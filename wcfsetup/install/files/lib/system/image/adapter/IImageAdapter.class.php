@@ -87,10 +87,23 @@ interface IImageAdapter {
 	 * @param	string		$string
 	 * @param	integer		$x
 	 * @param	integer		$y
+	 * @param	float		$opacity
+	 * 
 	 * @see		\wcf\system\image\adapter\IImageAdapter::getImage()
 	 * @see		\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
-	public function drawText($string, $x, $y);
+	public function drawText($string, $x, $y, $opacity);
+	
+	/**
+	 * Draws (multiple lines of) text on the image at the given relative position
+	 * with a certain margin to the image border.
+	 * 
+	 * @param	string		$text
+	 * @param	string		$position
+	 * @param	integer		$margin		in pixels
+	 * @param	float		$opacity
+	 */
+	public function drawTextRelative($text, $position, $margin, $opacity);
 	
 	/**
 	 * Sets active color.

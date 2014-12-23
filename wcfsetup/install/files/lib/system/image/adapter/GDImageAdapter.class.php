@@ -21,6 +21,12 @@ class GDImageAdapter implements IImageAdapter {
 	protected $color = null;
 	
 	/**
+	 * red, green, blue data of the active color
+	 * @var	array
+	 */
+	protected $colorData = array();
+	
+	/**
 	 * image height
 	 * @var	integer
 	 */
@@ -43,6 +49,12 @@ class GDImageAdapter implements IImageAdapter {
 	 * @var	integer
 	 */
 	protected $width = 0;
+	
+	/**
+	 * value of the font parameter of gd functions
+	 * @var	integer
+	 */
+	const FONT = 3;
 	
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::load()
@@ -179,15 +191,81 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($string, $x, $y) {
+	public function drawText($string, $x, $y, $opacity) {
 		if (!StringUtil::isUTF8($string)) {
-			throw new SystemException("Only UTF-8 encoded text can be written onto images"); // GD is buggy with UTF-8
+			// GD is buggy with UTF-8
+			throw new SystemException("Only UTF-8 encoded text can be written onto images");
 		}
 		
 		// convert UTF-8 characters > 127 to their numeric representation, e.g. A -> &#65;
-		$string = mb_encode_numericentity($string, array(0x0, 0xFFFF, 0, 0xFFF), 'UTF-8');
+		// todo: $string = mb_encode_numericentity($string, array(0x0, 0xFFFF, 0, 0xFFF), 'UTF-8');
 		
-		imageString($this->image, 3, $x, $y, $string, $this->color);
+		// set opacity
+		$color = imagecolorallocatealpha($this->image, $this->colorData['red'], $this->colorData['green'], $this->colorData['blue'], (1 - $opacity) * 127);
+		
+		imageString($this->image, self::FONT, $x, $y, $string, $color);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
+	 */
+	public function drawTextRelative($text, $position, $margin, $opacity) {
+		// split text into multiple lines to add each line separately
+		$lines = explode('\n', StringUtil::unifyNewlines($text));
+		
+		$characterWidth = imagefontwidth(self::FONT);
+		$lineHeight = imagefontheight(self::FONT);
+		$textHeight = $lineHeight * count($lines);
+		
+		foreach ($lines as $key => $line) {
+			$lineWidth = mb_strlen($line) * $characterWidth;
+			
+			// calculate x coordinate
+			$x = 0;
+			switch ($position) {
+				case 'topLeft':
+				case 'middleLeft':
+				case 'bottomLeft':
+					$x = $margin;
+				break;
+				
+				case 'topCenter':
+				case 'middleCenter':
+				case 'bottomCenter':
+					$x = floor(($this->getWidth() - $lineWidth) / 2);
+				break;
+				
+				case 'topRight':
+				case 'middleRight':
+				case 'bottomRight':
+					$x = $this->getWidth() - $lineWidth - $margin;
+				break;
+			}
+			
+			// calculate y coordinate
+			$y = 0;
+			switch ($position) {
+				case 'topLeft':
+				case 'topCenter':
+				case 'topRight':
+					$y = $margin + $key * $lineHeight;
+				break;
+				
+				case 'middleLeft':
+				case 'middleCenter':
+				case 'middleRight':
+					$y = floor(($this->getHeight() - $textHeight) / 2) + $key * $lineHeight;
+				break;
+				
+				case 'bottomLeft':
+				case 'bottomCenter':
+				case 'bottomRight':
+					$y = $this->getHeight() - $textHeight + $key * $lineHeight - $margin;
+				break;
+			}
+			
+			$this->drawText($line, $x, $y, $opacity);
+		}
 	}
 	
 	/**
@@ -195,6 +273,13 @@ class GDImageAdapter implements IImageAdapter {
 	 */
 	public function setColor($red, $green, $blue) {
 		$this->color = imageColorAllocate($this->image, $red, $green, $blue);
+		
+		// save data of the color
+		$this->colorData = array(
+			'red' => $red,
+			'green' => $green,
+			'blue' => $blue
+		);
 	}
 	
 	/**
