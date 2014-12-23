@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObject;
+use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\system\io\RemoteFile;
 
 /**
  * Represents a package update server.
