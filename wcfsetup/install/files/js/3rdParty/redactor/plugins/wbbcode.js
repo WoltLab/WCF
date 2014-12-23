@@ -1125,7 +1125,7 @@ RedactorPlugins.wbbcode = function() {
 			// replace nested elements e.g. <div><p>...</p></div>
 			html = html.replace(/<(div|p)([^>]+)?><(div|p)([^>]+)?>/g, '<p>');
 			html = html.replace(/<\/(div|p)><\/(div|p)>/g, '</p>');
-			html = html.replace(/<(div|p)><br><\/(div|p)>/g, '<p>');
+			//html = html.replace(/<(div|p)><br><\/(div|p)>/g, '<p>');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforePaste', { html: html });
 			
@@ -1140,7 +1140,7 @@ RedactorPlugins.wbbcode = function() {
 		 */
 		_pasteCallback: function(html) {
 			// reduce successive <br> by one
-			html = html.replace(/<br[^>]*>(<br[^>]*>)+/g, '$1');
+			//html = html.replace(/<br[^>]*>(<br[^>]*>)+/g, '$1');
 			
 			// replace <p>...</p> with <p>...</p><p><br></p>
 			/*html = html.replace(/<p>([\s\S]*?)<\/p>/g, function(match, content) {

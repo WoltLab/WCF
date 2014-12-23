@@ -242,6 +242,11 @@ RedactorPlugins.wmonkeypatch = function() {
 				return $restoreSpecialCharacters(html);
 			}).bind(this);
 			
+			// clean.onPasteRemoveEmpty
+			this.clean.onPasteRemoveEmpty = function(html) {
+				return html.replace(/<br\s?\/?>$/i, '');
+			};
+			
 			// clean.onSet
 			var $mpOnSet = this.clean.onSet;
 			this.clean.onSet = (function(html) {
