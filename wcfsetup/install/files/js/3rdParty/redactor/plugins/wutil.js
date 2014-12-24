@@ -276,7 +276,7 @@ RedactorPlugins.wutil = function() {
 			if (this.wutil._autosaveWorker === null) {
 				this.wutil.autosavePurgeOutdated();
 				
-				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this.wutil.saveTextToStorage, this), 60 * 1000);
+				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this.wutil.saveTextToStorage, this), 15 * 1000);
 			}
 			
 			return true;
