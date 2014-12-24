@@ -65,6 +65,10 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 		// removes orphaned and non-accessable events
 		UserActivityEventHandler::validateEvents($eventList);
 		
+		if (!count($eventList)) {
+			return array();
+		}
+		
 		// parse template
 		WCF::getTPL()->assign(array(
 			'eventList' => $eventList
