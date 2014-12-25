@@ -271,11 +271,11 @@ class WCF {
 		try {
 			if ($e instanceof IPrintableException) {
 				$e->show();
-				exit;
 			}
-			
-			// repack Exception
-			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
+			else {
+				// repack Exception
+				self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
+			}
 		}
 		catch (\Exception $exception) {
 			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
