@@ -38,11 +38,11 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 			$showOrder = $this->parameters['data']['showOrder'];
 			unset($this->parameters['data']['showOrder']);
 		}
-	
+		
 		$subscription = parent::create();
 		$editor = new PaidSubscriptionEditor($subscription);
 		$editor->setShowOrder($showOrder);
-	
+		
 		return new PaidSubscription($subscription->subscriptionID);
 	}
 	
@@ -51,7 +51,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 	 */
 	public function update() {
 		parent::update();
-	
+		
 		if (count($this->objects) == 1 && isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] != reset($this->objects)->showOrder) {
 			reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
 		}
