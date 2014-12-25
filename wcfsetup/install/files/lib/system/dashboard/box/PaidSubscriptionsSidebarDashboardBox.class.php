@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class PaidSubscriptionsSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * list of available paid subscriptions
-	 * @var array
+	 * @var	array
 	 */
 	public $subscriptions = array();
 	

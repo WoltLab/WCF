@@ -54,7 +54,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	
 	/**
 	 * fallback return value used in Category::getPermission()
-	 * @var boolean
+	 * @var	boolean
 	 */
 	protected $defaultPermission = false;
 	

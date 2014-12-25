@@ -48,19 +48,19 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	
 	/**
 	 * transaction id
-	 * @var string
+	 * @var	string
 	 */
 	public $transactionID = '';
 	
 	/**
 	 * username
-	 * @var string
+	 * @var	string
 	 */
 	public $username = '';
 	
 	/**
 	 * subscription id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $subscriptionID = 0;
 	
@@ -80,7 +80,7 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
-	
+		
 		if ($this->transactionID) {
 			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.transactionID LIKE ?', array('%' . $this->transactionID . '%'));
 		}
@@ -101,7 +101,7 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		WCF::getTPL()->assign(array(
 			'transactionID' => $this->transactionID,
 			'username' => $this->username,

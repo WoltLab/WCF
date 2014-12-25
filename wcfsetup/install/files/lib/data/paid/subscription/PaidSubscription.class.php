@@ -30,7 +30,7 @@ class PaidSubscription extends DatabaseObject {
 	/**
 	 * Returns list of purchase buttons.
 	 * 
-	 * @return array<string>
+	 * @return	array<string>
 	 */
 	public function getPurchaseButtons() {
 		$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.payment.type', 'com.woltlab.wcf.payment.type.paidSubscription');
@@ -51,7 +51,7 @@ class PaidSubscription extends DatabaseObject {
 	/**
 	 * Returns a DateInterval object based on subscription length.
 	 * 
-	 * @return \DateInterval
+	 * @return	\DateInterval
 	 */
 	public function getDateInterval() {
 		return new \DateInterval('P' . $this->subscriptionLength . $this->subscriptionLengthUnit);

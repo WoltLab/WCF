@@ -132,7 +132,7 @@ class CronjobAddForm extends AbstractForm {
 		
 		try {
 			CronjobUtil::validate($this->startMinute, $this->startHour, $this->startDom, $this->startMonth, $this->startDow);
-		} 
+		}
 		catch (SystemException $e) {
 			// extract field name
 			$fieldName = '';

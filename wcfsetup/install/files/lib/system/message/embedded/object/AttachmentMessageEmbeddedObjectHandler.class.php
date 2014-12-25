@@ -6,7 +6,7 @@ use wcf\util\ArrayUtil;
 
 /**
  * IMessageEmbeddedObjectHandler implementation for attachments.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -16,7 +16,7 @@ use wcf\util\ArrayUtil;
  */
 class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler {
 	/**
-	 * @see \wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::parseMessage()
+	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::parseMessage()
 	 */
 	public function parseMessage($message) {
 		$parsedAttachmentIDs = array_unique(ArrayUtil::toIntegerArray(array_merge(self::getFirstParameters($message, 'attach'), self::getTextParameters($message, 'attach'))));
@@ -39,7 +39,7 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
 	}
 	
 	/**
-	 * @see \wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::loadObjects()
+	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::loadObjects()
 	 */
 	public function loadObjects(array $objectIDs) {
 		$attachmentList = new AttachmentList();

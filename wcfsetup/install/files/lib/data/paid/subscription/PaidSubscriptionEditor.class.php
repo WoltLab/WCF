@@ -23,19 +23,19 @@ class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCa
 	
 	/**
 	 * Sets the show order of the subscription.
-	 *
+	 * 
 	 * @param	integer		$showOrder
 	 */
 	public function setShowOrder($showOrder = 0) {
 		$newShowOrder = 1;
-	
+		
 		$sql = "SELECT	MAX(showOrder)
 			FROM	wcf".WCF_N."_paid_subscription";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		$maxShowOrder = $statement->fetchColumn();
 		if (!$maxShowOrder) $maxShowOrder = 0;
-	
+		
 		if (!$showOrder || $showOrder > $maxShowOrder) {
 			$newShowOrder = $maxShowOrder + 1;
 		}
@@ -51,7 +51,7 @@ class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCa
 				
 			$newShowOrder = $showOrder;
 		}
-	
+		
 		$this->update(array(
 			'showOrder' => $newShowOrder
 		));

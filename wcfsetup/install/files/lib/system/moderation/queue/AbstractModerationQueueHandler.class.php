@@ -40,7 +40,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	
 	/**
 	 * required permission for assigned users
-	 * @var string
+	 * @var	string
 	 */
 	protected $requiredPermission = 'mod.general.canUseModeration';
 	

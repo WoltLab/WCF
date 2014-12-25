@@ -46,19 +46,19 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	
 	/**
 	 * username
-	 * @var string
+	 * @var	string
 	 */
 	public $username = '';
 	
 	/**
 	 * user object
-	 * @var \wcf\data\user\User
+	 * @var	\wcf\data\user\User
 	 */
 	public $user = null;
 	
 	/**
 	 * subscription end date
-	 * @var string
+	 * @var	string
 	 */
 	public $endDate = '';
 	
@@ -155,7 +155,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		if (empty($_POST)) {
 			if ($this->subscription->subscriptionLength) {
 				$d = DateUtil::getDateTimeByTimestamp(TIME_NOW);

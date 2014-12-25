@@ -129,7 +129,7 @@ class Gravatar extends DefaultAvatar {
 	 */
 	public function getImageTag($size = null) {
 		if ($size === null) $size = $this->size;
-	
+		
 		$retinaSize = null;
 		switch ($size) {
 			case 16:

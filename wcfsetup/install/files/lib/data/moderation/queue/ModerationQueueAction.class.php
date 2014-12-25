@@ -287,15 +287,15 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		if (empty($this->parameters['visitTime'])) {
 			$this->parameters['visitTime'] = TIME_NOW;
 		}
-	
+		
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
-	
+		
 		foreach ($this->objects as $queue) {
 			VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.moderation.queue', $queue->queueID, $this->parameters['visitTime']);
 		}
-	
+		
 		// reset storage
 		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'unreadModerationCount');
 		

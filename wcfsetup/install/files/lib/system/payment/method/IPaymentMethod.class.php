@@ -3,7 +3,7 @@ namespace wcf\system\payment\method;
 
 /**
  * Default interface for payment methods.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -30,12 +30,12 @@ interface IPaymentMethod {
 	 * Returns the HTML code of the purchase button.
 	 * 
 	 * @param	float		$cost
-	 * @param 	string		$currency	ISO 4217 code
+	 * @param	string		$currency	ISO 4217 code
 	 * @param	string		$name		product/item name
 	 * @param	string		$token		custom token
 	 * @param	string		$returnURL
 	 * @param	string		$cancelReturnURL
-	 * @param 	boolean		$isRecurring
+	 * @param	boolean		$isRecurring
 	 * @param	integer		$subscriptionLength
 	 * @param	string		$subscriptionLengthUnit
 	 * 

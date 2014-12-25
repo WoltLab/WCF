@@ -3047,7 +3047,7 @@ WCF.Action.Toggle = Class.extend({
 		
 		// bind event listener
 		this._initElements();
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Toggle' + this._className.hashCode(), $.proxy(this._initElements, this));	
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Toggle' + this._className.hashCode(), $.proxy(this._initElements, this));
 	},
 	
 	/**
@@ -11310,7 +11310,7 @@ $.widget('ui.wcfDialog', {
 		// Firefox ignores padding-bottom for elements within an overflowing container
 		if ($.browser.mozilla && !$.browser.mobile) {
 			if ($overflow === 'auto') {
-				this._content.children('div').css('margin-bottom',  this._content.css('padding-bottom'));
+				this._content.children('div').css('margin-bottom', this._content.css('padding-bottom'));
 			}
 			else {
 				this._content.children('div').css('margin-bottom', false);

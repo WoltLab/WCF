@@ -86,7 +86,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 				
 			$this->searchEngine = call_user_func(array($className, 'getInstance'));
 		}
-	
+		
 		return $this->searchEngine;
 	}
 	

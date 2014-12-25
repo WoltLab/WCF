@@ -5,7 +5,7 @@ use wcf\data\user\UserProfile;
 
 /**
  * IMessageEmbeddedObjectHandler implementation for quotes.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -15,7 +15,7 @@ use wcf\data\user\UserProfile;
  */
 class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler {
 	/**
-	 * @see \wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::parseMessage()
+	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::parseMessage()
 	 */
 	public function parseMessage($message) {
 		$usernames = self::getFirstParameters($message, 'quote');
@@ -30,7 +30,7 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
 	}
 	
 	/**
-	 * @see \wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::loadObjects()
+	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::loadObjects()
 	 */
 	public function loadObjects(array $objectIDs) {
 		return UserProfile::getUserProfiles($objectIDs);

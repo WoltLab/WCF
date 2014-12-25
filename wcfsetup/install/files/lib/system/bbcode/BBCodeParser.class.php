@@ -547,7 +547,7 @@ class BBCodeParser extends SingletonFactory {
 	
 	/**
 	 * Removes code bbcode occurrences in given message.
-	 *
+	 * 
 	 * @param	string		$message
 	 * @return	string
 	 */

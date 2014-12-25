@@ -36,7 +36,7 @@ class PaymentMethodSelectOptionType extends AbstractOptionType {
 		if (!is_array($newValue)) {
 			$newValue = array();
 		}
-	
+		
 		$selectOptions = PaymentMethodHandler::getInstance()->getPaymentMethodSelection();
 		foreach ($newValue as $optionName) {
 			if (!isset($selectOptions[$optionName])) {

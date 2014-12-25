@@ -27,14 +27,14 @@ class PaidSubscriptionUser extends DatabaseObject {
 	
 	/**
 	 * paid subscription object
-	 * @var \wcf\data\paid\subscription\PaidSubscription
+	 * @var	\wcf\data\paid\subscription\PaidSubscription
 	 */
 	protected $subscription = null;
 	
 	/**
 	 * Gets the paid subscription object.
 	 * 
-	 * @return \wcf\data\paid\subscription\PaidSubscription
+	 * @return	\wcf\data\paid\subscription\PaidSubscription
 	 */
 	public function getSubscription() {
 		if ($this->subscription === null) {
@@ -46,8 +46,8 @@ class PaidSubscriptionUser extends DatabaseObject {
 	
 	/**
 	 * Sets the paid subscription object.
-	 *
-	 * @param \wcf\data\paid\subscription\PaidSubscription		$subscription
+	 * 
+	 * @param	\wcf\data\paid\subscription\PaidSubscription		$subscription
 	 */
 	public function setSubscription(PaidSubscription $subscription) {
 		$this->subscription = $subscription;

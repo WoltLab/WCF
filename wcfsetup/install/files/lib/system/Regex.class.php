@@ -292,4 +292,3 @@ final class Regex {
 		return $this->regex;
 	}
 }
-

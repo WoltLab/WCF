@@ -49,7 +49,7 @@ interface ISearchEngine {
 	
 	/**
 	 * Searches for the given string and returns the data of the found messages.
-	 *
+	 * 
 	 * @param	string								$q
 	 * @param	array								$objectTypes
 	 * @param	boolean								$subjectOnly

@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
 
 /**
  * IPaymentMethod implementation for Paypal.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -16,14 +16,14 @@ use wcf\util\StringUtil;
  */
 class PaypalPaymentMethod extends AbstractPaymentMethod {
 	/**
-	 * @see \wcf\system\payment\method\IPaymentMethod::supportsRecurringPayments()
+	 * @see	\wcf\system\payment\method\IPaymentMethod::supportsRecurringPayments()
 	 */
 	public function supportsRecurringPayments() {
 		return true;
 	}
 	
 	/**
-	 * @see \wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
+	 * @see	\wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
 	 */
 	public function getSupportedCurrencies() {
 		return array(
@@ -56,7 +56,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 	}
 	
 	/**
-	 * @see \wcf\system\payment\method\IPaymentMethod::getPurchaseButton()
+	 * @see	\wcf\system\payment\method\IPaymentMethod::getPurchaseButton()
 	 */
 	public function getPurchaseButton($cost, $currency, $name, $token, $returnURL, $cancelReturnURL, $isRecurring = false, $subscriptionLength = 0, $subscriptionLengthUnit = '') {
 		if ($isRecurring) {

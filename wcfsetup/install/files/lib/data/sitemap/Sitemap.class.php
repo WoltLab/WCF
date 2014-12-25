@@ -57,7 +57,7 @@ class Sitemap extends DatabaseObject {
 	/**
 	 * Returns true, if the active user has access to this sitemap.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function isAccessible() {
 		// check the options of this item

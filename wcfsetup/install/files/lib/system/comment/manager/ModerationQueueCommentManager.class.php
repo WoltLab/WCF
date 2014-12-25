@@ -59,7 +59,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 		if (!$this->isAccessible($objectID, true)) {
 			return false;
 		}
-	
+		
 		return true;
 	}
 	

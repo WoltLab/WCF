@@ -58,7 +58,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		if (empty($_POST)) {
 			I18nHandler::getInstance()->setOptions('description', 1, $this->subscription->description, 'wcf.paidSubscription.subscription\d+.description');
 			I18nHandler::getInstance()->setOptions('title', 1, $this->subscription->title, 'wcf.paidSubscription.subscription\d+');
@@ -153,10 +153,10 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		$useRequestData = (empty($_POST)) ? false : true;
 		I18nHandler::getInstance()->assignVariables($useRequestData);
-	
+		
 		WCF::getTPL()->assign(array(
 			'action' => 'edit',
 			'subscriptionID' => $this->subscriptionID,

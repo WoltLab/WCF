@@ -31,7 +31,7 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (isset($_REQUEST['id'])) $this->logID = intval($_REQUEST['id']);
 		$this->log = new PaidSubscriptionTransactionLog($this->logID);
 		if (!$this->log->logID) {

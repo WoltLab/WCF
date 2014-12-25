@@ -28,13 +28,13 @@ class PaidSubscriptionListPage extends AbstractPage {
 	
 	/**
 	 * list of available paid subscriptions
-	 * @var array
+	 * @var	array
 	 */
 	public $subscriptions = array();
 	
 	/**
 	 * list of user subscriptions
-	 * @var \wcf\data\paid\subscription\user\PaidSubscriptionUserList
+	 * @var	\wcf\data\paid\subscription\user\PaidSubscriptionUserList
 	 */
 	public $userSubscriptionList = array();
 	

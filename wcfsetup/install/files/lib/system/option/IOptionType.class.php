@@ -72,7 +72,7 @@ interface IOptionType {
 	
 	/**
 	 * Returns true if option's label is hidden in search form.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function hideLabelInSearch();

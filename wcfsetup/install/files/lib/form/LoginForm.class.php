@@ -37,10 +37,11 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		parent::readFormParameters();
 		
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'register') {
-			// if the usernamefield is an email, save it as email for the registration
+			// if the username field is an email, save it as email for the registration
 			if (UserUtil::isValidEmail($this->username)) {
 				WCF::getSession()->register('__email', $this->username);
-			} else {
+			}
+			else {
 				WCF::getSession()->register('__username', $this->username);
 			}
 			WCF::getSession()->update();

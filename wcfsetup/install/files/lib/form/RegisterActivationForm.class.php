@@ -45,7 +45,7 @@ class RegisterActivationForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (!empty($_GET['u'])) {
 			$userID = intval($_GET['u']);
 			$this->user = new User($userID);

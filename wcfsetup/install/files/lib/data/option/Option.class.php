@@ -196,7 +196,7 @@ class Option extends DatabaseObject {
 	
 	/**
 	 * Allows modifications of hidden option.
-	 *
+	 * 
 	 * @param	string		$hiddenOption
 	 */
 	public function modifyHiddenOption($hiddenOption) {

@@ -29,13 +29,13 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	
 	/**
 	 * user object
-	 * @var \wcf\data\user\User
+	 * @var	\wcf\data\user\User
 	 */
 	protected $user = null;
 	
 	/**
 	 * paid subscription object
-	 * @var \wcf\data\paid\subscription\PaidSubscription
+	 * @var	\wcf\data\paid\subscription\PaidSubscription
 	 */
 	protected $subscription = null;
 	
@@ -73,20 +73,20 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	
 	/**
 	 * Returns the paid subscription of this transaction.
-	 *
+	 * 
 	 * @return	\wcf\data\paid\subscription\PaidSubscription
 	 */
 	public function getSubscription() {
 		if ($this->subscription === null) {
 			$this->subscription = new PaidSubscription($this->subscriptionID);
 		}
-	
+		
 		return $this->subscription;
 	}
 	
 	/**
 	 * Gets a transaction log entry by transaction id.
-	 *
+	 * 
 	 * @param	integer		$paymentMethodObjectTypeID
 	 * @param	string		$transactionID
 	 * @return	\wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog

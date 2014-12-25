@@ -337,7 +337,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	
 	/**
 	 * Handles logo upload.
-	 *
+	 * 
 	 * @return	array<string>
 	 */
 	public function uploadLogo() {

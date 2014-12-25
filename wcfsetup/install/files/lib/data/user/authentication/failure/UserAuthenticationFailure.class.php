@@ -27,7 +27,7 @@ class UserAuthenticationFailure extends DatabaseObject {
 	
 	/**
 	 * Returns the ip address and attempts to convert into IPv4.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getIpAddress() {
@@ -52,7 +52,7 @@ class UserAuthenticationFailure extends DatabaseObject {
 	
 	/**
 	 * Returns the number of authentication failures for given user account.
-	 *
+	 * 
 	 * @param	integer		$userID
 	 * @return	boolean
 	 */

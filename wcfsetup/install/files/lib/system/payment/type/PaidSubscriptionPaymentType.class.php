@@ -10,7 +10,7 @@ use wcf\system\exception\SystemException;
 
 /**
  * IPaymentType implementation for paid subscriptions.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -20,7 +20,7 @@ use wcf\system\exception\SystemException;
  */
 class PaidSubscriptionPaymentType extends AbstractPaymentType {
 	/**
-	 * @see wcf\system\payment\type\IPaymentType::processTransaction()
+	 * @see	wcf\system\payment\type\IPaymentType::processTransaction()
 	 */
 	public function processTransaction($paymentMethodObjectTypeID, $token, $amount, $currency, $transactionID, $status, $transactionDetails) {
 		$userSubscription = $user = $subscription = null;

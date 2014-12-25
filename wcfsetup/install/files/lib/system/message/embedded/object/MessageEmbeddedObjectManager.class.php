@@ -8,7 +8,7 @@ use wcf\system\WCF;
 
 /**
  * Default interface of embedded object handler.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

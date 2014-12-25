@@ -273,7 +273,7 @@ class UserAddForm extends UserOptionListForm {
 			if ($this->disableSignatureExpires) {
 				$disableSignatureExpires = strtotime($this->disableSignatureExpires);
 			}
-
+			
 			$data['data']['disableSignature'] = $this->disableSignature;
 			$data['data']['disableSignatureReason'] = $this->disableSignatureReason;
 			$data['data']['disableSignatureExpires'] = $disableSignatureExpires;

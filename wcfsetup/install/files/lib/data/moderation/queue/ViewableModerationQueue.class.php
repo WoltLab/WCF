@@ -167,12 +167,12 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	
 	/**
 	 * Returns true if this queue item is new for the active user.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isNew() {
 		if ($this->time > max(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue'), VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.moderation.queue', $this->queueID))) return true;
-	
+		
 		return false;
 	}
 }

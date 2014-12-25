@@ -24,7 +24,7 @@ class ModerationReportForm extends AbstractModerationForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		$processor = ModerationQueueManager::getInstance()->getProcessor(null, null, $this->queue->objectTypeID);
 		if (!($processor instanceof IModerationQueueReportHandler)) {
 			throw new IllegalLinkException();

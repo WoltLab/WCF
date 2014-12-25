@@ -115,7 +115,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		
 		// check permissions
 		if (!WCF::getUser()->userID || !WCF::getSession()->getPermission('user.like.canLike')) {
-			throw new PermissionDeniedException();	
+			throw new PermissionDeniedException();
 		}
 		
 		// check if liking own content but forbidden by configuration

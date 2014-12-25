@@ -17,7 +17,7 @@ use wcf\util\ArrayUtil;
 abstract class AbstractAttachmentObjectType implements IAttachmentObjectType {
 	/**
 	 * cached objects
-	 * @var array<\wcf\data\DatabaseObject>
+	 * @var	array<\wcf\data\DatabaseObject>
 	 */
 	protected $cachedObjects = array();
 	

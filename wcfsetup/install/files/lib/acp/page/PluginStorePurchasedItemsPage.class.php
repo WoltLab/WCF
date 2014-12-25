@@ -95,7 +95,7 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 			$this->productData[$wcfMajorRelease][$packageUpdateID] = array(
 				'author' => $product['author'],
 				'authorURL' => $product['authorURL'],
-				'package'  => $product['package'],
+				'package' => $product['package'],
 				'packageName' => $packageName,
 				'pluginStoreURL' => $product['pluginStoreURL'],
 				'version' => array(

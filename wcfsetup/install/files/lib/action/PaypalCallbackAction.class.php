@@ -8,7 +8,7 @@ use wcf\util\HTTPRequest;
 
 /**
  * Handles Paypal callbacks.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -18,7 +18,7 @@ use wcf\util\HTTPRequest;
  */
 class PaypalCallbackAction extends AbstractAction {
 	/**
-	 * @see \wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
@@ -43,7 +43,7 @@ class PaypalCallbackAction extends AbstractAction {
 			catch (SystemException $e) {
 				throw new SystemException('connection to paypal.com failed: ' . $e->getMessage());
 			}
-		
+			
 			if (strstr($content, "VERIFIED") === false) {
 				throw new SystemException('request not validated');
 			}
@@ -76,7 +76,7 @@ class PaypalCallbackAction extends AbstractAction {
 			if ($transactionType == 'web_accept' || $transactionType == 'subscr_payment') {
 				if ($paymentStatus == 'Completed') {
 					$status = 'completed';
-				}  
+				}
 			}
 			if ($paymentStatus == 'Refunded' || $paymentStatus == 'Reversed') {
 				$status = 'reversed';

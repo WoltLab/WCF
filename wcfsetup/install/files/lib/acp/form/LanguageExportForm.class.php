@@ -148,8 +148,8 @@ class LanguageExportForm extends AbstractForm {
 			$row['packageNameLength'] = mb_strlen(WCF::getLanguage()->get($row['packageName']));
 			$this->packages[] = new Package(null, $row);
 			if ($row['packageNameLength'] > $this->packageNameLength) {
-				$this->packageNameLength = $row['packageNameLength'];	
-			} 
+				$this->packageNameLength = $row['packageNameLength'];
+			}
 		}
 	}
 }

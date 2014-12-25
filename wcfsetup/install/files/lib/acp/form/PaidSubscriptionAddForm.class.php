@@ -40,13 +40,13 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * subscription title
-	 * @var string
+	 * @var	string
 	 */
 	public $title = '';
 	
 	/**
 	 * subscription description
-	 * @var string
+	 * @var	string
 	 */
 	public $description = '';
 	
@@ -64,13 +64,13 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * subscription cost
-	 * @var double
+	 * @var	double
 	 */
 	public $cost = 0.0;
 	
 	/**
 	 * subscription currency
-	 * @var string
+	 * @var	string
 	 */
 	public $currency = 'USD';
 	
@@ -82,13 +82,13 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * subscription length
-	 * @var integer
+	 * @var	integer
 	 */
 	public $subscriptionLength = 0;
 	
 	/**
 	 * subscription length unit
-	 * @var string
+	 * @var	string
 	 */
 	public $subscriptionLengthUnit = '';
 	
@@ -100,31 +100,31 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * list of group ids
-	 * @var array<intewer>
+	 * @var	array<intewer>
 	 */
 	public $groupIDs = array();
 	
 	/**
 	 * list of excluded subscriptions
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	public $excludedSubscriptionIDs = array();
 	
 	/**
 	 * available user groups
-	 * @var array
+	 * @var	array
 	 */
 	public $availableUserGroups = array();
 	
 	/**
 	 * list of available currencies
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public $availableCurrencies = array();
 	
 	/**
 	 * list of available subscriptions
-	 * @var array
+	 * @var	array
 	 */
 	public $availableSubscriptions = array();
 	
@@ -280,14 +280,14 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * Saves i18n values.
-	 *
+	 * 
 	 * @param	\wcf\data\paid\subscription\PaidSubscription		$subscription
 	 * @param	string							$columnName
 	 */
 	public function saveI18nValue(PaidSubscription $subscription, $columnName) {
 		if (!I18nHandler::getInstance()->isPlainValue($columnName)) {
 			I18nHandler::getInstance()->save($columnName, 'wcf.paidSubscription.subscription'.$subscription->subscriptionID.($columnName == 'description' ? '.description' : ''), 'wcf.paidSubscription', 1);
-				
+			
 			// update database
 			$editor = new PaidSubscriptionEditor($subscription);
 			$editor->update(array(

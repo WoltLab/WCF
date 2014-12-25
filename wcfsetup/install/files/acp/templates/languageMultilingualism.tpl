@@ -62,7 +62,7 @@
 	<div class="formSubmit">
 		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SECURITY_TOKEN_INPUT_TAG}
- 	</div>
+	</div>
 </form>
 
 {include file='footer'}

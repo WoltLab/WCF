@@ -217,7 +217,7 @@ class PreParser extends SingletonFactory {
 				)?\])
 				(.*?)
 				(?:\[/\\1\])", Regex::DOT_ALL | Regex::IGNORE_WHITESPACE | Regex::CASE_INSENSITIVE);
-		
+			
 			$callback = new Callback(function ($matches) {
 				return StringStack::pushToStringStack($matches[0], 'urlBBCodes');
 			});

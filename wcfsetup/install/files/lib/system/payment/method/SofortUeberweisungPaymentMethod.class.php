@@ -3,7 +3,7 @@ namespace wcf\system\payment\method;
 
 /**
  * IPaymentMethod implementation for SofortUeberweisung.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -13,7 +13,7 @@ namespace wcf\system\payment\method;
  */
 class SofortUeberweisungPaymentMethod extends AbstractPaymentMethod {
 	/**
-	 * @see \wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
+	 * @see	\wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
 	 */
 	public function getSupportedCurrencies() {
 		return array(
@@ -22,7 +22,7 @@ class SofortUeberweisungPaymentMethod extends AbstractPaymentMethod {
 	}
 	
 	/**
-	 * @see \wcf\system\payment\method\IPaymentMethod::getPurchaseButton()
+	 * @see	\wcf\system\payment\method\IPaymentMethod::getPurchaseButton()
 	 */
 	public function getPurchaseButton($cost, $currency, $name, $token, $returnURL, $cancelReturnURL, $isRecurring = false, $subscriptionLength = 0, $subscriptionLengthUnit = '') {
 		// @todo

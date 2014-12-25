@@ -582,7 +582,7 @@ WCF.Location.GoogleMaps.SuggestionMap = WCF.Location.GoogleMaps.LargeMap.extend(
 	init: function(mapContainerID, mapOptions, actionClassName, locationSearchInputSelector, additionalParameters) {
 		this._super(mapContainerID, mapOptions, actionClassName, locationSearchInputSelector, additionalParameters);
 		
-		var $locationSuggestionDiv = $('<div class="gmnoprint googleMapsCustomControlContainer"><div class="gm-style-mtc"><div class="googleMapsCustomControl">'  + WCF.Language.get('wcf.map.showLocationSuggestions') + '</div></div></div>');
+		var $locationSuggestionDiv = $('<div class="gmnoprint googleMapsCustomControlContainer"><div class="gm-style-mtc"><div class="googleMapsCustomControl">' + WCF.Language.get('wcf.map.showLocationSuggestions') + '</div></div></div>');
 		this._locationSuggestionsButton = $locationSuggestionDiv.find('.googleMapsCustomControl').click($.proxy(this._toggleLocationSuggestions, this));
 		
 		this._map.controls[google.maps.ControlPosition.TOP_RIGHT].push($locationSuggestionDiv.get(0));

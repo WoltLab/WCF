@@ -227,7 +227,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	
 	/**
 	 * Validates install or update instructions against the corresponding PIP, unknown PIPs will be silently ignored.
-	 *
+	 * 
 	 * @param	string		$type
 	 * @param	array<array>	$instructions
 	 */

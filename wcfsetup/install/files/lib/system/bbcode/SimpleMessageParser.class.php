@@ -30,13 +30,13 @@ class SimpleMessageParser extends SingletonFactory {
 	
 	/**
 	 * cached URLs
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $cachedURLs = array();
 	
 	/**
 	 * cached e-mails
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $cachedEmails = array();
 	
@@ -164,33 +164,33 @@ class SimpleMessageParser extends SingletonFactory {
 	
 	/**
 	 * Returns the hash for an matched URL in the message.
-	 *
+	 * 
 	 * @param	array		$matches
 	 * @return	string
 	 */
 	protected function cacheURLsCallback($matches) {
 		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[0]).'@@';
 		$this->cachedURLs[$hash] = $matches[0];
-	
+		
 		return $hash;
 	}
 	
 	/**
 	 * Returns the hash for an matched e-mail in the message.
-	 *
+	 * 
 	 * @param	array		$matches
 	 * @return	string
 	 */
 	protected function cacheEmailsCallback($matches) {
 		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[0]).'@@';
 		$this->cachedEmails[$hash] = $matches[0];
-	
+		
 		return $hash;
 	}
 	
 	/**
 	 * Reinserts cached URLs and e-mails.
-	 *
+	 * 
 	 * @param	string		$text
 	 * @return	string
 	 */
@@ -209,7 +209,7 @@ class SimpleMessageParser extends SingletonFactory {
 				
 			$text = str_replace($hash, '<a href="mailto:'.$email.'">'.$email.'</a>', $text);
 		}
-	
+		
 		return $text;
 	}
 	

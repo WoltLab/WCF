@@ -22,7 +22,7 @@ class ModerationActivationForm extends AbstractModerationForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		$processor = ModerationQueueManager::getInstance()->getProcessor(null, null, $this->queue->objectTypeID);
 		if (!($processor instanceof IModerationQueueActivationHandler)) {
 			throw new IllegalLinkException();

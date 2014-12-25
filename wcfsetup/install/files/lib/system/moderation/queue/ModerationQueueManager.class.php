@@ -242,14 +242,14 @@ class ModerationQueueManager extends SingletonFactory {
 	
 	/**
 	 * Returns the count of unread moderation queue items.
-	 *
+	 * 
 	 * @param	boolean		$skipCache
 	 * @return	integer
 	 */
 	public function getUnreadModerationCount($skipCache = false) {
 		// get count
 		$count = UserStorageHandler::getInstance()->getField('unreadModerationCount');
-	
+		
 		// cache does not exist or is outdated
 		if ($count === null || $skipCache) {
 			// force update of non-tracked queues for this user
@@ -278,7 +278,7 @@ class ModerationQueueManager extends SingletonFactory {
 			// update storage data
 			UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadModerationCount', $count);
 		}
-	
+		
 		return $count;
 	}
 	
@@ -290,17 +290,17 @@ class ModerationQueueManager extends SingletonFactory {
 		$queueList->sqlJoins = "LEFT JOIN wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user ON (moderation_queue_to_user.queueID = moderation_queue.queueID AND moderation_queue_to_user.userID = ".WCF::getUser()->userID.")";
 		$queueList->getConditionBuilder()->add("moderation_queue_to_user.queueID IS NULL");
 		$queueList->readObjects();
-			
+		
 		if (count($queueList)) {
 			$queues = array();
 			foreach ($queueList as $queue) {
 				if (!isset($queues[$queue->objectTypeID])) {
 					$queues[$queue->objectTypeID] = array();
 				}
-					
+				
 				$queues[$queue->objectTypeID][$queue->queueID] = $queue;
 			}
-		
+			
 			foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
 				foreach ($objectTypeIDs as $objectTypeID) {
 					if (isset($queues[$objectTypeID])) {

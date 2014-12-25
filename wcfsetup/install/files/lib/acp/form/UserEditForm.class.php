@@ -139,7 +139,7 @@ class UserEditForm extends UserAddForm {
 		else {
 			$this->banExpires = '';
 		}
-
+		
 		if (isset($_POST['avatarType'])) $this->avatarType = $_POST['avatarType'];
 		
 		if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {

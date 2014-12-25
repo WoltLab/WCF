@@ -219,7 +219,7 @@ class MessageParser extends BBCodeParser {
 	
 	/**
 	 * Returns a text-only version of given message.
-	 *
+	 * 
 	 * @param	string		$message
 	 * @return	string
 	 */

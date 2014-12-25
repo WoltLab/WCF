@@ -1033,7 +1033,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Logs of failed login attempts will be automatically pruned after the configured amount of days, raising the limit will provide a longer history in expense for increased database storage usage.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Default Gravatar Type]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[The <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">default Gravatar type</a> used if no matching Gravatar was found.]]></item>
-  		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[No default Gravatar]]></item>
+		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[No default Gravatar]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.identicon"><![CDATA[Identicon]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.wavatar"><![CDATA[Wavatar]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.monsterid"><![CDATA[Monster id]]></item>

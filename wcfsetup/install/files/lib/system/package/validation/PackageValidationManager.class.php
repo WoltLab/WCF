@@ -175,9 +175,9 @@ class PackageValidationManager extends SingletonFactory {
 	
 	/**
 	 * Validates an instruction against the corresponding package installation plugin.
-	 *
+	 * 
 	 * Please be aware that unknown PIPs will silently ignored and cause no error.
-	 *
+	 * 
 	 * @param	\wcf\data\package\PackageArchive	$archive
 	 * @param	string					$pip
 	 * @param	string					$instruction

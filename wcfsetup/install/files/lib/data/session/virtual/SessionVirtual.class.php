@@ -7,7 +7,7 @@ use wcf\util\UserUtil;
 /**
  * Virtual Sessions extend the original session system with a transparent layer. 
  * It's only purpose is to enforce session validation based on IP address and/or user agent.
- *
+ * 
  * The legacy session system does not allow the same user being logged-in more than once 
  * and the same is true for WCF 2.1 unless we break most parts of the API. 
  * In order to solve this, we do allow multiple clients to share the exact same session 

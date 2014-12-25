@@ -3,7 +3,7 @@ namespace wcf\system\payment\type;
 
 /**
  * Default interface for payment types.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -19,7 +19,7 @@ interface IPaymentType {
 	 * @param	string		$token
 	 * @param	float		$amount
 	 * @param	string		$currency
-	 * @param 	string		$transactionID
+	 * @param	string		$transactionID
 	 * @param	string		$status
 	 * @param	array		$transactionDetails
 	 */

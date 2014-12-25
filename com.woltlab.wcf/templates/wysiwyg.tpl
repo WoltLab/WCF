@@ -53,7 +53,7 @@ $(function() {
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			maxHeight: 500,
 			minHeight: 200,
-			plugins: [ 'wutil',  'wmonkeypatch', 'table', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
+			plugins: [ 'wutil', 'wmonkeypatch', 'table', 'wbutton', 'wbbcode', 'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
 			removeEmpty: false,
 			replaceDivs: false,
 			tabifier: false,

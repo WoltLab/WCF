@@ -27,7 +27,7 @@
 </div>
 
 {if $objects|count}
-	<div class="container containerPadding sortableListContainer marginTop"  id="noticeList">
+	<div class="container containerPadding sortableListContainer marginTop" id="noticeList">
 		<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 			{foreach from=$objects item='notice'}
 				<li class="sortableNode sortableNoNesting jsNotice" data-object-id="{@$notice->noticeID}">

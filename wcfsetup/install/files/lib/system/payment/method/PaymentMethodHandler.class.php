@@ -6,7 +6,7 @@ use wcf\system\WCF;
 
 /**
  * Handles enabled/available payment methods.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -17,18 +17,18 @@ use wcf\system\WCF;
 class PaymentMethodHandler extends SingletonFactory {
 	/**
 	 * payment methods
-	 * @var array
+	 * @var	array
 	 */
 	protected $paymentMethods = array();
 	
 	/**
 	 * payment method object types
-	 * @var array
+	 * @var	array
 	 */
 	protected $objectTypes = array();
 	
 	/**
-	 * @see \wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$availablePaymentMethods = explode(',', AVAILABLE_PAYMENT_METHODS);
@@ -51,7 +51,7 @@ class PaymentMethodHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the available payment methods for selection.
-	 *
+	 * 
 	 * @return	array<string>
 	 */
 	public function getPaymentMethodSelection() {
@@ -59,7 +59,7 @@ class PaymentMethodHandler extends SingletonFactory {
 		foreach ($this->objectTypes as $objectType) {
 			$selection[$objectType->objectType] = WCF::getLanguage()->get('wcf.payment.'.$objectType->objectType);
 		}
-	
+		
 		return $selection;
 	}
 }

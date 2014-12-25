@@ -674,7 +674,7 @@ class PackageArchive {
 				uksort($instances, array('wcf\data\package\Package', 'compareVersion'));
 				
 				// get package with highest version number (get last package)
-				$existingPackages[$packageName] = array_pop($instances);	
+				$existingPackages[$packageName] = array_pop($instances);
 			}
 		}
 		

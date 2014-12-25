@@ -162,7 +162,7 @@ class UserOption extends Option {
 	
 	/**
 	 * Returns true if this user option can be deleted.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function canDelete() {

@@ -3,7 +3,7 @@ namespace wcf\system\payment\method;
 
 /**
  * Abstract implementation of a payment method.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -13,7 +13,7 @@ namespace wcf\system\payment\method;
  */
 abstract class AbstractPaymentMethod implements IPaymentMethod {
 	/**
-	 * @see \wcf\system\payment\method\IPaymentMethod::supportsRecurringPayments()
+	 * @see	\wcf\system\payment\method\IPaymentMethod::supportsRecurringPayments()
 	 */
 	public function supportsRecurringPayments() {
 		return false;

@@ -723,7 +723,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
-
+		
 		$disableAvatarExpires = $this->parameters['disableAvatarExpires'];
 		if ($disableAvatarExpires) {
 			$disableAvatarExpires = strtotime($disableAvatarExpires);

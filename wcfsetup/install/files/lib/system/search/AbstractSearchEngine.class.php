@@ -36,13 +36,13 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
 	
 	/**
 	 * Manipulates the search term (< and > used as quotation marks):
-	 *
+	 * 
 	 * - <test foo> becomes <+test* +foo*>
 	 * - <test -foo bar> becomes <+test* -foo* +bar*>
 	 * - <test "foo bar"> becomes <+test* +"foo bar">
-	 *
+	 * 
 	 * @see	http://dev.mysql.com/doc/refman/5.5/en/fulltext-boolean.html
-	 *
+	 * 
 	 * @param	string		$query
 	 */
 	protected function parseSearchQuery($query) {

@@ -112,7 +112,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see \wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
 		$this->revoke();
@@ -176,7 +176,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
-	
+		
 		foreach ($this->objects as $subscriptionUser) {
 			if ($subscriptionUser->isActive) {
 				throw new UserInputException('objectIDs');

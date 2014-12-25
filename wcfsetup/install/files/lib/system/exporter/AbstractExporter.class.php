@@ -197,5 +197,5 @@ abstract class AbstractExporter implements IExporter {
 		$row = $statement->fetchArray();
 		if ($row !== false) return $row['maxID'];
 		return 0;
-	} 
+	}
 }

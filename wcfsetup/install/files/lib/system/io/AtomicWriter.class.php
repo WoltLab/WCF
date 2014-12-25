@@ -12,7 +12,7 @@ use wcf\util\FileUtil;
  * the data was flushed.
  * 
  * Note: The AtomicWriter only supports a small number of whitelisted (write) operations.
- *
+ * 
  * @author	Tim Duesterhus
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

@@ -340,7 +340,7 @@ $.widget('ui.wcfImageViewer', {
 				}
 				
 				this._isOpen = true;
-			
+				
 				WCF.System.DisableScrolling.disable();
 				WCF.System.DisableZoom.disable();
 			}
@@ -1226,7 +1226,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		if (!this._isOpen) {
 			this._isOpen = true;
-		
+			
 			WCF.System.DisableScrolling.disable();
 			WCF.System.DisableZoom.disable();
 		}
