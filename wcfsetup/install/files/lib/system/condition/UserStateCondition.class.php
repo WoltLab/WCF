@@ -188,7 +188,7 @@ HTML;
 		if ($this->userIsDisabled && $this->userIsEnabled) {
 			$this->errorMessage = 'wcf.user.condition.state.isEnabled.error.conflict';
 			
-			throw new UserInputException('userisEnabled', 'conflict');
+			throw new UserInputException('userIsEnabled', 'conflict');
 		}
 	}
 	
