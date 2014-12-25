@@ -9658,6 +9658,11 @@ WCF.Popover = Class.extend({
 		
 		this._initContainers();
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Popover.'+selector, $.proxy(this._initContainers, this));
+		
+		$(window).on('beforeunload', (function() {
+			this._cancelPopover = true;
+			this._hide(true);
+		}).bind(this));
 	},
 	
 	/**
@@ -9684,18 +9689,12 @@ WCF.Popover = Class.extend({
 				$element.hover($.proxy(this._overElement, this), $.proxy(this._out, this));
 				
 				if ($element.is('a') && $element.attr('href')) {
-					$element.click($.proxy(this._cancel, this));
+					$element.click((function() {
+						this._hide(true);
+					}).bind(this));
 				}
 			}
 		}, this));
-	},
-	
-	/**
-	 * Cancels popovers if link is being clicked
-	 */
-	_cancel: function(event) {
-		this._cancelPopover = true;
-		this._hide(true);
 	},
 	
 	/**
