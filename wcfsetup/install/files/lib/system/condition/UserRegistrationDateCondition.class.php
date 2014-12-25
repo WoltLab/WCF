@@ -131,7 +131,7 @@ HTML;
 			if ($registrationDateStart === false) {
 				$this->errorMessage = 'wcf.user.condition.registrationDate.error.startNotValid';
 				
-				throw new UserInputException($this->fieldName, 'startNotValid');
+				throw new UserInputException('registrationDateStart', 'startNotValid');
 			}
 		}
 		if (strlen($this->registrationDateEnd)) {
@@ -139,14 +139,14 @@ HTML;
 			if ($registrationDateEnd === false) {
 				$this->errorMessage = 'wcf.user.condition.registrationDate.error.endNotValid';
 				
-				throw new UserInputException($this->fieldName, 'endNotValid');
+				throw new UserInputException('registrationDateEnd', 'endNotValid');
 			}
 		}
 		
 		if ($registrationDateEnd !== null && $registrationDateStart !== null && $registrationDateEnd < $registrationDateStart) {
 			$this->errorMessage = 'wcf.user.condition.registrationDate.error.endBeforeStart';
 			
-			throw new UserInputException($this->fieldName, 'endBeforeStart');
+			throw new UserInputException('registrationDateEnd', 'endBeforeStart');
 		}
 	}
 	
