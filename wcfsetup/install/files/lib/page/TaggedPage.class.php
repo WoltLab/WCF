@@ -5,6 +5,7 @@ use wcf\data\tag\Tag;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\tagging\TypedTagCloud;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows the a list of tagged objects.
@@ -17,6 +18,12 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class TaggedPage extends MultipleLinkPage {
+	/**
+	 * list of available taggable object types
+	 * @var	array<\wcf\data\object\type\ObjectTypeCache>
+	 */
+	public $availableObjectTypes = array();
+	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
@@ -64,17 +71,55 @@ class TaggedPage extends MultipleLinkPage {
 			throw new IllegalLinkException();
 		}
 		
+		// filter taggable object types by options and permissions
+		$this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.tagging.taggableObject');
+		foreach ($this->availableObjectTypes as $key => $objectType) {
+			if ($objectType->options) {
+				$hasEnabledOption = false;
+				$options = explode(',', strtoupper($objectType->options));
+				foreach ($options as $option) {
+					if (defined($option) && constant($option)) {
+						$hasEnabledOption = true;
+						break;
+					}
+				}
+				
+				if (!$hasEnabledOption) {
+					unset($this->availableObjectTypes[$key]);
+				}
+			}
+			
+			if ($objectType->permissions) {
+				$hasPermission = false;
+				$permissions = explode(',', $objectType->permissions);
+				foreach ($permissions as $permission) {
+					if (WCF::getSession()->getPermission($permission)) {
+						$hasPermission = true;
+						break;
+					}
+				}
+				
+				if (!$hasPermission) {
+					unset($this->availableObjectTypes[$key]);
+				}
+			}
+		}
+		
+		if (empty($this->availableObjectTypes)) {
+			throw new IllegalLinkException();
+		}
+		
 		// get object type
 		if (isset($_REQUEST['objectType'])) {
-			$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.tagging.taggableObject', $_REQUEST['objectType']);
-			if ($this->objectType === null) {
+			$objectType = StringUtil::trim($_REQUEST['objectType']);
+			if (!isset($this->availableObjectTypes[$objectType])) {
 				throw new IllegalLinkException();
 			}
+			$this->objectType = $this->availableObjectTypes[$objectType];
 		}
 		else {
 			// use first object type
-			$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.tagging.taggableObject');
-			$this->objectType = reset($objectTypes);
+			$this->objectType = reset($this->availableObjectTypes);
 		}
 	}
 	
@@ -103,7 +148,7 @@ class TaggedPage extends MultipleLinkPage {
 		WCF::getTPL()->assign(array(
 			'tag' => $this->tag,
 			'tags' => $this->tagCloud->getTags(100),
-			'availableObjectTypes' => ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.tagging.taggableObject'),
+			'availableObjectTypes' => $this->availableObjectTypes,
 			'objectType' => $this->objectType->objectType,
 			'resultListTemplateName' => $this->objectType->getProcessor()->getTemplateName(),
 			'resultListApplication' => $this->objectType->getProcessor()->getApplication(),
