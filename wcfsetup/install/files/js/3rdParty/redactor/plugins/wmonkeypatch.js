@@ -475,7 +475,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			var $mpFormat = this.inline.format;
 			this.inline.format = (function(tag, type, value) {
 				if ($.browser.iOS) {
-					this.wmonkeypatch.restoreSelection();
+					this.wutil.restoreSelection();
 				}
 				
 				$mpFormat.call(this, tag, type, value);
@@ -484,7 +484,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			var $mpRemoveStyleRule = this.inline.removeStyleRule;
 			this.inline.removeStyleRule = (function(name) {
 				if ($.browser.iOS) {
-					this.wmonkeypatch.restoreSelection();
+					this.wuil.restoreSelection();
 				}
 				
 				$mpRemoveStyleRule.call(this, name);
