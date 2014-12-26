@@ -19,6 +19,11 @@ class PaidSubscriptionUserListPage extends SortablePage {
 	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription.user.list';
 	
 	/**
+	 * @see	\wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	
+	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
