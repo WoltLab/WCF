@@ -18,6 +18,10 @@ RedactorPlugins.wbbcode = function() {
 			var $identifier = this.$textarea.wcfIdentify();
 			
 			this.opts.initCallback = (function() {
+				if ($.browser.msie) {
+					this.$editor.addClass('msie');
+				}
+				
 				// use stored editor contents
 				var $content = $.trim(this.wutil.getOption('woltlab.originalValue'));
 				if ($content.length) {
@@ -1449,17 +1453,6 @@ RedactorPlugins.wbbcode = function() {
 				$editHeader.each((function(index, editHeader) {
 					var $editHeader = $(editHeader);
 					$editHeader.addClass('jsRedactorQuoteEdit').click($.proxy(this.wbbcode._observeQuotesClick, this));
-					
-					if ($.browser.msie) {
-						var $outerDiv = $editHeader.parent().parent();
-						$outerDiv.attr('contenteditable', false);
-						$outerDiv.children('div').attr('contenteditable', true);
-						
-						// prevent resize handles being displayed
-						$outerDiv.on('mscontrolselect', function(event) {
-							event.preventDefault();
-						});
-					}
 				}).bind(this));
 			}
 		},

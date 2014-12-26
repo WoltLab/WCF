@@ -164,6 +164,14 @@
 			}
 		}
 	}
+	
+	&.msie .quoteBox > .container {
+		/* resets 'hasLayout' causing IE to display resize handle and wonky editing behavior */
+		min-height: auto;
+		overflow: visible;
+		
+		.clearfix;
+	}
 }
 
 @media all and (min-width: 801px) {
