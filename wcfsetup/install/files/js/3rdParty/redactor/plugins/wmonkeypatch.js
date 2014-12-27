@@ -36,6 +36,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.wmonkeypatch.modal();
 			this.wmonkeypatch.paste();
 			this.wmonkeypatch.observe();
+			this.wmonkeypatch.selection();
 			this.wmonkeypatch.utils();
 			
 			// templates
@@ -787,6 +788,25 @@ RedactorPlugins.wmonkeypatch = function() {
 					
 					this.wutil.saveSelection();
 				}).bind(this), 20);
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'selection' module.
+		 * 
+		 *  - remove superflous empty text nodes caused by the selection markers (#2083)
+		 */
+		selection: function() {
+			// selection.removeMarkers
+			this.selection.removeMarkers = (function() {
+				this.$editor.find('span.redactor-selection-marker').each(function(index, marker) {
+					var $nextSibling = marker.nextSibling;
+					if ($nextSibling !== null && $nextSibling.nodeType === Element.TEXT_NODE && $nextSibling.length === 0) {
+						$($nextSibling).remove();
+					}
+					
+					$(marker).remove();
+				});
 			}).bind(this);
 		},
 		
