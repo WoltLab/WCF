@@ -797,16 +797,24 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - remove superflous empty text nodes caused by the selection markers (#2083)
 		 */
 		selection: function() {
+			var $removeEmptyTextNodes = function(index, marker) {
+				var $nextSibling = marker.nextSibling;
+				if ($nextSibling !== null && $nextSibling.nodeType === Node.TEXT_NODE && $nextSibling.length === 0) {
+					$($nextSibling).remove();
+				}
+				
+				$(marker).remove();	
+			};
+			
 			// selection.removeMarkers
 			this.selection.removeMarkers = (function() {
-				this.$editor.find('span.redactor-selection-marker').each(function(index, marker) {
-					var $nextSibling = marker.nextSibling;
-					if ($nextSibling !== null && $nextSibling.nodeType === Element.TEXT_NODE && $nextSibling.length === 0) {
-						$($nextSibling).remove();
-					}
-					
-					$(marker).remove();
-				});
+				this.$editor.find('span.redactor-selection-marker').each($removeEmptyTextNodes);
+			}).bind(this);
+			
+			// selection.removeNodesMarkers
+			this.selection.removeNodesMarkers = (function() {
+				$(document).find('span.redactor-nodes-marker').each($removeEmptyTextNodes);
+				this.$editor.find('span.redactor-nodes-marker').each($removeEmptyTextNodes);
 			}).bind(this);
 		},
 		
