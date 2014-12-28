@@ -33,6 +33,7 @@ class NoticeAddForm extends AbstractForm {
 	 */
 	public $availableCssClassNames = array(
 		'info',
+		'success',
 		'warning',
 		'error',
 		
