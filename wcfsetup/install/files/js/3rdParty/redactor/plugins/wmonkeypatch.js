@@ -504,7 +504,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				var $html = this.$editor.html();
 				if (this.utils.isEmpty($html)) {
 					var $cleared = false;
-					if (html.match(/^<(blockquote|div|p)/)) {
+					if (html.match(/^<(blockquote|div|p)/i)) {
 						// inserting a block-level element into a <p /> yields inconsistent behaviors in different browsers
 						// but since the HTML to be inserted is already a block element, we can place it directly in the root
 						this.$editor.empty();
@@ -521,6 +521,14 @@ RedactorPlugins.wmonkeypatch = function() {
 				else {
 					if (document.activeElement !== this.$editor[0]) {
 						this.wutil.restoreSelection();
+					}
+					
+					if (html.match(/^<(blockquote|div|p)/i) && getSelection().getRangeAt(0).collapsed) {
+						var $startContainer = getSelection().getRangeAt(0).startContainer;
+						if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b') {
+							// Safari breaks if inserting block-level elements into a <p /> w/ only a zero-width space
+							this.caret.setEnd($($startContainer.parentElement).html('<br />'));
+						}
 					}
 				}
 			}).bind(this);
