@@ -878,13 +878,13 @@ RedactorPlugins.wbbcode = function() {
 			var $cachedQuotes = [ ];
 			var $knownQuotes = [ ];
 			
-			var $parts = data.split(/(\[(?:\/quote|quote|quote='[^']*?'(?:,'[^']*?')?|quote="[^"]*?"(?:,"[^"]*?")?)\])/);
+			var $parts = data.split(/(\[(?:\/quote|quote|quote='[^']*?'(?:,'[^']*?')?|quote="[^"]*?"(?:,"[^"]*?")?)\])/i);
 			var $lostQuote = WCF.getUUID();
 			while (true) {
 				var $foundClosingTag = false;
 				for (var $i = 0; $i < $parts.length; $i++) {
 					var $part = $parts[$i];
-					if ($part === '[/quote]') {
+					if ($part.toLowerCase() === '[/quote]') {
 						$foundClosingTag = true;
 						
 						var $content = '';
@@ -893,7 +893,7 @@ RedactorPlugins.wbbcode = function() {
 						while ($previous.length) {
 							var $prev = $previous.pop();
 							$content = $prev + $content;
-							if ($prev.match(/^\[quote/)) {
+							if ($prev.match(/^\[quote/i)) {
 								$part = $content + $part;
 								
 								var $key = WCF.getUUID();
