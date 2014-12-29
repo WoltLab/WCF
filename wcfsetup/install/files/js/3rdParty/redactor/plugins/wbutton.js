@@ -121,7 +121,10 @@ RedactorPlugins.wbutton = function() {
 			var $button = this.button.add($buttonName, data.label);
 			this.button.addCallback($button, this.wbutton._insertBBCode);
 			
-			this._bbcodes[$buttonName] = data.name;
+			this._bbcodes[$buttonName] = {
+				name: data.name,
+				voidElement: (data.voidElement === true)
+			};
 			
 			// FontAwesome class name
 			if (data.icon.match(/^fa\-[a-z\-]+$/)) {
@@ -139,7 +142,7 @@ RedactorPlugins.wbutton = function() {
 		 * @param	string		buttonName
 		 */
 		_insertBBCode: function(buttonName) {
-			var $bbcode = this._bbcodes[buttonName];
+			var $bbcode = this._bbcodes[buttonName].name;
 			var $eventData = {
 				buttonName: buttonName,
 				cancel: false
@@ -162,7 +165,14 @@ RedactorPlugins.wbutton = function() {
 				}
 				else {
 					this.buffer.set();
-					this.insert.html('[' + $bbcode + ']' + $selectedHtml + this.selection.getMarkerAsHtml() + '[/' + $bbcode + ']', false);
+					
+					if (this._bbcodes[buttonName].voidElement) {
+						this.insert.html($selectedHtml + this.selection.getMarkerAsHtml() + '[' + $bbcode + ']', false);
+					}
+					else {
+						this.insert.html('[' + $bbcode + ']' + $selectedHtml + this.selection.getMarkerAsHtml() + '[/' + $bbcode + ']', false);
+					}
+					
 					this.selection.restore();
 				}
 			}
