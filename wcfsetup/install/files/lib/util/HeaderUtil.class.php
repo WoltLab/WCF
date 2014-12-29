@@ -33,7 +33,11 @@ final class HeaderUtil {
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$addDomain = (mb_strpos($application->cookieDomain, '.') === false || StringUtil::endsWith($application->cookieDomain, '.lan') || StringUtil::endsWith($application->cookieDomain, '.local') || (filter_var(current(explode(':', $application->cookieDomain)), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))) ? false : true;
+		
+		$isLocalDomain = (mb_strpos($application->cookieDomain, '.') === false) || StringUtil::endsWith($application->cookieDomain, '.lan') || StringUtil::endsWith($application->cookieDomain, '.local');
+		$isIPDomain = filter_var(current(explode(':', $application->cookieDomain)), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) || filter_var(current(explode(']:', str_replace("[", "", $application->cookieDomain))), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+		
+		$addDomain = ($isLocalDomain || $isIPDomain) ? false : true;
 		
 		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path='.$application->cookiePath.($addDomain ? '; domain='.$application->cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
 	}
