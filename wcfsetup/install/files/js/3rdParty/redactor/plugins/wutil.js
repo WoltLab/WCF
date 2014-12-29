@@ -600,6 +600,32 @@ RedactorPlugins.wutil = function() {
 		},
 		
 		/**
+		 * Inserting block-level elements into other blocks or inline elements can mess up the entire DOM,
+		 * this method tries to find the best insert location nearby.
+		 */
+		adjustSelectionForBlockElement: function() {
+			if (document.activeElement !== this.$editor[0]) {
+				this.wutil.restoreSelection();
+			}
+			
+			if (getSelection().getRangeAt(0).collapsed) {
+				var $startContainer = getSelection().getRangeAt(0).startContainer;
+				if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b' && $startContainer.parentElement.tagName === 'P' && $startContainer.parentElement.parentElement === this.$editor[0]) {
+					// caret position is fine
+					
+					return;
+				}
+				else {
+					// walk tree up until we find a direct children of the editor and place the caret afterwards
+					var $insertAfter = $($startContainer).parentsUntil(this.$editor[0]).last();
+					var $p = $('<p><br></p>').insertAfter($insertAfter);
+					
+					this.caret.setEnd($p);
+				}
+			}
+		},
+		
+		/**
 		 * Returns true if current selection is just a caret or false if selection spans content.
 		 * 
 		 * @return	boolean
