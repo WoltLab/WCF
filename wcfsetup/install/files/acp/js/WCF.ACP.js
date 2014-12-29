@@ -1629,7 +1629,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 		});
 		
 		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search') + '</span></a></li>');
-		$button.prependTo($('.contentNavigation:eq(0) > nav > ul')).click($.proxy(this._click, this));
+		$button.prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul')).click($.proxy(this._click, this));
 	},
 	
 	/**
