@@ -443,9 +443,7 @@ RedactorPlugins.wutil = function() {
 					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), (function(data) {
 						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), $uuid);
 						
-						setTimeout((function() {
-							$accept.trigger('click');
-						}).bind(this), 3000);
+						setTimeout(function() { $accept.trigger('click'); }, 3000);
 					}).bind(this));
 				break;
 				
