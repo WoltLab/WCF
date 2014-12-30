@@ -295,7 +295,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/&nbsp;/gi, " ");
 			
 			// [quote]
-			html = html.replace(/<blockquote([^>]+)>\n?<div[^>]+>\n?<header[^>]*?>[\s\S]*?<\/header>/gi, function(match, attributes, innerContent) {
+			html = html.replace(/<blockquote([^>]+)>\n?<header[^>]*?>[\s\S]*?<\/header>/gi, function(match, attributes, innerContent) {
 				var $quote;
 				var $author = '';
 				var $link = '';
@@ -1024,8 +1024,7 @@ RedactorPlugins.wbbcode = function() {
 							$link = WCF.String.escapeHTML($unquoteString($.trim($link)));
 						}
 						
-						var $quote = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">'
-							+ '<div class="container containerPadding">'
+						var $quote = '<blockquote class="quoteBox container containerPadding quoteBoxSimple" cite="' + $link + '" data-author="' + $author + '">'
 								+ '<header contenteditable="false">'
 									+ '<h3>'
 										+ self.wbbcode._buildQuoteHeader($author, $link)
@@ -1059,7 +1058,7 @@ RedactorPlugins.wbbcode = function() {
 						}
 						
 						$quote += $tmp;
-						$quote += '</div></blockquote>';
+						$quote += '</blockquote>';
 						
 						return $quote;
 					});
@@ -1438,7 +1437,7 @@ RedactorPlugins.wbbcode = function() {
 			// check for empty <blockquote
 			this.$editor.find('blockquote').each(function(index, blockquote) {
 				var $blockquote = $(blockquote);
-				if (!$blockquote.find('> div > header').length) {
+				if (!$blockquote.children('header').length) {
 					$blockquote.remove();
 				}
 			});
@@ -1483,7 +1482,7 @@ RedactorPlugins.wbbcode = function() {
 			$tooltip.appendTo(document.body);
 			
 			// prevent the cursor being placed in the quote header
-			$('<div contenteditable="true" />').appendTo(document.body).focus().remove();
+			this.selection.remove();
 		},
 		
 		/**

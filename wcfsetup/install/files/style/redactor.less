@@ -151,7 +151,7 @@
 	.quoteBox {
 		clear: none;
 		
-		> div > header {
+		> header {
 			position: relative;
 			
 			> .redactorQuoteEdit {
@@ -166,12 +166,9 @@
 		}
 	}
 	
-	&.msie .quoteBox > .container {
+	&.msie .quoteBox {
 		/* resets 'hasLayout' causing IE to display resize handle and wonky editing behavior */
 		min-height: auto;
-		overflow: visible;
-		
-		.clearfix;
 	}
 }
 

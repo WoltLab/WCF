@@ -219,75 +219,94 @@ html[dir='rtl'] {
 
 /* Quote Box */
 .quoteBox {
-	clear: both;
+	background-color: @wcfContentBackgroundColor;
+	min-height: 28px;
+	position: relative;
 	
-	> .container {
-		background-color: @wcfContentBackgroundColor;
-		min-height: 28px;
-		margin-bottom: @wcfGapTiny;
-		overflow: hidden;
-		position: relative;
+	.clearfix;
+	
+	&.quoteBoxSimple {
+		clear: both;
+		margin: (@wcfGapSmall + @wcfGapTiny) 0;
+		padding-left: 54px;
+	}
+	
+	> header {
+		padding-bottom: @wcfGapTiny;
+		border-bottom: 1px dotted @wcfContainerBorderColor;
+		margin-bottom: @wcfGapSmall;
 		
-		&.containerPadding {
-			padding-left: 54px;
+		.userSelectNone;
+		
+		> h3 {
+			font-weight: bold;
 		}
-		
-		> header {
-			padding-bottom: @wcfGapTiny;
-			border-bottom: 1px dotted @wcfContainerBorderColor;
-			margin-bottom: @wcfGapSmall;
-			
-			.userSelectNone;
-			
-			> h3 {
-				font-weight: bold;
-			}
+	}
+	
+	/* quote icon */
+	> div:first-of-type {
+		&::before {
+			content: "\f10d";
+			color: @wcfDimmedColor;
+			font-family: FontAwesome;
+			font-size: 28px;
+			position: absolute;
+			left: @wcfGapMedium;
+			top: @wcfGapSmall;
 		}
+	}
+	
+	/* nested quotes */
+	.quoteBox {
+		margin-left: 0;
+		padding-left: @wcfGapLarge;
+		min-height: 0;
 		
-		/* quote icon */
 		> div:first-of-type {
 			&::before {
-				content: "\f10d";
-				color: @wcfDimmedColor;
-				font-family: FontAwesome;
-				font-size: 28px;
-				position: absolute;
-				left: @wcfGapMedium;
-				top: @wcfGapSmall;
+				display: none;
 			}
 		}
 	}
+}
+
+.quoteBoxAuthor {
+	clear: both;
+	margin: (@wcfGapSmall + @wcfGapTiny) 0;
+	position: relative;
+	
+	.clearfix;
 	
 	> .quoteAuthorAvatar {
 		float: left;
 		
-		+ .container {
+		&::before,
+		&::after {
+			border-style: inset solid inset none;
+			border-width: 15px;
+			content: "";
+			display: block;
+			height: 0;
+			position: absolute;
+			top: 15px;
+			width: 0;
+		}
+		
+		&::before {
+			border-color: transparent @wcfContainerBorderColor transparent transparent;
+			left: 75px;
+			z-index: 100;
+		}
+		
+		&::after {
+			border-color: transparent @wcfContentBackgroundColor transparent transparent;
+			left: 76px;
+			z-index: 101;
+		}
+		
+		+ .quoteBox {
 			margin-left: 90px;
 			padding-left: @wcfGapLarge;
-			
-			&::before,
-			&::after {
-				border-style: inset solid inset none;
-				border-width: 15px;
-				content: "";
-				display: block;
-				height: 0;
-				position: absolute;
-				top: 15px;
-				width: 0;
-			}
-			
-			&::before {
-				border-color: transparent @wcfContainerBorderColor transparent transparent;
-				left: -15px;
-				z-index: 100;
-			}
-			
-			&::after {
-				border-color: transparent @wcfContentBackgroundColor transparent transparent;
-				left: -14px;
-				z-index: 101;
-			}
 			
 			/* hide quote icon */
 			> div:first-of-type {
@@ -303,60 +322,43 @@ html[dir='rtl'] {
 	}
 	
 	/* nested quotes */
-	.quoteBox {
+	.quoteBoxAuthor {
 		> .quoteAuthorAvatar {
 			display: none;
-		}
-		
-		> .container {
-			margin-left: 0;
-			padding-left: @wcfGapLarge;
-			min-height: 0;
 			
-			&::before,
-			&::after {
-				display: none;
-			}
-			
-			> div:first-of-type {
-				&::before {
-					display: none;
-				}
+			+ .quoteBox {
+				margin-left: 0;
 			}
 		}
 	}
 }
 
 @media only screen and (max-width: 800px) {
-	.quoteBox {
+	.quoteBoxAuthor {
 		> .quoteAuthorAvatar {
 			display: none;
 		}
+	}
+	
+	.quoteBox {
+		margin-left: 0 !important;
+		padding-left: 28px !important;
 		
-		> .container {
-			margin-left: 0 !important;
-			
-			&.containerPadding {
-				padding-left: 28px;
-			}
-			
-			> div:first-of-type {
-				&::before {
-					display: block !important;
-					font-size: 14px;
-					left: @wcfGapSmall;
-				}
+		> div:first-of-type {
+			&::before {
+				display: block !important;
+				font-size: 14px;
+				left: @wcfGapSmall;
 			}
 		}
 		
+		/* nested quotes */
 		.quoteBox {
-			> .container {
-				padding-left: @wcfGapSmall;
-				
-				> div:first-of-type {
-					&::before {
-						display: none !important;
-					}
+			padding-left: @wcfGapSmall !important;
+			
+			> div:first-of-type {
+				&::before {
+					display: none !important;
 				}
 			}
 		}

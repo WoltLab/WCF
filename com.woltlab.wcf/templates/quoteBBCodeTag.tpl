@@ -1,9 +1,8 @@
-<blockquote class="quoteBox"{if $quoteLink} cite="{$quoteLink}"{/if}>
-	{if $quoteAuthorObject}
-		<div class="quoteAuthorAvatar"><a href="{link controller='User' object=$quoteAuthorObject}{/link}" class="userLink framed" data-user-id="{@$quoteAuthorObject->userID}">{@$quoteAuthorObject->getAvatar()->getImageTag(64)}</a></div>
-	{/if}
-	
-	<div class="container containerPadding">
+{if $quoteAuthorObject}
+<div class="quoteBoxAuthor">
+	<div class="quoteAuthorAvatar"><a href="{link controller='User' object=$quoteAuthorObject}{/link}" class="userLink framed" data-user-id="{@$quoteAuthorObject->userID}">{@$quoteAuthorObject->getAvatar()->getImageTag(64)}</a></div>
+{/if}
+	<blockquote class="quoteBox container containerPadding{if !$quoteAuthorObject} quoteBoxSimple{/if}"{if $quoteLink} cite="{$quoteLink}"{/if}>
 		{if $quoteAuthor}
 			<header>
 				<h3>
@@ -19,5 +18,7 @@
 		<div>
 			{@$content}
 		</div>
-	</div>
-</blockquote>
+	</blockquote>
+{if $quoteAuthorObject}
+</div>
+{/if}
