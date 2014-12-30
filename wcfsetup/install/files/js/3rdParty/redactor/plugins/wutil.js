@@ -438,6 +438,15 @@ RedactorPlugins.wutil = function() {
 					$message = WCF.Language.get('wcf.message.autosave.restored');
 					
 					$autosaveNotice.addClass('redactorAutosaveNoticeRestore');
+					
+					var $uuid = '';
+					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), (function(data) {
+						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), $uuid);
+						
+						setTimeout((function() {
+							$accept.trigger('click');
+						}).bind(this), 3000);
+					}).bind(this));
 				break;
 				
 				case 'saved':
