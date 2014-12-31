@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\collapsible\content;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -246,5 +247,32 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			
 			WCF::getSession()->register('collapsedContent', $collapsedContent);
 		}
+	}
+	
+	/**
+	 * Deletes the saved states for a specific object or all objects of a
+	 * specific object type for all users.
+	 * 
+	 * @param	string		$objectType
+	 * @param	integer		$objectID
+	 */
+	public function resetAll($objectType, $objectID = null) {
+		$objectTypeID = $this->getObjectTypeID($objectType);
+		if (!$objectTypeID) {
+			throw new SystemException("Unknown collapsible object type '".$objectType."'");
+		}
+		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('objectTypeID = ?', array($objectTypeID));
+		if ($objectID) {
+			$conditionBuilder->add('objectID = ?', array($objectID));
+		}
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_user_collapsible_content
+			".$conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		
+		UserStorageHandler::getInstance()->resetAll('collapsedContent-'.$objectTypeID);
 	}
 }
