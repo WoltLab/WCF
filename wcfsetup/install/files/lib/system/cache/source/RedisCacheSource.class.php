@@ -124,12 +124,23 @@ class RedisCacheSource implements ICacheSource {
 		
 		// check if entry is parameterized
 		if (isset($parts[1])) {
+			$key = $this->getCacheName($parts[0]);
+			
 			// save parameterized cache entries as field in a hashset
-			$this->redis->hset($parts[0], $parts[1], serialize($value));
+			// saving in a hashset is safe as the smallest lifetime of its fields is set as TTL for the whole hashset
+			$this->redis->hset($key, $parts[1], serialize($value));
+			
+			$keyTTL = $this->redis->ttl($key);
+			$newTTL = $this->getTTL($maxLifetime);
+			
+			// set a new TTL if no TTL is set or if the current TTL is longer than the new one.
+			if ($keyTTL < 0 || $keyTTL > $newTTL) {
+				$this->redis->expire($key, $newTTL);
+			}
 		}
 		else {
 			// save normal cache entries as simple key
-			$this->redis->setex($cacheName, $this->getTTL($maxLifetime), serialize($value));
+			$this->redis->setex($this->getCacheName($cacheName), $this->getTTL($maxLifetime), serialize($value));
 		}
 	}
 	
