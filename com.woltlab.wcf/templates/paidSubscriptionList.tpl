@@ -71,7 +71,7 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$subscription->title|language}</h3>
-						<p>{$subscription->description|language}</p>
+						<p>{@$subscription->description|language|newlineToBreak}</p>
 						
 						<p class="marginTopTiny">{lang}wcf.paidSubscription.formattedCost{/lang}</p>
 						
@@ -98,7 +98,7 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$userSubscription->getSubscription()->title|language}</h3>
-						<p>{$userSubscription->getSubscription()->description|language}</p>
+						<p>{@$userSubscription->getSubscription()->description|language|newlineToBreak}</p>
 						
 						{if $userSubscription->endDate}
 							<p>{lang}wcf.paidSubscription.expires{/lang}: {@$userSubscription->endDate|time}</p>
