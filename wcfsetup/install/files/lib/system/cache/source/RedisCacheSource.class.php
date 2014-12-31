@@ -66,7 +66,22 @@ class RedisCacheSource implements ICacheSource {
 	 * @see	\wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush($cacheName, $useWildcard) {
+		$parts = explode('-', $cacheName, 2);
 		
+		// check if the key is saved in a hashset
+		if (isset($parts[1])) {
+			if ($useWildcard) {
+				// delete the complete hashset
+				$this->redis->del($this->getCacheName($parts[0]));
+			}
+			else {
+				// delete the specified key from the hashset
+				$this->redis->hdel($this->getCacheName($parts[0]), $parts[1]);
+			}
+		}
+		else {
+			$this->redis->del($this->getCacheName($cacheName));
+		}
 	}
 	
 	/**
