@@ -113,4 +113,24 @@ class RedisCacheSource implements ICacheSource {
 			$this->redis->setex($cacheName, $this->getTTL($maxLifetime), serialize($value));
 		}
 	}
+	
+	/**
+	 * Returns the name for the given cache name in respect to flush count.
+	 * 
+	 * @param	string		$cacheName
+	 * @return	string
+	 */
+	protected function getCacheName($cacheName) {
+		$flush = $this->redis->get('_flush');
+		
+		// create flush counter if it does not exist
+		if ($flush === false) {
+			$this->redis->setnx('_flush', TIME_NOW);
+			$this->redis->incr('_flush');
+			
+			$flush = $this->redis->get('_flush');
+		}
+		
+		return $flush.':'.$cacheName;
+	}
 }
