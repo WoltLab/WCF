@@ -158,7 +158,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			}
 			
 			// reset storage
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID, 1);
+			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID);
 		}
 		else {
 			$collapsedContent = WCF::getSession()->getVar('collapsedContent');
@@ -195,7 +195,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			));
 			
 			// reset storage
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID, 1);
+			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID);
 		}
 		else {
 			$collapsedContent = WCF::getSession()->getVar('collapsedContent');
@@ -232,7 +232,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			));
 			
 			// reset storage
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID, 1);
+			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID);
 		}
 		else {
 			$collapsedContent = WCF::getSession()->getVar('collapsedContent');
