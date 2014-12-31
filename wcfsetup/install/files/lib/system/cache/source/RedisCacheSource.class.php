@@ -99,7 +99,28 @@ class RedisCacheSource implements ICacheSource {
 	 * @see	\wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get($cacheName, $maxLifetime) {
+		$parts = explode('-', $cacheName, 2);
 		
+		if (isset($parts[1])) {
+			$value = $this->redis->hget($this->getCacheName($parts[0]), $parts[1]);
+		}
+		else {
+			$value = $this->redis->get($this->getCacheName($cacheName));
+		}
+		
+		// check if the key exist
+		if ($value === false) {
+			return null;
+		}
+		
+		$value = @unserialize($value);
+		
+		// check if value is valid
+		if ($value === false) {
+			return null;
+		}
+		
+		return $value;
 	}
 	
 	/**
