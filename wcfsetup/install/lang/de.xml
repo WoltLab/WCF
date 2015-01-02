@@ -1771,13 +1771,13 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.code.filename.description"><![CDATA[Optional: Legen Sie einen anzuzeigenden Dateinamen fest.]]></item>
 		<item name="wcf.bbcode.code.highlighter"><![CDATA[Syntax-Hervorherbung]]></item>
 		<item name="wcf.bbcode.code.highlighter.description"><![CDATA[Die farbliche Hervorherbung wird im Editor nicht angezeigt.]]></item>
-		<item name="wcf.bbcode.code.highlighter.none"><![CDATA[(Keine Hervorherbung)]]></item>
+		<item name="wcf.bbcode.code.highlighter.none"><![CDATA[(Keine Hervorhebung)]]></item>
 		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML-Quellcode]]></item>
 		<item name="wcf.bbcode.code.insert"><![CDATA[Quellcode einfügen]]></item>
 		<item name="wcf.bbcode.code.java.title"><![CDATA[Java-Quellcode]]></item>
 		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript-Quellcode]]></item>
 		<item name="wcf.bbcode.code.lineNumber"><![CDATA[Start-Zeilennummer]]></item>
-		<item name="wcf.bbcode.code.lineNumber.description"><![CDATA[Optional: Legen Sie den Wert fest ab dem die Zeilennummierung startet.]]></item>
+		<item name="wcf.bbcode.code.lineNumber.description"><![CDATA[Optional: Legen Sie den Wert fest, ab dem die Zeilennummierung startet.]]></item>
 		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl-Quellcode]]></item>
 		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP-Quellcode]]></item>
 		<item name="wcf.bbcode.code.plain.title"><![CDATA[Quellcode]]></item>

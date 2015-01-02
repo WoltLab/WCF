@@ -243,7 +243,7 @@ RedactorPlugins.wbbcode = function() {
 				var $uuid = WCF.getUUID();
 				$cachedCodeListings[$uuid] = {
 					codeContent: codeContent.replace(/<li>/g, '').replace(/<\/li>/g, '\n'),
-					filename: $filename,
+					filename: $filename.replace(/['"]/g, ''),
 					highlighter: ($highlighter === 'plain' ? '' : $highlighter),
 					lineNumber: (lineNumber > 1 ? lineNumber : 0)
 				};
@@ -1804,7 +1804,7 @@ RedactorPlugins.wbbcode = function() {
 					var $highlighter = $('#redactorCodeHighlighter');
 					var $lineNumber = $('#redactorCodeLineNumber');
 					
-					var $codeFilename = $.trim($filename.val());
+					var $codeFilename = $.trim($filename.val().replace(/['"]/g, ''));
 					var $bbcode = '[code=' + $highlighter.val() + ',' + $lineNumber.val() + ($codeFilename.length ? ",'" + $codeFilename + "'" : '') + ']';
 					$bbcode += $codeBox.val().replace(/^\n+/, '').replace(/\n+$/, '').replace(/^$/, '\n');
 					$bbcode += '[/code]';
@@ -1852,7 +1852,7 @@ RedactorPlugins.wbbcode = function() {
 					codeBox.attr('data-highlighter', $selectedHighlighter);
 					
 					var $headline = __REDACTOR_CODE_HIGHLIGHTERS[$selectedHighlighter];
-					var $codeFilename = $.trim($filename.val());
+					var $codeFilename = $.trim($filename.val().replace(/['"]/g, ''));
 					if ($codeFilename) {
 						$headline += ': ' + WCF.String.escapeHTML($codeFilename);
 						codeBox.data('filename', $codeFilename);
