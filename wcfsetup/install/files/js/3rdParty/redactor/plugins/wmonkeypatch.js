@@ -887,6 +887,50 @@ RedactorPlugins.wmonkeypatch = function() {
 					+ '</dl>'
 				+ '</fieldset>';
 			
+			// template: code
+			var $highlighters = '';
+			$.each(__REDACTOR_CODE_HIGHLIGHTERS, function(k, v) {
+				if (k === 'plain') return true;
+				
+				$highlighters += '<option value="' + k + '">' + v + '</option>';
+			});
+			
+			this.opts.modal.code =
+				'<fieldset>'
+					+ '<legend>' + WCF.Language.get('wcf.bbcode.code.settings') + '</legend>'
+					+ '<dl>'
+						+ '<dt><label for="redactorCodeHighlighter">' + WCF.Language.get('wcf.bbcode.code.highlighter') + '</label></dt>'
+						+ '<dd>'
+							+ '<select id="redactorCodeHighlighter">'
+								+ '<option value="">' + WCF.Language.get('wcf.bbcode.code.highlighter.none') + '</option>'
+								+ $highlighters
+							+ '</select>'
+							+ '<small>' + WCF.Language.get('wcf.bbcode.code.highlighter.description') + '</small>'
+						+ '</dd>'
+					+ '</dl>'
+					+ '<dl>'
+						+ '<dt><label for="redactorCodeLineNumber">' + WCF.Language.get('wcf.bbcode.code.lineNumber') + '</label></dt>'
+						+ '<dd>'
+							+ '<input type="number" id="redactorCodeLineNumber" min="1" max="99999" value="1" />'
+							+ '<small>' + WCF.Language.get('wcf.bbcode.code.lineNumber.description') + '</small>'
+						+ '</dd>'
+					+ '</dl>'
+					+ '<dl>'
+						+ '<dt><label for="redactorCodeFilename">' + WCF.Language.get('wcf.bbcode.code.filename') + '</label></dt>'
+						+ '<dd>'
+							+ '<input type="text" id="redactorCodeFilename" value="" />'
+							+ '<small>' + WCF.Language.get('wcf.bbcode.code.filename.description') + '</small>'
+						+ '</dd>'
+					+ '</dl>'
+				+ '</fieldset>'
+				+ '<fieldset>'
+					+ '<legend>' + WCF.Language.get('wcf.bbcode.code') + '</legend>'
+					+ '<dl class="wide">'
+						+ '<dt></dt>'
+						+ '<dd><textarea id="redactorCodeBox" class="long" rows="12" /></dd>'
+					+ '</dl>'
+				+ '</fieldset>';
+			
 			// template: table
 			this.opts.modal.table =
 				'<fieldset id="redactor-modal-table-insert">'

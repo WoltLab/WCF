@@ -74,6 +74,13 @@ RedactorPlugins.wbbcode = function() {
 				this.wbbcode._handleInsertQuote();
 			}, this));
 			
+			// handle 'insert code' button
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'insertBBCode_code_' + $identifier, $.proxy(function(data) {
+				data.cancel = true;
+				
+				this.wbbcode._handleInsertCode(null, true);
+			}, this));
+			
 			// handle keydown
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + $identifier, $.proxy(this.wbbcode._keydownCallback, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keyup_' + $identifier, $.proxy(this.wbbcode._keyupCallback, this));
@@ -106,9 +113,10 @@ RedactorPlugins.wbbcode = function() {
 					this.$textarea.val(this.wbbcode.convertToHtml(this.$textarea.val()));
 					this.code.offset = this.$textarea.val().length;
 					this.code.showVisual();
-					this.wbbcode._fixQuotes();
+					this.wbbcode.fixBlockLevelElements();
 					this.wutil.selectionEndOfEditor();
-					this.wbbcode._observeQuotes();
+					this.wbbcode.observeQuotes();
+					this.wbbcode.observeCodeListings();
 					
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');
 					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
@@ -220,24 +228,31 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/&mdash;/gi, '\u2014');
 			html = html.replace(/&dash;/gi, '\u2010');
 			
-			// preserve newlines in <pre> tags
-			var $cachedPreTags = { };
-			html = html.replace(/<pre>[\s\S]+?<\/pre>/g, function(match) {
+			// preserve code listings
+			var $cachedCodeListings = { };
+			html = html.replace(/<div class="codeBox[^"]+"(.*?)>\n*<div>[\s\S]+?<ol start="(\d+)">([\s\S]+?)<\/ol>\n*<\/div>\n*<\/div>/g, function(match, codeBoxAttributes, lineNumber, codeContent) {
+				var $highlighter = '';
+				var $filename = '';
+				if (codeBoxAttributes.match(/data-highlighter="([a-zA-Z]+)"/)) {
+					$highlighter = RegExp.$1;
+				}
+				if (codeBoxAttributes.match(/data-filename="([^"]+)"/)) {
+					$filename = $.trim(RegExp.$1);
+				}
+				
 				var $uuid = WCF.getUUID();
-				$cachedPreTags[$uuid] = match;
+				$cachedCodeListings[$uuid] = {
+					codeContent: codeContent.replace(/<li>/g, '').replace(/<\/li>/g, '\n'),
+					filename: $filename,
+					highlighter: ($highlighter === 'plain' ? '' : $highlighter),
+					lineNumber: (lineNumber > 1 ? lineNumber : 0)
+				};
 				
 				return '@@@' + $uuid + '@@@';
 			});
 			
 			// drop all new lines
 			html = html.replace(/\r?\n/g, '');
-			
-			// restore <pre> tags
-			if ($.getLength($cachedPreTags)) {
-				$.each($cachedPreTags, function(key, value) {
-					html = html.replace('@@@' + key + '@@@', value);
-				});
-			}
 			
 			// remove empty links
 			html = html.replace(/<a[^>]*?><\/a>/g, '');
@@ -589,6 +604,57 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
+			// restore code listings
+			if ($.getLength($cachedCodeListings)) {
+				$.each($cachedCodeListings, function(uuid, listing) {
+					var $count = 0;
+					if (listing.highlighter) $count++;
+					if (listing.lineNumber) $count++;
+					if (listing.filename) $count++;
+					
+					var $attributes = '';
+					switch ($count) {
+						case 1:
+							if (listing.highlighter) {
+								$attributes = listing.highlighter;
+							}
+							else if (listing.filename) {
+								$attributes = "'" + listing.filename + "'";
+							}
+							else {
+								$attributes = listing.lineNumber;
+							}
+						break;
+						
+						case 2:
+							if (listing.highlighter) {
+								$attributes = listing.highlighter;
+							}
+							
+							if (listing.lineNumber) {
+								if ($attributes.length) $attributes += ',';
+								
+								$attributes += listing.lineNumber;
+							}
+							
+							if (listing.filename) {
+								if ($attributes.length) $attributes += ',';
+								
+								$attributes += "'" + listing.filename + "'";
+							}
+						break;
+						
+						case 3:
+							$attributes = listing.highlighter + ',' + listing.lineNumber + ",'" + listing.filename + "'";
+						break;
+					}
+					
+					var $bbcode = '[code' + ($attributes.length ? '=' + $attributes : '') + ']' + listing.codeContent + '[/code]\n';
+					
+					html = html.replace(new RegExp('@@@' + uuid + '@@@', 'g'), $bbcode);
+				});
+			}
+			
 			// Restore <, > and &
 			html = html.replace(/&lt;/g, '<');
 			html = html.replace(/&gt;/g, '>');
@@ -598,34 +664,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/%28/g, '(');
 			html = html.replace(/%29/g, ')');
 			
-			// Restore %20
-			//html = html.replace(/%20/g, ' ');
-			
-			// cache source code tags to preserve leading tabs
-			/*var $cachedCodes = { };
-			for (var $i = 0, $length = __REDACTOR_SOURCE_BBCODES.length; $i < $length; $i++) {
-				var $bbcode = __REDACTOR_SOURCE_BBCODES[$i];
-				
-				var $regExp = new RegExp('\\[' + $bbcode + '([\\S\\s]+?)\\[\\/' + $bbcode + '\\]', 'gi');
-				html = html.replace($regExp, function(match) {
-					var $key = match.hashCode();
-					$cachedCodes[$key] = match.replace(/\$/g, '$$$$');
-					return '@@' + $key + '@@';
-				});
-			}*/
-			
-			// ensure that [/code] is always followed by at least one empty line
-			html = html.replace(/\[\/code\]\n\n?/g, '[/code]\n\n');
-			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', { html: html });
-			
-			// insert codes
-			/*if ($.getLength($cachedCodes)) {
-				for (var $key in $cachedCodes) {
-					var $regex = new RegExp('@@' + $key + '@@', 'g');
-					html = html.replace($regex, $cachedCodes[$key]);
-				}
-			}*/
 			
 			// remove all leading and trailing whitespaces, but add one empty line at the end
 			html = $.trim(html);
@@ -1083,16 +1122,87 @@ RedactorPlugins.wbbcode = function() {
 					// [tt]
 					//$value = $value.replace(/^\[tt\](.*)\[\/tt\]/, '<span class="inlineCode">$1</span>');
 					
-					// preserve leading whitespaces in [code] tags
-					$value = $value.replace(/^\[code[^\]]*\][\S\s]*\[\/code\]$/, '<pre>$&</pre>');
+					// [code]
+					$value = $value.replace(/^\[code([^\]]*)\]([\S\s]*)\[\/code\]$/, function(matches, parameters, content) {
+						var $highlighter = 'plain';
+						var $lineNumber = 0;
+						var $filename = '';
+						
+						if (parameters) {
+							parameters = parameters.substring(1);
+							parameters = parameters.split(',');
+							
+							var $isNumber = function(string) { return string.match(/^\d+$/); };
+							var $isFilename = function(string) { return (string.indexOf('.') !== -1); };
+							var $isHighlighter = function(string) { return  (__REDACTOR_CODE_HIGHLIGHTERS[parameters[0]] !== undefined); };
+							
+							var $unquoteFilename = function(filename) {
+								return filename.replace(/^(["'])(.*)\1$/, '$2');
+							};
+							
+							switch (parameters.length) {
+								case 1:
+									if ($isNumber(parameters[0])) {
+										$lineNumber = (parseInt(parameters[0]) > 1) ? parameters[0] : 0;
+									}
+									else if ($isFilename(parameters[0])) {
+										$filename = $unquoteFilename(parameters[0]);
+									}
+									else if ($isHighlighter(parameters[0])) {
+										$highlighter = parameters[0];
+									}
+								break;
+								
+								case 2:
+									if ($isNumber(parameters[0])) {
+										$lineNumber = (parseInt(parameters[0]) > 1) ? parameters[0] : 0;
+										
+										if ($isFilename(parameters[1])) {
+											$filename = $unquoteFilename(parameters[1]);
+										}
+										else if ($isHighlighter(parameters[1])) {
+											$highlighter = parameters[1];
+										}
+									}
+									else {
+										if ($isHighlighter(parameters[0])) $highlighter = parameters[0];
+										if ($isFilename(parameters[1])) $filename = $unquoteFilename(parameters[1]);
+									}
+								break;
+								
+								case 3:
+									if ($isHighlighter(parameters[0])) $highlighter = parameters[0];
+									if ($isNumber(parameters[1])) $lineNumber = parameters[1];
+									if ($isFilename(parameters[2])) $filename = $unquoteFilename(parameters[2]);
+								break;
+							}
+						}
+						
+						content = content.replace(/^\n+/, '').replace(/\n+$/, '').split(/\n/);
+						var $lines = '';
+						for (var $i = 0; $i < content.length; $i++) {
+							$lines += '<li>' + content[$i] + '</li>';
+						}
+						
+						return '<div class="codeBox container" contenteditable="false" data-highlighter="' + $highlighter + '"' + ($filename ? ' data-filename="' + WCF.String.escapeHTML($filename) + '"' : '' ) + '>'
+							+ '<div>'
+								+ '<div>'
+									+ '<h3>' + __REDACTOR_CODE_HIGHLIGHTERS[$highlighter] + ($filename ? ': ' + WCF.String.escapeHTML($filename) : '') + '</h3>'
+								+ '</div>'
+								+ '<ol start="' + ($lineNumber > 1 ? $lineNumber : 1) + '">'
+									+ $lines
+								+ '</ol>'
+							+ '</div>'
+						+ '</div>';
+					});
 					
 					data = data.replace($regex, $value);
 				}
 			}
 			
-			// remove <p> wrapping a quote
-			data = data.replace(/<p><blockquote/g, '<blockquote');
-			data = data.replace(/<\/blockquote><\/p>/g, '</blockquote>');
+			// remove <p> wrapping a quote or a div
+			data = data.replace(/<p><(blockquote|div)/g, '<$1');
+			data = data.replace(/<\/(blockquote|div)><\/p>/g, '</$1>');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
@@ -1114,7 +1224,7 @@ RedactorPlugins.wbbcode = function() {
 				5: 12,
 				6: 10
 			};
-			
+			console.debug(html);
 			// replace <h1> ... </h6> tags
 			html = html.replace(/<h([1-6])[^>]+>/g, function(match, level) {
 				return '[size=' + $levels[level] + ']';
@@ -1142,6 +1252,7 @@ RedactorPlugins.wbbcode = function() {
 		 * @return	string
 		 */
 		_pasteCallback: function(html) {
+			console.debug(html);
 			// reduce successive <br> by one
 			//html = html.replace(/<br[^>]*>(<br[^>]*>)+/g, '$1');
 			
@@ -1446,7 +1557,7 @@ RedactorPlugins.wbbcode = function() {
 		/**
 		 * Initializes source editing for quotes.
 		 */
-		_observeQuotes: function() {
+		observeQuotes: function() {
 			var $editHeader = this.$editor.find('.redactorQuoteEdit:not(.jsRedactorQuoteEdit)');
 			if ($editHeader.length) {
 				$editHeader.each((function(index, editHeader) {
@@ -1486,6 +1597,19 @@ RedactorPlugins.wbbcode = function() {
 		},
 		
 		/**
+		 * Initializes editing for code listings.
+		 */
+		observeCodeListings: function() {
+			this.$editor.find('.codeBox:not(.jsRedactorCodeBox)').each((function(index, codeBox) {
+				var $codeBox = $(codeBox).addClass('jsRedactorCodeBox');
+				var $editBox = $('<div class="redactorEditCodeBox"><div>' + WCF.Language.get('wcf.bbcode.code.edit') + '</div></div>').insertAfter($codeBox.find('> div > div > h3'));
+				$editBox.click((function() {
+					this.wbbcode._handleInsertCode($codeBox, false);
+				}).bind(this));
+			}).bind(this));
+		},
+		
+		/**
 		 * Opens the quote source edit dialog.
 		 * 
 		 * @param	jQuery		quote
@@ -1512,7 +1636,7 @@ RedactorPlugins.wbbcode = function() {
 					if ($quote !== null) {
 						// set caret inside the quote
 						if (!$html.length) {
-							this.caret.setStart($quote.find('> div > div')[0]);
+							this.caret.setStart($quote.find('> div')[0]);
 						}
 					}
 					
@@ -1591,7 +1715,7 @@ RedactorPlugins.wbbcode = function() {
 				$quote = this.$editor.find('#' + $id);
 				if ($quote.length) {
 					// quote may be empty if $innerHTML was empty, fix it
-					var $inner = $quote.find('> div > div');
+					var $inner = $quote.find('> div');
 					if ($inner.length == 1) {
 						if ($inner[0].innerHTML === '') {
 							$inner[0].innerHTML = this.opts.invisibleSpace;
@@ -1610,8 +1734,8 @@ RedactorPlugins.wbbcode = function() {
 					this.wutil.setCaretAfter($quote[0]);
 				}
 				
-				this.wbbcode._observeQuotes();
-				this.wbbcode._fixQuotes();
+				this.wbbcode.observeQuotes();
+				this.wbbcode.fixBlockLevelElements();
 				
 				this.$toolbar.find('a.re-__wcf_quote').removeClass('redactor-button-disabled');
 			}
@@ -1658,13 +1782,116 @@ RedactorPlugins.wbbcode = function() {
 		},
 		
 		/**
-		 * Ensures that there is a paragraph in front of each quotes because you cannot click in between two of them.
+		 * Opens the code edit dialog.
+		 * 
+		 * @param	jQuery		codeBox
+		 * @param	boolean		isInsert
 		 */
-		_fixQuotes: function() {
+		_handleInsertCode: function(codeBox, isInsert) {
+			this.modal.load('code', WCF.Language.get('wcf.bbcode.code.' + (isInsert ? 'insert' : 'edit')), 400);
+			
+			var $button = this.modal.createActionButton(this.lang.get('save'));
+			
+			if (isInsert) {
+				this.selection.save();
+				this.modal.show();
+				
+				$('#redactorCodeBox').focus();
+				
+				$button.click($.proxy(function() {
+					var $codeBox = $('#redactorCodeBox');
+					var $filename = $('#redactorCodeFilename');
+					var $highlighter = $('#redactorCodeHighlighter');
+					var $lineNumber = $('#redactorCodeLineNumber');
+					
+					var $codeFilename = $.trim($filename.val());
+					var $bbcode = '[code=' + $highlighter.val() + ',' + $lineNumber.val() + ($codeFilename.length ? ",'" + $codeFilename + "'" : '') + ']';
+					$bbcode += $codeBox.val().replace(/^\n+/, '').replace(/\n+$/, '').replace(/^$/, '\n');
+					$bbcode += '[/code]';
+					
+					this.wutil.adjustSelectionForBlockElement();
+					this.wutil.saveSelection();
+					var $html = this.wbbcode.convertToHtml($bbcode);
+					this.insert.html($html, false);
+					
+					// set caret after code listing
+					var $codeBox = this.$editor.find('.codeBox:not(.jsRedactorCodeBox)');
+					
+					this.wbbcode.observeCodeListings();
+					this.wbbcode.fixBlockLevelElements();
+					
+					// document.execCommand('insertHTML') seems to drop 'contenteditable="false"' for root element
+					$codeBox.attr('contenteditable', 'false');
+					this.caret.setAfter($codeBox);
+					
+					this.modal.close();
+				}, this));
+			}
+			else {
+				this.modal.show();
+				
+				var $codeBox = $('#redactorCodeBox').focus();
+				var $filename = $('#redactorCodeFilename');
+				var $highlighter = $('#redactorCodeHighlighter');
+				var $lineNumber = $('#redactorCodeLineNumber');
+				
+				$highlighter.val(codeBox.data('highlighter'));
+				$filename.val(codeBox.data('filename') || '');
+				var $list = codeBox.find('> div > ol');
+				$lineNumber.val(parseInt($list.prop('start')));
+				
+				var $code = '';
+				$list.children('li').each(function(index, listItem) {
+					$code += $(listItem).text() + "\n";
+				});
+				$codeBox.val($code.replace(/^\n+/, '').replace(/\n+$/, ''));
+				
+				$button.click($.proxy(function() {
+					var $selectedHighlighter = $highlighter.val();
+					codeBox.data('highlighter', $selectedHighlighter);
+					codeBox.attr('data-highlighter', $selectedHighlighter);
+					
+					var $headline = __REDACTOR_CODE_HIGHLIGHTERS[$selectedHighlighter];
+					var $codeFilename = $.trim($filename.val());
+					if ($codeFilename) {
+						$headline += ': ' + WCF.String.escapeHTML($codeFilename);
+						codeBox.data('filename', $codeFilename);
+						codeBox.attr('data-filename', $codeFilename);
+					}
+					else {
+						codeBox.removeAttr('data-filename');
+						codeBox.removeData('filename');
+					}
+					
+					codeBox.data('highlighter', $highlighter.val());
+					codeBox.find('> div > div > h3').html($headline);
+					
+					var $list = codeBox.find('> div > ol').empty();
+					var $start = parseInt($lineNumber.val());
+					$list.prop('start', ($start > 1 ? $start : 1));
+					
+					var $code = $codeBox.val().replace(/^\n+/, '').replace(/\n+$/, '').replace(/^$/, '\n');
+					$code = $code.split('\n');
+					console.debug($code);
+					var $codeContent = '';
+					for (var $i = 0; $i < $code.length; $i++) {
+						$codeContent += '<li>' + $code[$i] + '</li>';
+					}
+					$list.append($($codeContent));
+					
+					this.modal.close();
+				}, this));
+			}
+		},
+		
+		/**
+		 * Ensures that there is a paragraph in front of each block-level element because you cannot click in between two of them.
+		 */
+		fixBlockLevelElements: function() {
 			var $addSpacing = (function(referenceElement, target) {
 				var $tagName = 'P';
 				
-				// fix reference element if blockquote is within a quote (wrapped by <div>...</div>)
+				// fix reference element if a block element is within a quote (wrapped by <div>...</div>)
 				if (referenceElement.parentElement.tagName === 'DIV' && referenceElement.parentElement !== this.$editor[0]) {
 					referenceElement = referenceElement.parentElement;
 					$tagName = 'DIV';
@@ -1675,16 +1902,16 @@ RedactorPlugins.wbbcode = function() {
 					$('<' + $tagName + '>' + this.opts.invisibleSpace + '</' + $tagName + '>')[(target === 'previousElementSibling' ? 'insertBefore' : 'insertAfter')](referenceElement);
 				}
 				else if (referenceElement.previousElementSibling.tagName === $tagName) {
-					// previous/next element is empty or contains an empty <p></p> (blockquote is a direct children of the editor)
+					// previous/next element is empty or contains an empty <p></p> (block element is a direct children of the editor)
 					if (!referenceElement[target].innerHTML.length || referenceElement[target].innerHTML.toLowerCase() === '<p></p>') {
 						$(referenceElement[target]).html(this.opts.invisibleSpace);
 					}
 				}
 			}).bind(this);
 			
-			this.$editor.find('blockquote').each((function(index, blockquote) {
-				$addSpacing(blockquote, 'previousElementSibling');
-				$addSpacing(blockquote, 'nextElementSibling');
+			this.$editor.find('blockquote, .codeBox').each((function(index, blockElement) {
+				$addSpacing(blockElement, 'previousElementSibling');
+				$addSpacing(blockElement, 'nextElementSibling');
 			}).bind(this));
 		}
 	};

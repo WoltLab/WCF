@@ -116,4 +116,13 @@ class BBCodeHandler extends SingletonFactory {
 		
 		return $this->sourceBBCodes;
 	}
+	
+	/**
+	 * Returns a list of known highlighters.
+	 * 
+	 * @return	array<string>
+	 */
+	public function getHighlighters() {
+		return BBCodeCache::getInstance()->getHighlighters();
+	}
 }

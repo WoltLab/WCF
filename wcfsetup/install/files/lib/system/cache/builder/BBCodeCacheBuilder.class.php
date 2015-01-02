@@ -19,7 +19,8 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
-		$data = $attributes = array();
+		$attributes = array();
+		$data = array('bbcodes' => array(), 'highlighters' => array());
 		
 		// get attributes
 		$sql = "SELECT		attribute.*, bbcode.bbcodeTag
@@ -44,7 +45,17 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder {
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			$row['attributes'] = (isset($attributes[$row['bbcodeTag']]) ? $attributes[$row['bbcodeTag']] : array());
-			$data[$row['bbcodeTag']] = new BBCode(null, $row);
+			$data['bbcodes'][$row['bbcodeTag']] = new BBCode(null, $row);
+		}
+		
+		// get code highlighters
+		$highlighters = glob(WCF_DIR . 'lib/system/bbcode/highlighter/*.class.php');
+		if (is_array($highlighters)) {
+			foreach ($highlighters as $highlighter) {
+				if (preg_match('~\/([a-zA-Z]+)Highlighter\.class\.php$~', $highlighter, $matches)) {
+					$data['highlighters'][] = strtolower($matches[1]);
+				}
+			}
 		}
 		
 		return $data;

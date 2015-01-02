@@ -109,6 +109,13 @@ class LinkHandler extends SingletonFactory {
 			}
 			unset($parameters['forceWCF']);
 		}
+		
+		// DEBUG ONLY
+		if ($_SERVER['REMOTE_ADDR'] == '5.28.86.103') {
+			$parameters['encodeTitle'] = true;
+		}
+		// /DEBUG ONLY
+		
 		if (isset($parameters['encodeTitle'])) {
 			$encodeTitle = $parameters['encodeTitle'];
 			unset($parameters['encodeTitle']);

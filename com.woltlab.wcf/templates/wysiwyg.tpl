@@ -3,6 +3,7 @@ var __REDACTOR_ICON_PATH = '{@$__wcf->getPath()}icon/';
 var __REDACTOR_BUTTONS = [ {implode from=$__wcf->getBBCodeHandler()->getButtonBBCodes() item=__bbcode}{ icon: '{$__bbcode->wysiwygIcon}', label: '{$__bbcode->buttonLabel|language}', name: '{$__bbcode->bbcodeTag}' }{/implode} ];
 var __REDACTOR_SMILIES = { {implode from=$__wcf->getSmileyCache()->getCategorySmilies() item=smiley}'{@$smiley->smileyCode|encodeJS}': '{@$smiley->getURL()|encodeJS}'{/implode} };
 var __REDACTOR_SOURCE_BBCODES = [ {implode from=$__wcf->getBBCodeHandler()->getSourceBBCodes() item=__bbcode}'{@$__bbcode->bbcodeTag}'{/implode} ];
+var __REDACTOR_CODE_HIGHLIGHTERS = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{@$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
 </script>
 <script data-relocate="true">
 $(function() {
@@ -17,6 +18,17 @@ $(function() {
 		'wcf.bbcode.button.superscript': '{lang}wcf.bbcode.button.superscript{/lang}',
 		'wcf.bbcode.button.toggleBBCode': '{lang}wcf.bbcode.button.toggleBBCode{/lang}',
 		'wcf.bbcode.button.toggleHTML': '{lang}wcf.bbcode.button.toggleHTML{/lang}',
+		'wcf.bbcode.code': '{lang}wcf.bbcode.code{/lang}',
+		'wcf.bbcode.code.edit': '{lang}wcf.bbcode.code.edit{/lang}',
+		'wcf.bbcode.code.filename': '{lang}wcf.bbcode.code.filename{/lang}',
+		'wcf.bbcode.code.filename.description': '{lang}wcf.bbcode.code.filename.description{/lang}',
+		'wcf.bbcode.code.highlighter': '{lang}wcf.bbcode.code.highlighter{/lang}',
+		'wcf.bbcode.code.highlighter.description': '{lang}wcf.bbcode.code.highlighter.description{/lang}',
+		'wcf.bbcode.code.highlighter.none': '{lang}wcf.bbcode.code.highlighter.none{/lang}',
+		'wcf.bbcode.code.insert': '{lang}wcf.bbcode.code.insert{/lang}',
+		'wcf.bbcode.code.lineNumber': '{lang}wcf.bbcode.code.lineNumber{/lang}',
+		'wcf.bbcode.code.lineNumber.description': '{lang}wcf.bbcode.code.lineNumber.description{/lang}',
+		'wcf.bbcode.code.settings': '{lang}wcf.bbcode.code.settings{/lang}',
 		'wcf.bbcode.quote.edit': '{lang}wcf.bbcode.quote.edit{/lang}',
 		'wcf.bbcode.quote.edit.author': '{lang}wcf.bbcode.quote.edit.author{/lang}',
 		'wcf.bbcode.quote.edit.link': '{lang}wcf.bbcode.quote.edit.link{/lang}',
