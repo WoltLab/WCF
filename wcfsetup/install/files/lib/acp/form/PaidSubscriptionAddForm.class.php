@@ -6,6 +6,7 @@ use wcf\data\paid\subscription\PaidSubscriptionEditor;
 use wcf\data\paid\subscription\PaidSubscriptionList;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\payment\method\PaymentMethodHandler;
@@ -144,6 +145,10 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		
 		// get available user groups
 		$this->availableUserGroups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
+		
+		if (!count(PaymentMethodHandler::getInstance()->getPaymentMethods())) {
+			throw new NamedUserException(WCF::getLanguage()->get('wcf.acp.paidSubscription.error.noPaymentMethods'));
+		}
 		
 		// get available currencies
 		foreach (PaymentMethodHandler::getInstance()->getPaymentMethods() as $paymentMethod) {
