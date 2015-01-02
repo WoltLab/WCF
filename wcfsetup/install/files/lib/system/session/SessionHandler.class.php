@@ -405,8 +405,18 @@ class SessionHandler extends SingletonFactory {
 			$this->virtualSession = null;
 			if ($this->user->userID && $this->supportsVirtualSessions) {
 				$virtualSessionAction = new SessionVirtualAction(array(), 'create', array('data' => array('sessionID' => $this->session->sessionID)));
-				$returnValues = $virtualSessionAction->executeAction();
-				$this->virtualSession = $returnValues['returnValues'];
+				
+				try {
+					$returnValues = $virtualSessionAction->executeAction();
+					$this->virtualSession = $returnValues['returnValues'];
+				}
+				catch (DatabaseException $e) {
+					// MySQL error 23000 = unique key
+					// do not check against the message itself, some weird systems localize them
+					if ($e->getCode() == 23000) {
+						$this->virtualSession = SessionVirtual::getExistingSession($this->session->sessionID);
+					}
+				}
 			}
 		}
 	}

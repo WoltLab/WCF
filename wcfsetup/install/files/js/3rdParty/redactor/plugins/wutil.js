@@ -608,7 +608,7 @@ RedactorPlugins.wutil = function() {
 		
 		/**
 		 * Inserting block-level elements into other blocks or inline elements can mess up the entire DOM,
-		 * this method tries to find the best insert location nearby.
+		 * this method tries to find the best nearby insert location.
 		 */
 		adjustSelectionForBlockElement: function() {
 			if (document.activeElement !== this.$editor[0]) {
@@ -619,15 +619,20 @@ RedactorPlugins.wutil = function() {
 				var $startContainer = getSelection().getRangeAt(0).startContainer;
 				if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b' && $startContainer.parentElement.tagName === 'P' && $startContainer.parentElement.parentElement === this.$editor[0]) {
 					// caret position is fine
-					
 					return;
 				}
 				else {
 					// walk tree up until we find a direct children of the editor and place the caret afterwards
 					var $insertAfter = $($startContainer).parentsUntil(this.$editor[0]).last();
-					var $p = $('<p><br></p>').insertAfter($insertAfter);
-					
-					this.caret.setEnd($p);
+					if ($insertAfter[0] === document.body.parentElement) {
+						// work-around if selection never has been within the editor before
+						this.wutil.selectionEndOfEditor();
+					}
+					else {
+						var $p = $('<p><br></p>').insertAfter($insertAfter);
+						
+						this.caret.setEnd($p);
+					}
 				}
 			}
 		},
