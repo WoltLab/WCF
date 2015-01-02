@@ -186,13 +186,6 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			
 			// use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
 			$requestURI = preg_replace('~[?&]s=[a-f0-9]{40}~', '', $_SERVER['REQUEST_URI']);
-			if (strpos($requestURI, '%') !== false) {
-				// DEBUG ONLY
-				if ($_SERVER['REMOTE_ADDR'] != '5.28.86.103') {
-					$requestURI = urldecode($requestURI);
-				}
-				// /DEBUG ONLY
-			}
 			if (!StringUtil::isUTF8($requestURI)) {
 				$requestURI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $requestURI);
 			}
@@ -221,15 +214,6 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			}
 			
 			if ($redirect) {
-				if ($_SERVER['REMOTE_ADDR'] == '5.28.86.103') {
-					header('Content-Type: text/html; charset=utf-8');
-					echo "<pre>";
-					echo "<h3>Redirect</h3>";
-					echo "Canonical: " . $this->canonicalURL . "\n";
-					echo "RequestURL: " . $requestURI . "\n";
-					exit;
-				}
-				
 				$redirectURL = $this->canonicalURL;
 				if (!empty($requestURL['query'])) {
 					$queryString = $requestURL['query'];

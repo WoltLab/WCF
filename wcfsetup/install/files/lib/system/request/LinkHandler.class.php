@@ -66,8 +66,8 @@ class LinkHandler extends SingletonFactory {
 		$abbreviation = 'wcf';
 		$anchor = '';
 		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
-		$encodeTitle = $forceWCF = $isRaw = false;
-		$appendSession = true;
+		$forceWCF = $isRaw = false;
+		$appendSession = $encodeTitle = true;
 		
 		// enforce a certain level of sanitation and protection for links embedded in emails
 		if (isset($parameters['isEmail']) && (bool)$parameters['isEmail']) {
@@ -109,12 +109,6 @@ class LinkHandler extends SingletonFactory {
 			}
 			unset($parameters['forceWCF']);
 		}
-		
-		// DEBUG ONLY
-		if ($_SERVER['REMOTE_ADDR'] == '5.28.86.103') {
-			$parameters['encodeTitle'] = true;
-		}
-		// /DEBUG ONLY
 		
 		if (isset($parameters['encodeTitle'])) {
 			$encodeTitle = $parameters['encodeTitle'];
