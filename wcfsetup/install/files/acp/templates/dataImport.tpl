@@ -185,7 +185,7 @@
 				<dl>
 					<dt><label for="dbPassword">{lang}wcf.acp.dataImport.configure.database.password{/lang}</label></dt>
 					<dd>
-						<input type="password" id="dbPassword" name="dbPassword" value="{$dbPassword}" class="medium" />
+						<input type="password" id="dbPassword" name="dbPassword" value="{$dbPassword}" class="medium" autocomplete="off" />
 					</dd>
 				</dl>
 				

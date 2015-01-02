@@ -132,7 +132,7 @@
 					<dl{if $errorType.password|isset} class="formError"{/if}>
 						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 						<dd>
-							<input type="password" id="password" name="password" value="{$password}" class="medium" />
+							<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="off" />
 							{if $errorType.password|isset}
 								<small class="innerError">
 									{if $errorType.password == 'empty'}
@@ -148,7 +148,7 @@
 					<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
 						<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 						<dd>
-							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" />
+							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="off" />
 							{if $errorType.confirmPassword|isset}
 								<small class="innerError">
 									{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}

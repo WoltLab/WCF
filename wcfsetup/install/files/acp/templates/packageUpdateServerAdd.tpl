@@ -56,7 +56,7 @@
 			<dl>
 				<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
 				<dd>
-					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" />
+					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" autocomplete="off" />
 					<small>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</small>
 				</dd>
 			</dl>

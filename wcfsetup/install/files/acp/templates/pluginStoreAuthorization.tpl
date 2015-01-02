@@ -13,7 +13,7 @@
 	
 	<dl>
 		<dt><label for="pluginStorePassword">{lang}wcf.acp.pluginStore.authorization.password{/lang}</label></dt>
-		<dd><input type="password" id="pluginStorePassword" value="" class="long" /></dd>
+		<dd><input type="password" id="pluginStorePassword" value="" class="long" autocomplete="off" /></dd>
 	</dl>
 </fieldset>
 
