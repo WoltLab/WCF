@@ -239,13 +239,13 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			
 			// delete old avatar
 			if ($this->parameters['userEditor']->avatarID) {
-				$action = new UserAvatarAction(array(WCF::getUser()->avatarID), 'delete');
+				$action = new UserAvatarAction(array($this->parameters['userEditor']->avatarID), 'delete');
 				$action->executeAction();
-				
-				// reset user storage
-				UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'avatar');
 			}
 		}
+		
+		// reset user storage
+		UserStorageHandler::getInstance()->reset(array($this->parameters['userEditor']->userID), 'avatar');
 	}
 	
 	/**
