@@ -224,7 +224,10 @@ class PackageInstallationScheduler {
 			if ($packageUpdateVersion['filename']) {
 				$request = new HTTPRequest(
 					$packageUpdateVersion['filename'],
-					(!empty($authData) ? array('auth' => $authData) : array())
+					(!empty($authData) ? array('auth' => $authData) : array()),
+					array(
+						'apiVersion' => PackageUpdate::API_VERSION
+					)
 				);
 			}
 			else {
