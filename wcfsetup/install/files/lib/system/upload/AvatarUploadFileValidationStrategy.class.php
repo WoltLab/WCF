@@ -22,7 +22,7 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 		// get image size
 		try {
 			$imageData = getimagesize($uploadFile->getLocation());
-			if ($imageData[0] < 48 || $imageData[1] < 48) {
+			if ($imageData[0] < 96 || $imageData[1] < 96) {
 				$uploadFile->setValidationErrorType('tooSmall');
 				return false;
 			}
