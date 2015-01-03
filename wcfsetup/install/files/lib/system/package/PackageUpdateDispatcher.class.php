@@ -91,10 +91,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		if ($updateServer->apiVersion == '2.1') {
 			$metaData = $updateServer->getMetaData();
-			if (!empty($metaData['list'])) {
-				$request->addHeader('if-none-match', $metaData['list']['etag']);
-				$request->addHeader('if-modified-since', $metaData['list']['lastModified']);
-			}
+			if (isset($metaData['list']['etag'])) $request->addHeader('if-none-match', $metaData['list']['etag']);
+			if (isset($metaData['list']['lastModified'])) $request->addHeader('if-modified-since', $metaData['list']['lastModified']);
 		}
 		
 		try {
@@ -133,17 +131,17 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		$metaData = array();
 		if ($updateServer->apiVersion == '2.1' || (isset($data['apiVersion']) && $data['apiVersion'] == '2.1')) {
-			if (empty($reply['httpHeaders']['etag']) || empty($reply['httpHeaders']['last-modified'])) {
-				throw new SystemException("Missing required HTTP headers 'etag' and/or 'last-modified'.");
+			if (empty($reply['httpHeaders']['etag']) && empty($reply['httpHeaders']['last-modified'])) {
+				throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
 			}
 			else if (empty($reply['httpHeaders']['wcf-update-server-ssl'])) {
 				throw new SystemException("Missing required HTTP header 'wcf-update-server-ssl'.");
 			}
 			
-			$metaData['list'] = array(
-				'etag' => reset($reply['httpHeaders']['etag']),
-				'lastModified' => reset($reply['httpHeaders']['last-modified'])
-			);
+			$metaData['list'] = array();
+			if (!empty($reply['httpHeaders']['etag'])) $metaData['list']['etag'] = reset($reply['httpHeaders']['etag']);
+			if (!empty($reply['httpHeaders']['last-modified'])) $metaData['list']['lastModified'] = reset($reply['httpHeaders']['last-modified']);
+			
 			$metaData['ssl'] = (reset($reply['httpHeaders']['wcf-update-server-ssl']) == 'true') ? true : false;
 		}
 		$data['metaData'] = serialize($metaData);
