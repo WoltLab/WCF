@@ -53,7 +53,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				}
 				catch (PackageUpdateUnauthorizedException $e) {
 					$reply = $e->getRequest()->getReply();
-					$errorMessage = reset($reply['httpHeaders']);
+					list($errorMessage) = reset($reply['httpHeaders']);
 				}
 				
 				if ($errorMessage) {
