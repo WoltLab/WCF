@@ -78,7 +78,7 @@ class SmileyEditForm extends SmileyAddForm {
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null
 			)),
-			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/tmp/'.$this->uploadedFilename : ''
+			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/'.$this->uploadedFilename : ''
 		));
 		$this->objectAction->executeAction();
 		

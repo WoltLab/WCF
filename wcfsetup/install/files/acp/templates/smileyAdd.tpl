@@ -119,7 +119,7 @@
 				<dt><label for="fileUpload">{lang}wcf.acp.smiley.fileUpload{/lang}</label></dt>
 				<dd>
 					{if $uploadedFilename}
-						<img src="{@$__wcf->getPath()}images/smilies/tmp/{$uploadedFilename}" alt="" />
+						<img src="{@$__wcf->getPath()}images/smilies/{$uploadedFilename}" alt="" />
 						<input type="hidden" name="uploadedFilename" value="{$uploadedFilename}" />
 					{/if}
 					<input type="file" id="fileUpload" name="fileUpload" value="" />
@@ -140,7 +140,7 @@
 			<dl{if $errorField == 'smileyPath'} class="formError"{/if}>
 				<dt><label for="smileyPath">{lang}wcf.acp.smiley.smileyPath{/lang}</label></dt>
 				<dd>
-					<input type="text" id="smileyPath" name="smileyPath" value="{$smileyPath}" required="required" class="long" />
+					<input type="text" id="smileyPath" name="smileyPath" value="{$smileyPath}" class="long" />
 					
 					{if $errorField == 'smileyPath'}
 						<small class="innerError">
