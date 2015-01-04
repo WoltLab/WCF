@@ -1793,10 +1793,14 @@ RedactorPlugins.wbbcode = function() {
 			var $button = this.modal.createActionButton(this.lang.get('save'));
 			
 			if (isInsert) {
+				this.selection.get();
+				var $selectedText = this.selection.getText();
+				
 				this.selection.save();
 				this.modal.show();
 				
-				$('#redactorCodeBox').focus();
+				var $codeBox = $('#redactorCodeBox').focus();
+				$codeBox.val($selectedText);
 				
 				$button.click($.proxy(function() {
 					var $codeBox = $('#redactorCodeBox');
@@ -1812,6 +1816,8 @@ RedactorPlugins.wbbcode = function() {
 					this.wutil.adjustSelectionForBlockElement();
 					this.wutil.saveSelection();
 					var $html = this.wbbcode.convertToHtml($bbcode);
+					
+					this.buffer.set();
 					this.insert.html($html, false);
 					
 					// set caret after code listing
