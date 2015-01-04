@@ -902,7 +902,7 @@ RedactorPlugins.wmonkeypatch = function() {
 						+ '<dt><label for="redactorCodeHighlighter">' + WCF.Language.get('wcf.bbcode.code.highlighter') + '</label></dt>'
 						+ '<dd>'
 							+ '<select id="redactorCodeHighlighter">'
-								+ '<option value="">' + WCF.Language.get('wcf.bbcode.code.highlighter.none') + '</option>'
+								+ '<option value="plain">' + WCF.Language.get('wcf.bbcode.code.highlighter.none') + '</option>'
 								+ $highlighters
 							+ '</select>'
 							+ '<small>' + WCF.Language.get('wcf.bbcode.code.highlighter.description') + '</small>'

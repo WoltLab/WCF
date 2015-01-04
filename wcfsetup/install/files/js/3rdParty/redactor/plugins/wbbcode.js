@@ -1881,7 +1881,7 @@ RedactorPlugins.wbbcode = function() {
 					console.debug($code);
 					var $codeContent = '';
 					for (var $i = 0; $i < $code.length; $i++) {
-						$codeContent += '<li>' + $code[$i] + '</li>';
+						$codeContent += '<li>' + WCF.String.escapeHTML($code[$i]) + '</li>';
 					}
 					$list.append($($codeContent));
 					
