@@ -145,7 +145,7 @@ WCF.Comment.Handler = Class.extend({
 			this._loadNextComments.children('button').enable();
 		}
 		else if (this._loadNextComments !== null) {
-			this._loadNextComments.hide();
+			this._loadNextComments.remove();
 		}
 	},
 	
