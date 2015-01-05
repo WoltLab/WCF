@@ -1790,7 +1790,7 @@ RedactorPlugins.wbbcode = function() {
 		_handleInsertCode: function(codeBox, isInsert) {
 			this.modal.load('code', WCF.Language.get('wcf.bbcode.code.' + (isInsert ? 'insert' : 'edit')), 400);
 			
-			var $button = this.modal.createActionButton(this.lang.get('save'));
+			var $button = this.modal.createActionButton(this.lang.get('save')).addClass('buttonPrimary');
 			
 			if (isInsert) {
 				this.selection.get();
@@ -1843,6 +1843,15 @@ RedactorPlugins.wbbcode = function() {
 				}, this));
 			}
 			else {
+				var $deleteButton = this.modal.createActionButton(WCF.Language.get('wcf.global.button.delete'));
+				$deleteButton.click((function() {
+					this.buffer.set();
+					
+					codeBox.remove();
+					
+					this.modal.close();
+				}).bind(this));
+				
 				this.modal.show();
 				
 				var $codeBox = $('#redactorCodeBox').focus();
