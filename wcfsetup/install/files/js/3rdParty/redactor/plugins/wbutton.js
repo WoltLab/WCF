@@ -166,6 +166,14 @@ RedactorPlugins.wbutton = function() {
 				else {
 					this.buffer.set();
 					
+					if (this.utils.browser('mozilla') && !$selectedHtml.length) {
+						var $container = getSelection().getRangeAt(0).startContainer;
+						if ($container.nodeType === Node.ELEMENT_NODE && $container.tagName === 'P' && $container.innerHTML === '<br>') {
+							// <br> is not removed in Firefox, instead content gets inserted afterwards creating a leading empty line
+							$container.removeChild($container.children[0]);
+						}
+					}
+					
 					if (this._bbcodes[buttonName].voidElement) {
 						this.insert.html($selectedHtml + this.selection.getMarkerAsHtml() + '[' + $bbcode + ']', false);
 					}
