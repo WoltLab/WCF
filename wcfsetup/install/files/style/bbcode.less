@@ -220,7 +220,6 @@ html[dir='rtl'] {
 
 /* Quote Box */
 .quoteBox {
-	background-color: @wcfContentBackgroundColor;
 	min-height: 28px;
 	position: relative;
 	
@@ -230,6 +229,10 @@ html[dir='rtl'] {
 		clear: both;
 		margin: (@wcfGapSmall + @wcfGapTiny) 0;
 		padding-left: 54px;
+	}
+	
+	&.container {
+		background-color: @wcfContentBackgroundColor;
 	}
 	
 	> header {
