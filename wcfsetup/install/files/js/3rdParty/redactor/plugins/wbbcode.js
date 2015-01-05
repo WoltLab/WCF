@@ -1808,9 +1808,18 @@ RedactorPlugins.wbbcode = function() {
 					var $highlighter = $('#redactorCodeHighlighter');
 					var $lineNumber = $('#redactorCodeLineNumber');
 					
+					var $codeBoxContent = $codeBox.val().replace(/^\n+/, '').replace(/\n+$/, '');
+					if ($.trim($codeBoxContent).length === 0) {
+						if (!$codeBox.next('small.innerError').length) {
+							$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($codeBox);
+						}
+						
+						return;
+					}
+					
 					var $codeFilename = $.trim($filename.val().replace(/['"]/g, ''));
 					var $bbcode = '[code=' + $highlighter.val() + ',' + $lineNumber.val() + ($codeFilename.length ? ",'" + $codeFilename + "'" : '') + ']';
-					$bbcode += $codeBox.val().replace(/^\n+/, '').replace(/\n+$/, '').replace(/^$/, '\n');
+					$bbcode += $codeBoxContent;
 					$bbcode += '[/code]';
 					
 					this.wutil.adjustSelectionForBlockElement();
@@ -1853,6 +1862,15 @@ RedactorPlugins.wbbcode = function() {
 				$codeBox.val($code.replace(/^\n+/, '').replace(/\n+$/, ''));
 				
 				$button.click($.proxy(function() {
+					var $codeBoxContent = $codeBox.val().replace(/^\n+/, '').replace(/\n+$/, '');
+					if ($.trim($codeBoxContent).length === 0) {
+						if (!$codeBox.next('small.innerError').length) {
+							$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($codeBox);
+						}
+						
+						return;
+					}
+					
 					var $selectedHighlighter = $highlighter.val();
 					codeBox.data('highlighter', $selectedHighlighter);
 					codeBox.attr('data-highlighter', $selectedHighlighter);
@@ -1876,12 +1894,10 @@ RedactorPlugins.wbbcode = function() {
 					var $start = parseInt($lineNumber.val());
 					$list.prop('start', ($start > 1 ? $start : 1));
 					
-					var $code = $codeBox.val().replace(/^\n+/, '').replace(/\n+$/, '').replace(/^$/, '\n');
-					$code = $code.split('\n');
-					console.debug($code);
+					$codeBoxContent = $codeBoxContent.split('\n');
 					var $codeContent = '';
-					for (var $i = 0; $i < $code.length; $i++) {
-						$codeContent += '<li>' + WCF.String.escapeHTML($code[$i]) + '</li>';
+					for (var $i = 0; $i < $codeBoxContent.length; $i++) {
+						$codeContent += '<li>' + WCF.String.escapeHTML($codeBoxContent[$i]) + '</li>';
 					}
 					$list.append($($codeContent));
 					

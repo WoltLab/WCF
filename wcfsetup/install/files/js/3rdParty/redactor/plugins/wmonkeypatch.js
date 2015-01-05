@@ -918,7 +918,7 @@ RedactorPlugins.wmonkeypatch = function() {
 					+ '<dl>'
 						+ '<dt><label for="redactorCodeFilename">' + WCF.Language.get('wcf.bbcode.code.filename') + '</label></dt>'
 						+ '<dd>'
-							+ '<input type="text" id="redactorCodeFilename" value="" />'
+							+ '<input type="text" id="redactorCodeFilename" value="" class="long" />'
 							+ '<small>' + WCF.Language.get('wcf.bbcode.code.filename.description') + '</small>'
 						+ '</dd>'
 					+ '</dl>'
