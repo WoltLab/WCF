@@ -176,9 +176,6 @@ RedactorPlugins.wbutton = function() {
 					this.selection.restore();
 				}
 			}
-			
-			event.preventDefault();
-			return false;
 		},
 		
 		insertImage: function() {
