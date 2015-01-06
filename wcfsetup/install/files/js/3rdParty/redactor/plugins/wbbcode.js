@@ -715,7 +715,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<b>$1</b>');
 			
 			// [i]
-			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, '<i>$1</i>');
+			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, '<em>$1</em>');
 			
 			// [u]
 			data = data.replace(/\[u\]([\s\S]*?)\[\/u]/gi, '<u>$1</u>');
