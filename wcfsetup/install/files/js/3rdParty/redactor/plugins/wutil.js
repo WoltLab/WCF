@@ -12,6 +12,8 @@ RedactorPlugins.wutil = function() {
 	
 	var $autosaveLastMessage = '';
 	var $autosaveNotice = null;
+	var $autosaveDidSave = false;
+	var $autosaveSaveNoticePE = null;
 	
 	return {
 		/**
@@ -276,7 +278,9 @@ RedactorPlugins.wutil = function() {
 			if (this.wutil._autosaveWorker === null) {
 				this.wutil.autosavePurgeOutdated();
 				
-				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this.wutil.saveTextToStorage, this), 15 * 1000);
+				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter((function(pe) {
+					this.wutil.saveTextToStorage(false);
+				}).bind(this), 15 * 1000);
 			}
 			
 			return true;
@@ -299,8 +303,21 @@ RedactorPlugins.wutil = function() {
 					timestamp: Date.now()
 				}));
 				$autosaveLastMessage = $content;
+				$autosaveDidSave = true;
 				
-				this.wutil.autosaveShowNotice('saved');
+				if ($autosaveSaveNoticePE === null) {
+					$autosaveSaveNoticePE = new WCF.PeriodicalExecuter((function(pe) {
+						if ($autosaveDidSave === false) {
+							pe.stop();
+							$autosaveSaveNoticePE = null;
+							
+							return;
+						}
+						
+						this.wutil.autosaveShowNotice('saved');
+						$autosaveDidSave = false;
+					}).bind(this), 120 * 1000);
+				}
 			}
 			catch (e) {
 				console.debug("[wutil.saveTextToStorage] Unable to access local storage: " + e.message);
