@@ -1265,12 +1265,14 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.button.search"><![CDATA[Erworbene Produkte (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems"><![CDATA[Erworbene Produkte (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.noResults"><![CDATA[Die Suche ergab keine Treffer, entweder haben Sie noch keine Produkte erworben oder diese sind nicht kompatibel.]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.status.requireUpdate"><![CDATA[Paket-Server muss abgefragt werden]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.update"><![CDATA[Neuere Version verfügbar]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Paket-Server nicht installiert]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[Aktuellste Version bereits installiert]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Möchten Sie das Produkt „{$product[packageName]}“ wirklich installieren?]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) ist deaktiviert und steht weder für Neuinstallation noch Updates zur Verfügung.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ ist bei Ihnen nicht eingetragen. Wenn Sie die unten stehenden Pakete installieren möchten, müssen Sie diesen zuvor <a href="{link controller='PackageUpdateServerAdd'}{/link}">hinzufügen</a>.<br />Die Adresse des Servers lautet: „http://store.woltlab.com/{$wcfMajorRelease}/“]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) wurde noch nicht abgefragt, bitte lassen Sie zu erst nach Updates suchen um den Server abzufragen.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Paket-Server für „{$wcfMajorRelease}“]]></item>
 	</category>
 	

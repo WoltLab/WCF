@@ -116,6 +116,10 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 					$this->productData[$wcfMajorRelease][$packageUpdateID]['status'] = 'upToDate';
 				}
 			}
+			
+			if (isset($this->updateServers[$wcfMajorRelease]) && $this->updateServers[$wcfMajorRelease]->lastUpdateTime == 0) {
+				$this->productData[$wcfMajorRelease][$packageUpdateID]['status'] = 'requireUpdate';
+			}
 		}
 	}
 	

@@ -36,6 +36,8 @@
 			<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.missing{/lang}</p>
 		{else if $updateServers[$wcfMajorRelease]->isDisabled}
 			<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.disabled{/lang}</p>
+		{else if $updateServers[$wcfMajorRelease]->lastUpdateTime == 0}
+			<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate{/lang}</p>
 		{/if}
 		
 		<div class="tabularBox tabularBoxTitle marginTop">
@@ -63,6 +65,8 @@
 									<a class="jsButtonPackageUpdate"><span class="icon icon16 fa-refresh jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.update{/lang}"></span></a>
 								{else if $product[status] == 'upToDate'}
 									<span class="icon icon16 fa-check green jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.upToDate{/lang}"></span>
+								{else if $product[status] == 'requireUpdate'}
+									<span class="icon icon16 fa-ban red jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.requireUpdate{/lang}"></span>
 								{else}
 									<span class="icon icon16 fa-ban red jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.unavailable{/lang}"></span>
 								{/if}
