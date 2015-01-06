@@ -648,8 +648,31 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				this.selection.get();
 				var $current = this.selection.getCurrent();
+				if ($current.nodeType === Node.TEXT_NODE) {
+					$current = $current.parentElement;
+				}
+				
 				if ($current.tagName === 'A') {
 					this.caret.setAfter($current);
+				}
+			}).bind(this);
+			
+			// link.set
+			var $mpSet = this.link.set;
+			this.link.set = (function(text, link, target) {
+				$mpSet.call(this, text, link, target);
+				
+				if (text.length && this.link.text !== text) {
+					this.selection.get();
+					
+					var $current = this.selection.getCurrent();
+					if ($current.nodeType === Node.TEXT_NODE) {
+						$current = $current.parentElement;
+					}
+					
+					if ($current.tagName === 'A') {
+						$($current).text(text);
+					}
 				}
 			}).bind(this);
 		},
