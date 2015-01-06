@@ -743,7 +743,7 @@ RedactorPlugins.wbbcode = function() {
 				return '<img src="' + src + '" style="' + $style + '" />';
 			});
 			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right|none)'?,'?(\d+)'?\]\[\/img\]/gi, function(match, src, alignment, width) {
-				var $style = 'float: ' + alignment + '; width: ' + width + 'px';
+				var $style = 'float: ' + alignment + '; width: ' + width + 'px;';
 				if (alignment === 'left') {
 					$style += 'margin: 0 15px 7px 0';
 				}
