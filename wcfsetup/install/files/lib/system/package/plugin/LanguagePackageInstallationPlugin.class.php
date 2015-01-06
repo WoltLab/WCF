@@ -46,7 +46,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 						$languageFiles[$match[1]] = $file['filename'];
 					}
 					else {
-						throw new SystemException("Can not determine language code of language file '".$file['filename']."'");
+						throw new SystemException("Cannot determine language code of language file '".$file['filename']."'");
 					}
 				}
 			}
@@ -62,7 +62,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				$languageCode = $match[1];
 			}
 			else {
-				throw new SystemException("Can not determine language code of language file '".$filename."'");
+				throw new SystemException("Cannot determine language code of language file '".$filename."'");
 			}
 			
 			$languageFiles[$languageCode] = $filename;

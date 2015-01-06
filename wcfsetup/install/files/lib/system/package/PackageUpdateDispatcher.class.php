@@ -660,7 +660,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		if (empty($versions)) {
-			throw new SystemException("Can not find package '".$package."' in version '".$version."'");
+			throw new SystemException("Cannot find package '".$package."' in version '".$version."'");
 		}
 		
 		return $versions;

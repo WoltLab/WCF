@@ -34,7 +34,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 		if (empty($path)) {
 			$dirConstant = strtoupper($abbreviation) . '_DIR';
 			if (!defined($dirConstant)) {
-				throw new SystemException("Can not execute script-PIP, abbreviation '".$abbreviation."' is unknown");
+				throw new SystemException("Cannot execute script-PIP, abbreviation '".$abbreviation."' is unknown");
 			}
 			
 			$path = constant($dirConstant);

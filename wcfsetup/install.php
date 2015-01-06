@@ -868,7 +868,7 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 	$tar = new Tar(SETUP_FILE);
 	$contentList = $tar->getContentList();
 	if (empty($contentList)) {
-		throw new SystemException("Can not unpack 'WCFSetup.tar.gz'. File is probably broken.");
+		throw new SystemException("Cannot unpack 'WCFSetup.tar.gz'. File is probably broken.");
 	}
 	
 	foreach ($contentList as $file) {
@@ -896,7 +896,7 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 }
 
 if (!class_exists('wcf\system\WCFSetup')) {
-	throw new SystemException("Can not find class 'WCFSetup'");
+	throw new SystemException("Cannot find class 'WCFSetup'");
 }
 
 // start setup
