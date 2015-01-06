@@ -776,7 +776,7 @@ $.widget('ui.wcfImageViewer', {
 		this._didInit = true;
 		
 		this._container = $('<div class="wcfImageViewer' + (this.options.staticViewer ? ' wcfImageViewerStatic' : '') + '" />').appendTo(document.body);
-		var $imageContainer = $('<div><img class="active" /><img /></div>').appendTo(this._container);
+		var $imageContainer = $('<div><img /><img /></div>').appendTo(this._container);
 		var $imageList = $('<footer><span class="wcfImageViewerButtonPrevious icon icon-double-angle-left" /><div><ul /></div><span class="wcfImageViewerButtonNext icon icon-double-angle-right" /></footer>').appendTo(this._container);
 		var $slideshowContainer = $('<ul />').appendTo($imageContainer);
 		var $slideshowButtonPrevious = $('<li class="wcfImageViewerSlideshowButtonPrevious"><span class="icon icon48 icon-angle-left" /></li>').appendTo($slideshowContainer);
