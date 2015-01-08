@@ -36,6 +36,9 @@ $(function() {
 		'wcf.bbcode.quote.title.clickToSet': '{lang}wcf.bbcode.quote.title.clickToSet{/lang}',
 		'wcf.bbcode.quote.title.javascript': '{lang}wcf.bbcode.quote.title.javascript{/lang}',
 		'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
+		'wcf.message.autosave.prompt': '{lang}wcf.message.autosave.prompt{/lang}',
+		'wcf.message.autosave.prompt.confirm': '{lang}wcf.message.autosave.prompt.confirm{/lang}',
+		'wcf.message.autosave.prompt.discard': '{lang}wcf.message.autosave.prompt.discard{/lang}',
 		'wcf.message.autosave.restored': '{lang}wcf.message.autosave.restored{/lang}',
 		'wcf.message.autosave.restored.confirm': '{lang}wcf.message.autosave.restored.confirm{/lang}',
 		'wcf.message.autosave.restored.revert': '{lang}wcf.message.autosave.restored.revert{/lang}',
@@ -54,6 +57,8 @@ $(function() {
 		{include file='wysiwygToolbar'}
 		
 		var $autosave = $textarea.data('autosave');
+		var $autosaveLastEditTime = ($autosave && $textarea.data('autosaveLastEditTime')) ? (parseInt($textarea.data('autosaveLastEditTime')) || 0) : 0;
+		var $autosavePrompt = ($autosave && $textarea.data('autosavePrompt')) ? true : false;
 		var $config = {
 			autosave: false,
 			buttons: $buttons,
@@ -74,7 +79,9 @@ $(function() {
 				autosave: {
 					active: ($autosave) ? true : false,
 					key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
+					lastEditTime: $autosaveLastEditTime,
 					prefix: '{@$__wcf->getAutosavePrefix()}',
+					prompt: $autosavePrompt,
 					saveOnInit: {if !$errorField|empty}true{else}false{/if}
 				},
 				originalValue: $textarea.val()

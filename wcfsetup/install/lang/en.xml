@@ -2276,6 +2276,9 @@ Errors are:
 	</category>
 	
 	<category name="wcf.message">
+ 		<item name="wcf.message.autosave.prompt"><![CDATA[Restore saved draft?]]></item>
+ 		<item name="wcf.message.autosave.prompt.confirm"><![CDATA[Restore draft]]></item>
+ 		<item name="wcf.message.autosave.prompt.discard"><![CDATA[Discard draft]]></item>
 		<item name="wcf.message.autosave.restored"><![CDATA[Draft restored]]></item>
 		<item name="wcf.message.autosave.restored.confirm"><![CDATA[Keep]]></item>
 		<item name="wcf.message.autosave.restored.revert"><![CDATA[Discard and Clear Editor]]></item>
