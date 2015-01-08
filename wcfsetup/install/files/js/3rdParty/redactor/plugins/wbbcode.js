@@ -143,6 +143,12 @@ RedactorPlugins.wbbcode = function() {
 			if ($index > -1) {
 				this.opts.verifiedTags.splice($index, 1);
 			}
+			
+			// reattach event listeners
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'observe_load_' + $identifier, (function(data) {
+				this.wbbcode.observeCodeListings();
+				this.wbbcode.observeQuotes();
+			}).bind(this));
 		},
 		
 		/**
@@ -1558,13 +1564,7 @@ RedactorPlugins.wbbcode = function() {
 		 * Initializes source editing for quotes.
 		 */
 		observeQuotes: function() {
-			var $editHeader = this.$editor.find('.redactorQuoteEdit:not(.jsRedactorQuoteEdit)');
-			if ($editHeader.length) {
-				$editHeader.each((function(index, editHeader) {
-					var $editHeader = $(editHeader);
-					$editHeader.addClass('jsRedactorQuoteEdit').click($.proxy(this.wbbcode._observeQuotesClick, this));
-				}).bind(this));
-			}
+			this.$editor.find('.redactorQuoteEdit').off('click.wbbcode').on('click.wbbcode', $.proxy(this.wbbcode._observeQuotesClick, this));
 		},
 		
 		/**
@@ -1600,10 +1600,14 @@ RedactorPlugins.wbbcode = function() {
 		 * Initializes editing for code listings.
 		 */
 		observeCodeListings: function() {
-			this.$editor.find('.codeBox:not(.jsRedactorCodeBox)').each((function(index, codeBox) {
-				var $codeBox = $(codeBox).addClass('jsRedactorCodeBox');
-				var $editBox = $('<div class="redactorEditCodeBox"><div>' + WCF.Language.get('wcf.bbcode.code.edit') + '</div></div>').insertAfter($codeBox.find('> div > div > h3'));
-				$editBox.click((function() {
+			this.$editor.find('.codeBox').each((function(index, codeBox) {
+				var $codeBox = $(codeBox);
+				var $editBox = $codeBox.find('.redactorEditCodeBox');
+				if (!$editBox.length) {
+					$editBox = $('<div class="redactorEditCodeBox"><div>' + WCF.Language.get('wcf.bbcode.code.edit') + '</div></div>').insertAfter($codeBox.find('> div > div > h3'));
+				}
+				
+				$editBox.off('click.wbbcode').on('click.wbbcode', (function() {
 					this.wbbcode._handleInsertCode($codeBox, false);
 				}).bind(this));
 			}).bind(this));

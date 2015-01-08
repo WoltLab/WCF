@@ -788,6 +788,14 @@ RedactorPlugins.wmonkeypatch = function() {
 				$toggleButtons(parent, 'sup', 'a.re-superscript', false, 'redactor-act');
 			}).bind(this);
 			
+			// observe.load
+			var $mpLoad = this.observe.load;
+			this.observe.load = (function() {
+				$mpLoad.call(this);
+				
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'observe_load_' + this.$textarea.wcfIdentify());
+			}).bind(this);
+			
 			// observe.showTooltip
 			var $mpShowTooltip = this.observe.showTooltip;
 			this.observe.showTooltip = (function(e) {
