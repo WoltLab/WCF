@@ -4653,6 +4653,17 @@ WCF.Template = Class.extend({
 		.replace(/\{lang\}(.+?)\{\/lang\}/g, function(_, content) {
 			return "' + WCF.Language.get('" + unescape(content) + "') + '";
 		})
+		// {include}
+		.replace(/\{include (.+?)\}/g, function(_, content) {
+			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			var $parameters = parseParameterList(content);
+			
+			if (typeof $parameters['file'] === 'undefined') throw new Error('Missing file attribute in include-tag');
+			
+			$parameters['file'] = $parameters['file'].replace(/\$([^.\[\(\)\]\s]+)/g, "(v.$1)");
+			
+			return "' + " + $parameters['file'] + ".fetch(v) + '";
+		})
 		// {if}
 		.replace(/\{if (.+?)\}/g, function(_, content) {
 			content = unescape(content.replace(/\$([^.\[\(\)\]\s]+)/g, "(v['$1'])"));
