@@ -4,7 +4,7 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  * Provides the smiley button and modifies the source mode to transform HTML into BBCodes.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 RedactorPlugins.wbbcode = function() {
@@ -149,6 +149,8 @@ RedactorPlugins.wbbcode = function() {
 				this.wbbcode.observeCodeListings();
 				this.wbbcode.observeQuotes();
 			}).bind(this));
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'fixFormatting_' + $identifier, $.proxy(this.wbbcode.fixFormatting, this));
 		},
 		
 		/**
@@ -1948,6 +1950,37 @@ RedactorPlugins.wbbcode = function() {
 				$addSpacing(blockElement, 'previousElementSibling');
 				$addSpacing(blockElement, 'nextElementSibling');
 			}).bind(this));
+		},
+		
+		/**
+		 * Fixes incorrect formatting applied to element that should be left untouched.
+		 * 
+		 * @param	object		data
+		 */
+		fixFormatting: function(data) {
+			var $stripTextAlign = function(element) {
+				element.style.removeProperty('text-align');
+				
+				for (var $i = 0; $i < element.children.length; $i++) {
+					$stripTextAlign(element.children[$i]);
+				}
+			};
+			
+			for (var $i = 0; $i < this.alignment.blocks.length; $i++) {
+				var $block = this.alignment.blocks[$i];
+				switch ($block.tagName) {
+					case 'BLOCKQUOTE':
+						$block.style.removeProperty('text-align');
+						$stripTextAlign($block.children[0]);
+					break;
+					
+					case 'DIV':
+						if ($block.classList.contains('codeBox')) {
+							$stripTextAlign($block);
+						}
+					break;
+				}
+			}
 		}
 	};
 };

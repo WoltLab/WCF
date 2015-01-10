@@ -6,12 +6,12 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  * way or a work-around would cause a giant pile of boilerplates.
  * 
  * ATTENTION!
- * This plugin partially contains code taken from Redactor, Copyright (c) 2009-2014 Imperavi LLC.
+ * This plugin partially contains code taken from Redactor, Copyright (c) 2009-2015 Imperavi LLC.
  * Under no circumstances you are allowed to use potions or entire code blocks for use anywhere
  * except when directly working with WoltLab Community Framework.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH, 2009-2014 Imperavi LLC.
+ * @copyright	2001-2015 WoltLab GmbH, 2009-2015 Imperavi LLC.
  * @license	http://imperavi.com/redactor/license/
  */
 RedactorPlugins.wmonkeypatch = function() {
@@ -23,6 +23,7 @@ RedactorPlugins.wmonkeypatch = function() {
 		 */
 		init: function() {
 			// module overrides
+			this.wmonkeypatch.alignment();
 			this.wmonkeypatch.button();
 			this.wmonkeypatch.caret();
 			this.wmonkeypatch.clean();
@@ -101,6 +102,21 @@ RedactorPlugins.wmonkeypatch = function() {
 					this.wutil.saveSelection();
 				}
 			}).bind(this));
+		},
+		
+		/**
+		 * Partially overwrites the 'alignment' module.
+		 * 
+		 *  - Firing an event after setBlocks() has been called, useful to strip unwanted formatting
+		 */
+		alignment: function() {
+			// alignment.setBlocks
+			var $mpSetBlocks = this.alignment.setBlocks;
+			this.alignment.setBlocks = (function(type) {
+				$mpSetBlocks.call(this, type);
+				
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'fixFormatting_' + this.$textarea.wcfIdentify());
+			}).bind(this);
 		},
 		
 		/**
