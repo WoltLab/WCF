@@ -1232,9 +1232,42 @@ RedactorPlugins.wbbcode = function() {
 				5: 12,
 				6: 10
 			};
-			console.debug(html);
+			
 			// replace <h1> ... </h6> tags
-			html = html.replace(/<h([1-6])[^>]+>/g, function(match, level) {
+			html = html.replace(/<h([1-6])([^>]*)>/g, function(match, level, elementAttributes) {
+				if (elementAttributes && elementAttributes.match(/style="([^"]+?)"/)) {
+					if (/font-size: ?(\d+|\d+\.\d+)(px|pt|em|rem|%)/.test(RegExp.$1)) {
+						var $div = $('<div style="width: ' + RegExp.$1 + RegExp.$2 + '; position: absolute;" />').appendTo(document.body);
+						var $width = parseInt($div[0].clientWidth);
+						$div.remove();
+						
+						// look for the closest matching size
+						var $bestMatch = -1;
+						var $isExactMatch = false;
+						$.each($levels, function(k, v) {
+							if ($bestMatch === -1) {
+								$bestMatch = k;
+							}
+							else {
+								if (Math.abs($width - v) < Math.abs($width - $levels[$bestMatch])) {
+									$bestMatch = k;
+								}
+							}
+							
+							if ($width == v) {
+								$isExactMatch = true;
+							}
+						});
+						
+						if (!$isExactMatch) {
+							// if dealing with non-exact matches, lower size by one level
+							$bestMatch = ($bestMatch < 6) ? parseInt($bestMatch) + 1 : $bestMatch;
+						}
+						
+						level = $bestMatch;
+					}
+				}
+				
 				return '[size=' + $levels[level] + ']';
 			});
 			html = html.replace(/<\/h[1-6]>/g, '[/size]');
