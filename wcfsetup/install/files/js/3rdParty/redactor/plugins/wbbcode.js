@@ -1975,7 +1975,7 @@ RedactorPlugins.wbbcode = function() {
 					break;
 					
 					case 'DIV':
-						if ($block.classList.contains('codeBox')) {
+						if (/\bcodeBox\b/.test($block.className)) {
 							$stripTextAlign($block);
 						}
 					break;
