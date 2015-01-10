@@ -1429,7 +1429,7 @@ RedactorPlugins.wbbcode = function() {
 						if ($quote.length) {
 							// check if quote is empty
 							var $isEmpty = true;
-							$quote.find('div > div').each(function() {
+							$quote.children('div').each(function() {
 								if ($(this).text().replace(/\u200B/, '').length) {
 									$isEmpty = false;
 									return false;
@@ -1471,13 +1471,13 @@ RedactorPlugins.wbbcode = function() {
 				// arrow down
 				case $.ui.keyCode.DOWN:
 					if ($current.next('blockquote').length) {
-						this.caret.setStart($current.next().find('> div > div:first'));
+						this.caret.setStart($current.next().children('div:first'));
 						
 						data.cancel = true;
 					}
 					else if ($parent) {
 						if ($parent.next('blockquote').length) {
-							this.caret.setStart($parent.next().find('> div > div:first'));
+							this.caret.setStart($parent.next().children('div:first'));
 							
 							data.cancel = true;
 						}
@@ -1532,7 +1532,7 @@ RedactorPlugins.wbbcode = function() {
 					else {
 						if ($previousElement[0].tagName === 'BLOCKQUOTE') {
 							// set focus to quote text rather than the element itself
-							this.caret.sendEnd($previousElement.find('> div > div:last'));
+							this.caret.sendEnd($previousElement.children('div:last'));
 						}
 						else {
 							// focus is wrong if the previous element is empty (e.g. only a newline present)
