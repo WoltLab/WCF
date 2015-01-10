@@ -2277,6 +2277,9 @@ Fehler sind beispielsweise:
 	</category>
 	
 	<category name="wcf.message">
+		<item name="wcf.message.autosave.prompt"><![CDATA[Gespeicherten Entwurf wiederherstellen?]]></item>
+ 		<item name="wcf.message.autosave.prompt.confirm"><![CDATA[Entwurf wiederherstellen]]></item>
+ 		<item name="wcf.message.autosave.prompt.discard"><![CDATA[Entwurf verwerfen]]></item>
 		<item name="wcf.message.autosave.restored"><![CDATA[Entwurf wiederhergestellt]]></item>
 		<item name="wcf.message.autosave.restored.confirm"><![CDATA[Beibehalten]]></item>
 		<item name="wcf.message.autosave.restored.revert"><![CDATA[Verwerfen und Editor leeren]]></item>

@@ -4,7 +4,7 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  * Provides the smiley button and modifies the source mode to transform HTML into BBCodes.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 RedactorPlugins.wbbcode = function() {
@@ -143,6 +143,14 @@ RedactorPlugins.wbbcode = function() {
 			if ($index > -1) {
 				this.opts.verifiedTags.splice($index, 1);
 			}
+			
+			// reattach event listeners
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'observe_load_' + $identifier, (function(data) {
+				this.wbbcode.observeCodeListings();
+				this.wbbcode.observeQuotes();
+			}).bind(this));
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'fixFormatting_' + $identifier, $.proxy(this.wbbcode.fixFormatting, this));
 		},
 		
 		/**
@@ -1224,9 +1232,42 @@ RedactorPlugins.wbbcode = function() {
 				5: 12,
 				6: 10
 			};
-			console.debug(html);
+			
 			// replace <h1> ... </h6> tags
-			html = html.replace(/<h([1-6])[^>]+>/g, function(match, level) {
+			html = html.replace(/<h([1-6])([^>]*)>/g, function(match, level, elementAttributes) {
+				if (elementAttributes && elementAttributes.match(/style="([^"]+?)"/)) {
+					if (/font-size: ?(\d+|\d+\.\d+)(px|pt|em|rem|%)/.test(RegExp.$1)) {
+						var $div = $('<div style="width: ' + RegExp.$1 + RegExp.$2 + '; position: absolute;" />').appendTo(document.body);
+						var $width = parseInt($div[0].clientWidth);
+						$div.remove();
+						
+						// look for the closest matching size
+						var $bestMatch = -1;
+						var $isExactMatch = false;
+						$.each($levels, function(k, v) {
+							if ($bestMatch === -1) {
+								$bestMatch = k;
+							}
+							else {
+								if (Math.abs($width - v) < Math.abs($width - $levels[$bestMatch])) {
+									$bestMatch = k;
+								}
+							}
+							
+							if ($width == v) {
+								$isExactMatch = true;
+							}
+						});
+						
+						if (!$isExactMatch) {
+							// if dealing with non-exact matches, lower size by one level
+							$bestMatch = ($bestMatch < 6) ? parseInt($bestMatch) + 1 : $bestMatch;
+						}
+						
+						level = $bestMatch;
+					}
+				}
+				
 				return '[size=' + $levels[level] + ']';
 			});
 			html = html.replace(/<\/h[1-6]>/g, '[/size]');
@@ -1388,7 +1429,7 @@ RedactorPlugins.wbbcode = function() {
 						if ($quote.length) {
 							// check if quote is empty
 							var $isEmpty = true;
-							$quote.find('div > div').each(function() {
+							$quote.children('div').each(function() {
 								if ($(this).text().replace(/\u200B/, '').length) {
 									$isEmpty = false;
 									return false;
@@ -1430,13 +1471,13 @@ RedactorPlugins.wbbcode = function() {
 				// arrow down
 				case $.ui.keyCode.DOWN:
 					if ($current.next('blockquote').length) {
-						this.caret.setStart($current.next().find('> div > div:first'));
+						this.caret.setStart($current.next().children('div:first'));
 						
 						data.cancel = true;
 					}
 					else if ($parent) {
 						if ($parent.next('blockquote').length) {
-							this.caret.setStart($parent.next().find('> div > div:first'));
+							this.caret.setStart($parent.next().children('div:first'));
 							
 							data.cancel = true;
 						}
@@ -1491,7 +1532,7 @@ RedactorPlugins.wbbcode = function() {
 					else {
 						if ($previousElement[0].tagName === 'BLOCKQUOTE') {
 							// set focus to quote text rather than the element itself
-							this.caret.sendEnd($previousElement.find('> div > div:last'));
+							this.caret.sendEnd($previousElement.children('div:last'));
 						}
 						else {
 							// focus is wrong if the previous element is empty (e.g. only a newline present)
@@ -1558,13 +1599,7 @@ RedactorPlugins.wbbcode = function() {
 		 * Initializes source editing for quotes.
 		 */
 		observeQuotes: function() {
-			var $editHeader = this.$editor.find('.redactorQuoteEdit:not(.jsRedactorQuoteEdit)');
-			if ($editHeader.length) {
-				$editHeader.each((function(index, editHeader) {
-					var $editHeader = $(editHeader);
-					$editHeader.addClass('jsRedactorQuoteEdit').click($.proxy(this.wbbcode._observeQuotesClick, this));
-				}).bind(this));
-			}
+			this.$editor.find('.redactorQuoteEdit').off('click.wbbcode').on('click.wbbcode', $.proxy(this.wbbcode._observeQuotesClick, this));
 		},
 		
 		/**
@@ -1600,10 +1635,14 @@ RedactorPlugins.wbbcode = function() {
 		 * Initializes editing for code listings.
 		 */
 		observeCodeListings: function() {
-			this.$editor.find('.codeBox:not(.jsRedactorCodeBox)').each((function(index, codeBox) {
-				var $codeBox = $(codeBox).addClass('jsRedactorCodeBox');
-				var $editBox = $('<div class="redactorEditCodeBox"><div>' + WCF.Language.get('wcf.bbcode.code.edit') + '</div></div>').insertAfter($codeBox.find('> div > div > h3'));
-				$editBox.click((function() {
+			this.$editor.find('.codeBox').each((function(index, codeBox) {
+				var $codeBox = $(codeBox);
+				var $editBox = $codeBox.find('.redactorEditCodeBox');
+				if (!$editBox.length) {
+					$editBox = $('<div class="redactorEditCodeBox"><div>' + WCF.Language.get('wcf.bbcode.code.edit') + '</div></div>').insertAfter($codeBox.find('> div > div > h3'));
+				}
+				
+				$editBox.off('click.wbbcode').on('click.wbbcode', (function() {
 					this.wbbcode._handleInsertCode($codeBox, false);
 				}).bind(this));
 			}).bind(this));
@@ -1944,6 +1983,37 @@ RedactorPlugins.wbbcode = function() {
 				$addSpacing(blockElement, 'previousElementSibling');
 				$addSpacing(blockElement, 'nextElementSibling');
 			}).bind(this));
+		},
+		
+		/**
+		 * Fixes incorrect formatting applied to element that should be left untouched.
+		 * 
+		 * @param	object		data
+		 */
+		fixFormatting: function(data) {
+			var $stripTextAlign = function(element) {
+				element.style.removeProperty('text-align');
+				
+				for (var $i = 0; $i < element.children.length; $i++) {
+					$stripTextAlign(element.children[$i]);
+				}
+			};
+			
+			for (var $i = 0; $i < this.alignment.blocks.length; $i++) {
+				var $block = this.alignment.blocks[$i];
+				switch ($block.tagName) {
+					case 'BLOCKQUOTE':
+						$block.style.removeProperty('text-align');
+						$stripTextAlign($block.children[0]);
+					break;
+					
+					case 'DIV':
+						if (/\bcodeBox\b/.test($block.className)) {
+							$stripTextAlign($block);
+						}
+					break;
+				}
+			}
 		}
 	};
 };

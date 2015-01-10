@@ -384,6 +384,19 @@ RedactorPlugins.wutil = function() {
 				return false;
 			}
 			
+			if ($options.lastEditTime && ($options.lastEditTime * 1000) > $text.timestamp) {
+				// stored message is older than last edit time, consider it tainted and discard
+				this.wutil.autosavePurge();
+				
+				return false;
+			}
+			
+			if ($options.prompt) {
+				this.wutil.autosaveShowNotice('prompt', $text);
+				
+				return false;
+			}
+			
 			if (this.wutil.inWysiwygMode()) {
 				this.wutil.setOption('woltlab.originalValue', $text.content);
 			}
@@ -392,7 +405,6 @@ RedactorPlugins.wutil = function() {
 			}
 			
 			this.wutil.autosaveShowNotice('restored', { timestamp: $text.timestamp });
-			WCF.DOMNodeInsertedHandler.execute();
 			
 			return true;
 		},
@@ -407,12 +419,13 @@ RedactorPlugins.wutil = function() {
 			if ($autosaveNotice === null) {
 				$autosaveNotice = $('<div class="redactorAutosaveNotice"><span class="redactorAutosaveMessage" /></div>');
 				$autosaveNotice.appendTo(this.$box);
-				$autosaveNotice.on('transitionend webkitTransitionEnd', (function(event) {
-					if (event.originalEvent.propertyName !== 'opacity') {
+				
+				var $resetNotice = (function(event) {
+					if (event !== null && event.originalEvent.propertyName !== 'opacity') {
 						return;
 					}
 					
-					if ($autosaveNotice.hasClass('open')) {
+					if ($autosaveNotice.hasClass('open') && event !== null) {
 						if ($autosaveNotice.data('callbackOpen')) {
 							$autosaveNotice.data('callbackOpen')();
 						}
@@ -425,15 +438,47 @@ RedactorPlugins.wutil = function() {
 						$autosaveNotice.removeData('callbackClose');
 						$autosaveNotice.removeData('callbackOpen');
 						
-						$autosaveNotice.removeClass('redactorAutosaveNoticeRestore');
+						$autosaveNotice.removeClass('redactorAutosaveNoticeIcons');
 						$autosaveNotice.empty();
 						$('<span class="redactorAutosaveMessage" />').appendTo($autosaveNotice);
 					}
-				}).bind(this));
+				}).bind(this);
+				
+				$autosaveNotice.on('transitionend webkitTransitionEnd', $resetNotice);
 			}
 			
 			var $message = '';
 			switch (type) {
+				case 'prompt':
+					$('<span class="icon icon16 fa-info blue jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.version', { date: new Date(data.timestamp).toLocaleString() }) + '"></span>').prependTo($autosaveNotice);
+					var $accept = $('<span class="icon icon16 fa-check green pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.prompt.confirm') + '"></span>').appendTo($autosaveNotice);
+					var $discard = $('<span class="icon icon16 fa-times red pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.prompt.discard') + '"></span>').appendTo($autosaveNotice);
+					
+					$accept.click((function() {
+						this.wutil.replaceText(data.content);
+						
+						$resetNotice(null);
+						
+						this.wutil.autosaveShowNotice('restored', data);
+					}).bind(this));
+					
+					$discard.click((function() {
+						this.wutil.autosavePurge();
+						
+						$autosaveNotice.removeClass('open');
+					}).bind(this));
+					
+					$message = WCF.Language.get('wcf.message.autosave.prompt');
+					$autosaveNotice.addClass('redactorAutosaveNoticeIcons');
+					
+					var $uuid = '';
+					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), (function(data) {
+						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), $uuid);
+						
+						setTimeout(function() { $autosaveNotice.removeClass('open'); }, 3000);
+					}).bind(this));
+				break;
+				
 				case 'restored':
 					$('<span class="icon icon16 fa-info blue jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.version', { date: new Date(data.timestamp).toLocaleString() }) + '"></span>').prependTo($autosaveNotice);
 					var $accept = $('<span class="icon icon16 fa-check green pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.confirm') + '"></span>').appendTo($autosaveNotice);
@@ -453,8 +498,7 @@ RedactorPlugins.wutil = function() {
 					}).bind(this));
 					
 					$message = WCF.Language.get('wcf.message.autosave.restored');
-					
-					$autosaveNotice.addClass('redactorAutosaveNoticeRestore');
+					$autosaveNotice.addClass('redactorAutosaveNoticeIcons');
 					
 					var $uuid = '';
 					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), (function(data) {
@@ -479,6 +523,10 @@ RedactorPlugins.wutil = function() {
 			
 			$autosaveNotice.children('span.redactorAutosaveMessage').text($message);
 			$autosaveNotice.addClass('open');
+			
+			if (type !== 'saved') {
+				WCF.DOMNodeInsertedHandler.execute();
+			}
 		},
 		
 		/**
