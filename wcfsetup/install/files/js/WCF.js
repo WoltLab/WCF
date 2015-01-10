@@ -4651,7 +4651,7 @@ WCF.Template = Class.extend({
 		})
 		// {lang}foo{/lang}
 		.replace(/\{lang\}(.+?)\{\/lang\}/g, function(_, content) {
-			return "' + WCF.Language.get('" + unescape(content) + "', v) + '";
+			return "' + WCF.Language.get('" + content + "', v) + '";
 		})
 		// {include}
 		.replace(/\{include (.+?)\}/g, function(_, content) {
