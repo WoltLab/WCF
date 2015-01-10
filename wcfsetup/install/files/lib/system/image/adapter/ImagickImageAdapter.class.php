@@ -187,24 +187,27 @@ class ImagickImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($string, $x, $y, $opacity) {
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1) {
 		$draw = new \ImagickDraw();
 		$draw->setStrokeOpacity($opacity);
 		$draw->setFillColor($this->color);
 		$draw->setTextAntialias(true);
+		$draw->setFont($font);
+		$draw->setFontSize($size);
 		
 		// draw text
-		$draw->annotation($x, $y, $string);
+		$draw->annotation($x, $y, $text);
 		$this->imagick->drawImage($draw);
 	}
 	
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
 	 */
-	public function drawTextRelative($text, $position, $margin, $opacity) {
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1) {
 		$draw = new \ImagickDraw();
-		$draw->setStrokeOpacity($opacity);
-		$metrics = $this->imagick->queryFontMetrics($draw, $string);
+		$draw->setFont($font);
+		$draw->setFontSize($size);
+		$metrics = $this->imagick->queryFontMetrics($draw, $text);
 		
 		// calculate x coordinate
 		$x = 0;
@@ -251,7 +254,7 @@ class ImagickImageAdapter implements IImageAdapter {
 		}
 		
 		// draw text
-		$this->drawText($string, $x, $y);
+		$this->drawText($text, $x + $offsetX, $y + $offsetY, $font, $size, $opacity);
 	}
 	
 	/**

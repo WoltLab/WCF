@@ -84,15 +84,16 @@ interface IImageAdapter {
 	/**
 	 * Draws a line of text, overwrites image resource within instance.
 	 * 
-	 * @param	string		$string
+	 * @param	string		$text
 	 * @param	integer		$x
 	 * @param	integer		$y
+	 * @param	string		$font		path to TrueType font file
+	 * @param	integer		$size		font size
 	 * @param	float		$opacity
-	 * 
 	 * @see		\wcf\system\image\adapter\IImageAdapter::getImage()
 	 * @see		\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
-	public function drawText($string, $x, $y, $opacity);
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1);
 	
 	/**
 	 * Draws (multiple lines of) text on the image at the given relative position
@@ -101,9 +102,13 @@ interface IImageAdapter {
 	 * @param	string		$text
 	 * @param	string		$position
 	 * @param	integer		$margin		in pixels
+	 * @param	integer		$offsetX
+	 * @param	integer		$offsetY
+	 * @param	string		$font		path to TrueType font file
+	 * @param	integer		$size		font size
 	 * @param	float		$opacity
 	 */
-	public function drawTextRelative($text, $position, $margin, $opacity);
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1);
 	
 	/**
 	 * Sets active color.

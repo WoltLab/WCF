@@ -51,12 +51,6 @@ class GDImageAdapter implements IImageAdapter {
 	protected $width = 0;
 	
 	/**
-	 * value of the font parameter of gd functions
-	 * @var	integer
-	 */
-	const FONT = 3;
-	
-	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::load()
 	 */
 	public function load($image, $type = '') {
@@ -191,81 +185,73 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($string, $x, $y, $opacity) {
-		if (!StringUtil::isUTF8($string)) {
-			// GD is buggy with UTF-8
-			throw new SystemException("Only UTF-8 encoded text can be written onto images");
-		}
-		
-		// convert UTF-8 characters > 127 to their numeric representation, e.g. A -> &#65;
-		// todo: $string = mb_encode_numericentity($string, array(0x0, 0xFFFF, 0, 0xFFF), 'UTF-8');
-		
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1) {
 		// set opacity
 		$color = imagecolorallocatealpha($this->image, $this->colorData['red'], $this->colorData['green'], $this->colorData['blue'], (1 - $opacity) * 127);
 		
-		imageString($this->image, self::FONT, $x, $y, $string, $color);
+		// draw text
+		imagettftext($this->image, $size, 0, $x, $y, $color, $font, $text);
 	}
 	
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
 	 */
-	public function drawTextRelative($text, $position, $margin, $opacity) {
-		// split text into multiple lines to add each line separately
-		$lines = explode('\n', StringUtil::unifyNewlines($text));
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1) {
+		// split text into multiple lines
+		$lines = explode("\n", StringUtil::unifyNewlines($text));
 		
-		$characterWidth = imagefontwidth(self::FONT);
-		$lineHeight = imagefontheight(self::FONT);
-		$textHeight = $lineHeight * count($lines);
+		// calc text width, height and first line height
+		$box = imagettfbbox($size, 0, $font, $text);
+		$firstLineBox = imagettfbbox($size, 0, $font, $lines[0]);
+		$textWidth = abs($box[0] - $box[2]);
+		$textHeight = abs($box[7] - $box[1]);
+		$firstLineHeight = abs($firstLineBox[7] - $firstLineBox[1]);
 		
-		foreach ($lines as $key => $line) {
-			$lineWidth = mb_strlen($line) * $characterWidth;
-			
-			// calculate x coordinate
-			$x = 0;
-			switch ($position) {
-				case 'topLeft':
-				case 'middleLeft':
-				case 'bottomLeft':
-					$x = $margin;
+		// calculate x coordinate
+		$x = 0;
+		switch ($position) {
+			case 'topLeft':
+			case 'middleLeft':
+			case 'bottomLeft':
+				$x = $margin;
 				break;
-				
-				case 'topCenter':
-				case 'middleCenter':
-				case 'bottomCenter':
-					$x = floor(($this->getWidth() - $lineWidth) / 2);
+		
+			case 'topCenter':
+			case 'middleCenter':
+			case 'bottomCenter':
+				$x = floor(($this->getWidth() - $textWidth) / 2);
 				break;
-				
-				case 'topRight':
-				case 'middleRight':
-				case 'bottomRight':
-					$x = $this->getWidth() - $lineWidth - $margin;
+		
+			case 'topRight':
+			case 'middleRight':
+			case 'bottomRight':
+				$x = $this->getWidth() - $textWidth - $margin;
 				break;
-			}
-			
-			// calculate y coordinate
-			$y = 0;
-			switch ($position) {
-				case 'topLeft':
-				case 'topCenter':
-				case 'topRight':
-					$y = $margin + $key * $lineHeight;
-				break;
-				
-				case 'middleLeft':
-				case 'middleCenter':
-				case 'middleRight':
-					$y = floor(($this->getHeight() - $textHeight) / 2) + $key * $lineHeight;
-				break;
-				
-				case 'bottomLeft':
-				case 'bottomCenter':
-				case 'bottomRight':
-					$y = $this->getHeight() - $textHeight + $key * $lineHeight - $margin;
-				break;
-			}
-			
-			$this->drawText($line, $x, $y, $opacity);
 		}
+			
+		// calculate y coordinate
+		$y = 0;
+		switch ($position) {
+			case 'topLeft':
+			case 'topCenter':
+			case 'topRight':
+				$y = $margin + $firstLineHeight;
+				break;
+		
+			case 'middleLeft':
+			case 'middleCenter':
+			case 'middleRight':
+				$y = floor(($this->getHeight() - $textHeight) / 2) + $firstLineHeight;
+				break;
+		
+			case 'bottomLeft':
+			case 'bottomCenter':
+			case 'bottomRight':
+				$y = $this->getHeight() - $textHeight + $firstLineHeight - $margin;
+				break;
+		}
+		
+		$this->drawText($text, $x + $offsetX, $y + $offsetY, $font, $size, $opacity);
 	}
 	
 	/**

@@ -128,7 +128,7 @@ class ImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($string, $x, $y, $opacity) {
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1) {
 		if (!$this->adapter->hasColor()) {
 			throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
 		}
@@ -138,13 +138,13 @@ class ImageAdapter implements IImageAdapter {
 			throw new SystemException("Invalid opacity value given.");
 		}
 		
-		$this->adapter->drawText($string, $x, $y, $opacity);
+		$this->adapter->drawText($text, $x, $y, $font, $size, $opacity);
 	}
 	
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
 	 */
-	public function drawTextRelative($text, $position, $margin, $opacity) {
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1) {
 		if (!$this->adapter->hasColor()) {
 			throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
 		}
@@ -164,7 +164,7 @@ class ImageAdapter implements IImageAdapter {
 			throw new SystemException("Invalid opacity value given.");
 		}
 		
-		$this->adapter->drawTextRelative($text, $position, $margin, $opacity);
+		$this->adapter->drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity);
 	}
 	
 	/**
