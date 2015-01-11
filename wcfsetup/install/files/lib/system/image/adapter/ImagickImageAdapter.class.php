@@ -197,7 +197,18 @@ class ImagickImageAdapter implements IImageAdapter {
 		
 		// draw text
 		$draw->annotation($x, $y, $text);
-		$this->imagick->drawImage($draw);
+		
+		if ($this->imagick->getImageFormat() == 'GIF') {
+			$this->imagick = $this->imagick->coalesceImages();
+				
+			do {
+				$this->imagick->drawImage($draw);
+			}
+			while ($this->imagick->nextImage());
+		}
+		else {
+			$this->imagick->drawImage($draw);
+		}
 	}
 	
 	/**
@@ -353,8 +364,19 @@ class ImagickImageAdapter implements IImageAdapter {
 		}
 		
 		$overlayImage->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $opacity, \Imagick::CHANNEL_OPACITY);
-		$this->imagick->compositeImage($overlayImage, \Imagick::COMPOSITE_OVER, $x, $y);
-		$this->imagick = $this->imagick->flattenImages();
+		
+		if ($this->imagick->getImageFormat() == 'GIF') {
+			$this->imagick = $this->imagick->coalesceImages();
+		
+			do {
+				$this->imagick->compositeImage($overlayImage, \Imagick::COMPOSITE_OVER, $x, $y);
+			}
+			while ($this->imagick->nextImage());
+		}
+		else {
+			$this->imagick->compositeImage($overlayImage, \Imagick::COMPOSITE_OVER, $x, $y);
+			$this->imagick = $this->imagick->flattenImages();
+		}
 	}
 	
 	/**
