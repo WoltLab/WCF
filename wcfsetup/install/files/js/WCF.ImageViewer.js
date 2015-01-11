@@ -83,6 +83,11 @@ WCF.ImageViewer = Class.extend({
 		
 		$image.removeClass('jsResizeImage');
 		
+		// check if image falls within the signature, in that case ignore it
+		if ($image.closest('.messageSignature').length) {
+			return;
+		}
+		
 		// setting img { max-width: 100% } causes the image to fit within boundaries, but does not reveal the original dimenions
 		var $imageObject = new Image();
 		$imageObject.src = $image.attr('src');
