@@ -185,10 +185,7 @@ RedactorPlugins.wupload = function() {
 				this.wupload._revertDropArea(undefined, $containerID);
 				
 				for (var $i = 0; $i < event.dataTransfer.files.length; $i++) {
-					var $file = event.dataTransfer.files[$i];
-					if ($file.type) {
-						WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'upload_' + $containerID, { file: $file });
-					}
+					WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'upload_' + $containerID, { file: event.dataTransfer.files[$i] });
 				}
 			}
 		},
