@@ -504,7 +504,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/ ?<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, ' $1 '); // chrome, ie
 			
 			// attachments
-			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment[^"]*" data-attachment-id="(\d+)"( style="([^"]+)")?>/gi, function(match, attachmentID, styleTag, style) {
+			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment[^"]*" data-attachment-id="(\d+)".*?( style="([^"]+)")?.*?>/gi, function(match, attachmentID, styleTag, style) {
 				var $float = 'none';
 				var $width = null;
 				
@@ -533,7 +533,7 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// [img]
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="([^"]+)".*?>/gi, function(match, quotationMarks, source, style) {
+			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?style="([^"]+)".*?>/gi, function(match, quotationMarks, source, style) {
 				var $float = 'none';
 				var $width = 0;
 				
@@ -557,6 +557,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				return "[img]" + source + "[/img]";
 			});
+			
 			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
 			
 			// [*]
