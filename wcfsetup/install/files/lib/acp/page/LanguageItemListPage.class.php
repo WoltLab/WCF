@@ -131,7 +131,7 @@ class LanguageItemListPage extends AbstractPage {
 		if ($this->languageItem) $this->languageItemList->getConditionBuilder()->add('languageItem LIKE ?', array($this->languageItem.'%'));
 		if ($this->languageItemValue) $this->languageItemList->getConditionBuilder()->add('((languageUseCustomValue = 0 AND languageItemValue LIKE ?) OR languageCustomItemValue LIKE ?)', array('%'.$this->languageItemValue.'%', '%'.$this->languageItemValue.'%'));
 		if ($this->hasCustomValue) $this->languageItemList->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
-		if (!$this->languageCategoryID) $this->languageItemList->sqlLimit = 100;
+		$this->languageItemList->sqlLimit = 100;
 		
 		if (!empty($_POST)) {
 			$this->count = $this->languageItemList->countObjects();

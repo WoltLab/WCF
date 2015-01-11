@@ -15,7 +15,7 @@
 {include file='formError'}
 
 {if $items}
-	<form action="{link controller='TagList'}{/link}">
+	<form action="{link controller='TagList'}{/link}" method="post">
 		<div class="container containerPadding marginTop">
 			<fieldset>
 				<legend>{lang}wcf.acp.tag.list.search{/lang}</legend>

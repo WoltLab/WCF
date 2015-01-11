@@ -33,6 +33,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.wmonkeypatch.inline();
 			this.wmonkeypatch.insert();
 			this.wmonkeypatch.keydown();
+			this.wmonkeypatch.keyup();
 			this.wmonkeypatch.link();
 			this.wmonkeypatch.modal();
 			this.wmonkeypatch.paste();
@@ -648,6 +649,21 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				
 				$mpSetupBuffer.call(this, e, key);
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'keyup' module.
+		 * 
+		 *  - prevent divs inside a quote being replace with paragraphs
+		 */
+		keyup: function() {
+			// keyup.replaceToParagraph
+			var $mpReplaceToParagraph = this.keyup.replaceToParagraph;
+			this.keyup.replaceToParagraph = (function(clone) {
+				if (this.keyup.current.tagName !== 'DIV' || this.keyup.current.parentElement.tagName !== 'BLOCKQUOTE') {
+					$mpReplaceToParagraph.call(this, clone);
+				}
 			}).bind(this);
 		},
 		

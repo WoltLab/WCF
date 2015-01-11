@@ -122,6 +122,8 @@
 			{/if}
 			
 			{event name='javascriptInit'}
+			
+			$('form[method=get]').attr('method', 'post');
 		});
 		//]]>
 	</script>

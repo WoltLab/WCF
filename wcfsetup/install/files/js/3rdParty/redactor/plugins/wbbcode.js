@@ -504,7 +504,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/ ?<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, ' $1 '); // chrome, ie
 			
 			// attachments
-			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment[^"]*" data-attachment-id="(\d+)"( style="([^"]+)")?>/gi, function(match, attachmentID, styleTag, style) {
+			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment[^"]*" data-attachment-id="(\d+)".*?( style="([^"]+)")?.*?>/gi, function(match, attachmentID, styleTag, style) {
 				var $float = 'none';
 				var $width = null;
 				
@@ -533,7 +533,7 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// [img]
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="([^"]+)".*?>/gi, function(match, quotationMarks, source, style) {
+			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?style="([^"]+)".*?>/gi, function(match, quotationMarks, source, style) {
 				var $float = 'none';
 				var $width = 0;
 				
@@ -557,6 +557,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				return "[img]" + source + "[/img]";
 			});
+			
 			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
 			
 			// [*]
@@ -1417,7 +1418,7 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			this.selection.get();
-			var $current = $(this.selection.getCurrent());
+			var current = this.selection.getCurrent();
 			var $parent = this.selection.getParent();
 			$parent = ($parent) ? $($parent) : $parent;
 			var $quote = ($parent) ? $parent.closest('blockquote.quoteBox', this.$editor.get()[0]) : { length: 0 };
@@ -1426,41 +1427,55 @@ RedactorPlugins.wbbcode = function() {
 				// backspace key
 				case $.ui.keyCode.BACKSPACE:
 					if (this.wutil.isCaret()) {
+						var $preventAndSelectQuote = false;
+						
 						if ($quote.length) {
 							// check if quote is empty
 							var $isEmpty = true;
-							$quote.children('div').each(function() {
-								if ($(this).text().replace(/\u200B/, '').length) {
-									$isEmpty = false;
-									return false;
+							for (var $i = 0; $i < $quote[0].children.length; $i++) {
+								var $child = $quote[0].children[$i];
+								if ($child.tagName === 'DIV') {
+									if ($child.textContent.replace(/\u200b/, '').length) {
+										$isEmpty = false;
+										break;
+									}
 								}
-							});
+							}
 							
 							if ($isEmpty) {
-								// expand selection and prevent delete
-								var $selection = window.getSelection();
-								if ($selection.rangeCount) $selection.removeAllRanges();
-								
-								var $quoteRange = document.createRange();
-								$quoteRange.selectNode($quote[0]);
-								$selection.addRange($quoteRange);
-								
-								data.cancel = true;
+								$preventAndSelectQuote = true;
 							}
+						}
+						else if (current.previousElementSibling && current.previousElementSibling.tagName === 'BLOCKQUOTE') {
+							$quote = current.previousElementSibling;
+							$preventAndSelectQuote = true;
+						}
+						
+						if ($preventAndSelectQuote) {
+							// expand selection and prevent delete
+							var $selection = window.getSelection();
+							if ($selection.rangeCount) $selection.removeAllRanges();
+							
+							var $quoteRange = document.createRange();
+							$quoteRange.selectNode($quote[0] || $quote);
+							$selection.addRange($quoteRange);
+							
+							data.cancel = true;
 						}
 					}
 				break;
 				
 				// delete key
 				case $.ui.keyCode.DELETE:
-					if (this.wutil.isCaret()) {
-						if (this.wutil.isEndOfElement($current[0]) && $current.next('blockquote').length) {
+					if (this.wutil.isCaret() && this.wutil.isEndOfElement(current)) {
+						var $next = current.nextElementSibling;
+						if ($next && $next.tagName === 'BLOCKQUOTE') {
 							// expand selection and prevent delete
 							var $selection = window.getSelection();
 							if ($selection.rangeCount) $selection.removeAllRanges();
 							
 							var $quoteRange = document.createRange();
-							$quoteRange.selectNode($current.next()[0]);
+							$quoteRange.selectNode($next);
 							$selection.addRange($quoteRange);
 							
 							data.cancel = true;
@@ -1470,6 +1485,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				// arrow down
 				case $.ui.keyCode.DOWN:
+					var $current = $(current);
 					if ($current.next('blockquote').length) {
 						this.caret.setStart($current.next().children('div:first'));
 						
@@ -1513,16 +1529,13 @@ RedactorPlugins.wbbcode = function() {
 						return;
 					}
 					
-					var $container = $current.closest('div', $quote[0]);
+					var $container = $(current).closest('div', $quote[0]);
 					var $prev = $container.prev();
 					if ($prev[0].tagName === 'DIV') {
 						return;
 					}
 					else if ($prev[0].tagName === 'BLOCKQUOTE') {
-						// TODO
-						// set focus to quote text rather than the element itself
 						return;
-						//this.selectionEnd($prev.find('> div > div:last'));
 					}
 					
 					var $previousElement = $quote.prev();
