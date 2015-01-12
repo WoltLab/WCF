@@ -226,6 +226,9 @@ RedactorPlugins.wbbcode = function() {
 			// remove data-redactor-tag="" attribute
 			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
 			
+			// remove rel="" attribute
+			html = html.replace(/(<[^>]+?) rel="[^"]+"/g, '$1');
+			
 			// remove zero-width space sometimes slipping through
 			html = html.replace(/&#(8203|x200b);/g, '');
 			
