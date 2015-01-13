@@ -1449,9 +1449,23 @@ RedactorPlugins.wbbcode = function() {
 								$preventAndSelectQuote = true;
 							}
 						}
-						else if (current.previousElementSibling && current.previousElementSibling.tagName === 'BLOCKQUOTE') {
-							$quote = current.previousElementSibling;
-							$preventAndSelectQuote = true;
+						else {
+							var $scope = current;
+							if ($scope.nodeType === Node.TEXT_NODE) {
+								if (this.range.startOffset === 0 || (this.range.startOffset === 1 && $scope.textContent === '\u200b')) {
+									if (!$scope.previousSibling) {
+										$scope = $scope.parentElement;
+									}
+								}
+							}
+							
+							if ($scope.nodeType === Node.ELEMENT_NODE) {
+								var $previous = $scope.previousSibling;
+								if ($previous && $previous.nodeType === Node.ELEMENT_NODE && $previous.tagName === 'BLOCKQUOTE') {
+									$quote = $previous;
+									$preventAndSelectQuote = true;
+								}
+							}
 						}
 						
 						if ($preventAndSelectQuote) {
