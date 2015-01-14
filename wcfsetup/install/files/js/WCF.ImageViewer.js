@@ -595,7 +595,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		// meta data
 		var $title = WCF.String.escapeHTML($image.image.title);
-		if ($image.image.link) $title = '<a href="' + $image.image.link + '">' + $image.image.title + '</a>';
+		if ($image.image.link) $title = '<a href="' + $image.image.link + '">' + $title + '</a>';
 		this._ui.header.find('> div > h1').html($title);
 		
 		var $seriesTitle = ($image.series && $image.series.title ? WCF.String.escapeHTML($image.series.title) : '');
