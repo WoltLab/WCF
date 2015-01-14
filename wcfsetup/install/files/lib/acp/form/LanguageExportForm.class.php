@@ -4,6 +4,7 @@ use wcf\data\language\LanguageEditor;
 use wcf\data\package\Package;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -12,7 +13,7 @@ use wcf\util\ArrayUtil;
  * Shows the language export form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -71,13 +72,7 @@ class LanguageExportForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		// get language editor object
 		if (isset($_REQUEST['id'])) $this->languageID = intval($_REQUEST['id']);
-		$language = LanguageFactory::getInstance()->getLanguage($this->languageID);
-		if ($language === null) {
-			throw new IllegalLinkException();
-		}
-		$this->language = new LanguageEditor($language);
 	}
 	
 	/**
@@ -92,9 +87,21 @@ class LanguageExportForm extends AbstractForm {
 			if (isset($this->selectedPackages[0])) unset($this->selectedPackages[0]);
 		}
 		
-		if (isset($_POST['exportCustomValues'])) {
-			$this->exportCustomValues = intval($_POST['exportCustomValues']);
+		if (isset($_POST['exportCustomValues'])) $this->exportCustomValues = intval($_POST['exportCustomValues']);
+		if (isset($_POST['languageID'])) $this->languageID = intval($_POST['languageID']);
+	}
+	
+	/**
+	 * @see	\wcf\form\IForm::validate()
+	 */
+	public function validate() {
+		parent::validate();
+		
+		$language = LanguageFactory::getInstance()->getLanguage($this->languageID);
+		if ($language === null) {
+			throw new UserInputException('languageID', 'noValidSelection');
 		}
+		$this->language = new LanguageEditor($language);
 	}
 	
 	/**
@@ -102,6 +109,14 @@ class LanguageExportForm extends AbstractForm {
 	 */
 	public function readData() {
 		parent::readData();
+		
+		if (empty($_POST) && $this->languageID) {
+			$language = LanguageFactory::getInstance()->getLanguage($this->languageID);
+			if ($language === null) {
+				throw new IllegalLinkException();
+			}
+			$this->language = new LanguageEditor($language);
+		}
 		
 		$this->readPackages();
 	}

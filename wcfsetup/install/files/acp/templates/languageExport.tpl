@@ -10,21 +10,30 @@
 	<nav>
 		<ul>
 			<li><a href="{link controller='LanguageList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
-				
+			
 			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
 </div>
 
-<form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport' id=$languageID}{/link}">
+<form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.language.export{/lang}</legend>
 			
-			<dl>
+			<dl{if $errorField == 'languageID'} class="formError"{/if}>
 				<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
 				<dd>
 					{htmlOptions options=$languages selected=$languageID name='languageID' id='languageID'}
+					{if $errorField == 'languageID'}
+						<small class="innerError">
+							{if $errorType == 'noValidSelection'}
+								{lang}wcf.global.form.error.noValidSelection{/lang}
+							{else}
+								{lang}wcf.acp.language.languageID.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
 				</dd>
 			</dl>
 			
