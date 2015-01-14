@@ -14,14 +14,25 @@ use wcf\system\exception\SystemException;
  */
 class GZipFile extends File {
 	/**
+	 * checks if gz*64 functions are available instead of gz*
+	 * https://bugs.php.net/bug.php?id=53829
+	 * @var	boolean
+	 */
+	protected static $gzopen64 = null;
+	
+	/**
 	 * Opens a gzip file.
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$mode
 	 */
 	public function __construct($filename, $mode = 'wb') {
+		if (self::$gzopen64 === null) {
+			self::$gzopen64 = (function_exists('gzopen64'));
+		}
+		
 		$this->filename = $filename;
-		$this->resource = gzopen($filename, $mode);
+		$this->resource = (self::$gzopen64 ? gzopen64($filename, $mode) : gzopen($filename, $mode));
 		if ($this->resource === false) {
 			throw new SystemException('Can not open file ' . $filename);
 		}
@@ -34,7 +45,11 @@ class GZipFile extends File {
 	 * @param	array		$arguments
 	 */
 	public function __call($function, $arguments) {
-		if (function_exists('gz' . $function)) {
+		if (self::$gzopen64 && function_exists('gz' . $function . '64')) {
+			array_unshift($arguments, $this->resource);
+			return call_user_func_array('gz' . $function . '64', $arguments);
+		}
+		else if (function_exists('gz' . $function)) {
 			array_unshift($arguments, $this->resource);
 			return call_user_func_array('gz' . $function, $arguments);
 		}
