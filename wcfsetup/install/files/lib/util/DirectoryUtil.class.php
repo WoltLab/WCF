@@ -294,7 +294,7 @@ final class DirectoryUtil {
 				@rmdir($filename);
 			}
 			else if ($obj->isFile()) {
-				unlink($filename);
+				@unlink($filename);
 			}
 		}
 		
