@@ -158,7 +158,7 @@ class LanguageExportForm extends AbstractForm {
 			FROM		wcf".WCF_N."_package
 			ORDER BY	packageName";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->languageID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			$row['packageNameLength'] = mb_strlen(WCF::getLanguage()->get($row['packageName']));
 			$this->packages[] = new Package(null, $row);
