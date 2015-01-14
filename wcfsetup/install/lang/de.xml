@@ -1515,6 +1515,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einer anderen Templategruppe verwendet.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[Sie haben einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[Das angegebene Verzeichnis wird bereits von einer anderen Templategruppe verwendet.]]></item>
+		<item name="wcf.acp.template.group.parentTemplateGroupID.error.notValid"><![CDATA[Die ausgewählte übergeordnete Templategruppe ist ungültig.]]></item>
 		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Wollen Sie die Templategruppe „{$templateGroup->templateGroupName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template-Quelltext]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einem anderen Template verwendet.]]></item>

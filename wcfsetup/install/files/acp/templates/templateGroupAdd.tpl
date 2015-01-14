@@ -33,6 +33,15 @@
 							<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
 							{htmlOptions options=$availableTemplateGroups selected=$parentTemplateGroupID disableEncoding=true}
 						</select>
+						{if $errorField == 'parentTemplateGroupID'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+								{else}
+								{lang}wcf.acp.template.group.parentTemplateGroupID.error.{@$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 					</dd>
 				</dl>
 			{/if}

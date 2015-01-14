@@ -75,6 +75,10 @@ class TemplateGroupAddForm extends AbstractForm {
 		
 		$this->validateName();
 		$this->validateFolderName();
+		
+		if ($this->parentTemplateGroupID && !isset($this->availableTemplateGroups[$this->parentTemplateGroupID])) {
+			throw new UserInputException('parentTemplateGroupID', 'notValid');
+		}
 	}
 	
 	/**
