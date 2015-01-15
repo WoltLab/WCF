@@ -144,8 +144,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public function save() {
 		parent::save();
 		
-		// get default group
-		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
 		$optionValues = $this->optionHandler->save();
 		
 		$data = array(
