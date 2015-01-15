@@ -136,11 +136,14 @@ WCF.ColorPicker = Class.extend({
 		
 		// set 'current' color
 		var $rgb = this.hsvToRgb(this._hsv.h, this._hsv.s, this._hsv.v);
-		this._oldColor.css({ backgroundColor: 'rgb(' + $rgb.r + ', ' + $rgb.g + ', ' + $rgb.b + ')' });
+		this._oldColor.css({ backgroundColor: 'rgba(' + $rgb.r + ', ' + $rgb.g + ', ' + $rgb.b + ', ' + (this._rgba.a.val() / 100) + ')' });
 		
 		this._dialog.wcfDialog({
 			'title': WCF.Language.get('wcf.style.colorPicker')
 		});
+		
+		// set default focus
+		this._hex.focus();
 	},
 	
 	/**
@@ -230,8 +233,8 @@ WCF.ColorPicker = Class.extend({
 		// new and current color
 		$('<small>' + WCF.Language.get('wcf.style.colorPicker.new') + '</small>').appendTo($form);
 		var $colors = $('<ul class="colors" />').appendTo($form);
-		this._newColor = $('<li class="new" />').appendTo($colors);
-		this._oldColor = $('<li class="old" />').appendTo($colors);
+		this._newColor = $('<li class="new"><span /></li>').appendTo($colors).children('span');
+		this._oldColor = $('<li class="old"><span /></li>').appendTo($colors).children('span');
 		$('<small>' + WCF.Language.get('wcf.style.colorPicker.current') + '</small>').appendTo($form);
 		
 		// RGBa input
@@ -274,6 +277,11 @@ WCF.ColorPicker = Class.extend({
 				self._hex.attr('maxlength', '6').val($value);
 			}, 50);
 		});
+		
+		// select text in input boxes on user focus
+		$form.find('input').focus(function(){
+			this.select();
+		});
 	},
 	
 	/**
@@ -309,7 +317,7 @@ WCF.ColorPicker = Class.extend({
 		}
 		
 		var $element = $('#' + this._elementID);
-		$element.data('hsv', $hsv).css({ backgroundColor: 'rgb(' + $rgb.r + ', ' + $rgb.g + ', ' + $rgb.b + ')' }).data('alpha', parseInt(this._rgba.a.val()));
+		$element.data('hsv', $hsv).css({ backgroundColor: 'rgba(' + $rgb.r + ', ' + $rgb.g + ', ' + $rgb.b + ', ' + (this._rgba.a.val() / 100) + ')' }).data('alpha', parseInt(this._rgba.a.val()));
 		$element.data('rgb', {
 			r: this._rgba.r.val(),
 			g: this._rgba.g.val(),
@@ -444,6 +452,10 @@ WCF.ColorPicker = Class.extend({
 		// calculate RGB values from HSV
 		if (rgb === null) {
 			rgb = this.hsvToRgb(this._hsv.h, this._hsv.s, this._hsv.v);
+			
+			if (this._rgba.a.val() == 0) {
+				rgb.a = 100;
+			}
 		}
 		
 		// add alpha channel
@@ -488,7 +500,7 @@ WCF.ColorPicker = Class.extend({
 		});
 				
 		// update 'new' color
-		this._newColor.css({ backgroundColor: 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')' });
+		this._newColor.css({ backgroundColor: 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + (rgb.a / 100) + ')' });
 		
 		// adjust gradient color
 		var $rgb = this.hsvToRgb(this._hsv.h, 100, 100);
