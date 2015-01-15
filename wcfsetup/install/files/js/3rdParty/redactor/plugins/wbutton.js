@@ -145,7 +145,8 @@ RedactorPlugins.wbutton = function() {
 			var $bbcode = this._bbcodes[buttonName].name;
 			var $eventData = {
 				buttonName: buttonName,
-				cancel: false
+				cancel: false,
+				redactor: this
 			};
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'insertBBCode_' + $bbcode + '_' + this.$textarea.wcfIdentify(), $eventData);
