@@ -95,7 +95,7 @@ WCF.ImageViewer = Class.extend({
 		var $maxWidth = $image.closest('div.messageText').width();
 		if ($maxWidth < $imageObject.width) {
 			if (!$image.parents('a').length) {
-				$image.wrap('<a href="' + $image.attr('src') + '" class="jsImageViewerEnabled" />');
+				$image.wrap('<a href="' + $image.attr('src') + '" class="jsImageViewerEnabled embeddedImageLink" />');
 				$image.parent().click($.proxy(this._click, this));
 			}
 		}
