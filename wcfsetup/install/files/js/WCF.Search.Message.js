@@ -154,7 +154,7 @@ WCF.Search.Message.SearchArea = Class.extend({
 	 */
 	_callback: function(data) {
 		this._searchArea.find('input[type=search]').val(data.label);
-		this._searchArea.find('input[type=search]').focus();
+		this._searchArea.find('form').submit();
 		return false;
 	}
 });
