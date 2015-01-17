@@ -17,8 +17,6 @@ if (!RedactorPlugins) var RedactorPlugins = {};
 RedactorPlugins.wmonkeypatch = function() {
 	"use strict";
 	
-	var $rangeBeforeRemoveMarker = null;
-	
 	return {
 		/**
 		 * Initializes the RedactorPlugins.wmonkeypatch plugin.
