@@ -17,6 +17,8 @@ if (!RedactorPlugins) var RedactorPlugins = {};
 RedactorPlugins.wmonkeypatch = function() {
 	"use strict";
 	
+	var $rangeBeforeRemoveMarker = null;
+	
 	return {
 		/**
 		 * Initializes the RedactorPlugins.wmonkeypatch plugin.
@@ -868,6 +870,8 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - remove superflous empty text nodes caused by the selection markers (#2083)
 		 */
 		selection: function() {
+			this.selection.implicitRange = null;
+			
 			var $removeEmptyTextNodes = (function(index, marker) {
 				var $nextSibling = marker.nextSibling;
 				if ($nextSibling !== null && $nextSibling.nodeType === Node.TEXT_NODE && $nextSibling.length === 0) {
@@ -882,7 +886,12 @@ RedactorPlugins.wmonkeypatch = function() {
 				$(marker).remove();
 				
 				if ($node !== null) {
-					this.caret.set($node, $node.length, $node, $node.length);
+					this.selection.implicitRange = document.createRange();
+					this.selection.implicitRange.setStart($node, $node.length);
+					this.selection.implicitRange.setEnd($node, $node.length);
+				}
+				else {
+					this.selection.implicitRange = null;
 				}
 			}).bind(this);
 			

@@ -60,12 +60,17 @@ RedactorPlugins.wutil = function() {
 		
 		/**
 		 * Saves current caret position.
+		 * 
+		 * @param	boolean		discardSavedIfEmpty
 		 */
-		saveSelection: function() {
+		saveSelection: function(discardSavedIfEmpty) {
 			var $selection = getSelection();
 			
 			if ($selection.rangeCount) {
 				this.wutil._range = $selection.getRangeAt(0);
+			}
+			else if (discardSavedIfEmpty) {
+				this.wutil._range = null;
 			}
 		},
 		
@@ -90,7 +95,16 @@ RedactorPlugins.wutil = function() {
 		 * Clears the current selection.
 		 */
 		clearSelection: function() {
-			this._wutil.range = null;
+			this.wutil._range = null;
+		},
+		
+		/**
+		 * Returns stored selection or null.
+		 * 
+		 * @return	Range
+		 */
+		getSelection: function() {
+			return this.wutil._range;
 		},
 		
 		/**

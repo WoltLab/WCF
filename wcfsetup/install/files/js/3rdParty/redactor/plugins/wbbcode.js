@@ -1450,9 +1450,10 @@ RedactorPlugins.wbbcode = function() {
 							}
 						}
 						else {
-							var $scope = current;
+							var $range = (this.selection.implicitRange === null) ? this.range : this.selection.implicitRange;
+							var $scope = $range.startContainer;
 							if ($scope.nodeType === Node.TEXT_NODE) {
-								if (this.range.startOffset === 0 || (this.range.startOffset === 1 && $scope.textContent === '\u200b')) {
+								if ($range.startOffset === 0 || ($range.startOffset === 1 && $scope.textContent === '\u200b')) {
 									if (!$scope.previousSibling) {
 										$scope = $scope.parentElement;
 									}
