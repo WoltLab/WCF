@@ -178,8 +178,6 @@ class RegisterForm extends UserAddForm {
 			
 			if (WCF::getSession()->getVar('noRegistrationCaptcha')) {
 				$this->captchaObjectType = null;
-				
-				WCF::getSession()->unregister('noRegistrationCaptcha');
 			}
 		}
 		
@@ -497,6 +495,10 @@ class RegisterForm extends UserAddForm {
 		
 		if ($this->captchaObjectType) {
 			$this->captchaObjectType->getProcessor()->reset();
+		}
+		
+		if (WCF::getSession()->getVar('noRegistrationCaptcha')) {
+			WCF::getSession()->unregister('noRegistrationCaptcha');
 		}
 		
 		// login user
