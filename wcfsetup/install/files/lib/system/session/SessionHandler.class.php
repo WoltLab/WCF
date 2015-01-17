@@ -705,8 +705,10 @@ class SessionHandler extends SingletonFactory {
 			//
 			case 0:
 				// delete virtual session
-				$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
-				$virtualSessionEditor->delete();
+				if ($this->virtualSession) {
+					$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+					$virtualSessionEditor->delete();
+				}
 				
 				// there are still other virtual sessions, create a new session
 				if (SessionVirtual::countVirtualSessions($this->session->sessionID)) {
