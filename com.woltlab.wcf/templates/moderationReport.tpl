@@ -125,7 +125,7 @@
 
 {include file='__commentJavaScript' commentContainerID='moderationQueueCommentList'}
 
-<div class="container containerList marginTop blogEntryComments">
+<div class="container containerList marginTop moderationComments">
 	<ul id="moderationQueueCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$queueID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{if $queue->comments}{@$commentList->countObjects()}{else}0{/if}" data-last-comment-time="{@$lastCommentTime}">
 		{include file='commentList'}
 	</ul>
