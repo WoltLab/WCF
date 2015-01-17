@@ -103,6 +103,48 @@ RedactorPlugins.wmonkeypatch = function() {
 					this.wutil.saveSelection();
 				}
 			}).bind(this));
+			
+			var $setCaretBeforeOrAfter = (function(event, blockquote) {
+				var $offset = $(blockquote).offset();
+				if (event.pageY <= $offset.top) {
+					// set caret before
+					if (blockquote.previousElementSibling && blockquote.previousElementSibling.tagName === 'P') {
+						this.caret.setEnd(blockquote.previousElementSibling);
+					}
+					else {
+						this.wutil.setCaretBefore(blockquote);
+					}
+				}
+				else {
+					if (blockquote.nextElementSibling && blockquote.nextElementSibling.tagName === 'P') {
+						this.caret.setEnd(blockquote.nextElementSibling);
+					}
+					else {
+						this.wutil.setCaretAfter(blockquote);
+					}
+				}
+			}).bind(this);
+			
+			this.$editor.on('click.wmonkeypatch', (function(event) {
+				if (event.target === this.$editor[0]) {
+					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
+					if ($range !== null && $range.collapsed) {
+						// clicking on the margin created by <blockquote> will direct the cursor inside the quote
+						var $current = $range.startContainer;
+						while ($current !== null && $current !== this.$editor[0]) {
+							if ($current.nodeType === Node.ELEMENT_NODE) {
+								if ($current.tagName === 'BLOCKQUOTE') {
+									$setCaretBeforeOrAfter(event, $current);
+									
+									return false;
+								}
+							}
+							
+							$current = $current.parentElement;
+						}
+					}
+				}
+			}).bind(this));
 		},
 		
 		/**
