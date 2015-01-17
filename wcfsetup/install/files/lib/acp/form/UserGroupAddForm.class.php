@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\system\exception\UserInputException;
@@ -144,8 +143,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public function save() {
 		parent::save();
 		
-		// get default group
-		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
 		$optionValues = $this->optionHandler->save();
 		
 		$data = array(
