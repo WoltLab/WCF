@@ -104,23 +104,21 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 			}).bind(this));
 			
-			var $setCaretBeforeOrAfter = (function(event, blockquote) {
-				var $offset = $(blockquote).offset();
-				if (event.pageY <= $offset.top) {
-					// set caret before
-					if (blockquote.previousElementSibling && blockquote.previousElementSibling.tagName === 'P') {
-						this.caret.setEnd(blockquote.previousElementSibling);
+			var $setCaretBeforeOrAfter = (function(element, setBefore) {
+				if (setBefore) {
+					if (element.previousElementSibling && element.previousElementSibling.tagName === 'P') {
+						this.caret.setEnd(element.previousElementSibling);
 					}
 					else {
-						this.wutil.setCaretBefore(blockquote);
+						this.wutil.setCaretBefore(element);
 					}
 				}
 				else {
-					if (blockquote.nextElementSibling && blockquote.nextElementSibling.tagName === 'P') {
-						this.caret.setEnd(blockquote.nextElementSibling);
+					if (element.nextElementSibling && element.nextElementSibling.tagName === 'P') {
+						this.caret.setEnd(element.nextElementSibling);
 					}
 					else {
-						this.wutil.setCaretAfter(blockquote);
+						this.wutil.setCaretAfter(element);
 					}
 				}
 			}).bind(this);
@@ -128,14 +126,21 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.$editor.on('click.wmonkeypatch', (function(event) {
 				if (event.target === this.$editor[0]) {
 					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
-					if ($range !== null && $range.collapsed) {
-						// clicking on the margin created by <blockquote> will direct the cursor inside the quote
+					
+					if ($range && $range.collapsed) {
 						var $current = $range.startContainer;
 						while ($current !== null && $current !== this.$editor[0]) {
 							if ($current.nodeType === Node.ELEMENT_NODE) {
-								if ($current.tagName === 'BLOCKQUOTE') {
-									$setCaretBeforeOrAfter(event, $current);
+								if ($current.tagName === 'BLOCKQUOTE' || ($current.tagName === 'DIV' && /\bcodeBox\b/.test($current.className))) {
+									var $offset = $(element).offset();
+									if (event.pageY <= $offset.top) {
+										$setCaretBeforeOrAfter($current, true);
+									}
+									else {
+										$setCaretBeforeOrAfter($current, false);
+									}
 									
+									// stop processing
 									return false;
 								}
 							}
@@ -143,6 +148,28 @@ RedactorPlugins.wmonkeypatch = function() {
 							$current = $current.parentElement;
 						}
 					}
+					
+					var $elements = this.$editor.children('blockquote, div.codeBox');
+					$elements.each(function(index, element) {
+						var $element = $(element);
+						var $offset = $element.offset();
+						
+						if (event.pageY <= $offset.top) {
+							$setCaretBeforeOrAfter(element, true);
+							
+							return false;
+						}
+						else {
+							var $height = $element.outerHeight() + (parseInt($element.css('margin-bottom'), 10) || 0);
+							if ((event.pageY <= $offset.top + $height) || (index + 1) === $elements.length) {
+								$setCaretBeforeOrAfter(element, false);
+								
+								return false;
+							}
+						}
+					});
+					
+					return false;
 				}
 			}).bind(this));
 		},

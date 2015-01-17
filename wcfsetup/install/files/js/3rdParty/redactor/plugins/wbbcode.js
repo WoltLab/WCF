@@ -253,7 +253,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				var $uuid = WCF.getUUID();
 				$cachedCodeListings[$uuid] = {
-					codeContent: codeContent.replace(/<li>/g, '').replace(/<\/li>/g, '\n'),
+					codeContent: codeContent.replace(/<li>/g, '').replace(/<\/li>/g, '\n').replace(/\n$/, ''),
 					filename: $filename.replace(/['"]/g, ''),
 					highlighter: ($highlighter === 'plain' ? '' : $highlighter),
 					lineNumber: (lineNumber > 1 ? lineNumber : 0)
@@ -663,7 +663,7 @@ RedactorPlugins.wbbcode = function() {
 					
 					var $bbcode = '[code' + ($attributes.length ? '=' + $attributes : '') + ']' + listing.codeContent + '[/code]\n';
 					
-					html = html.replace(new RegExp('@@@' + uuid + '@@@', 'g'), $bbcode);
+					html = html.replace(new RegExp('@@@' + uuid + '@@@\n?', 'g'), $bbcode);
 				});
 			}
 			
@@ -1297,7 +1297,6 @@ RedactorPlugins.wbbcode = function() {
 		 * @return	string
 		 */
 		_pasteCallback: function(html) {
-			console.debug(html);
 			// reduce successive <br> by one
 			//html = html.replace(/<br[^>]*>(<br[^>]*>)+/g, '$1');
 			
@@ -1989,6 +1988,7 @@ RedactorPlugins.wbbcode = function() {
 		 * Ensures that there is a paragraph in front of each block-level element because you cannot click in between two of them.
 		 */
 		fixBlockLevelElements: function() {
+			return;
 			var $addSpacing = (function(referenceElement, target) {
 				var $tagName = 'P';
 				
