@@ -8,7 +8,9 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
+use wcf\system\message\censorship\Censorship;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\SingletonFactory;
@@ -18,7 +20,7 @@ use wcf\system\WCF;
  * Provides methods for comment object handling.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.comment
@@ -224,6 +226,21 @@ class CommentHandler extends SingletonFactory {
 			));
 			if (($row = $statement->fetchArray()) !== false) {
 				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', array('lastCommentTime' => $row['time'])));
+			}
+		}
+	}
+	
+	/**
+	 * Enforces the censorship.
+	 * 
+	 * @param	string		$text
+	 */
+	public static function enforceCensorship($text) {
+		// search for censored words
+		if (ENABLE_CENSORSHIP) {
+			$result = Censorship::getInstance()->test($text);
+			if ($result) {
+				throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.censoredWordsFound', array('censoredWords' => $result)));
 			}
 		}
 	}

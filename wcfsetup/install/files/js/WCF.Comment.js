@@ -9,7 +9,7 @@ WCF.Comment = { };
  * Comment support for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Comment.Handler = Class.extend({
@@ -435,7 +435,8 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	jQuery		input
 	 */
 	_save: function(event, isResponse, input) {
-		var $input = (event === null) ? input : $(event.currentTarget).prev('textarea');
+		var $input = (event === null) ? input : $(event.currentTarget).parent().children('textarea');
+		$input.next('small.innerError').remove();
 		var $value = $.trim($input.val());
 		
 		// ignore empty comments
@@ -472,14 +473,28 @@ WCF.Comment.Handler = Class.extend({
 			this._proxy.sendRequest();
 		}
 		else {
-			this._proxy.setOption('data', {
-				actionName: $actionName,
-				className: 'wcf\\data\\comment\\CommentAction',
-				parameters: {
-					data: $data
-				}
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: $actionName,
+					className: 'wcf\\data\\comment\\CommentAction',
+					parameters: {
+						data: $data
+					}
+				},
+				success: $.proxy(this._success, this),
+				failure: (function(data, jqXHR, textStatus, errorThrown) {
+					if (data.returnValues && data.returnValues.fieldName) {
+						if (data.returnValues.fieldName === 'text' && data.returnValues.errorType) {
+							$('<small class="innerError">' + data.returnValues.errorType + '</small>').insertAfter($input);
+							
+							return false;
+						}
+					}
+					
+					this._failure(data, jqXHR, textStatus, errorThrown);
+				}).bind(this)
 			});
-			this._proxy.sendRequest();
 		}
 	},
 	
@@ -806,6 +821,7 @@ WCF.Comment.Handler = Class.extend({
 	_saveEdit: function(event) {
 		var $input = $(event.currentTarget);
 		if ($input.is('button')) {
+			$input.prev('small.innerError').remove();
 			$input = $input.prev('textarea');
 		}
 		var $message = $.trim($input.val());
@@ -827,14 +843,28 @@ WCF.Comment.Handler = Class.extend({
 			$data.responseID = $input.data('responseID');
 		}
 		
-		this._proxy.setOption('data', {
-			actionName: 'edit',
-			className: 'wcf\\data\\comment\\CommentAction',
-			parameters: {
-				data: $data
-			}
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				actionName: 'edit',
+				className: 'wcf\\data\\comment\\CommentAction',
+				parameters: {
+					data: $data
+				}
+			},
+			success: $.proxy(this._success, this),
+			failure: (function(data, jqXHR, textStatus, errorThrown) {
+				if (data.returnValues && data.returnValues.fieldName) {
+					if (data.returnValues.fieldName === 'text' && data.returnValues.errorType) {
+						$('<small class="innerError">' + data.returnValues.errorType + '</small>').insertAfter($input);
+						
+						return false;
+					}
+				}
+				
+				this._failure(data, jqXHR, textStatus, errorThrown);
+			}).bind(this)
 		});
-		this._proxy.sendRequest();
 	},
 	
 	/**
