@@ -13,13 +13,13 @@
 	//]]>
 </script>
 {if JQUERY_SOURCE == 'google'}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'microsoft'}
-<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'cloudflare'}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {else}
 <script src="{@$__wcf->getPath()}js/3rdParty/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
