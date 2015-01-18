@@ -206,9 +206,9 @@
 		// WoltLab modifications	BEGIN
 		
 		//center.className = "";
-		
+		//$(image).css({backgroundImage: "url(" + activeURL + ")", visibility: "hidden", display: ""});
+		$(image).css({backgroundImage: "url('" + activeURL + "')", visibility: "hidden", display: ""});
 		// WoltLab modifications	END
-		$(image).css({backgroundImage: "url(" + activeURL + ")", visibility: "hidden", display: ""});
 		$(sizer).width(preload.width);
 		$([sizer, prevLink, nextLink]).height(preload.height);
 
