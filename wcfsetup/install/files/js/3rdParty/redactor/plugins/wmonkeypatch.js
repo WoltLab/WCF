@@ -840,9 +840,18 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				try {
 					this.modal.dialog.wcfDialog('close');
-					this.modal.dialog.remove();
 				}
-				catch (e) { }
+				catch (e) {
+					// ignore
+				}
+				finally {
+					var $container = this.modal.dialog.parents('.dialogContainer:eq(0)');
+					if ($container.length) {
+						setTimeout(function() {
+							$container.remove();
+						}, 500);
+					}
+				}
 				
 				this.modal.dialog = null;
 			}).bind(this);
