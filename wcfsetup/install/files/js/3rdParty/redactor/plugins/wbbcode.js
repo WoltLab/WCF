@@ -10,6 +10,8 @@ if (!RedactorPlugins) var RedactorPlugins = {};
 RedactorPlugins.wbbcode = function() {
 	"use strict";
 	
+	var $skipOnSyncReplacementOnce = false;
+	
 	return {
 		/**
 		 * Initializes the RedactorPlugins.wbbcode plugin.
@@ -41,10 +43,16 @@ RedactorPlugins.wbbcode = function() {
 			this.opts.pasteCallback = $.proxy(this.wbbcode._pasteCallback, this);
 			
 			var $mpCleanOnSync = this.clean.onSync;
-			this.clean.onSync = function(html) {
-				html = html.replace(/<p><br([^>]+)?><\/p>/g, '<p>@@@wcf_empty_line@@@</p>');
-				return $mpCleanOnSync.call(self, html);
-			};
+			this.clean.onSync = (function(html) {
+				if ($skipOnSyncReplacementOnce === true) {
+					$skipOnSyncReplacementOnce = false;
+				}
+				else {
+					html = html.replace(/<p><br([^>]+)?><\/p>/g, '<p>@@@wcf_empty_line@@@</p>');
+				}
+				
+				return $mpCleanOnSync.call(this, html);
+			}).bind(this);
 			
 			if (this.wutil.getOption('woltlab.autosaveOnce')) {
 				this.wutil.saveTextToStorage();
@@ -1696,6 +1704,7 @@ RedactorPlugins.wbbcode = function() {
 					var $link = WCF.String.escapeHTML($('#redactorQuoteLink').val());
 					
 					this.selection.restore();
+					$skipOnSyncReplacementOnce = true;
 					var $html = this.selection.getHtml();
 					if (this.utils.isEmpty($html)) {
 						$html = '';
