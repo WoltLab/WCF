@@ -1155,7 +1155,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.update.step.prepare"><![CDATA[Preparing Update …]]></item>
 		<item name="wcf.acp.package.update.excludedPackages"><![CDATA[Conflict]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluded"><![CDATA[Installed Packages]]></item>
-		<item name="wcf.acp.package.update.excludedPackages.excluded.description"><![CDATA[The following pakages are not compatible with the packages to be installed]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluded.description"><![CDATA[The following packages are not compatible with the packages to be installed]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluded.package"><![CDATA[“{$excludedPackage[existingPackageName]}” in version “{$excludedPackage[existingPackageVersion]}” prevents {if $excludedPackage[action] == 'update'}an update{else}the installation{/if} of “{$excludedPackage[packageName]}” {if $excludedPackage[action] == 'update'}to{else}in{/if} version “{$excludedPackage[packageVersion]}”]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding"><![CDATA[Packages to be installed]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.description"><![CDATA[The following packages to be installed are not compatible with installed packages]]></item>
