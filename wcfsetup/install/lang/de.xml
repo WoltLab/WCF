@@ -1661,7 +1661,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.rank.requiredPoints"><![CDATA[Punkte]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[Benötigte Menge an Aktivitätspunkten, die ein Benutzer erreichen muss, um in diesen Rang aufzusteigen.]]></item>
 		<item name="wcf.acp.user.rank.requirement"><![CDATA[Beschränkungen]]></item>
-		<item name="wcf.acp.user.rank.repeatImage"><![CDATA[Wiederholung der Rankgrafik]]></item>
+		<item name="wcf.acp.user.rank.repeatImage"><![CDATA[Wiederholung der Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.repeatImage.description"><![CDATA[Bestimmt, wie oft die Grafik wiederholt wird.]]></item>
 		<item name="wcf.acp.user.rank.title"><![CDATA[Rangbezeichnung]]></item>
 		<item name="wcf.acp.user.rank.userGroup.description"><![CDATA[Dieser Benutzerrang steht ausschließlich den Mitgliedern der ausgewählten Benutzergruppe zur Verfügung.]]></item>
