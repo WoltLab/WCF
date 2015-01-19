@@ -1981,7 +1981,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	_getNodeText: function(node) {
 		// work-around for IE, see http://stackoverflow.com/a/5983176
 		var $nodeFilter = function(node) {
-			if (node.tagName === 'H3') {
+			if (node.tagName === 'H3' || node.tagName === 'SCRIPT') {
 				return NodeFilter.FILTER_REJECT;
 			}
 			
@@ -2016,7 +2016,7 @@ WCF.Message.Quote.Handler = Class.extend({
 				}
 			}
 			else {
-				$text += $walker.currentNode.nodeValue;
+				$text += $node.nodeValue.replace(/\n/g, '');
 			}
 			
 		}
