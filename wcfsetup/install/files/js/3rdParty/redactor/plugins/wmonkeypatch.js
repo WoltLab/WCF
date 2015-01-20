@@ -596,6 +596,25 @@ RedactorPlugins.wmonkeypatch = function() {
 				$mpFormat.call(this, tag, type, value);
 			}).bind(this);
 			
+			// inline.formatRemoveSameChildren;
+			this.inline.formatRemoveSameChildren = (function($el, tag) {
+				$el.children(tag).each((function(index, child) {
+					var $child = $(child);
+					if (!$child.hasClass('redactor-selection-marker')) {
+						// check if this represents a style
+						if (tag === 'span' && this.inline.type === 'style') {
+							var $newProperty = this.inline.value.replace(/^([^:]+?):.*/, '$1');
+							if (!child.style.getPropertyValue($newProperty)) {
+								// child carries a different CSS property, skip
+								return true;
+							}
+						}
+						
+						$child.contents().unwrap();
+					}
+				}).bind(this));
+			}).bind(this);
+			
 			var $mpRemoveStyleRule = this.inline.removeStyleRule;
 			this.inline.removeStyleRule = (function(name) {
 				if ($.browser.iOS) {
