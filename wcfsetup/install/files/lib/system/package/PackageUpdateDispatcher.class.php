@@ -724,11 +724,13 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			LEFT JOIN	wcf".WCF_N."_package_update_server pus
 			ON		(pus.packageUpdateServerID = pu.packageUpdateServerID)
 			WHERE		pu.package = ?
-					AND puv.packageVersion = ?";
+					AND puv.packageVersion = ?
+					AND pus.isDisabled = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$package,
-			$version
+			$version,
+			0
 		));
 		while ($row = $statement->fetchArray()) {
 			$versions[] = $row;
