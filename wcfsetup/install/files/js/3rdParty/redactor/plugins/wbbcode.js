@@ -732,7 +732,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>' + this.opts.invisibleSpace);
 			
 			// [b]
-			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<b>$1</b>');
+			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<strong>$1</strong>');
 			
 			// [i]
 			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, '<em>$1</em>');
