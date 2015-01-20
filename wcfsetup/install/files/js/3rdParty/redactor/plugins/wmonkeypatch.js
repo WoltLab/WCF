@@ -171,6 +171,34 @@ RedactorPlugins.wmonkeypatch = function() {
 					
 					return false;
 				}
+				else if (event.target.tagName === 'LI') {
+					// work-around for #1942
+					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
+					var $caretInsideList = false;
+					if ($range !== null) {
+						if (!$range.collapsed) {
+							return;
+						}
+						
+						var $current = $range.startContainer;
+						while ($current !== null && $current !== this.$editor[0]) {
+							if ($current.tagName === 'LI') {
+								$caretInsideList = true;
+								break;
+							}
+							
+							$current = $current.parentElement;
+						}
+					}
+					
+					if (!$caretInsideList || $range === null) {
+						var $node = document.createTextNode('\u200b');
+						var $firstChild = event.target.children[0];
+						$firstChild.appendChild($node);
+						
+						this.caret.setEnd($firstChild);
+					}
+				}
 			}).bind(this));
 		},
 		
