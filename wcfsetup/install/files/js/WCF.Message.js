@@ -1079,16 +1079,20 @@ WCF.Message.QuickReply = Class.extend({
 			$message = $.trim(this._messageField.val());
 		}
 		
+		var $parameters = {
+			containerID: this._getObjectID(),
+			message: $message
+		};
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.messageOptionsInline', 'prepareExtended_' + this._messageField.wcfIdentify(), $parameters);
+		
 		new WCF.Action.Proxy({
 			autoSend: true,
 			data: {
 				actionName: 'jumpToExtended',
 				className: this._getClassName(),
 				interfaceName: 'wcf\\data\\IExtendedMessageQuickReplyAction',
-				parameters: {
-					containerID: this._getObjectID(),
-					message: $message
-				}
+				parameters: $parameters
 			},
 			success: (function(data) {
 				this._messageField.redactor('wutil.saveTextToStorage');
