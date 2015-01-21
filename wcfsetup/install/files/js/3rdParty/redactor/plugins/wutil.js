@@ -256,7 +256,13 @@ RedactorPlugins.wutil = function() {
 		submit: function() {
 			if (this.wutil.inWysiwygMode()) {
 				this.code.startSync();
-				this.$textarea.val($.trim(this.wbbcode.convertFromHtml(this.$textarea.val())));
+				
+				var $text = $.trim(this.wbbcode.convertFromHtml(this.$textarea.val()));
+				
+				// remove linebreak after [/quote]
+				$text = $text.replace(/\[\/quote\]\n/g, '[/quote]');
+				
+				this.$textarea.val($text);
 			}
 			
 			this.wutil.autosavePurge();
