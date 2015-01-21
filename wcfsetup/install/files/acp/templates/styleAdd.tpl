@@ -352,7 +352,7 @@
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd class="framed">
-						<img src="" alt="" id="styleLogo" />
+						<img src="" alt="" id="styleLogo" style="max-width: 100%" />
 						<div id="uploadLogo"></div>
 						{if $errorField == 'image'}
 							<small class="innerError">
