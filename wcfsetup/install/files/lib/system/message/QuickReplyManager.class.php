@@ -259,4 +259,13 @@ class QuickReplyManager extends SingletonFactory {
 	public function getContainer() {
 		return $this->container;
 	}
+	
+	/**
+	 * Stores tmpHash in current session, used in combination with the extended form.
+	 * 
+	 * @param	string		$tmpHash
+	 */
+	public function setTmpHash($tmpHash) {
+		WCF::getSession()->register('__wcfAttachmentTmpHash', $tmpHash);
+	}
 }

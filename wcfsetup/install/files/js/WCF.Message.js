@@ -1079,16 +1079,20 @@ WCF.Message.QuickReply = Class.extend({
 			$message = $.trim(this._messageField.val());
 		}
 		
+		var $parameters = {
+			containerID: this._getObjectID(),
+			message: $message
+		};
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.messageOptionsInline', 'prepareExtended_' + this._messageField.wcfIdentify(), $parameters);
+		
 		new WCF.Action.Proxy({
 			autoSend: true,
 			data: {
 				actionName: 'jumpToExtended',
 				className: this._getClassName(),
 				interfaceName: 'wcf\\data\\IExtendedMessageQuickReplyAction',
-				parameters: {
-					containerID: this._getObjectID(),
-					message: $message
-				}
+				parameters: $parameters
 			},
 			success: (function(data) {
 				this._messageField.redactor('wutil.saveTextToStorage');
@@ -1981,7 +1985,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	_getNodeText: function(node) {
 		// work-around for IE, see http://stackoverflow.com/a/5983176
 		var $nodeFilter = function(node) {
-			if (node.tagName === 'H3') {
+			if (node.tagName === 'H3' || node.tagName === 'SCRIPT') {
 				return NodeFilter.FILTER_REJECT;
 			}
 			
@@ -2016,7 +2020,7 @@ WCF.Message.Quote.Handler = Class.extend({
 				}
 			}
 			else {
-				$text += $walker.currentNode.nodeValue;
+				$text += $node.nodeValue.replace(/\n/g, '');
 			}
 			
 		}

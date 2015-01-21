@@ -172,7 +172,13 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			$this->tmpHash = $_REQUEST['tmpHash'];
 		}
 		if (empty($this->tmpHash)) {
-			$this->tmpHash = StringUtil::getRandomID();
+			$this->tmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
+			if ($this->tmpHash === null) {
+				$this->tmpHash = StringUtil::getRandomID();
+			}
+			else {
+				WCF::getSession()->unregister('__wcfAttachmentTmpHash');
+			}
 		}
 		
 		if ($this->enableMultilingualism) {

@@ -171,6 +171,34 @@ RedactorPlugins.wmonkeypatch = function() {
 					
 					return false;
 				}
+				else if (event.target.tagName === 'LI') {
+					// work-around for #1942
+					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
+					var $caretInsideList = false;
+					if ($range !== null) {
+						if (!$range.collapsed) {
+							return;
+						}
+						
+						var $current = $range.startContainer;
+						while ($current !== null && $current !== this.$editor[0]) {
+							if ($current.tagName === 'LI') {
+								$caretInsideList = true;
+								break;
+							}
+							
+							$current = $current.parentElement;
+						}
+					}
+					
+					if (!$caretInsideList || $range === null) {
+						var $node = document.createTextNode('\u200b');
+						var $firstChild = event.target.children[0];
+						$firstChild.appendChild($node);
+						
+						this.caret.setEnd($firstChild);
+					}
+				}
 			}).bind(this));
 		},
 		
@@ -568,6 +596,25 @@ RedactorPlugins.wmonkeypatch = function() {
 				$mpFormat.call(this, tag, type, value);
 			}).bind(this);
 			
+			// inline.formatRemoveSameChildren;
+			this.inline.formatRemoveSameChildren = (function($el, tag) {
+				$el.children(tag).each((function(index, child) {
+					var $child = $(child);
+					if (!$child.hasClass('redactor-selection-marker')) {
+						// check if this represents a style
+						if (tag === 'span' && this.inline.type === 'style') {
+							var $newProperty = this.inline.value.replace(/^([^:]+?):.*/, '$1');
+							if (!child.style.getPropertyValue($newProperty)) {
+								// child carries a different CSS property, skip
+								return true;
+							}
+						}
+						
+						$child.contents().unwrap();
+					}
+				}).bind(this));
+			}).bind(this);
+			
 			var $mpRemoveStyleRule = this.inline.removeStyleRule;
 			this.inline.removeStyleRule = (function(name) {
 				if ($.browser.iOS) {
@@ -845,11 +892,13 @@ RedactorPlugins.wmonkeypatch = function() {
 					// ignore
 				}
 				finally {
-					var $container = this.modal.dialog.parents('.dialogContainer:eq(0)');
-					if ($container.length) {
-						setTimeout(function() {
-							$container.remove();
-						}, 500);
+					if (this.modal.dialog) {
+						var $container = this.modal.dialog.parents('.dialogContainer:eq(0)');
+						if ($container.length) {
+							setTimeout(function() {
+								$container.remove();
+							}, 500);
+						}
 					}
 				}
 				

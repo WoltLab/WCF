@@ -732,7 +732,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>' + this.opts.invisibleSpace);
 			
 			// [b]
-			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<b>$1</b>');
+			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<strong>$1</strong>');
 			
 			// [i]
 			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, '<em>$1</em>');
@@ -1305,17 +1305,24 @@ RedactorPlugins.wbbcode = function() {
 		 * @return	string
 		 */
 		_pasteCallback: function(html) {
-			// reduce successive <br> by one
-			//html = html.replace(/<br[^>]*>(<br[^>]*>)+/g, '$1');
+			var $uuid = WCF.getUUID();
 			
-			// replace <p>...</p> with <p>...</p><p><br></p>
-			/*html = html.replace(/<p>([\s\S]*?)<\/p>/g, function(match, content) {
-				if (content.match(/<br( \/)?>$/)) {
+			// replace <p>...</p> with <p>...</p><p><br></p> unless there is already a newline
+			html = html.replace(/<p>([\s\S]*?)<\/p>/gi, function(match, content) {
+				if (content.match(/^<br( \/)?>$/)) {
 					return match;
 				}
 				
-				return '<p>' + content + '</p><p><br></p>';
-			});*/
+				return match + '@@@' + $uuid + '@@@';
+			});
+			
+			html = html.replace(new RegExp('@@@' + $uuid + '@@@(<p><br(?: /)?></p>)?', 'g'), function(match, next) {
+				if (next) {
+					return next;
+				}
+				
+				return '<p><br></p>';
+			});
 			
 			// restore font size
 			html = html.replace(/\[size=(\d+)\]/g, '<p><span style="font-size: $1pt">');

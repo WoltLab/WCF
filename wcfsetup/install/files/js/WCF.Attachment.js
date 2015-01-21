@@ -61,9 +61,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		this._autoInsert = [ ];
 		this._objectType = objectType;
-		this._objectID = objectID;
+		this._objectID = parseInt(objectID);
 		this._tmpHash = tmpHash;
-		this._parentObjectID = parentObjectID;
+		this._parentObjectID = parseInt(parentObjectID);
 		this._wysiwygContainerID = wysiwygContainerID;
 		
 		this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
@@ -85,6 +85,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		if (this._wysiwygContainerID) {
 			WCF.System.Event.addListener('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._wysiwygContainerID, $.proxy(this._submitInline, this));
+			WCF.System.Event.addListener('com.woltlab.wcf.messageOptionsInline', 'prepareExtended_' + this._wysiwygContainerID, $.proxy(this._prepareExtended, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'reset', $.proxy(this._reset, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'upload_' + this._wysiwygContainerID, $.proxy(this._editorUpload, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'getImageAttachments_' + this._wysiwygContainerID, $.proxy(this._getImageAttachments, this));
@@ -137,6 +138,17 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 */
 	_submitInline: function(data) {
 		if (this._tmpHash) {
+			data.tmpHash = this._tmpHash;
+		}
+	},
+	
+	/**
+	 * Adds parameters send to the server before jumping to extended form.
+	 * 
+	 * @param	object		data
+	 */
+	_prepareExtended: function(data) {
+		if (!this._objectID && this._tmpHash && this._fileListSelector.children('li:not(.uploadFailed)').length) {
 			data.tmpHash = this._tmpHash;
 		}
 	},
