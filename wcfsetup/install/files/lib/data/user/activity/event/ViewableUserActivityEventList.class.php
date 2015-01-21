@@ -110,11 +110,11 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 		$orphanedEventIDs = array();
 		
 		foreach ($this->objects as $index => $event) {
-			if (!$event->isAccessible()) {
+			if ($event->isOrphaned()) {
+				$orphanedEventIDs[] = $event->eventID;
 				unset($this->objects[$index]);
 			}
-			else if ($event->isOrphaned()) {
-				$orphanedEventIDs[] = $event->eventID;
+			else if (!$event->isAccessible()) {
 				unset($this->objects[$index]);
 			}
 		}
