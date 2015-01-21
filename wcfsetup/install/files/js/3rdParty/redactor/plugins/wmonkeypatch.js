@@ -892,11 +892,13 @@ RedactorPlugins.wmonkeypatch = function() {
 					// ignore
 				}
 				finally {
-					var $container = this.modal.dialog.parents('.dialogContainer:eq(0)');
-					if ($container.length) {
-						setTimeout(function() {
-							$container.remove();
-						}, 500);
+					if (this.modal.dialog) {
+						var $container = this.modal.dialog.parents('.dialogContainer:eq(0)');
+						if ($container.length) {
+							setTimeout(function() {
+								$container.remove();
+							}, 500);
+						}
 					}
 				}
 				
