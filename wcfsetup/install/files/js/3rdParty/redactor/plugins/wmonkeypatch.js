@@ -585,8 +585,29 @@ RedactorPlugins.wmonkeypatch = function() {
 		 * Partially overwrites the 'inline' module.
 		 * 
 		 *  - restore the text selection on iOS (#2003)
+		 *  - work-around existing formatting is removed in Firefox (#1962)
+		 *  - fix formatting with the same property stacking up in Chrome (#2080)
 		 */
 		inline: function() {
+			var $purgeSimilarFormatting = (function($el, newProperty) {
+				var $current = $el.parent();
+				
+				while ($current[0] !== this.$editor[0]) {
+					if ($current.children(':not(.redactor-selection-marker)').length > 1) {
+						break;
+					}
+					
+					if ($current[0].tagName === 'SPAN' && $current[0].style.getPropertyValue(newProperty)) {
+						$current.contents().unwrap();
+						
+						break;
+					}
+					
+					$current = $current.parent();
+				}
+			}).bind(this);
+			
+			// inline.format
 			var $mpFormat = this.inline.format;
 			this.inline.format = (function(tag, type, value) {
 				if ($.browser.iOS) {
@@ -597,24 +618,32 @@ RedactorPlugins.wmonkeypatch = function() {
 			}).bind(this);
 			
 			// inline.formatRemoveSameChildren;
+			var $mpFormatRemoveSameChildren = this.inline.formatRemoveSameChildren;
 			this.inline.formatRemoveSameChildren = (function($el, tag) {
-				$el.children(tag).each((function(index, child) {
-					var $child = $(child);
-					if (!$child.hasClass('redactor-selection-marker')) {
-						// check if this represents a style
-						if (tag === 'span' && this.inline.type === 'style') {
-							var $newProperty = this.inline.value.replace(/^([^:]+?):.*/, '$1');
+				// check if this represents a style
+				if (tag === 'span' && this.inline.type === 'style') {
+					var $newProperty = this.inline.value.replace(/^([^:]+?):.*/, '$1');
+					
+					$el.children(tag).each((function(index, child) {
+						var $child = $(child);
+						if (!$child.hasClass('redactor-selection-marker')) {
 							if (!child.style.getPropertyValue($newProperty)) {
 								// child carries a different CSS property, skip
 								return true;
 							}
+							
+							$child.contents().unwrap();
 						}
-						
-						$child.contents().unwrap();
-					}
-				}).bind(this));
+					}).bind(this));
+					
+					$purgeSimilarFormatting($el, $newProperty);
+				}
+				else {
+					$mpFormatRemoveSameChildren.call(this, $el, tag);
+				}
 			}).bind(this);
 			
+			// inline.removeStyleRule
 			var $mpRemoveStyleRule = this.inline.removeStyleRule;
 			this.inline.removeStyleRule = (function(name) {
 				if ($.browser.iOS) {
