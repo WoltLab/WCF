@@ -123,16 +123,44 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 			}).bind(this);
 			
+			var $editorPadding = null;
 			this.$editor.on('click.wmonkeypatch', (function(event) {
 				if (event.target === this.$editor[0]) {
 					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
 					
 					if ($range && $range.collapsed) {
 						var $current = $range.startContainer;
+						
+						// this can occur if click occurs within the editor padding
+						var $offsets = this.$editor.offset();
+						if ($editorPadding === null) {
+							$editorPadding = {
+								left: this.$editor.cssAsNumber('padding-left'),
+								top: this.$editor.cssAsNumber('padding-top')
+							};
+						}
+						
+						if (event.pageY <= $offsets.top + $editorPadding.top) {
+							var $firstChild = this.$editor[0].children[0];
+							if ($firstChild.tagName !== 'BLOCKQUOTE' && ($firstChild.tagName !== 'DIV' || !/\bcodeBox\b/.test($firstChild.className))) {
+								return;
+							}
+						}
+						else {
+							if (event.pageX <= $offsets.left + $editorPadding.left) {
+								return;
+							}
+							else {
+								if (event.pageX > $offsets.left + this.$editor.width()) {
+									return;
+								}
+							}
+						}
+						
 						while ($current !== null && $current !== this.$editor[0]) {
 							if ($current.nodeType === Node.ELEMENT_NODE) {
 								if ($current.tagName === 'BLOCKQUOTE' || ($current.tagName === 'DIV' && /\bcodeBox\b/.test($current.className))) {
-									var $offset = $(element).offset();
+									var $offset = $($current).offset();
 									if (event.pageY <= $offset.top) {
 										$setCaretBeforeOrAfter($current, true);
 									}
