@@ -42,6 +42,12 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	protected $activeMessageID = null;
 	
 	/**
+	 * objectType of the active message
+	 * @var	string
+	 */
+	protected $activeMessageObjectType = '';
+	
+	/**
 	 * list of embedded object handlers
 	 * @var	array
 	 */
@@ -158,6 +164,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	public function setActiveMessage($messageObjectType, $messageID) {
 		$this->activeMessageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 		$this->activeMessageID = $messageID;
+		$this->activeMessageObjectType = $messageObjectType;
 	}
 	
 	/**
@@ -254,5 +261,32 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$this->getEmbeddedObjectHandlers();
 		
 		return $this->embeddedObjectHandlers[$objectTypeID];
+	}
+	
+	/**
+	 * Returns active message id.
+	 * 
+	 * @return	integer
+	 */
+	public function getActiveMessageID() {
+		return $this->activeMessageID;
+	}
+	
+	/**
+	 * Returns active message object type.
+	 * 
+	 * @return	string
+	 */
+	public function getActiveMessageObjectType() {
+		return $this->activeMessageObjectType;
+	}
+	
+	/**
+	 * Returns active message object type id.
+	 * 
+	 * @return	integer
+	 */
+	public function getActiveMessageObjectTypeID() {
+		return $this->activeMessageObjectTypeID;
 	}
 }
