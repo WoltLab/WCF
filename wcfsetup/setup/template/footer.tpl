@@ -11,7 +11,7 @@
 		</nav>
 		
 		<div class="footerContent">
-			<address class="copyright marginTop"><a href="http://www.woltlab.com">Copyright &copy; 2001-2014 WoltLab&reg; GmbH</a></address>
+			<address class="copyright marginTop"><a href="http://www.woltlab.com">Copyright &copy; 2001-2015 WoltLab&reg; GmbH</a></address>
 		</div>
 	</footer>
 	
