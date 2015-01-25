@@ -86,7 +86,7 @@ class AJAXException extends LoggedException {
 			break;
 			
 			case self::SESSION_EXPIRED:
-				$statusHeader = 'HTTP/1.0 430 Session Expired';
+				$statusHeader = 'HTTP/1.0 409 Conflict';
 			break;
 			
 			case self::INSUFFICIENT_PERMISSIONS:
