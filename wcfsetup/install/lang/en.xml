@@ -853,7 +853,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Show number of shares]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Edits]]></item>
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
-		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores old versions of user created items.]]]></item>
+		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores old versions of user created items.]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage time]]></item>
 		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Items in the edit history will be discarded if they are older than the given period. [time in days, 0 to disable]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
