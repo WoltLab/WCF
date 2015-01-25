@@ -208,8 +208,6 @@ ALTER TABLE wcf1_template_listener ADD niceValue TINYINT(3) NOT NULL DEFAULT 0;
 
 ALTER TABLE wcf1_user_group_option ADD usersOnly TINYINT(1) NOT NULL DEFAULT 0;
 
-ALTER TABLE wcf1_user ADD gravatarFileExtension VARCHAR(3) NOT NULL DEFAULT '';
-
 /* truncate table to ensure consistency */
 DELETE FROM wcf1_user_notification;
 
@@ -220,8 +218,8 @@ ALTER TABLE wcf1_user_notification ADD userID INT(10) NOT NULL;
 ALTER TABLE wcf1_user_notification ADD mailNotified TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_user_notification ADD confirmTime INT(10) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_user_notification ADD baseObjectID INT(10) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_user_notification ADD KEY (userID, eventID, objectID, confirmTime);
-ALTER TABLE wcf1_user_notification ADD KEY (userID, confirmTime);
+ALTER TABLE wcf1_user_notification ADD KEY userRelatedFields (userID, eventID, objectID, confirmTime);
+ALTER TABLE wcf1_user_notification ADD KEY userConfirmTime (userID, confirmTime);
 
 ALTER TABLE wcf1_user_notification_to_user DROP mailNotified;
 

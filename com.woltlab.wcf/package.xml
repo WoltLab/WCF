@@ -54,9 +54,9 @@
 		<instruction type="file">files.tar</instruction>
 		<instruction type="script">acp/update_com.woltlab.wcf_2.1.php</instruction>
 		
-		<instruction type="template" run="standalone">templates_update.tar</instruction>
+		<instruction type="template" run="standalone">templates.tar</instruction>
 		
-		<instruction type="acpTemplate" run="standalone">acptemplates_update.tar</instruction>
+		<instruction type="acpTemplate" run="standalone">acptemplates.tar</instruction>
 		
 		<instruction type="language" run="standalone">language/*.xml</instruction>
 		
@@ -66,6 +66,7 @@
 		<instruction type="sql" run="standalone">update_user2_210.sql</instruction>
 		<instruction type="sql" run="standalone">update_user3_210.sql</instruction>
 		<instruction type="sql" run="standalone">update_user4_210.sql</instruction>
+		<instruction type="sql" run="standalone">update_user5_210.sql</instruction>
 		
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="bbcode">bbcode.xml</instruction>
