@@ -29,15 +29,18 @@
 			</category>
 				<category name="general.page">
 					<parent>general</parent>
+					<showorder>1</showorder>
 				</category>
 					<category name="general.page.seo">
 						<parent>general.page</parent>
 					</category>
 				<category name="general.offline">
 					<parent>general</parent>
+					<showorder>2</showorder>
 				</category>
 				<category name="general.system">
 					<parent>general</parent>
+					<showorder>3</showorder>
 				</category>
 					<category name="general.system.cookie">
 						<parent>general.system</parent>
@@ -68,6 +71,7 @@
 					</category>
 				<category name="general.mail">
 					<parent>general</parent>
+					<showorder>4</showorder>
 				</category>
 					<category name="general.mail.general">
 						<parent>general.mail</parent>
@@ -77,6 +81,7 @@
 					</category>
 				<category name="general.cache">
 					<parent>general</parent>
+					<showorder>5</showorder>
 				</category>
 					<category name="general.cache.general">
 						<parent>general.cache</parent>
@@ -86,6 +91,7 @@
 					</category>
 				<category name="general.payment">
 					<parent>general</parent>
+					<showorder>6</showorder>
 				</category>
 					<category name="general.payment.paidSubscription">
 						<parent>general.payment</parent>

@@ -3,7 +3,7 @@ use wcf\data\option\OptionEditor;
 
 /**
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework
@@ -25,6 +25,6 @@ if (RECAPTCHA_PUBLICKEY === '6LfOlMYSAAAAADvo3s4puBAYDqI-6YK2ybe7BJE5' && RECAPT
 	$options['recaptcha_privatekey'] = '';
 }
 
-OptionEditor::updateAll($options);
+OptionEditor::import($options);
 
 OptionEditor::resetCache();
