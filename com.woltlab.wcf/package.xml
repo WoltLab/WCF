@@ -73,7 +73,7 @@
 		<instruction type="style">blue-temptation-style.tgz</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
 		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="cronjob">cronjob_update410.xml</instruction>
+		<instruction type="cronjob">cronjob_update210.xml</instruction>
 		<instruction type="dashboardBox">dashboardBox.xml</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
