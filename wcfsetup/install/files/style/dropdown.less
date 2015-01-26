@@ -428,16 +428,15 @@
 			
 			&.interactiveDropdownItemsUserMenu {
 				> li {
+					padding: 0 !important;
+					
 					&:not(.dropdownDivider) {
 						border-bottom-width: 0 !important;
 					}
 					
-					&.dropdownDivider {
-						padding: 0;
-					}
-					
 					> a {
 						display: block;
+						padding: @wcfGapSmall (@wcfGapSmall + @wcfGapTiny);
 						text-decoration: none;
 					}
 				}
