@@ -425,6 +425,23 @@
 					}
 				}
 			}
+			
+			&.interactiveDropdownItemsUserMenu {
+				> li {
+					&:not(.dropdownDivider) {
+						border-bottom-width: 0 !important;
+					}
+					
+					&.dropdownDivider {
+						padding: 0;
+					}
+					
+					> a {
+						display: block;
+						text-decoration: none;
+					}
+				}
+			}
 		}
 	}
 	
@@ -454,6 +471,16 @@
 			position: absolute;
 			top: 2px;
 			z-index: 101;
+		}
+	}
+	
+	&.interactiveDropdownUserMenu > .pointer {
+		border-width: 0 7px 7px 7px;
+		top: -7px;
+		
+		> span {
+			border-width: 0 5px 5px 5px;
+			left: -5px;
 		}
 	}
 }

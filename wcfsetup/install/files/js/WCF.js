@@ -1425,6 +1425,12 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	_linkList: null,
 	
 	/**
+	 * option list
+	 * @var	object
+	 */
+	_options: { },
+	
+	/**
 	 * arrow pointer
 	 * @var	jQuery
 	 */
@@ -1445,22 +1451,29 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * @param	object		options
 	 */
 	init: function(dropdownContainer, triggerElement, identifier, options) {
+		this._options = options || { };
 		this._triggerElement = triggerElement;
 		
-		this._container = $('<div class="interactiveDropdown" data-source="' + identifier + '" />').click(function(event) { event.stopPropagation(); });
-		
-		var $header = $('<div class="interactiveDropdownHeader" />').appendTo(this._container);
-		$('<span class="interactiveDropdownTitle">' + options.title + '</span>').appendTo($header);
-		this._linkList = $('<ul class="interactiveDropdownLinks"></ul>').appendTo($header);
-		
-		var $itemContainer = $('<div class="interactiveDropdownItemsContainer" />').appendTo(this._container);
-		this._itemList = $('<ul class="interactiveDropdownItems" />').appendTo($itemContainer);
-		
-		$('<a href="' + options.showAllLink + '" class="interactiveDropdownShowAll">' + WCF.Language.get('wcf.user.panel.showAll') + '</a>').appendTo(this._container);
+		var $itemContainer = null;
+		if (options.staticDropdown === true) {
+			this._container = this._triggerElement.find('.interactiveDropdownStatic:eq(0)').data('source', identifier).click(function(event) { event.stopPropagation(); });
+		}
+		else {
+			this._container = $('<div class="interactiveDropdown" data-source="' + identifier + '" />').click(function(event) { event.stopPropagation(); });
+			
+			var $header = $('<div class="interactiveDropdownHeader" />').appendTo(this._container);
+			$('<span class="interactiveDropdownTitle">' + options.title + '</span>').appendTo($header);
+			this._linkList = $('<ul class="interactiveDropdownLinks"></ul>').appendTo($header);
+			
+			$itemContainer = $('<div class="interactiveDropdownItemsContainer" />').appendTo(this._container);
+			this._itemList = $('<ul class="interactiveDropdownItems" />').appendTo($itemContainer);
+			
+			$('<a href="' + options.showAllLink + '" class="interactiveDropdownShowAll">' + WCF.Language.get('wcf.user.panel.showAll') + '</a>').appendTo(this._container);
+		}
 		
 		this._pointer = $('<span class="pointer"><span /></span>').appendTo(this._container);
 		
-		if (!$.browser.mobile) {
+		if (!$.browser.mobile && $itemContainer !== null) {
 			// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
 			$itemContainer.perfectScrollbar({
 				suppressScrollX: true
@@ -1642,7 +1655,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 			});
 			
 			this._pointer.css({
-				left: '4px'
+				left: (this._options.pointerOffset ? this._options.pointerOffset : '4px')
 			});
 		}
 		else {
@@ -1653,7 +1666,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 			});
 			
 			this._pointer.css({
-				right: '4px'
+				right: (this._options.pointerOffset ? this._options.pointerOffset : '4px')
 			});
 		}
 	},

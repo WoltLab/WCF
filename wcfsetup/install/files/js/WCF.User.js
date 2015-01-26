@@ -525,6 +525,23 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 });
 
 /**
+ * User Panel implementation for user menu dropdown.
+ * 
+ * @see	WCF.User.Panel.Abstract
+ */
+WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
+	/**
+	 * @see	WCF.User.Panel.Abstract.init()
+	 */
+	init: function() {
+		this._super($('#userMenu'), 'userMenu', {
+			pointerOffset: '13px',
+			staticDropdown: true
+		});
+	}
+});
+
+/**
  * Quick login box
  */
 WCF.User.QuickLogin = {
