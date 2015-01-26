@@ -1,6 +1,8 @@
 {if $recaptchaLegacyMode|empty}
 	{include file='captcha'}
 {else}
+	{* No explicit keys were set, use legacy V1 API and WoltLab's OEM keys *}
+	{if RECAPTCHA_PUBLICKEY === '' || RECAPTCHA_PRIVATEKEY === ''}
 	<fieldset>
 		<legend><label for="recaptcha_response_field">{lang}wcf.recaptcha.title{/lang}</label></legend>
 		<small>{lang}wcf.recaptcha.description{/lang}</small>
@@ -94,4 +96,83 @@
 			{/if}
 		</dl>
 	</fieldset>
+	{else}
+	<fieldset>
+		<legend>{lang}wcf.recaptcha.title{/lang}</legend>
+		{assign var="recaptchaBucketID" value=true|microtime|sha1}
+		<dl class="{if $errorField|isset && $errorField == 'recaptchaString'}formError{/if}">
+			<dt></dt>
+			<dd>
+				<div id="recaptchaBucket{$recaptchaBucketID}"></div>
+				<noscript>
+					<div style="width: 302px; height: 352px;">
+						<div style="width: 302px; height: 352px; position: relative;">
+							<div style="width: 302px; height: 352px; position: absolute;">
+								<iframe src="https://www.google.com/recaptcha/api/fallback?k={RECAPTCHA_PUBLICKEY|encodeJS}" frameborder="0" scrolling="no" style="width: 302px; height:352px; border-style: none;"></iframe>
+							</div>
+							<div style="width: 250px; height: 80px; position: absolute; border-style: none; bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+								<textarea name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 80px; border: 1px solid #c1c1c1; margin: 0px; padding: 0px; resize: none;"></textarea>
+							</div>
+						</div>
+					</div>
+				</noscript>
+				{if (($errorType|isset && $errorType|is_array && $errorType[recaptchaString]|isset) || ($errorField|isset && $errorField == 'recaptchaString'))}
+					{if $errorType|is_array && $errorType[recaptchaString]|isset}
+						{assign var='__errorType' value=$errorType[recaptchaString]}
+					{else}
+						{assign var='__errorType' value=$errorType}
+					{/if}
+					<small class="innerError">
+						{if $__errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.captcha.recaptchaV2.error.recaptchaString.{$__errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		<script data-relocate="true">
+		//<![CDATA[
+		if (!WCF.recaptcha) {
+			WCF.recaptcha = {
+				queue: [],
+				callbackCalled: false,
+				mapping: { }
+			};
+			
+			// this needs to be in global scope
+			function recaptchaCallback() {
+				var bucket;
+				WCF.recaptcha.callbackCalled = true;
+				
+				// clear queue
+				while (bucket = WCF.recaptcha.queue.shift()) {
+					WCF.recaptcha.mapping[bucket] = grecaptcha.render(bucket, {
+						'sitekey' : '{RECAPTCHA_PUBLICKEY|encodeJS}'
+					});
+				}
+			}
+		}
+		
+		// add captcha to queue
+		WCF.recaptcha.queue.push('recaptchaBucket{$recaptchaBucketID}');
+		
+		// trigger callback immediately, if API already is available
+		if (WCF.recaptcha.callbackCalled) setTimeout(recaptchaCallback, 1);
+		
+		{if $ajaxCaptcha|isset && $ajaxCaptcha}
+		WCF.System.Captcha.addCallback('{$captchaID}', function() {
+			return {
+				'g-recaptcha-response': grecaptcha.getResponse(WCF.recaptcha.mapping['recaptchaBucket{$recaptchaBucketID}'])
+			};
+		});
+		{/if}
+		
+		// ensure recaptcha API is loaded at most once
+		if (!window.grecaptcha) $.getScript('https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback');
+		//]]>
+		</script>
+	</fieldset>
+	{/if}
 {/if}
