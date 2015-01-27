@@ -39,7 +39,7 @@
 					{/if}
 				</ul>
 			</div>
-			<a class="interactiveDropdownShowAll">{lang}wcf.user.logout{/lang}</a>
+			<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
 		</div>
 		<script data-relocate="true">
 			$(function() {
