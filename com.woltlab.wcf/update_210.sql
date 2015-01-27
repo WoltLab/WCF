@@ -185,6 +185,7 @@ DROP TABLE wcf1_search_index;
 ALTER TABLE wcf1_bbcode ADD originIsSystem TINYINT(1) NOT NULL DEFAULT 0;
 
 ALTER TABLE wcf1_label_group ADD showOrder INT(10) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_label_group ADD groupDescription VARCHAR(255) NOT NULL DEFAULT '';
 
 ALTER TABLE wcf1_moderation_queue ADD comments SMALLINT(5) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_moderation_queue DROP FOREIGN KEY objectTypeID;
@@ -193,6 +194,9 @@ ALTER TABLE wcf1_moderation_queue ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1
 
 /* change default value to '1' */
 ALTER TABLE wcf1_like CHANGE time time INT(10) NOT NULL DEFAULT 1;
+
+ALTER TABLE wcf1_package_update_server ADD apiVersion ENUM('2.0', '2.1') NOT NULL DEFAULT '2.0';
+ALTER TABLE wcf1_package_update_server ADD metaData TEXT;
 
 ALTER TABLE wcf1_page_menu_item ADD originIsSystem TINYINT(1) NOT NULL DEFAULT 0;
 
@@ -220,6 +224,8 @@ ALTER TABLE wcf1_user_notification ADD confirmTime INT(10) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_user_notification ADD baseObjectID INT(10) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_user_notification ADD KEY userRelatedFields (userID, eventID, objectID, confirmTime);
 ALTER TABLE wcf1_user_notification ADD KEY userConfirmTime (userID, confirmTime);
+ALTER TABLE wcf1_user_notification DROP KEY eventHash;
+ALTER TABLE wcf1_user_notification DROP KEY packageID;
 
 ALTER TABLE wcf1_user_notification_to_user DROP mailNotified;
 
@@ -279,14 +285,23 @@ UPDATE wcf1_style_variable SET defaultValue = '0px' WHERE variableName = 'wcfCon
 DELETE FROM wcf1_style_variable WHERE variableName = 'wcfMainMenuHoverBackgroundColor';
 
 /* 
- * ########################
- * ### MEDIA PROVIDIERS ###
- * ########################
+ * #######################
+ * ### MEDIA PROVIDERS ###
+ * #######################
  */
 
 INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud set', 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/sets/(?P<name>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="450" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2Fsets%2F{$name}"></iframe>');
 UPDATE wcf1_bbcode_media_provider SET regex = 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/(?!sets/)(?P<song>[a-zA-Z0-9_-]+)' WHERE title = 'Soundcloud';
 UPDATE wcf1_bbcode_media_provider SET html = '<iframe style="max-width:100%;" width="560" height="315" src="https://www.youtube-nocookie.com/embed/{$ID}?wmode=transparent{$start}" allowfullscreen></iframe>' WHERE title = 'YouTube';
+
+/* 
+ * ##############################
+ * ### TYPHOON UPDATE SERVERS ###
+ * ##############################
+ */
+
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/typhoon/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/typhoon/', 'online', 0, NULL, 0, '', '');
 
 /* 
  * ########################
