@@ -573,7 +573,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [*]
 			html = html.replace(/<li>/gi, '[*]');
-			html = html.replace(/<\/li>/gi, '');
+			html = html.replace(/<\/li>/gi, '\n');
 			
 			// [list]
 			html = html.replace(/<ul>/gi, '[list]');
@@ -581,6 +581,12 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<ul style="list-style-type: (none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)">/gi, '[list=$1]');
 			html = html.replace(/<\/(ul|ol)>/gi, '[/list]');
 			
+			// ensure there is a newline in front of a [list]
+			html = html.replace(/\n?\[list\]/g, '\n[list]');
+			
+			// drop newline between [/list] and [*]
+			html = html.replace(/\[\/list\]\n\[\*\]/g, '[/list][*]');
+			console.debug(html);
 			// [table]
 			html = html.replace(/<table[^>]*>/gi, '[table]\n');
 			html = html.replace(/<\/table>/gi, '[/table]\n');
@@ -809,7 +815,12 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]/gi,'<div style="text-align: $1">$2</div>');
 			
 			// [*]
-			data = data.replace(/\[\*\]([\s\S]*?)(?=\[\*\]|\[\/list\])/gi,'<li>$1</li>');
+			data = data.replace(/\[\*\]([\s\S]*?)(?=\[\*\]|\[\/list\])/gi, function(match, content) {
+				return '<li>' + $.trim(content) + '</li>';
+			});
+			
+			// fix superflous newlines with nested lists
+			data = data.replace(/\n*(\[list\]<\/li>)/g, '$1');
 			
 			// [list]
 			data = data.replace(/\[list\]/gi, '<ul>');
