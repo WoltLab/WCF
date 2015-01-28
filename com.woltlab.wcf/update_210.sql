@@ -212,6 +212,8 @@ ALTER TABLE wcf1_template_listener ADD niceValue TINYINT(3) NOT NULL DEFAULT 0;
 
 ALTER TABLE wcf1_user_group_option ADD usersOnly TINYINT(1) NOT NULL DEFAULT 0;
 
+ALTER TABLE wcf1_user_menu_item ADD iconClassName VARCHAR(255) NOT NULL DEFAULT '';
+
 /* truncate table to ensure consistency */
 DELETE FROM wcf1_user_notification;
 

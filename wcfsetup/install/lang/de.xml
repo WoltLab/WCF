@@ -2659,6 +2659,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.confirmPassword"><![CDATA[Kennwort wiederholen]]></item>
 		<item name="wcf.user.confirmEmail.error.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch.]]></item>
 		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
+		<item name="wcf.user.controlPanel"><![CDATA[Kontrollzentrum]]></item>
 		<item name="wcf.user.email"><![CDATA[E-Mail-Adresse]]></item>
 		<item name="wcf.user.email.error.notUnique"><![CDATA[Diese E-Mail-Adresse ist bereits durch einen anderen Benutzer vergeben.]]></item>
 		<item name="wcf.user.email.error.notValid"><![CDATA[Sie haben eine ungültige E-Mail-Adresse eingegeben.]]></item>

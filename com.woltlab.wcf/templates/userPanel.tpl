@@ -4,7 +4,8 @@
 		<a class="framed" href="{link controller='User' object=$__wcf->user}{/link}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} <span>{lang}wcf.user.userNote{/lang}</span></a>
 		<div class="interactiveDropdown interactiveDropdownStatic interactiveDropdownUserMenu">
 			<div class="interactiveDropdownHeader">
-				<span class="interactiveDropdownTitle">{$__wcf->user->username}</span>
+				<span class="interactiveDropdownTitle">{lang}wcf.user.controlPanel{/lang}</span>
+				
 				{hascontent}
 					<ul class="interactiveDropdownLinks">
 						{content}
@@ -16,27 +17,40 @@
 			<div class="interactiveDropdownItemsContainer">
 				<ul class="interactiveDropdownItems interactiveDropdownItemsUserMenu">
 					<li>
-						<a href="{link controller='User' object=$__wcf->user}{/link}" class="box64">
+						<div class="box64">
 							<div class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(64)}</div>
 							
 							<div class="containerHeadline">
-								<h3>{$__wcf->user->username}</h3>
+								<h3><a href="{link controller='User' object=$__wcf->user}{/link}">{$__wcf->user->username}</a></h3>
 								{if MODULE_USER_RANK && $__wcf->getUserProfileHandler()->getUserTitle()}<p><span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span></p>{/if}
-								<small style="display: none;">{lang}wcf.user.myProfile{/lang}</small>
+								
+								<ul class="interactiveDropdownUserMenuLinkList">
+									<li><a href="{link controller='User' object=$__wcf->user}{/link}">{lang}wcf.user.myProfile{/lang}</a></li>
+									{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
+									{if $__wcf->session->getPermission('admin.general.canUseAcp')}<li><a href="{link isACP=true}{/link}">{lang}wcf.global.acp.short{/lang}</a></li>{/if}
+								</ul>
 							</div>
 						</a>
+						</div>
 					</li>
-					<li class="dropdownDivider"></li>
-					<li><a href="{link controller='User' object=$__wcf->user}{/link}">{lang}wcf.user.myProfile{/lang}</a></li>
-					{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
-					<li><a href="{link controller='Settings'}{/link}">{lang}wcf.user.menu.settings{/lang}</a></li>
 					
-					{event name='userMenuItems'}
-					
-					{if $__wcf->session->getPermission('admin.general.canUseAcp')}
+					{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
 						<li class="dropdownDivider"></li>
-						<li><a href="{link isACP=true}{/link}">{lang}wcf.global.acp.short{/lang}</a></li>
-					{/if}
+						<li class="interactiveDropdownUserMenuItem">
+							<div class="box32">
+								<div><span class="icon icon32 {@$menuCategory->getIconClassName()}"></span></div>
+								
+								<div class="containerHeadline">
+									<h3>{lang}{$menuCategory->menuItem}{/lang}</h3>
+									
+									<ul class="interactiveDropdownUserMenuLinkList">
+										{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
+											<li><a href="{$menuItem->getProcessor()->getLink()}">{@$menuItem}</a></li>
+										{/foreach}
+									</ul>
+								</div>
+							</div>
+					{/foreach}
 				</ul>
 			</div>
 			<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>

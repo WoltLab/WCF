@@ -428,16 +428,41 @@
 			
 			&.interactiveDropdownItemsUserMenu {
 				> li {
-					padding: 0 !important;
+					&.dropdownDivider {
+						padding: 0 !important;
+					}
 					
 					&:not(.dropdownDivider) {
 						border-bottom-width: 0 !important;
+						padding: (@wcfGapSmall + @wcfGapTiny);
 					}
 					
-					> a {
-						display: block;
-						padding: @wcfGapSmall (@wcfGapSmall + @wcfGapTiny);
-						text-decoration: none;
+					> .box32 > .containerHeadline {
+						> h3 {
+							font-size: 1.1rem;
+						}
+					}
+					
+					> .box64 {
+						position: relative;
+						
+						> .containerHeadline > .interactiveDropdownUserMenuLinkList {
+							bottom: 0;
+							position: absolute;
+						}
+					}
+					
+					.interactiveDropdownUserMenuLinkList > li {
+						display: inline-block;
+						font-size: .85rem;
+						
+						&:after {
+							content: " \2013 ";
+						}
+						
+						&:last-child:after {
+							content: "";
+						}
 					}
 				}
 			}

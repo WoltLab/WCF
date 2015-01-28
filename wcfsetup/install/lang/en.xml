@@ -2657,6 +2657,7 @@ Errors are:
 		<item name="wcf.user.confirmPassword"><![CDATA[Confirm Password]]></item>
 		<item name="wcf.user.confirmEmail.error.notEqual"><![CDATA[The entered email addresses do not match.]]></item>
 		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[The entered passwords do not match.]]></item>
+		<item name="wcf.user.controlPanel"><![CDATA[Control Panel]]></item>
 		<item name="wcf.user.email"><![CDATA[Email]]></item>
 		<item name="wcf.user.email.error.notUnique"><![CDATA[Email is already in use.]]></item>
 		<item name="wcf.user.email.error.notValid"><![CDATA[Email is invalid.]]></item>

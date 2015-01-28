@@ -4,6 +4,7 @@
 		<!-- profile -->
 		<usermenuitem name="wcf.user.menu.profile">
 			<showorder>1</showorder>
+			<iconclassname>fa-user</iconclassname>
 		</usermenuitem>
 		
 		<usermenuitem name="wcf.user.menu.profile.accountManagement">
@@ -27,6 +28,7 @@
 		<!-- settings -->
 		<usermenuitem name="wcf.user.menu.settings">
 			<showorder>2</showorder>
+			<iconclassname>fa-cog</iconclassname>
 		</usermenuitem>
 		
 		<usermenuitem name="wcf.user.menu.settings.notification">
@@ -44,6 +46,7 @@
 		<!-- community -->
 		<usermenuitem name="wcf.user.menu.community">
 			<showorder>3</showorder>
+			<iconclassname>fa-globe</iconclassname>
 		</usermenuitem>
 		
 		<usermenuitem name="wcf.user.menu.community.notification">

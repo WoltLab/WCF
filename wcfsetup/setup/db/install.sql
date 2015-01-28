@@ -1278,6 +1278,7 @@ CREATE TABLE wcf1_user_menu_item (
 	permissions TEXT,
 	options TEXT,
 	className VARCHAR(255) NOT NULL DEFAULT '',
+	iconClassName VARCHAR(255) NOT NULL DEFAULT '',
 	UNIQUE KEY menuItem (menuItem, packageID)
 );
 

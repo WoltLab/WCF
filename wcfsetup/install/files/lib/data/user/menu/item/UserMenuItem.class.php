@@ -118,4 +118,13 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	public function __toString() {
 		return WCF::getLanguage()->getDynamicVariable($this->menuItem);
 	}
+	
+	/**
+	 * Returns FontAwesome icon class name.
+	 * 
+	 * @return	string
+	 */
+	public function getIconClassName() {
+		return ($this->iconClassName ?: 'fa-bars');
+	}
 }
