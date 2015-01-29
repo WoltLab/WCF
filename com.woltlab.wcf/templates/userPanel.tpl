@@ -18,7 +18,7 @@
 				<ul class="interactiveDropdownItems interactiveDropdownItemsUserMenu">
 					<li>
 						<div class="box64">
-							<div class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(64)}</div>
+							<a href="{link controller='User' object=$__wcf->user}{/link}" class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(64)}</a>
 							
 							<div class="containerHeadline">
 								<h3><a href="{link controller='User' object=$__wcf->user}{/link}">{$__wcf->user->username}</a></h3>
