@@ -172,6 +172,7 @@ WCF.User.Panel.Abstract = Class.extend({
 	 */
 	init: function(triggerElement, identifier, options) {
 		this._dropdown = null;
+		this._loadData = true;
 		this._identifier = identifier;
 		this._triggerElement = triggerElement;
 		this._options = options;
@@ -186,9 +187,14 @@ WCF.User.Panel.Abstract = Class.extend({
 			this._triggerElement.dblclick($.proxy(this._dblClick, this));
 		}
 		
-		var $badge = this._triggerElement.find('span.badge');
-		if ($badge.length) {
-			this._badge = $badge;
+		if (this._options.staticDropdown === true) {
+			this._loadData = false;
+		}
+		else {
+			var $badge = this._triggerElement.find('span.badge');
+			if ($badge.length) {
+				this._badge = $badge;
+			}
 		}
 	},
 	
