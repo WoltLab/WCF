@@ -514,8 +514,11 @@
 		min-width: 350px;
 		
 		> .interactiveDropdownItemsContainer {
-			overflow: hidden;
 			position: relative;
+			
+			&:not(.interactiveDropdownItemsUserMenu) {
+				overflow: hidden;
+			}
 			
 			> .interactiveDropdownItems > li:not(.loading) {
 				max-width: 400px;
