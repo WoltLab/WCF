@@ -507,7 +507,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [align]
 			html = html.replace(/<(div|p) style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)\n/gi, function(match, tag, alignment, content) {
-				return '[align=' + alignment + ']' + $.trim(content) + '[/align]';
+				return '[align=' + alignment + ']' + $.trim(content) + '[/align]\n';
 			});
 			
 			// smileys
