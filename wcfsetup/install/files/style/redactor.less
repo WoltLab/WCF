@@ -227,12 +227,12 @@
 }
 
 .redactor-toolbar {
-	background: repeating-linear-gradient(0deg, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor 29px, @wcfContainerBorderColor 30px, @wcfContainerBorderColor 30px);
-	border-bottom: 1px solid @wcfContainerBorderColor;
-	margin-top: -1px;
+	background: repeating-linear-gradient(0deg, @wcfContainerBorderColor 0px, @wcfContainerBorderColor 3%, @wcfContainerBackgroundColor 3%, @wcfContainerAccentBackgroundColor 100%);
+	background-size: 100% 31px;
 	
 	> li {
 		display: inline-block;
+		margin-bottom: 1px;
 		vertical-align: middle;
 		
 		&:last-of-type,
