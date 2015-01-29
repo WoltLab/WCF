@@ -329,7 +329,7 @@ WCF.Moderation.Report.Content = Class.extend({
 	 */
 	_submit: function() {
 		var $text = this._dialog.find('.jsReportMessage').val();
-		if ($text == '') {
+		if ($.trim($text) == '') {
 			this._dialog.find('fieldset > dl').addClass('formError');
 			
 			if (!this._dialog.find('.innerError').length) {
