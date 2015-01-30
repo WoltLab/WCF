@@ -3,6 +3,7 @@ namespace wcf\system\package\validation;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 
@@ -10,7 +11,7 @@ use wcf\system\WCF;
  * Recursively validates the package archive and it's delivered requirements.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.validation
@@ -94,10 +95,14 @@ class PackageValidationArchive implements \RecursiveIterator {
 				// check if package is installable or suitable for an update
 				$this->validateInstructions($requiredVersion);
 			}
-			catch (\Exception $e) {
-				$this->exception = $e;
+			catch (SystemException $e) {
+				if ($e->getCode()) {
+					$this->exception = new PackageValidationException($e->getCode(), array('legacyMessage' => $e->getMessage()));
+					
+					return false;
+				}
 				
-				return false;
+				throw $e;
 			}
 		}
 		

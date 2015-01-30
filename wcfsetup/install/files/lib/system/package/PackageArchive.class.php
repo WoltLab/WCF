@@ -3,6 +3,7 @@ namespace wcf\system\package;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\package\validation\PackageValidationException;
 use wcf\system\io\Tar;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -13,7 +14,7 @@ use wcf\util\XML;
  * Represents the archive of a package.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -134,7 +135,7 @@ class PackageArchive {
 	public function openArchive() {
 		// check whether archive exists and is a TAR archive
 		if (!file_exists($this->archive)) {
-			throw new SystemException("unable to find package file '".$this->archive."'");
+			throw new SystemException("unable to find package file '".$this->archive."'", PackageValidationException::FILE_NOT_FOUND);
 		}
 		
 		// open archive and read package information
@@ -149,7 +150,7 @@ class PackageArchive {
 		// search package.xml in package archive
 		// throw error message if not found
 		if ($this->tar->getIndexByFilename(self::INFO_FILE) === false) {
-			throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'");
+			throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'", PackageValidationException::MISSING_PACKAGE_XML);
 		}
 		
 		// extract package.xml, parse XML
@@ -209,7 +210,7 @@ class PackageArchive {
 				
 				case 'version':
 					if (!Package::isValidVersion($element->nodeValue)) {
-						throw new SystemException("package version '".$element->nodeValue."' is invalid");
+						throw new SystemException("package version '".$element->nodeValue."' is invalid", PackageValidationException::INVALID_PACKAGE_VERSION);
 					}
 					
 					$this->packageInfo['version'] = $element->nodeValue;
@@ -235,7 +236,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:requiredpackages/ns:requiredpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", PackageValidationException::INVALID_PACKAGE_NAME);
 			}
 			
 			// read attributes
@@ -252,7 +253,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", PackageValidationException::INVALID_PACKAGE_NAME);
 			}
 			
 			// read attributes
@@ -269,7 +270,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:excludedpackages/ns:excludedpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", PackageValidationException::INVALID_PACKAGE_NAME);
 			}
 			
 			// read attributes
