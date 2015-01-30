@@ -365,27 +365,8 @@
 						}
 					}
 					
-					&.interactiveDropdownItemOutstandingIcon {
-						> div.box32 {
-							padding-right: 16px + (@wcfGapSmall + @wcfGapTiny);
-						}
-						
-						> div.interactiveDropdownItemMarkAsRead {
-							opacity: .6;
-							position: absolute;
-							right: (@wcfGapSmall + @wcfGapTiny);
-							top: 50%;
-							
-							transform: translateY(-50%);
-							-ms-transform: translateY(-50%);
-							-webkit-transform: translateY(-50%);
-							
-							.transition(opacity, .3s, linear);
-						}
-						
-						&:hover > div.interactiveDropdownItemMarkAsRead {
-							opacity: 1;
-						}
+					&.interactiveDropdownItemOutstandingIcon > div.box32 {
+						padding-right: 16px + (@wcfGapSmall + @wcfGapTiny);
 					}
 					
 					&.notificationItem {
@@ -498,13 +479,20 @@
 		}
 	}
 	
-	&.interactiveDropdownUserMenu > .pointer {
-		border-width: 0 7px 7px 7px;
-		top: -7px;
+	&.interactiveDropdownUserMenu {
+		> .interactiveDropdownItemsContainer {
+			overflow: visible;
+			max-height: none;
+		}
 		
-		> span {
-			border-width: 0 5px 5px 5px;
-			left: -5px;
+		> .pointer {
+			border-width: 0 7px 7px 7px;
+			top: -7px;
+			
+			> span {
+				border-width: 0 5px 5px 5px;
+				left: -5px;
+			}
 		}
 	}
 }
@@ -514,14 +502,30 @@
 		min-width: 350px;
 		
 		> .interactiveDropdownItemsContainer {
+			overflow: hidden;
 			position: relative;
-			
-			&:not(.interactiveDropdownItemsUserMenu) {
-				overflow: hidden;
-			}
 			
 			> .interactiveDropdownItems > li:not(.loading) {
 				max-width: 400px;
+				
+				&.interactiveDropdownItemOutstandingIcon {
+					> div.interactiveDropdownItemMarkAsRead {
+						opacity: .6;
+						position: absolute;
+						right: (@wcfGapSmall + @wcfGapTiny);
+						top: 50%;
+						
+						transform: translateY(-50%);
+						-ms-transform: translateY(-50%);
+						-webkit-transform: translateY(-50%);
+						
+						.transition(opacity, .3s, linear);
+					}
+					
+					&:hover > div.interactiveDropdownItemMarkAsRead {
+						opacity: 1;
+					}
+				}
 			}
 		}
 	}
@@ -535,6 +539,29 @@
 		
 		> .interactiveDropdownItemsContainer {
 			overflow-x: auto;
+			
+			> .interactiveDropdownItems > li.interactiveDropdownItemOutstandingIcon > div.interactiveDropdownItemMarkAsRead {
+				bottom: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+				width: (@wcfGapSmall + @wcfGapTiny) + 16px + (@wcfGapSmall + @wcfGapTiny);
+				
+				> a {
+					display: block;
+					height: 100%;
+					text-align: center;
+					
+					> .icon {
+						position: relative;
+						top: 50%;
+						
+						transform: translateY(-50%);
+						-ms-transform: translateY(-50%);
+						-webkit-transform: translateY(-50%);
+					}
+				}
+			}
 		}
 	}
 }
