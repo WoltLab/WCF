@@ -278,14 +278,14 @@
 	background-color: @wcfContainerAccentBackgroundColor;
 	border: 1px solid @wcfDropdownBorderColor;
 	color: @wcfDropdownColor;
-	display: none;
+	display: block;
 	position: absolute;
 	z-index: 450;
 	
 	.boxShadow(0, 3px, rgba(0, 0, 0, .25), 8px);
 	
-	&.open {
-		display: block;
+	&:not(.open) {
+		display: none !important;
 	}
 	
 	> .interactiveDropdownHeader {
