@@ -17,22 +17,23 @@ class Zip extends File implements IArchive {
 	const LOCAL_FILE_SIGNATURE = "\x50\x4b\x03\x04";
 	const CENTRAL_DIRECTORY_SIGNATURE = "\x50\x4b\x01\x02";
 	const EOF_SIGNATURE = "\x50\x4b\x05\x06";
+	const DATA_DESCRIPTOR_SIGNATURE = "\x50\x4b\x07\x08";
+	protected $centralDirectory = null;
 	
 	/**
 	 * @see	\wcf\system\io\File::__construct()
 	 */
 	public function __construct($filename) {
 		parent::__construct($filename, 'rb');
+		
+		$this->centralDirectory = $this->readCentralDirectory();
 	}
 	
 	/**
 	 * @see	\wcf\system\io\IArchive::getIndexByFilename()
 	 */
 	public function getIndexByFilename($filename) {
-		$this->jumpToCentralDirectory();
-		$centralDirectory = $this->readCentralDirectory();
-		
-		if (isset($centralDirectory['files'][$filename])) return $centralDirectory['files'][$filename]['offset'];
+		if (isset($this->centralDirectory['files'][$filename])) return $this->centralDirectory['files'][$filename]['offset'];
 		return false;
 	}
 	
@@ -40,10 +41,7 @@ class Zip extends File implements IArchive {
 	 * @see	\wcf\system\io\IArchive::getContentList()
 	 */
 	public function getContentList() {
-		$this->jumpToCentralDirectory();
-		$centralDirectory = $this->readCentralDirectory();
-		
-		return $centralDirectory['files'];
+		return $this->centralDirectory['files'];
 	}
 	
 	/**
@@ -131,7 +129,7 @@ class Zip extends File implements IArchive {
 	/**
 	 * Moves the file-pointer to the beginning of the Central Directory.
 	 */
-	public function jumpToCentralDirectory() {
+	protected function jumpToCentralDirectory() {
 		$this->seek(0, SEEK_END);
 		$lastOffset = $this->tell();
 		$this->seek(-4, SEEK_CUR);
@@ -159,19 +157,18 @@ class Zip extends File implements IArchive {
 	/**
 	 * Reads the central directory and returns it.
 	 * 
-	 * @param	integer		$offset		where to start reading
 	 * @return	array
 	 */
-	public function readCentralDirectory($offset = null) {
-		if ($offset === null) $offset = $this->tell();
-		if ($offset === false) throw new SystemException('Invalid offset passed to readCentralDirectory');
+	protected function readCentralDirectory() {
+		$this->jumpToCentralDirectory();
 		
-		$this->seek($offset);
+		$offset = $this->tell();
+
 		// check signature
 		if ($this->read(4) !== self::CENTRAL_DIRECTORY_SIGNATURE) {
-			throw new SystemException('Invalid offset passed to readCentralDirectory');
+			throw new SystemException('Not in central directory');
 		}
-		$this->seek($offset);
+		$this->seek(-4, SEEK_CUR);
 		
 		$files = array();
 		while ($this->read(4) === self::CENTRAL_DIRECTORY_SIGNATURE) {
@@ -200,7 +197,7 @@ class Zip extends File implements IArchive {
 			
 			$files[$data['filename']] = $data;
 		}
-		$this->seek($this->tell() - 4);
+		$this->seek(-4, SEEK_CUR);
 		$size = $this->tell() - $offset;
 		
 		if ($this->read(4) !== self::EOF_SIGNATURE) throw new SystemException('Could not find the end of Central Directory');
@@ -238,35 +235,6 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * Moves the file-pointer right after this file.
-	 * 
-	 * @param	integer		$offset		where to start reading
-	 */
-	public function skipFile($offset = null) {
-		if ($offset === null) $offset = $this->tell();
-		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
-		if ($offset === false) throw new SystemException('Invalid offset passed to skipFile');
-		
-		$this->seek($offset);
-		// check signature
-		if ($this->read(4) !== self::LOCAL_FILE_SIGNATURE) {
-			throw new SystemException('Invalid offset passed to skipFile');
-		}
-		
-		// skip unneccessary header
-		$this->seek($offset + 18);
-		// read compressed filesize
-		$compressedSize = $this->readAndUnpack(4, 'V');
-		$this->read(4);
-		// read length of some fields
-		$filenameLength = $this->readAndUnpack(2, 'v');
-		$extraFieldLength = $this->readAndUnpack(2, 'v');
-		
-		// skip file
-		$this->seek($offset + 30 + $compressedSize + $filenameLength + $extraFieldLength);
-	}
-	
-	/**
 	 * Reads a file and returns it.
 	 * 
 	 * @param	integer		$offset		where to start reading
@@ -286,7 +254,6 @@ class Zip extends File implements IArchive {
 		// read headers
 		$header = array();
 		$header = unpack('vminVersion/vgeneralPurposeBit/vcompression/vmtime/vmdate', $this->read(10));
-		if ($header['generalPurposeBit'] & 7 /* 3rd bit */) throw new SystemException('Data Descriptors are not supported');
 		$second = ($header['mtime'] & 31 /* 5 bits */) * 2;
 		$minute = ($header['mtime'] >> 5) & 63 /* 6 bits */;
 		$hour = ($header['mtime'] >> 11) & 31 /* 5 bits */;
@@ -302,6 +269,13 @@ class Zip extends File implements IArchive {
 		if ($header['extraFieldLength'] > 0) $header['extraField'] = $this->read($header['extraFieldLength']);
 		else $header['extraField'] = '';
 		
+		// fetch sizes and crc from central directory
+		if ($header['generalPurposeBit'] & (1 << 3)) {
+			$header['compressedSize'] = $this->centralDirectory['files'][$header['filename']]['compressedSize'];
+			$header['size'] = $this->centralDirectory['files'][$header['filename']]['size'];
+			$header['crc32'] = $this->centralDirectory['files'][$header['filename']]['crc32'];
+		}
+
 		// read contents
 		$header['type'] = 'file';
 		if (substr($header['filename'], -1) != '/') $content = $this->read($header['compressedSize']);
@@ -326,6 +300,16 @@ class Zip extends File implements IArchive {
 		
 		// check crc32
 		if (crc32($content) != $header['crc32']) throw new SystemException('Checksum does not match');
+		
+		// gobble data descriptor
+		if ($header['generalPurposeBit'] & (1 << 3)) {
+			if ($this->read(4) === self::DATA_DESCRIPTOR_SIGNATURE) {
+				$this->read(12);
+			}
+			else {
+				$this->read(8);
+			}
+		}
 		
 		return array('header' => $header, 'content' => $content);
 	}
