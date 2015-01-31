@@ -1,15 +1,13 @@
 <?php
 namespace wcf\system\package\validation;
-use wcf\data\package\installation\plugin\PackageInstallationPluginList;
 use wcf\data\package\Package;
-use wcf\system\package\PackageArchive;
 use wcf\system\SingletonFactory;
 
 /**
  * Manages recursive validation of package archives.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.validation
