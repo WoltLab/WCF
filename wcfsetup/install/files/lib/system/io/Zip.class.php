@@ -132,14 +132,28 @@ class Zip extends File implements IArchive {
 	 * Moves the file-pointer to the beginning of the Central Directory.
 	 */
 	public function jumpToCentralDirectory() {
-		$this->seek(0);
-		while ($this->isFile()) {
-			$this->skipFile();
-			$offset = $this->tell();
-		}
+		$this->seek(0, SEEK_END);
+		$lastOffset = $this->tell();
+		$this->seek(-4, SEEK_CUR);
+		
+		do {
+			if ($this->read(4) === self::EOF_SIGNATURE) {
+				$eof = unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize/VcentralDirectoryOffset/vcommentLength', $this->read(18));
+				if ($eof['commentLength'] + $this->tell() === $lastOffset) {
+					$this->seek($eof['centralDirectoryOffset']);
+					break;
+				}
+				else {
+					// some part of the comment looked like the EOF_SIGNATURE
+					$this->seek(-18, SEEK_CUR);
+				}
+			}
+			
+			$this->seek(-5, SEEK_CUR);
+		} while(true);
 		
 		if ($this->read(4) !== self::CENTRAL_DIRECTORY_SIGNATURE) throw new SystemException('Unable to locate central directory');
-		$this->seek($offset);
+		$this->seek(-4, SEEK_CUR);
 	}
 	
 	/**
@@ -191,10 +205,10 @@ class Zip extends File implements IArchive {
 		
 		if ($this->read(4) !== self::EOF_SIGNATURE) throw new SystemException('Could not find the end of Central Directory');
 		
-		$eof = unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/vcentralDirectorySize', $this->read(12));
+		$eof = unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize', $this->read(12));
 		// check size of Central Directory
 		if ($size !== $eof['centralDirectorySize']) throw new SystemException('Central Directory size does not match');
-		$eof += unpack('vcentralDirectoryOffset/vcommentLength', $this->read(6));
+		$eof += unpack('VcentralDirectoryOffset/vcommentLength', $this->read(6));
 		
 		// read comment
 		if ($eof['commentLength'] > 0) $eof['comment'] = $this->read($eof['commentLength']);
