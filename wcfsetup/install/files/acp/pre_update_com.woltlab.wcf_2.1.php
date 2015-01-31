@@ -5,7 +5,7 @@ use wcf\system\WCF;
 
 /**
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework
@@ -13,7 +13,6 @@ use wcf\system\WCF;
 
 if (Package::compareVersion(preg_replace('~ \(Maelstrom\)$~', '', WCF_VERSION), '2.0.10', '<')) {
 	if (WCF::getLanguage()->getFixedLanguageCode() == 'de') {
-		die("<pre>".preg_replace('~ \(Maelstrom\)$~', '', WCF_VERSION)." != 2.0.10");
 		throw new SystemException("Die Aktualisierung erfordert WoltLab Community Framework (com.woltlab.wcf) in Version 2.0.10 oder hoeher");
 	}
 	else {
