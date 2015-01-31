@@ -3,7 +3,6 @@ namespace wcf\system\package\validation;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\SystemException;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 
@@ -90,19 +89,16 @@ class PackageValidationArchive implements \RecursiveIterator {
 		if ($validationMode !== PackageValidationManager::VALIDATION_EXCLUSION) {
 			try {
 				// try to read archive
+				$this->archive->disableLegacyExceptions();
 				$this->archive->openArchive();
 				
 				// check if package is installable or suitable for an update
 				$this->validateInstructions($requiredVersion);
 			}
-			catch (SystemException $e) {
-				if ($e->getCode()) {
-					$this->exception = new PackageValidationException($e->getCode(), array('legacyMessage' => $e->getMessage()));
-					
-					return false;
-				}
+			catch (PackageValidationException $e) {
+				$this->exception = $e;
 				
-				throw $e;
+				return false;
 			}
 		}
 		

@@ -28,6 +28,12 @@ class PackageArchive {
 	protected $archive = null;
 	
 	/**
+	 * throw SystemExceptions rather than PackageValidationException
+	 * @var	boolean
+	 */
+	protected $legacyExceptions = true;
+	
+	/**
 	 * package object of an existing package
 	 * @var	\wcf\data\package\Package
 	 */
@@ -103,6 +109,13 @@ class PackageArchive {
 	}
 	
 	/**
+	 * Disables legacy exceptions, throwing PackageValidationException instead of SystemException.
+	 */
+	public function disableLegacyExceptions() {
+		$this->legacyExceptions = false;
+	}
+	
+	/**
 	 * Sets associated package object.
 	 * 
 	 * @param	\wcf\data\package\Package	$package
@@ -135,7 +148,12 @@ class PackageArchive {
 	public function openArchive() {
 		// check whether archive exists and is a TAR archive
 		if (!file_exists($this->archive)) {
-			throw new SystemException("unable to find package file '".$this->archive."'", PackageValidationException::FILE_NOT_FOUND);
+			if ($this->legacyExceptions) {
+				throw new SystemException("unable to find package file '".$this->archive."'");
+			}
+			else {
+				throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, array('archive' => $this->archive));
+			}
 		}
 		
 		// open archive and read package information
@@ -150,7 +168,12 @@ class PackageArchive {
 		// search package.xml in package archive
 		// throw error message if not found
 		if ($this->tar->getIndexByFilename(self::INFO_FILE) === false) {
-			throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'", PackageValidationException::MISSING_PACKAGE_XML);
+			if ($this->legacyExceptions) {
+				throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'");
+			}
+			else {
+				throw new PackageValidationException(PackageValidationException::MISSING_PACKAGE_XML, array('archive' => $this->archive));
+			}
 		}
 		
 		// extract package.xml, parse XML
@@ -171,7 +194,12 @@ class PackageArchive {
 		$packageName = $package->getAttribute('name');
 		if (!Package::isValidPackageName($packageName)) {
 			// package name is not a valid package identifier
-			throw new SystemException("'".$packageName."' is not a valid package name.");
+			if ($this->legacyExceptions) {
+				throw new SystemException("'".$packageName."' is not a valid package name.");
+			}
+			else {
+				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $packageName));
+			}
 		}
 		
 		$this->packageInfo['name'] = $packageName;
@@ -210,7 +238,12 @@ class PackageArchive {
 				
 				case 'version':
 					if (!Package::isValidVersion($element->nodeValue)) {
-						throw new SystemException("package version '".$element->nodeValue."' is invalid", PackageValidationException::INVALID_PACKAGE_VERSION);
+						if ($this->legacyExceptions) {
+							throw new SystemException("package version '".$element->nodeValue."' is invalid");
+						}
+						else {
+							throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_VERSION, array('packageVersion' => $element->nodeValue));
+						}
 					}
 					
 					$this->packageInfo['version'] = $element->nodeValue;
@@ -236,7 +269,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:requiredpackages/ns:requiredpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", PackageValidationException::INVALID_PACKAGE_NAME);
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
 			}
 			
 			// read attributes
@@ -253,7 +286,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", PackageValidationException::INVALID_PACKAGE_NAME);
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
 			}
 			
 			// read attributes
@@ -270,7 +303,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:excludedpackages/ns:excludedpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", PackageValidationException::INVALID_PACKAGE_NAME);
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
 			}
 			
 			// read attributes
