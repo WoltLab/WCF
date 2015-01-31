@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.10 pl 1</version> <!-- codename: maelstrom -->
-		<date>2015-01-26</date>
+		<version>2.0.10 pl 2</version> <!-- codename: maelstrom -->
+		<date>2015-01-31</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,7 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.10">
+	<instructions type="update" fromversion="2.0.10 pl 1">
 		<instruction type="file">files_update.tar</instruction>
 	</instructions>
 </package>
