@@ -324,6 +324,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
 		// insert updates
 		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = array();
+		WCF::getDB()->beginTransaction();
 		foreach ($allNewPackages as $identifier => $packageData) {
 			// create new database entry
 			$packageUpdate = PackageUpdateEditor::create(array(
@@ -402,6 +403,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				}
 			}
 		}
+		WCF::getDB()->commitTransaction();
 		
 		// save requirements, excluded packages and fromversions
 		// insert requirements
