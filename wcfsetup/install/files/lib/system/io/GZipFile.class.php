@@ -84,7 +84,7 @@ class GZipFile extends File {
 			$eof += $byteBlock * ($this->seek($eof) ? -1 : 1);
 		}
 		
-		if ($this->seek($eof) == -1) $eof -= 1;
+		if ($this->seek($eof) == -1) $eof--;
 				
 		$this->rewind();
 		return $eof - $correction;

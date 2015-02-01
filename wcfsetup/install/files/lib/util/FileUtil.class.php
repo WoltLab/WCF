@@ -169,9 +169,7 @@ final class FileUtil {
 						unset($target[$j]);
 					}
 					$relPath .= str_repeat('../', count($current) - $i).implode('/', $target).'/';
-					for ($j = $i + 1; $j < count($current); $j++) {
-						unset($current[$j]);
-					}
+					
 					break;
 				}
 			}	
