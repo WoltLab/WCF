@@ -1,6 +1,6 @@
 <?php
-use wcf\system\WCF;
 use wcf\system\package\SplitNodeException;
+use wcf\system\WCF;
 
 /**
  * @author	Alexander Ebert

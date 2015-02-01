@@ -5,12 +5,12 @@ use wcf\util\DateUtil;
 
 /**
  * @author	Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
-// change the priority of the PIP's to "1"
+// change the priority of the PIPs to "1"
 $sql = "UPDATE	wcf".WCF_N."_package_installation_plugin
 	SET	priority = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
