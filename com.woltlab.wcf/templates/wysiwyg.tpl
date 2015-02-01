@@ -111,7 +111,7 @@ $(function() {
 		'{@$__wcf->getPath()}js/3rdParty/redactor/redactor{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}',
 		{if $__wcf->getLanguage()->getFixedLanguageCode() != 'en'}'{@$__wcf->getPath()}js/3rdParty/redactor/languages/{@$__wcf->getLanguage()->getFixedLanguageCode()}.js?v={@LAST_UPDATE_TIME}',{/if}
 		{if !ENABLE_DEBUG_MODE}
-			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wcombined.min.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wcombined.min.js?v={@LAST_UPDATE_TIME}'
 		{else}
 			{* official *}
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/table.js?v={@LAST_UPDATE_TIME}',
