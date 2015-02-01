@@ -296,9 +296,9 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				if (orgn.tagName == 'BR' && this.opts.linebreaks === false)
 				{
-					var par = $(this.opts.emptyHtml)[0];
-					$(orgn).replaceWith(par);
-					orgn = par;
+					var parent = $(this.opts.emptyHtml)[0];
+					$(orgn).replaceWith(parent);
+					orgn = parent;
 					focn = orgn;
 				}
 				
@@ -484,6 +484,8 @@ RedactorPlugins.wmonkeypatch = function() {
 						var $item = $('<a href="#" class="redactor-dropdown-' + btnName + '">' + btnObject.title + '</a>');
 						
 						$item.on('click', $.proxy(function(e) {
+							e.preventDefault();
+							
 							var type = 'func';
 							var callback = btnObject.func;
 							if (btnObject.command) {
@@ -496,7 +498,7 @@ RedactorPlugins.wmonkeypatch = function() {
 							}
 							
 							this.button.onClick(e, btnName, type, callback);
-							
+							this.dropdown.hideAll();
 						}, this));
 						
 						$item.appendTo($listItem);
@@ -646,12 +648,12 @@ RedactorPlugins.wmonkeypatch = function() {
 			}).bind(this);
 			
 			// inline.formatRemoveSameChildren;
-			var $mpFormatRemoveSameChildren = this.inline.formatRemoveSameChildren;
+			/*var $mpFormatRemoveSameChildren = this.inline.formatRemoveSameChildren;
 			this.inline.formatRemoveSameChildren = (function($el, tag) {
 				// check if this represents a style
-				if (tag === 'span' && this.inline.type === 'style') {
-					var $newProperty = this.inline.value.replace(/^([^:]+?):.*/, '$1');
-					
+				if (tag === 'span' && this.inline.type === 'style') {*/
+					//var $newProperty = this.inline.value.replace(/^([^:]+?):.*/, '$1');
+					/*
 					$el.children(tag).each((function(index, child) {
 						var $child = $(child);
 						if (!$child.hasClass('redactor-selection-marker')) {
@@ -669,7 +671,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				else {
 					$mpFormatRemoveSameChildren.call(this, $el, tag);
 				}
-			}).bind(this);
+			}).bind(this);*/
 			
 			// inline.removeStyleRule
 			var $mpRemoveStyleRule = this.inline.removeStyleRule;
@@ -863,7 +865,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			}).bind(this);
 			
 			// link.set
-			var $mpSet = this.link.set;
+			/*var $mpSet = this.link.set;
 			this.link.set = (function(text, link, target) {
 				$mpSet.call(this, text, link, target);
 				
@@ -879,7 +881,7 @@ RedactorPlugins.wmonkeypatch = function() {
 						$($current).text(text);
 					}
 				}
-			}).bind(this);
+			}).bind(this);*/
 		},
 		
 		/**
