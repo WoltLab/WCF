@@ -50,7 +50,7 @@ class StructuredCommentList extends CommentList {
 	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
 	 */
-	public $sqlLimit = 10;
+	public $sqlLimit = 30;
 	
 	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy

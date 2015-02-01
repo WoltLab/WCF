@@ -62,7 +62,6 @@ $(function() {
 		var $config = {
 			autosave: false,
 			buttons: $buttons,
-			buttonSource: true,
 			convertImageLinks: false,
 			convertUrlLinks: false,
 			convertVideoLinks: false,
@@ -73,6 +72,7 @@ $(function() {
 			plugins: [ 'wutil', 'wmonkeypatch', 'table', 'wbutton', 'wbbcode', 'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
 			removeEmpty: false,
 			replaceDivs: false,
+			source: true,
 			tabifier: false,
 			toolbarFixed: false,
 			woltlab: {

@@ -86,6 +86,7 @@
 		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
 		
 		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
+		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 	
 	<instructions type="update" fromversion="2.1.0 Beta 3">
@@ -97,5 +98,7 @@
 		
 		<instruction type="option">option.xml</instruction>
 		<instruction type="userMenu">userMenu.xml</instruction>
+		
+		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 </package>

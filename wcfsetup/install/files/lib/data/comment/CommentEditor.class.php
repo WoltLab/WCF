@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Provides functions to edit comments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
@@ -27,7 +27,7 @@ class CommentEditor extends DatabaseObjectEditor {
 			FROM		wcf".WCF_N."_comment_response
 			WHERE		commentID = ?
 			ORDER BY	time ASC";
-		$statement = WCF::getDB()->prepareStatement($sql, 3);
+		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute(array($this->commentID));
 		$responseIDs = array();
 		while ($row = $statement->fetchArray()) {
