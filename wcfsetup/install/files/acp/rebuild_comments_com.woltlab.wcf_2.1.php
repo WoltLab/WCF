@@ -9,6 +9,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
+$commentsPerRun = 100;
 $rebuildData = WCF::getSession()->getVar('__wcfUpdateRebuildComments');
 if ($rebuildData === null) {
 	$sql = "SELECT	COUNT(*) AS count
@@ -24,19 +25,19 @@ if ($rebuildData === null) {
 	);
 	
 	if ($row['count']) {
-		$rebuildData['max'] = ceil($row['count'] / 50);
+		$rebuildData['max'] = ceil($row['count'] / $commentsPerRun);
 	}
 }
 
 if ($rebuildData['max']) {
-	$offset = $rebuildData['i'] * 50;
+	$offset = $rebuildData['i'] * $commentsPerRun;
 	
 	// get comments
 	$sql = "SELECT		commentID
 		FROM		wcf".WCF_N."_comment
 		WHERE		responses > ?
 		ORDER BY	commentID";
-	$statement = WCF::getDB()->prepareStatement($sql, 50, $offset);
+	$statement = WCF::getDB()->prepareStatement($sql, $commentsPerRun, $offset);
 	$statement->execute(array(3));
 	
 	$commentData = array();
