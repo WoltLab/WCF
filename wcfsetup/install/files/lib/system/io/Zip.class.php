@@ -148,7 +148,8 @@ class Zip extends File implements IArchive {
 			}
 			
 			$this->seek(-5, SEEK_CUR);
-		} while(true);
+		}
+		while(true);
 		
 		if ($this->read(4) !== self::CENTRAL_DIRECTORY_SIGNATURE) throw new SystemException('Unable to locate central directory');
 		$this->seek(-4, SEEK_CUR);
