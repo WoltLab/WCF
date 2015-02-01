@@ -96,6 +96,7 @@
 		
 		<instruction type="language" run="standalone">language/*.xml</instruction>
 		
+		<instruction type="sql">update_2.1.0_beta_4.sql</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="userMenu">userMenu.xml</instruction>
 		
