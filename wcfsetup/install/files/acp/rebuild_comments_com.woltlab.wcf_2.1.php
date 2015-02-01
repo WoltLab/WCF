@@ -40,12 +40,12 @@ if ($rebuildData['max']) {
 	$statement = WCF::getDB()->prepareStatement($sql, $commentsPerRun, $offset);
 	$statement->execute(array(3));
 	
-	$commentData = array();
+	$commentIDs = array();
 	while ($row = $statement->fetchArray()) {
-		$commentData[$row['commentID']] = array();
+		$commentIDs[] = $row['commentID'];
 	}
 	
-	if (empty($commentData)) {
+	if (empty($commentIDs)) {
 		WCF::getSession()->unregister('__wcfUpdateRebuildComments');
 	}
 	else {
@@ -56,13 +56,15 @@ if ($rebuildData['max']) {
 			ORDER BY	time";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		
-		foreach ($commentData as $commentID => &$responseIDs) {
+		$commentData = array();
+		for ($i = 0, $length = count($commentIDs); $i < $length; $i++) {
+			$commentID = $commentIDs[$i];
+			$commentData[$commentID] = array();
+			
 			$statement->execute(array($commentID));
 			while ($row = $statement->fetchArray()) {
-				$responseIDs[] = $row['responseID'];
+				$commentData[$commentID][] = $row['responseID'];
 			}
-			
-			$responseIDs = serialize($responseIDs);
 		}
 		
 		// set responseIDs per comment
@@ -73,7 +75,7 @@ if ($rebuildData['max']) {
 		WCF::getDB()->beginTransaction();
 		foreach ($commentData as $commentID => $responseIDs) {
 			$statement->execute(array(
-				$responseIDs,
+				serialize($responseIDs),
 				$commentID
 			));
 		}
