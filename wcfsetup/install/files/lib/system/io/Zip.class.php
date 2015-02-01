@@ -149,7 +149,7 @@ class Zip extends File implements IArchive {
 			
 			$this->seek(-5, SEEK_CUR);
 		}
-		while(true);
+		while (true);
 		
 		if ($this->read(4) !== self::CENTRAL_DIRECTORY_SIGNATURE) throw new SystemException('Unable to locate central directory');
 		$this->seek(-4, SEEK_CUR);
@@ -175,12 +175,12 @@ class Zip extends File implements IArchive {
 		while ($this->read(4) === self::CENTRAL_DIRECTORY_SIGNATURE) {
 			$data = unpack('vversion/vminVersion/vgeneralPurposeBit/vcompression/vmtime/vmdate', $this->read(12));
 			// calculate timestamp
-			$second = ($data['mtime'] & 31 /* 5 bits */) * 2;
-			$minute = ($data['mtime'] >> 5) & 63 /* 6 bits */;
-			$hour = ($data['mtime'] >> 11) & 31 /* 5 bits */;
-			$day = $data['mdate'] & 31 /* 5 bits */;
-			$month = ($data['mdate'] >> 5) & 15 /* 4 bits */;
-			$year = (($data['mdate'] >> 9) & 127 /* 7 bits */) + 1980;
+			$second = ($data['mtime'] & ((1 << 5) - 1)) * 2;
+			$minute = ($data['mtime'] >> 5) & ((1 << 6) - 1);
+			$hour = ($data['mtime'] >> 11) & ((1 << 5) - 1);
+			$day = $data['mdate'] & ((1 << 5) - 1);
+			$month = ($data['mdate'] >> 5) & ((1 << 4) - 1);
+			$year = (($data['mdate'] >> 9) & ((1 << 7) - 1)) + 1980;
 			$data['mtime'] = gmmktime($hour, $minute, $second, $month, $day, $year);
 			
 			$data += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr', $this->read(26));
@@ -255,12 +255,12 @@ class Zip extends File implements IArchive {
 		// read headers
 		$header = array();
 		$header = unpack('vminVersion/vgeneralPurposeBit/vcompression/vmtime/vmdate', $this->read(10));
-		$second = ($header['mtime'] & 31 /* 5 bits */) * 2;
-		$minute = ($header['mtime'] >> 5) & 63 /* 6 bits */;
-		$hour = ($header['mtime'] >> 11) & 31 /* 5 bits */;
-		$day = $header['mdate'] & 31 /* 5 bits */;
-		$month = ($header['mdate'] >> 5) & 15 /* 4 bits */;
-		$year = (($header['mdate'] >> 9) & 127 /* 7 bits */) + 1980;
+		$second = ($header['mtime'] & ((1 << 5) - 1)) * 2;
+		$minute = ($header['mtime'] >> 5) & ((1 << 6) - 1);
+		$hour = ($header['mtime'] >> 11) & ((1 << 5) - 1);
+		$day = $header['mdate'] & ((1 << 5) - 1);
+		$month = ($header['mdate'] >> 5) & ((1 << 4) - 1);
+		$year = (($header['mdate'] >> 9) & ((1 << 7) - 1)) + 1980;
 		$header['x-timestamp'] = gmmktime($hour, $minute, $second, $month, $day, $year);
 		$header += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength', $this->read(16));
 		
