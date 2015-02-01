@@ -227,6 +227,7 @@ ALTER TABLE wcf1_user_notification ADD baseObjectID INT(10) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_user_notification ADD KEY userRelatedFields (userID, eventID, objectID, confirmTime);
 ALTER TABLE wcf1_user_notification ADD KEY userConfirmTime (userID, confirmTime);
 ALTER TABLE wcf1_user_notification DROP KEY eventHash;
+ALTER TABLE wcf1_user_notification DROP FOREIGN KEY packageID;
 ALTER TABLE wcf1_user_notification DROP KEY packageID;
 
 ALTER TABLE wcf1_user_notification_to_user DROP mailNotified;
@@ -261,7 +262,6 @@ ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_ses
 
 ALTER TABLE wcf1_user_group_assignment ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_user_notification DROP FOREIGN KEY packageID;
 ALTER TABLE wcf1_user_notification ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_notification_author ADD FOREIGN KEY (notificationID) REFERENCES wcf1_user_notification (notificationID) ON DELETE CASCADE;
