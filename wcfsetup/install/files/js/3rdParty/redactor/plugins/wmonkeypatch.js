@@ -189,7 +189,7 @@ RedactorPlugins.wmonkeypatch = function() {
 						}
 						else {
 							var $height = $element.outerHeight() + (parseInt($element.css('margin-bottom'), 10) || 0);
-							if ((event.pageY <= $offset.top + $height) || (index + 1) === $elements.length) {
+							if (event.pageY <= $offset.top + $height) {
 								$setCaretBeforeOrAfter(element, false);
 								
 								return false;

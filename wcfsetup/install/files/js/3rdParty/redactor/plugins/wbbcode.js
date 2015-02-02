@@ -586,7 +586,10 @@ RedactorPlugins.wbbcode = function() {
 			
 			// drop newline between [/list] and [*]
 			html = html.replace(/\[\/list\]\n\[\*\]/g, '[/list][*]');
-			console.debug(html);
+			
+			// drop newline between two [/list]
+			html = html.replace(/\[\/list\]\n\[\/list\]/g, '[/list][/list]');
+			
 			// [table]
 			html = html.replace(/<table[^>]*>/gi, '[table]\n');
 			html = html.replace(/<\/table>/gi, '[/table]\n');
