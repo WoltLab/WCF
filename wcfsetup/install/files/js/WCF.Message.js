@@ -1963,6 +1963,19 @@ WCF.Message.Quote.Handler = Class.extend({
 			
 			return;
 		}
+		else {
+			// check if mousedown occured inside a <blockquote>
+			var $element = event.target;
+			while ($element !== $container[0]) {
+				if ($element.tagName === 'BLOCKQUOTE') {
+					this._activeContainerID = '';
+					
+					return;
+				}
+				
+				$element = $element.parentElement;
+			}
+		}
 		
 		this._activeContainerID = $container.wcfIdentify();
 		
@@ -1985,11 +1998,17 @@ WCF.Message.Quote.Handler = Class.extend({
 	_getNodeText: function(node) {
 		// work-around for IE, see http://stackoverflow.com/a/5983176
 		var $nodeFilter = function(node) {
-			if (node.tagName === 'H3' || node.tagName === 'SCRIPT') {
-				return NodeFilter.FILTER_REJECT;
+			switch (node.tagName) {
+				case 'BLOCKQUOTE':
+				case 'H3':
+				case 'SCRIPT':
+					return NodeFilter.FILTER_REJECT;
+				break;
+				
+				default:
+					return NodeFilter.FILTER_ACCEPT;
+				break;
 			}
-			
-			return NodeFilter.FILTER_ACCEPT;
 		};
 		$nodeFilter.acceptNode = $nodeFilter;
 		
@@ -2050,14 +2069,22 @@ WCF.Message.Quote.Handler = Class.extend({
 			return;
 		}
 		
+		var $messageBody = (this._messageBodySelector) ? $container.find(this._messageContentSelector)[0] : $container[0];
+		
+		// check if mouseup occured within a <blockquote>
+		var $element = event.target;
+		while ($element !== $container[0]) {
+			if ($element.tagName === 'BLOCKQUOTE') {
+				this._copyQuote.hide();
+				
+				return;
+			}
+			
+			$element = $element.parentElement;
+		}
+		
 		// compare selection with message text of given container
-		var $messageText = null;
-		if (this._messageBodySelector) {
-			$messageText = this._getNodeText($container.find(this._messageContentSelector)[0]);
-		}
-		else {
-			$messageText = this._getNodeText($container[0]);
-		}
+		var $messageText = this._getNodeText($messageBody);
 		
 		// selected text is not part of $messageText or contains text from unrelated nodes
 		if (this._normalize($messageText).indexOf(this._normalize($text)) === -1) {
