@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\package\validation;
+use wcf\data\package\installation\plugin\PackageInstallationPluginList;
 use wcf\data\package\Package;
+use wcf\system\package\PackageArchive;
 use wcf\system\SingletonFactory;
 
 /**
