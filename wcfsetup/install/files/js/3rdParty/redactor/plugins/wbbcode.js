@@ -1735,7 +1735,12 @@ RedactorPlugins.wbbcode = function() {
 					if ($quote !== null) {
 						// set caret inside the quote
 						if (!$html.length) {
-							this.caret.setStart($quote.find('> div')[0]);
+							// careful, Firefox is stupid and replaces an empty div with br[type=_moz]
+							if ($.browser.mozilla) {
+								$quote.children('br[type=_moz]').replaceWith('<div>' + this.opts.invisibleSpace + '</div>');
+							}
+							
+							this.caret.setStart($quote.children('div')[0]);
 						}
 					}
 					
