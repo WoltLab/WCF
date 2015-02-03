@@ -136,5 +136,6 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		$writer->close();
 		
 		FileUtil::makeWritable(WCF_DIR.'options.inc.php');
+		WCF::resetZendOpcache(WCF_DIR.'options.inc.php');
 	}
 }
