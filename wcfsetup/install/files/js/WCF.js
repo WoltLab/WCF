@@ -1623,7 +1623,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 			$left = this._getPositionLeft($elementOffsets, $dropdownDimensions, $pageWidth);
 			
 			if (!$left.result) {
-				$right = this._getPositionRight($elementOffsets, $dropdownDimensions, $elementDimensions);
+				$right = this._getPositionRight($elementOffsets, $dropdownDimensions, $elementDimensions, $pageWidth);
 				
 				if ($right.result) {
 					$left = null;
@@ -1634,7 +1634,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 			}
 		}
 		else {
-			$right = this._getPositionRight($elementOffsets, $dropdownDimensions, $elementDimensions);
+			$right = this._getPositionRight($elementOffsets, $dropdownDimensions, $elementDimensions, $pageWidth);
 			
 			if (!$right.result) {
 				$left = this._getPositionLeft($elementOffsets, $dropdownDimensions, $pageWidth);
@@ -1695,11 +1695,12 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * @param	object		elementOffsets
 	 * @param	object		dropdownDimensions
 	 * @param	object		elementDimensions
+	 * @param	integer		pageWidth
 	 * @return	object
 	 */
-	_getPositionRight: function(elementOffsets, dropdownDimensions, elementDimensions) {
+	_getPositionRight: function(elementOffsets, dropdownDimensions, elementDimensions, pageWidth) {
 		var $left = (elementOffsets.left + elementDimensions.width) - dropdownDimensions.width;
-		var $right = elementOffsets.right;
+		var $right = pageWidth - (elementOffsets.left + elementDimensions.width);
 		
 		return {
 			result: ($left > 0),
