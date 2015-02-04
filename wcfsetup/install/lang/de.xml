@@ -1199,6 +1199,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.D"><![CDATA[Tag(e)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.M"><![CDATA[Monat(e)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.Y"><![CDATA[Jahr(e)]]></item>
+		<item name="wcf.acp.paidSubscription.subscriptionLength.error.invalid"><![CDATA[Sie haben eine ungültige Laufzeit eingegeben. Für die Auswahl „Tage“ liegt der zulässige Maximalwert bei 90, für „Monate“ bei 24 und für „Jahre“ bei fünf.]]></item>
 		<item name="wcf.acp.paidSubscription.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die bezahlten Mitgliedschaften angezeigt werden.]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled"><![CDATA[Mitgliedschaft deaktivieren]]></item>
