@@ -30,7 +30,6 @@
 									{if $__wcf->session->getPermission('admin.general.canUseAcp')}<li><a href="{link isACP=true}{/link}">{lang}wcf.global.acp.short{/lang}</a></li>{/if}
 								</ul>
 							</div>
-						</a>
 						</div>
 					</li>
 					
@@ -50,6 +49,7 @@
 									</ul>
 								</div>
 							</div>
+						</li>
 					{/foreach}
 				</ul>
 			</div>
@@ -60,6 +60,7 @@
 				new WCF.User.Panel.UserMenu();
 			});
 		</script>
+	</li>
 	
 	<li><a href="{link controller='Settings'}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 icon-cogs"></span> <span>{lang}wcf.user.menu.settings{/lang}</span></a></li>
 	
