@@ -33,6 +33,8 @@
 						</div>
 					</li>
 					
+					{event name='userMenuItemsBefore'}
+					
 					{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
 						<li class="dropdownDivider"></li>
 						<li class="interactiveDropdownUserMenuItem">
@@ -51,6 +53,8 @@
 							</div>
 						</li>
 					{/foreach}
+					
+					{event name='userMenuItemsAfter'}
 				</ul>
 			</div>
 			<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
