@@ -179,6 +179,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		
 		// execute action
 		call_user_func_array(array($this, $actionName), $this->getParameters());
+		
+		// fire event action
+		EventHandler::getInstance()->fireAction($this, 'validateAction');
 	}
 	
 	/**
