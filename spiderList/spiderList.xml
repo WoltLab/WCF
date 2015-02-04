@@ -822,7 +822,7 @@
 	</spider>
 	<spider ident="NIF">
 		<name>NIF</name>
-		<url>http://www.newsisfree.com/robot.php users</url>
+		<url>http://www.newsisfree.com/robot.php</url>
 	</spider>
 	<spider ident="NimbleCrawler">
 		<name>NimbleCrawler</name>
