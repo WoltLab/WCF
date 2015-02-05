@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\cronjob;
 use wcf\data\cronjob\log\CronjobLogEditor;
+use wcf\data\user\User;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\system\cronjob\CronjobScheduler;
@@ -209,6 +210,10 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 * Executes open cronjobs.
 	 */
 	public function executeCronjobs() {
+		// switch session owner to 'system' during execution of cronjobs
+		WCF::getSession()->changeUser(new User(null, array('userID' => 0, 'username' => 'System')), true);
+		WCF::getSession()->disableUpdate();
+		
 		CronjobScheduler::getInstance()->executeCronjobs();
 	}
 }
