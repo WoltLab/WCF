@@ -134,15 +134,16 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			if (empty($reply['httpHeaders']['etag']) && empty($reply['httpHeaders']['last-modified'])) {
 				throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
 			}
-			else if (empty($reply['httpHeaders']['wcf-update-server-ssl'])) {
+			/*else if (empty($reply['httpHeaders']['wcf-update-server-ssl'])) {
 				throw new SystemException("Missing required HTTP header 'wcf-update-server-ssl'.");
-			}
+			}*/
 			
 			$metaData['list'] = array();
 			if (!empty($reply['httpHeaders']['etag'])) $metaData['list']['etag'] = reset($reply['httpHeaders']['etag']);
 			if (!empty($reply['httpHeaders']['last-modified'])) $metaData['list']['lastModified'] = reset($reply['httpHeaders']['last-modified']);
 			
-			$metaData['ssl'] = (reset($reply['httpHeaders']['wcf-update-server-ssl']) == 'true') ? true : false;
+			$metaData['ssl'] = false;
+			//(reset($reply['httpHeaders']['wcf-update-server-ssl']) == 'true') ? true : false;
 		}
 		$data['metaData'] = serialize($metaData);
 		
