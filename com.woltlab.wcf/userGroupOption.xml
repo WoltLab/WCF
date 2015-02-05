@@ -366,7 +366,6 @@
 				<defaultvalue>1000000</defaultvalue>
 				<minvalue>10000</minvalue>
 				<options>module_attachment</options>
-				<usersonly>1</usersonly>
 			</option>
 			<option name="user.attachment.allowedExtensions">
 				<categoryname>user.message.attachment</categoryname>
@@ -389,7 +388,6 @@ pdf]]></defaultvalue>
 				<minvalue>1</minvalue>
 				<options>module_attachment</options>
 				<maxvalue>100</maxvalue>
-				<usersonly>1</usersonly>
 			</option>
 			
 			<option name="admin.attachment.canManageAttachment">
