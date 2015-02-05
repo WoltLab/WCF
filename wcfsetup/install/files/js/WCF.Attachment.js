@@ -335,7 +335,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 					}
 					else {
 						var $insertPlain = $('<li><span class="button small jsButtonAttachmentInsertPlain" data-object-id="' + data.returnValues.attachments[$internalFileID].attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</span></li>');
-						$insertPlain.children('span.button').click($.proxy(this._insert, this)).appendTo($buttonList);
+						$insertPlain.appendTo($buttonList).children('span.button').click($.proxy(this._insert, this));
 					}
 				}
 			}

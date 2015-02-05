@@ -478,13 +478,19 @@
 }
 
 @media only screen and (max-width: 800px) {
-	.messageTabMenu > nav > ul > li:not(.active) > a {
-		> span.icon {
-			display: block;
+	.messageTabMenu {
+		> nav > ul > li:not(.active) > a {
+			> span.icon {
+				display: block;
+			}
+			
+			> span:not(.icon) {
+				display: none;
+			}
 		}
 		
-		> span:not(.icon) {
-			display: none;
+		> div > nav {
+			margin: (@wcfGapTiny - @wcfGapSmall) -@wcfGapSmall @wcfGapSmall -@wcfGapSmall;
 		}
 	}
 }

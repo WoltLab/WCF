@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * Parses the [attach] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
@@ -75,18 +75,18 @@ class AttachmentBBCode extends AbstractBBCode {
 				
 				$result = '';
 				if ($width > 0) {
-					$style = 'width: '.$width.'px;';
+					$style = '';
 					if ($alignment == 'left') {
-						$style .= ' float: left; margin: 0 15px 7px 0;';
+						$style .= 'float: left; margin: 0 15px 7px 0';
 					}
 					else if ($alignment == 'right') {
-						$style .= ' float: right; margin: 0 0 7px 15px;';
+						$style .= 'float: right; margin: 0 0 7px 15px';
 					}
 					
 					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment)));
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
-					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer"><img src="' . $source . '" style="' . $style . '" alt="" /></a>';
+					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer"' . ($style ? ' style="' . $style . '"' : '') . '><img src="' . $source . '" style="width: '.$width.'px" alt="" /></a>';
 				}
 				else {
 					$linkParameters = array(
@@ -94,9 +94,17 @@ class AttachmentBBCode extends AbstractBBCode {
 					);
 					if ($attachment->hasThumbnail()) $linkParameters['thumbnail'] = 1;
 					
-					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.(!$attachment->hasThumbnail() ? ' class="embeddedAttachmentLink jsResizeImage"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight: $attachment->height).'px;'.(!empty($alignment) ? ' float:' . ($alignment == 'left' ? 'left' : 'right') . '; margin: ' . ($alignment == 'left' ? '0 15px 7px 0' : '0 0 7px 15px' ) : '').'" alt="" />';
+					$style = '';
+					if ($alignment == 'left') {
+						$style .= 'float: left; margin: 0 15px 7px 0';
+					}
+					else if ($alignment == 'right') {
+						$style .= 'float: right; margin: 0 0 7px 15px';
+					}
+					
+					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.(!$attachment->hasThumbnail() ? ' class="embeddedAttachmentLink jsResizeImage"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight: $attachment->height).'px;' . ((!$attachment->hasThumbnail() || !$attachment->canDownload()) ? $style : '').'" alt="" />';
 					if ($attachment->hasThumbnail() && $attachment->canDownload()) {
-						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment))).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer">'.$result.'</a>';
+						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment))).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer"' . ($style ? ' style="'.$style.'"' : '') . '>'.$result.'</a>';
 					}
 				}
 				
