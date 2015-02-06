@@ -103,7 +103,7 @@ String.prototype.hashCode = function() {
  * 
  * @see	http://stackoverflow.com/a/2450976
  */
-function shuffle(array) {
+window.shuffle = function(array) {
 	var currentIndex = array.length, temporaryValue, randomIndex;
 	
 	// While there remain elements to shuffle...
