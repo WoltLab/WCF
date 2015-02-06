@@ -3,6 +3,14 @@
 <head>
 	<title>{lang}wcf.user.option.category.settings.{$category}{/lang} - {lang}wcf.user.menu.settings{/lang} - {PAGE_TITLE|language}</title>
 	{include file='headInclude'}
+
+	<script data-relocate="true">
+		//<![CDATA[
+		$(function() {
+			new WCF.Option.Handler();
+		});
+		//]]>
+	</script>
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
