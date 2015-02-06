@@ -1941,7 +1941,7 @@ RedactorPlugins.wbbcode = function() {
 					
 					// document.execCommand('insertHTML') seems to drop 'contenteditable="false"' for root element
 					$codeBox.attr('contenteditable', 'false');
-					this.caret.setAfter($codeBox);
+					this.wutil.setCaretAfter($codeBox[0]);
 					
 					this.modal.close();
 				}, this));
