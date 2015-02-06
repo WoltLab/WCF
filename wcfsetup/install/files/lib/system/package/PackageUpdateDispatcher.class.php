@@ -97,10 +97,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$authData = $updateServer->getAuthData();
 		if ($authData) $settings['auth'] = $authData;
 		
-		// append auth code if set and update server resolves to woltlab.com
-		/*if (PACKAGE_SERVER_AUTH_CODE && Regex::compile('^https?://[a-z]+.woltlab.com/')->match($updateServer->serverURL)) {
-			$postData['authCode'] = PACKAGE_SERVER_AUTH_CODE;
-		}*/
+		$secureConnection = $updateServer->attemptSecureConnection();
+		if ($secureConnection && !$forceHTTP) $settings['timeout'] = 5;
 		
 		$request = new HTTPRequest($updateServer->getListURL($forceHTTP), $settings);
 		
@@ -122,7 +120,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			
 			$statusCode = (is_array($reply['statusCode'])) ? reset($reply['statusCode']) : $reply['statusCode'];
 			// status code 0 is a connection timeout
-			if (!$statusCode && $updateServer->attemptSecureConnection()) {
+			if (!$statusCode && $secureConnection) {
 				if (preg_match('~https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
 					// woltlab.com servers are most likely to be available, thus we assume that SSL connections are dropped
 					RemoteFile::disableSSL();
