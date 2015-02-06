@@ -373,7 +373,7 @@ class PackageInstallationScheduler {
 							'action' => $packageInstallations[$key]['action'],
 							'conflict' => 'newPackageExcludesExistingPackage',
 							'existingPackage' => $row['excludedPackage'],
-							'existingPackageName' => $row['packageName'],
+							'existingPackageName' => WCF::getLanguage()->get($row['packageName']),
 							'existingPackageVersion' => $row['packageVersion']
 						);
 					}
@@ -418,7 +418,7 @@ class PackageInstallationScheduler {
 							'action' => $packageInstallation['action'],
 							'conflict' => 'existingPackageExcludesNewPackage',
 							'existingPackage' => $row['package'],
-							'existingPackageName' => $row['packageName'],
+							'existingPackageName' => WCF::getLanguage()->get($row['packageName']),
 							'existingPackageVersion' => $row['packageVersion']
 						);
 					}
