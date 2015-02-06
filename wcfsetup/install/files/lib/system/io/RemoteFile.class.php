@@ -124,4 +124,11 @@ class RemoteFile extends File {
 		
 		return static::$hasSSLSupport;
 	}
+	
+	/**
+	 * Disables SSL/TLS support on runtime regardless if PHP is theoretically capable of it.
+	 */
+	public static function disableSSL() {
+		static::$hasSSLSupport = false;
+	}
 }
