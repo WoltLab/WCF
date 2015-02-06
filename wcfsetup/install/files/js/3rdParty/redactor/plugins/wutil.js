@@ -13,6 +13,7 @@ RedactorPlugins.wutil = function() {
 	var $autosaveLastMessage = '';
 	var $autosaveNotice = null;
 	var $autosaveDidSave = false;
+	var $autosavePaused = false;
 	var $autosaveSaveNoticePE = null;
 	
 	return {
@@ -327,6 +328,10 @@ RedactorPlugins.wutil = function() {
 				
 				if ($autosaveSaveNoticePE === null) {
 					$autosaveSaveNoticePE = new WCF.PeriodicalExecuter((function(pe) {
+						if ($autosavePaused === true) {
+							return;
+						}
+						
 						if ($autosaveDidSave === false) {
 							pe.stop();
 							$autosaveSaveNoticePE = null;
@@ -601,6 +606,20 @@ RedactorPlugins.wutil = function() {
 					console.debug("[wutil.autosavePurgeOutdated] Unable to access local storage: " + e.message);
 				}
 			}
+		},
+		
+		/**
+		 * Temporarily pauses autosave worker.
+		 */
+		autosavePause: function() {
+			$autosavePaused = true;
+		},
+		
+		/**
+		 * Resumes autosave worker.
+		 */
+		autosaveResume: function() {
+			$autosavePaused = false;
 		},
 		
 		/**

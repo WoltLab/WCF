@@ -1110,6 +1110,7 @@ WCF.Message.QuickReply = Class.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		if ($.browser.redactor) {
+			this._messageField.redactor('wutil.autosavePause');
 			this._messageField.redactor('wutil.autosavePurge');
 		}
 		
@@ -1144,6 +1145,7 @@ WCF.Message.QuickReply = Class.extend({
 			
 			if ($.browser.redactor) {
 				this._messageField.redactor('wutil.reset');
+				this._messageField.redactor('wutil.autosaveResume');
 			}
 			else {
 				this._messageField.val('');
@@ -1703,7 +1705,7 @@ WCF.Message.InlineEditor = Class.extend({
 	},
 	
 	/**
-	 * Destroies editor instance and removes it's DOM elements.
+	 * Destroys editor instance and removes its DOM elements.
 	 */
 	_destroyEditor: function() {
 		var $container = this._container[this._activeElementID];
@@ -1711,6 +1713,7 @@ WCF.Message.InlineEditor = Class.extend({
 		// destroy editor
 		if ($.browser.redactor) {
 			var $target = $('#' + this._messageEditorIDPrefix + $container.data('objectID'));
+			$target.redactor('wutil.autosavePause');
 			$target.redactor('wutil.autosavePurge');
 			$target.redactor('core.destroy');
 		}
