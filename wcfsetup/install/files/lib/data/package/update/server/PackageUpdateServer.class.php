@@ -173,12 +173,11 @@ class PackageUpdateServer extends DatabaseObject {
 		$serverURL = FileUtil::addTrailingSlash($this->serverURL) . 'list/' . WCF::getLanguage()->getFixedLanguageCode() . '.xml';
 		
 		$metaData = $this->getMetaData();
-		//if (!RemoteFile::supportsSSL() || !$metaData['ssl']) {
-		if (!RemoteFile::supportsSSL()) {
+		if (!RemoteFile::supportsSSL() || !$metaData['ssl']) {
 			return preg_replace('~^https://~', 'http://', $serverURL);
 		}
 		
-		return $serverURL;
+		return preg_replace('~^http://~', 'https://', $serverURL);
 	}
 	
 	/**
@@ -192,12 +191,11 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		$metaData = $this->getMetaData();
-		//if (!RemoteFile::supportsSSL() || !$metaData['ssl']) {
-		if (!RemoteFile::supportsSSL()) {
+		if (!RemoteFile::supportsSSL() || !$metaData['ssl']) {
 			return preg_replace('~^https://~', 'http://', $this->serverURL);
 		}
 		
-		return $this->serverURL;
+		return preg_replace('~^http://~', 'https://', $this->serverURL);
 	}
 	
 	/**
