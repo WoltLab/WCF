@@ -9,12 +9,12 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
+use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageUpdateUnauthorizedException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
 use wcf\util\XML;
-use wcf\system\io\RemoteFile;
 
 /**
  * Provides functions to manage package updates.
