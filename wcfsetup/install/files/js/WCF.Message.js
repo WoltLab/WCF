@@ -2077,7 +2077,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		// check if mouseup occured within a <blockquote>
 		var $element = event.target;
 		while ($element !== $container[0]) {
-			if ($element.tagName === 'BLOCKQUOTE') {
+			if ($element === null || $element.tagName === 'BLOCKQUOTE') {
 				this._copyQuote.hide();
 				
 				return;
