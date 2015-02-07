@@ -746,8 +746,8 @@ class TemplateScriptingCompiler {
 			unset($args['application']);
 		}
 		
-		if (preg_match('~^\'(.*)\'$~', $application, $matches)) {
-			$application = $matches[1];
+		if (preg_match('~^(\'|\")(.*)\1$~', $application, $matches)) {
+			$application = $matches[2];
 		}
 		
 		$sandbox = false;
