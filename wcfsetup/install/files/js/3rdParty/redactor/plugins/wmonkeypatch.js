@@ -1031,6 +1031,20 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - fixes text pasting in Internet Explorer 11 (#2040) 
 		 */
 		paste: function() {
+			// paste.createPasteBox
+			var $mpCreatePasteBox = this.paste.createPasteBox;
+			this.paste.createPasteBox = (function() {
+				if ($.browser.iOS) {
+					this.$pasteBox = $('<div>').html('').attr('contenteditable', 'true').css({ position: 'absolute', visibility: 'hidden' });
+					
+					this.$box.parent().append(this.$pasteBox);
+					this.$pasteBox.focus();
+				}
+				else {
+					$mpCreatePasteBox.call(this);
+				}
+			}).bind(this);
+			
 			// paste.insert
 			var $mpInsert = this.paste.insert;
 			this.paste.insert = (function(html) {
