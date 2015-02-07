@@ -53,7 +53,7 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 	 */
 	public function deleteFiles() {
 		foreach (UserAvatar::$avatarThumbnailSizes as $size) {
-			if ($this->width < $size || $this->height < $size) break;
+			if ($this->width < $size && $this->height < $size) break;
 			
 			@unlink($this->getLocation($size));
 		}
