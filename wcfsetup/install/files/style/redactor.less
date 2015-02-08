@@ -279,7 +279,7 @@
 			&.dropact {
 				background-color: @wcfContainerHoverBackgroundColor;
 				
-				.textShadow(@wcfButtonHoverBackgroundColor);*/
+				.textShadow(@wcfButtonHoverBackgroundColor);
 				
 				> i {
 					text-shadow: none;
@@ -478,6 +478,10 @@
 }
 
 @media only screen and (max-width: 800px) {
+	.redactor-toolbar > li > a:hover {
+		background-color: transparent !important;
+	}
+	
 	.messageTabMenu {
 		> nav > ul > li:not(.active) > a {
 			> span.icon {
