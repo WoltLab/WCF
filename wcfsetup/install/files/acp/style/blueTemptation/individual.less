@@ -279,8 +279,6 @@ button.active:hover {
 				.transition(max-width, .2s);
 				
 				&:hover {
-					max-width: 100%;
-					
 					> a {
 						background-color: @wcfContainerAccentBackgroundColor;
 						position: relative;
@@ -330,6 +328,12 @@ button.active:hover {
 				&:first-child > a {
 					border-radius: @wcfContainerBorderRadius - 2 0 0 @wcfContainerBorderRadius - 2;
 					padding-left: 9px;
+				}
+			}
+			
+			&:hover {
+				> li {
+					max-width: 100%;
 				}
 			}
 		}
