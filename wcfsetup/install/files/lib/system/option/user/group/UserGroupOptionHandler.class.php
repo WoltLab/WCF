@@ -130,5 +130,24 @@ class UserGroupOptionHandler extends OptionHandler {
 				throw new UserInputException($option->optionName, 'exceedsOwnPermission');
 			}
 		}
+		else if ($option->optionName == 'admin.user.accessibleGroups' && $this->group->isAdminGroup()) {
+			$hasOtherAdminGroup = false;
+			foreach (UserGroup::getGroupsByType() as $userGroup) {
+				if ($userGroup->groupID != $this->group->groupID && $userGroup->isAdminGroup()) {
+					$hasOtherAdminGroup = true;
+					break;
+				}
+			}
+			
+			// prevent users from dropping their own admin state
+			if (!$hasOtherAdminGroup) {
+				// get type object
+				$typeObj = $this->getTypeObject($option->optionType);
+				
+				if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == -1) {
+					throw new UserInputException($option->optionName, 'cannotDropPrivileges');
+				}
+			}
+		}
 	}
 }
