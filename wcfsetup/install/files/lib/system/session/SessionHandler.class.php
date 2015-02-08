@@ -514,7 +514,33 @@ class SessionHandler extends SingletonFactory {
 			);
 			
 			if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
-			$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
+			
+			try {
+				$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
+			}
+			catch (DatabaseException $e) {
+				// MySQL error 23000 = unique key
+				// do not check against the message itself, some weird systems localize them
+				if ($e->getCode() == 23000 && $this->supportsVirtualSessions) {
+					// find existing session
+					$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $this->user->userID);
+					
+					if ($session === null) {
+						// MySQL reported a unique key error, but no corresponding session exists, rethrow exception
+						throw $e;
+					}
+					else {
+						// inherit existing session
+						$this->session = $session;
+						$this->loadVirtualSession(true);
+					}
+				}
+				else {
+					// unrelated to user id
+					throw $e;
+				}
+			}
+			
 			$this->firstVisit = true;
 			$this->loadVirtualSession(true);
 		}
