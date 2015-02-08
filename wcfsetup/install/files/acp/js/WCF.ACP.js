@@ -1338,7 +1338,7 @@ WCF.ACP.Package.Server.Installation = Class.extend({
 		});
 		this._proxy.sendRequest();
 	},
-})
+});
 
 /**
  * Namespace for package update related classes.
@@ -1403,6 +1403,9 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 			// disable submit button
 			if (!$('input[type=checkbox]:checked').length) {
 				this._submitButton.disable();
+			}
+			else {
+				this._submitButton.enable();
 			}
 		}
 	},
