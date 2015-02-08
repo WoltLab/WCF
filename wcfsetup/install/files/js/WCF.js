@@ -5951,7 +5951,29 @@ WCF.DOMNodeRemovedHandler = {
 	_bindListener: function() {
 		if (this._isListening) return;
 		
-		$(document).bind('DOMNodeRemoved', $.proxy(this._executeCallbacks, this));
+		if (window.MutationObserver) {
+			var $mutationObserver = new MutationObserver((function(mutations) {
+				var $triggerEvent = false;
+				
+				mutations.forEach((function(mutation) {
+					if (mutation.removedNodes.length) {
+						$triggerEvent = true;
+					}
+				}).bind(this));
+				
+				if ($triggerEvent) {
+					this._executeCallbacks({ });
+				}
+			}).bind(this));
+			
+			$mutationObserver.observe(document.body, {
+				childList: true,
+				subtree: true
+			});
+		}
+		else {
+			$(document).bind('DOMNodeRemoved', $.proxy(this._executeCallbacks, this));
+		}
 		
 		this._isListening = true;
 	},
