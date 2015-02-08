@@ -71,12 +71,20 @@ class NotificationConfirmAction extends AbstractAction {
 		$objectType = ObjectTypeCache::getInstance()->getObjectType($event->objectTypeID);
 		$objects = $objectType->getProcessor()->getObjectsByIDs(array($this->notification->objectID));
 		
+		$userProfile = null;
+		if ($this->notification->authorID) {
+			$userProfile = new UserProfile(new User($this->notification->authorID));
+		}
+		else {
+			$userProfile = new UserProfile(new User(null, array('userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest'))));
+		}
+		
 		$className = $event->className;
 		$notificationEvent = new $className($event);
 		$notificationEvent->setObject(
 			$this->notification,
 			$objects[$this->notification->objectID],
-			$unknownAuthor = new UserProfile(new User(null, array('userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest')))),
+			$userProfile,
 			$this->notification->additionalData
 		);
 		
