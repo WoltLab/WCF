@@ -130,7 +130,7 @@ class UserGroupOptionHandler extends OptionHandler {
 				throw new UserInputException($option->optionName, 'exceedsOwnPermission');
 			}
 		}
-		else if ($option->optionName == 'admin.user.accessibleGroups' && $this->group->isAdminGroup()) {
+		else if ($option->optionName == 'admin.user.accessibleGroups' && $this->group !== null && $this->group->isAdminGroup()) {
 			$hasOtherAdminGroup = false;
 			foreach (UserGroup::getGroupsByType() as $userGroup) {
 				if ($userGroup->groupID != $this->group->groupID && $userGroup->isAdminGroup()) {
