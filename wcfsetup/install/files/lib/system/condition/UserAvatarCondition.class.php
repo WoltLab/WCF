@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Condition implementation for the avatar of a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -69,11 +69,11 @@ class UserAvatarCondition extends AbstractSelectCondition implements IContentCon
 	public function checkUser(Condition $condition, User $user) {
 		switch ($condition->userAvatar) {
 			case self::NO_AVATAR:
-				return !$user->avatar;
+				return !$user->avatarID && !$user->enableGravatar;
 			break;
 			
 			case self::AVATAR:
-				return $user->avatar != 0;
+				return $user->avatarID != 0;
 			break;
 			
 			case self::GRAVATAR:
