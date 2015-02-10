@@ -515,15 +515,24 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/ ?<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, ' $1 '); // chrome, ie
 			
 			// attachments
-			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment[^"]*" data-attachment-id="(\d+)".*?( style="([^"]+)")?.*?>/gi, function(match, attachmentID, styleTag, style) {
+			html = html.replace(/<img(.*?)class="redactorEmbeddedAttachment"(.*?)>/gi, function(match, attributesBefore, attributesAfter) {
+				var $attributes = attributesBefore + ' ' + attributesAfter;
+				var $attachmentID;
+				if ($attributes.match(/data-attachment-id="(\d+)"/)) {
+					$attachmentID = RegExp.$1;
+				}
+				else {
+					return match;
+				}
+				
 				var $float = 'none';
 				var $width = null;
 				
-				if (style) {
-					style = style.split(';');
+				if ($attributes.match(/style="([^"]+)"/)) {
+					var $styles = RegExp.$1.split(';');
 					
-					for (var $i = 0; $i < style.length; $i++) {
-						var $style = $.trim(style[$i]);
+					for (var $i = 0; $i < $styles.length; $i++) {
+						var $style = $.trim($styles[$i]);
 						if ($style.match(/^float: (left|right)$/)) {
 							$float = RegExp.$1;
 						}
@@ -533,14 +542,14 @@ RedactorPlugins.wbbcode = function() {
 					}
 					
 					if ($width !== null) {
-						return '[attach=' + attachmentID + ',' + $float + ',' + $width + '][/attach]';
+						return '[attach=' + $attachmentID + ',' + $float + ',' + $width + '][/attach]';
 					}
 					else if ($float !== 'none') {
-						return '[attach=' + attachmentID + ',' + $float + '][/attach]';
+						return '[attach=' + $attachmentID + ',' + $float + '][/attach]';
 					}
 				}
 				
-				return '[attach=' + attachmentID + '][/attach]';
+				return '[attach=' + $attachmentID + '][/attach]';
 			});
 			
 			// [img]
