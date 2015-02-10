@@ -1,14 +1,13 @@
 <?php
 namespace wcf\system\message\censorship;
 use wcf\system\SingletonFactory;
-use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
  * Finds censored words.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.message.censorship
@@ -47,7 +46,25 @@ class Censorship extends SingletonFactory {
 		$censoredWords = explode("\n", StringUtil::unifyNewlines(mb_strtolower(CENSORED_WORDS)));
 		
 		// format censored words
-		$this->censoredWords = ArrayUtil::trim($censoredWords);
+		for ($i = 0, $length = count($censoredWords); $i < $length; $i++) {
+			$censoredWord = StringUtil::trim($censoredWords[$i]);
+			if (empty($censoredWord)) {
+				continue;
+			}
+			
+			$displayedCensoredWord = str_replace(array('~', '*'), '', $censoredWord);
+			
+			// check if censored word contains at least one delimiter
+			if (preg_match('!'.$this->delimiters.'+!', $censoredWord)) {
+				// remove delimiters
+				$censoredWord = preg_replace('!'.$this->delimiters.'!', '', $censoredWord);
+				
+				// enforce partial matching
+				$censoredWord = '~' . $censoredWord;
+			}
+			
+			$this->censoredWords[$displayedCensoredWord] = $censoredWord;
+		}
 	}
 	
 	/**
@@ -72,7 +89,7 @@ class Censorship extends SingletonFactory {
 		// check each word if it's censored.
 		for ($i = 0, $count = count($this->words); $i < $count; $i++) {
 			$word = $this->words[$i];
-			foreach ($this->censoredWords as $censoredWord) {
+			foreach ($this->censoredWords as $displayedCensoredWord => $censoredWord) {
 				// check for direct matches ("badword" == "badword")
 				if ($censoredWord == $word) {
 					// store censored word
@@ -122,11 +139,11 @@ class Censorship extends SingletonFactory {
 						}
 						
 						// store censored word
-						if (isset($this->matches[$censoredWord])) {
-							$this->matches[$censoredWord]++;
+						if (isset($this->matches[$displayedCensoredWord])) {
+							$this->matches[$displayedCensoredWord]++;
 						}
 						else {
-							$this->matches[$censoredWord] = 1;
+							$this->matches[$displayedCensoredWord] = 1;
 						}
 						
 						continue 2;
