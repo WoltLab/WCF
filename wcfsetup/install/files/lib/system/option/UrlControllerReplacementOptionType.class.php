@@ -1,10 +1,11 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
-use wcf\util\StringUtil;
+use wcf\system\cache\builder\ControllerCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
-use wcf\system\cache\builder\ControllerCacheBuilder;
+use wcf\util\StringUtil;
+
 
 /**
  * Option type implementation for URL controller replacements.

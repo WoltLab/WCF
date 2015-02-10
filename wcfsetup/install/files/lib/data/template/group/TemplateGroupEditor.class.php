@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\template\group;
+use wcf\data\package\PackageCache;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\TemplateGroupCacheBuilder;
 use wcf\system\WCF;
