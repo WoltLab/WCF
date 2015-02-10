@@ -128,14 +128,7 @@ class MembersListPage extends SortablePage {
 		
 		if (!empty($this->letter)) {
 			if ($this->letter == '#') {
-				// PostgreSQL
-				if (WCF::getDB() instanceof PostgreSQLDatabase) {
-					$this->objectList->getConditionBuilder()->add("SUBSTRING(username FROM 1 for 1) IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')");
-				}
-				else {
-					// MySQL
-					$this->objectList->getConditionBuilder()->add("SUBSTRING(username,1,1) IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')");
-				}
+				$this->objectList->getConditionBuilder()->add("SUBSTRING(username,1,1) IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')");
 			}
 			else {
 				$this->objectList->getConditionBuilder()->add("username LIKE ?", array($this->letter.'%'));
