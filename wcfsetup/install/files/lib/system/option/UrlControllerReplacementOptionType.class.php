@@ -6,7 +6,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
-
 /**
  * Option type implementation for URL controller replacements.
  * 
