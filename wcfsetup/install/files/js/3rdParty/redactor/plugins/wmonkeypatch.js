@@ -1035,7 +1035,21 @@ RedactorPlugins.wmonkeypatch = function() {
 			var $mpCreatePasteBox = this.paste.createPasteBox;
 			this.paste.createPasteBox = (function() {
 				if ($.browser.iOS) {
-					this.$pasteBox = $('<div>').html('').attr('contenteditable', 'true').css({ position: 'absolute', visibility: 'hidden' });
+					var $top = 0;
+					if (window.getSelection().rangeCount) {
+						var $container = window.getSelection().getRangeAt(0).endContainer;
+						if ($container.nodeType !== Node.ELEMENT_NODE) {
+							$container = $container.parentElement;
+						}
+						$container = $($container);
+						
+						$top = $($container).offset().top;
+					}
+					else {
+						$top = $(window).scrollTop();
+					}
+					
+					this.$pasteBox = $('<div>').html('').attr('contenteditable', 'true').css({ position: 'fixed', /*width: 0, */top: $top + 'px', /*left: '-9999px', */fontSize: '16px' });
 					
 					this.$box.parent().append(this.$pasteBox);
 					this.$pasteBox.focus();
