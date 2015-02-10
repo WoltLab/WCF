@@ -15,7 +15,7 @@ use wcf\util\HeaderUtil;
  * Handles http requests.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -33,6 +33,12 @@ class RequestHandler extends SingletonFactory {
 	 * @var	array<array>
 	 */
 	protected $controllers = null;
+	
+	/**
+	 * list of controller aliases
+	 * @var	array<string>
+	 */
+	protected $controllerAliases = array();
 	
 	/**
 	 * true, if current domain mismatch any known domain
@@ -78,6 +84,14 @@ class RequestHandler extends SingletonFactory {
 			$this->controllers = ControllerCacheBuilder::getInstance()->getData(array(
 				'environment' => ($this->isACPRequest ? 'admin' : 'user')
 			));
+			
+			if (!URL_LEGACY_MODE && URL_CONTROLLER_REPLACEMENT) {
+				$controllerAliases = explode("\n", URL_CONTROLLER_REPLACEMENT);
+				for ($i = 0, $length = count($controllerAliases); $i < $length; $i++) {
+					$tmp = explode('=', $controllerAliases[$i]);
+					$this->controllerAliases[$tmp[0]] = $tmp[1];
+				}
+			}
 		}
 	}
 	
@@ -162,12 +176,28 @@ class RequestHandler extends SingletonFactory {
 						exit;
 					}
 				}
+				
+				// handle controller aliasing
+				if (!URL_LEGACY_MODE && isset($routeData['controller'])) {
+					// aliased controller, pretend it does not exist
+					if ($this->getAliasByController($routeData['controller']) !== null) {
+						throw new IllegalLinkException();
+					}
+					
+					$controller = $this->getControllerByAlias($routeData['controller']);
+					if ($controller !== null) {
+						$routeData['controller'] = $controller;
+					}
+				}
+			}
+			else if (empty($routeData['controller'])) {
+				$routeData['controller'] = 'Index';
 			}
 			
 			$controller = $routeData['controller'];
 			
 			// validate class name
-			if (!preg_match('~^[a-z0-9_]+$~i', $controller)) {
+			if (!preg_match('~^[a-z0-9' . (URL_LEGACY_MODE ? '' : '\-') . ']+$~i', $controller)) {
 				throw new SystemException("Illegal class name '".$controller."'");
 			}
 			
@@ -249,7 +279,6 @@ class RequestHandler extends SingletonFactory {
 	 */
 	protected function getClassData($controller, $pageType, $application) {
 		$className = false;
-		
 		if ($this->controllers !== null) {
 			$className = $this->lookupController($controller, $pageType, $application);
 			if ($className === false && $application != 'wcf') {
@@ -293,6 +322,8 @@ class RequestHandler extends SingletonFactory {
 	protected function lookupController($controller, $pageType, $application) {
 		if (isset($this->controllers[$application]) && isset($this->controllers[$application][$pageType])) {
 			$ciController = mb_strtolower($controller);
+			if (!URL_LEGACY_MODE) $ciController = str_replace('-', '', $ciController);
+			
 			if (isset($this->controllers[$application][$pageType][$ciController])) {
 				return $this->controllers[$application][$pageType][$ciController];
 			}
@@ -326,5 +357,34 @@ class RequestHandler extends SingletonFactory {
 	 */
 	public function inRescueMode() {
 		return $this->inRescueMode;
+	}
+	
+	/**
+	 * Returns the alias by controller or null if there is no match.
+	 * 
+	 * @param	string		$controller
+	 * @return	string
+	 */
+	public function getAliasByController($controller) {
+		if (isset($this->controllerAliases[$controller])) {
+			return $this->controllerAliases[$controller];
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns the controller by alias or null if there is no match.
+	 * 
+	 * @param	string		$alias
+	 * @return	string
+	 */
+	public function getControllerByAlias($alias) {
+		$controller = array_search($alias, $this->controllerAliases);
+		if ($controller !== false) {
+			return $controller;
+		}
+		
+		return null;
 	}
 }

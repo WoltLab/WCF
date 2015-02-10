@@ -430,16 +430,16 @@
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<enableoptions>!url_controller_replacement</enableoptions>
 			</option>
 			<option name="url_omit_index_php">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			<option name="url_to_lowercase">
+			<option name="url_controller_replacement">
 				<categoryname>general.page.seo</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<optiontype>urlControllerReplacement</optiontype>
 			</option>
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>
@@ -1402,5 +1402,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 	<delete>
 		<option name="cache_source_memcached_use_pconnect" />
 		<option name="http_gzip_level" />
+		<option name="url_to_lowercase" />
 	</delete>
 </data>

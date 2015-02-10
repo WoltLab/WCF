@@ -12,13 +12,13 @@ use wcf\system\WCF;
  * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
  */
-class Route {
+class Route implements IRoute {
 	/**
 	 * route controller if controller is no part of the route schema
 	 * @var	string
@@ -128,10 +128,7 @@ class Route {
 	}
 	
 	/**
-	 * Returns true if given request url matches this route.
-	 * 
-	 * @param	string		$requestURL
-	 * @return	boolean
+	 * @see	\wcf\system\request\IRoute::matches()
 	 */
 	public function matches($requestURL) {
 		$urlParts = $this->getParts($requestURL);
@@ -194,9 +191,7 @@ class Route {
 	}
 	
 	/**
-	 * Returns parsed route data.
-	 * 
-	 * @return	array
+	 * @see	\wcf\system\request\IRoute::getRouteData()
 	 */
 	public function getRouteData() {
 		return $this->routeData;
@@ -221,10 +216,7 @@ class Route {
 	}
 	
 	/**
-	 * Returns true if current route can handle the build request.
-	 * 
-	 * @param	array		$components
-	 * @return	boolean
+	 * @see	\wcf\system\request\IRoute::canHandle()
 	 */
 	public function canHandle(array $components) {
 		foreach ($this->routeSchema as $schemaPart) {
@@ -256,10 +248,7 @@ class Route {
 	}
 	
 	/**
-	 * Builds a link upon route components.
-	 * 
-	 * @param	array		$components
-	 * @return	string
+	 * @see	\wcf\system\request\IRoute::buildLink()
 	 */
 	public function buildLink(array $components) {
 		$application = (isset($components['application'])) ? $components['application'] : null;
@@ -345,9 +334,7 @@ class Route {
 	}
 	
 	/**
-	 * Returns true if route applies for ACP.
-	 * 
-	 * @return	boolean
+	 * @see	\wcf\system\request\IRoute::isACP()
 	 */
 	public function isACP() {
 		return $this->isACP;

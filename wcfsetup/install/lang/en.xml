@@ -736,6 +736,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie Path]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Value should be absolute to Document Root, e.g. “/forum” for “http://www.woltlab.com/forum”.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie Prefix]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[The alias “{$urlControllerReplacementError}” equals an existing controller and cannot be used.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[The alias “{$urlControllerReplacementError}” is already in use.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementDuplicateController"><![CDATA[The controller “{$urlControllerReplacementError}” has already been aliased.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementDuplicateUnknown"><![CDATA[The controller “{$urlControllerReplacementError}” is unknown.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Below the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.export"><![CDATA[Download Options]]></item>
@@ -981,6 +985,12 @@ Examples for medium ID detection:
 Examples:<br />
 WBB=WoltLab Burning Board<br />
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
+		<item name="wcf.acp.option.url_controller_replacement"><![CDATA[Controller Aliasing]]></item>
+		<item name="wcf.acp.option.url_controller_replacement.description"><![CDATA[You can rename controllers by assigning an alias to them, please provide only one alias per line. Aliases must be defined as “real-name=custom-name” and contain only lower-case a-z, the numbers 0-9 and the dash for compatibility reasons. Examples:
+<ul class="nativeList">
+	<li>“board-list=forums”, the link “http://example.com/index.php?board-list/” will turn into “http://example.com/index.php?forums/”</li>
+	<li>“members-list=profiles”, the link “http://example.com/index.php?members-list/” will turn into “http://example.com/index.php?profiles/”</li>
+</ul>]]></item>
 		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Display legend for “Users Online” list]]></item>
 		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
 		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Map Zoom]]></item>
@@ -1004,15 +1014,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on “Cookie Usage”]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable URL-Rewrite]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Rewrites URLs into a better readable representation, turning links like “http://example.com/?Thread/1-Hello-I-am-John-Doe/” into “http://example.com/thread/1-hello-i-am-john-doe/” and similar. Heads up! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you!]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Rewrites URLs into a better readable representation, turning links like “http://example.com/index.php?thread/1-hello-i-am-john-doe/” into “http://example.com/thread/1-hello-i-am-john-doe/” and similar. Heads up! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you!]]></item>
 		<item name="wcf.acp.option.url_legacy_mode"><![CDATA[Enable link compatibility mode]]></item>
 		<item name="wcf.acp.option.url_legacy_mode.description"><![CDATA[Enabling this option forces the system to use WoltLab Community Framework 2.0-compilant URLs and should only be used to ensure compatibility with legacy URLs:
 <ul class="nativeList">
 	<li>WCF 2.0: “index.php/Thread/123-Title/”</li>
-	<li>WCF 2.1+: “?Thread/123-Title/”</li>
+	<li>WCF 2.1+: “index.php?thread/123-title/”</li>
 </ul>]]></item>
-		<item name="wcf.acp.option.url_to_lowercase"><![CDATA[Force lower-case links]]></item>
-		<item name="wcf.acp.option.url_to_lowercase.description"><![CDATA[Links will no longer contain uppercase letters turning links like “Thread/1-Hello-I-am-John-Doe/” into “thread/1-hello-i-am-john-doe/”.]]></item>
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Enables the <a href="{link controller='AdList'}{/link}">advertisement management</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>

@@ -51,20 +51,21 @@ class ControllerCacheBuilder extends AbstractCacheBuilder {
 		$controllers = array();
 		$path .= $type . '/';
 		
-		$files = glob($path . '*' . ucfirst($type) . '.class.php');
+		$type = ucfirst($type);
+		$files = glob($path . '*' . $type . '.class.php');
 		if ($files === false) {
 			return array();
 		}
 		
 		foreach ($files as $file) {
 			$file = basename($file);
-			if (preg_match('~^([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(Action|Form|Page)\.class\.php$~', $file, $match)) {
+			if (preg_match('~^([A-Z][A-Za-z0-9]*)' . $type . '\.class\.php$~', $file, $match)) {
 				if ($match[1] === 'I') {
 					continue;
 				}
 				
 				$controller = mb_strtolower($match[1]);
-				$fqn = '\\' . $abbreviation . '\\' . ($isACP ? 'acp\\' : '') . $type . '\\' . $match[1] . $match[2];
+				$fqn = '\\' . $abbreviation . '\\' . ($isACP ? 'acp\\' : '') . $type . '\\' . $match[1] . $type;
 				
 				$controllers[$controller] = $fqn;
 			}

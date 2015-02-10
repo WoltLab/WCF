@@ -1,8 +1,10 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
@@ -12,7 +14,7 @@ use wcf\util\FileUtil;
  * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -50,6 +52,12 @@ class RouteHandler extends SingletonFactory {
 	protected static $secure = null;
 	
 	/**
+	 * list of application abbreviation and default controller name
+	 * @var	array<string>
+	 */
+	protected $defaultControllers = null;
+	
+	/**
 	 * true, if default controller is used (support for custom landing page)
 	 * @var	boolean
 	 */
@@ -57,7 +65,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of available routes
-	 * @var	array<\wcf\system\request\Route>
+	 * @var	array<\wcf\system\request\IRoute>
 	 */
 	protected $routes = array();
 	
@@ -81,32 +89,41 @@ class RouteHandler extends SingletonFactory {
 	 * Adds default routes.
 	 */
 	protected function addDefaultRoutes() {
-		$acpRoute = new Route('ACP_default', true);
-		$acpRoute->setSchema('/{controller}/{id}');
-		$acpRoute->setParameterOption('controller', 'Index', null, true);
-		$acpRoute->setParameterOption('id', null, '\d+', true);
-		$this->addRoute($acpRoute);
-		
-		$defaultRoute = new Route('default');
-		$defaultRoute->setSchema('/{controller}/{id}');
-		$defaultRoute->setParameterOption('controller', null, null, true);
-		$defaultRoute->setParameterOption('id', null, '\d+', true);
-		$this->addRoute($defaultRoute);
+		if (URL_LEGACY_MODE) {
+			$acpRoute = new Route('ACP_default', true);
+			$acpRoute->setSchema('/{controller}/{id}');
+			$acpRoute->setParameterOption('controller', 'Index', null, true);
+			$acpRoute->setParameterOption('id', null, '\d+', true);
+			$this->addRoute($acpRoute);
+			
+			$defaultRoute = new Route('default');
+			$defaultRoute->setSchema('/{controller}/{id}');
+			$defaultRoute->setParameterOption('controller', null, null, true);
+			$defaultRoute->setParameterOption('id', null, '\d+', true);
+			$this->addRoute($defaultRoute);
+		}
+		else {
+			$acpRoute = new FlexibleRoute(true);
+			$this->addRoute($acpRoute);
+			
+			$defaultRoute = new FlexibleRoute(false);
+			$this->addRoute($defaultRoute);
+		}
 	}
 	
 	/**
 	 * Adds a new route to the beginning of all routes.
 	 * 
-	 * @param	\wcf\system\request\Route	$route
+	 * @param	\wcf\system\request\IRoute	$route
 	 */
-	public function addRoute(Route $route) {
+	public function addRoute(IRoute $route) {
 		array_unshift($this->routes, $route);
 	}
 	
 	/**
 	 * Returns all registered routes. 
 	 * 
-	 * @return	array<\wcf\system\request\Route>
+	 * @return	array<\wcf\system\request\IRoute>
 	 **/
 	public function getRoutes() {
 		return $this->routes; 
@@ -313,5 +330,49 @@ class RouteHandler extends SingletonFactory {
 		}
 		
 		return self::$pathInfo;
+	}
+	
+	/**
+	 * Returns the default controller name for given application.
+	 * 
+	 * @param	string		$application
+	 * @return	string
+	 */
+	public function getDefaultController($application) {
+		$this->loadDefaultControllers();
+		
+		if (isset($this->defaultControllers[$application])) {
+			return $this->defaultControllers[$application];
+		}
+		
+		return '';
+	}
+	
+	/**
+	 * Loads the default controllers for each active application.
+	 */
+	protected function loadDefaultControllers() {
+		if ($this->defaultControllers === null) {
+			$this->defaultControllers = array();
+			
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				$app = WCF::getApplicationObject($application);
+				
+				if (!$app) {
+					continue;
+				}
+				
+				$controller = $app->getPrimaryController();
+				
+				if (!$controller) {
+					continue;
+				}
+				
+				$controller = explode('\\', $controller);
+				$controllerName = preg_replace('~(Action|Form|Page)$~', '', array_pop($controller));
+				
+				$this->defaultControllers[$controller[0]] = $controllerName;
+			}
+		}
 	}
 }
