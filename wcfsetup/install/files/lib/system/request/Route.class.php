@@ -362,7 +362,6 @@ class Route implements IRoute {
 				
 				$controller = explode('\\', $controller);
 				$controllerName = preg_replace('~(Action|Form|Page)$~', '', array_pop($controller));
-				if (URL_TO_LOWERCASE) $controllerName = mb_strtolower($controllerName);
 				
 				self::$defaultControllers[$controller[0]] = $controllerName;
 			}
