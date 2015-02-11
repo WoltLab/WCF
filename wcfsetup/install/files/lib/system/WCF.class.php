@@ -27,6 +27,7 @@ use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 // try to set a time-limit to infinite
 @set_time_limit(0);
@@ -37,7 +38,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.0.10 pl 2 (Maelstrom)');
+define('WCF_VERSION', '2.0.11 (Maelstrom)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -385,7 +386,10 @@ class WCF {
 	 */
 	protected function initBlacklist() {
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-			if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
+			if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(self::getSession()->ipAddress), BLACKLIST_IP_ADDRESSES)) {
+				throw new PermissionDeniedException();
+			}
+			else if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
 				throw new PermissionDeniedException();
 			}
 		}
