@@ -337,7 +337,7 @@ class Mail {
 	 */
 	public function setFrom($from) {
 		if (is_array($from)) {
-			$this->from = self::buildAddress(key($from), current($from), false);
+			$this->from = self::buildAddress(key($from), current($from));
 		}
 		else {
 			$this->from = $from;
