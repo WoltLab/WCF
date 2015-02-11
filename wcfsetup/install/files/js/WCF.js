@@ -10025,6 +10025,18 @@ $.widget('ui.wcfSlideshow', {
 	},
 	
 	/**
+	 * Rebuilds slideshow height in case the initial height contained resources affecting the
+	 * element height, but loading has not completed on slideshow init.
+	 */
+	rebuildHeight: function() {
+		var $firstItem = $(this._items.get(0)).css('height', 'auto');
+		var $itemHeight = $firstItem.outerHeight();
+		
+		this._items.css('height', $itemHeight + 'px');
+		this.element.css('height', $itemHeight + 'px');
+	},
+	
+	/**
 	 * Handles browser resizing
 	 */
 	_resize: function() {
