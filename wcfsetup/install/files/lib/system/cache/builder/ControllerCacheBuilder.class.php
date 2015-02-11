@@ -51,6 +51,7 @@ class ControllerCacheBuilder extends AbstractCacheBuilder {
 		$controllers = array();
 		$path .= $type . '/';
 		
+		$lowercaseType = $type;
 		$type = ucfirst($type);
 		$files = glob($path . '*' . $type . '.class.php');
 		if ($files === false) {
@@ -65,7 +66,7 @@ class ControllerCacheBuilder extends AbstractCacheBuilder {
 				}
 				
 				$controller = mb_strtolower($match[1]);
-				$fqn = '\\' . $abbreviation . '\\' . ($isACP ? 'acp\\' : '') . $type . '\\' . $match[1] . $type;
+				$fqn = '\\' . $abbreviation . '\\' . ($isACP ? 'acp\\' : '') . $lowercaseType . '\\' . $match[1] . $type;
 				
 				$controllers[$controller] = $fqn;
 			}
