@@ -665,15 +665,17 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$statement->execute(array($this->templateGroupID));
 			while ($row = $statement->fetchArray()) {
 				$packageDir = 'com.woltlab.wcf';
+				$package = null;
 				
 				if ($row['application'] != 'wcf') {
 					$application = ApplicationHandler::getInstance()->getApplication($row['application']);
-					$packageDir = $row['package'];
+					$package = PackageCache::getInstance()->getPackage($application->packageID);
+					$packageDir = $package->package;
 				}
 				else {
 					$application = ApplicationHandler::getInstance()->getWCF();
+					$package = PackageCache::getInstance()->getPackage($application->packageID);
 				}
-				$package = PackageCache::getInstance()->getPackage($application->packageID);
 				
 				$filename = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $package->packageDir . 'templates/' . $templateGroup->templateGroupFolderName)) . $row['templateName'] . '.tpl';
 				$templatesTar->add($filename, $packageDir, dirname($filename));
