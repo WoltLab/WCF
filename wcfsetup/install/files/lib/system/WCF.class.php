@@ -27,6 +27,7 @@ use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 // try to set a time-limit to infinite
 @set_time_limit(0);
@@ -385,7 +386,10 @@ class WCF {
 	 */
 	protected function initBlacklist() {
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-			if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
+			if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(self::getSession()->ipAddress), BLACKLIST_IP_ADDRESSES)) {
+				throw new PermissionDeniedException();
+			}
+			else if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
 				throw new PermissionDeniedException();
 			}
 		}
