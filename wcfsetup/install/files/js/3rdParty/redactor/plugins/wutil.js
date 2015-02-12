@@ -284,6 +284,22 @@ RedactorPlugins.wutil = function() {
 		},
 		
 		/**
+		 * Adds newlines after certain elements, this is actually the reverse of
+		 * _removeSuperfluousNewlines() which removes them prior to submitting.
+		 * 
+		 * @param	string
+		 * @return	string
+		 */
+		addNewlines: function(text) {
+			text = text.replace(/(\[\/(?:align|code|quote)\])/g, '$1\n');
+			
+			var $data = { text: text };
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'wutil_addNewlines', $data);
+			
+			return $data.text;
+		},
+		
+		/**
 		 * Resets the editor's contents.
 		 */
 		reset: function() {
@@ -873,6 +889,7 @@ RedactorPlugins.wutil = function() {
 				$wasInWysiwygMode = true;
 			}
 			
+			value = this.wutil.addNewlines(value);
 			this.$textarea.val(value);
 			
 			if ($wasInWysiwygMode) {

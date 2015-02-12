@@ -276,8 +276,8 @@ RedactorPlugins.wbbcode = function() {
 			// remove empty links
 			html = html.replace(/<a[^>]*?><\/a>/g, '');
 			
-			// drop empty paragraphs
-			html = html.replace(/<p><\/p>/g, '');
+			// handle empty paragraphs not followed by an empty one
+			html = html.replace(/<p><\/p><p>(?!<br>)/g, '<p>@@@wcf_empty_line@@@</p><p>');
 			
 			// remove <br> right in front of </p> (does not match <p><br></p> since it has been converted already)
 			html = html.replace(/<br( \/)?><\/p>/g, '</p>');
