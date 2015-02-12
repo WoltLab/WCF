@@ -232,8 +232,7 @@ RedactorPlugins.wutil = function() {
 			
 			var $text = $.trim(this.$textarea.val());
 			
-			// remove linebreak after [/quote]
-			$text = $text.replace(/\[\/quote\]\n/g, '[/quote]');
+			$text = this.wutil._removeSuperfluousNewlines($text);
 			
 			return $text;
 		},
@@ -260,13 +259,28 @@ RedactorPlugins.wutil = function() {
 				
 				var $text = $.trim(this.wbbcode.convertFromHtml(this.$textarea.val()));
 				
-				// remove linebreak after [/quote]
-				$text = $text.replace(/\[\/quote\]\n/g, '[/quote]');
+				$text = this.wutil._removeSuperfluousNewlines($text);
 				
 				this.$textarea.val($text);
 			}
 			
 			this.wutil.autosavePurge();
+		},
+		
+		/**
+		 * Removes newlines after certain elements which have been inserted for
+		 * readability but do not represent an actual newline.
+		 * 
+		 * @param	string		text
+		 * @return	string
+		 */
+		_removeSuperfluousNewlines: function(text) {
+			text = text.replace(/(\[\/(?:align|code|quote)\])\n/g, '$1');
+			
+			var $data = { text: text };
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'wutil_removeSuperfluousNewlines', $data);
+			
+			return $data.text;
 		},
 		
 		/**
