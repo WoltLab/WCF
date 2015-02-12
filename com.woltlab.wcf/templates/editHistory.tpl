@@ -19,7 +19,7 @@
 
 <div><div>
 {assign var='prevType' value=''}
-{foreach from=$diff->getRawDiff() item='line'}
+{foreach from=$diff item='line'}
 {if $line[0] !== $prevType}
 	</div>
 	
@@ -44,9 +44,9 @@
 	{/if}
 	<div{if $line[0] === '+'} style="color: green;"{elseif $line[0] === '-'} style="color: red;"{/if}>
 {/if}
-{if $line[0] === ' '}{$line[1]}<br>{/if}
-{if $line[0] === '-'}{$line[1]}<br>{/if}
-{if $line[0] === '+'}{$line[1]}<br>{/if}
+{if $line[0] === ' '}{@$line[1]}<br>{/if}
+{if $line[0] === '-'}{@$line[1]}<br>{/if}
+{if $line[0] === '+'}{@$line[1]}<br>{/if}
 {assign var='prevType' value=$line[0]}
 {/foreach}
 </div></div>

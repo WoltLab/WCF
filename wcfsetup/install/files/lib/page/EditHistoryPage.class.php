@@ -161,7 +161,44 @@ class EditHistoryPage extends AbstractPage {
 		if ($this->old && $this->new) {
 			$a = explode("\n", StringUtil::unifyNewlines($this->old->getMessage()));
 			$b = explode("\n", StringUtil::unifyNewlines($this->new->getMessage()));
-			$this->diff = new Diff($a, $b);
+			$diff = new Diff($a, $b);
+			$this->diff = $diff->getRawDiff();
+			
+			// create word diff for small changes (only one consecutive paragraph modified)
+			for ($i = 0, $max = count($this->diff); $i < $max;) {
+				$previousIsNotRemoved = !isset($this->diff[$i - 1][0]) || $this->diff[$i - 1][0] !== Diff::REMOVED;
+				$currentIsRemoved = $this->diff[$i][0] === Diff::REMOVED;
+				$nextIsAdded = isset($this->diff[$i + 1][0]) && $this->diff[$i + 1][0] === Diff::ADDED;
+				$afterNextIsNotAdded = !isset($this->diff[$i + 2][0]) || $this->diff[$i + 2][0] !== Diff::ADDED;
+				
+				if ($previousIsNotRemoved && $currentIsRemoved && $nextIsAdded && $afterNextIsNotAdded) {
+					$a = preg_split('/(\\W)/u', $this->diff[$i][1], -1, PREG_SPLIT_DELIM_CAPTURE);
+					$b = preg_split('/(\\W)/u', $this->diff[$i + 1][1], -1, PREG_SPLIT_DELIM_CAPTURE);
+					
+					$diff = new Diff($a, $b);
+					$this->diff[$i][1] = '';
+					$this->diff[$i + 1][1] = '';
+					foreach ($diff->getRawDiff() as $entry) {
+						$entry[1] = StringUtil::encodeHTML($entry[1]);
+						
+						if ($entry[0] === Diff::SAME) {
+							$this->diff[$i][1] .= $entry[1];
+							$this->diff[$i + 1][1] .= $entry[1];
+						}
+						else if ($entry[0] === Diff::REMOVED) {
+							$this->diff[$i][1] .= '<strong>'.$entry[1].'</strong>';
+						}
+						else if ($entry[0] === Diff::ADDED) {
+							$this->diff[$i + 1][1] .= '<strong>'.$entry[1].'</strong>';
+						}
+					}
+					$i += 2;
+				}
+				else {
+					$this->diff[$i][1] = StringUtil::encodeHTML($this->diff[$i][1]);
+					$i++;
+				}
+			}
 		}
 		
 		// set default values

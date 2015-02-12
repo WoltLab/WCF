@@ -199,7 +199,7 @@ class Diff {
 				$this->d[] = [self::REMOVED, $this->a[$positionA++]];
 			}
 			
-			// find next matching item in b, every item in between must be removed
+			// find next matching item in b, every item in between must be added
 			while ($positionB < $this->sizeB && $this->b[$positionB] !== $item) {
 				$this->d[] = [self::ADDED, $this->b[$positionB++]];
 			}
