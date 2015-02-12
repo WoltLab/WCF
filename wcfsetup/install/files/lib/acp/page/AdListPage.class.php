@@ -32,4 +32,9 @@ class AdListPage extends MultipleLinkPage {
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\ad\AdList';
+	
+	/**
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 */
+	public $sqlOrderBy = 'ad.showOrder';
 }
