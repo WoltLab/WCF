@@ -38,7 +38,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.1.0 Beta 4 (Typhoon)');
+define('WCF_VERSION', '2.1.0 RC 1 (Typhoon)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -53,7 +53,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
