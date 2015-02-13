@@ -3,6 +3,7 @@
 <head>
 	<base href="{$baseHref}" />
 	<meta charset="utf-8" />
+	<meta name="robots" content="noindex" />
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	<script data-relocate="true">
 		//<![CDATA[
