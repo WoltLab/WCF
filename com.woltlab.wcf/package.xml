@@ -90,13 +90,17 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.1.0 Beta 4">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="option">option.xml</instruction>
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_2.1.0_rc_1.php</instruction>
 		
 		<instruction type="language" run="standalone">language/*.xml</instruction>
 		
-		<instruction type="option">option.xml</instruction>
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="sql">update_2.1.0_rc_1.sql</instruction>
+		
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 	</instructions>
 </package>
