@@ -1595,7 +1595,8 @@ WCF.Message.InlineEditor = Class.extend({
 			data: {
 				message: $message
 			},
-			objectID: $objectID
+			objectID: $objectID,
+			removeQuoteIDs: (this._quoteManager === null ? [ ] : this._quoteManager.getQuotesMarkedForRemoval())
 		};
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._messageEditorIDPrefix + $objectID, $parameters);
@@ -1701,6 +1702,7 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		if (this._quoteManager) {
 			this._quoteManager.clearAlternativeEditor();
+			this._quoteManager.countQuotes();
 		}
 	},
 	
