@@ -81,37 +81,39 @@ final class DateUtil {
 		'Europe/Helsinki', // (UTC+02:00) Helsinki, Kiev, Riga, Sofia, Tallinn, Vilnius
 		'Asia/Jerusalem', // (UTC+02:00) Jerusalem
 		'Africa/Cairo', // (UTC+02:00) Cairo
+		'Europe/Kaliningrad', // (UTC+02:00) Kaliningrad
 		'Asia/Amman', // (UTC+03:00) Amman
 		'Asia/Baghdad', // (UTC+03:00) Baghdad
-		'Europe/Minsk', // (UTC+03:00) Kaliningrad, Minsk
+		'Europe/Minsk', // (UTC+03:00) Minsk
+		'Europe/Moscow', // (UTC+03:00) Moscow, Volgograd
 		'Asia/Kuwait', // (UTC+03:00) Kuwait, Riyadh
 		'Africa/Nairobi', // (UTC+03:00) Nairobi
 		'Asia/Tehran', // (UTC+03:30) Tehran
 		'Asia/Muscat', // (UTC+04:00) Muscat
 		'Asia/Baku', // (UTC+04:00) Baku
 		'Asia/Yerevan', // (UTC+04:00) Yerevan
-		'Europe/Moscow', // (UTC+04:00) Moscow, Volgograd
 		'Indian/Mauritius', // (UTC+04:00) Port Loius
 		'Asia/Tbilisi', // (UTC+04:00) Tbilisi
 		'Asia/Kabul', // (UTC+04:30) Kabul
 		'Asia/Karachi', // (UTC+05:00) Karachi
+		'Asia/Yekaterinburg', // (UTC+05:00) Ekaterinburg
 		'Asia/Tashkent', // (UTC+05:00) Tashkent
 		'Asia/Kolkata', // (UTC+05:30) Calcutta, New Dehli
 		'Asia/Colombo', // (UTC+05:30) Sri Jayawardenepura
 		'Asia/Katmandu', // (UTC+05:45) Kathmandu
 		'Asia/Almaty', // (UTC+06:00) Almaty
 		'Asia/Dhaka', // (UTC+06:00) Dhaka
-		'Asia/Yekaterinburg', // (UTC+06:00) Ekaterinburg
+		'Asia/Novosibirsk', // (UTC+06:00) Novosibirsk
 		'Asia/Rangoon', // (UTC+06:30) Yangon (Rangoon)
 		'Asia/Bangkok', // (UTC+07:00) Bangkok, Jakarta
-		'Asia/Novosibirsk', // (UTC+07:00) Novosibirsk
-		'Asia/Krasnoyarsk', // (UTC+08:00) Krasnoyarsk
+		'Asia/Krasnoyarsk', // (UTC+07:00) Krasnoyarsk
+		'Asia/Irkutsk', // (UTC+08:00) Irkutsk
 		'Asia/Kuala_Lumpur', // (UTC+08:00) Kuala Lumpur, Singapore
 		'Asia/Chongqing', // (UTC+08:00) Beijing, Chongqing, Hong Kong
 		'Australia/Perth', // (UTC+08:00) Perth
 		'Asia/Taipei', // (UTC+08:00) Taipei
 		'Asia/Ulaanbaatar', // (UTC+08:00) Ulaan Bataar
-		'Asia/Irkutsk', // (UTC+09:00) Irkutsk
+		'Asia/Yakutsk', // (UTC+09:00) Yakutsk
 		'Asia/Tokyo', // (UTC+09:00) Tokyo
 		'Asia/Seoul', // (UTC+09:00) Seoul
 		'Australia/Adelaide', // (UTC+09:30) Adelaide
@@ -120,12 +122,10 @@ final class DateUtil {
 		'Australia/Sydney', // (UTC+10:00) Canberra, Melbourne, Sydney
 		'Pacific/Guam', // (UTC+10:00) Guam, Port Moresby
 		'Australia/Hobart', // (UTC+10:00) Hobart
-		'Asia/Yakutsk', // (UTC+10:00) Yakutsk
+		'Asia/Vladivostok', // (UTC+10:00) Vladivostok
 		'Pacific/Noumea', // (UTC+11:00) New Caledonia
-		'Asia/Vladivostok', // (UTC+11:00) Vladivostok
 		'Pacific/Auckland', // (UTC+12:00) Auckland
 		'Pacific/Fiji', // (UTC+12:00) Fiji
-		'Asia/Magadan', // (UTC+12:00) Magadan
 		'Pacific/Tongatapu', // (UTC+13:00) Nukualofa
 		'Pacific/Apia', // (UTC+13:00) Samoa
 	);
