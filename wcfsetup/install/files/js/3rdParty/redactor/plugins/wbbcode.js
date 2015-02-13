@@ -515,7 +515,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/ ?<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, ' $1 '); // chrome, ie
 			
 			// attachments
-			html = html.replace(/<img(.*?)class="redactorEmbeddedAttachment"(.*?)>/gi, function(match, attributesBefore, attributesAfter) {
+			html = html.replace(/<img(.*?)class="[^"]*redactorEmbeddedAttachment[^"]*"(.*?)>/gi, function(match, attributesBefore, attributesAfter) {
 				var $attributes = attributesBefore + ' ' + attributesAfter;
 				var $attachmentID;
 				if ($attributes.match(/data-attachment-id="(\d+)"/)) {
