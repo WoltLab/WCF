@@ -22,7 +22,7 @@
 		<div class="footerContent">
 			{if PACKAGE_ID && ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 			
-			<address class="copyright marginTop"><a href="http://www.woltlab.com">Copyright &copy; 2001-2014 WoltLab&reg; GmbH</a>{event name='copyright'}</address>
+			<address class="copyright marginTop"><a href="http://www.woltlab.com">Copyright &copy; 2001-2015 WoltLab&reg; GmbH</a>{event name='copyright'}</address>
 		</div>
 	</footer>
 	
