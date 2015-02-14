@@ -420,7 +420,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			failure: $.proxy(this._failure, this),
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
-			url: 'index.php?' + $actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php?' + $actionName + '/&t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 	},
 	
@@ -1798,7 +1798,7 @@ WCF.ACP.Worker = Class.extend({
 			},
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
-			url: 'index.php?worker-proxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php?worker-proxy/&t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 		this._title = title;
 	},
@@ -2447,7 +2447,7 @@ WCF.ACP.Import.Manager = Class.extend({
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
-			url: 'index.php?worker-proxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php?worker-proxy/&t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 		this._redirectURL = redirectURL;
 		
@@ -2474,7 +2474,7 @@ WCF.ACP.Import.Manager = Class.extend({
 					success: $.proxy(function() {
 						window.location = this._redirectURL;
 					}, this),
-					url: 'index.php?cache-clear/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+					url: 'index.php?cache-clear/&t=' + SECURITY_TOKEN + SID_ARG_2ND
 				});
 			}, this)).appendTo($form);
 			

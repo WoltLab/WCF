@@ -201,6 +201,15 @@ class RequestHandler extends SingletonFactory {
 				throw new SystemException("Illegal class name '".$controller."'");
 			}
 			
+			// work-around for WCFSetup
+			if (!PACKAGE_ID) {
+				$parts = explode('-', $controller);
+				$parts = array_map(function($part) {
+					return ucfirst($part);
+				}, $parts);
+				$controller = implode('', $parts);
+			}
+			
 			// find class
 			$classData = $this->getClassData($controller, 'page', $application);
 			if ($classData === null) $classData = $this->getClassData($controller, 'form', $application);
