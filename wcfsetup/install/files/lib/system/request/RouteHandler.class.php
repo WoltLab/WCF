@@ -89,13 +89,10 @@ class RouteHandler extends SingletonFactory {
 	 * Adds default routes.
 	 */
 	protected function addDefaultRoutes() {
+		$acpRoute = new FlexibleRoute(true);
+		$this->addRoute($acpRoute);
+		
 		if (URL_LEGACY_MODE) {
-			$acpRoute = new Route('ACP_default', true);
-			$acpRoute->setSchema('/{controller}/{id}');
-			$acpRoute->setParameterOption('controller', 'Index', null, true);
-			$acpRoute->setParameterOption('id', null, '\d+', true);
-			$this->addRoute($acpRoute);
-			
 			$defaultRoute = new Route('default');
 			$defaultRoute->setSchema('/{controller}/{id}');
 			$defaultRoute->setParameterOption('controller', null, null, true);
@@ -103,9 +100,6 @@ class RouteHandler extends SingletonFactory {
 			$this->addRoute($defaultRoute);
 		}
 		else {
-			$acpRoute = new FlexibleRoute(true);
-			$this->addRoute($acpRoute);
-			
 			$defaultRoute = new FlexibleRoute(false);
 			$this->addRoute($defaultRoute);
 		}

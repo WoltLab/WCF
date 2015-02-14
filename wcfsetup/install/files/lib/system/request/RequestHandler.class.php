@@ -197,7 +197,7 @@ class RequestHandler extends SingletonFactory {
 			$controller = $routeData['controller'];
 			
 			// validate class name
-			if (!preg_match('~^[a-z0-9' . (URL_LEGACY_MODE ? '' : '\-') . ']+$~i', $controller)) {
+			if (!preg_match('~^[a-z0-9-]+$~i', $controller)) {
 				throw new SystemException("Illegal class name '".$controller."'");
 			}
 			
@@ -216,6 +216,7 @@ class RequestHandler extends SingletonFactory {
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
 		catch (SystemException $e) {
+			die("eek: " . $e->getMessage());
 			throw new IllegalLinkException();
 		}
 	}
@@ -322,7 +323,7 @@ class RequestHandler extends SingletonFactory {
 	protected function lookupController($controller, $pageType, $application) {
 		if (isset($this->controllers[$application]) && isset($this->controllers[$application][$pageType])) {
 			$ciController = mb_strtolower($controller);
-			if (!URL_LEGACY_MODE) $ciController = str_replace('-', '', $ciController);
+			if (!URL_LEGACY_MODE || $this->isACPRequest) $ciController = str_replace('-', '', $ciController);
 			
 			if (isset($this->controllers[$application][$pageType][$ciController])) {
 				return $this->controllers[$application][$pageType][$ciController];
