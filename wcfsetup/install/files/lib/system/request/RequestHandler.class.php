@@ -216,7 +216,6 @@ class RequestHandler extends SingletonFactory {
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
 		catch (SystemException $e) {
-			die("eek: " . $e->getMessage());
 			throw new IllegalLinkException();
 		}
 	}
