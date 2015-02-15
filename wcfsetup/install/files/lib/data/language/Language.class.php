@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Represents a language.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language
@@ -103,8 +103,12 @@ class Language extends DatabaseObject {
 			return $this->items[$item];
 		}
 		
-		// return plain variable
-		if ($optional) return '';
+		// do not output value if there was no match and the item looks like a valid language item
+		if ($optional && preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)) {
+			return '';
+		}
+		
+		// return plain input
 		return $item;
 	}
 	
