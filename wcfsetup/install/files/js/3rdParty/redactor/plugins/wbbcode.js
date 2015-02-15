@@ -835,7 +835,7 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			// search for [*] not followed by [/list]
-			var $lastList = data.indexOf('[/list]');
+			var $lastList = data.lastIndexOf('[/list]');
 			if ($lastList === -1) {
 				// drop all [list*] and [*]
 				data = data.replace(/\[\*\]/g, '');
