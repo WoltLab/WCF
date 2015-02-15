@@ -173,7 +173,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 					$thumbnails[] = $attachment;
 					
 					// rotate image based on the exif data
-					$neededMemory = $attachment->width * $attachment->height * ($attachment->imageType == 'image/png' ? 4 : 3) * 2.1;
+					$neededMemory = $attachment->width * $attachment->height * ($attachment->fileType == 'image/png' ? 4 : 3) * 2.1;
 					if (FileUtil::getMemoryLimit() == -1 || FileUtil::getMemoryLimit() > (memory_get_usage() + $neededMemory)) {
 						$exifData = ExifUtil::getExifData($attachment->getLocation());
 						if (!empty($exifData)) {
