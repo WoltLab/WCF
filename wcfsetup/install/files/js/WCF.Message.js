@@ -477,7 +477,7 @@ WCF.Message.DefaultPreview = WCF.Message.Preview.extend({
 	_handleResponse: function(data) {
 		var $preview = $('#previewContainer');
 		if (!$preview.length) {
-			$preview = $('<div class="container containerPadding marginTop" id="previewContainer"><fieldset><legend>' + WCF.Language.get('wcf.global.preview') + '</legend><div></div></fieldset>').prependTo($('#messageContainer')).wcfFadeIn();
+			$preview = $('<div class="container containerPadding marginTop" id="previewContainer"><fieldset><legend>' + WCF.Language.get('wcf.global.preview') + '</legend><div class="messageTextPreview"></div></fieldset>').prependTo($('#messageContainer')).wcfFadeIn();
 		}
 		
 		$preview.find('div:eq(0)').html(data.returnValues.message);
