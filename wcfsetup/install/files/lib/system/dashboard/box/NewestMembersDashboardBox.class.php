@@ -4,6 +4,7 @@ use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\UserProfileList;
 use wcf\page\IPage;
 use wcf\system\cache\builder\NewestMembersCacheBuilder;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -48,6 +49,9 @@ class NewestMembersDashboardBox extends AbstractSidebarDashboardBox {
 	protected function render() {
 		if ($this->userProfileList == null) return '';
 		
+		if (MODULE_MEMBERS_LIST) {
+			$this->titleLink = LinkHandler::getInstance()->getLink('MembersList', array(), 'sortField=registrationDate&sortOrder=DESC');
+		}
 		WCF::getTPL()->assign(array(
 			'newestMembers' => $this->userProfileList
 		));

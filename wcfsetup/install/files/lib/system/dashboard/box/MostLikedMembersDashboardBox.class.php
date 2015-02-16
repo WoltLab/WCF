@@ -4,6 +4,7 @@ use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\UserProfileList;
 use wcf\page\IPage;
 use wcf\system\cache\builder\MostLikedMembersCacheBuilder;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -48,6 +49,9 @@ class MostLikedMembersDashboardBox extends AbstractSidebarDashboardBox {
 	protected function render() {
 		if ($this->userProfileList == null) return '';
 		
+		if (MODULE_MEMBERS_LIST) {
+			$this->titleLink = LinkHandler::getInstance()->getLink('MembersList', array(), 'sortField=likesReceived&sortOrder=DESC');
+		}
 		WCF::getTPL()->assign(array(
 			'mostLikedMembers' => $this->userProfileList
 		));

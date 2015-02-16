@@ -4,6 +4,7 @@ use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\page\IPage;
 use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -44,6 +45,7 @@ class RecentActivitySidebarDashboardBox extends AbstractSidebarDashboardBox {
 	 */
 	protected function render() {
 		if (count($this->eventList)) {
+			$this->titleLink = LinkHandler::getInstance()->getLink('RecentActivityList');
 			WCF::getTPL()->assign(array(
 				'eventList' => $this->eventList
 			));
