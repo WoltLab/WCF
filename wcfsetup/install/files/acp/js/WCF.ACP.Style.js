@@ -231,12 +231,17 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 		var $src = this._pageLogo.val();
 		if ($src.length) {
 			if (!$src.match(/^https?:\/\//)) {
-				var $path = this._pageLogo.val();
+				var $path = this._imagePath.val();
 				if (!$path) {
 					$path = 'images/';
 				}
 				
-				$path = this._wcfPath + $path;
+				$path = this._wcfPath + $path.replace(/^\/?images\/?/, '');
+				if ($path.substr(-1) !== '/') {
+					$path += '/';
+				}
+				
+				$src = $path + $src;
 			}
 		}
 		else {
