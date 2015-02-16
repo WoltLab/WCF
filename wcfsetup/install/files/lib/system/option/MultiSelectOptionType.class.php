@@ -49,7 +49,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	public function getSearchFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
 			'option' => $option,
-			'searchOption' => $value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName]),
+			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
 		));

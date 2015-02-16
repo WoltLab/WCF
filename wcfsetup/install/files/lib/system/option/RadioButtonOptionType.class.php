@@ -69,7 +69,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$this->templateName = 'radioButtonSearchableOptionType';
-		WCF::getTPL()->assign('searchOption', $value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName]));
+		WCF::getTPL()->assign('searchOption', $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])));
 		
 		return $this->getFormElement($option, $value);
 	}

@@ -52,7 +52,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 			'option' => $option,
 			'inputType' => $this->inputType,
 			'inputClass' => $this->inputClass,
-			'searchOption' => $value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName]),
+			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
 			'value' => $value
 		));
 		return WCF::getTPL()->fetch('textSearchableOptionType');
