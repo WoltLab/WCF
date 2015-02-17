@@ -8,7 +8,7 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a viewable comment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
@@ -37,5 +37,20 @@ class ViewableComment extends DatabaseObjectDecorator {
 		}
 		
 		return $this->userProfile;
+	}
+	
+	/**
+	 * Gets a specific comment decorated as comment entry.
+	 * 
+	 * @param	integer		$commentID
+	 * @return	\wcf\data\comment\ViewableComment
+	 */
+	public static function getComment($commentID) {
+		$list = new ViewableCommentList();
+		$list->setObjectIDs(array($commentID));
+		$list->readObjects();
+		$objects = $list->getObjects();
+		if (isset($objects[$commentID])) return $objects[$commentID];
+		return null;
 	}
 }
