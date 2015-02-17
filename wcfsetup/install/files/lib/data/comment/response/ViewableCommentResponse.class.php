@@ -8,7 +8,7 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a viewable comment response.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
@@ -37,5 +37,20 @@ class ViewableCommentResponse extends DatabaseObjectDecorator {
 		}
 		
 		return $this->userProfile;
+	}
+	
+	/**
+	 * Gets a specific comment response decorated as viewable comment response.
+	 * 
+	 * @param	integer		$responseID
+	 * @return	\wcf\data\comment\response\ViewableCommentResponse
+	 */
+	public static function getResponse($responseID) {
+		$list = new ViewableCommentResponseList();
+		$list->setObjectIDs(array($responseID));
+		$list->readObjects();
+		$objects = $list->getObjects();
+		if (isset($objects[$responseID])) return $objects[$responseID];
+		return null;
 	}
 }

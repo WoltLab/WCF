@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * An implementation of IModerationQueueReportHandler for comment responses.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.moderation.queue
@@ -117,7 +117,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	 */
 	public function getReportedContent(ViewableModerationQueue $queue) {
 		WCF::getTPL()->assign(array(
-			'message' => new ViewableCommentResponse($queue->getAffectedObject())
+			'message' => ViewableCommentResponse::getResponse($queue->objectID)
 		));
 		
 		return WCF::getTPL()->fetch('moderationComment');
