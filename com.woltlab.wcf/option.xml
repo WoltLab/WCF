@@ -1117,13 +1117,13 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<categoryname>user.avatar</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>192</defaultvalue>
-				<minvalue>48</minvalue>
+				<minvalue>96</minvalue>
 			</option>
 			<option name="max_avatar_height">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>192</defaultvalue>
-				<minvalue>48</minvalue>
+				<minvalue>96</minvalue>
 			</option>
 			<!-- /user.avatar -->
 			
