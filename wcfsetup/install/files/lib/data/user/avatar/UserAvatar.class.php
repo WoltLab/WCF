@@ -38,6 +38,12 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	public static $maxThumbnailSize = 128;
 	
 	/**
+	 * minimum height and width of an uploaded avatar
+	 * @var	integer
+	 */
+	const MIN_AVATAR_SIZE = 96;
+	
+	/**
 	 * Returns the physical location of this avatar.
 	 * 
 	 * @param	integer		$size

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\upload;
+use wcf\data\user\avatar\UserAvatar;
 use wcf\system\exception\SystemException;
 
 /**
@@ -19,10 +20,10 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 	public function validate(UploadFile $uploadFile) {
 		if (!parent::validate($uploadFile)) return false;
 		
-		// get image size
+		// check image size
 		try {
 			$imageData = getimagesize($uploadFile->getLocation());
-			if ($imageData[0] < 96 || $imageData[1] < 96) {
+			if ($imageData[0] < UserAvatar::MIN_AVATAR_SIZE || $imageData[1] < UserAvatar::MIN_AVATAR_SIZE) {
 				$uploadFile->setValidationErrorType('tooSmall');
 				return false;
 			}
