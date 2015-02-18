@@ -15,7 +15,7 @@
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-{include file='header' __disableLoginLink=true}
+{include file='header' __disableLoginLink=true __disableAds=true}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.user.login{/lang}</h1>
@@ -160,7 +160,7 @@
 	</div>
 </form>
 
-{include file='footer'}
+{include file='footer' __disableAds=true}
 
 </body>
 </html>

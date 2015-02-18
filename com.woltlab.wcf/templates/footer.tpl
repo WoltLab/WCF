@@ -2,7 +2,7 @@
 				
 				{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
 				
-				{if MODULE_WCF_AD}
+				{if MODULE_WCF_AD && $__disableAds|empty}
 					{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
 				{/if}
 			</section>
@@ -40,7 +40,7 @@
 			{event name='copyright'}
 		</div>
 		
-		{if MODULE_WCF_AD}
+		{if MODULE_WCF_AD && $__disableAds|empty}
 			{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}
 		{/if}
 	</div>

@@ -20,7 +20,7 @@
 		</nav>
 		
 		<div id="logo" class="logo">
-			{if MODULE_WCF_AD}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.logo')}{/if}
+			{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.logo')}{/if}
 			
 			<a href="{link}{/link}">
 				{if $__wcf->getStyleHandler()->getStyle()->getPageLogo()}
@@ -56,7 +56,7 @@
 				{if $sidebar|isset}
 					<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>
 						<div>
-							{if MODULE_WCF_AD}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}{/if}
+							{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}{/if}
 							
 							{event name='sidebarBoxesTop'}
 							
@@ -64,7 +64,7 @@
 							
 							{event name='sidebarBoxesBottom'}
 							
-							{if MODULE_WCF_AD}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}{/if}
+							{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}{/if}
 						</div>
 					</aside>
 					
@@ -85,7 +85,7 @@
 			{/if}
 			
 			<section id="content" class="content">
-				{if MODULE_WCF_AD}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}
+				{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}
 				
 				{event name='contents'}
 				

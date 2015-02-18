@@ -7,7 +7,7 @@
 
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
 
-{include file='header'}
+{include file='header' __disableAds=true}
 	
 <p id="errorMessage" class="error">
 	{@$message}
@@ -28,7 +28,7 @@
 	-->
 {/if}
 
-{include file='footer'}
+{include file='footer' __disableAds=true}
 
 </body>
 </html>

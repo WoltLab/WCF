@@ -10,14 +10,14 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{include file='header'}
+{include file='header' __disableAds=true}
 
 <div class="{if !$status|empty}{@$status}{else}success{/if}">
 	<p>{@$message}</p>
 	<a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a>
 </div>
 
-{include file='footer'}
+{include file='footer' __disableAds=true}
 
 </body>
 </html>
