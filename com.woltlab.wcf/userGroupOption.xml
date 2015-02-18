@@ -191,7 +191,7 @@
 				<categoryname>admin.user.group</categoryname>
 				<optiontype>userGroups</optiontype>
 				<defaultvalue></defaultvalue>
-				<admindefaultvalue>1,2,3,4,5,6</admindefaultvalue>
+				<admindefaultvalue>1,2,3,4,5</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
 			<option name="admin.user.canAddUser">
