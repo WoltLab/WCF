@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.1.0 RC 1</version> <!-- codename: typhoon -->
+		<version>2.1.0 RC 2</version> <!-- codename: typhoon -->
 		<date>2015-02-16</date>
 	</packageinformation>
 	
@@ -89,18 +89,8 @@
 		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.1.0 Beta 4">
-		<instruction type="option">option.xml</instruction>
+	<instructions type="update" fromversion="2.1.0 RC 1">
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_2.1.0_rc_1.php</instruction>
-		
-		<instruction type="language" run="standalone">language/*.xml</instruction>
-		
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="sql">update_2.1.0_rc_1.sql</instruction>
-		
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="script">acp/update_accessibleGroups_com.woltlab.wcf_2.1.0_rc_2.php</instruction>
 	</instructions>
 </package>
