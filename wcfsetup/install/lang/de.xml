@@ -20,7 +20,7 @@
 		<item name="wcf.acp.ad.ad.description"><![CDATA[HTML-Code der Werbung]]></item>
 		<item name="wcf.acp.ad.add"><![CDATA[Werbung hinzufügen]]></item>
 		<item name="wcf.acp.ad.conditions"><![CDATA[Bedingungen]]></item>
-		<item name="wcf.acp.ad.conditions.description"><![CDATA[Werden keine Bedingungen ausgewählt, wird die für jeden Benutzer angezeigt.]]></item>
+		<item name="wcf.acp.ad.conditions.description"><![CDATA[Werden keine Bedingungen ausgewählt, wird die Werbung für jeden Benutzer angezeigt.]]></item>
 		<item name="wcf.acp.ad.conditions.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[Die vom Benutzer aufgerufene Seite muss folgende Bedingungen erfüllen, damit die Werbung angezeigt wird.]]></item>
 		<item name="wcf.acp.ad.conditions.pointInTime"><![CDATA[Zeitpunkt]]></item>
