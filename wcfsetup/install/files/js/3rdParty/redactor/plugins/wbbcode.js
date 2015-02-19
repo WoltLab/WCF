@@ -824,7 +824,7 @@ RedactorPlugins.wbbcode = function() {
 			}).bind(this));
 			
 			// [align]
-			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]/gi,'<div style="text-align: $1">$2</div>');
+			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]\n?/gi,'<div style="text-align: $1">$2</div>');
 			
 			// search for [*] not preceeded by [list by searching for the first occurence of [list and then check the left
 			var $firstList = data.indexOf('[list');
