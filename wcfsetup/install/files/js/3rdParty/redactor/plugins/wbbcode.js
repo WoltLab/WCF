@@ -230,8 +230,7 @@ RedactorPlugins.wbbcode = function() {
 		 */
 		convertFromHtml: function(html) {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
-			console.debug(html);
-			console.debug("");
+			
 			// remove data-redactor-tag="" attribute
 			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
 			
@@ -286,7 +285,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// remove <br> right in front of </p> (does not match <p><br></p> since it has been converted already)
 			html = html.replace(/<br( \/)?><\/p>/g, '</p>');
-			console.debug(html);
+			
 			// convert paragraphs into single lines
 			var $parts = html.split(/(<\/?(?:div|p)>)/);
 			var $tmp = '';
