@@ -230,7 +230,8 @@ RedactorPlugins.wbbcode = function() {
 		 */
 		convertFromHtml: function(html) {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
-			
+			console.debug(html);
+			console.debug("");
 			// remove data-redactor-tag="" attribute
 			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
 			
@@ -276,12 +277,16 @@ RedactorPlugins.wbbcode = function() {
 			// remove empty links
 			html = html.replace(/<a[^>]*?><\/a>/g, '');
 			
+			// unwrap <p></p><table></table><p></p>
+			html = html.replace(/<p><\/p><table/, '<table');
+			html = html.replace(/<\/table><p><\/p>/, '</table>');
+			
 			// handle empty paragraphs not followed by an empty one
 			html = html.replace(/<p><\/p><p>(?!<br>)/g, '<p>@@@wcf_empty_line@@@</p><p>');
 			
 			// remove <br> right in front of </p> (does not match <p><br></p> since it has been converted already)
 			html = html.replace(/<br( \/)?><\/p>/g, '</p>');
-			
+			console.debug(html);
 			// convert paragraphs into single lines
 			var $parts = html.split(/(<\/?(?:div|p)>)/);
 			var $tmp = '';
@@ -601,7 +606,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [table]
 			html = html.replace(/<table[^>]*>/gi, '[table]\n');
-			html = html.replace(/<\/table>/gi, '[/table]\n');
+			html = html.replace(/<\/table>\n?/gi, '[/table]\n');
 			
 			// remove <tbody>
 			html = html.replace(/<tbody>([\s\S]*?)<\/tbody>/, function(match, p1) {
