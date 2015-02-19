@@ -172,6 +172,9 @@ class FlexibleRoute implements IRoute {
 				else {
 					// routes are build from left-to-right
 					if (empty($components[$value])) {
+						// drop empty components to avoid them being appended as query string argument
+						unset($components[$value]);
+						
 						break;
 					}
 					
