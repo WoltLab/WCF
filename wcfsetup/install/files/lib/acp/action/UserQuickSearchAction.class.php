@@ -46,7 +46,7 @@ class UserQuickSearchAction extends AbstractAction {
 	 * shown columns
 	 * @var	array<string>
 	 */
-	public $columns = array('email', 'registrationDate');
+	public $columns = array('registrationDate', 'lastActivityTime');
 	
 	/**
 	 * sort field
@@ -82,6 +82,11 @@ class UserQuickSearchAction extends AbstractAction {
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.user.search');
 		
 		parent::execute();
+		
+		// add email column for authorized users
+		if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+			array_unshift($this->columns, 'email');
+		}
 		
 		switch ($this->mode) {
 			case 'banned':
