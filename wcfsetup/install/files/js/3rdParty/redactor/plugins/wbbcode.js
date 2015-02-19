@@ -1059,7 +1059,7 @@ RedactorPlugins.wbbcode = function() {
 				var $line = $.trim($tmp[$i]);
 				
 				if ($line.match(/^<([a-z]+)/) || $line.match(/<\/([a-z]+)>$/)) {
-					if (this.reIsBlock.test(RegExp.$1.toUpperCase())) {
+					if (this.reIsBlock.test(RegExp.$1.toUpperCase()) || RegExp.$1.toUpperCase() === 'TABLE') {
 						// check if line starts and ends with the same tag
 						if ($line.match(/^<([a-z]+).*<\/\1>/)) {
 							data += $line;
