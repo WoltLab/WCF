@@ -157,7 +157,7 @@ class UserSearchForm extends UserOptionListForm {
 	 * shown columns
 	 * @var	array<string>
 	 */
-	public $columns = array('email', 'registrationDate');
+	public $columns = array('registrationDate', 'lastActivityTime');
 	
 	/**
 	 * number of results
@@ -230,6 +230,11 @@ class UserSearchForm extends UserOptionListForm {
 	 */
 	public function readData() {
 		parent::readData();
+		
+		// add email column for authorized users
+		if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+			array_unshift($this->columns, 'email');
+		}
 		
 		$this->readOptionTree();
 	}
