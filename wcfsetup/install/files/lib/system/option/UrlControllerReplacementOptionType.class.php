@@ -42,7 +42,7 @@ class UrlControllerReplacementOptionType extends TextareaOptionType {
 			$controllers = array();
 			for ($i = 0, $length = count($lines); $i < $length; $i++) {
 				$line = $lines[$i];
-				if (preg_match('~^(?P<controller>[a-z0-9\-]+)=(?P<alias>[a-z0-9\-]+)$~', $line, $matches)) {
+				if (preg_match('~^(?P<controller>[a-z][a-z0-9\-]+)=(?P<alias>[a-z][a-z0-9\-]+)$~', $line, $matches)) {
 					// check if there is already a replacement for given controller
 					if (in_array($matches['controller'], $controllers)) {
 						WCF::getTPL()->assign('urlControllerReplacementError', $matches['controller']);
@@ -71,6 +71,7 @@ class UrlControllerReplacementOptionType extends TextareaOptionType {
 					}
 				}
 				else {
+					WCF::getTPL()->assign('urlControllerReplacementError', $line);
 					throw new UserInputException($option->optionName, 'controllerReplacementInvalidFormat', array('line' => $line));
 				}
 			}

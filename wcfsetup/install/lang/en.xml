@@ -739,7 +739,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[The alias “{$urlControllerReplacementError}” equals an existing controller and cannot be used.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[The alias “{$urlControllerReplacementError}” is already in use.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateController"><![CDATA[The controller “{$urlControllerReplacementError}” has already been aliased.]]></item>
-		<item name="wcf.acp.option.error.controllerReplacementDuplicateUnknown"><![CDATA[The controller “{$urlControllerReplacementError}” is unknown.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementInvalidFormat"><![CDATA[You must provide aliases using “real-name=custom-name”, the line “{$urlControllerReplacementError}” violates it.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[The controller “{$urlControllerReplacementError}” is unknown.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Below the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.export"><![CDATA[Download Options]]></item>

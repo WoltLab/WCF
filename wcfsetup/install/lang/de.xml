@@ -740,7 +740,8 @@
 		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[Das Alias „{$urlControllerReplacementError}“ kollidiert mit einem real existierenden Controller und ist daher unzulässig.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[Das Alias „{$urlControllerReplacementError}“ wird bereits verwendet.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateController"><![CDATA[Dem Controller „{$urlControllerReplacementError}“ wurde bereits ein Alias zugewiesen.]]></item>
-		<item name="wcf.acp.option.error.controllerReplacementDuplicateUnknown"><![CDATA[Der Controller „{$urlControllerReplacementError}“ ist unbekannt.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementInvalidFormat"><![CDATA[Die Angabe muss im Format „realer-name=neuer-name“ erfolgen, die Zeile „{$urlControllerReplacementError}“ is ungültig.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[Der Controller „{$urlControllerReplacementError}“ ist unbekannt.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.export"><![CDATA[Optionen sichern]]></item>
