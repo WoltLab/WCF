@@ -179,9 +179,10 @@ class RequestHandler extends SingletonFactory {
 				
 				// handle controller aliasing
 				if (!URL_LEGACY_MODE && isset($routeData['controller'])) {
-					// aliased controller, pretend it does not exist
-					if ($this->getAliasByController($routeData['controller']) !== null) {
-						throw new IllegalLinkException();
+					// aliased controller, redirect to new URL
+					$alias = $this->getAliasByController($routeData['controller']);
+					if ($alias !== null) {
+						$this->redirect($routeData, $application);
 					}
 					
 					$controller = $this->getControllerByAlias($routeData['controller']);
@@ -222,11 +223,47 @@ class RequestHandler extends SingletonFactory {
 				throw new SystemException("unable to find class '".$classData['className']."'");
 			}
 			
+			// check if controller was provided exactly as it should
+			if (!URL_LEGACY_MODE && !$this->isACPRequest()) {
+				if (preg_match('~([A-Za-z0-9]+)(?:Action|Form|Page)$~', $classData['className'], $matches)) {
+					$parts = preg_split('~([A-Z][a-z0-9]+)~', $matches[1], null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+					$parts = array_map('strtolower', $parts);
+					$realController = implode('-', $parts);
+					
+					if ($controller != $realController) {
+						$this->redirect($routeData, $application, $matches[1]);
+					}
+				}
+			}
+			
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
 		catch (SystemException $e) {
 			throw new IllegalLinkException();
 		}
+	}
+	
+	/**
+	 * Redirects to the actual URL, e.g. controller has been aliased or mistyped (boardlist instead of board-list).
+	 * 
+	 * @param	array<string>		$routeData
+	 * @param	string			$application
+	 * @param	string			$controller
+	 */
+	protected function redirect(array $routeData, $application, $controller = null) {
+		$routeData['application'] = $application;
+		if ($controller !== null) $routeData['controller'] = $controller;
+		
+		// append the remaining query parameters
+		foreach ($_GET as $key => $value) {
+			if (!empty($value)) {
+				$linkData[$key] = $value;
+			}
+		}
+		
+		$redirectURL = LinkHandler::getInstance()->getLink($routeData['controller'], $linkData);
+		HeaderUtil::redirect($redirectURL, true);
+		exit;
 	}
 	
 	/**

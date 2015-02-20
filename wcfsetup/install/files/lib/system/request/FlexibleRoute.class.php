@@ -67,7 +67,11 @@ class FlexibleRoute implements IRoute {
 				(?P<controller>[A-Za-z0-9\-]+)
 				(?:
 					/
-					(?P<id>\d+)	
+					(?P<id>\d+)
+					(?:
+						-
+						(?P<title>[^/]+)
+					)?
 				)?
 			)?
 		~x';
@@ -282,7 +286,7 @@ class FlexibleRoute implements IRoute {
 				$controllerName .= strtolower($parts[$i]);
 			}
 			
-			$alias = RequestHandler::getInstance()->getAliasByController($controllerName);
+			$alias = (!$this->isACP) ? RequestHandler::getInstance()->getAliasByController($controllerName) : null;
 			
 			self::$controllerNames[$controller] = ($alias) ?: $controllerName;
 		}
