@@ -199,7 +199,45 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			if (this.opts.visual) {
-				this.insert.html('&nbsp;<img src="' + smileyPath + '" class="smiley" alt="' + smileyCode + '" />&nbsp;', false);
+				var $parentBefore = null;
+				if (window.getSelection().rangeCount && window.getSelection().getRangeAt(0).collapsed) {
+					$parentBefore = window.getSelection().getRangeAt(0).startContainer;
+					if ($parentBefore.nodeType === Node.TEXT_NODE) {
+						$parentBefore = $parentBefore.parentElement;
+					}
+					
+					if (!this.utils.isRedactorParent($parentBefore)) {
+						$parentBefore = null;
+					}
+				}
+				
+				this.insert.html('<img src="' + smileyPath + '" class="smiley" alt="' + smileyCode + '" id="redactorSmiley">', false);
+				
+				var $smiley = document.getElementById('redactorSmiley');
+				if ($parentBefore !== null) {
+					var $currentParent = window.getSelection().getRangeAt(0).startContainer;
+					if ($currentParent.nodeType === Node.TEXT_NODE) {
+						$currentParent = $currentParent.parentElement;
+					}
+					
+					// smiley has been inserted outside the original caret parent, move
+					if ($parentBefore !== $currentParent) {
+						$parentBefore.appendChild($smiley);
+					}
+				}
+				
+				// add spaces as paddings
+				var $parent = $smiley.parentElement;
+				var $node = document.createTextNode('\u00A0');
+				$parent.insertBefore($node, $smiley);
+				
+				var $node = document.createTextNode('\u00A0');
+				if ($parent.lastChild === $smiley) {
+					$parent.appendChild($node);
+				}
+				else {
+					$parent.insertBefore($node, $smiley.nextSibling);
+				}
 			}
 			else {
 				this.wutil.insertAtCaret(' ' + smileyCode + ' ');
