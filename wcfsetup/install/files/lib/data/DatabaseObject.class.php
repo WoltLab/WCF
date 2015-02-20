@@ -5,7 +5,7 @@ use wcf\system\WCF;
 /**
  * Abstract class for all data holder classes.
  * 
- * @author	Marcel Werk
+ * @author	Marcel Werk, Sebastian Teumert
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -125,18 +125,75 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
+	 * Returns the database table name of this object.
+	 * 
+	 * If the DBO defines a static, non-empty $databaseTableName property, that property
+	 * is used and prefixed with the application abbreviation and WCF instance number.
+	 *
+	 * If the property is not defined, the table name is guessed. Therefore,
+	 * the class name is split into its CamelCase parts and rejoined with under-
+	 * scores (_). 
+	 * 
+	 * Example:
+	 * wcf\data\event\EventListener would be automatically guessed to
+	 * wcf<WCF_N>_event_listener
+	 *
 	 * @see	\wcf\data\IStorableObject::getDatabaseTableName()
+	 * @return string <app_abbreviation><WCF_N>_<table_name>
 	 */
 	public static function getDatabaseTableName() {
 		$classParts = explode('\\', get_called_class());
-		return $classParts[0].WCF_N.'_'.static::$databaseTableName;
+		$tableName = static::doTableNameGuessing();
+		return $classParts[0].WCF_N.'_'.$tableName;
 	}
 	
 	/**
+	 * Returns the database table alias of the object.
+	 *
+	 * if the DBO defines a static, non-empty $databaseTableName property, 
+	 * that property is used and returned.
+	 *
+	 * Otherwise, the table alias is guessed. Therefore the class name is split
+	 * into its CamelCase parts and rejoined with underscores.
+	 * 
+	 * Example:
+	 * wcf\data\event\EventListener would be automatically guessed to
+	 * event_listener
+	 *
 	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @return string
 	 */
 	public static function getDatabaseTableAlias() {
-		return static::$databaseTableName;
+		return static::doTableNameGuessing();
+	}
+	
+	/**
+	 * Guesses the table name. 
+	 *
+	 * This method is private & final because it should
+	 * never be overridden. Developers can override {@link getDatabaseTableAlias()}
+	 * and {@link getDatabaseTableName()} separately when needed, as is done for example
+	 * in {@link wcf\data\user\User}.
+	 * 
+	 * The table name is guessed by splitting the CamelCase class name into it's
+	 * parts and then rejoining them with underscores (_). This works
+	 * well in most cases, but fails for example with {@link wcf\data\acp\ACPSession}
+	 * because of the multiple upper case characters. In those cases, guessing 
+	 * can be prevented by defining a static $databaseTableName property in
+	 * the class.
+	 * 
+	 * @return string
+	 */
+	private static final function doTableNameGuessing() {
+		$className = get_called_class();
+		if (property_exists($className, 'databaseTableName') && !empty(static::$databaseTableName)) {
+			$tableName = static::$databaseTableName;
+		}
+		else {
+			$classParts = explode('\\', $className);
+			$tableName = strtolower(implode('_', preg_split('/(?=[A-Z])/', array_pop($classParts), -1, PREG_SPLIT_NO_EMPTY)));
+		}
+		return $tableName;
 	}
 	
 	/**
@@ -147,10 +204,29 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
+	 * Returns the name of the index column of this DBO.
+	 * 
+	 * If the class defined a static, non-empty $databaseTableIndexName property,
+	 * that property is returned. Otherwise the index is guessed.
+	 *
+	 * The guessed index is the last part of the CamelCase class name followed
+	 * by the literal "ID". 
+	 * For example, wcf\data\event\listener\EventListener would be guessed to "listenerID".
+	 *
 	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexName()
+	 * @return string
 	 */
 	public static function getDatabaseTableIndexName() {
-		return static::$databaseTableIndexName;
+		$className = get_called_class();
+		if (property_exists($className, 'databaseTableIndexName') && !empty(static::$databaseTableIndexName)) {
+			$indexName = static::$databaseTableIndexName;
+		}
+		else {
+			$classParts = explode('\\', $className);
+			$classNameParts = preg_split('/(?=[A-Z])/', array_pop($classParts), -1, PREG_SPLIT_NO_EMPTY);
+			$indexName = strtolower(array_pop($classNameParts)) . 'ID';
+		}
+		return $indexName;
 	}
 	
 	/**
