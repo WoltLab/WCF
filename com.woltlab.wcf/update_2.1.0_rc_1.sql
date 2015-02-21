@@ -1,1 +1,0 @@
-UPDATE wcf1_bbcode_media_provider SET regex = 'https?://vimeo\\.com/(?P<ID>\\d+)', html = '<iframe src="https://player.vimeo.com/video/{$ID}" width="400" height="225" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>' WHERE title = 'Vimeo';

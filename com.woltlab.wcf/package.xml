@@ -6,7 +6,7 @@
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
 		<version>2.1.0 RC 2</version> <!-- codename: typhoon -->
-		<date>2015-02-16</date>
+		<date>2015-02-21</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,7 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.10 pl 2">
+	<instructions type="update" fromversion="2.0.11">
 		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
 		<instruction type="file">pre_update_check.tar</instruction>
 		<instruction type="script" run="standalone">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
@@ -91,6 +91,13 @@
 	
 	<instructions type="update" fromversion="2.1.0 RC 1">
 		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
 		<instruction type="script">acp/update_accessibleGroups_com.woltlab.wcf_2.1.0_rc_2.php</instruction>
+		
+		<instruction type="option">option.xml</instruction>
+		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		
+		<instruction type="language" run="standalone">language/*.xml</instruction>
 	</instructions>
 </package>
