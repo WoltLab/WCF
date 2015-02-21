@@ -754,6 +754,32 @@ $.extend(WCF, {
 		}
 		
 		return new Blob($byteArrays, { type: contentType });
+	},
+	
+	/**
+	 * Converts legacy URLs to the URL schema used by WCF 2.1.
+	 * 
+	 * @param	string		url
+	 * @return	string
+	 */
+	convertLegacyURL: function(url) {
+		if (URL_LEGACY_MODE) {
+			return url;
+		}
+		
+		return url.replace(/^index\.php\/(.*?)\/\?/, function(match, controller) {
+			var $parts = controller.split(/([A-Z][a-z0-9]+)/);
+			var $controller = '';
+			for (var $i = 0, $length = $parts.length; $i < $length; $i++) {
+				var $part = $parts[$i].trim();
+				if ($part.length) {
+					if ($controller.length) $controller += '-';
+					$controller += $part.toLowerCase();
+				}
+			}
+			
+			return 'index.php?' + $controller + '/&';
+		});
 	}
 });
 
@@ -2533,9 +2559,7 @@ WCF.Action.Proxy = Class.extend({
 			autoAbortPrevious: false
 		}, options);
 		
-		if (!URL_LEGACY_MODE) {
-			this.options.url = this.options.url.replace(/^index\.php\/(.*?)\/\?/, '?$1/&');
-		}
+		this.options.url = WCF.convertLegacyURL(this.options.url);
 		
 		this.confirmationDialog = null;
 		this.loading = null;
@@ -8927,9 +8951,7 @@ WCF.Upload = Class.extend({
 			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		}, options || { });
 		
-		if (!URL_LEGACY_MODE) {
-			this._options.url = this._options.url.replace(/^index\.php\/(.*?)\/\?/, '?$1/&');
-		}
+		this._options.url = WCF.convertLegacyURL(this._options.url);
 		
 		// check for ajax upload support
 		var $xhr = new XMLHttpRequest();
