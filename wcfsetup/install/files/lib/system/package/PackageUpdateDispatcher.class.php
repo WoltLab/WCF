@@ -595,7 +595,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					if (preg_match('~^(\d+\.\d+)\.~', $versionNumber, $matches)) {
 						$major = $matches[1];
 						if (isset($highestVersions[$major])) {
-							if (version_compare($highestVersions[$major], $versionNumber, '<')) {
+							if (Package::compareVersion($highestVersions[$major], $versionNumber, '<')) {
 								// version is newer, discard current version
 								unset($updateData['versions'][$highestVersions[$major]]);
 								$highestVersions[$major] = $versionNumber;
