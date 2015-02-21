@@ -226,9 +226,7 @@ class RequestHandler extends SingletonFactory {
 			// check if controller was provided exactly as it should
 			if (!URL_LEGACY_MODE && !$this->isACPRequest()) {
 				if (preg_match('~([A-Za-z0-9]+)(?:Action|Form|Page)$~', $classData['className'], $matches)) {
-					$parts = preg_split('~([A-Z][a-z0-9]+)~', $matches[1], null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-					$parts = array_map('strtolower', $parts);
-					$realController = implode('-', $parts);
+					$realController = self::getTokenizedController($matches[1]);
 					
 					if ($controller != $realController) {
 						$this->redirect($routeData, $application, $matches[1]);
@@ -239,6 +237,7 @@ class RequestHandler extends SingletonFactory {
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
 		catch (SystemException $e) {
+			die("<pre>".$e->getMessage());
 			throw new IllegalLinkException();
 		}
 	}
@@ -261,7 +260,7 @@ class RequestHandler extends SingletonFactory {
 			}
 		}
 		
-		$redirectURL = LinkHandler::getInstance()->getLink($routeData['controller'], $linkData);
+		$redirectURL = LinkHandler::getInstance()->getLink($routeData['controller'], $routeData);
 		HeaderUtil::redirect($redirectURL, true);
 		exit;
 	}
@@ -292,6 +291,7 @@ class RequestHandler extends SingletonFactory {
 		// check if currently invoked application matches the landing page
 		if ($landingPageApplication == $application) {
 			$routeData['controller'] = $landingPage->getController();
+			if (!URL_LEGACY_MODE) $routeData['controller'] = self::getTokenizedController($routeData['controller']);
 			return;
 		}
 		
@@ -305,7 +305,7 @@ class RequestHandler extends SingletonFactory {
 				exit;
 			}
 			else {
-				$routeData['controller'] = preg_replace('~(Action|Form|Page)$~', '', array_pop($controller));
+				$routeData['controller'] = self::getTokenizedController(preg_replace('~(Action|Form|Page)$~', '', array_pop($controller)));
 				return;
 			}
 		}
@@ -432,5 +432,18 @@ class RequestHandler extends SingletonFactory {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns the tokenized controller name, e.g. BoardList -> board-list.
+	 * 
+	 * @param	string		controller
+	 * @return	string
+	 */
+	public static function getTokenizedController($controller) {
+		$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$parts = array_map('strtolower', $parts);
+		
+		return implode('-', $parts);
 	}
 }

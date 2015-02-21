@@ -279,13 +279,7 @@ class FlexibleRoute implements IRoute {
 	 */
 	protected function getControllerName($application, $controller) {
 		if (!isset(self::$controllerNames[$controller])) {
-			$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-			$controllerName = '';
-			for ($i = 0, $length = count($parts); $i < $length; $i++) {
-				if (!empty($controllerName)) $controllerName .= '-';
-				$controllerName .= strtolower($parts[$i]);
-			}
-			
+			$controllerName = RequestHandler::getTokenizedController($controller);
 			$alias = (!$this->isACP) ? RequestHandler::getInstance()->getAliasByController($controllerName) : null;
 			
 			self::$controllerNames[$controller] = ($alias) ?: $controllerName;
