@@ -457,7 +457,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				if ($value == '</span>') {
 					var $opening = $openElements.pop();
-					var $tmp = $opening.start + $.trim($buffer.pop()) + $opening.end;
+					var $tmp = $opening.start + $buffer.pop() + $opening.end;
 					
 					if ($buffer.length) {
 						$buffer[$buffer.length - 1] += $tmp;
@@ -837,7 +837,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [size]
 			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi, (function(match, size, content) {
-				content = $.trim(content);
 				if (!content.length) {
 					content = this.opts.invisibleSpace;
 				}
@@ -847,7 +846,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [color]
 			data = data.replace(/\[color=([#a-z0-9]*?)\]([\s\S]*?)\[\/color\]/gi, (function(match, color, content) {
-				content = $.trim(content);
 				if (!content.length) {
 					content = this.opts.invisibleSpace;
 				}
@@ -857,7 +855,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [font]
 			data = data.replace(/\[font='?([a-z,\- ]*?)'?\]([\s\S]*?)\[\/font\]/gi, (function(match, fontFamily, content) {
-				content = $.trim(content);
 				if (!content.length) {
 					content = this.opts.invisibleSpace;
 				}
