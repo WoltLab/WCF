@@ -315,8 +315,8 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<a[^>]*?><\/a>/g, '');
 			
 			// unwrap <p></p><table></table><p></p>
-			html = html.replace(/<p><\/p><table/, '<table');
-			html = html.replace(/<\/table><p><\/p>/, '</table>');
+			html = html.replace(/<p><\/p><table/g, '<table');
+			html = html.replace(/<\/table><p><\/p>/g, '</table>');
 			
 			// handle empty paragraphs not followed by an empty one
 			html = html.replace(/<p><\/p><p>(?!<br>)/g, '<p>@@@wcf_empty_line@@@</p><p>');
