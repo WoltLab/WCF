@@ -934,7 +934,9 @@ RedactorPlugins.wutil = function() {
 		},
 		
 		/**
-		 * Fixes the DOM by moving all non-element children of the editor into a paragraph.
+		 * Fixes the DOM after pasting:
+		 *  - move all non-element children of the editor into a paragraph
+		 *  - pasting lists/list-items in lists can yield empty <li></li>
 		 */
 		fixDOM: function() {
 			var $current = this.$editor[0].childNodes[0];
@@ -972,6 +974,17 @@ RedactorPlugins.wutil = function() {
 					}
 					
 					$p.append($current);
+				}
+			}
+			
+			var $listItems = this.$editor[0].getElementsByTagName('li');
+			for (var $i = 0, $length = $listItems.length; $i < $length; $i++) {
+				var $listItem = $listItems[$i];
+				if (!$listItem.innerHTML.length) {
+					var $parent = $listItem.parentElement;
+					if ($parent.children.length > 1) {
+						$listItem.parentElement.removeChild($listItem);
+					}
 				}
 			}
 		}
