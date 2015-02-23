@@ -1030,6 +1030,11 @@ RedactorPlugins.wmonkeypatch = function() {
 				$toggleButtons(parent, 'blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor-button-disabled', true);
 				$toggleButtons(parent, 'sub', 'a.re-subscript', false, 'redactor-act');
 				$toggleButtons(parent, 'sup', 'a.re-superscript', false, 'redactor-act');
+				
+				if (btnName) {
+					// work-around for buttons stuck after disabling -- #2138
+					this.observe.buttons(e);
+				}
 			}).bind(this);
 			
 			// observe.load
