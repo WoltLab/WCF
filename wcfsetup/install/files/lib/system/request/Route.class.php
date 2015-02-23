@@ -56,6 +56,12 @@ class Route implements IRoute {
 	protected $routeData = null;
 	
 	/**
+	 * cached list of transformed controller names
+	 * @var	array<string>
+	 */
+	protected static $controllerNames = array();
+	
+	/**
 	 * list of application abbreviation and default controller name
 	 * @var	array<string>
 	 */
@@ -301,6 +307,11 @@ class Route implements IRoute {
 					continue;
 				}
 				
+				// handle controller names
+				if (!URL_LEGACY_MODE && $component === 'controller') {
+					$components[$component] = $this->getControllerName($application, $components[$component]);
+				}
+				
 				// handle built-in SEO
 				if ($component === 'id' && isset($components['title'])) {
 					$link .= $components[$component] . '-' . $components['title'] . '/';
@@ -338,6 +349,24 @@ class Route implements IRoute {
 	 */
 	public function isACP() {
 		return $this->isACP;
+	}
+	
+	/**
+	 * Returns the transformed controller name.
+	 *
+	 * @param	string		$application
+	 * @param	string		$controller
+	 * @return	string
+	 */
+	protected function getControllerName($application, $controller) {
+		if (!isset(self::$controllerNames[$controller])) {
+			$controllerName = RequestHandler::getTokenizedController($controller);
+			$alias = (!$this->isACP) ? RequestHandler::getInstance()->getAliasByController($controllerName) : null;
+			
+			self::$controllerNames[$controller] = ($alias) ?: $controllerName;
+		}
+		
+		return self::$controllerNames[$controller];
 	}
 	
 	/**
