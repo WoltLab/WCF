@@ -1687,9 +1687,16 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 		}
 		else if (data.returnValues.noResults) {
 			// there are no purchased products yet
-			this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.acp.pluginStore.purchasedItems'));
-			this._dialog.html(data.returnValues.noResults);
-			this._dialog.wcfDialog('open');
+			if (this._dialog === null) {
+				this._dialog = $('<div />').hide().appendTo(document.body);
+				this._dialog.html(data.returnValues.noResults).wcfDialog({
+					title: WCF.Language.get('wcf.acp.pluginStore.purchasedItems')
+				});
+			} else {
+				this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.acp.pluginStore.purchasedItems'));
+				this._dialog.html(data.returnValues.noResults);
+				this._dialog.wcfDialog('open');
+			}
 		}
 		else if (data.returnValues.noSSL) {
 			// PHP was compiled w/o OpenSSL support
