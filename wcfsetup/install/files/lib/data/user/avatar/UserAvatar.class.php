@@ -68,7 +68,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			
 			case 48:
 			case 64:
-				if ($this->width >= 96) {
+				if ($this->width > 96 && $this->height > 96) {
 					$size = 96;
 				}
 				else {
