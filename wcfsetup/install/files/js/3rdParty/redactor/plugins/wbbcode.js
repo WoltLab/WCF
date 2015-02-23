@@ -1388,7 +1388,7 @@ RedactorPlugins.wbbcode = function() {
 		 * @return	string
 		 */
 		_pasteCallback: function(html) {
-			var $uuid = WCF.getUUID();
+			/*var $uuid = WCF.getUUID();
 			
 			// replace <p>...</p> with <p>...</p><p><br></p> unless there is already a newline
 			html = html.replace(/<p>([\s\S]*?)<\/p>/gi, function(match, content) {
@@ -1398,14 +1398,13 @@ RedactorPlugins.wbbcode = function() {
 				
 				return match + '@@@' + $uuid + '@@@';
 			});
-			
 			html = html.replace(new RegExp('@@@' + $uuid + '@@@(<p><br(?: /)?></p>)?', 'g'), function(match, next) {
 				if (next) {
 					return next;
 				}
 				
 				return '<p><br></p>';
-			});
+			});*/
 			
 			// restore font size
 			html = html.replace(/\[size=(\d+)\]/g, '<p><span style="font-size: $1pt">');
