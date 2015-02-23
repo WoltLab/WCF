@@ -149,6 +149,8 @@ class Route implements IRoute {
 					// validate parameter against a regex pattern
 					if ($this->parameterOptions[$schemaPart]['regexPattern'] !== null) {
 						$pattern = '~^' . $this->parameterOptions[$schemaPart]['regexPattern'] . '$~';
+						if (!URL_LEGACY_MODE && $schemaPart == 'controller') $pattern .= 'i';
+						
 						if (!preg_match($pattern, $urlParts[$i])) {
 							return false;
 						}
