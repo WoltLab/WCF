@@ -1304,8 +1304,8 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			// remove <p> wrapping a quote or a div
-			data = data.replace(/<p><(blockquote|div)/g, '<$1');
-			data = data.replace(/<\/(blockquote|div)><\/p>/g, '</$1>');
+			data = data.replace(/<(?:div|p)><(blockquote|div)/g, '<$1');
+			data = data.replace(/<\/(blockquote|div)><\/(?:div|p)>/g, '</$1>');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			

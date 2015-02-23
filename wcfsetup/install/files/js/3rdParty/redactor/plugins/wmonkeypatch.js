@@ -106,7 +106,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			
 			var $setCaretBeforeOrAfter = (function(element, setBefore) {
 				if (setBefore) {
-					if (element.previousElementSibling && element.previousElementSibling.tagName === 'P') {
+					if (element.previousElementSibling && (element.previousElementSibling.tagName === 'P' || element.previousElementSibling.tagName === 'DIV')) {
 						this.caret.setEnd(element.previousElementSibling);
 					}
 					else {
@@ -114,7 +114,7 @@ RedactorPlugins.wmonkeypatch = function() {
 					}
 				}
 				else {
-					if (element.nextElementSibling && element.nextElementSibling.tagName === 'P') {
+					if (element.nextElementSibling && (element.nextElementSibling.tagName === 'P' || element.nextElementSibling.tagName === 'DIV')) {
 						this.caret.setEnd(element.nextElementSibling);
 					}
 					else {

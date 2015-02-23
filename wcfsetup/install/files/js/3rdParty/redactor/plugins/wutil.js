@@ -928,7 +928,14 @@ RedactorPlugins.wutil = function() {
 		 * @param	boolean		setBefore
 		 */
 		_setCaret: function(element, setBefore) {
-			var $node = $(this.opts.emptyHtml);
+			var $node;
+			if ((element[0] || element).parentElement && (element[0] || element).parentElement.tagName === 'BLOCKQUOTE') {
+				$node = $('<div>' + this.opts.invisibleSpace + '</div>');
+			}
+			else {
+				$node = $('<p>' + this.opts.invisibleSpace + '</p>');
+			}
+			
 			$node[(setBefore ? 'insertBefore' : 'insertAfter')](element);
 			this.caret.setEnd($node[0]);
 		},
