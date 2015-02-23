@@ -1376,6 +1376,9 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<\/(div|p)><\/(div|p)>/g, '</p>');
 			//html = html.replace(/<(div|p)><br><\/(div|p)>/g, '<p>');
 			
+			// drop <wbr>
+			html = html.replace(/<\/?wbr[^>]*>/g, '');
+			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforePaste', { html: html });
 			
 			return html;
