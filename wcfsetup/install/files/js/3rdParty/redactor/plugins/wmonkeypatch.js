@@ -227,6 +227,32 @@ RedactorPlugins.wmonkeypatch = function() {
 						this.caret.setEnd($firstChild);
 					}
 				}
+				else if (event.target.tagName === 'BLOCKQUOTE') {
+					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
+					if ($range !== null && $range.collapsed) {
+						// check if caret is now inside a quote
+						var $blockquote = null;
+						var $current = ($range.startContainer.nodeType === Node.TEXT_NODE) ? $range.startContainer.parentElement : $range.startContainer;
+						while ($current !== null && $current !== this.$editor[0]) {
+							if ($current.tagName === 'BLOCKQUOTE') {
+								$blockquote = $current;
+								break;
+							}
+							
+							$current = $current.parentElement;
+						}
+						
+						if ($blockquote !== null && $blockquote !== event.target) {
+							// click occured within inner quote margin, check if click happened before inner quote
+							if (event.pageY <= $($blockquote).offset().top) {
+								$setCaretBeforeOrAfter($blockquote, true);
+							}
+							else {
+								$setCaretBeforeOrAfter($blockquote, false);
+							}
+						}
+					}
+				}
 			}).bind(this));
 		},
 		
