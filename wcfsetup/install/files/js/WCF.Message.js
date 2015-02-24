@@ -3598,8 +3598,17 @@ WCF.Message.UserMention = Class.extend({
 		// allow redactor to undo this
 		this._redactor.buffer.set();
 		
+		var $startContainer = $orgRange.startContainer;
+		var $startOffset = $orgRange.startOffset - (this._mentionStart.length + 1);
+		
+		// navigating with the keyboard before hitting enter will cause the text node to be split
+		if ($startOffset < 0) {
+			$startContainer = $startContainer.previousSibling;
+			$startOffset = $startContainer.length - (this._mentionStart.length + 1) - ($orgRange.startOffset - 1);
+		}
+		
 		var $newRange = document.createRange();
-		$newRange.setStart($orgRange.startContainer, $orgRange.startOffset - (this._mentionStart.length + 1));
+		$newRange.setStart($startContainer, $startOffset);
 		$newRange.setEnd($orgRange.startContainer, $orgRange.startOffset);
 		
 		this._redactor.wutil.replaceRangesWith($newRange);
