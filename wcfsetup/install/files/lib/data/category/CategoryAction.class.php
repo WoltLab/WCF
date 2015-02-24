@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * Executes category-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
@@ -91,16 +91,53 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 		}
 		
 		parent::update();
+		
+		if (isset($this->parameters['data']['parentCategoryID'])) {
+			$objectType = null;
+			$parentUpdates = array();
+			
+			foreach ($this->objects as $category) {
+				if ($objectType === null) {
+					$objectType = $category->getObjectType();
+				}
+				
+				if ($category->parentCategoryID != $this->parameters['data']['parentCategoryID']) {
+					$parentUpdates[$category->categoryID] = array(
+						'oldParentCategoryID' => $category->parentCategoryID,
+						'newParentCategoryID' => $this->parameters['data']['parentCategoryID']
+					);
+				}
+			}
+			
+			if (!empty($parentUpdates)) {
+				$objectType->getProcessor()->changedParentCategories($parentUpdates);
+			}
+		}
 	}
 	
 	/**
 	 * @see	\wcf\data\ISortableAction::updatePosition()
 	 */
 	public function updatePosition() {
+		$objectType = null;
+		$parentUpdates = array();
+		
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'] as $parentCategoryID => $categoryIDs) {
 			$showOrder = 1;
 			foreach ($categoryIDs as $categoryID) {
+				$category = CategoryHandler::getInstance()->getCategory($categoryID);
+				if ($objectType === null) {
+					$objectType = $category->getObjectType();
+				}
+				
+				if ($category->parentCategoryID != $parentCategoryID) {
+					$parentUpdates[$categoryID] = array(
+						'oldParentCategoryID' => $category->parentCategoryID,
+						'newParentCategoryID' => $parentCategoryID
+					);
+				}
+				
 				$this->objects[$categoryID]->update(array(
 					'parentCategoryID' => $parentCategoryID ? $this->objects[$parentCategoryID]->categoryID : 0,
 					'showOrder' => $showOrder++
@@ -108,6 +145,10 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 			}
 		}
 		WCF::getDB()->commitTransaction();
+		
+		if (!empty($parentUpdates)) {
+			$objectType->getProcessor()->changedParentCategories($parentUpdates);
+		}
 	}
 	
 	/**
