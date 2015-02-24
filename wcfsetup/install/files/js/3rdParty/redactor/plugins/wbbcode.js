@@ -121,7 +121,6 @@ RedactorPlugins.wbbcode = function() {
 					this.$textarea.val(this.wbbcode.convertToHtml(this.$textarea.val()));
 					this.code.offset = this.$textarea.val().length;
 					this.code.showVisual();
-					this.wbbcode.fixCodeBBCode();
 					this.wbbcode.fixBlockLevelElements();
 					this.wutil.selectionEndOfEditor();
 					this.wbbcode.observeQuotes();
@@ -1215,6 +1214,10 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
+			// remove <p> wrapping a quote or a div
+			data = data.replace(/<(?:div|p)><(blockquote|div)/g, '<$1');
+			data = data.replace(/<\/(blockquote|div)><\/(?:div|p)>/g, '</$1>');
+			
 			// insert codes
 			if ($cachedCodes.length) {
 				for (var $i = $cachedCodes.length - 1; $i >= 0; $i--) {
@@ -1303,10 +1306,6 @@ RedactorPlugins.wbbcode = function() {
 					data = data.replace($regex, $value);
 				}
 			}
-			
-			// remove <p> wrapping a quote or a div
-			data = data.replace(/<(?:div|p)><(blockquote|div)/g, '<$1');
-			data = data.replace(/<\/(blockquote|div)><\/(?:div|p)>/g, '</$1>');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
@@ -2008,7 +2007,6 @@ RedactorPlugins.wbbcode = function() {
 					// set caret after code listing
 					var $codeBox = this.$editor.find('.codeBox:not(.jsRedactorCodeBox)');
 					
-					this.wbbcode.fixCodeBBCode($codeBox[0]);
 					this.wbbcode.observeCodeListings();
 					this.wbbcode.fixBlockLevelElements();
 					
@@ -2089,35 +2087,6 @@ RedactorPlugins.wbbcode = function() {
 					
 					this.modal.close();
 				}, this));
-			}
-		},
-		
-		/**
-		 * Fixes the code bbcode.
-		 * 
-		 * @param	Element		codeBox
-		 * @returns
-		 */
-		fixCodeBBCode: function(codeBox) {
-			if (!codeBox) {
-				var $codeBoxes = this.$editor[0].querySelectorAll('div.codeBox');
-				for (var $i = 0, $length = $codeBoxes.length; $i < $length; $i++) {
-					this.wbbcode.fixCodeBBCode($codeBoxes[$i]);
-				}
-				
-				return;
-			}
-			
-			codeBox = codeBox[0] || codeBox;
-			
-			// sometimes the inner div is missing
-			if (codeBox.children.length > 1) {
-				var $container = document.createElement('div');
-				codeBox.insertBefore($container, codeBox.firstChild);
-				
-				while ($container.nextElementSibling) {
-					$container.appendChild($container.nextElementSibling);
-				}
 			}
 		},
 		
