@@ -214,6 +214,7 @@ RedactorPlugins.wbbcode = function() {
 				this.insert.html('<img src="' + smileyPath + '" class="smiley" alt="' + smileyCode + '" id="redactorSmiley">', false);
 				
 				var $smiley = document.getElementById('redactorSmiley');
+				$smiley.removeAttribute('id');
 				if ($parentBefore !== null) {
 					var $currentParent = window.getSelection().getRangeAt(0).startContainer;
 					if ($currentParent.nodeType === Node.TEXT_NODE) {
