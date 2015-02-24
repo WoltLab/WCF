@@ -92,7 +92,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 		
 		parent::update();
 		
-		if ($this->parameters['data']['parentCategoryID']) {
+		if (isset($this->parameters['data']['parentCategoryID'])) {
 			$objectType = null;
 			$parentUpdates = array();
 			
@@ -102,7 +102,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 				}
 				
 				if ($category->parentCategoryID != $this->parameters['data']['parentCategoryID']) {
-					$parentUpdates[$categoryID] = array(
+					$parentUpdates[$category->categoryID] = array(
 						'oldParentCategoryID' => $category->parentCategoryID,
 						'newParentCategoryID' => $this->parameters['data']['parentCategoryID']
 					);
