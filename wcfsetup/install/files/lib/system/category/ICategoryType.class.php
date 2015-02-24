@@ -6,7 +6,7 @@ use wcf\data\category\CategoryEditor;
  * Every category type has to implement this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -40,6 +40,23 @@ interface ICategoryType {
 	 * @return	boolean
 	 */
 	public function canEditCategory();
+	
+	/**
+	 * Is called after categories were assigned different parent categories.
+	 * 
+	 * Array structure:
+	 * [
+	 * 	categoryID => [
+	 * 		oldParentCategoryID => 1,
+	 * 		newParentCategoryID => 2
+	 * 	],
+	 * 	categoryID => [
+	 * 		oldParentCategoryID => null,
+	 * 		newParentCategoryID => 2
+	 * 	],
+	 * ]
+	 */
+	public function changedParentCategories(array $categoryData);
 	
 	/**
 	 * Returns true if a category of this type may have no empty description.

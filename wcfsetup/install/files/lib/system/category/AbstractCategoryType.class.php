@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Abstract implementation of a category type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -96,6 +96,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 */
 	public function canEditCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canEditCategory');
+	}
+	
+	/**
+	 * @see	\wcf\system\category\ICategoryType::changedParentCategories()
+	 */
+	public function changedParentCategories(array $categoryData) {
+		// does nothing
 	}
 	
 	/**
