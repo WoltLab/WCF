@@ -32,14 +32,14 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 		static $userRegex = null;
 		if ($userRegex === null) {
 			$userRegex = new Regex("
-				(?<=^|\s)					# either at start of string, or after whitespace
+				(?:^|(?<=\s|\]))					# either at start of string, or after whitespace
 				@
 				(
 					([^',\s][^,\s]{2,})(?:\s[^,\s]+)?	# either at most two strings, not containing
 										# whitespace or the comma, not starting with a single quote
 										# separated by a single whitespace character
 				|
-					'(?:''|[^'])*'				# or a string delimited by single quotes
+					'(?:''|[^']){3,}'			# or a string delimited by single quotes
 				)
 			", Regex::IGNORE_WHITESPACE);
 		}
