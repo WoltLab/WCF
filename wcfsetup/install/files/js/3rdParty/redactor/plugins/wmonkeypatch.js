@@ -157,7 +157,7 @@ RedactorPlugins.wmonkeypatch = function() {
 							}
 						}
 						
-						while ($current !== null && $current !== this.$editor[0]) {
+						while ($current && $current !== this.$editor[0]) {
 							if ($current.nodeType === Node.ELEMENT_NODE) {
 								if ($current.tagName === 'BLOCKQUOTE' || ($current.tagName === 'DIV' && /\bcodeBox\b/.test($current.className))) {
 									var $offset = $($current).offset();

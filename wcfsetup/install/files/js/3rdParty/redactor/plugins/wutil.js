@@ -751,7 +751,7 @@ RedactorPlugins.wutil = function() {
 			
 			if (getSelection().getRangeAt(0).collapsed) {
 				var $startContainer = getSelection().getRangeAt(0).startContainer;
-				if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b' && $startContainer.parentElement.tagName === 'P' && $startContainer.parentElement.parentElement === this.$editor[0]) {
+				if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b' && $startContainer.parentElement && $startContainer.parentElement.tagName === 'P' && $startContainer.parentElement.parentElement === this.$editor[0]) {
 					// caret position is fine
 					return;
 				}
