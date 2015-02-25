@@ -61,5 +61,9 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\data\smiley\SmileyCache]]></objectname>
 		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\poll\PollManager]]></objectname>
+		</coreobject>
 	</import>
 </data>
