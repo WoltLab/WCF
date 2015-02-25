@@ -3206,7 +3206,7 @@ WCF.Message.Share.Page = Class.extend({
 			data.link.data('provider', provider).click($.proxy(self._click, self));
 		});
 		
-		if (WCF.User.userID) {
+		if (WCF.User.userID && !$container.find('.jsShowPrivacySettings').length) {
 			var $openSettings = $('<li class="jsShowPrivacySettings"><a><span class="icon icon32 fa-gear jsTooltip" title="' + WCF.Language.get('wcf.message.share.privacy') + '" /></a></li>');
 			$openSettings.appendTo($container.children('ul')).children('a').click($.proxy(this._openPrivacySettings, this));
 		}
