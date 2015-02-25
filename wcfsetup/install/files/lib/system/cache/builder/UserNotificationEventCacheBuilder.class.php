@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Caches user notification events.
  * 
  * @author	Marcell Werk, Oliver Kliebisch
- * @copyright	2001-2014 WoltLab GmbH, Oliver Kliebisch
+ * @copyright	2001-2015 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder

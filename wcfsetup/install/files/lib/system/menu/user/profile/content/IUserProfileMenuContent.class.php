@@ -5,7 +5,7 @@ namespace wcf\system\menu\user\profile\content;
  * Default interface for user profile menu content.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.menu.user.profile.content

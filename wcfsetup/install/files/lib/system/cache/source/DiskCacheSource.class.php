@@ -12,7 +12,7 @@ use wcf\util\FileUtil;
  * DiskCacheSource is an implementation of CacheSource that stores the cache as simple files in the file system.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.source

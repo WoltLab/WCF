@@ -6,7 +6,7 @@ use wcf\data\user\group\assignment\UserGroupAssignmentList;
  * Caches the enabled automatic user group assignments.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder

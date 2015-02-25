@@ -9,7 +9,7 @@ use wcf\system\request\LinkHandler;
  * Moderation queue implementation for moderated content.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.moderation.queue

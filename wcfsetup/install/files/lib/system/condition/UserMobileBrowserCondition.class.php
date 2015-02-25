@@ -9,7 +9,7 @@ use wcf\util\UserUtil;
  * Condition implementation if it is the active user uses a mobile browser.
  * 
  * @author	Matthias Schmidt, Joshua Rüsweg
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
