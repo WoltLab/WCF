@@ -65,7 +65,7 @@
 				<dd>
 					<label><input type="checkbox" name="pollIsChangeable" value="1"{if $pollIsChangeable} checked="checked"{/if} /> {lang}wcf.poll.isChangeable{/lang}</label>
 				</dd>
-				{if !$pollID}
+				{if !$pollID && $__wcf->getPollManager()->canStartPublicPoll()}
 					<dd>
 						<label><input type="checkbox" name="pollIsPublic" value="1"{if $pollIsPublic} checked="checked"{/if} /> {lang}wcf.poll.isPublic{/lang}</label>
 					</dd>
