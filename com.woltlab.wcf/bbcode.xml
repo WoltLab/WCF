@@ -165,7 +165,7 @@
 			<htmlclose>code</htmlclose>
 			<allowedchildren>none</allowedchildren>
 			<sourcecode>1</sourcecode>
-			<wysiwygicon>fa-font</wysiwygicon>
+			<wysiwygicon>fa-terminal</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.inlineCode</buttonlabel>
 		</bbcode>
 		
