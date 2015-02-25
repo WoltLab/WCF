@@ -7,7 +7,7 @@ use wcf\data\ITitledObject;
  * This interface should be implemented by every object which is part of a notification.
  * 
  * @author	Marcel Werk, Oliver Kliebisch
- * @copyright	2001-2014 WoltLab GmbH, Oliver Kliebisch
+ * @copyright	2001-2015 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.object

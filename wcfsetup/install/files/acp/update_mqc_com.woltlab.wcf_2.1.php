@@ -5,7 +5,7 @@ use wcf\system\WCF;
  * Updates the wcf1_moderation_queue by converting the 'comment' field into a wcf1_comment object.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework
