@@ -554,8 +554,8 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// smileys
-			html = html.replace(/ ?<img [^>]*?alt="([^"]+?)".*?class="smiley".*?> ?/gi, ' $1 '); // firefox
-			html = html.replace(/ ?<img [^>]*?class="smiley".*?alt="([^"]+?)".*?> ?/gi, ' $1 '); // chrome, ie
+			html = html.replace(/ ?<img [^>]*?alt="([^"]+?)"[^>]*?class="smiley"[^>]*?> ?/gi, ' $1 '); // firefox
+			html = html.replace(/ ?<img [^>]*?class="smiley"[^>]*?alt="([^"]+?)"[^>]*?> ?/gi, ' $1 '); // chrome, ie
 			
 			// attachments
 			html = html.replace(/<img(.*?)class="[^"]*redactorEmbeddedAttachment[^"]*"(.*?)>/gi, function(match, attributesBefore, attributesAfter) {
