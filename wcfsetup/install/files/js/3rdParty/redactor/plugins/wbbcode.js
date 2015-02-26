@@ -1940,7 +1940,7 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			if (author) {
-				if (link) $header += '<a href="' + link + '">';
+				if (link) $header += '<a href="' + link + '" tabindex="-1">';
 				
 				$header += WCF.Language.get('wcf.bbcode.quote.title.javascript', { quoteAuthor: WCF.String.unescapeHTML(author) });
 				
