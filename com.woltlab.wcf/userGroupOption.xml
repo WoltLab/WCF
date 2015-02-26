@@ -302,7 +302,6 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_paid_subscription</options>
 			</option>
 			
 			<option name="admin.content.dashboard.canEditDashboard">
