@@ -95,7 +95,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 				$parentNode->addChild($childNode);
 				
 				// build next level
-				$this->buildTreeLevel($childNode);
+				$this->buildTreeLevel($childNode, $depth - 1);
 			}
 		}
 	}
