@@ -1208,7 +1208,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.D"><![CDATA[Day(s)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.M"><![CDATA[Month(s)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.Y"><![CDATA[Year(s)]]></item>
-		<item name="wcf.acp.paidSubscription.subscriptionLength.error.invalid"><![CDATA[TODO: Sie haben eine ungültige Laufzeit eingegeben. Für die Auswahl „Tage“ liegt der zulässige Maximalwert bei 90, für „Monate“ bei 24 und für „Jahre“ bei fünf.]]></item>
+		<item name="wcf.acp.paidSubscription.subscriptionLength.error.invalid"><![CDATA[You have entered an invalid length. You may set a maximum of 90 for “Day(s)”, 24 for “Month(s)” or 5 for “Year(s)”.]]></item>
 		<item name="wcf.acp.paidSubscription.showOrder"><![CDATA[Show Order]]></item>
 		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[Sets the show order for paid subscriptions.]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled"><![CDATA[Disable subscription]]></item>
@@ -1230,7 +1230,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.excludedSubscriptions.description"><![CDATA[Prevents purchasing of other subscriptions for buyers of this subscription.]]></item>
 		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[Do you really want to terminate the subscription “{$subscriptionUser->title|language}” for the user “{$subscriptionUser->username}”?]]></item>
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Manually Add Subscription]]></item>
-		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[TODO: Es muss mindestens ein Zahlungsanbieter in den Optionen unter „Zahlungsoptionen“ ausgewählt sein, um bezahlte Mitgliedschaften erstellen zu können.]]></item>
+		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the option “Supported Payment Methods”.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
