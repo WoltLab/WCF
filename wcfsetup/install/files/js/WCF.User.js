@@ -390,6 +390,7 @@ WCF.User.Panel.Abstract = Class.extend({
 		}
 		else if (this._badge !== null) {
 			this._badge.remove();
+			this._badge = null;
 		}
 		
 		if (this._options.enableMarkAsRead) {
@@ -527,7 +528,7 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 		}
 		
 		this.updateBadge(count);
-	}	
+	}
 });
 
 /**
