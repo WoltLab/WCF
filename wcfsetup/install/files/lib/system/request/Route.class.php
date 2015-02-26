@@ -332,8 +332,8 @@ class Route implements IRoute {
 				$link = '?' . $link;
 			}
 		}
-		else if (!URL_OMIT_INDEX_PHP) {
-			$link = (URL_LEGACY_MODE ? 'index.php/' : (!empty($link) ? '?' : '')) . $link;
+		else if (!URL_OMIT_INDEX_PHP && !empty($link)) {
+			$link = (URL_LEGACY_MODE ? 'index.php/' : '?') . $link;
 		}
 		
 		if (!empty($components)) {
