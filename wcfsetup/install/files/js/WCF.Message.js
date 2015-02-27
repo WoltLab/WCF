@@ -2088,6 +2088,14 @@ WCF.Message.Quote.Handler = Class.extend({
 			$element = $element.parentElement;
 		}
 		
+		// check if selection starts and ends within the $messageBody element
+		var $range = window.getSelection().getRangeAt(0);
+		if (!this._elementInsideContainer($range.startContainer, $messageBody) || !this._elementInsideContainer($range.endContainer, $messageBody)) {
+			this._copyQuote.hide();
+			
+			return;
+		}
+		
 		// compare selection with message text of given container
 		var $messageText = this._getNodeText($messageBody);
 		
@@ -2131,6 +2139,27 @@ WCF.Message.Quote.Handler = Class.extend({
 				}
 			}
 		}, 10);
+	},
+	
+	/**
+	 * Returns true if given element is a child element of given container element.
+	 * 
+	 * @param	Node		element
+	 * @param	Element		container
+	 * @return	boolean
+	 */
+	_elementInsideContainer: function(element, container) {
+		if (element.nodeType === Node.TEXT_NODE) element = element.parentElement;
+		
+		while (element) {
+			if (element === container) {
+				return true;
+			}
+			
+			element = element.parentElement;
+		}
+		
+		return false;
 	},
 	
 	/**
