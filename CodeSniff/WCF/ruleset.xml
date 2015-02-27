@@ -3,6 +3,7 @@
 	<description>WoltLab Community Framework Coding Standard</description>
 	<exclude-pattern>*/zend/*</exclude-pattern>
 	<exclude-pattern>*/CodeSniff/*</exclude-pattern>
+	<exclude-pattern>*/parsedown/*</exclude-pattern>
 	
 	<rule ref="Generic.Classes.DuplicateClassName" />
 	<rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop" />
