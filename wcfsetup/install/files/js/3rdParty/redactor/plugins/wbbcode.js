@@ -319,6 +319,11 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<p><\/p><table/g, '<table');
 			html = html.replace(/<\/table><p><\/p>/g, '</table>');
 			
+			// unwrap code boxes
+			for (var $uuid in $cachedCodeListings) {
+				html = html.replace(new RegExp('<p><\/p>@@@' + $uuid + '@@@<p><\/p>'), '@@@' + $uuid + '@@@');
+			}
+			
 			// handle empty paragraphs not followed by an empty one
 			html = html.replace(/<p><\/p><p>(?!<br>)/g, '<p>@@@wcf_empty_line@@@</p><p>');
 			
