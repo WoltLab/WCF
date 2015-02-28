@@ -62,12 +62,13 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 			FROM	wcf".WCF_N."_moderation_queue
 			WHERE	objectTypeID = ?
 				AND objectID = ?
-				AND status <> ?";
+				AND status IN (?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$objectTypeID,
 			$objectID,
-			ModerationQueue::STATUS_DONE
+			ModerationQueue::STATUS_OUTSTANDING,
+			ModerationQueue::STATUS_PROCESSING
 		));
 		
 		return $statement->fetchColumn() > 0;
