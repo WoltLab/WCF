@@ -9,7 +9,8 @@
 
 <div class="container containerPadding{if $__tabCount} messageTabMenu{/if}" data-preselect="true" data-collapsible="false" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	{capture assign=__defaultSmilies}
-		{include file='__messageFormSmilies' smilies=$__wcf->getSmileyCache()->getCategorySmilies()}
+		{assign var='__firstSmileyCategory' value=$smileyCategories|reset}
+		{include file='__messageFormSmilies' smilies=$__wcf->getSmileyCache()->getCategorySmilies($__firstSmileyCategory->categoryID)}
 	{/capture}
 	
 	{if $__tabCount > 1}
