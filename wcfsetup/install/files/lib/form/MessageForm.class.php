@@ -341,15 +341,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 		
 		// get default smilies
 		if (MODULE_SMILEY) {
-			$this->smileyCategories = SmileyCache::getInstance()->getCategories();
-			foreach ($this->smileyCategories as $index => $category) {
-				$category->loadSmilies();
-				
-				// remove empty categories
-				if (!count($category) || $category->isDisabled) {
-					unset($this->smileyCategories[$index]);
-				}
-			}
+			$this->smileyCategories = SmileyCache::getInstance()->getVisibleCategories();
 			
 			$firstCategory = reset($this->smileyCategories);
 			if ($firstCategory) {

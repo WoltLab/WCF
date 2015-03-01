@@ -20,11 +20,9 @@
 		</nav>
 		
 		{foreach from=$smileyCategories item=smileyCategory}
-			{if !$smileyCategory->isDisabled}
-				<div id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{@$smileyCategory->categoryID}">
-					{if !$smileyCategory->categoryID}{@$__defaultSmilies}{/if}
-				</div>
-			{/if}
+			<div id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{@$smileyCategory->categoryID}">
+				{if !$smileyCategory->categoryID}{@$__defaultSmilies}{/if}
+			</div>
 		{/foreach}
 		
 		<script data-relocate="true">

@@ -1,4 +1,4 @@
-{assign var=smileyCategories value=$__wcf->getSmileyCache()->getCategories()}
+{assign var=smileyCategories value=$__wcf->getSmileyCache()->getVisibleCategories()}
 {if !$permissionCanUseSmilies|isset}{assign var=permissionCanUseSmilies value='user.message.canUseSmilies'}{/if}
 {if !$wysiwygContainerID|isset}{assign var=wysiwygContainerID value='text'}{/if}
 
