@@ -6,7 +6,9 @@ WoltLab Community Framework is a free web-framework, designed and developed for 
 Version notes
 -------------
 
-This is the stable tree of WCF, changes will be rejected unless they fix an existing issue without changing the API.
+This is the **oldstable** tree of WCF, changes will be rejected unless they fix an existing issue without changing the API.
+
+If you wish to access the **stable WCF 2.1.x** branch, please see here: [WCF 2.1.x](https://github.com/WoltLab/WCF/tree/master)
 
 Contribution
 ------------
