@@ -202,6 +202,7 @@ ALTER TABLE wcf1_page_menu_item ADD originIsSystem TINYINT(1) NOT NULL DEFAULT 0
 
 /* truncate table to ensure consistency */
 DELETE FROM wcf1_session;
+DELETE FROM wcf1_session_virtual;
 
 ALTER TABLE wcf1_session ADD UNIQUE KEY uniqueUserID (userID);
 
