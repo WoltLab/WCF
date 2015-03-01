@@ -3,7 +3,7 @@ CONTRIBUTING
 
 First of all: Thanks for your interest in contributing to WoltLab Community Framework! However, you have to meet some requirements in order to get your changes accepted.
 
-**Notice:** This is the unstable development tree of WCF, if you wish to submit pull requests for WCF 2.0.x, please select the branch "2.0". 
+**Notice:** This is the stable tree of WCF 2.1.x, if you wish to submit pull requests for WCF 2.0.x, please select the branch "2.0". 
 
 General requirements
 --------------------
