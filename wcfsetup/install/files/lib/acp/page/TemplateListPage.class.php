@@ -98,7 +98,7 @@ class TemplateListPage extends SortablePage {
 		if ($this->templateGroupID) $this->objectList->getConditionBuilder()->add('template.templateGroupID = ?', array($this->templateGroupID));
 		else $this->objectList->getConditionBuilder()->add('template.templateGroupID IS NULL');
 		
-		if ($this->searchTemplateName) $this->objectList->getConditionBuilder()->add('templateName LIKE ?', array($this->searchTemplateName.'%'));
+		if ($this->searchTemplateName) $this->objectList->getConditionBuilder()->add('templateName LIKE ?', array('%'.$this->searchTemplateName.'%'));
 		if ($this->application) $this->objectList->getConditionBuilder()->add('application = ?', array($this->application));
 	}
 	
