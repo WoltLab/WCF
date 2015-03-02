@@ -131,7 +131,7 @@ WCF.ACP.Style.ImageUpload = WCF.Upload.extend({
 	_success: function(uploadID, data) {
 		if (data.returnValues.url) {
 			// show image
-			this._image.attr('src', data.returnValues.url);
+			this._image.attr('src', data.returnValues.url + '?timestamp=' + Date.now());
 			
 			// hide error
 			this._button.next('.innerError').remove();
@@ -249,7 +249,7 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 			$src = $('#logo > a > img').prop('src');
 		}
 		
-		this._image.attr('src', $src);
+		this._image.attr('src', $src + '?timestamp=' + Date.now());
 	},
 	
 	/**
@@ -274,7 +274,7 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 	_success: function(uploadID, data) {
 		if (data.returnValues.url) {
 			// show image
-			this._image.attr('src', data.returnValues.url);
+			this._image.attr('src', data.returnValues.url + '?timestamp=' + Date.now());
 			this._pageLogo.val(data.returnValues.url);
 			
 			// hide error
