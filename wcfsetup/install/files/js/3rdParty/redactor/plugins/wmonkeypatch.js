@@ -30,6 +30,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.wmonkeypatch.code();
 			this.wmonkeypatch.dropdown();
 			this.wmonkeypatch.image();
+			this.wmonkeypatch.indent();
 			this.wmonkeypatch.inline();
 			this.wmonkeypatch.insert();
 			this.wmonkeypatch.keydown();
@@ -634,6 +635,25 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				this.modal.close();
 				this.observe.images();
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'indent' module.
+		 * 
+		 *  - prevent browsers from screwing up the DOM when indenting the only item
+		 */
+		indent: function() {
+			// indent.increaseLists
+			var $mpIncrease = this.indent.increase;
+			this.indent.increase = (function() {
+				var $block = this.selection.getBlock();
+				if ($block && $block.tagName === 'LI') {
+					// do not allow indenting the first list item because it yields invalid HTML
+					if ($block.parentElement.firstChild !== $block) {
+						$mpIncrease.call(this);
+					}
+				}
 			}).bind(this);
 		},
 		
