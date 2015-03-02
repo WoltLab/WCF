@@ -24,7 +24,7 @@ class Censorship extends SingletonFactory {
 	 * word delimiters
 	 * @var	string
 	 */
-	protected $delimiters = '[\s\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]';
+	protected $delimiters = '[\s\x21-\x2F\x3A-\x3F\x5B-\x60\x7B-\x7E]';
 	
 	/**
 	 * list of words
