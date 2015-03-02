@@ -2,6 +2,7 @@
 namespace wcf\data\style;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
+use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -509,6 +510,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				));
 			}
 		}
+		
+		StyleCacheBuilder::getInstance()->reset();
 		
 		return array(
 			'redirectURL' => LinkHandler::getInstance()->getLink('StyleEdit', array('id' => $newStyle->styleID))
