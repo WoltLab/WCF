@@ -2149,14 +2149,14 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @return	boolean
 	 */
 	_elementInsideContainer: function(element, container) {
-		if (element.nodeType === Node.TEXT_NODE) element = element.parentElement;
+		if (element.nodeType === Node.TEXT_NODE) element = element.parentNode;
 		
 		while (element) {
 			if (element === container) {
 				return true;
 			}
 			
-			element = element.parentElement;
+			element = element.parentNode;
 		}
 		
 		return false;
