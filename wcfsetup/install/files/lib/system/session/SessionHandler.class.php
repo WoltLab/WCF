@@ -382,7 +382,7 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		$this->user = new User($this->session->userID);
-		$this->loadVirtualSession();
+		$this->virtualSession = SessionVirtual::getExistingSession($sessionID);
 		
 		if (!$this->validate()) {
 			$this->session = null;
@@ -391,6 +391,8 @@ class SessionHandler extends SingletonFactory {
 			
 			return;
 		}
+		
+		$this->loadVirtualSession();
 	}
 	
 	/**
