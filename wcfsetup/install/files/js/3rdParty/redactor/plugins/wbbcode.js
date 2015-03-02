@@ -1718,17 +1718,53 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	object		data
 		 */
 		_keyupCallback: function(data) {
-			if (data.event.which !== $.ui.keyCode.BACKSPACE && data.event.which !== $.ui.keyCode.DELETE) {
-				return;
+			switch (data.event.which) {
+				case $.ui.keyCode.BACKSPACE:
+				case $.ui.keyCode.DELETE:
+					// check for empty <blockquote>
+					this.$editor.find('blockquote').each(function(index, blockquote) {
+						var $blockquote = $(blockquote);
+						if (!$blockquote.children('header').length) {
+							$blockquote.remove();
+						}
+					});
+				break;
+				
+				case $.ui.keyCode.ENTER:
+					// fix markup for empty lines
+					for (var $i = 0, $length = this.$editor[0].children.length; $i < $length; $i++) {
+						var $child = this.$editor[0].children[$i];
+						if ($child.nodeType !== Node.ELEMENT_NODE || $child.tagName !== 'P') {
+							// not a <p> element
+							continue;
+						}
+						
+						if ($child.textContent.length > 0) {
+							// element is non-empty
+							continue;
+						}
+						
+						if ($child.children.length > 1 || $child.children[0].tagName === 'BR') {
+							// element contains more than one children or it is just a <br>
+							continue;
+						}
+						
+						// head all the way down to the most inner node
+						$child = $child.children[0];
+						while ($child.children.length === 1) {
+							$child = $child.children[0];
+						}
+						
+						// check if node has no children and it is a <br>
+						if ($child.children.length === 0 && $child.tagName === 'BR') {
+							var $parent = $child.parentNode;
+							var $node = document.createTextNode('\u200b');
+							$parent.appendChild($node);
+							$parent.removeChild($child);
+						}
+					}
+				break;
 			}
-			
-			// check for empty <blockquote
-			this.$editor.find('blockquote').each(function(index, blockquote) {
-				var $blockquote = $(blockquote);
-				if (!$blockquote.children('header').length) {
-					$blockquote.remove();
-				}
-			});
 		},
 		
 		/**
