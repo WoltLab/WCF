@@ -5,6 +5,7 @@ use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\UserGroupCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
@@ -118,62 +119,49 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * @param	boolean		$delete		flag for group deletion
 	 */
 	protected static function updateAccessibleGroups($groupID, $delete = false) {
-		if ($delete) {
-			$sql = "UPDATE	wcf".WCF_N."_user_group_option_value
-				SET	optionValue = ?
-				WHERE	groupID = ?
-				AND	optionID = ?";
-			$updateStatement = WCF::getDB()->prepareStatement($sql);
-			
-			$sql = "SELECT		groupID, optionValue, groupOption.optionID
-				FROM		wcf".WCF_N."_user_group_option groupOption
-				LEFT JOIN	wcf".WCF_N."_user_group_option_value optionValue
-				ON		(groupOption.optionID = optionValue.optionID)
-				WHERE		groupOption.optionname = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array('admin.user.accessibleGroups'));
-			while ($row = $statement->fetchArray()) {
-				$valueIDs = explode(',', $row['optionValue']);
-				if (in_array($groupID, $valueIDs)) {
-					$key = array_keys($valueIDs, $groupID);
-					if (!empty($key)) unset($valueIDs[$key[0]]);
-					
-					$updateStatement->execute(array(implode(',', $valueIDs), $row['groupID'], $row['optionID']));
-				}
-			}
-			
-			return;
-		}
-		
-		$userGroupList = new UserGroupList();
-		$userGroupList->readObjects();
-		foreach ($userGroupList as $userGroup) {
-			$groupIDs[] = $userGroup->groupID;
-			
-			if ($userGroup->isAdminGroup()) {
-				$updateGroupIDs[] = $userGroup->groupID;
-			}
-		}
-		
 		$sql = "SELECT	optionID
 			FROM	wcf".WCF_N."_user_group_option
 			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array('admin.user.accessibleGroups'));
-		$row = $statement->fetchArray();
-		$optionID = $row['optionID'];
+		$optionID = $statement->fetchColumn();
+		$statement->closeCursor();
 		
-		// update optionValue from groups which got all existing groups as value
-		if (!empty($updateGroupIDs)) {
-			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('groupID IN (?)', array($updateGroupIDs));
-			$conditionBuilder->add('optionID = ?', array($optionID));
+		if (!$optionID) throw new SystemException("Unable to find 'admin.user.accessibleGroups' user option");
+		
+		$userGroupList = new UserGroupList();
+		$userGroupList->getConditionBuilder()->add('user_group.groupID <> ?', array($groupID));
+		$userGroupList->readObjects();
+		$groupIDs = array();
+		foreach ($userGroupList as $userGroup) {
+			$groupIDs[] = $userGroup->groupID;
+		}
+		
+		$sql = "UPDATE	wcf".WCF_N."_user_group_option_value
+			SET	optionValue = ?
+			WHERE		groupID = ?
+				AND	optionID = ?";
+		$updateStatement = WCF::getDB()->prepareStatement($sql);
+		
+		$sql = "SELECT		groupID, optionValue
+			FROM		wcf".WCF_N."_user_group_option_value
+			WHERE		optionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($optionID));
+		while ($row = $statement->fetchArray()) {
+			$valueIDs = explode(',', $row['optionValue']);
+			if ($delete) {
+				$valueIDs = array_filter($valueIDs, function ($item) use ($groupID) {
+					return $item != $groupID;
+				});
+			}
+			else {
+				if (count(array_diff($groupIDs, $valueIDs)) == 0) {
+					$valueIDs[] = $groupID;
+				}
+			}
 			
-			$sql = "UPDATE	wcf".WCF_N."_user_group_option_value
-				SET	optionValue = ?
-				".$conditionBuilder;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array_merge((array) implode(',', $groupIDs), $conditionBuilder->getParameters()));
+			$updateStatement->execute(array(implode(',', $valueIDs), $row['groupID'], $optionID));
 		}
 	}
 	
