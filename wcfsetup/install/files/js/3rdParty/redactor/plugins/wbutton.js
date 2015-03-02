@@ -87,6 +87,14 @@ RedactorPlugins.wbutton = function() {
 			
 			// handle image insert
 			this.button.addCallback(this.button.get('image'), $.proxy(this.wbutton.insertImage, this));
+			
+			// handle redo/undo buttons
+			var $undoButton = this.button.addAfter('html', 'undo', this.lang.get('undo'));
+			var $redoButton = this.button.addAfter('undo', 'redo', this.lang.get('redo'));
+			this.button.addCallback($undoButton, this.buffer.undo);
+			this.button.addCallback($redoButton, this.buffer.redo);
+			
+			$redoButton.parent().addClass('separator');
 		},
 		
 		/**

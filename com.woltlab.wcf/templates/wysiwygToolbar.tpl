@@ -1,4 +1,5 @@
 $buttons.push('html');
+
 $buttons.push('separator');
 
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('b')}
