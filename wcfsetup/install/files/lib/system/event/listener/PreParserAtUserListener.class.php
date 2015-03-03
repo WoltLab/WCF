@@ -82,7 +82,7 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 		
 		$userRegex->match($text, true, Regex::ORDER_MATCH_BY_SET);
 		$matches = $userRegex->getMatches();
-		//
+		
 		if (!empty($matches)) {
 			$usernames = array();
 			foreach ($matches as $match) {
