@@ -179,14 +179,23 @@ class RequestHandler extends SingletonFactory {
 				
 				// handle controller aliasing
 				if (!URL_LEGACY_MODE && isset($routeData['controller'])) {
+					$ciController = mb_strtolower($routeData['controller']);
+					
 					// aliased controller, redirect to new URL
-					$alias = $this->getAliasByController($routeData['controller']);
+					$alias = $this->getAliasByController($ciController);
 					if ($alias !== null) {
 						$this->redirect($routeData, $application);
 					}
 					
-					$controller = $this->getControllerByAlias($routeData['controller']);
+					$controller = $this->getControllerByAlias($ciController);
 					if ($controller !== null) {
+						// check if controller was provided explicitly as it should
+						$alias = $this->getAliasByController($controller);
+						if ($alias != $routeData['controller']) {
+							$routeData['controller'] = $controller;
+							$this->redirect($routeData, $application);
+						}
+						
 						$routeData['controller'] = $controller;
 					}
 				}
