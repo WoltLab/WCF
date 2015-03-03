@@ -1008,17 +1008,15 @@ RedactorPlugins.wutil = function() {
 					continue;
 				}
 				
-				if ($child.children.length > 1 || $child.children[0].tagName === 'BR') {
+				if ($child.children.length > 1 || ($child.children.length === 1 && $child.children[0].tagName === 'BR')) {
 					// element contains more than one children or it is just a <br>
 					continue;
 				}
 				
 				// head all the way down to the most inner node
-				$child = $child.children[0];
 				while ($child.children.length === 1) {
 					$child = $child.children[0];
 				}
-				
 				
 				if ($child.childNodes.length === 0 && $child.tagName !== 'BR') {
 					var $node = document.createTextNode('\u200b');
