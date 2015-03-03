@@ -4048,6 +4048,8 @@ $.widget('wcf.messageTabMenu', {
 				activeTab: $target
 			});
 		}
+		
+		$(window).trigger('resize');
 	},
 	
 	/**
