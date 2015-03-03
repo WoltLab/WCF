@@ -409,14 +409,8 @@ class PackageInstallationSQLParser extends SQLParser {
 	protected function executeDropTableStatement($tableName) {
 		if ($this->test) {
 			if (in_array($tableName, $this->existingTables)) {
-				if (isset($this->knownTables[$tableName])) {
-					if ($this->knownTables[$tableName] != $this->package->packageID) {
-						throw new SystemException("Cannot drop table '".$tableName."'. A package can only drop own tables.");
-					}
-				}
-				else {
-					if (!isset($this->conflicts['DROP TABLE'])) $this->conflicts['DROP TABLE'] = array();
-					$this->conflicts['DROP TABLE'][] = $tableName;
+				if (isset($this->knownTables[$tableName]) && $this->knownTables[$tableName] != $this->package->packageID) {
+					throw new SystemException("Cannot drop table '".$tableName."'. A package can only drop own tables.");
 				}
 			}
 		}
