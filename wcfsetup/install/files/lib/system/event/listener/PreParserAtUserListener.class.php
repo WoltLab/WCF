@@ -82,7 +82,7 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 		
 		$userRegex->match($text, true, Regex::ORDER_MATCH_BY_SET);
 		$matches = $userRegex->getMatches();
-		
+		//
 		if (!empty($matches)) {
 			$usernames = array();
 			foreach ($matches as $match) {
@@ -108,6 +108,7 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 				$text = $userRegex->replace($text, new Callback(function ($matches) use ($users) {
 					// containing the full match
 					$usernames = array($matches[1]);
+					
 					// containing only the part before the first space
 					if (isset($matches[2])) $usernames[] = $matches[2];
 					
@@ -119,7 +120,15 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 							'appendSession' => false,
 							'object' => $users[$username]
 						));
-						return "[url='".$link."']@".$users[$username]->username.'[/url]';
+						
+						$mention = "[url='".$link."']@".$users[$username]->username.'[/url]';
+						
+						// check if only the part before the first space matched, in that case append the second word
+						if (isset($matches[2]) && $matches[2] == $username) {
+							$mention .= mb_substr($matches[1], strlen($matches[2]));
+						}
+						
+						return $mention;
 					}
 					
 					return $matches[0];
