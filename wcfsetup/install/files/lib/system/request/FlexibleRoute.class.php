@@ -24,6 +24,12 @@ class FlexibleRoute implements IRoute {
 	protected $buildSchema = array();
 	
 	/**
+	 * cached list of transformed controller names
+	 * @var	array<string>
+	 */
+	protected $controllerNames = array();
+	
+	/**
 	 * route is restricted to ACP
 	 * @var	boolean
 	 */
@@ -46,12 +52,6 @@ class FlexibleRoute implements IRoute {
 	 * @var	array<mixed>
 	 */
 	protected $routeData = array();
-	
-	/**
-	 * cached list of transformed controller names
-	 * @var	array<string>
-	 */
-	protected static $controllerNames = array();
 	
 	/**
 	 * Creates a new flexible route instace.
@@ -278,13 +278,13 @@ class FlexibleRoute implements IRoute {
 	 * @return	string
 	 */
 	protected function getControllerName($application, $controller) {
-		if (!isset(self::$controllerNames[$controller])) {
+		if (!isset($this->controllerNames[$controller])) {
 			$controllerName = RequestHandler::getTokenizedController($controller);
 			$alias = (!$this->isACP) ? RequestHandler::getInstance()->getAliasByController($controllerName) : null;
 			
-			self::$controllerNames[$controller] = ($alias) ?: $controllerName;
+			$this->controllerNames[$controller] = ($alias) ?: $controllerName;
 		}
 		
-		return self::$controllerNames[$controller];
+		return $this->controllerNames[$controller];
 	}
 }
