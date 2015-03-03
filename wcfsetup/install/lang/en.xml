@@ -1768,12 +1768,14 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.button.image"><![CDATA[Image]]></item>
 		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.bbcode.button.quote"><![CDATA[Quote]]></item>
+		<item name="wcf.bbcode.button.redo"><![CDATA[Redo]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Show All]]></item>
 		<item name="wcf.bbcode.button.spoiler"><![CDATA[Spoiler]]></item>
 		<item name="wcf.bbcode.button.subscript"><![CDATA[Subscript]]></item>
 		<item name="wcf.bbcode.button.superscript"><![CDATA[Superscript]]></item>
 		<item name="wcf.bbcode.button.toggleBBCode"><![CDATA[BBCode]]></item>
 		<item name="wcf.bbcode.button.toggleHTML"><![CDATA[WYSIWYG]]></item>
+		<item name="wcf.bbcode.button.undo"><![CDATA[Undo]]></item>
 		<item name="wcf.bbcode.code"><![CDATA[Source Code]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
 		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck Source Code]]></item>

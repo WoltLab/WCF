@@ -1769,12 +1769,14 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.button.image"><![CDATA[Bild]]></item>
 		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.bbcode.button.quote"><![CDATA[Zitat]]></item>
+		<item name="wcf.bbcode.button.redo"><![CDATA[Wiederholen]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Alles anzeigen]]></item>
 		<item name="wcf.bbcode.button.spoiler"><![CDATA[Spoiler]]></item>
 		<item name="wcf.bbcode.button.subscript"><![CDATA[Tiefgestellt]]></item>
 		<item name="wcf.bbcode.button.superscript"><![CDATA[Hochgestellt]]></item>
 		<item name="wcf.bbcode.button.toggleBBCode"><![CDATA[BBCode]]></item>
 		<item name="wcf.bbcode.button.toggleHTML"><![CDATA[WYSIWYG]]></item>
+		<item name="wcf.bbcode.button.undo"><![CDATA[Rückgängig]]></item>
 		<item name="wcf.bbcode.code"><![CDATA[Quellcode]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
 		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck-Quellcode]]></item>
