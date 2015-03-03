@@ -61,17 +61,20 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
 		
+		$menuItems = ACPMenu::getInstance()->menuItemList;
 		while ($menuItem = $statement->fetchObject('wcf\data\acp\menu\item\ACPMenuItem')) {
-			if (!$this->validate($menuItem)) {
+			// only valid menu items exist in TreeMenu::$menuItemList,
+			// so no need to call AbstractACPSearchResultProvider::validate()
+			if (!isset($menuItems[$menuItem->menuItem])) {
 				continue;
 			}
 			
 			$parentMenuItem = $menuItem->parentMenuItem;
 			$parentMenuItems = array();
-			while ($parentMenuItem && isset(ACPMenu::getInstance()->menuItems[$parentMenuItem])) {
+			while ($parentMenuItem && isset($menuItems[$parentMenuItem])) {
 				array_unshift($parentMenuItems, $parentMenuItem);
 				
-				$parentMenuItem = ACPMenu::getInstance()->menuItemList[$parentMenuItem]->parentMenuItem;
+				$parentMenuItem = $menuItems[$parentMenuItem]->parentMenuItem;
 			}
 			$results[] = new ACPSearchResult($languageItems[$menuItem->menuItem], $menuItem->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', array(
 				'pieces' => $parentMenuItems
