@@ -64,12 +64,14 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 				}
 			}
 			
-			$userAction = new UserAction(array($user), 'addToGroups', array(
-				'addDefaultGroups' => false,
-				'deleteOldGroups' => false,
-				'groups' => $newGroupIDs
-			));
-			$userAction->executeAction();
+			if (!empty($newGroupIDs)) {
+				$userAction = new UserAction(array($user), 'addToGroups', array(
+					'addDefaultGroups' => false,
+					'deleteOldGroups' => false,
+					'groups' => $newGroupIDs
+				));
+				$userAction->executeAction();
+			}
 		}
 	}
 	
