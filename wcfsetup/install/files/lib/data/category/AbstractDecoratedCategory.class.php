@@ -89,6 +89,13 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	}
 	
 	/**
+	 * @see	\wcf\data\category\Category::isParentCategory()
+	 */
+	public function isParentCategory(AbstractDecoratedCategory $category) {
+		return $this->getDecoratedObject()->isParentCategory($category->getDecoratedObject());
+	}
+	
+	/**
 	 * Returns the decorated category with the given id or null if no such
 	 * category exists.
 	 * 

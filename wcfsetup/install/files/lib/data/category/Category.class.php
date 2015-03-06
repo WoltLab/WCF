@@ -160,6 +160,16 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
+	 * Returns true if given category is a parent category of this category.
+	 * 
+	 * @param	\wcf\data\category\Category	$category
+	 * @return	boolean
+	 */
+	public function isParentCategory(Category $category) {
+		return in_array($category, $this->getParentCategories());
+	}
+	
+	/**
 	 * @see	\wcf\data\IPermissionObject::getPermission()
 	 */
 	public function getPermission($permission, User $user = null) {
