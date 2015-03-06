@@ -47,6 +47,10 @@ RedactorPlugins.wupload = function() {
 		_dragOver: function(event) {
 			event = event.originalEvent;
 			
+			if (!this.$editor.is(':visible')) {
+				return;
+			}
+			
 			if (!event.dataTransfer || !event.dataTransfer.types) {
 				return;
 			}
