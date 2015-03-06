@@ -12189,6 +12189,143 @@ WCF.Category.NestedList = Class.extend({
 });
 
 /**
+ * Handles selection of categories.
+ */
+WCF.Category.FlexibleCategoryList = Class.extend({
+	/**
+	 * category list container
+	 * @var	jQuery
+	 */
+	_list: null,
+	
+	/**
+	 * list of children per category id
+	 * @var	object<integer>
+	 */
+	_categories: { },
+	
+	init: function(elementID) {
+		this._list = $('#' + elementID);
+		
+		this._buildStructure();
+		
+		if ($.browser.chrome) {
+			this._resize();
+			
+			$(window).resize(this._resize.bind(this));
+		}
+	},
+	
+	_buildStructure: function() {
+		var self = this;
+		this._list.find('.jsCategory').each(function(i, category) {
+			var $category = $(category).change(self._updateSelection.bind(self));
+			var $categoryID = parseInt($category.val());
+			var $childCategories = [ ];
+			
+			$category.parents('li:eq(0)').find('.jsChildCategory').each(function(j, childCategory) {
+				var $childCategory = $(childCategory);
+				$childCategory.data('parentCategory', $category).change(self._updateSelection.bind(self));
+				
+				var $childCategoryID = parseInt($childCategory.val());
+				$childCategories.push($childCategory);
+				
+				var $subChildCategories = [ ];
+				
+				$childCategory.parents('li:eq(0)').find('.jsSubChildCategory').each(function(k, subChildCategory) {
+					var $subChildCategory = $(subChildCategory);
+					$subChildCategory.data('parentCategory', $childCategory).change(self._updateSelection.bind(self));
+					$subChildCategories.push($subChildCategory);
+				});
+				
+				self._categories[$childCategoryID] = $subChildCategories;
+			});
+			
+			self._categories[$categoryID] = $childCategories;
+		});
+	},
+	
+	_resize: function() {
+		var $referenceOffset = -1;
+		var $realBottom = 0;
+		var $items = this._list.children('li');
+		
+		$items.each(function(index, item) {
+			if ($referenceOffset === -1) {
+				$referenceOffset = item.offsetLeft;
+			}
+			else {
+				if (index + 1 === $items.length || $items[index + 1].offsetLeft != $referenceOffset) {
+					var $item = $(item);
+					var $height = $item.outerHeight(true);
+					var $offset = $item.position();
+					
+					$realBottom = Math.max($realBottom, $offset.top + $height);
+					$referenceOffset = item.offsetLeft;
+				}
+			}
+		});
+		
+		this._list.css('max-height', $realBottom + 'px');
+	},
+	
+	_updateSelection: function(event) {
+		var $category = $(event.currentTarget);
+		var $categoryID = parseInt($category.val());
+		var $parentCategory = $category.data('parentCategory');
+		
+		if ($category.is(':checked')) {
+			if ($parentCategory) {
+				$parentCategory.prop('checked', 'checked');
+				
+				$parentCategory = $parentCategory.data('parentCategory');
+				if ($parentCategory) {
+					$parentCategory.prop('checked', 'checked');
+				}
+			}
+		}
+		else {
+			// uncheck child categories
+			if (this._categories[$categoryID]) {
+				for (var $i = 0, $length = this._categories[$categoryID].length; $i < $length; $i++) {
+					var $childCategory = this._categories[$categoryID][$i];
+					$childCategory.prop('checked', false);
+					
+					var $childCategoryID = parseInt($childCategory.val());
+					if (this._categories[$childCategoryID]) {
+						for (var $j = 0, $innerLength = this._categories[$childCategoryID].length; $j < $innerLength; $j++) {
+							this._categories[$childCategoryID][$j].prop('checked', false);
+						}
+					}
+				}
+			}
+			
+			// uncheck direct parent if it has no more checked children
+			if ($parentCategory) {
+				var $parentCategoryID = parseInt($parentCategory.val());
+				for (var $i = 0, $length = this._categories[$parentCategoryID].length; $i < $length; $i++) {
+					if (this._categories[$parentCategoryID][$i].prop('checked')) {
+						// at least one child is checked, break
+						return;
+					}
+				}
+				
+				$parentCategory = $parentCategory.data('parentCategory');
+				if ($parentCategory) {
+					$parentCategoryID = parseInt($parentCategory.val());
+					for (var $i = 0, $length = this._categories[$parentCategoryID].length; $i < $length; $i++) {
+						if (this._categories[$parentCategoryID][$i].prop('checked')) {
+							// at least one child is checked, break
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+});
+
+/**
  * Initializes WCF.Condition namespace.
  */
 WCF.Condition = { };
