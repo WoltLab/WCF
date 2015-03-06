@@ -8,7 +8,8 @@
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
-				'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}'
+				'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}',
+				'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}'
 			});
 			
 			new WCF.Notification.List();
