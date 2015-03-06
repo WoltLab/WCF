@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\template;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\language\LanguageFactory;
 
 /**
  * Executes template-related actions.
@@ -50,6 +51,17 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 		}
 		
 		return $template;
+	}
+	
+	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 */
+	public function delete() {
+		$count = parent::delete();
+		
+		LanguageFactory::getInstance()->deleteLanguageCache();
+		
+		return $count;
 	}
 	
 	/**
