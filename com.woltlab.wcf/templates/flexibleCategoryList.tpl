@@ -16,7 +16,7 @@
 							<label{if $subCategoryItem->getDescription()} class="jsTooltip" title="{$subCategoryItem->getDescription()}"{/if} style="font-size: 1rem;"><input type="checkbox" name="{$flexibleCategoryListName}[]" value="{@$subCategoryItem->categoryID}" class="jsChildCategory"{if $subCategoryItem->categoryID|in_array:$flexibleCategoryListSelectedIDs}checked="checked" {/if}/> {$subCategoryItem->getTitle()}</label>
 							
 							{if $subCategoryItem->hasChildren()}
-								<ol class="dtdesign">
+								<ol>
 									{foreach from=$subCategoryItem item=subSubCategoryItem}
 										<li>
 											<label{if $subSubCategoryItem->getDescription()} class="jsTooltip" title="{$subSubCategoryItem->getDescription()}"{/if}><input type="checkbox" name="{$flexibleCategoryListName}[]" value="{@$subSubCategoryItem->categoryID}" class="jsSubChildCategory"{if $subSubCategoryItem->categoryID|in_array:$flexibleCategoryListSelectedIDs}checked="checked" {/if}/> {$subSubCategoryItem->getTitle()}</label>
