@@ -13,20 +13,20 @@
 	//]]>
 </script>
 {if JQUERY_SOURCE == 'google'}
-<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'microsoft'}
-<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'cloudflare'}
-<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {else}
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 {if JQUERY_SOURCE != 'local'}
-<script data-relocate="true">
+<script>
 	//<![CDATA[
 	if (!window.jQuery) {
 		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
@@ -37,13 +37,13 @@
 {/if}
 
 {if ENABLE_DEBUG_MODE}
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
 {else}
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 
 <script data-relocate="true">
