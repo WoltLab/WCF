@@ -150,17 +150,15 @@ HTML;
 	 */
 	protected function getUserGroups() {
 		if ($this->userGroups == null) {
-			$groupTypes = array(UserGroup::OTHER);
-			if ($this->includeguests) {
-				$groupTypes[] = UserGroup::GUESTS;
+			$invalidGroupTypes = array(
+				UserGroup::EVERYONE,
+				UserGroup::USERS
+			);
+			if (!$this->includeguests) {
+				$invalidGroupTypes[] = UserGroup::GUESTS;
 			}
 			
-			$this->userGroups = UserGroup::getGroupsByType($groupTypes);
-			foreach ($this->userGroups as $key => $userGroup) {
-				if (!$userGroup->isAccessible()) {
-					unset($this->userGroups[$key]);
-				}
-			}
+			$this->userGroups = UserGroup::getAccessibleGroups(array(), $invalidGroupTypes);
 			
 			uasort($this->userGroups, function(UserGroup $groupA, UserGroup $groupB) {
 				return strcmp($groupA->getName(), $groupB->getName());
