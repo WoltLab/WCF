@@ -1509,6 +1509,20 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/\[size=(\d+)\]/g, '<p><span style="font-size: $1pt">');
 			html = html.replace(/\[\/size\]/g, '</span></p>');
 			
+			// strip background-color
+			html = html.replace(/style="([^"]+)"/, function(match, inlineStyles) {
+				var $parts = inlineStyles.split(';');
+				var $styles = [ ];
+				for (var $i = 0, $length = $parts.length; $i < $length; $i++) {
+					var $part = $parts[$i];
+					if (!$part.match(/^\s*background-color/)) {
+						$styles.push($part);
+					}
+				}
+				
+				return 'style="' + $styles.join(';') + '"';
+			});
+			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterPaste', { html: html });
 			
 			return html;
