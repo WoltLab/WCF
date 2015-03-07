@@ -268,6 +268,8 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	string		html
 		 */
 		convertFromHtml: function(html) {
+			var $searchFor = [ ];
+			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
 			
 			// remove data-redactor-tag="" attribute
@@ -418,27 +420,51 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// [b]
-			html = html.replace(/<(?:b|strong)>/gi, '[b]');
+			html = html.replace(/<(?:b|strong)>/gi, function() {
+				if ($searchFor.indexOf('b') === -1) $searchFor.push('b');
+				
+				return '[b]';
+			});
 			html = html.replace(/<\/(?:b|strong)>/gi, '[/b]');
 			
 			// [i]
-			html = html.replace(/<(?:i|em)>/gi, '[i]');
+			html = html.replace(/<(?:i|em)>/gi, function() {
+				if ($searchFor.indexOf('i') === -1) $searchFor.push('i');
+				
+				return '[i]';
+			});
 			html = html.replace(/<\/(?:i|em)>/gi, '[/i]');
 			
 			// [u]
-			html = html.replace(/<u>/gi, '[u]');
+			html = html.replace(/<u>/gi, function() {
+				if ($searchFor.indexOf('u') === -1) $searchFor.push('u');
+				
+				return '[u]';
+			});
 			html = html.replace(/<\/u>/gi, '[/u]');
 			
 			// [sub]
-			html = html.replace(/<sub>/gi, '[sub]');
+			html = html.replace(/<sub>/gi, function() {
+				if ($searchFor.indexOf('b') === -1) $searchFor.push('sub');
+				
+				return '[sub]';
+			});
 			html = html.replace(/<\/sub>/gi, '[/sub]');
 			
 			// [sup]
-			html = html.replace(/<sup>/gi, '[sup]');
+			html = html.replace(/<sup>/gi, function() {
+				if ($searchFor.indexOf('sup') === -1) $searchFor.push('sup');
+				
+				return '[sup]';
+			});
 			html = html.replace(/<\/sup>/gi, '[/sup]');
 			
 			// [s]
-			html = html.replace(/<(?:s(trike)?|del)>/gi, '[s]');
+			html = html.replace(/<(?:s(trike)?|del)>/gi, function() {
+				if ($searchFor.indexOf('s') === -1) $searchFor.push('s');
+				
+				return '[s]';
+			});
 			html = html.replace(/<\/(?:s(trike)?|del)>/gi, '[/s]');
 			
 			// handle [color], [size], [font] and [tt]
@@ -486,21 +512,29 @@ RedactorPlugins.wbbcode = function() {
 								
 								var $hex = ("0123456789ABCDEF".charAt(($r - $r % 16) / 16) + '' + "0123456789ABCDEF".charAt($r % 16)) + '' + ("0123456789ABCDEF".charAt(($g - $g % 16) / 16) + '' + "0123456789ABCDEF".charAt($g % 16)) + '' + ("0123456789ABCDEF".charAt(($b - $b % 16) / 16) + '' + "0123456789ABCDEF".charAt($b % 16));
 								$start = '[color=#' + $hex + ']';
-								$end = '[/color]';
+								$end = '[/color=#' + $hex + ']';
+								
+								if ($searchFor.indexOf('color') === -1) $searchFor.push('color');
 							}
 							else if ($style.match(/color: ?([^;]+);?/i)) {
 								$start = '[color=' + RegExp.$1 + ']';
-								$end = '[/color]';
+								$end = '[/color=' + RegExp.$1 + ']';
+								
+								if ($searchFor.indexOf('color') === -1) $searchFor.push('color');
 							}
 							else if ($style.match(/font-size: ?(\d+)(pt|px);?/i)) {
 								if (RegExp.$2 == 'pt') {
 									$start = '[size=' + RegExp.$1 + ']';
-									$end = '[/size]';
+									$end = '[/size=' + RegExp.$1 + ']';
+									
+									if ($searchFor.indexOf('size') === -1) $searchFor.push('size');
 								}
 								else {
 									if ($pixelToPoint[RegExp.$1]) {
 										$start = '[size=' + $pixelToPoint[RegExp.$1] + ']';
-										$end = '[/size]';
+										$end = '[/size=' + $pixelToPoint[RegExp.$1] + ']';
+										
+										if ($searchFor.indexOf('size') === -1) $searchFor.push('size');
 									}
 									else {
 										// unsupported size
@@ -511,7 +545,9 @@ RedactorPlugins.wbbcode = function() {
 							}
 							else if ($style.match(/font-family: ?([^;]+);?/)) {
 								$start = "[font='" + RegExp.$1.replace(/'/g, '') + "']";
-								$end = '[/font]';
+								$end = "[/font='" + RegExp.$1.replace(/'/g, '') + "']";
+								
+								if ($searchFor.indexOf('font') === -1) $searchFor.push('font');
 							}
 							else {
 								$start = '<span style="' + $style + '">';
@@ -555,8 +591,24 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [align]
 			html = html.replace(/<(div|p) style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)\n/gi, function(match, tag, alignment, content) {
-				return '[align=' + alignment + ']' + $.trim(content) + '[/align]\n';
+				if ($searchFor.indexOf('align') === -1) $searchFor.push('align');
+				
+				return '[align=' + alignment + ']' + $.trim(content) + '[/align=' + alignment + ']\n';
 			});
+			
+			if ($searchFor.length) {
+				var $didReplace = true;
+				while ($didReplace) {
+					$didReplace = false;
+					html = html.replace(new RegExp('\\[\\/((?:' + $searchFor.join('|') + ')=[^\\]]+?)\\]\n\\[\\1\\]', 'gi'), function() {
+						$didReplace = true;
+						
+						return '\n';
+					});
+				}
+				
+				html = html.replace(new RegExp('\\[\\/(' + $searchFor.join('|') + ')=[^\\]]+?\\]', 'gi'), '[/$1]');
+			}
 			
 			// smileys
 			html = html.replace(/ ?<img [^>]*?alt="([^"]+?)"[^>]*?class="smiley"[^>]*?> ?/gi, ' $1 '); // firefox
@@ -797,23 +849,46 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>' + this.opts.invisibleSpace);
 			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>' + this.opts.invisibleSpace);
 			
+			// cleanup inline formattings that could stack in a weird way
+			
+			// replaces [b][b] with [b]
+			data = data.replace(/\[(b|i|s|sub|sup|u)\]\[\1\]/gi, '[$1]');
+			
+			// replaces [/b][/b] with [/b]
+			data = data.replace(/\[(\/(?:b|i|s|sub|sup|u))\]\[\1\]/gi, '[$1]');
+			
+			// drops [b][/b] (we can safely remove them because empty lines will preserve their formatting due to the expand formatting function
+			data = data.replace(/\[(b|i|s|sub|sup|u)\]\[\/\1\]/gi, '');
+			
 			// [b]
-			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<strong>$1</strong>');
+			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, (function(match, content) {
+				return this.wbbcode._expandFormatting(content, '<strong>', '</strong>');
+			}).bind(this));
 			
 			// [i]
-			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, '<em>$1</em>');
+			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, (function(match, content) {
+				return this.wbbcode._expandFormatting(content, '<em>', '</em>');
+			}).bind(this));
 			
 			// [u]
-			data = data.replace(/\[u\]([\s\S]*?)\[\/u]/gi, '<u>$1</u>');
+			data = data.replace(/\[u\]([\s\S]*?)\[\/u]/gi, (function(match, content) {
+				return this.wbbcode._expandFormatting(content, '<u>', '</u>');
+			}).bind(this));
 			
 			// [s]
-			data = data.replace(/\[s\]([\s\S]*?)\[\/s]/gi, '<strike>$1</strike>');
+			data = data.replace(/\[s\]([\s\S]*?)\[\/s]/gi, (function(match, content) {
+				return this.wbbcode._expandFormatting(content, '<strike>', '</strike>');
+			}).bind(this));
 			
 			// [sub]
-			data = data.replace(/\[sub\]([\s\S]*?)\[\/sub]/gi, '<sub>$1</sub>');
+			data = data.replace(/\[sub\]([\s\S]*?)\[\/sub]/gi, (function(match, content) {
+				return this.wbbcode._expandFormatting(content, '<sub>', '</sub>');
+			}).bind(this));
 			
 			// [sup]
-			data = data.replace(/\[sup\]([\s\S]*?)\[\/sup]/gi, '<sup>$1</sup>');
+			data = data.replace(/\[sup\]([\s\S]*?)\[\/sup]/gi, (function(match, content) {
+				return this.wbbcode._expandFormatting(content, '<sup>', '</sup>');
+			}).bind(this));
 				
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
@@ -843,33 +918,23 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [size]
 			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi, (function(match, size, content) {
-				if (!content.length) {
-					content = this.opts.invisibleSpace;
-				}
-				
-				return '<span style="font-size: ' + size + 'pt">' + content + '</span>';
+				return this.wbbcode._expandFormatting(content, '<span style="font-size: ' + size + 'pt">', '</span>');
 			}).bind(this));
 			
 			// [color]
 			data = data.replace(/\[color=([#a-z0-9]*?)\]([\s\S]*?)\[\/color\]/gi, (function(match, color, content) {
-				if (!content.length) {
-					content = this.opts.invisibleSpace;
-				}
-				
-				return '<span style="color: ' + color + '">' + content + '</span>';
+				return this.wbbcode._expandFormatting(content, '<span style="color: ' + color + '">', '</span>');
 			}).bind(this));
 			
 			// [font]
 			data = data.replace(/\[font='?([a-z,\- ]*?)'?\]([\s\S]*?)\[\/font\]/gi, (function(match, fontFamily, content) {
-				if (!content.length) {
-					content = this.opts.invisibleSpace;
-				}
-				
-				return '<span style="font-family: ' + fontFamily + '">' + content + '</span>';
+				return this.wbbcode._expandFormatting(content, '<span style="font-family: ' + fontFamily + '">', '</span>');
 			}).bind(this));
 			
 			// [align]
-			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]\n?/gi,'<div style="text-align: $1">$2</div>');
+			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]\n?/gi, (function(match, alignment, content) {
+				return this.wbbcode._expandFormatting(content, '<div style="text-align: ' + alignment + '">', '</div>');
+			}).bind(this));
 			
 			// search for [*] not preceeded by [list by searching for the first occurence of [list and then check the left
 			var $firstList = data.indexOf('[list');
@@ -1316,6 +1381,31 @@ RedactorPlugins.wbbcode = function() {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
 			return data;
+		},
+		
+		/**
+		 * Expands formatting to convert markup like [b]Hello\nWorld[/b] into [b]Hello[/b]\n[b]World[/b].
+		 * 
+		 * @param	string		content
+		 * @param	string		openingTag
+		 * @param	string		closingTag
+		 * @return	string
+		 */
+		_expandFormatting: function(content, openingTag, closingTag) {
+			if (!content.length) {
+				return openingTag + this.opts.invisibleSpace + closingTag;
+			}
+			
+			var $tmp = content.split("\n");
+			content = '';
+			
+			for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
+				if (content.length) content += '\n';
+				
+				content += openingTag + $tmp[$i] + closingTag;
+			}
+			
+			return content;
 		},
 		
 		/**
