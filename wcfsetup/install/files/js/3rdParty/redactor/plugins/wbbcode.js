@@ -445,7 +445,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [sub]
 			html = html.replace(/<sub>/gi, function() {
-				if ($searchFor.indexOf('b') === -1) $searchFor.push('sub');
+				if ($searchFor.indexOf('sub') === -1) $searchFor.push('sub');
 				
 				return '[sub]';
 			});
