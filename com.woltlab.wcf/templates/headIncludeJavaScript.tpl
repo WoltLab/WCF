@@ -88,7 +88,6 @@
 		'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
 		'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
 		'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
-		'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 		'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
 		'wcf.global.form.error.greaterThan': '{lang __literal=true}wcf.global.form.error.greaterThan{/lang}',
 		'wcf.global.form.error.lessThan': '{lang __literal=true}wcf.global.form.error.lessThan{/lang}',
