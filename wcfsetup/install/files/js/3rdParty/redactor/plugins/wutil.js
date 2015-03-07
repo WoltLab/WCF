@@ -790,26 +790,31 @@ RedactorPlugins.wutil = function() {
 		 * @return	boolean
 		 */
 		isEndOfElement: function(element) {
-			this.selection.get();
+			// prefer our range because it is more reliable
+			var $range = this.selection.implicitRange;
+			if ($range === null) {
+				this.selection.get();
+				$range = this.range;
+			}
 			
 			// range is not a plain caret
 			if (!this.wutil.isCaret()) {
 				return false;
 			}
 			
-			if (this.range.endContainer.nodeType === Element.TEXT_NODE) {
+			if ($range.endContainer.nodeType === Element.TEXT_NODE) {
 				// caret is not at the end
-				if (this.range.endOffset < this.range.endContainer.length) {
+				if ($range.endOffset < $range.endContainer.length) {
 					return false;
 				}
 			}
 			
 			// range is not within the provided element
-			if (!this.wutil.isNodeWithin(this.range.endContainer, element)) {
+			if (!this.wutil.isNodeWithin($range.endContainer, element)) {
 				return false;
 			}
 			
-			var $current = this.range.endContainer;
+			var $current = $range.endContainer;
 			while ($current !== element) {
 				// end of range is not the last element
 				if ($current.nextSibling) {
