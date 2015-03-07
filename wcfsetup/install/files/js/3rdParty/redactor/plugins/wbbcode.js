@@ -505,7 +505,7 @@ RedactorPlugins.wbbcode = function() {
 							var $start;
 							var $end;
 							
-							if ($style.match(/color: ?rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\);?/i)) {
+							if ($style.match(/(?:^|;\s*)color: ?rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\);?/i)) {
 								var $r = RegExp.$1;
 								var $g = RegExp.$2;
 								var $b = RegExp.$3;
@@ -516,7 +516,7 @@ RedactorPlugins.wbbcode = function() {
 								
 								if ($searchFor.indexOf('color') === -1) $searchFor.push('color');
 							}
-							else if ($style.match(/color: ?([^;]+);?/i)) {
+							else if ($style.match(/(?:^|;\s*)color: ?([^;]+);?/i)) {
 								$start = '[color=' + RegExp.$1 + ']';
 								$end = '[/color=' + RegExp.$1 + ']';
 								
