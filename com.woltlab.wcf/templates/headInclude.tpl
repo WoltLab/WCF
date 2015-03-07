@@ -6,6 +6,10 @@
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 {event name='metaTags'}
 
+<!-- Stylesheets -->
+{@$__wcf->getStyleHandler()->getStylesheet()}
+{event name='stylesheets'}
+
 {include file='headIncludeJavaScript'}
 
 <script data-relocate="true">
@@ -17,10 +21,6 @@
 
 {* DEPRECATED -- PLEASE USE javascriptInclude@headIncludeJavaScript *}
 {event name='javascriptInclude'}
-
-<!-- Stylesheets -->
-{@$__wcf->getStyleHandler()->getStylesheet()}
-{event name='stylesheets'}
 
 <!-- Icons -->
 <link rel="icon" href="{@$__wcf->getFavicon()}" type="image/x-icon" />
