@@ -26,7 +26,7 @@ class CommentEditor extends DatabaseObjectEditor {
 		$sql = "SELECT		responseID
 			FROM		wcf".WCF_N."_comment_response
 			WHERE		commentID = ?
-			ORDER BY	time ASC";
+			ORDER BY	time ASC, responseID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute(array($this->commentID));
 		$responseIDs = array();

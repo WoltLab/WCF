@@ -39,8 +39,8 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 		$sql = "SELECT		responseID
 			FROM		wcf".WCF_N."_comment_response
 			WHERE		commentID = ?
-			ORDER BY	responseID ASC";
-		$statement = WCF::getDB()->prepareStatement($sql, 3);
+			ORDER BY	time ASC, responseID ASC";
+		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute(array($response->commentID));
 		$responseIDs = array();
 		while ($responseID = $statement->fetchColumn()) $responseIDs[] = $responseID;

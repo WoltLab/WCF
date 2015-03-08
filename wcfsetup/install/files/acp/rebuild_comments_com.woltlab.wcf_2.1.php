@@ -53,7 +53,7 @@ if ($rebuildData['max']) {
 		$sql = "SELECT		responseID
 			FROM		wcf".WCF_N."_comment_response
 			WHERE		commentID = ?
-			ORDER BY	time";
+			ORDER BY	time ASC, responseID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		
 		$commentData = array();
@@ -88,4 +88,3 @@ if ($rebuildData['max']) {
 		throw new SplitNodeException();
 	}
 }
-
