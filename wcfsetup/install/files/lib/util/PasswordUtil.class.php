@@ -50,6 +50,7 @@ final class PasswordUtil {
 		'joomla2',	// Joomla 2.x
 		'joomla3',	// Joomla 3.x
 		'cryptMD5',
+		'invalid',	// Never going to match anything
 	);
 	
 	/**
@@ -697,6 +698,19 @@ final class PasswordUtil {
 			return true;
 		}
 		
+		return false;
+	}
+	
+	/**
+	 * Returns false.
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function invalid($username, $password, $salt, $dbHash) {
 		return false;
 	}
 	
