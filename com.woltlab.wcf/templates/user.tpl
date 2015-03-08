@@ -105,7 +105,14 @@
 <header class="boxHeadline userHeadline">
 	<span class="framed invisible">{@$user->getAvatar()->getImageTag(48)}</span>
 	
-	<h1>{$user->username}{if MODULE_USER_RANK && $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}</h1>
+	<h1>{$user->username}{if MODULE_USER_RANK}
+		{if $user->getUserTitle()}
+			<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+		{/if}
+		{if $user->getRank() && $user->getRank()->rankImage}
+			<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+		{/if}
+	{/if}</h1>
 	
 	<ul class="dataList">
 		{if $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
