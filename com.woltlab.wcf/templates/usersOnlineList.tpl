@@ -125,7 +125,15 @@
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
-							<h3><a href="{link controller='User' object=$user}{/link}">{@$user->getFormattedUsername()}</a>{if MODULE_USER_RANK && $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}</h3>
+							<h3><a href="{link controller='User' object=$user}{/link}">{@$user->getFormattedUsername()}</a>{if MODULE_USER_RANK}
+								{if $user->getUserTitle()}
+									<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+								{/if}
+								{if $user->getRank() && $user->getRank()->rankImage}
+									<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+								{/if}
+							{/if}</h3>
+							
 							{@$locationData}
 						</div>
 						
