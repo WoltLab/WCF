@@ -1177,7 +1177,7 @@ html[dir="rtl"] {
 		}
 	}
 	
-	.flexibleCategoryList {
+	.flexibleCategoryList:not(.flexibleCategoryListDisabled) {
 		/* WebKit */
 		-webkit-column-count: 2;
 		
@@ -1191,9 +1191,6 @@ html[dir="rtl"] {
 			/* WebKit */
 			-webkit-column-break-inside: avoid;
 			
-			/* Firefox */
-			page-break-inside: avoid;
-			
 			/* CSS 3 / Internet Explorer */
 			break-inside: avoid;
 			
@@ -1204,6 +1201,14 @@ html[dir="rtl"] {
 					display: inline-block;
 				}
 			}
+		}
+	}
+	
+	/* Firefox */
+	@-moz-document url-prefix() {
+		.flexibleCategoryList:not(.flexibleCategoryListDisabled) > li {
+			display: block;
+			overflow: hidden;
 		}
 	}
 }

@@ -12209,6 +12209,11 @@ WCF.Category.FlexibleCategoryList = Class.extend({
 		
 		this._buildStructure();
 		
+		if (this._list.children('li').length < 2) {
+			this._list.addClass('flexibleCategoryListDisabled');
+			return;
+		}
+		
 		if ($.browser.chrome) {
 			this._resize();
 			
@@ -12251,18 +12256,13 @@ WCF.Category.FlexibleCategoryList = Class.extend({
 		var $items = this._list.children('li');
 		
 		$items.each(function(index, item) {
-			if ($referenceOffset === -1) {
+			if ($referenceOffset === -1 || index + 1 === $items.length || $items[index + 1].offsetLeft != $referenceOffset) {
+				var $item = $(item);
+				var $height = $item.outerHeight(true);
+				var $offset = $item.position();
+				
+				$realBottom = Math.max($realBottom, $offset.top + $height);
 				$referenceOffset = item.offsetLeft;
-			}
-			else {
-				if (index + 1 === $items.length || $items[index + 1].offsetLeft != $referenceOffset) {
-					var $item = $(item);
-					var $height = $item.outerHeight(true);
-					var $offset = $item.position();
-					
-					$realBottom = Math.max($realBottom, $offset.top + $height);
-					$referenceOffset = item.offsetLeft;
-				}
 			}
 		});
 		
