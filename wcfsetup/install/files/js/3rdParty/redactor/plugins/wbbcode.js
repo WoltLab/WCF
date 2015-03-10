@@ -1301,7 +1301,7 @@ RedactorPlugins.wbbcode = function() {
 					//$value = $value.replace(/^\[tt\](.*)\[\/tt\]/, '<span class="inlineCode">$1</span>');
 					
 					// [code]
-					$value = $value.replace(/^\[code([^\]]*)\]([\S\s]*)\[\/code\]$/, function(matches, parameters, content) {
+					$value = $value.replace(/^\[code([^\]]*)\]([\S\s]*)\[\/code\]$/, (function(matches, parameters, content) {
 						var $highlighter = 'plain';
 						var $lineNumber = 0;
 						var $filename = '';
@@ -1359,7 +1359,12 @@ RedactorPlugins.wbbcode = function() {
 						content = content.replace(/^\n+/, '').replace(/\n+$/, '').split(/\n/);
 						var $lines = '';
 						for (var $i = 0; $i < content.length; $i++) {
-							$lines += '<li>' + content[$i] + '</li>';
+							var $line = content[$i];
+							if (!$line.length) {
+								$line = this.opts.invisibleSpace;
+							}
+							
+							$lines += '<li>' + $line + '</li>';
 						}
 						
 						return '<div class="codeBox container" contenteditable="false" data-highlighter="' + $highlighter + '"' + ($filename ? ' data-filename="' + WCF.String.escapeHTML($filename) + '"' : '' ) + '>'
@@ -1372,7 +1377,7 @@ RedactorPlugins.wbbcode = function() {
 								+ '</ol>'
 							+ '</div>'
 						+ '</div>';
-					});
+					}).bind(this));
 					
 					data = data.replace($regex, $value);
 				}

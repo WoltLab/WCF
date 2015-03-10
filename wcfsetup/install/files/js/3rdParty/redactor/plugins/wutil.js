@@ -996,6 +996,10 @@ RedactorPlugins.wutil = function() {
 					var $parent = $listItem.parentElement;
 					if ($parent.children.length > 1) {
 						$listItem.parentElement.removeChild($listItem);
+						
+						// node list is live
+						$i--;
+						$length--;
 					}
 				}
 			}
