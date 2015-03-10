@@ -55,7 +55,7 @@ class Censorship extends SingletonFactory {
 			$displayedCensoredWord = str_replace(array('~', '*'), '', $censoredWord);
 			
 			// check if censored word contains at least one delimiter
-			if (preg_match('!'.$this->delimiters.'+!', $censoredWord)) {
+			if (preg_match('!'.$this->delimiters.'+!', $displayedCensoredWord)) {
 				// remove delimiters
 				$censoredWord = preg_replace('!'.$this->delimiters.'!', '', $censoredWord);
 				
