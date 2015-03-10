@@ -404,7 +404,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				return $quote;
 			});
-			html = html.replace(/(?:\n*)<\/blockquote>\n?/gi, '[/quote]\n');
+			html = html.replace(/(?:\n*)<\/blockquote>\n?/gi, '\n[/quote]\n');
 			
 			// [email]
 			html = html.replace(/<a [^>]*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
