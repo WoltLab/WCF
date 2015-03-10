@@ -124,7 +124,7 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 						$mention = "[url='".$link."']@".$users[$username]->username.'[/url]';
 						
 						// check if only the part before the first space matched, in that case append the second word
-						if (isset($matches[2]) && $matches[2] == $username) {
+						if (isset($matches[2]) && strcasecmp($matches[2], $username) === 0) {
 							$mention .= mb_substr($matches[1], strlen($matches[2]));
 						}
 						
