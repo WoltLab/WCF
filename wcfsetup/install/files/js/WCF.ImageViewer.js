@@ -720,24 +720,13 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		if (this.options.staticViewer && !imageData.image.height && $image[0].complete) {
-			var $img = new Image();
-			$img.src = imageData.image.url;
+			$image.css({
+				height: 'auto',
+				width: 'auto'
+			});
 			
-			// Chrome on iOS seems to not fetch images from cache
-			if (navigator.userAgent.match(/CriOS/)) {
-				var self = this;
-				$img.onload = function() {
-					imageData.image.height = this.height;
-					imageData.image.width = this.width;
-					
-					self._renderImage(targetIndex, imageData, containerDimensions);
-				};
-				
-				return;
-			}
-			
-			imageData.image.height = $img.height;
-			imageData.image.width = $img.width;
+			imageData.image.height = $image[0].height;
+			imageData.image.width = $image[0].width;
 		}
 		
 		var $height = imageData.image.height;
