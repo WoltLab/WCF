@@ -7,7 +7,7 @@
 			{assign var='__messageFormSettingsInlineSettings' value=$__messageFormSettingsInlineSettings|trim}
 			
 			{if $__messageFormSettingsInlineSettings}
-				<dl class="wide">
+				<dl class="condensed">
 					{@$__messageFormSettingsInlineSettings}
 				</dl>
 			{/if}
