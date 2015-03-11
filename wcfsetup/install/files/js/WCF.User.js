@@ -1874,11 +1874,13 @@ WCF.User.RecentActivityLoader = Class.extend({
 		});
 		
 		if (this._container.children('li').length) {
-			this._loadButton = $('<li class="recentActivitiesMore"><button class="small">' + WCF.Language.get('wcf.user.recentActivity.more') + '</button></li>').appendTo(this._container);
+			// todo: remove recentActivitiesMore in 2.2
+			this._loadButton = $('<li class="recentActivitiesMore showMore"><button class="small">' + WCF.Language.get('wcf.user.recentActivity.more') + '</button></li>').appendTo(this._container);
 			this._loadButton = this._loadButton.children('button').click($.proxy(this._click, this));
 		}
 		else {
-			$('<li class="recentActivitiesMore"><small>' + WCF.Language.get('wcf.user.recentActivity.noMoreEntries') + '</small></li>').appendTo(this._container);
+			// todo: remove recentActivitiesMore in 2.2
+			$('<li class="recentActivitiesMore showMore"><small>' + WCF.Language.get('wcf.user.recentActivity.noMoreEntries') + '</small></li>').appendTo(this._container);
 		}
 		
 		if (WCF.User.userID) {
@@ -2021,7 +2023,8 @@ WCF.User.LikeLoader = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		var $container = $('<li class="likeListMore recentActivitiesMore"><button class="small">' + WCF.Language.get('wcf.like.likes.more') + '</button><small>' + WCF.Language.get('wcf.like.likes.noMoreEntries') + '</small></li>').appendTo(this._container);
+		// todo: remove recentActivitiesMore in 2.2
+		var $container = $('<li class="likeListMore recentActivitiesMore showMore"><button class="small">' + WCF.Language.get('wcf.like.likes.more') + '</button><small>' + WCF.Language.get('wcf.like.likes.noMoreEntries') + '</small></li>').appendTo(this._container);
 		this._loadButton = $container.children('button').click($.proxy(this._click, this));
 		this._noMoreEntries = $container.children('small').hide();
 		
