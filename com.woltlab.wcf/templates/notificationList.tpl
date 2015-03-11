@@ -67,7 +67,7 @@
 				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}" data-link="{if $notification[event]->isConfirmed()}{$notification[event]->getLink()}{else}{link controller='NotificationConfirm' id=$notification[notificationID]}{/link}{/if}" data-link-replace-all="{if $notification[event]->isConfirmed()}false{else}true{/if}" data-object-id="{@$notification[notificationID]}" data-is-read="{if $notification[event]->isConfirmed()}true{else}false{/if}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
 					<div class="box32">
 						{if $notification[authors] < 2}
-							<div class="framed">
+							<div class="framed jsTooltip" title="{$notification[event]->getAuthor()->username}">
 								{@$notification[event]->getAuthor()->getAvatar()->getImageTag(32)}
 							</div>
 							

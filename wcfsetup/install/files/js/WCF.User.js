@@ -1750,7 +1750,7 @@ WCF.Notification.List = Class.extend({
 			}
 			
 			// work-around for legacy notifications
-			if (!$item.find('a').length) {
+			if (!$item.find('a:not(.notificationItemMarkAsConfirmed)').length) {
 				$item.find('.details > p:eq(0)').html(function(index, oldHTML) {
 					return '<a href="' + $item.data('link') + '">' + oldHTML + '</a>';
 				});
