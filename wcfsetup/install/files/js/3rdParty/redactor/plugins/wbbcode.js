@@ -2036,6 +2036,24 @@ RedactorPlugins.wbbcode = function() {
 				// assign a unique id in order to recognize the inserted quote
 				$html = $html.replace(/<blockquote/, '<blockquote id="' + $id + '"');
 				
+				this.wutil.restoreSelection();
+				var $selection = window.getSelection().getRangeAt(0);
+				var $current = $selection.startContainer;
+				while ($current) {
+					var $parent = $current.parentNode;
+					if ($parent === this.$editor[0]) {
+						break;
+					}
+					
+					$current = $parent;
+				}
+				
+				if ($current && $current.parentNode === this.$editor[0]) {
+					if ($current.innerHTML.length) {
+						this.wutil.setCaretAfter($current);
+					}
+				}
+				
 				this.insert.html($html, false);
 				
 				$quote = this.$editor.find('#' + $id);
