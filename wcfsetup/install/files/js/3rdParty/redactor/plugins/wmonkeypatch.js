@@ -426,26 +426,6 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				return $restoreSpecialCharacters(html);
 			}).bind(this);
-			
-			// clean.setVerified
-			// TODO: remove this once the escape bug has been fixed by Imperavi
-			this.clean.setVerified = (function(html) {
-				if (this.utils.browser('msie')) return html;
-				
-				html = html.replace(new RegExp('<img(.*?[^>])>', 'gi'), '<img$1 data-verified="redactor">');
-				html = html.replace(new RegExp('<span(.*?)>', 'gi'), '<span$1 data-verified="redactor">');
-				
-				var matches = html.match(new RegExp('<(span|img)(.*?)style="(.*?)"(.*?[^>])>', 'gi'));
-				if (matches) {
-					var len = matches.length;
-					for (var i = 0; i < len; i++) {
-						var newTag = matches[i].replace(/style="(.*?)"/i, 'style="$1" rel="$1"');
-						html = html.replace(new RegExp(WCF.String.escapeRegExp(matches[i]), 'gi'), newTag);
-					}
-				}
-				
-				return html;
-			}).bind(this);
 		},
 		
 		/**
@@ -1050,11 +1030,6 @@ RedactorPlugins.wmonkeypatch = function() {
 				$toggleButtons(parent, 'blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor-button-disabled', true);
 				$toggleButtons(parent, 'sub', 'a.re-subscript', false, 'redactor-act');
 				$toggleButtons(parent, 'sup', 'a.re-superscript', false, 'redactor-act');
-				
-				if (btnName) {
-					// work-around for buttons stuck after disabling -- #2138
-					this.observe.buttons(e);
-				}
 			}).bind(this);
 			
 			// observe.load
