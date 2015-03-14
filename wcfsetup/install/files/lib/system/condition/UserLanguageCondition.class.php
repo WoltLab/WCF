@@ -113,6 +113,14 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	 * @see	\wcf\system\condition\IContentCondition::showContent()
 	 */
 	public function showContent(Condition $condition) {
-		return $this->checkUser($condition, WCF::getUser());
+		if (WCF::getUser()->userID) {
+			return $this->checkUser($condition, WCF::getUser());
+		}
+		
+		if (!empty($condition->conditionData['languageIDs']) && !in_array(WCF::getLanguage()->languageID, $condition->languageIDs)) {
+			return false;
+		}
+		
+		return true;
 	}
 }
