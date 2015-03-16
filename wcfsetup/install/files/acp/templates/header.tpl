@@ -5,6 +5,11 @@
 	<meta charset="utf-8" />
 	<meta name="robots" content="noindex" />
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
+	
+	<!-- Stylesheets -->
+	{@$__wcf->getStyleHandler()->getStylesheet(true)}
+	{event name='stylesheets'}
+	
 	<script data-relocate="true">
 		//<![CDATA[
 		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
@@ -29,10 +34,6 @@
 		//]]>
 	</script>
 	{event name='javascriptInclude'}
-	
-	<!-- Stylesheets -->
-	{@$__wcf->getStyleHandler()->getStylesheet(true)}
-	{event name='stylesheets'}
 	
 	<!-- Icons -->
 	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
