@@ -1198,6 +1198,11 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
+			// fix newlines in tables represented with <p>...</p> instead of <br>
+			data = data.replace(/<td>([\s\S]+?)<\/td>/g, function(match, content) {
+				return '<td>' + content.replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br>$/, '') + '</td>';
+			});
+			
 			// insert list items
 			if ($listItems.length) {
 				for (var $i = $listItems.length - 1; $i >= 0; $i--) {
