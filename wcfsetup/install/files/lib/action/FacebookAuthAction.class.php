@@ -36,6 +36,13 @@ class FacebookAuthAction extends AbstractAction {
 		parent::execute();
 		
 		$callbackURL = LinkHandler::getInstance()->getLink('FacebookAuth');
+
+		// Work around Facebook performing an illegal substitution of the Slash
+		// by '%2F' when entering redirect URI (RFC 3986 sect. 2.2, sect. 3.4)
+		$callbackURL = preg_replace_callback('/(?<=\?).*/', function ($matches) {
+			return rawurlencode($matches[0]);
+		}, $callbackURL);
+
 		// user accepted the connection
 		if (isset($_GET['code'])) {
 			try {
