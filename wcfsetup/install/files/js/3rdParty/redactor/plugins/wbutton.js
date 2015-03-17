@@ -161,6 +161,7 @@ RedactorPlugins.wbutton = function() {
 			
 			if ($eventData.cancel === false) {
 				var $selectedHtml = this.selection.getHtml();
+				$selectedHtml = $selectedHtml.replace(/<p>@@@wcf_empty_line@@@<\/p>/g, '<p><br></p>');
 				
 				// TODO: this behaves pretty weird at this time, fix or remove
 				if (false && $bbcode === 'tt') {

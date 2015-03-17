@@ -1303,7 +1303,35 @@ RedactorPlugins.wbbcode = function() {
 					var $value = $cachedCode.value;
 					
 					// [tt]
-					//$value = $value.replace(/^\[tt\](.*)\[\/tt\]/, '<span class="inlineCode">$1</span>');
+					$value = $value.replace(/^\[tt\]([\s\S]+)\[\/tt\]/, (function(match, content) {
+						var $tmp = content.split("\n");
+						content = '';
+						
+						for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
+							var $line = $tmp[$i];
+							
+							if ($line.length) {
+								if (content.length) content += '</p><p>';
+								
+								content += '[tt]' + $line + '[/tt]';
+							}
+							else {
+								if ($i === 0 || ($i + 1) === $length) {
+									// ignore the first and last empty element
+									continue;
+								}
+								
+								if (content.match(/\[\/tt\]$/)) {
+									content += '</p><p>' + this.opts.invisibleSpace + '';
+								}
+								else {
+									content += '</p><p><br>';
+								}
+							}
+						}
+						
+						return content;
+					}).bind(this));
 					
 					// [code]
 					$value = $value.replace(/^\[code([^\]]*)\]([\S\s]*)\[\/code\]$/, (function(matches, parameters, content) {
