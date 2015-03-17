@@ -113,6 +113,10 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 		WCF::getSession()->checkPermissions(array('user.profile.canReportContent'));
 		
 		$this->readString('message');
+		if (mb_strlen($this->parameters['message']) > 64000) {
+			// we allow only up to 64.000 characters (~1.5 below TEXT maximum)
+			$this->parameters['message'] = mb_substr($this->parameters['messages'], 0, 64000);
+		}
 		
 		$this->validatePrepareReport();
 	}
