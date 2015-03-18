@@ -287,7 +287,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/&hellip;/gi, '\u2026');
 			html = html.replace(/&mdash;/gi, '\u2014');
 			html = html.replace(/&dash;/gi, '\u2010');
-			console.debug(html);
+			
 			// preserve code listings
 			var $cachedCodeListings = { };
 			html = html.replace(/<div(.*?)class="codeBox[^"]+"(.*?)>\n*<div>[\s\S]+?<ol start="(\d+)">([\s\S]+?)<\/ol>\n*<\/div>\n*<\/div>/g, function(match, codeBoxAttributes1, codeBoxAttributes2, lineNumber, codeContent) {
@@ -766,14 +766,13 @@ RedactorPlugins.wbbcode = function() {
 						break;
 						
 						case 2:
-							if (listing.highlighter) {
-								$attributes = listing.highlighter;
+							if (listing.lineNumber) {
+								$attributes = listing.lineNumber;
 							}
 							
-							if (listing.lineNumber) {
+							if (listing.highlighter) {
 								if ($attributes.length) $attributes += ',';
-								
-								$attributes += listing.lineNumber;
+								$attributes += listing.highlighter;
 							}
 							
 							if (listing.filename) {
@@ -1346,7 +1345,7 @@ RedactorPlugins.wbbcode = function() {
 							
 							var $isNumber = function(string) { return string.match(/^\d+$/); };
 							var $isFilename = function(string) { return (string.indexOf('.') !== -1) || (string.match(/^(["']).*\1$/)); };
-							var $isHighlighter = function(string) { return  (__REDACTOR_CODE_HIGHLIGHTERS[parameters[0]] !== undefined); };
+							var $isHighlighter = function(string) { return  (__REDACTOR_CODE_HIGHLIGHTERS[string] !== undefined); };
 							
 							var $unquoteFilename = function(filename) {
 								return filename.replace(/^(["'])(.*)\1$/, '$2');
@@ -1412,7 +1411,7 @@ RedactorPlugins.wbbcode = function() {
 							+ '</div>'
 						+ '</div>';
 					}).bind(this));
-					console.debug($value);
+					
 					data = data.replace($regex, $value);
 				}
 			}
@@ -2197,6 +2196,11 @@ RedactorPlugins.wbbcode = function() {
 					
 					var $codeFilename = $.trim($filename.val().replace(/['"]/g, ''));
 					var $bbcode = '[code=' + $highlighter.val() + ',' + $lineNumber.val() + ($codeFilename.length ? ",'" + $codeFilename + "'" : '') + ']';
+					if ($bbcode.match(/\[code=([^,]+),(\d+)\]/)) {
+						// reverse line number and highlighter
+						$bbcode = '[code=' + RegExp.$2 + ',' + RegExp.$1 + ']';
+					}
+					
 					$bbcode += $codeBoxContent;
 					$bbcode += '[/code]';
 					
