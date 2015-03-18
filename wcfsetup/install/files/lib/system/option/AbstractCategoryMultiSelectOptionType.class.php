@@ -17,7 +17,7 @@ use wcf\util\ArrayUtil;
  * @subpackage	system.option
  * @category	Community Framework
  */
-class AbstractCategoryMultiSelectOptionType extends AbstractOptionType {
+abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType {
 	/**
 	 * object type name
 	 * @var	string
