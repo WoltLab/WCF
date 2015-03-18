@@ -287,16 +287,17 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/&hellip;/gi, '\u2026');
 			html = html.replace(/&mdash;/gi, '\u2014');
 			html = html.replace(/&dash;/gi, '\u2010');
-			
+			console.debug(html);
 			// preserve code listings
 			var $cachedCodeListings = { };
-			html = html.replace(/<div class="codeBox[^"]+"(.*?)>\n*<div>[\s\S]+?<ol start="(\d+)">([\s\S]+?)<\/ol>\n*<\/div>\n*<\/div>/g, function(match, codeBoxAttributes, lineNumber, codeContent) {
+			html = html.replace(/<div(.*?)class="codeBox[^"]+"(.*?)>\n*<div>[\s\S]+?<ol start="(\d+)">([\s\S]+?)<\/ol>\n*<\/div>\n*<\/div>/g, function(match, codeBoxAttributes1, codeBoxAttributes2, lineNumber, codeContent) {
+				var $attributes = codeBoxAttributes1 + ' ' + codeBoxAttributes2;
 				var $highlighter = '';
 				var $filename = '';
-				if (codeBoxAttributes.match(/data-highlighter="([a-zA-Z]+)"/)) {
+				if ($attributes.match(/data-highlighter="([a-zA-Z]+)"/)) {
 					$highlighter = RegExp.$1;
 				}
-				if (codeBoxAttributes.match(/data-filename="([^"]+)"/)) {
+				if ($attributes.match(/data-filename="([^"]+)"/)) {
 					$filename = $.trim(RegExp.$1);
 				}
 				
