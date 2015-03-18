@@ -1345,7 +1345,7 @@ RedactorPlugins.wbbcode = function() {
 							parameters = parameters.split(',');
 							
 							var $isNumber = function(string) { return string.match(/^\d+$/); };
-							var $isFilename = function(string) { return (string.indexOf('.') !== -1); };
+							var $isFilename = function(string) { return (string.indexOf('.') !== -1) || (string.match(/^(["']).*\1$/)); };
 							var $isHighlighter = function(string) { return  (__REDACTOR_CODE_HIGHLIGHTERS[parameters[0]] !== undefined); };
 							
 							var $unquoteFilename = function(filename) {
@@ -1369,11 +1369,11 @@ RedactorPlugins.wbbcode = function() {
 									if ($isNumber(parameters[0])) {
 										$lineNumber = (parseInt(parameters[0]) > 1) ? parameters[0] : 0;
 										
-										if ($isFilename(parameters[1])) {
-											$filename = $unquoteFilename(parameters[1]);
-										}
-										else if ($isHighlighter(parameters[1])) {
+										if ($isHighlighter(parameters[1])) {
 											$highlighter = parameters[1];
+										}
+										else if ($isFilename(parameters[1])) {
+											$filename = $unquoteFilename(parameters[1]);
 										}
 									}
 									else {
@@ -1412,7 +1412,7 @@ RedactorPlugins.wbbcode = function() {
 							+ '</div>'
 						+ '</div>';
 					}).bind(this));
-					
+					console.debug($value);
 					data = data.replace($regex, $value);
 				}
 			}
