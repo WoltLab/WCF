@@ -16,5 +16,5 @@ class UserGroupOptionCategoryEditor extends DatabaseObjectEditor {
 	/**
 	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
-	protected static $baseClass = 'wcf\user\group\option\category\UserGroupOptionCategory';
+	protected static $baseClass = 'wcf\data\user\group\option\category\UserGroupOptionCategory';
 }
