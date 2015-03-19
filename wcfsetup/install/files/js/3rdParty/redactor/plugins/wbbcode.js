@@ -2033,7 +2033,7 @@ RedactorPlugins.wbbcode = function() {
 			var $link = quote.attr('cite');
 			if ($link) $link = WCF.String.escapeHTML($link);
 			
-			quote.find('> div > header > h3').empty().append(this.wbbcode._buildQuoteHeader($author, $link));	
+			quote.find('> header > h3').empty().append(this.wbbcode._buildQuoteHeader($author, $link));	
 		},
 		
 		/**
