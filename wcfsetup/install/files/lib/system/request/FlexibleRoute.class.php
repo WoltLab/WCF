@@ -87,12 +87,15 @@ class FlexibleRoute implements IRoute {
 		$this->buildSchema = array();
 		
 		$buildSchema = ltrim($buildSchema, '/');
-		$components = preg_split('~{([a-z]+)}~', $buildSchema, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$components = preg_split('~({(?:[a-z]+)})~', $buildSchema, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 		$delimiters = array('/', '-', '.', '_');
 		
 		foreach ($components as $component) {
 			$type = 'component';
-			if (in_array($component, $delimiters)) {
+			if (preg_match('~{([a-z]+)}~', $component, $matches)) {
+				$component = $matches[1];
+			}
+			else {
 				$type = 'separator';
 			}
 			
@@ -130,10 +133,8 @@ class FlexibleRoute implements IRoute {
 		// drop application component to avoid being appended as query string
 		unset($components['application']);
 		
-		$link = '';
-		
 		// handle default values for controller
-		$buildRoute = true;
+		$useBuildSchema = true;
 		if (count($components) == 1 && isset($components['controller'])) {
 			$ignoreController = false;
 			
@@ -158,14 +159,29 @@ class FlexibleRoute implements IRoute {
 			
 			// drops controller from route
 			if ($ignoreController) {
-				$buildRoute = false;
+				$useBuildSchema = false;
 				
 				// unset the controller, since it would otherwise be added with http_build_query()
 				unset($components['controller']);
 			}
 		}
 		
-		if ($buildRoute) {
+		return $this->buildRoute($components, $application, $useBuildSchema);
+	}
+	
+	/**
+	 * Builds the actual link, the parameter $useBuildSchema can be set to false for
+	 * empty routes, e.g. for the default page.
+	 * 
+	 * @param	array		$components
+	 * @param	string		$application
+	 * @param	boolean		$useBuildSchema
+	 * @return	string
+	 */
+	protected function buildRoute(array $components, $application, $useBuildSchema) {
+		$link = '';
+		
+		if ($useBuildSchema) {
 			$lastSeparator = null;
 			foreach ($this->buildSchema as $component) {
 				$value = $component['value'];
@@ -197,8 +213,8 @@ class FlexibleRoute implements IRoute {
 				}
 			}
 			
-			if (!empty($link)) {
-				$link .= '/';
+			if (!empty($link) && $lastSeparator !== null) {
+				$link .= $lastSeparator;
 			}
 		}
 		

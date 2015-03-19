@@ -286,10 +286,12 @@ class RouteHandler extends SingletonFactory {
 			if (!URL_LEGACY_MODE || RequestHandler::getInstance()->isACPRequest()) {
 				// WCF 2.1: ?Foo/Bar/
 				if (!empty($_SERVER['QUERY_STRING'])) {
-					parse_str($_SERVER['QUERY_STRING'], $parts);
-					foreach ($parts as $key => $value) {
-						if ($value === '') {
-							self::$pathInfo = $key;
+					// don't use parse_str as it replaces dots with underscores
+					$components = explode('&', $_SERVER['QUERY_STRING']);
+					for ($i = 0, $length = count($components); $i < $length; $i++) {
+						$component = $components[$i];
+						if (mb_strpos($component, '=') === false) {
+							self::$pathInfo = urldecode($component);
 							break;
 						}
 					}
