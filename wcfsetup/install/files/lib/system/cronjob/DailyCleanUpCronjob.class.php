@@ -3,7 +3,10 @@ namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\visitTracker\VisitTracker;
+use wcf\system\Callback;
 use wcf\system\WCF;
+use wcf\util\DirectoryUtil;
+use wcf\util\FileUtil;
 
 /**
  * Cronjob for a daily system cleanup.
@@ -162,5 +165,21 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 				}
 			}
 		}
+		
+		// clean up temporary folder
+		$tempFolder = FileUtil::getTempFolder();
+		DirectoryUtil::getInstance($tempFolder)->executeCallback(new Callback(function($filename, $object) use ($tempFolder) {
+			if ($filename === $tempFolder) return;
+			if ($filename === $tempFolder.'.htaccess') return;
+			
+			if ($object->getMTime() < TIME_NOW - 86400) {
+				if ($object->isDir()) {
+					@rmdir($filename);
+				}
+				else if ($object->isFile()) {
+					@unlink($filename);
+				}
+			}
+		}));
 	}
 }
