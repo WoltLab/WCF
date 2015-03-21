@@ -2696,11 +2696,24 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 		this._pageConditions = $('#pageConditions');
 		this._pageControllers = $('#pageControllers');
 		
+		var $dl = this._pageControllers.parents('dl:eq(0)');
+		
 		// hide the page controller element
-		this._pageControllers.parents('dl:eq(0)').hide();
+		$dl.hide();
+		
+		var $fieldset = $dl.parent('fieldset');
+		if (!$fieldset.children('dl:visible').length) {
+			$fieldset.hide();
+		}
+		
+		var $nextFieldset = $fieldset.next('fieldset');
+		if ($nextFieldset) {
+			$nextFieldset.data('margin-top', $nextFieldset.css('margin-top'));
+			$nextFieldset.css('margin-top', 0);
+		}
 		
 		// fix the margin of a potentially next page condition element
-		this._pageControllers.parents('dl:eq(0)').next('dl').css('margin-top', 0);
+		$dl.next('dl').css('margin-top', 0);
 		
 		$('#objectTypeID').on('change', $.proxy(this._setPageController, this));
 		
