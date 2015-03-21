@@ -183,19 +183,22 @@ class FlexibleRoute implements IRoute {
 		
 		if ($useBuildSchema) {
 			$lastSeparator = null;
+			$skipToLastSeparator = false;
 			foreach ($this->buildSchema as $component) {
 				$value = $component['value'];
 				
 				if ($component['type'] === 'separator') {
 					$lastSeparator = $value;
 				}
-				else {
+				else if ($skipToLastSeparator === false) {
 					// routes are build from left-to-right
 					if (empty($components[$value])) {
+						$skipToLastSeparator = true;
+						
 						// drop empty components to avoid them being appended as query string argument
 						unset($components[$value]);
 						
-						break;
+						continue;
 					}
 					
 					if ($lastSeparator !== null) {
