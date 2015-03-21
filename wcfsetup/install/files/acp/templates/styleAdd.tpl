@@ -49,11 +49,13 @@
 			$target.prev().attr('step', ($target.val() == 'em' ? '0.01' : '1'));
 		}).trigger('change');
 		
-		$('.tabMenuContainer').on('wcftabsbeforeactivate', function () {
+		$('.tabMenuContainer').on('wcftabsactivate', function (event, ui) {
+			if (ui.newPanel.selector !== '#advanced') return;
+
 			setTimeout(function() {
 				$('#individualLess')[0].codemirror.refresh();
 				$('#overrideLess')[0].codemirror.refresh();
-			}, 100);
+			}, 10);
 		});
 	});
 	//]]>
