@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.1.1</version> <!-- codename: typhoon -->
-		<date>2015-03-03</date>
+		<version>2.1.2</version> <!-- codename: typhoon -->
+		<date>2015-03-22</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,8 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<!-- attention: keep the two upgrade paths below in sync -->
-	<instructions type="update" fromversion="2.0.11">
+	<instructions type="update" fromversion="2.0.12">
 		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
 		<instruction type="file">pre_update_check.tar</instruction>
 		<instruction type="script" run="standalone">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
@@ -90,56 +89,13 @@
 		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.11 pl 1">
-		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
-		<instruction type="file">pre_update_check.tar</instruction>
-		<instruction type="script" run="standalone">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
-		
-		<!-- the actual update -->
-		<instruction type="option" run="standalone">option.xml</instruction>
-		
-		<instruction type="file">files.tar</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_2.1.php</instruction>
-		
-		<instruction type="template" run="standalone">templates.tar</instruction>
-		
-		<instruction type="acpTemplate" run="standalone">acptemplates.tar</instruction>
-		
-		<instruction type="language" run="standalone">language/*.xml</instruction>
-		
-		<instruction type="sql" run="standalone">update_210.sql</instruction>
-		
-		<instruction type="sql" run="standalone">update_user1_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user2_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user3_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user4_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user5_210.sql</instruction>
-		
-		<instruction type="acpMenu">acpMenu.xml</instruction>
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="style">blue-temptation-style.tgz</instruction>
-		<instruction type="clipboardAction">clipboardAction.xml</instruction>
-		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="cronjob">cronjob_update210.xml</instruction>
-		<instruction type="dashboardBox">dashboardBox.xml</instruction>
-		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="pageMenu">pageMenu.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="userMenu">userMenu.xml</instruction>
-		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
-		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
-		
-		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
-		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.1.0">
-		<instruction type="file" run="standalone">files_update.tar</instruction>
+	<instructions type="update" fromversion="2.1.1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language" run="standalone">language/*.xml</instruction>
+		
+		<instruction type="sql">update_212.sql</instruction>
 	</instructions>
 </package>
