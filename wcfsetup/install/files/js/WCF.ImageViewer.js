@@ -558,6 +558,24 @@ $.widget('ui.wcfImageViewer', {
 			});
 			
 			var $item = this._ui.imageList.children('li:eq(' + $i + ')');
+			
+			// check if currently active image does not exist anymore
+			if (this._active !== -1) {
+				var $clear = false;
+				if (this._active != $item.data('index')) {
+					$clear = true;
+				}
+				
+				if (this._ui.images[this._activeImage].prop('src') != this._images[this._active].image.url) {
+					$clear = true;
+				}
+				
+				if ($clear) {
+					// reset active state
+					this._active = -1;
+				}
+			}
+			
 			$item.trigger('click');
 			this.moveToImage($item.data('index'));
 		}
