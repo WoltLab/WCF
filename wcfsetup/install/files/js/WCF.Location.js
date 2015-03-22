@@ -366,6 +366,19 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 	},
 	
 	/**
+	 * Changes the bounds of the map.
+	 * 
+	 * @param	object		northEast
+	 * @param	object		southWest
+	 */
+	setBounds: function(northEast, southWest) {
+		this._map.fitBounds(new google.maps.LatLngBounds(
+			new google.maps.LatLng(southWest.latitude, southWest.longitude),
+			new google.maps.LatLng(northEast.latitude, northEast.longitude)
+		));
+	},
+	
+	/**
 	 * Sets the center of the map to the given position.
 	 * 
 	 * @param	float		latitude
