@@ -374,7 +374,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	array<\wcf\data\user\notification\UserNotification>	$notificationObjects
 	 * @return	array
 	 */
-	protected function processNotifications(array $notificationObjects) {
+	public function processNotifications(array $notificationObjects) {
 		// return an empty set if no notifications exist
 		if (empty($notificationObjects)) {
 			return array(
