@@ -933,7 +933,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [align]
 			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]\n?/gi, (function(match, alignment, content) {
-				return this.wbbcode._expandFormatting(content, '<div style="text-align: ' + alignment + '">', '</div>');
+				return this.wbbcode._expandFormatting(content, '<p style="text-align: ' + alignment + '">', '</p>');
 			}).bind(this));
 			
 			// search for [*] not preceeded by [list by searching for the first occurence of [list and then check the left
