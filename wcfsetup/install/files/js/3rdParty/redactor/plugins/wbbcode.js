@@ -1438,9 +1438,13 @@ RedactorPlugins.wbbcode = function() {
 			content = '';
 			
 			for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
-				if (content.length) content += '\n';
+				var $line = $tmp[$i];
+				if ($line.length === 0) {
+					$line = this.opts.invisibleSpace;
+				}
 				
-				content += openingTag + $tmp[$i] + closingTag;
+				if (content.length) content += '\n';
+				content += openingTag + $line + closingTag;
 			}
 			
 			return content;
