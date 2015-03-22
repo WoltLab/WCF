@@ -109,7 +109,8 @@ class MembersListPage extends SortablePage {
 		}
 		
 		if (!empty($_POST)) {
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', array(), 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder));
+			$parameters = http_build_query($_POST, '', '&');
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', array(), $parameters));
 			exit;
 		}
 	}
