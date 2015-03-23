@@ -19,7 +19,8 @@
 			type: '{@GOOGLE_MAPS_TYPE}',
 			zoom: {@GOOGLE_MAPS_ZOOM},
 			defaultLatitude: {@GOOGLE_MAPS_DEFAULT_LATITUDE},
-			defaultLongitude: {@GOOGLE_MAPS_DEFAULT_LONGITUDE}
+			defaultLongitude: {@GOOGLE_MAPS_DEFAULT_LONGITUDE},
+			userLocationAsDefault: {@GOOGLE_MAPS_USER_LOCATION_AS_DEFAULT}
 		});
 		
 		{event name='javascriptInit'}
