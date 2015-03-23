@@ -22,8 +22,8 @@ WCF.Location.Util = {
 	 * @param	integer		timeout
 	 */
 	getLocation: function(callback, timeout) {
-		var $userLocationAsDefault = WCF.Location.GoogleMaps.Settings.get('userLocationAsDefault');
-		if (navigator.geolocation && $userLocationAsDefault !== null && $userLocationAsDefault) {
+		var $accessUserLocation = WCF.Location.GoogleMaps.Settings.get('accessUserLocation');
+		if (navigator.geolocation && $accessUserLocation !== null && $accessUserLocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
 				callback(position.coords.latitude, position.coords.longitude);
 			}, function() {

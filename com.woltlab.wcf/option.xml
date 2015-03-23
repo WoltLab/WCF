@@ -747,7 +747,7 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 				<optiontype>float</optiontype>
 				<defaultvalue>13.4</defaultvalue>
 			</option>
-			<option name="google_maps_user_location_as_default">
+			<option name="google_maps_access_user_location">
 				<categoryname>general.system.googleMaps</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>

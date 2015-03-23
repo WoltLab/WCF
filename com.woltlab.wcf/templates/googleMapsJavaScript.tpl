@@ -20,7 +20,7 @@
 			zoom: {@GOOGLE_MAPS_ZOOM},
 			defaultLatitude: {@GOOGLE_MAPS_DEFAULT_LATITUDE},
 			defaultLongitude: {@GOOGLE_MAPS_DEFAULT_LONGITUDE},
-			userLocationAsDefault: {@GOOGLE_MAPS_USER_LOCATION_AS_DEFAULT}
+			accessUserLocation: {@GOOGLE_MAPS_ACCESS_USER_LOCATION}
 		});
 		
 		{event name='javascriptInit'}
