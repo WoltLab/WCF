@@ -452,6 +452,7 @@
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.innoDBWarning"><![CDATA[Die MySQL-Einstellung „innodb_flush_log_at_trx_commit“ steht auf dem Wert „1“ und verursacht dadurch eine starke Verlangsamung bestimmter Datenbankabfragen. Es wird empfohlen diesen Wert auf „2“ zu setzen.]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[Sie rufen diese Installation über eine abweichende Domain auf, etwa auf Grund eines Umzuges. Bitte korrigieren Sie die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Anwendungen verwalten</a>.]]></item>
+		<item name="wcf.acp.index.tmpBroken"><![CDATA[Für den ordnungsgemäßen Betrieb muss das Verzeichnis „{WCF_DIR|concat:'tmp/'}“ existieren und beschreibbar sein. Bitte überprüfen Sie auch die Zugriffsrechte auf den Ordner „{'WCF_DIR'|constant}“.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte laden Sie diese Seite nicht neu.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
