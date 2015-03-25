@@ -452,6 +452,7 @@
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.innoDBWarning"><![CDATA[Die MySQL-Einstellung „innodb_flush_log_at_trx_commit“ steht auf dem Wert „1“ und verursacht dadurch eine starke Verlangsamung bestimmter Datenbankabfragen. Es wird empfohlen diesen Wert auf „2“ zu setzen.]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[Sie rufen diese Installation über eine abweichende Domain auf, etwa auf Grund eines Umzuges. Bitte korrigieren Sie die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Anwendungen verwalten</a>.]]></item>
+		<item name="wcf.acp.index.tmpBroken"><![CDATA[Für den ordnungsgemäßen Betrieb muss das Verzeichnis „{WCF_DIR|concat:'tmp/'}“ existieren und beschreibbar sein. Bitte überprüfen Sie auch die Zugriffsrechte auf den Ordner „{'WCF_DIR'|constant}“.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte laden Sie diese Seite nicht neu.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
@@ -1010,6 +1011,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Zoom durch Doppelklick zulassen]]></item>
 		<item name="wcf.acp.option.google_maps_default_latitude"><![CDATA[Standard-Kartenposition (Breitengrad)]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Standard-Kartenposition (Längengrad)]]></item>
+		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Aktuelle Benutzerposition verwenden]]></item>
+		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[Bei der Angabe von Positionen wird die aktuelle Position des Benutzers als Ausgangspunkt auf der Karte verwendet.]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[„Benutzer online“-Darstellung für Benutzernamen verwenden]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Datenschutzerklärung aktivieren]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Die Datenschutzerklärung informiert Nutzer über die Erfassung personenbezogener Daten.]]></item>

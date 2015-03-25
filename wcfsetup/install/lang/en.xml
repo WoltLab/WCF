@@ -449,8 +449,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.credits.productManager"><![CDATA[Product Manager]]></item>
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered Community Trade Marks at The Office of Harmonization for the Internal Market (OHIM) in Alicante, Spain.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
-		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Applications</a>.]]></item>
 		<item name="wcf.acp.index.innoDBWarning"><![CDATA[The MySQL configuration option “innodb_flush_log_at_trx_commit” is set to “1”, slowing down certain database queries. It is highly recommended to set it’s value to “2”.]]></item>
+		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Applications</a>.]]></item>
+		<item name="wcf.acp.index.tmpBroken"><![CDATA[For proper operation the folder “{WCF_DIR|concat:'tmp/'}” must exist and it must be writable. Please also check the permissions of the “{'WCF_DIR'|constant}” folder.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[The installation will be continued within a few moments, please do not reload this page.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Please Wait]]></item>
@@ -1009,6 +1010,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Enable Zoom by Double-Clicking]]></item>
 		<item name="wcf.acp.option.google_maps_default_latitude"><![CDATA[Default Map Position (Latitude)]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
+		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Use Current User Location]]></item>
+		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[When entering a location, the current location of the user is used as start point on the map.]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[Apply “Users Online” markings for usernames]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Enable Privacy Policy Page]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Inform users regarding the use of their personal data.]]></item>
