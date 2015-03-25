@@ -852,7 +852,15 @@ WCF.Message.QuickReply = Class.extend({
 		this._container.toggle();
 		
 		if (this._container.is(':visible')) {
-			this._quickReplyButtons.hide();
+			this._quickReplyButtons.each(function() {
+				var $button = $(this);
+				if ($button.parent()[0].tagName === 'LI') {
+					$button.parent().hide();
+				}
+				else {
+					$button.hide();
+				}
+			});
 			
 			setTimeout((function() {
 				$(document).trigger('resize');
@@ -1050,7 +1058,15 @@ WCF.Message.QuickReply = Class.extend({
 		// display form submit
 		$messageBody.next().show();
 		
-		this._quickReplyButtons.show();
+		this._quickReplyButtons.each(function() {
+			var $button = $(this);
+			if ($button.parent()[0].tagName === 'LI') {
+				$button.parent().show();
+			}
+			else {
+				$button.show();
+			}
+		});
 	},
 	
 	/**
