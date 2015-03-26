@@ -112,6 +112,17 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 			);
 		}
 		
+		usort($notifications, function ($a, $b) {
+			if ($a['object']->notificationID == $b['object']->notificationID) {
+				return 0;
+			}
+			else if ($a['object']->notificationID < $b['object']->notificationID) {
+				return -1;
+			}
+			
+			return 1;
+		});
+		
 		// insert author
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_author
 						(notificationID, authorID, time)

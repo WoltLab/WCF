@@ -162,6 +162,8 @@ class UserStorageHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($field));
 		
+		ksort($this->cache, SORT_NATURAL);
+		
 		foreach ($this->cache as $userID => $fields) {
 			if (isset($fields[$field])) {
 				unset($this->cache[$userID][$field]);
@@ -181,6 +183,9 @@ class UserStorageHandler extends SingletonFactory {
 				WHERE		userID = ?
 						AND field = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			ksort($this->resetFields, SORT_NATURAL);
+			
 			foreach ($this->resetFields as $userID => $fields) {
 				foreach ($fields as $field) {
 					$statement->execute(array(
@@ -214,7 +219,11 @@ class UserStorageHandler extends SingletonFactory {
 					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
+				ksort($this->updateFields, SORT_NATURAL);
+				
 				foreach ($this->updateFields as $userID => $fieldValues) {
+					ksort($fieldValues, SORT_STRING);
+					
 					foreach ($fieldValues as $field => $fieldValue) {
 						$statement->execute(array(
 							$userID,
