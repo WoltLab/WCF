@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\storage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -128,7 +129,7 @@ class UserStorageHandler extends SingletonFactory {
 	 */
 	public function update($userID, $field, $fieldValue) {
 		$this->updateFields[$userID][$field] = $fieldValue;
-		
+
 		// update data cache for given user
 		if (isset($this->cache[$userID])) {
 			$this->cache[$userID][$field] = $fieldValue;
@@ -175,68 +176,92 @@ class UserStorageHandler extends SingletonFactory {
 	 * Removes and inserts data records on shutdown.
 	 */
 	public function shutdown() {
-		WCF::getDB()->beginTransaction();
+		$toReset = array();
 		
 		// remove outdated entries
-		if (!empty($this->resetFields)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_user_storage
-				WHERE		userID = ?
-						AND field = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			
-			ksort($this->resetFields, SORT_NATURAL);
-			
-			foreach ($this->resetFields as $userID => $fields) {
-				foreach ($fields as $field) {
-					$statement->execute(array(
-						$userID,
-						$field
-					));
+		foreach ($this->resetFields as $userID => $fields) {
+			foreach ($fields as $field) {
+				if (!isset($toReset[$field])) $toReset[$field] = array();
+				$toReset[$field][] = $userID;
+			}
+		}
+		foreach ($this->updateFields as $userID => $fieldValues) {
+			foreach ($fieldValues as $field => $fieldValue) {
+				if (!isset($toReset[$field])) $toReset[$field] = array();
+				$toReset[$field][] = $userID;
+			}
+		}
+		ksort($toReset);
+		
+		// exclude values which should be resetted
+		foreach ($this->updateFields as $userID => $fieldValues) {
+			if (isset($this->resetFields[$userID])) {
+				foreach ($fieldValues as $field => $fieldValue) {
+					if (in_array($field, $this->resetFields[$userID])) {
+						unset($this->updateFields[$userID][$field]);
+					}
+				}
+				
+				if (empty($this->updateFields[$userID])) {
+					unset($this->updateFields[$userID]);
 				}
 			}
 		}
+		ksort($this->updateFields);
 		
-		// insert data
-		if (!empty($this->updateFields)) {
-			// exclude values which should be resetted
-			foreach ($this->updateFields as $userID => $fieldValues) {
-				if (isset($this->resetFields[$userID])) {
-					foreach ($fieldValues as $field => $fieldValue) {
-						if (in_array($field, $this->resetFields[$userID])) {
-							unset($this->updateFields[$userID][$field]);
+		$i = 0;
+		while (true) {
+			try {
+				WCF::getDB()->beginTransaction();
+				
+				// reset data
+				foreach ($toReset as $field => $userIDs) {
+					sort($userIDs);
+					$conditions = new PreparedStatementConditionBuilder();
+					$conditions->add("userID IN (?)", array($userIDs));
+					$conditions->add("field = ?", array($field));
+
+					$sql = "DELETE FROM	wcf".WCF_N."_user_storage
+						".$conditions;
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute($conditions->getParameters());
+				}
+				
+				// insert data
+				if (!empty($this->updateFields)) {
+					$sql = "INSERT INTO	wcf".WCF_N."_user_storage
+								(userID, field, fieldValue)
+						VALUES		(?, ?, ?)";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					
+					foreach ($this->updateFields as $userID => $fieldValues) {
+						ksort($fieldValues);
+						
+						foreach ($fieldValues as $field => $fieldValue) {
+							$statement->execute(array(
+								$userID,
+								$field,
+								$fieldValue
+							));
 						}
 					}
-					
-					if (empty($this->updateFields[$userID])) {
-						unset($this->updateFields[$userID]);
-					}
 				}
+				
+				WCF::getDB()->commitTransaction();
+				break;
 			}
-			
-			if (!empty($this->updateFields)) {
-				$sql = "REPLACE INTO	wcf".WCF_N."_user_storage
-							(userID, field, fieldValue)
-					VALUES		(?, ?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
+			catch(SystemException $e) {
+				WCF::getDB()->rollbackTransaction();
 				
-				ksort($this->updateFields, SORT_NATURAL);
-				
-				foreach ($this->updateFields as $userID => $fieldValues) {
-					ksort($fieldValues, SORT_STRING);
-					
-					foreach ($fieldValues as $field => $fieldValue) {
-						$statement->execute(array(
-							$userID,
-							$field,
-							$fieldValue
-						));
-					}
+				// retry up to 2 times
+				if (++$i === 2) {
+					$e->getExceptionID();
+					break;
 				}
+				
+				usleep(mt_rand(0, .1e6)); // 0 to .1 seconds
 			}
 		}
-		
-		WCF::getDB()->commitTransaction();
-		
 		$this->resetFields = $this->updateFields = array();
 	}
 	
