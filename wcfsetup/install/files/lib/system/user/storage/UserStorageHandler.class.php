@@ -163,8 +163,6 @@ class UserStorageHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($field));
 		
-		ksort($this->cache, SORT_NATURAL);
-		
 		foreach ($this->cache as $userID => $fields) {
 			if (isset($fields[$field])) {
 				unset($this->cache[$userID][$field]);
