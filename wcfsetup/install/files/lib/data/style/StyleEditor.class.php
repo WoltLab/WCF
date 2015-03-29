@@ -751,7 +751,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$xml->endElement();
 			
 			$xml->startElement('requiredpackages');
-			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', array('minversion' => '2.0.0'));
+			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', array('minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion));
 			$xml->endElement();
 			
 			$xml->startElement('instructions', array('type' => 'install'));
