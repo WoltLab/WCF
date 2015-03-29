@@ -27,7 +27,7 @@ RedactorPlugins.wbbcode = function() {
 				// use stored editor contents
 				var $content = $.trim(this.wutil.getOption('woltlab.originalValue'));
 				if ($content.length) {
-					this.wutil.replaceText($content);
+					this.wutil.replaceText($content, false);
 					
 					// ensure that the caret is not within a quote tag
 					this.wutil.selectionEndOfEditor();
@@ -1412,6 +1412,7 @@ RedactorPlugins.wbbcode = function() {
 						+ '</div>';
 					}).bind(this));
 					
+					data = data.replace(new RegExp('(?:<p>)?(@@' + $cachedCode.key + '@@)(?:<\/p>)?', 'g'), '$1');
 					data = data.replace($regex, $value);
 				}
 			}
@@ -2213,6 +2214,7 @@ RedactorPlugins.wbbcode = function() {
 					var $html = this.wbbcode.convertToHtml($bbcode);
 					
 					this.buffer.set();
+					
 					this.insert.html($html, false);
 					
 					// set caret after code listing
@@ -2302,35 +2304,28 @@ RedactorPlugins.wbbcode = function() {
 		},
 		
 		/**
-		 * Ensures that there is a paragraph in front of each block-level element because you cannot click in between two of them.
+		 * Inserting block-level elements (e.g. quotes or code bbcode) can lead to void paragraphs.
 		 */
 		fixBlockLevelElements: function() {
-			return;
-			var $addSpacing = (function(referenceElement, target) {
-				var $tagName = 'P';
-				
-				// fix reference element if a block element is within a quote (wrapped by <div>...</div>)
-				if (referenceElement.parentElement.tagName === 'DIV' && referenceElement.parentElement !== this.$editor[0]) {
-					referenceElement = referenceElement.parentElement;
-					$tagName = 'DIV';
-				}
-				
-				// no previous/next element or it is not a <p> (default) or <div> (within quotes)
-				if (referenceElement[target] === null || referenceElement[target].tagName !== $tagName) {
-					$('<' + $tagName + '>' + this.opts.invisibleSpace + '</' + $tagName + '>')[(target === 'previousElementSibling' ? 'insertBefore' : 'insertAfter')](referenceElement);
-				}
-				else if (referenceElement.previousElementSibling.tagName === $tagName) {
-					// previous/next element is empty or contains an empty <p></p> (block element is a direct children of the editor)
-					if (!referenceElement[target].innerHTML.length || referenceElement[target].innerHTML.toLowerCase() === '<p></p>') {
-						$(referenceElement[target]).html(this.opts.invisibleSpace);
+			var $removeVoidElements = (function(referenceElement, position) {
+				var $sibling = referenceElement[position];
+				if ($sibling && $sibling.nodeType === Node.ELEMENT_NODE && $sibling.tagName === 'P') {
+					if (!$sibling.innerHTML.length) {
+						$sibling.parentElement.removeChild($sibling);
+					}
+					else if ($sibling.innerHTML === '\u200b') {
+						var $adjacentSibling = $sibling[position];
+						if ($adjacentSibling && $adjacentSibling.nodeType === Node.ELEMENT_NODE && $adjacentSibling.tagName === 'P' && $adjacentSibling.innerHTML.length) {
+							$sibling.parentElement.removeChild($sibling);
+						}
 					}
 				}
 			}).bind(this);
 			
-			this.$editor.find('blockquote, .codeBox').each((function(index, blockElement) {
-				$addSpacing(blockElement, 'previousElementSibling');
-				$addSpacing(blockElement, 'nextElementSibling');
-			}).bind(this));
+			this.$editor.find('blockquote, .codeBox').each(function() {
+				$removeVoidElements(this, 'previousElementSibling');
+				$removeVoidElements(this, 'nextElementSibling');
+			});
 		},
 		
 		/**

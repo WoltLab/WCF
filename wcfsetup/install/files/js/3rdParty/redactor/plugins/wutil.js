@@ -763,9 +763,10 @@ RedactorPlugins.wutil = function() {
 						this.wutil.selectionEndOfEditor();
 					}
 					else {
-						var $p = $('<p><br></p>').insertAfter($insertAfter);
+						this.caret.setAfter($insertAfter);
+						/*var $p = $('<p><br></p>').insertAfter($insertAfter);
 						
-						this.caret.setEnd($p);
+						this.caret.setEnd($p);*/
 					}
 				}
 			}
@@ -883,8 +884,9 @@ RedactorPlugins.wutil = function() {
 		 * Replaces the current content with the provided value.
 		 * 
 		 * @param	string		value
+		 * @param	boolean		addNewlines
 		 */
-		replaceText: function(value) {
+		replaceText: function(value, addNewlines) {
 			var $document = $(document);
 			var $offsetTop = $document.scrollTop();
 			var $wasInWysiwygMode = false;
@@ -894,7 +896,10 @@ RedactorPlugins.wutil = function() {
 				$wasInWysiwygMode = true;
 			}
 			
-			value = this.wutil.addNewlines(value);
+			if (addNewlines !== false) {
+				value = this.wutil.addNewlines(value);
+			}
+			
 			this.$textarea.val(value);
 			
 			if ($wasInWysiwygMode) {
