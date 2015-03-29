@@ -932,7 +932,7 @@ RedactorPlugins.wbbcode = function() {
 			}).bind(this));
 			
 			// [align]
-			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]\n?/gi, (function(match, alignment, content) {
+			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]/gi, (function(match, alignment, content) {
 				return this.wbbcode._expandFormatting(content, '<p style="text-align: ' + alignment + '">', '</p>');
 			}).bind(this));
 			
