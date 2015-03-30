@@ -27,7 +27,7 @@ RedactorPlugins.wbbcode = function() {
 				// use stored editor contents
 				var $content = $.trim(this.wutil.getOption('woltlab.originalValue'));
 				if ($content.length) {
-					this.wutil.replaceText($content, false);
+					this.wutil.replaceText($content);
 					
 					// ensure that the caret is not within a quote tag
 					this.wutil.selectionEndOfEditor();
@@ -877,7 +877,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [s]
 			data = data.replace(/\[s\]([\s\S]*?)\[\/s]/gi, (function(match, content) {
-				return this.wbbcode._expandFormatting(content, '<strike>', '</strike>');
+				return this.wbbcode._expandFormatting(content, '<del>', '</del>');
 			}).bind(this));
 			
 			// [sub]

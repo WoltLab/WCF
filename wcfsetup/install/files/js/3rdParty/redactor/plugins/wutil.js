@@ -884,9 +884,8 @@ RedactorPlugins.wutil = function() {
 		 * Replaces the current content with the provided value.
 		 * 
 		 * @param	string		value
-		 * @param	boolean		addNewlines
 		 */
-		replaceText: function(value, addNewlines) {
+		replaceText: function(value) {
 			var $document = $(document);
 			var $offsetTop = $document.scrollTop();
 			var $wasInWysiwygMode = false;
@@ -896,10 +895,7 @@ RedactorPlugins.wutil = function() {
 				$wasInWysiwygMode = true;
 			}
 			
-			if (addNewlines !== false) {
-				value = this.wutil.addNewlines(value);
-			}
-			
+			value = this.wutil.addNewlines(value);
 			this.$textarea.val(value);
 			
 			if ($wasInWysiwygMode) {
@@ -1014,6 +1010,15 @@ RedactorPlugins.wutil = function() {
 				var $child = this.$editor[0].children[$i];
 				if ($child.nodeType !== Node.ELEMENT_NODE || $child.tagName !== 'P') {
 					// not a <p> element
+					continue;
+				}
+				
+				if ($child.innerHTML === "\n") {
+					$child.parentElement.removeChild($child);
+					
+					$i--;
+					$length--;
+					
 					continue;
 				}
 				
