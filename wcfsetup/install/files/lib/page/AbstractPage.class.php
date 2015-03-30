@@ -193,6 +193,11 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 				$requestURI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $requestURI);
 			}
 			
+			// some webservers output lower-case encoding (e.g. %c3 instead of %C3)
+			$requestURI = preg_replace_callback('~%(?P<encoded>[a-zA-Z0-9]{2})~', function($matches) {
+				return '%' . strtoupper($matches['encoded']);
+			}, $requestURI);
+			
 			$requestURL = parse_url($requestURI);
 			
 			$redirect = false;
