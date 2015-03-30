@@ -6,14 +6,12 @@
 			<div class="sidebarBoxHeadline">
 				<h3><a href="{link controller='User' object=$userOnline}{/link}" class="userLink" data-user-id="{@$userOnline->userID}">{$userOnline->username}</a></h3>
 				{if MODULE_USER_RANK}
-					<small>
-						{if $userOnline->getUserTitle()}
-							<span class="badge userTitleBadge{if $userOnline->getRank() && $userOnline->getRank()->cssClassName} {@$userOnline->getRank()->cssClassName}{/if}">{$userOnline->getUserTitle()}</span>
-						{/if}
-						{if $userOnline->getRank() && $userOnline->getRank()->rankImage}
-							<span class="userRankImage">{@$userOnline->getRank()->getImage()}</span>
-						{/if}
-					</small>
+					{if $userOnline->getUserTitle()}
+						<p><span class="badge userTitleBadge{if $userOnline->getRank() && $userOnline->getRank()->cssClassName} {@$userOnline->getRank()->cssClassName}{/if}">{$userOnline->getUserTitle()}</span></p>
+					{/if}
+					{if $userOnline->getRank() && $userOnline->getRank()->rankImage}
+						<p><span class="userRankImage">{@$userOnline->getRank()->getImage()}</span></p>
+					{/if}
 				{/if}
 			</div>
 		</li>
