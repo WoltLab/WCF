@@ -2074,6 +2074,8 @@ RedactorPlugins.wbbcode = function() {
 				// assign a unique id in order to recognize the inserted quote
 				$html = $html.replace(/<blockquote/, '<blockquote id="' + $id + '"');
 				
+				var $originalRange = window.getSelection().getRangeAt(0).cloneRange();
+				
 				this.wutil.restoreSelection();
 				var $selection = window.getSelection().getRangeAt(0);
 				var $current = $selection.startContainer;
@@ -2093,6 +2095,8 @@ RedactorPlugins.wbbcode = function() {
 				}
 				
 				this.insert.html($html, false);
+				
+				$originalRange.deleteContents();
 				
 				$quote = this.$editor.find('#' + $id);
 				if ($quote.length) {
