@@ -112,7 +112,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 			);
 		}
 		
-		usort($notifications, function ($a, $b) {
+		uksort($notifications, function ($a, $b) {
 			if ($a['object']->notificationID == $b['object']->notificationID) {
 				return 0;
 			}
