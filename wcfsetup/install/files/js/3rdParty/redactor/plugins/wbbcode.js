@@ -290,7 +290,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// preserve code listings
 			var $cachedCodeListings = { };
-			html = html.replace(/<div(.*?)class="codeBox[^"]+"(.*?)>\n*<div>[\s\S]+?<ol start="(\d+)">([\s\S]+?)<\/ol>\n*<\/div>\n*<\/div>/g, function(match, codeBoxAttributes1, codeBoxAttributes2, lineNumber, codeContent) {
+			html = html.replace(/<div([^>]+?)class="codeBox[^"]+"([^>]*?)>\n*<div>[\s\S]+?<ol start="(\d+)">([\s\S]+?)<\/ol>\n*<\/div>\n*<\/div>/g, function(match, codeBoxAttributes1, codeBoxAttributes2, lineNumber, codeContent) {
 				var $attributes = codeBoxAttributes1 + ' ' + codeBoxAttributes2;
 				var $highlighter = '';
 				var $filename = '';
@@ -616,7 +616,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/ ?<img [^>]*?class="smiley"[^>]*?alt="([^"]+?)"[^>]*?> ?/gi, ' $1 '); // chrome, ie
 			
 			// attachments
-			html = html.replace(/<img(.*?)class="[^"]*redactorEmbeddedAttachment[^"]*"(.*?)>/gi, function(match, attributesBefore, attributesAfter) {
+			html = html.replace(/<img([^>]*?)class="[^"]*redactorEmbeddedAttachment[^"]*"([^>]*?)>/gi, function(match, attributesBefore, attributesAfter) {
 				var $attributes = attributesBefore + ' ' + attributesAfter;
 				var $attachmentID;
 				if ($attributes.match(/data-attachment-id="(\d+)"/)) {
@@ -654,7 +654,7 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// [img]
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?style="([^"]+)".*?>/gi, function(match, quotationMarks, source, style) {
+			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1[^>]*?style="([^"]+)"[^>]*?>/gi, function(match, quotationMarks, source, style) {
 				var $float = 'none';
 				var $width = 0;
 				
@@ -679,7 +679,7 @@ RedactorPlugins.wbbcode = function() {
 				return "[img]" + source + "[/img]";
 			});
 			
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
+			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1[^>]*?>/gi, '[img]$2[/img]');
 			
 			// [*]
 			html = html.replace(/<li>/gi, '[*]');
@@ -2074,6 +2074,8 @@ RedactorPlugins.wbbcode = function() {
 				// assign a unique id in order to recognize the inserted quote
 				$html = $html.replace(/<blockquote/, '<blockquote id="' + $id + '"');
 				
+				var $originalRange = window.getSelection().getRangeAt(0).cloneRange();
+				
 				this.wutil.restoreSelection();
 				var $selection = window.getSelection().getRangeAt(0);
 				var $current = $selection.startContainer;
@@ -2093,6 +2095,8 @@ RedactorPlugins.wbbcode = function() {
 				}
 				
 				this.insert.html($html, false);
+				
+				$originalRange.deleteContents();
 				
 				$quote = this.$editor.find('#' + $id);
 				if ($quote.length) {

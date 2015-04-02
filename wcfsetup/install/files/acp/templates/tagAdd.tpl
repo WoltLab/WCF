@@ -77,7 +77,7 @@
 						var $tagList = new WCF.Tagging.TagList('#synonymList', '#synonyms');
 						
 						{if $synonyms|isset && $synonyms|count}
-							$tagList.load([ {implode from=$synonyms item='synonym'}'{$synonym}'{/implode} ]);
+							$tagList.load([ {implode from=$synonyms item='synonym'}'{$synonym|encodeJS}'{/implode} ]);
 						{/if}
 					});
 					//]]>
