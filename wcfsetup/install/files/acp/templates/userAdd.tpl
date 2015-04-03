@@ -394,7 +394,20 @@
 					</dl>
 					
 					<dl class="jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
-						<dt class="framed">{if $avatarType == 'custom'}{@$userAvatar->getImageTag(96)}{else}<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon96" />{/if}</dt>
+						<dt class="framed">
+							{if $avatarType == 'custom'}
+								{assign var='__customAvatar' value=$userAvatar->getImageTag(96)}
+								{if $userAvatar->canCrop()}
+									{assign var='__customAvatar' value=$__customAvatar|substr:0:-2}
+									{assign var='__customAvatarTitle' value='wcf.user.avatar.type.custom.crop'|language}
+									{append var='__customAvatar' value='class="userAvatarCrop jsTooltip" title="'|concat:$__customAvatarTitle:'" />'}
+								{/if}
+								
+								{@$__customAvatar}
+							{else}
+								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon96" />
+							{/if}
+						</dt>
 						<dd>
 							<label><input type="radio" name="avatarType" value="custom" {if $avatarType == 'custom'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.custom{/lang}</label>
 							
@@ -498,6 +511,7 @@
 					//<![CDATA[
 					$(function() {
 						WCF.Language.addObject({
+							'wcf.user.avatar.type.custom.crop': '{lang}wcf.user.avatar.type.custom.crop{/lang}',
 							'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
 							'wcf.user.avatar.upload.error.tooSmall': '{lang}wcf.user.avatar.upload.error.tooSmall{/lang}',
 							'wcf.user.avatar.upload.error.tooLarge': '{lang}wcf.user.avatar.upload.error.tooLarge{/lang}',
@@ -506,7 +520,11 @@
 							'wcf.user.avatar.upload.success': '{lang}wcf.user.avatar.upload.success{/lang}'
 						});
 						
-						new WCF.User.Avatar.Upload({@$user->userID});
+						{if $userAvatar && $userAvatar->canCrop()}
+							new WCF.User.Avatar.Upload({@$user->userID}, new WCF.User.Avatar.Crop({@$userAvatar->avatarID}));
+						{else}
+							new WCF.User.Avatar.Upload({@$user->userID});
+						{/if}
 					});
 					//]]>
 				</script>
