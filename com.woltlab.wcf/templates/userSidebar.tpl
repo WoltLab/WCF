@@ -37,6 +37,8 @@
 	</fieldset>
 {/hascontent}
 
+{event name='afterStatistics'}
+
 {if !$user->isProtected()}
 	{if $followingCount}
 		<fieldset>
