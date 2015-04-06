@@ -837,13 +837,12 @@ RedactorPlugins.wutil = function() {
 		 * @return	boolean
 		 */
 		isNodeWithin: function(node, element) {
-			var $node = $(node);
-			while ($node[0] !== this.$editor[0]) {
-				if ($node[0] === element) {
+			while (node && node !== this.$editor[0]) {
+				if (node === element) {
 					return true;
 				}
 				
-				$node = $node.parent();
+				node = node.parentNode;
 			}
 			
 			return false;
