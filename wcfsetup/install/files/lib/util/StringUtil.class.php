@@ -739,6 +739,8 @@ final class StringUtil {
 	 * @return	string		anchor tag
 	 */
 	public static function getAnchorTag($url, $title = '', $encodeTitle = true) {
+		$url = self::trim($url);
+		
 		$external = true;
 		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
 			$external = false;
