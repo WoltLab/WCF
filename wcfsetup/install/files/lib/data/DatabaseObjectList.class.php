@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -133,6 +134,8 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		}
 		
 		$this->conditionBuilder = new PreparedStatementConditionBuilder();
+		
+		EventHandler::getInstance()->fireAction($this, 'init');
 	}
 	
 	/**
