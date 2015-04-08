@@ -126,6 +126,18 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	 * @see	\wcf\system\option\IOptionType::compare()
 	 */
 	public function compare($value1, $value2) {
+		// handle special case where no allowed BBCodes have been set
+		if (empty($value1)) {
+			if (empty($value2)) {
+				return 0;
+			}
+			
+			return -1;
+		}
+		else if (empty($value2)) {
+			return 1;
+		}
+		
 		$value1 = explode(',', $value1);
 		$value2 = explode(',', $value2);
 		
