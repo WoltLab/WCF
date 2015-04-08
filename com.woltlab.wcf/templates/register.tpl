@@ -30,11 +30,7 @@
 	
 	<style type="text/css">	
 		#fieldset1 {
-			height: 0;
-			overflow: hidden;
-			position: absolute;
-			left: -9000px;
-			max-width: 8000px; 
+			display: none;
 		}
 	</style>
 </head>
