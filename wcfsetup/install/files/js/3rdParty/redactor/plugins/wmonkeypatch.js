@@ -1096,6 +1096,13 @@ RedactorPlugins.wmonkeypatch = function() {
 					if ($.browser.msie) {
 						getSelection().getRangeAt(0).collapse(false);
 					}
+					else if ($.browser.mozilla) {
+						// bugfix for Firefox setting the caret somewhere in the void
+						var $range = getSelection().getRangeAt(0);
+						if ($range.startContainer === this.$editor[0] && $range.endContainer === this.$editor[0]) {
+							this.wutil.selectionEndOfEditor();
+						}
+					}
 					
 					this.wutil.saveSelection();
 				}).bind(this), 20);
