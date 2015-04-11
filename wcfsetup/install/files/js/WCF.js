@@ -10264,7 +10264,7 @@ WCF.EditableItemList = Class.extend({
 	 */
 	_keyPress: function(event) {
 		// 44 = [,] (charCode != keyCode)
-		if (event === null || event.charCode === 44 || event.charCode === $.ui.keyCode.ENTER) {
+		if (event === null || event.charCode === 44 || event.charCode === $.ui.keyCode.ENTER || ($.browser.mozilla && event.keyCode === $.ui.keyCode.ENTER)) {
 			if (event !== null && event.charCode === $.ui.keyCode.ENTER && this._search) {
 				if (this._search._itemIndex !== -1) {
 					return false;
@@ -10277,7 +10277,7 @@ WCF.EditableItemList = Class.extend({
 			if (event && event.charCode === 44) {
 				$value = $value.substring(0, this._searchInput.getCaret());
 			}
-			
+			console.debug($value);
 			if ($value === '') {
 				return true;
 			}
