@@ -63,7 +63,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Returns the last responses for this comment.
 	 * 
-	 * @return	array<\wcf\data\comment\response\StructuredCommentReponse>
+	 * @return	array<\wcf\data\comment\response\StructuredCommentResponse>
 	 */
 	public function getResponses() {
 		return $this->responses;

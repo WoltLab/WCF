@@ -10,7 +10,7 @@ use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
 /**
- * Likeable object implementation for comment reponses.
+ * Likeable object implementation for comment responses.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2015 WoltLab GmbH
