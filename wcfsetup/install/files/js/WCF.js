@@ -10277,7 +10277,7 @@ WCF.EditableItemList = Class.extend({
 			if (event && event.charCode === 44) {
 				$value = $value.substring(0, this._searchInput.getCaret());
 			}
-			console.debug($value);
+			
 			if ($value === '') {
 				return true;
 			}
