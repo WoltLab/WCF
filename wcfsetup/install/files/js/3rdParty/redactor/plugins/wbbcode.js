@@ -2270,7 +2270,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				var $code = '';
 				$list.children('li').each(function(index, listItem) {
-					$code += $(listItem).text() + "\n";
+					$code += $(listItem).text().replace(/^\u200b$/, '') + "\n";
 				});
 				$codeBox.val($code.replace(/^\n+/, '').replace(/\n+$/, ''));
 				
