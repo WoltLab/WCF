@@ -738,13 +738,23 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		if (this.options.staticViewer && !imageData.image.height && $image[0].complete) {
-			$image.css({
-				height: 'auto',
-				width: 'auto'
-			});
-			
-			imageData.image.height = $image[0].height;
-			imageData.image.width = $image[0].width;
+			// Firefox returns bogus values if attempting to read the real dimensions
+			if ($.browser.mozilla) {
+				var $img = new Image();
+				$img.src = imageData.image.url;
+				
+				imageData.image.height = $img.height;
+				imageData.image.width = $img.width;
+			}
+			else {
+				$image.css({
+					height: 'auto',
+					width: 'auto'
+				});
+				
+				imageData.image.height = $image[0].height;
+				imageData.image.width = $image[0].width;
+			}
 		}
 		
 		var $height = imageData.image.height;
@@ -766,7 +776,6 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		var $left = Math.floor((containerDimensions.width - $width) / 2);
-		
 		this._ui.images[targetIndex].css({
 			height: $height + 'px',
 			left: ($left + 10) + 'px',
