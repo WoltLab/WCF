@@ -671,5 +671,14 @@ WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
 			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
 		});
 		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * @see	WCF.User.Panel.Abstract.resetItems()
+	 */
+	resetItems: function() {
+		this._super();
+		
+		this._loadData = true;
 	}
 });
