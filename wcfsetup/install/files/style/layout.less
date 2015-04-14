@@ -876,6 +876,16 @@ html[dir="rtl"] {
 		margin-right: 2px;
 		float: right;
 		.buttonList;
+		
+		> li {
+			&:not(:last-child) {
+				margin-right: 0;
+			}
+			
+			&:not(:first-child) {
+				margin-left: 8px;
+			}
+		}
 	}
 	
 	> nav:not(.pageNavigation) > ul.buttonGroup {
