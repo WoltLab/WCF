@@ -1843,7 +1843,7 @@ RedactorPlugins.wbbcode = function() {
 							$submitEditor = true;
 						}
 					}
-					else if (data.event.altKey) {
+					else if (data.event.altKey && !data.event.ctrlKey) {
 						$submitEditor = true;
 					}
 					
