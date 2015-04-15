@@ -738,8 +738,8 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		if (this.options.staticViewer && !imageData.image.height && $image[0].complete) {
-			// Firefox returns bogus values if attempting to read the real dimensions
-			if ($.browser.mozilla) {
+			// Firefox and Safari returns bogus values if attempting to read the real dimensions
+			if ($.browser.mozilla || $.browser.safari) {
 				var $img = new Image();
 				$img.src = imageData.image.url;
 				
