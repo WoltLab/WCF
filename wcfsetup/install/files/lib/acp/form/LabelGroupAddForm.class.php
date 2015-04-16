@@ -134,18 +134,13 @@ class LabelGroupAddForm extends AbstractForm {
 		parent::validate();
 		
 		// validate group name
-		try {
-			if (!I18nHandler::getInstance()->validateValue('groupName')) {
-				if (I18nHandler::getInstance()->isPlainValue('groupName')) {
-					throw new UserInputException('groupName');
-				}
-				else {
-					throw new UserInputException('groupName', 'multilingual');
-				}
+		if (!I18nHandler::getInstance()->validateValue('groupName')) {
+			if (I18nHandler::getInstance()->isPlainValue('groupName')) {
+				throw new UserInputException('groupName');
 			}
-		}
-		catch (UserInputException $e) {
-			$this->errorType[$e->getField()] = $e->getType();
+			else {
+				throw new UserInputException('groupName', 'multilingual');
+			}
 		}
 		
 		// validate object type relations

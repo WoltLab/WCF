@@ -59,8 +59,8 @@
 						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="long" />
 						{if $errorField == 'groupName'}
 							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
+								{if $errorType == 'empty' || $errorType == 'multilingual'}
+									{lang}wcf.global.form.error.{@$errorType}{/lang}
 								{else}
 									{lang}wcf.acp.label.group.groupName.error.{@$errorType}{/lang}
 								{/if}
