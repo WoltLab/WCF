@@ -2065,10 +2065,16 @@ RedactorPlugins.wbbcode = function() {
 			
 			var $quote = null;
 			if (this.wutil.inWysiwygMode()) {
-				var $innerHTML = (plainText) ? this.wbbcode.convertToHtml(plainText) : html;
 				var $id = WCF.getUUID();
-				var $html = this.wbbcode.convertToHtml($openTag + $id + $closingTag);
-				$html = $html.replace($id, $innerHTML.replace(/^<p>/, '').replace(/<\/p>$/, ''));
+				var $html = '';
+				if (plainText) {
+					$html = this.wbbcode.convertToHtml($openTag + plainText + $closingTag);
+				}
+				else {
+					$html = this.wbbcode.convertToHtml($openTag + $id + $closingTag);
+					$html = $html.replace($id, $innerHTML.replace(/^<p>/, '').replace(/<\/p>$/, ''));
+				}
+				
 				$html = $html.replace(/^<p>/, '').replace(/<\/p>$/, '');
 				
 				// assign a unique id in order to recognize the inserted quote
