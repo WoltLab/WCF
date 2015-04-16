@@ -1299,7 +1299,6 @@ RedactorPlugins.wbbcode = function() {
 				for (var $i = $cachedCodes.length - 1; $i >= 0; $i--) {
 					var $cachedCode = $cachedCodes[$i];
 					var $regex = new RegExp('@@' + $cachedCode.key + '@@', 'g');
-					
 					var $value = $cachedCode.value;
 					
 					// [tt]
@@ -1412,7 +1411,7 @@ RedactorPlugins.wbbcode = function() {
 						+ '</div>';
 					}).bind(this));
 					
-					data = data.replace(new RegExp('(?:<p>)?(@@' + $cachedCode.key + '@@)(?:<\/p>)?', 'g'), '$1');
+					//data = data.replace(new RegExp('(?:<p>)?(@@' + $cachedCode.key + '@@)(?:<\/p>)?', 'g'), '$1');
 					data = data.replace($regex, $value);
 				}
 			}
