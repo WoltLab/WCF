@@ -130,7 +130,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			
 			case 64:
 			case 96:
-				if ($this->size >= 128 && $this->height >= 128) {
+				if ($this->width >= 128 && $this->height >= 128) {
 					$retinaSize = 128;
 				}
 			break;
