@@ -628,6 +628,13 @@
 			<categoryname>com.woltlab.wcf.other</categoryname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.PaidSubscriptionListPage</name>
+			<definitionname>com.woltlab.wcf.page</definitionname>
+			<classname><![CDATA[wcf\page\PaidSubscriptionListPage]]></classname>
+			<options>module_paid_subscription</options>
+			<categoryname>com.woltlab.wcf.other</categoryname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.RecentActivityListPage</name>
 			<definitionname>com.woltlab.wcf.page</definitionname>
 			<classname><![CDATA[wcf\page\RecentActivityListPage]]></classname>
