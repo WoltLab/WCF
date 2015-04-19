@@ -617,6 +617,10 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	\wcf\system\user\notification\event\IUserNotificationEvent	$event
 	 */
 	public function sendInstantMailNotification(UserNotification $notification, User $user, IUserNotificationEvent $event) {
+		// no notifications for disabled or banned users
+		if ($user->activationCode) return;
+		if ($user->banned) return;
+		
 		// recipient's language
 		$event->setLanguage($user->getLanguage());
 		
