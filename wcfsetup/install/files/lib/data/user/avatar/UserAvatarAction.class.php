@@ -183,6 +183,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			if (!empty($filename)) {
 				@unlink($filename);
 			}
+			return;
 		}
 		
 		// rescale avatar if required
