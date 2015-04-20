@@ -178,22 +178,41 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$reply = $request->getReply();
 			$filename = FileUtil::getTemporaryFilename('avatar_');
 			file_put_contents($filename, $reply['body']);
+			
+			$imageData = getimagesize($filename);
+			if ($imageData === false) throw new SystemException('Downloaded file is not an image');
 		}
 		catch (\Exception $e) {
 			if (!empty($filename)) {
 				@unlink($filename);
 			}
+			return;
 		}
 		
 		// rescale avatar if required
 		try {
-			$filename = $this->enforceDimensions($filename);
+			$newFilename = $this->enforceDimensions($filename);
+			if ($newFilename !== $filename) @unlink($filename);
+			$filename = $newFilename;
+			
+			$imageData = getimagesize($filename);
+			if ($imageData === false) throw new SystemException('Rescaled file is not an image');
 		}
-		catch (\Exception $e) { /* ignore errors */ }
+		catch (\Exception $e) {
+			@unlink($filename);
+			return;
+		}
 		
-		$imageData = getimagesize($filename);
 		$tmp = parse_url($this->parameters['url']);
+		if (!isset($tmp['path'])) {
+			@unlink($filename);
+			return;
+		}
 		$tmp = pathinfo($tmp['path']);
+		if (!isset($tmp['basename']) || !isset($tmp['extension'])) {
+			@unlink($filename);
+			return;
+		}
 		
 		$data = array(
 			'avatarName' => $tmp['basename'],
@@ -225,6 +244,8 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$avatarID = $avatar->avatarID;
 		}
 		else {
+			@unlink($filename);
+			
 			// moving failed; delete avatar
 			$editor = new UserAvatarEditor($avatar);
 			$editor->delete();
