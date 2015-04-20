@@ -188,7 +188,9 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		
 		// rescale avatar if required
 		try {
-			$filename = $this->enforceDimensions($filename);
+			$newFilename = $this->enforceDimensions($filename);
+			@unlink($filename);
+			$filename = $newFilename;
 		}
 		catch (\Exception $e) { /* ignore errors */ }
 		
@@ -226,6 +228,8 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$avatarID = $avatar->avatarID;
 		}
 		else {
+			@unlink($filename);
+			
 			// moving failed; delete avatar
 			$editor = new UserAvatarEditor($avatar);
 			$editor->delete();
