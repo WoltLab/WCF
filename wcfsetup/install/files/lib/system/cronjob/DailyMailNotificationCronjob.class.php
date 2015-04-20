@@ -140,6 +140,10 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			if (!isset($users[$userID])) continue;
 			$user = $users[$userID];
 			
+			// no notifications for disabled or banned users
+			if ($user->activationCode) continue;
+			if ($user->banned) continue;
+			
 			// add mail header
 			$message = $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.header', array(
 				'user' => $user
