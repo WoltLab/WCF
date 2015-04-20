@@ -192,7 +192,10 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			@unlink($filename);
 			$filename = $newFilename;
 		}
-		catch (\Exception $e) { /* ignore errors */ }
+		catch (\Exception $e) {
+			@unlink($filename);
+			return;
+		}
 		
 		$imageData = getimagesize($filename);
 		$tmp = parse_url($this->parameters['url']);
