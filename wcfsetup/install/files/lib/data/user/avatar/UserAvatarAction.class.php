@@ -189,7 +189,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		// rescale avatar if required
 		try {
 			$newFilename = $this->enforceDimensions($filename);
-			@unlink($filename);
+			if ($newFilename !== $filename) @unlink($filename);
 			$filename = $newFilename;
 		}
 		catch (\Exception $e) {
