@@ -178,6 +178,9 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$reply = $request->getReply();
 			$filename = FileUtil::getTemporaryFilename('avatar_');
 			file_put_contents($filename, $reply['body']);
+			
+			$imageData = getimagesize($filename);
+			if ($imageData === false) throw new SystemException('Downloaded file is not an image');
 		}
 		catch (\Exception $e) {
 			if (!empty($filename)) {
@@ -191,15 +194,25 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$newFilename = $this->enforceDimensions($filename);
 			if ($newFilename !== $filename) @unlink($filename);
 			$filename = $newFilename;
+			
+			$imageData = getimagesize($filename);
+			if ($imageData === false) throw new SystemException('Rescaled file is not an image');
 		}
 		catch (\Exception $e) {
 			@unlink($filename);
 			return;
 		}
 		
-		$imageData = getimagesize($filename);
 		$tmp = parse_url($this->parameters['url']);
+		if (!isset($tmp['path'])) {
+			@unlink($filename);
+			return;
+		}
 		$tmp = pathinfo($tmp['path']);
+		if (!isset($tmp['basename']) || !isset($tmp['extension'])) {
+			@unlink($filename);
+			return;
+		}
 		
 		$data = array(
 			'avatarName' => $tmp['basename'],
