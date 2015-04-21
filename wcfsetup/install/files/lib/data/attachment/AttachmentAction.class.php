@@ -206,18 +206,21 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 								
 								if ($newImage !== null) {
 									$adapter->load($newImage, $adapter->getType());
-									
-									// update width and height of the attachment
+								}
+								
+								$adapter->writeImage($attachment->getLocation());
+								
+								if ($newImage !== null) {
+									// update width, height and filesize of the attachment
 									if ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE) {
 										$attachmentEditor = new AttachmentEditor($attachment);
 										$attachmentEditor->update(array(
 											'height' => $attachment->width,
-											'width' => $attachment->height
+											'width' => $attachment->height,
+											'filesize' => filesize($attachment->getLocation())
 										));
 									}
 								}
-								
-								$adapter->writeImage($attachment->getLocation());
 							}
 						}
 					}
