@@ -606,8 +606,6 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 			this._clearList(true);
 		}
 		else if ($content.length >= this._triggerLength) {
-			this._clearList(false);
-			
 			this._geocoder.geocode({
 				address: $content
 			}, $.proxy(this._success, this));
@@ -625,6 +623,8 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 	 * @param	integer		status
 	 */
 	_success: function(results, status) {
+		this._clearList(false);
+		
 		if (status != google.maps.GeocoderStatus.OK) {
 			return;
 		}
