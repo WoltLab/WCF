@@ -2071,7 +2071,7 @@ RedactorPlugins.wbbcode = function() {
 				}
 				else {
 					$html = this.wbbcode.convertToHtml($openTag + $id + $closingTag);
-					$html = $html.replace($id, $innerHTML.replace(/^<p>/, '').replace(/<\/p>$/, ''));
+					$html = $html.replace($id, html.replace(/^<p>/, '').replace(/<\/p>$/, ''));
 				}
 				
 				$html = $html.replace(/^<p>/, '').replace(/<\/p>$/, '');
@@ -2088,6 +2088,8 @@ RedactorPlugins.wbbcode = function() {
 						if (!window.getSelection().rangeCount) {
 							this.wutil.selectionEndOfEditor();
 						}
+						
+						this.wutil.saveSelection();
 					}
 				}
 				
