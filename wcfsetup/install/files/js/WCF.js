@@ -2410,13 +2410,33 @@ WCF.PeriodicalExecuter = Class.extend({
 	
 	/**
 	 * Resumes the interval-based callback execution.
+	 * 
+	 * @deprecated	2.1 - use restart() instead
 	 */
 	resume: function() {
+		this.restart();
+	},
+	
+	/**
+	 * Restarts the interval-based callback execution.
+	 */
+	restart: function() {
 		if (this._intervalID) {
 			this.stop();
 		}
 		
 		this._intervalID = setInterval($.proxy(this._execute, this), this._interval);
+	},
+	
+	/**
+	 * Sets the interval and restarts the interval.
+	 * 
+	 * @param	integer		interval
+	 */
+	setInterval: function(interval) {
+		this._interval = interval;
+		
+		this.restart();
 	}
 });
 
