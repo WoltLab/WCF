@@ -713,6 +713,7 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 	init: function(searchInput, callback, excludedSearchValues, commaSeperated, showLoadingOverlay) {
 		this._super(searchInput, callback, excludedSearchValues, commaSeperated, showLoadingOverlay);
 		
+		this.setDelay(500);
 		this._geocoder = new google.maps.Geocoder();
 	},
 	
@@ -759,9 +760,25 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 			this._clearList(true);
 		}
 		else if ($content.length >= this._triggerLength) {
-			this._geocoder.geocode({
-				address: $content
-			}, $.proxy(this._success, this));
+			if (this._delay) {
+				if (this._timer !== null) {
+					this._timer.stop();
+				}
+				
+				this._timer = new WCF.PeriodicalExecuter($.proxy(function() {
+					this._geocoder.geocode({
+						address: $content
+					}, $.proxy(this._success, this));
+					
+					this._timer.stop();
+					this._timer = null;
+				}, this), this._delay);
+			}
+			else {
+				this._geocoder.geocode({
+					address: $content
+				}, $.proxy(this._success, this));
+			}
 		}
 		else {
 			// input below trigger length
