@@ -160,5 +160,9 @@ class MembersListPage extends SortablePage {
 			'sidebarName' => 'com.woltlab.wcf.user.MembersListPage',
 			'allowSpidersToIndexThisPage' => true
 		));
+		
+		if (count($this->objectList) === 0) {
+			@header('HTTP/1.0 404 Not Found');
+		}
 	}
 }

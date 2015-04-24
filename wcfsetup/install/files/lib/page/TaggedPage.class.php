@@ -154,5 +154,9 @@ class TaggedPage extends MultipleLinkPage {
 			'resultListApplication' => $this->objectType->getProcessor()->getApplication(),
 			'allowSpidersToIndexThisPage' => true
 		));
+		
+		if (count($this->objectList) === 0) {
+			@header('HTTP/1.0 404 Not Found');
+		}
 	}
 }

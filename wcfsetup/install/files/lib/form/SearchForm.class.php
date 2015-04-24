@@ -286,6 +286,8 @@ class SearchForm extends AbstractCaptchaForm {
 	 * Throws a NamedUserException on search failure.
 	 */
 	public function throwNoMatchesException() {
+		@header('HTTP/1.0 404 Not Found');
+		
 		if (empty($this->query)) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.search.error.user.noMatches'));
 		}
