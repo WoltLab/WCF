@@ -80,7 +80,11 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		$this->userGroups = UserGroup::getGroupsByType(array(UserGroup::OTHER));
+		$this->userGroups = UserGroup::getGroupsByType(array(), array(
+			UserGroup::EVERYONE,
+			UserGroup::GUESTS,
+			UserGroup::USERS
+		));
 		foreach ($this->userGroups as $key => $userGroup) {
 			if (!$userGroup->isAccessible()) {
 				unset($this->userGroups[$key]);
