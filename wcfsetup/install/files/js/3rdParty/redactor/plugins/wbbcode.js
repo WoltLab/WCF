@@ -958,9 +958,19 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			// [*]
+			var $hasListItems = false;
 			data = data.replace(/\[\*\]([\s\S]*?)(?=\[\*\]|\[\/list\])/gi, function(match, content) {
+				$hasListItems = true;
+				
 				return '<li>' + $.trim(content) + '</li>';
 			});
+			
+			// fix expanded formatting for lists
+			if ($hasListItems) {
+				data = data.replace(/(<p style="[^"]+">)(\[list[^\]]*\])?<li>/g, '$2<li>$1');
+				data = data.replace(/(<p style="[^"]+">)<\/li><li>/g, '</li><li>$1');
+				data = data.replace(/(<\/li>\[\/list\])<\/p>/g, '$1');
+			}
 			
 			// fix superflous newlines with nested lists
 			data = data.replace(/\n*(\[list\]<\/li>)/g, '$1');
