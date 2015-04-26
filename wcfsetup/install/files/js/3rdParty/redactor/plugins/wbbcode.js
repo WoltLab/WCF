@@ -2106,7 +2106,7 @@ RedactorPlugins.wbbcode = function() {
 					}
 				}
 				
-				var $originalRange = window.getSelection().getRangeAt(0).cloneRange();
+				window.getSelection().getRangeAt(0).deleteContents();
 				
 				this.wutil.restoreSelection();
 				var $selection = window.getSelection().getRangeAt(0);
@@ -2127,8 +2127,6 @@ RedactorPlugins.wbbcode = function() {
 				}
 				
 				this.insert.html($html, false);
-				
-				$originalRange.deleteContents();
 				
 				$quote = this.$editor.find('#' + $id);
 				if ($quote.length) {
