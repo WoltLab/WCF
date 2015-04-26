@@ -2064,6 +2064,9 @@ WCF.User.LikeLoader = Class.extend({
 			$('#likeType > li:first-child > .button').text(WCF.Language.get('wcf.like.' + (this._likeValue == -1 ? 'dis' : '') + 'likesReceived'));
 			$('#likeType > li:last-child > .button').text(WCF.Language.get('wcf.like.' + (this._likeValue == -1 ? 'dis' : '') + 'likesGiven'));
 			
+			this._container.find('> li.likeListMore button').text(WCF.Language.get('wcf.like.' + (this._likeValue == -1 ? 'dis' : '') + 'likes.more'));
+			this._container.find('> li.likeListMore small').text(WCF.Language.get('wcf.like.' + (this._likeValue == -1 ? 'dis' : '') + 'likes.noMoreEntries'));
+			
 			this._reload();
 		}
 	},
