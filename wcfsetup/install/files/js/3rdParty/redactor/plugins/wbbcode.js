@@ -1522,6 +1522,11 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<\/(div|p)><\/(div|p)>/g, '</p>');
 			//html = html.replace(/<(div|p)><br><\/(div|p)>/g, '<p>');
 			
+			// strip classes from certain elements
+			html = html.replace(/<(?:div|p|span)[^>]+>/gi, function(match) {
+				return match.replace(/ class="[^"]+"/, '');
+			});
+			
 			// drop <wbr>
 			html = html.replace(/<\/?wbr[^>]*>/g, '');
 			
