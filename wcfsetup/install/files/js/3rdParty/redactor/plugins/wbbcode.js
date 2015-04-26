@@ -1522,6 +1522,11 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<\/(div|p)><\/(div|p)>/g, '</p>');
 			//html = html.replace(/<(div|p)><br><\/(div|p)>/g, '<p>');
 			
+			// strip classes from certain elements
+			html = html.replace(/<(?:div|p|span)[^>]+>/gi, function(match) {
+				return match.replace(/ class="[^"]+"/, '');
+			});
+			
 			// drop <wbr>
 			html = html.replace(/<\/?wbr[^>]*>/g, '');
 			
@@ -2101,7 +2106,7 @@ RedactorPlugins.wbbcode = function() {
 					}
 				}
 				
-				var $originalRange = window.getSelection().getRangeAt(0).cloneRange();
+				window.getSelection().getRangeAt(0).deleteContents();
 				
 				this.wutil.restoreSelection();
 				var $selection = window.getSelection().getRangeAt(0);
@@ -2122,8 +2127,6 @@ RedactorPlugins.wbbcode = function() {
 				}
 				
 				this.insert.html($html, false);
-				
-				$originalRange.deleteContents();
 				
 				$quote = this.$editor.find('#' + $id);
 				if ($quote.length) {
