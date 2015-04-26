@@ -1433,6 +1433,15 @@ RedactorPlugins.wbbcode = function() {
 				return openingTag + this.opts.invisibleSpace + closingTag;
 			}
 			
+			// check for unclosed tags in tables
+			var $index = content.indexOf('[/td]');
+			if ($index !== -1) {
+				var $tmp = content.substring(0, $index);
+				if ($tmp.indexOf('[td]') === -1) {
+					return openingTag + $tmp + closingTag + content.substring($index);
+				}
+			}
+			
 			var $tmp = content.split("\n");
 			content = '';
 			
