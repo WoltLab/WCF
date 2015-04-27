@@ -278,12 +278,13 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
+			<!--
 			<option name="enable_pluginstore_widget">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
-				<!-- TODO: change this to "1" once the widget goes live -->
 				<defaultvalue>0</defaultvalue>
 			</option>
+			 -->
 			
 			<option name="module_system_recaptcha"><!-- @deprecated -->
 				<categoryname>module.system</categoryname>
@@ -1405,8 +1406,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 	</import>
 	
 	<delete>
-		<option name="cache_source_memcached_use_pconnect" />
-		<option name="http_gzip_level" />
-		<option name="url_to_lowercase" />
+		<option name="enable_pluginstore_widget" />
 	</delete>
 </data>
