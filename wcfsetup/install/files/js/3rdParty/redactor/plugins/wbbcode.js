@@ -227,17 +227,33 @@ RedactorPlugins.wbbcode = function() {
 					}
 				}
 				
+				var $isSpace = function(sibling) {
+					if (sibling === null) return false;
+					
+					if ((sibling.nodeType === Node.ELEMENT_NODE && sibling.nodeName === 'SPAN') || sibling.nodeType === Node.TEXT_NODE) {
+						if (sibling.textContent === "\u00A0") {
+							return true;
+						}
+					}
+					
+					return false;
+				};
+				
 				// add spaces as paddings
 				var $parent = $smiley.parentElement;
-				var $node = document.createTextNode('\u00A0');
-				$parent.insertBefore($node, $smiley);
-				
-				var $node = document.createTextNode('\u00A0');
-				if ($parent.lastChild === $smiley) {
-					$parent.appendChild($node);
+				if (!$isSpace($smiley.previousSibling)) {
+					var $node = document.createTextNode('\u00A0');
+					$parent.insertBefore($node, $smiley);
 				}
-				else {
-					$parent.insertBefore($node, $smiley.nextSibling);
+				
+				if (!$isSpace($smiley.nextSibling)) {
+					var $node = document.createTextNode('\u00A0');
+					if ($parent.lastChild === $smiley) {
+						$parent.appendChild($node);
+					}
+					else {
+						$parent.insertBefore($node, $smiley.nextSibling);
+					}
 				}
 			}
 			else {
