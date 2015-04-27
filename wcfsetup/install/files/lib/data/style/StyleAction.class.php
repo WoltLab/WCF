@@ -511,6 +511,47 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			}
 		}
 		
+		// copy images
+		if ($this->styleEditor->imagePath && is_dir(WCF_DIR . $this->styleEditor->imagePath)) {
+			$path = FileUtil::removeTrailingSlash($this->styleEditor->imagePath);
+			$newPath = '';
+			$i = 2;
+			while (true) {
+				$newPath = "{$path}-{$i}/";
+				if (!file_exists(WCF_DIR . $newPath)) {
+					break;
+				}
+				
+				$i++;
+			}
+			
+			if (!FileUtil::makePath(WCF_DIR . $newPath)) {
+				$newPath = '';
+			}
+			
+			if ($newPath) {
+				$src = FileUtil::addTrailingSlash(WCF_DIR . $this->styleEditor->imagePath);
+				$dst = WCF_DIR . $newPath;
+				
+				$dir = opendir($src);
+				while (($file = readdir($dir)) !== false) {
+					if ($file != '.' && $file != '..' && !is_dir($file)) {
+						@copy($src . $file, $dst . $file);
+					}
+				}
+				closedir($dir);
+			}
+			
+			$sql = "UPDATE	wcf".WCF_N."_style
+				SET	imagePath = ?
+				WHERE	styleID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				$newPath,
+				$newStyle->styleID
+			));
+		}
+		
 		StyleCacheBuilder::getInstance()->reset();
 		
 		return array(

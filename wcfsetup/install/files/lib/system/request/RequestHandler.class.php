@@ -303,21 +303,6 @@ class RequestHandler extends SingletonFactory {
 			return;
 		}
 		
-		// assign the default controller
-		$currentApplication = ApplicationHandler::getInstance()->getApplication($application);
-		if ($controller = WCF::getApplicationObject($currentApplication)->getPrimaryController()) {
-			$controller = explode('\\', $controller);
-			
-			if (URL_LEGACY_MODE) {
-				HeaderUtil::redirect(LinkHandler::getInstance()->getLink(preg_replace('~(Action|Form|Page)$~', '', array_pop($controller)), array('application' => $controller[0])));
-				exit;
-			}
-			else {
-				$routeData['controller'] = self::getTokenizedController(preg_replace('~(Action|Form|Page)$~', '', array_pop($controller)));
-				return;
-			}
-		}
-		
 		HeaderUtil::redirect($landingPage->getLink());
 		exit;
 	}
