@@ -10,6 +10,7 @@ use wcf\system\option\user\UserOptionHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -232,7 +233,7 @@ class UserProfileAction extends UserAction {
 	public function save() {
 		$userTitle = null;
 		if (isset($this->parameters['values']['__userTitle'])) {
-			$userTitle = $this->parameters['values']['__userTitle'];
+			$userTitle = StringUtil::trim(MessageUtil::stripCrap($this->parameters['values']['__userTitle']));
 			unset($this->parameters['values']['__userTitle']);
 		}
 		

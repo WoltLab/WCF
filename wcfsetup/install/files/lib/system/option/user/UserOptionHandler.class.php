@@ -8,6 +8,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\option\ISearchableConditionUserOption;
 use wcf\system\option\OptionHandler;
 use wcf\util\DateUtil;
+use wcf\util\MessageUtil;
 
 /**
  * Handles user options.
@@ -280,6 +281,11 @@ class UserOptionHandler extends OptionHandler {
 	 */
 	public function readUserInput(array &$source) {
 		parent::readUserInput($source);
+		
+		// remove 4 byte utf-8 characters (e.g. emoji)
+		foreach ($this->rawValues as &$value) {
+			if (is_string($value)) $value = MessageUtil::stripCrap($value);
+		}
 		
 		if ($this->searchMode) {
 			$this->optionValues = $this->rawValues;
