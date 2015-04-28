@@ -834,7 +834,7 @@ WCF.Message.QuickReply = Class.extend({
 			}
 			
 			if ($insertQuote) {
-				this._messageField.redactor('wutil.adjustSelectionForBlockElement');
+				//this._messageField.redactor('wutil.adjustSelectionForBlockElement');
 				this._messageField.redactor('wbbcode.insertQuoteBBCode', data.quote.username, data.quote.link, data.quote.text, data.quote.text);
 				
 				// scroll to editor
