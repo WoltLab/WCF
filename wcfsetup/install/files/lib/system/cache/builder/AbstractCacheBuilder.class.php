@@ -30,7 +30,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	/**
 	 * @see	\wcf\system\cache\builder\ICacheBuilder::getData()
 	 */
-	public function getData(array $parameters = array(), $arrayIndex = '') {
+	public function getData(array $parameters = array(), $arrayIndex = null) {
 		$index = CacheHandler::getInstance()->getCacheIndex($parameters);
 		
 		if (!isset($this->cache[$index])) {
@@ -44,7 +44,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 			}
 		}
 		
-		if (!empty($arrayIndex)) {
+		if (isset($arrayIndex)) {
 			if (!isset($this->cache[$index][$arrayIndex])) {
 				throw new SystemException("array index '".$arrayIndex."' does not exist in cache resource");
 			}
