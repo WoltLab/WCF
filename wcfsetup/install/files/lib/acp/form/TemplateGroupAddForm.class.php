@@ -151,9 +151,9 @@ class TemplateGroupAddForm extends AbstractForm {
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		parent::readData();
-		
 		$this->availableTemplateGroups = TemplateGroup::getSelectList(array(), 1);
+
+		parent::readData();
 	}
 	
 	/**
