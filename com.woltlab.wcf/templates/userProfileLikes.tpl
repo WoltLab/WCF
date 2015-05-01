@@ -4,6 +4,8 @@
 		WCF.Language.addObject({
 			'wcf.like.likes.more': '{lang}wcf.like.likes.more{/lang}',
 			'wcf.like.likes.noMoreEntries': '{lang}wcf.like.likes.noMoreEntries{/lang}',
+			'wcf.like.dislikes.more': '{lang}wcf.like.dislikes.more{/lang}',
+			'wcf.like.dislikes.noMoreEntries': '{lang}wcf.like.dislikes.noMoreEntries{/lang}',
 			'wcf.like.likesReceived': '{lang}wcf.like.likesReceived{/lang}',
 			'wcf.like.likesGiven': '{lang}wcf.like.likesGiven{/lang}',
 			'wcf.like.dislikesReceived': '{lang}wcf.like.dislikesReceived{/lang}',
