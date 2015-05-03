@@ -168,5 +168,5 @@ define(['jQuery', 'enquire', 'DOM/Traverse'], function($, enquire, DOMTraverse) 
 		}
 	};
 	
-	return new UiMobile();
+	return new UIMobile();
 });
