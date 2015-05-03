@@ -42,6 +42,9 @@
 <script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
 <script src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
+
+<script src="{@$__wcf->getPath()}js/require.js?v={@LAST_UPDATE_TIME}"></script>
+
 {else}
 <script src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
@@ -128,13 +131,65 @@
 		{event name='javascriptLanguageImport'}
 	});
 	
-	new WCF.Date.Time();
+	$(function() {
+	console.time('wcf');
+	//WCF.TabMenu.init();
+	//WCF.System.FlexibleMenu.init();
+	console.timeEnd('wcf');
+	});
+</script>
+
+<script data-relocate="true">
+	requirejs.config({
+		baseUrl: '{@$__wcf->getPath()}js',
+		map: {
+			'*': {
+				'CallbackList': 'WoltLab/WCF/CallbackList',
+				'Core': 'WoltLab/WCF/Core',
+				'Dictionary': 'WoltLab/WCF/Dictionary',
+				'DOM/Traverse': 'WoltLab/WCF/DOM/Traverse',
+				'DOM/Util': 'WoltLab/WCF/DOM/Util',
+				'EventHandler': 'WoltLab/WCF/Event/Handler',
+				'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
+				'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple'
+			}
+		}
+	});
 	
-	WCF.Dropdown.init();
-	WCF.System.Mobile.UX.init();
+	/*require(function(require) {
+		var ui = require('WCF/UI');
+		
+		console.debug(ui);
+	});*/
 	
-	WCF.TabMenu.init();
-	WCF.System.FlexibleMenu.init();
+	define('jQuery', [], function() { return window.jQuery; });
+	define('enquire', [], function() { return window.enquire; });
+	
+	$.holdReady(true);
+	require(['Core'], function(core) {
+		core.setup();
+	});
+	/*
+	require(['WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown'], function(relative, dropdown) {
+		relative.init();
+		
+		console.time('wcfNew');
+		dropdown.setup();
+		console.timeEnd('wcfNew');
+		
+		$.holdReady(false);
+	});
+	*/
+	/*
+	require(function(require) {
+		var core = require('WoltLab/WCF/Core');
+		
+		core.Init();
+	});
+	
+	require(['WoltLab/WCF/Core'], function(core) {
+		core.Init();
+	});*/
 </script>
 
 {if ENABLE_DEBUG_MODE}

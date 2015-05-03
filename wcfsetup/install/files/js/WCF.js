@@ -409,11 +409,7 @@ $.fn.extend({
 	 * @return	string
 	 */
 	wcfIdentify: function() {
-		if (!this.attr('id')) {
-			this.attr('id', WCF.getRandomID());
-		}
-		
-		return this.attr('id');
+		return window.domUtilIdentify(this[0]);
 	},
 	
 	/**
@@ -624,14 +620,7 @@ $.extend(WCF, {
 	 * @return	string
 	 */
 	getRandomID: function() {
-		var $elementID = '';
-		
-		do {
-			$elementID = 'wcf' + this._idCounter++;
-		}
-		while ($.wcfIsset($elementID));
-		
-		return $elementID;
+		return window.domUtilGetUniqueId();
 	},
 	
 	/**
@@ -832,6 +821,8 @@ WCF.Dropdown = {
 	 */
 	_dropdowns: { },
 	
+	
+	
 	/**
 	 * container for dropdown menus
 	 * @var	object
@@ -844,78 +835,14 @@ WCF.Dropdown = {
 	 */
 	_menus: { },
 	
+	_api: null,
+	
 	/**
 	 * Initializes dropdowns.
 	 */
-	init: function() {
-		if (this._menuContainer === null) {
-			this._menuContainer = $('<div id="dropdownMenuContainer" />').appendTo(document.body);
-		}
-		
-		var self = this;
-		$('.dropdownToggle:not(.jsDropdownEnabled)').each(function(index, button) {
-			self.initDropdown($(button), false);
-		});
-		
-		if (!this._didInit) {
-			this._didInit = true;
-			
-			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown', $.proxy(this._closeAll, this));
-			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
-			$(document).on('scroll', $.proxy(this._scroll, this));
-		}
-	},
-	
-	/**
-	 * Handles dropdown positions in overlays when scrolling in the overlay.
-	 * 
-	 * @param	object		event
-	 */
-	_dialogScroll: function(event) {
-		var $dialogContent = $(event.currentTarget);
-		$dialogContent.find('.dropdown.dropdownOpen').each(function(index, element) {
-			var $dropdown = $(element);
-			var $dropdownID = $dropdown.wcfIdentify();
-			var $dropdownOffset = $dropdown.offset();
-			var $dialogContentOffset = $dialogContent.offset();
-			
-			var $verticalScrollTolerance = $(element).height() / 2;
-			
-			// check if dropdown toggle is still (partially) visible
-			if ($dropdownOffset.top + $verticalScrollTolerance <= $dialogContentOffset.top) {
-				// top check
-				WCF.Dropdown.toggleDropdown($dropdownID);
-			}
-			else if ($dropdownOffset.top >= $dialogContentOffset.top + $dialogContent.height()) {
-				// bottom check
-				WCF.Dropdown.toggleDropdown($dropdownID);
-			}
-			else if ($dropdownOffset.left <= $dialogContentOffset.left) {
-				// left check
-				WCF.Dropdown.toggleDropdown($dropdownID);
-			}
-			else if ($dropdownOffset.left >= $dialogContentOffset.left + $dialogContent.width()) {
-				// right check
-				WCF.Dropdown.toggleDropdown($dropdownID);
-			}
-			else {
-				WCF.Dropdown.setAlignmentByID($dropdown.wcfIdentify());
-			}
-		});
-	},
-	
-	/**
-	 * Handles dropdown positions in overlays when scrolling in the document.
-	 * 
-	 * @param	object		event
-	 */
-	_scroll: function(event) {
-		for (var $containerID in this._dropdowns) {
-			var $dropdown = this._dropdowns[$containerID];
-			if ($dropdown.data('isOverlayDropdownButton') && $dropdown.hasClass('dropdownOpen')) {
-				this.setAlignmentByID($containerID);
-			}
-		}
+	init: function(api) {
+		if (api) this._api = api;
+		else if (this._api !== null) this._api.initAll();
 	},
 	
 	/**
@@ -925,42 +852,7 @@ WCF.Dropdown = {
 	 * @param	boolean		isLazyInitialization
 	 */
 	initDropdown: function(button, isLazyInitialization) {
-		if (button.hasClass('jsDropdownEnabled') || button.data('target')) {
-			return;
-		}
-		
-		var $dropdown = button.parents('.dropdown');
-		if (!$dropdown.length) {
-			// broken dropdown, ignore
-			console.debug("[WCF.Dropdown] Invalid dropdown passed, button '" + button.wcfIdentify() + "' does not have a parent with .dropdown, aborting.");
-			return;
-		}
-		
-		var $dropdownMenu = button.next('.dropdownMenu');
-		if (!$dropdownMenu.length) {
-			// broken dropdown, ignore
-			console.debug("[WCF.Dropdown] Invalid dropdown passed, dropdown '" + $dropdown.wcfIdentify() + "' does not have a dropdown menu, aborting.");
-			return;
-		}
-		
-		$dropdownMenu.detach().appendTo(this._menuContainer);
-		var $containerID = $dropdown.wcfIdentify();
-		if (!this._dropdowns[$containerID]) {
-			button.addClass('jsDropdownEnabled').click($.proxy(this._toggle, this));
-			
-			this._dropdowns[$containerID] = $dropdown;
-			this._menus[$containerID] = $dropdownMenu;
-			
-			if (!$containerID.match(/^wcf\d+$/)) {
-				$dropdownMenu.attr('data-source', $containerID);
-			}
-		}
-		
-		button.data('target', $containerID);
-		
-		if (isLazyInitialization) {
-			button.trigger('click');
-		}
+		this._api.init(button[0], isLazyInitialization);
 	},
 	
 	/**
@@ -969,11 +861,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	removeDropdown: function(containerID) {
-		if (this._menus[containerID]) {
-			$(this._menus[containerID]).remove();
-			delete this._menus[containerID];
-			delete this._dropdowns[containerID];
-		}
+		this._api.remove(containerID);
 	},
 	
 	/**
@@ -984,14 +872,7 @@ WCF.Dropdown = {
 	 * @param	jQuery		dropdownMenu
 	 */
 	initDropdownFragment: function(dropdown, dropdownMenu) {
-		var $containerID = dropdown.wcfIdentify();
-		if (this._dropdowns[$containerID]) {
-			console.debug("[WCF.Dropdown] Cannot register dropdown identified by '" + $containerID + "' as a fragement.");
-			return;
-		}
-		
-		this._dropdowns[$containerID] = dropdown;
-		this._menus[$containerID] = dropdownMenu.detach().appendTo(this._menuContainer);
+		this._api.initFragment(dropdown[0], dropdownMenu[0]);
 	},
 	
 	/**
@@ -1001,16 +882,7 @@ WCF.Dropdown = {
 	 * @var		object		callback
 	 */
 	registerCallback: function(identifier, callback) {
-		if (!$.isFunction(callback)) {
-			console.debug("[WCF.Dropdown] Callback for '" + identifier + "' is invalid");
-			return false;
-		}
-		
-		if (!this._callbacks[identifier]) {
-			this._callbacks[identifier] = [ ];
-		}
-		
-		this._callbacks[identifier].push(callback);
+		this._api.registerCallback(identifier, callback);
 	},
 	
 	/**
@@ -1020,47 +892,7 @@ WCF.Dropdown = {
 	 * @param	string		targetID
 	 */
 	_toggle: function(event, targetID) {
-		var $targetID = (event === null) ? targetID : $(event.currentTarget).data('target');
-		
-		// check if 'isOverlayDropdownButton' is set which indicates if
-		// the dropdown toggle is in an overlay
-		var $target = this._dropdowns[$targetID];
-		if ($target && $target.data('isOverlayDropdownButton') === undefined) {
-			var $dialogContent = $target.parents('.dialogContent');
-			$target.data('isOverlayDropdownButton', $dialogContent.length > 0);
-			
-			if ($dialogContent.length) {
-				$dialogContent.on('scroll', this._dialogScroll);
-			}
-		}
-		
-		// close all dropdowns
-		for (var $containerID in this._dropdowns) {
-			var $dropdown = this._dropdowns[$containerID];
-			var $dropdownMenu = this._menus[$containerID];
-			
-			if ($dropdown.hasClass('dropdownOpen')) {
-				$dropdown.removeClass('dropdownOpen');
-				$dropdownMenu.removeClass('dropdownOpen');
-				
-				this._notifyCallbacks($containerID, 'close');
-			}
-			else if ($containerID === $targetID && $dropdownMenu[0].children.length > 0) {
-				$dropdown.addClass('dropdownOpen');
-				$dropdownMenu.addClass('dropdownOpen');
-				
-				this._notifyCallbacks($containerID, 'open');
-				
-				this.setAlignment($dropdown, $dropdownMenu);
-			}
-		}
-		
-		WCF.Dropdown.Interactive.Handler.closeAll();
-		
-		if (event !== null) {
-			event.stopPropagation();
-			return false;
-		}
+		this._api._toggle(event, targetID);
 	},
 	
 	/**
@@ -1069,7 +901,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	toggleDropdown: function(containerID) {
-		this._toggle(null, containerID);
+		this._api._toggle(null, containerID);
 	},
 	
 	/**
@@ -1079,11 +911,9 @@ WCF.Dropdown = {
 	 * @return	jQuery
 	 */
 	getDropdown: function(containerID) {
-		if (this._dropdowns[containerID]) {
-			return this._dropdowns[containerID];
-		}
+		var dropdown = this._api.getDropdown(containerID);
 		
-		return null;
+		return (dropdown) ? $(dropdown) : null;
 	},
 	
 	/**
@@ -1093,11 +923,9 @@ WCF.Dropdown = {
 	 * @return	jQuery
 	 */
 	getDropdownMenu: function(containerID) {
-		if (this._menus[containerID]) {
-			return this._menus[containerID];
-		}
+		var menu = this._api.getDropdownMenu(containerID);
 		
-		return null;
+		return (menu) ? $(menu) : null;
 	},
 	
 	/**
@@ -1106,17 +934,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	setAlignmentByID: function(containerID) {
-		var $dropdown = this.getDropdown(containerID);
-		if ($dropdown === null) {
-			console.debug("[WCF.Dropdown] Unable to find dropdown identified by '" + containerID + "'");
-		}
-		
-		var $dropdownMenu = this.getDropdownMenu(containerID);
-		if ($dropdownMenu === null) {
-			console.debug("[WCF.Dropdown] Unable to find dropdown menu identified by '" + containerID + "'");
-		}
-		
-		this.setAlignment($dropdown, $dropdownMenu);
+		this._api.setAlignmentById(containerID);
 	},
 	
 	/**
@@ -1126,169 +944,14 @@ WCF.Dropdown = {
 	 * @param	jQuery		dropdownMenu
 	 */
 	setAlignment: function(dropdown, dropdownMenu) {
-		// force dropdown menu to be placed in the upper left corner, otherwise
-		// it might cause the calculations to be a bit off if the page exceeds
-		// the window boundaries during getDimensions() making it visible
-		if (!dropdownMenu.data('isInitialized')) {
-			dropdownMenu.data('isInitialized', true).css({ left: 0, top: 0 });
-		}
-		
-		// get dropdown position
-		var $dropdownDimensions = dropdown.getDimensions('outer');
-		var $dropdownOffsets = dropdown.getOffsets('offset');
-		var $menuDimensions = dropdownMenu.getDimensions('outer');
-		var $windowWidth = $(window).width();
-		
-		// check if button belongs to an i18n textarea
-		var $button = dropdown.find('.dropdownToggle');
-		if ($button.hasClass('dropdownCaptionTextarea')) {
-			// use button dimensions instead
-			$dropdownDimensions = $button.getDimensions('outer');
-		}
-		
-		// get alignment
-		var $align = 'left';
-		if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
-			$align = 'right';
-		}
-		
-		// calculate offsets
-		var $left = 'auto';
-		var $right = 'auto';
-		if ($align === 'left') {
-			dropdownMenu.removeClass('dropdownArrowRight');
-			
-			$left = $dropdownOffsets.left;
-		}
-		else {
-			dropdownMenu.addClass('dropdownArrowRight');
-			
-			$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width));
-		}
-		
-		// rtl works the same with the exception that we need to offset it with the right boundary
-		if (WCF.Language.get('wcf.global.pageDirection') == 'rtl') {
-			var $oldLeft = $left;
-			var $oldRight = $right;
-			
-			// use reverse positioning
-			if ($left == 'auto') {
-				dropdownMenu.removeClass('dropdownArrowRight');
-			}
-			else {
-				$right = $windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width);
-				$left = 'auto';
-				
-				if ($right + $menuDimensions.width > $windowWidth) {
-					// exceeded window width, restore ltr values
-					$left = $oldLeft;
-					$right = $oldRight;
-					
-					dropdownMenu.addClass('dropdownArrowRight');
-				}
-			}
-		}
-		
-		if ($left == 'auto') $right += 'px';
-		else $left += 'px';
-		
-		// calculate vertical offset
-		var $wasHidden = true;
-		if (dropdownMenu.hasClass('dropdownOpen')) {
-			$wasHidden = false;
-			dropdownMenu.removeClass('dropdownOpen');
-		}
-		
-		var $bottom = 'auto';
-		var $top = $dropdownOffsets.top + $dropdownDimensions.height + 7;
-		
-		if ($.browser.smartphone) {
-			var $align = 'bottom';
-			var $forceLimit = false;
-			var $windowHeight = $(window).height();
-			var $projectedBottom = $top + $menuDimensions.height;
-			
-			// dropdown exceeds bottom boundary, check if the difference is lower if we open it towards top
-			if ($projectedBottom > $windowHeight) {
-				var $projectedTop = $dropdownOffsets.top + 10 - $menuDimensions.height;
-				
-				// align upwards
-				if ($projectedTop >= 0) {
-					$align = 'top';
-				}
-				else {
-					$forceLimit = true;
-					
-					// check which direction (up or down) provides more space
-					var $differenceTop = Math.abs($projectedTop);
-					var $differenceBottom = Math.abs($projectedBottom - $windowHeight);
-					if ($differenceBottom <= $differenceTop) {
-						$align = 'bottom';
-					}
-					else {
-						$align = 'top';
-					}
-				}
-			}
-			
-			if ($align == 'top') {
-				$bottom = $(window).height() - $dropdownOffsets.top + 10;
-				$top = 'auto';
-				
-				if ($forceLimit) {
-					$top = 0;
-					dropdownMenu.children('ul.scrollableDropdownMenu').css('max-height', $bottom);
-				}
-				
-				dropdownMenu.addClass('dropdownArrowBottom');
-			}
-			else {
-				if ($forceLimit) {
-					$bottom = 0;
-					var $ul = dropdownMenu.children('ul.scrollableDropdownMenu');
-					$ul.css('max-height', Math.min($ul.css('max-height').replace(/px$/, ''), $windowHeight - $top));
-				}
-				
-				dropdownMenu.removeClass('dropdownArrowBottom');
-			}
-		}
-		else {
-			if ($top + $menuDimensions.height > $(window).height() + $(document).scrollTop()) {
-				$bottom = $(window).height() - $dropdownOffsets.top + 10;
-				$top = 'auto';
-				
-				dropdownMenu.addClass('dropdownArrowBottom');
-			}
-			else {
-				dropdownMenu.removeClass('dropdownArrowBottom');
-			}
-		}
-		
-		if (!$wasHidden) {
-			dropdownMenu.addClass('dropdownOpen');
-		}
-		
-		dropdownMenu.css({
-			bottom: $bottom,
-			left: $left,
-			right: $right,
-			top: $top
-		});
+		this._api.setAlignment(dropdown[0], dropdownMenu[0]);
 	},
 	
 	/**
 	 * Closes all dropdowns.
 	 */
 	_closeAll: function() {
-		for (var $containerID in this._dropdowns) {
-			var $dropdown = this._dropdowns[$containerID];
-			if ($dropdown.hasClass('dropdownOpen')) {
-				$dropdown.removeClass('dropdownOpen');
-				this._menus[$containerID].removeClass('dropdownOpen');
-				
-				this._notifyCallbacks($containerID, 'close');
-			}
-		}
+		this._api.closeAll();
 	},
 	
 	/**
@@ -1297,28 +960,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	close: function(containerID) {
-		if (!this._dropdowns[containerID]) {
-			return;
-		}
-		
-		this._dropdowns[containerID].removeClass('dropdownOpen');
-		this._menus[containerID].removeClass('dropdownOpen');
-	},
-	
-	/**
-	 * Notifies callbacks.
-	 * 
-	 * @param	string		containerID
-	 * @param	string		action
-	 */
-	_notifyCallbacks: function(containerID, action) {
-		if (!this._callbacks[containerID]) {
-			return;
-		}
-		
-		for (var $i = 0, $length = this._callbacks[containerID].length; $i < $length; $i++) {
-			this._callbacks[containerID][$i](containerID, action);
-		}
+		this._api.close(containerID);
 	},
 	
 	/**
@@ -1328,15 +970,7 @@ WCF.Dropdown = {
 	 * @return	boolean
 	 */
 	destroy: function(containerID) {
-		if (this._dropdowns[containerID] === undefined) {
-			return false;
-		}
-		
-		this.close(containerID);
-		
-		this._menus[containerID].remove();
-		delete this._menus[containerID];
-		delete this._dropdowns[containerID];
+		this._api.destroy(containerID);
 	}
 };
 
@@ -3611,128 +3245,6 @@ WCF.Date.Util = {
 };
 
 /**
- * Handles relative time designations.
- */
-WCF.Date.Time = Class.extend({
-	/**
-	 * Date of current timestamp
-	 * @var	Date
-	 */
-	_date: 0,
-	
-	/**
-	 * list of time elements
-	 * @var	jQuery
-	 */
-	_elements: null,
-	
-	/**
-	 * difference between server and local time
-	 * @var	integer
-	 */
-	_offset: null,
-	
-	/**
-	 * current timestamp
-	 * @var	integer
-	 */
-	_timestamp: 0,
-	
-	/**
-	 * Initializes relative datetimes.
-	 */
-	init: function() {
-		this._elements = $('time.datetime');
-		this._offset = null;
-		this._timestamp = 0;
-		
-		// calculate relative datetime on init
-		this._refresh();
-		
-		// re-calculate relative datetime every minute
-		new WCF.PeriodicalExecuter($.proxy(this._refresh, this), 60000);
-		
-		// bind dom node inserted listener
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Time', $.proxy(this._domNodeInserted, this));
-	},
-	
-	/**
-	 * Updates element collection once a DOM node was inserted.
-	 */
-	_domNodeInserted: function() {
-		this._elements = $('time.datetime');
-		this._refresh();
-	},
-	
-	/**
-	 * Refreshes relative datetime for each element.
-	 */
-	_refresh: function() {
-		this._date = new Date();
-		this._timestamp = (this._date.getTime() - this._date.getMilliseconds()) / 1000;
-		if (this._offset === null) {
-			this._offset = this._timestamp - TIME_NOW;
-		}
-		
-		this._elements.each($.proxy(this._refreshElement, this));
-	},
-	
-	/**
-	 * Refreshes relative datetime for current element.
-	 * 
-	 * @param	integer		index
-	 * @param	object		element
-	 */
-	_refreshElement: function(index, element) {
-		var $element = $(element);
-		
-		if (!$element.attr('title')) {
-			$element.attr('title', $element.text());
-		}
-		
-		var $timestamp = $element.data('timestamp') + this._offset;
-		var $date = $element.data('date');
-		var $time = $element.data('time');
-		var $offset = $element.data('offset');
-		
-		// skip for future dates
-		if ($element.data('isFutureDate')) return;
-		
-		// timestamp is less than 60 seconds ago
-		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 60)) {
-			$element.text(WCF.Language.get('wcf.date.relative.now'));
-		}
-		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		else if (this._timestamp < ($timestamp + 3540)) {
-			var $minutes = Math.max(Math.round((this._timestamp - $timestamp) / 60), 1);
-			$element.text(WCF.Language.get('wcf.date.relative.minutes', { minutes: $minutes }));
-		}
-		// timestamp is less than 24 hours ago
-		else if (this._timestamp < ($timestamp + 86400)) {
-			var $hours = Math.round((this._timestamp - $timestamp) / 3600);
-			$element.text(WCF.Language.get('wcf.date.relative.hours', { hours: $hours }));
-		}
-		// timestamp is less than 6 days ago
-		else if (this._timestamp < ($timestamp + 518400)) {
-			var $midnight = new Date(this._date.getFullYear(), this._date.getMonth(), this._date.getDate());
-			var $days = Math.ceil(($midnight / 1000 - $timestamp) / 86400);
-			
-			// get day of week
-			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset * 1000);
-			var $dow = $dateObj.getDay();
-			var $day = WCF.Language.get('__days')[$dow];
-			
-			$element.text(WCF.Language.get('wcf.date.relative.pastDays', { days: $days, day: $day, time: $time }));
-		}
-		// timestamp is between ~700 million years BC and last week
-		else {
-			var $string = WCF.Language.get('wcf.date.shortDateTimeFormat');
-			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
-		}
-	}
-});
-
-/**
  * Hash-like dictionary. Based upon idead from Prototype's hash
  * 
  * @see	https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/hash.js
@@ -4365,6 +3877,12 @@ WCF.TabMenu = {
 	 * Initializes all TabMenus
 	 */
 	init: function() {
+		require(['WoltLab/WCF/UI/TabMenu'], function(tabMenu) {
+			tabMenu.init();
+		});
+		
+		return;
+		
 		var $containers = $('.tabMenuContainer:not(.staticTabMenuContainer)');
 		var self = this;
 		$containers.each(function(index, tabMenu) {
@@ -7367,148 +6885,6 @@ WCF.System.FlexibleMenu = {
  * Namespace for mobile device-related classes.
  */
 WCF.System.Mobile = { };
-
-/**
- * Handles general navigation and UX on mobile devices.
- */
-WCF.System.Mobile.UX = {
-	/**
-	 * true if mobile optimizations are enabled
-	 * @var	boolean
-	 */
-	_enabled: false,
-	
-	/**
-	 * main container
-	 * @var	jQuery
-	 */
-	_main: null,
-	
-	/**
-	 * sidebar container
-	 * @var	jQuery
-	 */
-	_sidebar: null,
-	
-	/**
-	 * Initializes the WCF.System.Mobile.UX class.
-	 */
-	init: function() {
-		this._enabled = false;
-		this._main = $('#main');
-		this._sidebar = this._main.find('> div > div > .sidebar');
-		
-		if ($.browser.touch) {
-			$('html').addClass('touch');
-		}
-		
-		enquire.register('screen and (max-width: 800px)', {
-			match: $.proxy(this._enable, this),
-			unmatch: $.proxy(this._disable, this),
-			setup: $.proxy(this._setup, this),
-			deferSetup: true
-		});
-		
-		if ($.browser.msie && this._sidebar.width() > 305) {
-			// sidebar is rarely broken on IE9/IE10
-			this._sidebar.css('display', 'none').css('display', '');
-		}
-	},
-	
-	/**
-	 * Initializes the mobile optimization once the media query matches.
-	 */
-	_setup: function() {
-		this._initSidebarToggleButtons();
-		this._initSearchBar();
-		this._initButtonGroupNavigation();
-		
-		WCF.CloseOverlayHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._closeMenus, this));
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._initButtonGroupNavigation, this));
-	},
-	
-	/**
-	 * Enables the mobile optimization.
-	 */
-	_enable: function() {
-		this._enabled = true;
-		
-		if ($.browser.msie) {
-			this._sidebar.css('display', 'none').css('display', '');
-		}
-	},
-	
-	/**
-	 * Disables the mobile optimization.
-	 */
-	_disable: function() {
-		this._enabled = false;
-		
-		if ($.browser.msie) {
-			this._sidebar.css('display', 'none').css('display', '');
-		}
-	},
-	
-	/**
-	 * Initializes the sidebar toggle buttons.
-	 */
-	_initSidebarToggleButtons: function() {
-		var $sidebarLeft = this._main.hasClass('sidebarOrientationLeft');
-		var $sidebarRight = this._main.hasClass('sidebarOrientationRight');
-		if ($sidebarLeft || $sidebarRight) {
-			// use icons if language item is empty/non-existant
-			var $languageShowSidebar = 'wcf.global.sidebar.show' + ($sidebarLeft ? 'Left' : 'Right') + 'Sidebar';
-			if ($languageShowSidebar === WCF.Language.get($languageShowSidebar) || WCF.Language.get($languageShowSidebar) === '') {
-				$languageShowSidebar = '<span class="icon icon16 icon-double-angle-' + ($sidebarLeft ? 'left' : 'right') + '" />';
-			}
-			
-			var $languageHideSidebar = 'wcf.global.sidebar.hide' + ($sidebarLeft ? 'Left' : 'Right') + 'Sidebar';
-			if ($languageHideSidebar === WCF.Language.get($languageHideSidebar) || WCF.Language.get($languageHideSidebar) === '') {
-				$languageHideSidebar = '<span class="icon icon16 icon-double-angle-' + ($sidebarLeft ? 'right' : 'left') + '" />';
-			}
-			
-			// add toggle buttons
-			var self = this;
-			$('<span class="button small mobileSidebarToggleButton">' + $languageShowSidebar + '</span>').appendTo($('.content')).click(function() { self._main.addClass('mobileShowSidebar'); });
-			$('<span class="button small mobileSidebarToggleButton">' + $languageHideSidebar + '</span>').appendTo($('.sidebar')).click(function() { self._main.removeClass('mobileShowSidebar'); });
-		}
-	},
-	
-	/**
-	 * Initializes the search bar.
-	 */
-	_initSearchBar: function() {
-		var $searchBar = $('.searchBar:eq(0)');
-		
-		var self = this;
-		$searchBar.click(function() {
-			if (self._enabled) {
-				$searchBar.addClass('searchBarOpen');
-			}
-		});
-		
-		this._main.click(function() { $searchBar.removeClass('searchBarOpen'); });
-	},
-	
-	/**
-	 * Initializes the button group lists, converting them into native dropdowns.
-	 */
-	_initButtonGroupNavigation: function() {
-		$('.buttonGroupNavigation:not(.jsMobileButtonGroupNavigation)').each(function(index, navigation) {
-			var $navigation = $(navigation).addClass('jsMobileButtonGroupNavigation');
-			var $button = $('<a class="dropdownLabel"><span class="icon icon24 icon-list" /></a>').prependTo($navigation);
-			
-			$button.click(function() { $button.next().toggleClass('open'); return false; });
-		});
-	},
-	
-	/**
-	 * Closes menus.
-	 */
-	_closeMenus: function() {
-		$('.jsMobileButtonGroupNavigation > ul.open').removeClass('open');
-	}
-};
 
 /**
  * Stores object references for global access.
@@ -11639,173 +11015,16 @@ $.widget('ui.wcfSlideshow', {
 	}
 });
 
-/**
- * Custom tab menu implementation for WCF.
- */
-$.widget('ui.wcfTabs', $.ui.tabs, {
-	/**
-	 * Workaround for ids containing a dot ".", until jQuery UI devs learn
-	 * to properly escape ids ... (it took 18 months until they finally
-	 * fixed it!)
-	 * 
-	 * @see	http://bugs.jqueryui.com/ticket/4681
-	 * @see	$.ui.tabs.prototype._sanitizeSelector()
-	 */
-	_sanitizeSelector: function(hash) {
-		return hash.replace(/([:\.])/g, '\\$1');
-	},
-	
-	/**
-	 * @see	$.ui.tabs.prototype.select()
-	 */
-	select: function(index) {
-		if (!$.isNumeric(index)) {
-			// panel identifier given
-			this.panels.each(function(i, panel) {
-				if ($(panel).wcfIdentify() === index) {
-					index = i;
-					return false;
-				}
-			});
-			
-			// unable to identify panel
-			if (!$.isNumeric(index)) {
-				console.debug("[ui.wcfTabs] Unable to find panel identified by '" + index + "', aborting.");
-				return;
+jQuery.fn.extend({
+	wcfTabs: function(method) {
+		var parameters = arguments;
+		
+		require(['DOM/Util', 'WoltLab/WCF/UI/TabMenu'], (function(DOMUtil, TabMenu) {
+			var container = TabMenu.getTabMenu(DOMUtil.identify(this[0]));
+			if (container !== null) {
+				container[method].apply(container, Array.prototype.slice.call(parameters, 1));
 			}
-		}
-		
-		this._setOption('active', index);
-	},
-	
-	/**
-	 * Selects a specific tab by triggering the 'click' event.
-	 * 
-	 * @param	string		tabIdentifier
-	 */
-	selectTab: function(tabIdentifier) {
-		tabIdentifier = '#' + tabIdentifier;
-		
-		this.anchors.each(function(index, anchor) {
-			var $anchor = $(anchor);
-			if ($anchor.prop('hash') === tabIdentifier) {
-				$anchor.trigger('click');
-				return false;
-			}
-		});
-	},
-	
-	/**
-	 * Returns the currently selected tab index.
-	 * 
-	 * @return	integer
-	 */
-	getCurrentIndex: function() {
-		return this.lis.index(this.lis.filter('.ui-tabs-selected'));
-	},
-	
-	/**
-	 * Returns true if identifier is used by an anchor.
-	 * 
-	 * @param	string		identifier
-	 * @param	boolean		isChildren
-	 * @return	boolean
-	 */
-	hasAnchor: function(identifier, isChildren) {
-		var $matches = false;
-		
-		this.anchors.each(function(index, anchor) {
-			var $href = $(anchor).attr('href');
-			if (/#.+/.test($href)) {
-				// split by anchor
-				var $parts = $href.split('#', 2);
-				if (isChildren) {
-					$parts = $parts[1].split('-', 2);
-				}
-				
-				if ($parts[1] === identifier) {
-					$matches = true;
-					
-					// terminate loop
-					return false;
-				}
-			}
-		});
-		
-		return $matches;
-	},
-	
-	/**
-	 * Shows default tab.
-	 */
-	revertToDefault: function() {
-		var $active = this.element.data('active');
-		if (!$active || $active === '') $active = 0;
-		
-		this.select($active);
-	},
-	
-	/**
-	 * @see	$.ui.tabs.prototype._processTabs()
-	 */
-	_processTabs: function() {
-		var that = this;
-		
-		this.tablist = this._getList()
-			.addClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
-			.attr( "role", "tablist" );
-		
-		this.tabs = this.tablist.find( "> li:has(a[href])" )
-			.addClass( "ui-state-default ui-corner-top" )
-			.attr({
-				role: "tab",
-				tabIndex: -1
-			});
-		
-		this.anchors = this.tabs.map(function() {
-				return $( "a", this )[ 0 ];
-			})
-			.addClass( "ui-tabs-anchor" )
-			.attr({
-				role: "presentation",
-				tabIndex: -1
-			});
-		
-		this.panels = $();
-		
-		this.anchors.each(function( i, anchor ) {
-			var selector, panel,
-				anchorId = $( anchor ).uniqueId().attr( "id" ),
-				tab = $( anchor ).closest( "li" ),
-				originalAriaControls = tab.attr( "aria-controls" );
-			
-			// inline tab
-			selector = anchor.hash;
-			panel = that.element.find( that._sanitizeSelector( selector ) );
-			
-			if ( panel.length) {
-				that.panels = that.panels.add( panel );
-			}
-			if ( originalAriaControls ) {
-				tab.data( "ui-tabs-aria-controls", originalAriaControls );
-			}
-			tab.attr({
-				"aria-controls": selector.substring( 1 ),
-				"aria-labelledby": anchorId
-			});
-			panel.attr( "aria-labelledby", anchorId );
-		});
-		
-		this.panels
-			.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" )
-			.attr( "role", "tabpanel" );
-	},
-	
-	/**
-	 * @see	$.ui.tabs.prototype.load()
-	 */
-	load: function( index, event ) {
-		return;
+		}).bind(this));
 	}
 });
 

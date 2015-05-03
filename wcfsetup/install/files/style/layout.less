@@ -1570,6 +1570,10 @@ html[dir="rtl"] {
 	min-height: @wcfGapLarge;
 	position: relative;
 	z-index: 20; /* Prevents border overlay during transition */
+	
+	&.hidden {
+		display: none;
+	}
 }
 
 /* sub tabs */
