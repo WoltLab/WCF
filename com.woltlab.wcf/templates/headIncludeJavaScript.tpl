@@ -142,6 +142,10 @@
 <script data-relocate="true">
 	requirejs.config({
 		baseUrl: '{@$__wcf->getPath()}js',
+		paths: {
+			enquire: '3rdParty/enquire',
+			favico: '3rdParty/favico'
+		},
 		map: {
 			'*': {
 				'CallbackList': 'WoltLab/WCF/CallbackList',
@@ -163,7 +167,6 @@
 	});*/
 	
 	define('jQuery', [], function() { return window.jQuery; });
-	define('enquire', [], function() { return window.enquire; });
 	
 	$.holdReady(true);
 	require(['WoltLab/WCF/Bootstrap'], function(bootstrap) {
