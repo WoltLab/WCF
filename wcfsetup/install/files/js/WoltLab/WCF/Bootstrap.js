@@ -9,9 +9,12 @@
  * @module	WoltLab/WCF/Bootstrap
  */
 define(
-	[       'WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile', 'WoltLab/WCF/UI/TabMenu'], 
-	function(relativeTime,                     simpleDropdown,      uiMobile,                TabMenu)
+	[       'favico', 'enquire', 'WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile', 'WoltLab/WCF/UI/TabMenu'], 
+	function(favico,   enquire,   relativeTime,                     simpleDropdown,      uiMobile,                TabMenu)
 {
+	window.Favico = favico;
+	window.enquire = enquire;
+	
 	/**
 	 * @constructor
 	 */
