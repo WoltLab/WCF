@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Core
  */
-define(['jQuery'], function($) {
+define([], function() {
 	"use strict";
 	
 	/**
@@ -14,20 +14,6 @@ define(['jQuery'], function($) {
 	 */
 	function Core() {};
 	Core.prototype = {
-		/**
-		 * Initializes the core UI modifications and unblocks jQuery's ready event.
-		 */
-		setup: function() {
-			require(['WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile', 'WoltLab/WCF/UI/TabMenu'], function(relativeTime, simpleDropdown, uiMobile, TabMenu) {
-				relativeTime.setup();
-				simpleDropdown.setup();
-				uiMobile.setup();
-				TabMenu.init();
-				
-				$.holdReady(false);
-			});
-		},
-		
 		/**
 		 * Merges objects with the first argument.
 		 * 

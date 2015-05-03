@@ -166,8 +166,8 @@
 	define('enquire', [], function() { return window.enquire; });
 	
 	$.holdReady(true);
-	require(['Core'], function(core) {
-		core.setup();
+	require(['WoltLab/WCF/Bootstrap'], function(bootstrap) {
+		bootstrap.setup();
 	});
 	/*
 	require(['WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown'], function(relative, dropdown) {
