@@ -139,25 +139,10 @@
 	});
 </script>
 
+<script data-relocate="true" src="{@$__wcf->getPath()}js/require.config.js"></script>
 <script data-relocate="true">
 	requirejs.config({
-		baseUrl: '{@$__wcf->getPath()}js',
-		paths: {
-			enquire: '3rdParty/enquire',
-			favico: '3rdParty/favico'
-		},
-		map: {
-			'*': {
-				'CallbackList': 'WoltLab/WCF/CallbackList',
-				'Core': 'WoltLab/WCF/Core',
-				'Dictionary': 'WoltLab/WCF/Dictionary',
-				'DOM/Traverse': 'WoltLab/WCF/DOM/Traverse',
-				'DOM/Util': 'WoltLab/WCF/DOM/Util',
-				'EventHandler': 'WoltLab/WCF/Event/Handler',
-				'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
-				'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple'
-			}
-		}
+		baseUrl: '{@$__wcf->getPath()}js'
 	});
 	
 	/*require(function(require) {
