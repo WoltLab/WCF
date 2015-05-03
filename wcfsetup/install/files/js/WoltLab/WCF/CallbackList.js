@@ -12,7 +12,7 @@ define(['Dictionary'], function(Dictionary) {
 	/**
 	 * @constructor
 	 */
-	var CallbackList = function() {
+	function CallbackList() {
 		this._dictionary = new Dictionary();
 	};
 	CallbackList.prototype = {

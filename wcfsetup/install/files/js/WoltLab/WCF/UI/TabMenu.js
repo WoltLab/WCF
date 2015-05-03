@@ -1,14 +1,34 @@
 "use strict";
 
+/**
+ * Common interface for tab menu access.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	WoltLab/WCF/UI/TabMenu
+ */
 define(['Dictionary', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMUtil, SimpleTabMenu) {
 	var _tabMenus = new Dictionary();
 	
 	/**
 	 * @constructor
 	 */
-	var UiTabMenu = function() {};
-	UiTabMenu.prototype = {
-		init: function() {
+	function UITabMenu() {};
+	UITabMenu.prototype = {
+		/**
+		 * Sets up tab menus and binds listeners.
+		 */
+		setup: function() {
+			this._init();
+			
+			// TODO: use WCF.DOMNodeInsertedHandler
+		},
+		
+		/**
+		 * Initializes available tab menus.
+		 */
+		_init: function() {
 			var tabMenus = document.querySelectorAll('.tabMenuContainer:not(.staticTabMenuContainer)');
 			for (var i = 0, length = tabMenus.length; i < length; i++) {
 				var container = tabMenus[i];
@@ -27,10 +47,16 @@ define(['Dictionary', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMU
 			}
 		},
 		
+		/**
+		 * Returns a SimpleTabMenu instance for given container id.
+		 * 
+		 * @param	{string}	containerId	tab menu container id
+		 * @return	{SimpleTabMenu}	tab menu object
+		 */
 		getTabMenu: function(containerId) {
 			return _tabMenus.get(containerId);
 		}
 	};
 	
-	return new UiTabMenu();
+	return new UITabMenu();
 });

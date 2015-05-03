@@ -12,7 +12,7 @@ define(['jQuery'], function($) {
 	/**
 	 * @constructor
 	 */
-	var Core = function() {};
+	function Core() {};
 	Core.prototype = {
 		/**
 		 * Initializes the core UI modifications and unblocks jQuery's ready event.

@@ -12,57 +12,8 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 	/**
 	 * @constructor
 	 */
-	var UiAlignment = function() {};
-	UiAlignment.prototype = {
-		_tryAlignmentHorizontal: function(align, elDimensions, refDimensions, refOffsets, windowWidth) {
-			var left = 'auto';
-			var right = 'auto';
-			var result = true;
-			
-			if (align === 'left') {
-				left = refOffsets.left;
-				if (left + elDimensions.width > windowWidth) {
-					result = false;
-				}
-			}
-			else {
-				right = refOffsets.left + refDimensions.width;
-				if (right - elDimensions.width < 0) {
-					result = false;
-				}
-			}
-			
-			return {
-				left: left,
-				right: right,
-				result: result
-			}
-		},
-		_tryAlignmentVertical: function(align, elDimensions, refDimensions, refOffsets, windowHeight, verticalOffset) {
-			var bottom = 'auto';
-			var top = 'auto';
-			var result = true;
-			
-			if (align === 'top') {
-				bottom = refOffsets.top + verticalOffset;
-				if (bottom - elDimensions.height < 0) {
-					result = false;
-				}
-			}
-			else {
-				top = refOffsets.top + refDimensions.height + verticalOffset;
-				if (top + elDimensions.height > windowHeight) {
-					result = false;
-				}
-			}
-			
-			return {
-				bottom: bottom,
-				top: top,
-				result: result
-			}
-		},
-		
+	function UIAlignment() {};
+	UIAlignment.prototype = {
 		/**
 		 * Sets the alignment for target element relatively to the reference element.
 		 * 
@@ -142,8 +93,8 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 			
 			// set pointer position
 			if (options.pointer) {
-				var pointer = null;
-				
+				//var pointer = null;
+				// TODO: implement pointer support, e.g. for interactive dropdowns
 				console.debug("TODO");
 			}
 			else if (options.pointerClassNames.length === 2) {
@@ -160,8 +111,79 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 				right: right + (right !== 'auto' ? 'px' : ''),
 				top: top + (top !== 'auto' ? 'px' : '')
 			});
+		},
+		
+		/**
+		 * Calculates left/right position and verifys if the element would be still within the page's boundaries.
+		 * 
+		 * @param	{string}			align		align to this side of the reference element
+		 * @param	{object<string, integer>}	elDimensions	element dimensions
+		 * @param	{object<string, integer>}	refDimensions	reference element dimensions
+		 * @param	{object<string, integer>}	refOffsets	position of reference element relative to the document
+		 * @param	{integer}			windowWidth	window width
+		 * @returns	{object<string, *>}	calculation results
+		 */
+		_tryAlignmentHorizontal: function(align, elDimensions, refDimensions, refOffsets, windowWidth) {
+			var left = 'auto';
+			var right = 'auto';
+			var result = true;
+			
+			if (align === 'left') {
+				left = refOffsets.left;
+				if (left + elDimensions.width > windowWidth) {
+					result = false;
+				}
+			}
+			else {
+				right = refOffsets.left + refDimensions.width;
+				if (right - elDimensions.width < 0) {
+					result = false;
+				}
+			}
+			
+			return {
+				left: left,
+				right: right,
+				result: result
+			};
+		},
+		
+		/**
+		 * Calculates top/bottom position and verifys if the element would be still within the page's boundaries.
+		 * 
+		 * @param	{string}			align		align to this side of the reference element
+		 * @param	{object<string, integer>}	elDimensions	element dimensions
+		 * @param	{object<string, integer>}	refDimensions	reference element dimensions
+		 * @param	{object<string, integer>}	refOffsets	position of reference element relative to the document
+		 * @param	{integer}			windowHeight	window height
+		 * @param	{integer}			verticalOffset	desired gap between element and reference element
+		 * @returns	{object<string, *>}	calculation results
+		 */
+		_tryAlignmentVertical: function(align, elDimensions, refDimensions, refOffsets, windowHeight, verticalOffset) {
+			var bottom = 'auto';
+			var top = 'auto';
+			var result = true;
+			
+			if (align === 'top') {
+				bottom = refOffsets.top + verticalOffset;
+				if (bottom - elDimensions.height < 0) {
+					result = false;
+				}
+			}
+			else {
+				top = refOffsets.top + refDimensions.height + verticalOffset;
+				if (top + elDimensions.height > windowHeight) {
+					result = false;
+				}
+			}
+			
+			return {
+				bottom: bottom,
+				top: top,
+				result: result
+			};
 		}
 	};
 	
-	return new UiAlignment();
+	return new UIAlignment();
 });

@@ -14,7 +14,7 @@ define(function() {
 	/**
 	 * @constructor
 	 */
-	var Dictionary = function() {
+	function Dictionary() {
 		this._dictionary = (_hasMap) ? new Map() : {};
 	};
 	Dictionary.prototype = {

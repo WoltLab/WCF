@@ -17,8 +17,8 @@ define(['jQuery', 'enquire', 'DOM/Traverse'], function($, enquire, DOMTraverse) 
 	/**
 	 * @constructor
 	 */
-	var UiMobile = function() {};
-	UiMobile.prototype = {
+	function UIMobile() {};
+	UIMobile.prototype = {
 		/**
 		 * Initializes the mobile UI using enquire.js.
 		 */

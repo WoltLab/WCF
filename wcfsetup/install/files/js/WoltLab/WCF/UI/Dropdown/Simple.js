@@ -21,7 +21,7 @@ define(
 	/**
 	 * @constructor
 	 */
-	var SimpleDropdown = function() { };
+	function SimpleDropdown() { };
 	SimpleDropdown.prototype = {
 		/**
 		 * Performs initial setup such as setting up dropdowns and binding listeners.

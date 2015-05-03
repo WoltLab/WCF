@@ -15,7 +15,7 @@ define(function() {
 	/**
 	 * @constructor
 	 */
-	var DateTimeRelative = function() {};
+	function DateTimeRelative() {};
 	DateTimeRelative.prototype = {
 		/**
 		 * Transforms <time> elements on init and binds event listeners.

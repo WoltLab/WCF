@@ -48,7 +48,7 @@ define(['DOM/Util'], function(DOMUtil) {
 	/**
 	 * @constructor
 	 */
-	var DOMTraverse = function() {};
+	function DOMTraverse() {};
 	DOMTraverse.prototype = {
 		/**
 		 * Examines parent nodes and returns the first parent that matches the given selector.

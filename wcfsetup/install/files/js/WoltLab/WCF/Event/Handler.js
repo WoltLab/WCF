@@ -14,7 +14,7 @@ define(['Dictionary'], function(Dictionary) {
 	/**
 	 * @constructor
 	 */
-	var EventHandler = function() {};
+	function EventHandler() {};
 	EventHandler.prototype = {
 		/**
 		 * Adds an event listener.

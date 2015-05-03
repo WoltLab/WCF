@@ -23,7 +23,7 @@ define(function() {
 	/**
 	 * @constructor
 	 */
-	var DOMUtil = function() {};
+	function DOMUtil() {};
 	DOMUtil.prototype = {
 		/**
 		 * Returns a unique element id.

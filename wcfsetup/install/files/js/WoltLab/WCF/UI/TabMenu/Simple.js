@@ -14,7 +14,7 @@ define(['jQuery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Diction
 	 * @param	{Element}	container	container element
 	 * @constructor
 	 */
-	var TabMenuSimple = function(containerId, container) {
+	function TabMenuSimple(containerId, container) {
 		this._container = container;
 		this._containers = new Dictionary();
 		this._containerId = containerId;
