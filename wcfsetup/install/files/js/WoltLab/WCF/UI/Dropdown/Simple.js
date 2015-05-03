@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Simple Dropdown
  * 
@@ -12,6 +10,8 @@ define(
 	[       'CallbackList', 'Dictionary', 'UI/Alignment', 'DOM/Traverse', 'DOM/Util'],
 	function(CallbackList,   Dictionary,    uiAlignment,    DOMTraverse,    DOMUtil)
 {
+	"use strict";
+	
 	var _availableDropdowns = null;
 	var _callbacks = null;
 	var _dropdowns = null;

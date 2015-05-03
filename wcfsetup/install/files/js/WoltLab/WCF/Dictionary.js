@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Dictionary implemention relying on an object or if supported on a Map to hold key => value data.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/Dictionary
  */
 define(function() {
+	"use strict";
+	
 	var _hasMap = window.hasOwnProperty('Map');
 	
 	/**

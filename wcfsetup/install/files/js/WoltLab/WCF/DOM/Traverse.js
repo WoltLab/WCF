@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Provides helper functions to traverse the DOM.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/DOM/Traverse
  */
 define(['DOM/Util'], function(DOMUtil) {
+	"use strict";
+	
 	/** @const */ var NONE = 0;
 	/** @const */ var SELECTOR = 1;
 	/** @const */ var CLASS_NAME = 2;

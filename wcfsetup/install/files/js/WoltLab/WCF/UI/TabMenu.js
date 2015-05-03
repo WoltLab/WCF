@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Common interface for tab menu access.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/UI/TabMenu
  */
 define(['Dictionary', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMUtil, SimpleTabMenu) {
+	"use strict";
+	
 	var _tabMenus = new Dictionary();
 	
 	/**

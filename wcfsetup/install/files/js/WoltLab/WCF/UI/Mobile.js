@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Modifies the interface to provide a better usability for mobile devices.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/UI/Mobile
  */
 define(['jQuery', 'enquire', 'DOM/Traverse'], function($, enquire, DOMTraverse) {
+	"use strict";
+	
 	var _buttonGroupNavigations = null;
 	var _enabled = false;
 	var _main = null;

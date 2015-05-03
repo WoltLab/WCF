@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Simple tab menu implementation with a straight-forward logic.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/UI/TabMenu/Simple
  */
 define(['jQuery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Dictionary, DOMUtil, EventHandler) {
+	"use strict";
+	
 	/**
 	 * @param	{string}	containerId	container id
 	 * @param	{Element}	container	container element

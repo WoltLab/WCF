@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Provides the basic core functionality.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/Core
  */
 define(['jQuery'], function($) {
+	"use strict";
+	
 	/**
 	 * @constructor
 	 */

@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Transforms <time> elements to display the elapsed time relative to the current time.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/Date/Time/Relative
  */
 define(function() {
+	"use strict";
+	
 	var _elements = null;
 	var _offset = null;
 	

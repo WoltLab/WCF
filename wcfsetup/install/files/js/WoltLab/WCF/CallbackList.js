@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Simple API to store and invoke multiple callbacks per identifier.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/CallbackList
  */
 define(['Dictionary'], function(Dictionary) {
+	"use strict";
+	
 	/**
 	 * @constructor
 	 */

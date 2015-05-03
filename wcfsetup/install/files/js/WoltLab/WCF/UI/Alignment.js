@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Utility class to align elements relatively to another.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/UI/Alignment
  */
 define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
+	"use strict";
+	
 	/**
 	 * @constructor
 	 */

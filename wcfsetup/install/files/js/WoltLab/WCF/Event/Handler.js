@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Versatile event system similar to the WCF-PHP counter part.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/Event/Handler
  */
 define(['Dictionary'], function(Dictionary) {
+	"use strict";
+	
 	var _listeners = new Dictionary();
 	
 	/**

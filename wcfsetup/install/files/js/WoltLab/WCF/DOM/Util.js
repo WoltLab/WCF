@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Provides helper functions to work with DOM nodes.
  * 
@@ -9,6 +7,8 @@
  * @module	WoltLab/WCF/DOM/Util
  */
 define(function() {
+	"use strict";
+	
 	var _matchesSelectorFunction = '';
 	var _possibleFunctions = ['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector'];
 	for (var i = 0; i < 4; i++) {
