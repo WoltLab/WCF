@@ -138,7 +138,7 @@
 		baseUrl: '{@$__wcf->getPath()}js'
 	});
 	
-	define('jQuery', [], function() { return window.jQuery; });
+	define('jquery', [], function() { return window.jQuery; });
 	
 	$.holdReady(true);
 	require(['WoltLab/WCF/Bootstrap'], function(bootstrap) {

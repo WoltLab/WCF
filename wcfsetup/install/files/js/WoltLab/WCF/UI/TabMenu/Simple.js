@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/TabMenu/Simple
  */
-define(['jQuery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Dictionary, DOMUtil, EventHandler) {
+define(['jquery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Dictionary, DOMUtil, EventHandler) {
 	"use strict";
 	
 	/**

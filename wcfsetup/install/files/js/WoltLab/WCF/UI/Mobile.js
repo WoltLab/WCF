@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Mobile
  */
-define(['jQuery', 'enquire', 'DOM/Traverse'], function($, enquire, DOMTraverse) {
+define(['jquery', 'enquire', 'DOM/Traverse'], function($, enquire, DOMTraverse) {
 	"use strict";
 	
 	var _buttonGroupNavigations = null;
