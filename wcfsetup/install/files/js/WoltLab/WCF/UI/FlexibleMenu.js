@@ -13,7 +13,7 @@ define(['Core', 'Dictionary', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], 
 	/**
 	 * @constructor
 	 */
-	var UIFlexibleMenu = function() {
+	function UIFlexibleMenu() {
 		this._containers = new Dictionary();
 		this._dropdowns = new Dictionary();
 		this._dropdownMenus = new Dictionary();
