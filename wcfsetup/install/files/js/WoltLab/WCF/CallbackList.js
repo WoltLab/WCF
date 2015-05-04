@@ -21,12 +21,10 @@ define(['Dictionary'], function(Dictionary) {
 		 * 
 		 * @param	{string}	identifier	arbitrary string to group and identify callbacks
 		 * @param	{function}	callback	callback function
-		 * @return	{boolean}	false if callback is not a function
 		 */
 		add: function(identifier, callback) {
 			if (typeof callback !== 'function') {
 				throw new TypeError("Expected a valid callback as second argument for identifier '" + identifier + "'.");
-				return false;
 			}
 			
 			if (!this._dictionary.has(identifier)) {
@@ -34,8 +32,6 @@ define(['Dictionary'], function(Dictionary) {
 			}
 			
 			this._dictionary.get(identifier).push(callback);
-			
-			return true;
 		},
 		
 		/**

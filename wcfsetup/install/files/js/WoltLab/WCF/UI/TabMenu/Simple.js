@@ -79,32 +79,27 @@ define(['jquery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Diction
 				}
 				
 				if (this._tabs.has(name)) {
-					throw "Tab names must be unique, li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "') exists more than once.";
-					return false;
+					throw new Error("Tab names must be unique, li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "') exists more than once.");
 				}
 				
 				var container = this._containers.get(name);
 				if (container === null) {
-					throw "Expected content element for li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "').";
-					return false;
+					throw new Error("Expected content element for li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "').");
 				}
 				else if (container.parentNode !== this._container) {
-					throw "Expected content element '" + name + "' (tab menu id: '" + this._containerId + "') to be a direct children.";
-					return false;
+					throw new Error("Expected content element '" + name + "' (tab menu id: '" + this._containerId + "') to be a direct children.");
 				}
 				
 				// check if tab holds exactly one children which is an anchor element
 				if (tab.childElementCount !== 1 || tab.children[0].nodeName !== 'A') {
-					throw "Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "').";
-					return false;
+					throw new Error("Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "').");
 				}
 				
 				this._tabs.set(name, tab);
 			}
 			
 			if (!this._tabs.size) {
-				throw "Expected at least one tab (tab menu id: '" + this._containerId + "').";
-				return false;
+				throw new Error("Expected at least one tab (tab menu id: '" + this._containerId + "').");
 			}
 			
 			if (this._isLegacy) {
@@ -191,8 +186,7 @@ define(['jquery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Diction
 				}
 				
 				if (tab === null) {
-					throw "Expected a valid tab name (tab menu id: '" + this._containerId + "').";
-					return;
+					throw new Error("Expected a valid tab name (tab menu id: '" + this._containerId + "').");
 				}
 			}
 			

@@ -27,7 +27,6 @@ define(function() {
 		set: function(key, value) {
 			if (typeof key !== "string") {
 				throw new TypeError("Only strings can be used as keys, rejected '" +  + "' (" + typeof key + ").");
-				return;
 			}
 			
 			if (_hasMap) this._dictionary.set(key, value);

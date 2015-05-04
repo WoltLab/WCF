@@ -69,14 +69,12 @@ define(
 			
 			var dropdown = DOMTraverse.parentByClass(button, 'dropdown');
 			if (dropdown === null) {
-				throw "Invalid dropdown passed, button '" + DOMUtil.identify(button) + "' does not have a parent with .dropdown.";
-				return;
+				throw new Error("Invalid dropdown passed, button '" + DOMUtil.identify(button) + "' does not have a parent with .dropdown.");
 			}
 			
 			var menu = DOMTraverse.nextByClass(button, 'dropdownMenu');
 			if (menu === null) {
-				throw "Invalid dropdown passed, button '" + DOMUtil.identify(button) + "' does not have a menu as next sibling.";
-				return;
+				throw new Error("Invalid dropdown passed, button '" + DOMUtil.identify(button) + "' does not have a menu as next sibling.");
 			}
 			
 			// move menu into global container
@@ -111,8 +109,7 @@ define(
 		initFragment: function(dropdown, menu) {
 			var containerId = DOMUtil.identify(dropdown);
 			if (_dropdowns.has(dropdown)) {
-				throw "Dropdown identified by '" + DOMUtil.identify(dropdown) + "' has already been registered.";
-				return;
+				throw new Error("Dropdown identified by '" + DOMUtil.identify(dropdown) + "' has already been registered.");
 			}
 			
 			_dropdowns.set(containerId, dropdown);
@@ -186,8 +183,7 @@ define(
 		setAlignmentById: function(containerId) {
 			var dropdown = _dropdowns.get(containerId);
 			if (dropdown === null) {
-				throw "Unknown dropdown identifier '" + containerId + "'.";
-				return;
+				throw new Error("Unknown dropdown identifier '" + containerId + "'.");
 			}
 			
 			var menu = _menus.get(containerId);
