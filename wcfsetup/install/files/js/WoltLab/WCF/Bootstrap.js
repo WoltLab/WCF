@@ -30,7 +30,7 @@ define(
 			simpleDropdown.setup();
 			uiMobile.setup();
 			TabMenu.setup();
-			FlexibleMenu.setup();
+			UIFlexibleMenu.setup();
 			
 			$.holdReady(false);
 		}
