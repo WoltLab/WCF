@@ -9,9 +9,11 @@
  * @module	WoltLab/WCF/Bootstrap
  */
 define(
-	[       'favico', 'enquire', 'WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile', 'WoltLab/WCF/UI/TabMenu'], 
-	function(favico,   enquire,   relativeTime,                     simpleDropdown,      uiMobile,                TabMenu)
+	[       'favico', 'enquire', 'WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile', 'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu'], 
+	function(favico,   enquire,   relativeTime,                     simpleDropdown,      uiMobile,                TabMenu,                  FlexibleMenu)
 {
+	"use strict";
+	
 	window.Favico = favico;
 	window.enquire = enquire;
 	
@@ -28,10 +30,11 @@ define(
 			simpleDropdown.setup();
 			uiMobile.setup();
 			TabMenu.setup();
+			FlexibleMenu.setup();
 			
 			$.holdReady(false);
 		}
-	}
+	};
 	
 	return new Bootstrap();
 });

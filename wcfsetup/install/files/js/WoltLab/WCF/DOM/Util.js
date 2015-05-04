@@ -132,14 +132,14 @@ define(function() {
 			return {
 				top: rect.top + document.body.scrollTop,
 				left: rect.left + document.body.scrollLeft
-			}
+			};
 		},
 		
 		/**
 		 * Applies a list of CSS properties to an element.
 		 * 
 		 * @param	{Element}		el	element
-		 * @param	{Object<string, mixed}	styles	list of CSS styles
+		 * @param	{Object<string, mixed>}	styles	list of CSS styles
 		 */
 		setStyles: function(el, styles) {
 			for (var property in styles) {
@@ -147,6 +147,25 @@ define(function() {
 					el.style.setProperty(property, styles[property]);
 				}
 			}
+		},
+		
+		/**
+		 * Returns a style property value as integer.
+		 * 
+		 * The behavior of this method is undefined for properties that are not considered
+		 * to have a "numeric" value, e.g. "background-image".
+		 * 
+		 * @param	{CSSStyleDeclaration}	styles		result of window.getComputedStyle()
+		 * @param	{string}		propertyName	property name
+		 * @return	{integer}	property value as integer
+		 */
+		styleAsInt: function(styles, propertyName) {
+			var value = styles.getPropertyValue(propertyName);
+			if (value === null) {
+				return 0;
+			}
+			
+			return parseInt(value);
 		}
 	};
 	

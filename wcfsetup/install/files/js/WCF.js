@@ -3877,8 +3877,8 @@ WCF.TabMenu = {
 	 * Initializes all TabMenus
 	 */
 	init: function() {
-		require(['WoltLab/WCF/UI/TabMenu'], function(tabMenu) {
-			tabMenu.init();
+		require(['WoltLab/WCF/UI/TabMenu'], function(UITabMenu) {
+			UITabMenu.setup();
 		});
 		
 		return;
@@ -6648,73 +6648,9 @@ WCF.System.Dependency.Manager = {
  */
 WCF.System.FlexibleMenu = {
 	/**
-	 * list of containers
-	 * @var	object<jQuery>
-	 */
-	_containers: { },
-	
-	/**
-	 * list of registered container ids
-	 * @var	array<string>
-	 */
-	_containerIDs: [ ],
-	
-	/**
-	 * list of dropdowns
-	 * @var	object<jQuery>
-	 */
-	_dropdowns: { },
-	
-	/**
-	 * list of dropdown menus
-	 * @var	object<jQuery>
-	 */
-	_dropdownMenus: { },
-	
-	/**
-	 * list of hidden status for containers
-	 * @var	object<boolean>
-	 */
-	_hasHiddenItems: { },
-	
-	/**
-	 * true if menus are currently rebuilt
-	 * @var	boolean
-	 */
-	_isWorking: false,
-	
-	/**
-	 * list of tab menu items per container
-	 * @var	object<jQuery>
-	 */
-	_menuItems: { },
-	
-	/**
 	 * Initializes the WCF.System.FlexibleMenu class.
 	 */
-	init: function() {
-		// register .mainMenu and .navigationHeader by default
-		this.registerMenu('mainMenu');
-		this.registerMenu($('.navigationHeader:eq(0)').wcfIdentify());
-		
-		this._registerTabMenus();
-		
-		$(window).resize($.proxy(this.rebuildAll, this));
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.FlexibleMenu', $.proxy(this._registerTabMenus, this));
-	},
-	
-	/**
-	 * Registers tab menus.
-	 */
-	_registerTabMenus: function() {
-		// register tab menus
-		$('.tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)').each(function(index, tabMenuContainer) {
-			var $navigation = $(tabMenuContainer).addClass('jsFlexibleMenuEnabled').children('nav');
-			if ($navigation.length && $navigation.find('> ul:eq(0) > li').length) {
-				WCF.System.FlexibleMenu.registerMenu($navigation.wcfIdentify());
-			}
-		});
-	},
+	init: function() { /* does nothing */ },
 	
 	/**
 	 * Registers a tab-based menu by id.
@@ -6732,39 +6668,9 @@ WCF.System.FlexibleMenu = {
 	 * @param	string		containerID
 	 */
 	registerMenu: function(containerID) {
-		var $container = $('#' + containerID);
-		if (!$container.length) {
-			console.debug("[WCF.System.FlexibleMenu] Unable to find container identified by '" + containerID + "', aborting.");
-			return;
-		}
-		
-		this._containerIDs.push(containerID);
-		this._containers[containerID] = $container;
-		this._menuItems[containerID] = $container.find('> ul:eq(0) > li');
-		this._dropdowns[containerID] = $('<li class="dropdown jsFlexibleMenuDropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).click($.proxy(this._click, this));
-		this._dropdownMenus[containerID] = $('<ul class="dropdownMenu" />').appendTo(this._dropdowns[containerID]);
-		this._hasHiddenItems[containerID] = false;
-		
-		this.rebuild(containerID);
-		
-		WCF.Dropdown.initDropdown(this._dropdowns[containerID].children('a'));
-	},
-	
-	/**
-	 * Rebuilds all registered containers.
-	 */
-	rebuildAll: function() {
-		if (this._isWorking) {
-			return;
-		}
-		
-		this._isWorking = true;
-		
-		for (var $i = 0, $length = this._containerIDs.length; $i < $length; $i++) {
-			this.rebuild(this._containerIDs[$i]);
-		}
-		
-		this._isWorking = false;
+		require(['WoltLab/WCF/UI/FlexibleMenu'], function(UIFlexibleMenu) {
+			UIFlexibleMenu.register(containerID);
+		});
 	},
 	
 	/**
@@ -6773,111 +6679,9 @@ WCF.System.FlexibleMenu = {
 	 * @param	string		containerID
 	 */
 	rebuild: function(containerID) {
-		if (!this._containers[containerID]) {
-			console.debug("[WCF.System.FlexibleMenu] Cannot rebuild unknown container identified by '" + containerID + "'");
-			return;
-		}
-		
-		var $container = this._containers[containerID];
-		
-		// hide all items
-		var $menuItems = this._menuItems[containerID].hide();
-		
-		// the active item must always be visible
-		var $activeItem = $menuItems.filter('.active, .ui-state-active').show();
-		
-		// insert dropdown for calculation purposes
-		if (!this._hasHiddenItems[containerID]) {
-			this._dropdowns[containerID].appendTo($container.children('ul:eq(0)'));
-		}
-		var $dropdownWidth = this._dropdowns[containerID].outerWidth(true);
-		
-		// get maximum width
-		var $parent = $container.parent();
-		var $maximumWidth = $parent.innerWidth();
-		
-		// exclude padding
-		$maximumWidth -= $parent.cssAsNumber('padding-left') + $parent.cssAsNumber('padding-right');
-		
-		// substract margins and paddings from the container itself
-		$maximumWidth -= $container.cssAsNumber('margin-left') + $container.cssAsNumber('margin-right');
-		$maximumWidth -= $container.cssAsNumber('padding-left') + $container.cssAsNumber('padding-right');
-		
-		// substract paddings from the actual list
-		$maximumWidth -= $container.children('ul:eq(0)').cssAsNumber('padding-left') + $container.children('ul:eq(0)').cssAsNumber('padding-right');
-		
-		// the active item must always be visible, substract its width
-		$maximumWidth -= $activeItem.outerWidth(true);
-		
-		// show items until maximum width is exceeded
-		this._hasHiddenItems[containerID] = false;
-		for (var $i = 0; $i < $menuItems.length; $i++) {
-			var $item = $($menuItems[$i]);
-			
-			// ignore active item because it is already visible
-			if ($item.hasClass('active') || $item.hasClass('ui-state-active')) {
-				continue;
-			}
-			
-			var $width = $item.outerWidth(true);
-			if ($maximumWidth - $width > 0) {
-				$maximumWidth -= $width;
-				$item.show();
-			}
-			else {
-				// check if dropdown no longer fits in
-				if ($maximumWidth < $dropdownWidth) {
-					// hide previous item to clear up some space for the dropdown unless it is the active item
-					var $prev = $item.prev();
-					if ($prev.hasClass('active') || $prev.hasClass('ui-state-active')) {
-						$prev.prev().hide();
-					}
-					else {
-						$prev.hide();
-					}
-				}
-				
-				this._hasHiddenItems[containerID] = true;
-				
-				break;
-			}
-		}
-		
-		// rebuild dropdown
-		if (this._hasHiddenItems[containerID]) {
-			this._dropdownMenus[containerID].empty();
-			var self = this;
-			$menuItems.each($.proxy(function(index, item) {
-				if ($(item).is(':visible')) {
-					return true;
-				}
-				
-				$('<li>' + $(item).html() + '</li>').data('index', index).appendTo(this._dropdownMenus[containerID]).click(function(event) {
-					// forward click to the original item
-					var $item = $($menuItems[$(event.currentTarget).data('index')]);
-					if ($item[0].tagName === 'A') {
-						$item.trigger('click');
-					}
-					else if ($item[0].tagName === 'LI') {
-						$item.find('a').trigger('click');
-					}
-					
-					// prevent links being followed (they are mandatory in jQuery UI's tab menu)
-					if ($item.parent().hasClass('ui-tabs-nav')) {
-						event.preventDefault();
-					}
-					
-					// force a rebuild to guarantee the active item being visible
-					setTimeout(function() {
-						self.rebuild(containerID);
-					}, 50);
-				});
-			}, this));
-		}
-		else {
-			// remove dropdown if there are no hidden items
-			this._dropdowns[containerID].detach();
-		}
+		require(['WoltLab/WCF/UI/FlexibleMenu'], function(UIFlexibleMenu) {
+			UIFlexibleMenu.rebuild(containerID);
+		});
 	}
 };
 

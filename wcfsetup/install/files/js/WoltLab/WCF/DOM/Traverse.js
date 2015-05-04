@@ -21,6 +21,18 @@ define(['DOM/Util'], function(DOMUtil) {
 		function(el, tagName) { return el.nodeName === tagName; }
 	];
 	
+	var _children = function(el, type, value) {
+		var children = [];
+		
+		for (var i = 0; i < el.childElementCount; i++) {
+			if (_probe[type](el.children[i], value)) {
+				children.push(el.children[i]);
+			}
+		}
+		
+		return children;
+	};
+	
 	var _parent = function(el, type, value) {
 		el = el.parentNode;
 		
@@ -50,6 +62,39 @@ define(['DOM/Util'], function(DOMUtil) {
 	 */
 	function DOMTraverse() {};
 	DOMTraverse.prototype = {
+		/**
+		 * Examines child elements and returns all children matching the given selector.
+		 * 
+		 * @param	{Element}		el		element
+		 * @param	{string}		selector	CSS selector to match child elements against
+		 * @return	{array<Element>}	list of children matching the selector
+		 */
+		childrenBySel: function(el, selector) {
+			return _children(el, SELECTOR, selector);
+		},
+		
+		/**
+		 * Examines child elements and returns all children that have the given CSS class set.
+		 * 
+		 * @param	{Element}		el		element
+		 * @param	{string}		className	CSS class name
+		 * @return	{array<Element>}	list of children with the given class
+		 */
+		childrenByClass: function(el, className) {
+			return _children(el, CLASS_NAME, className);
+		},
+		
+		/**
+		 * Examines child elements and returns all children which equal the given tag.
+		 * 
+		 * @param	{Element}		el		element
+		 * @param	{string}		tagName		element tag name
+		 * @return	{array<Element>}	list of children equaling the tag name
+		 */
+		childrenByTag: function(el, tagName) {
+			return _children(el, TAG_NAME, tagName);
+		},
+		
 		/**
 		 * Examines parent nodes and returns the first parent that matches the given selector.
 		 * 

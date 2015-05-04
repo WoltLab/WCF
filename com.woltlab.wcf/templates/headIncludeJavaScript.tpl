@@ -130,13 +130,6 @@
 		
 		{event name='javascriptLanguageImport'}
 	});
-	
-	$(function() {
-	console.time('wcf');
-	//WCF.TabMenu.init();
-	//WCF.System.FlexibleMenu.init();
-	console.timeEnd('wcf');
-	});
 </script>
 
 <script data-relocate="true" src="{@$__wcf->getPath()}js/require.config.js"></script>
@@ -145,39 +138,12 @@
 		baseUrl: '{@$__wcf->getPath()}js'
 	});
 	
-	/*require(function(require) {
-		var ui = require('WCF/UI');
-		
-		console.debug(ui);
-	});*/
-	
 	define('jQuery', [], function() { return window.jQuery; });
 	
 	$.holdReady(true);
 	require(['WoltLab/WCF/Bootstrap'], function(bootstrap) {
 		bootstrap.setup();
 	});
-	/*
-	require(['WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown'], function(relative, dropdown) {
-		relative.init();
-		
-		console.time('wcfNew');
-		dropdown.setup();
-		console.timeEnd('wcfNew');
-		
-		$.holdReady(false);
-	});
-	*/
-	/*
-	require(function(require) {
-		var core = require('WoltLab/WCF/Core');
-		
-		core.Init();
-	});
-	
-	require(['WoltLab/WCF/Core'], function(core) {
-		core.Init();
-	});*/
 </script>
 
 {if ENABLE_DEBUG_MODE}
