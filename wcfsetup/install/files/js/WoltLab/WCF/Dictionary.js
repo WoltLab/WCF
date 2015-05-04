@@ -89,8 +89,26 @@ define(function() {
 			else {
 				var keys = Object.keys(this._dictionary);
 				for (var i = 0, length = keys.length; i < length; i++) {
-					callback(this._dictionary[keys[i]]);
+					callback(this._dictionary[keys[i]], keys[i]);
 				}
+			}
+		},
+		
+		/**
+		 * Merges one or more Dictionary instances into this one.
+		 * 
+		 * @param	{...Dictionary}		var_args	one or more Dictionary instances
+		 */
+		merge: function() {
+			for (var i = 0, length = arguments.length; i < length; i++) {
+				var dictionary = arguments[i];
+				if (!(dictionary instanceof Dictionary)) {
+					throw new TypeError("Expected an object of type Dictionary, but argument " + i + " is not.");
+				}
+				
+				dictionary.forEach((function(value, key) {
+					this.set(key, value);
+				}).bind(this));
 			}
 		}
 	};
