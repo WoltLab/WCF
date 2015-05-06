@@ -460,7 +460,7 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 		this._markerClusterer = new MarkerClusterer(this._map, this._markers, {
 			maxZoom: 17,
 			// replace default value for https support
-			imagePath: MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_.replace(/^http:/, '')
+			imagePath: '//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m'
 		});
 		
 		this._markerSpiderfier = new OverlappingMarkerSpiderfier(this._map, {
