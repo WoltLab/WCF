@@ -117,7 +117,7 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 			WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
 					".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
 			".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
-			LIMIT		1000";
+			LIMIT		".($limit == 1000 ? SearchEngine::INNER_SEARCH_LIMIT : $limit);
 		
 		return array(
 			'fulltextCondition' => $fulltextCondition,
