@@ -297,6 +297,18 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
+	 * @see wcf\form\IForm::submit()
+	 */
+	public function submit() {
+		try {
+			parent::submit();
+		}
+		catch (NamedUserException $e) {
+			WCF::getTPL()->assign('errorMessage', $e->getMessage());
+		}
+	}
+	
+	/**
 	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
