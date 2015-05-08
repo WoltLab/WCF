@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\user\UserProfileAction;
 use wcf\data\user\UserProfileList;
 use wcf\data\IGroupedUserListAction;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
@@ -46,13 +47,21 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 		
 		// get users
 		$users = array();
-		$userIDs = UserBirthdayCache::getInstance()->getBirthdays($month, $day);
-		$userList = new UserProfileList();
-		$userList->setObjectIDs($userIDs);
-		$userList->readObjects();
-		foreach ($userList->getObjects() as $user) {
-			if (!$user->isProtected() && $user->getAge($year) >= 0) {
-				$users[] = $user;
+		$userOptions = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+		if (isset($userOptions['birthday'])) {
+			$birthdayUserOption = $userOptions['birthday'];
+			
+			$userIDs = UserBirthdayCache::getInstance()->getBirthdays($month, $day);
+			$userList = new UserProfileList();
+			$userList->setObjectIDs($userIDs);
+			$userList->readObjects();
+				
+			foreach ($userList->getObjects() as $user) {
+				$birthdayUserOption->setUser($user->getDecoratedObject());
+					
+				if (!$user->isProtected() && $birthdayUserOption->isVisible() && $user->getAge($year) >= 0) {
+					$users[] = $user;
+				}
 			}
 		}
 		

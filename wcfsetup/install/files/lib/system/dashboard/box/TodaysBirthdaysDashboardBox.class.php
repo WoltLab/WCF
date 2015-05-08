@@ -3,6 +3,7 @@ namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\UserProfileList;
 use wcf\page\IPage;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -38,16 +39,23 @@ class TodaysBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 		$userIDs = UserBirthdayCache::getInstance()->getBirthdays($date[1], $date[2]);
 		
 		if (!empty($userIDs)) {
-			$userProfileList = new UserProfileList();
-			$userProfileList->setObjectIDs($userIDs);
-			$userProfileList->readObjects();
-			$i = 0;
-			foreach ($userProfileList as $userProfile) {
-				if ($i == 10) break;
+			$userOptions = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+			if (isset($userOptions['birthday'])) {
+				$birthdayUserOption = $userOptions['birthday'];
 				
-				if (!$userProfile->isProtected() && substr($userProfile->birthday, 5) == $currentDay) {
-					$this->userProfiles[] = $userProfile;
-					$i++;
+				$userProfileList = new UserProfileList();
+				$userProfileList->setObjectIDs($userIDs);
+				$userProfileList->readObjects();
+				$i = 0;
+				foreach ($userProfileList as $userProfile) {
+					if ($i == 10) break;
+					
+					$birthdayUserOption->setUser($userProfile->getDecoratedObject());
+						
+					if (!$userProfile->isProtected() && $birthdayUserOption->isVisible() && substr($userProfile->birthday, 5) == $currentDay) {
+						$this->userProfiles[] = $userProfile;
+						$i++;
+					}
 				}
 			}
 		}
