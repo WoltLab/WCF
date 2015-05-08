@@ -47,7 +47,7 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
 			foreach ($items as $key => &$item) {
 				$double = false;
 				foreach ($items as $key2 => $item2) {
-					if ($key != $key2 && $item['title'] == $item2['title']) {
+					if ($key != $key2 && !strcasecmp($item['title'], $item2['title'])) {
 						$double = true;
 						break;
 					}
