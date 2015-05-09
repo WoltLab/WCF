@@ -169,7 +169,7 @@ class UserGroupOptionForm extends AbstractForm {
 				$this->optionType->validate($this->userGroupOption, $optionValue);
 			}
 			catch (UserInputException $e) {
-				$this->errorType[$e->getField()] = $e->getType();
+				$this->errorType[$groupID] = $e->getType();
 			}
 			
 			if (!$isAdmin && $this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
