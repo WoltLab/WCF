@@ -161,6 +161,11 @@
 					&:-ms-input-placeholder { /* Internet Explorer 10+ */
 						color: darken(@wcfUserPanelColor, 20%);
 					}
+					
+					/* remove broken cancel-button (webkit) */
+					&::-webkit-search-cancel-button{
+						display:none;
+					}
 				}
 			}
 			
