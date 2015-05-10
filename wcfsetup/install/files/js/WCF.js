@@ -11300,9 +11300,9 @@ $.widget('ui.wcfDialog', {
 		// set dialog to be fully opaque, prevents weird bugs in WebKit
 		this._container.show().css('opacity', 1.0);
 		
-		// handle positioning of form submit controls
+		// handle positioning of visible form submit controls
 		var $heightDifference = 0;
-		if (this._content.find('.formSubmit').length) {
+		if (this._content.find('.formSubmit:visible').length) {
 			$heightDifference = this._content.find('.formSubmit').outerHeight();
 			
 			this._content.addClass('dialogForm').css({ marginBottom: $heightDifference + 'px' });
