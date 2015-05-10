@@ -214,21 +214,21 @@ class GDImageAdapter implements IImageAdapter {
 			case 'middleLeft':
 			case 'bottomLeft':
 				$x = $margin;
-				break;
-		
+			break;
+			
 			case 'topCenter':
 			case 'middleCenter':
 			case 'bottomCenter':
 				$x = floor(($this->getWidth() - $textWidth) / 2);
-				break;
-		
+			break;
+			
 			case 'topRight':
 			case 'middleRight':
 			case 'bottomRight':
 				$x = $this->getWidth() - $textWidth - $margin;
-				break;
+			break;
 		}
-			
+		
 		// calculate y coordinate
 		$y = 0;
 		switch ($position) {
@@ -236,22 +236,41 @@ class GDImageAdapter implements IImageAdapter {
 			case 'topCenter':
 			case 'topRight':
 				$y = $margin + $firstLineHeight;
-				break;
-		
+			break;
+			
 			case 'middleLeft':
 			case 'middleCenter':
 			case 'middleRight':
 				$y = floor(($this->getHeight() - $textHeight) / 2) + $firstLineHeight;
-				break;
-		
+			break;
+			
 			case 'bottomLeft':
 			case 'bottomCenter':
 			case 'bottomRight':
 				$y = $this->getHeight() - $textHeight + $firstLineHeight - $margin;
-				break;
+			break;
 		}
 		
 		$this->drawText($text, $x + $offsetX, $y + $offsetY, $font, $size, $opacity);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::textFitsImage()
+	 */
+	public function textFitsImage($text, $margin, $font, $size) {
+		$box = imagettfbbox($size, 0, $font, $text);
+		
+		$textWidth = abs($box[0] - $box[2]);
+		$textHeight = abs($box[7] - $box[1]);
+		
+		return ($textWidth + 2 * $margin <= $this->getWidth() && $textHeight + 2 * $margin <= $this->getHeight());
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::adjustFontSize()
+	 */
+	public function adjustFontSize($text, $margin, $font, $size) {
+		// does nothing
 	}
 	
 	/**
