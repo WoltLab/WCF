@@ -302,7 +302,14 @@ class RequestHandler extends SingletonFactory {
 			if (!URL_LEGACY_MODE) $routeData['controller'] = self::getTokenizedController($routeData['controller']);
 			return;
 		}
+		else {
+			$routeData['controller'] = WCF::getApplicationObject(ApplicationHandler::getInstance()->getApplication($application))->getPrimaryController();
+			$routeData['controller'] = preg_replace('~.*?\\\([^\\\]+)(?:Form|Page)$~', '$1', $routeData['controller']);
+			if (!URL_LEGACY_MODE) $routeData['controller'] = self::getTokenizedController($routeData['controller']);
+			return;
+		}
 		
+		// TODO: what is this supposed to do?
 		HeaderUtil::redirect($landingPage->getLink());
 		exit;
 	}

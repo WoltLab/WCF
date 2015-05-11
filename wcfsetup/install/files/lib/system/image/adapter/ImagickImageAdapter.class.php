@@ -200,7 +200,7 @@ class ImagickImageAdapter implements IImageAdapter {
 		
 		if ($this->imagick->getImageFormat() == 'GIF') {
 			$this->imagick = $this->imagick->coalesceImages();
-				
+			
 			do {
 				$this->imagick->drawImage($draw);
 			}
@@ -266,6 +266,25 @@ class ImagickImageAdapter implements IImageAdapter {
 		
 		// draw text
 		$this->drawText($text, $x + $offsetX, $y + $offsetY, $font, $size, $opacity);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::textFitsImage()
+	 */
+	public function textFitsImage($text, $margin, $font, $size) {
+		$draw = new \ImagickDraw();
+		$draw->setFont($font);
+		$draw->setFontSize($size);
+		$metrics = $this->imagick->queryFontMetrics($draw, $text);
+		
+		return ($metrics['textWidth'] + 2 * $margin <= $this->getWidth() && $metrics['textHeight'] + 2 * $margin <= $this->getHeight());
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::adjustFontSize()
+	 */
+	public function adjustFontSize($text, $margin, $font, $size) {
+		// does nothing
 	}
 	
 	/**

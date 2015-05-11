@@ -168,6 +168,25 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::textFitsImage()
+	 */
+	public function textFitsImage($text, $margin, $font, $size) {
+		return $this->adapter->textFitsImage($text, $margin, $font, $size);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::adjustFontSize()
+	 */
+	public function adjustFontSize($text, $margin, $font, $size) {
+		// adjust font size
+		while ($size && !$this->textFitsImage($text, $margin, $font, $size)) {
+			$size--;
+		}
+		
+		return $size;
+	}
+	
+	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
 	public function setColor($red, $green, $blue) {

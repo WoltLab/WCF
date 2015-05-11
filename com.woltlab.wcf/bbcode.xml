@@ -138,7 +138,7 @@
 		</bbcode>
 		<bbcode name="list">
 			<classname><![CDATA[wcf\system\bbcode\ListBBCode]]></classname>
-			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font,list,url,email</allowedchildren>
+			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font,list,url,email,attach,tt</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$</validationpattern>

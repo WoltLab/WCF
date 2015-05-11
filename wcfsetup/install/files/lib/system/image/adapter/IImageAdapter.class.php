@@ -111,6 +111,30 @@ interface IImageAdapter {
 	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1);
 	
 	/**
+	 * Returns true if the given text fits the image.
+	 * 
+	 * @param	string		$text
+	 * @param	integer		$margin
+	 * @param	string		$font		path to TrueType font file
+	 * @param	integer		$size		font size
+	 * @return	integer
+	 * @return	boolean
+	 */
+	public function textFitsImage($text, $margin, $font, $size);
+	
+	/**
+	 * Adjusts the given font size so that the given text fits on the current
+	 * image. Returns 0 if no appropriate font size could be determined.
+	 * 
+	 * @param	string		$text
+	 * @param	integer		$margin
+	 * @param	string		$font		path to TrueType font file
+	 * @param	integer		$size		font size
+	 * @return	integer
+	 */
+	public function adjustFontSize($text, $margin, $font, $size);
+	
+	/**
 	 * Sets active color.
 	 * 
 	 * @param	integer		$red

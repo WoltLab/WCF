@@ -17,6 +17,12 @@ use wcf\system\SingletonFactory;
  */
 class SearchEngine extends SingletonFactory implements ISearchEngine {
 	/**
+	 * limit for inner search limits
+	 * @var	integer
+	 */
+	const INNER_SEARCH_LIMIT = 2500;
+	
+	/**
 	 * list of available object types
 	 * @var	array
 	 */
