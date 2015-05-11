@@ -56,6 +56,8 @@ define(['jquery', 'UI/Alignment'], function($, UIAlignment) {
 				element.classList.remove('jsTooltip');
 				
 				var title = element.getAttribute('title');
+				title = (typeof title === 'string') ? title.trim() : '';
+				
 				if (title.length) {
 					element.setAttribute('data-tooltip', title);
 					element.removeAttribute('title');
@@ -75,7 +77,9 @@ define(['jquery', 'UI/Alignment'], function($, UIAlignment) {
 		_mouseEnter: function(event) {
 			var element = event.currentTarget;
 			var title = element.getAttribute('title');
-			if (typeof title === 'string' && title !== '') {
+			title = (typeof title === 'string') ? title.trim() : '';
+			
+			if (title !== '') {
 				element.setAttribute('data-tooltip', title);
 				element.removeAttribute('title');
 			}
