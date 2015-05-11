@@ -136,6 +136,21 @@ define(function() {
 		},
 		
 		/**
+		 * Prepends an element to a parent element.
+		 * 
+		 * @param	{Element}	el		element to prepend
+		 * @param	{Element}	parentEl	future containing element
+		 */
+		prepend: function(el, parentEl) {
+			if (parentEl.childElementCount === 0) {
+				parentEl.appendChild(el);
+			}
+			else {
+				parentEl.insertBefore(el, parentEl.children[0]);
+			}
+		},
+		
+		/**
 		 * Applies a list of CSS properties to an element.
 		 * 
 		 * @param	{Element}		el	element

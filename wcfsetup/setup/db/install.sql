@@ -1791,7 +1791,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPan
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverColor', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBackgroundColor', 'rgba(249, 249, 249, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorderColor', 'rgba(221, 221, 221, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorderRadius', '15px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorderRadius', '3px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSmallButtonBorderRadius', '3px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonColor', 'rgba(102, 102, 102, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryBackgroundColor', 'rgba(211, 232, 254, 1)');

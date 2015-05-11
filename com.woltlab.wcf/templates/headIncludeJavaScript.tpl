@@ -181,7 +181,6 @@
 	//<![CDATA[
 	$(function() {
 		new WCF.Effect.SmoothScroll();
-		new WCF.Effect.BalloonTooltip();
 		new WCF.Sitemap();
 		{if $__wcf->getStyleHandler()->countStyles() > 1}new WCF.Style.Chooser();{/if}
 		WCF.System.PageNavigation.init('.pageNavigation');

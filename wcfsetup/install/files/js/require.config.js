@@ -12,6 +12,7 @@ requirejs.config({
 			'DOM/Util': 'WoltLab/WCF/DOM/Util',
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
 			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
+			'UI/Dialog': 'WoltLab/WCF/UI/Dialog',
 			'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple'
 		}
 	}

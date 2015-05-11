@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Alignment
  */
-define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
+define(['Core', 'DOM/Traverse', 'DOM/Util'], function(Core, DOMTraverse, DOMUtil) {
 	"use strict";
 	
 	/**
@@ -29,13 +29,16 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 				// align the pointer element, expects .pointer as a direct child of given element
 				pointer: false,
 				
+				// offset from/left side, ignored for center alignment
+				pointerOffset: 4,
+				
 				// use static pointer positions, expects two items: class to move it to the bottom and the second to move it to the right
 				pointerClassNames: [],
 				
 				// alternate element used to calculate dimensions
 				refDimensionsElement: null,
 				
-				// preferred alignment, possible values: left/right and top/bottom
+				// preferred alignment, possible values: left/right/center and top/bottom
 				horizontal: 'left',
 				vertical: 'bottom',
 				
@@ -43,36 +46,58 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 				allowFlip: 'both'
 			}, options);
 			
-			if (!Array.isArray(options.pointerClassNames) || options.pointerClassNames.length !== 2) options.pointerClassNames = [];
-			if (options.horizontal !== 'right') options.horizontal = 'left';
+			if (!Array.isArray(options.pointerClassNames) || options.pointerClassNames.length !== (options.pointer ? 1 : 2)) options.pointerClassNames = [];
+			if (['left', 'right', 'center'].indexOf(options.horizontal) === -1) options.horizontal = 'left';
 			if (options.vertical !== 'bottom') options.horizontal = 'top';
 			if (['both', 'horizontal', 'vertical', 'none'].indexOf(options.allowFlip) === -1) options.allowFlip = 'both';
 			
 			// place element in the upper left corner to prevent calculation issues due to possible scrollbars
 			DOMUtil.setStyles(el, {
-				bottom: 'auto',
-				left: '0px',
-				right: 'auto',
-				top: '0px'
+				bottom: 'auto !important',
+				left: '0 !important',
+				right: 'auto !important',
+				top: '0 !important'
 			});
 			
 			var elDimensions = DOMUtil.outerDimensions(el);
 			var refDimensions = DOMUtil.outerDimensions((options.refDimensionsElement instanceof Element ? options.refDimensionsElement : ref));
 			var refOffsets = DOMUtil.offset(ref);
 			var windowHeight = window.innerHeight;
-			var windowWidth = window.innerWidth;
+			var windowWidth = document.body.clientWidth;
+			
+			var horizontal = { result: null };
+			var alignCenter = false;
+			if (options.horizontal === 'center') {
+				alignCenter = true;
+				horizontal = this._tryAlignmentHorizontal(options.horizontal, elDimensions, refDimensions, refOffsets, windowWidth);
+				
+				if (!horizontal.result) {
+					if (options.allowFlip === 'both' || options.allowFlip === 'horizontal') {
+						options.horizontal = 'left';
+					}
+					else {
+						horizontal.result = true;
+					}
+				}
+			}
 			
 			// in rtl languages we simply swap the value for 'horizontal'
 			if (WCF.Language.get('wcf.global.pageDirection') === 'rtl') {
 				options.horizontal = (options.horizontal === 'left') ? 'right' : 'left';
 			}
 			
-			var horizontal = this._tryAlignmentHorizontal(options.horizontal, elDimensions, refDimensions, refOffsets, windowWidth);
-			if (!horizontal.result && (options.allowFlip === 'both' || options.allowFlip === 'horizontal')) {
-				var horizontalFlipped = this._tryAlignmentHorizontal((options.horizontal === 'left' ? 'right' : 'left'), elDimensions, refDimensions, refOffsets, windowWidth);
-				// only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
-				if (horizontalFlipped.result) {
-					horizontal = horizontalFlipped;
+			if (!horizontal.result) {
+				var horizontalCenter = horizontal;
+				horizontal = this._tryAlignmentHorizontal(options.horizontal, elDimensions, refDimensions, refOffsets, windowWidth);
+				if (!horizontal.result && (options.allowFlip === 'both' || options.allowFlip === 'horizontal')) {
+					var horizontalFlipped = this._tryAlignmentHorizontal((options.horizontal === 'left' ? 'right' : 'left'), elDimensions, refDimensions, refOffsets, windowWidth);
+					// only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
+					if (horizontalFlipped.result) {
+						horizontal = horizontalFlipped;
+					}
+					else if (alignCenter) {
+						horizontal = horizontalCenter;
+					}
 				}
 			}
 			
@@ -93,9 +118,31 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 			
 			// set pointer position
 			if (options.pointer) {
-				//var pointer = null;
-				// TODO: implement pointer support, e.g. for interactive dropdowns
-				console.debug("TODO");
+				var pointer = DOMTraverse.childrenByClass(el, 'elementPointer');
+				pointer = pointer[0] || null;
+				if (pointer === null) {
+					throw new Error("Expected the .elementPointer element to be a direct children.");
+				}
+				
+				if (horizontal.align === 'center') {
+					pointer.classList.add('center');
+					
+					pointer.classList.remove('left');
+					pointer.classList.remove('right');
+				}
+				else {
+					pointer.classList.add(horizontal.align);
+					
+					pointer.classList.remove('center');
+					pointer.classList.remove(horizontal.align === 'left' ? 'right' : 'left');
+				}
+				
+				if (vertical.align === 'top') {
+					pointer.classList.add('flipVertical');
+				}
+				else {
+					pointer.classList.remove('flipVertical');
+				}
 			}
 			else if (options.pointerClassNames.length === 2) {
 				var pointerRight = 0;
@@ -134,14 +181,24 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 					result = false;
 				}
 			}
+			else if (align === 'right') {
+				console.debug(windowWidth + " | " + refOffsets.left + " | " + refDimensions.width);
+				right = windowWidth - (refOffsets.left + refDimensions.width);
+				if (right < 0) {
+					result = false;
+				}
+			}
 			else {
-				right = refOffsets.left + refDimensions.width;
-				if (right - elDimensions.width < 0) {
+				left = refOffsets.left + (refDimensions.width / 2) - (elDimensions.width / 2);
+				left = ~~left;
+				
+				if (left < 0 || left + elDimensions.width > windowWidth) {
 					result = false;
 				}
 			}
 			
 			return {
+				align: align,
 				left: left,
 				right: right,
 				result: result
@@ -165,8 +222,9 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 			var result = true;
 			
 			if (align === 'top') {
-				bottom = refOffsets.top + verticalOffset;
-				if (bottom - elDimensions.height < 0) {
+				var bodyHeight = document.body.clientHeight;
+				bottom = (bodyHeight - refOffsets.top) + verticalOffset;
+				if (bottom + elDimensions.height > document.body.clientHeight) {
 					result = false;
 				}
 			}
@@ -178,6 +236,7 @@ define(['Core', 'DOM/Util'], function(Core, DOMUtil) {
 			}
 			
 			return {
+				align: align,
 				bottom: bottom,
 				top: top,
 				result: result

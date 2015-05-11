@@ -1,93 +1,140 @@
-.dialogContainer {
-	background: rgba(0, 0, 0, .4);
-	border: 14px solid transparent;
-	border-radius: 15px;
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 90%;
-	min-width: 500px;
+.dialogOverlay {
+	background-color: transparent;
+	bottom: 0;
+	left: 0;
 	position: fixed;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+	z-index: 399;
 	
-	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 23px);
+	transition: visibility 0s linear .3s;
+	
+	&[aria-hidden=false] {
+		/* do not animate opacity or background-color, the transition is anything but smooth due to the large area covered */
+		background-color: rgba(255, 255, 255, .4);
+		visibility: visible;
+		
+		transition-delay: 0s;
+	}
+}
+
+@-webkit-keyframes wcfDialog {
+	0%   { visibility: visible; opacity: 0; top: 8%; }
+	100% { visibility: visible; opacity: 1; top: 10%; }
+}
+
+@-webkit-keyframes wcfDialogOut {
+	0% { visibility: visible; opacity: 1; top: 10%; }
+	100% { visibility: hidden; opacity: 0; top: 12%; }
+}
+
+.dialogContainer {
+	background-color: rgba(0, 0, 0, .4);
+	border: 3px solid transparent;
+	border-radius: 3px;
+	box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
+	box-sizing: border-box;
+	left: 50%;
+	max-height: 80%;
+	max-width: 80%;
+	min-width: 400px;
+	position: absolute;
+	top: 10%;
+	transform: translateX(-50%);
+	
+	-webkit-animation: wcfDialogOut .3s;
+	-webkit-animation-fill-mode: forwards;
+	
+	&[aria-hidden=false] {
+		-webkit-animation: wcfDialog .3s;
+		-webkit-animation-fill-mode: forwards;
+	}
+	
+	> header {
+		background: linear-gradient(to right, @wcfTabularBoxBackgroundColor, lighten(@wcfTabularBoxBackgroundColor, 10%));
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+		color: @wcfTabularBoxColor;
+		display: flex;
+		padding: 7px 10px;
+		
+		.textShadow(@wcfTabularBoxBackgroundColor);
+		
+		> span {
+			flex: 1;
+			font-size: 1.2rem;
+		}
+		
+		> a {
+			color: @wcfTabularBoxColor;
+			flex: 0 0 20px;
+			font-family: FontAwesome;
+			font-size: 18px;
+			text-align: right;
+			text-decoration: none;
+			
+			&:before {
+				content: @fa-var-times-circle;
+			}
+			
+			> span {
+				display: none;
+			}
+		}
+	}
+	
+	> .dialogContent {
+		background-color: @wcfContainerBackgroundColor;
+		box-sizing: border-box;
+		color: @wcfColor;
+		overflow: auto;
+		padding: 10px;
+		padding-bottom: 0;
+		
+		&:after {
+			content: "";
+			display: block;
+			height: 10px;
+		}
+		
+		&.dialogForm:after {
+			height: 17px;
+		}
+		
+		&:not(.dialogForm) {
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+		}
+		
+		dl:not(.plain) {
+			> dt {
+				width: 170px;
+			}
+			
+			> dd {
+				margin-left: 190px;
+			}
+		}
+		
+		.dialogFormSubmit {
+			background-color: @wcfContainerAccentBackgroundColor;
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+			bottom: 0;
+			left: 0;
+			padding: 7px 10px;
+			position: absolute;
+			right: 0;
+		}
+	}
 }
 
 @media only screen and (max-width: 800px) {
-	.dialogContainer {
-		border: 0;
-		border-radius: 0;
-		left: 0 !important;
-		max-width: none;
-		min-width: 0;
-		position: absolute;
-		top: 0 !important;
-		width: 100%;
-	}
 }
 
-.dialogTitlebar {
-	background-color: @wcfTabularBoxBackgroundColor;
-	border-bottom: 1px solid rgba(0, 0, 0, .1);
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
-	display: block;
-	padding: 10px 20px;
-	min-height: 27px;
-	position: relative;
-	
-	.dialogTitle {
-		color: @wcfTabularBoxColor;
-		display: block;
-		font-size: @wcfHeadlineFontSize;
-		font-weight: bold;
-		margin-right: 28px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		
-		.textShadow(@wcfTabularBoxBackgroundColor);
-	}
-	
-	.dialogCloseButton {
-		color: @wcfTabularBoxColor;
-		cursor: pointer;
-		display: inline-block;
-		font-family: FontAwesome;
-		font-size: 28px;
-		height: 32px;
-		position: absolute;
-		right: 10px;
-		text-align: center;
-		text-decoration: none;
-		top: 7px;
-		width: 32px;
-		
-		.textShadow(@wcfTabularBoxBackgroundColor);
-		
-		&::before {
-			content: "\f057";
-		}
-		
-		span {
-			display: none;
-		}
-	}
-}
 
-@media only screen and (max-width: 800px) {
-	.dialogTitlebar {
-		border-radius: 0;
-	}
-}
-
-.dialogContent {
-	background-color: @wcfContainerBackgroundColor;
-	color: @wcfColor;
-	padding: 10px 20px 20px;
-	
-	&:not(.dialogForm) {
-		border-bottom-left-radius: 7px;
-		border-bottom-right-radius: 7px;
-	}
+.dialogContentX {
 	
 	> .icon-spinner {
 		left: 50%;
@@ -95,16 +142,6 @@
 		padding: 0 21px 0 21px;
 		position: absolute;
 		top: 50%;
-	}
-	
-	dl:not(.plain) {
-		> dt {
-			width: 170px;
-		}
-		
-		> dd {
-			margin-left: 190px;
-		}
 	}
 	
 	.formSubmit {
@@ -118,30 +155,6 @@
 		position: absolute;
 		width: 100%;
 	}
-}
-
-@media only screen and (max-width: 800px) {
-	.dialogContent {
-		max-height: none !important;
-		max-width: none !important;
-		
-		&:not(.dialogForm) {
-			border-radius: 0;
-		}
-		
-		.formSubmit {
-			border-radius: 0;
-		}
-	}
-}
-
-.dialogOverlay {
-	background-color: rgba(0, 0, 0, .5);
-	bottom: 0;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
 }
 
 /* package (un-)installation */
