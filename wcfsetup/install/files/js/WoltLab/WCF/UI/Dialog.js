@@ -66,6 +66,7 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 					closable: true,
 					closeButtonLabel: WCF.Language.get('wcf.global.button.close'),
 					closeConfirmMessage: '',
+					disableContentPadding: false,
 					disposeOnClose: false,
 					title: '',
 					
@@ -161,6 +162,7 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 			
 			var contentContainer = document.createElement('div');
 			contentContainer.classList.add('dialogContent');
+			if (options.disableContentPadding) contentContainer.classList.add('dialogContentNoPadding');
 			dialog.appendChild(contentContainer);
 			
 			var content;
@@ -244,6 +246,11 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 			WCF.DOMNodeInsertedHandler.execute();
 		},
 		
+		/**
+		 * Rebuilds dialog identified by given id.
+		 * 
+		 * @param	{string}	id	element id
+		 */
 		rebuild: function(id) {
 			var data = _dialogs.get(id);
 			if (typeof data === 'undefined') {
@@ -257,7 +264,9 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 			
 			// fix for a calculation bug in Chrome causing the scrollbar to overlap the border
 			if ($.browser.chrome) {
-				data.content.style.setProperty('margin-right', '-1px');
+				if (data.content.scrollHeight > data.content.clientHeight) {
+					data.content.style.setProperty('margin-right', '-1px');
+				}
 			}
 			
 			var contentContainer = data.content.parentNode;

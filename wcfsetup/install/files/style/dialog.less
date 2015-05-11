@@ -89,17 +89,20 @@
 		box-sizing: border-box;
 		color: @wcfColor;
 		overflow: auto;
-		padding: 10px;
-		padding-bottom: 0;
 		
-		&:after {
-			content: "";
-			display: block;
-			height: 10px;
-		}
-		
-		&.dialogForm:after {
-			height: 17px;
+		&:not(.dialogContentNoPadding) {
+			padding: 10px;
+			padding-bottom: 0;
+			
+			&:after {
+				content: "";
+				display: block;
+				height: 10px;
+			}
+			
+			&.dialogForm:after {
+				height: 17px;
+			}
 		}
 		
 		&:not(.dialogForm) {
