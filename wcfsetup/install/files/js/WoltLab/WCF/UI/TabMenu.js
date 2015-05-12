@@ -23,6 +23,7 @@ define(['Dictionary', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMU
 			this._init();
 			
 			// TODO: use WCF.DOMNodeInsertedHandler
+			WCF.DOMNodeInsertedHandler.addCallback('WoltLab/WCF/UI/TabMenu', this._init.bind(this));
 		},
 		
 		/**

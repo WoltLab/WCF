@@ -13,7 +13,8 @@ requirejs.config({
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
 			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
 			'UI/Dialog': 'WoltLab/WCF/UI/Dialog',
-			'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple'
+			'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple',
+			'UI/TabMenu': 'WoltLab/WCF/UI/TabMenu'
 		}
 	}
 });

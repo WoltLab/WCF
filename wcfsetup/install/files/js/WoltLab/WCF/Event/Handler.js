@@ -31,13 +31,13 @@ define(['Dictionary'], function(Dictionary) {
 			
 			var actions = _listeners.get(identifier);
 			if (actions === null) {
-				actions = dictionary.create();
+				actions = new Dictionary();
 				_listeners.set(identifier, actions);
 			}
 			
 			var callbacks = actions.get(action);
 			if (callbacks === null) {
-				callbacks = dictionary.create();
+				callbacks = new Dictionary();
 				actions.set(action, callbacks);
 			}
 			

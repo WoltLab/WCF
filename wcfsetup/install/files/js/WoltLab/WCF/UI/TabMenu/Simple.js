@@ -168,7 +168,7 @@ define(['jquery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Diction
 		 * @param	{boolean=}		disableEvent	suppress event handling
 		 */
 		select: function(name, tab, disableEvent) {
-			tab = tab || this._tabs.get(name);
+			tab = tab || this._tabs.get(name) || null;
 			
 			if (tab === null) {
 				// check if name is an integer
@@ -186,7 +186,7 @@ define(['jquery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Diction
 				}
 				
 				if (tab === null) {
-					throw new Error("Expected a valid tab name (tab menu id: '" + this._containerId + "').");
+					throw new Error("Expected a valid tab name, '" + name + "' given (tab menu id: '" + this._containerId + "').");
 				}
 			}
 			

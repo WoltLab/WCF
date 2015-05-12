@@ -9,8 +9,16 @@
  * @module	WoltLab/WCF/Bootstrap
  */
 define(
-	[       'jquery', 'favico', 'enquire', 'WoltLab/WCF/Date/Time/Relative', 'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile', 'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu', 'UI/Dialog', 'WoltLab/WCF/UI/Tooltip'], 
-	function($,        favico,   enquire,   relativeTime,                     simpleDropdown,      UIMobile,                UITabMenu,                UIFlexibleMenu,                UIDialog,    UITooltip)
+	[
+		'jquery',            'favico',                 'enquire',                'WoltLab/WCF/Date/Time/Relative',
+		'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile',  'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu',
+		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Controller/Sitemap'
+	], 
+	function(
+		 $,                   favico,                   enquire,                  relativeTime,
+		 simpleDropdown,      UIMobile,                 UITabMenu,                UIFlexibleMenu,
+		 UIDialog,            UITooltip,                ControllerSitemap
+	)
 {
 	"use strict";
 	
@@ -33,6 +41,8 @@ define(
 			UIFlexibleMenu.setup();
 			UIDialog.setup();
 			UITooltip.setup();
+			
+			ControllerSitemap.setup();
 			
 			$.holdReady(false);
 		}

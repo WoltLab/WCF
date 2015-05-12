@@ -6,12 +6,13 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Dialog
  */
-define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionary, DOMUtil) {
+define(['jquery', 'enquire', 'Core', 'Dictionary', 'DOM/Util'], function($, enquire, Core, Dictionary, DOMUtil) {
 	"use strict";
 	
 	var _activeDialog = null;
 	var _container = null;
 	var _dialogs = null;
+	var _dialogFullHeight = false;
 	var _keyupListener = null;
 	
 	/**
@@ -43,6 +44,13 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 				
 				return true;
 			}).bind(this);
+			
+			enquire.register('screen and (max-width: 800px)', {
+				match: function() { _dialogFullHeight = true; },
+				unmatch: function() { _dialogFullHeight = false; },
+				setup: function() { _dialogFullHeight = true; },
+				deferSetup: true
+			});
 		},
 		
 		/**
@@ -55,6 +63,7 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 		 * @param 	{string}		id		element id, if exists the html parameter is ignored in favor of the existing element
 		 * @param	{?string}		html		content html
 		 * @param	{object<string, *>}	options		list of options, is completely ignored if the dialog already exists
+		 * @return	{object<string, *>}	dialog data
 		 */
 		open: function(id, html, options) {
 			if (_dialogs.has(id)) {
@@ -89,6 +98,8 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 				
 				this._createDialog(id, html, options);
 			}
+			
+			return _dialogs.get(id);
 		},
 		
 		/**
@@ -175,7 +186,11 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 				content = element;
 			}
 			
-			contentContainer.appendChild(element);
+			contentContainer.appendChild(content);
+			
+			if (content.style.getPropertyValue('display') === 'none') {
+				content.style.removeProperty('display');
+			}
 			
 			_dialogs.set(id, {
 				backdropCloseOnClick: options.backdropCloseOnClick,
@@ -262,13 +277,6 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 				return;
 			}
 			
-			// fix for a calculation bug in Chrome causing the scrollbar to overlap the border
-			if ($.browser.chrome) {
-				if (data.content.scrollHeight > data.content.clientHeight) {
-					data.content.style.setProperty('margin-right', '-1px');
-				}
-			}
-			
 			var contentContainer = data.content.parentNode;
 			
 			var formSubmit = data.content.querySelector('.formSubmit');
@@ -286,8 +294,18 @@ define(['jquery', 'Core', 'Dictionary', 'DOM/Util'], function($, Core, Dictionar
 			
 			unavailableHeight += DOMUtil.outerHeight(data.header);
 			
-			var maximumHeight = (window.innerHeight * 0.8) - unavailableHeight;
+			var maximumHeight = (window.innerHeight * (_dialogFullHeight ? 1 : 0.8)) - unavailableHeight;
 			contentContainer.style.setProperty('max-height', ~~maximumHeight + 'px');
+			
+			// fix for a calculation bug in Chrome causing the scrollbar to overlap the border
+			if ($.browser.chrome) {
+				if (data.content.scrollHeight > maximumHeight) {
+					data.content.style.setProperty('margin-right', '-1px');
+				}
+				else {
+					data.content.style.removeProperty('margin-right');
+				}
+			}
 		},
 		
 		/**
