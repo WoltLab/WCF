@@ -42,6 +42,18 @@ define(
 			UIDialog.setup();
 			UITooltip.setup();
 			
+			// convert method=get into method=post
+			var forms = document.querySelectorAll('form[method=get]');
+			for (var i = 0, length = forms.length; i < length; i++) {
+				forms[i].setAttribute('method', 'post');
+			}
+			
+			if ($.browser.msie) {
+				window.onbeforeunload = function() {
+					/* Prevent "Back navigation caching" (http://msdn.microsoft.com/en-us/library/ie/dn265017%28v=vs.85%29.aspx) */
+				};
+			}
+			
 			$.holdReady(false);
 		}
 	};
