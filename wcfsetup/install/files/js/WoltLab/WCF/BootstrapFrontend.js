@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/BootstrapFrontend
  */
-define(['WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap'], function(Bootstrap, ControllerSitemap) {
+define(['WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer'], function(Bootstrap, ControllerSitemap, ControllerStyleChanger) {
 	"use strict";
 	
 	/**
@@ -16,10 +16,17 @@ define(['WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap'], function(Boo
 	BootstrapFrontend.prototype = {
 		/**
 		 * Bootstraps general modules and frontend exclusive ones.
+		 * 
+		 * @param	{object<string, *>}	options		bootstrap options
 		 */
-		setup: function() {
+		setup: function(options) {
 			Bootstrap.setup();
+			
 			ControllerSitemap.setup();
+			
+			if (options.styleChanger) {
+				ControllerStyleChanger.setup();
+			}
 		}
 	};
 	

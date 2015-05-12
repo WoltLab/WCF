@@ -142,7 +142,9 @@
 	
 	$.holdReady(true);
 	require(['WoltLab/WCF/BootstrapFrontend'], function(BootstrapFrontend) {
-		BootstrapFrontend.setup();
+		BootstrapFrontend.setup({
+			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
+		});
 	});
 </script>
 
@@ -181,7 +183,7 @@
 	//<![CDATA[
 	$(function() {
 		new WCF.Effect.SmoothScroll();
-		{if $__wcf->getStyleHandler()->countStyles() > 1}new WCF.Style.Chooser();{/if}
+		
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
 		new WCF.User.ProfilePreview();
