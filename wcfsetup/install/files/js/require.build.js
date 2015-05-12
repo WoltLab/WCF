@@ -6,7 +6,7 @@
 	paths: {
 		"requireLib": "require",
 		
-		"jQuery": "empty:"
+		"jquery": "empty:"
 	},
 	include: [
 		"requireLib"
