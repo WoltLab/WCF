@@ -12,12 +12,12 @@ define(
 	[
 		'jquery',            'favico',                 'enquire',                'WoltLab/WCF/Date/Time/Relative',
 		'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile',  'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu',
-		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Controller/Sitemap'
+		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip'
 	], 
 	function(
 		 $,                   favico,                   enquire,                  relativeTime,
 		 simpleDropdown,      UIMobile,                 UITabMenu,                UIFlexibleMenu,
-		 UIDialog,            UITooltip,                ControllerSitemap
+		 UIDialog,            UITooltip
 	)
 {
 	"use strict";
@@ -28,7 +28,7 @@ define(
 	/**
 	 * @constructor
 	 */
-	function Bootstrap() { }
+	function Bootstrap() {}
 	Bootstrap.prototype = {
 		/**
 		 * Initializes the core UI modifications and unblocks jQuery's ready event.
@@ -41,8 +41,6 @@ define(
 			UIFlexibleMenu.setup();
 			UIDialog.setup();
 			UITooltip.setup();
-			
-			ControllerSitemap.setup();
 			
 			$.holdReady(false);
 		}

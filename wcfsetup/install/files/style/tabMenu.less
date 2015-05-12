@@ -2,6 +2,8 @@
 	line-height: @wcfBaseLineHeight;
 	
 	> .tabMenu {
+		margin-top: @wcfGapLarge;
+		
 		> ul {
 			font-size: 0;
 			white-space: nowrap;
@@ -135,11 +137,15 @@
 }
 
 .dialogContentNoPadding .tabMenuContainer {
-	> nav > ul > li {
-		border-top-width: 0;
+	> nav {
+		margin-top: 0;
 		
-		&:first-child {
-			border-left-width: 0;
+		> ul > li {
+			border-top-width: 0;
+			
+			&:first-child {
+				border-left-width: 0;
+			}
 		}
 	}
 	

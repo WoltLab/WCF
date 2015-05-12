@@ -141,8 +141,8 @@
 	define('jquery', [], function() { return window.jQuery; });
 	
 	$.holdReady(true);
-	require(['WoltLab/WCF/Bootstrap'], function(bootstrap) {
-		bootstrap.setup();
+	require(['WoltLab/WCF/BootstrapFrontend'], function(BootstrapFrontend) {
+		BootstrapFrontend.setup();
 	});
 </script>
 
