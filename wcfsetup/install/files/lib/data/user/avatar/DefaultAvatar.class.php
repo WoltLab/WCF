@@ -35,7 +35,7 @@ class DefaultAvatar implements IUserAvatar {
 	public function getImageTag($size = null) {
 		if ($size === null) $size = $this->size;
 		
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$size.'px; height: '.$size.'px" alt="'.WCF::getLanguage()->get('wcf.user.avatar.alt').'" class="userAvatarImage" />';
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$size.'px; height: '.$size.'px" alt="" class="userAvatarImage" />';
 	}
 	
 	/**

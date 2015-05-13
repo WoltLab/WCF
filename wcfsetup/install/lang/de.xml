@@ -3063,7 +3063,6 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 	
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
-		<item name="wcf.user.avatar.alt"><![CDATA[Benutzer-Avatarbild]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar verwalten]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->avatarID || $__wcf->user->enableGravatar} Ihren derzeitigen Avatar gesperrt und{/if} Ihnen die weitere Nutzungsberechtigung der Avatar-Funktion {if !$__wcf->user->disableAvatarReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableAvatarReason}{/if}]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Eigenen Avatar hochladen]]></item>

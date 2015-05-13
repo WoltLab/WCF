@@ -3057,7 +3057,6 @@ You can safely ignore this email if you did not register with the website: {@PAG
 	
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
-		<item name="wcf.user.avatar.alt"><![CDATA[User Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID || $__wcf->user->enableGravatar}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Own Avatar]]></item>
