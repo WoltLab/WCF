@@ -83,7 +83,7 @@ define(['jquery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Diction
 				}
 				
 				var container = this._containers.get(name);
-				if (container === null) {
+				if (container === undefined) {
 					throw new Error("Expected content element for li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "').");
 				}
 				else if (container.parentNode !== this._container) {
@@ -140,7 +140,7 @@ define(['jquery', 'Dictionary', 'DOM/Util', 'EventHandler'], function($, Diction
 				if (preselect !== false) {
 					if (preselect !== true) {
 						var tab = this._tabs.get(preselect);
-						if (tab !== null) {
+						if (tab !== undefined) {
 							this.select(null, tab, true);
 						}
 					}

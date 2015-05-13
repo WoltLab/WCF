@@ -182,7 +182,6 @@ define(['Core', 'DOM/Traverse', 'DOM/Util'], function(Core, DOMTraverse, DOMUtil
 				}
 			}
 			else if (align === 'right') {
-				console.debug(windowWidth + " | " + refOffsets.left + " | " + refDimensions.width);
 				right = windowWidth - (refOffsets.left + refDimensions.width);
 				if (right < 0) {
 					result = false;

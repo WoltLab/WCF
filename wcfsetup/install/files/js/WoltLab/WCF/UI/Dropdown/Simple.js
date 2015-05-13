@@ -182,7 +182,7 @@ define(
 		 */
 		setAlignmentById: function(containerId) {
 			var dropdown = _dropdowns.get(containerId);
-			if (dropdown === null) {
+			if (dropdown === undefined) {
 				throw new Error("Unknown dropdown identifier '" + containerId + "'.");
 			}
 			
@@ -198,7 +198,7 @@ define(
 		 */
 		close: function(containerId) {
 			var dropdown = _dropdowns.get(containerId);
-			if (dropdown !== null) {
+			if (dropdown !== undefined) {
 				dropdown.classList.remove('dropdownOpen');
 				_menus.get(containerId).classList.remove('dropdownOpen');
 			}
@@ -314,7 +314,7 @@ define(
 			// check if 'isOverlayDropdownButton' is set which indicates if
 			// the dropdown toggle is in an overlay
 			var dropdown = _dropdowns.get(targetId);
-			if (dropdown !== null && dropdown.getAttribute('data-is-overlay-dropdown-button') === null) {
+			if (dropdown !== undefined && dropdown.getAttribute('data-is-overlay-dropdown-button') === null) {
 				var dialogContent = DOMTraverse.parentByClass(dropdown, 'dialogContent');
 				dropdown.setAttribute('data-is-overlay-dropdown-button', (dialogContent !== null));
 				

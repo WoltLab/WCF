@@ -145,6 +145,30 @@
 		BootstrapFrontend.setup({
 			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
 		});
+		
+		require(['WoltLab/WCF/Controller/Popover'], function(ControllerPopover) {
+			ControllerPopover.init({
+				attributeName: 'data-user-id',
+				className: 'userLink',
+				identifier: 'com.woltlab.wcf.user',
+				loadCallback: function(objectId, popover) {
+					new WCF.Action.Proxy({
+						autoSend: true,
+						data: {
+							actionName: 'getUserProfile',
+							className: 'wcf\\data\\user\\UserProfileAction',
+							objectIDs: [ objectId ]
+						},
+						success: (function(data) {
+							popover.setContent('com.woltlab.wcf.user', objectId, data.returnValues.template);
+						}).bind(this),
+						failure: (function(data) {
+							// TODO
+						}).bind(this)
+					});
+				}
+			});
+		});
 	});
 </script>
 
@@ -186,7 +210,7 @@
 		
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
-		new WCF.User.ProfilePreview();
+		//new WCF.User.ProfilePreview();
 		new WCF.Notice.Dismiss();
 		WCF.User.Profile.ActivityPointList.init();
 		
@@ -211,22 +235,5 @@
 	});
 	//]]>
 </script>
-<!--[IF IE 9]>
-<script data-relocate="true">
-	$(function() {
-		function fixButtonTypeIE9() {
-			$('button').each(function(index, button) {
-				var $button = $(button);
-				if (!$button.attr('type')) {
-					$button.attr('type', 'button');
-				}
-			});
-		}
-		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.FixButtonTypeIE9', fixButtonTypeIE9);
-		fixButtonTypeIE9();
-	});
-</script>
-<![ENDIF]-->
 
 {include file='imageViewer'}

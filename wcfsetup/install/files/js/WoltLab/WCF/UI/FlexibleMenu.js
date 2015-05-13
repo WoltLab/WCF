@@ -90,7 +90,7 @@ define(['Core', 'Dictionary', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], 
 		 */
 		rebuild: function(containerId) {
 			var container = this._containers.get(containerId);
-			if (container === null) {
+			if (container === undefined) {
 				throw "Expected a valid element id, '" + containerId + "' is unknown.";
 			}
 			
@@ -104,7 +104,7 @@ define(['Core', 'Dictionary', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], 
 			var items = DOMTraverse.childrenByTag(list, 'LI');
 			var dropdown = this._dropdowns.get(containerId);
 			var dropdownWidth = 0;
-			if (dropdown !== null) {
+			if (dropdown !== undefined) {
 				// show all items for calculation
 				for (var i = 0, length = items.length; i < length; i++) {
 					var item = items[i];
@@ -192,7 +192,7 @@ define(['Core', 'Dictionary', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], 
 				dropdownMenu.innerHTML = '';
 				dropdownMenu.appendChild(fragment);
 			}
-			else if (dropdown !== null && dropdown.parentNode !== null) {
+			else if (dropdown !== undefined && dropdown.parentNode !== null) {
 				dropdown.parentNode.removeChild(dropdown);
 			}
 		}

@@ -26,6 +26,24 @@ define(function() {
 	function DOMUtil() {};
 	DOMUtil.prototype = {
 		/**
+		 * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
+		 * 
+		 * @param	{string}	html	HTML string
+		 * @return	{DocumentFragment}	fragment containing DOM nodes
+		 */
+		createFragmentFromHtml: function(html) {
+			var tmp = document.createElement('div');
+			tmp.innerHTML = html;
+			
+			var fragment = document.createDocumentFragment();
+			while (tmp.childNodes.length) {
+				fragment.appendChild(tmp.childNodes[0]);
+			}
+			
+			return fragment;
+		},
+		
+		/**
 		 * Returns a unique element id.
 		 * 
 		 * @return	{string}	unique id

@@ -274,20 +274,7 @@ fieldset {
 		}
 	}
 	
-	.pointer {
-		border-color: @wcfTooltipBackgroundColor transparent;
-		border-style: solid;
-		border-width: 0 5px 5px;
-		left: 50%;
-		position: absolute;
-		top: -5px;
-	}
-	
 	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
-	
-	&.inverse > .pointer {
-		border-width: 5px 5px 0;
-	}
 	
 	&.active {
 		opacity: 1;
@@ -296,70 +283,6 @@ fieldset {
 		transition-delay: 0s;
 	}
 }
-
-/* popover */
-.popover {
-	background-color: rgba(0, 0, 0, .4);
-	border-radius: 6px;
-	padding: @wcfGapSmall;
-	position: absolute;
-	vertical-align: middle;
-	width: 400px !important;
-	z-index: 500;
-	
-	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 7px);
-	
-	> .icon-spinner {
-		color: white;
-		left: 50%;
-		margin-left: -21px;
-		margin-top: -21px;
-		position: absolute;
-		top: 50%;
-		
-		.textShadow(black);
-	}
-	
-	> .popoverContent {
-		background-color: @wcfContainerBackgroundColor;
-		border-radius: 6px;
-		color: @wcfColor;
-		max-height: 300px;
-		min-height: 16px;
-		opacity: 0;
-		overflow: hidden;
-		padding: @wcfGapSmall @wcfGapMedium;
-	}
-	
-	&::after {
-		border: 10px solid transparent;
-		content: "";
-		display: inline-block;
-		position: absolute;
-		z-index: 100;
-	}
-	
-	&.top::after {
-		border-bottom-width: 0;
-		border-top-color: rgba(0, 0, 0, .3);
-		bottom: -10px;
-	}
-	
-	&.bottom::after {
-		border-bottom-color: rgba(0, 0, 0, .3);
-		border-top-width: 0;
-		top: -10px;
-	}
-	
-	&.right::after {
-		left: 10px;
-	}
-	
-	&.left::after {
-		right: 10px;
-	}
-}
-
 
 /* ### badges ### */
 /* default values */

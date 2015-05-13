@@ -51,7 +51,7 @@ define(['Dictionary', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMU
 		 * Returns a SimpleTabMenu instance for given container id.
 		 * 
 		 * @param	{string}	containerId	tab menu container id
-		 * @return	{SimpleTabMenu}	tab menu object
+		 * @return	{(SimpleTabMenu|undefined)}	tab menu object
 		 */
 		getTabMenu: function(containerId) {
 			return _tabMenus.get(containerId);

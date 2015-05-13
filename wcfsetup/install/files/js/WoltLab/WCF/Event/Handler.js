@@ -30,13 +30,13 @@ define(['Dictionary'], function(Dictionary) {
 			}
 			
 			var actions = _listeners.get(identifier);
-			if (actions === null) {
+			if (actions === undefined) {
 				actions = new Dictionary();
 				_listeners.set(identifier, actions);
 			}
 			
 			var callbacks = actions.get(action);
-			if (callbacks === null) {
+			if (callbacks === undefined) {
 				callbacks = new Dictionary();
 				actions.set(action, callbacks);
 			}
@@ -58,9 +58,9 @@ define(['Dictionary'], function(Dictionary) {
 			data = data || {};
 			
 			var actions = _listeners.get(identifier);
-			if (actions !== null) {
+			if (actions !== undefined) {
 				var callbacks = actions.get(action);
-				if (callbacks !== null) {
+				if (callbacks !== undefined) {
 					callbacks.forEach(function(callback) {
 						callback(data);
 					});
@@ -77,12 +77,12 @@ define(['Dictionary'], function(Dictionary) {
 		 */
 		remove: function(identifier, action, uuid) {
 			var actions = _listeners.get(identifier);
-			if (actions === null) {
+			if (actions === undefined) {
 				return;
 			}
 			
 			var callbacks = actions.get(action);
-			if (callbacks === null) {
+			if (callbacks === undefined) {
 				return;
 			}
 			
@@ -97,8 +97,10 @@ define(['Dictionary'], function(Dictionary) {
 		 * @param	{string=}	action		action name
 		 */
 		removeAll: function(identifier, action) {
+			if (typeof action !== 'string') action = undefined;
+			
 			var actions = _listeners.get(identifier);
-			if (actions === null) {
+			if (actions === undefined) {
 				return;
 			}
 			

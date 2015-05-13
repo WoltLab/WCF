@@ -110,7 +110,7 @@ define(['jquery', 'enquire', 'Core', 'Dictionary', 'DOM/Util'], function($, enqu
 		 */
 		setTitle: function(id, title) {
 			var data = _dialogs.get(id);
-			if (typeof data === 'undefined') {
+			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			
@@ -230,7 +230,7 @@ define(['jquery', 'enquire', 'Core', 'Dictionary', 'DOM/Util'], function($, enqu
 		 */
 		_updateDialog: function(id, html) {
 			var data = _dialogs.get(id);
-			if (typeof data === 'undefined') {
+			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			
@@ -268,7 +268,7 @@ define(['jquery', 'enquire', 'Core', 'Dictionary', 'DOM/Util'], function($, enqu
 		 */
 		rebuild: function(id) {
 			var data = _dialogs.get(id);
-			if (typeof data === 'undefined') {
+			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			
@@ -352,7 +352,7 @@ define(['jquery', 'enquire', 'Core', 'Dictionary', 'DOM/Util'], function($, enqu
 		 */
 		close: function(id) {
 			var data = _dialogs.get(id);
-			if (typeof data === 'undefined') {
+			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			

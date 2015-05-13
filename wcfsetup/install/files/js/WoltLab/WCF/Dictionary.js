@@ -25,8 +25,10 @@ define(function() {
 		 * @param	{*}		value	value
 		 */
 		set: function(key, value) {
+			if (typeof key === 'number') key = key.toString();
+			
 			if (typeof key !== "string") {
-				throw new TypeError("Only strings can be used as keys, rejected '" +  + "' (" + typeof key + ").");
+				throw new TypeError("Only strings can be used as keys, rejected '" + key + "' (" + typeof key + ").");
 			}
 			
 			if (_hasMap) this._dictionary.set(key, value);
@@ -39,6 +41,8 @@ define(function() {
 		 * @param	{string}	key	key
 		 */
 		remove: function(key) {
+			if (typeof key === 'number') key = key.toString();
+			
 			if (_hasMap) this._dictionary.remove(key);
 			else this._dictionary[key] = undefined;
 		},
@@ -50,6 +54,8 @@ define(function() {
 		 * @return	{boolean}	true if key exists and value is not undefined
 		 */
 		has: function(key) {
+			if (typeof key === 'number') key = key.toString();
+			
 			if (_hasMap) return this._dictionary.has(key);
 			else {
 				return (this._dictionary.hasOwnProperty(key) && typeof this._dictionary[key] !== "undefined");
@@ -57,18 +63,20 @@ define(function() {
 		},
 		
 		/**
-		 * Retrieves a value by key, returns null if not found or undefined.
+		 * Retrieves a value by key, returns undefined if there is no match.
 		 * 
 		 * @param	{string}	key	key
 		 * @return	{*}
 		 */
 		get: function(key) {
+			if (typeof key === 'number') key = key.toString();
+			
 			if (this.has(key)) {
 				if (_hasMap) return this._dictionary.get(key);
 				else return this._dictionary[key];
 			}
 			
-			return null;
+			return undefined;
 		},
 		
 		/**

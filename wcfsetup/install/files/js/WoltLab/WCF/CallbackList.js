@@ -51,7 +51,7 @@ define(['Dictionary'], function(Dictionary) {
 		 */
 		forEach: function(identifier, callback) {
 			var callbacks = this._dictionary.get(identifier);
-			if (callbacks !== null) {
+			if (callbacks !== undefined) {
 				callbacks.forEach(callback);
 			}
 		}
