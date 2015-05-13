@@ -71,7 +71,7 @@ $(function() {
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			maxHeight: 500,
 			minHeight: 200,
-			plugins: [ 'wutil', 'wmonkeypatch', 'table', 'wbutton', 'wbbcode', 'wfontcolor', 'wfontfamily', 'wfontsize' ],
+			plugins: [ 'wutil', 'wmonkeypatch', 'wbutton', 'wbbcode', 'wfontcolor', 'wfontfamily', 'wfontsize' ],
 			removeEmpty: false,
 			replaceDivs: false,
 			source: true,
@@ -89,6 +89,10 @@ $(function() {
 				originalValue: $textarea.val()
 			}
 		};
+		
+		{if $__wcf->getBBCodeHandler()->isAvailableBBCode('table')}
+			$config.plugins.splice(2, 0, 'table');
+		{/if}
 		
 		if ($.browser.iOS) {
 			// using a zero-width space breaks iOS' detection of the start of a sentence, causing the first word to be lowercased
