@@ -670,7 +670,13 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// [img]
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1[^>]*?style="([^"]+)"[^>]*?>/gi, function(match, quotationMarks, source, style) {
+			html = html.replace(/<img([^>]*)?src=(["'])([^"']+?)\2([^>]*)?>/gi, function(match, attributesBefore, quotationMarks, source, attributesAfter) {
+				var attrs = attributesBefore + " " + attributesAfter;
+				var style = '';
+				if (attrs.match(/style="([^"]+)"/)) {
+					style = RegExp.$1;
+				}
+				
 				var $float = 'none';
 				var $width = 0;
 				
@@ -694,8 +700,6 @@ RedactorPlugins.wbbcode = function() {
 				
 				return "[img]" + source + "[/img]";
 			});
-			
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1[^>]*?>/gi, '[img]$2[/img]');
 			
 			// [*]
 			html = html.replace(/<li>/gi, '[*]');
