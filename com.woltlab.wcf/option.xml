@@ -1186,7 +1186,8 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<selectoptions><![CDATA[username:wcf.user.username
 registrationDate:wcf.user.registrationDate
 activityPoints:wcf.user.activityPoint
-likesReceived:wcf.like.likesReceived]]></selectoptions>
+likesReceived:wcf.like.likesReceived
+lastActivityTime:wcf.user.usersOnline.lastActivity]]></selectoptions>
 			</option>
 			<option name="members_list_default_sort_order">
 				<categoryname>user.list.members</categoryname>

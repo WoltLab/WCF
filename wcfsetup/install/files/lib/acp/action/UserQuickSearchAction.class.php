@@ -64,7 +64,7 @@ class UserQuickSearchAction extends AbstractAction {
 	 * number of results
 	 * @var	integer
 	 */
-	public $maxResults = 500;
+	public $maxResults = 2000;
 	
 	/**
 	 * @see	\wcf\action\IAction::readParameters()

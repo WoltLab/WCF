@@ -134,7 +134,7 @@ class MessageParser extends BBCodeParser {
 	protected function parseSmilies($text, $enableHtml = false) {
 		foreach ($this->smilies as $code => $html) {
 			//$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?![^<]*>)~', $html, $text);
-			$text = preg_replace('~(?<=^|\s)'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?=$|\s|</li>'.(!$enableHtml ? '|<br />' : '').')~', $html, $text);
+			$text = preg_replace('~(?<=^|\s|<li>)'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?=$|\s|</li>'.(!$enableHtml ? '|<br />' : '').')~', $html, $text);
 		}
 		
 		return $text;

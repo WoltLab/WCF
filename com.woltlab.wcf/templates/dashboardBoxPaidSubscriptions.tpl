@@ -3,7 +3,7 @@
 </header>
 
 <div class="container marginTop containerPadding">
-	<ul class="paidSubscriptionTeaserList">
+	<ul class="containerBoxList tripleColumned">
 		{foreach from=$subscriptions item=subscription}
 			<li>
 				<div class="containerHeadline" title="{$subscription->description|language}">

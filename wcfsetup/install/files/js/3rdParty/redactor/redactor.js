@@ -1,6 +1,6 @@
 /*
-	Redactor v10.1.0
-	Updated: April 16, 2015
+	Redactor v10.1.1
+	Updated: April 28, 2015
 
 	http://imperavi.com/redactor/
 
@@ -91,7 +91,7 @@
 
 	// Functionality
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '10.1.0';
+	$.Redactor.VERSION = '10.1.1';
 	$.Redactor.modules = ['alignment', 'autosave', 'block', 'buffer', 'build', 'button',
 						  'caret', 'clean', 'code', 'core', 'dropdown', 'file', 'focus',
 						  'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
@@ -191,6 +191,10 @@
 
 		deniedTags: ['script', 'style'],
 		allowedTags: false, // or array
+
+		paragraphizeBlocks: ['table', 'div', 'pre', 'form', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dl', 'blockquote', 'figcaption',
+							'address', 'section', 'header', 'footer', 'aside', 'article', 'object', 'style', 'script', 'iframe', 'select', 'input', 'textarea',
+							'button', 'option', 'map', 'area', 'math', 'hr', 'fieldset', 'legend', 'hgroup', 'nav', 'figure', 'details', 'menu', 'summary', 'p'],
 
 		removeComments: false,
 		replaceTags: [
@@ -332,7 +336,7 @@
 				youtube: /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube\.com\S*[^\w\-\s])([\w\-]{11})(?=[^\w\-]|$)(?![?=&+%\w.\-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/ig,
 				vimeo: /https?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/,
 				image: /((https?|www)[^\s]+\.)(jpe?g|png|gif)(\?[^\s-]+)?/ig,
-				url: /((?:http[s]?:\/\/(?:www\.)?|www\.){1}(?:[0-9A-Za-z\-%_]+\.)+[a-zA-Z]{2,}(?::[0-9]+)?(?:(?:\/[0-9A-Za-z\-#\.%\+_]*)+)?(?:\?(?:[0-9A-Za-z\-\.%_]+(?:=[0-9A-Za-z\-\.%_\+]*)?)?(?:&(?:[0-9A-Za-z\-\.%_]+(?:=[0-9A-Za-z\-\.%_\+]*)?)?)*)?(?:#[0-9A-Za-z\-\.%_\+=\?&;]*)?)/ig,
+				url: /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/ig,
 			}
 		},
 
@@ -1357,6 +1361,9 @@
 					// paste
 					this.$editor.on('paste.redactor', $.proxy(this.paste.init, this));
 
+					// cut
+					this.$editor.on('cut.redactor', $.proxy(this.code.sync, this));
+
 					// keydown
 					this.$editor.on('keydown.redactor', $.proxy(this.keydown.init, this));
 
@@ -2261,29 +2268,16 @@
 					}
 
 					var options = {
-						deniedTags: false,
-						allowedTags: tags,
+						deniedTags: (this.opts.deniedTags) ? this.opts.deniedTags : false,
+						allowedTags: (this.opts.allowedTags) ? this.opts.allowedTags : tags,
 						removeComments: true,
 						removePhp: true,
-						removeAttr: false,
-						allowedAttr: attrAllowed,
+						removeAttr: (this.opts.removeAttr) ? this.opts.removeAttr : false,
+						allowedAttr: (this.opts.allowedAttr) ? this.opts.allowedAttr : attrAllowed,
 						removeEmpty: tagsEmpty
 					};
 
-					// denied tags
-					if (this.opts.deniedTags)
-					{
-						options.deniedTags = this.opts.deniedTags;
-					}
-
-					// allowed tags
-					if (this.opts.allowedTags)
-					{
-						options.allowedTags = this.opts.allowedTags;
-					}
-
 					return this.tidy.load(html, options);
-
 				},
 				onPasteRemoveEmpty: function(html)
 				{
@@ -2707,6 +2701,14 @@
 					if (this.autosave.html == false)
 					{
 						this.autosave.html = this.code.get();
+					}
+
+					if (this.opts.codemirror)
+					{
+						this.$textarea.next('.CodeMirror').each(function(i, el)
+						{
+							el.CodeMirror.setValue(html);
+						});
 					}
 
 					//autosave
@@ -3490,8 +3492,11 @@
 
 					if (height < 50 || width < 100) return;
 
+					var height = Math.round(this.image.resizeHandle.el.width() / this.image.resizeHandle.ratio);
+
+					this.image.resizeHandle.el.attr({width: width, height: height});
 		            this.image.resizeHandle.el.width(width);
-		            this.image.resizeHandle.el.height(this.image.resizeHandle.el.width()/this.image.resizeHandle.ratio);
+		            this.image.resizeHandle.el.height(height);
 
 		            this.code.sync();
 				},
@@ -3915,6 +3920,15 @@
 					for (var i = 0; i < tags.length; i++)
 					{
 						if (tag == tags[i]) tag = replaced[i];
+					}
+
+					if (this.opts.allowedTags)
+					{
+						if ($.inArray(tag, this.opts.allowedTags) == -1) return;
+					}
+					else
+					{
+						if ($.inArray(tag, this.opts.deniedTags) !== -1) return;
 					}
 
 					this.inline.type = type || false;
@@ -4671,8 +4685,6 @@
 							current = this.selection.getCurrent();
 							$next = $(this.keydown.current).next();
 
-
-
 							if ($next.length !== 0 && $next[0].tagName == 'BR')
 							{
 								return this.keydown.insertBreakLine(e);
@@ -5065,6 +5077,7 @@
 					e.stopPropagation();
 
 					this.selection.get();
+
 					var br1 = document.createElement('br');
 
 					if (this.utils.browser('msie'))
@@ -5079,9 +5092,19 @@
 
 					this.range.insertNode(br1);
 
+					// move br outside A tag
+					var $parentA = $(br1).parent("a");
+
+					if ($parentA.length > 0)
+					{
+						$parentA.find(br1)
+								.remove();
+
+						$parentA.after(br1);
+					}
+
 					if (dbl === true)
 					{
-
 						var $next = $(br1).next();
 						if ($next.length !== 0 && $next[0].tagName === 'BR' && this.utils.isEndOfEditor())
 						{
@@ -5091,6 +5114,7 @@
 						}
 
 						var br2 = document.createElement('br');
+
 						this.range.insertNode(br2);
 						this.caret.setAfter(br2);
 					}
@@ -5204,7 +5228,10 @@
 						}
 
 						// remove empty paragraphs
-						this.$editor.find('p').each($.proxy(this.utils.removeEmpty, this));
+						this.$editor.find('p').each($.proxy(function(i, s)
+						{
+							this.utils.removeEmpty(i, $(s).html());
+						}, this));
 
 						// remove invisible space
 						if (this.opts.linebreaks && this.keyup.current && this.keyup.current.tagName == 'DIV' && this.utils.isEmpty(this.keyup.current.innerHTML))
@@ -5398,17 +5425,20 @@
 				cleanUrl: function()
 				{
 					var thref = self.location.href.replace(/\/$/i, '');
-					this.link.url = this.link.url.replace(thref, '');
-					this.link.url = this.link.url.replace(/^\/#/, '#');
-					this.link.url = this.link.url.replace('mailto:', '');
 
-					// remove host from href
-					if (!this.opts.linkProtocol)
+					if (typeof this.link.url !== "undefined")
 					{
-						var re = new RegExp('^(http|ftp|https)://' + self.location.host, 'i');
-						this.link.url = this.link.url.replace(re, '');
-					}
+						this.link.url = this.link.url.replace(thref, '');
+						this.link.url = this.link.url.replace(/^\/#/, '#');
+						this.link.url = this.link.url.replace('mailto:', '');
 
+						// remove host from href
+						if (!this.opts.linkProtocol)
+						{
+							var re = new RegExp('^(http|ftp|https)://' + self.location.host, 'i');
+							this.link.url = this.link.url.replace(re, '');
+						}
+					}
 				},
 				getData: function()
 				{
@@ -6310,10 +6340,6 @@
 					if (this.opts.linebreaks) return html;
 					if (html === '' || html === '<p></p>') return this.opts.emptyHtml;
 
-					this.paragraphize.blocks = ['table', 'div', 'pre', 'form', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dl', 'blockquote', 'figcaption',
-					'address', 'section', 'header', 'footer', 'aside', 'article', 'object', 'style', 'script', 'iframe', 'select', 'input', 'textarea',
-					'button', 'option', 'map', 'area', 'math', 'hr', 'fieldset', 'legend', 'hgroup', 'nav', 'figure', 'details', 'menu', 'summary', 'p'];
-
 					html = html + "\n";
 
 					this.paragraphize.safes = [];
@@ -6328,7 +6354,7 @@
 					html = this.paragraphize.clear(html);
 					html = this.paragraphize.restoreSafes(html);
 
-					html = html.replace(new RegExp('<br\\s?/?>\n?<(' + this.paragraphize.blocks.join('|') + ')(.*?[^>])>', 'gi'), '<p><br /></p>\n<$1$2>');
+					html = html.replace(new RegExp('<br\\s?/?>\n?<(' + this.opts.paragraphizeBlocks.join('|') + ')(.*?[^>])>', 'gi'), '<p><br /></p>\n<$1$2>');
 
 					return $.trim(html);
 				},
@@ -6344,7 +6370,7 @@
 
 					html = $div.html();
 
-					$div.find(this.paragraphize.blocks.join(', ')).each($.proxy(function(i,s)
+					$div.find(this.opts.paragraphizeBlocks.join(', ')).each($.proxy(function(i,s)
 					{
 						this.paragraphize.z++;
 						this.paragraphize.safes[this.paragraphize.z] = s.outerHTML;
@@ -7379,24 +7405,13 @@
 						replacement.push(this.tidy.settings.replaceTags[i][0]);
 					}
 
-					this.tidy.$div.find(replacement.join(',')).each($.proxy(function(n,s)
+					$.each(replacement, $.proxy(function(key, value)
 					{
-						var tag = rTags[n];
-						$(s).replaceWith(function()
+						this.tidy.$div.find(value).replaceWith(function()
 						{
-							var replaced = $('<' + tag + ' />').append($(this).contents());
-
-							for (var i = 0; i < this.attributes.length; i++)
-							{
-								replaced.attr(this.attributes[i].name, this.attributes[i].value);
-							}
-
-							return replaced;
+							return $("<" + rTags[key] + " />", {html: $(this).html()});
 						});
-
 					}, this));
-
-					return html;
 				},
 				replaceStyles: function()
 				{
@@ -8371,12 +8386,13 @@
 				},
 				removeEmpty: function(i, s)
 				{
-					var $s = $(s);
+					var $s = $($.parseHTML(s));
 
 					$s.find('.redactor-invisible-space').removeAttr('style').removeAttr('class');
 
 					if ($s.find('hr, br, img, iframe, source').length !== 0) return;
 					var text = $.trim($s.text());
+
 					if (this.utils.isEmpty(text, false))
 					{
 						$s.remove();
@@ -8642,19 +8658,17 @@
 							var text = $(this).text(),
 								html = text;
 
-
-							if (opts.convertImageLinks && html.match(opts.linkify.regexps.image))
+							if (opts.convertVideoLinks && (html.match(opts.linkify.regexps.youtube) || html.match(opts.linkify.regexps.vimeo)) )
+							{
+								html = linkify.convertVideoLinks(html);
+							}
+							else if (opts.convertImageLinks && html.match(opts.linkify.regexps.image))
 							{
 								html = linkify.convertImages(html);
 							}
-							else if (opts.convertUrlLinks && !html.match(opts.linkify.regexps.youtube) && !html.match(opts.linkify.regexps.vimeo))
+							else if (opts.convertUrlLinks)
 							{
 								html = linkify.convertLinks(html);
-							}
-
-							if (opts.convertVideoLinks)
-							{
-								html = linkify.convertVideoLinks(html);
 							}
 
 							$(this).before(text.replace(text, html))
@@ -8685,7 +8699,9 @@
 					var matches = html.match(this.opts.linkify.regexps.image);
 
 					if (matches)
+					{
 						html = html.replace(html, '<img src="' + matches + '" />');
+					}
 
 					return html;
 				},
@@ -8706,15 +8722,26 @@
 								linkProtocol = this.opts.linkProtocol + '://';
 
 							if (href.match(/(https?|ftp):\/\//i) !== null)
+							{
 								linkProtocol = "";
+							}
 
 							if (text.length > this.opts.linkSize)
+							{
 								text = text.substring(0, this.opts.linkSize) + '...';
+							}
 
 							text = decodeURIComponent(text);
 
+							var regexB = "\\b";
+
+							if ($.inArray(href.slice(-1), ["/", "&", "="]) != -1)
+							{
+								regexB = "";
+							}
+
 							// escaping url
-							var regexp = new RegExp('(' + href.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&") + ')\\b', 'g');
+							var regexp = new RegExp('(' + href.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&") + regexB + ')', 'g');
 
 							html = html.replace(regexp, '<a href="' + linkProtocol + $.trim(href) + '">' + $.trim(text) + '</a>');
 						}
