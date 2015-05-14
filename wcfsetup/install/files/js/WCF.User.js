@@ -2015,7 +2015,7 @@ WCF.User.LikeLoader = Class.extend({
 		this._userID = userID;
 		
 		if (!this._userID) {
-			console.debug("[WCF.User.RecentActivityLoader] Invalid parameter 'userID' given.");
+			console.debug("[WCF.User.LikeLoader] Invalid parameter 'userID' given.");
 			return;
 		}
 		
