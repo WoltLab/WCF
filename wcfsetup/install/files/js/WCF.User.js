@@ -2005,10 +2005,9 @@ WCF.User.LikeLoader = Class.extend({
 	_userID: 0,
 	
 	/**
-	 * Initializes a new RecentActivityLoader object.
+	 * Initializes a new LikeLoader object.
 	 * 
 	 * @param	integer		userID
-	 * @param	boolean		filteredByFollowedUsers
 	 */
 	init: function(userID) {
 		this._container = $('#likeList');
@@ -2023,8 +2022,7 @@ WCF.User.LikeLoader = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		// todo: remove recentActivitiesMore in 2.2
-		var $container = $('<li class="likeListMore recentActivitiesMore showMore"><button class="small">' + WCF.Language.get('wcf.like.likes.more') + '</button><small>' + WCF.Language.get('wcf.like.likes.noMoreEntries') + '</small></li>').appendTo(this._container);
+		var $container = $('<li class="likeListMore showMore"><button class="small">' + WCF.Language.get('wcf.like.likes.more') + '</button><small>' + WCF.Language.get('wcf.like.likes.noMoreEntries') + '</small></li>').appendTo(this._container);
 		this._loadButton = $container.children('button').click($.proxy(this._click, this));
 		this._noMoreEntries = $container.children('small').hide();
 		
