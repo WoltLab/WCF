@@ -933,7 +933,7 @@ class TemplateScriptingCompiler {
 	 */
 	protected function compileIfTag($tagArgs, $elseif = false) {
 		$tagArgs = $this->replaceQuotes($tagArgs);
-		$tagArgs = str_replace(' ', '', $tagArgs);
+		$tagArgs = str_replace(array(' ', "\n"), '', $tagArgs);
 		
 		// split tags
 		preg_match_all('~('.$this->conditionOperatorPattern.')~', $tagArgs, $matches);
