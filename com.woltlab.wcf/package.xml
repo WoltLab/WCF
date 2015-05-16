@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.1.3</version> <!-- codename: typhoon -->
-		<date>2015-04-14</date>
+		<version>2.1.4</version> <!-- codename: typhoon -->
+		<date>2015-05-16</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -135,35 +135,15 @@
 		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 	
-	<!-- Heads up! Keep all update blocks below in sync! -->
-	
-	<instructions type="update" fromversion="2.1.2">
+	<instructions type="update" fromversion="2.1.3">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.1.2 pl 1">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.1.2 pl 2">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.1.2 pl 3">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.1.2 pl 4">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" run="standalone">language/*.xml</instruction>
+		
+		<instruction type="bbcode">bbcode.xml</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
+		<instruction type="option">option.xml</instruction>
 	</instructions>
 </package>
