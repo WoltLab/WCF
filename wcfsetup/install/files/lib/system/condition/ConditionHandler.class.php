@@ -52,10 +52,10 @@ class ConditionHandler extends SingletonFactory {
 	 * Deletes all conditions of the objects with the given ids.
 	 * 
 	 * @param	string			$definitionName
-	 * @param	array<integer>		$objectID
+	 * @param	array<integer>		$objectIDs
 	 */
-	public function deleteConditions($definitionName, array $objectID) {
-		if (empty($objectID)) return;
+	public function deleteConditions($definitionName, array $objectIDs) {
+		if (empty($objectIDs)) return;
 		
 		$definition = ObjectTypeCache::getInstance()->getDefinitionByName($definitionName);
 		if ($definition === null) {
@@ -72,7 +72,7 @@ class ConditionHandler extends SingletonFactory {
 		
 		$conditionList = new ConditionList();
 		$conditionList->getConditionBuilder()->add('objectTypeID IN (?)', array($objectTypeIDs));
-		$conditionList->getConditionBuilder()->add('objectID IN (?)', array($objectID));
+		$conditionList->getConditionBuilder()->add('objectID IN (?)', array($objectIDs));
 		$conditionList->readObjects();
 		
 		if (count($conditionList)) {
