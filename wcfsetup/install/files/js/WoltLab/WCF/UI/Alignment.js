@@ -48,7 +48,7 @@ define(['Core', 'DOM/Traverse', 'DOM/Util'], function(Core, DOMTraverse, DOMUtil
 			
 			if (!Array.isArray(options.pointerClassNames) || options.pointerClassNames.length !== (options.pointer ? 1 : 2)) options.pointerClassNames = [];
 			if (['left', 'right', 'center'].indexOf(options.horizontal) === -1) options.horizontal = 'left';
-			if (options.vertical !== 'bottom') options.horizontal = 'top';
+			if (options.vertical !== 'bottom') options.vertical = 'top';
 			if (['both', 'horizontal', 'vertical', 'none'].indexOf(options.allowFlip) === -1) options.allowFlip = 'both';
 			
 			// place element in the upper left corner to prevent calculation issues due to possible scrollbars
