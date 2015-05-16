@@ -145,5 +145,7 @@
 		<instruction type="bbcode">bbcode.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
+		
+		<instruction type="script" run="standalone">acp/rebuild_attachments_com.woltlab.wcf_2.1.4.php</instruction>
 	</instructions>
 </package>
