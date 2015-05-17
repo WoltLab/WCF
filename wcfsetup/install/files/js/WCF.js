@@ -3376,54 +3376,24 @@ WCF.Dictionary = Class.extend({
 });
 
 /**
- * Global language storage.
- * 
- * @see	WCF.Dictionary
+ * @deprecated Use WoltLab/WCF/Language
  */
 WCF.Language = {
-	_variables: new WCF.Dictionary(),
-	
-	/**
-	 * @see	WCF.Dictionary.add()
-	 */
 	add: function(key, value) {
-		this._variables.add(key, value);
+		console.warn('Call to deprecated WCF.Language.add("' + key + '")');
+		require(['WoltLab/WCF/Language'], function(Language) {
+			Language.add(key, value);
+		});
 	},
-	
-	/**
-	 * @see	WCF.Dictionary.addObject()
-	 */
 	addObject: function(object) {
-		this._variables.addObject(object);
+		console.warn('Call to deprecated WCF.Language.addObject()');
+		require(['WoltLab/WCF/Language'], function(Language) {
+			Language.addObject(object);
+		});
 	},
-	
-	/**
-	 * Retrieves a variable.
-	 * 
-	 * @param	string		key
-	 * @return	mixed
-	 */
 	get: function(key, parameters) {
-		// initialize parameters with an empty object
-		if (parameters == null) var parameters = { };
-		
-		var value = this._variables.get(key);
-		
-		if (value === null) {
-			// return key again
-			return key;
-		}
-		else if (typeof value === 'string') {
-			// transform strings into template and try to refetch
-			this.add(key, new WCF.Template(value));
-			return this.get(key, parameters);
-		}
-		else if (typeof value.fetch === 'function') {
-			// evaluate templates
-			value = value.fetch(parameters);
-		}
-		
-		return value;
+		// This cannot be sanely provided as a compatibility wrapper.
+		throw new Error('Call to deprecated WCF.Language.get("' + key + '")');
 	}
 };
 

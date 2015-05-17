@@ -12,18 +12,30 @@ define(
 	[
 		'jquery',            'favico',                 'enquire',                'WoltLab/WCF/Date/Time/Relative',
 		'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile',  'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu',
-		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip'
+		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Language'
 	], 
 	function(
 		 $,                   favico,                   enquire,                  relativeTime,
 		 simpleDropdown,      UIMobile,                 UITabMenu,                UIFlexibleMenu,
-		 UIDialog,            UITooltip
+		 UIDialog,            UITooltip,                Language
 	)
 {
 	"use strict";
 	
 	window.Favico = favico;
 	window.enquire = enquire;
+	window.WCF.Language.get = function(key, parameters) {
+		console.warn('Call to deprecated WCF.Language.get("' + key + '")');
+		return Language.get(key);
+	};
+	window.WCF.Language.add = function(key, value) {
+		console.warn('Call to deprecated WCF.Language.add("' + key + '")');
+		return Language.add(key, value);
+	};
+	window.WCF.Language.addObject = function(object) {
+		console.warn('Call to deprecated WCF.Language.addObject()');
+		return Language.addObject(object);
+	};
 	
 	/**
 	 * @constructor
