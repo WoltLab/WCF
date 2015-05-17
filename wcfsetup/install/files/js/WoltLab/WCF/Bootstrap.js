@@ -26,7 +26,7 @@ define(
 	window.enquire = enquire;
 	window.WCF.Language.get = function(key, parameters) {
 		console.warn('Call to deprecated WCF.Language.get("' + key + '")');
-		return Language.get(key);
+		return Language.get(key, parameters);
 	};
 	window.WCF.Language.add = function(key, value) {
 		console.warn('Call to deprecated WCF.Language.add("' + key + '")');
