@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Mobile
  */
-define(['jquery', 'enquire', 'DOM/Traverse'], function($, enquire, DOMTraverse) {
+define(['jquery', 'enquire', 'Language', 'DOM/Traverse'], function($, enquire, Language, DOMTraverse) {
 	"use strict";
 	
 	var _buttonGroupNavigations = null;
@@ -86,13 +86,13 @@ define(['jquery', 'enquire', 'DOM/Traverse'], function($, enquire, DOMTraverse) 
 			
 			// use icons if language item is empty/non-existant
 			var languageShowSidebar = 'wcf.global.sidebar.show' + sidebarPosition + 'Sidebar';
-			if (languageShowSidebar === WCF.Language.get(languageShowSidebar) || WCF.Language.get(languageShowSidebar) === '') {
+			if (languageShowSidebar === Language.get(languageShowSidebar) || Language.get(languageShowSidebar) === '') {
 				languageShowSidebar = document.createElement('span');
 				languageShowSidebar.className = 'icon icon16 fa-angle-double-' + sidebarPosition.toLowerCase();
 			}
 			
 			var languageHideSidebar = 'wcf.global.sidebar.hide' + sidebarPosition + 'Sidebar';
-			if (languageHideSidebar === WCF.Language.get(languageHideSidebar) || WCF.Language.get(languageHideSidebar) === '') {
+			if (languageHideSidebar === Language.get(languageHideSidebar) || Language.get(languageHideSidebar) === '') {
 				languageHideSidebar = document.createElement('span');
 				languageHideSidebar.className = 'icon icon16 fa-angle-double-' + (sidebarPosition === 'Left' ? 'right' : 'left');
 			}

@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Alignment
  */
-define(['Core', 'DOM/Traverse', 'DOM/Util'], function(Core, DOMTraverse, DOMUtil) {
+define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language, DOMTraverse, DOMUtil) {
 	"use strict";
 	
 	/**
@@ -82,7 +82,7 @@ define(['Core', 'DOM/Traverse', 'DOM/Util'], function(Core, DOMTraverse, DOMUtil
 			}
 			
 			// in rtl languages we simply swap the value for 'horizontal'
-			if (WCF.Language.get('wcf.global.pageDirection') === 'rtl') {
+			if (Language.get('wcf.global.pageDirection') === 'rtl') {
 				options.horizontal = (options.horizontal === 'left') ? 'right' : 'left';
 			}
 			

@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Style/Changer
  */
-define(['UI/Dialog'], function(UIDialog) {
+define(['Language', 'UI/Dialog'], function(Language, UIDialog) {
 	"use strict";
 	
 	/**
@@ -29,7 +29,7 @@ define(['UI/Dialog'], function(UIDialog) {
 			
 			var link = document.createElement('a');
 			link.setAttribute('href', '#');
-			link.textContent = WCF.Language.get('wcf.style.changeStyle');
+			link.textContent = Language.get('wcf.style.changeStyle');
 			listItem.appendChild(link);
 			
 			list.appendChild(listItem);
@@ -53,7 +53,7 @@ define(['UI/Dialog'], function(UIDialog) {
 					success: (function(data) {
 						var dialog = UIDialog.open('styleChanger', data.returnValues.template, {
 							disableContentPadding: true,
-							title: WCF.Language.get('wcf.style.changeStyle')
+							title: Language.get('wcf.style.changeStyle')
 						});
 						
 						var styles = dialog.content.querySelectorAll('.styleList > li');
