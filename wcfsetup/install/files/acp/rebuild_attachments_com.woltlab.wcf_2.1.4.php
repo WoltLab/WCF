@@ -55,6 +55,11 @@ if ($rebuildData['max']) {
 	else {
 		$attachmentUpdates = array();
 		foreach ($attachmentList as $attachment) {
+			if (!file_exists($attachment->getLocation())) {
+				// missing files should not cause the update to fail
+				continue;
+			}
+			
 			$filesize = filesize($attachment->getLocation());
 			if ($filesize != $attachment->filesize) {
 				$attachmentUpdates[$attachment->attachmentID] = $filesize;

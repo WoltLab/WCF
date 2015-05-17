@@ -3,6 +3,7 @@ namespace wcf\data\ad;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -47,6 +48,15 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 		$adEditor->setShowOrder($showOrder);
 		
 		return new Ad($ad->adID);
+	}
+	
+	/**
+	 * @see	\wcf\data\IDeleteAction::delete()
+	 */
+	public function delete() {
+		ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.ad', $this->objectIDs);
+		
+		return parent::delete();
 	}
 	
 	/**

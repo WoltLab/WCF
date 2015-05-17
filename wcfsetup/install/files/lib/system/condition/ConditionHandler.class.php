@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\condition;
 use wcf\data\condition\ConditionAction;
+use wcf\data\condition\ConditionList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\ConditionCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -44,6 +45,39 @@ class ConditionHandler extends SingletonFactory {
 				));
 				$conditionAction->executeAction();
 			}
+		}
+	}
+	
+	/**
+	 * Deletes all conditions of the objects with the given ids.
+	 * 
+	 * @param	string			$definitionName
+	 * @param	array<integer>		$objectIDs
+	 */
+	public function deleteConditions($definitionName, array $objectIDs) {
+		if (empty($objectIDs)) return;
+		
+		$definition = ObjectTypeCache::getInstance()->getDefinitionByName($definitionName);
+		if ($definition === null) {
+			throw new SystemException("Unknown object type definition with name '".$definitionName."'");
+		}
+		
+		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes($definitionName);
+		$objectTypeIDs = array();
+		foreach ($objectTypes as $objectType) {
+			$objectTypeIDs[] = $objectType->objectTypeID;
+		}
+		
+		if (empty($objectTypeIDs)) return;
+		
+		$conditionList = new ConditionList();
+		$conditionList->getConditionBuilder()->add('objectTypeID IN (?)', array($objectTypeIDs));
+		$conditionList->getConditionBuilder()->add('objectID IN (?)', array($objectIDs));
+		$conditionList->readObjects();
+		
+		if (count($conditionList)) {
+			$conditionAction = new ConditionAction($conditionList->getObjects(), 'delete');
+			$conditionAction->executeAction();
 		}
 	}
 	

@@ -3,6 +3,7 @@ namespace wcf\data\notice;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -53,6 +54,15 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 		$noticeEditor->setShowOrder($showOrder);
 		
 		return new Notice($notice->noticeID);
+	}
+	
+	/**
+	 * @see	\wcf\data\IDeleteAction::delete()
+	 */
+	public function delete() {
+		ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.notice', $this->objectIDs);
+		
+		return parent::delete();
 	}
 	
 	/**

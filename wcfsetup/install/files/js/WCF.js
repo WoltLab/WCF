@@ -5651,7 +5651,7 @@ WCF.PageVisibilityHandler = {
 /**
  * Namespace for table related classes.
  */
-WCF.Table = {};
+WCF.Table = { };
 
 /**
  * Handles empty tables which can be used in combination with WCF.Action.Proxy.
@@ -5691,47 +5691,68 @@ WCF.Table.EmptyTableHandler = Class.extend({
 	},
 	
 	/**
+	 * Returns the current number of table rows.
+	 * 
+	 * @return	integer
+	 */
+	_getRowCount: function() {
+		return this._tableContainer.find('table tr.' + this._rowClassName).length;
+	},
+	
+	/**
+	 * Handles an empty table.
+	 */
+	_handleEmptyTable: function() {
+		if (this._options.emptyMessage) {
+			// insert message
+			this._tableContainer.replaceWith($('<p />').addClass(this._options.messageType).text(this._options.emptyMessage));
+		}
+		else if (this._options.refreshPage) {
+			// refresh page
+			if (this._options.updatePageNumber) {
+				// calculate the new page number
+				var pageNumberURLComponents = window.location.href.match(/(\?|&)pageNo=(\d+)/g);
+				if (pageNumberURLComponents) {
+					var currentPageNumber = pageNumberURLComponents[pageNumberURLComponents.length - 1].match(/\d+/g);
+					if (this._options.updatePageNumber > 0) {
+						currentPageNumber++;
+					}
+					else {
+						currentPageNumber--;
+					}
+					
+					window.location = window.location.href.replace(pageNumberURLComponents[pageNumberURLComponents.length - 1], pageNumberURLComponents[pageNumberURLComponents.length - 1][0] + 'pageNo=' + currentPageNumber);
+				}
+			}
+			else {
+				window.location.reload();
+			}
+		}
+		else {
+			// simply remove the table container
+			this._tableContainer.remove();
+		}
+	},
+	
+	/**
 	 * Handles the removal of a DOM node.
 	 */
 	_remove: function(event) {
-		var element = $(event.target);
-		
-		// check if DOM element is relevant
-		if (element.hasClass(this._rowClassName)) {
-			var tbody = element.parents('tbody:eq(0)');
+		if ($.getLength(event)) {
+			var element = $(event.target);
 			
-			// check if table will be empty if DOM node is removed
-			if (tbody.children('tr').length == 1) {
-				if (this._options.emptyMessage) {
-					// insert message
-					this._tableContainer.replaceWith($('<p />').addClass(this._options.messageType).text(this._options.emptyMessage));
-				}
-				else if (this._options.refreshPage) {
-					// refresh page
-					if (this._options.updatePageNumber) {
-						// calculate the new page number
-						var pageNumberURLComponents = window.location.href.match(/(\?|&)pageNo=(\d+)/g);
-						if (pageNumberURLComponents) {
-							var currentPageNumber = pageNumberURLComponents[pageNumberURLComponents.length - 1].match(/\d+/g);
-							if (this._options.updatePageNumber > 0) {
-								currentPageNumber++;
-							}
-							else {
-								currentPageNumber--;
-							}
-							
-							window.location = window.location.href.replace(pageNumberURLComponents[pageNumberURLComponents.length - 1], pageNumberURLComponents[pageNumberURLComponents.length - 1][0] + 'pageNo=' + currentPageNumber);
-						}
-					}
-					else {
-						window.location.reload();
-					}
-				}
-				else {
-					// simply remove the table container
-					this._tableContainer.remove();
+			// check if DOM element is relevant
+			if (element.hasClass(this._rowClassName)) {
+				var tbody = element.parents('tbody:eq(0)');
+				
+				// check if table will be empty if DOM node is removed
+				if (tbody.children('tr').length == 1) {
+					this._handleEmptyTable();
 				}
 			}
+		}
+		else if (!this._getRowCount()) {
+			this._handleEmptyTable();
 		}
 	}
 });
