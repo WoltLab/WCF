@@ -1,7 +1,7 @@
 /**
  * Dictionary implemention relying on an object or if supported on a Map to hold key => value data.
  * 
- * @author	Alexander Ebert
+ * @author	Tim Duesterhus, Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Dictionary
@@ -118,6 +118,26 @@ define(function() {
 				}).bind(this));
 			}
 		}
+	};
+	
+	/**
+	 * Creates a new Dictionary based on the given object.
+	 * All properties that are owned by the object will be added
+	 * as keys to the resulting Dictionary.
+	 * 
+	 * @param	{object}	object
+	 * @return	{Dictionary}
+	 */
+	Dictionary.fromObject = function(object) {
+		var result = new Dictionary();
+		
+		for (var key in object) {
+			if (object.hasOwnProperty(key)) {
+				result.set(key, object[key]);
+			}
+		}
+		
+		return result;
 	};
 	
 	Object.defineProperty(Dictionary.prototype, 'size', {
