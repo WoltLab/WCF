@@ -104,7 +104,8 @@ define(['jquery', 'UI/Alignment'], function($, UIAlignment) {
 			UIAlignment.set(_tooltip, element, {
 				horizontal: 'center',
 				pointer: true,
-				pointerClassNames: ['inverse']
+				pointerClassNames: ['inverse'],
+				vertical: 'top'
 			});
 		},
 		
