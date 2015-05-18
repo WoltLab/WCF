@@ -42,7 +42,7 @@ define(['./Template.grammar', './StringUtil', 'Language'], function(parser, Stri
 			+ "v.__wcf = window.WCF; v.__window = window;\n"
 			+ "return " + template;
 			
-			this.fetch = new Function("StringUtil", "Language", "v", template).bind(null, StringUtil, Language);
+			this.fetch = new Function("StringUtil", "Language", "v", template).bind(undefined, StringUtil, Language);
 		}
 		catch (e) {
 			console.debug(e.message);

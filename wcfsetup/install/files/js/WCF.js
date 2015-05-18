@@ -1962,12 +1962,7 @@ WCF.Clipboard = {
 };
 
 /**
- * Provides a simple call for periodical executed functions. Based upon
- * ideas by Prototype's PeriodicalExecuter.
- * 
- * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/periodical_executer.js
- * @param	function		callback
- * @param	integer			delay
+ * @deprecated Use WoltLab/WCF/Timer/Repeating
  */
 WCF.PeriodicalExecuter = Class.extend({
 	/**
