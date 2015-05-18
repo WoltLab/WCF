@@ -143,7 +143,7 @@ define(['Core', 'Dictionary', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], 
 			
 			if (hiddenItems.length) {
 				var dropdownMenu;
-				if (dropdown === null) {
+				if (dropdown === undefined) {
 					dropdown = document.createElement('li');
 					dropdown.className = 'dropdown jsFlexibleMenuDropdown';
 					var icon = document.createElement('a');
