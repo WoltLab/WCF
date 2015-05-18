@@ -41,7 +41,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 				actions.set(action, callbacks);
 			}
 			
-			var uuid = Core.getUUID();
+			var uuid = Core.getUuid();
 			callbacks.set(uuid, callback);
 			
 			return uuid;

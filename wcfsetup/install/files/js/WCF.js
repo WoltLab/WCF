@@ -703,7 +703,7 @@ $.extend(WCF, {
 	},
 	
 	/**
-	 * @deprecated Use WoltLab/WCF/Core.getUUID()
+	 * @deprecated Use WoltLab/WCF/Core.getUuid().
 	 */
 	getUUID: function() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
