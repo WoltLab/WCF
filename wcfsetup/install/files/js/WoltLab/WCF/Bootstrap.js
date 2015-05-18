@@ -24,18 +24,9 @@ define(
 	
 	window.Favico = favico;
 	window.enquire = enquire;
-	window.WCF.Language.get = function(key, parameters) {
-		console.warn('Call to deprecated WCF.Language.get("' + key + '")');
-		return Language.get(key, parameters);
-	};
-	window.WCF.Language.add = function(key, value) {
-		console.warn('Call to deprecated WCF.Language.add("' + key + '")');
-		return Language.add(key, value);
-	};
-	window.WCF.Language.addObject = function(object) {
-		console.warn('Call to deprecated WCF.Language.addObject()');
-		return Language.addObject(object);
-	};
+	window.WCF.Language.get = Language.get;
+	window.WCF.Language.add = Language.add;
+	window.WCF.Language.addObject = Language.addObject;
 	
 	/**
 	 * @constructor

@@ -3380,13 +3380,11 @@ WCF.Dictionary = Class.extend({
  */
 WCF.Language = {
 	add: function(key, value) {
-		console.warn('Call to deprecated WCF.Language.add("' + key + '")');
 		require(['WoltLab/WCF/Language'], function(Language) {
 			Language.add(key, value);
 		});
 	},
 	addObject: function(object) {
-		console.warn('Call to deprecated WCF.Language.addObject()');
 		require(['WoltLab/WCF/Language'], function(Language) {
 			Language.addObject(object);
 		});
