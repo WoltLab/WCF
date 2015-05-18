@@ -10114,61 +10114,6 @@ WCF.Condition.PageControllerDependence = Class.extend({
 WCF.Notice = { };
 
 /**
- * Handles dismissing notices.
- */
-WCF.Notice.Dismiss = Class.extend({
-	/**
-	 * list with notices
-	 * @var	jQuery
-	 */
-	_notices: { },
-	
-	/**
-	 * action proxy object
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * Initializes a new WCF.Notice.Dismiss object.
-	 */
-	init: function() {
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		var $dismissButtons = $('.jsDismissNoticeButton').click($.proxy(this._click, this));
-		
-		$dismissButtons.each($.proxy(function(index, element) {
-			this._notices[$(element).data('objectID')] = $(element).parent();
-		}, this));
-	},
-	
-	/**
-	 * Handles clicking on 
-	 */
-	_click: function(event) {
-		this._proxy.setOption('data', {
-			actionName: 'dismiss',
-			className: 'wcf\\data\\notice\\NoticeAction',
-			objectIDs: [ $(event.currentTarget).data('objectID') ]
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Handles successfull AJAX request.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		this._notices[data.returnValues.noticeID].wcfFadeOut();
-	}
-});
-
-/**
  * Encapsulate eval() within an own function to prevent problems
  * with optimizing and minifiny JS.
  * 

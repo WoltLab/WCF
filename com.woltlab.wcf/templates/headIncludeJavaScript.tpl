@@ -188,8 +188,6 @@
 		
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
-		//new WCF.User.ProfilePreview();
-		new WCF.Notice.Dismiss();
 		WCF.User.Profile.ActivityPointList.init();
 		
 		{event name='javascriptInit'}
