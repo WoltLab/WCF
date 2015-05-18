@@ -223,7 +223,7 @@ define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language
 			if (align === 'top') {
 				var bodyHeight = document.body.clientHeight;
 				bottom = (bodyHeight - refOffsets.top) + verticalOffset;
-				if (bottom + elDimensions.height > document.body.clientHeight) {
+				if (bodyHeight - (bottom + elDimensions.height) < document.body.scrollTop) {
 					result = false;
 				}
 			}
