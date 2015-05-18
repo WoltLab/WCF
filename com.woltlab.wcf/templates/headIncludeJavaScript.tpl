@@ -170,7 +170,7 @@
 {event name='javascriptInclude'}
 
 <noscript>
-	<style type="text/css">
+	<style>
 		.jsOnly {
 			display: none !important;
 		}
