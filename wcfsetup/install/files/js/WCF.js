@@ -3724,6 +3724,7 @@ WCF.MultipleLanguageInput = Class.extend({
 
 /**
  * Number utilities.
+ * @deprecated Use WoltLab/WCF/NumberUtil
  */
 WCF.Number = {
 	/**
@@ -3742,6 +3743,7 @@ WCF.Number = {
 
 /**
  * String utilities.
+ * @deprecated Use WoltLab/WCF/StringUtil
  */
 WCF.String = {
 	/**

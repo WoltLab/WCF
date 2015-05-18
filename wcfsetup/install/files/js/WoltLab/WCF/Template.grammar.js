@@ -87,13 +87,13 @@ case 22:
 	
 break;
 case 23:
-this.$ = "WCF.Language.get(" + $$[$0-1] + ")";
+this.$ = "Language.get(" + $$[$0-1] + ")";
 break;
 case 24:
-this.$ = "WCF.String.escapeHTML(" + $$[$0-1] + ")";
+this.$ = "StringUtil.escapeHTML(" + $$[$0-1] + ")";
 break;
 case 25:
-this.$ = "WCF.String.formatNumeric(" + $$[$0-1] + ")";
+this.$ = "StringUtil.formatNumeric(" + $$[$0-1] + ")";
 break;
 case 26:
 this.$ = $$[$0-1];

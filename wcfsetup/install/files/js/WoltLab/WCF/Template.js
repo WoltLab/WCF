@@ -9,7 +9,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Template
  */
-define(['./Template.grammar'], function(parser) {
+define(['./Template.grammar', './StringUtil', 'Language'], function(parser, StringUtil, Language) {
 	"use strict";
 	
 	// work around bug in AMD module generation of Jison
@@ -27,6 +27,9 @@ define(['./Template.grammar'], function(parser) {
 	 * @constructor
 	 */
 	function Template(template) {
+		// Fetch Language, as it cannot be provided because of a circular dependency
+		if (Language === undefined) Language = require('Language');
+		
 		if (!(this instanceof Template)) {
 			return new Template(template);
 		}
@@ -39,7 +42,7 @@ define(['./Template.grammar'], function(parser) {
 			+ "v.__wcf = window.WCF; v.__window = window;\n"
 			+ "return " + template;
 			
-			this.fetch = new Function("v", template).bind(null);
+			this.fetch = new Function("StringUtil", "Language", "v", template).bind(null, StringUtil, Language);
 		}
 		catch (e) {
 			console.debug(e.message);
