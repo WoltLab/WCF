@@ -38,10 +38,10 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 		/**
 		 * Fetches the language item specified by the given key.
 		 * If the language item is a string it will be evaluated as
-		 * WCF.Template with the given parameters.
+		 * WoltLab/WCF/Template with the given parameters.
 		 * 
 		 * @param	{string}	key		Language item to return.
-		 * @param	{Object=}	parameters	Parameters to provide to WCF.Template.
+		 * @param	{Object=}	parameters	Parameters to provide to WoltLab/WCF/Template.
 		 * @return	{string}
 		 */
 		get: function(key, parameters) {
