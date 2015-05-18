@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Notice/Dismiss
  */
-define(function() {
+define([], function() {
 	"use strict";
 	
 	/**
