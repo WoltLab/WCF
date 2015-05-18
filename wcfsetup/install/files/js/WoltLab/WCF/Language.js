@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Language
  */
-define(['Dictionary'], function(Dictionary) {
+define(['Dictionary', './Template'], function(Dictionary, Template) {
 	"use strict";
 	
 	var languageItems = new Dictionary();
@@ -56,11 +56,11 @@ define(['Dictionary'], function(Dictionary) {
 			
 			if (typeof value === 'string') {
 				// lazily convert to WCF.Template
-				languageItems.set(key, new WCF.Template(value));
+				languageItems.set(key, new Template(value));
 				value = languageItems.get(key);
 			}
 			
-			if (value instanceof WCF.Template) {
+			if (value instanceof Template) {
 				value = value.fetch(parameters);
 			}
 			
