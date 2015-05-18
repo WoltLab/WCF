@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Sitemap
  */
-define(['EventHandler', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], function(EventHandler, DOMUtil, UIDialog, UITabMenu) {
+define(['EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], function(EventHandler, Language, DOMUtil, UIDialog, UITabMenu) {
 	"use strict";
 	
 	var _cache = [];
@@ -44,7 +44,7 @@ define(['EventHandler', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], function(EventHa
 						
 						_dialog = UIDialog.open('sitemapDialog', data.returnValues.template, {
 							disableContentPadding: true,
-							title: WCF.Language.get('wcf.page.sitemap')
+							title: Language.get('wcf.page.sitemap')
 						});
 						
 						var tabMenuContainer = _dialog.content.querySelector('.tabMenuContainer');

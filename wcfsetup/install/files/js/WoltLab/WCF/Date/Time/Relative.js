@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Date/Time/Relative
  */
-define(function() {
+define(['Language'], function(Language) {
 	"use strict";
 	
 	var _elements = null;
@@ -49,17 +49,17 @@ define(function() {
 				
 				// timestamp is less than 60 seconds ago
 				if (elTimestamp >= timestamp || timestamp < (elTimestamp + 60)) {
-					element.textContent = WCF.Language.get('wcf.date.relative.now');
+					element.textContent = Language.get('wcf.date.relative.now');
 				}
 				// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
 				else if (timestamp < (elTimestamp + 3540)) {
 					var minutes = Math.max(Math.round((timestamp - elTimestamp) / 60), 1);
-					element.textContent = WCF.Language.get('wcf.date.relative.minutes', { minutes: minutes });
+					element.textContent = Language.get('wcf.date.relative.minutes', { minutes: minutes });
 				}
 				// timestamp is less than 24 hours ago
 				else if (timestamp < (elTimestamp + 86400)) {
 					var hours = Math.round((timestamp - elTimestamp) / 3600);
-					element.textContent = WCF.Language.get('wcf.date.relative.hours', { hours: hours });
+					element.textContent = Language.get('wcf.date.relative.hours', { hours: hours });
 				}
 				// timestamp is less than 6 days ago
 				else if (timestamp < (elTimestamp + 518400)) {
@@ -69,13 +69,13 @@ define(function() {
 					// get day of week
 					var dateObj = WCF.Date.Util.getTimezoneDate((elTimestamp * 1000), elOffset * 1000);
 					var dow = dateObj.getDay();
-					var day = WCF.Language.get('__days')[dow];
+					var day = Language.get('__days')[dow];
 					
-					element.textContent = WCF.Language.get('wcf.date.relative.pastDays', { days: days, day: day, time: elTime });
+					element.textContent = Language.get('wcf.date.relative.pastDays', { days: days, day: day, time: elTime });
 				}
 				// timestamp is between ~700 million years BC and last week
 				else {
-					element.textContent = WCF.Language.get('wcf.date.shortDateTimeFormat').replace(/\%date\%/, elDate).replace(/\%time\%/, elTime);
+					element.textContent = Language.get('wcf.date.shortDateTimeFormat').replace(/\%date\%/, elDate).replace(/\%time\%/, elTime);
 				}
 			}
 		}

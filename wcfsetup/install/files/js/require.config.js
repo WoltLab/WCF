@@ -11,6 +11,7 @@ requirejs.config({
 			'DOM/Traverse': 'WoltLab/WCF/DOM/Traverse',
 			'DOM/Util': 'WoltLab/WCF/DOM/Util',
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
+			'Language': 'WoltLab/WCF/Language',
 			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
 			'UI/Dialog': 'WoltLab/WCF/UI/Dialog',
 			'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple',

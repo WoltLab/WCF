@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Dialog
  */
-define(['jquery', 'enquire', 'Core', 'Dictionary', 'DOM/Util'], function($, enquire, Core, Dictionary, DOMUtil) {
+define(['jquery', 'enquire', 'Core', 'Dictionary', 'Language', 'DOM/Util'], function($, enquire, Core, Dictionary, Language, DOMUtil) {
 	"use strict";
 	
 	var _activeDialog = null;
@@ -73,7 +73,7 @@ define(['jquery', 'enquire', 'Core', 'Dictionary', 'DOM/Util'], function($, enqu
 				options = Core.extend({
 					backdropCloseOnClick: true,
 					closable: true,
-					closeButtonLabel: WCF.Language.get('wcf.global.button.close'),
+					closeButtonLabel: Language.get('wcf.global.button.close'),
 					closeConfirmMessage: '',
 					disableContentPadding: false,
 					disposeOnClose: false,

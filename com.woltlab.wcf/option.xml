@@ -1407,6 +1407,8 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 	</import>
 	
 	<delete>
+		<option name="cache_source_memcached_use_pconnect" />
+		<option name="http_gzip_level" />
 		<option name="enable_pluginstore_widget" />
 	</delete>
 </data>
