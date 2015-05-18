@@ -703,10 +703,7 @@ $.extend(WCF, {
 	},
 	
 	/**
-	 * Returns a RFC4122 version 4 compilant UUID.
-	 * 
-	 * @see		http://stackoverflow.com/a/2117523
-	 * @return	string
+	 * @deprecated Use WoltLab/WCF/Core.getUUID()
 	 */
 	getUUID: function() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
