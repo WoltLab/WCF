@@ -15,6 +15,7 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 	var _elements = null;
 	var _handlers = null;
 	var _hoverId = null;
+	var _suspended = false;
 	var _timeoutEnter = null;
 	var _timeoutLeave = null;
 	
@@ -88,6 +89,11 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 			
 			window.addEventListener('beforeunload', (function() {
 				_suspended = true;
+				
+				if (_timeoutEnter !== null) {
+					window.clearTimeout(_timeoutEnter);
+				}
+				
 				this._hide(true);
 			}).bind(this));
 			
@@ -228,6 +234,10 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 		 * @param	{object}	event	event object
 		 */
 		_mouseEnter: function(event) {
+			if (_suspended) {
+				return;
+			}
+			
 			if (_timeoutEnter !== null) {
 				window.clearTimeout(_timeoutEnter);
 				_timeoutEnter = null;
