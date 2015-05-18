@@ -137,7 +137,7 @@ define(['jquery', 'enquire', 'Core', 'Dictionary', 'Language', 'DOM/Util'], func
 			var dialog = document.createElement('div');
 			dialog.classList.add('dialogContainer');
 			dialog.setAttribute('aria-hidden', 'true');
-			dialog.setAttribute('role', 'dialog')
+			dialog.setAttribute('role', 'dialog');
 			dialog.setAttribute('data-id', id);
 			
 			if (options.disposeOnClose) {

@@ -15,7 +15,6 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 	var _elements = null;
 	var _handlers = null;
 	var _hoverId = null;
-	var _suspended = false;
 	var _timeoutEnter = null;
 	var _timeoutLeave = null;
 	
@@ -85,6 +84,8 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 				}
 			});
 			
+			_popover.addEventListener('transitionend', this._clearContent.bind(this));
+			
 			window.addEventListener('beforeunload', (function() {
 				_suspended = true;
 				this._hide(true);
@@ -132,7 +133,7 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 				loadCallback: options.loadCallback
 			});
 			
-			this._init(options.identifier)
+			this._init(options.identifier);
 		},
 		
 		/**
@@ -174,7 +175,7 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 				element.addEventListener('mouseleave', _callbackMouseLeave);
 				
 				if (element.nodeName === 'A' && element.getAttribute('href')) {
-					element.addEventListener('click', _callbackClick)
+					element.addEventListener('click', _callbackClick);
 				}
 				
 				var cacheId = identifier + "-" + objectId;
@@ -294,13 +295,6 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 			}
 			
 			var disableAnimation = (_activeId !== null && _activeId !== _hoverId);
-			if (disableAnimation) {
-				var activeElData = _cache.get(_elements.get(_activeId).element.getAttribute('data-cache-id'));
-				while (_popoverContent.childNodes.length) {
-					activeElData.content.appendChild(_popoverContent.childNodes[0]);
-				}
-			}
-			
 			if (_popover.classList.contains('active')) {
 				this._hide(disableAnimation);
 			}
@@ -344,6 +338,22 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 				
 				// force reflow
 				_popover.offsetHeight;
+				
+				this._clearContent();
+			}
+		},
+		
+		/**
+		 * Clears popover content by moving it back into the cache.
+		 */
+		_clearContent: function() {
+			if (_activeId && _popoverContent.childElementCount && !_popover.classList.contains('active')) {
+				var activeElData = _cache.get(_elements.get(_activeId).element.getAttribute('data-cache-id'));
+				while (_popoverContent.childNodes.length) {
+					activeElData.content.appendChild(_popoverContent.childNodes[0]);
+				}
+				
+				_popoverContent.style.removeProperty('height');
 			}
 		},
 		
@@ -369,8 +379,6 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 					_popoverContent.style.removeProperty('height');
 					
 					var height = _popoverContent.offsetHeight;
-					console.debug(_baseHeight);
-					console.debug(height);
 					_popoverContent.style.setProperty('height', _baseHeight + 'px');
 					
 					// force reflow

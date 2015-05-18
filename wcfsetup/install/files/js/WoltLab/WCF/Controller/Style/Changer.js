@@ -43,7 +43,7 @@ define(['Language', 'UI/Dialog'], function(Language, UIDialog) {
 		showDialog: function(event) {
 			event.preventDefault();
 			
-			if (UIDialog.getDialog('styleChanger') === null) {
+			if (UIDialog.getDialog('styleChanger') === undefined) {
 				new WCF.Action.Proxy({
 					autoSend: true,
 					data: {

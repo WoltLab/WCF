@@ -32,7 +32,7 @@ define(['EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], func
 		_click: function(event) {
 			event.preventDefault();
 			
-			if (UIDialog.getDialog('sitemapDialog') === null) {
+			if (UIDialog.getDialog('sitemapDialog') === undefined) {
 				new WCF.Action.Proxy({
 					autoSend: true,
 					data: {
