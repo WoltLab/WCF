@@ -69,6 +69,10 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog'], function(Core, Language, D
 				WCF.LoadingOverlayHandler.show();
 			}
 			
+			if (this._xhr instanceof XMLHttpRequest) {
+				this._previousXhr = this._xhr;
+			}
+			
 			this._xhr = new XMLHttpRequest();
 			this._xhr.open(this._options.type, this._options.url, true);
 			this._xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
@@ -77,7 +81,7 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog'], function(Core, Language, D
 			var self = this;
 			this._xhr.onload = function() {
 				if (this.readyState === XMLHttpRequest.DONE) {
-					if (this.stauts >= 200 && this.status < 300 || this.status === 304) {
+					if (this.status >= 200 && this.status < 300 || this.status === 304) {
 						self._success(this);
 					}
 					else {
@@ -123,6 +127,8 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog'], function(Core, Language, D
 		 * 
 		 * Do not call this method, it exists for compatibility with WCF.Action.Proxy
 		 * and will be removed at some point without further notice.
+		 * 
+		 * @deprecated	2.2
 		 * 
 		 * @param	{string}	key	option name
 		 * @param	{*}		value	option value
