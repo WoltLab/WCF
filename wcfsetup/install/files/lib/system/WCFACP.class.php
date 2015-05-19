@@ -36,7 +36,6 @@ class WCFACP extends WCF {
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
-		$this->initMagicQuotes();
 		$this->initDB();
 		$this->loadOptions();
 		$this->initPackage();

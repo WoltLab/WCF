@@ -137,7 +137,6 @@ class WCF {
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
-		$this->initMagicQuotes();
 		$this->initDB();
 		$this->loadOptions();
 		$this->initSession();
@@ -180,41 +179,6 @@ class WCF {
 		}
 		catch (\Exception $exception) {
 			die("<pre>WCF::destruct() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
-		}
-	}
-	
-	/**
-	 * Removes slashes in superglobal gpc data arrays if 'magic quotes gpc' is enabled.
-	 */
-	protected function initMagicQuotes() {
-		if (function_exists('get_magic_quotes_gpc')) {
-			if (@get_magic_quotes_gpc()) {
-				if (!empty($_REQUEST)) {
-					$_REQUEST = ArrayUtil::stripslashes($_REQUEST);
-				}
-				if (!empty($_POST)) {
-					$_POST = ArrayUtil::stripslashes($_POST);
-				}
-				if (!empty($_GET)) {
-					$_GET = ArrayUtil::stripslashes($_GET);
-				}
-				if (!empty($_COOKIE)) {
-					$_COOKIE = ArrayUtil::stripslashes($_COOKIE);
-				}
-				if (!empty($_FILES)) {
-					foreach ($_FILES as $name => $attributes) {
-						foreach ($attributes as $key => $value) {
-							if ($key != 'tmp_name') {
-								$_FILES[$name][$key] = ArrayUtil::stripslashes($value);
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		if (function_exists('set_magic_quotes_runtime')) {
-			@set_magic_quotes_runtime(0);
 		}
 	}
 	
