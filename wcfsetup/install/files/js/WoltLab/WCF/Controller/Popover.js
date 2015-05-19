@@ -109,7 +109,7 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 		 * 	className: 'fooLink',
 		 * 	identifier: 'com.example.bar.foo',
 		 * 	loadCallback: function(objectId, popover) {
-		 * 		// request data for object id (e.g. via WCF.Action.Proxy)
+		 * 		// request data for object id (e.g. via Ajax)
 		 * 		
 		 * 		// then call this to set the content
 		 * 		popover.setContent('com.example.bar.foo', objectId, htmlTemplateString);

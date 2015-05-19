@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Sitemap
  */
-define(['EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], function(EventHandler, Language, DOMUtil, UIDialog, UITabMenu) {
+define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], function(Ajax, EventHandler, Language, DOMUtil, UIDialog, UITabMenu) {
 	"use strict";
 	
 	var _cache = [];
@@ -33,8 +33,7 @@ define(['EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], func
 			event.preventDefault();
 			
 			if (UIDialog.getDialog('sitemapDialog') === undefined) {
-				new WCF.Action.Proxy({
-					autoSend: true,
+				Ajax.api({
 					data: {
 						actionName: 'getSitemap',
 						className: 'wcf\\data\\sitemap\\SitemapAction'
@@ -70,8 +69,7 @@ define(['EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], func
 			var name = tabData.active.getAttribute('data-name').replace(/^sitemap_/, '');
 			
 			if (_cache.indexOf(name) === -1) {
-				new WCF.Action.Proxy({
-					autoSend: true,
+				Ajax.api({
 					data: {
 						actionName: 'getSitemap',
 						className: 'wcf\\data\\sitemap\\SitemapAction',

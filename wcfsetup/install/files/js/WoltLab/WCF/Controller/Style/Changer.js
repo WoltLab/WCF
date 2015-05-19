@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Style/Changer
  */
-define(['Language', 'UI/Dialog'], function(Language, UIDialog) {
+define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 	"use strict";
 	
 	/**
@@ -44,8 +44,7 @@ define(['Language', 'UI/Dialog'], function(Language, UIDialog) {
 			event.preventDefault();
 			
 			if (UIDialog.getDialog('styleChanger') === undefined) {
-				new WCF.Action.Proxy({
-					autoSend: true,
+				Ajax.api({
 					data: {
 						actionName: 'getStyleChooser',
 						className: 'wcf\\data\\style\\StyleAction'
@@ -79,8 +78,7 @@ define(['Language', 'UI/Dialog'], function(Language, UIDialog) {
 		_click: function(event) {
 			event.preventDefault();
 			
-			new WCF.Action.Proxy({
-				autoSend: true,
+			Ajax.api({
 				data: {
 					actionName: 'changeStyle',
 					className: 'wcf\\data\\style\\StyleAction',

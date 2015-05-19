@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ajax
  */
-define(['Core', 'Language', 'DOM/Util', 'UI/Dialog'], function(Core, Language, DOMUtil, UIDialog) {
+define(['Core', 'Language', 'DOM/Util', 'UI/Dialog', 'WoltLab/WCF/Ajax/Status'], function(Core, Language, DOMUtil, UIDialog, AjaxStatus) {
 	"use strict";
 	
 	var _didInit = false;
@@ -66,7 +66,7 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog'], function(Core, Language, D
 			}
 			
 			if (!this._options.silent) {
-				WCF.LoadingOverlayHandler.show();
+				AjaxStatus.show();
 			}
 			
 			if (this._xhr instanceof XMLHttpRequest) {
@@ -118,7 +118,7 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog'], function(Core, Language, D
 			this._previousXhr = null;
 			
 			if (!this._options.silent) {
-				WCF.LoadingOverlayHandler.hide();
+				AjaxStatus.hide();
 			}
 		},
 		
@@ -144,7 +144,7 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog'], function(Core, Language, D
 		 */
 		_success: function(xhr) {
 			if (!this._options.silent) {
-				WCF.LoadingOverlayHandler.hide();
+				AjaxStatus.hide();
 			}
 			
 			if (typeof this._options.success === 'function') {
@@ -174,7 +174,7 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog'], function(Core, Language, D
 			}
 			
 			if (!this._options.silent) {
-				WCF.LoadingOverlayHandler.hide();
+				AjaxStatus.hide();
 			}
 			
 			var data = null;

@@ -2068,71 +2068,26 @@ WCF.PeriodicalExecuter = Class.extend({
 
 /**
  * Handler for loading overlays
+ * 
+ * @deprecated	2.2 - Please use WoltLab/WCF/Ajax/Status
  */
 WCF.LoadingOverlayHandler = {
-	/**
-	 * count of active loading-requests
-	 * @var	integer
-	 */
-	_activeRequests: 0,
-	
-	/**
-	 * loading overlay
-	 * @var	jQuery
-	 */
-	_loadingOverlay: null,
-	
-	/**
-	 * WCF.PeriodicalExecuter instance
-	 * @var	WCF.PeriodicalExecuter
-	 */
-	_pending: null,
-	
 	/**
 	 * Adds one loading-request and shows the loading overlay if nessercery
 	 */
 	show: function() {
-		if (this._loadingOverlay === null) { // create loading overlay on first run
-			this._loadingOverlay = $('<div class="spinner"><span class="icon icon48 icon-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').appendTo($('body'));
-			
-			// fix position
-			var $width = this._loadingOverlay.outerWidth();
-			if ($width < 70) $width = 70;
-			this._loadingOverlay.css({
-				marginLeft: Math.ceil(-1 * $width / 2), 
-				width: $width
-			}).hide();
-		}
-		
-		this._activeRequests++;
-		if (this._activeRequests == 1) {
-			if (this._pending === null) {
-				var self = this;
-				this._pending = new WCF.PeriodicalExecuter(function(pe) {
-					if (self._activeRequests) {
-						self._loadingOverlay.stop(true, true).fadeIn(100);
-					}
-					
-					pe.stop();
-					self._pending = null;
-				}, 250);
-			}
-		}
+		require(['WoltLab/WCF/Ajax/Status'], function(AjaxStatus) {
+			AjaxStatus.show();
+		});
 	},
 	
 	/**
 	 * Removes one loading-request and hides loading overlay if there're no more pending requests
 	 */
 	hide: function() {
-		this._activeRequests--;
-		if (this._activeRequests == 0) {
-			if (this._pending !== null) {
-				this._pending.stop();
-				this._pending = null;
-			}
-			
-			this._loadingOverlay.stop(true, true).fadeOut(100);
-		}
+		require(['WoltLab/WCF/Ajax/Status'], function(AjaxStatus) {
+			AjaxStatus.hide();
+		});
 	},
 	
 	/**

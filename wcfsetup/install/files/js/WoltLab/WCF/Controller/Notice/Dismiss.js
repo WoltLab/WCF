@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Notice/Dismiss
  */
-define([], function() {
+define(['Ajax'], function(Ajax) {
 	"use strict";
 	
 	/**
@@ -34,8 +34,7 @@ define([], function() {
 		_click: function(event) {
 			var button = event.currentTarget;
 			
-			new WCF.Action.Proxy({
-				autoSend: true,
+			Ajax.api({
 				data: {
 					actionName: 'dismiss',
 					className: 'wcf\\data\\notice\\NoticeAction',
