@@ -91,7 +91,7 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog', 'WoltLab/WCF/Ajax/Status'],
 			};
 			this._xhr.onerror = function() {
 				self._failure(this);
-			}
+			};
 			
 			if (this._options.type === 'POST') {
 				var data = this._options.data;
@@ -208,7 +208,7 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog', 'WoltLab/WCF/Ajax/Status'],
 				
 				var html = '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
 				
-				UIDialog.open(DOMUtil.getUniqueId(), message, {
+				UIDialog.open(DOMUtil.getUniqueId(), html, {
 					title: Language.get('wcf.global.error.title')
 				});
 			}
