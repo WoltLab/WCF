@@ -5,6 +5,7 @@ requirejs.config({
 	},
 	map: {
 		'*': {
+			'Ajax': 'WoltLab/WCF/Ajax',
 			'CallbackList': 'WoltLab/WCF/CallbackList',
 			'Core': 'WoltLab/WCF/Core',
 			'Dictionary': 'WoltLab/WCF/Dictionary',

@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/BootstrapFrontend
  */
-define(['WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer', 'WoltLab/WCF/Controller/Popover'], function(Bootstrap, ControllerSitemap, ControllerStyleChanger, ControllerPopover) {
+define(['Ajax', 'WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer', 'WoltLab/WCF/Controller/Popover'], function(Ajax, Bootstrap, ControllerSitemap, ControllerStyleChanger, ControllerPopover) {
 	"use strict";
 	
 	/**
@@ -40,8 +40,7 @@ define(['WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/
 				className: 'userLink',
 				identifier: 'com.woltlab.wcf.user',
 				loadCallback: function(objectId, popover) {
-					new WCF.Action.Proxy({
-						autoSend: true,
+					Ajax.api({
 						data: {
 							actionName: 'getUserProfile',
 							className: 'wcf\\data\\user\\UserProfileAction',
