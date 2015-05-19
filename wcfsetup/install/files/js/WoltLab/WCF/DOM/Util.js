@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/DOM/Util
  */
-define(function() {
+define([], function() {
 	"use strict";
 	
 	var _matchesSelectorFunction = '';

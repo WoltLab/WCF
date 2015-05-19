@@ -703,10 +703,7 @@ $.extend(WCF, {
 	},
 	
 	/**
-	 * Returns a RFC4122 version 4 compilant UUID.
-	 * 
-	 * @see		http://stackoverflow.com/a/2117523
-	 * @return	string
+	 * @deprecated Use WoltLab/WCF/Core.getUuid().
 	 */
 	getUUID: function() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -1965,12 +1962,7 @@ WCF.Clipboard = {
 };
 
 /**
- * Provides a simple call for periodical executed functions. Based upon
- * ideas by Prototype's PeriodicalExecuter.
- * 
- * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/periodical_executer.js
- * @param	function		callback
- * @param	integer			delay
+ * @deprecated Use WoltLab/WCF/Timer/Repeating
  */
 WCF.PeriodicalExecuter = Class.extend({
 	/**
@@ -3380,13 +3372,11 @@ WCF.Dictionary = Class.extend({
  */
 WCF.Language = {
 	add: function(key, value) {
-		console.warn('Call to deprecated WCF.Language.add("' + key + '")');
 		require(['WoltLab/WCF/Language'], function(Language) {
 			Language.add(key, value);
 		});
 	},
 	addObject: function(object) {
-		console.warn('Call to deprecated WCF.Language.addObject()');
 		require(['WoltLab/WCF/Language'], function(Language) {
 			Language.addObject(object);
 		});
@@ -3724,6 +3714,7 @@ WCF.MultipleLanguageInput = Class.extend({
 
 /**
  * Number utilities.
+ * @deprecated Use WoltLab/WCF/NumberUtil
  */
 WCF.Number = {
 	/**
@@ -3742,6 +3733,7 @@ WCF.Number = {
 
 /**
  * String utilities.
+ * @deprecated Use WoltLab/WCF/StringUtil
  */
 WCF.String = {
 	/**

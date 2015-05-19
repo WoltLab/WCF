@@ -49,6 +49,22 @@
 <script src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 
+<script data-relocate="true" src="{@$__wcf->getPath()}js/require.config.js"></script>
+<script data-relocate="true">
+	requirejs.config({
+		baseUrl: '{@$__wcf->getPath()}js'
+	});
+	
+	define('jquery', [], function() { return window.jQuery; });
+	
+	$.holdReady(true);
+	require(['WoltLab/WCF/BootstrapFrontend'], function(BootstrapFrontend) {
+		BootstrapFrontend.setup({
+			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
+		});
+	});
+</script>
+
 <script data-relocate="true">
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	
@@ -130,22 +146,6 @@
 			{/if}
 			
 			{event name='javascriptLanguageImport'}
-		});
-	});
-</script>
-
-<script data-relocate="true" src="{@$__wcf->getPath()}js/require.config.js"></script>
-<script data-relocate="true">
-	requirejs.config({
-		baseUrl: '{@$__wcf->getPath()}js'
-	});
-	
-	define('jquery', [], function() { return window.jQuery; });
-	
-	$.holdReady(true);
-	require(['WoltLab/WCF/BootstrapFrontend'], function(BootstrapFrontend) {
-		BootstrapFrontend.setup({
-			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
 		});
 	});
 </script>

@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Event/Handler
  */
-define(['Dictionary'], function(Dictionary) {
+define(['Core', 'Dictionary'], function(Core, Dictionary) {
 	"use strict";
 	
 	var _listeners = new Dictionary();
@@ -41,7 +41,7 @@ define(['Dictionary'], function(Dictionary) {
 				actions.set(action, callbacks);
 			}
 			
-			var uuid = WCF.getUUID();
+			var uuid = Core.getUuid();
 			callbacks.set(uuid, callback);
 			
 			return uuid;
