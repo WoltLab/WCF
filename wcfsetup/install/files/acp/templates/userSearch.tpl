@@ -217,7 +217,9 @@
 				<dl>
 					<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
 					<dd>
-						<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
+						{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
+							<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
+						{/if}
 						<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
 						<label><input type="checkbox" name="columns[]" value="lastActivityTime" {if "lastActivityTime"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.lastActivityTime{/lang}</label>
 						<label><input type="checkbox" name="columns[]" value="profileHits" {if "profileHits"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.profileHits{/lang}</label>
