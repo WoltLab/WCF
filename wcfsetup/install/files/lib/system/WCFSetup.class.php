@@ -103,7 +103,6 @@ class WCFSetup extends WCF {
 	 */
 	public function __construct() {
 		@set_time_limit(0);
-		$this->initMagicQuotes();
 		$this->getDeveloperMode();
 		$this->getLanguageSelection();
 		$this->getWCFDir();
