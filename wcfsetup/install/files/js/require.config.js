@@ -11,6 +11,7 @@ requirejs.config({
 			'Dictionary': 'WoltLab/WCF/Dictionary',
 			'DOM/Traverse': 'WoltLab/WCF/DOM/Traverse',
 			'DOM/Util': 'WoltLab/WCF/DOM/Util',
+			'Environment': 'WoltLab/WCF/Environment',
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
 			'Language': 'WoltLab/WCF/Language',
 			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',

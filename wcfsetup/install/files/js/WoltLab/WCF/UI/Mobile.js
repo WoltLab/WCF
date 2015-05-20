@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Mobile
  */
-define(['jquery', 'enquire', 'Language', 'DOM/Traverse'], function($, enquire, Language, DOMTraverse) {
+define(['enquire', 'Environment', 'Language', 'DOM/Traverse'], function(enquire, Environment, Language, DOMTraverse) {
 	"use strict";
 	
 	var _buttonGroupNavigations = null;
@@ -27,8 +27,12 @@ define(['jquery', 'enquire', 'Language', 'DOM/Traverse'], function($, enquire, L
 			_main = document.getElementById('main');
 			_sidebar = _main.querySelector('#main > div > div > .sidebar');
 			
-			if ($.browser.touch) {
+			if (Environment.touch()) {
 				document.documentElement.classList.add('touch');
+			}
+			
+			if (Environment.platform() !== 'desktop') {
+				document.documentElement.classList.add('mobile');
 			}
 			
 			enquire.register('screen and (max-width: 800px)', {
@@ -38,7 +42,7 @@ define(['jquery', 'enquire', 'Language', 'DOM/Traverse'], function($, enquire, L
 				deferSetup: true
 			});
 			
-			if ($.browser.msie && _sidebar.clientWidth > 305) {
+			if (Environment.browser() === 'microsoft' && _sidebar.clientWidth > 305) {
 				this._fixSidebarIE();
 			}
 		},
@@ -49,7 +53,7 @@ define(['jquery', 'enquire', 'Language', 'DOM/Traverse'], function($, enquire, L
 		enable: function() {
 			_enabled = true;
 			
-			if ($.browser.msie) this._fixSidebarIE();
+			if (Environment.browser() === 'microsoft') this._fixSidebarIE();
 		},
 		
 		/**
@@ -58,7 +62,7 @@ define(['jquery', 'enquire', 'Language', 'DOM/Traverse'], function($, enquire, L
 		disable: function() {
 			_enabled = false;
 			
-			if ($.browser.msie) this._fixSidebarIE();
+			if (Environment.browser() === 'microsoft') this._fixSidebarIE();
 		},
 		
 		_fixSidebarIE: function() {

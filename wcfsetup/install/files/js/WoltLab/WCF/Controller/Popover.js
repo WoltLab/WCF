@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Popover
  */
-define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil, UIAlignment) {
+define(['Dictionary', 'Environment', 'DOM/Util', 'UI/Alignment'], function(Dictionary, Environment, DOMUtil, UIAlignment) {
 	"use strict";
 	
 	var _activeId = null;
@@ -119,7 +119,7 @@ define(['Dictionary', 'DOM/Util', 'UI/Alignment'], function(Dictionary, DOMUtil,
 		 * @param	{object<string, *>}	options		handler options
 		 */
 		init: function(options) {
-			if ($.browser.mobile) {
+			if (Environment.platform() !== 'desktop') {
 				return;
 			}
 			

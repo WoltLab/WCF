@@ -10,14 +10,14 @@
  */
 define(
 	[
-		'jquery',            'favico',                 'enquire',                'WoltLab/WCF/Date/Time/Relative',
+		'favico',            'enquire',                'WoltLab/WCF/Date/Time/Relative',
 		'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile',  'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu',
-		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Language'
+		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment'
 	], 
 	function(
-		 $,                   favico,                   enquire,                  relativeTime,
-		 simpleDropdown,      UIMobile,                 UITabMenu,                UIFlexibleMenu,
-		 UIDialog,            UITooltip,                Language
+		 favico,              enquire,                  DateTimeRelative,
+		 UISimpleDropdown,    UIMobile,                 UITabMenu,                UIFlexibleMenu,
+		 UIDialog,            UITooltip,                Language,                 Environment
 	)
 {
 	"use strict";
@@ -37,8 +37,11 @@ define(
 		 * Initializes the core UI modifications and unblocks jQuery's ready event.
 		 */
 		setup: function() {
-			relativeTime.setup();
-			simpleDropdown.setup();
+			Environment.setup();
+			
+			DateTimeRelative.setup();
+			
+			UISimpleDropdown.setup();
 			UIMobile.setup();
 			UITabMenu.setup();
 			UIFlexibleMenu.setup();
@@ -51,13 +54,21 @@ define(
 				forms[i].setAttribute('method', 'post');
 			}
 			
-			if ($.browser.msie) {
+			if (Environment.browser() === 'microsoft') {
 				window.onbeforeunload = function() {
 					/* Prevent "Back navigation caching" (http://msdn.microsoft.com/en-us/library/ie/dn265017%28v=vs.85%29.aspx) */
 				};
 			}
 			
-			$.holdReady(false);
+			// DEBUG ONLY
+			var interval = 0;
+			interval = window.setInterval(function() {
+				if (typeof window.jQuery === 'function') {
+					window.clearInterval(interval);
+					
+					window.jQuery.holdReady(false);
+				}
+			}, 20);
 		}
 	};
 	

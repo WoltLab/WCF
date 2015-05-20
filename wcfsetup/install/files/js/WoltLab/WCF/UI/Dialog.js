@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Dialog
  */
-define(['jquery', 'enquire', 'Core', 'Dictionary', 'Language', 'DOM/Util'], function($, enquire, Core, Dictionary, Language, DOMUtil) {
+define(['enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/Util'], function(enquire, Core, Dictionary, Environment, Language, DOMUtil) {
 	"use strict";
 	
 	var _activeDialog = null;
@@ -298,7 +298,7 @@ define(['jquery', 'enquire', 'Core', 'Dictionary', 'Language', 'DOM/Util'], func
 			contentContainer.style.setProperty('max-height', ~~maximumHeight + 'px');
 			
 			// fix for a calculation bug in Chrome causing the scrollbar to overlap the border
-			if ($.browser.chrome) {
+			if (Environment.browser() === 'chrome') {
 				if (data.content.scrollHeight > maximumHeight) {
 					data.content.style.setProperty('margin-right', '-1px');
 				}

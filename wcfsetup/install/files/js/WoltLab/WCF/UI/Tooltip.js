@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Tooltip
  */
-define(['jquery', 'UI/Alignment'], function($, UIAlignment) {
+define(['Environment', 'UI/Alignment'], function(Environment, UIAlignment) {
 	"use strict";
 	
 	var _elements = null;
@@ -23,7 +23,7 @@ define(['jquery', 'UI/Alignment'], function($, UIAlignment) {
 		 * Initializes the tooltip element and binds event listener.
 		 */
 		setup: function() {
-			if ($.browser.mobile) return;
+			if (Environment.platform() !== 'desktop') return;
 			
 			_tooltip = document.createElement('div');
 			_tooltip.setAttribute('id', 'balloonTooltip');
