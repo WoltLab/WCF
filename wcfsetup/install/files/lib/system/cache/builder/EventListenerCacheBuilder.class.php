@@ -6,7 +6,7 @@ use wcf\system\WCF;
 /**
  * Caches the event listeners.
  * 
- * Important: You cannot use \wcf\data\event\listener\EventListenerLister here as
+ * Important: You cannot use \wcf\data\event\listener\EventListenerList here as
  * \wcf\data\DatabaseObjectList fires an event.
  * 
  * @author	Matthias Schmidt, Marcel Werk
