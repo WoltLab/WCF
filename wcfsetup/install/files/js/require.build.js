@@ -12,7 +12,8 @@
 		"jquery": "empty:"
 	},
 	include: [
-		"requireLib"
+		"requireLib",
+		"require.config"
 	],
 	excludeShallow: [
 		'WoltLab/_Meta'
