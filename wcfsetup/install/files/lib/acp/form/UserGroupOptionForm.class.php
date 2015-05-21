@@ -89,7 +89,7 @@ class UserGroupOptionForm extends AbstractForm {
 		}
 		
 		// verify options and permissions for current option
-		if ($this->verifyPermissions($this->userGroupOption)) {
+		if ($this->userGroupOption->validateOptions() && $this->userGroupOption->validatePermissions()) {
 			// read all categories
 			$categoryList = new UserGroupOptionCategoryList();
 			$categoryList->readObjects();
@@ -102,7 +102,7 @@ class UserGroupOptionForm extends AbstractForm {
 			// verify categories
 			$category = $categories[$this->userGroupOption->categoryName];
 			while ($category != null) {
-				if (!$this->verifyPermissions($category)) {
+				if (!$category->validateOptions() || !$category->validatePermissions()) {
 					throw new PermissionDeniedException();
 				}
 				
@@ -255,6 +255,8 @@ class UserGroupOptionForm extends AbstractForm {
 	 * 
 	 * @param	\wcf\data\DatabaseObject		$object
 	 * @return	boolean
+	 * 
+	 * @deprecated	since 2.2
 	 */
 	protected function verifyPermissions(DatabaseObject $object) {
 		// check the options of this item

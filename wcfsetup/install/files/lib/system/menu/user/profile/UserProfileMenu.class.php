@@ -72,35 +72,7 @@ class UserProfileMenu extends SingletonFactory {
 	 * @return	boolean
 	 */
 	protected function checkMenuItem(UserProfileMenuItem $item) {
-		// check the options of this item
-		$hasEnabledOption = true;
-		if (!empty($item->options)) {
-			$hasEnabledOption = false;
-			$options = explode(',', strtoupper($item->options));
-			foreach ($options as $option) {
-				if (defined($option) && constant($option)) {
-					$hasEnabledOption = true;
-					break;
-				}
-			}
-		}
-		if (!$hasEnabledOption) return false;
-		
-		// check the permission of this item for the active user
-		$hasPermission = true;
-		if (!empty($item->permissions)) {
-			$hasPermission = false;
-			$permissions = explode(',', $item->permissions);
-			foreach ($permissions as $permission) {
-				if (WCF::getSession()->getPermission($permission)) {
-					$hasPermission = true;
-					break;
-				}
-			}
-		}
-		if (!$hasPermission) return false;
-		
-		return true;
+		return $item->validateOptions() && $item->validatePermissions();
 	}
 	
 	/**

@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\sitemap;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -16,6 +18,9 @@ use wcf\util\ClassUtil;
  * @category	Community Framework
  */
 class Sitemap extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * ISitemapProvider object
 	 * @var	\wcf\system\sitemap\ISitemapProvider
@@ -60,34 +65,6 @@ class Sitemap extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isAccessible() {
-		// check the options of this item
-		$hasEnabledOption = true;
-		if ($this->options) {
-			$hasEnabledOption = false;
-			$options = explode(',', strtoupper($this->options));
-			foreach ($options as $option) {
-				if (defined($option) && constant($option)) {
-					$hasEnabledOption = true;
-					break;
-				}
-			}
-		}
-		if (!$hasEnabledOption) return false;
-		
-		// check the permission of this item for the active user
-		$hasPermission = true;
-		if ($this->permissions) {
-			$hasPermission = false;
-			$permissions = explode(',', $this->permissions);
-			foreach ($permissions as $permission) {
-				if (WCF::getSession()->getPermission($permission)) {
-					$hasPermission = true;
-					break;
-				}
-			}
-		}
-		if (!$hasPermission) return false;
-		
-		return true;
+		return $this->validateOptions() && $this->validatePermissions();
 	}
 }

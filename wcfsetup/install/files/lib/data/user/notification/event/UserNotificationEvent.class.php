@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\notification\event;
 use wcf\data\ProcessibleDatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 
 /**
  * Represents a user notification event.
@@ -13,6 +15,9 @@ use wcf\data\ProcessibleDatabaseObject;
  * @category	Community Framework
  */
 class UserNotificationEvent extends ProcessibleDatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */

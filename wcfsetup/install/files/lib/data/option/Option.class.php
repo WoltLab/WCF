@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\option;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -15,6 +17,9 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class Option extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
