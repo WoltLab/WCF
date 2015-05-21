@@ -9,6 +9,10 @@
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var TIME_NOW = {@TIME_NOW};
 	var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
+	
+	requirejs.config({
+		baseUrl: '{@$__wcf->getPath()}js'
+	});
 </script>
 
 {if ENABLE_DEBUG_MODE}
@@ -19,10 +23,6 @@
 {/if}
 
 <script data-relocate="true">
-	requirejs.config({
-		baseUrl: '{@$__wcf->getPath()}js'
-	});
-	
 	{if ENABLE_DEBUG_MODE}
 		{* force synchronous requests to prevent jQuery and other files being loaded to early *}
 		var __require_createNode = require.createNode;
