@@ -12,63 +12,31 @@
 	var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
 	//]]>
 </script>
-{if JQUERY_SOURCE == 'google'}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{elseif JQUERY_SOURCE == 'microsoft'}
-<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{elseif JQUERY_SOURCE == 'cloudflare'}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{else}
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-{/if}
-{if JQUERY_SOURCE != 'local'}
-<script>
-	//<![CDATA[
-	if (!window.jQuery) {
-		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
-		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
-	}
-	//]]>
-</script>
-{/if}
 
 {if ENABLE_DEBUG_MODE}
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
-<script src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
-
 <script src="{@$__wcf->getPath()}js/require.js?v={@LAST_UPDATE_TIME}"></script>
-
+<script src="{@$__wcf->getPath()}js/require.config.js?v={@LAST_UPDATE_TIME}"></script>
 {else}
-<script src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/WCF.Core.min.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 
-<script data-relocate="true" src="{@$__wcf->getPath()}js/require.config.js"></script>
 <script data-relocate="true">
 	requirejs.config({
 		baseUrl: '{@$__wcf->getPath()}js'
 	});
 	
-	define('jquery', [], function() { return window.jQuery; });
+	{if ENABLE_DEBUG_MODE}
+		{* force synchronous requests to prevent jQuery and other files being loaded to early *}
+		var __require_createNode = require.createNode;
+		require.createNode = function() {
+			var node = __require_createNode.apply(require, arguments);
+			node.removeAttribute('async');
+			
+			return node;
+		};
+	{/if}
 	
-	$.holdReady(true);
-	require(['WoltLab/WCF/BootstrapFrontend'], function(BootstrapFrontend) {
-		BootstrapFrontend.setup({
-			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
-		});
-	});
-</script>
-
-<script data-relocate="true">
-	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
-	
-	require(['Language'], function(Language) {
+	require(['Language', 'WoltLab/WCF/BootstrapFrontend'], function(Language, BootstrapFrontend) {
 		Language.addObject({
 			'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
 			'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
@@ -147,7 +115,59 @@
 			
 			{event name='javascriptLanguageImport'}
 		});
+		
+		BootstrapFrontend.setup({
+			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
+		});
 	});
+	
+	// prevent jQuery and other libraries from utilizing define()
+	__require_define_amd = define.amd;
+	define.amd = undefined;
+</script>
+
+{if JQUERY_SOURCE == 'google'}
+<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js" data-requiremodule="jquery-ui" data-requirecontext="_"></script>
+{elseif JQUERY_SOURCE == 'microsoft'}
+<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+{elseif JQUERY_SOURCE == 'cloudflare'}
+<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+{else}
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+{/if}
+{if JQUERY_SOURCE != 'local'}
+<script data-relocate="true">
+	//<![CDATA[
+	if (!window.jQuery) {
+		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
+		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}" data-requiremodule="jquery-ui" data-requirecontext="_"><\/script>');
+	}
+	//]]>
+</script>
+{/if}
+
+{if ENABLE_DEBUG_MODE}
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true">
+	require.createNode = __require_createNode;
+</script>
+{else}
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
+{/if}
+
+<script data-relocate="true">
+	define.amd = __require_define_amd;
+	$.holdReady(true);
+	
+	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 </script>
 
 {if ENABLE_DEBUG_MODE}
