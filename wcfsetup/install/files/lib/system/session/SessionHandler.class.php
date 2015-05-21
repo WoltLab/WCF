@@ -52,6 +52,12 @@ class SessionHandler extends SingletonFactory {
 	protected $groupData = null;
 	
 	/**
+	 * true if client provided a valid session cookie
+	 * @var	boolean
+	 */
+	protected $hasValidCookie = false;
+	
+	/**
 	 * language id for active user
 	 * @var	integer
 	 */
@@ -154,6 +160,24 @@ class SessionHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData(array(), 'usersOnlyOptions');
+	}
+	
+	/**
+	 * Sets a boolean value to determine if the client provided a valid session cookie.
+	 * 
+	 * @param	boolean		$hasValidCookie
+	 */
+	public function setHasValidCookie($hasValidCookie) {
+		$this->hasValidCookie = $hasValidCookie;
+	}
+	
+	/**
+	 * Returns true if client provided a valid session cookie.
+	 * 
+	 * @return	boolean
+	 */
+	public function hasValidCookie() {
+		return $this->hasValidCookie;
 	}
 	
 	/**

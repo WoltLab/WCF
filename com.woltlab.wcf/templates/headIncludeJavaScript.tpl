@@ -3,14 +3,12 @@
 *}
 
 <script>
-	//<![CDATA[
-	var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
+	var SID_ARG_2ND	= '';
 	var WCF_PATH = '{@$__wcf->getPath()}';
 	var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var TIME_NOW = {@TIME_NOW};
 	var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
-	//]]>
 </script>
 
 {if ENABLE_DEBUG_MODE}

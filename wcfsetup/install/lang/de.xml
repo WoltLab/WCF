@@ -2684,6 +2684,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.userAgent"><![CDATA[Browser-Kennung]]></item>
 		<item name="wcf.user.login"><![CDATA[Anmeldung]]></item>
 		<item name="wcf.user.login.data"><![CDATA[Zugangsdaten]]></item>
+		<item name="wcf.user.login.error.cookieRequired"><![CDATA[Die Anmeldung erfordert den Einsatz von Cookies, bitte aktivieren Sie diese um die Anmeldung durchzuführen.]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[Dieses Kennwort ist falsch.]]></item>
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.user.language.description"><![CDATA[Sprache der Benutzeroberfläche]]></item>

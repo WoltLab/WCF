@@ -23,7 +23,11 @@
 
 {include file='userNotice'}
 
-{include file='formError'}
+{if !$errorField|empty && $errorField == 'cookie'}
+	<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
+{else}
+	{include file='formError'}
+{/if}
 
 <div class="contentNavigation">
 	{hascontent}

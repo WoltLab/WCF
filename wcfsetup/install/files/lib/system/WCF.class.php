@@ -23,7 +23,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -304,6 +303,7 @@ class WCF {
 		$factory->load();
 		
 		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**
