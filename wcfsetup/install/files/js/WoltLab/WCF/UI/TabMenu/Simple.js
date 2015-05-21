@@ -223,13 +223,13 @@ define(['Dictionary', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMUtil,
 					previous: oldTab,
 				});
 				
-				if (this._isLegacy) {
+				if (this._isLegacy && typeof window.jQuery === 'function') {
 					// simulate jQuery UI Tabs event
-					$(this._container).trigger('wcftabsbeforeactivate', {
-						newTab: $(tab),
-						oldTab: $(oldTab),
-						newPanel: $(newContent),
-						oldPanel: $(oldContent)
+					window.jQuery(this._container).trigger('wcftabsbeforeactivate', {
+						newTab: window.jQuery(tab),
+						oldTab: window.jQuery(oldTab),
+						newPanel: window.jQuery(newContent),
+						oldPanel: window.jQuery(oldContent)
 					});
 				}
 			}
