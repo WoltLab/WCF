@@ -1,5 +1,5 @@
 /**
- * Dictionary implemention relying on an object or if supported on a Map to hold key => value data.
+ * Dictionary implementation relying on an object or if supported on a Map to hold key => value data.
  * 
  * If you're looking for a dictionary with object keys, please see `WoltLab/WCF/ObjectMap`.
  * 
@@ -11,7 +11,7 @@
 define([], function() {
 	"use strict";
 	
-	var _hasMap = window.hasOwnProperty('Map');
+	var _hasMap = window.hasOwnProperty('Map') & typeof window.WeakMap === 'function';
 	
 	/**
 	 * @constructor
