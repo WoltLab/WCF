@@ -46,13 +46,21 @@ define(['Dictionary'], function(Dictionary) {
 		/**
 		 * Invokes callback function on each registered callback.
 		 * 
-		 * @param	{string}		identifier	arbitrary string to group and identify callbacks
+		 * @param	{string|null}		identifier	arbitrary string to group and identify callbacks.
+		 * 							null is a wildcard to match every identifier
 		 * @param	{function(function)}	callback	function called with the individual callback as parameter
 		 */
 		forEach: function(identifier, callback) {
-			var callbacks = this._dictionary.get(identifier);
-			if (callbacks !== undefined) {
-				callbacks.forEach(callback);
+			if (identifier === null) {
+				this._dictionary.forEach(function(callbacks, identifier) {
+					callbacks.forEach(callback);
+				});
+			}
+			else {
+				var callbacks = this._dictionary.get(identifier);
+				if (callbacks !== undefined) {
+					callbacks.forEach(callback);
+				}
 			}
 		}
 	};
