@@ -29,7 +29,40 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder {
 				$data[$templateListener->templateName] = array();
 			}
 			
-			$data[$templateListener->templateName][$templateListener->eventName][] = $templateListener->templateCode;
+			$templateCode = $templateListener->templateCode;
+			// wrap template listener code in if condition for options
+			// and permissions check
+			if ($templateListener->options || $templateListener->permissions) {
+				$templateCode = '{if ';
+				
+				$options = $permissions = [ ];
+				if ($templateListener->options) {
+					$options = explode(',', strtoupper($templateListener->options));
+					
+					array_walk($options, function(&$value, $key) {
+						$value = "('".$value."'|defined && '".$value."'|constant)";
+					});
+					
+					$templateCode .= '('.implode(' || ', $options).')';
+				}
+				if ($templateListener->permissions) {
+					$permissions = explode(',', $templateListener->permissions);
+					
+					array_walk($permissions, function(&$value, $key) {
+						$value = "\$__wcf->session->getPermission('".$value."')";
+					});
+					
+					if (!empty($options)) {
+						$templateCode .= " && ";
+					}
+					
+					$templateCode .= '('.implode(' || ', $permissions).')';
+				}
+				
+				$templateCode .= '}'.$templateListener->templateCode.'{/if}';
+			}
+			
+			$data[$templateListener->templateName][$templateListener->eventName][] = $templateCode;
 		}
 		
 		return $data;
