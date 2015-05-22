@@ -114,7 +114,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isVisible()
 	 */
 	public function isVisible() {
-		return $this->getDecoratedObject()->validateOptions() & $this->getDecoratedObject()->validatePermissions();
+		return $this->getDecoratedObject()->validateOptions() && $this->getDecoratedObject()->validatePermissions();
 	}
 	
 	/**
