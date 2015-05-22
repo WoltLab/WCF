@@ -1,6 +1,6 @@
 /**
  * Allows to be informed when the DOM may have changed and
- * new elements that are relevant to may you have been added.
+ * new elements that are relevant to you may have been added.
  * 
  * @author	Tim Duesterhus
  * @copyright	2001-2015 WoltLab GmbH
