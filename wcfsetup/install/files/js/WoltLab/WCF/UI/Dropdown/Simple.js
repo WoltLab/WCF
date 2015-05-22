@@ -13,9 +13,9 @@ define(
 	"use strict";
 	
 	var _availableDropdowns = null;
-	var _callbacks = null;
-	var _dropdowns = null;
-	var _menus = null;
+	var _callbacks = new CallbackList();
+	var _dropdowns = new Dictionary();
+	var _menus = new Dictionary();
 	var _menuContainer = null;
 	
 	/**
@@ -30,10 +30,6 @@ define(
 			_menuContainer = document.createElement('div');
 			_menuContainer.setAttribute('id', 'dropdownMenuContainer');
 			document.body.appendChild(_menuContainer);
-			
-			_callbacks = new CallbackList();
-			_dropdowns = new Dictionary();
-			_menus = new Dictionary();
 			
 			_availableDropdowns = document.getElementsByClassName('dropdownToggle');
 			

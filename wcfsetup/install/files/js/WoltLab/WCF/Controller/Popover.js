@@ -11,9 +11,9 @@ define(['Dictionary', 'Environment', 'DOM/Util', 'UI/Alignment'], function(Dicti
 	
 	var _activeId = null;
 	var _baseHeight = 0;
-	var _cache = null;
-	var _elements = null;
-	var _handlers = null;
+	var _cache = new Dictionary();
+	var _elements = new Dictionary();
+	var _handlers = new Dictionary();
 	var _hoverId = null;
 	var _suspended = false;
 	var _timeoutEnter = null;
@@ -47,10 +47,6 @@ define(['Dictionary', 'Environment', 'DOM/Util', 'UI/Alignment'], function(Dicti
 			if (_popover !== null) {
 				return;
 			}
-			
-			_cache = new Dictionary();
-			_elements = new Dictionary();
-			_handlers = new Dictionary();
 			
 			_popover = document.createElement('div');
 			_popover.classList.add('popover');

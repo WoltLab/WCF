@@ -11,7 +11,7 @@ define(['enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/Util'],
 	
 	var _activeDialog = null;
 	var _container = null;
-	var _dialogs = null;
+	var _dialogs = new Dictionary();
 	var _dialogFullHeight = false;
 	var _keyupListener = null;
 	
@@ -30,8 +30,6 @@ define(['enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/Util'],
 			_container.addEventListener('click', this._closeOnBackdrop.bind(this));
 			
 			document.body.appendChild(_container);
-			
-			_dialogs = new Dictionary();
 			
 			_keyupListener = (function(event) {
 				if (event.keyCode === 27) {
