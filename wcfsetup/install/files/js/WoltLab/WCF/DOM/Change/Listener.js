@@ -49,5 +49,5 @@ define(['CallbackList'], function(CallbackList) {
 		}
 	};
 	
-	return Listener;
+	return new Listener();
 });

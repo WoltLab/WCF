@@ -5119,51 +5119,19 @@ WCF.CloseOverlayHandler = {
 };
 
 /**
- * Notifies objects once a DOM node was inserted.
+ * @deprecated Use WoltLab/WCF/DOM/Change/Listener
  */
 WCF.DOMNodeInsertedHandler = {
-	/**
-	 * list of callbacks
-	 * @var	array<object>
-	 */
-	_callbacks: [ ],
-	
-	/**
-	 * prevent infinite loop if a callback manipulates DOM
-	 * @var	boolean
-	 */
-	_isExecuting: false,
-	
-	/**
-	 * Adds a new callback.
-	 * 
-	 * @param	string		identifier
-	 * @param	object		callback
-	 */
 	addCallback: function(identifier, callback) {
-		this._callbacks.push(callback);
+		require(['WoltLab/WCF/DOM/Change/Listener'], function (ChangeListener) {
+			ChangeListener.add('__legacy__', callback);
+		});
 	},
-	
-	/**
-	 * Executes callbacks on click.
-	 */
 	_executeCallbacks: function() {
-		if (this._isExecuting) return;
-		
-		// do not track events while executing callbacks
-		this._isExecuting = true;
-		
-		for (var $i = 0, $length = this._callbacks.length; $i < $length; $i++) {
-			this._callbacks[$i]();
-		}
-		
-		// enable listener again
-		this._isExecuting = false;
+		require(['WoltLab/WCF/DOM/Change/Listener'], function (ChangeListener) {
+			ChangeListener.trigger();
+		});
 	},
-	
-	/**
-	 * Executes all callbacks.
-	 */
 	execute: function() {
 		this._executeCallbacks();
 	}
