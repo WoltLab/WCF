@@ -22,11 +22,14 @@
 			<inherit>1</inherit>
 			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
 		</eventlistener>
+	</import>
+	
+	<delete>
 		<eventlistener>
 			<eventclassname><![CDATA[wcf\system\bbcode\PreParser]]></eventclassname>
 			<eventname>beforeParsing</eventname>
 			<listenerclassname><![CDATA[wcf\system\event\listener\PreParserAtUserListener]]></listenerclassname>
 			<environment>user</environment>
 		</eventlistener>
-	</import>
+	</delete>
 </data>
