@@ -234,8 +234,8 @@ define(
 			var menu = _menus.get(containerId);
 			_menus.parentNode.removeChild(menu);
 			
-			_menus.remove(containerId);
-			_dropdowns.remove(containerId);
+			_menus.delete(containerId);
+			_dropdowns.delete(containerId);
 			
 			return true;
 		},

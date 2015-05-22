@@ -40,10 +40,10 @@ define([], function() {
 		 * 
 		 * @param	{string}	key	key
 		 */
-		remove: function(key) {
+		delete: function(key) {
 			if (typeof key === 'number') key = key.toString();
 			
-			if (_hasMap) this._dictionary.remove(key);
+			if (_hasMap) this._dictionary.delete(key);
 			else this._dictionary[key] = undefined;
 		},
 		

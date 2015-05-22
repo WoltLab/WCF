@@ -86,7 +86,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 				return;
 			}
 			
-			callbacks.remove(uuid);
+			callbacks.delete(uuid);
 		},
 		
 		/**
@@ -105,10 +105,10 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 			}
 			
 			if (typeof action === 'undefined') {
-				_listeners.remove(identifier);
+				_listeners.delete(identifier);
 			}
 			else {
-				actions.remove(action);
+				actions.delete(action);
 			}
 		}
 	};

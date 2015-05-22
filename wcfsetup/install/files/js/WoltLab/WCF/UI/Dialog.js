@@ -364,7 +364,7 @@ define(['enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/Util'],
 				setTimeout(function() {
 					if (data.dialog.getAttribute('aria-hidden') === 'true') {
 						_container.removeChild(data.dialog);
-						_dialogs.remove(id);
+						_dialogs.delete(id);
 					}
 				}, 5000);
 			}
