@@ -7,8 +7,8 @@
  * @module	WoltLab/WCF/UI/Dropdown/Simple
  */
 define(
-	[       'CallbackList', 'Dictionary', 'UI/Alignment', 'DOM/Traverse', 'DOM/Util'],
-	function(CallbackList,   Dictionary,    uiAlignment,    DOMTraverse,    DOMUtil)
+	[       'CallbackList', 'Dictionary', 'UI/Alignment', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util'],
+	function(CallbackList,   Dictionary,    UIAlignment,    DOMChangeListener,    DOMTraverse,    DOMUtil)
 {
 	"use strict";
 	
@@ -38,7 +38,7 @@ define(
 			WCF.Dropdown.init(this);
 			
 			WCF.CloseOverlayHandler.addCallback('WoltLab/WCF/UI/Dropdown/Simple', this.closeAll.bind(this));
-			WCF.DOMNodeInsertedHandler.addCallback('WoltLab/WCF/UI/Dropdown/Simple', this.initAll.bind(this));
+			DOMChangeListener.add('WoltLab/WCF/UI/Dropdown/Simple', this.initAll.bind(this));
 			
 			document.addEventListener('scroll', this._onScroll.bind(this));
 		},
@@ -165,7 +165,7 @@ define(
 				refDimensionsElement = button;
 			}
 			
-			uiAlignment.set(dropdownMenu, dropdown, {
+			UIAlignment.set(dropdownMenu, dropdown, {
 				pointerClassNames: ['dropdownArrowBottom', 'dropdownArrowRight'],
 				refDimensionsElement: refDimensionsElement
 			});

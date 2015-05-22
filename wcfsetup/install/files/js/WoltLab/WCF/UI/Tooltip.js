@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Tooltip
  */
-define(['Environment', 'UI/Alignment'], function(Environment, UIAlignment) {
+define(['Environment', 'DOM/ChangeListener', 'UI/Alignment'], function(Environment, DOMChangeListener, UIAlignment) {
 	"use strict";
 	
 	var _elements = null;
@@ -44,7 +44,7 @@ define(['Environment', 'UI/Alignment'], function(Environment, UIAlignment) {
 			
 			this.init();
 			
-			WCF.DOMNodeInsertedHandler.addCallback('WoltLab/WCF/UI/Tooltip', this.init.bind(this));
+			DOMChangeListener.add('WoltLab/WCF/UI/Tooltip', this.init.bind(this));
 		},
 		
 		/**

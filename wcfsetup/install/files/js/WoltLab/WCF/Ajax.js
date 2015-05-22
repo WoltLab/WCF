@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ajax
  */
-define(['Core', 'Language', 'DOM/Util', 'UI/Dialog', 'WoltLab/WCF/Ajax/Status'], function(Core, Language, DOMUtil, UIDialog, AjaxStatus) {
+define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'WoltLab/WCF/Ajax/Status'], function(Core, Language, DOMChangeListener, DOMUtil, UIDialog, AjaxStatus) {
 	"use strict";
 	
 	var _didInit = false;
@@ -226,7 +226,7 @@ define(['Core', 'Language', 'DOM/Util', 'UI/Dialog', 'WoltLab/WCF/Ajax/Status'],
 			
 			this._previousXhr = null;
 			
-			WCF.DOMNodeInsertedHandler.execute();
+			DOMChangeListener.trigger();
 			
 			// fix anchor tags generated through WCF::getAnchor()
 			var links = document.querySelectorAll('a[href*="#"]');

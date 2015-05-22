@@ -9,6 +9,7 @@ requirejs.config({
 			'CallbackList': 'WoltLab/WCF/CallbackList',
 			'Core': 'WoltLab/WCF/Core',
 			'Dictionary': 'WoltLab/WCF/Dictionary',
+			'DOM/ChangeListener': 'WoltLab/WCF/DOM/Change/Listener',
 			'DOM/Traverse': 'WoltLab/WCF/DOM/Traverse',
 			'DOM/Util': 'WoltLab/WCF/DOM/Util',
 			'Environment': 'WoltLab/WCF/Environment',

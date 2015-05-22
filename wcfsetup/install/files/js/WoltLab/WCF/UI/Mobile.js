@@ -6,7 +6,10 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Mobile
  */
-define(['enquire', 'Environment', 'Language', 'DOM/Traverse'], function(enquire, Environment, Language, DOMTraverse) {
+define(
+	[       'enquire', 'Environment', 'Language', 'DOM/ChangeListener', 'DOM/Traverse'],
+	function(enquire,   Environment,   Language,    DOMChangeListener,    DOMTraverse)
+{
 	"use strict";
 	
 	var _buttonGroupNavigations = null;
@@ -77,7 +80,7 @@ define(['enquire', 'Environment', 'Language', 'DOM/Traverse'], function(enquire,
 			this._initButtonGroupNavigation();
 			
 			WCF.CloseOverlayHandler.addCallback('WoltLab/WCF/UI/Mobile', this._closeAllMenus.bind(this));
-			WCF.DOMNodeInsertedHandler.addCallback('WoltLab/WCF/UI/Mobile', this._initButtonGroupNavigation.bind(this));
+			DOMChangeListener.add('WoltLab/WCF/UI/Mobile', this._initButtonGroupNavigation.bind(this));
 		},
 		
 		_initSidebarToggleButtons: function() {
