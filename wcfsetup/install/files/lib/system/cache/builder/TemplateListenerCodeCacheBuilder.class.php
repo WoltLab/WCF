@@ -39,18 +39,18 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder {
 				if ($templateListener->options) {
 					$options = explode(',', strtoupper($templateListener->options));
 					
-					array_walk($options, function(&$value, $key) {
-						$value = "('".$value."'|defined && '".$value."'|constant)";
-					});
+					$options = array_map(function($value) {
+						return "('".$value."'|defined && '".$value."'|constant)";
+					}, $options);
 					
 					$templateCode .= '('.implode(' || ', $options).')';
 				}
 				if ($templateListener->permissions) {
 					$permissions = explode(',', $templateListener->permissions);
 					
-					array_walk($permissions, function(&$value, $key) {
-						$value = "\$__wcf->session->getPermission('".$value."')";
-					});
+					$permissions = array_map(function($value) {
+						return "\$__wcf->session->getPermission('".$value."')";
+					}, $permissions);
 					
 					if (!empty($options)) {
 						$templateCode .= " && ";
