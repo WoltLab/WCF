@@ -1,6 +1,8 @@
 /**
  * Dictionary implemention relying on an object or if supported on a Map to hold key => value data.
  * 
+ * If you're looking for a dictionary with object keys, please see `WoltLab/WCF/ObjectMap`.
+ * 
  * @author	Tim Duesterhus, Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -40,10 +42,10 @@ define([], function() {
 		 * 
 		 * @param	{string}	key	key
 		 */
-		delete: function(key) {
+		'delete': function(key) {
 			if (typeof key === 'number') key = key.toString();
 			
-			if (_hasMap) this._dictionary.delete(key);
+			if (_hasMap) this._dictionary['delete'](key);
 			else this._dictionary[key] = undefined;
 		},
 		
