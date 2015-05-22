@@ -9,10 +9,6 @@
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var TIME_NOW = {@TIME_NOW};
 	var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
-	
-	requirejs.config({
-		baseUrl: '{@$__wcf->getPath()}js'
-	});
 </script>
 
 {if ENABLE_DEBUG_MODE}
@@ -21,6 +17,11 @@
 {else}
 <script src="{@$__wcf->getPath()}js/WCF.Core.min.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
+<script>
+requirejs.config({
+	baseUrl: '{@$__wcf->getPath()}js'
+});
+</script>
 
 <script data-relocate="true">
 	{if ENABLE_DEBUG_MODE}
