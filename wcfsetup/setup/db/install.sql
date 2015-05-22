@@ -377,6 +377,9 @@ CREATE TABLE wcf1_event_listener (
 	listenerClassName VARCHAR(200) NOT NULL DEFAULT '',
 	inherit TINYINT(1) NOT NULL DEFAULT 0,
 	niceValue TINYINT(3) NOT NULL DEFAULT 0,
+	permissions TEXT,
+	options TEXT,
+	
 	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
 );
 

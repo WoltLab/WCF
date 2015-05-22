@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\event\listener;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 
 /**
  * Represents an event listener.
@@ -13,6 +15,9 @@ use wcf\data\DatabaseObject;
  * @category	Community Framework
  */
 class EventListener extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */

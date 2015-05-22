@@ -62,7 +62,9 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			'eventName' => $data['elements']['eventname'],
 			'inherit' => (isset($data['elements']['inherit'])) ? intval($data['elements']['inherit']) : 0,
 			'listenerClassName' => $data['elements']['listenerclassname'],
-			'niceValue' => $nice
+			'niceValue' => $nice,
+			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
+			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '')
 		);
 	}
 	
