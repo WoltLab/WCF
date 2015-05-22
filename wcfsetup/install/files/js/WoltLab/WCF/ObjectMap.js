@@ -51,7 +51,7 @@ define([], function() {
 			 */
 			'delete': function(key) {
 				if (_hasMap) {
-					this._map.['delete'](_key);
+					this._map['delete'](_key);
 				}
 				else {
 					var index = this._map.key.indexOf(key);
