@@ -6,7 +6,10 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/Dialog
  */
-define(['enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/Util'], function(enquire, Core, Dictionary, Environment, Language, DOMUtil) {
+define(
+	[       'enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/ChangeListener', 'DOM/Util'],
+	function(enquire,   Core,   Dictionary,   Environment,   Language,    DOMChangeListener,    DOMUtil)
+{
 	"use strict";
 	
 	var _activeDialog = null;
@@ -217,7 +220,7 @@ define(['enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/Util'],
 				options.onShow(id);
 			}
 			
-			WCF.DOMNodeInsertedHandler.execute();
+			ChangeListener.trigger();
 		},
 		
 		/**
@@ -256,7 +259,7 @@ define(['enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/Util'],
 				}
 			}
 			
-			WCF.DOMNodeInsertedHandler.execute();
+			ChangeListener.trigger();
 		},
 		
 		/**

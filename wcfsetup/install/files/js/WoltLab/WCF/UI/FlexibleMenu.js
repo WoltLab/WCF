@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/FlexibleMenu
  */
-define(['Core', 'Dictionary', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], function(Core, Dictionary, DOMTraverse, DOMUtil, SimpleDropdown) {
+define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], function(Core, Dictionary, DOMChangeListener, DOMTraverse, DOMUtil, SimpleDropdown) {
 	"use strict";
 	
 	/**
@@ -30,7 +30,7 @@ define(['Core', 'Dictionary', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], 
 			
 			
 			window.addEventListener('resize', this.rebuildAll.bind(this));
-			WCF.DOMNodeInsertedHandler.addCallback('WoltLab/WCF/UI/FlexibleMenu', this.registerTabMenus.bind(this));
+			DOMChangeListener.add('WoltLab/WCF/UI/FlexibleMenu', this.registerTabMenus.bind(this));
 		},
 		
 		/**

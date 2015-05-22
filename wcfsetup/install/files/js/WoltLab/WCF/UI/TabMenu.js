@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/TabMenu
  */
-define(['Dictionary', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMUtil, SimpleTabMenu) {
+define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMChangeListener, DOMUtil, SimpleTabMenu) {
 	"use strict";
 	
 	var _tabMenus = new Dictionary();
@@ -22,7 +22,7 @@ define(['Dictionary', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMU
 		setup: function() {
 			this._init();
 			
-			WCF.DOMNodeInsertedHandler.addCallback('WoltLab/WCF/UI/TabMenu', this._init.bind(this));
+			DOMChangeListener.add('WoltLab/WCF/UI/TabMenu', this._init.bind(this));
 		},
 		
 		/**

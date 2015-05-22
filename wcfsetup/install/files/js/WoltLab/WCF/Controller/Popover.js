@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Popover
  */
-define(['Dictionary', 'Environment', 'DOM/Util', 'UI/Alignment'], function(Dictionary, Environment, DOMUtil, UIAlignment) {
+define(['Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', 'UI/Alignment'], function(Dictionary, Environment, DOMChangeListener, DOMUtil, UIAlignment) {
 	"use strict";
 	
 	var _activeId = null;
@@ -93,7 +93,7 @@ define(['Dictionary', 'Environment', 'DOM/Util', 'UI/Alignment'], function(Dicti
 				this._hide(true);
 			}).bind(this));
 			
-			WCF.DOMNodeInsertedHandler.addCallback('WoltLab/WCF/Controller/Popover', this._init.bind(this));
+			DOMChangeListener.add('WoltLab/WCF/Controller/Popover', this._init.bind(this));
 		},
 		
 		/**
