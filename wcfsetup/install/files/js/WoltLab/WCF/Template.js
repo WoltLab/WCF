@@ -30,10 +30,6 @@ define(['./Template.grammar', './StringUtil', 'Language'], function(parser, Stri
 		// Fetch Language, as it cannot be provided because of a circular dependency
 		if (Language === undefined) Language = require('Language');
 		
-		if (!(this instanceof Template)) {
-			return new Template(template);
-		}
-		
 		try {
 			template = parser.parse(template);
 			template = "var tmp = {};\n"
