@@ -61,6 +61,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			'className' => (isset($data['elements']['classname'])) ? $data['elements']['classname'] : '',
 			'description' => (isset($data['elements']['description'])) ? $data['elements']['description'] : '',
 			'isDisabled' => (isset($data['elements']['isdisabled'])) ? intval($data['elements']['isdisabled']) : 0,
+			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
 			'startDom' => $data['elements']['startdom'],
 			'startDow' => $data['elements']['startdow'],
 			'startHour' => $data['elements']['starthour'],

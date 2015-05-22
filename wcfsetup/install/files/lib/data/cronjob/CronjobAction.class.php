@@ -126,10 +126,17 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			
 			// execute cronjob
 			$exception = null;
-			try {
-				$executable->execute(new Cronjob($cronjob->cronjobID));
+			
+			// check if all required options are set for cronjob to be executed
+			// note: a general log is created to avoid confusion why a cronjob
+			// apperently is not executed while that is indeed the correct internal
+			// behavior
+			if ($cronjob->validateOptions()) {
+				try {
+					$executable->execute(new Cronjob($cronjob->cronjobID));
+				}
+				catch (\Exception $exception) { }
 			}
-			catch (\Exception $exception) { }
 			
 			CronjobLogEditor::create(array(
 				'cronjobID' => $cronjob->cronjobID,

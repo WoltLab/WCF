@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\cronjob;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
 use wcf\util\CronjobUtil;
 
 /**
@@ -14,6 +15,8 @@ use wcf\util\CronjobUtil;
  * @category	Community Framework
  */
 class Cronjob extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
