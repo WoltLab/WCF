@@ -11,7 +11,7 @@
 define([], function() {
 	"use strict";
 	
-	var _hasMap = window.hasOwnProperty('Map') & typeof window.WeakMap === 'function';
+	var _hasMap = window.hasOwnProperty('Map') && typeof window.Map === 'function';
 	
 	/**
 	 * @constructor
