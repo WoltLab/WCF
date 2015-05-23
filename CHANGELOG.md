@@ -5,6 +5,7 @@
 ### 2.2.0 Alpha 1 (XXXX-YY-ZZ)
 
 * `options` support for cronjobs.
+* `name` attribute for cronjob PIP (`cronjobName` for cronjob objects).
 * `permissions` and `options` support for event listeners.
 * `name` attribute for event listener PIP (`listenerName` for event listener objects).
 * `permissions` and `options` support for template listeners.

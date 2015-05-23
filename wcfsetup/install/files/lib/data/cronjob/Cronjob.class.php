@@ -48,6 +48,13 @@ class Cronjob extends DatabaseObject {
 	const MAX_FAIL_COUNT = 3;
 	
 	/**
+	 * prefix of automatically created cronjob names
+	 * @var	string
+	 * @deprecated	will be removed once cronjob names are mandatory
+	 */
+	const AUTOMATIC_NAME_PREFIX = 'com.woltlab.wcf.cronjob';
+	
+	/**
 	 * Returns timestamp of next execution.
 	 * 
 	 * @param	integer		$timeBase
