@@ -4,6 +4,7 @@
 
 ### 2.2.0 Alpha 1 (XXXX-YY-ZZ)
 
+* instruction file name for most PIPs has default value now.
 * `options` support for cronjobs.
 * `name` attribute for cronjob PIP (`cronjobName` for cronjob objects).
 * `permissions` and `options` support for event listeners.

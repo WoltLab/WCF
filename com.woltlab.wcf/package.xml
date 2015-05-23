@@ -15,31 +15,31 @@
 	</authorinformation>
 	
 	<instructions type="install">
-		<instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
-		<instruction type="acpMenu">acpMenu.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="template">templates.tar</instruction>
-		<instruction type="eventListener">eventListener.xml</instruction>
+		<instruction type="packageInstallationPlugin" />
+		<instruction type="acpMenu" />
+		<instruction type="userGroupOption" />
+		<instruction type="option" />
+		<instruction type="template" />
+		<instruction type="eventListener" />
 		<instruction type="script">acp/install.php</instruction>
-		<instruction type="cronjob">cronjob.xml</instruction>
-		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="clipboardAction">clipboardAction.xml</instruction>
-		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
+		<instruction type="cronjob" />
+		<instruction type="coreObject" />
+		<instruction type="clipboardAction" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="acpSearchProvider" />
 		<instruction type="style">blue-temptation-style.tgz</instruction>
 		<instruction type="style">woltlab-basic-style.tgz</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="smiley">smiley.xml</instruction>
-		<instruction type="pageMenu">pageMenu.xml</instruction>
-		<instruction type="sitemap">sitemap.xml</instruction>
-		<instruction type="dashboardBox">dashboardBox.xml</instruction>
-		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
-		<instruction type="userMenu">userMenu.xml</instruction>
-		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="aclOption">aclOption.xml</instruction>
+		<instruction type="userOption" />
+		<instruction type="bbcode" />
+		<instruction type="smiley" />
+		<instruction type="pageMenu" />
+		<instruction type="sitemap" />
+		<instruction type="dashboardBox" />
+		<instruction type="userProfileMenu" />
+		<instruction type="userMenu" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="aclOption" />
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 </package>

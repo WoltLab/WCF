@@ -78,4 +78,11 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	protected function cleanup() {
 		ACPSearchProviderCacheBuilder::getInstance()->reset();
 	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 */
+	public static function getDefaultFilename() {
+		return 'acpSearchProvider.xml';
+	}
 }
