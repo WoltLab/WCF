@@ -20,7 +20,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 */
 	public $className = 'wcf\data\style\StyleEditor';
 	
-	/** 
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
@@ -41,7 +41,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		@unlink($filename);
 	}
 	
-	/** 
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {

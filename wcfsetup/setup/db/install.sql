@@ -308,6 +308,7 @@ CREATE TABLE wcf1_cronjob (
 	cronjobID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	className varchar(255) NOT NULL DEFAULT '',
 	packageID INT(10) NOT NULL,
+	cronjobName VARCHAR(255) NOT NULL,
 	description varchar(255) NOT NULL DEFAULT '',
 	startMinute varchar(255) NOT NULL DEFAULT '*',
 	startHour varchar(255) NOT NULL DEFAULT '*',
@@ -322,7 +323,9 @@ CREATE TABLE wcf1_cronjob (
 	canBeDisabled TINYINT(1) NOT NULL DEFAULT 1,
 	state TINYINT(1) NOT NULL DEFAULT 0,
 	failCount TINYINT(1) NOT NULL DEFAULT 0,
-	options TEXT
+	options TEXT,
+	
+	UNIQUE KEY cronjobName (cronjobName, packageID)
 );
 
 DROP TABLE IF EXISTS wcf1_cronjob_log;
@@ -373,6 +376,7 @@ CREATE TABLE wcf1_event_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
 	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+	listenerName VARCHAR(255) NOT NULL,
 	eventClassName VARCHAR(80) NOT NULL DEFAULT '',
 	eventName VARCHAR(50) NOT NULL DEFAULT '',
 	listenerClassName VARCHAR(200) NOT NULL DEFAULT '',
@@ -381,6 +385,7 @@ CREATE TABLE wcf1_event_listener (
 	permissions TEXT,
 	options TEXT,
 	
+	UNIQUE KEY listenerName (listenerName, packageID),
 	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
 );
 

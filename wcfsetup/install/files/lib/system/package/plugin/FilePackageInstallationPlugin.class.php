@@ -109,9 +109,20 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 */
+	public static function getDefaultFilename() {
+		return 'files.tar';
+	}
+	
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
+		if (!$instruction) {
+			$defaultFilename = static::getDefaultFilename();
+		}
+		
 		if (preg_match('~\.(tar(\.gz)?|tgz)$~', $instruction)) {
 			// check if file actually exists
 			try {

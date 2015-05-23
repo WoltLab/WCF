@@ -555,6 +555,14 @@ class PackageInstallationDispatcher {
 			throw new SystemException("unable to find class '".$className."'");
 		}
 		
+		// set default value
+		if (empty($nodeData['value'])) {
+			$defaultValue = call_user_func(array($className, 'getDefaultFilename'));
+			if ($defaultValue) {
+				$nodeData['value'] = $defaultValue;
+			}
+		}
+		
 		$plugin = new $className($this, $nodeData);
 		
 		if (!($plugin instanceof IPackageInstallationPlugin)) {
