@@ -42,7 +42,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 				(isset($item['elements']['environment']) ? $item['elements']['environment'] : 'user'),
 				$item['elements']['eventclassname'],
 				$item['elements']['eventname'],
-				(isset($data['elements']['inherit'])) ? $data['elements']['inherit'] : 0,
+				(isset($item['elements']['inherit'])) ? $item['elements']['inherit'] : 0,
 				$item['elements']['listenerclassname']
 			));
 		}
