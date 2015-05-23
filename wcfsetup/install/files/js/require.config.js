@@ -6,6 +6,7 @@ requirejs.config({
 	map: {
 		'*': {
 			'Ajax': 'WoltLab/WCF/Ajax',
+			'AjaxRequest': 'WoltLab/WCF/Ajax/Request',
 			'CallbackList': 'WoltLab/WCF/CallbackList',
 			'Core': 'WoltLab/WCF/Core',
 			'Dictionary': 'WoltLab/WCF/Dictionary',
@@ -15,6 +16,7 @@ requirejs.config({
 			'Environment': 'WoltLab/WCF/Environment',
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
 			'Language': 'WoltLab/WCF/Language',
+			'ObjectMap': 'WoltLab/WCF/ObjectMap',
 			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
 			'UI/Dialog': 'WoltLab/WCF/UI/Dialog',
 			'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple',

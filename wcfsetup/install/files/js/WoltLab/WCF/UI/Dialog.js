@@ -220,7 +220,7 @@ define(
 				options.onShow(id);
 			}
 			
-			ChangeListener.trigger();
+			DOMChangeListener.trigger();
 		},
 		
 		/**
@@ -259,7 +259,7 @@ define(
 				}
 			}
 			
-			ChangeListener.trigger();
+			DOMChangeListener.trigger();
 		},
 		
 		/**

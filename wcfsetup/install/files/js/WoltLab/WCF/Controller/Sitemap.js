@@ -33,7 +33,7 @@ define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu
 			event.preventDefault();
 			
 			if (UIDialog.getDialog('sitemapDialog') === undefined) {
-				Ajax.api({
+				Ajax.apiOnce({
 					data: {
 						actionName: 'getSitemap',
 						className: 'wcf\\data\\sitemap\\SitemapAction'
@@ -60,6 +60,21 @@ define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu
 			}
 		},
 		
+		_ajaxSetup: function() {
+			return {
+				data: {
+					actionName: 'getSitemap',
+					className: 'wcf\\data\\sitemap\\SitemapAction'
+				}
+			};
+		},
+		
+		_ajaxSuccess: function(data) {
+			_cache.push(data.returnValues.sitemapName);
+			
+			document.getElementById('sitemap_' + data.returnValues.sitemapName).innerHTML = data.returnValues.template;
+		},
+		
 		/**
 		 * Callback for tab links, lazy loads content.
 		 * 
@@ -69,18 +84,9 @@ define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu
 			var name = tabData.active.getAttribute('data-name').replace(/^sitemap_/, '');
 			
 			if (_cache.indexOf(name) === -1) {
-				Ajax.api({
-					data: {
-						actionName: 'getSitemap',
-						className: 'wcf\\data\\sitemap\\SitemapAction',
-						parameters: {
-							sitemapName: name
-						}
-					},
-					success: function(data) {
-						_cache.push(data.returnValues.sitemapName);
-						
-						document.getElementById('sitemap_' + data.returnValues.sitemapName).innerHTML = data.returnValues.template;
+				Ajax.api(this, {
+					parameters: {
+						sitemapName: name
 					}
 				});
 			}
