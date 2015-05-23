@@ -373,6 +373,7 @@ CREATE TABLE wcf1_event_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
 	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+	listenerName VARCHAR(255) NOT NULL,
 	eventClassName VARCHAR(80) NOT NULL DEFAULT '',
 	eventName VARCHAR(50) NOT NULL DEFAULT '',
 	listenerClassName VARCHAR(200) NOT NULL DEFAULT '',
@@ -381,6 +382,7 @@ CREATE TABLE wcf1_event_listener (
 	permissions TEXT,
 	options TEXT,
 	
+	UNIQUE KEY listenerName (listenerName, packageID),
 	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
 );
 
