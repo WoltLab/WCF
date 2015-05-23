@@ -164,7 +164,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
 		if (!$instruction) {
-			$defaultFilename = static::getDefaultFilename();
+			$instruction = static::getDefaultFilename();
 		}
 		
 		if (preg_match('~\.sql$~', $instruction)) {
