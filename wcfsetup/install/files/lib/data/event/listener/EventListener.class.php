@@ -34,4 +34,13 @@ class EventListener extends DatabaseObject {
 	 * @deprecated	will be removed once listener names are mandatory
 	 */
 	const AUTOMATIC_NAME_PREFIX = 'com.woltlab.wcf.eventListener';
+	
+	/**
+	 * Returns the names of all events listened to.
+	 * 
+	 * @return	array<string>
+	 */
+	public function getEventNames() {
+		return explode(',', $this->eventName);
+	}
 }

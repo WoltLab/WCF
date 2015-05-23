@@ -378,15 +378,14 @@ CREATE TABLE wcf1_event_listener (
 	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
 	listenerName VARCHAR(255) NOT NULL,
 	eventClassName VARCHAR(80) NOT NULL DEFAULT '',
-	eventName VARCHAR(50) NOT NULL DEFAULT '',
+	eventName TEXT,
 	listenerClassName VARCHAR(200) NOT NULL DEFAULT '',
 	inherit TINYINT(1) NOT NULL DEFAULT 0,
 	niceValue TINYINT(3) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
 	
-	UNIQUE KEY listenerName (listenerName, packageID),
-	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
+	UNIQUE KEY listenerName (listenerName, packageID)
 );
 
 DROP TABLE IF EXISTS wcf1_import_mapping;

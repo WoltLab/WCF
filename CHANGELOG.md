@@ -7,6 +7,7 @@
 * instruction file name for most PIPs has default value provided by `wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()`.
 * `options` support for cronjobs.
 * `name` attribute for cronjob PIP (`cronjobName` for cronjob objects).
+* `eventName` of event listener PIP supports multiple events.
 * `permissions` and `options` support for event listeners.
 * `name` attribute for event listener PIP (`listenerName` for event listener objects).
 * `permissions` and `options` support for template listeners.

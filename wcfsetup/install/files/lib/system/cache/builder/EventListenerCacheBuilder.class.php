@@ -37,28 +37,34 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($eventListener = $statement->fetchObject('wcf\data\event\listener\EventListener')) {
+			$eventNames = $eventListener->getEventNames();
+			
 			if (!$eventListener->inherit) {
 				if (!isset($actions[$eventListener->environment])) {
 					$actions[$eventListener->environment] = array();
 				}
 				
-				$key = EventHandler::generateKey($eventListener->eventClassName, $eventListener->eventName);
-				if (!isset($actions[$eventListener->environment][$key])) {
-					$actions[$eventListener->environment][$key] = array();
+				foreach ($eventNames as $eventName) {
+					$key = EventHandler::generateKey($eventListener->eventClassName, $eventName);
+					if (!isset($actions[$eventListener->environment][$key])) {
+						$actions[$eventListener->environment][$key] = array();
+					}
+					
+					$actions[$eventListener->environment][$key][] = $eventListener;
 				}
-				
-				$actions[$eventListener->environment][$key][] = $eventListener;
 			}
 			else {
 				if (!isset($inheritedActions[$eventListener->environment])) {
 					$inheritedActions[$eventListener->environment] = array();
 				}
 				
-				if (!isset($inheritedActions[$eventListener->environment][$eventListener->eventClassName])) {
-					$inheritedActions[$eventListener->environment][$eventListener->eventClassName] = array();
+				foreach ($eventNames as $eventName) {
+					if (!isset($inheritedActions[$eventListener->environment][$eventListener->eventClassName])) {
+						$inheritedActions[$eventListener->environment][$eventListener->eventClassName] = array();
+					}
+					
+					$inheritedActions[$eventListener->environment][$eventListener->eventClassName][$eventName][] = $eventListener;
 				}
-				
-				$inheritedActions[$eventListener->environment][$eventListener->eventClassName][$eventListener->eventName][] = $eventListener;
 			}
 		}
 		
