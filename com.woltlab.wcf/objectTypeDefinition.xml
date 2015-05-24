@@ -197,4 +197,8 @@
 			<interfacename><![CDATA[wcf\system\payment\type\IPaymentType]]></interfacename>
 		</definition>
 	</import>
+	
+	<delete>
+		<definition name="com.woltlab.wcf.versionableObject" />
+	</delete>
 </data>
