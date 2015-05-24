@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\moderation\queue;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
 
@@ -93,12 +93,7 @@ class ViewableModerationQueueList extends ModerationQueueList {
 					$userIDs[] = $object->getAffectedObject()->getUserID();
 				}
 				
-				$userProfiles = UserProfile::getUserProfiles($userIDs);
-				foreach ($this->objects as $object) {
-					if (isset($userProfiles[$object->getAffectedObject()->getUserID()])) {
-						$object->setUserProfile($userProfiles[$object->getAffectedObject()->getUserID()]);
-					}
-				}
+				UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 			}
 		}
 	}

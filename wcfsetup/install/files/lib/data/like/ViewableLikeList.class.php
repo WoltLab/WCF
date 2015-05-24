@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\like;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\like\IViewableLikeProvider;
 
 /**
@@ -59,12 +59,7 @@ class ViewableLikeList extends LikeList {
 		
 		// set user profiles
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $like) {
-				$like->setUserProfile($users[$like->userID]);
-			}
+			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 		}
 		
 		// parse like

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\user\activity\event;
 use wcf\data\comment\CommentList;
-use wcf\data\user\UserProfileList;
+use wcf\data\user\UserProfileCache;
 use wcf\system\user\activity\event\IUserActivityEvent;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -42,10 +42,7 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 			$userIDs[] = $comment->objectID;
 		}
 		if (!empty($userIDs)) {
-			$userList = new UserProfileList();
-			$userList->setObjectIDs($userIDs);
-			$userList->readObjects();
-			$users = $userList->getObjects();
+			$users = UserProfileCache::getInstance()->getUserProfiles($userIDs);
 		}
 		
 		// set message

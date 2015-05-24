@@ -4,6 +4,7 @@
 
 ### 2.2.0 Alpha 1 (XXXX-YY-ZZ)
 
+* `wcf\data\user\UserProfileCache` for caching user profiles during runtime.
 * instruction file name for most PIPs has default value provided by `wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()`.
 * `options` support for cronjobs.
 * `name` attribute for cronjob PIP (`cronjobName` for cronjob objects).

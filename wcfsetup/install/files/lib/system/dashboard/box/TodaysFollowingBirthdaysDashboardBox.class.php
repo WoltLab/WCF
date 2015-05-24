@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
-use wcf\data\user\UserProfileList;
+use wcf\data\user\UserProfileCache;
 use wcf\page\IPage;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
@@ -39,11 +39,10 @@ class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 		$userIDs = array_intersect($userIDs, WCF::getUserProfileHandler()->getFollowingUsers());
 		
 		if (!empty($userIDs)) {
-			$userProfileList = new UserProfileList();
-			$userProfileList->setObjectIDs($userIDs);
-			$userProfileList->readObjects();
+			$userProfiles = UserProfileCache::getInstance()->getUserProfiles($userIDs);
+			
 			$i = 0;
-			foreach ($userProfileList as $userProfile) {
+			foreach ($userProfiles as $userProfile) {
 				if ($i == 10) break;
 				
 				if (!$userProfile->isProtected() && substr($userProfile->birthday, 5) == $currentDay) {

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
 
@@ -76,16 +76,9 @@ class StructuredCommentResponseList extends CommentResponseList {
 			$response->setIsEditable($this->commentManager->canEditResponse($response->getDecoratedObject()));
 		}
 		
-		// fetch user data and avatars
+		// cache user ids
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $response) {
-				if (isset($users[$response->userID])) {
-					$response->setUserProfile($users[$response->userID]);
-				}
-			}
+			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 		}
 	}
 	

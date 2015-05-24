@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\user\activity\event;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\language\LanguageFactory;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
@@ -71,12 +71,7 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 		
 		// set user profiles
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $event) {
-				$event->setUserProfile($users[$event->userID]);
-			}
+			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 		}
 		
 		// parse events

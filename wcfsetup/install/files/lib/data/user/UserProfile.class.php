@@ -342,11 +342,10 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * 
 	 * @param	integer				$userID
 	 * @return	\wcf\data\user\UserProfile
+	 * @deprecated	use UserProfileCache::getUserProfile()
 	 */
 	public static function getUserProfile($userID) {
-		$users = self::getUserProfiles(array($userID));
-		
-		return (isset($users[$userID]) ? $users[$userID] : null);
+		return UserProfileCache::getInstance()->getUserProfile($userID);
 	}
 	
 	/**
@@ -354,26 +353,15 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * 
 	 * @param	array				$userIDs
 	 * @return	array<\wcf\data\user\UserProfile>
+	 * @deprecated	use UserProfileCache::getUserProfiles()
 	 */
 	public static function getUserProfiles(array $userIDs) {
-		$users = array();
+		$users = UserProfileCache::getInstance()->getUserProfiles($userIDs);
 		
-		// check cache
-		foreach ($userIDs as $index => $userID) {
-			if (isset(self::$userProfiles[$userID])) {
-				$users[$userID] = self::$userProfiles[$userID];
-				unset($userIDs[$index]);
-			}
-		}
-		
-		if (!empty($userIDs)) {
-			$userList = new UserProfileList();
-			$userList->setObjectIDs($userIDs);
-			$userList->readObjects();
-			
-			foreach ($userList as $user) {
-				$users[$user->userID] = $user;
-				self::$userProfiles[$user->userID] = $user;
+		// this method does not return null for non-existing user profiles
+		foreach ($users as $userID => $user) {
+			if ($user === null) {
+				unset($users[$userID]);
 			}
 		}
 		
@@ -385,6 +373,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * 
 	 * @param	string				$username
 	 * @return	\wcf\data\user\UserProfile
+	 * @todo	move to UserProfileCache?
 	 */
 	public static function getUserProfileByUsername($username) {
 		$users = self::getUserProfilesByUsername(array($username));
@@ -397,6 +386,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * 
 	 * @param	array<string>			$usernames
 	 * @return	array<\wcf\data\user\UserProfile>
+	 * @todo	move to UserProfileCache?
 	 */
 	public static function getUserProfilesByUsername(array $usernames) {
 		$users = array();
@@ -411,8 +401,9 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		unset($username);
 		
 		// check cache
+		$userProfiles = UserProfileCache::getInstance()->getCachedUserProfiles();
 		foreach ($usernames as $index => $username) {
-			foreach (self::$userProfiles as $user) {
+			foreach ($userProfiles as $user) {
 				if (mb_strtolower($user->username) === $username) {
 					$users[$username] = $user;
 					unset($usernames[$index]);

@@ -2,7 +2,7 @@
 namespace wcf\data\comment;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
 
@@ -125,22 +125,9 @@ class StructuredCommentList extends CommentList {
 			}
 		}
 		
-		// fetch user data and avatars
+		// cache user ids
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $comment) {
-				if ($comment->userID && isset($users[$comment->userID])) {
-					$comment->setUserProfile($users[$comment->userID]);
-				}
-				
-				foreach ($comment as $response) {
-					if ($response->userID && isset($users[$response->userID])) {
-						$response->setUserProfile($users[$response->userID]);
-					}
-				}
-			}
+			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 		}
 	}
 	
