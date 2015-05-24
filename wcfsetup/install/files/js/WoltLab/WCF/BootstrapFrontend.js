@@ -40,19 +40,15 @@ define(['Ajax', 'WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'Wolt
 				className: 'userLink',
 				identifier: 'com.woltlab.wcf.user',
 				loadCallback: function(objectId, popover) {
-					Ajax.api({
-						data: {
-							actionName: 'getUserProfile',
-							className: 'wcf\\data\\user\\UserProfileAction',
-							objectIDs: [ objectId ]
-						},
-						success: (function(data) {
-							popover.setContent('com.woltlab.wcf.user', objectId, data.returnValues.template);
-						}).bind(this),
-						failure: (function(data) {
-							popover.setContent('com.woltlab.wcf.user', objectId, data.returnValues.template);
-						}).bind(this)
-					});
+					var callback = function(data) {
+						popover.setContent('com.woltlab.wcf.user', objectId, data.returnValues.template);
+					};
+					
+					popover.ajaxApi({
+						actionName: 'getUserProfile',
+						className: 'wcf\\data\\user\\UserProfileAction',
+						objectIDs: [ objectId ]
+					}, callback, callback);
 				}
 			});
 		}

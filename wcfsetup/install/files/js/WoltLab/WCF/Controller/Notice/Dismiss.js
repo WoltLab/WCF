@@ -34,7 +34,7 @@ define(['Ajax'], function(Ajax) {
 		_click: function(event) {
 			var button = event.currentTarget;
 			
-			Ajax.api({
+			Ajax.apiOnce({
 				data: {
 					actionName: 'dismiss',
 					className: 'wcf\\data\\notice\\NoticeAction',

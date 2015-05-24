@@ -24,9 +24,26 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 		 * @return	{AjaxRequest}
 		 */
 		api: function(callbackObject, data) {
+			return this.apiProxy(callbackObject, data);
+		},
+		
+		/**
+		 * Shorthand function to perform a request against the WCF-API with overrides
+		 * for success and failure callbacks.
+		 * 
+		 * @param	{object}		callbackObject	callback object
+		 * @param	{object<string, *>=}	data		request data
+		 * @param	{function=}		success		success callback
+		 * @param	{function=}		failure		failure callback
+		 * @return	{AjaxRequest}
+		 */
+		apiProxy: function(callbackObject, data, success, failure) {
 			var request = _requests.get(callbackObject);
 			if (request !== undefined) {
 				data = data || {};
+				
+				if (typeof success === 'function') request.setOption('success', success);
+				if (typeof failure === 'function') request.setOption('failure', failure);
 				
 				request.setData(data || {});
 				request.sendRequest();
@@ -49,6 +66,10 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 			if (!options.url) options.url = 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN;
 			
 			request = new AjaxRequest(options);
+			
+			if (typeof success === 'function') request.setOption('success', success);
+			if (typeof failure === 'function') request.setOption('failure', failure);
+			
 			request.sendRequest();
 			
 			_requests.set(callbackObject, request);

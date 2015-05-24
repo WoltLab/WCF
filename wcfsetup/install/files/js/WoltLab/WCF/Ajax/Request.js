@@ -46,9 +46,9 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 			}
 			
 			if (this._options.callbackObject !== null) {
-				this._options.failure = (typeof this._options.callbackObject._ajaxFailure === 'function') ? this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject) : null;
-				this._options.finalize = (typeof this._options.callbackObject._ajaxFinalize === 'function') ? this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject) : null;
-				this._options.success = (typeof this._options.callbackObject._ajaxSuccess === 'function') ? this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject) : null;
+				if (typeof this._options.callbackObject._ajaxFailure === 'function') this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
+				if (typeof this._options.callbackObject._ajaxFinalize === 'function') this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
+				if (typeof this._options.callbackObject._ajaxSuccess === 'function') this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
 			}
 			
 			if (_didInit === false) {
@@ -82,18 +82,20 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 			this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 			
 			var self = this;
+			
+			var options = Core.clone(this._options);
 			this._xhr.onload = function() {
 				if (this.readyState === XMLHttpRequest.DONE) {
 					if (this.status >= 200 && this.status < 300 || this.status === 304) {
-						self._success(this);
+						self._success(this, options);
 					}
 					else {
-						self._failure(this);
+						self._failure(this, options);
 					}
 				}
 			};
 			this._xhr.onerror = function() {
-				self._failure(this);
+				self._failure(this, options);
 			};
 			
 			if (this._options.type === 'POST') {
@@ -156,14 +158,15 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 		/**
 		 * Handles a successful request.
 		 * 
-		 * @param	{XMLHttpRequest}	xhr	request object
+		 * @param	{XMLHttpRequest}	xhr		request object
+		 * @param	{object<string, *>}	options		request options
 		 */
-		_success: function(xhr) {
-			if (!this._options.silent) {
+		_success: function(xhr, options) {
+			if (!options.silent) {
 				AjaxStatus.hide();
 			}
 			
-			if (typeof this._options.success === 'function') {
+			if (typeof options.success === 'function') {
 				var data = null;
 				if (xhr.getResponseHeader('Content-Type') === 'application/json') {
 					try {
@@ -182,24 +185,25 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 					}
 				}
 				
-				this._options.success(data, xhr.responseText, xhr);
+				options.success(data, xhr.responseText, xhr);
 			}
 			
-			this._finalize();
+			this._finalize(options);
 		},
 		
 		/**
 		 * Handles failed requests, this can be both a successful request with
 		 * a non-success status code or an entirely failed request.
 		 * 
-		 * @param	{XMLHttpRequest}	xhr	request object
+		 * @param	{XMLHttpRequest}	xhr		request object
+		 * @param	{object<string, *>}	options		request options
 		 */
-		_failure: function (xhr) {
+		_failure: function (xhr, options) {
 			if (_ignoreAllErrors) {
 				return;
 			}
 			
-			if (!this._options.silent) {
+			if (!options.silent) {
 				AjaxStatus.hide();
 			}
 			
@@ -210,11 +214,11 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 			catch (e) {}
 			
 			var showError = true;
-			if (typeof this._options.failure === 'function') {
-				showError = this._options.failure(data, xhr);
+			if (typeof options.failure === 'function') {
+				showError = options.failure(data, xhr);
 			}
 			
-			if (this._options.ignoreError !== true && showError !== false) {
+			if (options.ignoreError !== true && showError !== false) {
 				var details = '';
 				var message = '';
 				
@@ -239,15 +243,17 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 				});
 			}
 			
-			this._finalize();
+			this._finalize(options);
 		},
 		
 		/**
 		 * Finalizes a request.
+		 * 
+		 * @param	{object<string, *>}	options		request options
 		 */
-		_finalize: function() {
-			if (typeof this._options.finalize === 'function') {
-				this._options.finalize(this._xhr);
+		_finalize: function(options) {
+			if (typeof options.finalize === 'function') {
+				options.finalize(this._xhr);
 			}
 			
 			this._previousXhr = null;

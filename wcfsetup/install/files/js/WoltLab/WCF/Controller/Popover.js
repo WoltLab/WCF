@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Popover
  */
-define(['Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', 'UI/Alignment'], function(Dictionary, Environment, DOMChangeListener, DOMUtil, UIAlignment) {
+define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', 'UI/Alignment'], function(Ajax, Dictionary, Environment, DOMChangeListener, DOMUtil, UIAlignment) {
 	"use strict";
 	
 	var _activeId = null;
@@ -399,6 +399,26 @@ define(['Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', 'UI/Align
 				vertical: 'top',
 				verticalOffset: 3
 			});
+		},
+		
+		_ajaxSetup: function() {
+			// does nothing
+			return {};
+		},
+		
+		/**
+		 * Sends an AJAX requests to the server, simple wrapper to reuse the request object.
+		 * 
+		 * @param	{object<string, *>}	data		request data
+		 * @param	{function<object>}	success		success callback
+		 * @param	{function<object>=}	failure		error callback
+		 */
+		ajaxApi: function(data, success, failure) {
+			if (typeof success !== 'function') {
+				throw new TypeError("Expected a valid callback for parameter 'success'.");
+			}
+			
+			Ajax.apiProxy(this, data, success, failure);
 		}
 	};
 	

@@ -44,7 +44,7 @@ define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 			event.preventDefault();
 			
 			if (UIDialog.getDialog('styleChanger') === undefined) {
-				Ajax.api({
+				Ajax.apiOnce({
 					data: {
 						actionName: 'getStyleChooser',
 						className: 'wcf\\data\\style\\StyleAction'
@@ -78,7 +78,7 @@ define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 		_click: function(event) {
 			event.preventDefault();
 			
-			Ajax.api({
+			Ajax.apiOnce({
 				data: {
 					actionName: 'changeStyle',
 					className: 'wcf\\data\\style\\StyleAction',

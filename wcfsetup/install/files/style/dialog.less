@@ -171,16 +171,27 @@
 	box-sizing: border-box;
 	color: #fff;
 	left: 50%;
+	opacity: 0;
 	padding: 7px;
 	position: fixed;
 	text-align: center;
 	top: 200px;
+	visibility: hidden;
 	z-index: 401;
 	
 	transform: translateX(-50%);
 	
 	.boxShadow(0, 1px, rgba(0, 0, 0, .5), 7px);
 	.linearGradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0), rgba(0, 0, 0, .7));
+	
+	transition: visibility 0s linear .1s, opacity .1s linear;
+	
+	&.active {
+		opacity: 1;
+		visibility: visible;
+		
+		transition-delay: 0s;
+	}
 	
 	> .icon {
 		color: #fff;

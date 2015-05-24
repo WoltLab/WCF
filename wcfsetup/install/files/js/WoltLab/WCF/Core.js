@@ -9,11 +9,59 @@
 define([], function() {
 	"use strict";
 	
+	var _clone = function(variable) {
+		if (typeof variable === 'object' && variable !== null) {
+			return _cloneObject(variable);
+		}
+		
+		return variable;
+	};
+	
+	var _cloneArray = function(oldArray) {
+		var i = oldArray.length;
+		var newArray = new Array(i);
+		
+		while (i--) {
+			newArray[i] = oldArray[i];
+		}
+		
+		return newArray;
+	};
+	
+	var _cloneObject = function(obj) {
+		if (!obj) {
+			return null;
+		}
+		
+		if (Array.isArray(obj)) {
+			return _cloneArray(obj);
+		}
+		
+		var newObj = {};
+		for (var key in obj) {
+			if (obj.hasOwnProperty(key) && typeof obj[key] !== 'undefined') {
+				newObj[key] = _clone(obj[key]);
+			}
+		}
+		
+		return newObj;
+	};
+	
 	/**
 	 * @constructor
 	 */
 	function Core() {};
 	Core.prototype = {
+		/**
+		 * Deep clones an object.
+		 * 
+		 * @param	{object}	obj	source object
+		 * @return	{object}	cloned object
+		 */
+		clone: function(obj) {
+			return _clone(obj);
+		},
+		
 		/**
 		 * Converts WCF 2.0-style URLs into the default URL layout.
 		 * 
