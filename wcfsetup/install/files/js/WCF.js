@@ -9166,6 +9166,11 @@ jQuery.fn.extend({
 				}
 			}
 			else {
+				if (this[0].parentNode === null) {
+					// if element is not already part of the DOM, UIDialog.open() will fail
+					document.body.appendChild(this[0]);
+				}
+				
 				UIDialog.open(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
 			}
 		}).bind(this));
