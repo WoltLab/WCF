@@ -118,6 +118,7 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
+	 * @deprecated	This method was introduced for a function in AJAXProxy that is deprecated.
 	 * @see	\wcf\data\IStorableObject::getData()
 	 */
 	public function getData() {

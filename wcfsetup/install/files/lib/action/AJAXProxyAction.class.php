@@ -81,10 +81,9 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	}
 	
 	/**
-	 * Gets the values of object data variables
-	 * 
-	 * @param	mixed		$response
-	 * @return	mixed
+	 * @deprecated	This function makes it too easy to accidentally expose private information.
+	 * 		It will be removed in Community Framework 2.2.
+	 * 		Consider using \JsonSerializable beginning with Community Framework 2.2.
 	 */
 	protected function getData($response) {
 		if ($response instanceof IStorableObject) {
