@@ -17,6 +17,7 @@ requirejs.config({
 			'Environment': 'WoltLab/WCF/Environment',
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
 			'Language': 'WoltLab/WCF/Language',
+			'List': 'WoltLab/WCF/List',
 			'ObjectMap': 'WoltLab/WCF/ObjectMap',
 			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
 			'UI/Dialog': 'WoltLab/WCF/UI/Dialog',
