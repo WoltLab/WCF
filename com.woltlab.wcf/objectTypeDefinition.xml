@@ -23,10 +23,6 @@
 		</definition>
 		
 		<definition>
-			<name>com.woltlab.wcf.versionableObject</name>
-		</definition>
-		
-		<definition>
 			<name>com.woltlab.wcf.attachment.objectType</name>
 			<interfacename><![CDATA[wcf\system\attachment\IAttachmentObjectType]]></interfacename>
 		</definition>

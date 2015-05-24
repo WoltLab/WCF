@@ -11,8 +11,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
-use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -93,10 +91,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			EventHandler::getInstance()->fireAction($this, 'postUninstall');
 		}
 		
-		if ($this->requireRestructureVersionTables) {
-			$this->restructureVersionTables();
-		}
-		
 		// return next node
 		return $node;
 	}
@@ -106,10 +100,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 */
 	protected function executePIP(array $nodeData) {
 		$pip = new $nodeData['className']($this);
-		
-		if ($pip instanceof SQLPackageInstallationPlugin || $pip instanceof ObjectTypePackageInstallationPlugin) {
-			$this->requireRestructureVersionTables = true;
-		}
 		
 		$pip->uninstall();
 	}

@@ -16,4 +16,5 @@
 * `wcf\system\cache\builder\EventListenerCacheBuilder` returns `wcf\data\event\listener\EventListener` objects instead of data arrays.
 * `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
 * `wcf\system\event\listener\PreParserAtUserListener` removed.
-* `wcf\action\AJAXProxyAction::getData()` remove.
+* `wcf\action\AJAXProxyAction::getData()` removed.
+* Version system removed.
