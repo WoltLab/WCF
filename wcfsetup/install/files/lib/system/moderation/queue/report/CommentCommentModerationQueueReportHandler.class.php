@@ -190,7 +190,7 @@ class CommentCommentModerationQueueReportHandler extends AbstractModerationQueue
 		
 		// fetch comments
 		$commentList = new CommentList();
-		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($objectIDs));
+		$commentList->setObjectIDs($objectIDs);
 		$commentList->readObjects();
 		$comments = $commentList->getObjects();
 		

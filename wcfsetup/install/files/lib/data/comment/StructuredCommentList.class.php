@@ -105,7 +105,7 @@ class StructuredCommentList extends CommentList {
 		// fetch last responses
 		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
-			$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array(array_keys($responseIDs)));
+			$responseList->setObjectIDs(array_keys($responseIDs));
 			$responseList->readObjects();
 			
 			foreach ($responseList as $response) {

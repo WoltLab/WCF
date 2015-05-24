@@ -32,7 +32,7 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 		
 		// fetch comments
 		$commentList = new CommentList();
-		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+		$commentList->setObjectIDs($commentIDs);
 		$commentList->readObjects();
 		$comments = $commentList->getObjects();
 		
@@ -43,7 +43,7 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 		}
 		if (!empty($userIDs)) {
 			$userList = new UserProfileList();
-			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
+			$userList->setObjectIDs($userIDs);
 			$userList->readObjects();
 			$users = $userList->getObjects();
 		}
