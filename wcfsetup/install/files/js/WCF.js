@@ -2114,26 +2114,12 @@ WCF.Action = {};
 /**
  * Basic implementation for AJAX-based proxyies
  * 
+ * @deprecated	2.2 - please use `WoltLab/WCF/Ajax.api()` instead
+ * 
  * @param	object		options
  */
 WCF.Action.Proxy = Class.extend({
-	/**
-	 * shows loading overlay for a single request
-	 * @var	boolean
-	 */
-	_showLoadingOverlayOnce: false,
-	
-	/**
-	 * suppresses errors
-	 * @var	boolean
-	 */
-	_suppressErrors: false,
-	
-	/**
-	 * last request
-	 * @var	jqXHR
-	 */
-	_lastRequest: null,
+	_ajaxRequest: null,
 	
 	/**
 	 * Initializes AJAXProxy.
@@ -2141,8 +2127,9 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	object		options
 	 */
 	init: function(options) {
-		// initialize default values
-		this.options = $.extend(true, {
+		this._ajaxRequest = null;
+		
+		options = $.extend(true, {
 			autoSend: false,
 			data: { },
 			dataType: 'json',
@@ -2160,20 +2147,34 @@ WCF.Action.Proxy = Class.extend({
 			autoAbortPrevious: false
 		}, options);
 		
-		this.options.url = WCF.convertLegacyURL(this.options.url);
-		
-		this.confirmationDialog = null;
-		this.loading = null;
-		this._showLoadingOverlayOnce = false;
-		this._suppressErrors = (this.options.suppressErrors === true);
-		
-		// send request immediately after initialization
-		if (this.options.autoSend) {
-			this.sendRequest();
+		if (options.dataType === 'jsonp') {
+			require(['AjaxJsonp'], function(AjaxJsonp) {
+				AjaxJsonp.send(options.url, options.success, options.failure, {
+					parameterName: options.jsonp
+				});
+			});
 		}
-		
-		var self = this;
-		$(window).on('beforeunload', function() { self._suppressErrors = true; });
+		else {
+			require(['AjaxRequest'], (function(AjaxRequest) {
+				this._ajaxRequest = new AjaxRequest({
+					data: options.data,
+					type: options.type,
+					url: options.url,
+					
+					autoAbort: options.autoAbortPrevious,
+					ignoreError: options.suppressErrors,
+					silent: options.suppressErrors,
+					
+					failure: options.failure,
+					finalize: options.after,
+					success: options.success
+				});
+				
+				if (options.autoSend) {
+					this._ajaxRequest.sendRequest();
+				}
+			}).bind(this));
+		}
 	},
 	
 	/**
@@ -2183,65 +2184,31 @@ WCF.Action.Proxy = Class.extend({
 	 * @return	jqXHR
 	 */
 	sendRequest: function(abortPrevious) {
-		this._init();
-		
-		if (abortPrevious || this.options.autoAbortPrevious) {
-			this.abortPrevious();
+		if (this._ajaxRequest !== null) {
+			this._ajaxRequest.sendRequest(abortPrevious);
 		}
 		
-		this._lastRequest = $.ajax({
-			data: this.options.data,
-			dataType: this.options.dataType,
-			jsonp: this.options.jsonp,
-			async: this.options.async,
-			type: this.options.type,
-			url: this.options.url,
-			success: $.proxy(this._success, this),
-			error: $.proxy(this._failure, this)
-		});
-		return this._lastRequest;
+		return null;
 	},
 	
 	/**
 	 * Aborts the previous request
 	 */
 	abortPrevious: function() {
-		if (this._lastRequest !== null) {
-			this._lastRequest.abort();
-			this._lastRequest = null;
-			
-			if (this.options.showLoadingOverlay || this._showLoadingOverlayOnce) {
-				WCF.LoadingOverlayHandler.hide();
-			}
+		if (this._ajaxRequest !== null) {
+			this._ajaxRequest.abortPrevious();
 		}
 	},
 	
 	/**
 	 * Shows loading overlay for a single request.
 	 */
-	showLoadingOverlayOnce: function() {
-		this._showLoadingOverlayOnce = true;
-	},
+	showLoadingOverlayOnce: function() {},
 	
 	/**
 	 * Suppressed errors for this action proxy.
 	 */
-	suppressErrors: function() {
-		this._suppressErrors = true;
-	},
-	
-	/**
-	 * Fires before request is send, displays global loading status.
-	 */
-	_init: function() {
-		if ($.isFunction(this.options.init)) {
-			this.options.init(this);
-		}
-		
-		if (this.options.showLoadingOverlay || this._showLoadingOverlayOnce) {
-			WCF.LoadingOverlayHandler.show();
-		}
-	},
+	suppressErrors: function() {},
 	
 	/**
 	 * Handles AJAX errors.
@@ -2250,53 +2217,7 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	string		textStatus
 	 * @param	string		errorThrown
 	 */
-	_failure: function(jqXHR, textStatus, errorThrown) {
-		if (textStatus == 'abort') {
-			// call child method if applicable
-			if ($.isFunction(this.options.aborted)) {
-				this.options.aborted(jqXHR);
-			}
-			
-			return;
-		}
-		
-		try {
-			var $data = $.parseJSON(jqXHR.responseText);
-			
-			// call child method if applicable
-			var $showError = true;
-			if ($.isFunction(this.options.failure)) {
-				$showError = this.options.failure($data, jqXHR, textStatus, errorThrown);
-			}
-			
-			if (!this._suppressErrors && $showError !== false) {
-				var $details = '';
-				if ($data.stacktrace) $details = '<br /><p>Stacktrace:</p><p>' + $data.stacktrace + '</p>';
-				else if ($data.exceptionID) $details = '<br /><p>Exception ID: <code>' + $data.exceptionID + '</code></p>';
-				
-				$('<div class="ajaxDebugMessage"><p>' + $data.message + '</p>' + $details + '</div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
-			}
-		}
-		// failed to parse JSON
-		catch (e) {
-			// call child method if applicable
-			var $showError = true;
-			if ($.isFunction(this.options.failure)) {
-				$showError = this.options.failure(null, jqXHR, textStatus, errorThrown);
-			}
-			
-			if (!this._suppressErrors && $showError !== false) {
-				var $message = (textStatus === 'timeout') ? WCF.Language.get('wcf.global.error.timeout') : jqXHR.responseText;
-				
-				// validate if $message is neither empty nor 'undefined'
-				if ($message && $message != 'undefined') {
-					$('<div class="ajaxDebugMessage"><p>' + $message + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
-				}
-			}
-		}
-		
-		this._after();
-	},
+	_failure: function(jqXHR, textStatus, errorThrown) {},
 	
 	/**
 	 * Handles successful AJAX requests.
@@ -2305,49 +2226,12 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	string		textStatus
 	 * @param	object		jqXHR
 	 */
-	_success: function(data, textStatus, jqXHR) {
-		// call child method if applicable
-		if ($.isFunction(this.options.success)) {
-			// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
-			if (data && data.returnValues && data.returnValues.template !== undefined) {
-				data.returnValues.template = $.trim(data.returnValues.template);
-			}
-			
-			this.options.success(data, textStatus, jqXHR);
-		}
-		
-		this._after();
-	},
+	_success: function(data, textStatus, jqXHR) {},
 	
 	/**
 	 * Fires after an AJAX request, hides global loading status.
 	 */
-	_after: function() {
-		this._lastRequest = null;
-		if ($.isFunction(this.options.after)) {
-			this.options.after();
-		}
-		
-		if (this.options.showLoadingOverlay || this._showLoadingOverlayOnce) {
-			WCF.LoadingOverlayHandler.hide();
-			
-			if (this._showLoadingOverlayOnce) {
-				this._showLoadingOverlayOnce = false;
-			}
-		}
-		
-		WCF.DOMNodeInsertedHandler.execute();
-		
-		// fix anchor tags generated through WCF::getAnchor()
-		$('a[href*=#]').each(function(index, link) {
-			var $link = $(link);
-			if ($link.prop('href').indexOf('AJAXProxy') != -1) {
-				var $anchor = $link.prop('href').substr($link.prop('href').indexOf('#'));
-				var $pageLink = document.location.toString().replace(/#.*/, '');
-				$link.prop('href', $pageLink + $anchor);
-			}
-		});
-	},
+	_after: function() {},
 	
 	/**
 	 * Sets options, MUST be used to set parameters before sending request
@@ -2357,7 +2241,9 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	mixed		optionData
 	 */
 	setOption: function(optionName, optionData) {
-		this.options[optionName] = optionData;
+		if (this._ajaxRequest !== null) {
+			this._ajaxRequest.setOption(optionName, optionData);
+		}
 	}
 });
 
