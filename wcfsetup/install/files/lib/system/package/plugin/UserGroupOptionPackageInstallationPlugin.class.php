@@ -31,7 +31,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * list of names of tags which aren't considered as additional data
 	 * @var	array<string>
 	 */
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
+	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'moddefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata', 'usersonly');
 	
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
