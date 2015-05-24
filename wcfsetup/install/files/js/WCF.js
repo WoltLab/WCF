@@ -9166,7 +9166,7 @@ jQuery.fn.extend({
 				}
 			}
 			else {
-				if (this[0].parentNode === null) {
+				if (this[0].parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
 					// if element is not already part of the DOM, UIDialog.open() will fail
 					document.body.appendChild(this[0]);
 				}
