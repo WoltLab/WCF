@@ -22,6 +22,7 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 			this._options = Core.extend({
 				// request data
 				data: {},
+				responseType: 'application/json',
 				type: 'POST',
 				url: '',
 				
@@ -87,7 +88,13 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 			this._xhr.onload = function() {
 				if (this.readyState === XMLHttpRequest.DONE) {
 					if (this.status >= 200 && this.status < 300 || this.status === 304) {
-						self._success(this, options);
+						if (options.responseType && options.responseType !== this.getResponseHeader('Content-Type')) {
+							// request succeeded but invalid response type
+							self._failure(this, options);
+						}
+						else {
+							self._success(this, options);
+						}
 					}
 					else {
 						self._failure(this, options);
