@@ -18,14 +18,7 @@ define([], function() {
 	};
 	
 	var _cloneArray = function(oldArray) {
-		var i = oldArray.length;
-		var newArray = new Array(i);
-		
-		while (i--) {
-			newArray[i] = oldArray[i];
-		}
-		
-		return newArray;
+		return oldArray.slice();
 	};
 	
 	var _cloneObject = function(obj) {
