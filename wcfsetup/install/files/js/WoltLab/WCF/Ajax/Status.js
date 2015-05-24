@@ -68,12 +68,8 @@ define(['Language'], function(Language) {
 					window.clearTimeout(_timeoutShow);
 				}
 				
-				console.debug("Removing 'active'!");
-				window.dt = _overlay;
 				_overlay.classList.remove('active');
 			}
-			
-			console.debug(_activeRequests);
 		}
 	};
 	
