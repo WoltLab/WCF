@@ -48,6 +48,11 @@ class StructuredCommentList extends CommentList {
 	public $responseIDs = array();
 	
 	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = StructuredComment::class;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
 	 */
 	public $sqlLimit = 30;
@@ -84,7 +89,7 @@ class StructuredCommentList extends CommentList {
 		
 		// fetch response ids
 		$responseIDs = $userIDs = array();
-		foreach ($this->objects as &$comment) {
+		foreach ($this->objects as $comment) {
 			if (!$this->minCommentTime || $comment->time < $this->minCommentTime) $this->minCommentTime = $comment->time;
 			$commentResponseIDs = $comment->getResponseIDs();
 			foreach ($commentResponseIDs as $responseID) {
@@ -96,11 +101,9 @@ class StructuredCommentList extends CommentList {
 				$userIDs[] = $comment->userID;
 			}
 			
-			$comment = new StructuredComment($comment);
 			$comment->setIsDeletable($this->commentManager->canDeleteComment($comment->getDecoratedObject()));
 			$comment->setIsEditable($this->commentManager->canEditComment($comment->getDecoratedObject()));
 		}
-		unset($comment);
 		
 		// fetch last responses
 		if (!empty($responseIDs)) {

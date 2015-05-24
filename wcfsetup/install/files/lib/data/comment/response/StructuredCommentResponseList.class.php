@@ -35,6 +35,11 @@ class StructuredCommentResponseList extends CommentResponseList {
 	public $minResponseTime = 0;
 	
 	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = StructuredCommentResponse::class;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
 	 */
 	public $sqlLimit = 50;
@@ -63,15 +68,13 @@ class StructuredCommentResponseList extends CommentResponseList {
 		
 		// get user ids
 		$userIDs = array();
-		foreach ($this->objects as &$response) {
+		foreach ($this->objects as $response) {
 			if (!$this->minResponseTime || $response->time < $this->minResponseTime) $this->minResponseTime = $response->time;
 			$userIDs[] = $response->userID;
 			
-			$response = new StructuredCommentResponse($response);
 			$response->setIsDeletable($this->commentManager->canDeleteResponse($response->getDecoratedObject()));
 			$response->setIsEditable($this->commentManager->canEditResponse($response->getDecoratedObject()));
 		}
-		unset($response);
 		
 		// fetch user data and avatars
 		if (!empty($userIDs)) {

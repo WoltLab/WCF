@@ -19,6 +19,11 @@ class UserFollowerList extends UserFollowList {
 	public $className = 'wcf\data\user\follow\UserFollow';
 	
 	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = UserProfile::class;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObjectList::$objectClassName
 	 */
 	public $objectClassName = 'wcf\data\user\User';
@@ -39,16 +44,5 @@ class UserFollowerList extends UserFollowList {
 		
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user user_table ON (user_table.userID = user_follow.userID)";
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user_avatar user_avatar ON (user_avatar.avatarID = user_table.avatarID)";
-	}
-	
-	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
-	 */
-	public function readObjects() {
-		parent::readObjects();
-		
-		foreach ($this->objects as &$object) {
-			$object = new UserProfile($object);
-		}
 	}
 }

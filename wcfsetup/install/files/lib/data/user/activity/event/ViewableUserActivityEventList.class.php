@@ -22,6 +22,11 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	public $className = 'wcf\data\user\activity\event\UserActivityEvent';
 	
 	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = ViewableUserActivityEvent::class;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
 	 */
 	public $sqlLimit = 20;
@@ -50,9 +55,8 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 		
 		$userIDs = array();
 		$eventGroups = array();
-		foreach ($this->objects as &$event) {
+		foreach ($this->objects as $event) {
 			$userIDs[] = $event->userID;
-			$event = new ViewableUserActivityEvent($event);
 			
 			if (!isset($eventGroups[$event->objectTypeID])) {
 				$objectType = UserActivityEventHandler::getInstance()->getObjectType($event->objectTypeID);
@@ -64,7 +68,6 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 			
 			$eventGroups[$event->objectTypeID]['objects'][] = $event;
 		}
-		unset($event);
 		
 		// set user profiles
 		if (!empty($userIDs)) {

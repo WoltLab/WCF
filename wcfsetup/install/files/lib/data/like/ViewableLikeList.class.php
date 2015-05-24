@@ -21,6 +21,11 @@ class ViewableLikeList extends LikeList {
 	public $className = 'wcf\data\like\Like';
 	
 	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = ViewableLike::class;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
 	 */
 	public $sqlLimit = 20;
@@ -40,7 +45,6 @@ class ViewableLikeList extends LikeList {
 		$likeGroups = array();
 		foreach ($this->objects as &$like) {
 			$userIDs[] = $like->userID;
-			$like = new ViewableLike($like);
 			
 			if (!isset($likeGroups[$like->objectTypeID])) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($like->objectTypeID);
@@ -52,7 +56,6 @@ class ViewableLikeList extends LikeList {
 			
 			$likeGroups[$like->objectTypeID]['objects'][] = $like;
 		}
-		unset($like);
 		
 		// set user profiles
 		if (!empty($userIDs)) {

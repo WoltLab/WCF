@@ -26,6 +26,11 @@ class ViewableModerationQueueList extends ModerationQueueList {
 	public $loadUserProfiles = false;
 	
 	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = ViewableModerationQueue::class;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObjectList::$useQualifiedShorthand
 	 */
 	public $useQualifiedShorthand = false;
@@ -55,15 +60,12 @@ class ViewableModerationQueueList extends ModerationQueueList {
 		if (!empty($this->objects)) {
 			$objects = array();
 			foreach ($this->objects as &$object) {
-				$object = new ViewableModerationQueue($object);
-				
 				if (!isset($objects[$object->objectTypeID])) {
 					$objects[$object->objectTypeID] = array();
 				}
 				
 				$objects[$object->objectTypeID][] = $object;
 			}
-			unset($object);
 			
 			foreach ($objects as $objectTypeID => $queueItems) {
 				ModerationQueueManager::getInstance()->populate($objectTypeID, $queueItems);

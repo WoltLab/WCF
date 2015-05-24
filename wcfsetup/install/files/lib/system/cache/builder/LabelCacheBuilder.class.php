@@ -27,12 +27,9 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		
 		// get label groups
 		$groupList = new LabelGroupList();
+		$groupList->decoratorClassName = ViewableLabelGroup::class;
 		$groupList->readObjects();
-		$groups = $groupList->getObjects();
-		foreach ($groups as &$group) {
-			$data['groups'][$group->groupID] = new ViewableLabelGroup($group);
-		}
-		unset($group);
+		$data['groups'] = $groupList->getObjects();
 		
 		// get permissions for groups
 		$permissions = ACLHandler::getInstance()->getPermissions(
