@@ -1,7 +1,8 @@
 requirejs.config({
 	paths: {
 		enquire: '3rdParty/enquire',
-		favico: '3rdParty/favico'
+		favico: '3rdParty/favico',
+		'perfect-scrollbar': '3rdParty/perfect-scrollbar'
 	},
 	map: {
 		'*': {

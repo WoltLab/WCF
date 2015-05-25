@@ -593,6 +593,37 @@ $.fn.extend({
 		}
 		
 		return 0;
+	},
+	/**
+	 * @deprecated Use perfectScrollbar directly.
+	 * 
+	 * This is taken from the jQuery adaptor of perfect scrollbar.
+	 * Copyright (c) 2015 Hyunje Alex Jun and other contributors
+	 * Licensed under the MIT License
+	 */
+	perfectScrollbar: function (settingOrCommand) {
+	    var ps = require('perfect-scrollbar');
+	    
+	    return this.each(function () {
+	      if (typeof settingOrCommand === 'object' ||
+	          typeof settingOrCommand === 'undefined') {
+	        // If it's an object or none, initialize.
+	        var settings = settingOrCommand;
+	        if (!$(this).data('psID'))
+	          ps.initialize(this, settings);
+	      } else {
+	        // Unless, it may be a command.
+	        var command = settingOrCommand;
+
+	        if (command === 'update') {
+	          ps.update(this);
+	        } else if (command === 'destroy') {
+	          ps.destroy(this);
+	        }
+	      }
+
+	      return jQuery(this);
+	    });
 	}
 });
 
