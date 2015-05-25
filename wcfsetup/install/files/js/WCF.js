@@ -186,7 +186,8 @@ window.shuffle = function(array) {
 /**
  * Initialize WCF namespace
  */
-window.WCF = {};
+// non strict equals by intent
+if (window.WCF == null) window.WCF = { };
 
 /**
  * Extends jQuery with additional methods.
@@ -3239,25 +3240,28 @@ WCF.Dictionary = Class.extend({
 	}
 });
 
-/**
- * @deprecated Use WoltLab/WCF/Language
- */
-WCF.Language = {
-	add: function(key, value) {
-		require(['WoltLab/WCF/Language'], function(Language) {
-			Language.add(key, value);
-		});
-	},
-	addObject: function(object) {
-		require(['WoltLab/WCF/Language'], function(Language) {
-			Language.addObject(object);
-		});
-	},
-	get: function(key, parameters) {
-		// This cannot be sanely provided as a compatibility wrapper.
-		throw new Error('Call to deprecated WCF.Language.get("' + key + '")');
-	}
-};
+// non strict equals by intent
+if (window.WCF.Language == null) {
+	/**
+	 * @deprecated Use WoltLab/WCF/Language
+	 */
+	WCF.Language = {
+		add: function(key, value) {
+			require(['WoltLab/WCF/Language'], function(Language) {
+				Language.add(key, value);
+			});
+		},
+		addObject: function(object) {
+			require(['WoltLab/WCF/Language'], function(Language) {
+				Language.addObject(object);
+			});
+		},
+		get: function(key, parameters) {
+			// This cannot be sanely provided as a compatibility wrapper.
+			throw new Error('Call to deprecated WCF.Language.get("' + key + '")');
+		}
+	};
+}
 
 /**
  * Handles multiple language input fields.

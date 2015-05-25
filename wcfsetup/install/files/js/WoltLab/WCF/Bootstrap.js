@@ -25,6 +25,9 @@ define(
 	// perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 	window.Favico = favico;
 	window.enquire = enquire;
+	// non strict equals by intent
+	if (window.WCF == null) window.WCF = { };
+	if (window.WCF.Language == null) window.WCF.Language = { };
 	window.WCF.Language.get = Language.get;
 	window.WCF.Language.add = Language.add;
 	window.WCF.Language.addObject = Language.addObject;
