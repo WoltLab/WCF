@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Date/Time/Relative
  */
-define(['DOM/ChangeListener', 'Language'], function(DOMChangeListener, Language) {
+define(['DOM/ChangeListener', 'Language', 'WoltLab/WCF/Timer/Repeating'], function(DOMChangeListener, Language, Repeating) {
 	"use strict";
 	
 	var _elements = null;
@@ -25,7 +25,7 @@ define(['DOM/ChangeListener', 'Language'], function(DOMChangeListener, Language)
 			
 			this._refresh();
 			
-			new WCF.PeriodicalExecuter(this._refresh.bind(this), 60000);
+			new Repeating(this._refresh.bind(this), 60000);
 			
 			DOMChangeListener.add('WoltLab/WCF/Date/Time/Relative', this._refresh.bind(this));
 		},
