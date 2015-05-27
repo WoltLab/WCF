@@ -1505,6 +1505,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym für]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Verwendungen]]></item>
 		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[Ein Tag mit diesem Namen existiert bereits.]]></item>
+		<item name="wcf.acp.tag.setAsSynonyms"><![CDATA[Als Synonyme verwenden]]></item>
+		<item name="wcf.acp.tag.setAsSynonyms.description"><![CDATA[Wählen Sie einen Tag aus. Die übrigen Tags werden als Synonyme des ausgewählten Tags verwendet.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -1880,18 +1882,25 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
+		
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[{if $count == 1}Einen Tag{else}{#$count} Tag{/if} löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Als Synonyme verwenden ({#$count})]]></item>
+		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Sperren ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Aktivieren]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Zusammenfügen]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Neues Kennwort senden ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Wollen Sie wirklich {if $count == 1}einem{else}{#$count}{/if} Benutzer ein neues Kennwort zusenden?]]></item>
+		
+		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}Ein Tag{else}{#$count} Tags{/if} markiert]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Zusammenfügen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Aktivieren]]></item>
 	</category>
 	
 	<category name="wcf.comment">

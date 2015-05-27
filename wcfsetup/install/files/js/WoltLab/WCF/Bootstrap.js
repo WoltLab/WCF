@@ -10,20 +10,24 @@
  */
 define(
 	[
-		'favico',            'enquire',                'WoltLab/WCF/Date/Time/Relative',
+		'favico',            'enquire',                'perfect-scrollbar',      'WoltLab/WCF/Date/Time/Relative',
 		'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile',  'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu',
 		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment'
 	], 
 	function(
-		 favico,              enquire,                  DateTimeRelative,
+		 favico,              enquire,                  perfectScrollbar,         DateTimeRelative,
 		 UISimpleDropdown,    UIMobile,                 UITabMenu,                UIFlexibleMenu,
 		 UIDialog,            UITooltip,                Language,                 Environment
 	)
 {
 	"use strict";
 	
+	// perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 	window.Favico = favico;
 	window.enquire = enquire;
+	// non strict equals by intent
+	if (window.WCF == null) window.WCF = { };
+	if (window.WCF.Language == null) window.WCF.Language = { };
 	window.WCF.Language.get = Language.get;
 	window.WCF.Language.add = Language.add;
 	window.WCF.Language.addObject = Language.addObject;

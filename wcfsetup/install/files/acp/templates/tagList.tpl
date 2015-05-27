@@ -3,7 +3,15 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\tag\\TagAction', '.jsTagRow');
+		WCF.Language.add('wcf.acp.tag.setAsSynonyms', '{lang}wcf.acp.tag.setAsSynonyms{/lang}');
+		
+		WCF.Clipboard.init('wcf\\acp\\page\\TagListPage', {@$hasMarkedItems}, {
+			'com.woltlab.wcf.tag': {
+				'delete': new WCF.Action.Delete('wcf\\data\\tag\\TagAction', '.jsTagRow')
+			}
+		});
+		
+		new WCF.ACP.Tag.SetAsSynonymsHandler();
 	});
 	//]]>
 </script>
@@ -43,7 +51,7 @@
 	<nav>
 		<ul>
 			<li><a href="{link controller='TagAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.tag.add{/lang}</span></a></li>
-				
+			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
@@ -55,9 +63,10 @@
 			<h2>{lang}wcf.acp.tag.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
 		</header>
 		
-		<table class="table">
+		<table data-type="com.woltlab.wcf.tag" class="table jsClipboardContainer">
 			<thead>
 				<tr>
+					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll" /></label></th>
 					<th class="columnID columnTagID{if $sortField == 'tagID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=tagID&sortOrder={if $sortField == 'tagID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.name{/lang}</a></th>
 					<th class="columnDigits columnUsageCount{if $sortField == 'usageCount'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=usageCount&sortOrder={if $sortField == 'usageCount' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.usageCount{/lang}</a></th>
@@ -70,7 +79,8 @@
 			
 			<tbody>
 				{foreach from=$objects item=tag}
-					<tr class="jsTagRow">
+					<tr class="jsTagRow jsClipboardObject">
+						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$tag->tagID}" /></td>
 						<td class="columnIcon">
 							<a href="{link controller='TagEdit' object=$tag}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
 							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$tag->tagID}" data-confirm-message="{lang}wcf.acp.tag.delete.sure{/lang}"></span>
@@ -97,10 +107,12 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='TagAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.tag.add{/lang}</span></a></li>
-					
+				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>
+		
+		<nav class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.tag' ]"></nav>
 	</div>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>

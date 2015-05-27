@@ -24,17 +24,6 @@ requirejs.config({
 </script>
 
 <script data-relocate="true">
-	{if ENABLE_DEBUG_MODE}
-		{* force synchronous requests to prevent jQuery and other files being loaded to early *}
-		var __require_createNode = require.createNode;
-		require.createNode = function() {
-			var node = __require_createNode.apply(require, arguments);
-			node.removeAttribute('async');
-			
-			return node;
-		};
-	{/if}
-	
 	require(['Language', 'WoltLab/WCF/BootstrapFrontend'], function(Language, BootstrapFrontend) {
 		Language.addObject({
 			'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
@@ -140,12 +129,10 @@ requirejs.config({
 {/if}
 {if JQUERY_SOURCE != 'local'}
 <script data-relocate="true">
-	//<![CDATA[
 	if (!window.jQuery) {
 		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
 		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}" data-requiremodule="jquery-ui" data-requirecontext="_"><\/script>');
 	}
-	//]]>
 </script>
 {/if}
 
@@ -155,9 +142,6 @@ requirejs.config({
 <script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true">
-	require.createNode = __require_createNode;
-</script>
 {else}
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}

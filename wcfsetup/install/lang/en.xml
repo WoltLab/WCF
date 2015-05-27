@@ -1504,6 +1504,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Usages]]></item>
 		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[This tag name is already in use.]]></item>
+		<item name="wcf.acp.tag.setAsSynonyms"><![CDATA[Set as Synonyms]]></item>
+		<item name="wcf.acp.tag.setAsSynonyms.description"><![CDATA[Select one of the tags. The other tags will be set as synonyms of the selected tag.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -1879,18 +1881,25 @@ Errors are:
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
+		
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Delete ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} tag{if $count != 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Set as Synonyms ({#$count})]]></item>
+		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Ban ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} user{if $count != 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email addresses]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Merge]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Revert Changes To Contents]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
+		
+		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{#$count} Tag{if $count != 1}s{/if} marked]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{#$count} User{if $count != 1}s{/if} marked]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Merge]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Revert Changes To Contents]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
 	</category>
 	
 	<category name="wcf.comment">

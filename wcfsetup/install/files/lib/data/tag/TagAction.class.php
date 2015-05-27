@@ -2,6 +2,7 @@
 namespace wcf\data\tag;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -41,6 +42,12 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('delete', 'update');
+	
+	/**
+	 * tag for which other tags will be used as synonyms
+	 * @var	\wcf\data\tag\TagEditor
+	 */
+	public $tagEditor = null;
 	
 	/**
 	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
@@ -83,5 +90,69 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 		}
 		
 		return $list;
+	}
+	
+	/**
+	 * @see	\wcf\data\IDeleteAction::delete()
+	 */
+	public function delete() {
+		$returnValue = parent::delete();
+		
+		$this->unmarkItems();
+		
+		return $returnValue;
+	}
+	
+	/**
+	 * Validates the 'setAsSynonyms' action.
+	 */
+	public function validateSetAsSynonyms() {
+		WCF::getSession()->checkPermissions([ 'admin.content.tag.canManageTag' ]);
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (count($this->objects) < 2) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		$this->readInteger('tagID');
+		$this->tagEditor = new TagEditor(new Tag($this->parameters['tagID']));
+		if (!$this->tagEditor->tagID) {
+			throw new UserInputException('tagID');
+		}
+	}
+	
+	/**
+	 * Sets a number of tags as a synonyms of another tag.
+	 */
+	public function setAsSynonyms() {
+		// the "main" tag may not be a synonym itself
+		if ($this->tagEditor->synonymFor) {
+			$this->tagEditor->update([
+				'synonymFor' => null
+			]);
+		}
+		
+		foreach ($this->objects as $tagEditor) {
+			$this->tagEditor->addSynonym($tagEditor->getDecoratedObject());
+		}
+		
+		$this->unmarkItems();
+	}
+	
+	/**
+	 * Unmarks tags.
+	 * 
+	 * @param	array<integer>		$tagIDs
+	 */
+	protected function unmarkItems(array $tagIDs = array()) {
+		if (empty($tagIDs)) {
+			$tagIDs = $this->objectIDs;
+		}
+		
+		if (!empty($tagIDs)) {
+			ClipboardHandler::getInstance()->unmark($tagIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.tag'));
+		}
 	}
 }
