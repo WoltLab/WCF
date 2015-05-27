@@ -1,9 +1,22 @@
+/**
+ * Versatile AJAX request handling.
+ * 
+ * In case you want to issue JSONP requests, please use `AjaxJsonp` instead.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	WoltLab/WCF/Ajax/Request
+ */
 define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'WoltLab/WCF/Ajax/Status'], function(Core, Language, DOMChangeListener, DOMUtil, UIDialog, AjaxStatus) {
 	"use strict";
 	
 	var _didInit = false;
 	var _ignoreAllErrors = false;
 	
+	/**
+	 * @constructor
+	 */
 	function AjaxRequest(options) {
 		this._data = null;
 		this._options = {};
