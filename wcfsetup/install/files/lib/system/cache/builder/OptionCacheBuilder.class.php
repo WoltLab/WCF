@@ -28,6 +28,12 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 	protected $tableName = 'option';
 	
 	/**
+	 * application
+	 * @var	string
+	 */
+	protected $application = 'wcf'; 
+	
+	/**
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
@@ -41,7 +47,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 		// option categories
 		// get all option categories and sort categories by priority
 		$sql = "SELECT	categoryName, categoryID
-			FROM	wcf".WCF_N."_".$this->tableName."_category";
+			FROM	".$this->application.WCF_N."_".$this->tableName."_category";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		$optionCategories = array();
@@ -55,7 +61,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 			$conditions->add("categoryID IN (?)", array($optionCategories));
 			
 			$sql = "SELECT		option_category.*, package.packageDir
-				FROM		wcf".WCF_N."_".$this->tableName."_category option_category
+				FROM		".$this->application.WCF_N."_".$this->tableName."_category option_category
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = option_category.packageID)
 				".$conditions."
@@ -76,7 +82,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 		// get all options and sort options by priority
 		$optionIDs = array();
 		$sql = "SELECT		optionName, optionID
-			FROM		wcf".WCF_N."_".$this->tableName;
+			FROM		".$this->application.WCF_N."_".$this->tableName;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
@@ -89,7 +95,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 			$conditions->add("optionID IN (?)", array($optionIDs));
 			
 			$sql = "SELECT		*
-				FROM		wcf".WCF_N."_".$this->tableName."
+				FROM		".$this->application.WCF_N."_".$this->tableName."
 				".$conditions."
 				ORDER BY	showOrder ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
