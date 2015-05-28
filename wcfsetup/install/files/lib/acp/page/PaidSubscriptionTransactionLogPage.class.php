@@ -32,6 +32,18 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage {
 	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
 	
 	/**
+	 * log entry id
+	 * @var integer
+	 */
+	public $logID = 0;
+	
+	/**
+	 * log entry object
+	 * @var\wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog
+	 */
+	public $log = null;
+	
+	/**
 	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
