@@ -125,15 +125,11 @@ define([], function() {
 		 * @returns	{boolean}	true if target is an object literal
 		 */
 		isPlainObject: function(obj) {
-			if (obj === window || obj.nodeType) {
+			if (typeof obj !== 'object' || obj === null || obj.nodeType) {
 				return false;
 			}
 			
-			if (obj.constructor && !obj.constructor.prototype.hasOwnProperty('isPrototypeOf')) {
-				return false;
-			}
-			
-			return true;
+			return (Object.getPrototypeOf(obj) === Object.prototype);
 		},
 		
 		/**
