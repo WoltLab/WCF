@@ -89,6 +89,9 @@
 					<category name="general.cache.memcached">
 						<parent>general.cache</parent>
 					</category>
+					<category name="general.cache.redis">
+						<parent>general.cache</parent>
+					</category>
 				<category name="general.payment">
 					<parent>general</parent>
 					<showorder>6</showorder>
@@ -830,14 +833,20 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<optiontype>radioButton</optiontype>
 				<defaultvalue><![CDATA[disk]]></defaultvalue>
 				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
-memcached:wcf.acp.option.cache_source_type.memcached]]></selectoptions>
-				<enableoptions><![CDATA[disk:!cache_source_memcached_host
-memcached:cache_source_memcached_host]]></enableoptions>
+memcached:wcf.acp.option.cache_source_type.memcached
+redis:wcf.acp.option.cache_source_type.redis]]></selectoptions>
+				<enableoptions><![CDATA[disk:!cache_source_memcached_host,!cache_source_redis_host
+memcached:cache_source_memcached_host,!cache_source_redis_host
+redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 			</option>
 			
 			<option name="cache_source_memcached_host">
 				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>textarea</optiontype>
+			</option>
+			<option name="cache_source_redis_host">
+				<categoryname>general.cache.redis</categoryname>
+				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.cache -->
 			
