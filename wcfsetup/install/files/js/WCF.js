@@ -6574,38 +6574,10 @@ WCF.System.Notification = Class.extend({
 
 /**
  * Provides dialog-based confirmations.
+ *
+ * @deprecated	2.2 - please use `UI/Confirmation` instead
  */
 WCF.System.Confirmation = {
-	/**
-	 * notification callback
-	 * @var	object
-	 */
-	_callback: null,
-	
-	/**
-	 * confirmation dialog
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * callback parameters
-	 * @var	object
-	 */
-	_parameters: null,
-	
-	/**
-	 * dialog visibility
-	 * @var	boolean
-	 */
-	_visible: false,
-	
-	/**
-	 * confirmation button
-	 * @var	jQuery
-	 */
-	_confirmationButton: null,
-	
 	/**
 	 * Displays a confirmation dialog.
 	 * 
@@ -6615,91 +6587,14 @@ WCF.System.Confirmation = {
 	 * @param	jQuery		template
 	 */
 	show: function(message, callback, parameters, template) {
-		if (this._visible) {
-			console.debug('[WCF.System.Confirmation] Confirmation dialog is already open, refusing action.');
-			return;
-		}
-		
-		if (!$.isFunction(callback)) {
-			console.debug('[WCF.System.Confirmation] Given callback is invalid, aborting.');
-			return;
-		}
-		
-		this._callback = callback;
-		this._parameters = parameters;
-		
-		var $render = true;
-		if (this._dialog === null) {
-			this._createDialog();
-			$render = false;
-		}
-		
-		this._dialog.find('#wcfSystemConfirmationContent').empty().hide();
-		if (template && template.length) {
-			template.appendTo(this._dialog.find('#wcfSystemConfirmationContent').show());
-		}
-		
-		this._dialog.find('p').text(message);
-		this._dialog.wcfDialog({
-			onClose: $.proxy(this._close, this),
-			onShow: $.proxy(this._show, this),
-			title: WCF.Language.get('wcf.global.confirmation.title')
+		require(['UI/Confirmation'], function(UIConfirmation) {
+			UIConfirmation.show({
+				legacyCallback: callback,
+				message: message,
+				parameters: parameters,
+				template: (typeof template === 'object' ? template.html() : '')
+			});
 		});
-		if ($render) {
-			this._dialog.wcfDialog('render');
-		}
-		
-		this._confirmationButton.focus();
-		this._visible = true;
-	},
-	
-	/**
-	 * Creates the confirmation dialog on first use.
-	 */
-	_createDialog: function() {
-		this._dialog = $('<div id="wcfSystemConfirmation" class="systemConfirmation"><p /><div id="wcfSystemConfirmationContent" /></div>').hide().appendTo(document.body);
-		var $formButtons = $('<div class="formSubmit" />').appendTo(this._dialog);
-		
-		this._confirmationButton = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
-		$('<button>' + WCF.Language.get('wcf.global.confirmation.cancel') + '</button>').data('action', 'cancel').click($.proxy(this._click, this)).appendTo($formButtons);
-	},
-	
-	/**
-	 * Handles button clicks.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		this._notify($(event.currentTarget).data('action'));
-	},
-	
-	/**
-	 * Handles dialog being closed.
-	 */
-	_close: function() {
-		if (this._visible) {
-			this._notify('cancel');
-		}
-	},
-	
-	/**
-	 * Notifies callback upon user's decision.
-	 * 
-	 * @param	string		action
-	 */
-	_notify: function(action) {
-		this._visible = false;
-		this._dialog.wcfDialog('close');
-		this._confirmationButton.blur();
-		
-		this._callback(action, this._parameters);
-	},
-	
-	/**
-	 * Tries to set focus on confirm button.
-	 */
-	_show: function() {
-		this._dialog.find('button.buttonPrimary').blur().focus();
 	}
 };
 
