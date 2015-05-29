@@ -19,3 +19,4 @@
 * `wcf\system\event\listener\PreParserAtUserListener` removed.
 * `wcf\action\AJAXProxyAction::getData()` removed.
 * Version system removed.
+* `wcf\system\cache\source\RedisCacheSource` added.

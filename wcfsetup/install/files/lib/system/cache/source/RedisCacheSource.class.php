@@ -184,4 +184,15 @@ class RedisCacheSource implements ICacheSource {
 		
 		return $flush.':'.$cacheName;
 	}
+	
+	/**
+	 * Returns the Redis server version
+	 * 
+	 * @return	string
+	 */
+	public function getRedisVersion() {
+		$info = $this->redis->info('server');
+		
+		return $info['redis_version'];
+	}
 }
