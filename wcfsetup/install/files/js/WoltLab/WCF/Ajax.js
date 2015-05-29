@@ -56,9 +56,6 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 			}
 			
 			var options = callbackObject._ajaxSetup();
-			if (typeof data === 'object') {
-				options.data = Core.extend(data, options.data);
-			}
 			
 			options.pinData = true;
 			options.callbackObject = callbackObject;
@@ -69,6 +66,10 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 			
 			if (typeof success === 'function') request.setOption('success', success);
 			if (typeof failure === 'function') request.setOption('failure', failure);
+			
+			if (typeof data === 'object') {
+				request.setData(data);
+			}
 			
 			request.sendRequest();
 			

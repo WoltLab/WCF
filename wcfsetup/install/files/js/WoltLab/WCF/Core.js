@@ -90,6 +90,7 @@ define([], function() {
 		 */
 		extend: function(out) {
 			out = out || {};
+			var newObj = this.clone(out);
 			
 			for (var i = 1, length = arguments.length; i < length; i++) {
 				var obj = arguments[i];
@@ -99,16 +100,40 @@ define([], function() {
 				for (var key in obj) {
 					if (obj.hasOwnProperty(key)) {
 						if (!Array.isArray(obj[key]) && typeof obj[key] === 'object') {
-							this.extend(out[key], obj[key]);
+							if (this.isPlainObject(obj[key])) {
+								// object literals have the prototype of Object which in return has no parent prototype
+								newObj[key] = this.extend(out[key], obj[key]);
+							}
+							else {
+								newObj[key] = obj[key];
+							}
 						}
 						else {
-							out[key] = obj[key];
+							newObj[key] = obj[key];
 						}
 					}
 				}
 			}
 			
-			return out;
+			return newObj;
+		},
+		
+		/**
+		 * Returns true if `obj` is an object literal.
+		 * 
+		 * @param	{*}	obj	target object
+		 * @returns	{boolean}	true if target is an object literal
+		 */
+		isPlainObject: function(obj) {
+			if (obj === window || obj.nodeType) {
+				return false;
+			}
+			
+			if (obj.constructor && !obj.constructor.prototype.hasOwnProperty('isPrototypeOf')) {
+				return false;
+			}
+			
+			return true;
 		},
 		
 		/**
@@ -138,29 +163,23 @@ define([], function() {
 		 * Recursively serializes an object into an encoded URI parameter string.
 		 *  
 		 * @param	{object}	obj	target object
+		 * @param	{string=}	prefix	parameter prefix
 		 * @return	encoded parameter string
 		 */
-		serialize: function(obj) {
+		serialize: function(obj, prefix) {
 			var parameters = [];
 			
 			for (var key in obj) {
 				if (obj.hasOwnProperty(key)) {
+					var parameterKey = (prefix) ? prefix + '[' + key + ']' : key;
 					var value = obj[key];
 					
-					if (Array.isArray(value)) {
-						for (var i = 0, length = value.length; i < length; i++) {
-							parameters.push(key + '[]=' + encodeURIComponent(value[i]));
-						}
-						
-						continue;
+					if (typeof value === 'object') {
+						parameters.push(this.serialize(value, parameterKey));
 					}
-					else if (this.getType(value) === 'Object') {
-						parameters.push(this.serialize(value));
-						
-						continue;
+					else {
+						parameters.push(encodeURIComponent(parameterKey) + '=' + encodeURIComponent(value));
 					}
-					
-					parameters.push(key + '=' + encodeURIComponent(value));
 				}
 			}
 			

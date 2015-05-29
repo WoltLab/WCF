@@ -53,6 +53,10 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 				callbackObject: null
 			}, options);
 			
+			if (typeof options.callbackObject === 'object') {
+				this._options.callbackObject = options.callbackObject;
+			}
+			
 			this._options.url = Core.convertLegacyUrl(this._options.url);
 			
 			if (this._options.pinData) {

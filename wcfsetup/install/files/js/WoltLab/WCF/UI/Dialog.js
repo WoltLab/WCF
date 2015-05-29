@@ -365,7 +365,7 @@ define(
 				setTimeout(function() {
 					if (data.dialog.getAttribute('aria-hidden') === 'true') {
 						_container.removeChild(data.dialog);
-						_dialogs.delete(id);
+						_dialogs['delete'](id);
 					}
 				}, 5000);
 			}
