@@ -63,6 +63,39 @@ define(['DOM/Util'], function(DOMUtil) {
 	function DOMTraverse() {};
 	DOMTraverse.prototype = {
 		/**
+		 * Examines child elements and returns the first child matching the given selector.
+		 * 
+		 * @param	{Element}		el		element
+		 * @param	{string}		selector	CSS selector to match child elements against
+		 * @return	{(Element|null)}	null if there is no child node matching the selector
+		 */
+		childBySel: function(el, selector) {
+			return _children(el, SELECTOR, selector)[0] || null;
+		},
+		
+		/**
+		 * Examines child elements and returns the first child that has the given CSS class set.
+		 * 
+		 * @param	{Element}		el		element
+		 * @param	{string}		className	CSS class name
+		 * @return	{(Element|null)}	null if there is no child node with given CSS class
+		 */
+		childByClass: function(el, className) {
+			return _children(el, CLASS_NAME, className)[0] || null;
+		},
+		
+		/**
+		 * Examines child elements and returns the first child which equals the given tag.
+		 * 
+		 * @param	{Element}		el		element
+		 * @param	{string}		tagName		element tag name
+		 * @return	{(Element|null)}	null if there is no child node which equals given tag
+		 */
+		childByTag: function(el, tagName) {
+			return _children(el, TAG_NAME, tagName)[0] || null;
+		},
+		
+		/**
 		 * Examines child elements and returns all children matching the given selector.
 		 * 
 		 * @param	{Element}		el		element
