@@ -17,17 +17,6 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 	function Ajax() {};
 	Ajax.prototype = {
 		/**
-		 * Shorthand function to perform a request against the WCF-API.
-		 * 
-		 * @param	{object}		callbackObject	callback object
-		 * @param	{object<string, *>=}	data		request data
-		 * @return	{AjaxRequest}
-		 */
-		api: function(callbackObject, data) {
-			return this.apiProxy(callbackObject, data);
-		},
-		
-		/**
 		 * Shorthand function to perform a request against the WCF-API with overrides
 		 * for success and failure callbacks.
 		 * 
@@ -37,43 +26,45 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 		 * @param	{function=}		failure		failure callback
 		 * @return	{AjaxRequest}
 		 */
-		apiProxy: function(callbackObject, data, success, failure) {
+		api: function(callbackObject, data, success, failure) {
+			if (typeof data !== 'object') data = {};
+			
 			var request = _requests.get(callbackObject);
-			if (request !== undefined) {
-				data = data || {};
+			if (request === undefined) {
+				if (typeof callbackObject._ajaxSetup !== 'function') {
+					throw new TypeError("Callback object must implement at least _ajaxSetup().");
+				}
 				
-				if (typeof success === 'function') request.setOption('success', success);
-				if (typeof failure === 'function') request.setOption('failure', failure);
+				var options = callbackObject._ajaxSetup();
 				
-				request.setData(data || {});
-				request.sendRequest();
+				options.pinData = true;
+				options.callbackObject = callbackObject;
 				
-				return request;
+				if (!options.url) options.url = 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN;
+				
+				request = new AjaxRequest(options);
+				
+				_requests.set(callbackObject, request);
 			}
 			
-			if (typeof callbackObject._ajaxSetup !== 'function') {
-				throw new TypeError("Callback object must implement at least _ajaxSetup().");
+			var oldSuccess = null;
+			var oldFailure = null;
+			
+			if (typeof success === 'function') {
+				oldSuccess = request.getOption('success');
+				request.setOption('success', success);
+			}
+			if (typeof failure === 'function') {
+				oldFailure = request.getOption('failure');
+				request.setOption('failure', failure);
 			}
 			
-			var options = callbackObject._ajaxSetup();
-			
-			options.pinData = true;
-			options.callbackObject = callbackObject;
-			
-			if (!options.url) options.url = 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN;
-			
-			request = new AjaxRequest(options);
-			
-			if (typeof success === 'function') request.setOption('success', success);
-			if (typeof failure === 'function') request.setOption('failure', failure);
-			
-			if (typeof data === 'object') {
-				request.setData(data);
-			}
-			
+			request.setData(data);
 			request.sendRequest();
 			
-			_requests.set(callbackObject, request);
+			// restore callbacks
+			if (oldSuccess !== null) request.setOption('success', oldSuccess);
+			if (oldFailure !== null) request.setOption('failure', oldFailure);
 			
 			return request;
 		},
