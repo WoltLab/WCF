@@ -12,10 +12,9 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 	var _languageItems = new Dictionary();
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Language
 	 */
-	function Language() { };
-	Language.prototype = {
+	var Language = {
 		/**
 		 * Adds all the language items in the given object to the store.
 		 * 
@@ -68,5 +67,5 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 		}
 	};
 	
-	return new Language();
+	return Language;
 });

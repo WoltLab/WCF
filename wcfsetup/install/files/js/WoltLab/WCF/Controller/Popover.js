@@ -36,10 +36,9 @@ define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', '
 	/** @const */ var DELAY_HIDE = 500;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Controller/Popover
 	 */
-	function ControllerPopover() {};
-	ControllerPopover.prototype = {
+	var ControllerPopover = {
 		/**
 		 * Builds popover DOM elements and binds event listeners.
 		 */
@@ -418,9 +417,9 @@ define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', '
 				throw new TypeError("Expected a valid callback for parameter 'success'.");
 			}
 			
-			Ajax.apiProxy(this, data, success, failure);
+			Ajax.api(this, data, success, failure);
 		}
 	};
 	
-	return new ControllerPopover();
+	return ControllerPopover;
 });

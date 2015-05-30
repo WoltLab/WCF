@@ -33,10 +33,9 @@ define(
 	window.WCF.Language.addObject = Language.addObject;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Bootstrap
 	 */
-	function Bootstrap() {}
-	Bootstrap.prototype = {
+	var Bootstrap = {
 		/**
 		 * Initializes the core UI modifications and unblocks jQuery's ready event.
 		 */
@@ -76,5 +75,5 @@ define(
 		}
 	};
 	
-	return new Bootstrap();
+	return Bootstrap;
 });

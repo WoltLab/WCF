@@ -21,10 +21,9 @@ define([], function() {
 	var _idCounter = 0;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/DOM/Util
 	 */
-	function DOMUtil() {};
-	DOMUtil.prototype = {
+	var DOMUtil = {
 		/**
 		 * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
 		 * 
@@ -202,11 +201,5 @@ define([], function() {
 		}
 	};
 	
-	var domUtilObj = new DOMUtil();
-	
-	// expose methods on the window object for backwards-compatibility
-	window.domUtilGetUniqueId = domUtilObj.getUniqueId.bind(domUtilObj);
-	window.domUtilIdentify = domUtilObj.identify.bind(domUtilObj);
-	
-	return domUtilObj;
+	return DOMUtil;
 });

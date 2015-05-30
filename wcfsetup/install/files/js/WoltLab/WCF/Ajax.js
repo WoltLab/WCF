@@ -12,10 +12,9 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 	var _requests = new ObjectMap();
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Ajax
 	 */
-	function Ajax() {};
-	Ajax.prototype = {
+	var Ajax = {
 		/**
 		 * Shorthand function to perform a request against the WCF-API with overrides
 		 * for success and failure callbacks.
@@ -87,5 +86,5 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 		}
 	};
 	
-	return new Ajax();
+	return Ajax;
 });

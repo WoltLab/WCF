@@ -12,10 +12,9 @@ define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], fun
 	var _tabMenus = new Dictionary();
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/UI/TabMenu
 	 */
-	function UITabMenu() {};
-	UITabMenu.prototype = {
+	var UITabMenu = {
 		/**
 		 * Sets up tab menus and binds listeners.
 		 */
@@ -58,5 +57,5 @@ define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], fun
 		}
 	};
 	
-	return new UITabMenu();
+	return UITabMenu;
 });

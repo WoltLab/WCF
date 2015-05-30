@@ -15,10 +15,9 @@ define([], function() {
 	var _touch = false;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Enviroment
 	 */
-	function Environment() {};
-	Environment.prototype = {
+	var Environment = {
 		/**
 		 * Determines environment variables.
 		 */
@@ -123,5 +122,5 @@ define([], function() {
 		}
 	};
 	
-	return new Environment();
+	return Environment;
 });

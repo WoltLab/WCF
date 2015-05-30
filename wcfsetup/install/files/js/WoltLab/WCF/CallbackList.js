@@ -40,7 +40,7 @@ define(['Dictionary'], function(Dictionary) {
 		 * @param	{string}	identifier	arbitrary string to group and identify callbacks
 		 */
 		remove: function(identifier) {
-			this._dictionary.delete(identifier);
+			this._dictionary['delete'](identifier);
 		},
 		
 		/**

@@ -10,10 +10,9 @@ define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language
 	"use strict";
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/UI/Alignment
 	 */
-	function UIAlignment() {};
-	UIAlignment.prototype = {
+	var UIAlignment = {
 		/**
 		 * Sets the alignment for target element relatively to the reference element.
 		 * 
@@ -243,5 +242,5 @@ define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language
 		}
 	};
 	
-	return new UIAlignment();
+	return UIAlignment;
 });

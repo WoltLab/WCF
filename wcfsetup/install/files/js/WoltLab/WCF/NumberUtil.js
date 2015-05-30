@@ -10,10 +10,9 @@ define([], function() {
 	"use strict";
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/NumberUtil
 	 */
-	function NumberUtil() { };
-	NumberUtil.prototype = {
+	var NumberUtil = {
 		/**
 		 * Decimal adjustment of a number.
 		 *
@@ -45,5 +44,5 @@ define([], function() {
 		}
 	};
 	
-	return new NumberUtil();
+	return NumberUtil;
 });

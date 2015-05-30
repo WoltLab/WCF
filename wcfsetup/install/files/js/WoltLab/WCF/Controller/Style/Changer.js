@@ -10,10 +10,9 @@ define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 	"use strict";
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Controller/Style/Changer
 	 */
-	function ControllerStyleChanger() {};
-	ControllerStyleChanger.prototype = {
+	var ControllerStyleChanger = {
 		/**
 		 * Adds the style changer to the bottom navigation.
 		 */
@@ -89,5 +88,5 @@ define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 		}
 	};
 	
-	return new ControllerStyleChanger();
+	return ControllerStyleChanger;
 });

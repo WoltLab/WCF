@@ -10,10 +10,9 @@ define(['Ajax'], function(Ajax) {
 	"use strict";
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Controller/Notice/Dismiss
 	 */
-	function ControllerNoticeDismiss() {};
-	ControllerNoticeDismiss.prototype = {
+	var ControllerNoticeDismiss = {
 		/**
 		 * Initializes dismiss buttons.
 		 */
@@ -53,5 +52,5 @@ define(['Ajax'], function(Ajax) {
 		}
 	};
 	
-	return new ControllerNoticeDismiss();
+	return ControllerNoticeDismiss;
 });

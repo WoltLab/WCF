@@ -10,10 +10,9 @@ define(['Ajax', 'WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'Wolt
 	"use strict";
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/BootstrapFrontend
 	 */
-	function BootstrapFrontend() {}
-	BootstrapFrontend.prototype = {
+	var BootstrapFrontend = {
 		/**
 		 * Bootstraps general modules and frontend exclusive ones.
 		 * 
@@ -54,5 +53,5 @@ define(['Ajax', 'WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'Wolt
 		}
 	};
 	
-	return new BootstrapFrontend();
+	return BootstrapFrontend;
 });

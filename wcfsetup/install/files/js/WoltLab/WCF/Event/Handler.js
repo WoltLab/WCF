@@ -12,10 +12,9 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 	var _listeners = new Dictionary();
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Event/Handler
 	 */
-	function EventHandler() {};
-	EventHandler.prototype = {
+	var EventHandler = {
 		/**
 		 * Adds an event listener.
 		 * 
@@ -86,7 +85,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 				return;
 			}
 			
-			callbacks.delete(uuid);
+			callbacks['delete'](uuid);
 		},
 		
 		/**
@@ -105,13 +104,13 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 			}
 			
 			if (typeof action === 'undefined') {
-				_listeners.delete(identifier);
+				_listeners['delete'](identifier);
 			}
 			else {
-				actions.delete(action);
+				actions['delete'](action);
 			}
 		}
 	};
 	
-	return new EventHandler();
+	return EventHandler;
 });

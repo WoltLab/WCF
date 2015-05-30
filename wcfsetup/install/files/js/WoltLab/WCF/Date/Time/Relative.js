@@ -9,20 +9,17 @@
 define(['DOM/ChangeListener', 'Language', 'WoltLab/WCF/Timer/Repeating'], function(DOMChangeListener, Language, Repeating) {
 	"use strict";
 	
-	var _elements = null;
+	var _elements = document.getElementsByTagName('time');
 	var _offset = null;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Date/Time/Relative
 	 */
-	function DateTimeRelative() {};
-	DateTimeRelative.prototype = {
+	var DateTimeRelative = {
 		/**
 		 * Transforms <time> elements on init and binds event listeners.
 		 */
 		setup: function() {
-			_elements = document.getElementsByTagName('time');
-			
 			this._refresh();
 			
 			new Repeating(this._refresh.bind(this), 60000);
@@ -81,5 +78,5 @@ define(['DOM/ChangeListener', 'Language', 'WoltLab/WCF/Timer/Repeating'], functi
 		}
 	};
 	
-	return new DateTimeRelative();
+	return DateTimeRelative;
 });

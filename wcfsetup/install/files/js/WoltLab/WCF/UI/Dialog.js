@@ -19,10 +19,9 @@ define(
 	var _keyupListener = null;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/UI/Dialog
 	 */
-	function UIDialog() {};
-	UIDialog.prototype = {
+	var UIDialog = {
 		/**
 		 * Sets up global container and internal variables.
 		 */
@@ -406,5 +405,5 @@ define(
 		}
 	};
 	
-	return new UIDialog();
+	return UIDialog;
 });

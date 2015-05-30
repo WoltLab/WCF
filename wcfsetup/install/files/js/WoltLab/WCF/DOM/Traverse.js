@@ -58,10 +58,9 @@ define(['DOM/Util'], function(DOMUtil) {
 	};
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/DOM/Traverse
 	 */
-	function DOMTraverse() {};
-	DOMTraverse.prototype = {
+	var DOMTraverse = {
 		/**
 		 * Examines child elements and returns the first child matching the given selector.
 		 * 
@@ -248,5 +247,5 @@ define(['DOM/Util'], function(DOMUtil) {
 		}
 	};
 	
-	return new DOMTraverse();
+	return DOMTraverse;
 });

@@ -10,10 +10,9 @@ define(['Core'], function(Core) {
 	"use strict";
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Ajax/Jsonp
 	 */
-	function AjaxJsonp() {};
-	AjaxJsonp.prototype = {
+	var AjaxJsonp = {
 		/**
 		 * Issues a JSONP request.
 		 * 
@@ -57,12 +56,12 @@ define(['Core'], function(Core) {
 			url += options.parameterName + '=' + callbackName;
 			
 			var script = document.createElement('script');
-			script.setAttribute('async', true);
+			script.async = true;
 			script.setAttribute('src', url);
 			
 			document.head.appendChild(script);
 		}
 	};
 	
-	return new AjaxJsonp();
+	return AjaxJsonp;
 });

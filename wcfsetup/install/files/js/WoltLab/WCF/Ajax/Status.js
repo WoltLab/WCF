@@ -14,10 +14,9 @@ define(['Language'], function(Language) {
 	var _timeoutShow = null;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Ajax/Status
 	 */
-	function AjaxStatus() {}
-	AjaxStatus.prototype = {
+	var AjaxStatus = {
 		/**
 		 * Initializes the status overlay on first usage.
 		 */
@@ -73,5 +72,5 @@ define(['Language'], function(Language) {
 		}
 	};
 	
-	return new AjaxStatus();
+	return AjaxStatus;
 });

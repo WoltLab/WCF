@@ -18,10 +18,9 @@ define(
 	var _sidebar = null;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/UI/Mobile
 	 */
-	function UIMobile() {};
-	UIMobile.prototype = {
+	var UIMobile = {
 		/**
 		 * Initializes the mobile UI using enquire.js.
 		 */
@@ -175,5 +174,5 @@ define(
 		}
 	};
 	
-	return new UIMobile();
+	return UIMobile;
 });

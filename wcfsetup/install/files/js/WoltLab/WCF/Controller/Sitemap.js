@@ -13,10 +13,9 @@ define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu
 	var _dialog = null;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Controller/Sitemap
 	 */
-	function ControllerSitemap() {};
-	ControllerSitemap.prototype = {
+	var ControllerSitemap = {
 		/**
 		 * Binds click handler.
 		 */
@@ -93,5 +92,5 @@ define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu
 		} 
 	};
 	
-	return new ControllerSitemap();
+	return ControllerSitemap;
 });

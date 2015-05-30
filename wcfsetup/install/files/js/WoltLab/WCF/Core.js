@@ -41,10 +41,9 @@ define([], function() {
 	};
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/Core
 	 */
-	function Core() {};
-	Core.prototype = {
+	var Core = {
 		/**
 		 * Deep clones an object.
 		 * 
@@ -195,5 +194,5 @@ define([], function() {
 		}
 	};
 	
-	return new Core();
+	return Core;
 });

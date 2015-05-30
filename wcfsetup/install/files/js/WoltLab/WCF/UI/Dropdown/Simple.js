@@ -19,10 +19,9 @@ define(
 	var _menuContainer = null;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/UI/Dropdown/Simple
 	 */
-	function SimpleDropdown() { };
-	SimpleDropdown.prototype = {
+	var SimpleDropdown = {
 		/**
 		 * Performs initial setup such as setting up dropdowns and binding listeners.
 		 */
@@ -230,8 +229,8 @@ define(
 			var menu = _menus.get(containerId);
 			_menus.parentNode.removeChild(menu);
 			
-			_menus.delete(containerId);
-			_dropdowns.delete(containerId);
+			_menus['delete'](containerId);
+			_dropdowns['delete'](containerId);
 			
 			return true;
 		},
@@ -350,5 +349,5 @@ define(
 		}
 	};
 	
-	return new SimpleDropdown();
+	return SimpleDropdown;
 });

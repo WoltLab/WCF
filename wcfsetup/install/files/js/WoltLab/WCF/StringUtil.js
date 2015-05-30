@@ -10,10 +10,9 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 	"use strict";
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/StringUtil
 	 */
-	function StringUtil() { };
-	StringUtil.prototype = {
+	var StringUtil = {
 		/**
 		 * Adds thousands separators to a given number.
 		 * 
@@ -102,5 +101,5 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		}
 	};
 	
-	return new StringUtil();
+	return StringUtil;
 });

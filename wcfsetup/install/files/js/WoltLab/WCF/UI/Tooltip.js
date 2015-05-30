@@ -15,10 +15,9 @@ define(['Environment', 'DOM/ChangeListener', 'UI/Alignment'], function(Environme
 	var _tooltip = null;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/UI/Tooltip
 	 */
-	function UITooltip() {};
-	UITooltip.prototype = {
+	var UITooltip = {
 		/**
 		 * Initializes the tooltip element and binds event listener.
 		 */
@@ -119,5 +118,5 @@ define(['Environment', 'DOM/ChangeListener', 'UI/Alignment'], function(Environme
 		}
 	};
 	
-	return new UITooltip();
+	return UITooltip;
 });

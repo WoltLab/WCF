@@ -14,10 +14,9 @@ define(['CallbackList'], function(CallbackList) {
 	var _hot = false;
 	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/DOM/Change/Listener
 	 */
-	function Listener() { };
-	Listener.prototype = {
+	var Listener = {
 		/**
 		 * @see	WoltLab/WCF/CallbackList#add
 		 */
@@ -49,5 +48,5 @@ define(['CallbackList'], function(CallbackList) {
 		}
 	};
 	
-	return new Listener();
+	return Listener;
 });
