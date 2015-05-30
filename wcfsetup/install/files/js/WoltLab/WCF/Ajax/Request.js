@@ -154,16 +154,25 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 		/**
 		 * Sets a specific option.
 		 * 
-		 * Do not call this method, it exists for compatibility with WCF.Action.Proxy
-		 * and will be removed at some point without further notice.
-		 * 
-		 * @deprecated	2.2
-		 * 
 		 * @param	{string}	key	option name
 		 * @param	{*}		value	option value
 		 */
 		setOption: function(key, value) {
 			this._options[key] = value;
+		},
+		
+		/**
+		 * Returns an option by key or undefined.
+		 * 
+		 * @param	{string}	key	option name
+		 * @return	{(*|null)}	option value or null
+		 */
+		getOption: function(key) {
+			if (this._options.hasOwnProperty(key)) {
+				return this._options[key];
+			}
+			
+			return null;
 		},
 		
 		/**
@@ -198,18 +207,18 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 					}
 					catch (e) {
 						// invalid JSON
-						this._failure(xhr);
+						this._failure(xhr, options);
 						
 						return;
 					}
 					
 					// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
-					if (data.returnValues !== undefined && data.returnValues.template !== undefined) {
+					if (data.returnValues && data.returnValues.template !== undefined) {
 						data.returnValues.template = data.returnValues.template.trim();
 					}
 				}
 				
-				options.success(data, xhr.responseText, xhr);
+				options.success(data, xhr.responseText, xhr, options.data);
 			}
 			
 			this._finalize(options);
@@ -239,7 +248,7 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 			
 			var showError = true;
 			if (typeof options.failure === 'function') {
-				showError = options.failure(data, xhr);
+				showError = options.failure(data, xhr.responseText, xhr, options.data);
 			}
 			
 			if (options.ignoreError !== true && showError !== false) {
