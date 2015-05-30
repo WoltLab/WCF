@@ -31,16 +31,6 @@ interface IClipboardAction {
 	public function execute(array $objects, ClipboardAction $action);
 	
 	/**
-	 * Filters the given objects by the given type data and returns the filtered
-	 * list.
-	 * 
-	 * @param	array		$objects
-	 * @param	array		$typeData
-	 * @return	array
-	 */
-	public function filterObjects(array $objects, array $typeData);
-	
-	/**
 	 * Returns action class name.
 	 * 
 	 * @return	string

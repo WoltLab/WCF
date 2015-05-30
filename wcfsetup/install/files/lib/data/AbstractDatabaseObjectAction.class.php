@@ -6,10 +6,10 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
-use wcf\util\ArrayUtil;
 
 /**
  * Default implementation for DatabaseObject-related actions.
