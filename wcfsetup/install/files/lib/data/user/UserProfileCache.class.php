@@ -37,7 +37,7 @@ class UserProfileCache extends SingletonFactory {
 	/**
 	 * Caches the given user ids.
 	 * 
-	 * @param	array<integer>		$userID
+	 * @param	array<integer>		$userIDs
 	 */
 	public function cacheUserIDs(array $userIDs) {
 		$this->userIDs = array_merge($this->userIDs, $userIDs);
