@@ -116,24 +116,17 @@ define(
 		 */
 		_initEditors: function() {
 			var getTypes = function(editor) {
-				var tmp = null;
-				
 				try {
 					var types = editor.getAttribute('data-types');
 					if (typeof types === 'string') {
-						tmp = JSON.parse('{ "types": ' + types.replace(/'/g, '"') + '}');
+						return JSON.parse('{ "types": ' + types.replace(/'/g, '"') + '}').types;
 					}
 				}
 				catch (e) {
 					throw new Error("Expected a valid 'data-type' attribute for element '" + DOMUtil.identify(editor) + "'.");
 				}
 				
-				return tmp.types;
-				if (types !== null) {
-					types = types.types;
-				}
-				
-				return types;
+				return [];
 			};
 			
 			var editors = document.getElementsByClassName('jsClipboardEditor');
