@@ -74,6 +74,15 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 		},
 		
 		/**
+		 * Returns content container element.
+		 * 
+		 * @return	{Element}	content container element
+		 */
+		getContentElement: function() {
+			return _content;
+		},
+		
+		/**
 		 * Creates the dialog DOM elements.
 		 */
 		_createDialog: function() {
