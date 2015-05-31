@@ -20,7 +20,7 @@ define([], function() {
 		 * @return	integer		UTC timestamp in seconds
 		 */
 		gmdate: function(data) {
-			if ((!date instanceof Date)) {
+			if (!(date instanceof Date)) {
 				date = new Date();
 			}
 			
