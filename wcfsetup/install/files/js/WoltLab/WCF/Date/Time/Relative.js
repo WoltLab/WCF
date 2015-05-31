@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Date/Time/Relative
  */
-define(['DOM/ChangeListener', 'Language', 'WoltLab/WCF/Timer/Repeating'], function(DOMChangeListener, Language, Repeating) {
+define(['DOM/ChangeListener', 'Language', 'WoltLab/WCF/Date/Util', 'WoltLab/WCF/Timer/Repeating'], function(DOMChangeListener, Language, DateUtil, Repeating) {
 	"use strict";
 	
 	var _elements = document.getElementsByTagName('time');
@@ -64,7 +64,7 @@ define(['DOM/ChangeListener', 'Language', 'WoltLab/WCF/Timer/Repeating'], functi
 					var days = Math.ceil((midnight / 1000 - elTimestamp) / 86400);
 					
 					// get day of week
-					var dateObj = WCF.Date.Util.getTimezoneDate((elTimestamp * 1000), elOffset * 1000);
+					var dateObj = DateUtil.getTimezoneDate((elTimestamp * 1000), elOffset * 1000);
 					var dow = dateObj.getDay();
 					var day = Language.get('__days')[dow];
 					

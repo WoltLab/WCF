@@ -201,5 +201,8 @@ define([], function() {
 		}
 	};
 	
+	// expose on window object for backward compatibility
+	window.bc_wcfDOMUtil = DOMUtil;
+	
 	return DOMUtil;
 });

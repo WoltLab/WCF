@@ -26,6 +26,7 @@ requirejs.config({
 			'List': 'WoltLab/WCF/List',
 			'ObjectMap': 'WoltLab/WCF/ObjectMap',
 			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
+			'UI/CloseOverlay': 'WoltLab/WCF/UI/CloseOverlay',
 			'UI/Confirmation': 'WoltLab/WCF/UI/Confirmation',
 			'UI/Dialog': 'WoltLab/WCF/UI/Dialog',
 			'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple',

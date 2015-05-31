@@ -7,8 +7,8 @@
  * @module	WoltLab/WCF/UI/Dialog
  */
 define(
-	[       'enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/ChangeListener', 'DOM/Util'],
-	function(enquire,   Core,   Dictionary,   Environment,   Language,    DOMChangeListener,    DOMUtil)
+	[       'enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Confirmation'],
+	function(enquire,   Core,   Dictionary,   Environment,   Language,   DOMChangeListener,    DOMUtil,    UIConfirmation)
 {
 	"use strict";
 	
@@ -88,11 +88,12 @@ define(
 				if (!options.closable) options.backdropCloseOnClick = false;
 				if (options.closeConfirmMessage) {
 					options.onBeforeClose = (function(id) {
-						WCF.System.Confirmation.show(options.closeConfirmMessage, (function(action) {
-							if (action === 'confirm') {
+						UIConfirmation.show({
+							confirm: (function() {
 								this.close(id);
-							}
-						}).bind(this));
+							}).bind(this),
+							message: options.closeConfirmMessage
+						})
 					}).bind(this);
 				}
 				

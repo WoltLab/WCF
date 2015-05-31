@@ -10,16 +10,15 @@
 define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], function(Core, Dictionary, DOMChangeListener, DOMTraverse, DOMUtil, SimpleDropdown) {
 	"use strict";
 	
+	var _containers = new Dictionary();
+	var _dropdowns = new Dictionary();
+	var _dropdownMenus = new Dictionary();
+	var _itemLists = new Dictionary();
+	
 	/**
-	 * @constructor
+	 * @exports	WoltLab/WCF/UI/FlexibleMenu
 	 */
-	function UIFlexibleMenu() {
-		this._containers = new Dictionary();
-		this._dropdowns = new Dictionary();
-		this._dropdownMenus = new Dictionary();
-		this._itemLists = new Dictionary();
-	};
-	UIFlexibleMenu.prototype = {
+	var UIFlexibleMenu = {
 		/**
 		 * Register default menus and set up event listeners.
 		 */
@@ -27,7 +26,6 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 			if (document.getElementById('mainMenu') !== null) this.register('mainMenu');
 			var navigationHeader = document.querySelector('.navigationHeader');
 			if (navigationHeader !== null) this.register(DOMUtil.identify(navigationHeader));
-			
 			
 			window.addEventListener('resize', this.rebuildAll.bind(this));
 			DOMChangeListener.add('WoltLab/WCF/UI/FlexibleMenu', this.registerTabMenus.bind(this));
@@ -44,17 +42,17 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 				throw "Expected a valid element id, '" + containerId + "' does not exist.";
 			}
 			
-			if (this._containers.has(containerId)) {
+			if (_containers.has(containerId)) {
 				return;
 			}
 			
-			var lists = DOMTraverse.childrenByTag(container, 'UL');
-			if (!lists.length) {
+			var list = DOMTraverse.childByTag(container, 'UL');
+			if (list === null) {
 				throw "Expected an <ul> element as child of container '" + containerId + "'.";
 			}
 			
-			this._containers.set(containerId, container);
-			this._itemLists.set(containerId, lists[0]);
+			_containers.set(containerId, container);
+			_itemLists.set(containerId, list);
 			
 			this.rebuild(containerId);
 		},
@@ -66,10 +64,10 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 			var tabMenus = document.querySelectorAll('.tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)');
 			for (var i = 0, length = tabMenus.length; i < length; i++) {
 				var tabMenu = tabMenus[i];
-				var navs = DOMTraverse.childrenByTag(tabMenu, 'NAV');
-				if (navs.length !== 0) {
+				var nav = DOMTraverse.childByTag(tabMenu, 'NAV');
+				if (nav !== null) {
 					tabMenu.classList.add('jsFlexibleMenuEnabled');
-					this.register(DOMUtil.identify(navs[0]));
+					this.register(DOMUtil.identify(nav));
 				}
 			}
 		},
@@ -78,7 +76,7 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 		 * Rebuilds all menus, e.g. on window resize.
 		 */
 		rebuildAll: function() {
-			this._containers.forEach((function(container, containerId) {
+			_containers.forEach((function(container, containerId) {
 				this.rebuild(containerId);
 			}).bind(this));
 		},
@@ -89,7 +87,7 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 		 * @param	{string}	containerId	element id
 		 */
 		rebuild: function(containerId) {
-			var container = this._containers.get(containerId);
+			var container = _containers.get(containerId);
 			if (container === undefined) {
 				throw "Expected a valid element id, '" + containerId + "' is unknown.";
 			}
@@ -100,9 +98,9 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 			availableWidth -= DOMUtil.styleAsInt(styles, 'margin-left');
 			availableWidth -= DOMUtil.styleAsInt(styles, 'margin-right');
 			
-			var list = this._itemLists.get(containerId);
+			var list = _itemLists.get(containerId);
 			var items = DOMTraverse.childrenByTag(list, 'LI');
-			var dropdown = this._dropdowns.get(containerId);
+			var dropdown = _dropdowns.get(containerId);
 			var dropdownWidth = 0;
 			if (dropdown !== undefined) {
 				// show all items for calculation
@@ -154,13 +152,13 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 					dropdownMenu.classList.add('dropdownMenu');
 					dropdown.appendChild(dropdownMenu);
 					
-					this._dropdowns.set(containerId, dropdown);
-					this._dropdownMenus.set(containerId, dropdownMenu);
+					_dropdowns.set(containerId, dropdown);
+					_dropdownMenus.set(containerId, dropdownMenu);
 					
 					SimpleDropdown.init(icon);
 				}
 				else {
-					dropdownMenu = this._dropdownMenus.get(containerId);
+					dropdownMenu = _dropdownMenus.get(containerId);
 				}
 				
 				if (dropdown.parentNode === null) {
@@ -198,5 +196,5 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 		}
 	};
 	
-	return new UIFlexibleMenu();
+	return UIFlexibleMenu;
 });

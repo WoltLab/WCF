@@ -410,7 +410,7 @@ $.fn.extend({
 	 * @return	string
 	 */
 	wcfIdentify: function() {
-		return window.domUtilIdentify(this[0]);
+		return window.bc_wcfDOMUtil.identify(this[0]);
 	},
 	
 	/**
@@ -652,7 +652,7 @@ $.extend(WCF, {
 	 * @return	string
 	 */
 	getRandomID: function() {
-		return window.domUtilGetUniqueId();
+		return window.bc_wcfDOMUtil.getUniqueId();
 	},
 	
 	/**
@@ -830,48 +830,15 @@ WCF.Browser = {
 
 /**
  * Dropdown API
+ * 
+ * @deprecated	2.2 - please use `UI/SimpleDropdown` instead
  */
 WCF.Dropdown = {
-	/**
-	 * list of callbacks
-	 * @var	object
-	 */
-	_callbacks: { },
-	
-	/**
-	 * initialization state
-	 * @var	boolean
-	 */
-	_didInit: false,
-	
-	/**
-	 * list of registered dropdowns
-	 * @var	object
-	 */
-	_dropdowns: { },
-	
-	
-	
-	/**
-	 * container for dropdown menus
-	 * @var	object
-	 */
-	_menuContainer: null,
-	
-	/**
-	 * list of registered dropdown menus
-	 * @var	object
-	 */
-	_menus: { },
-	
-	_api: null,
-	
 	/**
 	 * Initializes dropdowns.
 	 */
 	init: function(api) {
-		if (api) this._api = api;
-		else if (this._api !== null) this._api.initAll();
+		window.bc_wcfSimpleDropdown.initAll();
 	},
 	
 	/**
@@ -881,7 +848,7 @@ WCF.Dropdown = {
 	 * @param	boolean		isLazyInitialization
 	 */
 	initDropdown: function(button, isLazyInitialization) {
-		this._api.init(button[0], isLazyInitialization);
+		window.bc_wcfSimpleDropdown.init(button[0], isLazyInitialization);
 	},
 	
 	/**
@@ -890,7 +857,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	removeDropdown: function(containerID) {
-		this._api.remove(containerID);
+		window.bc_wcfSimpleDropdown.remove(containerID);
 	},
 	
 	/**
@@ -901,7 +868,7 @@ WCF.Dropdown = {
 	 * @param	jQuery		dropdownMenu
 	 */
 	initDropdownFragment: function(dropdown, dropdownMenu) {
-		this._api.initFragment(dropdown[0], dropdownMenu[0]);
+		window.bc_wcfSimpleDropdown.initFragment(dropdown[0], dropdownMenu[0]);
 	},
 	
 	/**
@@ -911,7 +878,7 @@ WCF.Dropdown = {
 	 * @var		object		callback
 	 */
 	registerCallback: function(identifier, callback) {
-		this._api.registerCallback(identifier, callback);
+		window.bc_wcfSimpleDropdown.registerCallback(identifier, callback);
 	},
 	
 	/**
@@ -921,7 +888,7 @@ WCF.Dropdown = {
 	 * @param	string		targetID
 	 */
 	_toggle: function(event, targetID) {
-		this._api._toggle(event, targetID);
+		window.bc_wcfSimpleDropdown._toggle(event, targetID);
 	},
 	
 	/**
@@ -930,7 +897,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	toggleDropdown: function(containerID) {
-		this._api._toggle(null, containerID);
+		window.bc_wcfSimpleDropdown._toggle(null, containerID);
 	},
 	
 	/**
@@ -940,7 +907,7 @@ WCF.Dropdown = {
 	 * @return	jQuery
 	 */
 	getDropdown: function(containerID) {
-		var dropdown = this._api.getDropdown(containerID);
+		var dropdown = window.bc_wcfSimpleDropdown.getDropdown(containerID);
 		
 		return (dropdown) ? $(dropdown) : null;
 	},
@@ -952,7 +919,7 @@ WCF.Dropdown = {
 	 * @return	jQuery
 	 */
 	getDropdownMenu: function(containerID) {
-		var menu = this._api.getDropdownMenu(containerID);
+		var menu = window.bc_wcfSimpleDropdown.getDropdownMenu(containerID);
 		
 		return (menu) ? $(menu) : null;
 	},
@@ -963,7 +930,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	setAlignmentByID: function(containerID) {
-		this._api.setAlignmentById(containerID);
+		window.bc_wcfSimpleDropdown.setAlignmentById(containerID);
 	},
 	
 	/**
@@ -973,14 +940,14 @@ WCF.Dropdown = {
 	 * @param	jQuery		dropdownMenu
 	 */
 	setAlignment: function(dropdown, dropdownMenu) {
-		this._api.setAlignment(dropdown[0], dropdownMenu[0]);
+		window.bc_wcfSimpleDropdown.setAlignment(dropdown[0], dropdownMenu[0]);
 	},
 	
 	/**
 	 * Closes all dropdowns.
 	 */
 	_closeAll: function() {
-		this._api.closeAll();
+		window.bc_wcfSimpleDropdown.closeAll();
 	},
 	
 	/**
@@ -989,7 +956,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	close: function(containerID) {
-		this._api.close(containerID);
+		window.bc_wcfSimpleDropdown.close(containerID);
 	},
 	
 	/**
@@ -999,7 +966,7 @@ WCF.Dropdown = {
 	 * @return	boolean
 	 */
 	destroy: function(containerID) {
-		this._api.destroy(containerID);
+		window.bc_wcfSimpleDropdown.destroy(containerID);
 	}
 };
 
@@ -4407,20 +4374,10 @@ WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
  * preventing errors from blocking the iteration. Furthermore you should
  * always handle clicks on your overlay's container and return 'false' to
  * prevent bubbling.
+ * 
+ * @deprecated	2.2 - please use `UI/CloseOverlay` instead
  */
 WCF.CloseOverlayHandler = {
-	/**
-	 * list of callbacks
-	 * @var	WCF.Dictionary
-	 */
-	_callbacks: new WCF.Dictionary(),
-	
-	/**
-	 * indicates that overlay handler is listening to click events on body-tag
-	 * @var	boolean
-	 */
-	_isListening: false,
-	
 	/**
 	 * Adds a new callback.
 	 * 
@@ -4428,14 +4385,9 @@ WCF.CloseOverlayHandler = {
 	 * @param	object		callback
 	 */
 	addCallback: function(identifier, callback) {
-		this._bindListener();
-		
-		if (this._callbacks.isset(identifier)) {
-			console.debug("[WCF.CloseOverlayHandler] identifier '" + identifier + "' is already bound to a callback");
-			return false;
-		}
-		
-		this._callbacks.add(identifier, callback);
+		require(['UI/CloseOverlay'], function(UICloseOverlay) {
+			UICloseOverlay.add(identifier, callback);
+		});
 	},
 	
 	/**
@@ -4444,36 +4396,17 @@ WCF.CloseOverlayHandler = {
 	 * @param	string		identifier
 	 */
 	removeCallback: function(identifier) {
-		if (this._callbacks.isset(identifier)) {
-			this._callbacks.remove(identifier);
-		}
+		require(['UI/CloseOverlay'], function(UICloseOverlay) {
+			UICloseOverlay.remove(identifier);
+		});
 	},
 	
 	/**
 	 * Triggers the callbacks programmatically.
 	 */
 	forceExecution: function() {
-		this._executeCallbacks();
-	},
-	
-	/**
-	 * Binds click event handler.
-	 */
-	_bindListener: function() {
-		if (this._isListening) return;
-		
-		$(document.body).click($.proxy(this._executeCallbacks, this));
-		
-		this._isListening = true;
-	},
-	
-	/**
-	 * Executes callbacks on click.
-	 */
-	_executeCallbacks: function(event) {
-		this._callbacks.each(function(pair) {
-			// execute callback
-			pair.value();
+		require(['UI/CloseOverlay'], function(UICloseOverlay) {
+			UICloseOverlay.execute();
 		});
 	}
 };
