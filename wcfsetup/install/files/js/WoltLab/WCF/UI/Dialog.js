@@ -89,9 +89,7 @@ define(
 				if (options.closeConfirmMessage) {
 					options.onBeforeClose = (function(id) {
 						UIConfirmation.show({
-							confirm: (function() {
-								this.close(id);
-							}).bind(this),
+							confirm: this.close.bind(this, id),
 							message: options.closeConfirmMessage
 						})
 					}).bind(this);
