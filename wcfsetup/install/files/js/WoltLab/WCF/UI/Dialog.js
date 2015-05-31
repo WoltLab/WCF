@@ -91,7 +91,7 @@ define(
 						UIConfirmation.show({
 							confirm: this.close.bind(this, id),
 							message: options.closeConfirmMessage
-						})
+						});
 					}).bind(this);
 				}
 				
