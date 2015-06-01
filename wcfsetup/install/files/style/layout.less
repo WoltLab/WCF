@@ -606,6 +606,9 @@
 				.transition(width, .2s, ease);
 				
 				> span {
+					/* fix for Chrome in RTL mode */
+					display: inline-block;
+					
 					position: relative;
 					
 					> .collapsibleButton {

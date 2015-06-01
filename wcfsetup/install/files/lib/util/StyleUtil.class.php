@@ -63,12 +63,15 @@ final class StyleUtil {
 		$contents = str_replace('border-right-color:', 'border-left-color:', $contents);
 		$contents = str_replace('wcf-border-left-color:', 'border-right-color:', $contents);
 		
+		// box-shadow
+		$contents = preg_replace_callback('~box-shadow:\s*(?P<inset>inset)?\s*(?P<negate>-)?(?P<number>\d+)~', function($matches) {
+			return 'box-shadow: ' . $matches['inset'] . ' ' . ($matches['negate'] ? '' : '-') . $matches['number'];
+		}, $contents);
+		
 		// clear
 		$contents = preg_replace('/clear:\s*left/', 'wcf-clear:left', $contents);
 		$contents = preg_replace('/clear:\s*right/', 'clear:left', $contents);
 		$contents = str_replace('wcf-clear:left', 'clear:right', $contents);
-		
-		// todo: clip?
 		
 		// float
 		$contents = preg_replace('/float:\s*left/', 'wcf-float:left', $contents);
