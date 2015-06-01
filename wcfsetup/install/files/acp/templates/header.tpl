@@ -10,15 +10,13 @@
 	{@$__wcf->getStyleHandler()->getStylesheet(true)}
 	{event name='stylesheets'}
 	
-	<script data-relocate="true">
-		//<![CDATA[
+	<script>
 		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
 		var WCF_PATH = '{@$__wcf->getPath()}';
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		var TIME_NOW = {@TIME_NOW};
 		var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
-		//]]>
 	</script>
 	<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"></script>
@@ -31,9 +29,7 @@
 	<script src="{@$__wcf->getPath()}js/require.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}js/require.config.js?v={@LAST_UPDATE_TIME}"></script>
 	<script>
-		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
-		//]]>
 	</script>
 	{event name='javascriptInclude'}
 	
@@ -46,16 +42,11 @@
 			baseUrl: '{@$__wcf->getPath()}js'
 		});
 		
-		define('jquery', [], function() { return window.jQuery; });
-		
 		$.holdReady(true);
-		require(['WoltLab/WCF/Bootstrap'], function(bootstrap) {
-			bootstrap.setup();
-		});
 	</script>
 	
 	<script>
-		require(['Language'], function(Language) {
+		require(['Language', 'WoltLab/WCF/ACP/Bootstrap'], function(Language, ACPBootstrap) {
 			Language.addObject({
 				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
 				'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
@@ -115,6 +106,8 @@
 				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
+			
+			ACPBootstrap.setup();
 		});
 		
 		$(function() {
@@ -126,13 +119,10 @@
 			{/if}
 			
 			if (jQuery.browser.touch) $('html').addClass('touch');
-			//new WCF.Date.Time();
-			new WCF.Effect.SmoothScroll();
 			
-			//WCF.Dropdown.init();
+			new WCF.Effect.SmoothScroll();
 			WCF.System.PageNavigation.init('.pageNavigation');
 			WCF.Date.Picker.init();
-			//WCF.System.FlexibleMenu.init();
 			
 			{if $__wcf->user->userID}
 				new WCF.ACP.Search();
