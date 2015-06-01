@@ -7,8 +7,8 @@
  * @module	WoltLab/WCF/UI/Mobile
  */
 define(
-	[       'enquire', 'Environment', 'Language', 'DOM/ChangeListener', 'DOM/Traverse', 'UI/CloseHandler'],
-	function(enquire,   Environment,   Language,   DOMChangeListener,    DOMTraverse,    UICloseHandler)
+	[       'enquire', 'Environment', 'Language', 'DOM/ChangeListener', 'DOM/Traverse', 'UI/CloseOverlay'],
+	function(enquire,   Environment,   Language,   DOMChangeListener,    DOMTraverse,    UICloseOverlay)
 {
 	"use strict";
 	
@@ -78,7 +78,7 @@ define(
 			this._initSearchBar();
 			this._initButtonGroupNavigation();
 			
-			UICloseHandler.add('WoltLab/WCF/UI/Mobile', this._closeAllMenus.bind(this));
+			UICloseOverlay.add('WoltLab/WCF/UI/Mobile', this._closeAllMenus.bind(this));
 			DOMChangeListener.add('WoltLab/WCF/UI/Mobile', this._initButtonGroupNavigation.bind(this));
 		},
 		

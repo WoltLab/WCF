@@ -254,6 +254,8 @@ define(['Dictionary', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMUtil,
 		 * @param	{object}	event	event object
 		 */
 		_onClick: function(event) {
+			event.preventDefault();
+			
 			var tab = event.currentTarget.parentNode;
 			
 			this.select(null, tab);

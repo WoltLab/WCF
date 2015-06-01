@@ -7,14 +7,23 @@
  * @module	WoltLab/WCF/UI/Dialog
  */
 define(
-	[       'enquire', 'Core', 'Dictionary', 'Environment', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Confirmation'],
-	function(enquire,   Core,   Dictionary,   Environment,   Language,   DOMChangeListener,    DOMUtil,    UIConfirmation)
+	[
+		'enquire',  'Core',      'Dictionary',         'Environment',
+		'Language', 'ObjectMap', 'DOM/ChangeListener', 'DOM/Util',
+		'UI/Confirmation'
+	],
+	function(
+		enquire,     Core,        Dictionary,           Environment,
+		Language,    ObjectMap,   DOMChangeListener,    DOMUtil,
+		UIConfirmation
+	)
 {
 	"use strict";
 	
 	var _activeDialog = null;
 	var _container = null;
 	var _dialogs = new Dictionary();
+	var _dialogObjects = new ObjectMap();
 	var _dialogFullHeight = false;
 	var _keyupListener = null;
 	
@@ -54,18 +63,98 @@ define(
 		},
 		
 		/**
+		 * Opens the dialog and implicitly creates it on first usage.
+		 * 
+		 * @param	{object}			callbackObject	used to invoke `_dialogSetup()` on first call
+		 * @param	{(string|DocumentFragment=}	html		html content or document fragment to use for dialog content
+		 * @returns	{object<string, *>}		dialog data
+		 */
+		open: function(callbackObject, html) {
+			var dialogData = _dialogObjects.get(callbackObject);
+			if (Core.isPlainObject(dialogData)) {
+				// dialog already exists
+				return this.openStatic(dialogData.id, html);
+			}
+			
+			// initialize a new dialog
+			if (typeof callbackObject._dialogSetup !== 'function') {
+				throw new Error("Callback object does not implement the method '_dialogSetup()'.");
+			}
+			
+			var setupData = callbackObject._dialogSetup();
+			if (!Core.isPlainObject(setupData)) {
+				throw new Error("Expected an object literal as return value of '_dialogSetup()'.");
+			}
+			
+			dialogData = { id: setupData.id };
+			
+			var createOnly = true;
+			if (setupData.source === undefined) {
+				var dialogElement = document.getElementById(setupData.id);
+				if (dialogElement === null) {
+					throw new Error("Element id '" + setupData.id + "' is invalid and no source attribute was given.");
+				}
+				
+				setupData.source = document.createDocumentFragment();
+				setupData.source.appendChild(dialogElement);
+			}
+			else if (typeof setupData.source === null) {
+				// `null` means there is no static markup and `html` should be used instead
+				setupData.source = html;
+			}
+			
+			else if (typeof setupData.source === 'function') {
+				setupData.source();
+			}
+			else if (Core.isPlainObject(setupData.source)) {
+				Ajax.api(this, {
+					data: setupData.source.data
+				}, (function(data) {
+					if (data.returnValues && typeof data.returnValues.template === 'string') {
+						this.open(callbackObject, data.returnValues.template);
+						
+						if (typeof setupData.source.after === 'function') {
+							setupData.source.after(_dialogs.get(setupData.id).content, data);
+						}
+					}
+				}).bind(this));
+			}
+			else {
+				if (typeof setupData.source === 'string') {
+					var dialogElement = document.createElement('div');
+					dialogElement.setAttribute('id', setupData.id);
+					dialogElement.innerHTML = setupData.source;
+					
+					setupData.source = document.createDocumentFragment();
+					setupData.source.appendChild(dialogElement);
+				}
+				
+				if (!setupData.source.nodeType || setupData.source.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
+					throw new Error("Expected at least a document fragment as 'source' attribute.");
+				}
+				
+				createOnly = false;
+			}
+			
+			_dialogObjects.set(callbackObject, dialogData);
+			
+			return this.openStatic(setupData.id, setupData.source, setupData.options, createOnly);
+		},
+		
+		/**
 		 * Opens an dialog, if the dialog is already open the content container
 		 * will be replaced by the HTML string contained in the parameter html.
 		 * 
 		 * If id is an existing element id, html will be ignored and the referenced
 		 * element will be appended to the content element instead.
 		 * 
-		 * @param 	{string}		id		element id, if exists the html parameter is ignored in favor of the existing element
-		 * @param	{?string}		html		content html
-		 * @param	{object<string, *>}	options		list of options, is completely ignored if the dialog already exists
-		 * @return	{object<string, *>}	dialog data
+		 * @param 	{string}			id		element id, if exists the html parameter is ignored in favor of the existing element
+		 * @param	{?(string|DocumentFragment)}	html		content html
+		 * @param	{object<string, *>}		options		list of options, is completely ignored if the dialog already exists
+		 * @param	{boolean=}			createOnly	create the dialog but do not open it
+		 * @return	{object<string, *>}		dialog data
 		 */
-		open: function(id, html, options) {
+		openStatic: function(id, html, options, createOnly) {
 			if (_dialogs.has(id)) {
 				this._updateDialog(id, html);
 			}
@@ -120,11 +209,12 @@ define(
 		/**
 		 * Creates the DOM for a new dialog and opens it.
 		 * 
-		 * @param 	{string}		id		element id, if exists the html parameter is ignored in favor of the existing element
-		 * @param	{?string}		html		content html
-		 * @param	{object<string, *>}	options		list of options
+		 * @param 	{string}			id		element id, if exists the html parameter is ignored in favor of the existing element
+		 * @param	{?(string|DocumentFragment)}	html		content html
+		 * @param	{object<string, *>}		options		list of options
+		 * @param	{boolean=}			createOnly	create the dialog but do not open it
 		 */
-		_createDialog: function(id, html, options) {
+		_createDialog: function(id, html, options, createOnly) {
 			var element = null;
 			if (html === null) {
 				element = document.getElementById(id);
@@ -178,8 +268,20 @@ define(
 			var content;
 			if (element === null) {
 				content = document.createElement('div');
-				content.setAttribute('id', id);
-				content.innerHTML = html;
+				
+				if (typeof html === 'string') {
+					content.innerHTML = html;
+				}
+				else if (html instanceof DocumentFragment) {
+					if (html.children[0].nodeName !== 'div' || html.childElementCount > 1) {
+						content.appendChild(html);
+					}
+					else {
+						content = html.children[0];
+					}
+				}
+				
+				content.id = id;
 			}
 			else {
 				content = element;
@@ -201,24 +303,11 @@ define(
 				onShow: options.onShow
 			});
 			
-			if (_container.getAttribute('aria-hidden') === 'true') {
-				window.addEventListener('keyup', _keyupListener);
-			}
-			
 			DOMUtil.prepend(dialog, _container);
-			_container.setAttribute('aria-hidden', 'false');
-			_container.setAttribute('data-close-on-click', (options.backdropCloseOnClick ? 'true' : 'false'));
-			dialog.setAttribute('aria-hidden', 'false');
 			
-			this.rebuild(id);
-			
-			_activeDialog = id;
-			
-			if (typeof options.onShow === 'function') {
-				options.onShow(id);
+			if (createOnly !== true) {
+				this._updateDialog(id, null);
 			}
-			
-			DOMChangeListener.trigger();
 		},
 		
 		/**
@@ -243,12 +332,14 @@ define(
 			}
 			
 			if (data.dialog.getAttribute('aria-hidden') === 'true') {
+				if (_container.getAttribute('aria-hidden') === 'true') {
+					window.addEventListener('keyup', _keyupListener);
+				}
+				
 				data.dialog.setAttribute('aria-hidden', 'false');
 				_container.setAttribute('aria-hidden', 'false');
 				_container.setAttribute('data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 				_activeDialog = id;
-				
-				window.addEventListener('keyup', _keyupListener);
 				
 				this.rebuild(id);
 				

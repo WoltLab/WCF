@@ -42,19 +42,23 @@ define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 		showDialog: function(event) {
 			event.preventDefault();
 			
-			if (UIDialog.getDialog('styleChanger') === undefined) {
-				Ajax.apiOnce({
+			UIDialog.show(this);
+		},
+		
+		_dialogSetup: function() {
+			return {
+				id: 'styleChanger',
+				options: {
+					disableContentPadding: true,
+					title: Language.get('wcf.style.changeStyle')
+				},
+				source: {
 					data: {
 						actionName: 'getStyleChooser',
 						className: 'wcf\\data\\style\\StyleAction'
 					},
-					success: (function(data) {
-						var dialog = UIDialog.open('styleChanger', data.returnValues.template, {
-							disableContentPadding: true,
-							title: Language.get('wcf.style.changeStyle')
-						});
-						
-						var styles = dialog.content.querySelectorAll('.styleList > li');
+					after: (function(content) {
+						var styles = content.querySelectorAll('.styleList > li');
 						for (var i = 0, length = styles.length; i < length; i++) {
 							var style = styles[i];
 							
@@ -62,11 +66,8 @@ define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 							style.addEventListener('click', this._click.bind(this));
 						}
 					}).bind(this)
-				});
-			}
-			else {
-				UIDialog.open('styleChanger');
-			}
+				}
+			};
 		},
 		
 		/**

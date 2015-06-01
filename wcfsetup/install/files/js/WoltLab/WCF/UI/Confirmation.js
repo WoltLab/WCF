@@ -66,11 +66,18 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 			
 			_active = true;
 			
-			UIDialog.open('wcfSystemConfirmation', null, {
-				onClose: this._onClose.bind(this),
-				onShow: this._onShow.bind(this),
-				title: Language.get('wcf.global.confirmation.title')
-			});
+			UIDialog.open(this);
+		},
+		
+		_dialogSetup: function() {
+			return {
+				id: 'wcfSystemConfirmation',
+				options: {
+					onClose: this._onClose.bind(this),
+					onShow: this._onShow.bind(this),
+					title: Language.get('wcf.global.confirmation.title')
+				}
+			};
 		},
 		
 		/**
