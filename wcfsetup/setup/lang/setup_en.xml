@@ -78,7 +78,7 @@
 		<item name="wcf.global.createUser.error"><![CDATA[Errors have occured while registering the user account, please check the marked fields for errors.]]></item>
 		<item name="wcf.global.createUser.error.empty"><![CDATA[This field can not be left empty.]]></item>
 		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[The username you have given is invalid. A valid username must be between 3 and 20 characters long.]]></item>
-		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[The email address you have given is invalid. A valid e-mail address must be in the format of name@domain.tld]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[The email address you have given is invalid. A valid email address must be in the format of name@domain.tld]]></item>
 		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[The email addresses you have given are not identical. For security reasons, please make sure that both email address fields have been filled in and are identical.]]></item>
 		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[The passwords you have given are not identical. For security reasons, please make sure that both password fields have been filled in and are identical.]]></item>
 		<item name="wcf.global.wcfDir.error"><![CDATA[An Error has accured while extracting the required files:
