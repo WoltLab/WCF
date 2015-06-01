@@ -26,7 +26,7 @@ class TagEditor extends DatabaseObjectEditor {
 	 */
 	public function addSynonym(Tag $synonym) {
 		if ($synonym->tagID == $this->tagID) return;
-
+		
 		// assign all associations for the synonym with this tag
 		$sql = "UPDATE IGNORE	wcf".WCF_N."_tag_to_object
 			SET		tagID = ?

@@ -133,6 +133,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cache.list.size"><![CDATA[Size]]></item>
 		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Filesystem]]></item>
 		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached]]></item>
+		<item name="wcf.acp.cache.source.type.RedisCacheSource"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Data]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.cache.type.style"><![CDATA[Styles]]></item>
@@ -691,15 +692,20 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[One user-agent per line]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[One server per line, you can additionally specify a weight factor to allow load balancing, for example “localhost:11211:67” or “10.0.13.37:31337:33”.]]></item>
+		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
+		<item name="wcf.acp.option.cache_source_redis_host.description"><![CDATA[The server’s address, for example “localhost” or “10.0.13.37:1337”.]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Caching Method]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods different from “Filesystem” require special extensions or services running on your machine.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Filesystem (default)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
+		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Memcached uses the machine’s memory to store frequently accessed data, reducing database and filesystem load. Read more about Memcached on <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
+		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
+		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis uses the machine’s memory to store frequently accessed data, reducing database and filesystem load. Read more about Redis on <a href="http://redis.io/" class="externalURL">redis.io</a>.]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date &amp; Time]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Graphics]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
@@ -1504,6 +1510,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Usages]]></item>
 		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[This tag name is already in use.]]></item>
+		<item name="wcf.acp.tag.setAsSynonyms"><![CDATA[Set as Synonyms]]></item>
+		<item name="wcf.acp.tag.setAsSynonyms.description"><![CDATA[Select one of the tags. The other tags will be set as synonyms of the selected tag.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -1879,18 +1887,25 @@ Errors are:
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
+		
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Delete ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} tag{if $count != 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Set as Synonyms ({#$count})]]></item>
+		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Ban ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} user{if $count != 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email addresses]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Merge]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Revert Changes To Contents]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
+		
+		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{#$count} Tag{if $count != 1}s{/if} marked]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{#$count} User{if $count != 1}s{/if} marked]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Merge]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Revert Changes To Contents]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
 	</category>
 	
 	<category name="wcf.comment">
@@ -2682,6 +2697,7 @@ Errors are:
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.data"><![CDATA[Credentials]]></item>
+		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[The entered password is wrong.]]></item>
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
 		<item name="wcf.user.language.description"><![CDATA[User interface language]]></item>

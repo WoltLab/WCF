@@ -308,6 +308,7 @@ CREATE TABLE wcf1_cronjob (
 	cronjobID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	className varchar(255) NOT NULL DEFAULT '',
 	packageID INT(10) NOT NULL,
+	cronjobName VARCHAR(255) NOT NULL,
 	description varchar(255) NOT NULL DEFAULT '',
 	startMinute varchar(255) NOT NULL DEFAULT '*',
 	startHour varchar(255) NOT NULL DEFAULT '*',
@@ -321,7 +322,10 @@ CREATE TABLE wcf1_cronjob (
 	canBeEdited TINYINT(1) NOT NULL DEFAULT 1,
 	canBeDisabled TINYINT(1) NOT NULL DEFAULT 1,
 	state TINYINT(1) NOT NULL DEFAULT 0,
-	failCount TINYINT(1) NOT NULL DEFAULT 0
+	failCount TINYINT(1) NOT NULL DEFAULT 0,
+	options TEXT,
+	
+	UNIQUE KEY cronjobName (cronjobName, packageID)
 );
 
 DROP TABLE IF EXISTS wcf1_cronjob_log;
@@ -372,12 +376,16 @@ CREATE TABLE wcf1_event_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
 	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+	listenerName VARCHAR(255) NOT NULL,
 	eventClassName VARCHAR(80) NOT NULL DEFAULT '',
-	eventName VARCHAR(50) NOT NULL DEFAULT '',
+	eventName TEXT,
 	listenerClassName VARCHAR(200) NOT NULL DEFAULT '',
 	inherit TINYINT(1) NOT NULL DEFAULT 0,
 	niceValue TINYINT(3) NOT NULL DEFAULT 0,
-	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
+	permissions TEXT,
+	options TEXT,
+	
+	UNIQUE KEY listenerName (listenerName, packageID)
 );
 
 DROP TABLE IF EXISTS wcf1_import_mapping;
@@ -1055,6 +1063,9 @@ CREATE TABLE wcf1_template_listener (
 	eventName VARCHAR(50) NOT NULL DEFAULT '',
 	templateCode TEXT NOT NULL,
 	niceValue TINYINT(3) NOT NULL DEFAULT 0,
+	permissions TEXT,
+	options TEXT,
+	
 	KEY templateName (environment, templateName)
 );
 
@@ -1791,7 +1802,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPan
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverColor', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBackgroundColor', 'rgba(249, 249, 249, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorderColor', 'rgba(221, 221, 221, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorderRadius', '15px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorderRadius', '3px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSmallButtonBorderRadius', '3px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonColor', 'rgba(102, 102, 102, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryBackgroundColor', 'rgba(211, 232, 254, 1)');

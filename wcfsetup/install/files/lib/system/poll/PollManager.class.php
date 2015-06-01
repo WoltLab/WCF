@@ -327,7 +327,7 @@ class PollManager extends SingletonFactory {
 	 */
 	public function getPolls(array $pollIDs) {
 		$pollList = new PollList();
-		$pollList->getConditionBuilder()->add("poll.pollID IN (?)", array($pollIDs));
+		$pollList->setObjectIDs($pollIDs);
 		$pollList->readObjects();
 		$polls = $pollList->getObjects();
 		

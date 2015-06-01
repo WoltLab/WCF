@@ -97,31 +97,33 @@ class EventHandler extends SingletonFactory {
 				if (isset($this->inheritedActions[$member])) {
 					$actions = $this->inheritedActions[$member];
 					if (isset($actions[$eventName]) && !empty($actions[$eventName])) {
-						foreach ($actions[$eventName] as $action) {
-							if (isset($this->inheritedActionsObjects[$name][$action['listenerClassName']])) continue;
-							
-							// get class object
-							if (isset($this->listenerObjects[$action['listenerClassName']])) {
-								$object = $this->listenerObjects[$action['listenerClassName']];
-							}
-							else {
-								$object = null;
-								// instance action object
-								if (!class_exists($action['listenerClassName'])) {
-									throw new SystemException("Unable to find class '".$action['listenerClassName']."'");
+						foreach ($actions[$eventName] as $eventListener) {
+							if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
+								if (isset($this->inheritedActionsObjects[$name][$eventListener->listenerClassName])) continue;
+								
+								// get class object
+								if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
+									$object = $this->listenerObjects[$eventListener->listenerClassName];
 								}
-								if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\listener\IParameterizedEventListener')) {
-									// legacy event listeners
-									if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\IEventListener')) {
-										throw new SystemException("'".$action['listenerClassName']."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
+								else {
+									$object = null;
+									// instance action object
+									if (!class_exists($eventListener->listenerClassName)) {
+										throw new SystemException("Unable to find class '".$eventListener->listenerClassName."'");
 									}
+									if (!ClassUtil::isInstanceOf($eventListener->listenerClassName, 'wcf\system\event\listener\IParameterizedEventListener')) {
+										// legacy event listeners
+										if (!ClassUtil::isInstanceOf($eventListener->listenerClassName, 'wcf\system\event\IEventListener')) {
+											throw new SystemException("'".$eventListener->listenerClassName."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
+										}
+									}
+									
+									$object = new $eventListener->listenerClassName;
+									$this->listenerObjects[$eventListener->listenerClassName] = $object;
 								}
 								
-								$object = new $action['listenerClassName'];
-								$this->listenerObjects[$action['listenerClassName']] = $object;
+								if ($object !== null) $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $object;
 							}
-							
-							if ($object !== null) $this->inheritedActionsObjects[$name][$action['listenerClassName']] = $object;
 						}
 					}
 				}
@@ -181,30 +183,32 @@ class EventHandler extends SingletonFactory {
 			}
 			
 			$this->actionsObjects[$name] = array();
-			foreach ($this->actions[$name] as $action) {
-				if (isset($this->actionsObjects[$name][$action['listenerClassName']])) continue;
-				
-				// get class object
-				if (isset($this->listenerObjects[$action['listenerClassName']])) {
-					$object = $this->listenerObjects[$action['listenerClassName']];
-				}
-				else {
-					// instance action object
-					if (!class_exists($action['listenerClassName'])) {
-						throw new SystemException("Unable to find class '".$action['listenerClassName']."'");
+			foreach ($this->actions[$name] as $eventListener) {
+				if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
+					if (isset($this->actionsObjects[$name][$eventListener->listenerClassName])) continue;
+					
+					// get class object
+					if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
+						$object = $this->listenerObjects[$eventListener->listenerClassName];
 					}
-					if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\listener\IParameterizedEventListener')) {
-						// legacy event listeners
-						if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\IEventListener')) {
-							throw new SystemException("'".$action['listenerClassName']."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
+					else {
+						// instance action object
+						if (!class_exists($eventListener->listenerClassName)) {
+							throw new SystemException("Unable to find class '".$eventListener->listenerClassName."'");
 						}
+						if (!ClassUtil::isInstanceOf($eventListener->listenerClassName, 'wcf\system\event\listener\IParameterizedEventListener')) {
+							// legacy event listeners
+							if (!ClassUtil::isInstanceOf($eventListener->listenerClassName, 'wcf\system\event\IEventListener')) {
+								throw new SystemException("'".$eventListener->listenerClassName."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
+							}
+						}
+						
+						$object = new $eventListener->listenerClassName;
+						$this->listenerObjects[$eventListener->listenerClassName] = $object;
 					}
 					
-					$object = new $action['listenerClassName'];
-					$this->listenerObjects[$action['listenerClassName']] = $object;
+					$this->actionsObjects[$name][$eventListener->listenerClassName] = $object;
 				}
-				
-				$this->actionsObjects[$name][$action['listenerClassName']] = $object;
 			}
 		}
 		

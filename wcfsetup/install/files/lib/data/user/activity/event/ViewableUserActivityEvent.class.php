@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\activity\event;
 use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 
@@ -97,6 +98,10 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	 * @return	\wcf\data\user\UserProfile
 	 */
 	public function getUserProfile() {
+		if ($this->userProfile === null) {
+			$this->userProfile = UserProfileCache::getInstance()->getUserProfile($this->userID);
+		}
+		
 		return $this->userProfile;
 	}
 	

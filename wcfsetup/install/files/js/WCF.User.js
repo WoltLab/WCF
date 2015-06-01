@@ -553,68 +553,30 @@ WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
  */
 WCF.User.QuickLogin = {
 	/**
-	 * dialog overlay
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * login message container
-	 * @var	jQuery
-	 */
-	_loginMessage: null,
-	
-	/**
 	 * Initializes the quick login box
 	 */
 	init: function() {
-		$('.loginLink').click($.proxy(this._render, this));
-		
-		// prepend protocol and hostname
-		$('#loginForm input[name=url]').val(function(index, value) {
-			return window.location.protocol + '//' + window.location.host + value;
-		});
-	},
-	
-	/**
-	 * Displays the quick login box with a info message
-	 * 
-	 * @param	string	message
-	 */
-	show: function(message) {
-		if (message) {
-			if (this._loginMessage === null) {
-				this._loginMessage = $('<p class="info" />').hide().prependTo($('#loginForm > form'));
+		require(['UI/Dialog'], function(UIDialog) {
+			var loginForm = document.getElementById('loginForm');
+			
+			var links = document.getElementsByClassName('loginLink');
+			for (var i = 0, length = links.length; i < length; i++) {
+				links[i].addEventListener('click', function(event) {
+					event.preventDefault();
+					
+					loginForm.style.removeProperty('display');
+					
+					UIDialog.open('loginForm', null, {
+						title: WCF.Language.get('wcf.user.login')
+					});
+				});
 			}
 			
-			this._loginMessage.show().text(message);
-		}
-		else if (this._loginMessage !== null) {
-			this._loginMessage.hide();
-		}
-		
-		this._render();
-	},
-	
-	/**
-	 * Renders the dialog
-	 * 
-	 * @param	jQuery.Event	event
-	 */
-	_render: function(event) {
-		if (event !== undefined) {
-			event.preventDefault();
-		}
-		
-		if (this._dialog === null) {
-			this._dialog = $('#loginForm').wcfDialog({
-				title: WCF.Language.get('wcf.user.login')
-			});
-			this._dialog.find('#username').focus();
-		}
-		else {
-			this._dialog.wcfDialog('open');
-		}
+			var input = loginForm.querySelector('#loginForm input[name=url]');
+			if (input !== null) {
+				input.setAttribute('value', window.location.protocol + '//' + window.location.host + input.getAttribute('value'));
+			}
+		});
 	}
 };
 

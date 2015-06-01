@@ -1,7 +1,8 @@
 <?php
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
-use wcf\data\user\UserProfileList;
+use wcf\data\user\UserProfileCache;
+use wcf\data\DatabaseObject;
 use wcf\page\IPage;
 use wcf\system\cache\builder\NewestMembersCacheBuilder;
 use wcf\system\request\LinkHandler;
@@ -19,10 +20,10 @@ use wcf\system\WCF;
  */
 class NewestMembersDashboardBox extends AbstractSidebarDashboardBox {
 	/**
-	 * user profile list
-	 * @var	\wcf\data\user\UserProfileList
+	 * ids of the newest members
+	 * @var	array<integer>
 	 */
-	public $userProfileList = null;
+	public $newestMemberIDs = array();
 	
 	/**
 	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
@@ -31,13 +32,9 @@ class NewestMembersDashboardBox extends AbstractSidebarDashboardBox {
 		parent::init($box, $page);
 		
 		// get ids
-		$newestMemberIDs = NewestMembersCacheBuilder::getInstance()->getData();
-		if (!empty($newestMemberIDs)) {
-			// get profile data
-			$this->userProfileList = new UserProfileList();
-			$this->userProfileList->sqlOrderBy = 'user_table.registrationDate DESC';
-			$this->userProfileList->setObjectIDs($newestMemberIDs);
-			$this->userProfileList->readObjects();
+		$this->newestMemberIDs = NewestMembersCacheBuilder::getInstance()->getData();
+		if (!empty($this->newestMemberIDs)) {
+			UserProfileCache::getInstance()->cacheUserIDs($this->newestMemberIDs);
 		}
 		
 		$this->fetched();
@@ -47,13 +44,17 @@ class NewestMembersDashboardBox extends AbstractSidebarDashboardBox {
 	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
-		if ($this->userProfileList == null) return '';
+		if (empty($this->newestMemberIDs)) return '';
 		
 		if (MODULE_MEMBERS_LIST) {
 			$this->titleLink = LinkHandler::getInstance()->getLink('MembersList', array(), 'sortField=registrationDate&sortOrder=DESC');
 		}
+		
+		$newestMembers = UserProfileCache::getInstance()->getUserProfiles($this->newestMemberIDs);
+		DatabaseObject::sort($newestMembers, 'registrationDate', 'DESC');
+		
 		WCF::getTPL()->assign(array(
-			'newestMembers' => $this->userProfileList
+			'newestMembers' => $newestMembers
 		));
 		return WCF::getTPL()->fetch('dashboardBoxNewestMembers');
 	}

@@ -2,7 +2,9 @@
 namespace wcf\data\comment;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\TLegacyUserPropertyAccess;
 
 /**
  * Represents a viewable comment.
@@ -15,6 +17,8 @@ use wcf\data\DatabaseObjectDecorator;
  * @category	Community Framework
  */
 class ViewableComment extends DatabaseObjectDecorator {
+	use TLegacyUserPropertyAccess;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
@@ -33,7 +37,14 @@ class ViewableComment extends DatabaseObjectDecorator {
 	 */
 	public function getUserProfile() {
 		if ($this->userProfile === null) {
-			$this->userProfile = new UserProfile(new User(null, $this->getDecoratedObject()->data));
+			if ($this->userID) {
+				$this->userProfile = UserProfileCache::getInstance()->getUserProfile($this->userID);
+			}
+			else {
+				$this->userProfile = new UserProfile(new User(null, array(
+					'username' => $this->username
+				)));
+			}
 		}
 		
 		return $this->userProfile;

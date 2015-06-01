@@ -264,12 +264,7 @@ class Tar implements IArchive {
 				$longFilename = null;
 			}
 			if ($header['typeflag'] == 'L') {
-				if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-					$format = 'Z'.$header['size'].'filename';
-				}
-				else {
-					$format = 'a'.$header['size'].'filename';
-				}
+				$format = 'Z'.$header['size'].'filename';
 				
 				$fileData = unpack($format, $this->file->read(512));
 				$longFilename = $fileData['filename'];
@@ -314,12 +309,7 @@ class Tar implements IArchive {
 		}
 		
 		// extract values
-		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-			$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
-		}
-		else {
-			$format = 'a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix';
-		}
+		$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
 		
 		$data = unpack($format, $binaryData);
 		

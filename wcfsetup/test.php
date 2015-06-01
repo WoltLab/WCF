@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>WoltLab Community Framework 2.1 System Requirements</title>
+	<title>WoltLab Community Framework 2.2 System Requirements</title>
 </head>
 <body>
 <?php
 /**
- * Tests the support of PHP 5.3.2 or greater.
+ * Tests the support of PHP 5.5.4 or greater.
  * ><p><b>Support for PHP is missing.<br />PHP Unterst&uuml;tzung nicht gefunden</b></p> <!--
  * 
  * @author	Marcel Werk
@@ -18,7 +18,7 @@
 // php version
 $phpVersion = phpversion();
 $comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $phpVersion);
-$neededPhpVersion = '5.3.2';
+$neededPhpVersion = '5.5.4';
 $configArray = @ini_get_all();
 if (!(version_compare($comparePhpVersion, $neededPhpVersion) >= 0)) {
 	?>
@@ -88,14 +88,6 @@ else if (!extension_loaded('pcre')) {
 	?>
 	<p>The 'PCRE' PHP extension is missing. PCRE is required for a stable work of this software.<br />
 	Die 'PCRE' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
-	<?php
-}
-
-// check safemode
-else if ((is_array($configArray) && !empty($configArray['safe_mode']['local_value']) && $configArray['safe_mode']['local_value'] != 'off') || (@ini_get('safe_mode') && ini_get('safe_mode') != 'off')) {
-	?>
-	<p>PHP Safemode is enabled. You must disable it to install this software.<br />
-	Der PHP Safemode ist aktiviert. F&uuml;r den Betrieb der Software muss der Safemode deaktiviert sein.</p>
 	<?php
 }
 

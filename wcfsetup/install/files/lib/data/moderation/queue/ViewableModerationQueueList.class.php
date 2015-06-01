@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\moderation\queue;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
 
@@ -24,6 +24,11 @@ class ViewableModerationQueueList extends ModerationQueueList {
 	 * @var	boolean
 	 */
 	public $loadUserProfiles = false;
+	
+	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = ViewableModerationQueue::class;
 	
 	/**
 	 * @see	\wcf\data\DatabaseObjectList::$useQualifiedShorthand
@@ -55,15 +60,12 @@ class ViewableModerationQueueList extends ModerationQueueList {
 		if (!empty($this->objects)) {
 			$objects = array();
 			foreach ($this->objects as &$object) {
-				$object = new ViewableModerationQueue($object);
-				
 				if (!isset($objects[$object->objectTypeID])) {
 					$objects[$object->objectTypeID] = array();
 				}
 				
 				$objects[$object->objectTypeID][] = $object;
 			}
-			unset($object);
 			
 			foreach ($objects as $objectTypeID => $queueItems) {
 				ModerationQueueManager::getInstance()->populate($objectTypeID, $queueItems);
@@ -91,12 +93,7 @@ class ViewableModerationQueueList extends ModerationQueueList {
 					$userIDs[] = $object->getAffectedObject()->getUserID();
 				}
 				
-				$userProfiles = UserProfile::getUserProfiles($userIDs);
-				foreach ($this->objects as $object) {
-					if (isset($userProfiles[$object->getAffectedObject()->getUserID()])) {
-						$object->setUserProfile($userProfiles[$object->getAffectedObject()->getUserID()]);
-					}
-				}
+				UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 			}
 		}
 	}

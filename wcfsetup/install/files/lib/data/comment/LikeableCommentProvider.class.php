@@ -53,7 +53,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 		
 		// fetch comments
 		$commentList = new CommentList();
-		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+		$commentList->setObjectIDs($commentIDs);
 		$commentList->readObjects();
 		$comments = $commentList->getObjects();
 		

@@ -1,0 +1,156 @@
+.tabMenuContainer {
+	line-height: @wcfBaseLineHeight;
+	
+	> .tabMenu {
+		margin-top: @wcfGapLarge;
+		
+		> ul {
+			font-size: 0;
+			white-space: nowrap;
+			
+			> li {
+				border: 1px solid @wcfContainerBorderColor;
+				border-bottom-color: transparent;
+				display: inline-block;
+				margin-bottom: -2px;
+				
+				&:first-child {
+					border-top-left-radius: @wcfContainerBorderRadius;
+					
+					> a {
+						border-top-left-radius: @wcfContainerBorderRadius - 1;
+					}
+				}
+				
+				&:last-child {
+					border-top-right-radius: @wcfContainerBorderRadius;
+					
+					> a {
+						border-top-right-radius: @wcfContainerBorderRadius - 1;
+					}
+				}
+				
+				&:not(:first-child) {
+					border-left-width: 0;
+				}
+				
+				> a {
+					color: @wcfButtonColor;
+					display: block;
+					font-size: 1rem;
+					line-height: @wcfBaseLineHeight;
+					padding: 7px 14px 8px 14px;
+					text-decoration: none;
+					
+					.userSelectNone;
+					
+					&:hover {
+						color: @wcfLinkColor;
+					}
+				}
+				
+				&.active {
+					> a {
+						background-color: @wcfContainerBackgroundColor;
+						color: @wcfLinkColor;
+					}
+				}
+			}
+		}
+	}
+	
+	> div,
+	> fieldset{
+		background-color: @wcfContainerBackgroundColor;
+		border-width: 0;
+		border-radius: 0;
+		border: 1px solid @wcfContainerBorderColor;
+		display: none;
+		position: static;
+		
+		&.active {
+			display: block;
+		}
+	}
+	
+	> div {
+		> nav {
+			background-color: @wcfContainerBackgroundColor;
+			border-bottom: 1px solid @wcfContainerBorderColor;
+			margin: -14px -21px 14px -21px;
+			padding: @wcfGapTiny @wcfGapSmall;
+			
+			ul {
+				display: inline-block;
+				font-size: 0;
+				white-space: nowrap;
+				
+				li {
+					display: inline-block;
+					outline: 0;
+					vertical-align: baseline;
+					
+					&.active a,
+					&.active a:hover {
+						color: @wcfButtonPrimaryColor;
+						cursor: default;
+					}
+					
+					a {
+						color: @wcfButtonColor;
+						display: block;
+						font-size: @wcfSmallFontSize;
+						outline: 0;
+						padding: 0 @wcfGapSmall;
+						
+						.userSelectNone;
+						
+						&:hover {
+							color: @wcfButtonHoverColor;
+							text-decoration: none;
+						}
+					}
+					
+					&:not(:last-child) {
+						padding-right: @wcfGapTiny;
+					}
+					
+					&.dropdown > a {
+						font-size: 1.0rem;
+						padding: 4px 7px 2px;
+					}
+				}
+			}
+		}
+		
+		> div,
+		> fieldset {
+			border-top-width: 0;
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.messageTabMenu > div > nav {
+		margin: (@wcfGapTiny - @wcfGapSmall) -@wcfGapSmall @wcfGapSmall -@wcfGapSmall;
+	}
+}
+
+.dialogContentNoPadding .tabMenuContainer {
+	> nav {
+		margin-top: 0;
+		
+		> ul > li {
+			border-top-width: 0;
+			
+			&:first-child {
+				border-left-width: 0;
+			}
+		}
+	}
+	
+	> div,
+	> fieldset {
+		border-width: 1px 0 0 0;
+	}
+}

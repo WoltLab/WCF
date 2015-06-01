@@ -185,4 +185,11 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			}
 		}
 	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 */
+	public static function getDefaultFilename() {
+		return 'bbcode.xml';
+	}
 }

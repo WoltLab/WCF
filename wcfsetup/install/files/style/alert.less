@@ -48,6 +48,16 @@
 	float: right;
 }
 
+.notice.noticeDismissible {
+	opacity: 0;
+	
+	transition: opacity .3s linear;
+	
+	&.active {
+		opacity: 1;
+	}
+}
+
 /* types */
 .info {
 	background-color: @wcfInfoBackgroundColor;

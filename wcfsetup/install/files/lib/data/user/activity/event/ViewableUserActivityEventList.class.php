@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\user\activity\event;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\language\LanguageFactory;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
@@ -20,6 +20,11 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	 * @see	\wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\user\activity\event\UserActivityEvent';
+	
+	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = ViewableUserActivityEvent::class;
 	
 	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
@@ -50,9 +55,8 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 		
 		$userIDs = array();
 		$eventGroups = array();
-		foreach ($this->objects as &$event) {
+		foreach ($this->objects as $event) {
 			$userIDs[] = $event->userID;
-			$event = new ViewableUserActivityEvent($event);
 			
 			if (!isset($eventGroups[$event->objectTypeID])) {
 				$objectType = UserActivityEventHandler::getInstance()->getObjectType($event->objectTypeID);
@@ -64,16 +68,10 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 			
 			$eventGroups[$event->objectTypeID]['objects'][] = $event;
 		}
-		unset($event);
 		
 		// set user profiles
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $event) {
-				$event->setUserProfile($users[$event->userID]);
-			}
+			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 		}
 		
 		// parse events

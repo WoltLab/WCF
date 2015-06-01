@@ -15,11 +15,6 @@ if (!defined('PACKAGE_ID')) {
 // define the wcf-root-dir
 define('WCF_DIR', dirname(__FILE__).'/');
 
-// APC below 3.1.4 breaks PHP's late static binding
-if (extension_loaded('apc') && strnatcmp(phpversion('apc'), '3.1.4') < 0) {
-	apc_clear_cache('opcode');
-}
-
 // initiate wcf core
 require_once(WCF_DIR.'lib/system/WCF.class.php');
 new wcf\system\WCF();

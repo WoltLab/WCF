@@ -58,6 +58,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			'eventName' => $data['elements']['eventname'],
 			'niceValue' => $niceValue,
 			'name' => $data['attributes']['name'],
+			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
+			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : ''),
 			'templateCode' => $data['elements']['templatecode'],
 			'templateName' => $data['elements']['templatename']
 		);

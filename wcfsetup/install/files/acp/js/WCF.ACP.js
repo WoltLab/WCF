@@ -2754,3 +2754,93 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 		}
 	}
 });
+
+/**
+ * Initialize WCF.ACP.Tag namespace.
+ */
+WCF.ACP.Tag = { };
+
+/**
+ * Handles setting tags as synonyms of another tag by clipboard.
+ */
+WCF.ACP.Tag.SetAsSynonymsHandler = Class.extend({
+	/**
+	 * dialog to select the "main" tag
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * ids of the selected tags
+	 * @var	array<integer>
+	 */
+	_objectIDs: [ ],
+	
+	/**
+	 * Initializes the SetAsSynonymsHandler object.
+	 * 
+	 * @param	array<integer>		objectIDs
+	 */
+	init: function() {
+		// bind listener
+		$('.jsClipboardEditor').each($.proxy(function(index, container) {
+			var $container = $(container);
+			var $types = eval($container.data('types'));
+			if (WCF.inArray('com.woltlab.wcf.tag', $types)) {
+				$container.on('clipboardAction', $.proxy(this._execute, this));
+				return false;
+			}
+		}, this));
+	},
+	
+	/**
+	 * Handles clipboard actions.
+	 * 
+	 * @param	object		event
+	 * @param	string		type
+	 * @param	string		actionName
+	 * @param	object		parameters
+	 */
+	_execute: function(event, type, actionName, parameters) {
+		if (type !== 'com.woltlab.wcf.tag' || actionName !== 'com.woltlab.wcf.tag.setAsSynonyms') {
+			return;
+		}
+		
+		this._objectIDs = parameters.objectIDs;
+		if (this._dialog === null) {
+			this._dialog = $('<div id="setAsSynonymsDialog" />').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				closable: false,
+				title: WCF.Language.get('wcf.acp.tag.setAsSynonyms')
+			});
+		}
+		
+		this._dialog.html(parameters.template);
+		$button = this._dialog.find('button[data-type="submit"]').disable().click($.proxy(this._submit, this));
+		this._dialog.find('input[type=radio]').change(function() { $button.enable(); });
+	},
+	
+	/**
+	 * Saves the tags as synonyms.
+	 */
+	_submit: function() {
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				actionName: 'setAsSynonyms',
+				className: 'wcf\\data\\tag\\TagAction',
+				objectIDs: this._objectIDs,
+				parameters: {
+					tagID: this._dialog.find('input[name="tagID"]:checked').val()
+				}
+			},
+			success: $.proxy(function() {
+				this._dialog.wcfDialog('close');
+				
+				new WCF.System.Notification().show(function() {
+					window.location.reload();
+				});
+			}, this)
+		});
+	}
+});

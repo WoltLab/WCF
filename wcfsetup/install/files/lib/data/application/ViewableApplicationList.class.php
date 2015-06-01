@@ -13,14 +13,7 @@ namespace wcf\data\application;
  */
 class ViewableApplicationList extends ApplicationList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
 	 */
-	public function readObjects() {
-		parent::readObjects();
-		
-		foreach ($this->objects as &$application) {
-			$application = new ViewableApplication($application);
-		}
-		unset($application);
-	}
+	public $decoratorClassName = ViewableApplication::class;
 }

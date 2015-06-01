@@ -355,7 +355,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 */
 	public static function getUsers(array $userIDs) {
 		$userList = new UserList();
-		$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
+		$userList->setObjectIDs($userIDs);
 		$userList->readObjects();
 		
 		return $userList->getObjects();

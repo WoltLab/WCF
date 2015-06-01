@@ -23,7 +23,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -38,7 +37,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.1.4 (Typhoon)');
+define('WCF_VERSION', '2.2.0 Alpha 1 (Vortex)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -137,7 +136,6 @@ class WCF {
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
-		$this->initMagicQuotes();
 		$this->initDB();
 		$this->loadOptions();
 		$this->initSession();
@@ -180,41 +178,6 @@ class WCF {
 		}
 		catch (\Exception $exception) {
 			die("<pre>WCF::destruct() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
-		}
-	}
-	
-	/**
-	 * Removes slashes in superglobal gpc data arrays if 'magic quotes gpc' is enabled.
-	 */
-	protected function initMagicQuotes() {
-		if (function_exists('get_magic_quotes_gpc')) {
-			if (@get_magic_quotes_gpc()) {
-				if (!empty($_REQUEST)) {
-					$_REQUEST = ArrayUtil::stripslashes($_REQUEST);
-				}
-				if (!empty($_POST)) {
-					$_POST = ArrayUtil::stripslashes($_POST);
-				}
-				if (!empty($_GET)) {
-					$_GET = ArrayUtil::stripslashes($_GET);
-				}
-				if (!empty($_COOKIE)) {
-					$_COOKIE = ArrayUtil::stripslashes($_COOKIE);
-				}
-				if (!empty($_FILES)) {
-					foreach ($_FILES as $name => $attributes) {
-						foreach ($attributes as $key => $value) {
-							if ($key != 'tmp_name') {
-								$_FILES[$name][$key] = ArrayUtil::stripslashes($value);
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		if (function_exists('set_magic_quotes_runtime')) {
-			@set_magic_quotes_runtime(0);
 		}
 	}
 	
@@ -340,6 +303,7 @@ class WCF {
 		$factory->load();
 		
 		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**

@@ -8,6 +8,7 @@ body {
 	color: @wcfColor;
 	font-family: @wcfBaseFontFamily;
 	line-height: @wcfBaseLineHeight;
+	position: relative;
 	word-wrap: break-word;
 }
 
@@ -219,6 +220,35 @@ fieldset {
 	}
 }
 
+.elementPointer {
+	position: absolute;
+	top: 0;
+	transform: translateY(-100%);
+	
+	&.center {
+		left: 50%;
+		transform: translateX(-50%) translateY(-100%);
+	}
+	
+	&.left {
+		left: 4px;
+	}
+	
+	&.right {
+		right: 4px;
+	}
+	
+	&.flipVertical {
+		bottom: 0;
+		top: auto;
+		transform: translateY(100%);
+		
+		&.center {
+			transform: translateX(-50%) translateY(100%);
+		}
+	}
+}
+
 /* balloon tooltips */
 .balloonTooltip {
 	background-color: @wcfTooltipBackgroundColor;
@@ -226,91 +256,33 @@ fieldset {
 	color: @wcfTooltipColor;
 	font-size: @wcfSmallFontSize;
 	max-width: 300px;
+	opacity: 0;
 	padding: 5px 10px 7px;
 	position: absolute;
+	visibility: hidden;
 	z-index: 800;
 	
-	.pointer {
+	transition: visibility 0s linear .2s, opacity .2s linear .2s;
+	
+	> .elementPointer {
 		border-color: @wcfTooltipBackgroundColor transparent;
 		border-style: solid;
 		border-width: 0 5px 5px;
-		left: 50%;
-		position: absolute;
-		top: -5px;
+		
+		&.flipVertical {
+			border-width: 5px 5px 0;
+		}
 	}
 	
 	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
 	
-	&.inverse {
-		.pointer {
-			border-width: 5px 5px 0;
-		}
-	}
-}
-
-/* popover */
-.popover {
-	background-color: rgba(0, 0, 0, .4);
-	border-radius: 6px;
-	padding: @wcfGapSmall;
-	position: absolute;
-	vertical-align: middle;
-	width: 400px !important;
-	z-index: 500;
-	
-	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 7px);
-	
-	> .icon-spinner {
-		color: white;
-		left: 50%;
-		margin-left: -21px;
-		margin-top: -21px;
-		position: absolute;
-		top: 50%;
+	&.active {
+		opacity: 1;
+		visibility: visible;
 		
-		.textShadow(black);
-	}
-	
-	> .popoverContent {
-		background-color: @wcfContainerBackgroundColor;
-		border-radius: 6px;
-		color: @wcfColor;
-		max-height: 300px;
-		min-height: 16px;
-		opacity: 0;
-		overflow: hidden;
-		padding: @wcfGapSmall @wcfGapMedium;
-	}
-	
-	&::after {
-		border: 10px solid transparent;
-		content: "";
-		display: inline-block;
-		position: absolute;
-		z-index: 100;
-	}
-	
-	&.top::after {
-		border-bottom-width: 0;
-		border-top-color: rgba(0, 0, 0, .3);
-		bottom: -10px;
-	}
-	
-	&.bottom::after {
-		border-bottom-color: rgba(0, 0, 0, .3);
-		border-top-width: 0;
-		top: -10px;
-	}
-	
-	&.right::after {
-		left: 10px;
-	}
-	
-	&.left::after {
-		right: 10px;
+		transition-delay: 0s;
 	}
 }
-
 
 /* ### badges ### */
 /* default values */

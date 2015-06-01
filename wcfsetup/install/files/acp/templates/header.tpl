@@ -28,6 +28,8 @@
 	<script src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@LAST_UPDATE_TIME}"></script>
+	<script src="{@$__wcf->getPath()}js/require.js?v={@LAST_UPDATE_TIME}"></script>
+	<script src="{@$__wcf->getPath()}js/require.config.js?v={@LAST_UPDATE_TIME}"></script>
 	<script>
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -40,16 +42,21 @@
 	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
 	
 	<script>
-		//<![CDATA[
-		$(function() {
-			{* work-around for unknown core-object during WCFSetup *}
-			{if PACKAGE_ID}
-				{assign var=activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()|array_reverse}
-				var $activeMenuItems = [{implode from=$activeMenuItems item=_menuItem}'{$_menuItem}'{/implode}];
-				new WCF.ACP.Menu($activeMenuItems);
-			{/if}
-			
-			WCF.Language.addObject({
+		requirejs.config({
+			baseUrl: '{@$__wcf->getPath()}js'
+		});
+		
+		define('jquery', [], function() { return window.jQuery; });
+		
+		$.holdReady(true);
+		require(['WoltLab/WCF/Bootstrap'], function(bootstrap) {
+			bootstrap.setup();
+		});
+	</script>
+	
+	<script>
+		require(['Language'], function(Language) {
+			Language.addObject({
 				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
 				'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
 				'__months': [ '{lang}wcf.date.month.january{/lang}', '{lang}wcf.date.month.february{/lang}', '{lang}wcf.date.month.march{/lang}', '{lang}wcf.date.month.april{/lang}', '{lang}wcf.date.month.may{/lang}', '{lang}wcf.date.month.june{/lang}', '{lang}wcf.date.month.july{/lang}', '{lang}wcf.date.month.august{/lang}', '{lang}wcf.date.month.september{/lang}', '{lang}wcf.date.month.october{/lang}', '{lang}wcf.date.month.november{/lang}', '{lang}wcf.date.month.december{/lang}' ], 
@@ -108,16 +115,24 @@
 				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
+		});
+		
+		$(function() {
+			{* work-around for unknown core-object during WCFSetup *}
+			{if PACKAGE_ID}
+				{assign var=activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()|array_reverse}
+				var $activeMenuItems = [{implode from=$activeMenuItems item=_menuItem}'{$_menuItem}'{/implode}];
+				new WCF.ACP.Menu($activeMenuItems);
+			{/if}
 			
 			if (jQuery.browser.touch) $('html').addClass('touch');
-			new WCF.Date.Time();
+			//new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
-			new WCF.Effect.BalloonTooltip();
 			
-			WCF.Dropdown.init();
+			//WCF.Dropdown.init();
 			WCF.System.PageNavigation.init('.pageNavigation');
 			WCF.Date.Picker.init();
-			WCF.System.FlexibleMenu.init();
+			//WCF.System.FlexibleMenu.init();
 			
 			{if $__wcf->user->userID}
 				new WCF.ACP.Search();
@@ -127,7 +142,6 @@
 			
 			$('form[method=get]').attr('method', 'post');
 		});
-		//]]>
 	</script>
 </head>
 

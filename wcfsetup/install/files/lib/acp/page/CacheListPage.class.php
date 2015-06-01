@@ -82,6 +82,11 @@ class CacheListPage extends AbstractPage {
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
 			break;
+			
+			case 'wcf\system\cache\source\RedisCacheSource':
+				// set version
+				$this->cacheData['version'] = 'Redis '.CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
+			break;
 		}
 		
 		$this->readCacheFiles('language', FileUtil::unifyDirSeparator(WCF_DIR.'language'));

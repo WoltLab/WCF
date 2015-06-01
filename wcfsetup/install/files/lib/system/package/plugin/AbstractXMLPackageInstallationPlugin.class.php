@@ -347,9 +347,25 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 */
+	public static function getDefaultFilename() {
+		$classParts = explode('\\', get_called_class());
+		
+		return lcfirst(str_replace('PackageInstallationPlugin', '', array_pop($classParts))).'.xml';
+	}
+	
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
+		if (!$instruction) {
+			$defaultFilename = static::getDefaultFilename();
+			if ($defaultFilename) {
+				$instruction = $defaultFilename;
+			}
+		}
+		
 		if (preg_match('~\.xml$~', $instruction)) {
 			// check if file actually exists
 			try {

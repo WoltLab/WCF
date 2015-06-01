@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\option\category;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 
 /**
  * Represents an option category.
@@ -13,6 +15,9 @@ use wcf\data\DatabaseObject;
  * @category	Community Framework
  */
 class OptionCategory extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */

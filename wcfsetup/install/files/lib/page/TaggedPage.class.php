@@ -74,34 +74,8 @@ class TaggedPage extends MultipleLinkPage {
 		// filter taggable object types by options and permissions
 		$this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.tagging.taggableObject');
 		foreach ($this->availableObjectTypes as $key => $objectType) {
-			if ($objectType->options) {
-				$hasEnabledOption = false;
-				$options = explode(',', strtoupper($objectType->options));
-				foreach ($options as $option) {
-					if (defined($option) && constant($option)) {
-						$hasEnabledOption = true;
-						break;
-					}
-				}
-				
-				if (!$hasEnabledOption) {
-					unset($this->availableObjectTypes[$key]);
-				}
-			}
-			
-			if ($objectType->permissions) {
-				$hasPermission = false;
-				$permissions = explode(',', $objectType->permissions);
-				foreach ($permissions as $permission) {
-					if (WCF::getSession()->getPermission($permission)) {
-						$hasPermission = true;
-						break;
-					}
-				}
-				
-				if (!$hasPermission) {
-					unset($this->availableObjectTypes[$key]);
-				}
+			if (!$objectType->validateOptions() || !$objectType->validatePermissions()) {
+				unset($this->availableObjectTypes[$key]);
 			}
 		}
 		

@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\group\option\category;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 
 /**
  * Represents a user group options category.
@@ -13,6 +15,9 @@ use wcf\data\DatabaseObject;
  * @category	Community Framework
  */
 class UserGroupOptionCategory extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */

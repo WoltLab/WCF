@@ -1,0 +1,34 @@
+<?php
+namespace wcf\data;
+
+/**
+ * Provides a method for validating database object options.
+ * 
+ * @author	Matthias Schmidt
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	data
+ * @category	Community Framework
+ */
+trait TDatabaseObjectOptions {
+	/**
+	 * Returns true if at least one of the options required by this object is set.
+	 * 
+	 * @return	boolean
+	 */
+	public function validateOptions() {
+		if ($this->options) {
+			$options = explode(',', strtoupper($this->options));
+			foreach ($options as $option) {
+				if (defined($option) && constant($option)) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		return true;
+	}
+}
