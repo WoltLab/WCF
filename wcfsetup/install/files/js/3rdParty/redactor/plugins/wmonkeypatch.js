@@ -417,6 +417,18 @@ RedactorPlugins.wmonkeypatch = function() {
 				return html.replace(/<br\s?\/?>$/i, '');
 			};
 			
+			// clean.removeSpaces
+			var mpRemoveSpaces = this.clean.removeSpaces;
+			this.clean.removeSpaces = (function(html) {
+				html = html.replace(/\u200C/g, '__wcf_zwnj__');
+				html = html.replace(/\u200D/g, '__wcf_zwj__');
+				
+				html = mpRemoveSpaces.call(this, html);
+				
+				html = html.replace(/__wcf_zwnj__/g, '\u200C');
+				return html.replace(/__wcf_zwj__/g, '\u200D');
+			});
+			
 			// clean.onSet
 			var $mpOnSet = this.clean.onSet;
 			this.clean.onSet = (function(html) {
