@@ -115,7 +115,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 				'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
 				'logTime' => TIME_NOW,
 				'transactionID' => $transactionID,
-				'logMessage' => $e,
+				'logMessage' => $e->getMessage(),
 				'transactionDetails' => serialize($transactionDetails)
 			)));
 			$action->executeAction();

@@ -44,6 +44,9 @@ RedactorPlugins.wbbcode = function() {
 			
 			var $mpCleanOnSync = this.clean.onSync;
 			this.clean.onSync = (function(html) {
+				html = html.replace(/\u200C/g, '__wcf_zwnj__');
+				html = html.replace(/\u200D/g, '__wcf_zwj__');
+				
 				if ($skipOnSyncReplacementOnce === true) {
 					$skipOnSyncReplacementOnce = false;
 				}
@@ -51,7 +54,10 @@ RedactorPlugins.wbbcode = function() {
 					html = html.replace(/<p><br([^>]+)?><\/p>/g, '<p>@@@wcf_empty_line@@@</p>');
 				}
 				
-				return $mpCleanOnSync.call(this, html);
+				html = $mpCleanOnSync.call(this, html);
+				
+				html = html.replace(/__wcf_zwnj__/g, '\u200C');
+				return html.replace(/__wcf_zwj__/g, '\u200D');
 			}).bind(this);
 			
 			if (this.wutil.getOption('woltlab.autosaveOnce')) {

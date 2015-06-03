@@ -349,28 +349,50 @@ class WCF {
 	 * Executes the blacklist.
 	 */
 	protected function initBlacklist() {
+		$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+		
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
 			if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(self::getSession()->ipAddress), BLACKLIST_IP_ADDRESSES)) {
-				throw new PermissionDeniedException();
+				if ($isAjax) {
+					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+				}
+				else {
+					throw new PermissionDeniedException();
+				}
 			}
 			else if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
-				throw new PermissionDeniedException();
+				if ($isAjax) {
+					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+				}
+				else {
+					throw new PermissionDeniedException();
+				}
 			}
 		}
 		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
 			if (!StringUtil::executeWordFilter(self::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
-				throw new PermissionDeniedException();
+				if ($isAjax) {
+					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+				}
+				else {
+					throw new PermissionDeniedException();
+				}
 			}
 		}
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
 			if (!StringUtil::executeWordFilter(@gethostbyaddr(self::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
-				throw new PermissionDeniedException();
+				if ($isAjax) {
+					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+				}
+				else {
+					throw new PermissionDeniedException();
+				}
 			}
 		}
 		
 		// handle banned users
 		if (self::getUser()->userID && self::getUser()->banned) {
-			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+			if ($isAjax) {
 				throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
 			}
 			else {
