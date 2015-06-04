@@ -79,7 +79,7 @@
 		<item name="wcf.global.createUser.error"><![CDATA[Es sind Fehler bei Ihrer Registrierung aufgetreten. Bitte überprüfen Sie die markierten Felder.]]></item>
 		<item name="wcf.global.createUser.error.empty"><![CDATA[Bitte füllen Sie dieses Eingabefeld aus.]]></item>
 		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[Der eingegebene Benutzername ist ungültig. Ein gültiger Benutzername muss mindestens 3 und maximal 20 Zeichen lang sein.]]></item>
-		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[Die eingegebene E-Mail-Adresse ist ungültig. Eine gültige E-Mail-Adresse muss dem Format name@domain.tld entsprechen.]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[Die eingegebene E-Mail-Adresse ist ungültig. Eine gültige E-Mail-Adresse muss dem Format name@example.com entsprechen.]]></item>
 		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch. Bitte tragen Sie zur Sicherheit in beide Eingabefelder die selbe E-Mail-Adresse ein.]]></item>
 		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch. Bitte tragen Sie zur Sicherheit in beide Eingabefelder das selbe Kennwort ein.]]></item>
 		<item name="wcf.global.wcfDir.error"><![CDATA[Beim Versuch die Dateien zu entpacken, ist folgender Fehler aufgetreten:
