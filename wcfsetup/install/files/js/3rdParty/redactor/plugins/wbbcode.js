@@ -2148,7 +2148,12 @@ RedactorPlugins.wbbcode = function() {
 				
 				if ($current && $current.parentNode === this.$editor[0]) {
 					if ($current.innerHTML.length) {
-						this.wutil.setCaretAfter($current);
+						if ($current.innerHTML === '\u200b') {
+							this.caret.setEnd($current);
+						}
+						else {
+							this.wutil.setCaretAfter($current);
+						}
 					}
 				}
 				
@@ -2174,6 +2179,15 @@ RedactorPlugins.wbbcode = function() {
 					
 					$quote.removeAttr('id');
 					this.wutil.setCaretAfter($quote[0]);
+					
+					// inserting a quote can spawn an additional empty newline in front
+					var prev = $quote[0].previousElementSibling;
+					if (prev !== null && prev.nodeName === 'P' && prev.innerHTML === '\u200B') {
+						prev = prev.previousElementSibling;
+						if (prev !== null && prev.nodeName === 'P' && (prev.innerHTML === '\u200B' || prev.innerHTML === '<br>')) {
+							prev.parentNode.removeChild(prev.nextElementSibling);
+						}
+					}
 				}
 				
 				this.wbbcode.observeQuotes();
@@ -2373,12 +2387,12 @@ RedactorPlugins.wbbcode = function() {
 					if (!$sibling.innerHTML.length) {
 						$sibling.parentElement.removeChild($sibling);
 					}
-					else if ($sibling.innerHTML === '\u200b') {
+					/*else if ($sibling.innerHTML === '\u200b') {
 						var $adjacentSibling = $sibling[position];
 						if ($adjacentSibling && $adjacentSibling.nodeType === Node.ELEMENT_NODE && $adjacentSibling.tagName === 'P' && $adjacentSibling.innerHTML.length) {
 							$sibling.parentElement.removeChild($sibling);
 						}
-					}
+					}*/
 				}
 			}).bind(this);
 			
