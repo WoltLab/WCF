@@ -9026,7 +9026,7 @@ WCF.Upload = Class.extend({
 	 * @param	jQuery		button
 	 */
 	_insertButton: function(button) {
-		this._buttonSelector.append(button);
+		this._buttonSelector.prepend(button);
 	},
 	
 	/**
