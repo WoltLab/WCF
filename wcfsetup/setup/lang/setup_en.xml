@@ -3,7 +3,7 @@
 	<category name="wcf.global">
 		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} installation]]></item>
 		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
-		<item name="wcf.global.title.subtitle"><![CDATA[Prepairing Installation]]></item>
+		<item name="wcf.global.title.subtitle"><![CDATA[Preparing Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
@@ -61,7 +61,7 @@
 		<item name="wcf.global.configureDB.database.description"><![CDATA[The database must already exist.]]></item>
 		<item name="wcf.global.configureDB.number"><![CDATA[Installation Number]]></item>
 		<item name="wcf.global.configureDB.number.description"><![CDATA[The installation number allows you to install multiple installations of this software into the same database. If this is your first installation in this database, you should enter <em>1</em>.]]></item>	
-		<item name="wcf.global.configureDB.error"><![CDATA[An error has accured while trying to connect to your database:
+		<item name="wcf.global.configureDB.error"><![CDATA[An error has occurred while trying to connect to your database:
 		<br /><strong>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</strong>]]></item>
 		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your “{$dbName}” Database:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />To solve this problem, please do one of the following:<br />1. Remove the table{if $conflictedTables|count > 1}s{/if} manually and continue the installation with the “Next” button or<br />2. You re-enter the database access information, but to a different database and continue the installation with the “Next” button or<br />3. Enter a new installation number, not forgetting to continue the installation with the “Next” Button.]]></item>
 		<item name="wcf.global.configureDB.class"><![CDATA[Database Type]]></item>
@@ -75,10 +75,10 @@
 		<item name="wcf.global.createUser.confirmEmail"><![CDATA[Confirm Email Address]]></item>
 		<item name="wcf.global.createUser.password"><![CDATA[Password]]></item>
 		<item name="wcf.global.createUser.confirmPassword"><![CDATA[Confirm Password]]></item>
-		<item name="wcf.global.createUser.error"><![CDATA[Errors have occured while registering the user account, please check the marked fields for errors.]]></item>
+		<item name="wcf.global.createUser.error"><![CDATA[Errors have occurred while registering the user account, please check the marked fields for errors.]]></item>
 		<item name="wcf.global.createUser.error.empty"><![CDATA[This field can not be left empty.]]></item>
 		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[The username you have given is invalid. A valid username must be between 3 and 20 characters long.]]></item>
-		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[The email address you have given is invalid. A valid e-mail address must be in the format of name@domain.tld]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[The email address you have given is invalid. A valid email address must be in the format of name@example.com]]></item>
 		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[The email addresses you have given are not identical. For security reasons, please make sure that both email address fields have been filled in and are identical.]]></item>
 		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[The passwords you have given are not identical. For security reasons, please make sure that both password fields have been filled in and are identical.]]></item>
 		<item name="wcf.global.wcfDir.error"><![CDATA[An Error has accured while extracting the required files:

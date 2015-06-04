@@ -65,7 +65,7 @@
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
-		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of bbcodes and smilies.]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of BBCodes and smilies.]]></item>
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
 		
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
@@ -117,26 +117,26 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cronjob.add"><![CDATA[Add Cronjob]]></item>
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Day of Month]]></item>
-		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Day of the month (1 - 31), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Day of the month (1 - 31), the cronjob should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
 		<item name="wcf.acp.cronjob.startDow"><![CDATA[Weekday]]></item>
-		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Weekday (0 - 6 with Sunday = 0, or mon - sun), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Weekday (0 - 6 with Sunday = 0, or mon - sun), the cronjob should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startDowShort"><![CDATA[DoW]]></item>
 		<item name="wcf.acp.cronjob.startHour"><![CDATA[Hour]]></item>
-		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Hours (0 - 23), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Hours (0 - 23), the cronjob should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startHourShort"><![CDATA[h]]></item>
 		<item name="wcf.acp.cronjob.startMinute"><![CDATA[Minute]]></item>
-		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minutes (0 - 59), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minutes (0 - 59), the cronjob should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startMinuteShort"><![CDATA[m]]></item>
 		<item name="wcf.acp.cronjob.startMonth"><![CDATA[Month]]></item>
-		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Month (1 - 12, or jan - dec), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Month (1 - 12, or jan - dec), the cronjob should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Next Scheduled Execution]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Edit Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Schedule]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cronjobs requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following webpage: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>.]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cronjobs requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following web page: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>.]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Run Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Invalid time format.]]></item>
@@ -179,11 +179,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Filesystem]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Installation Path]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Required if file-based data (e.g. avatars or attachments) should be imported.]]></item>
-		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[An error occured while trying to access the database:
+		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[An error occurred while trying to access the database:
 		<br /><strong>{$exception->getMessage()}<br />{$exception->getErrorDesc()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Unable to find a valid installation with the given path.]]></item>
 		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Settings]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Behavior for colliding user acounts]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Behavior for colliding user accounts]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Rename users]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Merge users with same account name]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Merge users with same account name and email address]]></item>
@@ -228,7 +228,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group “{$group->groupName|language}”?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
-		<item name="wcf.acp.group.option.editingOption"><![CDATA[Edit Usergroup Option]]></item>
+		<item name="wcf.acp.group.option.editingOption"><![CDATA[Edit User Group Option]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Heads up! You’re a member of this user group, changes may cause yourself being locked out from the Administration Control Panel.]]></item>
 		<item name="wcf.acp.group.group1"><![CDATA[Everyone]]></item>
 		<item name="wcf.acp.group.group2"><![CDATA[Guests]]></item>
@@ -324,7 +324,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.avatar.allowedFileExtensions"><![CDATA[Allowed File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canSeeAvatars"><![CDATA[Can see avatars of other users]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canUploadAvatar"><![CDATA[Can upload own avatar]]></item>
-		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximimum File Size]]></item>
+		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximum File Size]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change email address]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Can edit own user title]]></item>
 		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can send emails to other users]]></item>
@@ -391,7 +391,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[Community Framework&trade; Version]]></item>
 		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
 		<item name="wcf.acp.index.system.os"><![CDATA[Operating System]]></item>
-		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
+		<item name="wcf.acp.index.system.webserver"><![CDATA[Web Server]]></item>
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP Version]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
 		<item name="wcf.acp.index.system.load"><![CDATA[Current UNIX Load]]></item>
@@ -437,7 +437,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.language.export.allPackages"><![CDATA[All Packages]]></item>
 		<item name="wcf.acp.language.export.customValues"><![CDATA[Include custom items]]></item>
 		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.language.import.error"><![CDATA[Errors occured while importing the language file:]]></item>
+		<item name="wcf.acp.language.import.error"><![CDATA[Errors occurred while importing the language file:]]></item>
 		<item name="wcf.acp.language.import.source.file"><![CDATA[Path to Language File]]></item>
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Enter the relative path to a valid XML language file.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Upload Language File]]></item>
@@ -469,11 +469,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[The page or action requires the master password for security reasons, the password will be remembered for your current session. In case you forgot the password, please reset it by removing the file <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.notValid"><![CDATA[Password is incorrect. In case you forgot the password, please reset it by removing the file <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Passwords do not match.]]></item>
-		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Password is regarded unsafe. It should be at least 8 characters, containing upper and lower latin letters, as well as numbers and special symbols.]]></item>
+		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Password is regarded unsafe. It should be at least 8 characters, containing upper and lower Latin letters, as well as numbers and special symbols.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
-		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other webpages.]]></item>
+		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other web pages.]]></item>
 	</category>
 	
 	<category name="wcf.acp.menu">
@@ -621,7 +621,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.export.download"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Downloads a backup of the configuration settings to your local machine. This is not a replacement for a backup!]]></item>
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable gzip-compression]]></item>
-		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transfered to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
+		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transferred to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent browser-caching]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Prevents browser’s caching ensuring your users are always viewing the latest content. Increases both traffic and server load.]]></item>
 		<item name="wcf.acp.option.http_gzip_level"><![CDATA[Gzip-Compression Level]]></item>
@@ -660,7 +660,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Use “-f” parameter]]></item>
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Some servers require the “-f” parameter to send emails. Enable this option if you have any trouble sending emails.]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Use formatted email address]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender and receiver addresses will be converted into “Name &lt;email@domain.tld&gt;”. This option is not supported by most mail-servers, try turning it off if you experience any issues.]]></item>
+		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender and receiver addresses will be converted into “Name &lt;email@example.com&gt;”. This option is not supported by most mail-servers, try turning it off if you experience any issues.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
@@ -695,7 +695,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Local Version]]></item>
 		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
 		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[Cloudflare CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[CloudFlare CDN]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in production environments.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
@@ -957,7 +957,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Uninstallation completed]]></item>
 		<item name="wcf.acp.package.uninstallation.step.uninstall"><![CDATA[Package “{$queue->packageName}” is being uninstalled …]]></item>
 		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Uninstallation]]></item>
-		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Prepairing uninstallation …]]></item>
+		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Preparing uninstallation …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[The package list could not be retrieved]]></item>
@@ -976,7 +976,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.update.step.prepare"><![CDATA[Preparing Update …]]></item>
 		<item name="wcf.acp.package.update.excludedPackages"><![CDATA[Conflict]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluded"><![CDATA[Installed Packages]]></item>
-		<item name="wcf.acp.package.update.excludedPackages.excluded.description"><![CDATA[The following pakages are not compatible with the packages to be installed]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluded.description"><![CDATA[The following packages are not compatible with the packages to be installed]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluded.package"><![CDATA[“{$excludedPackage[existingPackageName]}” in version “{$excludedPackage[existingPackageVersion]}” prevents {if $excludedPackage[action] == 'update'}an update{else}the installation{/if} of “{$excludedPackage[packageName]}” {if $excludedPackage[action] == 'update'}to{else}in{/if} version “{$excludedPackage[packageVersion]}”]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding"><![CDATA[Zu installierende Pakete]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.description"><![CDATA[Die folgenden zu installierenden Pakete sind mit installierten Paketen nicht kompatibel]]></item>
@@ -1063,7 +1063,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit Server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error Message]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
-		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Errors occured on last connection attempt:]]></item>
+		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Errors occurred on last connection attempt:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Password]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Authentication password (optional)]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Username]]></item>
@@ -1113,7 +1113,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.add"><![CDATA[Add Style]]></item>
 		<item name="wcf.acp.style.advanced"><![CDATA[Advanced Settings]]></item>
 		<item name="wcf.acp.style.advanced.individualLess"><![CDATA[Individual CSS and LESS]]></item>
-		<item name="wcf.acp.style.advanced.individualLess.description"><![CDATA[Content will be appended to the stylesheet and may contain pure CSS. Furthermore you can use LESS including all Mixins provided by Community Framework.]]></item>
+		<item name="wcf.acp.style.advanced.individualLess.description"><![CDATA[Content will be appended to the style sheet and may contain pure CSS. Furthermore you can use LESS including all Mixins provided by Community Framework.]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess"><![CDATA[LESS Variables Override]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Allows you to override LESS variables not available through the style editor itself. Syntax: “@variableName: variableValue;”, referred variables must be declared prior any attempt to read their value.]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error"><![CDATA[Provided value was invalid, please verify these items:]]></item>
@@ -1182,7 +1182,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[List Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
-		<item name="wcf.acp.style.packageName.description"><![CDATA[Enter a package identifier matching the pattern “tld.domain.packageName”. For exmaple if you own the domain “example.com” and created a style called “Blue Sunrise”, you could pick “com.example.style.blueSunrise” as a valid and descriptive identifier.]]></item>
+		<item name="wcf.acp.style.packageName.description"><![CDATA[Enter a package identifier matching the pattern “tld.domain.packageName”. For example if you own the domain “example.com” and created a style called “Blue Sunrise”, you could pick “com.example.style.blueSunrise” as a valid and descriptive identifier.]]></item>
 		<item name="wcf.acp.style.packageName.error.notValid"><![CDATA[Package Identifier is invalid.]]></item>
 		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Package Identifiers cannot begin with “com.woltlab.”]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Date]]></item>
@@ -1415,7 +1415,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[File is too big.]]></item>
 		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments.]]></item>
 		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have chosen too many attachments, remaining: #remaining#.]]></item>
-		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occured during upload.]]></item>
+		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occurred during upload.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[Maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br />
 Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br />
 Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
@@ -1806,7 +1806,7 @@ Errors are:
 	</category>
 	
 	<category name="wcf.imageViewer">
-		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Fullscreen Mode]]></item>
+		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
 		<item name="wcf.imageViewer.button.full"><![CDATA[View Source Image]]></item>
 		<item name="wcf.imageViewer.button.openSlideshow"><![CDATA[Slideshow]]></item>
 		<item name="wcf.imageViewer.seriesIndex"><![CDATA[{literal}{x} of {y}{/literal}]]></item>
@@ -1861,7 +1861,7 @@ Errors are:
 		<item name="wcf.message.settings.enableSmilies"><![CDATA[Enable smilies]]></item>
 		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smilies will be displayed as a smiley-image.]]></item>
 		<item name="wcf.message.settings.preParse"><![CDATA[Detect links]]></item>
-		<item name="wcf.message.settings.preParse.description"><![CDATA[Links to webpages are automatically detected.]]></item>
+		<item name="wcf.message.settings.preParse.description"><![CDATA[Links to web pages are automatically detected.]]></item>
 		<item name="wcf.message.settings.showSignature"><![CDATA[Show signature]]></item>
 		<item name="wcf.message.settings.showSignature.description"><![CDATA[Appends signature to this message, can be edited in your profile.]]></item>
 		<item name="wcf.message.share"><![CDATA[Share]]></item>
@@ -1990,7 +1990,7 @@ Errors are:
 		<item name="wcf.search.extended"><![CDATA[More Options]]></item>
 		<item name="wcf.search.general"><![CDATA[General Search Terms]]></item>
 		<item name="wcf.search.matchExactly"><![CDATA[Exact match]]></item>
-		<item name="wcf.search.period"><![CDATA[Timeframe]]></item>
+		<item name="wcf.search.period"><![CDATA[Time frame]]></item>
 		<item name="wcf.search.query"><![CDATA[Search for Term]]></item>
 		<item name="wcf.search.query.description"><![CDATA[Type in one or more search terms, each must be at least 4 characters.]]></item>
 		<item name="wcf.search.results"><![CDATA[Search Results]]></item>
@@ -2175,7 +2175,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.registerActivation.success"><![CDATA[User account has been activated.]]></item>
 		<item name="wcf.user.activationCode.error.notValid"><![CDATA[You have provided an invalid activation code. Click the button below if you wish to request a new activation code.]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[You may provide a different email address or leave it empty to send the code to the same email address again.]]></item>
-		<item name="wcf.user.newActivationCode.success"><![CDATA[Activiation code has been sent to “{$email}”.]]></item>
+		<item name="wcf.user.newActivationCode.success"><![CDATA[Activation code has been sent to “{$email}”.]]></item>
 		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[Email address is already activated.]]></item>
 		<item name="wcf.user.emailActivation.success"><![CDATA[Email address has been activated.]]></item>
 		<item name="wcf.user.registerActivation.info"><![CDATA[An email containing the 9-digit activation code was sent to “{$__wcf->user->email}”.]]></item>
@@ -2393,7 +2393,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[Image does not match the allowed file extensions.]]></item>
 		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[Image exceeds maximum file size.]]></item>
 		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[Image dimensions are below the minimum sizes.]]></item>
-		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occured.]]></item>
+		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occurred.]]></item>
 		<item name="wcf.user.avatar.upload.success"><![CDATA[Avatar has been saved.]]></item>
 	</category>
 	
