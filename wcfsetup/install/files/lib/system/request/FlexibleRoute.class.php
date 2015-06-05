@@ -150,8 +150,10 @@ class FlexibleRoute implements IRoute {
 						// check if this is the primary application and the landing page originates to the same application
 						$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
 						$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
-						if ($abbreviation != $application || $landingPage === null) {
-							$ignoreController = true;
+						if ($abbreviation == $application) {
+							if ($landingPage === null || $landingPage->getController() === $components['controller']) {
+								$ignoreController = true;
+							}
 						}
 					}
 				}
