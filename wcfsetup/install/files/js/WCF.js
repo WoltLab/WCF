@@ -8337,7 +8337,7 @@ jQuery.fn.extend({
 					document.body.appendChild(this[0]);
 				}
 				
-				UIDialog.show(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
+				UIDialog.openStatic(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
 			}
 		}).bind(this));
 	}

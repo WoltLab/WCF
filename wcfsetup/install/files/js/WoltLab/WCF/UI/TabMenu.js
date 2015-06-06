@@ -20,6 +20,7 @@ define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], fun
 		 */
 		setup: function() {
 			this._init();
+			this._selectErroneousTabs();
 			
 			DOMChangeListener.add('WoltLab/WCF/UI/TabMenu', this._init.bind(this));
 		},
@@ -44,6 +45,22 @@ define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], fun
 					_tabMenus.set(containerId, tabMenu);
 				}
 			}
+		},
+		
+		/**
+		 * Selects the first tab containing an element with class `formError`.
+		 */
+		_selectErroneousTabs: function() {
+			_tabMenus.forEach(function(tabMenu) {
+				var foundError = false;
+				tabMenu.getContainers().forEach(function(container) {
+					if (!foundError && container.getElementsByClassName('formError').length) {
+						foundError = true;
+						
+						tabMenu.select(container.id);
+					}
+				});
+			});
 		},
 		
 		/**

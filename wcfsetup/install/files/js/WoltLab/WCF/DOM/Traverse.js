@@ -22,6 +22,10 @@ define(['DOM/Util'], function(DOMUtil) {
 	];
 	
 	var _children = function(el, type, value) {
+		if (!(el instanceof Element)) {
+			throw new TypeError("Expected a valid element as first argument.");
+		}
+		
 		var children = [];
 		
 		for (var i = 0; i < el.childElementCount; i++) {
@@ -34,6 +38,10 @@ define(['DOM/Util'], function(DOMUtil) {
 	};
 	
 	var _parent = function(el, type, value) {
+		if (!(el instanceof Element)) {
+			throw new TypeError("Expected a valid element as first argument.");
+		}
+		
 		el = el.parentNode;
 		
 		while (el instanceof Element) {
@@ -48,6 +56,10 @@ define(['DOM/Util'], function(DOMUtil) {
 	};
 	
 	var _sibling = function(el, siblingType, type, value) {
+		if (!(el instanceof Element)) {
+			throw new TypeError("Expected a valid element as first argument.");
+		}
+		
 		if (el instanceof Element) {
 			if (el[siblingType] !== null && _probe[type](el[siblingType], value)) {
 				return el[siblingType];

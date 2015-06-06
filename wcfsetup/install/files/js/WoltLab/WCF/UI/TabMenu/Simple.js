@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/UI/TabMenu/Simple
  */
-define(['Dictionary', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMUtil, EventHandler) {
+define(['Dictionary', 'DOM/Traverse', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMTraverse, DOMUtil, EventHandler) {
 	"use strict";
 	
 	/**
@@ -29,15 +29,15 @@ define(['Dictionary', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMUtil,
 		 * Validates the properties and DOM structure of this container.
 		 * 
 		 * Expected DOM:
-		 * <element class="tabMenuContainer">
+		 * <div class="tabMenuContainer">
 		 * 	<nav>
 		 * 		<ul>
 		 * 			<li data-name="foo"><a>bar</a></li>
 		 * 		</ul>
 		 * 	</nav>
 		 * 	
-		 * 	<element id="foo">baz</element>
-		 * </element>
+		 * 	<div id="foo">baz</div>
+		 * </div>
 		 * 
 		 * @return	{boolean}	false if any properties are invalid or the DOM does not match the expectations
 		 */
@@ -46,7 +46,7 @@ define(['Dictionary', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMUtil,
 				return false;
 			}
 			
-			var nav = document.querySelector('#' + this._containerId + ' > nav');
+			var nav = DOMTraverse.childByTag(this._container, 'NAV');
 			if (nav === null) {
 				return false;
 			}
@@ -57,7 +57,7 @@ define(['Dictionary', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMUtil,
 				return false;
 			}
 			
-			var containers = document.querySelectorAll('#' + this._containerId + ' > .tabMenuContent');
+			var containers = DOMTraverse.childrenByTag(this._container, 'DIV');
 			for (var i = 0, length = containers.length; i < length; i++) {
 				var container = containers[i];
 				var name = container.getAttribute('data-name');
@@ -289,6 +289,24 @@ define(['Dictionary', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMUtil,
 			}
 			
 			return name;
+		},
+		
+		/**
+		 * Returns the list of registered content containers.
+		 * 
+		 * @returns	{Dictionary}	content containers
+		 */
+		getContainers: function() {
+			return this._containers;
+		},
+		
+		/**
+		 * Returns the list of registered tabs.
+		 * 
+		 * @returns	{Dictionary}	tab items
+		 */
+		getTabs: function() {
+			return this._tabs;
 		}
 	};
 	

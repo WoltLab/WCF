@@ -7,8 +7,8 @@
  * @module	WoltLab/WCF/UI/Dropdown/Simple
  */
 define(
-	[       'CallbackList', 'Dictionary', 'UI/Alignment', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 'UI/CloseOverlay'],
-	function(CallbackList,   Dictionary,   UIAlignment,    DOMChangeListener,    DOMTraverse,    DOMUtil,    UICloseOverlay)
+	[       'CallbackList', 'Core', 'Dictionary', 'UI/Alignment', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 'UI/CloseOverlay'],
+	function(CallbackList,   Core,   Dictionary,   UIAlignment,    DOMChangeListener,    DOMTraverse,    DOMUtil,    UICloseOverlay)
 {
 	"use strict";
 	
@@ -92,7 +92,7 @@ define(
 			button.setAttribute('data-target', containerId);
 			
 			if (isLazyInitialization) {
-				event.trigger(button, 'click');
+				Core.triggerEvent(button, 'click');
 			}
 		},
 		
