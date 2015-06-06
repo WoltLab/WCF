@@ -49,7 +49,7 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 			var value = _languageItems.get(key);
 			
 			if (value === undefined) {
-				console.warn("Trying to get() undefined language item.");
+				console.warn("Attempt to retrieve unknown phrase '" + key + "'.");
 				return key;
 			}
 			
