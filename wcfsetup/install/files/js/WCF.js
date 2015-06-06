@@ -1619,57 +1619,25 @@ WCF.Action.Proxy = Class.extend({
 	 * Sends an AJAX request.
 	 * 
 	 * @param	abortPrevious	boolean
-	 * @return	jqXHR
 	 */
 	sendRequest: function(abortPrevious) {
-		if (this._ajaxRequest !== null) {
-			this._ajaxRequest.sendRequest(abortPrevious);
-		}
-		
-		return null;
+		require(['AjaxRequest'], (function(AjaxRequest) {
+			if (this._ajaxRequest !== null) {
+				this._ajaxRequest.sendRequest(abortPrevious);
+			}
+		}).bind(this));
 	},
 	
 	/**
 	 * Aborts the previous request
 	 */
 	abortPrevious: function() {
-		if (this._ajaxRequest !== null) {
-			this._ajaxRequest.abortPrevious();
-		}
+		require(['AjaxRequest'], (function(AjaxRequest) {
+			if (this._ajaxRequest !== null) {
+				this._ajaxRequest.abortPrevious();
+			}
+		}).bind(this));
 	},
-	
-	/**
-	 * Shows loading overlay for a single request.
-	 */
-	showLoadingOverlayOnce: function() {},
-	
-	/**
-	 * Suppressed errors for this action proxy.
-	 */
-	suppressErrors: function() {},
-	
-	/**
-	 * Handles AJAX errors.
-	 * 
-	 * @param	object		jqXHR
-	 * @param	string		textStatus
-	 * @param	string		errorThrown
-	 */
-	_failure: function(jqXHR, textStatus, errorThrown) {},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	object		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {},
-	
-	/**
-	 * Fires after an AJAX request, hides global loading status.
-	 */
-	_after: function() {},
 	
 	/**
 	 * Sets options, MUST be used to set parameters before sending request
@@ -1679,10 +1647,19 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	mixed		optionData
 	 */
 	setOption: function(optionName, optionData) {
-		if (this._ajaxRequest !== null) {
-			this._ajaxRequest.setOption(optionName, optionData);
-		}
-	}
+		require(['AjaxRequest'], (function(AjaxRequest) {
+			if (this._ajaxRequest !== null) {
+				this._ajaxRequest.setOption(optionName, optionData);
+			}
+		}).bind(this));
+	},
+	
+	// legacy methods, no longer supported
+	showLoadingOverlayOnce: function() {},
+	suppressErrors: function() {},
+	_failure: function(jqXHR, textStatus, errorThrown) {},
+	_success: function(data, textStatus, jqXHR) {},
+	_after: function() {}
 });
 
 /**
@@ -8336,6 +8313,7 @@ WCF.UserPanel = Class.extend({
 });
 
 jQuery.fn.extend({
+	// shim for 'ui.wcfDialog'
 	wcfDialog: function(method) {
 		var args = arguments;
 		
@@ -8359,7 +8337,7 @@ jQuery.fn.extend({
 					document.body.appendChild(this[0]);
 				}
 				
-				UIDialog.open(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
+				UIDialog.show(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
 			}
 		}).bind(this));
 	}
