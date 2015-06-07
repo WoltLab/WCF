@@ -4578,7 +4578,12 @@ WCF.Option.Handler = Class.extend({
 					
 					case 'radio':
 						if (option.prop('checked')) {
-							this._execute(true, $disableOptions, $enableOptions);
+							var isActive = true;
+							if (option.data('isBoolean') && option.val() != 1) {
+								isActive = false;
+							}
+							
+							this._execute(isActive, $disableOptions, $enableOptions);
 						}
 					break;
 				}

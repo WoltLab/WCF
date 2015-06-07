@@ -157,6 +157,15 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns true if this is the 'Everyone' group.
+	 * 
+	 * @return	boolean
+	 */
+	public function isEveryone() {
+		return $this->groupType == self::EVERYONE;
+	}
+	
+	/**
 	 * Returns true if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
