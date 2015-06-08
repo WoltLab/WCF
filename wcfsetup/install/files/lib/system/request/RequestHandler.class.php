@@ -291,9 +291,10 @@ class RequestHandler extends SingletonFactory {
 		
 		// resolve implicit application abbreviation for landing page controller
 		$landingPageApplication = $landingPage->getApplication();
+		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+		$primaryApplicationAbbr = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
 		if ($landingPageApplication == 'wcf') {
-			$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
-			$landingPageApplication = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
+			$landingPageApplication = $primaryApplicationAbbr;
 		}
 		
 		// check if currently invoked application matches the landing page
@@ -303,8 +304,16 @@ class RequestHandler extends SingletonFactory {
 			return;
 		}
 		
-		HeaderUtil::redirect($landingPage->getLink());
-		exit;
+		// redirect if this is the primary application
+		if ($application === $primaryApplicationAbbr) {
+			HeaderUtil::redirect($landingPage->getLink());
+			exit;
+		}
+		
+		// set default controller
+		$applicationObj = WCF::getApplicationObject(ApplicationHandler::getInstance()->getApplication($application));
+		$routeData['controller'] = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $applicationObj->getPrimaryController());
+		if (!URL_LEGACY_MODE) $routeData['controller'] = self::getTokenizedController($routeData['controller']);
 	}
 	
 	/**
