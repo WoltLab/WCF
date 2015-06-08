@@ -166,6 +166,15 @@ CREATE TABLE wcf1_attachment (
 	KEY (objectID, uploadTime)
 );
 
+DROP TABLE IF EXISTS wcf1_background_job;
+CREATE TABLE wcf1_background_job (
+	jobID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	job MEDIUMTEXT NOT NULL,
+	status ENUM('ready', 'processing') NOT NULL DEFAULT 'ready',
+	time INT(10) NOT NULL,
+	KEY (status, time)
+);
+
 DROP TABLE IF EXISTS wcf1_bbcode;
 CREATE TABLE wcf1_bbcode (
 	bbcodeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
