@@ -1074,6 +1074,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.paid_subscription_enable_tos_confirmation"><![CDATA[Users are required to accept your Terms of Service prior to any purchase]]></item>
 		<item name="wcf.acp.option.paid_subscription_tos_url"><![CDATA[Terms of Service URL]]></item>
 		<item name="wcf.acp.option.category.general.payment.paidSubscription"><![CDATA[Paid Subscriptions]]></item>
+		<item name="wcf.acp.option.suffix.days"><![CDATA[Days]]></item>
+		<item name="wcf.acp.option.suffix.minutes"><![CDATA[Minutes]]></item>
+		<item name="wcf.acp.option.suffix.pixel"><![CDATA[Pixel]]></item>
+		<item name="wcf.acp.option.suffix.seconds"><![CDATA[Seconds]]></item>
+		<item name="wcf.acp.option.suffix.years"><![CDATA[Years]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
