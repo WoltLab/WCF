@@ -25,6 +25,7 @@ requirejs.config({
 			'Language': 'WoltLab/WCF/Language',
 			'List': 'WoltLab/WCF/List',
 			'ObjectMap': 'WoltLab/WCF/ObjectMap',
+			'StringUtil': 'WoltLab/WCF/StringUtil',
 			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
 			'UI/CloseOverlay': 'WoltLab/WCF/UI/CloseOverlay',
 			'UI/Confirmation': 'WoltLab/WCF/UI/Confirmation',

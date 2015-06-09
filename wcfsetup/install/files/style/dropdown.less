@@ -4,6 +4,19 @@
 		outline: 0;
 	}
 	
+	&.inputAddon {
+		> .dropdownToggle {
+			padding: @wcfGapTiny;
+			
+			> span.active:after {
+				content: "\f0d7";
+				font-family: FontAwesome;
+				font-size: 14px;
+				margin-left: 7px;
+			}
+		}
+	}
+	
 	&.preInput {
 		display: table;
 		width: 100%;
@@ -186,6 +199,19 @@
 		
 		&.boxFlag {
 			padding-top: 2px;
+		}
+		
+		&.missingValue > span {
+			position: relative;
+			
+			&:after {
+				color: @wcfWarningBackgroundColor;
+				content: @fa-var-exclamation-triangle;
+				font-family: FontAwesome;
+				position: absolute;
+				right: @wcfGapMedium;
+				top: @wcfGapTiny;
+			}
 		}
 		
 		> a,

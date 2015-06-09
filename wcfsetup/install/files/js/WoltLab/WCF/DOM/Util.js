@@ -168,6 +168,21 @@ define([], function() {
 		},
 		
 		/**
+		 * Inserts an element after an existing element.
+		 * 
+		 * @param	{Element}	newEl		element to insert
+		 * @param	{Element}	el		reference element
+		 */
+		insertAfter: function(newEl, el) {
+			if (el.nextElementSibling !== null) {
+				el.parentNode.insertBefore(newEl, el.nextElementSibling);
+			}
+			else {
+				el.parentNode.appendChild(newEl);
+			}
+		},
+		
+		/**
 		 * Applies a list of CSS properties to an element.
 		 * 
 		 * @param	{Element}		el	element

@@ -14,6 +14,7 @@ define(
 	
 	var _availableDropdowns = null;
 	var _callbacks = new CallbackList();
+	var _didInit = false;
 	var _dropdowns = new Dictionary();
 	var _menus = new Dictionary();
 	var _menuContainer = null;
@@ -26,6 +27,9 @@ define(
 		 * Performs initial setup such as setting up dropdowns and binding listeners.
 		 */
 		setup: function() {
+			if (_didInit) return;
+			_didInit = true;
+			
 			_menuContainer = document.createElement('div');
 			_menuContainer.setAttribute('id', 'dropdownMenuContainer');
 			document.body.appendChild(_menuContainer);
@@ -59,6 +63,8 @@ define(
 		 * @param	{boolean}	isLazyInitialization
 		 */
 		init: function(button, isLazyInitialization) {
+			this.setup();
+			
 			if (button.classList.contains('jsDropdownEnabled') || button.getAttribute('data-target')) {
 				return false;
 			}
@@ -103,11 +109,13 @@ define(
 		 * @param	{Element}	menu		menu list element
 		 */
 		initFragment: function(dropdown, menu) {
-			var containerId = DOMUtil.identify(dropdown);
+			this.setup();
+			
 			if (_dropdowns.has(dropdown)) {
-				throw new Error("Dropdown identified by '" + DOMUtil.identify(dropdown) + "' has already been registered.");
+				return;
 			}
 			
+			var containerId = DOMUtil.identify(dropdown);
 			_dropdowns.set(containerId, dropdown);
 			_menuContainer.appendChild(menu);
 			

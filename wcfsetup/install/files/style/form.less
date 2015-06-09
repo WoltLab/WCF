@@ -209,6 +209,79 @@ dl:not(.plain) {
 	}
 }
 
+/* input prefix/suffix */
+.inputAddon {
+	display: flex;
+	
+	> .inputPrefix {
+		flex: 0 0 auto;
+		margin: 0 !important;
+		white-space: nowrap;
+	}
+	
+	> input {
+		border-radius: 0;
+		flex: 1 auto;
+		
+		&.tiny {
+			flex: 0 0 80px;
+		}
+		
+		&.short {
+			flex: 0 1 10%;
+		}
+		
+		&.medium {
+			flex: 0 1 30%;
+		}
+		
+		&:first-child {
+			border-radius: 3px 0 0 3px;
+		}
+		
+		&:last-child {
+			border-radius: 0 3px 3px 0;
+		}
+	}
+	
+	> .inputSuffix {
+		background-color: rgba(240, 240, 240, 1);
+		border: 1px solid @wcfContainerBorderColor;
+		border-left-width: 0;
+		border-radius: 0 3px 3px 0;
+		color: rgba(153, 153, 153, 1);
+		padding: @wcfGapTiny @wcfGapSmall;
+	}
+	
+	&.inputAddonTextarea {
+		flex-direction: column;
+		
+		> .inputPrefix {
+			align-self: flex-start;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			border-bottom-width: 0;
+		}
+		
+		> textarea {
+			border-top-left-radius: 0;
+		}
+	}
+	
+	&:not(.inputAddonTextarea) {
+		> .inputPrefix {
+			border-bottom-right-radius: 0;
+			border-right-width: 0;
+			border-top-right-radius: 0;
+			
+			&+ input {
+				border-bottom-left-radius: 0 !important;
+				border-top-left-radius: 0 !important;
+			}
+		}
+	}
+}
+
 /* submit buttons */
 .formSubmit {
 	font-size: 0;
@@ -406,16 +479,16 @@ select[multiple][disabled] {
 textarea {
 	width: 100%;
 }
-	
+
 .tiny {
 	width: 80px;
 }
-	
+
 .short {
 	min-width: 80px;
 	width: 10%;
 }
-	
+
 .medium {
 	min-width: 150px;
 	width: 30%;
