@@ -767,7 +767,7 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 			
 			<!-- general.system.update -->
 			<option name="show_update_notice_frontend">
-				<categoryname>general.system.googleMaps</categoryname>
+				<categoryname>general.system.update</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
