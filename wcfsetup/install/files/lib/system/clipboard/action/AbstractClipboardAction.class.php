@@ -68,13 +68,6 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::filterObjects()
-	 */
-	public function filterObjects(array $objects, array $typeData) {
-		return $objects;
-	}
-	
-	/**
 	 * @see	\wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
 	 */
 	public function getEditorLabel(array $objects) {

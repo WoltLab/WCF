@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\object\type;
 use wcf\data\ProcessibleDatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
 use wcf\util\ClassUtil;
 
@@ -15,6 +17,9 @@ use wcf\util\ClassUtil;
  * @category	Community Framework
  */
 class ObjectType extends ProcessibleDatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */

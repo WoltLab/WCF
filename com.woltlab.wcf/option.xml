@@ -89,6 +89,9 @@
 					<category name="general.cache.memcached">
 						<parent>general.cache</parent>
 					</category>
+					<category name="general.cache.redis">
+						<parent>general.cache</parent>
+					</category>
 				<category name="general.payment">
 					<parent>general</parent>
 					<showorder>6</showorder>
@@ -535,12 +538,14 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>1800</defaultvalue>
 				<minvalue>600</minvalue>
 				<maxvalue>86400</maxvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="user_online_timeout">
 				<categoryname>security.general.session</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>900</defaultvalue>
 				<minvalue>1</minvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="session_validate_ip_address">
 				<categoryname>security.general.session</categoryname>
@@ -572,6 +577,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>7200</defaultvalue>
 				<minvalue>300</minvalue>
 				<maxvalue>86400</maxvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="user_authentication_failure_ip_captcha">
 				<categoryname>security.general.authentication</categoryname>
@@ -597,6 +603,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>30</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>365</maxvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /security.general.authentication -->
 			
@@ -830,14 +837,20 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<optiontype>radioButton</optiontype>
 				<defaultvalue><![CDATA[disk]]></defaultvalue>
 				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
-memcached:wcf.acp.option.cache_source_type.memcached]]></selectoptions>
-				<enableoptions><![CDATA[disk:!cache_source_memcached_host
-memcached:cache_source_memcached_host]]></enableoptions>
+memcached:wcf.acp.option.cache_source_type.memcached
+redis:wcf.acp.option.cache_source_type.redis]]></selectoptions>
+				<enableoptions><![CDATA[disk:!cache_source_memcached_host,!cache_source_redis_host
+memcached:cache_source_memcached_host,!cache_source_redis_host
+redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 			</option>
 			
 			<option name="cache_source_memcached_host">
 				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>textarea</optiontype>
+			</option>
+			<option name="cache_source_redis_host">
+				<categoryname>general.cache.redis</categoryname>
+				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.cache -->
 			
@@ -889,12 +902,14 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue><![CDATA[210]]></defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<option name="attachment_thumbnail_width">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue><![CDATA[280]]></defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			
 			<!-- message.general -->
@@ -937,6 +952,7 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>90</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /message.general.edit -->
 			
@@ -1061,6 +1077,7 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>years</suffix>
 			</option>
 			<!-- /user.register -->
 			
@@ -1124,12 +1141,14 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>192</defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<option name="max_avatar_height">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>192</defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<!-- /user.avatar -->
 			
@@ -1139,6 +1158,7 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>150</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<!-- /user.signature -->
 			
@@ -1163,6 +1183,7 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>182</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="profile_enable_visitors">
 				<categoryname>user.profile</categoryname>
@@ -1229,6 +1250,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="users_online_record_no_guests">
 				<categoryname>user.list.online</categoryname>
@@ -1260,18 +1282,21 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>14</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="user_cleanup_activity_event_lifetime">
 				<categoryname>user.cleanup</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>60</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="user_cleanup_profile_visitor_lifetime">
 				<categoryname>user.cleanup</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>60</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /user.cleanup -->
 			

@@ -1,7 +1,8 @@
 <?php
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
-use wcf\data\user\UserProfileList;
+use wcf\data\user\UserProfileCache;
+use wcf\data\DatabaseObject;
 use wcf\page\IPage;
 use wcf\system\cache\builder\MostLikedMembersCacheBuilder;
 use wcf\system\request\LinkHandler;
@@ -19,10 +20,10 @@ use wcf\system\WCF;
  */
 class MostLikedMembersDashboardBox extends AbstractSidebarDashboardBox {
 	/**
-	 * user profile list
-	 * @var	\wcf\data\user\UserProfileList
+	 * ids of the most liked members
+	 * @var	array<integer>
 	 */
-	public $userProfileList = null;
+	public $mostLikedMemberIDs = array();
 	
 	/**
 	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
@@ -31,29 +32,30 @@ class MostLikedMembersDashboardBox extends AbstractSidebarDashboardBox {
 		parent::init($box, $page);
 		
 		// get ids
-		$mostLikedMemberIDs = MostLikedMembersCacheBuilder::getInstance()->getData();
-		if (!empty($mostLikedMemberIDs)) {
-			// get profile data
-			$this->userProfileList = new UserProfileList();
-			$this->userProfileList->sqlOrderBy = 'user_table.likesReceived DESC';
-			$this->userProfileList->setObjectIDs($mostLikedMemberIDs);
-			$this->userProfileList->readObjects();
-		}
+		$this->mostLikedMemberIDs = MostLikedMembersCacheBuilder::getInstance()->getData();
 		
 		$this->fetched();
+		
+		if (!empty($this->mostLikedMemberIDs)) {
+			UserProfileCache::getInstance()->cacheUserIDs($this->mostLikedMemberIDs);
+		}
 	}
 	
 	/**
 	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
-		if ($this->userProfileList == null) return '';
+		if (empty($this->mostLikedMemberIDs)) return '';
 		
 		if (MODULE_MEMBERS_LIST) {
 			$this->titleLink = LinkHandler::getInstance()->getLink('MembersList', array(), 'sortField=likesReceived&sortOrder=DESC');
 		}
+		
+		$mostLikedMembers = UserProfileCache::getInstance()->getUserProfiles($this->mostLikedMemberIDs);
+		DatabaseObject::sort($mostLikedMembers, 'likesReceived', 'DESC');
+		
 		WCF::getTPL()->assign(array(
-			'mostLikedMembers' => $this->userProfileList
+			'mostLikedMembers' => $mostLikedMembers
 		));
 		return WCF::getTPL()->fetch('dashboardBoxMostLikedMembers');
 	}

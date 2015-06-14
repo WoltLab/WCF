@@ -630,12 +630,6 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$comment->setIsDeletable($this->commentProcessor->canDeleteComment($comment->getDecoratedObject()));
 		$comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
 		
-		// set user profile
-		if ($comment->userID) {
-			$userProfile = UserProfile::getUserProfile($comment->userID);
-			$comment->setUserProfile($userProfile);
-		}
-		
 		WCF::getTPL()->assign(array(
 			'commentList' => array($comment),
 			'commentManager' => $this->commentProcessor
@@ -653,12 +647,6 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$response = new StructuredCommentResponse($response);
 		$response->setIsDeletable($this->commentProcessor->canDeleteResponse($response->getDecoratedObject()));
 		$response->setIsEditable($this->commentProcessor->canEditResponse($response->getDecoratedObject()));
-		
-		// set user profile
-		if ($response->userID) {
-			$userProfile = UserProfile::getUserProfile($response->userID);
-			$response->setUserProfile($userProfile);
-		}
 		
 		// render response
 		WCF::getTPL()->assign(array(

@@ -159,11 +159,7 @@ class Mail {
 			$this->header .= 'Content-Type: '.$this->getContentType().'; charset=UTF-8'.self::$lineEnding;
 		}
 		
-		// until PHP 5.3.4 mb_send_mail() appends an extra MIME-Version header
-		// @see: https://bugs.php.net/bug.php?id=52681
-		if (MAIL_SEND_METHOD != 'php' || version_compare(PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION, '5.3.4', '>=')) {
-			$this->header .= 'MIME-Version: 1.0'.self::$lineEnding;
-		}
+		$this->header .= 'MIME-Version: 1.0'.self::$lineEnding;
 		
 		return $this->header;
 	}

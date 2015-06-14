@@ -2,6 +2,7 @@
 namespace wcf\data\like;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
@@ -75,6 +76,10 @@ class ViewableLike extends DatabaseObjectDecorator {
 	 * @return	\wcf\data\user\UserProfile
 	 */
 	public function getUserProfile() {
+		if ($this->userProfile === null) {
+			$this->userProfile = UserProfileCache::getInstance()->getUserProfile($this->userID);
+		}
+		
 		return $this->userProfile;
 	}
 	

@@ -51,6 +51,13 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	}
 	
 	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 */
+	public static function getDefaultFilename() {
+		return 'packageInstallationPlugin.xml';
+	}
+	
+	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {

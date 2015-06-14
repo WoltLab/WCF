@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\cronjob;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
 use wcf\util\CronjobUtil;
 
 /**
@@ -14,6 +15,8 @@ use wcf\util\CronjobUtil;
  * @category	Community Framework
  */
 class Cronjob extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -43,6 +46,13 @@ class Cronjob extends DatabaseObject {
 	 * maximum number of allowed fails
 	 */
 	const MAX_FAIL_COUNT = 3;
+	
+	/**
+	 * prefix of automatically created cronjob names
+	 * @var	string
+	 * @deprecated	will be removed once cronjob names are mandatory
+	 */
+	const AUTOMATIC_NAME_PREFIX = 'com.woltlab.wcf.cronjob';
 	
 	/**
 	 * Returns timestamp of next execution.

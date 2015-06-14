@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
@@ -25,7 +26,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	public $enableTracking = true;
 	
 	/**
-	 * true enables the usage of cookies
+	 * true enables the usage of cookies to save login credentials
 	 * @var	boolean
 	 */
 	public $useCookies = 1;
@@ -51,6 +52,17 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		
 		$this->useCookies = 0;
 		if (isset($_POST['useCookies'])) $this->useCookies = intval($_POST['useCookies']);
+	}
+	
+	/**
+	 * @see	\wcf\form\IForm::validate()
+	 */
+	public function validate() {
+		if (!WCF::getSession()->hasValidCookie()) {
+			throw new UserInputException('cookie');
+		}
+		
+		parent::validate();
 	}
 	
 	/**

@@ -75,27 +75,6 @@ class AJAXProxyAction extends AJAXInvokeAction {
 		
 		// execute action
 		$this->response = $this->objectAction->executeAction();
-		if (isset($this->response['returnValues'])) {
-			$this->response['returnValues'] = $this->getData($this->response['returnValues']);
-		}
-	}
-	
-	/**
-	 * @deprecated	This function makes it too easy to accidentally expose private information.
-	 * 		It will be removed in Community Framework 2.2.
-	 * 		Consider using \JsonSerializable beginning with Community Framework 2.2.
-	 */
-	protected function getData($response) {
-		if ($response instanceof IStorableObject) {
-			return $response->getData();
-		}
-		if (is_array($response)) {
-			foreach ($response as &$object) {
-				$object = $this->getData($object);
-			}
-			unset($object);
-		}
-		return $response;
 	}
 	
 	/**

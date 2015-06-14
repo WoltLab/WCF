@@ -19,42 +19,41 @@ class SessionFactory extends ACPSessionFactory {
 	protected $sessionEditor = 'wcf\data\session\SessionEditor';
 	
 	/**
+	 * @see	\wcf\system\session\ACPSessionFactory::hasValidCookie()
+	 */
+	public function hasValidCookie() {
+		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'])) {
+			if ($_COOKIE[COOKIE_PREFIX.'cookieHash'] == SessionHandler::getInstance()->sessionID) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * @see	\wcf\system\session\ACPSessionFactory::readSessionID()
 	 */
 	protected function readSessionID() {
-		$sessionID = parent::readSessionID();
-		
 		// get sessionID from cookie
-		if (empty($sessionID) && isset($_COOKIE[COOKIE_PREFIX.'cookieHash'])) {
-			$sessionID = $_COOKIE[COOKIE_PREFIX . 'cookieHash'];
+		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'])) {
+			return $_COOKIE[COOKIE_PREFIX . 'cookieHash'];
 		}
 		
-		return $sessionID;
+		return '';
 	}
 	
 	/**
 	 * @see	\wcf\system\session\ACPSessionFactory::init()
 	 */
 	protected function init() {
-		$usesCookies = true;
-		
-		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'])) {
-			if ($_COOKIE[COOKIE_PREFIX.'cookieHash'] != SessionHandler::getInstance()->sessionID) {
-				$usesCookies = false;
-			}
-		}
-		else {
-			$usesCookies = false;
-		}
-		
-		if (!$usesCookies) {
+		if (!$this->hasValidCookie()) {
 			// cookie support will be enabled upon next request
 			HeaderUtil::setCookie('cookieHash', SessionHandler::getInstance()->sessionID);
 		}
-		else {
-			// enable cookie support
-			SessionHandler::getInstance()->enableCookies();
-		}
+		
+		// enable cookie support
+		SessionHandler::getInstance()->enableCookies();
 		
 		parent::init();
 	}

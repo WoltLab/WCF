@@ -713,17 +713,11 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true if requested template has assigned template listeners.
+	 * Returns false.
 	 * 
-	 * @param	string		$templateName
-	 * @param	string		$application
-	 * @return	boolean
+	 * @deprecated
 	 */
 	public function hasTemplateListeners($templateName, $application = 'wcf') {
-		if (isset($this->templateListeners[$application]) && isset($this->templateListeners[$application][$templateName])) {
-			return true;
-		}
-		
 		return false;
 	}
 	

@@ -3,6 +3,7 @@ namespace wcf\data\moderation\queue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IUserContent;
 use wcf\system\moderation\queue\ModerationQueueManager;
@@ -97,7 +98,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	public function getUserProfile() {
 		if ($this->affectedObject !== null && $this->userProfile === null) {
 			if ($this->affectedObject->getUserID()) {
-				$this->userProfile = UserProfile::getUserProfile($this->affectedObject->getUserID());
+				$this->userProfile = UserProfileCache::getInstance()->getUserProfile($this->affectedObject->getUserID());
 			}
 			else {
 				$this->userProfile = new UserProfile(new User(null, array()));

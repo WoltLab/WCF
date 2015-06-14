@@ -6,7 +6,10 @@ use wcf\system\WCF;
 /**
  * Caches the event listeners.
  * 
- * @author	Marcel Werk
+ * Important: You cannot use \wcf\data\event\listener\EventListenerList here as
+ * \wcf\data\DatabaseObjectList fires an event.
+ * 
+ * @author	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -18,57 +21,56 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$data = array(
-			'actions' => array('user' => array(), 'admin' => array()),
-			'inheritedActions' => array('user' => array(), 'admin' => array())
+		$actions = array(
+			'admin' => array(),
+			'user' => array()
 		);
 		
-		// get all listeners and filter options with low priority
-		$sql = "SELECT	event_listener.*
-			FROM	wcf".WCF_N."_event_listener event_listener";
+		$inheritedActions = array(
+			'admin' => array(),
+			'user' => array()
+		);
+		
+		$sql = "SELECT		*
+			FROM		wcf".WCF_N."_event_listener
+			ORDER BY	niceValue ASC, listenerClassName ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			// distinguish between inherited actions and non-inherited actions
-			if (!$row['inherit']) {
-				$data['actions'][$row['environment']][EventHandler::generateKey($row['eventClassName'], $row['eventName'])][] = $row;
+		while ($eventListener = $statement->fetchObject('wcf\data\event\listener\EventListener')) {
+			$eventNames = $eventListener->getEventNames();
+			
+			if (!$eventListener->inherit) {
+				if (!isset($actions[$eventListener->environment])) {
+					$actions[$eventListener->environment] = array();
+				}
+				
+				foreach ($eventNames as $eventName) {
+					$key = EventHandler::generateKey($eventListener->eventClassName, $eventName);
+					if (!isset($actions[$eventListener->environment][$key])) {
+						$actions[$eventListener->environment][$key] = array();
+					}
+					
+					$actions[$eventListener->environment][$key][] = $eventListener;
+				}
 			}
 			else {
-				if (!isset($data['inheritedActions'][$row['environment']][$row['eventClassName']])) $data['inheritedActions'][$row['environment']][$row['eventClassName']] = array();
-				$data['inheritedActions'][$row['environment']][$row['eventClassName']][$row['eventName']][] = $row;
-			}
-		}
-		
-		// sort data by nice value and class name
-		foreach ($data['actions'] as &$listenerMap) {
-			foreach ($listenerMap as &$listeners) {
-				uasort($listeners, array(__CLASS__, 'sortListeners'));
-			}
-		}
-		
-		foreach ($data['inheritedActions'] as &$listenerMap) {
-			foreach ($listenerMap as &$listeners) {
-				foreach ($listeners as &$val) {
-					uasort($val, array(__CLASS__, 'sortListeners'));
+				if (!isset($inheritedActions[$eventListener->environment])) {
+					$inheritedActions[$eventListener->environment] = array();
+				}
+				
+				foreach ($eventNames as $eventName) {
+					if (!isset($inheritedActions[$eventListener->environment][$eventListener->eventClassName])) {
+						$inheritedActions[$eventListener->environment][$eventListener->eventClassName] = array();
+					}
+					
+					$inheritedActions[$eventListener->environment][$eventListener->eventClassName][$eventName][] = $eventListener;
 				}
 			}
 		}
 		
-		return $data;
-	}
-	
-	/**
-	 * Sorts the event listeners by nice value.
-	 */
-	public static function sortListeners($listenerA, $listenerB) {
-		if ($listenerA['niceValue'] < $listenerB['niceValue']) {
-			return -1;
-		}
-		else if ($listenerA['niceValue'] > $listenerB['niceValue']) {
-			return 1;
-		}
-		else {
-			return strcmp($listenerA['listenerClassName'], $listenerB['listenerClassName']);
-		}
+		return array(
+			'actions' => $actions,
+			'inheritedActions' => $inheritedActions
+		);
 	}
 }

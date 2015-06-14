@@ -46,6 +46,19 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
+	 * @see	\wcf\system\option\OptionHandler::getTypeObject()
+	 */
+	public function getTypeObject($type) {
+		$objectType = parent::getTypeObject($type);
+		
+		if ($this->group !== null && $objectType instanceof IUserGroupGroupOptionType) {
+			$objectType->setUserGroup($this->group);
+		}
+		
+		return $objectType;
+	}
+	
+	/**
 	 * @see	\wcf\system\option\OptionHandler::checkOption()
 	 */
 	protected function checkOption(Option $option) {

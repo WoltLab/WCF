@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\profile\menu\item;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
 use wcf\util\ClassUtil;
 
@@ -15,6 +17,9 @@ use wcf\util\ClassUtil;
  * @category	Community Framework
  */
 class UserProfileMenuItem extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * content manager
 	 * @var	\wcf\system\menu\user\profile\content\IUserProfileContent

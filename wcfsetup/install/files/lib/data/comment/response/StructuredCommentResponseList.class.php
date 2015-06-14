@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
 
@@ -35,6 +35,11 @@ class StructuredCommentResponseList extends CommentResponseList {
 	public $minResponseTime = 0;
 	
 	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = StructuredCommentResponse::class;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
 	 */
 	public $sqlLimit = 50;
@@ -63,26 +68,17 @@ class StructuredCommentResponseList extends CommentResponseList {
 		
 		// get user ids
 		$userIDs = array();
-		foreach ($this->objects as &$response) {
+		foreach ($this->objects as $response) {
 			if (!$this->minResponseTime || $response->time < $this->minResponseTime) $this->minResponseTime = $response->time;
 			$userIDs[] = $response->userID;
 			
-			$response = new StructuredCommentResponse($response);
 			$response->setIsDeletable($this->commentManager->canDeleteResponse($response->getDecoratedObject()));
 			$response->setIsEditable($this->commentManager->canEditResponse($response->getDecoratedObject()));
 		}
-		unset($response);
 		
-		// fetch user data and avatars
+		// cache user ids
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $response) {
-				if (isset($users[$response->userID])) {
-					$response->setUserProfile($users[$response->userID]);
-				}
-			}
+			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 		}
 	}
 	

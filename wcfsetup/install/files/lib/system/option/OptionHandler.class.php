@@ -7,7 +7,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
-use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
@@ -443,34 +442,7 @@ class OptionHandler implements IOptionHandler {
 	 * @return	boolean
 	 */
 	protected function checkCategory(OptionCategory $category) {
-		if ($category->permissions) {
-			$hasPermission = false;
-			$permissions = explode(',', $category->permissions);
-			foreach ($permissions as $permission) {
-				if (WCF::getSession()->getPermission($permission)) {
-					$hasPermission = true;
-					break;
-				}
-			}
-			
-			if (!$hasPermission) return false;
-			
-		}
-		
-		if ($category->options) {
-			$hasEnabledOption = false;
-			$options = explode(',', strtoupper($category->options));
-			foreach ($options as $option) {
-				if (defined($option) && constant($option)) {
-					$hasEnabledOption = true;
-					break;
-				}
-			}
-			
-			if (!$hasEnabledOption) return false;
-		}
-		
-		return true;
+		return $category->validateOptions() && $category->validatePermissions();
 	}
 	
 	/**
@@ -480,38 +452,7 @@ class OptionHandler implements IOptionHandler {
 	 * @return	boolean
 	 */
 	protected function checkOption(Option $option) {
-		if ($option->permissions) {
-			$hasPermission = false;
-			$permissions = explode(',', $option->permissions);
-			foreach ($permissions as $permission) {
-				if (WCF::getSession()->getPermission($permission)) {
-					$hasPermission = true;
-					break;
-				}
-			}
-			
-			if (!$hasPermission) return false;
-			
-		}
-		
-		if ($option->options) {
-			$hasEnabledOption = false;
-			$__options = explode(',', strtoupper($option->options));
-			foreach ($__options as $__option) {
-				if (defined($__option) && constant($__option)) {
-					$hasEnabledOption = true;
-					break;
-				}
-			}
-			
-			if (!$hasEnabledOption) return false;
-		}
-		
-		if (!$this->checkVisibility($option)) {
-			return false;
-		}
-		
-		return true;
+		return $option->validateOptions() && $option->validatePermissions() && $this->checkVisibility($option);
 	}
 	
 	/**

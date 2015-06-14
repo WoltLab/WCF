@@ -93,14 +93,8 @@ class AdHandler extends SingletonFactory {
 		
 		// filter by options
 		foreach ($objectTypes as $objectTypeName => $objectType) {
-			if ($objectType->options) {
-				$options = explode(',', strtoupper($objectType->options));
-				foreach ($options as $option) {
-					if (!defined($option) || !constant($option)) {
-						unset($objectTypes[$objectTypeName]);
-						break;
-					}
-				}
+			if (!$objectType->validateOptions()) {
+				unset($objectTypes[$objectTypeName]);
 			}
 		}
 		

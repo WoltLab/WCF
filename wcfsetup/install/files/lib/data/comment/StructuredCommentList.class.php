@@ -2,7 +2,7 @@
 namespace wcf\data\comment;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
 
@@ -48,6 +48,11 @@ class StructuredCommentList extends CommentList {
 	public $responseIDs = array();
 	
 	/**
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 */
+	public $decoratorClassName = StructuredComment::class;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
 	 */
 	public $sqlLimit = 30;
@@ -84,7 +89,7 @@ class StructuredCommentList extends CommentList {
 		
 		// fetch response ids
 		$responseIDs = $userIDs = array();
-		foreach ($this->objects as &$comment) {
+		foreach ($this->objects as $comment) {
 			if (!$this->minCommentTime || $comment->time < $this->minCommentTime) $this->minCommentTime = $comment->time;
 			$commentResponseIDs = $comment->getResponseIDs();
 			foreach ($commentResponseIDs as $responseID) {
@@ -96,16 +101,14 @@ class StructuredCommentList extends CommentList {
 				$userIDs[] = $comment->userID;
 			}
 			
-			$comment = new StructuredComment($comment);
 			$comment->setIsDeletable($this->commentManager->canDeleteComment($comment->getDecoratedObject()));
 			$comment->setIsEditable($this->commentManager->canEditComment($comment->getDecoratedObject()));
 		}
-		unset($comment);
 		
 		// fetch last responses
 		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
-			$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array(array_keys($responseIDs)));
+			$responseList->setObjectIDs(array_keys($responseIDs));
 			$responseList->readObjects();
 			
 			foreach ($responseList as $response) {
@@ -122,22 +125,9 @@ class StructuredCommentList extends CommentList {
 			}
 		}
 		
-		// fetch user data and avatars
+		// cache user ids
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $comment) {
-				if ($comment->userID && isset($users[$comment->userID])) {
-					$comment->setUserProfile($users[$comment->userID]);
-				}
-				
-				foreach ($comment as $response) {
-					if ($response->userID && isset($users[$response->userID])) {
-						$response->setUserProfile($users[$response->userID]);
-					}
-				}
-			}
+			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
 		}
 	}
 	

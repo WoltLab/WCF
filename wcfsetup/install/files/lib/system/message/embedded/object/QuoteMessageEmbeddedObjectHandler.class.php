@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\message\embedded\object;
 use wcf\data\user\UserList;
-use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 
 /**
  * IMessageEmbeddedObjectHandler implementation for quotes.
@@ -33,6 +33,6 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
 	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::loadObjects()
 	 */
 	public function loadObjects(array $objectIDs) {
-		return UserProfile::getUserProfiles($objectIDs);
+		return UserProfileCache::getInstance()->getUserProfiles($objectIDs);
 	}
 }

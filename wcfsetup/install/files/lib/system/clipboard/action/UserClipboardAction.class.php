@@ -25,7 +25,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
-	protected $supportedActions = array('assignToGroup', 'ban', 'delete', 'exportMailAddress', 'sendMail', 'sendNewPassword');
+	protected $supportedActions = array('assignToGroup', 'ban', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword');
 	
 	/**
 	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
@@ -51,6 +51,10 @@ class UserClipboardAction extends AbstractClipboardAction {
 			
 			case 'exportMailAddress':
 				$item->setURL(LinkHandler::getInstance()->getLink('UserEmailAddressExport'));
+			break;
+			
+			case 'merge':
+				$item->setURL(LinkHandler::getInstance()->getLink('UserMerge'));
 			break;
 			
 			case 'sendMail':
@@ -167,5 +171,41 @@ class UserClipboardAction extends AbstractClipboardAction {
 		}
 		
 		return $this->__validateAccessibleGroups(array_keys($this->objects));
+	}
+	
+	/**
+	 * Returns the ids of the users which can be enabled.
+	 * 
+	 * @return	array<integer>
+	 */
+	protected function validateEnable() {
+		// check permissions
+		if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+			return array();
+		}
+		
+		$userIDs = array();
+		foreach ($this->objects as $user) {
+			if ($user->activationCode) $userIDs[] = $user->userID;
+		}
+		
+		return $userIDs;
+	}
+	
+	/**
+	 * Returns the ids of the users which can be merge.
+	 * 
+	 * @return	array<integer>
+	 */
+	protected function validateMerge() {
+		// check permissions
+		if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {
+			return array();
+		}
+		
+		$userIDs = array_keys($this->objects);
+		if (count($userIDs) < 2) return array();
+		
+		return $userIDs;
 	}
 }

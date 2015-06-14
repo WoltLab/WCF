@@ -103,7 +103,6 @@ class WCFSetup extends WCF {
 	 */
 	public function __construct() {
 		@set_time_limit(0);
-		$this->initMagicQuotes();
 		$this->getDeveloperMode();
 		$this->getLanguageSelection();
 		$this->getWCFDir();
@@ -375,7 +374,7 @@ class WCFSetup extends WCF {
 		// php version
 		$system['phpVersion']['value'] = phpversion();
 		$comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $system['phpVersion']['value']);
-		$system['phpVersion']['result'] = (version_compare($comparePhpVersion, '5.3.2') >= 0);
+		$system['phpVersion']['result'] = (version_compare($comparePhpVersion, '5.5.4') >= 0);
 		
 		// sql
 		$system['sql']['value'] = array_keys(self::getAvailableDBClasses());

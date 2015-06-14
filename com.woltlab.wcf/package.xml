@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.1.4</version> <!-- codename: typhoon -->
-		<date>2015-05-19</date>
+		<version>2.2.0 Alpha 1</version> <!-- codename: vortex -->
+		<date>2015-05-03</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -15,137 +15,31 @@
 	</authorinformation>
 	
 	<instructions type="install">
-		<instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
-		<instruction type="acpMenu">acpMenu.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="template">templates.tar</instruction>
-		<instruction type="eventListener">eventListener.xml</instruction>
+		<instruction type="packageInstallationPlugin" />
+		<instruction type="acpMenu" />
+		<instruction type="userGroupOption" />
+		<instruction type="option" />
+		<instruction type="template" />
+		<instruction type="eventListener" />
 		<instruction type="script">acp/install.php</instruction>
-		<instruction type="cronjob">cronjob.xml</instruction>
-		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="clipboardAction">clipboardAction.xml</instruction>
-		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
+		<instruction type="cronjob" />
+		<instruction type="coreObject" />
+		<instruction type="clipboardAction" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="acpSearchProvider" />
 		<instruction type="style">blue-temptation-style.tgz</instruction>
 		<instruction type="style">woltlab-basic-style.tgz</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="smiley">smiley.xml</instruction>
-		<instruction type="pageMenu">pageMenu.xml</instruction>
-		<instruction type="sitemap">sitemap.xml</instruction>
-		<instruction type="dashboardBox">dashboardBox.xml</instruction>
-		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
-		<instruction type="userMenu">userMenu.xml</instruction>
-		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="aclOption">aclOption.xml</instruction>
+		<instruction type="userOption" />
+		<instruction type="bbcode" />
+		<instruction type="smiley" />
+		<instruction type="pageMenu" />
+		<instruction type="sitemap" />
+		<instruction type="dashboardBox" />
+		<instruction type="userProfileMenu" />
+		<instruction type="userMenu" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="aclOption" />
 		<instruction type="script">acp/post_install.php</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.0.12">
-		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
-		<instruction type="file">pre_update_check.tar</instruction>
-		<instruction type="script" run="standalone">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
-		
-		<!-- the actual update -->
-		<instruction type="option" run="standalone">option.xml</instruction>
-		
-		<instruction type="file">files.tar</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_2.1.php</instruction>
-		
-		<instruction type="template" run="standalone">templates.tar</instruction>
-		
-		<instruction type="acpTemplate" run="standalone">acptemplates.tar</instruction>
-		
-		<instruction type="language" run="standalone">language/*.xml</instruction>
-		
-		<instruction type="sql" run="standalone">update_210.sql</instruction>
-		
-		<instruction type="sql" run="standalone">update_user1_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user2_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user3_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user4_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user5_210.sql</instruction>
-		
-		<instruction type="acpMenu">acpMenu.xml</instruction>
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="style">blue-temptation-style.tgz</instruction>
-		<instruction type="clipboardAction">clipboardAction.xml</instruction>
-		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="cronjob">cronjob_update210.xml</instruction>
-		<instruction type="dashboardBox">dashboardBox.xml</instruction>
-		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="pageMenu">pageMenu.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="userMenu">userMenu.xml</instruction>
-		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
-		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
-		
-		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
-		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.0.12 pl 1">
-		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
-		<instruction type="file">pre_update_check.tar</instruction>
-		<instruction type="script" run="standalone">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
-		
-		<!-- the actual update -->
-		<instruction type="option" run="standalone">option.xml</instruction>
-		
-		<instruction type="file">files.tar</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_2.1.php</instruction>
-		
-		<instruction type="template" run="standalone">templates.tar</instruction>
-		
-		<instruction type="acpTemplate" run="standalone">acptemplates.tar</instruction>
-		
-		<instruction type="language" run="standalone">language/*.xml</instruction>
-		
-		<instruction type="sql" run="standalone">update_210.sql</instruction>
-		
-		<instruction type="sql" run="standalone">update_user1_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user2_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user3_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user4_210.sql</instruction>
-		<instruction type="sql" run="standalone">update_user5_210.sql</instruction>
-		
-		<instruction type="acpMenu">acpMenu.xml</instruction>
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="style">blue-temptation-style.tgz</instruction>
-		<instruction type="clipboardAction">clipboardAction.xml</instruction>
-		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="cronjob">cronjob_update210.xml</instruction>
-		<instruction type="dashboardBox">dashboardBox.xml</instruction>
-		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="pageMenu">pageMenu.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="userMenu">userMenu.xml</instruction>
-		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
-		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
-		
-		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
-		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.1.3">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" run="standalone">language/*.xml</instruction>
-		
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		
-		<instruction type="script" run="standalone">acp/rebuild_attachments_com.woltlab.wcf_2.1.4.php</instruction>
 	</instructions>
 </package>

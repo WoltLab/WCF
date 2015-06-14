@@ -22,15 +22,25 @@
 		<p class="warning">{lang}wcf.user.register.needActivation{/lang}</p>
 	{/if}
 	
-	{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
-		<p class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible{/if}">
-			{if $notice->isDismissible}
-				<span class="icon icon16 fa-times pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}"></span>
-			{/if}
-			
-			{if $notice->noticeUseHtml}{@$notice->notice|language}{else}{@$notice->notice|language|htmlspecialchars|nl2br}{/if}
-		</p>
-	{/foreach}
+	{hascontent}
+		{content}
+			{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
+				<p class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible active{/if}">
+					{if $notice->isDismissible}
+						<span class="icon icon16 fa-times pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}"></span>
+					{/if}
+					
+					{if $notice->noticeUseHtml}{@$notice->notice|language}{else}{@$notice->notice|language|htmlspecialchars|nl2br}{/if}
+				</p>
+			{/foreach}
+		{/content}
+		
+		<script data-relocate="true">
+			require(['WoltLab/WCF/Controller/Notice/Dismiss'], function(ControllerNoticeDismiss) {
+				ControllerNoticeDismiss.setup();
+			});
+		</script>
+	{/hascontent}
 	
 	{event name='userNotice'}
 </div>
