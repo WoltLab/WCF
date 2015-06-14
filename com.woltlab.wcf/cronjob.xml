@@ -79,6 +79,19 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
+		<cronjob name="backgroundQueueCleanUp">
+			<classname><![CDATA[wcf\system\cronjob\BackgroundQueueCleanUpCronjob]]></classname>
+			<description><![CDATA[Requeues stuck queue items]]></description>
+			<description language="de"><![CDATA[Start hängen gebliebene Hintergrundaufgaben neu]]></description>
+			<startminute>*/10</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
 		<cronjob name="lastActivityUpdate">
 			<classname><![CDATA[wcf\system\cronjob\LastActivityCronjob]]></classname>
 			<description><![CDATA[Updates last activity timestamp]]></description>
