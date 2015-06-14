@@ -35,6 +35,7 @@
 		
 		{foreach from=$objectTypes item=objectType}
 			<dl class="wide">
+				<dd>
 			                <a class="button small" id="rebuildAllData">{lang}wcf.acp.rebuildAllData{/lang}</a>
 					<small>{lang}wcf.acp.rebuildAllData.description{/lang}</small>
 					
