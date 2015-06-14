@@ -2,7 +2,7 @@
 namespace wcf\system\database;
 
 /**
- * This is the database implementation for MySQL4.1 or higher using PDO.
+ * This is the database implementation for MySQL 5.1 or higher using PDO.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2015 WoltLab GmbH
@@ -52,18 +52,6 @@ class MySQLDatabase extends Database {
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO') && extension_loaded('pdo_mysql'));
-	}
-	
-	/**
-	 * @see	\wcf\system\database\Database::handleLimitParameter()
-	 */
-	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
-		if ($limit != 0) {
-			if ($offset > 0) $query .= " LIMIT " . $offset . ", " . $limit;
-			else $query .= " LIMIT " . $limit;
-		}
-		
-		return $query;
 	}
 	
 	/**
