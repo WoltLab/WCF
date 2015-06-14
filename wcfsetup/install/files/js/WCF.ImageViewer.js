@@ -97,6 +97,15 @@ WCF.ImageViewer = Class.extend({
 			if (!$image.parents('a').length) {
 				$image.wrap('<a href="' + $image.attr('src') + '" class="jsImageViewerEnabled embeddedImageLink" />');
 				$image.parent().click($.proxy(this._click, this));
+				
+				if ($image.css('float') == 'right') {
+					$image.parent().addClass('messageFloatObjectRight');
+				}
+				else if ($image.css('float') == 'left') {
+					$image.parent().addClass('messageFloatObjectLeft');
+				}
+				$image[0].style.removeProperty('float');
+				$image[0].style.removeProperty('margin');
 			}
 		}
 	}
