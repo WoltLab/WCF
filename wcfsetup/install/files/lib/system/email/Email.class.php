@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\email;
+use wcf\system\email\mime\AbstractMimePart;
+use wcf\system\email\mime\TextMimePart;
 use wcf\system\exception\SystemException;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -70,10 +72,42 @@ class Email {
 	protected $extraHeaders = [ ];
 	
 	/**
+	 * Text parts of this email
+	 * @var	array
+	 */
+	protected $text = [ ];
+	
+	/**
+	 * Attachments of this email
+	 * @var	array
+	 */
+	protected $attachments = [ ];
+	
+	/**
+	 * Boundary between the 'Text' parts of this email
+	 * @var	string
+	 */
+	private $textBoundary;
+	
+	/**
+	 * Boundary between the mime parts of this email
+	 * @var	string
+	 */
+	private $mimeBoundary;
+	
+	/**
 	 * Mail host for use in the Message-Id
 	 * @var	string
 	 */
 	private static $host = null;
+	
+	/**
+	 * Generates boundaries for the mime parts.
+	 */
+	public function __construct() {
+		$this->textBoundary = "WoltLab_Community_Framework=_".StringUtil::getRandomID();
+		$this->mimeBoundary = "WoltLab_Community_Framework=_".StringUtil::getRandomID();
+	}
 	
 	/**
 	 * Returns the mail host for use in the Message-Id.
@@ -331,6 +365,43 @@ class Email {
 	}
 	
 	/**
+	 * Adds a mime part to this email. Should be either \wcf\system\email\mime\TextMimePart
+	 * or \wcf\system\email\mime\AttachmentMimePart.
+	 * The given priority determines the ordering within the Email. A higher priority
+	 * mime part will be further down the email (see RFC 2046, 5.1.4).
+	 * 
+	 * @param	\wcf\system\email\mime\AbstractMimePart	$part
+	 * @param	integer					$priority
+	 */
+	public function addMimePart(AbstractMimePart $part, $priority = 1000) {
+		foreach ($part->getAdditionalHeaders() as $header) {
+			$header[0] = mb_strtolower($header[0]);
+			if ($header[0] == 'content-type' || $header[0] == 'content-transfer-encoding') {
+				throw new SystemException("The header '".$header."' may not be set. Use the proper methods.");
+			}
+			
+			if (!StringUtil::startsWith($header[0], 'x-') && !StringUtil::startsWith($header[0], 'content-')) {
+				throw new SystemException("The header '".$header."' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
+			}
+		}
+		
+		switch ($part->getContentTransferEncoding()) {
+			case 'base64':
+			case 'quoted-printable':
+			break;
+			default:
+				throw new SystemException("The Content-Transfer-Encoding '".$header."' may not be set. You may only use 'quoted-printable' or 'base64'.");
+		}
+		
+		if ($part instanceof TextMimePart) {
+			$this->text[] = [ $priority, $part ];
+		}
+		else {
+			$this->attachments[] = [ $priority, $part ];
+		}
+	}
+	
+	/**
 	 * Returns an array of [ name, value ] tuples representing the email's headers.
 	 * Note: You must have set a Subject and at least one recipient, otherwise fetching the
 	 *       headers will fail.
@@ -361,7 +432,7 @@ class Email {
 			$headers[] = [ 'cc', implode(",\r\n   ", $cc) ];
 		}
 		if ($this->getSubject()) {
-			$headers[] = [ 'subject', EmailGrammar::encodeMimeHeader($this->getSubject()) ];
+			$headers[] = [ 'subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject()) ];
 		}
 		else {
 			throw new SystemException("Cannot generate message headers, you must specify a subject.");
@@ -377,6 +448,23 @@ class Email {
 		}
 		$headers[] = [ 'mime-version', '1.0' ];
 		
+		if (!$this->text) {
+			throw new SystemException("Cannot generate message headers, you must specify at least one 'Text' part.");
+		}
+		if ($this->attachments) {
+			$headers[] = [ 'content-type', "multipart/mixed;\r\n   boundary=\"".$this->mimeBoundary."\"" ];
+		}
+		else {
+			if (count($this->text) > 1) {
+				$headers[] = [ 'content-type', "multipart/alternative;\r\n   boundary=\"".$this->textBoundary."\"" ];
+			}
+			else {
+				$headers[] = [ 'content-type', $this->text[0][1]->getContentType() ];
+				$headers[] = [ 'content-transfer-encoding', $this->text[0][1]->getContentTransferEncoding() ];
+				$headers = array_merge($headers, $this->text[0][1]->getAdditionalHeaders());
+			}
+		}
+		
 		return array_merge($headers, $this->extraHeaders);
 	}
 	
@@ -390,5 +478,96 @@ class Email {
 		return implode("\r\n", array_map(function ($item) {
 			return implode(': ', $item);
 		}, $this->getHeaders()));
+	}
+	
+	/**
+	 * Returns the email's body as a string.
+	 * 
+	 * @return	string
+	 */
+	public function getBodyString() {
+		$text = "";
+		$body = "";
+		
+		if (count($this->text) > 1 || $this->attachments) {
+			$body .= StringUtil::wordWrap("This is a MIME encoded email. As you are seeing this your user agent does not support these.");
+			$body .= "\r\n\r\n";
+		}
+		
+		usort($this->text, function ($a, $b) {
+			return $a[0] - $b[0];
+		});
+		foreach ($this->text as $part) {
+			if (count($this->text) > 1) {
+				$text .= "--".$this->textBoundary."\r\n";
+			}
+			if (count($this->text) > 1 || $this->attachments) {
+				$text .= "content-type: ".$part[1]->getContentType()."\r\n";
+				$text .= "content-transfer-encoding: ".$part[1]->getContentTransferEncoding()."\r\n";
+				if ($part[1]->getAdditionalHeaders()) {
+					$text .= implode("\r\n", array_map(function ($item) {
+						return implode(': ', $item);
+					}, $part[1]->getAdditionalHeaders()))."\r\n";
+				}
+				$text .= "\r\n";
+			}
+			switch ($part[1]->getContentTransferEncoding()) {
+				case 'quoted-printable':
+					$text .= quoted_printable_encode($part[1]->getContent());
+				break;
+				case 'base64':
+					$text .= chunk_split(base64_encode($part[1]->getContent()));
+				break;
+			}
+			$text .= "\r\n";
+		}
+		if (count($this->text) > 1) {
+			$text .= "--".$this->textBoundary."--\r\n";
+		}
+		
+		if ($this->attachments) {
+			$body .= "--".$this->mimeBoundary."\r\n";
+			if (count($this->text) > 1) {
+				$body .= "Content-Type: multipart/alternative;\r\n   boundary=\"".$this->textBoundary."\"\r\n";
+				$body .= "\r\n";
+			}
+			$body .= $text;
+			
+			foreach ($this->attachments as $part) {
+				$body .= "\r\n--".$this->mimeBoundary."\r\n";
+				$body .= "content-type: ".$part[1]->getContentType()."\r\n";
+				$body .= "content-transfer-encoding: ".$part[1]->getContentTransferEncoding()."\r\n";
+				if ($part[1]->getAdditionalHeaders()) {
+					$body .= implode("\r\n", array_map(function ($item) {
+						return implode(': ', $item);
+					}, $part[1]->getAdditionalHeaders()))."\r\n";
+				}
+				$body .= "\r\n";
+				switch ($part[1]->getContentTransferEncoding()) {
+					case 'quoted-printable':
+						$body .= quoted_printable_encode($part[1]->getContent());
+					break;
+					case 'base64':
+						$body .= chunk_split(base64_encode($part[1]->getContent()));
+					break;
+				}
+				$body .= "\r\n";
+			}
+			$body .= "--".$this->mimeBoundary."--\r\n";
+		}
+		else {
+			$body .= $text;
+		}
+		
+		return $body;
+	}
+	
+	/**
+	 * Returns the email RFC 2822 representation of this email.
+	 * 
+	 * @return	string
+	 */
+	public function __toString() {
+		return $this->getHeaderString()."\r\n\r\n".$this->getBodyString();
 	}
 }
