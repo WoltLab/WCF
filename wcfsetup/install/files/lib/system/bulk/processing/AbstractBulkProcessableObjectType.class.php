@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @subpackage	system.bulk.processing
  * @category	Community Framework
  */
-class AbstractBulkProcessableObjectType extends AbstractObjectTypeProcessor implements IBulkProcessableObjectType {
+abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProcessor implements IBulkProcessableObjectType {
 	/**
 	 * name of the object type definition for the bulk actions
 	 * @var	string
