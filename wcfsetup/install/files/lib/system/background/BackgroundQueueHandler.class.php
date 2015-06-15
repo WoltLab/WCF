@@ -34,12 +34,41 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$time
 		]);
 	}
-
+	
+	/**
+	 * Immediatly performs the given job.
+	 * This method automatically handles requeuing in case of failure.
+	 * 
+	 * This method is used internally by performNextJob(), but it can
+	 * be useful if you wish immediate execution of a certain job, but
+	 * don't want to miss the automated error handling mechanism of the
+	 * queue.
+	 * 
+	 * @param	\wcf\system\background\job\AbstractBackgroundJob	$job	The job to perform.
+	 */
+	public function performJob(AbstractBackgroundJob $job) {
+		try {
+			$job->perform();
+		}
+		catch (\Exception $e) {
+			// gotta catch 'em all
+			$job->fail();
+			
+			if ($job->getFailures() <= $job::MAX_FAILURES) {
+				$this->enqueue($job, TIME_NOW + $job->retryAfter());
+			}
+			else {
+				// job failed too often: log
+				if ($e instanceof LoggedException) $e->getExceptionID();
+			}
+		}
+	}
+	
 	/**
 	 * Performs the (single) job that is due next.
 	 * This method automatically handles requeuing in case of failure.
 	 */
-	public function performJob() {
+	public function performNextJob() {
 		WCF::getDB()->beginTransaction();
 		$commited = false;
 		try {
@@ -91,26 +120,12 @@ class BackgroundQueueHandler extends SingletonFactory {
 			// no shut up operator, exception will be caught
 			$job = unserialize($row['job']);
 			if ($job) {
-				$job->perform();
+				$this->performJob($job);
 			}
 		}
 		catch (\Exception $e) {
-			// gotta catch 'em all
-			if ($job) {
-				$job->fail();
-				
-				if ($job->getFailures() <= $job::MAX_FAILURES) {
-					$this->enqueue($job, TIME_NOW + $job->retryAfter());
-				}
-				else {
-					// job failed too often: log
-					if ($e instanceof LoggedException) $e->getExceptionID();
-				}
-			}
-			else {
-				// job is completely broken: log
-				if ($e instanceof LoggedException) $e->getExceptionID();
-			}
+			// job is completely broken: log
+			if ($e instanceof LoggedException) $e->getExceptionID();
 		}
 		finally {
 			// remove entry of processed job
