@@ -2,7 +2,6 @@
 namespace wcf\system\bulk\processing\user;
 use wcf\system\bulk\processing\AbstractBulkProcessableObjectType;
 
-
 /**
  * Bulk processable object type implementation for users.
  * 

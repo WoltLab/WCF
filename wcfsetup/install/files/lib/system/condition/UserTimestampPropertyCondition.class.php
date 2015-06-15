@@ -16,8 +16,8 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class UserTimestampPropertyCondition extends AbstractTimestampCondition implements IContentCondition, IUserCondition {
-	use TObjectUserCondition;
 	use TObjectListUserCondition;
+	use TObjectUserCondition;
 	
 	/**
 	 * @see	\wcf\system\condition\AbstractTimestampCondition::$className
