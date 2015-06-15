@@ -196,6 +196,21 @@
 			<name>com.woltlab.wcf.payment.type</name>
 			<interfacename><![CDATA[wcf\system\payment\type\IPaymentType]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessableObject</name>
+			<interfacename><![CDATA[wcf\system\bulk\processing\IBulkProcessableObjectType]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessing.user.condition</name>
+			<interfacename><![CDATA[wcf\system\condition\IObjectListCondition]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessing.user.action</name>
+			<interfacename><![CDATA[wcf\system\bulk\processing\IBulkProcessingAction]]></interfacename>
+		</definition>
 	</import>
 	
 	<delete>

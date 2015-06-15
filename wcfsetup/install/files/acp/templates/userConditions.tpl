@@ -1,3 +1,5 @@
+{if !$groupedObjectTypes|isset && $conditions|isset}{assign var='groupedObjectTypes' value=$conditions}{/if}
+
 <div class="tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
@@ -9,7 +11,7 @@
 	</nav>
 	
 	{foreach from=$groupedObjectTypes key='conditionGroup' item='conditionObjectTypes'}
-		<div id="user_{$conditionGroup}" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="user_{$conditionGroup}" class="container containerPadding tabMenuContent">
 			{if $conditionGroup != 'userOptions'}
 				<fieldset>
 					<legend>{lang}wcf.user.condition.conditionGroup.{$conditionGroup}{/lang}</legend>

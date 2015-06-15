@@ -3,7 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -19,7 +19,9 @@ use wcf\util\ArrayUtil;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserGroupCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IUserCondition {
+class UserGroupCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$descriptions
 	 */
@@ -55,14 +57,16 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	protected $userGroups = null;
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		if ($condition->groupIDs !== null) {
-			$userList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', array($condition->groupIDs, count($condition->groupIDs)));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		if (isset($conditionData['groupIDs'])) {
+			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', array($conditionData['groupIDs'], count($conditionData['groupIDs'])));
 		}
-		if ($condition->notGroupIDs !== null) {
-			$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?))', array($condition->notGroupIDs));
+		if (isset($conditionData['notGroupIDs'])) {
+			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?))', array($conditionData['notGroupIDs']));
 		}
 	}
 	

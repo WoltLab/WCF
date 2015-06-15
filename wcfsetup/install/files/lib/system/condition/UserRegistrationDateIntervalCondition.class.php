@@ -2,7 +2,7 @@
 namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
-use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +16,9 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements IContentCondition, IUserCondition {
+class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$languageItemPrefix
 	 */
@@ -28,14 +30,16 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 	protected $minValue = 0;
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		if ($condition->greaterThan !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate < ?', array(TIME_NOW - $condition->greaterThan * 86400));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		if ($conditionData['greaterThan'] !== null) {
+			$userList->getConditionBuilder()->add('user_table.registrationDate < ?', array(TIME_NOW - $conditionData['greaterThan'] * 86400));
 		}
-		if ($condition->lessThan !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate > ?', array(TIME_NOW - $condition->lessThan * 86400));
+		if ($conditionData['lessThan'] !== null) {
+			$userList->getConditionBuilder()->add('user_table.registrationDate > ?', array(TIME_NOW - $conditionData['lessThan'] * 86400));
 		}
 	}
 	

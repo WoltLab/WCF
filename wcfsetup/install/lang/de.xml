@@ -1592,11 +1592,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Zeitraum]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angegebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt. [Zeitraum in Tagen]]]></item>
 		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Änderungen folgender Nutzer zurücksetzen]]></item>
-		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
-		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
-		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Bedingungen]]></item>
-		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Die gewählte Aktion wurde erfolgreich auf {#$affectedUsers} Benutzer ausgeführt.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen.]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profil]]></item>
@@ -1735,6 +1730,17 @@ Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[Sie können auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benachrichtigungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
+		
+		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
+		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
+		<item name="wcf.acp.user.bulkProcessing.assignToUserGroups"><![CDATA[Benutzergruppen zuweisen]]></item>
+		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Bedingungen]]></item>
+		<item name="wcf.acp.user.bulkProcessing.delete"><![CDATA[Benutzer löschen]]></item>
+		<item name="wcf.acp.user.bulkProcessing.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
+		<item name="wcf.acp.user.bulkProcessing.removeFromUserGroups"><![CDATA[Aus Benutzergruppen entfernen]]></item>
+		<item name="wcf.acp.user.bulkProcessing.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
+		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Die gewählte Aktion wurde auf {#$affectedObjectCount} Benutzer ausgeführt.]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen.]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -2246,6 +2252,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.button.showAll"><![CDATA[Alle anzeigen]]></item>
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>
 		<item name="wcf.global.settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> aus!]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
@@ -3118,6 +3125,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.groupIDs"><![CDATA[in Benutzergruppen]]></item>
 		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Benutzer müssen in den ausgewählten Benutzergruppen Mitglied sein.]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Sprachen]]></item>
+		<item name="wcf.user.condition.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.condition.likesReceived"><![CDATA[Erhaltene Likes]]></item>
 		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobiler Browser]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Verwendet mobilen Browser]]></item>

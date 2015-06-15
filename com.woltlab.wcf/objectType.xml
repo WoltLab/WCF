@@ -996,5 +996,131 @@
 			<definitionname>com.woltlab.wcf.payment.type</definitionname>
 			<classname><![CDATA[wcf\system\payment\type\PaidSubscriptionPaymentType]]></classname>
 		</type>
+		
+		<!-- bulk processable objects -->
+		<type>
+			<name>com.woltlab.wcf.bulkProcessing.user</name>
+			<definitionname>com.woltlab.wcf.bulkProcessableObject</definitionname>
+			<classname><![CDATA[wcf\system\bulk\processing\user\UserBulkProcessableObjectType]]></classname>
+		</type>
+		<!-- /bulk processable objects -->
+		
+		<!-- user bulk processing actions -->
+		<type>
+			<name>com.woltlab.wcf.delete</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.action</definitionname>
+			<classname><![CDATA[wcf\system\bulk\processing\user\DeleteUserBulkProcessingAction]]></classname>
+			<action>delete</action>
+			<permissions>admin.user.canDeleteUser</permissions>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.assignToUserGroups</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.action</definitionname>
+			<classname><![CDATA[wcf\system\bulk\processing\user\AssignToUserGroupsUserBulkProcessingAction]]></classname>
+			<action>assignToUserGroups</action>
+			<permissions>admin.user.canEditUser</permissions>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.removeFromUserGroups</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.action</definitionname>
+			<classname><![CDATA[wcf\system\bulk\processing\user\RemoveFromUserGroupsUserBulkProcessingAction]]></classname>
+			<action>removeFromUserGroups</action>
+			<permissions>admin.user.canEditUser</permissions>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.sendMail</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.action</definitionname>
+			<classname><![CDATA[wcf\system\bulk\processing\user\SendMailUserBulkProcessingAction]]></classname>
+			<action>sendMail</action>
+			<permissions>admin.user.canMailUser</permissions>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.exportMailAddress</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.action</definitionname>
+			<classname><![CDATA[wcf\system\bulk\processing\user\ExportMailAddressUserBulkProcessingAction]]></classname>
+			<action>exportMailAddress</action>
+			<permissions>admin.user.canMailUser</permissions>
+		</type>
+		<!-- /user bulk processing actions -->
+		
+		<!-- user bulk processing conditions -->
+		<type>
+			<name>com.woltlab.wcf.username</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserUsernameCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.email</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserEmailCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userGroup</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserGroupCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.languages</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserLanguageCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.registrationDate</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserRegistrationDateCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.registrationDateInterval</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserRegistrationDateIntervalCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.lastActivityTime</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserTimestampPropertyCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+			<propertyname>lastActivityTime</propertyname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.avatar</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserAvatarCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.state</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserStateCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.activityPoints</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>activityPoints</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.likesReceived</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>likesReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userOptions</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserOptionsCondition]]></classname>
+			<conditiongroup>userOptions</conditiongroup>
+		</type>
+		<!-- /user bulk processing conditions -->
 	</import>
 </data>

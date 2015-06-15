@@ -1591,11 +1591,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Timeframe]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Changes made in this timeframe will be reverted to the newest version that is either older than the given timeframe or made by an unrelated user [time in days]]]></item>
 		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Revert changes by the following users]]></item>
-		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Bulk Processing]]></item>
-		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Actions]]></item>
-		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Executed action affected {#$affectedUsers} user{if $affectedUsers != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
@@ -1735,6 +1730,16 @@ You can now fully access the website.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Any changes to default notification settings will be applied to existing users. This overrides all affected settings previously changed by the respective user itself.]]></item>
 		
+		<item name="wcf.acp.user.bulkProcessing"><![CDATA[User Bulk Processing]]></item>
+		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Action]]></item>
+		<item name="wcf.acp.user.bulkProcessing.assignToUserGroups"><![CDATA[Assign to User Groups]]></item>
+		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.user.bulkProcessing.delete"><![CDATA[Delete Users]]></item>
+		<item name="wcf.acp.user.bulkProcessing.exportMailAddress"><![CDATA[Export Email Addresses]]></item>
+		<item name="wcf.acp.user.bulkProcessing.removeFromUserGroups"><![CDATA[Remove from User Groups]]></item>
+		<item name="wcf.acp.user.bulkProcessing.sendMail"><![CDATA[Send Email to Users]]></item>
+		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[The selection action has been executed and affected {#$affectedObjectCount} user{if $affectedUsers != 1}s{/if}.]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below on all users matching the seleced conditions without any further confirmation prompt!]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
