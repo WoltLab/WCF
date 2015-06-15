@@ -68,16 +68,7 @@ class Mailbox {
 			return $this->address;
 		}
 		
-		$name = $this->name;
-		if (!preg_match('(^'.EmailGrammar::getGrammar('atom').'$)', $name)) {
-			if (($encoded = EmailGrammar::encodeMimeHeader($name)) === $name) {
-				$name = '"'.addcslashes($name, '\\"').'"';
-			}
-			else {
-				$name = $encoded;
-			}
-		}
-		
+		$name = EmailGrammar::encodeHeader($this->name);
 		return $name.' <'.$this->address.'>';
 	}
 }

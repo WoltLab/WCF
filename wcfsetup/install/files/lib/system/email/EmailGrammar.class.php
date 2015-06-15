@@ -83,8 +83,29 @@ final class EmailGrammar {
 	 * @param	string	$header		Header to encode
 	 * @return	string			Encoded header
 	 */
-	public static function encodeMimeHeader($header) {
+	public static function encodeQuotedPrintableHeader($header) {
 		return mb_encode_mimeheader($header, "UTF-8", "Q", "\r\n");
+	}
+	
+	/**
+	 * Return text either unmodified, if it matches the 'atom' grammar,
+	 * in double quotes or encoded in quoted printable. Depending on which
+	 * encoding is necessary.
+	 *
+	 * @param	string	$header		Header to encode
+	 * @return	string			Encoded header
+	 */
+	public static function encodeHeader($header) {
+		if (!preg_match('(^'.self::getGrammar('atom').'$)', $header)) {
+			if (($encoded = self::encodeQuotedPrintableHeader($header)) === $header) {
+				$header = '"'.addcslashes($header, '\\"').'"';
+			}
+			else {
+				$header = $encoded;
+			}
+		}
+		
+		return $header;
 	}
 	
 	private function __construct() { }
