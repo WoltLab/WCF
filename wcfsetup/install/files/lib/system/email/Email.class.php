@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\email;
+use wcf\system\background\job\EmailDeliveryBackgroundJob;
 use wcf\system\email\mime\AbstractMimePart;
 use wcf\system\email\mime\TextMimePart;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -361,7 +363,7 @@ class Email {
 			throw new SystemException("The header '".$header."' may not be set. You may only set user defined headers (starting with 'X-').");
 		}
 		
-		$this->extraHeaders[] = [ $header, EmailGrammar::encodeMimeHeader($value) ];
+		$this->extraHeaders[] = [ $header, EmailGrammar::encodeQuotedPrintableHeader($value) ];
 	}
 	
 	/**
@@ -559,7 +561,39 @@ class Email {
 			$body .= $text;
 		}
 		
+		// TODO: Where to put the email signature?
+		
 		return $body;
+	}
+	
+	/**
+	 * Returns needed AbstractBackgroundJobs to deliver this email to every recipient.
+	 * 
+	 * @return	array<\wcf\system\background\job\AbstractBackgroundJob>
+	 */
+	public function getJobs() {
+		$jobs = [ ];
+		
+		// ensure every header is filled in
+		$this->getHeaders();
+		
+		foreach ($this->recipients as $recipient) {
+			$mail = clone $this;
+			
+			if ($recipient[1] instanceof UserMailbox) {
+				$mail->addHeader('X-Community-Framework-Recipient', $recipient[1]->getUser()->username);
+			}
+			
+			$data = [ 'mail' => $mail, 'recipient' => $recipient, 'skip' => false ];
+			EventHandler::getInstance()->fireAction($this, 'getJobs', $data);
+			
+			// an event decided that this email should be skipped
+			if ($data['skip']) continue;
+			
+			$jobs[] = new EmailDeliveryBackgroundJob($mail, $recipient[1]);
+		}
+		
+		return $jobs;
 	}
 	
 	/**

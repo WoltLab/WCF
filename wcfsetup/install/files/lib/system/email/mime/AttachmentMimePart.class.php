@@ -33,6 +33,12 @@ class AttachmentMimePart extends AbstractMimePart {
 	protected $mimeType;
 	
 	/**
+	 * the file contents
+	 * @var	string
+	 */
+	protected $content = '';
+	
+	/**
 	 * Creates a new Attachment.
 	 * 
 	 * @param	string	$path		Path to read the file from.
@@ -47,6 +53,7 @@ class AttachmentMimePart extends AbstractMimePart {
 		$this->mimeType = $mimeType ?: (FileUtil::getMimeType($path) ?: 'application/octet-stream');
 		$this->path = $path;
 		$this->filename = $filename ?: basename($path);
+		$this->content = file_get_contents($this->path);
 	}
 	
 	/**
@@ -78,6 +85,6 @@ class AttachmentMimePart extends AbstractMimePart {
 	 * @see	\wcf\system\email\mime\AbstractMimePart::getContent()
 	 */
 	public function getContent() {
-		return file_get_contents($this->path);
+		return $this->content;
 	}
 }
