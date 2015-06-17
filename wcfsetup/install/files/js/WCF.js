@@ -2208,253 +2208,15 @@ WCF.Date = {};
 
 /**
  * Provides a date picker for date input fields.
+ * 
+ * @deprecated	2.2 - no longer required
  */
-WCF.Date.Picker = {
-	/**
-	 * date format
-	 * @var	string
-	 */
-	_dateFormat: 'yy-mm-dd',
-	
-	/**
-	 * time format
-	 * @var	string
-	 */
-	_timeFormat: 'g:ia',
-	
-	/**
-	 * Initializes the jQuery UI based date picker.
-	 */
-	init: function() {
-		// ignore error 'unexpected literal' error; this might be not the best approach
-		// to fix this problem, but since the date is properly processed anyway, we can
-		// simply continue :)	- Alex
-		var $__log = $.timepicker.log;
-		$.timepicker.log = function(error) {
-			if (error.indexOf('Error parsing the date/time string: Unexpected literal at position') == -1 && error.indexOf('Error parsing the date/time string: Unknown name at position') == -1) {
-				$__log(error);
-			}
-		};
-		
-		this._convertDateFormat();
-		this._initDatePicker();
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Picker', $.proxy(this._initDatePicker, this));
-	},
-	
-	/**
-	 * Convert PHPs date() format to jQuery UIs date picker format.
-	 */
-	_convertDateFormat: function() {
-		// replacement table
-		// format of PHP date() => format of jQuery UI date picker
-		//
-		// No equivalence in PHP date():
-		// oo	day of the year (three digit)
-		// !	Windows ticks (100ns since 01/01/0001)
-		//
-		// No equivalence in jQuery UI date picker:
-		// N	ISO-8601 numeric representation of the day of the week
-		// w	Numeric representation of the day of the week
-		// W	ISO-8601 week number of year, weeks starting on Monday
-		// t	Number of days in the given month
-		// L	Whether it's a leap year
-		var $replacementTable = {
-			// time
-			'a': 'tt',
-			'A': 'TT',
-			'g': 'h',
-			'G': 'H',
-			'h': 'hh',
-			'H': 'HH',
-			'i': 'mm',
-			's': 'ss',
-			'u': 'l',
-			
-			// day
-			'd': 'dd',
-			'D': 'D',
-			'j': 'd',
-			'l': 'DD',
-			'z': 'o',
-			'S': '', // English ordinal suffix for the day of the month, 2 characters, will be discarded
-			
-			// month
-			'F': 'MM',
-			'm': 'mm',
-			'M': 'M',
-			'n': 'm',
-			
-			// year
-			'o': 'yy',
-			'Y': 'yy',
-			'y': 'y',
-			
-			// timestamp
-			'U': '@'
-		};
-		
-		// do the actual replacement
-		// this is not perfect, but a basic implementation and should work in 99% of the cases
-		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzSFmMnoYyU\\]*(?:\\.[^dDjlzSFmMnoYyU\\]*)*)([dDjlzSFmMnoYyU])/g, function(match, part1, part2, offset, string) {
-			for (var $key in $replacementTable) {
-				if (part2 == $key) {
-					part2 = $replacementTable[$key];
-				}
-			}
-			
-			return part1 + part2;
-		});
-		
-		this._timeFormat = WCF.Language.get('wcf.date.timeFormat').replace(/([^aAgGhHisu\\]*(?:\\.[^aAgGhHisu\\]*)*)([aAgGhHisu])/g, function(match, part1, part2, offset, string) {
-			for (var $key in $replacementTable) {
-				if (part2 == $key) {
-					part2 = $replacementTable[$key];
-				}
-			}
-			
-			return part1 + part2;
-		});
-	},
-	
-	/**
-	 * Initializes the date picker for valid fields.
-	 */
-	_initDatePicker: function() {
-		$('input[type=date]:not(.jsDatePicker), input[type=datetime]:not(.jsDatePicker)').each($.proxy(function(index, input) {
-			var $input = $(input);
-			var $inputName = $input.prop('name');
-			var $inputValue = $input.val(); // should be Y-m-d (H:i:s), must be interpretable by Date
-			
-			var $hasTime = $input.attr('type') == 'datetime';
-			
-			// update $input
-			$input.prop('type', 'text').addClass('jsDatePicker');
-			
-			// set placeholder
-			if ($input.data('placeholder')) $input.attr('placeholder', $input.data('placeholder'));
-			
-			// insert a hidden element representing the actual date
-			$input.removeAttr('name');
-			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
-			
-			// max- and mindate
-			var $maxDate = $input.attr('max') ? new Date($input.attr('max').replace(' ', 'T')) : null;
-			var $minDate = $input.attr('min') ? new Date($input.attr('min').replace(' ', 'T')) : null;
-			
-			// init date picker
-			var $options = {
-				altField: '#' + $input.wcfIdentify() + 'DatePicker',
-				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
-				beforeShow: function(input, instance) {
-					// dirty hack to force opening below the input
-					setTimeout(function() {
-						instance.dpDiv.position({
-							my: 'left top',
-							at: 'left bottom',
-							collision: 'none',
-							of: input
-						});
-					}, 1);
-				},
-				changeMonth: true,
-				changeYear: true,
-				dateFormat: this._dateFormat,
-				dayNames: WCF.Language.get('__days'),
-				dayNamesMin: WCF.Language.get('__daysShort'),
-				dayNamesShort: WCF.Language.get('__daysShort'),
-				firstDay: parseInt(WCF.Language.get('wcf.date.firstDayOfTheWeek')) || 0,
-				isRTL: WCF.Language.get('wcf.global.pageDirection') == 'rtl',
-				maxDate: $maxDate,
-				minDate: $minDate,
-				monthNames: WCF.Language.get('__months'),
-				monthNamesShort: WCF.Language.get('__monthsShort'),
-				showButtonPanel: false,
-				onClose: function(dateText, datePicker) {
-					// clear altField when datepicker is cleared
-					if (dateText == '') {
-						$(datePicker.settings["altField"]).val(dateText);
-					}
-				},
-				showOtherMonths: true,
-				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
-			};
-			
-			if ($hasTime) {
-				// drop the seconds
-				if (/[0-9]{2}:[0-9]{2}:[0-9]{2}$/.test($inputValue)) {
-					$inputValue = $inputValue.replace(/:[0-9]{2}$/, '');
-					$input.val($inputValue);
-				}
-				$inputValue = $inputValue.replace(' ', 'T');
-				
-				// Date objects require a date and a time, thus
-				// add the current date to a time only-value
-				if ($input.data('timeOnly')) {
-					var $dateComponents = $inputValue.split(':');
-					var $date = new Date();
-					$date.setHours($dateComponents[0]);
-					$date.setMinutes($dateComponents[1]);
-					$date.setSeconds(0);
-					
-					$inputValue = $date.toString();
-				}
-				
-				if ($input.data('ignoreTimezone')) {
-					var $timezoneOffset = new Date($inputValue).getTimezoneOffset();
-					var $timezone = ($timezoneOffset > 0) ? '-' : '+'; // -120 equals GMT+0200
-					$timezoneOffset = Math.abs($timezoneOffset);
-					var $hours = (Math.floor($timezoneOffset / 60)).toString();
-					var $minutes = ($timezoneOffset % 60).toString();
-					$timezone += ($hours.length == 2) ? $hours : '0' + $hours;
-					$timezone += ':';
-					$timezone += ($minutes.length == 2) ? $minutes : '0' + $minutes;
-					
-					$inputValue = $inputValue.replace(/[+-][0-9]{2}:[0-9]{2}$/, $timezone);
-				}
-				
-				$options = $.extend($options, {
-					altFieldTimeOnly: false,
-					altTimeFormat: 'HH:mm',
-					controlType: 'select',
-					hourText: WCF.Language.get('wcf.date.hour'),
-					minuteText: WCF.Language.get('wcf.date.minute'),
-					showTime: false,
-					timeFormat: this._timeFormat,
-					timeOnly: $input.data('timeOnly') ? true : false,
-					yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
-				});
-			}
-			
-			if ($hasTime) {
-				$input.datetimepicker($options);
-			}
-			else {
-				$input.datepicker($options);
-			}
-			
-			// format default date
-			if ($inputValue) {
-				$inputValue = new Date($inputValue);
-				if (!$hasTime) {
-					// drop timezone for date-only input
-					$inputValue.setMinutes($inputValue.getMinutes() + $inputValue.getTimezoneOffset());
-				}
-				
-				$input.datepicker('setDate', $inputValue);
-			}
-			
-			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
-			$input.datepicker('widget').hide();
-			
-			if ($input.data('timeOnly')) {
-				$input.datepicker('widget').addClass('timeOnlyPicker');
-			}
-		}, this));
-	}
-};
+WCF.Date.Picker = { init: function() {} };
 
 /**
  * Provides utility functions for date operations.
+ * 
+ * @deprecated	2.2 - use `DateUtil` instead
  */
 WCF.Date.Util = {
 	/**
@@ -2462,6 +2224,8 @@ WCF.Date.Util = {
 	 * 
 	 * @param	Date		date
 	 * @return	integer
+	 * 
+	 * @deprecated	2.2 - use `DateUtil::gmdate()` instead
 	 */
 	gmdate: function(date) {
 		var $date = (date) ? date : new Date();
@@ -2483,6 +2247,8 @@ WCF.Date.Util = {
 	 * @param	integer		timestamp
 	 * @param	integer		offset
 	 * @return	Date
+	 * 
+	 * @deprecated	2.2 - use `DateUtil::getTimezoneDate()` instead
 	 */
 	getTimezoneDate: function(timestamp, offset) {
 		var $date = new Date(timestamp);
@@ -8563,15 +8329,56 @@ $.widget('ui.wcfSlideshow', {
 });
 
 jQuery.fn.extend({
-	wcfTabs: function(method) {
-		var parameters = arguments;
+	datepicker: function(method) {
+		var element = this[0], parameters = Array.prototype.slice.call(arguments, 1);
 		
-		require(['DOM/Util', 'WoltLab/WCF/UI/TabMenu'], (function(DOMUtil, TabMenu) {
-			var container = TabMenu.getTabMenu(DOMUtil.identify(this[0]));
+		switch (method) {
+			case 'destroy':
+				window.__wcf_bc_datePicker.destroy(element);
+				break;
+				
+			case 'getDate':
+				return window.__wcf_bc_datePicker.getDate(element);
+				break;
+				
+			case 'option':
+				if (parameters[0] === 'onClose') {
+					return function() {};
+				}
+				
+				console.warn("datepicker('option') supports only 'onClose'.");
+				break;
+				
+			case 'setDate':
+				window.__wcf_bc_datePicker.setDate(element, parameters[0]);
+				break;
+				
+			case 'setOption':
+				if (parameters[0] === 'onClose') {
+					window.__wcf_bc_datePicker.setCloseCallback(element, parameters[1]);
+				}
+				else {
+					console.warn("datepicker('setOption') supports only 'onClose'.");
+				}
+				break;
+				
+			default:
+				console.debug("Unsupported method '" + method + "' for datepicker()");
+				break;
+		}
+	}
+});
+
+jQuery.fn.extend({
+	wcfTabs: function(method) {
+		var element = this[0], parameters = Array.prototype.slice.call(arguments, 1);
+		
+		require(['DOM/Util', 'WoltLab/WCF/UI/TabMenu'], function(DOMUtil, TabMenu) {
+			var container = TabMenu.getTabMenu(DOMUtil.identify(element));
 			if (container !== null) {
-				container[method].apply(container, Array.prototype.slice.call(parameters, 1));
+				container[method].apply(container, parameters);
 			}
-		}).bind(this));
+		});
 	}
 });
 

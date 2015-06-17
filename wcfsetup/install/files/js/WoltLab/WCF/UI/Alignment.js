@@ -25,7 +25,7 @@ define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language
 				// offset to reference element
 				verticalOffset: 7,
 				
-				// align the pointer element, expects .pointer as a direct child of given element
+				// align the pointer element, expects .elementPointer as a direct child of given element
 				pointer: false,
 				
 				// offset from/left side, ignored for center alignment

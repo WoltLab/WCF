@@ -6,7 +6,16 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/BootstrapFrontend
  */
-define(['Ajax', 'WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer', 'WoltLab/WCF/Controller/Popover'], function(Ajax, Bootstrap, ControllerSitemap, ControllerStyleChanger, ControllerPopover) {
+define(
+	[
+	 	'Ajax',                           'WoltLab/WCF/Bootstrap',   'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer',
+	 	'WoltLab/WCF/Controller/Popover', 'WoltLab/WCF/Date/Picker'
+	],
+	function(
+		Ajax,                              Bootstrap,                 ControllerSitemap,                ControllerStyleChanger,
+		ControllerPopover,                 DatePicker
+	)
+{
 	"use strict";
 	
 	/**
@@ -22,6 +31,7 @@ define(['Ajax', 'WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Controller/Sitemap', 'Wolt
 			Bootstrap.setup();
 			
 			ControllerSitemap.setup();
+			DatePicker.init();
 			
 			if (options.styleChanger) {
 				ControllerStyleChanger.setup();

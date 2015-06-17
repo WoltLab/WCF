@@ -22,7 +22,40 @@ requirejs.config({
 	baseUrl: '{@$__wcf->getPath()}js'
 });
 </script>
-
+<script>
+	(function(window) {
+		var orgRequire = window.require;
+		var queue = [];
+		var counter = 0;
+		
+		window.require = function(dependencies, callback) {
+			if (!Array.isArray(dependencies)) {
+				return orgRequire.apply(window, arguments);
+			}
+			
+			var i = counter++;
+			queue.push(i);
+			
+			orgRequire(dependencies, function() {
+				var args = arguments;
+				
+				queue[queue.indexOf(i)] = function() { callback.apply(window, args); };
+				
+				executeCallbacks();
+			});
+		};
+		
+		function executeCallbacks() {
+			while (queue.length) {
+				if (typeof queue[0] !== 'function') {
+					break;
+				}
+				
+				queue.shift()();
+			}
+		};
+	})(window);
+</script>
 <script data-relocate="true">
 	require(['Language', 'WoltLab/WCF/BootstrapFrontend'], function(Language, BootstrapFrontend) {
 		Language.addObject({
@@ -139,7 +172,6 @@ requirejs.config({
 {if ENABLE_DEBUG_MODE}
 <script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
 {else}

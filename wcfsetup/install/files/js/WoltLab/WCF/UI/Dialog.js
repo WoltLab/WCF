@@ -8,14 +8,14 @@
  */
 define(
 	[
-		'enquire',  'Core',      'Dictionary',         'Environment',
-		'Language', 'ObjectMap', 'DOM/ChangeListener', 'DOM/Util',
-		'UI/Confirmation'
+		'enquire',     'Ajax',       'Core',      'Dictionary',
+		'Environment', 'Language',   'ObjectMap', 'DOM/ChangeListener',
+		'DOM/Util',    'UI/Confirmation'
 	],
 	function(
-		enquire,     Core,        Dictionary,           Environment,
-		Language,    ObjectMap,   DOMChangeListener,    DOMUtil,
-		UIConfirmation
+		enquire,        Ajax,         Core,        Dictionary,
+		Environment,    Language,     ObjectMap,   DOMChangeListener,
+		DOMUtil,        UIConfirmation
 	)
 {
 	"use strict";

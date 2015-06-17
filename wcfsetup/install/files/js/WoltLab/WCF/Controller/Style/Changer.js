@@ -42,7 +42,7 @@ define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 		showDialog: function(event) {
 			event.preventDefault();
 			
-			UIDialog.show(this);
+			UIDialog.open(this);
 		},
 		
 		_dialogSetup: function() {

@@ -86,8 +86,10 @@ define(
 				
 				if (containerData === undefined) {
 					var markAll = container.querySelector('.jsClipboardMarkAll');
-					markAll.setAttribute('data-container-id', containerId);
-					markAll.addEventListener('click', this._markAll.bind(this));
+					if (markAll !== null) {
+						markAll.setAttribute('data-container-id', containerId);
+						markAll.addEventListener('click', this._markAll.bind(this));
+					}
 					
 					containerData = {
 						checkboxes: container.getElementsByClassName('jsClipboardItem'),

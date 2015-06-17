@@ -22,7 +22,6 @@
 	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch.min.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.min.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
 	<script src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@LAST_UPDATE_TIME}"></script>

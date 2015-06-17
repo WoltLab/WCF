@@ -50,6 +50,7 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 			
 			if (value === undefined) {
 				console.warn("Attempt to retrieve unknown phrase '" + key + "'.");
+				console.warn(new Error().stack);
 				return key;
 			}
 			

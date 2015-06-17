@@ -1,178 +1,136 @@
-.ui-datepicker {
+.inputAddon > .inputDatePicker {
+	background-color: @wcfInputBackgroundColor !important;
+	cursor: pointer;
+	flex: 0 1 150px;
+	min-width: 150px;
+}
+
+.datePicker {
 	background-color: @wcfDropdownBackgroundColor;
 	border: 1px solid @wcfDropdownBorderColor;
+	border-radius: 3px;
 	color: @wcfDropdownColor;
-	margin-top: 7px;
-	z-index: 450 !important;
+	opacity: 0;
+	position: absolute;
+	transition: visibility .3s linear .3s, opacity .3s linear;
+	visibility: hidden;
+	width: 240px;
+	z-index: 450;
 	
 	.boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
 	
-	&::after {
-		border: 7px solid transparent;
-		border-bottom-color: @wcfDropdownBorderColor;
-		border-top-width: 0;
-		content: "";
-		display: inline-block;
-		left: 9px;
-		position: absolute;
-		top: -7px;
-		z-index: 100;
+	&.active {
+		opacity: 1;
+		transition-delay: 0s;
+		visibility: visible;
 	}
 	
-	&::before {
-		border: 6px solid transparent;
-		border-bottom-color: @wcfDropdownBackgroundColor;
-		border-top-width: 0;
-		content: "";
-		display: inline-block;
-		left: 10px;
-		position: absolute;
-		top: -6px;
-		z-index: 101;
+	&.datePickerTime > footer {
+		display: block;
 	}
 	
-	a:hover {
-		text-decoration: none;
-	}
-	
-	> .ui-datepicker-header {
-		padding: 4px;
-		text-align: center;
+	> .elementPointer {
+		border-color: @wcfDropdownBorderColor transparent;
+		border-style: solid;
+		border-width: 0 8px 8px;
 		
-		> .ui-datepicker-prev,
-		> .ui-datepicker-next {
-			display: inline-block;
-			margin: 2px 2px 0 2px;
+		> span {
+			border-color: @wcfDropdownBackgroundColor transparent;
+			border-style: solid;
+			border-width: 0 6px 6px;
+			left: -6px;
+			position: absolute;
+			top: 2px;
+		}
+		
+		&.flipVertical {
+			border-width: 8px 8px 0;
 			
 			> span {
-				display: none;
-			}
-		}
-		
-		> .ui-datepicker-prev {
-			float: left;
-			
-			&::before {
-				content: "\f060";
-				font-family: FontAwesome;
-				font-size: 14px;
-			}
-		}
-		
-		> .ui-datepicker-next {
-			float: right;
-			
-			&::before {
-				content: "\f061";
-				font-family: FontAwesome;
-				font-size: 14px;
+				border-width: 6px 6px 0;
 			}
 		}
 	}
 	
-	> table {
-		border-collapse: collapse;
-		border-spacing: 0;
-		width: 100%;
+	> header,
+	> footer {
+		padding: @wcfGapSmall;
+		position: relative;
+		text-align: center;
+	}
+	
+	> header > a {
+		display: none;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
 		
-		> thead {
-			background-color: @wcfTabularBoxBackgroundColor;
+		&.active {
+			display: block;
+		}
+		
+		&.previous {
+			left: @wcfGapSmall;
+		}
+		
+		&.next {
+			right: @wcfGapSmall;
+		}
+	}
+	
+	> ul {
+		border-top: 1px solid @wcfDropdownBorderColor;
+		
+		// hide borders
+		margin: 0 -1px -1px 0;
+		
+		> li {
+			display: flex;
 			
-			> tr > th {
+			> a,
+			> span {
+				border: 1px solid @wcfDropdownBorderColor;
+				border-width: 0 1px 1px 0;
+				display: block;
+				flex: 1;
+				padding: @wcfGapTiny 0;
+				text-align: center;
+			}
+			
+			> a {
+				background-color: @wcfContainerAccentBackgroundColor;
+				color: @wcfColor;
+				
+				&:hover {
+					text-decoration: none;
+				}
+				
+				&.active,
+				&:not(.otherMonth):hover {
+					background-color: @wcfContainerHoverBackgroundColor;
+				}
+				
+				&.otherMonth {
+					background-color: @wcfContainerBackgroundColor;
+					color: @wcfDimmedColor;
+					cursor: default;
+				}
+			}
+			
+			> span {
+				background-color: @wcfTabularBoxBackgroundColor;
+				border-right-color: @wcfTabularBoxBackgroundColor;
 				color: @wcfTabularBoxColor;
-				font-size: @wcfSmallFontSize;
-				padding: 5px 0;
+				font-size: .85rem;
 				text-transform: uppercase;
 				
 				.textShadow(@wcfTabularBoxBackgroundColor);
 			}
 		}
-		
-		> tbody {
-			> tr {
-				border-bottom: 1px solid @wcfContainerBorderColor;
-				
-				&:last-child {
-					border-bottom: 0;
-				}
-				
-				> td {
-					border-right: 1px solid @wcfContainerBorderColor;
-					
-					&:last-child {
-						border-right: 0;
-					}
-					
-					> span,
-					> a {
-						display: inline-block;
-						color: @wcfColor;
-						font-weight: bold;
-						height: 30px;
-						line-height: 30px;
-						text-align: center;
-						width: 30px;
-						
-						.textShadow(@wcfContainerBackgroundColor);
-					}
-				}
-			}
-		}
 	}
 	
-	.ui-datepicker-calendar .ui-state-default {
-		background-color: @wcfContainerAccentBackgroundColor;
+	> footer {
+		display: none;
 	}
 	
-	.ui-datepicker-unselectable .ui-state-default {
-		background-color: @wcfContainerBackgroundColor;
-		color: @wcfDimmedColor;
-	}
-	
-	.ui-datepicker-calendar .ui-state-hover {
-		background-color: @wcfContainerHoverBackgroundColor;
-	}
-	
-	.ui-datepicker-calendar .ui-state-active {
-		background-color: @wcfContainerHoverBackgroundColor;
-	}
-	
-	/* time picker */
-	.ui-timepicker-div {
-		border-top: 1px solid @wcfContainerBorderColor;
-		
-		> dl {
-			> dt {
-				margin-top: @wcfGapTiny !important;
-				width: 100px;
-			}
-			
-			> dd {
-				margin-left: 120px;
-				margin-top: @wcfGapTiny !important;
-			}
-		}
-	}
-	
-	&.timeOnlyPicker {
-		.ui-timepicker-div {
-			border-top: none;
-			
-			> .ui-widget-header {
-				display: none;
-			}
-			
-			> dl {
-				margin-right: @wcfGapTiny;
-				
-				> dt {
-					width: 70px;
-				}
-				
-				> dd {
-					margin-left: 90px;
-				}
-			}
-		}
-	}
 }

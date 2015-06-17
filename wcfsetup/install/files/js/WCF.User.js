@@ -566,7 +566,7 @@ WCF.User.QuickLogin = {
 					
 					loginForm.style.removeProperty('display');
 					
-					UIDialog.open('loginForm', null, {
+					UIDialog.openStatic('loginForm', null, {
 						title: WCF.Language.get('wcf.user.login')
 					});
 				});

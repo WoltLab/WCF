@@ -16,6 +16,7 @@ requirejs.config({
 			'AjaxRequest': 'WoltLab/WCF/Ajax/Request',
 			'CallbackList': 'WoltLab/WCF/CallbackList',
 			'Core': 'WoltLab/WCF/Core',
+			'DateUtil': 'WoltLab/WCF/Date/Util',
 			'Dictionary': 'WoltLab/WCF/Dictionary',
 			'DOM/ChangeListener': 'WoltLab/WCF/DOM/Change/Listener',
 			'DOM/Traverse': 'WoltLab/WCF/DOM/Traverse',
