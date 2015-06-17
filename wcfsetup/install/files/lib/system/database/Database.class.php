@@ -244,7 +244,7 @@ abstract class Database {
 	 */
 	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
 		if ($limit != 0) {
-			$query .= " LIMIT " . $limit . " OFFSET " . $offset;
+			$query .= " LIMIT " . $limit . ($offset ? " OFFSET " . $offset : '');
 		}
 		
 		return $query;
