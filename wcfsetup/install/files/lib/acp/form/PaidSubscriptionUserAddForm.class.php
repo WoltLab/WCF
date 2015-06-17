@@ -110,7 +110,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 			throw new UserInputException('username', 'notFound');
 		}
 		
-		if ($this->subscription->subscrtionLength) {
+		if ($this->subscription->subscriptionLength) {
 			$this->endDateTime = \DateTime::createFromFormat('Y-m-d', $this->endDate, new \DateTimeZone('UTC'));
 			if ($this->endDateTime === false || $this->endDateTime->getTimestamp() < TIME_NOW) {
 				throw new UserInputException('endDate');
@@ -126,7 +126,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 		
 		$userSubscription = PaidSubscriptionUser::getSubscriptionUser($this->subscriptionID, $this->user->userID);
 		$data = array();
-		if ($this->subscription->subscrtionLength) {
+		if ($this->subscription->subscriptionLength) {
 			$data['endDate'] = $this->endDateTime->getTimestamp();
 		}
 		if ($userSubscription === null) {
