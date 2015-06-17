@@ -48,7 +48,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 						$job->fail();
 						
 						if ($job->getFailures() <= $job::MAX_FAILURES) {
-							BackgroundQueueHandler::getInstance()->enqueue($job, TIME_NOW + $job->retryAfter());
+							BackgroundQueueHandler::getInstance()->enqueueIn($job, $job->retryAfter());
 						}
 					}
 				}

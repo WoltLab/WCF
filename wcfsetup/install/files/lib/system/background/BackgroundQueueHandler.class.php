@@ -2,6 +2,7 @@
 namespace wcf\system\background;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\exception\LoggedException;
+use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -17,6 +18,18 @@ use wcf\system\WCF;
  */
 class BackgroundQueueHandler extends SingletonFactory {
 	/**
+	 * Enqueues the given job for execution in the specified number of
+	 * seconds. Defaults to "as soon as possible" (0 seconds).
+	 * 
+	 * @param	\wcf\system\background\job\AbstractBackgroundJob	$job	The job to enqueue.
+	 * @param	int							$time	Minimum number of seconds to wait before performing the job.
+	 * @see	\wcf\system\background\BackgroundQueueHandler::enqueueAt()
+	 */
+	public function enqueueIn(AbstractBackgroundJob $job, $time = 0) {
+		return self::enqueueAt($job, TIME_NOW + $time);
+	}
+	
+	/**
 	 * Enqueues the given job for execution at the given time.
 	 * Note: The time is a minimum time. Depending on the size of
 	 * the queue the job can be performed later as well!
@@ -24,7 +37,11 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * @param	\wcf\system\background\job\AbstractBackgroundJob	$job	The job to enqueue.
 	 * @param	int							$time	Earliest time to consider the job for execution.
 	 */
-	public function enqueue(AbstractBackgroundJob $job, $time = 0) {
+	public function enqueueAt(AbstractBackgroundJob $job, $time) {
+		if ($time < TIME_NOW) {
+			throw new SystemException("You may not schedule a job in the past (".$time." is smaller than the current timestamp ".TIME_NOW.").");
+		}
+		
 		$sql = "INSERT INTO	wcf".WCF_N."_background_job
 					(job, time)
 			VALUES		(?, ?)";
@@ -55,7 +72,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$job->fail();
 			
 			if ($job->getFailures() <= $job::MAX_FAILURES) {
-				$this->enqueue($job, TIME_NOW + $job->retryAfter());
+				$this->enqueueIn($job, $job->retryAfter());
 			}
 			else {
 				// job failed too often: log
