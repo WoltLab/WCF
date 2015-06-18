@@ -37,6 +37,14 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
 	}
 	
 	/**
+	 * @see	\wcf\system\option\IOptionType::getData()
+	 */
+	public function getData(Option $option, $newValue) {
+		if ($newValue == -1 || $newValue == 1) return $newValue;
+		return 0;
+	}
+	
+	/**
 	 * @see	\wcf\system\option\IOptionType::getCSSClassName()
 	 */
 	public function getCSSClassName() {
