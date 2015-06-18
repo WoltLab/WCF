@@ -36,15 +36,8 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
-		if ($newValue !== null) return 1;
+		if ($newValue == 1) return 1;
 		return 0;
-	}
-	
-	/**
-	 * @see	\wcf\system\option\IOptionType::getCSSClassName()
-	 */
-	public function getCSSClassName() {
-		return 'reversed';
 	}
 	
 	/**

@@ -440,9 +440,6 @@
 		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[Die neue Benutzergruppe wird die gleichen Berechtigungen besitzen wie die kopierte Benutzergruppe.]]></item>
 		<item name="wcf.acp.group.option.admin.paidSubscription.canManageSubscription"><![CDATA[Kann bezahlte Mitgliedschaften verwalten]]></item>
 		<item name="wcf.acp.group.option.user.tag.canViewTag"><![CDATA[Kann Tag sehen]]></item>
-		<item name="wcf.acp.group.option.type.boolean.never"><![CDATA[Nie]]></item>
-		<item name="wcf.acp.group.option.type.boolean.no"><![CDATA[Nein]]></item>
-		<item name="wcf.acp.group.option.type.boolean.yes"><![CDATA[Ja]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -1080,6 +1077,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.suffix.pixel"><![CDATA[Pixel]]></item>
 		<item name="wcf.acp.option.suffix.seconds"><![CDATA[Sekunden]]></item>
 		<item name="wcf.acp.option.suffix.years"><![CDATA[Jahre]]></item>
+		<item name="wcf.acp.option.type.boolean.never"><![CDATA[Nie]]></item>
+		<item name="wcf.acp.option.type.boolean.no"><![CDATA[Nein]]></item>
+		<item name="wcf.acp.option.type.boolean.yes"><![CDATA[Ja]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

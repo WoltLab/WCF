@@ -439,9 +439,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[The new user group will have the same permissions as the copied user group.]]></item>
 		<item name="wcf.acp.group.option.admin.paidSubscription.canManageSubscription"><![CDATA[Can manage paid subscriptions]]></item>
 		<item name="wcf.acp.group.option.user.tag.canViewTag"><![CDATA[Can view tags]]></item>
-		<item name="wcf.acp.group.option.type.boolean.never"><![CDATA[Never]]></item>
-		<item name="wcf.acp.group.option.type.boolean.no"><![CDATA[No]]></item>
-		<item name="wcf.acp.group.option.type.boolean.yes"><![CDATA[Yes]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -1079,6 +1076,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.suffix.pixel"><![CDATA[Pixel]]></item>
 		<item name="wcf.acp.option.suffix.seconds"><![CDATA[Seconds]]></item>
 		<item name="wcf.acp.option.suffix.years"><![CDATA[Years]]></item>
+		<item name="wcf.acp.option.type.boolean.never"><![CDATA[Never]]></item>
+		<item name="wcf.acp.option.type.boolean.no"><![CDATA[No]]></item>
+		<item name="wcf.acp.option.type.boolean.yes"><![CDATA[Yes]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
