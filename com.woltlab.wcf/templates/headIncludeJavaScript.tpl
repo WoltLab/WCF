@@ -11,12 +11,8 @@
 	var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
 </script>
 
-{if ENABLE_DEBUG_MODE}
-<script src="{@$__wcf->getPath()}js/require.js?v={@LAST_UPDATE_TIME}"></script>
-<script src="{@$__wcf->getPath()}js/require.config.js?v={@LAST_UPDATE_TIME}"></script>
-{else}
-<script src="{@$__wcf->getPath()}js/WCF.Core.min.js?v={@LAST_UPDATE_TIME}"></script>
-{/if}
+{js application='wcf' file='require' bundle='WCF.Core' core='true'}
+{js application='wcf' file='require.config' bundle='WCF.Core' core='true'}
 <script>
 requirejs.config({
 	baseUrl: '{@$__wcf->getPath()}js'
@@ -148,35 +144,27 @@ requirejs.config({
 </script>
 
 {if JQUERY_SOURCE == 'google'}
-<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'microsoft'}
-<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'cloudflare'}
-<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {else}
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+{js application='wcf' lib='jquery'}
 {/if}
 {if JQUERY_SOURCE != 'local'}
 <script data-relocate="true">
 	if (!window.jQuery) {
-		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
-		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
+		document.write('{js application='wcf' lib='jquery' encodeJs='true'}');
 	}
 </script>
 {/if}
 
-{if ENABLE_DEBUG_MODE}
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
-{else}
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
-{/if}
+{js application='wcf' lib='jquery-ui'}
+{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined'}
+{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Assets' bundle='WCF.Combined'}
+{js application='wcf' file='WCF' bundle='WCF.Combined'}
 
 <script data-relocate="true">
 	define.amd = __require_define_amd;
@@ -185,22 +173,20 @@ requirejs.config({
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 </script>
 
-{if ENABLE_DEBUG_MODE}
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Like.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ACL.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Attachment.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Comment.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Location.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Poll.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Search.Message.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation.js?v={@LAST_UPDATE_TIME}"></script>
-{/if}
+{js application='wcf' file='WCF.Like' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.ACL' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Comment' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.ImageViewer' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Location' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Poll' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Search.Message' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Tagging' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.User' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Moderation' bundle='WCF.Combined'}
 
 {event name='javascriptInclude'}
 
