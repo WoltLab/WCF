@@ -1,7 +1,6 @@
 {include file='header'}
 
 <script data-relocate="true">
-console.time('option');
 	(function() {
 		var container = document.getElementById('optionValueContainer');
 		var parent = container.parentNode;
@@ -44,7 +43,6 @@ console.time('option');
 			parent.appendChild(fragment);
 		}
 	})();
-console.timeEnd('option');
 </script>
 
 <header class="boxHeadline">
