@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\background\job;
+use wcf\system\email\transport\exception\PermanentFailure;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 
@@ -69,6 +70,12 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 			self::$transport = new $name();
 		}
 		
-		self::$transport->deliver($this->email, $this->mailbox);
+		try {
+			self::$transport->deliver($this->email, $this->mailbox);
+		}
+		catch (PermanentFailure $e) {
+			// no need for retrying. Eat Exception and log the error.
+			$e->getExceptionID();
+		}
 	}
 }
