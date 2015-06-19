@@ -241,11 +241,6 @@ class Mail {
 	 * @return	string
 	 */
 	public static function buildAddress($name, $email, $encodeName = true) {
-		if (!empty($name) && MAIL_USE_FORMATTED_ADDRESS) {
-			if ($encodeName) $name = self::encodeMIMEHeader($name);
-			if (!preg_match('/^[a-z0-9 ]*$/i', $name)) return '"'.str_replace('"', '\"', $name).'" <'.$email.'>';
-			else return $name . ' <'.$email.'>';
-		}
 		return $email;
 	}
 	

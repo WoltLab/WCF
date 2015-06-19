@@ -174,12 +174,7 @@ class UserMailForm extends AbstractForm {
 				$this->userIDs = array_keys($users);
 			}
 			
-			if (MAIL_USE_FORMATTED_ADDRESS) {
-				$this->from = MAIL_FROM_NAME.' <'.MAIL_FROM_ADDRESS.'>';
-			}
-			else {
-				$this->from = MAIL_FROM_ADDRESS;
-			}
+			$this->from = MAIL_FROM_ADDRESS;
 		}
 		
 		if (!empty($this->userIDs)) {

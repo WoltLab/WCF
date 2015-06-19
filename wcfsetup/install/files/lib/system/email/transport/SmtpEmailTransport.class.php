@@ -82,6 +82,7 @@ class SmtpEmailTransport implements EmailTransport {
 		$this->username = $username;
 		$this->password = $password;
 		
+		// TODO: Add option in ACP for STARTTLS
 		switch ($starttls) {
 			case 'none':
 			case 'may':
