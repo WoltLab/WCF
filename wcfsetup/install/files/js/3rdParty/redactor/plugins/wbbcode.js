@@ -1738,6 +1738,23 @@ RedactorPlugins.wbbcode = function() {
 							if ($isEmpty) {
 								$preventAndSelectQuote = true;
 							}
+							else {
+								// check if caret is at the start of the quote
+								var range = (this.selection.implicitRange === null) ? this.range : this.selection.implicitRange;
+								if (range.startOffset === 0) {
+									var element = range.startContainer, prev;
+									while ((element = element.parentNode) !== null) {
+										prev = element.previousSibling;
+										if (prev !== null) {
+											if (prev.nodeType === Node.ELEMENT_NODE && prev.nodeName === 'HEADER') {
+												$preventAndSelectQuote = true;
+											}
+											
+											break;
+										}
+									}
+								}								
+							}
 						}
 						else {
 							var $range = (this.selection.implicitRange === null) ? this.range : this.selection.implicitRange;
