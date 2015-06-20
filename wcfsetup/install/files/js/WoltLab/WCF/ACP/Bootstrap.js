@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/ACP/Bootstrap
  */
-define(['WoltLab/WCF/Bootstrap'], function(Bootstrap) {
+define(['WoltLab/WCF/Bootstrap', 'WoltLab/WCF/Date/Picker'], function(Bootstrap, DatePicker) {
 	"use strict";
 	
 	/**
@@ -22,6 +22,7 @@ define(['WoltLab/WCF/Bootstrap'], function(Bootstrap) {
 		 */
 		setup: function(options) {
 			Bootstrap.setup();
+			DatePicker.init();
 		}
 	};
 	

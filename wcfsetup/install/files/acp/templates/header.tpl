@@ -121,7 +121,6 @@
 			
 			new WCF.Effect.SmoothScroll();
 			WCF.System.PageNavigation.init('.pageNavigation');
-			WCF.Date.Picker.init();
 			
 			{if $__wcf->user->userID}
 				new WCF.ACP.Search();
