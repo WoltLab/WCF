@@ -1226,7 +1226,9 @@ RedactorPlugins.wbbcode = function() {
 			
 			// fix newlines in tables represented with <p>...</p> instead of <br>
 			data = data.replace(/<td>([\s\S]+?)<\/td>/g, function(match, content) {
-				return '<td>' + content.replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br>$/, '') + '</td>';
+				content = content.replace(/<br(?: \/)?>(<[uo]l)/g, '$1');
+				
+				return '<td>' + content.replace(/<p><br(?: \/)?><\/p>/g, '<br>').replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br>$/, '') + '</td>';
 			});
 			
 			// insert list items
