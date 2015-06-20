@@ -35,6 +35,9 @@ define(
 		 * Sets up global container and internal variables.
 		 */
 		setup: function() {
+			// Fetch Ajax, as it cannot be provided because of a circular dependency
+			if (Ajax === undefined) Ajax = require('Ajax');
+			
 			_container = document.createElement('div');
 			_container.classList.add('dialogOverlay');
 			_container.setAttribute('aria-hidden', 'true');
@@ -107,9 +110,7 @@ define(
 				setupData.source();
 			}
 			else if (Core.isPlainObject(setupData.source)) {
-				Ajax.api(this, {
-					data: setupData.source.data
-				}, (function(data) {
+				Ajax.api(this, setupData.source.data, (function(data) {
 					if (data.returnValues && typeof data.returnValues.template === 'string') {
 						this.open(callbackObject, data.returnValues.template);
 						
@@ -492,6 +493,10 @@ define(
 		 */
 		getDialog: function(id) {
 			return _dialogs.get(id);
+		},
+		
+		_ajaxSetup: function() {
+			return {};
 		}
 	};
 	
