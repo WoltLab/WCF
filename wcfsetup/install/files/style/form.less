@@ -619,29 +619,34 @@ select > option {
 	}
 }
 
-/* BooleanUserGroupOptionType */
-.optionTypeBoolean {
-	display: flex;
+.flexibleButtonGroup {
+	display: inline-flex;
 	
 	> li {
 		border: 1px solid @wcfContainerBorderColor;
 		display: flex;
-		flex: 0 1 100px;
+		flex: 1 auto;
+		overflow: hidden;
 		
 		&:not(:last-child) {
 			border-right-width: 0;
 		}
 		
+		&.spaceAfter + li,
 		&:first-child {
-			border-radius: 3px 0 0 3px;
+			border-bottom-left-radius: 3px;
+			border-top-left-radius: 3px;
 		}
 		
+		&.spaceAfter,
 		&:last-child {
-			border-radius: 0 3px 3px 0;
+			border-bottom-right-radius: 3px;
+			border-top-right-radius: 3px;
 		}
 		
-		&:hover > label {
-			opacity: 1 !important;
+		&.spaceAfter {
+			border-right-width: 1px;
+			margin-right: @wcfGapMedium;
 		}
 		
 		> input {
@@ -653,54 +658,65 @@ select > option {
 			
 			&:checked + label {
 				opacity: 1;
-				
-				&.yes {
-					background-color: rgb(223, 240, 216);
-					color: rgb(60, 118, 61);
-					
-					> .icon {
-						color: rgb(60, 118, 61);
-					}
-				}
-				
-				&.no {
-					background-color: rgb(242, 222, 222);
-					color: rgb(169, 68, 66);
-					
-					> .icon {
-						color: rgb(169, 68, 66);
-					}
-				}
-				
-				&.never {
-					background-color: rgb(252, 248, 227);
-					color: rgb(138, 109, 59);
-					
-					> .icon {
-						color: rgb(138, 109, 59);
-					}
-				}
 			}
 		}
 		
-		> label {
+		> a,
+		> label{
+			color: @wcfColor;
 			cursor: pointer;
-			flex: 1 auto;
 			font-size: .85rem;
-			padding: @wcfGapTiny;
+			opacity: .6;
+			padding: @wcfGapTiny @wcfGapSmall;
 			text-align: center;
 			
 			transition: all .3s linear;
+			
+			&:hover {
+				opacity: 1 !important;
+			}
 			
 			> .icon {
 				cursor: pointer !important;
 			}
 		}
-	}
-}
-
-@media only screen and (max-width: 800px) {
-	.optionTypeBoolean > li {
-		flex: 1;
+		
+		> a {
+			&.active,
+			&:hover {
+				opacity: 1;
+				text-decoration: none;
+			}
+		}
+		
+		> input:checked + label.green,
+		> a.active.green {
+			background-color: rgb(223, 240, 216);
+			color: rgb(60, 118, 61);
+			
+			> .icon {
+				color: rgb(60, 118, 61);
+			}
+		}
+		
+		> input:checked + label.red,
+		> a.active.red {
+			background-color: rgb(242, 222, 222);
+			color: rgb(169, 68, 66);
+			
+			> .icon {
+				color: rgb(169, 68, 66);
+			}
+		}
+		
+		> input:checked + label.yellow,
+		> a.active.yellow {
+			background-color: rgb(252, 248, 227);
+			color: rgb(138, 109, 59);
+			
+			> .icon {
+				color: rgb(138, 109, 59);
+			}
+		}
 	}
 }

@@ -3185,6 +3185,9 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[Keine aktuellen Benachrichtigungen]]></item>
 		<item name="wcf.user.notification.noNotifications"><![CDATA[Sie haben keine Benachrichtigungen.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Benachrichtigungen]]></item>
+		<item name="wcf.user.notification.notifications.description"><![CDATA[E-Mail-Benachrichtigungen werden nicht von allen verfügbaren Benachrichtigungen unterstützt.]]></item>
+		<item name="wcf.user.notification.notifications.disabled"><![CDATA[Deaktiviert]]></item>
+		<item name="wcf.user.notification.notifications.enabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Alle Benachrichtigungen anzeigen]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[Benutzer-Profile]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[Jemand folgt Ihnen]]></item>

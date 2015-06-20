@@ -98,7 +98,7 @@ define(
 			button.setAttribute('data-target', containerId);
 			
 			if (isLazyInitialization) {
-				Core.triggerEvent(button, 'click');
+				setTimeout(function() { Core.triggerEvent(button, 'click'); }, 10);
 			}
 		},
 		

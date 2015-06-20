@@ -355,6 +355,17 @@
 	}
 }
 
+/* user notification settings */
+#notificationSettings .notificationSettingsEmail {
+	&:not(.active) {
+		display: none;
+	}
+	
+	&.dropdownOpen > a {
+		opacity: 1;
+	}
+}
+
 .dashboardBoxRecentActivityHeadline {
 	overflow: visible;
 	position: relative;

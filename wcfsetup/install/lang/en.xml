@@ -3176,6 +3176,9 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[No recent notifications]]></item>
 		<item name="wcf.user.notification.noNotifications"><![CDATA[You have no notifications.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Notifications]]></item>
+		<item name="wcf.user.notification.notifications.description"><![CDATA[Email notifications may not be supported for every available notification]]></item>
+		<item name="wcf.user.notification.notifications.disabled"><![CDATA[Disabled]]></item>
+		<item name="wcf.user.notification.notifications.enabled"><![CDATA[Enabled]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Show All Notifications]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[User Profiles]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[New follower]]></item>
