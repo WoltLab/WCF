@@ -1041,6 +1041,12 @@ RedactorPlugins.wutil = function() {
 					$child.appendChild($node);
 				}
 			}
+			
+			// remove input elements
+			var inputElements = this.$editor[0].getElementsByTagName('INPUT');
+			while (inputElements.length) {
+				inputElements[0].parentNode.removeChild(inputElements[0]);
+			}
 		}
 	};
 };

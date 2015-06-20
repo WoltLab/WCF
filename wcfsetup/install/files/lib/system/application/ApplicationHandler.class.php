@@ -148,7 +148,7 @@ class ApplicationHandler extends SingletonFactory {
 		$protocolRegex = new Regex('^https(?=://)');
 		if (empty($this->pageURLs)) {
 			foreach ($this->getApplications() as $application) {
-				$this->pageURLs[] = $protocolRegex->replace($application->getPageURL(), 'http');
+				$this->pageURLs[] = preg_replace('~/$~', '', $protocolRegex->replace($application->getPageURL(), 'http'));
 			}
 		}
 		
