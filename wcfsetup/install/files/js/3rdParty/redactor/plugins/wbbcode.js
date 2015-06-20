@@ -915,7 +915,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[sup\]([\s\S]*?)\[\/sup]/gi, (function(match, content) {
 				return this.wbbcode._expandFormatting(content, '<sup>', '</sup>');
 			}).bind(this));
-				
+			
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
 			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi, function(match, src, alignment) {
@@ -1247,7 +1247,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				var self = this;
 				var $transformQuote = function(quote) {
-					return quote.replace(/\[quote(=['"].+['"])?\]([\S\s]*)\[\/quote\]/gi, function(match, attributes, innerContent) {
+					return quote.replace(/\[quote(=['"].+?\1)?\]([\S\s]*)\[\/quote\]/gi, function(match, attributes, innerContent) {
 						var $author = '';
 						var $link = '';
 						
