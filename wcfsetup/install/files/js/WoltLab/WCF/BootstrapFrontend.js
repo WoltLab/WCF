@@ -9,11 +9,11 @@
 define(
 	[
 	 	'Ajax',                           'WoltLab/WCF/Bootstrap',   'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer',
-	 	'WoltLab/WCF/Controller/Popover', 'WoltLab/WCF/Date/Picker'
+	 	'WoltLab/WCF/Controller/Popover'
 	],
 	function(
 		Ajax,                              Bootstrap,                 ControllerSitemap,                ControllerStyleChanger,
-		ControllerPopover,                 DatePicker
+		ControllerPopover
 	)
 {
 	"use strict";
@@ -31,7 +31,6 @@ define(
 			Bootstrap.setup();
 			
 			ControllerSitemap.setup();
-			DatePicker.init();
 			
 			if (options.styleChanger) {
 				ControllerStyleChanger.setup();

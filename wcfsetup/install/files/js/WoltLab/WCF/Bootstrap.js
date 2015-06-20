@@ -10,14 +10,16 @@
  */
 define(
 	[
-		'favico',            'enquire',                'perfect-scrollbar',      'WoltLab/WCF/Date/Time/Relative',
-		'UI/SimpleDropdown', 'WoltLab/WCF/UI/Mobile',  'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu',
-		'UI/Dialog',         'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment'
+		'favico',                 'enquire',                'perfect-scrollbar',      'WoltLab/WCF/Date/Time/Relative',
+		'UI/SimpleDropdown',      'WoltLab/WCF/UI/Mobile',  'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu',
+		'UI/Dialog',              'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment',
+		'WoltLab/WCF/Date/Picker'
 	], 
 	function(
-		 favico,              enquire,                  perfectScrollbar,         DateTimeRelative,
-		 UISimpleDropdown,    UIMobile,                 UITabMenu,                UIFlexibleMenu,
-		 UIDialog,            UITooltip,                Language,                 Environment
+		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
+		 UISimpleDropdown,         UIMobile,                 UITabMenu,                UIFlexibleMenu,
+		 UIDialog,                 UITooltip,                Language,                 Environment,
+		 DatePicker
 	)
 {
 	"use strict";
@@ -43,6 +45,7 @@ define(
 			Environment.setup();
 			
 			DateTimeRelative.setup();
+			DatePicker.init();
 			
 			UISimpleDropdown.setup();
 			UIMobile.setup();
