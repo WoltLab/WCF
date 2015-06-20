@@ -200,7 +200,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'DOM/ChangeListener', 'UI/Alignment
 			if (value) {
 				date = new Date(+value);
 				
-				if (Number.isNaN(date.valueOf())) {
+				if (date.toString() === 'Invalid Date') {
 					date = new Date();
 				}
 			}
