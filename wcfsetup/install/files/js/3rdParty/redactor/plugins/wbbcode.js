@@ -915,7 +915,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[sup\]([\s\S]*?)\[\/sup]/gi, (function(match, content) {
 				return this.wbbcode._expandFormatting(content, '<sup>', '</sup>');
 			}).bind(this));
-				
+			
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
 			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi, function(match, src, alignment) {
@@ -1226,7 +1226,9 @@ RedactorPlugins.wbbcode = function() {
 			
 			// fix newlines in tables represented with <p>...</p> instead of <br>
 			data = data.replace(/<td>([\s\S]+?)<\/td>/g, function(match, content) {
-				return '<td>' + content.replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br>$/, '') + '</td>';
+				content = content.replace(/<br(?: \/)?>(<[uo]l)/g, '$1');
+				
+				return '<td>' + content.replace(/<p><br(?: \/)?><\/p>/g, '<br>').replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br>$/, '') + '</td>';
 			});
 			
 			// insert list items
@@ -1245,7 +1247,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				var self = this;
 				var $transformQuote = function(quote) {
-					return quote.replace(/\[quote(=['"].+['"])?\]([\S\s]*)\[\/quote\]/gi, function(match, attributes, innerContent) {
+					return quote.replace(/\[quote(=['"].+?\1)?\]([\S\s]*)\[\/quote\]/gi, function(match, attributes, innerContent) {
 						var $author = '';
 						var $link = '';
 						
@@ -1737,6 +1739,23 @@ RedactorPlugins.wbbcode = function() {
 							
 							if ($isEmpty) {
 								$preventAndSelectQuote = true;
+							}
+							else {
+								// check if caret is at the start of the quote
+								var range = (this.selection.implicitRange === null) ? this.range : this.selection.implicitRange;
+								if (range.startOffset === 0) {
+									var element = range.startContainer, prev;
+									while ((element = element.parentNode) !== null) {
+										prev = element.previousSibling;
+										if (prev !== null) {
+											if (prev.nodeType === Node.ELEMENT_NODE && prev.nodeName === 'HEADER') {
+												$preventAndSelectQuote = true;
+											}
+											
+											break;
+										}
+									}
+								}								
 							}
 						}
 						else {
