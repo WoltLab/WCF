@@ -820,6 +820,7 @@ debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_sm
 			<option name="mail_use_f_param">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.mail.send -->
 			
