@@ -18,38 +18,48 @@ use wcf\system\WCF;
  */
 class BackgroundQueueHandler extends SingletonFactory {
 	/**
-	 * Enqueues the given job for execution in the specified number of
+	 * Enqueues the given job(s) for execution in the specified number of
 	 * seconds. Defaults to "as soon as possible" (0 seconds).
 	 * 
-	 * @param	\wcf\system\background\job\AbstractBackgroundJob	$job	The job to enqueue.
-	 * @param	int							$time	Minimum number of seconds to wait before performing the job.
+	 * @param	mixed	$jobs	Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
+	 * @param	int	$time	Minimum number of seconds to wait before performing the job.
 	 * @see	\wcf\system\background\BackgroundQueueHandler::enqueueAt()
 	 */
-	public function enqueueIn(AbstractBackgroundJob $job, $time = 0) {
-		return self::enqueueAt($job, TIME_NOW + $time);
+	public function enqueueIn($jobs, $time = 0) {
+		return self::enqueueAt($jobs, TIME_NOW + $time);
 	}
 	
 	/**
-	 * Enqueues the given job for execution at the given time.
+	 * Enqueues the given job(s) for execution at the given time.
 	 * Note: The time is a minimum time. Depending on the size of
 	 * the queue the job can be performed later as well!
 	 *
-	 * @param	\wcf\system\background\job\AbstractBackgroundJob	$job	The job to enqueue.
-	 * @param	int							$time	Earliest time to consider the job for execution.
+	 * @param	mixed	$jobs	Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
+	 * @param	int	$time	Earliest time to consider the job for execution.
 	 */
-	public function enqueueAt(AbstractBackgroundJob $job, $time) {
+	public function enqueueAt($jobs, $time) {
 		if ($time < TIME_NOW) {
 			throw new SystemException("You may not schedule a job in the past (".$time." is smaller than the current timestamp ".TIME_NOW.").");
 		}
+		if (!is_array($jobs)) $jobs = [ $jobs ];
+		foreach ($jobs as $job) {
+			if (!($job instanceof AbstractBackgroundJob)) {
+				throw new SystemException('$jobs contains an item that does not extend \wcf\system\background\job\AbstractBackgroundJob.');
+			}
+		}
 		
+		WCF::getDB()->beginTransaction();
 		$sql = "INSERT INTO	wcf".WCF_N."_background_job
 					(job, time)
 			VALUES		(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			serialize($job),
-			$time
-		]);
+		foreach ($jobs as $job) {
+			$statement->execute([
+				serialize($job),
+				$time
+			]);
+		}
+		WCF::getDB()->commitTransaction();
 	}
 	
 	/**
