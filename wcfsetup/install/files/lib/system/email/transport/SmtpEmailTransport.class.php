@@ -68,6 +68,13 @@ class SmtpEmailTransport implements EmailTransport {
 	protected $features = [ ];
 	
 	/**
+	 * if this property is an instance of \Exception email delivery will be locked
+	 * and the \Exception will be thrown when attempting to deliver() an email
+	 * @var	\Exception
+	 */
+	protected $locked = null;
+	
+	/**
 	 * Creates a new SmtpEmailTransport using the given host.
 	 * 
 	 * @param	string	$host		host of the smtp server to use
@@ -234,33 +241,40 @@ class SmtpEmailTransport implements EmailTransport {
 			if ($parameters[0] == 'auth') {
 				// try mechanisms in order of preference
 				foreach ([ 'login', 'plain' ] as $method) {
-					try {
-						if (in_array($method, $parameters)) {
-							switch ($method) {
-								case 'login':
+					if (in_array($method, $parameters)) {
+						switch ($method) {
+							case 'login':
+								try {
 									$this->write('AUTH LOGIN');
 									$this->read([ 334 ]);
-									$this->write(base64_encode($this->username));
-									$this->lastWrite = '*redacted*';
-									$this->read([ 334 ]);
-									$this->write(base64_encode($this->password));
-									$this->lastWrite = '*redacted*';
-									$this->read([ 235 ]);
-									return;
-								break;
-								case 'plain':
-									// RFC 4616
+								}
+								catch (SystemException $e) {
+									// try next authentication method
+									continue 2;
+								}
+								$this->write(base64_encode($this->username));
+								$this->lastWrite = '*redacted*';
+								$this->read([ 334 ]);
+								$this->write(base64_encode($this->password));
+								$this->lastWrite = '*redacted*';
+								$this->read([ 235 ]);
+								return;
+							break;
+							case 'plain':
+								// RFC 4616
+								try {
 									$this->write('AUTH PLAIN');
 									$this->read([ 334 ]);
-									$this->write(base64_encode("\0".$this->username."\0".$this->password));
-									$this->lastWrite = '*redacted*';
-									$this->read([ 235 ]);
-									return;
-							}
+								}
+								catch (SystemException $e) {
+									// try next authentication method
+									continue 2;
+								}
+								$this->write(base64_encode("\0".$this->username."\0".$this->password));
+								$this->lastWrite = '*redacted*';
+								$this->read([ 235 ]);
+								return;
 						}
-					}
-					catch (SystemException $e) {
-						// try next authentication method
 					}
 				}
 				
@@ -296,10 +310,28 @@ class SmtpEmailTransport implements EmailTransport {
 	 * @param	\wcf\system\email\Mailbox	$envelopeTo
 	 */
 	public function deliver(Email $email, Mailbox $envelopeTo) {
-		if (!$this->connection || $this->connection->eof()) {
-			$this->connect();
-			$this->auth();
+		// delivery is locked
+		if ($this->locked instanceof \Exception) {
+			throw $this->locked;
 		}
+		
+		if (!$this->connection || $this->connection->eof()) {
+			try {
+				$this->connect();
+				$this->auth();
+			}
+			catch (PermanentFailure $e) {
+				// lock delivery on permanent failure to avoid spamming the SMTP server
+				$this->locked = $e;
+				$this->disconnect();
+				throw $e;
+			}
+			catch (SystemException $e) {
+				$this->disconnect();
+				throw $e;
+			}
+		}
+		
 		$this->write('RSET');
 		$this->read([ 250 ]);
 		$this->write('MAIL FROM:<'.$email->getSender()->getAddress().'>');
