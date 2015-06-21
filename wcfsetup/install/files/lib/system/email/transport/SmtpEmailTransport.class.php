@@ -83,13 +83,12 @@ class SmtpEmailTransport implements EmailTransport {
 	 * @param	string	$password	corresponding password
 	 * @param	string	$starttls	one of 'none', 'may' and 'encrypt'
 	 */
-	public function __construct($host = MAIL_SMTP_HOST, $port = MAIL_SMTP_PORT, $username = MAIL_SMTP_USER, $password = MAIL_SMTP_PASSWORD, $starttls = 'may') {
+	public function __construct($host = MAIL_SMTP_HOST, $port = MAIL_SMTP_PORT, $username = MAIL_SMTP_USER, $password = MAIL_SMTP_PASSWORD, $starttls = MAIL_SMTP_STARTTLS) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->username = $username;
 		$this->password = $password;
 		
-		// TODO: Add option in ACP for STARTTLS
 		switch ($starttls) {
 			case 'none':
 			case 'may':

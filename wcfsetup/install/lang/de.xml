@@ -785,9 +785,14 @@
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Die Signatur wird an jede automatisch generierte E-Mail angehängt.]]></item>
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP-Server]]></item>
-		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP-Port]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP-Verschlüsselung]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.none"><![CDATA[Deaktivieren]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.may"><![CDATA[Wenn unterstützt]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.encrypt"><![CDATA[Erzwingen]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.description"><![CDATA[Diese Einstellung steuert die Verwendung von „STARTTLS“. Deaktivieren Sie diese Option, wenn Sie E-Mails über SSL (Port 465) versenden!]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP-Benutzer]]></item>
+		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[„-f“ Parameter verwenden]]></item>
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Der „-f“-Parameter sorgt bei der PHP-Versandmethode dafür, dass der korrekte Absender gesetzt wird. Diese Einstellung wird möglicherweise nicht von jedem Server unterstützt. Probieren Sie in diesem Falle die Option zu deaktivieren.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>

@@ -809,6 +809,14 @@ debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_sm
 				<minvalue>0</minvalue>
 				<maxvalue>65535</maxvalue>
 			</option>
+			<option name="mail_smtp_starttls">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>may</defaultvalue>
+				<selectoption><selectoptions><![CDATA[none:wcf.acp.option.mail_smtp_starttls.none
+may:wcf.acp.option.mail_smtp_starttls.may
+encrypt:wcf.acp.option.mail_smtp_starttls.encrypt]]></selectoptions></selectoptions>
+			</option>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>text</optiontype>
