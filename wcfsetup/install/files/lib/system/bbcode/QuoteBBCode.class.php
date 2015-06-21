@@ -4,6 +4,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Parses the [quote] bbcode tag.
@@ -29,7 +30,7 @@ class QuoteBBCode extends AbstractBBCode {
 			$quoteAuthor = (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '');
 			$quoteAuthorObject = null;
 			if ($quoteAuthor && !$externalQuoteLink) {
-				$quoteAuthorLC = mb_strtolower($quoteAuthor);
+				$quoteAuthorLC = mb_strtolower(StringUtil::decodeHTML($quoteAuthor));
 				foreach (MessageEmbeddedObjectManager::getInstance()->getObjects('com.woltlab.wcf.quote') as $user) {
 					if (mb_strtolower($user->username) == $quoteAuthorLC) {
 						$quoteAuthorObject = $user;

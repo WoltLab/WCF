@@ -46,13 +46,22 @@ abstract class AbstractMessageEmbeddedObjectHandler extends DatabaseObjectDecora
 	 */
 	public static function getFirstParameters($message, $bbcode) {
 		$pattern = '~\['.$bbcode.'=
-				(?:\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\'|([^,\]]*))
+				(\'(?:[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\'|(?:[^,\]]*))
 				(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
 			\]~ix';
 		
 		if (preg_match_all($pattern, $message, $matches)) {
+			foreach ($matches[1] as &$value) {
+				// remove quotes
+				if (mb_substr($value, 0, 1) == "'" && mb_substr($value, -1) == "'") {
+					$value = str_replace("\'", "'", $value);
+					$value = str_replace("\\\\", "\\", $value);
+				
+					$value = mb_substr($value, 1, -1);
+				}
+			}
+			
 			$results = ArrayUtil::trim($matches[1]);
-			$results = array_merge($results, ArrayUtil::trim($matches[2]));
 			$results = array_unique($results);
 			
 			return $results;
