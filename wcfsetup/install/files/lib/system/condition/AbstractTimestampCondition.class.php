@@ -7,7 +7,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Condition implementation for compairing a user-bound timestamp with a fixed time
@@ -49,7 +48,8 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
-		if (!ClassUtil::isInstanceOf($objectList, $this->getListClassName())) return;
+		$className = $this->getListClassName();
+		if (!($objectList instanceof $className)) return;
 		
 		$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' <> ?', [ 0 ]);
 		if (isset($conditionData['endTime'])) {
@@ -64,7 +64,8 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	 * @see	\wcf\system\condition\IObjectCondition::checkObject()
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData) {
-		if (!ClassUtil::isInstanceOf($object, $this->getClassName())) return;
+		$className = $this->getClassName();
+		if (!($object instanceof $className)) return;
 		
 		if (isset($conditionData['startTime']) && $object->{$this->getPropertyName()} < strtotime($conditionData['startTime'])) {
 			return false;
