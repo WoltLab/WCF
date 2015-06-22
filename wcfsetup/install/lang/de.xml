@@ -1943,6 +1943,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.condition.lessThan"><![CDATA[weniger als]]></item>
 		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[Der „weniger als“-Wert darf nicht größer sein als {#$maxValue}.]]></item>
 		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[Der „weniger als“-Wert darf nicht kleiner sein als {#$minValue}.]]></item>
+		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
+		<item name="wcf.condition.timestamp.error.endNotValid"><![CDATA[Das Startdatum ist ungültig.]]></item>
+		<item name="wcf.condition.timestamp.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.dashboard">
@@ -3135,9 +3138,6 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Benutzer dürfen in den ausgewählten Benutzergruppen nicht Mitglied sein.]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[Die ausgewählten Benutzergruppen in „in Benutzergruppen“ und „nicht in Benutzergruppen“ sind widersprüchlich.]]></item>
 		<item name="wcf.user.condition.registrationDate"><![CDATA[Registrierungsdatum]]></item>
-		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
-		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[Das Startdatum ist ungültig.]]></item>
-		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
 		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Tage seit Registrierung]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[Zustand]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Gesperrt]]></item>

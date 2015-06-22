@@ -187,7 +187,7 @@ HTML;
 		if (strlen($this->startTime)) {
 			$startTime = @strtotime($this->startTime);
 			if ($startTime === false) {
-				$this->errorMessage = $this->getLanguageItemPrefix().'.'.$this->getPropertyName().'.error.startNotValid';
+				$this->errorMessage = 'wcf.condition.timestamp.error.startNotValid';
 				
 				throw new UserInputException($this->getPropertyName(), 'startNotValid');
 			}
@@ -195,14 +195,14 @@ HTML;
 		if (strlen($this->endTime)) {
 			$endTime = @strtotime($this->endTime);
 			if ($endTime === false) {
-				$this->errorMessage = $this->getLanguageItemPrefix().'.'.$this->getPropertyName().'.error.endNotValid';
+				$this->errorMessage = 'wcf.condition.timestamp.error.endNotValid';
 				
 				throw new UserInputException($this->getPropertyName(), 'endNotValid');
 			}
 		}
 		
 		if ($endTime !== null && $startTime !== null && $endTime < $startTime) {
-			$this->errorMessage = $this->getLanguageItemPrefix().'.'.$this->getPropertyName().'.error.endBeforeStart';
+			$this->errorMessage = 'wcf.condition.timestamp.error.endBeforeStart';
 			
 			throw new UserInputException($this->getPropertyName(), 'endBeforeStart');
 		}

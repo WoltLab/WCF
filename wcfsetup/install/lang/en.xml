@@ -1941,6 +1941,9 @@ Errors are:
 		<item name="wcf.condition.lessThan"><![CDATA[less than]]></item>
 		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[The “less than” value may not be greater than {#$maxValue}.]]></item>
 		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[The “less than” value may not be less than {#$minValue}.]]></item>
+		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[The end date is prior to the start date.]]></item>
+		<item name="wcf.condition.timestamp.error.endNotValid"><![CDATA[The start date is not valid.]]></item>
+		<item name="wcf.condition.timestamp.error.startNotValid"><![CDATA[The end date is not valid.]]></item>
 	</category>
 	
 	<category name="wcf.dashboard">
@@ -3126,9 +3129,6 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Users may not be a member of the selected user groups.]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user groups in “in User Groups“ and “not in User Groups“ are conflicting.]]></item>
 		<item name="wcf.user.condition.registrationDate"><![CDATA[Registration Date]]></item>
-		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[The end date is prior to the start date.]]></item>
-		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[The start date is not valid.]]></item>
-		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[The end date is not valid.]]></item>
 		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Days since registration]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[State]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Banned]]></item>
