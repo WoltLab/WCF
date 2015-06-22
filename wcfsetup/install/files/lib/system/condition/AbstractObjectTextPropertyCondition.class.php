@@ -60,7 +60,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	
 	/**
 	 * Returns the name of the relevant database object class.
-	 *
+	 * 
 	 * @return	string
 	 */
 	protected function getClassName() {
@@ -77,7 +77,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 		}
 		
 		return [
-			$this->fieldName => preg_split('/\s*,\s*/', $value, -1, PREG_SPLIT_NO_EMPTY)
+			$this->fieldName => preg_split('/\s*,\s*/', $value[$this->fieldName], -1, PREG_SPLIT_NO_EMPTY)
 		];
 	}
 	
