@@ -34,11 +34,14 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		$userIDs = array();
 		$sql = "SELECT	DISTINCT userID
 			FROM	wcf".WCF_N."_user_notification
-			WHERE	mailNotified = 0
-				AND time < ?";
+			WHERE	mailNotified = ?
+				AND time < ?
+				AND confirmTime = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			TIME_NOW - 3600 * 23
+			0,
+			TIME_NOW - 3600 * 23,
+			0
 		));
 		while ($row = $statement->fetchArray()) {
 			$userIDs[] = $row['userID'];
@@ -55,6 +58,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("notification.userID IN (?)", array($userIDs));
 		$conditions->add("notification.mailNotified = ?", array(0));
+		$conditions->add("notification.confirmTime = ?", array(0));
 		
 		$sql = "SELECT		notification.*, notification_event.eventID, object_type.objectType
 			FROM		wcf".WCF_N."_user_notification notification
