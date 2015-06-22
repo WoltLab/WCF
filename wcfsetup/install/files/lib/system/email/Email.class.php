@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\email;
 use wcf\system\background\job\EmailDeliveryBackgroundJob;
+use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\email\mime\AbstractMimePart;
 use wcf\system\email\mime\TextMimePart;
 use wcf\system\event\EventHandler;
@@ -594,6 +595,18 @@ class Email {
 		}
 		
 		return $jobs;
+	}
+	
+	/**
+	 * Queues this email for delivery.
+	 * This is equivalent to manually queuing the jobs returned by getJobs().
+	 * 
+	 * @see	\wcf\system\email\Email::getJobs()
+	 * @see	\wcf\system\background\BackgroundQueueHandler::enqueueIn()
+	 */
+	public function send() {
+		$jobs = $this->getJobs();
+		BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
 	}
 	
 	/**
