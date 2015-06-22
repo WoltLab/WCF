@@ -448,7 +448,7 @@ define(
 			_containers.forEach((function(containerData) {
 				var typeName = containerData.element.getAttribute('data-type');
 				
-				var objectIds = (data.returnValues.markedItems.hasOwnProperty(typeName)) ? data.returnValues.markedItems[typeName] : [];
+				var objectIds = (data.returnValues.markedItems && data.returnValues.markedItems.hasOwnProperty(typeName)) ? data.returnValues.markedItems[typeName] : [];
 				this._rebuildMarkings(containerData, objectIds);
 			}).bind(this));
 			
