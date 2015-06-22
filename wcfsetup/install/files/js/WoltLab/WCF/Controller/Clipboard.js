@@ -467,7 +467,7 @@ define(
 				var typeData = data.returnValues.items[typeName];
 				
 				var editor = _editors.get(typeName);
-				var lists = DOMTraverse.childrenByTag('UL');
+				var lists = DOMTraverse.childrenByTag(editor, 'UL');
 				var list = lists[0] || null;
 				if (list === null) {
 					list = document.createElement('ul');
