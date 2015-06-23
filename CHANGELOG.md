@@ -20,3 +20,4 @@
 * `wcf\action\AJAXProxyAction::getData()` removed.
 * Version system removed.
 * `wcf\system\cache\source\RedisCacheSource` added.
+* Background queue (`wcf\system\background\*`) added.
