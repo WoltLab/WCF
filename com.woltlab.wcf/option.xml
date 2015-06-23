@@ -794,13 +794,9 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
 debug:wcf.acp.option.mail_send_method.debug]]></selectoptions>
-				<enableoptions><![CDATA[php:mail_use_f_param,!mail_debug_logfile_path,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password
-smtp:!mail_debug_logfile_path,!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_user,mail_smtp_password
-debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
-			</option>
-			<option name="mail_debug_logfile_path">
-				<categoryname>general.mail.send</categoryname>
-				<optiontype>text</optiontype>
+				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password
+smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_user,mail_smtp_password
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
@@ -813,6 +809,14 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<minvalue>0</minvalue>
 				<maxvalue>65535</maxvalue>
 			</option>
+			<option name="mail_smtp_starttls">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>may</defaultvalue>
+				<selectoption><selectoptions><![CDATA[none:wcf.acp.option.mail_smtp_starttls.none
+may:wcf.acp.option.mail_smtp_starttls.may
+encrypt:wcf.acp.option.mail_smtp_starttls.encrypt]]></selectoptions></selectoptions>
+			</option>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>text</optiontype>
@@ -824,10 +828,7 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 			<option name="mail_use_f_param">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>boolean</optiontype>
-			</option>
-			<option name="mail_use_formatted_address">
-				<categoryname>general.mail.send</categoryname>
-				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.mail.send -->
 			
@@ -1435,5 +1436,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 		<option name="cache_source_memcached_use_pconnect" />
 		<option name="http_gzip_level" />
 		<option name="enable_pluginstore_widget" />
+		<option name="mail_use_formatted_address" />
+		<option name="mail_debug_logfile_path" />
 	</delete>
 </data>

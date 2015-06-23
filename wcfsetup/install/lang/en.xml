@@ -773,7 +773,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-generated content, e.g. sessions, profiles or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Administrator’s email address]]></item>
-		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Log Filename]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Sender Email]]></item>
 		<item name="wcf.acp.option.mail_from_address.description"><![CDATA[Email used as a sender for all generated emails]]></item>
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Sender Name]]></item>
@@ -785,13 +784,16 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Signature]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Signature will be appended to every message.]]></item>
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP Server]]></item>
-		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP Password]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP Port]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP Encryption]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.none"><![CDATA[Disabled]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.may"><![CDATA[If supported]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.encrypt"><![CDATA[Required]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.description"><![CDATA[This option controls the usage of “STARTTLS”. Disable it, if you are using SSL (port 465)!]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP Username]]></item>
+		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP Password]]></item>
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Use “-f” parameter]]></item>
-		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Some servers require the “-f” parameter to send emails. Enable this option if you have any trouble sending emails.]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Use formatted email address]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender and receiver addresses will be converted into “Name &lt;email@example.com&gt;”. This option is not supported by most mail-servers, try turning it off if you experience any issues.]]></item>
+		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[The “-f” parameter sets the proper sender of the email if the PHP send method is used. This parameter may not be supported by every server. Try disabling it, if you have trouble sending emails.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
@@ -1607,8 +1609,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[Send email to all users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML for email]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.{if MAIL_USE_FORMATTED_ADDRESS} It is possible to use the following format:{/if}<br />
-{if MAIL_USE_FORMATTED_ADDRESS}<em>Sender Name &lt;email@example.com&gt;</em><br />{/if}
+		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.<br />
 You can define the default sender in <em>System -&gt; Options -&gt; General -&gt; Emails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email to user group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>

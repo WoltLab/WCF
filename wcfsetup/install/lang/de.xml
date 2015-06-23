@@ -774,7 +774,6 @@
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die Speicherung von IP-Adressen der Benutzer in z.B. Sitzungen, Benutzerprofilen, Forenbeiträgen.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[E-Mail-Adresse des Administrators]]></item>
-		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Logfile-Pfad]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Absender-Adresse]]></item>
 		<item name="wcf.acp.option.mail_from_address.description"><![CDATA[Absender-Adresse für automatisch generierte E-Mails]]></item>
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Absender-Name]]></item>
@@ -786,13 +785,16 @@
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Die Signatur wird an jede automatisch generierte E-Mail angehängt.]]></item>
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP-Server]]></item>
-		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP-Port]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP-Verschlüsselung]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.none"><![CDATA[Deaktivieren]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.may"><![CDATA[Wenn unterstützt]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.encrypt"><![CDATA[Erzwingen]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.description"><![CDATA[Diese Einstellung steuert die Verwendung von „STARTTLS“. Deaktivieren Sie diese Option, wenn Sie E-Mails über SSL (Port 465) versenden!]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP-Benutzer]]></item>
+		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[„-f“ Parameter verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Manche Server benötigen den „-f“ Parameter beim Versenden von E-Mails. Falls Sie Probleme mit dem Versand von E-Mails haben, aktivieren Sie diese Einstellung.]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Formatierte E-Mail-Adressen verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Absender- und Empfänger-Adressen werden in folgendes Format gebracht: „Name &lt;email@example.com&gt;“. Diese Funktion wird nicht von allen Mailservern unterstützt und sollte daher bei Problemen abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Der „-f“-Parameter sorgt bei der PHP-Versandmethode dafür, dass der korrekte Absender gesetzt wird. Diese Einstellung wird möglicherweise nicht von jedem Server unterstützt. Probieren Sie in diesem Falle die Option zu deaktivieren.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>
@@ -1608,8 +1610,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Absender]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Hier können Sie die E-Mail-Adresse des Absenders definieren.{if MAIL_USE_FORMATTED_ADDRESS} Es ist auch folgendes Format möglich:{/if}<br />
-{if MAIL_USE_FORMATTED_ADDRESS}<em>Absender Name &lt;email@example.com&gt;</em><br />{/if}
+		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Hier können Sie die E-Mail-Adresse des Absenders definieren.<br />
 Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alles ausgefüllt haben, wird dieses Feld automatisch ausgefüllt. Sollten Sie E-Mails per SMTP senden, so achten Sie darauf, dass die E-Mail-Adresse des Absenders auch vom Server akzeptiert werden muss.]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-Mail an Gruppenmitglieder senden]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[E-Mail an die Mitglieder folgender Benutzergruppen senden]]></item>
