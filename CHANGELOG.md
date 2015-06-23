@@ -21,3 +21,5 @@
 * Version system removed.
 * `wcf\system\cache\source\RedisCacheSource` added.
 * Background queue (`wcf\system\background\*`) added.
+* Rewritten email system (`wcf\system\email\*`) added.
+* Old email system (`wcf\system\mail\*`) deprecated.
