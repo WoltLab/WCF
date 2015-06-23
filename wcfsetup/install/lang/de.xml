@@ -1731,7 +1731,7 @@ Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
 		<item name="wcf.ajax.error.badRequest"><![CDATA[Die Anfrage war unvollständig und konnte nicht verarbeitet werden.]]></item>
 		<item name="wcf.ajax.error.internalError"><![CDATA[Es ist ein Fehler bei der Verarbeitung aufgetreten, bitte versuchen Sie es später erneut.]]></item>
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[Sie besitzen leider nicht die notwendigen Zugriffsrechte, um diese Aktion auszuführen.]]></item>
-		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut ein.]]></item>
+		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
