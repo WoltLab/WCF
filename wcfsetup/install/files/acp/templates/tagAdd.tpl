@@ -28,7 +28,7 @@
 			<dl{if $errorField == 'name'} class="formError"{/if}>
 				<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
-					<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="medium" />
+					<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long" />
 					{if $errorField == 'name'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
