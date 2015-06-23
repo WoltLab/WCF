@@ -8802,6 +8802,10 @@ WCF.Category.FlexibleCategoryList = Class.extend({
 		
 		this._buildStructure();
 		
+		this._list.find('input:checked').each(function() {
+			$(this).trigger('change');
+		});
+		
 		if (this._list.children('li').length < 2) {
 			this._list.addClass('flexibleCategoryListDisabled');
 			return;
