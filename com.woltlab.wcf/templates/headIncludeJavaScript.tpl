@@ -226,6 +226,16 @@ requirejs.config({
 				}
 			});
 		{/if}
+		
+		require(['Ajax'], function(Ajax) {
+			// fire and forget background queue perform task
+			Ajax.apiOnce({
+				url: '{link controller="BackgroundQueuePerform"}{/link}',
+				ignoreError: true,
+				silent: true
+			});
+		});
+		
 		{if $__sessionKeepAlive|isset}
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
 		{/if}
