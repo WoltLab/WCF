@@ -100,7 +100,6 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 			this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 			
 			var self = this;
-			
 			var options = Core.clone(this._options);
 			this._xhr.onload = function() {
 				if (this.readyState === XMLHttpRequest.DONE) {
@@ -271,7 +270,7 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 				
 				var html = '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
 				
-				UIDialog.open(DOMUtil.getUniqueId(), html, {
+				UIDialog.openStatic(DOMUtil.getUniqueId(), html, {
 					title: Language.get('wcf.global.error.title')
 				});
 			}
