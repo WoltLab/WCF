@@ -150,22 +150,24 @@ class WCF {
 	}
 	
 	/**
-	 * Replacement of the "__destruct()" method.
-	 * Seems that under specific conditions (windows) the destructor is not called automatically.
-	 * So we use the php register_shutdown_function to register an own destructor method.
-	 * Flushs the output, closes caches and updates the session.
+	 * Flushes the output, closes the session, performs background tasks and more.
+	 * 
+	 * You *must* not create output in here under normal circumstances, as it might get eaten
+	 * when gzip is enabled.
 	 */
 	public static function destruct() {
 		try {
 			// database has to be initialized
 			if (!is_object(self::$dbObj)) return;
 			
-			// flush output
-			if (ob_get_level() && ini_get('output_handler')) {
-				ob_flush();
-			}
-			else {
+			$debug = self::debugModeIsEnabled(true);
+			if (!$debug) {
+				// flush output
+				if (ob_get_level()) ob_end_flush();
 				flush();
+				
+				// close connection if using FPM
+				if (function_exists('fastcgi_finish_request')) fastcgi_finish_request();
 			}
 			
 			// update session

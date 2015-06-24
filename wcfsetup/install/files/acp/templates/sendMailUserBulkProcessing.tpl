@@ -19,6 +19,7 @@
 				{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 			</small>
 		{/if}
+		{* TODO: Add field for Human readable name for new mail system *}
 		<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
 	</dd>
 </dl>

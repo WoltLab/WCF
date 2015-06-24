@@ -301,6 +301,13 @@ class RequestHandler extends SingletonFactory {
 		if ($landingPageApplication == $application) {
 			$routeData['controller'] = $landingPage->getController();
 			if (!URL_LEGACY_MODE) $routeData['controller'] = self::getTokenizedController($routeData['controller']);
+			
+			// use alias if defined to prevent incorrect recognition
+			$alias = $this->getAliasByController($routeData['controller']);
+			if ($alias !== null) {
+				$routeData['controller'] = $alias;
+			}
+			
 			return;
 		}
 		

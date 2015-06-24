@@ -448,7 +448,7 @@ define(
 			_containers.forEach((function(containerData) {
 				var typeName = containerData.element.getAttribute('data-type');
 				
-				var objectIds = (data.returnValues.markedItems.hasOwnProperty(typeName)) ? data.returnValues.markedItems[typeName] : [];
+				var objectIds = (data.returnValues.markedItems && data.returnValues.markedItems.hasOwnProperty(typeName)) ? data.returnValues.markedItems[typeName] : [];
 				this._rebuildMarkings(containerData, objectIds);
 			}).bind(this));
 			
@@ -467,7 +467,7 @@ define(
 				var typeData = data.returnValues.items[typeName];
 				
 				var editor = _editors.get(typeName);
-				var lists = DOMTraverse.childrenByTag('UL');
+				var lists = DOMTraverse.childrenByTag(editor, 'UL');
 				var list = lists[0] || null;
 				if (list === null) {
 					list = document.createElement('ul');

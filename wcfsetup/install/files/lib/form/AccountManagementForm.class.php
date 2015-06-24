@@ -313,7 +313,6 @@ class AccountManagementForm extends AbstractForm {
 		
 		$success = array();
 		$updateParameters = array();
-		$updateOptions = array();
 		
 		// quit
 		if (WCF::getSession()->getPermission('user.profile.canQuit')) {
@@ -432,11 +431,8 @@ class AccountManagementForm extends AbstractForm {
 		}
 		
 		$data = array();
-		if (!empty($updateParameters)) {
+		if (!empty($updateParameters) || !empty($this->additionalFields)) {
 			$data['data'] = array_merge($this->additionalFields, $updateParameters);
-		}
-		if (!empty($updateOptions)) {
-			$data['options'] = $updateOptions;
 		}
 		
 		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', $data);

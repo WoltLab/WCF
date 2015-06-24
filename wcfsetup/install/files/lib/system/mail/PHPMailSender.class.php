@@ -10,6 +10,7 @@ namespace wcf\system\mail;
  * @package	com.woltlab.wcf
  * @subpackage	data.mail
  * @category	Community Framework
+ * @deprecated	The Community Framework < 2.2 mail API is deprecated in favor of \wcf\system\email\*.
  */
 class PHPMailSender extends MailSender {
 	/**

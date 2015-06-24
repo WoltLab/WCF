@@ -2,7 +2,6 @@
 namespace wcf\system\condition;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
-use wcf\util\ClassUtil;
 
 /**
  * Abstract condition implementation for check a text-typed property of a database
@@ -39,7 +38,8 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
-		if (!ClassUtil::isInstanceOf($objectList, $this->getListClassName())) return;
+		$className = $this->getListClassName();
+		if (!($objectList instanceof $className)) return;
 		
 		if ($this->supportsMultipleValues) {
 			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' IN (?)', [ $conditionData[$this->fieldName] ]);
@@ -53,14 +53,15 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	 * @see	\wcf\system\condition\IObjectCondition::checkObject()
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData) {
-		if (!ClassUtil::isInstanceOf($object, $this->getClassName())) return;
+		$className = $this->getClassName();
+		if (!($object instanceof $className)) return;
 		
 		return in_array($object->{$this->getPropertyName()}, $conditionData[$this->fieldName]);
 	}
 	
 	/**
 	 * Returns the name of the relevant database object class.
-	 *
+	 * 
 	 * @return	string
 	 */
 	protected function getClassName() {
@@ -77,7 +78,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 		}
 		
 		return [
-			$this->fieldName => preg_split('/\s*,\s*/', $value, -1, PREG_SPLIT_NO_EMPTY)
+			$this->fieldName => preg_split('/\s*,\s*/', $value[$this->fieldName], -1, PREG_SPLIT_NO_EMPTY)
 		];
 	}
 	

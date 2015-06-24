@@ -774,7 +774,6 @@
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die Speicherung von IP-Adressen der Benutzer in z.B. Sitzungen, Benutzerprofilen, Forenbeiträgen.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[E-Mail-Adresse des Administrators]]></item>
-		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Logfile-Pfad]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Absender-Adresse]]></item>
 		<item name="wcf.acp.option.mail_from_address.description"><![CDATA[Absender-Adresse für automatisch generierte E-Mails]]></item>
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Absender-Name]]></item>
@@ -786,13 +785,16 @@
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Die Signatur wird an jede automatisch generierte E-Mail angehängt.]]></item>
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP-Server]]></item>
-		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP-Port]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP-Verschlüsselung]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.none"><![CDATA[Deaktivieren]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.may"><![CDATA[Wenn unterstützt]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.encrypt"><![CDATA[Erzwingen]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls.description"><![CDATA[Diese Einstellung steuert die Verwendung von „STARTTLS“. Deaktivieren Sie diese Option, wenn Sie E-Mails über SSL (Port 465) versenden!]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP-Benutzer]]></item>
+		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[„-f“ Parameter verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Manche Server benötigen den „-f“ Parameter beim Versenden von E-Mails. Falls Sie Probleme mit dem Versand von E-Mails haben, aktivieren Sie diese Einstellung.]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Formatierte E-Mail-Adressen verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Absender- und Empfänger-Adressen werden in folgendes Format gebracht: „Name &lt;email@example.com&gt;“. Diese Funktion wird nicht von allen Mailservern unterstützt und sollte daher bei Problemen abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Der „-f“-Parameter sorgt bei der PHP-Versandmethode dafür, dass der korrekte Absender gesetzt wird. Diese Einstellung wird möglicherweise nicht von jedem Server unterstützt. Probieren Sie in diesem Falle die Option zu deaktivieren.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>
@@ -806,7 +808,7 @@
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Eine Aktivierung dieser Einstellung kann Benutzer ausschließen, die mit wechselnden IP-Adressen im Internet unterwegs sind.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Browser-Kennung der Sitzung überprüfen]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Virtuelle Sessions erlauben]]></item>
-		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Benutzer können sich mit mehreren Endgeräten (PC, Tablet, Smartphone, etc.) gleichzeitig anmelden, alle Geräte nutzen dann die selbe Sitzung. Die Abschaltung dieser Option hat zur Folge, dass ein Benutzer nur von einem einzigen Gerät gleichzeitig angemeldet sein darf und sich unter Umständen die Geräte auf diese Weise gegenseitig ausloggen. Die Deaktivierung dieser Option wird nicht empfohlen und sollte nur vorgenommen werden, wenn Sie sich der Konsequenzen bewusst sind.]]></item>
+		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Benutzer können sich mit mehreren Endgeräten (PC, Tablet, Smartphone, etc.) gleichzeitig anmelden, alle Geräte nutzen dann die selbe Sitzung. Die Abschaltung dieser Option hat zur Folge, dass ein Benutzer nur von einem einzigen Gerät gleichzeitig angemeldet sein darf und sich unter Umständen die Geräte auf diese Weise gegenseitig abmelden. Die Deaktivierung dieser Option wird nicht empfohlen und sollte nur vorgenommen werden, wenn Sie sich der Konsequenzen bewusst sind.]]></item>
 		<item name="wcf.acp.option.show_clock"><![CDATA[Aktuelle Uhrzeit im Fußbereich der Seite anzeigen]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Standard-Zeitzone Ihrer Seite]]></item>
@@ -1300,7 +1302,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Möchten Sie das Produkt „{$product[packageName]}“ wirklich installieren?]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) ist deaktiviert und steht weder für Neuinstallation noch Updates zur Verfügung.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ ist bei Ihnen nicht eingetragen. Wenn Sie die unten stehenden Pakete installieren möchten, müssen Sie diesen zuvor <a href="{link controller='PackageUpdateServerAdd'}{/link}">hinzufügen</a>.<br />Die Adresse des Servers lautet: „http://store.woltlab.com/{$wcfMajorRelease}/“]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) wurde noch nicht abgefragt, bitte lassen Sie zu erst nach Updates suchen, um den Server abzufragen.]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) wurde noch nicht abgefragt, bitte lassen Sie zuerst nach Updates suchen, um den Server abzufragen.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Paket-Server für „{$wcfMajorRelease}“]]></item>
 	</category>
 	
@@ -1499,7 +1501,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.style.image.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[Sie haben einen ungültigen Pfad eingegeben.]]></item>
-		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[Sie haben eine ungültigen Versionsnummer eingegeben.]]></item>
+		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[Sie haben eine ungültige Versionsnummer eingegeben.]]></item>
 		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[Sie haben ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Seitenlogo]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo]]></item>
@@ -1608,8 +1610,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Absender]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Hier können Sie die E-Mail-Adresse des Absenders definieren.{if MAIL_USE_FORMATTED_ADDRESS} Es ist auch folgendes Format möglich:{/if}<br />
-{if MAIL_USE_FORMATTED_ADDRESS}<em>Absender Name &lt;email@example.com&gt;</em><br />{/if}
+		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Hier können Sie die E-Mail-Adresse des Absenders definieren.<br />
 Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alles ausgefüllt haben, wird dieses Feld automatisch ausgefüllt. Sollten Sie E-Mails per SMTP senden, so achten Sie darauf, dass die E-Mail-Adresse des Absenders auch vom Server akzeptiert werden muss.]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-Mail an Gruppenmitglieder senden]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[E-Mail an die Mitglieder folgender Benutzergruppen senden]]></item>
@@ -1753,7 +1754,7 @@ Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
 		<item name="wcf.ajax.error.badRequest"><![CDATA[Die Anfrage war unvollständig und konnte nicht verarbeitet werden.]]></item>
 		<item name="wcf.ajax.error.internalError"><![CDATA[Es ist ein Fehler bei der Verarbeitung aufgetreten, bitte versuchen Sie es später erneut.]]></item>
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[Sie besitzen leider nicht die notwendigen Zugriffsrechte, um diese Aktion auszuführen.]]></item>
-		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Ihre Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein.]]></item>
+		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -1883,7 +1884,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.cli.help.help"><![CDATA[Zeigt diese Hilfe an und beendet das Script.]]></item>
 		<item name="wcf.cli.help.q"><![CDATA[Quiet: Zeigt weniger Informationen an.]]></item>
 		<item name="wcf.cli.help.v"><![CDATA[Verbose: Zeigt mehr Informationen an.]]></item>
-		<item name="wcf.cli.help.disableUpdateCheck"><![CDATA[Nach dem Einloggen wird nicht nach Updates gesucht.]]></item>
+		<item name="wcf.cli.help.disableUpdateCheck"><![CDATA[Nach dem Anmelden wird nicht nach Updates gesucht.]]></item>
 		<item name="wcf.cli.help.exitOnFail"><![CDATA[Das Script wird beendet, sobald ein Fehler aufgetreten ist.]]></item>
 		<item name="wcf.cli.help.exitOnFail.description"><![CDATA[Wenn dieser Parameter gesetzt ist, dann wird die Ausführung des Scriptes abgebrochen, sobald ein Fehler aufgetreten ist.
 Fehler sind beispielsweise:
@@ -1943,6 +1944,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.condition.lessThan"><![CDATA[weniger als]]></item>
 		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[Der „weniger als“-Wert darf nicht größer sein als {#$maxValue}.]]></item>
 		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[Der „weniger als“-Wert darf nicht kleiner sein als {#$minValue}.]]></item>
+		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
+		<item name="wcf.condition.timestamp.error.endNotValid"><![CDATA[Das Startdatum ist ungültig.]]></item>
+		<item name="wcf.condition.timestamp.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.dashboard">
@@ -2457,11 +2461,11 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[Benutzerkonto]]></item>
-		<item name="wcf.page.javascriptDisabled"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Webseite nutzen zu können, muss JavaScript aktiviert sein.]]></item>
+		<item name="wcf.page.javascriptDisabled"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Website nutzen zu können, muss JavaScript aktiviert sein.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Aufgerufene Seite]]></item>
 		<item name="wcf.page.privacyPolicy"><![CDATA[Datenschutzerklärung]]></item>
 		<item name="wcf.page.privacyPolicy.text"><![CDATA[<h2>Datenschutz</h2>
-    <p>Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, 
+    <p>Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, 
       Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.   
     </p>
     <p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. 
@@ -2534,7 +2538,7 @@ Fehler sind beispielsweise:
 		 Diese Funktionen werden angeboten durch die Twitter Inc., Twitter, Inc. 
 		 1355 Market St, Suite 900, San Francisco, CA 94103, USA. Durch das Benutzen
 		 von Twitter und der Funktion "Re-Tweet" werden die von Ihnen
-		 besuchten Webseiten mit Ihrem Twitter-Account verknüpft und anderen
+		 besuchten Websites mit Ihrem Twitter-Account verknüpft und anderen
 		 Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter übertragen.</p>
      <p>Wir weisen darauf hin, dass wir als Anbieter der Seiten keine
      Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch
@@ -2994,11 +2998,11 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
     <p>Alle Inhalte unseres Internetauftritts wurden mit Sorgfalt und nach bestem Gewissen erstellt. Eine Gewähr für die Aktualität, Vollständigkeit und Richtigkeit sämtlicher Seiten kann jedoch nicht übernommen werden.</p>
 	<p>Gemäß § 7 Abs. 1 TMG sind wir als Dienstanbieter für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich, nach den §§ 8 bis 10 TMG jedoch nicht verpflichtet, die übermittelten oder gespeicherten fremden Informationen zu überwachen. Eine umgehende Entfernung dieser Inhalte erfolgt ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung und wir haften nicht vor dem Zeitpunkt der Kenntniserlangung.</p>
     <h2>Haftungsbeschränkung für externe Links</h2>
-    <p>Unsere Webseite enthält sog. „externe Links“ (Verknüpfungen zu Webseiten Dritter), auf deren Inhalt wir keinen Einfluss haben und für den wir aus diesem Grund keine Gewähr übernehmen. Für die Inhalte und Richtigkeit der Informationen ist der jeweilige Informationsanbieter der verlinkten Webseite verantwortlich. Als die Verlinkung vorgenommen wurde, waren für uns keine Rechtsverstöße erkennbar. Sollte uns eine Rechtsverletzung bekannt werden, wird der jeweilige Link umgehend von uns entfernt.</p>
+    <p>Unsere Website enthält sog. „externe Links“ (Verknüpfungen zu Websites Dritter), auf deren Inhalt wir keinen Einfluss haben und für den wir aus diesem Grund keine Gewähr übernehmen. Für die Inhalte und Richtigkeit der Informationen ist der jeweilige Informationsanbieter der verlinkten Websites verantwortlich. Als die Verlinkung vorgenommen wurde, waren für uns keine Rechtsverstöße erkennbar. Sollte uns eine Rechtsverletzung bekannt werden, wird der jeweilige Link umgehend von uns entfernt.</p>
     <h2>Urheberrecht</h2>
-    <p>Die auf dieser Webseite veröffentlichten Inhalte und Werke unterliegen dem deutschen Urheberrecht. Jede Art der Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung des jeweiligen Urhebers bzw. Autors.</p>
+    <p>Die auf dieser Website veröffentlichten Inhalte und Werke unterliegen dem deutschen Urheberrecht. Jede Art der Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung des jeweiligen Urhebers bzw. Autors.</p>
     <h2>Datenschutz</h2>
-    <p>Durch den Besuch unseres Internetauftritts können Informationen über den Zugriff (Datum, Uhrzeit, aufgerufene Seite) auf dem Server gespeichert werden. Dies stellt keine Auswertung personenbezogener Daten (z.B. Name, Anschrift oder E-Mail Adresse) dar. Sofern personenbezogene Daten erhoben werden, erfolgt dies – sofern möglich – nur mit dem vorherigen Einverständnis des Nutzers der Webseite. Eine Weiterleitung der Daten an Dritte findet ohne ausdrückliche Zustimmung des Nutzers nicht statt.</p>
+    <p>Durch den Besuch unseres Internetauftritts können Informationen über den Zugriff (Datum, Uhrzeit, aufgerufene Seite) auf dem Server gespeichert werden. Dies stellt keine Auswertung personenbezogener Daten (z.B. Name, Anschrift oder E-Mail Adresse) dar. Sofern personenbezogene Daten erhoben werden, erfolgt dies – sofern möglich – nur mit dem vorherigen Einverständnis des Nutzers der Website. Eine Weiterleitung der Daten an Dritte findet ohne ausdrückliche Zustimmung des Nutzers nicht statt.</p>
     <p>Wir weisen ausdrücklich darauf hin, dass die Übertragung von Daten im Internet (z.B. per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff Dritter kann nicht gewährleistet werden. Wir können keine Haftung für die durch solche Sicherheitslücken entstehenden Schäden übernehmen.</p>
     <p>Der Verwendung veröffentlichter Kontaktdaten durch Dritte zum Zwecke von Werbung wird ausdrücklich widersprochen. Wir behalten uns rechtliche Schritte für den Fall der unverlangten Zusendung von Werbeinformationen, z.B. durch Spam-Mails, vor.</p>
 <p><small><em>Quelle: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
@@ -3136,9 +3140,6 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Benutzer dürfen in den ausgewählten Benutzergruppen nicht Mitglied sein.]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[Die ausgewählten Benutzergruppen in „in Benutzergruppen“ und „nicht in Benutzergruppen“ sind widersprüchlich.]]></item>
 		<item name="wcf.user.condition.registrationDate"><![CDATA[Registrierungsdatum]]></item>
-		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
-		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[Das Startdatum ist ungültig.]]></item>
-		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
 		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Tage seit Registrierung]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[Zustand]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Gesperrt]]></item>

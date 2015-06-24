@@ -176,7 +176,9 @@ class SettingsForm extends AbstractForm {
 			// static options
 			if ($this->category == 'general') {
 				$this->contentLanguageIDs = WCF::getUser()->getLanguageIDs();
-				$this->languageID = WCF::getUser()->languageID;
+				if (isset($this->availableLanguages[WCF::getUser()->languageID])) {
+					$this->languageID = WCF::getUser()->languageID;
+				}
 				$this->styleID = WCF::getUser()->styleID;
 			}
 		}

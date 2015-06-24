@@ -819,28 +819,6 @@ WCF.Message.QuickReply = Class.extend({
 			
 			$saveButton.trigger('click');
 		});
-		
-		WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function(data) {
-			var $insertQuote = false;
-			
-			// direct insert
-			if (this._container.is(':visible')) {
-				$insertQuote = true;
-			}
-			else if (data.forceInsert) {
-				// do not programmatically insert the quote because the callback will already do this
-				$insertQuote = (this._messageField.redactor('wutil.isEmptyEditor') ? false : true);
-				this.click(null);
-			}
-			
-			if ($insertQuote) {
-				//this._messageField.redactor('wutil.adjustSelectionForBlockElement');
-				this._messageField.redactor('wbbcode.insertQuoteBBCode', data.quote.username, data.quote.link, data.quote.text, data.quote.text);
-				
-				// scroll to editor
-				this._scroll.scrollTo(this._container, true);
-			}
-		}).bind(this));
 	},
 	
 	/**
@@ -2612,6 +2590,10 @@ WCF.Message.Quote.Manager = Class.extend({
 		});
 		
 		this._toggleShowQuotes();
+		
+		WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function(data) {
+			this._insertQuote(null, undefined, data);
+		}).bind(this));
 	},
 	
 	/**
@@ -2850,16 +2832,28 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * 
 	 * @param	object		event
 	 * @param	object		inputElement
+	 * @param	object		data
 	 */
-	_insertQuote: function(event, inputElement) {
-		var $listItem = (event === null) ? $(inputElement).parents('li') : $(event.currentTarget).parents('li');
-		var $quote = $.trim($listItem.children('div.jsFullQuote').text());
-		var $message = $listItem.parents('article.message');
+	_insertQuote: function(event, inputElement, data) {
+		var $listItem = null, $quote, $username, $link;
+		if (data === undefined) {
+			$listItem = (event === null) ? $(inputElement).parents('li') : $(event.currentTarget).parents('li');
+			$quote = $.trim($listItem.children('div.jsFullQuote').text());
+			var $message = $listItem.parents('article.message');
+			$username = $message.attr('data-username');
+			$link = $message.data('link');
+		}
+		else {
+			$quote = data.quote.text;
+			$username = data.quote.username;
+			$link = data.quote.link;
+			console.debug("right here");
+		}
 		
 		// insert into editor
 		if ($.browser.redactor) {
 			if (this._editorElementAlternative === null) {
-				if (event !== null) {
+				if (event !== null || data !== null) {
 					var $api = $('.jsQuickReply:eq(0)').data('__api');
 					if ($api && !$api.getContainer().is(':visible')) {
 						this._insertQuotes = false;
@@ -2867,15 +2861,15 @@ WCF.Message.Quote.Manager = Class.extend({
 					}
 				}
 				
-				this._editorElement.redactor('wbbcode.insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
+				this._editorElement.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
 			}
 			else {
-				this._editorElementAlternative.redactor('wbbcode.insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
+				this._editorElementAlternative.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
 			}
 		}
 		else {
 			// build quote tag
-			$quote = "[quote='" + $message.attr('data-username') + "','" + $message.data('link') + "']" + $quote + "[/quote]";
+			$quote = "[quote='" + $username + "','" + $link + "']" + $quote + "[/quote]";
 			
 			// plain textarea
 			var $textarea = (this._editorElementAlternative === null) ? this._editorElement : this._editorElementAlternative;
@@ -2891,7 +2885,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		}
 		
 		// remove quote upon submit or upon request
-		this._removeOnSubmit.push($listItem.attr('data-quote-id'));
+		if ($listItem !== null) this._removeOnSubmit.push($listItem.attr('data-quote-id'));
 		
 		// close dialog
 		if (event !== null) {
