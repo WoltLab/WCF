@@ -10,15 +10,11 @@ define([], function() {
 	"use strict";
 	
 	var _clone = function(variable) {
-		if (typeof variable === 'object' && variable !== null) {
+		if (typeof variable === 'object' && (Array.isArray(variable) || Core.isPlainObject(variable))) {
 			return _cloneObject(variable);
 		}
 		
 		return variable;
-	};
-	
-	var _cloneArray = function(oldArray) {
-		return oldArray.slice();
 	};
 	
 	var _cloneObject = function(obj) {
@@ -27,7 +23,7 @@ define([], function() {
 		}
 		
 		if (Array.isArray(obj)) {
-			return _cloneArray(obj);
+			return obj.slice();
 		}
 		
 		var newObj = {};
@@ -181,16 +177,27 @@ define([], function() {
 			return parameters.join('&');
 		},
 		
-		triggerEvent: function(el, eventName) {
-			var ev;
-			if (document.createEvent) {
-				ev = new Event(eventName);
-				el.dispatchEvent(ev);
+		/**
+		 * Triggers a custom or built-in event.
+		 * 
+		 * @param	{Element}	element		target element
+		 * @param	{string}	eventName	event name
+		 */
+		triggerEvent: function(element, eventName) {
+			var event;
+			
+			try {
+				event = new Event(eventName, {
+					bubbles: true,
+					cancelable: true
+				});
 			}
-			else {
-				ev = document.createEventObject();
-				el.fireEvent('on' + eventName, ev);
+			catch (e) {
+				event = document.createEvent('Event');
+				event.initEvent(eventName, true, true);
 			}
+			
+			element.dispatchEvent(event);
 		}
 	};
 	
