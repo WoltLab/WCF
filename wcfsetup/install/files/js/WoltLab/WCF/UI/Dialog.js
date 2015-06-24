@@ -101,7 +101,7 @@ define(
 				setupData.source = document.createDocumentFragment();
 				setupData.source.appendChild(dialogElement);
 			}
-			else if (typeof setupData.source === null) {
+			else if (setupData.source === null) {
 				// `null` means there is no static markup and `html` should be used instead
 				setupData.source = html;
 			}
@@ -439,9 +439,16 @@ define(
 		/**
 		 * Closes a dialog identified by given id.
 		 * 
-		 * @param	{string}	id	element id
+		 * @param	{(string|object)}	id	element id or callback object
 		 */
 		close: function(id) {
+			if (typeof id === 'object') {
+				var dialogData = _dialogObjects.get(id);
+				if (dialogData !== undefined) {
+					id = dialogData.id;
+				}
+			}
+			
 			var data = _dialogs.get(id);
 			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
