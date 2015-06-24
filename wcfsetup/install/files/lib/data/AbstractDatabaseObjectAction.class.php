@@ -449,6 +449,17 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
+	 * Reads a string array and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 */
+	protected function readStringArray($variableName, $allowEmpty = false, $arrayIndex = '') {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING, self::STRUCT_ARRAY);
+	}
+	
+	/**
 	 * Reads a boolean value and validates it.
 	 * 
 	 * @param	string		$variableName
@@ -528,16 +539,30 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			case self::TYPE_STRING:
 				if (!isset($target[$variableName])) {
 					if ($allowEmpty) {
-						$target[$variableName] = '';
+						$target[$variableName] = ($structure === self::STRUCT_FLAT) ? '' : array();
 					}
 					else {
 						throw new UserInputException($variableName);
 					}
 				}
 				else {
-					$target[$variableName] = StringUtil::trim($target[$variableName]);
-					if (!$allowEmpty && empty($target[$variableName])) {
-						throw new UserInputException($variableName);
+					if ($structure === self::STRUCT_FLAT) {
+						$target[$variableName] = StringUtil::trim($target[$variableName]);
+						if (!$allowEmpty && empty($target[$variableName])) {
+							throw new UserInputException($variableName);
+						}
+					}
+					else {
+						$target[$variableName] = ArrayUtil::trim($target[$variableName]);
+						if (!is_array($target[$variableName])) {
+							throw new UserInputException($variableName);
+						}
+					
+						for ($i = 0, $length = count($target[$variableName]); $i < $length; $i++) {
+							if (empty($target[$variableName][$i])) {
+								throw new UserInputException($variableName);
+							}
+						}
 					}
 				}
 			break;
