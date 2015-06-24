@@ -2264,6 +2264,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Bitte füllen Sie dieses Eingabefeld für jede Sprache aus.]]></item>
 		<item name="wcf.global.form.error.noValidSelection"><![CDATA[Wählen Sie eine der angebotenen Optionen aus.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Ihre Sitzung ist abgelaufen, bitte senden Sie das Formular erneut ab.]]></item>
+		<item name="wcf.global.form.input.maxItems"><![CDATA[Maximale Anzahl erreicht]]></item>
 		
 		<!-- deprecated since 2.1 -->
 		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>

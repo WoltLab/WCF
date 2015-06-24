@@ -2261,6 +2261,7 @@ Errors are:
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Please fill in this field for all languages.]]></item>
 		<item name="wcf.global.form.error.noValidSelection"><![CDATA[Choose one of the available options.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Your session has expired, please submit the form again.]]></item>
+		<item name="wcf.global.form.input.maxItems"><![CDATA[Maximum items reached]]></item>
 		
 		<!-- deprecated since 2.1 -->
 		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}The entered value has to be greater than {#$greaterThan}.{/literal}]]></item>

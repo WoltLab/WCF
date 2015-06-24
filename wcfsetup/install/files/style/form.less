@@ -720,3 +720,90 @@ select > option {
 		}
 	}
 }
+
+/* input item list */
+.inputItemList {
+	background-color: @wcfInputBackgroundColor;
+	border: 1px solid @wcfInputBorderColor;
+	border-radius: @wcfInputBorderRadius;
+	color: @wcfInputColor;
+	cursor: text;
+	display: flex;
+	flex-wrap: wrap;
+	padding: @wcfGapTiny @wcfGapTiny 0;
+	
+	transition-duration: .2s;
+	transition-property: background-color, border-color, box-shadow;
+	transition-timing-function: linear;
+	
+	&:hover {
+		background-color: @wcfInputHoverBackgroundColor;
+		border-color: @wcfInputHoverBorderColor;
+	}
+	
+	> li {
+		align-items: center;
+		display: flex;
+		flex: 0 auto;
+		margin: 0 @wcfGapSmall @wcfGapTiny 0;
+		padding: @wcfGapTiny @wcfGapSmall;
+		
+		&.item {
+			background-color: @wcfColor;
+			border-radius: 3px;
+			padding-right: @wcfGapLarge;
+			position: relative;
+			
+			&:hover,
+			&.active {
+				background-color: @wcfTabularBoxBackgroundColor;
+				color: @wcfTabularBoxColor;
+			}
+			
+			> span,
+			> .icon {
+				color: @wcfContentBackgroundColor;
+				font-size: .85rem;
+				text-shadow: none;
+				white-space: nowrap;
+				word-wrap: normal;
+			}
+			
+			> .icon {
+				bottom: 0;
+				height: auto;
+				position: absolute;
+				right: 0;
+				top: 0;
+				width: @wcfGapLarge;
+				
+				&:before {
+					left: 50%;
+					position: absolute;
+					top: 50%;
+					transform: translateX(-50%) translateY(-50%);
+				}
+			}
+		}
+		
+		&.input {
+			padding: 0;
+			width: 200px;
+			
+			> input {
+				background-color: transparent !important;
+				background-image: none !important;
+				border-width: 0 !important;
+				box-shadow: none !important;
+				outline: none !important;
+				padding: 0 !important;
+				width: 100% !important;
+				
+				&::-ms-clear {
+					/* hide "clear value" button in IE (displayed as "X") */
+					display: none;
+				}
+			}
+		}
+	}
+}
