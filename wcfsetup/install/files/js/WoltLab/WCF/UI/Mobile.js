@@ -44,7 +44,7 @@ define(
 				deferSetup: true
 			});
 			
-			if (Environment.browser() === 'microsoft' && _sidebar.clientWidth > 305) {
+			if (Environment.browser() === 'microsoft' && _sidebar !== null && _sidebar.clientWidth > 305) {
 				this._fixSidebarIE();
 			}
 		},
@@ -68,6 +68,8 @@ define(
 		},
 		
 		_fixSidebarIE: function() {
+			if (_sidebar === null) return;
+			
 			// sidebar is rarely broken on IE9/IE10
 			_sidebar.style.setProperty('display', 'none');
 			_sidebar.style.removeProperty('display');
@@ -83,6 +85,8 @@ define(
 		},
 		
 		_initSidebarToggleButtons: function() {
+			if (_sidebar === null) return;
+			
 			var sidebarPosition = (_main.classList.contains('sidebarOrientationLeft')) ? 'Left' : '';
 			sidebarPosition = (sidebarPosition) ? sidebarPosition : (_main.classList.contains('sidebarOrientationRight') ? 'Right' : '');
 			
