@@ -13,6 +13,5 @@ WCF.Location
 WCF.Message
 WCF.Poll
 WCF.Search.Message
-WCF.Tagging
 WCF.User
 WCF.Moderation
