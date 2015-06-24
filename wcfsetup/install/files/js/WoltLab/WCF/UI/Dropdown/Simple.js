@@ -196,6 +196,33 @@ define(
 		},
 		
 		/**
+		 * Returns true if target dropdown exists and is open.
+		 * 
+		 * @param	{string}	containerId	dropdown wrapper id
+		 * @return	{boolean}	true if dropdown exists and is open
+		 */
+		isOpen: function(containerId) {
+			var menu = _menus.get(containerId);
+			if (menu !== undefined && menu.classList.contains('dropdownOpen')) {
+				return true;
+			}
+			
+			return false;
+		},
+		
+		/**
+		 * Opens the dropdown unless it is already open.
+		 * 
+		 * @param	{string}	containerId	dropdown wrapper id
+		 */
+		open: function(containerId) {
+			var menu = _menus.get(containerId);
+			if (menu !== undefined && !menu.classList.contains('dropdownOpen')) {
+				this.toggleDropdown(containerId);
+			}
+		},
+		
+		/**
 		 * Closes the dropdown identified by given id without notifying callbacks.
 		 * 
 		 * @param	{string}	containerId	dropdown wrapper id
@@ -313,7 +340,12 @@ define(
 		 * @return	{boolean}	'false' if event is not null
 		 */
 		_toggle: function(event, targetId) {
-			targetId = (event === null) ? targetId : event.currentTarget.getAttribute('data-target');
+			if (event !== null) {
+				event.preventDefault();
+				event.stopPropagation();
+				
+				targetId = event.currentTarget.getAttribute('data-target');
+			}
 			
 			// check if 'isOverlayDropdownButton' is set which indicates if
 			// the dropdown toggle is in an overlay
@@ -350,12 +382,7 @@ define(
 			// TODO
 			WCF.Dropdown.Interactive.Handler.closeAll();
 			
-			if (event !== null) {
-				event.stopPropagation();
-				return false;
-			}
-			
-			return true;
+			return (event === null);
 		}
 	};
 	
