@@ -23,3 +23,5 @@
 * Background queue (`wcf\system\background\*`) added.
 * Rewritten email system (`wcf\system\email\*`) added.
 * Old email system (`wcf\system\mail\*`) deprecated.
+* Abstract bulk processing system added.
+* Replaced old user bulk processing with new implementation using the abstract bulk processing system.
