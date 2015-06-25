@@ -88,13 +88,16 @@ RedactorPlugins.wbutton = function() {
 			// handle image insert
 			this.button.addCallback(this.button.get('image'), $.proxy(this.wbutton.insertImage, this));
 			
-			// handle redo/undo buttons
-			var $undoButton = this.button.addAfter('html', 'undo', WCF.Language.get('wcf.bbcode.button.undo'));
-			var $redoButton = this.button.addAfter('undo', 'redo', WCF.Language.get('wcf.bbcode.button.redo'));
-			this.button.addCallback($undoButton, this.buffer.undo);
-			this.button.addCallback($redoButton, this.buffer.redo);
+			// handle redo/undo buttons (for some reason not available on mobile, disabled for now)
+			if (this.utils.isDesktop()) {
+				var $undoButton = this.button.addAfter('html', 'undo', WCF.Language.get('wcf.bbcode.button.undo'));
+				var $redoButton = this.button.addAfter('undo', 'redo', WCF.Language.get('wcf.bbcode.button.redo'));
+				this.button.addCallback($undoButton, this.buffer.undo);
+				this.button.addCallback($redoButton, this.buffer.redo);
+				
+				$redoButton.parent().addClass('separator');
+			}
 			
-			$redoButton.parent().addClass('separator');
 		},
 		
 		/**
