@@ -396,7 +396,7 @@ define(['Core', 'Dictionary', 'Language', 'DOM/Traverse', 'WoltLab/WCF/UI/Sugges
 		 * @param	{object}	data		element data
 		 */
 		_syncShadow: function(data) {
-			if (!data.isCSV) return null;
+			if (!data.options.isCSV) return null;
 			
 			var value = '', values = this.getValues(data.element.id);
 			for (var i = 0, length = values.length; i < length; i++) {
