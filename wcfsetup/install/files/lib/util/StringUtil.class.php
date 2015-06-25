@@ -92,9 +92,6 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeHTML($string) {
-		if (is_object($string)) 
-			$string = $string->__toString();
-		
 		return @htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 	}
 	
@@ -105,8 +102,6 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeJS($string) {
-		if (is_object($string)) $string = $string->__toString();
-		
 		// unify newlines
 		$string = self::unifyNewlines($string);
 		
