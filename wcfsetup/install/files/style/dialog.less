@@ -112,11 +112,18 @@
 		
 		dl:not(.plain) {
 			> dt {
-				width: 170px;
+				float: none;
+				margin-bottom: @wcfGapTiny;
+				text-align: left;
+				width: auto !important;
+				
+				&:empty {
+					margin-bottom: 0;
+				}
 			}
 			
 			> dd {
-				margin-left: 190px;
+				margin-left: 0 !important;
 			}
 		}
 		
