@@ -10,6 +10,10 @@
 	{@$__wcf->getStyleHandler()->getStylesheet(true)}
 	{event name='stylesheets'}
 	
+	<!-- Icons -->
+	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
+	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
+	
 	<script>
 		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
 		var WCF_PATH = '{@$__wcf->getPath()}';
@@ -18,33 +22,16 @@
 		var TIME_NOW = {@TIME_NOW};
 		var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
 	</script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui/touchPunch.min.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui/nestedSortable.min.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}js/WCF.Assets.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}js/require.js?v={@LAST_UPDATE_TIME}"></script>
-	<script src="{@$__wcf->getPath()}js/require.config.js?v={@LAST_UPDATE_TIME}"></script>
-	<script>
-		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
-	</script>
-	{event name='javascriptInclude'}
 	
-	<!-- Icons -->
-	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
-	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
-	
+	{js application='wcf' file='require' bundle='WCF.Core' core='true'}
+	{js application='wcf' file='require.config' bundle='WCF.Core' core='true'}
 	<script>
 		requirejs.config({
 			baseUrl: '{@$__wcf->getPath()}js'
 		});
-		
-		$.holdReady(true);
 	</script>
-	
 	<script>
+		document.addEventListener('DOMContentLoaded', function() {
 		require(['Language', 'WoltLab/WCF/ACP/Bootstrap'], function(Language, ACPBootstrap) {
 			Language.addObject({
 				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
@@ -108,7 +95,20 @@
 			
 			ACPBootstrap.setup();
 		});
-		
+		});
+	</script>
+	{js application='wcf' lib='jquery'}
+	{js application='wcf' lib='jquery-ui'}
+	{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined'}
+	{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined'}
+	{js application='wcf' file='WCF.Assets' bundle='WCF.Combined'}
+	{js application='wcf' file='WCF' bundle='WCF.Combined'}
+	{js application='wcf' acp='true' file='WCF.ACP'}
+	<script>
+		$.holdReady(true);
+		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
+	</script>
+	<script>
 		$(function() {
 			{* work-around for unknown core-object during WCFSetup *}
 			{if PACKAGE_ID}
@@ -131,6 +131,7 @@
 			$('form[method=get]').attr('method', 'post');
 		});
 	</script>
+	{event name='javascriptInclude'}
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
+use wcf\system\request\RequestHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -53,7 +54,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$isJqueryUi = true;
 		}
 		
-		$src = WCF::getPath($tagArgs['application']) . 'js/';
+		$src = WCF::getPath($tagArgs['application']) . (isset($tagArgs['acp']) && $tagArgs['acp'] === 'true' ? 'acp/' : '') . 'js/';
 		if (!empty($tagArgs['bundle']) && !ENABLE_DEBUG_MODE) {
 			$src .= $tagArgs['bundle'];
 		}
@@ -79,7 +80,8 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		$this->includedFiles[] = $src;
 		$src .= (!ENABLE_DEBUG_MODE ? '.min' : '') . '.js?v=' . LAST_UPDATE_TIME;
 		
-		$html = '<script' . (!isset($tagArgs['core']) || $tagArgs['core'] !== 'true' ? ' data-relocate="true"' : '') . ' src="' . $src . '"></script>'."\n";
+		$relocate = !RequestHandler::getInstance()->isACPRequest() && (!isset($tagArgs['core']) || $tagArgs['core'] !== 'true');
+		$html = '<script' . ($relocate ? ' data-relocate="true"' : '') . ' src="' . $src . '"></script>'."\n";
 		
 		if (isset($tagArgs['encodeJs']) && $tagArgs['encodeJs'] === 'true') {
 			$html = StringUtil::encodeJS($html);
