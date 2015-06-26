@@ -57,14 +57,7 @@ class ObjectTypeCache extends SingletonFactory {
 		
 		// get object type cache
 		$this->objectTypes = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'objectTypes');
-		foreach ($this->objectTypes as $objectType) {
-			$definition = $this->getDefinition($objectType->definitionID);
-			if (!isset($this->groupedObjectTypes[$definition->definitionName])) {
-				$this->groupedObjectTypes[$definition->definitionName] = array();
-			}
-			
-			$this->groupedObjectTypes[$definition->definitionName][$objectType->objectType] = $objectType;
-		}
+		$this->groupedObjectTypes = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'groupedObjectTypes');
 	}
 	
 	/**
