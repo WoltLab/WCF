@@ -163,36 +163,24 @@ RedactorPlugins.wbutton = function() {
 				var $selectedHtml = this.selection.getHtml();
 				$selectedHtml = $selectedHtml.replace(/<p>@@@wcf_empty_line@@@<\/p>/g, '<p><br></p>');
 				
-				// TODO: this behaves pretty weird at this time, fix or remove
-				if (false && $bbcode === 'tt') {
-					var $parent = (this.selection.getParent()) ? $(this.selection.getParent()) : null;
-					if ($parent && $parent.closest('inline.inlineCode', this.$editor.get()[0]).length) {
-						this.inline.toggleClass('inlineCode');
+				this.buffer.set();
+				
+				if (this.utils.browser('mozilla') && !$selectedHtml.length) {
+					var $container = getSelection().getRangeAt(0).startContainer;
+					if ($container.nodeType === Node.ELEMENT_NODE && $container.tagName === 'P' && $container.innerHTML === '<br>') {
+						// <br> is not removed in Firefox, instead content gets inserted afterwards creating a leading empty line
+						$container.removeChild($container.children[0]);
 					}
-					else {
-						this.inline.toggleClass('inlineCode');
-					}
+				}
+				
+				if (this._bbcodes[buttonName].voidElement) {
+					this.insert.html($selectedHtml + this.selection.getMarkerAsHtml() + '[' + $bbcode + ']', false);
 				}
 				else {
-					this.buffer.set();
-					
-					if (this.utils.browser('mozilla') && !$selectedHtml.length) {
-						var $container = getSelection().getRangeAt(0).startContainer;
-						if ($container.nodeType === Node.ELEMENT_NODE && $container.tagName === 'P' && $container.innerHTML === '<br>') {
-							// <br> is not removed in Firefox, instead content gets inserted afterwards creating a leading empty line
-							$container.removeChild($container.children[0]);
-						}
-					}
-					
-					if (this._bbcodes[buttonName].voidElement) {
-						this.insert.html($selectedHtml + this.selection.getMarkerAsHtml() + '[' + $bbcode + ']', false);
-					}
-					else {
-						this.insert.html('[' + $bbcode + ']' + $selectedHtml + this.selection.getMarkerAsHtml() + '[/' + $bbcode + ']', false);
-					}
-					
-					this.selection.restore();
+					this.insert.html('[' + $bbcode + ']' + $selectedHtml + this.selection.getMarkerAsHtml() + '[/' + $bbcode + ']', false);
 				}
+				
+				this.selection.restore();
 			}
 		},
 		
