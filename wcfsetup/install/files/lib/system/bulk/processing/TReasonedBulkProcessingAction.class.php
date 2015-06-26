@@ -4,7 +4,7 @@ use wcf\util\StringUtil;
 use wcf\system\WCF;
 
 /**
- * Trait for bulk processing actions allowing given a reason for executing the action.
+ * Trait for bulk processing actions allowing to enter a reason for executing the action.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2015 WoltLab GmbH
