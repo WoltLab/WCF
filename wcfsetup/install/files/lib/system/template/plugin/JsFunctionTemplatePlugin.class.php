@@ -73,11 +73,11 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$src .= $tagArgs['file'];
 		}
 		
-		if (in_array($src, $this->includedFiles)) {
+		if (isset($this->includedFiles[$src])) {
 			return '';
 		}
 		
-		$this->includedFiles[] = $src;
+		$this->includedFiles[$src] = true;
 		$src .= (!ENABLE_DEBUG_MODE ? '.min' : '') . '.js?v=' . LAST_UPDATE_TIME;
 		
 		$relocate = !RequestHandler::getInstance()->isACPRequest() && (!isset($tagArgs['core']) || $tagArgs['core'] !== 'true');

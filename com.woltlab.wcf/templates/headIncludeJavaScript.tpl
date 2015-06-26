@@ -194,7 +194,7 @@ requirejs.config({
 		{/if}
 		
 		{* invoke background queue roughly every 10th request *}
-		if (Math.random().toString()[2] === '0') {
+		if (Math.random() < 0.1) {
 			require(['Ajax'], function(Ajax) {
 				// fire and forget background queue perform task
 				Ajax.apiOnce({
