@@ -185,7 +185,6 @@ requirejs.config({
 {js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
 {js application='wcf' file='WCF.Poll' bundle='WCF.Combined'}
 {js application='wcf' file='WCF.Search.Message' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Tagging' bundle='WCF.Combined'}
 {js application='wcf' file='WCF.User' bundle='WCF.Combined'}
 {js application='wcf' file='WCF.Moderation' bundle='WCF.Combined'}
 
