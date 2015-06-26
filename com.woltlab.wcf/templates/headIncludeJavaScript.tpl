@@ -18,40 +18,6 @@ requirejs.config({
 	baseUrl: '{@$__wcf->getPath()}js'
 });
 </script>
-<script>
-	(function(window) {
-		var orgRequire = window.require;
-		var queue = [];
-		var counter = 0;
-		
-		window.require = function(dependencies, callback) {
-			if (!Array.isArray(dependencies)) {
-				return orgRequire.apply(window, arguments);
-			}
-			
-			var i = counter++;
-			queue.push(i);
-			
-			orgRequire(dependencies, function() {
-				var args = arguments;
-				
-				queue[queue.indexOf(i)] = function() { callback.apply(window, args); };
-				
-				executeCallbacks();
-			});
-		};
-		
-		function executeCallbacks() {
-			while (queue.length) {
-				if (typeof queue[0] !== 'function') {
-					break;
-				}
-				
-				queue.shift()();
-			}
-		};
-	})(window);
-</script>
 <script data-relocate="true">
 	require(['Language', 'WoltLab/WCF/BootstrapFrontend'], function(Language, BootstrapFrontend) {
 		Language.addObject({
@@ -227,14 +193,17 @@ requirejs.config({
 			});
 		{/if}
 		
-		require(['Ajax'], function(Ajax) {
-			// fire and forget background queue perform task
-			Ajax.apiOnce({
-				url: '{link controller="BackgroundQueuePerform"}{/link}',
-				ignoreError: true,
-				silent: true
+		{* invoke background queue roughly every 10th request *}
+		if (Math.random().toString()[2] === '0') {
+			require(['Ajax'], function(Ajax) {
+				// fire and forget background queue perform task
+				Ajax.apiOnce({
+					url: '{link controller="BackgroundQueuePerform"}{/link}',
+					ignoreError: true,
+					silent: true
+				});
 			});
-		});
+		}
 		
 		{if $__sessionKeepAlive|isset}
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
