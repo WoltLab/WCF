@@ -34,6 +34,12 @@ use wcf\util\StringUtil;
  */
 class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
+	 * list of already included JavaScript files
+	 * @var	array<string>
+	 */
+	protected $includedFiles = [];
+	
+	/**
 	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
@@ -66,6 +72,11 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$src .= $tagArgs['file'];
 		}
 		
+		if (in_array($src, $this->includedFiles)) {
+			return '';
+		}
+		
+		$this->includedFiles[] = $src;
 		$src .= (!ENABLE_DEBUG_MODE ? '.min' : '') . '.js?v=' . LAST_UPDATE_TIME;
 		
 		$html = '<script' . (!isset($tagArgs['core']) || $tagArgs['core'] !== 'true' ? ' data-relocate="true"' : '') . ' src="' . $src . '"></script>'."\n";

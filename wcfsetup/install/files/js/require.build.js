@@ -13,7 +13,8 @@
 	},
 	include: [
 		"requireLib",
-		"require.config"
+		"require.config",
+		"require.linearExecution"
 	],
 	excludeShallow: [
 		'WoltLab/_Meta'
@@ -49,7 +50,7 @@
 				}
 			}
 			
-			return 'define([' + global.allModules.map(function (item) { return "'" + item.replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'"; }).join(', ') + '], function() { });';
+			return 'define([' + global.allModules.map(function (item) { return "'" + item.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\.js$/, '') + "'"; }).join(', ') + '], function() { });';
 		}
 		
 		return contents;
