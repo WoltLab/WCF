@@ -10,7 +10,7 @@ define([], function() {
 		},
 		
 		_splitTags: function(message) {
-			var validTags = 'attach|b|color|i|list|url';
+			var validTags = 'attach|b|color|i|list|url|table|td|tr';
 			var pattern = '(\\\[(?:/(?:' + validTags + ')|(?:' + validTags + ')'
 				+ '(?:='
 					+ '(?:\\\'[^\\\'\\\\]*(?:\\\\.[^\\\'\\\\]*)*\\\'|[^,\\\]]*)'

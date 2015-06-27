@@ -1,8 +1,8 @@
-define([], function() {
+define(['DOM/Traverse'], function(DOMTraverse) {
 	"use strict";
 	
 	var _converter = [];
-	var _inlineConverter = [];
+	var _inlineConverter = {};
 	
 	var BBCodeFromHtml = {
 		convert: function(message) {
@@ -53,15 +53,24 @@ define([], function() {
 				{ tagName: 'A', callback: this._convertUrl.bind(this) },
 				{ tagName: 'LI', callback: this._convertListItem.bind(this) },
 				{ tagName: 'OL', callback: this._convertList.bind(this) },
+				{ tagName: 'TABLE', callback: this._convertTable.bind(this) },
 				{ tagName: 'UL', callback: this._convertList.bind(this) },
-				{ tagName: 'SPAN', callback: this._convertSpan.bind(this) }
+				
+				// convert these last
+				{ tagName: 'SPAN', callback: this._convertSpan.bind(this) },
+				{ tagName: 'DIV', callback: this._convertDiv.bind(this) }
 			];
 			
-			_inlineConverter = [
-				{ style: 'color', callback: this._convertInlineColor.bind(this) },
-				{ style: 'font-size', callback: this._convertInlineFontSize.bind(this) },
-				{ style: 'font-family', callback: this._convertInlineFontFamily.bind(this) }
-			];
+			_inlineConverter = {
+				span: [
+					{ style: 'color', callback: this._convertInlineColor.bind(this) },
+					{ style: 'font-size', callback: this._convertInlineFontSize.bind(this) },
+					{ style: 'font-family', callback: this._convertInlineFontFamily.bind(this) }
+				],
+				div: [
+					{ style: 'text-align', callback: this._convertInlineTextAlign.bind(this) }
+				]
+			};
 		},
 		
 		_convert: function(container, converter) {
@@ -114,8 +123,8 @@ define([], function() {
 		_convertSpan: function(element) {
 			if (element.style.length || element.className) {
 				var converter, value;
-				for (var i = 0, length = _inlineConverters.length; i < length; i++) {
-					converter = _inlineConverters[i];
+				for (var i = 0, length = _inlineConverter.span.length; i < length; i++) {
+					converter = _inlineConverter.span[i];
 					
 					if (converter.style) {
 						value = element.style.getPropertyValue(converter.style) || '';
@@ -134,17 +143,80 @@ define([], function() {
 			element.outerHTML = element.innerHTML;
 		},
 		
-		_convertInlineColor: function(element, color) {
-			if (color.match(/^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i)) {
+		_convertDiv: function(element) {
+			if (element.style.length) {
+				var converter, value;
+				for (var i = 0, length = _inlineConverter.div.length; i < length; i++) {
+					converter = _inlineConverter.div[i];
+					
+					value = element.style.getPropertyValue(converter.style) || '';
+					if (value) {
+						converter.callback(element, value);
+					}
+				}
+			}
+			
+			element.outerHTML = element.innerHTML;
+		},
+		
+		_convertInlineColor: function(element, value) {
+			if (value.match(/^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i)) {
 				var r = RegExp.$1;
 				var g = RegExp.$2;
 				var b = RegExp.$3;
 				
 				var chars = '0123456789ABCDEF';
-				color = '#' + (chars.charAt((r - r % 16) / 16) + '' + chars.charAt(r % 16)) + '' + (chars.charAt((g - g % 16) / 16) + '' + chars.charAt(g % 16)) + '' + (chars.charAt((b - b % 16) / 16) + '' + chars.charAt(b % 16));
+				value = '#' + (chars.charAt((r - r % 16) / 16) + '' + chars.charAt(r % 16)) + '' + (chars.charAt((g - g % 16) / 16) + '' + chars.charAt(g % 16)) + '' + (chars.charAt((b - b % 16) / 16) + '' + chars.charAt(b % 16));
 			}
 			
-			element.innerHTML = '[color=' + color + ']' + element.innerHTML + '[/color]';
+			element.innerHTML = '[color=' + value + ']' + element.innerHTML + '[/color]';
+		},
+		
+		_convertInlineFontSize: function(element, value) {
+			if (value.match(/^(\d+)pt$/)) {
+				value = RegExp.$1;
+			}
+			else if (value.match(/^(\d+)(px|em|rem|%)$/)) {
+				value = window.getComputedStyle(value).fontSize.replace(/^(\d+).*$/, '$1');
+				value = Math.round(value);
+			}
+			else {
+				// unknown or unsupported value, ignore
+				value = '';
+			}
+			
+			if (value) {
+				// min size is 8 and maximum is 36
+				value = Math.min(Math.max(value, 8), 36);
+				
+				element.innerHTML = '[size=' + value + ']' + element.innerHTML + '[/size]';
+			}
+		},
+		
+		_convertInlineFontFamily: function(element, value) {
+			element.innerHTML = '[font=' + value.replace(/'/g, '') + ']' + element.innerHTML + '[/font]';
+		},
+		
+		_convertInlineTextAlign: function(element, value) {
+			if (value === 'left' || value === 'right' || value === 'justify') {
+				element.innerHTML = '[align=' + value + ']' + innerHTML + '[/align]';
+			}
+		},
+		
+		_convertTable: function(element) {
+			var elements = element.getElementsByTagName('TD');
+			while (elements.length) {
+				elements[0].outerHTML = '[td]' + elements[0].innerHTML + '[/td]\n';
+			}
+			
+			elements = element.getElementsByTagName('TR');
+			while (elements.length) {
+				elements[0].outerHTML = '\n[tr]\n' + elements[0].innerHTML + '[/tr]';
+			}
+			
+			var tbody = DOMTraverse.childByTag(element, 'TBODY');
+			var innerHtml = (tbody === null) ? element.innerHTML : tbody.innerHTML;
+			element.outerHTML = '\n[table]' + innerHtml + '\n[/table]';
 		},
 		
 		_convertUrl: function(element) {

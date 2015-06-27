@@ -2,6 +2,8 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 	"use strict";
 	
 	var _bbcodes = null;
+	var _removeNewlineAfter = [];
+	var _removeNewlineBefore = [];
 	
 	var BBCodeToHtml = {
 		convert: function(message) {
@@ -50,16 +52,22 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 				s: 'del',
 				sub: 'sub',
 				sup: 'sup',
+				table: 'table',
+				td: 'td',
+				tr: 'tr',
 				
 				// callback replacement
 				color: this._replaceColor.bind(this),
 				list: this._replaceList.bind(this),
 				url: this._replaceUrl.bind(this)
 			};
+			
+			_removeNewlineAfter = ['table', 'td', 'tr'];
+			_removeNewlineBefore = ['table', 'td', 'tr'];
 		},
 		
 		_replace: function(stack, item, index) {
-			var pair = stack[item.pair], replace = _bbcodes[item.name];
+			var pair = stack[item.pair], replace = _bbcodes[item.name], tmp;
 			
 			if (replace === undefined) {
 				// treat as plain text
@@ -67,7 +75,36 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 				
 				return item.source;
 			}
-			else if (typeof replace === 'string') {
+			
+			if (_removeNewlineAfter.indexOf(item.name) !== -1) {
+				tmp = stack[index + 1];
+				if (typeof tmp === 'string') {
+					stack[index + 1] = tmp.replace(/^\n/, '');
+				}
+				
+				if (stack.length < item.pair + 1) {
+					tmp = stack[item.pair + 1];
+					if (typeof tmp === 'string') {
+						stack[item.pair + 1] = tmp.replace(/^\n/, '');
+					}
+				}
+			}
+			
+			if (_removeNewlineBefore.indexOf(item.name) !== -1) {
+				if (index - 1 >= 0) {
+					tmp = stack[index - 1];
+					if (typeof tmp === 'string') {
+						stack[index - 1] = tmp.replace(/\n$/, '');
+					}
+				}
+				
+				tmp = stack[item.pair - 1];
+				if (typeof tmp === 'string') {
+					stack[item.pair - 1] = tmp.replace(/\n$/, '');
+				}
+			}
+			
+			if (typeof replace === 'string') {
 				stack[item.pair] = '</' + replace + '>';
 				
 				return '<' + replace + '>';

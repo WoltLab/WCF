@@ -337,16 +337,6 @@ RedactorPlugins.wbbcode = function() {
 				return '@@@' + $uuid + '@@@';
 			});
 			
-			// drop all new lines
-			html = html.replace(/\r?\n/g, '');
-			
-			// remove empty links
-			html = html.replace(/<a[^>]*?><\/a>/g, '');
-			
-			// unwrap <p></p><table></table><p></p>
-			html = html.replace(/<p><\/p><table/g, '<table');
-			html = html.replace(/<\/table><p><\/p>/g, '</table>');
-			
 			// unwrap code boxes
 			for (var $uuid in $cachedCodeListings) {
 				html = html.replace(new RegExp('<p><\/p>@@@' + $uuid + '@@@<p><\/p>'), '@@@' + $uuid + '@@@');
@@ -355,50 +345,9 @@ RedactorPlugins.wbbcode = function() {
 			// handle empty paragraphs not followed by an empty one
 			html = html.replace(/<p><\/p><p>(?!<br>)/g, '<p>@@@wcf_empty_line@@@</p><p>');
 			
-			// remove <br> right in front of </p> (does not match <p><br></p> since it has been converted already)
-			html = html.replace(/<br( \/)?><\/p>/g, '</p>');
-			
-			// convert paragraphs into single lines
-			var $parts = html.split(/(<\/?(?:div|p)>)/);
-			var $tmp = '';
-			var $buffer = '';
-			for (var $i = 0; $i < $parts.length; $i++) {
-				var $part = $parts[$i];
-				if ($part == '<p>' || $part == '<div>') {
-					continue;
-				}
-				else if ($part == '</p>' || $part == '</div>') {
-					$buffer = $.trim($buffer);
-					if ($buffer != '@@@wcf_empty_line@@@') {
-						$buffer += "\n";
-					}
-					
-					$tmp += $buffer;
-					$buffer = '';
-				}
-				else {
-					if ($i == 0 || $i + 1 == $parts.length) {
-						$tmp += $part;
-					}
-					else {
-						$buffer += $part;
-					}
-				}
-			}
-			
-			if ($buffer) {
-				$tmp += $buffer;
-				$buffer = '';
-			}
-			
-			html = $tmp;
-			
 			html = html.replace(/@@@wcf_empty_line@@@/g, '\n');
 			html = html.replace(/\n\n$/, '\n');
 			
-			// convert all <br> into \n
-			html = html.replace(/<br>$/, '');
-			html = html.replace(/<br>/g, '\n');
 			
 			// drop <br>, they are pointless because the editor already adds a newline after them
 			html = html.replace(/<br>/g, '');
@@ -431,210 +380,6 @@ RedactorPlugins.wbbcode = function() {
 				return $quote;
 			});
 			html = html.replace(/(?:\n*)<\/blockquote>\n?/gi, '\n[/quote]\n');
-			
-			// [email]
-			html = html.replace(/<a [^>]*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
-			
-			// remove empty links
-			html = html.replace(/<a[^>]+><\/a>/, '');
-			
-			// [url]
-			html = html.replace(/<a [^>]*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, function(match, x, url, text) {
-				if (url == text) return '[url]' + url + '[/url]';
-				
-				return "[url='" + url + "']" + text + "[/url]";
-			});
-			
-			// [b]
-			html = html.replace(/<(?:b|strong)>/gi, function() {
-				if ($searchFor.indexOf('b') === -1) $searchFor.push('b');
-				
-				return '[b]';
-			});
-			html = html.replace(/<\/(?:b|strong)>/gi, '[/b]');
-			
-			// [i]
-			html = html.replace(/<(?:i|em)>/gi, function() {
-				if ($searchFor.indexOf('i') === -1) $searchFor.push('i');
-				
-				return '[i]';
-			});
-			html = html.replace(/<\/(?:i|em)>/gi, '[/i]');
-			
-			// [u]
-			html = html.replace(/<u>/gi, function() {
-				if ($searchFor.indexOf('u') === -1) $searchFor.push('u');
-				
-				return '[u]';
-			});
-			html = html.replace(/<\/u>/gi, '[/u]');
-			
-			// [sub]
-			html = html.replace(/<sub>/gi, function() {
-				if ($searchFor.indexOf('sub') === -1) $searchFor.push('sub');
-				
-				return '[sub]';
-			});
-			html = html.replace(/<\/sub>/gi, '[/sub]');
-			
-			// [sup]
-			html = html.replace(/<sup>/gi, function() {
-				if ($searchFor.indexOf('sup') === -1) $searchFor.push('sup');
-				
-				return '[sup]';
-			});
-			html = html.replace(/<\/sup>/gi, '[/sup]');
-			
-			// [s]
-			html = html.replace(/<(?:s(trike)?|del)>/gi, function() {
-				if ($searchFor.indexOf('s') === -1) $searchFor.push('s');
-				
-				return '[s]';
-			});
-			html = html.replace(/<\/(?:s(trike)?|del)>/gi, '[/s]');
-			
-			// handle [color], [size], [font] and [tt]
-			var $components = html.split(/(<\/?span[^>]*>)/);
-			
-			var $buffer = [ ];
-			var $openElements = [ ];
-			var $result = '';
-			var $pixelToPoint = {
-				11: 8, 
-				13: 10,
-				16: 12,
-				19: 14,
-				24: 18,
-				29: 22,
-				32: 24,
-				48: 36
-			};
-			
-			for (var $i = 0; $i < $components.length; $i++) {
-				var $value = $components[$i];
-				
-				if ($value == '</span>') {
-					var $opening = $openElements.pop();
-					var $tmp = $opening.start + $buffer.pop() + $opening.end;
-					
-					if ($buffer.length) {
-						$buffer[$buffer.length - 1] += $tmp;
-					}
-					else {
-						$result += $tmp;
-					}
-				}
-				else {
-					if ($value.match(/^<span/)) {
-						if ($value.match(/^<span(?:.*?)style="([^"]+)"(?:[^>]*?)>/)) {
-							var $style = RegExp.$1;
-							var $start;
-							var $end;
-							
-							if ($style.match(/(?:^|;\s*)color: ?rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\);?/i)) {
-								var $r = RegExp.$1;
-								var $g = RegExp.$2;
-								var $b = RegExp.$3;
-								
-								var $hex = ("0123456789ABCDEF".charAt(($r - $r % 16) / 16) + '' + "0123456789ABCDEF".charAt($r % 16)) + '' + ("0123456789ABCDEF".charAt(($g - $g % 16) / 16) + '' + "0123456789ABCDEF".charAt($g % 16)) + '' + ("0123456789ABCDEF".charAt(($b - $b % 16) / 16) + '' + "0123456789ABCDEF".charAt($b % 16));
-								$start = '[color=#' + $hex + ']';
-								$end = '[/color=#' + $hex + ']';
-								
-								if ($searchFor.indexOf('color') === -1) $searchFor.push('color');
-							}
-							else if ($style.match(/(?:^|;\s*)color: ?([^;]+);?/i)) {
-								$start = '[color=' + RegExp.$1 + ']';
-								$end = '[/color=' + RegExp.$1 + ']';
-								
-								if ($searchFor.indexOf('color') === -1) $searchFor.push('color');
-							}
-							else if ($style.match(/font-size: ?(\d+)(pt|px);?/i)) {
-								if (RegExp.$2 == 'pt') {
-									$start = '[size=' + RegExp.$1 + ']';
-									$end = '[/size=' + RegExp.$1 + ']';
-									
-									if ($searchFor.indexOf('size') === -1) $searchFor.push('size');
-								}
-								else {
-									if ($pixelToPoint[RegExp.$1]) {
-										$start = '[size=' + $pixelToPoint[RegExp.$1] + ']';
-										$end = '[/size=' + $pixelToPoint[RegExp.$1] + ']';
-										
-										if ($searchFor.indexOf('size') === -1) $searchFor.push('size');
-									}
-									else {
-										// unsupported size
-										$start = '';
-										$end = '';
-									}
-								}
-							}
-							else if ($style.match(/font-family: ?([^;]+);?/)) {
-								$start = "[font='" + RegExp.$1.replace(/'/g, '') + "']";
-								$end = "[/font='" + RegExp.$1.replace(/'/g, '') + "']";
-								
-								if ($searchFor.indexOf('font') === -1) $searchFor.push('font');
-							}
-							else {
-								$start = '<span style="' + $style + '">';
-								$end = '</span>';
-							}
-							
-							$buffer[$buffer.length] = '';
-							$openElements[$buffer.length] = {
-								start: $start,
-								end: $end
-							};
-						}
-						else if ($value.match(/^<span class="inlineCode">/)) {
-							$buffer[$buffer.length] = '';
-							$openElements[$buffer.length] = {
-								start: '[tt]',
-								end: '[/tt]'
-							};
-						}
-						else {
-							// unrecognized span, ignore
-							$buffer[$buffer.length] = '';
-							$openElements[$buffer.length] = {
-								start: '',
-								end: ''
-							};
-						}
-					}
-					else {
-						if ($buffer.length) {
-							$buffer[$buffer.length - 1] += $value;
-						}
-						else {
-							$result += $value;
-						}
-					}
-				}
-			}
-			
-			html = $result;
-			
-			// [align]
-			html = html.replace(/<(div|p) style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)\n/gi, function(match, tag, alignment, content) {
-				if ($searchFor.indexOf('align') === -1) $searchFor.push('align');
-				
-				return '[align=' + alignment + ']' + $.trim(content) + '[/align=' + alignment + ']\n';
-			});
-			
-			if ($searchFor.length) {
-				var $didReplace = true;
-				while ($didReplace) {
-					$didReplace = false;
-					html = html.replace(new RegExp('\\[\\/((?:' + $searchFor.join('|') + ')=[^\\]]+?)\\]\n\\[\\1\\]', 'gi'), function() {
-						$didReplace = true;
-						
-						return '\n';
-					});
-				}
-				
-				html = html.replace(new RegExp('\\[\\/(' + $searchFor.join('|') + ')=[^\\]]+?\\]', 'gi'), '[/$1]');
-			}
 			
 			// smileys
 			html = html.replace(/ ?<img [^>]*?alt="([^"]+?)"[^>]*?class="smiley"[^>]*?> ?/gi, ' $1 '); // firefox
@@ -710,46 +455,8 @@ RedactorPlugins.wbbcode = function() {
 				return "[img]" + source + "[/img]";
 			});
 			
-			// [*]
-			html = html.replace(/<li>/gi, '[*]');
-			html = html.replace(/<\/li>/gi, '\n');
-			
-			// [list]
-			html = html.replace(/<ul>/gi, '[list]');
-			html = html.replace(/<(ol|ul style="list-style-type: decimal")>/gi, '[list=1]');
-			html = html.replace(/<ul style="list-style-type: (none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)">/gi, '[list=$1]');
-			html = html.replace(/<\/(ul|ol)>/gi, '[/list]');
-			
-			// ensure there is a newline in front of a [list]
-			html = html.replace(/\n?\[list\]/g, '\n[list]');
-			
-			// drop newline between [/list] and [*]
-			html = html.replace(/\[\/list\]\n\[\*\]/g, '[/list][*]');
-			
-			// drop newline between two [/list]
-			html = html.replace(/\[\/list\]\n\[\/list\]/g, '[/list][/list]');
-			
-			// [table]
-			html = html.replace(/<table[^>]*>/gi, '[table]\n');
-			html = html.replace(/<\/table>\n?/gi, '[/table]\n');
-			
-			// remove <tbody>
-			html = html.replace(/<tbody>([\s\S]*?)<\/tbody>/, function(match, p1) {
-				return $.trim(p1);
-			});
-			
-			// remove empty <tr>s
-			html = html.replace(/<tr><\/tr>/gi, '');
-			// [tr]
-			html = html.replace(/<tr>/gi, '[tr]\n');
-			html = html.replace(/<\/tr>/gi, '[/tr]\n');
-			
 			// [td]+[align]
 			html = html.replace(/<td style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/td>/gi, "[td][align=$1]$2[/align][/td]");
-			
-			// [td]
-			html = html.replace(/(\t)*<td>(\t)*/gi, '[td]');
-			html = html.replace(/(\t)*<\/td>/gi, '[/td]\n');
 			
 			// cache redactor's selection markers
 			var $cachedMarkers = { };
@@ -856,13 +563,6 @@ RedactorPlugins.wbbcode = function() {
 			// remove 0x200B (unicode zero width space)
 			data = this.wutil.removeZeroWidthSpace(data);
 			
-			// Convert & to its HTML entity.
-			data = data.replace(/&/g, '&amp;');
-			
-			// Convert < and > to their HTML entities.
-			data = data.replace(/</g, '&lt;');
-			data = data.replace(/>/g, '&gt;');
-			
 			// cache source code tags
 			var $cachedCodes = [ ];
 			var $regExp = new RegExp('\\[(' + __REDACTOR_SOURCE_BBCODES.join('|') + ')([\\S\\s]+?)\\[\\/\\1\\]', 'gi');
@@ -872,55 +572,9 @@ RedactorPlugins.wbbcode = function() {
 				return '@@' + $key + '@@';
 			});
 			
-			// [url]
-			data = data.replace(/\[url\]([^"]+?)\[\/url]/gi, '<a href="$1">$1</a>' + this.opts.invisibleSpace);
-			data = data.replace(/\[url\='([^'"]+)']([\s\S]+?)\[\/url]/gi, '<a href="$1">$2</a>' + this.opts.invisibleSpace);
-			data = data.replace(/\[url\=([^'"\]]+)]([\s\S]+?)\[\/url]/gi, '<a href="$1">$2</a>' + this.opts.invisibleSpace);
-			
 			// [email]
 			data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>' + this.opts.invisibleSpace);
 			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>' + this.opts.invisibleSpace);
-			
-			// cleanup inline formattings that could stack in a weird way
-			
-			// replaces [b][b] with [b]
-			data = data.replace(/\[(b|i|s|sub|sup|u)\]\[\1\]/gi, '[$1]');
-			
-			// replaces [/b][/b] with [/b]
-			data = data.replace(/\[(\/(?:b|i|s|sub|sup|u))\]\[\1\]/gi, '[$1]');
-			
-			// drops [b][/b] (we can safely remove them because empty lines will preserve their formatting due to the expand formatting function
-			data = data.replace(/\[(b|i|s|sub|sup|u)\]\[\/\1\]/gi, '');
-			
-			// [b]
-			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, (function(match, content) {
-				return this.wbbcode._expandFormatting(content, '<strong>', '</strong>');
-			}).bind(this));
-			
-			// [i]
-			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, (function(match, content) {
-				return this.wbbcode._expandFormatting(content, '<em>', '</em>');
-			}).bind(this));
-			
-			// [u]
-			data = data.replace(/\[u\]([\s\S]*?)\[\/u]/gi, (function(match, content) {
-				return this.wbbcode._expandFormatting(content, '<u>', '</u>');
-			}).bind(this));
-			
-			// [s]
-			data = data.replace(/\[s\]([\s\S]*?)\[\/s]/gi, (function(match, content) {
-				return this.wbbcode._expandFormatting(content, '<del>', '</del>');
-			}).bind(this));
-			
-			// [sub]
-			data = data.replace(/\[sub\]([\s\S]*?)\[\/sub]/gi, (function(match, content) {
-				return this.wbbcode._expandFormatting(content, '<sub>', '</sub>');
-			}).bind(this));
-			
-			// [sup]
-			data = data.replace(/\[sup\]([\s\S]*?)\[\/sup]/gi, (function(match, content) {
-				return this.wbbcode._expandFormatting(content, '<sup>', '</sup>');
-			}).bind(this));
 			
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
@@ -947,99 +601,6 @@ RedactorPlugins.wbbcode = function() {
 				return '<img src="' + src + '" style="' + $style + '" />';
 			});
 			data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
-			
-			// [size]
-			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi, (function(match, size, content) {
-				return this.wbbcode._expandFormatting(content, '<span style="font-size: ' + size + 'pt">', '</span>');
-			}).bind(this));
-			
-			// [color]
-			data = data.replace(/\[color=([#a-z0-9]*?)\]([\s\S]*?)\[\/color\]/gi, (function(match, color, content) {
-				return this.wbbcode._expandFormatting(content, '<span style="color: ' + color + '">', '</span>');
-			}).bind(this));
-			
-			// [font]
-			data = data.replace(/\[font='?([a-z,\- ]*?)'?\]([\s\S]*?)\[\/font\]/gi, (function(match, fontFamily, content) {
-				return this.wbbcode._expandFormatting(content, '<span style="font-family: ' + fontFamily + '">', '</span>');
-			}).bind(this));
-			
-			// [align]
-			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]/gi, (function(match, alignment, content) {
-				return this.wbbcode._expandFormatting(content, '<p style="text-align: ' + alignment + '">', '</p>');
-			}).bind(this));
-			
-			// search for [*] not preceeded by [list by searching for the first occurence of [list and then check the left
-			var $firstList = data.indexOf('[list');
-			if ($firstList > 0) {
-				var $tmp = data.substr(0, $firstList);
-				$tmp = $tmp.replace(/\[\*\]/g, '');
-				data = $tmp  + data.substr($firstList);
-			}
-			
-			// search for [*] not followed by [/list]
-			var $lastList = data.lastIndexOf('[/list]');
-			if ($lastList === -1) {
-				// drop all [list*] and [*]
-				data = data.replace(/\[\*\]/g, '');
-				data = data.replace(/\[list[^\]]*\]/g, '');
-			}
-			else {
-				var $tmp = data.substr($lastList + 7);
-				$tmp = $tmp.replace(/\[\*\]/g, '');
-				data = data.substr(0, $lastList + 7) + $tmp;
-			}
-			
-			// [*]
-			data = data.replace(/\[\*\]([\s\S]*?)(?=\[\*\]|\[\/list\])/gi, function(match, content) {
-				return '<li>' + $.trim(content) + '</li>';
-			});
-			
-			// fix superflous newlines with nested lists
-			data = data.replace(/\n*(\[list\]<\/li>)/g, '$1');
-			
-			// [list]
-			data = data.replace(/\[list\]/gi, '<ul>');
-			data = data.replace(/\[list=1\]/gi, '<ul style="list-style-type: decimal">');
-			data = data.replace(/\[list=a\]/gi, '<ul style="list-style-type: lower-latin">');
-			data = data.replace(/\[list=(none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)\]/gi, '<ul style="list-style-type: $1">');
-			data = data.replace(/\[\/list\]/gi, '</ul>');
-			
-			// trim whitespaces within [table]
-			data = data.replace(/\[table\]([\S\s]*?)\[\/table\]/gi, function(match, p1) {
-				return '[table]' + $.trim(p1) + '[/table]';
-			});
-			
-			// [table]
-			data = data.replace(/\[table\]\n*/gi, '<table border="1" cellspacing="1" cellpadding="1" style="width: 500px;">');
-			data = data.replace(/\[\/table\](\n*)?/gi, function(match, newlines) {
-				if (newlines) {
-					// tables cause an additional newline if there already was a newline afterwards
-					if (newlines.match(/\n/g).length > 2) {
-						newlines = newlines.replace(/^\n/, '');
-					}
-					
-					return '</table>' + newlines;
-				}
-				
-				return '</table>';
-			});
-			// [tr]
-			data = data.replace(/\[tr\]\n*/gi, '<tr>');
-			data = data.replace(/\[\/tr\]\n*/gi, '</tr>');
-			// [td]
-			data = data.replace(/\[td\]\n*/gi, '<td>');
-			data = data.replace(/\[\/td\]\n*/gi, '</td>');
-			
-			// trim whitespaces within <td>
-			data = data.replace(/<td>([\S\s]*?)<\/td>/gi, function(match, p1) {
-				var $tdContent = $.trim(p1);
-				if (!$tdContent.length) {
-					// unicode zero-width space
-					$tdContent = '&#8203;';
-				}
-				
-				return '<td>' + $tdContent + '</td>';
-			});
 			
 			// attachments
 			var $attachmentUrl = this.wutil.getOption('woltlab.attachmentUrl');
@@ -1116,9 +677,6 @@ RedactorPlugins.wbbcode = function() {
 			// remove "javascript:"
 			data = data.replace(/(javascript):/gi, '$1<span></span>:');
 			
-			// unify line breaks
-			data = data.replace(/(\r|\r\n)/g, "\n");
-			
 			// extract [quote] bbcodes to prevent line break handling below
 			var $cachedQuotes = [ ];
 			var $knownQuotes = [ ];
@@ -1178,71 +736,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// drop trailing line breaks
 			data = data.replace(/\n*$/, '');
-			
-			// line-breaks within list items must be a <br> instead of <p></p>
-			var $listItems = [ ];
-			data = data.replace(/(<li>[\s\S]*?<\/li>)/g, function(match) {
-				match = $.trim(match).replace(/\n/, '<br>');
-				
-				var $key = WCF.getUUID();
-				$listItems.push({
-					key: $key,
-					content: match
-				});
-				
-				return $key;
-			});
-			
-			// convert line breaks into <p></p> or empty lines to <p><br></p>
-			var $tmp = data.split("\n");
-			
-			data = '';
-			for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
-				var $line = $.trim($tmp[$i]);
-				
-				if ($line.match(/^<([a-z]+)/) || $line.match(/<\/([a-z]+)>$/)) {
-					if (this.reIsBlock.test(RegExp.$1.toUpperCase()) || RegExp.$1.toUpperCase() === 'TABLE') {
-						// check if line starts and ends with the same tag
-						if ($line.match(/^<([a-z]+).*<\/\1>/)) {
-							data += $line;
-						}
-						else {
-							data += $line + '<br />';
-						}
-					}
-					else {
-						data += '<p>' + $line + '</p>';
-					}
-				}
-				else {
-					if (!$line) {
-						$line = '<br>';
-					}
-					else if ($line.match(/^@@([0-9\-]+)@@$/)) {
-						if (WCF.inArray(RegExp.$1, $knownQuotes)) {
-							// prevent quote being nested inside a <p> block
-							data += $line;
-							continue;
-						}
-					}
-					
-					data += '<p>' + $line + '</p>';
-				}
-			}
-			
-			// fix newlines in tables represented with <p>...</p> instead of <br>
-			data = data.replace(/<td>([\s\S]+?)<\/td>/g, function(match, content) {
-				content = content.replace(/<br(?: \/)?>(<[uo]l)/g, '$1');
-				
-				return '<td>' + content.replace(/<p><br(?: \/)?><\/p>/g, '<br>').replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br>$/, '') + '</td>';
-			});
-			
-			// insert list items
-			if ($listItems.length) {
-				for (var $i = $listItems.length - 1; $i >= 0; $i--) {
-					data = data.replace($listItems[$i].key, $listItems[$i].content);
-				}
-			}
 			
 			// insert quotes
 			if ($cachedQuotes.length) {
@@ -1323,10 +816,6 @@ RedactorPlugins.wbbcode = function() {
 					data = data.replace($regex, $transformQuote($cachedQuote.content));
 				}
 			}
-			
-			// remove <p> wrapping a quote or a div
-			data = data.replace(/<(?:div|p)><(blockquote|div)/g, '<$1');
-			data = data.replace(/<\/(blockquote|div)><\/(?:div|p)>/g, '</$1>');
 			
 			// insert codes
 			if ($cachedCodes.length) {
@@ -1452,44 +941,6 @@ RedactorPlugins.wbbcode = function() {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
 			return data;
-		},
-		
-		/**
-		 * Expands formatting to convert markup like [b]Hello\nWorld[/b] into [b]Hello[/b]\n[b]World[/b].
-		 * 
-		 * @param	string		content
-		 * @param	string		openingTag
-		 * @param	string		closingTag
-		 * @return	string
-		 */
-		_expandFormatting: function(content, openingTag, closingTag) {
-			if (!content.length) {
-				return openingTag + this.opts.invisibleSpace + closingTag;
-			}
-			
-			// check for unclosed tags in tables
-			var $index = content.indexOf('[/td]');
-			if ($index !== -1) {
-				var $tmp = content.substring(0, $index);
-				if ($tmp.indexOf('[td]') === -1) {
-					return openingTag + $tmp + closingTag + content.substring($index);
-				}
-			}
-			
-			var $tmp = content.split("\n");
-			content = '';
-			
-			for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
-				var $line = $tmp[$i];
-				if ($line.length === 0) {
-					$line = this.opts.invisibleSpace;
-				}
-				
-				if (content.length) content += '\n';
-				content += openingTag + $line + closingTag;
-			}
-			
-			return content;
 		},
 		
 		/**
