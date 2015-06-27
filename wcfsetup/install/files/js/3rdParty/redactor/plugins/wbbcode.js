@@ -290,6 +290,9 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	string		html
 		 */
 		convertFromHtml: function(html) {
+			// DEBUG ONLY
+			return this.opts.woltlab.bbcode.fromHtml.convert(html);
+			
 			var $searchFor = [ ];
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
@@ -845,6 +848,9 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	string		data
 		 */
 		convertToHtml: function(data) {
+			// DEBUG ONLY
+			return this.opts.woltlab.bbcode.toHtml.convert(data);
+			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertToHtml', { data: data });
 			
 			// remove 0x200B (unicode zero width space)
