@@ -1740,7 +1740,7 @@ You can now fully access the website.]]></item>
 		<item name="wcf.acp.user.bulkProcessing.removeFromUserGroups"><![CDATA[Remove from User Groups]]></item>
 		<item name="wcf.acp.user.bulkProcessing.sendMail"><![CDATA[Send Email to Users]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[The selection action has been executed and affected {#$affectedObjectCount} user{if $affectedUsers != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below on all users matching the seleced conditions without any further confirmation prompt!]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below on all users matching the selected conditions without any further confirmation prompt!]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
