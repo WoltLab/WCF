@@ -22,7 +22,8 @@ class ObjectTypeCacheBuilder extends AbstractCacheBuilder {
 		$data = array(
 			'categories' => array(),
 			'definitions' => array(),
-			'objectTypes' => array()
+			'objectTypes' => array(),
+			'groupedObjectTypes' => array()
 		);
 		
 		// get definitions
@@ -48,7 +49,11 @@ class ObjectTypeCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-			$data['objectTypes'][$row['objectTypeID']] = new ObjectType(null, $row);
+			$data['objectTypes'][$row['objectTypeID']] = $objectType = new ObjectType(null, $row);
+			
+			$definition = $data['definitions'][$objectType->definitionID];
+			if (!isset($data['groupedObjectTypes'][$definition->definitionName])) $data['groupedObjectTypes'][$definition->definitionName] = array();
+			$data['groupedObjectTypes'][$definition->definitionName][$objectType->objectType] = $objectType;
 		}
 		
 		return $data;
