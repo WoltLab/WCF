@@ -216,7 +216,7 @@ define(['DOM/Traverse'], function(DOMTraverse) {
 			
 			var tbody = DOMTraverse.childByTag(element, 'TBODY');
 			var innerHtml = (tbody === null) ? element.innerHTML : tbody.innerHTML;
-			element.outerHTML = '\n[table]' + innerHtml + '\n[/table]';
+			element.outerHTML = '\n[table]' + innerHtml + '\n[/table]\n';
 		},
 		
 		_convertUrl: function(element) {

@@ -82,7 +82,7 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 					stack[index + 1] = tmp.replace(/^\n/, '');
 				}
 				
-				if (stack.length < item.pair + 1) {
+				if (stack.length > item.pair + 1) {
 					tmp = stack[item.pair + 1];
 					if (typeof tmp === 'string') {
 						stack[item.pair + 1] = tmp.replace(/^\n/, '');
