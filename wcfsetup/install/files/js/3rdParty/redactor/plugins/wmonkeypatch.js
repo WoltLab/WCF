@@ -105,151 +105,160 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 			}).bind(this));
 			
-			var $setCaretBeforeOrAfter = (function(element, setBefore) {
+			var isTargetElement = function(element) {
+				// [quote]
+				if (element.nodeName === 'BLOCKQUOTE') {
+					return true;
+				}
+				
+				// [code]
+				if (element.nodeName === 'DIV' && element.classList.contains('codeBox')) {
+					return true;
+				}
+				
+				return false;
+			};
+			
+			var getOffset = function(element) {
+				var offsets = element.getBoundingClientRect();
+				
+				return {
+					left: offsets.left + document.body.scrollLeft,
+					top: offsets.top + document.body.scrollTop
+				};
+			};
+			
+			function getVerticalBoundaries(element) {
+				var offset = getOffset(element);
+				var styles = window.getComputedStyle(element);
+				
+				return {
+					bottom: offset.top + element.offsetHeight + parseInt(styles.marginBottom),
+					top: offset.top - parseInt(styles.marginTop)
+				};
+			};
+			
+			var setCaretBeforeOrAfter = (function(element, setBefore) {
+				var ref;
 				if (setBefore) {
-					if (element.previousElementSibling && (element.previousElementSibling.tagName === 'P' || element.previousElementSibling.tagName === 'DIV')) {
-						this.caret.setEnd(element.previousElementSibling);
+					ref = element.previousSibling;
+					if (ref === null) {
+						var space = this.utils.createSpaceElement();
+						element.parentNode.insertBefore(space, element);
+						
+						this.caret.setEnd(space);
 					}
 					else {
-						this.wutil.setCaretBefore(element);
+						this.caret[(ref.nodeType === Node.ELEMENT_NODE && ref.nodeName === 'BR') ? 'setBefore' : 'setAfter'](ref);
 					}
 				}
 				else {
-					if (element.nextElementSibling && (element.nextElementSibling.tagName === 'P' || element.nextElementSibling.tagName === 'DIV')) {
-						this.caret.setEnd(element.nextElementSibling);
+					ref = element.nextSibling;
+					if (ref === null) {
+						var space = this.utils.createSpaceElement();
+						if (element.nextSibling === null) element.parentNode.appendChild(space);
+						else element.parentNode.insertBefore(space, element.nextSibling);
+						
+						this.caret.setEnd(space);
 					}
 					else {
-						this.wutil.setCaretAfter(element);
+						this.caret.setBefore(ref);
 					}
 				}
 			}).bind(this);
 			
-			var $editorPadding = null;
+			var editor = this.$editor[0];
 			this.$editor.on('click.wmonkeypatch', (function(event) {
-				if (event.target === this.$editor[0]) {
-					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
-					
-					if ($range && $range.collapsed) {
-						var $current = $range.startContainer;
+				var range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
+				
+				if (event.target === editor) {
+					var boundaries, element;
+					for (var i = 0, length = editor.childElementCount; i < length; i++) {
+						element = editor.children[i];
 						
-						// this can occur if click occurs within the editor padding
-						var $offsets = this.$editor.offset();
-						if ($editorPadding === null) {
-							$editorPadding = {
-								left: this.$editor.cssAsNumber('padding-left'),
-								top: this.$editor.cssAsNumber('padding-top')
-							};
+						if (!isTargetElement(element)) {
+							continue;
 						}
 						
-						if (event.pageY <= $offsets.top + $editorPadding.top) {
-							var $firstChild = this.$editor[0].children[0];
-							if ($firstChild.tagName !== 'BLOCKQUOTE' && ($firstChild.tagName !== 'DIV' || !/\bcodeBox\b/.test($firstChild.className))) {
-								return;
-							}
+						boundaries = getVerticalBoundaries(element);
+						
+						if (event.pageY > boundaries.bottom) {
+							continue;
 						}
-						else {
-							if (event.pageX <= $offsets.left + $editorPadding.left) {
-								return;
-							}
-							else {
-								if (event.pageX > $offsets.left + this.$editor.width()) {
+						else if (event.pageY < boundaries.top) {
+							break;
+						}
+						
+						if (event.pageY >= boundaries.top && event.pageY <= boundaries.bottom) {
+							var diffToTop = event.pageY - boundaries.top;
+							var height = boundaries.bottom - boundaries.top;
+							var setBefore = (diffToTop <= (height / 2));
+							
+							var ref = element[setBefore ? 'previousSibling' : 'nextSibling'];
+							while (ref !== null) {
+								if (ref.nodeType === Node.TEXT_NODE && ref.textContent !== '') {
+									// non-empty text node, default behavior is okay
 									return;
 								}
-							}
-						}
-						
-						while ($current && $current !== this.$editor[0]) {
-							if ($current.nodeType === Node.ELEMENT_NODE) {
-								if ($current.tagName === 'BLOCKQUOTE' || ($current.tagName === 'DIV' && /\bcodeBox\b/.test($current.className))) {
-									var $offset = $($current).offset();
-									if (event.pageY <= $offset.top) {
-										$setCaretBeforeOrAfter($current, true);
-									}
-									else {
-										$setCaretBeforeOrAfter($current, false);
-									}
-									
-									// stop processing
-									return false;
+								else if (ref.nodeType === Node.ELEMENT_NODE && !isTargetElement(ref)) {
+									// a non-blocking element such as a formatted line or something, default behavior is okay
+									return;
 								}
+								
+								ref = ref[setBefore ? 'previousSibling' : 'nextSibling'];
 							}
 							
-							$current = $current.parentElement;
+							setCaretBeforeOrAfter(element, setBefore);
 						}
 					}
-					
-					var $elements = this.$editor.children('blockquote, div.codeBox');
-					$elements.each(function(index, element) {
-						var $element = $(element);
-						var $offset = $element.offset();
-						
-						if (event.pageY <= $offset.top) {
-							$setCaretBeforeOrAfter(element, true);
-							
-							return false;
-						}
-						else {
-							var $height = $element.outerHeight() + (parseInt($element.css('margin-bottom'), 10) || 0);
-							if (event.pageY <= $offset.top + $height) {
-								$setCaretBeforeOrAfter(element, false);
-								
-								return false;
-							}
-						}
-					});
 					
 					return false;
 				}
-				else if (event.target.tagName === 'LI') {
+				else if (event.target.nodeName === 'LI') {
 					// work-around for #1942
-					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
-					var $caretInsideList = false;
-					if ($range !== null) {
-						if (!$range.collapsed) {
-							return;
-						}
-						
-						var $current = $range.startContainer;
-						while ($current !== null && $current !== this.$editor[0]) {
-							if ($current.tagName === 'LI') {
-								$caretInsideList = true;
+					var caretInsideList = false;
+					if (range !== null && range.collapsed) {
+						var current = range.startContainer;
+						while (current !== null && current !== editor) {
+							if (current.nodeName === 'LI') {
+								caretInsideList = true;
 								break;
 							}
 							
-							$current = $current.parentElement;
+							current = current.parentNode;
 						}
 					}
 					
-					if (!$caretInsideList || $range === null) {
-						var $node = document.createTextNode('\u200b');
-						var $firstChild = event.target.children[0];
-						$firstChild.appendChild($node);
+					if (!caretInsideList || range === null) {
+						var node = document.createTextNode('\u200b');
+						var firstChild = event.target.children[0];
+						firstChild.appendChild(node);
 						
-						this.caret.setEnd($firstChild);
+						this.caret.setEnd(firstChild);
 					}
 				}
-				else if (event.target.tagName === 'BLOCKQUOTE') {
-					var $range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
-					if ($range !== null && $range.collapsed) {
+				else if (event.target.nodeName === 'BLOCKQUOTE') {
+					range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
+					if (range !== null && range.collapsed) {
 						// check if caret is now inside a quote
-						var $blockquote = null;
-						var $current = ($range.startContainer.nodeType === Node.TEXT_NODE) ? $range.startContainer.parentElement : $range.startContainer;
-						while ($current !== null && $current !== this.$editor[0]) {
-							if ($current.tagName === 'BLOCKQUOTE') {
-								$blockquote = $current;
+						var blockquote = null;
+						var current = range.startContainer;
+						while (current !== null && current !== editor) {
+							if (current.nodeName === 'BLOCKQUOTE') {
+								blockquote = current;
 								break;
 							}
 							
-							$current = $current.parentElement;
+							current = current.parentNode;
 						}
 						
-						if ($blockquote !== null && $blockquote !== event.target) {
+						if (blockquote !== null && blockquote !== event.target) {
 							// click occured within inner quote margin, check if click happened before inner quote
-							if (event.pageY <= $($blockquote).offset().top) {
-								$setCaretBeforeOrAfter($blockquote, true);
+							if (event.pageY <= getOffset(blockquote).top) {
+								setCaretBeforeOrAfter(blockquote, true);
 							}
 							else {
-								$setCaretBeforeOrAfter($blockquote, false);
+								setCaretBeforeOrAfter(blockquote, false);
 							}
 						}
 					}

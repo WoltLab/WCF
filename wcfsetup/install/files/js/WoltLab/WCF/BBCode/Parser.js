@@ -10,7 +10,8 @@ define([], function() {
 		},
 		
 		_splitTags: function(message) {
-			var validTags = 'attach|b|color|i|list|url|table|td|tr';
+			// TODO: `validTags` should be dynamic similar to the PHP implementation
+			var validTags = 'attach|b|color|i|list|url|table|td|tr|quote';
 			var pattern = '(\\\[(?:/(?:' + validTags + ')|(?:' + validTags + ')'
 				+ '(?:='
 					+ '(?:\\\'[^\\\'\\\\]*(?:\\\\.[^\\\'\\\\]*)*\\\'|[^,\\\]]*)'
@@ -26,7 +27,7 @@ define([], function() {
 					continue;
 				}
 				else if (part.match(isBBCode)) {
-					tag = { name: '', closing: false, source: part };
+					tag = { name: '', closing: false, attributes: [], source: part };
 					
 					if (part[1] === '/') {
 						tag.name = part.substring(2, part.length - 1);
@@ -106,13 +107,13 @@ define([], function() {
 					break;
 				}
 				
-				tag = { name: item.name, closing: true, source: '[/' + item.name + ']' };
+				tag = { name: item.name, closing: true, attributes: item.attributes.slice(), source: '[/' + item.name + ']' };
 				item.pair = stack.length;
 				
 				stack.push(tag);
 				
 				openTags.pop();
-				reopenTags.push({ name: item.name, closing: false, source: item.source });
+				reopenTags.push({ name: item.name, closing: false, attributes: item.attributes.slice(), source: item.source });
 			}
 			
 			return reopenTags.reverse();
@@ -129,25 +130,25 @@ define([], function() {
 		},
 		
 		_parseAttributes: function(attrString) {
-			var tmp = attrString.match(/(?:^|,)('[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|[^,]*)/g);
+			var tmp = attrString.split(/(?:^|,)('[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|[^,]*)/g);
 			
 			var attribute, attributes = [];
 			for (var i = 0, length = tmp.length; i < length; i++) {
 				attribute = tmp[i];
 				
 				if (attribute !== '') {
-					if (attribute[0] === "'" && attribute.substr(-1) === "'") {
-						attributes.push(attribute.substring(1, attribute.length - 1));
+					if (attribute.charAt(0) === "'" && attribute.substr(-1) === "'") {
+						attributes.push(attribute.substring(1, attribute.length - 1).trim());
 					}
 					else {
-						attributes.push(attribute);
+						attributes.push(attribute.trim());
 					}
 				}
 			}
 			
 			return attributes;
 		}
-	}
+	};
 	
 	return BBCodeParser;
 });

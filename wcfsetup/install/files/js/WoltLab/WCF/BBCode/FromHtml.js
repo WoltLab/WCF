@@ -55,6 +55,7 @@ define(['DOM/Traverse'], function(DOMTraverse) {
 				{ tagName: 'OL', callback: this._convertList.bind(this) },
 				{ tagName: 'TABLE', callback: this._convertTable.bind(this) },
 				{ tagName: 'UL', callback: this._convertList.bind(this) },
+				{ tagName: 'BLOCKQUOTE', callback: this._convertBlockquote.bind(this) },
 				
 				// convert these last
 				{ tagName: 'SPAN', callback: this._convertSpan.bind(this) },
@@ -90,6 +91,31 @@ define(['DOM/Traverse'], function(DOMTraverse) {
 					converter.callback(element);
 				}
 			}
+		},
+		
+		_convertBlockquote: function(element) {
+			var author = element.getAttribute('data-author') || '';
+			var link = element.getAttribute('cite') || '';
+			
+			var open = '[quote]';
+			if (author) {
+				if (link) {
+					open = "[quote='" + author + "','" + link + "']";
+				}
+				else {
+					open = "[quote='" + author + "']";
+				}
+			}
+			
+			var header = DOMTraverse.childByTag(element, 'HEADER');
+			if (header !== null) element.removeChild(header);
+			
+			var divs = DOMTraverse.childrenByTag(element, 'DIV');
+			for (var i = 0, length = divs.length; i < length; i++) {
+				divs[i].outerHTML = divs[i].innerHTML + '\n';
+			}
+			
+			element.outerHTML = open + element.innerHTML.replace(/^\n*/, '').replace(/\n*$/, '') + '[/quote]\n';
 		},
 		
 		_convertList: function(element) {

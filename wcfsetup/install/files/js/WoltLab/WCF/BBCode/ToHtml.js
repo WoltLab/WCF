@@ -1,4 +1,4 @@
-define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
+define(['Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Language, StringUtil, BBCodeParser) {
 	"use strict";
 	
 	var _bbcodes = null;
@@ -59,19 +59,20 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 				// callback replacement
 				color: this._replaceColor.bind(this),
 				list: this._replaceList.bind(this),
+				quote: this._replaceQuote.bind(this),
 				url: this._replaceUrl.bind(this)
 			};
 			
-			_removeNewlineAfter = ['table', 'td', 'tr'];
+			_removeNewlineAfter = ['quote', 'table', 'td', 'tr'];
 			_removeNewlineBefore = ['table', 'td', 'tr'];
 		},
 		
 		_replace: function(stack, item, index) {
-			var pair = stack[item.pair], replace = _bbcodes[item.name], tmp;
+			var replace = _bbcodes[item.name], tmp;
 			
 			if (replace === undefined) {
 				// treat as plain text
-				stack[item.pair] = pair.source;
+				stack[item.pair] = stack[item.pair].source;
 				
 				return item.source;
 			}
@@ -110,12 +111,12 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 				return '<' + replace + '>';
 			}
 			else {
-				return replace(stack, item, pair, index);
+				return replace(stack, item, index);
 			}
 		},
 		
-		_replaceColor: function(stack, item, pair) {
-			if (item.attributes === undefined || !item.attributes.length || !item.attributes[0].match(/^[a-z0-9#]+$/i)) {
+		_replaceColor: function(stack, item, index) {
+			if (!item.attributes.length || !item.attributes[0].match(/^[a-z0-9#]+$/i)) {
 				stack[item.pair] = '';
 				
 				return '';
@@ -123,11 +124,11 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 			
 			stack[item.pair] = '</span>';
 			
-			return '<span style="color: ' + item.attributes[0] + '">';
+			return '<span style="color: ' + StringUtil.escapeHTML(item.attributes[0]) + '">';
 		},
 		
-		_replaceList: function(stack, item, pair, index) {
-			var type = (item.attributes === undefined || !items.attributes.length) ? '' : item.attributes[0].trim();
+		_replaceList: function(stack, item, index) {
+			var type = (items.attributes.length) ? item.attributes[0] : '';
 			
 			// replace list items
 			for (var i = index + 1; i < item.pair; i++) {
@@ -150,9 +151,49 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 			return '<ul>';
 		},
 		
-		_replaceUrl: function(stack, item, pair) {
+		_replaceQuote: function(stack, item, index) {
+			var author = '', link = '';
+			if (item.attributes.length > 1) {
+				author = item.attributes[0];
+				link = item.attributes[1];
+			}
+			else if (item.attributes.length === 1) {
+				author = item.attributes[0];
+			}
+			
+			stack[item.pair] = '</div></blockquote>';
+			
+			// get rid of the trailing newline for quote content
+			for (var i = item.pair - 1; i > index; i--) {
+				if (typeof stack[i] === 'string') {
+					stack[i] = stack[i].replace(/\n$/, '');
+					break;
+				}
+			}
+			
+			var header = '';
+			if (author) {
+				if (link) header = '<a href="' + StringUtil.escapeHTML(link) + '" tabindex="-1">';
+				header += Language.get('wcf.bbcode.quote.title.javascript', { quoteAuthor: author });
+				if (link) header += '</a>';
+			}
+			else {
+				header = '<small>' + Language.get('wcf.bbcode.quote.title.clickToSet') + '</small>';
+			}
+			
+			return '<blockquote class="quoteBox container containerPadding quoteBoxSimple" cite="' + StringUtil.escapeHTML(link) + '" data-author="' + StringUtil.escapeHTML(author) + '">'
+					+ '<header contenteditable="false">'
+						+ '<h3>'
+							+ header
+						+ '</h3>'
+						+ '<a class="redactorQuoteEdit"></a>'
+					+ '</header>'
+					+ '<div>\u200b';
+		},
+		
+		_replaceUrl: function(stack, item, index) {
 			// ignore url bbcode without arguments
-			if (item.attributes === undefined || !item.attributes.length) {
+			if (!item.attributes.length) {
 				stack[item.pair] = '';
 				
 				return '';
@@ -160,7 +201,7 @@ define(['WoltLab/WCF/BBCode/Parser'], function(BBCodeParser) {
 			
 			stack[item.pair] = '</a>';
 			
-			return '<a href="' + item.attributes[0] + '">';
+			return '<a href="' + StringUtil.escapeHTML(item.attributes[0]) + '">';
 		}
 	};
 	

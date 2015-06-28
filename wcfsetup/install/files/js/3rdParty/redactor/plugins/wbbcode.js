@@ -106,11 +106,10 @@ RedactorPlugins.wbbcode = function() {
 			var $tooltip = $('.redactor-toolbar-tooltip-html:not(.jsWbbcode)').addClass('jsWbbcode').text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
 			
 			var $fixBR = function(editor) {
-				editor.find('br').each(function(index, br) {
-					if (br.children.length) {
-						$(br).empty();
-					}
-				});
+				var elements = editor[0].querySelectorAll('br:not(:empty)');
+				for (var i = 0, length = elements.length; i < length; i++) {
+					elements[0].innerHTML = '';
+				}
 			};
 			
 			this.code.toggle = (function() {
@@ -1857,6 +1856,7 @@ RedactorPlugins.wbbcode = function() {
 		 * Inserting block-level elements (e.g. quotes or code bbcode) can lead to void paragraphs.
 		 */
 		fixBlockLevelElements: function() {
+			return;
 			var $removeVoidElements = (function(referenceElement, position) {
 				var $sibling = referenceElement[position];
 				if ($sibling && $sibling.nodeType === Node.ELEMENT_NODE && $sibling.tagName === 'P') {
