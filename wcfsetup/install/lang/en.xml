@@ -666,7 +666,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the notice to be shown.]]></item>
 		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Time]]></item>
 		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the notice is shown.]]></item>
-		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active user]]></item>
+		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active User]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the notice.]]></item>
 		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete the notice “{$notice->noticeName}”?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notices]]></item>
