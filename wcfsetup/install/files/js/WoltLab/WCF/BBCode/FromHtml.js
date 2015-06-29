@@ -1,4 +1,4 @@
-define(['DOM/Traverse'], function(DOMTraverse) {
+define(['StringUtil', 'DOM/Traverse'], function(StringUtil, DOMTraverse) {
 	"use strict";
 	
 	var _converter = [];
@@ -99,8 +99,9 @@ define(['DOM/Traverse'], function(DOMTraverse) {
 			
 			var open = '[quote]';
 			if (author) {
+				author = StringUtil.escapeHTML(author).replace(/(\\)?'/g, function(match, isEscaped) { return isEscaped ? match : "\\'"; });
 				if (link) {
-					open = "[quote='" + author + "','" + link + "']";
+					open = "[quote='" + author + "','" + StringUtil.escapeHTML(link) + "']";
 				}
 				else {
 					open = "[quote='" + author + "']";

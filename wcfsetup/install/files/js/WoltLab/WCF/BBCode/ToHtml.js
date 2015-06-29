@@ -174,7 +174,7 @@ define(['Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Languag
 			var header = '';
 			if (author) {
 				if (link) header = '<a href="' + StringUtil.escapeHTML(link) + '" tabindex="-1">';
-				header += Language.get('wcf.bbcode.quote.title.javascript', { quoteAuthor: author });
+				header += Language.get('wcf.bbcode.quote.title.javascript', { quoteAuthor: author.replace(/\\'/g, "'") });
 				if (link) header += '</a>';
 			}
 			else {
