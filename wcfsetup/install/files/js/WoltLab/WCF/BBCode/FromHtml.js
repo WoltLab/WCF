@@ -1,8 +1,9 @@
-define(['StringUtil', 'DOM/Traverse'], function(StringUtil, DOMTraverse) {
+define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, StringUtil, DOMTraverse) {
 	"use strict";
 	
 	var _converter = [];
 	var _inlineConverter = {};
+	var _sourceConverter = [];
 	
 	var BBCodeFromHtml = {
 		convert: function(message) {
@@ -18,13 +19,56 @@ define(['StringUtil', 'DOM/Traverse'], function(StringUtil, DOMTraverse) {
 			var elements = container.getElementsByTagName('BR');
 			while (elements.length) elements[0].outerHTML = "\n";
 			
+			var sourceElements = this._preserveSourceElements(container);
+			
 			for (var i = 0, length = _converter.length; i < length; i++) {
 				this._convert(container, _converter[i]);
 			}
 			
+			this._restoreSourceElements(container, sourceElements);
+			
 			message = this._convertSpecials(container.innerHTML);
 			
 			return message;
+		},
+		
+		_preserveSourceElements: function(container) {
+			var elements, sourceElements = [], tmp;
+			
+			for (var i = 0, length = _sourceConverter.length; i < length; i++) {
+				elements = container.querySelectorAll(_sourceConverter[i].selector);
+				
+				tmp = [];
+				for (var j = 0, innerLength = elements.length; j < innerLength; j++) {
+					this._preserveSourceElement(elements[j], tmp);
+				}
+				
+				sourceElements.push(tmp);
+			}
+			
+			return sourceElements;
+		},
+		
+		_restoreSourceElements: function(container, sourceElements) {
+			var element, elements, placeholder;
+			for (var i = 0, length = sourceElements.length; i < length; i++) {
+				elements = sourceElements[i];
+				
+				if (elements.length === 0) {
+					continue;
+				}
+				
+				for (var j = 0, innerLength = elements.length; j < innerLength; j++) {
+					element = elements[j];
+					placeholder = element.placeholder;
+					
+					placeholder.parentNode.insertBefore(element.fragment, placeholder);
+					
+					_sourceConverter[i].callback(placeholder.previousElementSibling);
+					
+					placeholder.parentNode.removeChild(placeholder);
+				}
+			}
 		},
 		
 		_convertSpecials: function(message) {
@@ -72,6 +116,16 @@ define(['StringUtil', 'DOM/Traverse'], function(StringUtil, DOMTraverse) {
 					{ style: 'text-align', callback: this._convertInlineTextAlign.bind(this) }
 				]
 			};
+			
+			_sourceConverter = [
+				{ selector: 'div.codeBox', callback: this._convertSourceCodeBox.bind(this) }
+			];
+			
+			EventHandler.fire('com.woltlab.wcf.bbcode.fromHtml', 'init', {
+				converter: _converter,
+				inlineConverter: _inlineConverter,
+				sourceConverter: _sourceConverter
+			});
 		},
 		
 		_convert: function(container, converter) {
@@ -171,14 +225,19 @@ define(['StringUtil', 'DOM/Traverse'], function(StringUtil, DOMTraverse) {
 		},
 		
 		_convertDiv: function(element) {
-			if (element.style.length) {
+			if (element.className.length || element.style.length) {
 				var converter, value;
 				for (var i = 0, length = _inlineConverter.div.length; i < length; i++) {
 					converter = _inlineConverter.div[i];
 					
-					value = element.style.getPropertyValue(converter.style) || '';
-					if (value) {
-						converter.callback(element, value);
+					if (converter.className && element.classList.contains(converter.className)) {
+						converter.callback(element);
+					}
+					else if (converter.style) {
+						value = element.style.getPropertyValue(converter.style) || '';
+						if (value) {
+							converter.callback(element, value);
+						}
 					}
 				}
 			}
@@ -264,6 +323,37 @@ define(['StringUtil', 'DOM/Traverse'], function(StringUtil, DOMTraverse) {
 			else {
 				element.outerHTML = "[url='" + href + "']" + element.innerHTML + "[/url]";
 			}
+		},
+		
+		_convertSourceCodeBox: function(element) {
+			var filename = element.getAttribute('data-filename').trim() || '';
+			var highlighter = element.getAttribute('data-highlighter') || '';
+			window.dtdesign = element;
+			var list = DOMTraverse.childByTag(element.children[0], 'OL');
+			var lineNumber = ~~list.getAttribute('start') || 1;
+			
+			var content = '';
+			for (var i = 0, length = list.childElementCount; i < length; i++) {
+				if (content) content += "\n";
+				content += list.children[i].textContent;
+			}
+			
+			var open = "[code='" + highlighter + "'," + lineNumber + ",'" + filename + "']";
+			
+			element.outerHTML = open + content + '[/code]';
+		},
+		
+		_preserveSourceElement: function(element, sourceElements) {
+			var placeholder = document.createElement('var');
+			element.parentNode.insertBefore(placeholder, element);
+			
+			var fragment = document.createDocumentFragment();
+			fragment.appendChild(element);
+			
+			sourceElements.push({
+				fragment: fragment,
+				placeholder: placeholder
+			});
 		}
 	};
 	

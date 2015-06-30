@@ -1,9 +1,13 @@
-define(['Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Language, StringUtil, BBCodeParser) {
+define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(EventHandler, Language, StringUtil, BBCodeParser) {
 	"use strict";
 	
 	var _bbcodes = null;
 	var _removeNewlineAfter = [];
 	var _removeNewlineBefore = [];
+	
+	function isNumber(value) { return value && value == ~~value; }
+	function isFilename(value) { return (value.indexOf('.') !== -1) || (!isNumber(value) && !isHighlighter(value)); }
+	function isHighlighter(value) { return __REDACTOR_CODE_HIGHLIGHTERS.hasOwnProperty(value); }
 	
 	var BBCodeToHtml = {
 		convert: function(message) {
@@ -25,7 +29,8 @@ define(['Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Languag
 			}
 			
 			message = stack.join('');
-			
+			var x = message;
+			console.debug(x);
 			message = message.replace(/\n/g, '<br>');
 			
 			return message;
@@ -58,6 +63,7 @@ define(['Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Languag
 				
 				// callback replacement
 				color: this._replaceColor.bind(this),
+				code: this._replaceCode.bind(this),
 				list: this._replaceList.bind(this),
 				quote: this._replaceQuote.bind(this),
 				url: this._replaceUrl.bind(this)
@@ -65,6 +71,12 @@ define(['Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Languag
 			
 			_removeNewlineAfter = ['quote', 'table', 'td', 'tr'];
 			_removeNewlineBefore = ['table', 'td', 'tr'];
+			
+			EventHandler.fire('com.woltlab.wcf.bbcode.toHtml', 'init', {
+				bbcodes: _bbcodes,
+				removeNewlineAfter: _removeNewlineAfter,
+				removeNewlineBefore: _removeNewlineBefore
+			});
 		},
 		
 		_replace: function(stack, item, index) {
@@ -113,6 +125,88 @@ define(['Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Languag
 			else {
 				return replace(stack, item, index);
 			}
+		},
+		
+		_replaceCode: function(stack, item, index) {
+			var attributes = item.attributes, filename = '', highlighter = 'auto', lineNumber = 0;
+			
+			// parse arguments
+			switch (attributes.length) {
+				case 1:
+					if (isNumber(attributes[0])) {
+						lineNumber = ~~attributes[0];
+					}
+					else if (isFilename(attributes[0])) {
+						filename = attributes[0];
+					}
+					else if (isHighlighter(attributes[0])) {
+						highlighter = attributes[0];
+					}
+					break;
+				case 2:
+					if (isNumber(attributes[0])) {
+						lineNumber = ~~attributes[0];
+						
+						if (isHighlighter(attributes[1])) {
+							highlighter = attributes[1];
+						}
+						else if (isFilename(attributes[1])) {
+							filename = attributes[1];
+						}
+					}
+					else {
+						if (isHighlighter(attributes[0])) highlighter = attributes[0];
+						if (isFilename(attributes[1])) filename = attributes[1];
+					}
+					break;
+				case 3:
+					if (isHighlighter(attributes[0])) highlighter = attributes[0];
+					if (isNumber(attributes[1])) lineNumber = ~~attributes[1];
+					if (isFilename(attributes[2])) filename = attributes[2];
+					break;
+			}
+			
+			// transform content
+			var before = true, content, line, empty = -1;
+			for (var i = index + 1; i < item.pair; i++) {
+				line = stack[i];
+				
+				if (line.trim() === '') {
+					if (before) {
+						stack[i] = '';
+						continue;
+					}
+					else if (empty === -1) {
+						empty = i;
+					}
+				}
+				else {
+					before = false;
+					empty = -1;
+				}
+				
+				content = line.split('\n');
+				for (var j = 0, innerLength = content.length; j < innerLength; j++) {
+					content[j] = '<li>' + (content[j] ? StringUtil.escapeHTML(content[j]) : '\u200b') + '</li>';
+				}
+				
+				stack[i] = content.join('');
+			}
+			
+			if (!before && empty !== -1) {
+				for (var i = item.pair - 1; i >= empty; i--) {
+					stack[i] = '';
+				}
+			}
+			
+			stack[item.pair] = '</ol></div></div>';
+			
+			return '<div class="codeBox container" contenteditable="false" data-highlighter="' + highlighter + '" data-filename="' + (filename ? StringUtil.escapeHTML(filename) : '') + '">'
+					+ '<div>'
+					+ '<div>'
+						+ '<h3>' + __REDACTOR_CODE_HIGHLIGHTERS[highlighter] + (filename ? ': ' + StringUtil.escapeHTML(filename) : '') + '</h3>'
+					+ '</div>'
+					+ '<ol start="' + (lineNumber > 1 ? lineNumber : 1) + '">';
 		},
 		
 		_replaceColor: function(stack, item, index) {

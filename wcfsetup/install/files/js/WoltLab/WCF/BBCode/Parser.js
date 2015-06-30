@@ -11,7 +11,7 @@ define([], function() {
 		
 		_splitTags: function(message) {
 			// TODO: `validTags` should be dynamic similar to the PHP implementation
-			var validTags = 'attach|b|color|i|list|url|table|td|tr|quote';
+			var validTags = 'attach|b|code|color|i|list|url|table|td|tr|quote';
 			var pattern = '(\\\[(?:/(?:' + validTags + ')|(?:' + validTags + ')'
 				+ '(?:='
 					+ '(?:\\\'[^\\\'\\\\]*(?:\\\\.[^\\\'\\\\]*)*\\\'|[^,\\\]]*)'
@@ -53,12 +53,13 @@ define([], function() {
 		
 		_buildLinearTree: function(stack) {
 			var item, openTags = [], reopenTags, sourceBBCode = '', tag;
-			for (var i = 0, length = stack.length; i < length; i++) {
+			for (var i = 0; i < stack.length; i++) { // do not cache stack.length, its size is dynamic
 				item = stack[i];
 				
 				if (typeof item === 'object') {
-					if (sourceBBCode.length && (item.name !== sourceBBCode || item.closing === false)) {
+					if (sourceBBCode.length && (item.name !== sourceBBCode || !item.closing)) {
 						stack[i] = item.source;
+						continue;
 					}
 					
 					if (item.closing) {
@@ -68,14 +69,26 @@ define([], function() {
 							stack[i] = item.source;
 						}
 						else {
-							reopenTags = this._closeUnclosedTags(stack, openTags, item.name);
-							
 							tag = openTags.pop();
 							tag.pair = i;
 							
-							for (var j = 0, innerLength = reopenTags.length; j < innerLength; j++) {
-								stack.splice(i, reopenTags[j]);
-								i++;
+							if (sourceBBCode === item.name) {
+								// join previous items in the stack
+								if (lastIndex + 2 < i) {
+									var joinWith = lastIndex + 1;
+									for (var j = lastIndex + 2; j < i; j++) {
+										stack[joinWith] += stack[j];
+										stack[j] = '';
+									}
+								}
+							}
+							else {
+								reopenTags = this._closeUnclosedTags(stack, openTags, item.name);
+								
+								for (var j = 0, innerLength = reopenTags.length; j < innerLength; j++) {
+									stack.splice(i, reopenTags[j]);
+									i++;
+								}
 							}
 						}
 						
