@@ -31,6 +31,7 @@ $(function() {
 		'wcf.bbcode.code.lineNumber': '{lang}wcf.bbcode.code.lineNumber{/lang}',
 		'wcf.bbcode.code.lineNumber.description': '{lang}wcf.bbcode.code.lineNumber.description{/lang}',
 		'wcf.bbcode.code.settings': '{lang}wcf.bbcode.code.settings{/lang}',
+		'wcf.bbcode.image.source': '{lang}wcf.bbcode.image.source{/lang}',
 		'wcf.bbcode.quote.edit': '{lang}wcf.bbcode.quote.edit{/lang}',
 		'wcf.bbcode.quote.edit.author': '{lang}wcf.bbcode.quote.edit.author{/lang}',
 		'wcf.bbcode.quote.edit.link': '{lang}wcf.bbcode.quote.edit.link{/lang}',
