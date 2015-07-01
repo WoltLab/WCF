@@ -20,10 +20,16 @@ RedactorPlugins.wbbcode = function() {
 			var $identifier = this.$textarea.wcfIdentify();
 			
 			this.opts.initCallback = (function() {
+				window.addEventListener('unload', (function(event) {
+					this.code.startSync();
+					
+					this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
+				}).bind(this));
+				
 				if ($.browser.msie) {
 					this.$editor.addClass('msie');
 				}
-				
+				this.$textarea[0].setAttribute('data-is-dirty', true);
 				// use stored editor contents
 				var $content = $.trim(this.wutil.getOption('woltlab.originalValue'));
 				if ($content.length) {
