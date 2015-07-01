@@ -1253,7 +1253,6 @@ RedactorPlugins.wbbcode = function() {
 				
 				var self = this;
 				var $transformQuote = function(quote) {
-					console.debug(quote);
 					return quote.replace(/\[quote(=(['"]).+?\2)?\]([\S\s]*)\[\/quote\]/gi, function(match, attributes, quotationMark, innerContent) {
 						var $author = '';
 						var $link = '';
