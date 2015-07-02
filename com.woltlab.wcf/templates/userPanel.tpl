@@ -99,7 +99,7 @@
 		</li>
 	{/if}
 {else}
-	{if !$__disableLoginLink|empty}
+	{if $__disableLoginLink|empty}
 		<!-- login box -->
 		<li id="userLogin">
 			<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
