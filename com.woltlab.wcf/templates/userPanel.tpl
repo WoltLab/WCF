@@ -78,7 +78,7 @@
 	<li><a href="{link controller='Settings'}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 icon-cogs"></span> <span>{lang}wcf.user.menu.settings{/lang}</span></a></li>
 	
 	<!-- user notifications -->
-	{if !$__hideUserMenu|isset}
+	{if $__hideUserMenu|empty}
 		<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
 			<a href="{link controller='NotificationList'}{/link}"><span class="icon icon16 icon-bell-alt"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeInverse">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
 			{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
@@ -99,7 +99,7 @@
 		</li>
 	{/if}
 {else}
-	{if !$__disableLoginLink|isset}
+	{if !$__disableLoginLink|empty}
 		<!-- login box -->
 		<li id="userLogin">
 			<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
@@ -229,7 +229,7 @@
 	{/if}
 {/if}
 
-{if !$__hideUserMenu|isset}
+{if $__hideUserMenu|empty}
 	{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
 		<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}">
 			<a href="{link controller='ModerationList'}{/link}">
