@@ -294,9 +294,10 @@ class RouteHandler extends SingletonFactory {
 						$pos = mb_strpos($component, '=');
 						if ($pos !== false && $pos + 1 === mb_strlen($component)) {
 							$component = mb_substr($component, 0, -1);
+							$pos = false;
 						}
 						
-						if (mb_strpos($component, '=') === false) {
+						if ($pos === false) {
 							self::$pathInfo = urldecode($component);
 							break;
 						}
