@@ -25,3 +25,4 @@
 * Old email system (`wcf\system\mail\*`) deprecated.
 * Abstract bulk processing system added.
 * Replaced old user bulk processing with new implementation using the abstract bulk processing system.
+* `conditionContainers` template event in template `noticeAdd.tpl` added.

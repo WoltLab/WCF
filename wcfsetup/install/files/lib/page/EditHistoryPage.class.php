@@ -147,7 +147,7 @@ class EditHistoryPage extends AbstractPage {
 		parent::readData();
 		
 		$this->objectList = new EditHistoryEntryList();
-		$this->objectList->sqlOrderBy = "time DESC";
+		$this->objectList->sqlOrderBy = "time DESC, entryID DESC";
 		$this->objectList->getConditionBuilder()->add('objectTypeID = ?', array($this->objectType->objectTypeID));
 		$this->objectList->getConditionBuilder()->add('objectID = ?', array($this->objectID));
 		$this->objectList->readObjects();

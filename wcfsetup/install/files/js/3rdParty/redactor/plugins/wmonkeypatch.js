@@ -574,14 +574,23 @@ RedactorPlugins.wmonkeypatch = function() {
 			// image.setEditable
 			var $mpSetEditable = this.image.setEditable;
 			this.image.setEditable = (function($image) {
-				if (!$image.hasClass('smiley')) {
-					$mpSetEditable.call(this, $image);
+				if ($image.hasClass('smiley')) {
+					return;
 				}
+				
+				// workaround for #2675
+				$image.off('click.redactor touchstart.redactor');
+				
+				$mpSetEditable.call(this, $image);
 			}).bind(this);
 			
 			// image.loadEditableControls
 			var $mpLoadEditableControls = this.image.loadEditableControls;
 			this.image.loadEditableControls = (function($image) {
+				if ($image[0].parentNode.id === 'redactor-image-box') {
+					return $('#redactor-image-resizer', this.$editor[0]);
+				}
+				
 				var $returnValue = $mpLoadEditableControls.call(this, $image);
 				
 				if ($image.hasClass('redactorDisableResize') && $returnValue !== false) {
@@ -597,6 +606,8 @@ RedactorPlugins.wmonkeypatch = function() {
 				var $button = this.modal.createActionButton(this.lang.get('insert'));
 				$button.click($.proxy(this.wbutton._insertImage, this));
 				
+				$('#redactorImageLinkHrefContainer').hide();
+				
 				this.selection.save();
 				this.modal.show();
 			}).bind(this);
@@ -610,11 +621,16 @@ RedactorPlugins.wmonkeypatch = function() {
 					this.image.update(image);
 				}).bind(this));
 				
+				var link = image.closest('a', this.$editor[0]);
+				
 				// set overlay values
 				$('#redactor-image-link-source').val(image.attr('src'));
+				$('#redactor-image-link-href').val(link.length ? link.attr('href') : '');
 				$('#redactor-image-align').val(image.css('float'));
 				
 				this.modal.show();
+				
+				setTimeout(function() { $('.redactor-link-tooltip').remove(); }, 1);
 			}).bind(this);
 			
 			// image.update
@@ -633,6 +649,30 @@ RedactorPlugins.wmonkeypatch = function() {
 				image.attr('src', $('#redactor-image-link-source').val());
 				this.image.setFloating(image);
 				$moveImage(image);
+				
+				var link = $('#redactor-image-link-href').val().trim();
+				var anchor = image.closest('a', this.$editor[0]);
+				
+				if (anchor.length) {
+					if (link === '') {
+						anchor = anchor[0];
+						var i = anchor.children.length, parent = anchor.parentNode;
+						while (i--) {
+							parent.insertBefore(anchor.children[0], anchor);
+						}
+						
+						parent.removeChild(anchor);
+					}
+					else {
+						anchor.attr('href', link);
+					}
+				}
+				else {
+					anchor = document.createElement('a');
+					anchor.href = link;
+					image[0].parentNode.insertBefore(anchor, image[0]);
+					anchor.appendChild(image[0]);
+				}
 				
 				this.modal.close();
 				this.observe.images();
@@ -1220,8 +1260,12 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.opts.modal.image =
 				'<fieldset id="redactor-modal-image-edit">'
 					+ '<dl>'
-						+ '<dt><label for="redactor-image-link-source">' + this.lang.get('link') + '</label></dt>'
+						+ '<dt><label for="redactor-image-link-source">' + WCF.Language.get('wcf.bbcode.image.source') + '</label></dt>'
 						+ '<dd><input type="text" id="redactor-image-link-source" class="long"  /></dd>'
+					+ '</dl>'
+					+ '<dl id="redactorImageLinkHrefContainer">'
+						+ '<dt><label for="redactor-image-link-href">' + this.lang.get('link') + '</label></dt>'
+						+ '<dd><input type="text" id="redactor-image-link-href" class="long"  /></dd>'
 					+ '</dl>'
 					+ '<dl>'
 						+ '<dt><label for="redactor-image-align">' + this.opts.curLang.image_position + '</label></dt>'

@@ -666,7 +666,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the notice to be shown.]]></item>
 		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Time]]></item>
 		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the notice is shown.]]></item>
-		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active user]]></item>
+		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active User]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the notice.]]></item>
 		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete the notice “{$notice->noticeName}”?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notices]]></item>
@@ -1740,7 +1740,7 @@ You can now fully access the website.]]></item>
 		<item name="wcf.acp.user.bulkProcessing.removeFromUserGroups"><![CDATA[Remove from User Groups]]></item>
 		<item name="wcf.acp.user.bulkProcessing.sendMail"><![CDATA[Send Email to Users]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[The selection action has been executed and affected {#$affectedObjectCount} user{if $affectedUsers != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below on all users matching the seleced conditions without any further confirmation prompt!]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below on all users matching the selected conditions without any further confirmation prompt!]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -1829,6 +1829,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty-Template]]></item>
 		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML Source Code]]></item>
+		<item name="wcf.bbcode.image.source"><![CDATA[Image Link]]></item>
 		<item name="wcf.bbcode.quote.edit"><![CDATA[Edit Quote]]></item>
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Author]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Source]]></item>

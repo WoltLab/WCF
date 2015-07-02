@@ -195,6 +195,8 @@
 	
 	{include file='userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
 	
+	{event name='conditionContainers'}
+	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
