@@ -292,11 +292,11 @@ RedactorPlugins.wbbcode = function() {
 		/**
 		 * Converts source contents from HTML into BBCode.
 		 * 
-		 * @param	string		html
+		 * @param	string		message
 		 */
-		convertFromHtml: function(html) {
+		convertFromHtml: function(message) {
 			// DEBUG ONLY
-			return this.opts.woltlab.bbcode.fromHtml.convert(html);
+			return __REDACTOR_AMD_DEPENDENCIES.BBCodeFromHTML.convert(message);
 			
 			var $searchFor = [ ];
 			
@@ -557,11 +557,11 @@ RedactorPlugins.wbbcode = function() {
 		/**
 		 * Converts source contents from BBCode to HTML.
 		 * 
-		 * @param	string		data
+		 * @param	string		message
 		 */
-		convertToHtml: function(data) {
+		convertToHtml: function(message) {
 			// DEBUG ONLY
-			return this.opts.woltlab.bbcode.toHtml.convert(data);
+			return __REDACTOR_AMD_DEPENDENCIES.BBCodeToHTML.convert(message);
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertToHtml', { data: data });
 			

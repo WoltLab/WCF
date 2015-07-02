@@ -716,28 +716,17 @@ RedactorPlugins.wutil = function() {
 		 * Sets the selection after the last direct children of the editor.
 		 */
 		selectionEndOfEditor: function() {
-			this.focus.setEnd();
-			
-			var $lastChild = this.$editor.children(':last')[0];
-			if ($lastChild.tagName === 'P') {
-				// sometimes the last <p> is just empty, causing the method to fail
-				if ($lastChild.innerHTML === '') {
-					$lastChild.remove();
-					$lastChild = $(this.opts.emptyHtml).appendTo(this.$editor)[0];
-				}
+			var lastChild = this.$editor[0].lastElementChild;
+			if (lastChild === null || lastChild.nodeName === 'BLOCKQUOTE' || (lastChild.nodeName === 'DIV' && lastChild.classList.contains('codeBox'))) {
+				var element = this.utils.createSpaceElement();
+				this.$editor[0].appendChild(element);
 				
-				if ($lastChild.lastChild.nodeType === Element.TEXT_NODE) {
-					this.caret.set($lastChild.lastChild, $lastChild.lastChild.length, $lastChild.lastChild, $lastChild.lastChild.length);
-				}
-				else {
-					this.caret.setEnd($lastChild);
-				}
+				this.caret.setEnd(element);
+				this.wutil.saveSelection();
 			}
 			else {
-				this.wutil.setCaretAfter($lastChild);
+				this.focus.setEnd();
 			}
-			
-			this.wutil.saveSelection();
 		},
 		
 		/**

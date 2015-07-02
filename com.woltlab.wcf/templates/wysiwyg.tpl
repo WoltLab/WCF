@@ -4,10 +4,15 @@ var __REDACTOR_BUTTONS = [ {implode from=$__wcf->getBBCodeHandler()->getButtonBB
 var __REDACTOR_SMILIES = { {implode from=$__wcf->getSmileyCache()->getCategorySmilies() item=smiley}'{@$smiley->smileyCode|encodeJS}': '{@$smiley->getURL()|encodeJS}'{/implode} };
 var __REDACTOR_SOURCE_BBCODES = [ {implode from=$__wcf->getBBCodeHandler()->getSourceBBCodes() item=__bbcode}'{@$__bbcode->bbcodeTag}'{/implode} ];
 var __REDACTOR_CODE_HIGHLIGHTERS = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{@$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
-</script>
-<script data-relocate="true">
-$(function() {
-	WCF.Language.addObject({
+var __REDACTOR_AMD_DEPENDENCIES = { };
+
+require(['Language', 'WoltLab/WCF/BBCode/FromHtml', 'WoltLab/WCF/BBCode/ToHtml'], function(Language, BBCodeFromHTML, BBCodeToHTML) {
+	__REDACTOR_AMD_DEPENDENCIES = {
+		BBCodeFromHTML: BBCodeFromHTML,
+		BBCodeToHTML: BBCodeToHTML
+	};
+	
+	Language.addObject({
 		'wcf.attachment.dragAndDrop.dropHere': '{lang}wcf.attachment.dragAndDrop.dropHere{/lang}',
 		'wcf.attachment.dragAndDrop.dropNow': '{lang}wcf.attachment.dragAndDrop.dropNow{/lang}',
 		'wcf.bbcode.button.fontColor': '{lang}wcf.bbcode.button.fontColor{/lang}',
@@ -70,6 +75,7 @@ $(function() {
 			convertVideoLinks: false,
 			direction: '{lang}wcf.global.pageDirection{/lang}',
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
+			linebreaks: true,
 			maxHeight: 500,
 			minHeight: 200,
 			plugins: [ 'wutil', 'wmonkeypatch', 'wbutton', 'wbbcode', 'wfontcolor', 'wfontfamily', 'wfontsize' ],
@@ -95,6 +101,7 @@ $(function() {
 			$config.plugins.splice(2, 0, 'table');
 		{/if}
 		
+		// TODO: is this still required?
 		if ($.browser.iOS) {
 			// using a zero-width space breaks iOS' detection of the start of a sentence, causing the first word to be lowercased
 			$config.emptyHtml = '<p><br></p>';

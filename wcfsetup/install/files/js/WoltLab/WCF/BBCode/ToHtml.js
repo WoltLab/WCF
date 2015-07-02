@@ -29,8 +29,7 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 			}
 			
 			message = stack.join('');
-			var x = message;
-			console.debug(x);
+			
 			message = message.replace(/\n/g, '<br>');
 			
 			return message;

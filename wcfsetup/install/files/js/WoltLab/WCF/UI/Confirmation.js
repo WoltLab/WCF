@@ -35,6 +35,8 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 		 * @param	{object<string, *>}	options		confirmation options
 		 */
 		show: function(options) {
+			if (UIDialog === undefined) UIDialog = require('UI/Dialog');
+			
 			if (_active) {
 				return;
 			}
