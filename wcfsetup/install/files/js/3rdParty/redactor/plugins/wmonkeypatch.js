@@ -658,7 +658,7 @@ RedactorPlugins.wmonkeypatch = function() {
 						anchor.attr('href', link);
 					}
 				}
-				else {
+				else if (link !== '') {
 					anchor = document.createElement('a');
 					anchor.href = link;
 					image[0].parentNode.insertBefore(anchor, image[0]);
