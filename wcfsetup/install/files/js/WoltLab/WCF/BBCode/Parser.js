@@ -11,7 +11,7 @@ define([], function() {
 		
 		_splitTags: function(message) {
 			// TODO: `validTags` should be dynamic similar to the PHP implementation
-			var validTags = 'attach|b|code|color|i|list|url|table|td|tr|quote';
+			var validTags = __REDACTOR_BBCODES.join('|');
 			var pattern = '(\\\[(?:/(?:' + validTags + ')|(?:' + validTags + ')'
 				+ '(?:='
 					+ '(?:\\\'[^\\\'\\\\]*(?:\\\\.[^\\\'\\\\]*)*\\\'|[^,\\\]]*)'

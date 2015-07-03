@@ -65,7 +65,8 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				code: this._replaceCode.bind(this),
 				list: this._replaceList.bind(this),
 				quote: this._replaceQuote.bind(this),
-				url: this._replaceUrl.bind(this)
+				url: this._replaceUrl.bind(this),
+				img: this._replaceImage.bind(this)
 			};
 			
 			_removeNewlineAfter = ['quote', 'table', 'td', 'tr'];
@@ -218,6 +219,54 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 			stack[item.pair] = '</span>';
 			
 			return '<span style="color: ' + StringUtil.escapeHTML(item.attributes[0]) + '">';
+		},
+		
+		_replaceImage: function(stack, item, index) {
+			stack[item.pair] = '';
+			
+			var float = 'none', source = '', width = 0;
+			
+			switch (item.attributes.length) {
+				case 0:
+					if (index + 1 < item.pair && typeof stack[index + 1] === 'string') {
+						source = stack[index + 1];
+						stack[index + 1] = '';
+					}
+					else {
+						// [img] without attributes and content, discard
+						return '';
+					}
+				break;
+				
+				case 1:
+					source = item.attributes[0];
+				break;
+				
+				case 2:
+					source = item.attributes[0];
+					float = item.attributes[1];
+				break;
+				
+				case 3:
+					source = item.attributes[0];
+					float = item.attributes[1];
+					width = ~~item.attributes[2];
+				break;
+			}
+			
+			if (float !== 'left' && float !== 'right') float = 'none';
+			
+			var styles = [];
+			if (width > 0) {
+				styles.push('width: ' + width + 'px');
+			}
+			
+			if (float !== 'none') {
+				styles.push('float: ' + float);
+				styles.push('margin: ' + (float === 'left' ? '0 15px 7px 0' : '0 0 7px 15px'));
+			}
+			
+			return '<img src="' + source + '"' + (styles.length ? ' style="' + styles.join(';') + '"' : '') + '>';
 		},
 		
 		_replaceList: function(stack, item, index) {

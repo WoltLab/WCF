@@ -95,6 +95,7 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 				
 				// callback replacement
 				{ tagName: 'A', callback: this._convertUrl.bind(this) },
+				{ tagName: 'IMG', callback: this._convertImage.bind(this) },
 				{ tagName: 'LI', callback: this._convertListItem.bind(this) },
 				{ tagName: 'OL', callback: this._convertList.bind(this) },
 				{ tagName: 'TABLE', callback: this._convertTable.bind(this) },
@@ -171,6 +172,32 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			}
 			
 			element.outerHTML = open + element.innerHTML.replace(/^\n*/, '').replace(/\n*$/, '') + '[/quote]\n';
+		},
+		
+		_convertImage: function(element) {
+			if (element.classList.contains('smiley')) {
+				// smiley
+				element.outerHTML = ' ' + element.getAttribute('alt') + ' ';
+			}
+			else if (element.classList.contains('redactorEmbeddedAttachment')) {
+				// TODO: handle attachments
+			}
+			else {
+				// regular image
+				var float = element.style.getPropertyValue('float') || 'none';
+				var source = element.src.trim();
+				var width = ~~element.style.getPropertyValue('width').replace(/px$/, '') || 0;
+				
+				if (width > 0) {
+					element.outerHTML = "[img='" + source + "'," + float + "," + width + "][/img]";
+				}
+				else if (float !== 'none') {
+					element.outerHTML = "[img='" + source + "'," + float + "][/img]";
+				}
+				else {
+					element.outerHTML = "[img]" + source + "[/img]";
+				}
+			}
 		},
 		
 		_convertList: function(element) {

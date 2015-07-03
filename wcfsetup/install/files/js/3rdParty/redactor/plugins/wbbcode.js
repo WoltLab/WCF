@@ -302,12 +302,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
 			
-			// remove data-redactor-tag="" attribute
-			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
-			
-			// remove rel="" attribute
-			html = html.replace(/(<[^>]+?) rel="[^"]+"/g, '$1');
-			
 			// remove zero-width space sometimes slipping through
 			html = html.replace(/&#(8203|x200b);/g, '');
 			
@@ -317,78 +311,6 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/&hellip;/gi, '\u2026');
 			html = html.replace(/&mdash;/gi, '\u2014');
 			html = html.replace(/&dash;/gi, '\u2010');
-			
-			// preserve code listings
-			var $cachedCodeListings = { };
-			html = html.replace(/<div([^>]+?)class="codeBox[^"]+"([^>]*?)>\n*<div>[\s\S]+?<ol start="(\d+)">([\s\S]+?)<\/ol>\n*<\/div>\n*<\/div>/g, function(match, codeBoxAttributes1, codeBoxAttributes2, lineNumber, codeContent) {
-				var $attributes = codeBoxAttributes1 + ' ' + codeBoxAttributes2;
-				var $highlighter = '';
-				var $filename = '';
-				if ($attributes.match(/data-highlighter="([a-zA-Z]+)"/)) {
-					$highlighter = RegExp.$1;
-				}
-				if ($attributes.match(/data-filename="([^"]+)"/)) {
-					$filename = $.trim(RegExp.$1);
-				}
-				
-				var $uuid = WCF.getUUID();
-				$cachedCodeListings[$uuid] = {
-					codeContent: codeContent.replace(/<li>/g, '').replace(/<\/li>/g, '\n').replace(/\n$/, ''),
-					filename: $filename.replace(/['"]/g, ''),
-					highlighter: ($highlighter === 'plain' ? '' : $highlighter),
-					lineNumber: (lineNumber > 1 ? lineNumber : 0)
-				};
-				
-				return '@@@' + $uuid + '@@@';
-			});
-			
-			// unwrap code boxes
-			for (var $uuid in $cachedCodeListings) {
-				html = html.replace(new RegExp('<p><\/p>@@@' + $uuid + '@@@<p><\/p>'), '@@@' + $uuid + '@@@');
-			}
-			
-			// handle empty paragraphs not followed by an empty one
-			html = html.replace(/<p><\/p><p>(?!<br>)/g, '<p>@@@wcf_empty_line@@@</p><p>');
-			
-			html = html.replace(/@@@wcf_empty_line@@@/g, '\n');
-			html = html.replace(/\n\n$/, '\n');
-			
-			
-			// drop <br>, they are pointless because the editor already adds a newline after them
-			html = html.replace(/<br>/g, '');
-			html = html.replace(/&nbsp;/gi, " ");
-			
-			// [quote]
-			html = html.replace(/<blockquote([^>]+)>\n?<header[^>]*?>[\s\S]*?<\/header>/gi, function(match, attributes, innerContent) {
-				var $quote;
-				var $author = '';
-				var $link = '';
-				
-				if (attributes.match(/data-author="([^"]+)"/)) {
-					$author = WCF.String.unescapeHTML(RegExp.$1);
-				}
-				
-				if (attributes.match(/cite="([^"]+)"/)) {
-					$link = WCF.String.unescapeHTML(RegExp.$1);
-				}
-				
-				if ($link) {
-					$quote = "[quote='" + $author + "','" + $link + "']";
-				}
-				else if ($author) {
-					$quote = "[quote='" + $author + "']";
-				}
-				else {
-					$quote = "[quote]";
-				}
-				
-				return $quote;
-			});
-			html = html.replace(/(?:\n*)<\/blockquote>\n?/gi, '\n[/quote]\n');
-			
-			// smileys
-			html = html.replace(/ ?<img [^>]*?alt="([^"]+?)"[^>]*?class="smiley"[^>]*?> ?/gi, ' $1 '); // firefox
-			html = html.replace(/ ?<img [^>]*?class="smiley"[^>]*?alt="([^"]+?)"[^>]*?> ?/gi, ' $1 '); // chrome, ie
 			
 			// attachments
 			html = html.replace(/<img([^>]*?)class="[^"]*redactorEmbeddedAttachment[^"]*"([^>]*?)>/gi, function(match, attributesBefore, attributesAfter) {
@@ -428,41 +350,6 @@ RedactorPlugins.wbbcode = function() {
 				return '[attach=' + $attachmentID + '][/attach]';
 			});
 			
-			// [img]
-			html = html.replace(/<img([^>]*)?src=(["'])([^"']+?)\2([^>]*)?>/gi, function(match, attributesBefore, quotationMarks, source, attributesAfter) {
-				var attrs = attributesBefore + " " + attributesAfter;
-				var style = '';
-				if (attrs.match(/style="([^"]+)"/)) {
-					style = RegExp.$1;
-				}
-				
-				var $float = 'none';
-				var $width = 0;
-				
-				var $styles = style.split(';');
-				for (var $i = 0; $i < $styles.length; $i++) {
-					var $style = $styles[$i];
-					if ($style.match(/float: (left|right|none)/)) {
-						$float = RegExp.$1;
-					}
-					else if ($style.match(/width: (\d+)px/)) {
-						$width = parseInt(RegExp.$1);
-					}
-				}
-				
-				if ($width) {
-					return "[img='" + source + "'," + $float + "," + $width + "][/img]";
-				}
-				else if ($float !== 'none') {
-					return "[img='" + source + "'," + $float + "][/img]";
-				}
-				
-				return "[img]" + source + "[/img]";
-			});
-			
-			// [td]+[align]
-			html = html.replace(/<td style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/td>/gi, "[td][align=$1]$2[/align][/td]");
-			
 			// cache redactor's selection markers
 			var $cachedMarkers = { };
 			html.replace(/<span id="selection-marker-\d+" class="redactor-selection-marker"><\/span>/, function(match) {
@@ -484,56 +371,6 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
-			// restore code listings
-			if ($.getLength($cachedCodeListings)) {
-				$.each($cachedCodeListings, function(uuid, listing) {
-					var $count = 0;
-					if (listing.highlighter) $count++;
-					if (listing.lineNumber) $count++;
-					if (listing.filename) $count++;
-					
-					var $attributes = '';
-					switch ($count) {
-						case 1:
-							if (listing.highlighter) {
-								$attributes = listing.highlighter;
-							}
-							else if (listing.filename) {
-								$attributes = "'" + listing.filename + "'";
-							}
-							else {
-								$attributes = listing.lineNumber;
-							}
-						break;
-						
-						case 2:
-							if (listing.lineNumber) {
-								$attributes = listing.lineNumber;
-							}
-							
-							if (listing.highlighter) {
-								if ($attributes.length) $attributes += ',';
-								$attributes += listing.highlighter;
-							}
-							
-							if (listing.filename) {
-								if ($attributes.length) $attributes += ',';
-								
-								$attributes += "'" + listing.filename + "'";
-							}
-						break;
-						
-						case 3:
-							$attributes = listing.highlighter + ',' + listing.lineNumber + ",'" + listing.filename + "'";
-						break;
-					}
-					
-					var $bbcode = '[code' + ($attributes.length ? '=' + $attributes : '') + ']' + listing.codeContent + '[/code]\n';
-					
-					html = html.replace(new RegExp('@@@' + uuid + '@@@\n?', 'g'), $bbcode);
-				});
-			}
-			
 			// Restore <, > and &
 			html = html.replace(/&lt;/g, '<');
 			html = html.replace(/&gt;/g, '>');
@@ -544,12 +381,6 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/%29/g, ')');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', { html: html });
-			
-			// remove all leading and trailing whitespaces, but add one empty line at the end
-			html = $.trim(html);
-			if (html.length) {
-				html += "\n";
-			}
 			
 			return html;
 		},
@@ -567,15 +398,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// remove 0x200B (unicode zero width space)
 			data = this.wutil.removeZeroWidthSpace(data);
-			
-			// cache source code tags
-			var $cachedCodes = [ ];
-			var $regExp = new RegExp('\\[(' + __REDACTOR_SOURCE_BBCODES.join('|') + ')([\\S\\s]+?)\\[\\/\\1\\]', 'gi');
-			data = data.replace($regExp, function(match) {
-				var $key = match.hashCode();
-				$cachedCodes.push({ key: $key, value: match.replace(/\$/g, '$$$$') });
-				return '@@' + $key + '@@';
-			});
 			
 			// [email]
 			data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>' + this.opts.invisibleSpace);
@@ -681,267 +503,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// remove "javascript:"
 			data = data.replace(/(javascript):/gi, '$1<span></span>:');
-			
-			// extract [quote] bbcodes to prevent line break handling below
-			var $cachedQuotes = [ ];
-			var $knownQuotes = [ ];
-			
-			var $parts = data.split(/(\[(?:\/quote|quote|quote='[^']*?'(?:,'[^']*?')?|quote="[^"]*?"(?:,"[^"]*?")?)\])/i);
-			var $lostQuote = WCF.getUUID();
-			while (true) {
-				var $foundClosingTag = false;
-				for (var $i = 0; $i < $parts.length; $i++) {
-					var $part = $parts[$i];
-					if ($part.toLowerCase() === '[/quote]') {
-						$foundClosingTag = true;
-						
-						var $content = '';
-						var $previous = $parts.slice(0, $i);
-						var $foundOpenTag = false;
-						while ($previous.length) {
-							var $prev = $previous.pop();
-							$content = $prev + $content;
-							if ($prev.match(/^\[quote/i)) {
-								$part = $content + $part;
-								
-								var $key = WCF.getUUID();
-								$cachedQuotes.push({
-									hashCode: $key,
-									content: $part.replace(/\$/g, '$$$$')
-								});
-								$knownQuotes.push($key);
-								
-								$part = '@@' + $key + '@@';
-								$foundOpenTag = true;
-								break;
-							}
-						}
-						
-						if (!$foundOpenTag) {
-							$previous = $parts.slice(0, $i);
-							$part = $lostQuote;
-						}
-						
-						// rebuild the array
-						$parts = $previous.concat($part, $parts.slice($i + 1));
-						
-						break;
-					}
-				}
-				
-				if (!$foundClosingTag) {
-					break;
-				}
-			}
-			
-			data = $parts.join('');
-			
-			// restore unmatched closing quote tags
-			data = data.replace(new RegExp($lostQuote, 'g'), '[/quote]');
-			
-			// drop trailing line breaks
-			data = data.replace(/\n*$/, '');
-			
-			// insert quotes
-			if ($cachedQuotes.length) {
-				// [quote]
-				var $unquoteString = function(quotedString) {
-					return quotedString.replace(/^['"]/, '').replace(/['"]$/, '');
-				};
-				
-				var self = this;
-				var $transformQuote = function(quote) {
-					return quote.replace(/\[quote(=(['"]).+?\2)?\]([\S\s]*)\[\/quote\]/gi, function(match, attributes, quotationMark, innerContent) {
-						var $author = '';
-						var $link = '';
-						
-						if (attributes) {
-							attributes = attributes.substr(1);
-							attributes = attributes.split(',');
-							
-							switch (attributes.length) {
-								case 1:
-									$author = attributes[0];
-								break;
-								
-								case 2:
-									$author = attributes[0];
-									$link = attributes[1];
-								break;
-							}
-							
-							$author = WCF.String.escapeHTML($unquoteString($.trim($author)));
-							$link = WCF.String.escapeHTML($unquoteString($.trim($link)));
-						}
-						
-						var $quote = '<blockquote class="quoteBox container containerPadding quoteBoxSimple" cite="' + $link + '" data-author="' + $author + '">'
-								+ '<header contenteditable="false">'
-									+ '<h3>'
-										+ self.wbbcode._buildQuoteHeader($author, $link)
-									+ '</h3>'
-									+ '<a class="redactorQuoteEdit"></a>'
-								+ '</header>';
-						
-						innerContent = $.trim(innerContent);
-						var $tmp = '';
-						
-						if (innerContent.length) {
-							var $lines = innerContent.split('\n');
-							for (var $i = 0; $i < $lines.length; $i++) {
-								var $line = $lines[$i];
-								if ($line.length === 0) {
-									$line = self.opts.invisibleSpace;
-								}
-								else if ($line.match(/^@@([0-9\-]+)@@$/)) {
-									if (WCF.inArray(RegExp.$1, $knownQuotes)) {
-										// prevent quote being nested inside a <div> block
-										$tmp += $line;
-										continue;
-									}
-								}
-								
-								$tmp += '<div>' + $line + '</div>';
-							}
-						}
-						else {
-							$tmp = '<div>' + self.opts.invisibleSpace + '</div>';
-						}
-						
-						$quote += $tmp;
-						$quote += '</blockquote>';
-						
-						return $quote;
-					});
-				};
-				
-				// reinsert quotes in reverse order, adding the most outer quotes first
-				for (var $i = $cachedQuotes.length - 1; $i >= 0; $i--) {
-					var $cachedQuote = $cachedQuotes[$i];
-					var $regex = new RegExp('@@' + $cachedQuote.hashCode + '@@', 'g');
-					data = data.replace($regex, $transformQuote($cachedQuote.content));
-				}
-			}
-			
-			// insert codes
-			if ($cachedCodes.length) {
-				for (var $i = $cachedCodes.length - 1; $i >= 0; $i--) {
-					var $cachedCode = $cachedCodes[$i];
-					var $regex = new RegExp('@@' + $cachedCode.key + '@@', 'g');
-					var $value = $cachedCode.value;
-					
-					// [tt]
-					$value = $value.replace(/^\[tt\]([\s\S]+)\[\/tt\]/, (function(match, content) {
-						var $tmp = content.split("\n");
-						content = '';
-						
-						for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
-							var $line = $tmp[$i];
-							
-							if ($line.length) {
-								if (content.length) content += '</p><p>';
-								
-								content += '[tt]' + $line + '[/tt]';
-							}
-							else {
-								if ($i === 0 || ($i + 1) === $length) {
-									// ignore the first and last empty element
-									continue;
-								}
-								
-								if (content.match(/\[\/tt\]$/)) {
-									content += '</p><p>' + this.opts.invisibleSpace + '';
-								}
-								else {
-									content += '</p><p><br>';
-								}
-							}
-						}
-						
-						return content;
-					}).bind(this));
-					
-					// [code]
-					$value = $value.replace(/^\[code([^\]]*)\]([\S\s]*)\[\/code\]$/, (function(matches, parameters, content) {
-						var $highlighter = 'plain';
-						var $lineNumber = 0;
-						var $filename = '';
-						
-						if (parameters) {
-							parameters = parameters.substring(1);
-							parameters = parameters.split(',');
-							
-							var $isNumber = function(string) { return string.match(/^\d+$/); };
-							var $isFilename = function(string) { return (string.indexOf('.') !== -1) || (string.match(/^(["']).*\1$/)); };
-							var $isHighlighter = function(string) { return  (__REDACTOR_CODE_HIGHLIGHTERS[string] !== undefined); };
-							
-							var $unquoteFilename = function(filename) {
-								return filename.replace(/^(["'])(.*)\1$/, '$2');
-							};
-							
-							switch (parameters.length) {
-								case 1:
-									if ($isNumber(parameters[0])) {
-										$lineNumber = (parseInt(parameters[0]) > 1) ? parameters[0] : 0;
-									}
-									else if ($isFilename(parameters[0])) {
-										$filename = $unquoteFilename(parameters[0]);
-									}
-									else if ($isHighlighter(parameters[0])) {
-										$highlighter = parameters[0];
-									}
-								break;
-								
-								case 2:
-									if ($isNumber(parameters[0])) {
-										$lineNumber = (parseInt(parameters[0]) > 1) ? parameters[0] : 0;
-										
-										if ($isHighlighter(parameters[1])) {
-											$highlighter = parameters[1];
-										}
-										else if ($isFilename(parameters[1])) {
-											$filename = $unquoteFilename(parameters[1]);
-										}
-									}
-									else {
-										if ($isHighlighter(parameters[0])) $highlighter = parameters[0];
-										if ($isFilename(parameters[1])) $filename = $unquoteFilename(parameters[1]);
-									}
-								break;
-								
-								case 3:
-									if ($isHighlighter(parameters[0])) $highlighter = parameters[0];
-									if ($isNumber(parameters[1])) $lineNumber = parameters[1];
-									if ($isFilename(parameters[2])) $filename = $unquoteFilename(parameters[2]);
-								break;
-							}
-						}
-						
-						content = content.replace(/^\n+/, '').replace(/\n+$/, '').split(/\n/);
-						var $lines = '';
-						for (var $i = 0; $i < content.length; $i++) {
-							var $line = content[$i];
-							if (!$line.length) {
-								$line = this.opts.invisibleSpace;
-							}
-							
-							$lines += '<li>' + $line + '</li>';
-						}
-						
-						return '<div class="codeBox container" contenteditable="false" data-highlighter="' + $highlighter + '"' + ($filename ? ' data-filename="' + WCF.String.escapeHTML($filename) + '"' : '' ) + '>'
-							+ '<div>'
-								+ '<div>'
-									+ '<h3>' + __REDACTOR_CODE_HIGHLIGHTERS[$highlighter] + ($filename ? ': ' + WCF.String.escapeHTML($filename) : '') + '</h3>'
-								+ '</div>'
-								+ '<ol start="' + ($lineNumber > 1 ? $lineNumber : 1) + '">'
-									+ $lines
-								+ '</ol>'
-							+ '</div>'
-						+ '</div>';
-					}).bind(this));
-					
-					data = data.replace($regex, $value);
-				}
-			}
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
