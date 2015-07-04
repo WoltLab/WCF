@@ -59,6 +59,7 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				table: 'table',
 				td: 'td',
 				tr: 'tr',
+				tt: 'kbd',
 				
 				// callback replacement
 				color: this._replaceColor.bind(this),
@@ -85,6 +86,8 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 			
 			if (replace === undefined) {
 				// treat as plain text
+				console.debug(item);
+				console.debug(stack);
 				stack[item.pair] = stack[item.pair].source;
 				
 				return item.source;

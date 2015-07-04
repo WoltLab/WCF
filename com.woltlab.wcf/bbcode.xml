@@ -162,8 +162,8 @@
 			<buttonlabel>wcf.bbcode.button.spoiler</buttonlabel>
 		</bbcode>
 		<bbcode name="tt">
-			<htmlopen>code class="inlineCode"</htmlopen>
-			<htmlclose>code</htmlclose>
+			<htmlopen>kbd</htmlopen>
+			<htmlclose>kbd</htmlclose>
 			<allowedchildren>none</allowedchildren>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-terminal</wysiwygicon>

@@ -717,7 +717,7 @@ RedactorPlugins.wutil = function() {
 		 */
 		selectionEndOfEditor: function() {
 			var lastChild = this.$editor[0].lastElementChild;
-			if (lastChild === null || lastChild.nodeName === 'BLOCKQUOTE' || (lastChild.nodeName === 'DIV' && lastChild.classList.contains('codeBox'))) {
+			if (lastChild === null || lastChild.nodeName === 'BLOCKQUOTE' || (lastChild.nodeName === 'DIV' && lastChild.classList.contains('codeBox')) || lastChild.nodeName === 'KBD') {
 				var element = this.utils.createSpaceElement();
 				this.$editor[0].appendChild(element);
 				

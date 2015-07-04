@@ -63,33 +63,18 @@ define([], function() {
 					}
 					
 					if (item.closing) {
-						var lastIndex = this._findOpenTag(openTags, item.name);
-						if (lastIndex === -1) {
-							// tag was never opened, treat as plain text
-							stack[i] = item.source;
+						if (this._hasOpenTag(openTags, item.name)) {
+							reopenTags = this._closeUnclosedTags(stack, openTags, item.name);
+							for (var j = 0, innerLength = reopenTags.length; j < innerLength; j++) {
+								stack.splice(i, reopenTags[j]);
+								i++;
+							}
+							
+							openTags.pop().pair = i;
 						}
 						else {
-							tag = openTags.pop();
-							tag.pair = i;
-							
-							if (sourceBBCode === item.name) {
-								// join previous items in the stack
-								if (lastIndex + 2 < i) {
-									var joinWith = lastIndex + 1;
-									for (var j = lastIndex + 2; j < i; j++) {
-										stack[joinWith] += stack[j];
-										stack[j] = '';
-									}
-								}
-							}
-							else {
-								reopenTags = this._closeUnclosedTags(stack, openTags, item.name);
-								
-								for (var j = 0, innerLength = reopenTags.length; j < innerLength; j++) {
-									stack.splice(i, reopenTags[j]);
-									i++;
-								}
-							}
+							// tag was never opened, treat as plain text
+							stack[i] = item.source;
 						}
 						
 						if (sourceBBCode === item.name) {
@@ -132,14 +117,14 @@ define([], function() {
 			return reopenTags.reverse();
 		},
 		
-		_findOpenTag: function(openTags, name) {
+		_hasOpenTag: function(openTags, name) {
 			for (var i = openTags.length - 1; i >= 0; i--) {
 				if (openTags[i].name === name) {
-					return i;
+					return true;
 				}
 			}
 			
-			return -1;
+			return false;
 		},
 		
 		_parseAttributes: function(attrString) {

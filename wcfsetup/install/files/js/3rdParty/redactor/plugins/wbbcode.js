@@ -673,6 +673,7 @@ RedactorPlugins.wbbcode = function() {
 				case $.ui.keyCode.DOWN:
 				case $.ui.keyCode.ENTER:
 				case $.ui.keyCode.UP:
+				case $.ui.keyCode.RIGHT:
 				case 83: // [S]
 					// handle keys
 				break;
@@ -818,6 +819,9 @@ RedactorPlugins.wbbcode = function() {
 						this.keydown.blockquote = false;
 						this.keydown.enterWithinBlockquote = true;
 					}
+					else if (current.nodeName === 'KBD') {
+						data.cancel = true;
+					}
 				break;
 				
 				// arrow up
@@ -855,6 +859,28 @@ RedactorPlugins.wbbcode = function() {
 					}
 					
 					data.cancel = true;
+				break;
+				
+				case $.ui.keyCode.RIGHT:
+					var range = window.getSelection().getRangeAt(0);
+					if (range.startContainer.nodeType === Node.TEXT_NODE && range.startContainer.length === range.startOffset) {
+						current = current.parentNode;
+						if (current.nodeName !== 'KBD') {
+							return;
+						}
+						
+						var editor = this.$editor[0];
+						if (current.nextElementSibling === editor.lastElementChild) {
+							current = current.nextElementSibling;
+							if (current.textContent === '') {
+								current.textContent = '\u200b';
+							}
+						}
+						
+						if (current === editor.lastElementChild) {
+							this.wutil.selectionEndOfEditor();
+						}
+					}
 				break;
 				
 				// [S]

@@ -129,8 +129,16 @@ RedactorPlugins.wbutton = function() {
 		 */
 		_addBBCodeButton: function(data) {
 			var $buttonName = '__wcf_' + data.name;
-			var $button = this.button.add($buttonName, data.label);
-			this.button.addCallback($button, this.wbutton._insertBBCode);
+			var button = this.button.add($buttonName, data.label);
+			if (data.name === 'tt') {
+				var newButton = this.button.build($buttonName, { command: 'kbd', title: data.label });
+				$('<li />').append(newButton).insertAfter(button.parent());
+				button.parent().remove();
+				button = newButton;
+			}
+			else {
+				this.button.addCallback(button, this.wbutton._insertBBCode);
+			}
 			
 			this._bbcodes[$buttonName] = {
 				name: data.name,
@@ -143,7 +151,7 @@ RedactorPlugins.wbutton = function() {
 			}
 			else {
 				// image reference
-				$button.css('background-image', 'url(' + __REDACTOR_ICON_PATH + data.icon + ')');
+				button.css('background-image', 'url(' + __REDACTOR_ICON_PATH + data.icon + ')');
 			}
 		},
 		

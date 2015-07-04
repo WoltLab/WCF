@@ -154,12 +154,12 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				else {
 					ref = element.nextSibling;
-					if (ref === null) {
+					if (ref === null || ref === element.nextElementSibling && ref.nodeName === 'BR') {
 						var space = this.utils.createSpaceElement();
 						if (element.nextSibling === null) element.parentNode.appendChild(space);
 						else element.parentNode.insertBefore(space, element.nextSibling);
 						
-						this.caret.setEnd(space);
+						this.caret.setAfter(space);
 					}
 					else {
 						this.caret.setBefore(ref);
@@ -212,6 +212,35 @@ RedactorPlugins.wmonkeypatch = function() {
 						}
 					}
 					
+					// check if caret is now inside <kbd>
+					range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
+					if (range !== null) {
+						var container = range.startContainer;
+						if (container.nodeType === Node.TEXT_NODE) container = container.parentNode;
+						
+						if (container.nodeName === 'KBD') {
+							if (container.nextElementSibling === editor.lastElementChild) {
+								if (editor.lastElementChild.nodeName === 'SPAN' && editor.lastElementChild.textContent === '') {
+									editor.removeChild(editor.lastElementChild);
+								}
+							}
+							else if (container.nextSibling === container.nextElementSibling) {
+								console.debug("this!");
+								if (container.nextElementSibling.nodeName === 'KBD' || container.nextElementSibling.nodeName === 'BR') {
+									setCaretBeforeOrAfter(container, false);
+								}
+								else {
+									console.debug(container.nextSibling);
+									console.debug(container.nextElementSibling);
+								}
+							}
+							
+							if (container === editor.lastElementChild) {
+								setCaretBeforeOrAfter(container, false);
+							}
+						}
+					}
+					
 					return false;
 				}
 				else if (event.target.nodeName === 'LI') {
@@ -238,7 +267,6 @@ RedactorPlugins.wmonkeypatch = function() {
 					}
 				}
 				else if (event.target.nodeName === 'BLOCKQUOTE') {
-					range = (window.getSelection().rangeCount) ? window.getSelection().getRangeAt(0) : null;
 					if (range !== null && range.collapsed) {
 						// check if caret is now inside a quote
 						var blockquote = null;
@@ -1064,9 +1092,9 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - handles custom button active states.
 		 */
 		observe: function() {
-			var $toggleButtons = (function(parent, searchFor, buttonSelector, inverse, className, skipInSourceMode) {
+			var $toggleButtons = (function(element, searchFor, buttonSelector, inverse, className, skipInSourceMode) {
 				var $buttons = this.$toolbar.find(buttonSelector);
-				if (parent && parent.closest(searchFor, this.$editor[0]).length != 0) {
+				if (element && element.closest(searchFor, this.$editor[0]).length != 0) {
 					$buttons[(inverse ? 'removeClass' : 'addClass')](className);
 				}
 				else {
@@ -1083,14 +1111,27 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.observe.buttons = (function(e, btnName) {
 				$mpButtons.call(this, e, btnName);
 				
-				var parent = this.selection.getParent();
-				parent = (parent === false) ? null : $(parent);
+				var element = this.selection.getCurrent();
+				if (element === false) {
+					console.debug("nope");
+					return;
+				}
 				
-				$toggleButtons(parent, 'ul, ol', 'a.re-indent, a.re-outdent', true, 'redactor-button-disabled');
-				//$toggleButtons(parent, 'inline.inlineCode', 'a.re-__wcf_tt', false, 'redactor-act');
-				$toggleButtons(parent, 'blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor-button-disabled', true);
-				$toggleButtons(parent, 'sub', 'a.re-subscript', false, 'redactor-act');
-				$toggleButtons(parent, 'sup', 'a.re-superscript', false, 'redactor-act');
+				if (element.nodeType === Node.TEXT_NODE) {
+					element = element.parentNode;
+				}
+				console.debug(element);
+				if (element === this.$editor[0]) {
+					return;
+				}
+				
+				element = $(element);
+				
+				$toggleButtons(element, 'ul, ol', 'a.re-indent, a.re-outdent', true, 'redactor-button-disabled');
+				$toggleButtons(element, 'kbd', 'a.re-__wcf_tt', false, 'redactor-act');
+				$toggleButtons(element, 'blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor-button-disabled', true);
+				$toggleButtons(element, 'sub', 'a.re-subscript', false, 'redactor-act');
+				$toggleButtons(element, 'sup', 'a.re-superscript', false, 'redactor-act');
 			}).bind(this);
 			
 			// observe.load

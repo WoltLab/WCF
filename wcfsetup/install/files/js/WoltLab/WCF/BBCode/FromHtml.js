@@ -101,6 +101,7 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 				{ tagName: 'SUB', bbcode: 'sub' },
 				{ tagName: 'SUP', bbcode: 'sup' },
 				{ tagName: 'U', bbcode: 'u' },
+				{ tagName: 'KBD', bbcode: 'tt' },
 				
 				// callback replacement
 				{ tagName: 'A', callback: this._convertUrl.bind(this) },
