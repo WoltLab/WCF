@@ -5,6 +5,15 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 	var _inlineConverter = {};
 	var _sourceConverter = [];
 	
+	function addSmileyPadding(element, before) {
+		var target = element[(before ? 'previousSibling' : 'nextSibling')];
+		if (target === null || target.nodeType !== Node.TEXT_NODE || !/\s$/.test(target.textContent)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	var BBCodeFromHtml = {
 		convert: function(message) {
 			if (message.length) this._setup();
@@ -177,7 +186,7 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 		_convertImage: function(element) {
 			if (element.classList.contains('smiley')) {
 				// smiley
-				element.outerHTML = ' ' + element.getAttribute('alt') + ' ';
+				element.outerHTML = (addSmileyPadding(element, true) ? ' ' : '') + element.getAttribute('alt') + (addSmileyPadding(element, false) ? ' ' : '');
 			}
 			else if (element.classList.contains('redactorEmbeddedAttachment')) {
 				// TODO: handle attachments
@@ -333,7 +342,7 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 		},
 		
 		_convertUrl: function(element) {
-			var content = element.textContent.trim(), href = element.href.trim();
+			var content = element.textContent.trim(), href = element.href.trim(), tagName = 'url';
 			
 			if (href === '' || content === '') {
 				// empty href or content
@@ -342,13 +351,15 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			}
 			
 			if (href.indexOf('mailto:') === 0) {
-				element.outerHTML = '[email=' + href.substr(6) + ']' + element.innerHTML + '[/email]';
+				href = href.substr(7);
+				tagName = 'email';
 			}
-			else if (href === content) {
-				element.outerHTML = '[url]' + href + '[/url]';
+			
+			if (href === content) {
+				element.outerHTML = '[' + tagName + ']' + href + '[/' + tagName + ']';
 			}
 			else {
-				element.outerHTML = "[url='" + href + "']" + element.innerHTML + "[/url]";
+				element.outerHTML = "[" + tagName + "='" + href + "']" + element.innerHTML + "[/" + tagName + "]";
 			}
 		},
 		

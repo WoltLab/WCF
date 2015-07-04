@@ -63,6 +63,7 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				// callback replacement
 				color: this._replaceColor.bind(this),
 				code: this._replaceCode.bind(this),
+				email: this._replaceEmail.bind(this),
 				list: this._replaceList.bind(this),
 				quote: this._replaceQuote.bind(this),
 				url: this._replaceUrl.bind(this),
@@ -116,6 +117,9 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 					stack[item.pair - 1] = tmp.replace(/\n$/, '');
 				}
 			}
+			
+			// replace smilies
+			this._replaceSmilies(stack);
 			
 			if (typeof replace === 'string') {
 				stack[item.pair] = '</' + replace + '>';
@@ -221,6 +225,38 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 			return '<span style="color: ' + StringUtil.escapeHTML(item.attributes[0]) + '">';
 		},
 		
+		_replaceEmail: function(stack, item, index) {
+			var email = '';
+			if (item.attributes.length) {
+				email = item.attributes[0];
+			}
+			else {
+				var element;
+				for (var i = index + 1; i < item.pair; i++) {
+					element = stack[i];
+					
+					if (typeof element === 'object') {
+						email = '';
+						break;
+					}
+					else {
+						email += element;
+					}
+				}
+				
+				// no attribute present and element is empty, handle as plain text
+				if (email.trim() === '') {
+					stack[item.pair] = stack[item.pair].source;
+					
+					return item.source;
+				}
+			}
+			
+			stack[item.pair] = '</a>';
+			
+			return '<a href="mailto:' + StringUtil.escapeHTML(email) + '">';
+		},
+		
 		_replaceImage: function(stack, item, index) {
 			stack[item.pair] = '';
 			
@@ -266,7 +302,7 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				styles.push('margin: ' + (float === 'left' ? '0 15px 7px 0' : '0 0 7px 15px'));
 			}
 			
-			return '<img src="' + source + '"' + (styles.length ? ' style="' + styles.join(';') + '"' : '') + '>';
+			return '<img src="' + StringUtil.escapeHTML(source) + '"' + (styles.length ? ' style="' + styles.join(';') + '"' : '') + '>';
 		},
 		
 		_replaceList: function(stack, item, index) {
@@ -331,6 +367,29 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 						+ '<a class="redactorQuoteEdit"></a>'
 					+ '</header>'
 					+ '<div>\u200b';
+		},
+		
+		_replaceSmilies: function(stack) {
+			var altValue, item, regexp;
+			for (var i = 0, length = stack.length; i < length; i++) {
+				item = stack[i];
+				
+				if (typeof item === 'string') {
+					for (var smileyCode in __REDACTOR_SMILIES) {
+						if (__REDACTOR_SMILIES.hasOwnProperty(smileyCode)) {
+							altValue = smileyCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+							regexp = new RegExp('(\\s|^)' + StringUtil.escapeRegExp(smileyCode) + '(?=\\s|$)', 'gi');
+							item = item.replace(regexp, '$1<img src="' + __REDACTOR_SMILIES[smileyCode] + '" class="smiley" alt="' + altValue + '">');
+						}
+					}
+					
+					stack[i] = item;
+				}
+				else if (__REDACTOR_SOURCE_BBCODES.indexOf(item.name) !== -1) {
+					// skip processing content
+					i = item.pair;
+				}
+			}
 		},
 		
 		_replaceUrl: function(stack, item, index) {

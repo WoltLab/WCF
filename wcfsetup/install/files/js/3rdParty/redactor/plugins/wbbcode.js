@@ -350,26 +350,10 @@ RedactorPlugins.wbbcode = function() {
 				return '[attach=' + $attachmentID + '][/attach]';
 			});
 			
-			// cache redactor's selection markers
-			var $cachedMarkers = { };
-			html.replace(/<span id="selection-marker-\d+" class="redactor-selection-marker"><\/span>/, function(match) {
-				var $key = match.hashCode();
-				$cachedMarkers[$key] = match.replace(/\$/g, '$$$$');
-				return '@@' + $key + '@@';
-			});
-			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'convertFromHtml', { html: html });
 			
 			// Remove remaining tags.
 			html = html.replace(/<[^(<|>)]+>/g, '');
-			
-			// insert redactor's selection markers
-			if ($.getLength($cachedMarkers)) {
-				for (var $key in $cachedMarkers) {
-					var $regex = new RegExp('@@' + $key + '@@', 'g');
-					data = data.replace($regex, $cachedMarkers[$key]);
-				}
-			}
 			
 			// Restore <, > and &
 			html = html.replace(/&lt;/g, '<');
@@ -398,36 +382,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// remove 0x200B (unicode zero width space)
 			data = this.wutil.removeZeroWidthSpace(data);
-			
-			// [email]
-			data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>' + this.opts.invisibleSpace);
-			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>' + this.opts.invisibleSpace);
-			
-			// [img]
-			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
-			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi, function(match, src, alignment) {
-				var $style = 'float: ' + alignment + ';';
-				if (alignment === 'left') {
-					$style += 'margin: 0 15px 7px 0';
-				}
-				else {
-					$style += 'margin: 0 0 7px 15px';
-				}
-				
-				return '<img src="' + src + '" style="' + $style + '" />';
-			});
-			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right|none)'?,'?(\d+)'?\]\[\/img\]/gi, function(match, src, alignment, width) {
-				var $style = 'float: ' + alignment + '; width: ' + width + 'px;';
-				if (alignment === 'left') {
-					$style += 'margin: 0 15px 7px 0';
-				}
-				else {
-					$style += 'margin: 0 0 7px 15px';
-				}
-				
-				return '<img src="' + src + '" style="' + $style + '" />';
-			});
-			data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
 			
 			// attachments
 			var $attachmentUrl = this.wutil.getOption('woltlab.attachmentUrl');
@@ -492,13 +446,6 @@ RedactorPlugins.wbbcode = function() {
 					
 					return match;
 				});
-			}
-			
-			// smileys
-			for (var smileyCode in __REDACTOR_SMILIES) {
-				var $smileyCode = smileyCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-				var regExp = new RegExp('(\\s|>|^)' + WCF.String.escapeRegExp($smileyCode) + '(?=\\s|<|$)', 'gi');
-				data = data.replace(regExp, '$1<img src="' + __REDACTOR_SMILIES[smileyCode] + '" class="smiley" alt="' + $smileyCode + '" />');
 			}
 			
 			// remove "javascript:"
