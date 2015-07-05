@@ -1,8 +1,8 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserList;
 use wcf\data\search\SearchEditor;
+use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
