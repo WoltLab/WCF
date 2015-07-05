@@ -1122,5 +1122,78 @@
 			<conditiongroup>userOptions</conditiongroup>
 		</type>
 		<!-- /user bulk processing conditions -->
+		
+		<!-- user search conditions -->
+		<type>
+			<name>com.woltlab.wcf.username</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserUsernameCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.email</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserEmailCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userGroup</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserGroupCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.languages</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserLanguageCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.registrationDate</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserRegistrationDateCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.registrationDateInterval</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserRegistrationDateIntervalCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.avatar</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserAvatarCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.state</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserStateCondition]]></classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.activityPoints</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>activityPoints</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.likesReceived</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>likesReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userOptions</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserOptionsCondition]]></classname>
+			<conditiongroup>userOptions</conditiongroup>
+		</type>
+		<!-- /user search conditions -->
 	</import>
 </data>

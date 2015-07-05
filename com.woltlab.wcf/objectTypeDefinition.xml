@@ -165,6 +165,11 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.condition.userSearch</name>
+			<interfacename><![CDATA[wcf\system\condition\IObjectListCondition]]></interfacename>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.adLocation</name>
 		</definition>
 		
