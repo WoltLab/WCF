@@ -188,15 +188,29 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			if (element.classList.contains('smiley')) {
 				// smiley
 				element.outerHTML = (addSmileyPadding(element, true) ? ' ' : '') + element.getAttribute('alt') + (addSmileyPadding(element, false) ? ' ' : '');
+				return;
 			}
-			else if (element.classList.contains('redactorEmbeddedAttachment')) {
-				// TODO: handle attachments
+			
+			var float = element.style.getPropertyValue('float') || 'none';
+			var width = element.style.getPropertyValue('width');
+			width = (typeof width === 'string') ? ~~width.replace(/px$/, '') : 0;
+			
+			if (element.classList.contains('redactorEmbeddedAttachment')) {
+				var attachmentId = element.getAttribute('data-attachment-id');
+				
+				if (width > 0) {
+					element.outerHTML = "[attach=" + attachmentId + "," + float + "," + width + "][/attach]";
+				}
+				else if (float !== 'none') {
+					element.outerHTML = "[attach=" + attachmentId + "," + float + "][/attach]";
+				}
+				else {
+					element.outerHTML = "[attach=" + attachmentId + "][/attach]";
+				}
 			}
 			else {
 				// regular image
-				var float = element.style.getPropertyValue('float') || 'none';
 				var source = element.src.trim();
-				var width = ~~element.style.getPropertyValue('width').replace(/px$/, '') || 0;
 				
 				if (width > 0) {
 					element.outerHTML = "[img='" + source + "'," + float + "," + width + "][/img]";

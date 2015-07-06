@@ -225,13 +225,8 @@ RedactorPlugins.wmonkeypatch = function() {
 								}
 							}
 							else if (container.nextSibling === container.nextElementSibling) {
-								console.debug("this!");
 								if (container.nextElementSibling.nodeName === 'KBD' || container.nextElementSibling.nodeName === 'BR') {
 									setCaretBeforeOrAfter(container, false);
-								}
-								else {
-									console.debug(container.nextSibling);
-									console.debug(container.nextElementSibling);
 								}
 							}
 							
@@ -662,21 +657,12 @@ RedactorPlugins.wmonkeypatch = function() {
 			}).bind(this);
 			
 			// image.update
-			var $moveImage = (function(image) {
-				var $parent = image.parent();
-				image = image.detach();
-				image.prependTo($parent);
-				
-				this.caret.setAfter(image);
-			}).bind(this);
-			
 			this.image.update = (function(image) {
 				this.image.hideResize();
 				this.buffer.set();
 				
 				image.attr('src', $('#redactor-image-link-source').val());
 				this.image.setFloating(image);
-				$moveImage(image);
 				
 				var link = $('#redactor-image-link-href').val().trim();
 				var anchor = image.closest('a', this.$editor[0]);
@@ -1113,14 +1099,13 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				var element = this.selection.getCurrent();
 				if (element === false) {
-					console.debug("nope");
 					return;
 				}
 				
 				if (element.nodeType === Node.TEXT_NODE) {
 					element = element.parentNode;
 				}
-				console.debug(element);
+				
 				if (element === this.$editor[0]) {
 					return;
 				}

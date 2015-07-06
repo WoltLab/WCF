@@ -1,7 +1,8 @@
-define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(EventHandler, Language, StringUtil, BBCodeParser) {
+define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Core, EventHandler, Language, StringUtil, BBCodeParser) {
 	"use strict";
 	
 	var _bbcodes = null;
+	var _options = {};
 	var _removeNewlineAfter = [];
 	var _removeNewlineBefore = [];
 	
@@ -10,7 +11,15 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 	function isHighlighter(value) { return __REDACTOR_CODE_HIGHLIGHTERS.hasOwnProperty(value); }
 	
 	var BBCodeToHtml = {
-		convert: function(message) {
+		convert: function(message, options) {
+			_options = Core.extend({
+				attachments: {
+					images: {},
+					thumbnailUrl: '',
+					url: ''
+				}
+			}, options);
+			
 			this._convertSpecials(message);
 			
 			var stack = BBCodeParser.parse(message);
@@ -19,12 +28,19 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				this._initBBCodes();
 			}
 			
-			var item;
+			var item, value;
 			for (var i = 0, length = stack.length; i < length; i++) {
 				item = stack[i];
 				
 				if (typeof item === 'object') {
-					stack[i] = this._replace(stack, item, i);
+					value = this._replace(stack, item, i);
+					if (Array.isArray(value)) {
+						stack[i] = (value[0] === null ? item.source : value[0]);
+						stack[item.pair] = (value[1] === null ? stack[item.pair].source : value[1]);
+					}
+					else {
+						stack[i] = value;
+					}
 				}
 			}
 			
@@ -62,6 +78,7 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				tt: 'kbd',
 				
 				// callback replacement
+				attach: this._replaceAttachment.bind(this),
 				color: this._replaceColor.bind(this),
 				code: this._replaceCode.bind(this),
 				email: this._replaceEmail.bind(this),
@@ -86,11 +103,7 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 			
 			if (replace === undefined) {
 				// treat as plain text
-				console.debug(item);
-				console.debug(stack);
-				stack[item.pair] = stack[item.pair].source;
-				
-				return item.source;
+				return [null, null];
 			}
 			
 			if (_removeNewlineAfter.indexOf(item.name) !== -1) {
@@ -125,13 +138,55 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 			this._replaceSmilies(stack);
 			
 			if (typeof replace === 'string') {
-				stack[item.pair] = '</' + replace + '>';
-				
-				return '<' + replace + '>';
+				return ['<' + replace + '>', '</' + replace + '>'];
 			}
 			else {
 				return replace(stack, item, index);
 			}
+		},
+		
+		_replaceAttachment: function(stack, item, index) {
+			var attachmentId = 0, attributes = item.attributes, length = attributes.length;
+			if (!_options.attachments.url) {
+				length = 0;
+			}
+			else if (length > 0) {
+				attachmentId = ~~attributes[0];
+				if (!_options.attachments.images.hasOwnProperty(attachmentId)) {
+					length = 0;
+				}
+			}
+			
+			if (length === 0) {
+				return [null, null];
+			}
+			
+			var maxHeight = ~~_options.attachments.images[attachmentId].height;
+			var maxWidth = ~~_options.attachments.images[attachmentId].width;
+			var styles = ['max-height: ' + maxHeight + 'px', 'max-width: ' + maxWidth + 'px'];
+			
+			if (length > 1) {
+				if (item.attributes[1] === 'left' || attributes[1] === 'right') {
+					styles.push('float: ' + attributes[1]);
+					styles.push('margin: ' + (attributes[1] === 'left' ? '0 15px 7px 0' : '0 0 7px 15px'));
+				}
+			}
+			
+			var baseUrl = _options.attachments.thumbnailUrl;
+			if (length > 2) {
+				width = ~~attributes[2] || 0;
+				if (width) {
+					if (width > maxWidth) width = maxWidth;
+					
+					styles.push('width: ' + width + 'px');
+					baseUrl = _options.attachments.url;
+				}
+			}
+			
+			return [
+				'<img src="' + baseUrl.replace(/987654321/, attachmentId) + '" class="redactorEmbeddedAttachment redactorDisableResize" data-attachment-id="' + attachmentId + '"' + (styles.length ? ' style="' + styles.join(';') + '"' : '') + '>',
+				''
+			];
 		},
 		
 		_replaceCode: function(stack, item, index) {
@@ -206,26 +261,23 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				}
 			}
 			
-			stack[item.pair] = '</ol></div></div>';
-			
-			return '<div class="codeBox container" contenteditable="false" data-highlighter="' + highlighter + '" data-filename="' + (filename ? StringUtil.escapeHTML(filename) : '') + '">'
+			return [
+				'<div class="codeBox container" contenteditable="false" data-highlighter="' + highlighter + '" data-filename="' + (filename ? StringUtil.escapeHTML(filename) : '') + '">'
 					+ '<div>'
 					+ '<div>'
 						+ '<h3>' + __REDACTOR_CODE_HIGHLIGHTERS[highlighter] + (filename ? ': ' + StringUtil.escapeHTML(filename) : '') + '</h3>'
 					+ '</div>'
-					+ '<ol start="' + (lineNumber > 1 ? lineNumber : 1) + '">';
+					+ '<ol start="' + (lineNumber > 1 ? lineNumber : 1) + '">',
+				'</ol></div></div>'
+			];
 		},
 		
 		_replaceColor: function(stack, item, index) {
 			if (!item.attributes.length || !item.attributes[0].match(/^[a-z0-9#]+$/i)) {
-				stack[item.pair] = '';
-				
-				return '';
+				return [null, null];
 			}
 			
-			stack[item.pair] = '</span>';
-			
-			return '<span style="color: ' + StringUtil.escapeHTML(item.attributes[0]) + '">';
+			return ['<span style="color: ' + StringUtil.escapeHTML(item.attributes[0]) + '">', '</span>'];
 		},
 		
 		_replaceEmail: function(stack, item, index) {
@@ -249,20 +301,14 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				
 				// no attribute present and element is empty, handle as plain text
 				if (email.trim() === '') {
-					stack[item.pair] = stack[item.pair].source;
-					
-					return item.source;
+					return [null, null];
 				}
 			}
 			
-			stack[item.pair] = '</a>';
-			
-			return '<a href="mailto:' + StringUtil.escapeHTML(email) + '">';
+			return ['<a href="mailto:' + StringUtil.escapeHTML(email) + '">', '</a>'];
 		},
 		
 		_replaceImage: function(stack, item, index) {
-			stack[item.pair] = '';
-			
 			var float = 'none', source = '', width = 0;
 			
 			switch (item.attributes.length) {
@@ -305,7 +351,7 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				styles.push('margin: ' + (float === 'left' ? '0 15px 7px 0' : '0 0 7px 15px'));
 			}
 			
-			return '<img src="' + StringUtil.escapeHTML(source) + '"' + (styles.length ? ' style="' + styles.join(';') + '"' : '') + '>';
+			return ['<img src="' + StringUtil.escapeHTML(source) + '"' + (styles.length ? ' style="' + styles.join(';') + '"' : '') + '>', ''];
 		},
 		
 		_replaceList: function(stack, item, index) {
@@ -319,17 +365,14 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 			}
 			
 			if (type == '1' || type === 'decimal') {
-				stack[item.pair] = '</ol>';
-				
-				return '<ol>';
+				return ['<ol>', '</ol>'];
 			}
 			
-			stack[item.pair] = '</ul>';
 			if (type.length && type.match(/^(?:none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$/)) {
-				return '<ul style="list-style-type: ' + type + '">';
+				return ['<ul style="list-style-type: ' + type + '">', '</ul>'];
 			}
 			
-			return '<ul>';
+			return ['<ul>', '</ul>'];
 		},
 		
 		_replaceQuote: function(stack, item, index) {
@@ -341,8 +384,6 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 			else if (item.attributes.length === 1) {
 				author = item.attributes[0];
 			}
-			
-			stack[item.pair] = '</div></blockquote>';
 			
 			// get rid of the trailing newline for quote content
 			for (var i = item.pair - 1; i > index; i--) {
@@ -362,14 +403,17 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				header = '<small>' + Language.get('wcf.bbcode.quote.title.clickToSet') + '</small>';
 			}
 			
-			return '<blockquote class="quoteBox container containerPadding quoteBoxSimple" cite="' + StringUtil.escapeHTML(link) + '" data-author="' + StringUtil.escapeHTML(author) + '">'
+			return [
+				'<blockquote class="quoteBox container containerPadding quoteBoxSimple" cite="' + StringUtil.escapeHTML(link) + '" data-author="' + StringUtil.escapeHTML(author) + '">'
 					+ '<header contenteditable="false">'
 						+ '<h3>'
 							+ header
 						+ '</h3>'
 						+ '<a class="redactorQuoteEdit"></a>'
 					+ '</header>'
-					+ '<div>\u200b';
+					+ '<div>\u200b',
+				'</div></blockquote>'
+			];
 		},
 		
 		_replaceSmilies: function(stack) {
@@ -403,9 +447,7 @@ define(['EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], 
 				return '';
 			}
 			
-			stack[item.pair] = '</a>';
-			
-			return '<a href="' + StringUtil.escapeHTML(item.attributes[0]) + '">';
+			return ['<a href="' + StringUtil.escapeHTML(item.attributes[0]) + '">', '</a>'];
 		}
 	};
 	

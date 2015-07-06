@@ -295,78 +295,20 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	string		message
 		 */
 		convertFromHtml: function(message) {
-			// DEBUG ONLY
-			return __REDACTOR_AMD_DEPENDENCIES.BBCodeFromHTML.convert(message);
+			var obj = { html: message };
 			
-			var $searchFor = [ ];
+			/** @deprecated legacy event */
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', obj);
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
+			/** @deprecated legacy event */
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'convertFromHtml', obj);
 			
-			// remove zero-width space sometimes slipping through
-			html = html.replace(/&#(8203|x200b);/g, '');
+			obj.html = __REDACTOR_AMD_DEPENDENCIES.BBCodeFromHTML.convert(obj.html);
 			
-			// revert conversion of special characters
-			html = html.replace(/&trade;/gi, '\u2122');
-			html = html.replace(/&copy;/gi, '\u00a9');
-			html = html.replace(/&hellip;/gi, '\u2026');
-			html = html.replace(/&mdash;/gi, '\u2014');
-			html = html.replace(/&dash;/gi, '\u2010');
+			/** @deprecated legacy event */
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', obj);
 			
-			// attachments
-			html = html.replace(/<img([^>]*?)class="[^"]*redactorEmbeddedAttachment[^"]*"([^>]*?)>/gi, function(match, attributesBefore, attributesAfter) {
-				var $attributes = attributesBefore + ' ' + attributesAfter;
-				var $attachmentID;
-				if ($attributes.match(/data-attachment-id="(\d+)"/)) {
-					$attachmentID = RegExp.$1;
-				}
-				else {
-					return match;
-				}
-				
-				var $float = 'none';
-				var $width = null;
-				
-				if ($attributes.match(/style="([^"]+)"/)) {
-					var $styles = RegExp.$1.split(';');
-					
-					for (var $i = 0; $i < $styles.length; $i++) {
-						var $style = $.trim($styles[$i]);
-						if ($style.match(/^float: (left|right)$/)) {
-							$float = RegExp.$1;
-						}
-						else if ($style.match(/^width: (\d+)px$/)) {
-							$width = RegExp.$1;
-						}
-					}
-					
-					if ($width !== null) {
-						return '[attach=' + $attachmentID + ',' + $float + ',' + $width + '][/attach]';
-					}
-					else if ($float !== 'none') {
-						return '[attach=' + $attachmentID + ',' + $float + '][/attach]';
-					}
-				}
-				
-				return '[attach=' + $attachmentID + '][/attach]';
-			});
-			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'convertFromHtml', { html: html });
-			
-			// Remove remaining tags.
-			html = html.replace(/<[^(<|>)]+>/g, '');
-			
-			// Restore <, > and &
-			html = html.replace(/&lt;/g, '<');
-			html = html.replace(/&gt;/g, '>');
-			html = html.replace(/&amp;/g, '&');
-			
-			// Restore ( and )
-			html = html.replace(/%28/g, '(');
-			html = html.replace(/%29/g, ')');
-			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', { html: html });
-			
-			return html;
+			return obj.html;
 		},
 		
 		/**
@@ -375,85 +317,23 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	string		message
 		 */
 		convertToHtml: function(message) {
-			// DEBUG ONLY
-			return __REDACTOR_AMD_DEPENDENCIES.BBCodeToHTML.convert(message);
+			var obj = { data: message };
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertToHtml', { data: data });
+			/** @deprecated legacy event */
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertToHtml', obj);
 			
-			// remove 0x200B (unicode zero width space)
-			data = this.wutil.removeZeroWidthSpace(data);
+			obj.data = __REDACTOR_AMD_DEPENDENCIES.BBCodeToHTML.convert(obj.data, {
+				attachments: {
+					images: this.wbbcode._getImageAttachments(),
+					thumbnailUrl: this.wutil.getOption('woltlab.attachmentThumbnailUrl'),
+					url: this.wutil.getOption('woltlab.attachmentUrl')
+				}
+			});
 			
-			// attachments
-			var $attachmentUrl = this.wutil.getOption('woltlab.attachmentUrl');
-			var $attachmentThumbnailUrl = this.wutil.getOption('woltlab.attachmentThumbnailUrl');
-			if ($attachmentUrl) {
-				var $imageAttachments = this.wbbcode._getImageAttachments();
-				
-				data = data.replace(/\[attach=(\d+)\]\[\/attach\]/g, function(match, attachmentID, alignment) {
-					attachmentID = parseInt(attachmentID);
-					
-					if ($imageAttachments[attachmentID] !== undefined) {
-						return '<img src="' + $attachmentThumbnailUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment redactorDisableResize" data-attachment-id="' + attachmentID + '" />';
-					}
-					
-					return match;
-				});
-				
-				data = data.replace(/\[attach=(\d+),(left|right|none)\]\[\/attach\]/g, function(match, attachmentID, alignment) {
-					attachmentID = parseInt(attachmentID);
-					
-					if ($imageAttachments[attachmentID] !== undefined) {
-						var $style = '';
-						if (alignment === 'left' || alignment === 'right') {
-							$style = 'float: ' + alignment + ';';
-							
-							if (alignment === 'left') {
-								$style += 'margin: 0 15px 7px 0';
-							}
-							else {
-								$style += 'margin: 0 0 7px 15px';
-							}
-						}
-						
-						$style = ' style="' + $style + '"';
-						
-						return '<img src="' + $attachmentThumbnailUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment redactorDisableResize" data-attachment-id="' + attachmentID + '"' + $style + ' />';
-					}
-					
-					return match;
-				});
-				
-				data = data.replace(/\[attach=(\d+),(left|right|none),(\d+)\]\[\/attach\]/g, function(match, attachmentID, alignment, width) {
-					attachmentID = parseInt(attachmentID);
-					
-					if ($imageAttachments[attachmentID] !== undefined) {
-						var $style = 'width: ' + width + 'px; max-height: ' + $imageAttachments[attachmentID].height + 'px; max-width: ' + $imageAttachments[attachmentID].width + 'px;';
-						if (alignment === 'left' || alignment === 'right') {
-							$style += 'float: ' + alignment + ';';
-							
-							if (alignment === 'left') {
-								$style += 'margin: 0 15px 7px 0';
-							}
-							else {
-								$style += 'margin: 0 0 7px 15px';
-							}
-						}
-						
-						$style = ' style="' + $style + '"';
-						
-						return '<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '"' + $style + ' />';
-					}
-					
-					return match;
-				});
-			}
+			/** @deprecated legacy event */
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', obj);
 			
-			// remove "javascript:"
-			data = data.replace(/(javascript):/gi, '$1<span></span>:');
-			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
-			
-			return data;
+			return obj.data;
 		},
 		
 		/**
