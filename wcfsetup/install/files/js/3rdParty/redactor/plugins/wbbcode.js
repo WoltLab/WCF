@@ -1547,6 +1547,9 @@ RedactorPlugins.wbbcode = function() {
 			});
 			html = html.replace(/<\/h[1-6]>/g, '[/size]');
 			
+			// fix empty paragraphs when pasting from Microsoft Word
+			html = html.replace(/<o:p>&nbsp;<\/o:p>/g, '<br>');
+			
 			// convert block-level elements
 			html = html.replace(/<(article|header)[^>]+>/g, '<div>');
 			html = html.replace(/<\/(article|header)>/g, '</div>');
