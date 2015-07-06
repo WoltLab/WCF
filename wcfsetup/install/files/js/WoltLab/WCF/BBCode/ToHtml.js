@@ -84,6 +84,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 				email: this._replaceEmail.bind(this),
 				list: this._replaceList.bind(this),
 				quote: this._replaceQuote.bind(this),
+				size: this._replaceSize.bind(this),
 				url: this._replaceUrl.bind(this),
 				img: this._replaceImage.bind(this)
 			};
@@ -439,12 +440,18 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			}
 		},
 		
+		_replaceSize: function(stack, item, index) {
+			if (!item.attributes.length || ~~item.attributes[0] === 0) {
+				return [null, null];
+			}
+			
+			return ['<span style="font-size: ' + ~~item.attributes[0] + 'pt">', '</span>'];
+		},
+		
 		_replaceUrl: function(stack, item, index) {
 			// ignore url bbcode without arguments
 			if (!item.attributes.length) {
-				stack[item.pair] = '';
-				
-				return '';
+				return [null, null];
 			}
 			
 			return ['<a href="' + StringUtil.escapeHTML(item.attributes[0]) + '">', '</a>'];

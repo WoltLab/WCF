@@ -501,16 +501,19 @@ RedactorPlugins.wmonkeypatch = function() {
 			// fixes an issue related to setSelectionRange on a hidden textarea in Firefox (NS_ERROR_FAILURE, #1984)
 			var $mpShowCode = this.code.showCode;
 			this.code.showCode = (function() {
-				var $hiddenParent = null;
+				var height = this.$editor.innerHeight(), hiddenParent = null;
 				if (!this.$textarea.is(':visible')) {
-					$hiddenParent = this.$textarea.parentsUntil(':visible').last();
-					$hiddenParent.show();
+					hiddenParent = this.$textarea.parentsUntil(':visible').last();
+					hiddenParent.show();
 				}
 				
 				$mpShowCode.call(this);
 				
-				if ($hiddenParent !== null) {
-					$hiddenParent.hide();
+				// jQuery's .height() seems to add the paddings
+				this.$textarea[0].style.setProperty('height', height + 'px');
+				
+				if (hiddenParent !== null) {
+					hiddenParent.hide();
 				}
 			}).bind(this);
 		},
