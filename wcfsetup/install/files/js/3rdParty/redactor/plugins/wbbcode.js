@@ -343,74 +343,57 @@ RedactorPlugins.wbbcode = function() {
 		 * @return	string
 		 */
 		_pasteBeforeCallback: function(html) {
-			var $levels = {
+			var container = document.createElement('div');
+			container.innerHTML = html;
+			document.body.appendChild(container);
+			
+			// handle <h1> ... <h6> tags
+			var defaultSizes = {
 				1: 24,
 				2: 22,
 				3: 18,
 				4: 14,
 				5: 12,
 				6: 10
-			};
-			
-			// replace <h1> ... </h6> tags
-			html = html.replace(/<h([1-6])([^>]*)>/g, function(match, level, elementAttributes) {
-				if (elementAttributes && elementAttributes.match(/style="([^"]+?)"/)) {
-					if (/font-size: ?(\d+|\d+\.\d+)(px|pt|em|rem|%)/.test(RegExp.$1)) {
-						var $div = $('<div style="width: ' + RegExp.$1 + RegExp.$2 + '; position: absolute;" />').appendTo(document.body);
-						var $width = parseInt($div[0].clientWidth);
-						$div.remove();
+			}, element, elements, size, styles;
+			for (var i = 1; i <= 6; i++) {
+				elements = container.getElementsByTagName('H' + i);
+				while (elements.length) {
+					element = elements[0];
+					size = defaultSizes[i];
+					
+					if (element.style.fontSize) {
+						styles = window.getComputedStyle(element);
+						size = Math.round(styles.getPropertyValue('font-size').replace(/px$/, ''));
 						
-						// look for the closest matching size
-						var $bestMatch = -1;
-						var $isExactMatch = false;
-						$.each($levels, function(k, v) {
-							if ($bestMatch === -1) {
-								$bestMatch = k;
-							}
-							else {
-								if (Math.abs($width - v) < Math.abs($width - $levels[$bestMatch])) {
-									$bestMatch = k;
-								}
-							}
-							
-							if ($width == v) {
-								$isExactMatch = true;
-							}
-						});
-						
-						if (!$isExactMatch) {
-							// if dealing with non-exact matches, lower size by one level
-							$bestMatch = ($bestMatch < 6) ? parseInt($bestMatch) + 1 : $bestMatch;
-						}
-						
-						level = $bestMatch;
+						if (size > 24) size = 24;
+						else if (size > 22) size = 22;
+						else if (size > 18) size = 22;
+						else if (size > 14) size = 14;
+						else if (size > 12) size = 14;
+						else if (size > 10) size = 12;
+						else size = 10;
 					}
+					
+					element.outerHTML = '<span style="font-size: ' + size + 'pt" data-verified="redactor" rel="font-size: ' + size + 'pt">' + element.innerHTML + '</span>';
 				}
-				
-				return '[size=' + $levels[level] + ']';
-			});
-			html = html.replace(/<\/h[1-6]>/g, '[/size]');
+			}
 			
-			// convert block-level elements
-			html = html.replace(/<(article|header)[^>]+>/g, '<div>');
-			html = html.replace(/<\/(article|header)>/g, '</div>');
+			document.body.removeChild(container);
 			
-			// replace nested elements e.g. <div><p>...</p></div>
-			html = html.replace(/<(div|p)([^>]+)?><(div|p)([^>]+)?>/g, '<p>');
-			html = html.replace(/<\/(div|p)><\/(div|p)>/g, '</p>');
-			//html = html.replace(/<(div|p)><br><\/(div|p)>/g, '<p>');
-			
-			// strip classes from certain elements
-			html = html.replace(/<(?:div|p|span)[^>]+>/gi, function(match) {
-				return match.replace(/ class="[^"]+"/, '');
-			});
+			// remove CSS classes from certain elements
+			elements = container.querySelectorAll('div,p,span');
+			for (var i = 0, length = elements.length; i < length; i++) {
+				if (elements[0].className) elements[0].className = '';
+			}
 			
 			// drop <wbr>
-			html = html.replace(/<\/?wbr[^>]*>/g, '');
+			elements = container.getElementsByTagName('WBR');
+			while (elements.length) {
+				elements[0].parentNode.removeChild(elements[0]);
+			}
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforePaste', { html: html });
-			
-			return html;
+			return container.innerHTML;
 		},
 		
 		/**
@@ -420,28 +403,6 @@ RedactorPlugins.wbbcode = function() {
 		 * @return	string
 		 */
 		_pasteCallback: function(html) {
-			/*var $uuid = WCF.getUUID();
-			
-			// replace <p>...</p> with <p>...</p><p><br></p> unless there is already a newline
-			html = html.replace(/<p>([\s\S]*?)<\/p>/gi, function(match, content) {
-				if (content.match(/^<br( \/)?>$/)) {
-					return match;
-				}
-				
-				return match + '@@@' + $uuid + '@@@';
-			});
-			html = html.replace(new RegExp('@@@' + $uuid + '@@@(<p><br(?: /)?></p>)?', 'g'), function(match, next) {
-				if (next) {
-					return next;
-				}
-				
-				return '<p><br></p>';
-			});*/
-			
-			// restore font size
-			html = html.replace(/\[size=(\d+)\]/g, '<p><span style="font-size: $1pt">');
-			html = html.replace(/\[\/size\]/g, '</span></p>');
-			
 			// strip background-color
 			html = html.replace(/style="([^"]+)"/, function(match, inlineStyles) {
 				var $parts = inlineStyles.split(';');
@@ -457,18 +418,6 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterPaste', { html: html });
-			
-			return html;
-			
-			// TODO
-			
-			// handle pasting of images in Firefox
-			html = html.replace(/<img([^>]+)>/g, function(match, content) {
-				match = match.replace(/data-mozilla-paste-image="0"/, 'data-mozilla-paste-image="0" style="display:none"');
-				return match;
-			});
-			
-			
 			
 			return html;
 		},
