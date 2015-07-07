@@ -37,7 +37,7 @@ define(['DOM/Util'], function(DOMUtil) {
 		return children;
 	};
 	
-	var _parent = function(el, type, value) {
+	var _parent = function(el, type, value, untilElement) {
 		if (!(el instanceof Element)) {
 			throw new TypeError("Expected a valid element as first argument.");
 		}
@@ -45,6 +45,10 @@ define(['DOM/Util'], function(DOMUtil) {
 		el = el.parentNode;
 		
 		while (el instanceof Element) {
+			if (el === untilElement) {
+				return null;
+			}
+			
 			if (_probe[type](el, value)) {
 				return el;
 			}
@@ -144,10 +148,11 @@ define(['DOM/Util'], function(DOMUtil) {
 		 * 
 		 * @param	{Element}	el		child element
 		 * @param	{string}	selector	CSS selector to match parent nodes against
+		 * @param	{Element=}	untilElement	stop when reaching this element
 		 * @return	{(Element|null)}	null if no parent node matched the selector
 		 */
-		parentBySel: function(el, selector) {
-			return _parent(el, SELECTOR, selector);
+		parentBySel: function(el, selector, untilElement) {
+			return _parent(el, SELECTOR, selector, untilElement);
 		},
 		
 		/**
@@ -155,10 +160,11 @@ define(['DOM/Util'], function(DOMUtil) {
 		 * 
 		 * @param	{Element}	el		child element
 		 * @param	{string}	className	CSS class name
+		 * @param	{Element=}	untilElement	stop when reaching this element
 		 * @return	{(Element|null)}	null if there is no parent node with given class
 		 */
-		parentByClass: function(el, className) {
-			return _parent(el, CLASS_NAME, className);
+		parentByClass: function(el, className, untilElement) {
+			return _parent(el, CLASS_NAME, className, untilElement);
 		},
 		
 		/**
@@ -166,10 +172,11 @@ define(['DOM/Util'], function(DOMUtil) {
 		 * 
 		 * @param	{Element}	el		child element
 		 * @param	{string}	tagName		element tag name
+		 * @param	{Element=}	untilElement	stop when reaching this element
 		 * @return	{(Element|null)}	null if there is no parent node of given tag type
 		 */
-		parentByTag: function(el, tagName) {
-			return _parent(el, TAG_NAME, tagName);
+		parentByTag: function(el, tagName, untilElement) {
+			return _parent(el, TAG_NAME, tagName, untilElement);
 		},
 		
 		/**
