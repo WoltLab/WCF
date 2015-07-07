@@ -178,7 +178,7 @@ class RequestHandler extends SingletonFactory {
 				}
 				
 				// handle controller aliasing
-				if (!URL_LEGACY_MODE && isset($routeData['controller'])) {
+				if (empty($routeData['isImplicitController']) && !URL_LEGACY_MODE && isset($routeData['controller'])) {
 					$ciController = mb_strtolower($routeData['controller']);
 					
 					// aliased controller, redirect to new URL
@@ -288,6 +288,8 @@ class RequestHandler extends SingletonFactory {
 		if ($landingPage === null) {
 			return;
 		}
+		
+		if (empty($routeData['controller'])) $routeData['isImplicitController'] = true;
 		
 		// resolve implicit application abbreviation for landing page controller
 		$landingPageApplication = $landingPage->getApplication();
