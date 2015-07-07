@@ -654,7 +654,7 @@
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
 		<item name="wcf.acp.notice.cssClassName"><![CDATA[Darstellung]]></item>
-		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[Wählen Sie eine vorgegeben Darstellungsmöglichkeiten aus oder wählen Sie eine eigene Darstellung durch Angabe einer CSS-Klasse.]]></item>
+		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[Sie können aus den vorgegebenen Darstellungen wählen oder eine eigene Darstellung durch Angabe einer <abbr title="Cascading Style Sheets">CSS</abbr>-Klasse nutzen.]]></item>
 		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Fehlermeldung]]></item>
 		<item name="wcf.acp.notice.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.notice.cssClassName.info"><![CDATA[Information]]></item>
