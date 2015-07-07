@@ -1,3 +1,11 @@
+/**
+ * Converts a message containing HTML tags into BBCodes.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	WoltLab/WCF/BBCode/FromHtml
+ */
 define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, StringUtil, DOMTraverse) {
 	"use strict";
 	
@@ -5,6 +13,13 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 	var _inlineConverter = {};
 	var _sourceConverter = [];
 	
+	/**
+	 * Returns true if a whitespace should be inserted before or after the smiley.
+	 * 
+	 * @param	{Element}	element		image element
+	 * @param	{boolean}	before		evaluate previous node
+	 * @return	{boolean}	true if a whitespace should be inserted
+	 */
 	function addSmileyPadding(element, before) {
 		var target = element[(before ? 'previousSibling' : 'nextSibling')];
 		if (target === null || target.nodeType !== Node.TEXT_NODE || !/\s$/.test(target.textContent)) {
@@ -14,7 +29,16 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 		return false;
 	}
 	
+	/**
+	 * @module	WoltLab/WCF/BBCode/FromHtml
+	 */
 	var BBCodeFromHtml = {
+		/**
+		 * Converts a message containing HTML elements into BBCodes.
+		 * 
+		 * @param	{string}	message		message containing HTML elements
+		 * @return	{string}	message containing BBCodes
+		 */
 		convert: function(message) {
 			if (message.length) this._setup();
 			
@@ -25,22 +49,38 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			var elements = container.getElementsByTagName('P');
 			while (elements.length) elements[0].outerHTML = elements[0].innerHTML;
 			
-			var elements = container.getElementsByTagName('BR');
+			elements = container.getElementsByTagName('BR');
 			while (elements.length) elements[0].outerHTML = "\n";
 			
+			// prevent conversion taking place inside source bbcodes
 			var sourceElements = this._preserveSourceElements(container);
+			
+			EventHandler.fire('com.woltlab.wcf.bbcode.fromHtml', 'beforeConvert', { container: container });
 			
 			for (var i = 0, length = _converter.length; i < length; i++) {
 				this._convert(container, _converter[i]);
 			}
 			
+			EventHandler.fire('com.woltlab.wcf.bbcode.fromHtml', 'afterConvert', { container: container });
+			
 			this._restoreSourceElements(container, sourceElements);
+			
+			// remove remaining HTML elements
+			elements = container.getElementsByTagName('*');
+			while (elements.length) elements[0].outerHTML = elements[0].innerHTML;
 			
 			message = this._convertSpecials(container.innerHTML);
 			
 			return message;
 		},
 		
+		/**
+		 * Replaces HTML elements mapping to source BBCodes to avoid
+		 * them being handled by other converters.
+		 * 
+		 * @param	{Element}	container	container element
+		 * @return	{array<object>}	list of source elements and their placeholder
+		 */
 		_preserveSourceElements: function(container) {
 			var elements, sourceElements = [], tmp;
 			
@@ -58,6 +98,32 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			return sourceElements;
 		},
 		
+		/**
+		 * Replaces an element with a placeholder.
+		 * 
+		 * @param	{Element}	element		target element
+		 * @param	{array<object>}	list of removed elements and their placeholders
+		 */
+		_preserveSourceElement: function(element, sourceElements) {
+			var placeholder = document.createElement('var');
+			placeholder.setAttribute('data-source', 'wcf');
+			element.parentNode.insertBefore(placeholder, element);
+			
+			var fragment = document.createDocumentFragment();
+			fragment.appendChild(element);
+			
+			sourceElements.push({
+				fragment: fragment,
+				placeholder: placeholder
+			});
+		},
+		
+		/**
+		 * Reinserts source elements for parsing.
+		 * 
+		 * @param	{Element}	container	container element
+		 * @param	{array<object>}	sourceElements	list of removed elements and their placeholders
+		 */
 		_restoreSourceElements: function(container, sourceElements) {
 			var element, elements, placeholder;
 			for (var i = 0, length = sourceElements.length; i < length; i++) {
@@ -80,6 +146,12 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			}
 		},
 		
+		/**
+		 * Converts special entities.
+		 * 
+		 * @param	{string}	message		HTML message
+		 * @return	{string}	HTML message
+		 */
 		_convertSpecials: function(message) {
 			message = message.replace(/&amp;/g, '&');
 			message = message.replace(/&lt;/g, '<');
@@ -88,6 +160,9 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			return message;
 		},
 		
+		/**
+		 * Sets up converters applied to elements in linear order.
+		 */
 		_setup: function() {
 			if (_converter.length) {
 				return;
@@ -139,6 +214,12 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			});
 		},
 		
+		/**
+		 * Converts an element into a raw string.
+		 * 
+		 * @param	{Element}	container	container element
+		 * @param	{object}	converter	converter object
+		 */
 		_convert: function(container, converter) {
 			if (typeof converter === 'function') {
 				converter(container);
@@ -158,6 +239,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			}
 		},
 		
+		/**
+		 * Converts <blockquote> into [quote].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertBlockquote: function(element) {
 			var author = element.getAttribute('data-author') || '';
 			var link = element.getAttribute('cite') || '';
@@ -184,6 +270,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			element.outerHTML = open + element.innerHTML.replace(/^\n*/, '').replace(/\n*$/, '') + '[/quote]\n';
 		},
 		
+		/**
+		 * Converts <img> into smilies, [attach] or [img].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertImage: function(element) {
 			if (element.classList.contains('smiley')) {
 				// smiley
@@ -224,6 +315,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			}
 		},
 		
+		/**
+		 * Converts <ol> and <ul> into [list].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertList: function(element) {
 			var open;
 			
@@ -243,6 +339,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			element.outerHTML = open + element.innerHTML + '[/list]';
 		},
 		
+		/**
+		 * Converts <li> into [*] unless it is not encapsulated in <ol> or <ul>.
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertListItem: function(element) {
 			if (element.parentNode.nodeName !== 'UL' && element.parentNode.nodeName !== 'OL') {
 				element.outerHTML = element.innerHTML;
@@ -252,6 +353,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			}
 		},
 		
+		/**
+		 * Converts <span> into a series of BBCodes including [color], [font] and [size].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertSpan: function(element) {
 			if (element.style.length || element.className) {
 				var converter, value;
@@ -275,6 +381,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			element.outerHTML = element.innerHTML;
 		},
 		
+		/**
+		 * Converts <div> into a series of BBCodes including [align].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertDiv: function(element) {
 			if (element.className.length || element.style.length) {
 				var converter, value;
@@ -296,6 +407,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			element.outerHTML = element.innerHTML;
 		},
 		
+		/**
+		 * Converts the CSS style `color` into [color].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertInlineColor: function(element, value) {
 			if (value.match(/^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i)) {
 				var r = RegExp.$1;
@@ -309,6 +425,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			element.innerHTML = '[color=' + value + ']' + element.innerHTML + '[/color]';
 		},
 		
+		/**
+		 * Converts the CSS style `font-size` into [size].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertInlineFontSize: function(element, value) {
 			if (value.match(/^(\d+)pt$/)) {
 				value = RegExp.$1;
@@ -330,16 +451,31 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			}
 		},
 		
+		/**
+		 * Converts the CSS style `font-family` into [font].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertInlineFontFamily: function(element, value) {
 			element.innerHTML = '[font=' + value.replace(/'/g, '') + ']' + element.innerHTML + '[/font]';
 		},
 		
+		/**
+		 * Converts the CSS style `text-align` into [align].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertInlineTextAlign: function(element, value) {
 			if (value === 'left' || value === 'right' || value === 'justify') {
 				element.innerHTML = '[align=' + value + ']' + innerHTML + '[/align]';
 			}
 		},
 		
+		/**
+		 * Converts tables and their children into BBCodes.
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertTable: function(element) {
 			var elements = element.getElementsByTagName('TD');
 			while (elements.length) {
@@ -356,6 +492,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			element.outerHTML = '\n[table]' + innerHtml + '\n[/table]\n';
 		},
 		
+		/**
+		 * Converts <a> into [email] or [url].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertUrl: function(element) {
 			var content = element.textContent.trim(), href = element.href.trim(), tagName = 'url';
 			
@@ -378,6 +519,11 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			}
 		},
 		
+		/**
+		 * Converts <div class="codeBox"> into [code].
+		 * 
+		 * @param	{Element}	element		target element
+		 */
 		_convertSourceCodeBox: function(element) {
 			var filename = element.getAttribute('data-filename').trim() || '';
 			var highlighter = element.getAttribute('data-highlighter') || '';
@@ -394,19 +540,6 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			var open = "[code='" + highlighter + "'," + lineNumber + ",'" + filename + "']";
 			
 			element.outerHTML = open + content + '[/code]';
-		},
-		
-		_preserveSourceElement: function(element, sourceElements) {
-			var placeholder = document.createElement('var');
-			element.parentNode.insertBefore(placeholder, element);
-			
-			var fragment = document.createDocumentFragment();
-			fragment.appendChild(element);
-			
-			sourceElements.push({
-				fragment: fragment,
-				placeholder: placeholder
-			});
 		}
 	};
 	

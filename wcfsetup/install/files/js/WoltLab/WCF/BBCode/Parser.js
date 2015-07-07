@@ -1,7 +1,24 @@
+/**
+ * Versatile BBCode parser based upon the PHP implementation.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	WoltLab/WCF/BBCode/Parser
+ */
 define([], function() {
 	"use strict";
 	
+	/**
+	 * @module	WoltLab/WCF/BBCode/Parser
+	 */
 	var BBCodeParser = {
+		/**
+		 * Parses a message and returns an XML-conform linear tree.
+		 * 
+		 * @param	{string}	message		message containing BBCodes
+		 * @return	{array<mixed>}	linear tree
+		 */
 		parse: function(message) {
 			var stack = this._splitTags(message);
 			this._buildLinearTree(stack);
@@ -9,8 +26,13 @@ define([], function() {
 			return stack;
 		},
 		
+		/**
+		 * Splits message into strings and BBCode objects.
+		 * 
+		 * @param	{string}	message		message containing BBCodes
+		 * @returns	{array<mixed>}	linear tree
+		 */
 		_splitTags: function(message) {
-			// TODO: `validTags` should be dynamic similar to the PHP implementation
 			var validTags = __REDACTOR_BBCODES.join('|');
 			var pattern = '(\\\[(?:/(?:' + validTags + ')|(?:' + validTags + ')'
 				+ '(?:='
@@ -51,8 +73,13 @@ define([], function() {
 			return stack;
 		},
 		
+		/**
+		 * Finds pairs and enforces XML-conformity in terms of pairing and proper nesting.
+		 * 
+		 * @param	{array<mixed>}	stack	linear tree
+		 */
 		_buildLinearTree: function(stack) {
-			var item, openTags = [], reopenTags, sourceBBCode = '', tag;
+			var item, openTags = [], reopenTags, sourceBBCode = '';
 			for (var i = 0; i < stack.length; i++) { // do not cache stack.length, its size is dynamic
 				item = stack[i];
 				
@@ -95,6 +122,15 @@ define([], function() {
 			this._closeUnclosedTags(stack, openTags, '');
 		},
 		
+		/**
+		 * Closes unclosed BBCodes and returns a list of BBCodes in order of appearance that should be
+		 * opened again to enforce proper nesting.
+		 * 
+		 * @param	{array<mixed>}	stack		linear tree
+		 * @param	{array<object>}	openTags	list of unclosed elements
+		 * @param	{string}	until		tag name to stop at
+		 * @return	{array<mixed>}	list of tags to open in order of appearance
+		 */
 		_closeUnclosedTags: function(stack, openTags, until) {
 			var item, reopenTags = [], tag;
 			
@@ -117,6 +153,13 @@ define([], function() {
 			return reopenTags.reverse();
 		},
 		
+		/**
+		 * Returns true if given BBCode was opened before.
+		 * 
+		 * @param	{array<object>}	openTags	list of unclosed elements
+		 * @param	{string}	name		BBCode to search for
+		 * @returns	{boolean}	false if tag was not opened before
+		 */
 		_hasOpenTag: function(openTags, name) {
 			for (var i = openTags.length - 1; i >= 0; i--) {
 				if (openTags[i].name === name) {
@@ -127,6 +170,12 @@ define([], function() {
 			return false;
 		},
 		
+		/**
+		 * Parses the attribute list and returns a list of attributes without enclosing quotes.
+		 * 
+		 * @param	{string}	attrString	comma separated string with optional quotes per attribute
+		 * @returns	{array<string>}	list of attributes
+		 */
 		_parseAttributes: function(attrString) {
 			var tmp = attrString.split(/(?:^|,)('[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|[^,]*)/g);
 			

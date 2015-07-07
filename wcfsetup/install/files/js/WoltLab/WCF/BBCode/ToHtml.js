@@ -1,3 +1,11 @@
+/**
+ * Converts a message containing BBCodes into HTML.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	WoltLab/WCF/BBCode/ToHtml
+ */
 define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Core, EventHandler, Language, StringUtil, BBCodeParser) {
 	"use strict";
 	
@@ -6,11 +14,47 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 	var _removeNewlineAfter = [];
 	var _removeNewlineBefore = [];
 	
-	function isNumber(value) { return value && value == ~~value; }
-	function isFilename(value) { return (value.indexOf('.') !== -1) || (!isNumber(value) && !isHighlighter(value)); }
-	function isHighlighter(value) { return __REDACTOR_CODE_HIGHLIGHTERS.hasOwnProperty(value); }
+	/**
+	 * Returns true if given value is a non-zero integer.
+	 * 
+	 * @param	{string}	value		target value
+	 * @return	{boolean}	true if `value` is a non-zero integer
+	 */
+	function isNumber(value) {
+		return value && value == ~~value;
+	}
 	
+	/**
+	 * Returns true if given value appears to be a filename, which means that it contains a dot
+	 * or is neither numeric nor a known highlighter.
+	 * 
+	 * @param	{string}	value		target value
+	 * @return	{boolean}	true if `value` appears to be a filename
+	 */
+	function isFilename(value) {
+		return (value.indexOf('.') !== -1) || (!isNumber(value) && !isHighlighter(value));
+	}
+	
+	/**
+	 * Returns true if given value is a known highlighter.
+	 * 
+	 * @param	{string}	value		target value
+	 * @return	{boolean}	true if `value` is a known highlighter
+	 */
+	function isHighlighter(value) {
+		return __REDACTOR_CODE_HIGHLIGHTERS.hasOwnProperty(value);
+	}
+	
+	/**
+	 * @module	WoltLab/WCF/BBCode/ToHtml
+	 */
 	var BBCodeToHtml = {
+		/**
+		 * Converts a message containing BBCodes to HTML.
+		 * 
+		 * @param	{string}	message		message containing BBCodes
+		 * @return	{string}	HTML message
+		 */
 		convert: function(message, options) {
 			_options = Core.extend({
 				attachments: {
@@ -28,6 +72,8 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 				this._initBBCodes();
 			}
 			
+			EventHandler.fire('com.woltlab.wcf.bbcode.toHtml', 'beforeConvert', { stack: stack });
+			
 			var item, value;
 			for (var i = 0, length = stack.length; i < length; i++) {
 				item = stack[i];
@@ -44,6 +90,8 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 				}
 			}
 			
+			EventHandler.fire('com.woltlab.wcf.bbcode.toHtml', 'afterConvert', { stack: stack });
+			
 			message = stack.join('');
 			
 			message = message.replace(/\n/g, '<br>');
@@ -51,6 +99,12 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return message;
 		},
 		
+		/**
+		 * Converts special characters to their entities.
+		 * 
+		 * @param	{string}	message		message containing BBCodes
+		 * @return	{string}	message with replaced special characters
+		 */
 		_convertSpecials: function(message) {
 			message = message.replace(/&/g, '&amp;');
 			message = message.replace(/</g, '&lt;');
@@ -59,6 +113,9 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return message;
 		},
 		
+		/**
+		 * Sets up converters applied to HTML elements.
+		 */
 		_initBBCodes: function() {
 			if (_bbcodes !== null) {
 				return;
@@ -99,6 +156,15 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			});
 		},
 		
+		/**
+		 * Converts an item from the stack.
+		 * 
+		 * @param	{array<mixed>}		stack		linear list of BBCode tags and regular strings
+		 * @param	{object}		item		current BBCode tag object
+		 * @param	{integer}		index		current stack index representing `item`
+		 * @return	{(string|array)}	string if only the current item should be replaced or an array with
+		 * 					the first item used for the opening tag and the second item for the closing tag
+		 */
 		_convert: function(stack, item, index) {
 			var replace = _bbcodes[item.name], tmp;
 			
@@ -146,6 +212,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			}
 		},
 		
+		/**
+		 * Converts [attach] into an <img> or to plain text if attachment is a non-image.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertAttachment: function(stack, item, index) {
 			var attachmentId = 0, attributes = item.attributes, length = attributes.length;
 			if (!_options.attachments.url) {
@@ -190,6 +264,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			];
 		},
 		
+		/**
+		 * Converts [code] to <div class="codeBox">.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertCode: function(stack, item, index) {
 			var attributes = item.attributes, filename = '', highlighter = 'auto', lineNumber = 0;
 			
@@ -273,6 +355,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			];
 		},
 		
+		/**
+		 * Converts [color] to <span style="color: ...">.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertColor: function(stack, item, index) {
 			if (!item.attributes.length || !item.attributes[0].match(/^[a-z0-9#]+$/i)) {
 				return [null, null];
@@ -281,6 +371,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<span style="color: ' + StringUtil.escapeHTML(item.attributes[0]) + '">', '</span>'];
 		},
 		
+		/**
+		 * Converts [email] to <a href="mailto: ...">.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertEmail: function(stack, item, index) {
 			var email = '';
 			if (item.attributes.length) {
@@ -309,6 +407,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<a href="mailto:' + StringUtil.escapeHTML(email) + '">', '</a>'];
 		},
 		
+		/**
+		 * Converts [img] to <img>.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertImage: function(stack, item, index) {
 			var float = 'none', source = '', width = 0;
 			
@@ -355,6 +461,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<img src="' + StringUtil.escapeHTML(source) + '"' + (styles.length ? ' style="' + styles.join(';') + '"' : '') + '>', ''];
 		},
 		
+		/**
+		 * Converts [list] to <ol> or <ul>.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertList: function(stack, item, index) {
 			var type = (items.attributes.length) ? item.attributes[0] : '';
 			
@@ -376,6 +490,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<ul>', '</ul>'];
 		},
 		
+		/**
+		 * Converts [quote] to <blockquote>.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertQuote: function(stack, item, index) {
 			var author = '', link = '';
 			if (item.attributes.length > 1) {
@@ -417,6 +539,11 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			];
 		},
 		
+		/**
+		 * Converts smiley codes into <img>.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 */
 		_convertSmilies: function(stack) {
 			var altValue, item, regexp;
 			for (var i = 0, length = stack.length; i < length; i++) {
@@ -440,6 +567,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			}
 		},
 		
+		/**
+		 * Converts [size] to <span style="font-size: ...">.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertSize: function(stack, item, index) {
 			if (!item.attributes.length || ~~item.attributes[0] === 0) {
 				return [null, null];
@@ -448,6 +583,14 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<span style="font-size: ' + ~~item.attributes[0] + 'pt">', '</span>'];
 		},
 		
+		/**
+		 * Converts [url] to <a>.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
 		_convertUrl: function(stack, item, index) {
 			// ignore url bbcode without arguments
 			if (!item.attributes.length) {
