@@ -1,6 +1,6 @@
 /*
-	Redactor 10.2
-	Updated: June 26, 2015
+	Redactor 10.2.1
+	Updated: July 6, 2015
 
 	http://imperavi.com/redactor/
 
@@ -12,6 +12,7 @@
 
 (function($)
 {
+
 	'use strict';
 
 	if (!Function.prototype.bind)
@@ -91,7 +92,7 @@
 
 	// Functionality
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '10.2';
+	$.Redactor.VERSION = '10.2.1';
 	$.Redactor.modules = ['alignment', 'autosave', 'block', 'buffer', 'build', 'button',
 						  'caret', 'clean', 'code', 'core', 'dropdown', 'file', 'focus',
 						  'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
@@ -1424,7 +1425,7 @@
 						this.$editor.on('focus.redactor', $.proxy(this.opts.focusCallback, this));
 					}
 
-					$(document).on('mousedown.redactor', $.proxy(function(e) { this.blurClickedElement = e.target; }, this));
+					$(document).on('mousedown.redactor.' + this.uuid, $.proxy(function(e) { this.blurClickedElement = e.target; }, this));
 
 
 					// blur
@@ -1509,7 +1510,7 @@
 				},
 				disableIeLinks: function()
 				{
-					if (!this.utils.browser('ie')) return;
+					if (!this.utils.browser('msie')) return;
 
 					// IE prevent converting links
 					document.execCommand("AutoUrlDetect", false, false);
@@ -1784,7 +1785,14 @@
 				},
 				setEnd: function(node)
 				{
+					node = node[0] || node;
+					if (node.lastChild.nodeType == 1)
+					{
+						return this.caret.setAfter(node.lastChild);
+					}
+
 					this.caret.set(node, 1, node, 1);
+
 				},
 				set: function(orgn, orgo, focn, foco)
 				{
@@ -2070,6 +2078,7 @@
 					// remove empty attributes
 					html = html.replace(/<(.*?)rel="\s*?"(.*?[^>]?)>/gi, '<$1$2">');
 					html = html.replace(/<(.*?)style="\s*?"(.*?[^>]?)>/gi, '<$1$2">');
+					html = html.replace(/="">/gi, '>');
 					html = html.replace(/""">/gi, '">');
 					html = html.replace(/"">/gi, '">');
 
@@ -3198,7 +3207,7 @@
 					this.$element.off('.redactor').removeData('redactor');
 					this.$editor.off('.redactor');
 
-					$(document).off('mousedown.redactor');
+					$(document).off('mousedown.redactor.' + this.uuid);
 					$(document).off('click.redactor-image-delete.' + this.uuid);
 					$(document).off('click.redactor-image-resize-hide.' + this.uuid);
 					$(document).off('touchstart.redactor.' + this.uuid + ' click.redactor.' + this.uuid);
@@ -3351,12 +3360,6 @@
 					if (this.opts.highContrast)
 					{
 						$dropdown.addClass("redactor-dropdown-contrast");
-					}
-
-					// ios keyboard hide
-					if (this.utils.isMobile())
-					{
-						document.activeElement.blur();
 					}
 
 					if ($button.hasClass('dropact'))
@@ -3781,8 +3784,7 @@
 
 
 					$image.off('mousedown.redactor').on('mousedown.redactor', $.proxy(this.image.hideResize, this));
-					$image.off('click.redactor touchstart.redactor', handler)
-					.on('click.redactor touchstart.redactor', handler);
+					$image.off('click.redactor touchstart.redactor').on('click.redactor touchstart.redactor', handler);
 				},
 				setResizable: function(e, $image)
 				{
@@ -3886,12 +3888,8 @@
 					var imageBox = this.$editor.find('#redactor-image-box');
 					if (imageBox.length === 0) return;
 
-					if (this.opts.imageEditable)
-					{
-						this.image.editter.remove();
-					}
-
-					$(this.image.resizer).remove();
+					$('#redactor-image-editter').remove();
+					$('#redactor-image-resizer').remove();
 
 					imageBox.find('img').css({
 						marginTop: imageBox[0].style.marginTop,
@@ -3908,6 +3906,7 @@
 					});
 
 					$(document).off('mousedown.redactor-image-resize-hide.' + this.uuid);
+
 
 					if (typeof this.image.resizeHandle !== 'undefined')
 					{
@@ -4245,6 +4244,9 @@
 				},
 				format: function(tag, type, value)
 				{
+					var current = this.selection.getCurrent();
+					if (current && current.tagName === 'TR') return;
+
 					// blur
 					this.blurClickedElement = true;
 
@@ -5884,8 +5886,6 @@
 
 						});
 
-						this.$modal.append('<p role="alert" class="redactor-voice-alert" aria-hidden="false">' + this.lang.get('url_required') + '</p>');
-
 						return;
 					}
 
@@ -5921,6 +5921,12 @@
 					text = $.trim(text.replace(/<|>/g, ''));
 
 					this.selection.restore();
+					var blocks = this.selection.getBlocks();
+
+					if (this.utils.browser('mozilla') && !this.focus.isFocused())
+					{
+						this.focus.setStart();
+					}
 
 					if (text === '' && link === '') return;
 					if (text === '' && link !== '') text = link;
@@ -6009,7 +6015,10 @@
 
 								if (this.link.text !== '' || this.link.text != text)
 								{
-									$a.text(text);
+									if (!this.opts.linebreaks && blocks && blocks.length <= 1)
+									{
+										$a.text(text);
+									}
 
 									this.selection.selectElement($a);
 								}
@@ -6123,11 +6132,26 @@
 								   .remove();
 						});
 
+
+					var objects = this.$editor.find('.redactor-linkify-object').each(function()
+					{
+						var $el = $(this);
+						$el.removeClass('redactor-linkify-object');
+						if ($el.attr('class') === '') $el.removeAttr('class');
+
+						return $el[0];
+
+					});
+
+					// callback
+					this.core.setCallback('linkify', objects);
+
+					// sync
 					this.code.sync();
 				},
 				convertVideoLinks: function(html)
 				{
-					var iframeStart = '<iframe width="500" height="281" src="',
+					var iframeStart = '<iframe class="redactor-linkify-object" width="500" height="281" src="',
 						iframeEnd = '" frameborder="0" allowfullscreen></iframe>';
 
 					if (html.match(this.opts.linkify.regexps.youtube))
@@ -6148,7 +6172,7 @@
 
 					if (matches)
 					{
-						html = html.replace(html, '<img src="' + matches + '" />');
+						html = html.replace(html, '<img src="' + matches + '" class="redactor-linkify-object" />');
 
 						if (this.opts.linebreaks)
 						{
@@ -6201,7 +6225,7 @@
 							// escaping url
 							var regexp = new RegExp('(' + href.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&") + regexB + ')', 'g');
 
-							html = html.replace(regexp, '<a href="' + linkProtocol + $.trim(href) + '">' + $.trim(text) + '</a>');
+							html = html.replace(regexp, '<a href="' + linkProtocol + $.trim(href) + '" class="redactor-linkify-object">' + $.trim(text) + '</a>');
 						}
 					}
 
@@ -6277,9 +6301,8 @@
 						document.execCommand('insert' + cmd);
 					}
 
-					var $list = $(this.selection.getParent()).closest('ol, ul', this.$editor[0]);
-
-
+					var parent = this.selection.getParent();
+					var $list = $(parent).closest('ol, ul', this.$editor[0]);
 					if ($td.length !== 0)
 					{
 						var prev = $td.prev();
@@ -6506,12 +6529,6 @@
 				},
 				show: function()
 				{
-					// ios keyboard hide
-					if (this.utils.isMobile())
-					{
-						document.activeElement.blur();
-					}
-
 					this.utils.disableBodyScroll();
 
 					if (this.utils.isMobile())

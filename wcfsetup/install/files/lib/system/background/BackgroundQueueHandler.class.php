@@ -8,7 +8,7 @@ use wcf\system\WCF;
 
 /**
  * Manages the background queue.
- *
+ * 
  * @author	Tim Duesterhus
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -33,7 +33,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * Enqueues the given job(s) for execution at the given time.
 	 * Note: The time is a minimum time. Depending on the size of
 	 * the queue the job can be performed later as well!
-	 *
+	 * 
 	 * @param	mixed	$jobs	Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
 	 * @param	int	$time	Earliest time to consider the job for execution.
 	 */
@@ -141,7 +141,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 		finally {
 			if (!$commited) WCF::getDB()->rollbackTransaction();
 		}
-
+		
 		$job = null;
 		try {
 			// no shut up operator, exception will be caught

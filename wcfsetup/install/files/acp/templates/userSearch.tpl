@@ -41,201 +41,87 @@
 </div>
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
-	<div class="tabMenuContainer">
-		<nav class="tabMenu">
-			<ul>
-				<li><a href="{@$__wcf->getAnchor('conditions')}">{lang}wcf.acp.user.search.conditions{/lang}</a></li>
-				
-				{if $optionTree|count}
-					<li><a href="{@$__wcf->getAnchor('profile')}">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
-				{/if}
-				
-				{event name='tabMenuTabs'}
-				
-				<li><a href="{@$__wcf->getAnchor('resultOptions')}">{lang}wcf.acp.user.search.display{/lang}</a></li>
-			</ul>
-		</nav>
-		
-		<div id="conditions" class="container containerPadding tabMenuContent hidden">
-			<fieldset>
-				<legend>{lang}wcf.acp.user.search.conditions{/lang}</legend>
-				
-				<dl>
-					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-					<dd>
-						<input type="text" id="username" name="username" value="{$username}" class="medium" />
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt><label for="userID">{lang}wcf.user.userID{/lang}</label></dt>
-					<dd>
-						<input type="number" id="userID" name="userID" value="{$userID}" class="short" />
-					</dd>
-				</dl>
-				
-				{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-					<dl>
-						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
-						<dd>
-							<input type="text" id="email" name="email" value="{$email}" class="medium" />
-						</dd>
-					</dl>
-				{/if}
-				
-				{if $availableGroups|count}
-					<dl>
-						<dt>
-							<label>{lang}wcf.acp.user.groups{/lang}</label>
-						</dt>
-						<dd>
-							{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}
-							
-							<label class="marginTop"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
-						</dd>
-					</dl>
-				{/if}
-				
-				{if $availableLanguages|count > 1}
-					<dl>
-						<dt>
-							<label>{lang}wcf.user.language{/lang}</label>
-						</dt>
-						<dd>
-							{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}
-						</dd>
-					</dl>
-				{/if}
-				
-				<dl>
-					<dt><label for="registrationDateStart">{lang}wcf.user.registrationDate{/lang}</label></dt>
-					<dd>
-						<input type="date" id="registrationDateStart" name="registrationDateStart" value="{$registrationDateStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
-						<input type="date" id="registrationDateEnd" name="registrationDateEnd" value="{$registrationDateEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt><label for="lastActivityTimeStart">{lang}wcf.user.lastActivityTime{/lang}</label></dt>
-					<dd>
-						<input type="date" id="lastActivityTimeStart" name="lastActivityTimeStart" value="{$lastActivityTimeStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
-						<input type="date" id="lastActivityTimeEnd" name="lastActivityTimeEnd" value="{$lastActivityTimeEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
-					</dd>
-				</dl>
-				
-				{event name='conditionFields'}
-			</fieldset>
+	<header class="boxHeadline boxSubHeadline">
+		<h2>{lang}wcf.acp.user.search.conditions{/lang}</h2>
+	</header>
+	
+	{include file='userConditions'}
+	
+	<header class="boxHeadline boxSubHeadline">
+		<h2>{lang}wcf.acp.user.search.display{/lang}</h2>
+	</header>
+	
+	<div class="container containerPadding marginTop">
+		<fieldset>
+			<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
 			
-			<fieldset>
-				<legend>{lang}wcf.acp.user.search.conditions.states{/lang}</legend>
-				
-				<dl>
-					<dt></dt>
-					<dd>
-						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
-						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>
-						<label><input type="checkbox" name="enabled" value="1" {if $enabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.enabled{/lang}</label>
-						<label><input type="checkbox" name="disabled" value="1" {if $disabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.disabled{/lang}</label>
+			<dl>
+				<dt><label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label></dt>
+				<dd>
+					<select id="sortField" name="sortField">
+						<option value="userID"{if $sortField == 'userID'} selected="selected"{/if}>{lang}wcf.user.userID{/lang}</option>
+						<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
+						<option value="email"{if $sortField == 'email'} selected="selected"{/if}>{lang}wcf.user.email{/lang}</option>
+						<option value="registrationDate"{if $sortField == 'registrationDate'} selected="selected"{/if}>{lang}wcf.user.registrationDate{/lang}</option>
 						
-						{event name='states'}
-					</dd>
-				</dl>
-				
-				{event name='stateFields'}
-			</fieldset>
+						{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
+					</select>
+					
+					<select id="sortOrder" name="sortOrder">
+						<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
+						<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
+					</select>
+				</dd>
+			</dl>
 			
-			{event name='conditionFieldsets'}
-		</div>
-		
-		{if $optionTree|count}
-			<div id="profile" class="container containerPadding tabMenuContent hidden">
-				{foreach from=$optionTree[0][categories] item=category}
-					<fieldset>
-						<legend>{lang}wcf.user.option.category.{@$category[object]->categoryName}{/lang}</legend>
-						{hascontent}<p>{content}{lang __optional=true}wcf.user.option.category.{@$category[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
-						
-						{include file='optionFieldList' options=$category[options] langPrefix='wcf.user.option.' isSearchMode=true}
-					</fieldset>
-				{/foreach}
-				
-				{event name='profileFieldsets'}
-			</div>
-		{/if}
-		
-		{event name='tabMenuContent'}
-		
-		<div id="resultOptions" class="container containerPadding tabMenuContent hidden">
-			<fieldset>
-				<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
-				
-				<dl>
-					<dt><label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label></dt>
-					<dd>
-						<select id="sortField" name="sortField">
-							<option value="userID"{if $sortField == 'userID'} selected="selected"{/if}>{lang}wcf.user.userID{/lang}</option>
-							<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
-							<option value="email"{if $sortField == 'email'} selected="selected"{/if}>{lang}wcf.user.email{/lang}</option>
-							<option value="registrationDate"{if $sortField == 'registrationDate'} selected="selected"{/if}>{lang}wcf.user.registrationDate{/lang}</option>
-							
-							{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
-						</select>
-						
-						<select id="sortOrder" name="sortOrder">
-							<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
-							<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
-						</select>
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt><label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label></dt>
-					<dd>
-						<input type="number" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="tiny" />
-					</dd>
-				</dl>
-				
-				{event name='searchDisplayFields'}
-			</fieldset>
+			<dl>
+				<dt><label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label></dt>
+				<dd>
+					<input type="number" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="tiny" />
+				</dd>
+			</dl>
 			
-			<fieldset>
-				<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
-				
-				{if $columnOptions|count}
-					<dl>
-						<dt>
-							<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
-						</dt>
-						<dd>
-							{foreach from=$columnOptions item=optionData}
-								{assign var='option' value=$optionData.object}
-								<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
-							{/foreach}
-						</dd>
-					</dl>
-				{/if}
-				
+			{event name='searchDisplayFields'}
+		</fieldset>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
+			
+			{if $columnOptions|count}
 				<dl>
-					<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
+					<dt>
+						<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
+					</dt>
 					<dd>
-						{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-							<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
-						{/if}
-						<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
-						<label><input type="checkbox" name="columns[]" value="lastActivityTime" {if "lastActivityTime"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.lastActivityTime{/lang}</label>
-						<label><input type="checkbox" name="columns[]" value="profileHits" {if "profileHits"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.profileHits{/lang}</label>
-						<label><input type="checkbox" name="columns[]" value="activityPoints" {if "activityPoints"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.activityPoint{/lang}</label>
-						{if MODULE_LIKE}
-							<label><input type="checkbox" name="columns[]" value="likesReceived" {if "likesReceived"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.like.likesReceived{/lang}</label>
-						{/if}
-						{event name='searchDisplayColumns'}
+						{foreach from=$columnOptions item=optionData}
+							{assign var='option' value=$optionData.object}
+							<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+						{/foreach}
 					</dd>
 				</dl>
-				
-				{event name='searchDisplayColumnFields'}
-			</fieldset>
+			{/if}
 			
-			{event name='resultOptionFieldsets'}
-		</div>
+			<dl>
+				<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
+				<dd>
+					{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
+						<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
+					{/if}
+					<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="lastActivityTime" {if "lastActivityTime"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.lastActivityTime{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="profileHits" {if "profileHits"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.profileHits{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="activityPoints" {if "activityPoints"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.activityPoint{/lang}</label>
+					{if MODULE_LIKE}
+						<label><input type="checkbox" name="columns[]" value="likesReceived" {if "likesReceived"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.like.likesReceived{/lang}</label>
+					{/if}
+					{event name='searchDisplayColumns'}
+				</dd>
+			</dl>
+			
+			{event name='searchDisplayColumnFields'}
+		</fieldset>
+		
+		{event name='resultOptionFieldsets'}
 	</div>
 	
 	<div class="formSubmit">

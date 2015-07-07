@@ -167,7 +167,7 @@ class DataImportForm extends AbstractForm {
 			}
 			
 			// get default database prefix
-			if (!count($_POST)) {
+			if (!isset($_POST['dbPrefix'])) {
 				$this->dbPrefix = $this->exporter->getDefaultDatabasePrefix();
 			}
 		}
@@ -268,9 +268,9 @@ class DataImportForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
+		if (!isset($_POST['fileSystemPath'])) $this->fileSystemPath = (!empty($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : WCF_DIR);
+		
 		if (empty($_POST)) {
-			$this->fileSystemPath = (!empty($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : WCF_DIR);
-			
 			if (!$this->exporterName) {
 				$sql = "SELECT	COUNT(*) AS count
 					FROM	wcf".WCF_N."_import_mapping";

@@ -2847,21 +2847,26 @@ WCF.Message.Quote.Manager = Class.extend({
 			$quote = data.quote.text;
 			$username = data.quote.username;
 			$link = data.quote.link;
-			console.debug("right here");
 		}
 		
 		// insert into editor
 		if ($.browser.redactor) {
 			if (this._editorElementAlternative === null) {
+				var insert = true;
 				if (event !== null || data !== null) {
 					var $api = $('.jsQuickReply:eq(0)').data('__api');
 					if ($api && !$api.getContainer().is(':visible')) {
-						this._insertQuotes = false;
-						$api.click(null);
+						if (data.forceInsert) {
+							this._insertQuotes = false;
+							$api.click(null);
+						}
+						else {
+							insert = false;
+						}
 					}
 				}
 				
-				this._editorElement.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
+				if (insert) this._editorElement.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
 			}
 			else {
 				this._editorElementAlternative.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);

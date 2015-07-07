@@ -445,6 +445,9 @@ class RegisterForm extends UserAddForm {
 		$user = $result['returnValues'];
 		$userEditor = new UserEditor($user);
 		
+		// update session
+		WCF::getSession()->changeUser($user);
+		
 		// set avatar if provided
 		if (!empty($avatarURL)) {
 			$userAvatarAction = new UserAvatarAction(array(), 'fetchRemoteAvatar', array(
@@ -453,9 +456,6 @@ class RegisterForm extends UserAddForm {
 			));
 			$userAvatarAction->executeAction();
 		}
-		
-		// update session
-		WCF::getSession()->changeUser($user);
 		
 		// activation management
 		if (REGISTER_ACTIVATION_METHOD == 0) {
