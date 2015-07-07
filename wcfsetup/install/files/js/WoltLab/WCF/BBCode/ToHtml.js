@@ -33,7 +33,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 				item = stack[i];
 				
 				if (typeof item === 'object') {
-					value = this._replace(stack, item, i);
+					value = this._convert(stack, item, i);
 					if (Array.isArray(value)) {
 						stack[i] = (value[0] === null ? item.source : value[0]);
 						stack[item.pair] = (value[1] === null ? stack[item.pair].source : value[1]);
@@ -78,15 +78,15 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 				tt: 'kbd',
 				
 				// callback replacement
-				attach: this._replaceAttachment.bind(this),
-				color: this._replaceColor.bind(this),
-				code: this._replaceCode.bind(this),
-				email: this._replaceEmail.bind(this),
-				list: this._replaceList.bind(this),
-				quote: this._replaceQuote.bind(this),
-				size: this._replaceSize.bind(this),
-				url: this._replaceUrl.bind(this),
-				img: this._replaceImage.bind(this)
+				attach: this._convertAttachment.bind(this),
+				color: this._convertColor.bind(this),
+				code: this._convertCode.bind(this),
+				email: this._convertEmail.bind(this),
+				list: this._convertList.bind(this),
+				quote: this._convertQuote.bind(this),
+				size: this._convertSize.bind(this),
+				url: this._convertUrl.bind(this),
+				img: this._convertImage.bind(this)
 			};
 			
 			_removeNewlineAfter = ['quote', 'table', 'td', 'tr'];
@@ -99,7 +99,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			});
 		},
 		
-		_replace: function(stack, item, index) {
+		_convert: function(stack, item, index) {
 			var replace = _bbcodes[item.name], tmp;
 			
 			if (replace === undefined) {
@@ -136,7 +136,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			}
 			
 			// replace smilies
-			this._replaceSmilies(stack);
+			this._convertSmilies(stack);
 			
 			if (typeof replace === 'string') {
 				return ['<' + replace + '>', '</' + replace + '>'];
@@ -146,7 +146,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			}
 		},
 		
-		_replaceAttachment: function(stack, item, index) {
+		_convertAttachment: function(stack, item, index) {
 			var attachmentId = 0, attributes = item.attributes, length = attributes.length;
 			if (!_options.attachments.url) {
 				length = 0;
@@ -190,7 +190,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			];
 		},
 		
-		_replaceCode: function(stack, item, index) {
+		_convertCode: function(stack, item, index) {
 			var attributes = item.attributes, filename = '', highlighter = 'auto', lineNumber = 0;
 			
 			// parse arguments
@@ -273,7 +273,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			];
 		},
 		
-		_replaceColor: function(stack, item, index) {
+		_convertColor: function(stack, item, index) {
 			if (!item.attributes.length || !item.attributes[0].match(/^[a-z0-9#]+$/i)) {
 				return [null, null];
 			}
@@ -281,7 +281,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<span style="color: ' + StringUtil.escapeHTML(item.attributes[0]) + '">', '</span>'];
 		},
 		
-		_replaceEmail: function(stack, item, index) {
+		_convertEmail: function(stack, item, index) {
 			var email = '';
 			if (item.attributes.length) {
 				email = item.attributes[0];
@@ -309,7 +309,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<a href="mailto:' + StringUtil.escapeHTML(email) + '">', '</a>'];
 		},
 		
-		_replaceImage: function(stack, item, index) {
+		_convertImage: function(stack, item, index) {
 			var float = 'none', source = '', width = 0;
 			
 			switch (item.attributes.length) {
@@ -355,7 +355,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<img src="' + StringUtil.escapeHTML(source) + '"' + (styles.length ? ' style="' + styles.join(';') + '"' : '') + '>', ''];
 		},
 		
-		_replaceList: function(stack, item, index) {
+		_convertList: function(stack, item, index) {
 			var type = (items.attributes.length) ? item.attributes[0] : '';
 			
 			// replace list items
@@ -376,7 +376,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<ul>', '</ul>'];
 		},
 		
-		_replaceQuote: function(stack, item, index) {
+		_convertQuote: function(stack, item, index) {
 			var author = '', link = '';
 			if (item.attributes.length > 1) {
 				author = item.attributes[0];
@@ -417,7 +417,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			];
 		},
 		
-		_replaceSmilies: function(stack) {
+		_convertSmilies: function(stack) {
 			var altValue, item, regexp;
 			for (var i = 0, length = stack.length; i < length; i++) {
 				item = stack[i];
@@ -440,7 +440,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			}
 		},
 		
-		_replaceSize: function(stack, item, index) {
+		_convertSize: function(stack, item, index) {
 			if (!item.attributes.length || ~~item.attributes[0] === 0) {
 				return [null, null];
 			}
@@ -448,7 +448,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			return ['<span style="font-size: ' + ~~item.attributes[0] + 'pt">', '</span>'];
 		},
 		
-		_replaceUrl: function(stack, item, index) {
+		_convertUrl: function(stack, item, index) {
 			// ignore url bbcode without arguments
 			if (!item.attributes.length) {
 				return [null, null];
