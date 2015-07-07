@@ -76,7 +76,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	public function readData() {
 		AbstractPage::readData();
 		
-		$fileNameRegex = new Regex('\d{4}-\d{2}-\d{2}\.txt$');
+		$fileNameRegex = new Regex('(?:^|/)\d{4}-\d{2}-\d{2}\.txt$');
 		$this->logFiles = DirectoryUtil::getInstance(WCF_DIR.'log/')->getFiles(SORT_DESC, $fileNameRegex);
 		
 		if ($this->exceptionID) {

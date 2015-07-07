@@ -42,6 +42,12 @@ class FlexibleRoute implements IRoute {
 	protected $pattern = '';
 	
 	/**
+	 * primary application's abbreviation (e.g. "wbb")
+	 * @var	string
+	 */
+	protected $primaryApplication = '';
+	
+	/**
 	 * list of required components
 	 * @var	array<string>
 	 */
@@ -140,22 +146,28 @@ class FlexibleRoute implements IRoute {
 			
 			if (!RequestHandler::getInstance()->isACPRequest()) {
 				$landingPage = PageMenu::getInstance()->getLandingPage();
-				if ($landingPage !== null && strcasecmp($landingPage->getController(), $components['controller']) == 0) {
-					$ignoreController = true;
+				if ($this->primaryApplication === '') {
+					$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+					$this->primaryApplication = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
 				}
 				
-				// check if this is the default controller of the requested application
-				if (!$ignoreController && $application !== null) {
-					if (RouteHandler::getInstance()->getDefaultController($application) == $components['controller']) {
-						// check if this is the primary application and the landing page originates to the same application
-						$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
-						$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
-						if ($abbreviation == $application) {
-							if ($landingPage === null || $landingPage->getController() === $components['controller']) {
-								$ignoreController = true;
-							}
+				// check if this is the default controller
+				if (strcasecmp(RouteHandler::getInstance()->getDefaultController($application), $components['controller']) === 0) {
+					// check if this matches the primary application
+					if ($this->primaryApplication === $application) {
+						if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
+							// skip controller if it matches the default controller
+							$ignoreController = true;
 						}
 					}
+					else {
+						// skip default controller
+						$ignoreController = true;
+					}
+				}
+				else if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
+					// landing page
+					$ignoreController = true;
 				}
 			}
 			
