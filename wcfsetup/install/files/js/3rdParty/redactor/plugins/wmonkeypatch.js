@@ -719,28 +719,8 @@ RedactorPlugins.wmonkeypatch = function() {
 		 * Partially overwrites the 'inline' module.
 		 * 
 		 *  - restore the text selection on iOS (#2003)
-		 *  - work-around existing formatting is removed in Firefox (#1962)
-		 *  - fix formatting with the same property stacking up in Chrome (#2080)
 		 */
 		inline: function() {
-			var $purgeSimilarFormatting = (function($el, newProperty) {
-				var $current = $el.parent();
-				
-				while ($current[0] !== this.$editor[0]) {
-					if ($current.children(':not(.redactor-selection-marker)').length > 1) {
-						break;
-					}
-					
-					if ($current[0].tagName === 'SPAN' && $current[0].style.getPropertyValue(newProperty)) {
-						$current.contents().unwrap();
-						
-						break;
-					}
-					
-					$current = $current.parent();
-				}
-			}).bind(this);
-			
 			// inline.format
 			var $mpFormat = this.inline.format;
 			this.inline.format = (function(tag, type, value) {
@@ -750,32 +730,6 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				$mpFormat.call(this, tag, type, value);
 			}).bind(this);
-			
-			// inline.formatRemoveSameChildren;
-			/*var $mpFormatRemoveSameChildren = this.inline.formatRemoveSameChildren;
-			this.inline.formatRemoveSameChildren = (function($el, tag) {
-				// check if this represents a style
-				if (tag === 'span' && this.inline.type === 'style') {*/
-					//var $newProperty = this.inline.value.replace(/^([^:]+?):.*/, '$1');
-					/*
-					$el.children(tag).each((function(index, child) {
-						var $child = $(child);
-						if (!$child.hasClass('redactor-selection-marker')) {
-							if (!child.style.getPropertyValue($newProperty)) {
-								// child carries a different CSS property, skip
-								return true;
-							}
-							
-							$child.contents().unwrap();
-						}
-					}).bind(this));
-					
-					$purgeSimilarFormatting($el, $newProperty);
-				}
-				else {
-					$mpFormatRemoveSameChildren.call(this, $el, tag);
-				}
-			}).bind(this);*/
 			
 			// inline.removeStyleRule
 			var $mpRemoveStyleRule = this.inline.removeStyleRule;
@@ -794,37 +748,17 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - fixes insertion in an empty editor w/o prior focus until the issue has been resolved by Imperavi
 		 */
 		insert: function() {
-			var $isWebKit = ($.browser.webkit || document.documentElement.style.hasOwnProperty('WebkitAppearance') || window.hasOwnProperty('chrome'));
+			var isWebKit = ($.browser.webkit || document.documentElement.style.hasOwnProperty('WebkitAppearance') || window.hasOwnProperty('chrome'));
 			
-			var $focusEditor = (function(html) {
+			var focusEditor = (function(html) {
 				var $html = this.$editor.html();
 				if (this.utils.isEmpty($html)) {
-					var $cleared = false;
-					if (html.match(/^<(blockquote|div|p)/i)) {
-						// inserting a block-level element into a <p /> yields inconsistent behaviors in different browsers
-						// but since the HTML to be inserted is already a block element, we can place it directly in the root
-						this.$editor.empty();
-						
-						$cleared = true;
-					}
-					
 					this.$editor.focus();
-					
-					if (!$cleared) {
-						this.caret.setEnd(this.$editor.children('p:eq(0)'));
-					}
+					this.wutil.selectionEndOfEditor();
 				}
 				else {
 					if (document.activeElement !== this.$editor[0]) {
 						this.wutil.restoreSelection();
-					}
-					
-					if (html.match(/^<(blockquote|div|p)/i) && getSelection().getRangeAt(0).collapsed) {
-						var $startContainer = getSelection().getRangeAt(0).startContainer;
-						if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b') {
-							// Safari breaks if inserting block-level elements into a <p /> w/ only a zero-width space
-							this.caret.setEnd($($startContainer.parentElement).html('<br />'));
-						}
 					}
 				}
 			}).bind(this);
@@ -832,50 +766,42 @@ RedactorPlugins.wmonkeypatch = function() {
 			// work-around for WebKit inserting lame spans
 			// bug report: https://code.google.com/p/chromium/issues/detail?id=335955
 			// based upon the idea: http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
-			var $fixWebKit = (function() {
-				var $removedSpan = false;
+			var fixWebKit = (function() {
+				var saveSelection = false;
 				
-				this.$editor.find('span').each(function() {
-					var $span = $(this);
-					if ($span.data('verified') !== 'redactor') {
-						var $helper = $('<b>helper</b>').insertBefore($span);
-						
-						$helper.after($span.contents());
-						
-						$helper.remove();
-						$span.remove();
-						
-						$removedSpan = true;
-					}
-				});
+				var elements = this.$editor[0].querySelector('span:not([data-verified="redactor"])');
+				for (var i = 0, length = elements.length; i < length; i++) {
+					elements[i].outerHTML = elements[i].innerHTML;
+					saveSelection = true;
+				}
 				
-				if ($removedSpan) {
+				if (saveSelection) {
 					this.wutil.saveSelection();
 				}
 			}).bind(this);
 			
 			// insert.html
-			var $mpHtml = this.insert.html;
+			var mpHtml = this.insert.html;
 			this.insert.html = (function(html, clean) {
-				$focusEditor(html);
+				focusEditor(html);
 				
-				$mpHtml.call(this, html, clean);
+				mpHtml.call(this, html, clean);
 				
 				this.wutil.saveSelection();
 				
-				if ($isWebKit) {
+				if (isWebKit) {
 					setTimeout(function() {
-						$fixWebKit();
+						fixWebKit();
 					}, 10);
 				}
 			}).bind(this);
 			
 			// pasting in Safari is broken, try to avoid breaking everything and wait for Imperavi to address this bug
 			if (navigator.userAgent.match(/safari/i)) {
-				var $mpExecHtml = this.insert.execHtml;
+				var mpExecHtml = this.insert.execHtml;
 				this.insert.execHtml = (function(html) {
 					try {
-						$mpExecHtml.call(this, html);
+						mpExecHtml.call(this, html);
 					}
 					catch (e) {
 						console.debug("[Redactor.wmonkeypatch] Suppressed error in Safari: " + e.message);
@@ -894,31 +820,31 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.keydown.enterWithinBlockquote = false;
 			
 			// keydown.onTab
-			var $mpOnTab = this.keydown.onTab;
+			var mpOnTab = this.keydown.onTab;
 			this.keydown.onTab = (function(e, key) {
-				var $block = this.selection.getBlock();
+				var block = this.selection.getBlock();
 				
-				if ($block && $block.tagName === 'LI') {
-					return $mpOnTab.call(this, e, key);
+				if (block && block.nodeName === 'LI') {
+					return mpOnTab.call(this, e, key);
 				}
 				
 				return true;
 			}).bind(this);
 			
 			// keydown.replaceDivToParagraph
-			var $mpReplaceDivToParagraph = this.keydown.replaceDivToParagraph;
+			var mpReplaceDivToParagraph = this.keydown.replaceDivToParagraph;
 			this.keydown.replaceDivToParagraph = (function() {
 				if (this.keydown.enterWithinBlockquote) {
 					// do nothing and prevent replacement
 					this.keydown.enterWithinBlockquote = false;
 				}
 				else {
-					$mpReplaceDivToParagraph.call(this);
+					mpReplaceDivToParagraph.call(this);
 				}
 			}).bind(this);
 			
 			// keydown.setupBuffer
-			var $mpSetupBuffer = this.keydown.setupBuffer;
+			var mpSetupBuffer = this.keydown.setupBuffer;
 			this.keydown.setupBuffer = (function(e, key) {
 				// undo
 				if (this.keydown.ctrl && key === 89 && !e.shiftKey && !e.altKey && this.opts.rebuffer.length !== 0) {
@@ -927,7 +853,7 @@ RedactorPlugins.wmonkeypatch = function() {
 					return;
 				}
 				
-				$mpSetupBuffer.call(this, e, key);
+				mpSetupBuffer.call(this, e, key);
 			}).bind(this);
 		},
 		
@@ -938,10 +864,10 @@ RedactorPlugins.wmonkeypatch = function() {
 		 */
 		keyup: function() {
 			// keyup.replaceToParagraph
-			var $mpReplaceToParagraph = this.keyup.replaceToParagraph;
+			var mpReplaceToParagraph = this.keyup.replaceToParagraph;
 			this.keyup.replaceToParagraph = (function(clone) {
-				if (this.keyup.current.tagName !== 'DIV' || this.keyup.current.parentElement.tagName !== 'BLOCKQUOTE') {
-					$mpReplaceToParagraph.call(this, clone);
+				if (this.keyup.current.nodeName !== 'DIV' || !this.keyup.current.parentNode || this.keyup.current.parentNode.nodeName !== 'BLOCKQUOTE') {
+					mpReplaceToParagraph.call(this, clone);
 				}
 			}).bind(this);
 		},
@@ -953,39 +879,20 @@ RedactorPlugins.wmonkeypatch = function() {
 		 */
 		link: function() {
 			// link.insert
-			var $mpInsert = this.link.insert;
+			var mpInsert = this.link.insert;
 			this.link.insert = (function() {
-				$mpInsert.call(this);
+				mpInsert.call(this);
 				
 				this.selection.get();
-				var $current = this.selection.getCurrent();
-				if ($current.nodeType === Node.TEXT_NODE) {
-					$current = $current.parentElement;
+				var container = this.selection.getCurrent();
+				if (container.nodeType === Node.TEXT_NODE) {
+					container = container.parentNode;
 				}
 				
-				if ($current.tagName === 'A') {
-					this.caret.setAfter($current);
+				if (container.nodeName === 'A') {
+					this.caret.setAfter(container);
 				}
 			}).bind(this);
-			
-			// link.set
-			/*var $mpSet = this.link.set;
-			this.link.set = (function(text, link, target) {
-				$mpSet.call(this, text, link, target);
-				
-				if (text.length && this.link.text !== text) {
-					this.selection.get();
-					
-					var $current = this.selection.getCurrent();
-					if ($current.nodeType === Node.TEXT_NODE) {
-						$current = $current.parentElement;
-					}
-					
-					if ($current.tagName === 'A') {
-						$($current).text(text);
-					}
-				}
-			}).bind(this);*/
 		},
 		
 		/**
