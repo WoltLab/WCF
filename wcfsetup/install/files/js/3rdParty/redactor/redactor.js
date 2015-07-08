@@ -1984,7 +1984,7 @@
 					html = html.replace(/\$/g, '&#36;');
 
 					// replace special characters in links
-					html = html.replace(/<a href="(.*?[^>]?)®(.*?[^>]?)">/gi, '<a href="$1&reg$2">');
+					html = html.replace(/<a href="(.*?[^>]?)��(.*?[^>]?)">/gi, '<a href="$1&reg$2">');
 
 					if (this.opts.replaceDivs) html = this.clean.replaceDivs(html);
 					if (this.opts.linebreaks)  html = this.clean.replaceParagraphsToBr(html);
@@ -2155,10 +2155,10 @@
 
 						if (this.utils.isCurrentOrParent('PRE'))
 						{
-							html = html.replace(/”/g, '"');
-							html = html.replace(/“/g, '"');
-							html = html.replace(/‘/g, '\'');
-							html = html.replace(/’/g, '\'');
+							html = html.replace(/���/g, '"');
+							html = html.replace(/���/g, '"');
+							html = html.replace(/���/g, '\'');
+							html = html.replace(/���/g, '\'');
 
 							return this.clean.getPreCode(html);
 						}
@@ -2341,7 +2341,7 @@
 						html = $div.html();
 
 						// remove ms word's bullet
-						html = html.replace(/·/g, '');
+						html = html.replace(/��/g, '');
 						html = html.replace(/<p class="Mso(.*?)"/gi, '<p');
 
 						// classes
@@ -2389,7 +2389,7 @@
 					html = html.replace(/<img src="webkit-fake-url\:\/\/(.*?)"(.*?)>/gi, '');
 
 					// bullets
-					html = html.replace(/<p>•([\w\W]*?)<\/p>/gi, '<li>$1</li>');
+					html = html.replace(/<p>���([\w\W]*?)<\/p>/gi, '<li>$1</li>');
 
 					// FF fix
 					if (this.utils.browser('mozilla'))
@@ -2586,7 +2586,7 @@
 				},
 				restoreSelectionMarker: function(html)
 				{
-					html = html.replace(/&lt;span id=&quot;selection-marker-([0-9])&quot; class=&quot;redactor-selection-marker&quot; data-verified=&quot;redactor&quot;&gt;​&lt;\/span&gt;/g, '<span id="selection-marker-$1" class="redactor-selection-marker" data-verified="redactor">​</span>');
+					html = html.replace(/&lt;span id=&quot;selection-marker-([0-9])&quot; class=&quot;redactor-selection-marker&quot; data-verified=&quot;redactor&quot;&gt;���&lt;\/span&gt;/g, '<span id="selection-marker-$1" class="redactor-selection-marker" data-verified="redactor">���</span>');
 
 					return html;
 				},
@@ -2985,8 +2985,6 @@
 					else
 					{
 						this.$textarea.height(height).show().focus();
-						console.debug(height);
-						console.debug(this.$textarea[0].outerHTML);
 						this.$textarea.on('keydown.redactor-textarea-indenting', this.code.textareaIndenting);
 
 						$(window).scrollTop(scroll);
