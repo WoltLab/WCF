@@ -16,6 +16,8 @@ RedactorPlugins.wutil = function() {
 	var $autosavePaused = false;
 	var $autosaveSaveNoticePE = null;
 	
+	var _editor = null;
+	var _range =  null;
 	var _textarea = null;
 	
 	return {
@@ -26,15 +28,10 @@ RedactorPlugins.wutil = function() {
 		_autosaveWorker: null,
 		
 		/**
-		 * saved selection range
-		 * @var	range
-		 */
-		_range: null,
-		
-		/**
 		 * Initializes the RedactorPlugins.wutil plugin.
 		 */
 		init: function() {
+			_editor = this.$editor[0];
 			_textarea = this.$textarea[0];
 			
 			// convert HTML to BBCode upon submit
@@ -69,13 +66,13 @@ RedactorPlugins.wutil = function() {
 		 * @param	boolean		discardSavedIfEmpty
 		 */
 		saveSelection: function(discardSavedIfEmpty) {
-			var $selection = getSelection();
+			var selection = window.getSelection();
 			
-			if ($selection.rangeCount) {
-				this.wutil._range = $selection.getRangeAt(0);
+			if (selection.rangeCount) {
+				_range = selection.getRangeAt(0);
 			}
 			else if (discardSavedIfEmpty) {
-				this.wutil._range = null;
+				_range = null;
 			}
 		},
 		
@@ -83,16 +80,16 @@ RedactorPlugins.wutil = function() {
 		 * Restores saved selection.
 		 */
 		restoreSelection: function() {
-			if (document.activeElement !== this.$editor[0]) {
-				this.$editor.focus();
+			if (document.activeElement !== _editor) {
+				_editor.focus();
 			}
 			
-			if (this.wutil._range !== null) {
-				var $selection = window.getSelection();
-				$selection.removeAllRanges();
-				$selection.addRange(this.wutil._range);
+			if (_range !== null) {
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(_range);
 				
-				this.wutil._range = null;
+				_range = null;
 			}
 		},
 		
@@ -100,7 +97,7 @@ RedactorPlugins.wutil = function() {
 		 * Clears the current selection.
 		 */
 		clearSelection: function() {
-			this.wutil._range = null;
+			_range = null;
 		},
 		
 		/**
@@ -109,7 +106,7 @@ RedactorPlugins.wutil = function() {
 		 * @return	Range
 		 */
 		getSelection: function() {
-			return this.wutil._range;
+			return _range;
 		},
 		
 		/**
@@ -243,7 +240,7 @@ RedactorPlugins.wutil = function() {
 		 */
 		isEmptyEditor: function() {
 			if (this.opts.visual) {
-				return this.utils.isEmpty(this.$editor.html());
+				return this.utils.isEmpty(_editor.innerHTML);
 			}
 			
 			return (_textarea.value.trim() === '');
@@ -267,7 +264,7 @@ RedactorPlugins.wutil = function() {
 		 */
 		reset: function() {
 			if (this.opts.visual) {
-				this.$editor[0].innerHTML = '';
+				_editor.innerHTML = '';
 				this.wutil.saveSelection();
 			}
 			
@@ -670,10 +667,10 @@ RedactorPlugins.wutil = function() {
 		 * Sets the selection after the last direct children of the editor.
 		 */
 		selectionEndOfEditor: function() {
-			var lastChild = this.$editor[0].lastElementChild;
+			var lastChild = _editor.lastElementChild;
 			if (lastChild === null || lastChild.nodeName === 'BLOCKQUOTE' || (lastChild.nodeName === 'DIV' && lastChild.classList.contains('codeBox')) || lastChild.nodeName === 'KBD') {
 				var element = this.utils.createSpaceElement();
-				this.$editor[0].appendChild(element);
+				_editor.appendChild(element);
 				
 				this.caret.setEnd(element);
 				this.wutil.saveSelection();
@@ -688,9 +685,7 @@ RedactorPlugins.wutil = function() {
 		 * this method tries to find the best nearby insert location.
 		 */
 		adjustSelectionForBlockElement: function() {
-			var editor = this.$editor[0];
-			
-			if (document.activeElement !== editor) {
+			if (document.activeElement !== _editor) {
 				this.wutil.restoreSelection();
 			}
 			
@@ -701,17 +696,17 @@ RedactorPlugins.wutil = function() {
 			var range = window.getSelection().getRangeAt(0);
 			if (range.collapsed) {
 				var element = range.startContainer;
-				if (element.nodeType === Node.TEXT_NODE && element.parentNode && element.parentNode.parentNode === editor) {
+				if (element.nodeType === Node.TEXT_NODE && element.parentNode && element.parentNode.parentNode === _editor) {
 					// caret position is fine
 					return;
 				}
 				else {
 					// walk tree up until we find a direct children of the editor and place the caret afterwards
-					while (element && element !== editor) {
+					while (element && element !== _editor) {
 						element = element.parentNode;
 					}
 					
-					if (element.parentNode === editor) {
+					if (element.parentNode === _editor) {
 						this.caret.setAfter(element);
 					}
 					else {
@@ -787,7 +782,7 @@ RedactorPlugins.wutil = function() {
 		 * @return	boolean
 		 */
 		isNodeWithin: function(node, element) {
-			while (node && node !== this.$editor[0]) {
+			while (node && node !== _editor) {
 				if (node === element) {
 					return true;
 				}
@@ -893,7 +888,7 @@ RedactorPlugins.wutil = function() {
 		 *  - pasting lists/list-items in lists can yield empty <li></li>
 		 */
 		fixDOM: function() {
-			var element, elements = this.$editor[0].querySelectorAll('li'), parent;
+			var element, elements = _editor.querySelectorAll('li'), parent;
 			for (var i = 0, length = elements.length; i < length; i++) {
 				element = elements[0];
 				if (element.innerHTML === '') {
@@ -905,7 +900,7 @@ RedactorPlugins.wutil = function() {
 			}
 			
 			// remove input elements
-			var inputElements = this.$editor[0].getElementsByTagName('INPUT');
+			var inputElements = _editor.getElementsByTagName('INPUT');
 			while (inputElements.length) {
 				inputElements[0].parentNode.removeChild(inputElements[0]);
 			}
