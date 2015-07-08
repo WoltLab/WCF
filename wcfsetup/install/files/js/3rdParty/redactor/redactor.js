@@ -2985,8 +2985,6 @@
 					else
 					{
 						this.$textarea.height(height).show().focus();
-						console.debug(height);
-						console.debug(this.$textarea[0].outerHTML);
 						this.$textarea.on('keydown.redactor-textarea-indenting', this.code.textareaIndenting);
 
 						$(window).scrollTop(scroll);
