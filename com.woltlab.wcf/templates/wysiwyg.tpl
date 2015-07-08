@@ -79,7 +79,7 @@ require(['Language', 'WoltLab/WCF/BBCode/FromHtml', 'WoltLab/WCF/BBCode/ToHtml']
 			linebreaks: true,
 			maxHeight: 500,
 			minHeight: 200,
-			plugins: [ 'wutil', 'wmonkeypatch', 'wbutton', 'wbbcode', 'wfontcolor', 'wfontfamily', 'wfontsize' ],
+			plugins: [ 'wutil', 'wautosave', 'wmonkeypatch', 'wbutton', 'wbbcode', 'wfontcolor', 'wfontfamily', 'wfontsize' ],
 			removeEmpty: false,
 			replaceDivs: false,
 			source: true,
@@ -132,6 +132,7 @@ require(['Language', 'WoltLab/WCF/BBCode/FromHtml', 'WoltLab/WCF/BBCode/ToHtml']
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/table.js?v={@LAST_UPDATE_TIME}',
 			
 			{* WoltLab *}
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wautosave.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbbcode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbutton.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontcolor.js?v={@LAST_UPDATE_TIME}',

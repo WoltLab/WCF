@@ -36,28 +36,6 @@ RedactorPlugins.wutil = function() {
 			
 			// convert HTML to BBCode upon submit
 			this.$textarea.parents('form').submit($.proxy(this.wutil.submit, this));
-			
-			if (this.wutil.getOption('woltlab.autosave').active) {
-				this.wutil.autosaveEnable();
-				
-				if (this.wutil.getOption('woltlab.autosave').saveOnInit || this.$textarea.data('saveOnInit')) {
-					this.wutil.setOption('woltlab.autosaveOnce', true);
-				}
-				else {
-					this.wutil.autosaveRestore();
-				}
-			}
-			
-			// prevent Redactor's own autosave
-			this.wutil.setOption('autosave', false);
-			
-			// disable autosave on destroy
-			var $mpDestroy = this.core.destroy;
-			this.core.destroy = (function() {
-				this.wutil.autosaveDisable();
-				
-				$mpDestroy.call(this);
-			}).bind(this);
 		},
 		
 		/**
@@ -256,7 +234,7 @@ RedactorPlugins.wutil = function() {
 				_textarea = this.wbbcode.convertFromHtml(_textarea.value).trim();
 			}
 			
-			this.wutil.autosavePurge();
+			this.wautosave.purge();
 		},
 		
 		/**
@@ -273,344 +251,32 @@ RedactorPlugins.wutil = function() {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'reset', { wysiwygContainerID: _textarea.id });
 		},
 		
-		/**
-		 * Enables automatic saving every minute.
-		 * 
-		 * @param	string		key
-		 */
-		autosaveEnable: function(key) {
-			if (!this.wutil.getOption('woltlab.autosave').active) {
-				this.wutil.setOption('woltlab.autosave', {
-					active: true,
-					key: key
-				});
-			}
-			
-			if (this.wutil._autosaveWorker === null) {
-				this.wutil.autosavePurgeOutdated();
-				
-				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter((function(pe) {
-					this.wutil.saveTextToStorage(false);
-				}).bind(this), 15 * 1000);
-			}
-			
-			return true;
-		},
+		/** @deprecated	2.2 - please use `wautosave.enable()` instead */
+		autosaveEnable: function(key) { this.wautosave.enable(key); },
 		
-		/**
-		 * Saves current editor text to local browser storage.
-		 * 
-		 * @param	boolean		force
-		 */
-		saveTextToStorage: function(force) {
-			var $content = this.wutil.getText();
-			if ($autosaveLastMessage == $content && !force) {
-				return;
-			}
-			
-			try {
-				localStorage.setItem(this.wutil.getOption('woltlab.autosave').key, JSON.stringify({
-					content: $content,
-					timestamp: Date.now()
-				}));
-				$autosaveLastMessage = $content;
-				$autosaveDidSave = true;
-				
-				if ($autosaveSaveNoticePE === null) {
-					$autosaveSaveNoticePE = new WCF.PeriodicalExecuter((function(pe) {
-						if ($autosavePaused === true) {
-							return;
-						}
-						
-						if ($autosaveDidSave === false) {
-							pe.stop();
-							$autosaveSaveNoticePE = null;
-							
-							return;
-						}
-						
-						this.wutil.autosaveShowNotice('saved');
-						$autosaveDidSave = false;
-					}).bind(this), 120 * 1000);
-				}
-			}
-			catch (e) {
-				console.debug("[wutil.saveTextToStorage] Unable to access local storage: " + e.message);
-			}
-		},
+		/** @deprecated	2.2 - please use `wautosave.save()` instead */
+		saveTextToStorage: function(force) { this.wautosave.save(force); },
 		
-		/**
-		 * Disables automatic saving.
-		 */
-		autosaveDisable: function() {
-			if (!this.wutil.getOption('woltlab.autosave').active) {
-				return false;
-			}
-			
-			this.wutil._autosaveWorker.stop();
-			this.wutil._autosaveWorker = null;
-			
-			this.wutil.setOption('woltlab.autosave', {
-				active: false,
-				key: ''
-			});
-			
-			return true;
-		},
+		/** @deprecated	2.2 - please use `wautosave.disable()` instead */
+		autosaveDisable: function() { return this.wautosave.disable(); },
 		
-		/**
-		 * Attempts to purge saved text.
-		 * 
-		 * @param	string		key
-		 */
-		autosavePurge: function() {
-			try {
-				localStorage.removeItem(this.wutil.getOption('woltlab.autosave').key);
-			}
-			catch (e) {
-				console.debug("[wutil.autosavePurge] Unable to access local storage: " + e.message);
-			}
-		},
+		/** @deprecated	2.2 - please use `wautosave.purge()` instead */
+		autosavePurge: function() { this.wautosave.purge(); },
 		
-		/**
-		 * Attempts to restore a saved text.
-		 * 
-		 * @return	boolean
-		 */
-		autosaveRestore: function() {
-			var $options = this.wutil.getOption('woltlab.autosave');
-			var $text = null;
-			
-			try {
-				$text = localStorage.getItem($options.key);
-			}
-			catch (e) {
-				console.debug("[wutil.autosaveRestore] Unable to access local storage: " + e.message);
-			}
-			
-			try {
-				$text = ($text === null) ? null : JSON.parse($text);
-			}
-			catch (e) {
-				$text = null;
-			}
-			
-			if ($text === null || !$text.content) {
-				return false;
-			}
-			
-			if ($options.lastEditTime && ($options.lastEditTime * 1000) > $text.timestamp) {
-				// stored message is older than last edit time, consider it tainted and discard
-				this.wutil.autosavePurge();
-				
-				return false;
-			}
-			
-			if ($options.prompt) {
-				this.wutil.autosaveShowNotice('prompt', $text);
-				
-				return false;
-			}
-			
-			if (this.wutil.inWysiwygMode()) {
-				this.wutil.setOption('woltlab.originalValue', $text.content);
-			}
-			else {
-				_textarea.value = $text.content;
-			}
-			
-			this.wutil.autosaveShowNotice('restored', { timestamp: $text.timestamp });
-			
-			return true;
-		},
+		/** @deprecated	2.2 - please use `wautosave.restore()` instead */
+		autosaveRestore: function() { return this.wautosave.restore(); },
 		
-		/**
-		 * Displays a notice regarding the autosave feature.
-		 * 
-		 * @param	string		type
-		 * @param	object		data
-		 */
-		autosaveShowNotice: function(type, data) {
-			if ($autosaveNotice === null) {
-				$autosaveNotice = $('<div class="redactorAutosaveNotice"><span class="redactorAutosaveMessage" /></div>');
-				$autosaveNotice.appendTo(this.$box);
-				
-				var $resetNotice = (function(event) {
-					if (event !== null && event.originalEvent.propertyName !== 'opacity') {
-						return;
-					}
-					
-					if ($autosaveNotice.hasClass('open') && event !== null) {
-						if ($autosaveNotice.data('callbackOpen')) {
-							$autosaveNotice.data('callbackOpen')();
-						}
-					}
-					else {
-						if ($autosaveNotice.data('callbackClose')) {
-							$autosaveNotice.data('callbackClose')();
-						}
-						
-						$autosaveNotice.removeData('callbackClose');
-						$autosaveNotice.removeData('callbackOpen');
-						
-						$autosaveNotice.removeClass('redactorAutosaveNoticeIcons');
-						$autosaveNotice.empty();
-						$('<span class="redactorAutosaveMessage" />').appendTo($autosaveNotice);
-					}
-				}).bind(this);
-				
-				$autosaveNotice.on('transitionend webkitTransitionEnd', $resetNotice);
-			}
-			
-			var $message = '';
-			switch (type) {
-				case 'prompt':
-					$('<span class="icon icon16 fa-info blue jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.version', { date: new Date(data.timestamp).toLocaleString() }) + '"></span>').prependTo($autosaveNotice);
-					var $accept = $('<span class="icon icon16 fa-check green pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.prompt.confirm') + '"></span>').appendTo($autosaveNotice);
-					var $discard = $('<span class="icon icon16 fa-times red pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.prompt.discard') + '"></span>').appendTo($autosaveNotice);
-					
-					$accept.click((function() {
-						this.wutil.replaceText(data.content);
-						
-						$resetNotice(null);
-						
-						this.wutil.autosaveShowNotice('restored', data);
-					}).bind(this));
-					
-					$discard.click((function() {
-						this.wutil.autosavePurge();
-						
-						$autosaveNotice.removeClass('open');
-					}).bind(this));
-					
-					$message = WCF.Language.get('wcf.message.autosave.prompt');
-					$autosaveNotice.addClass('redactorAutosaveNoticeIcons');
-					
-					var $uuid = '';
-					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + _textarea.id, (function(data) {
-						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + _textarea.id, $uuid);
-						
-						setTimeout(function() { $autosaveNotice.removeClass('open'); }, 3000);
-					}).bind(this));
-				break;
-				
-				case 'restored':
-					$('<span class="icon icon16 fa-info blue jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.version', { date: new Date(data.timestamp).toLocaleString() }) + '"></span>').prependTo($autosaveNotice);
-					var $accept = $('<span class="icon icon16 fa-check green pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.confirm') + '"></span>').appendTo($autosaveNotice);
-					var $discard = $('<span class="icon icon16 fa-times red pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.revert') + '"></span>').appendTo($autosaveNotice);
-					
-					$accept.click(function() { $autosaveNotice.removeClass('open'); });
-					
-					$discard.click((function() {
-						WCF.System.Confirmation.show(WCF.Language.get('wcf.message.autosave.restored.revert.confirmMessage'), (function(action) {
-							if (action === 'confirm') {
-								this.wutil.reset();
-								this.wutil.autosavePurge();
-								
-								$autosaveNotice.removeClass('open');
-							}
-						}).bind(this));
-					}).bind(this));
-					
-					$message = WCF.Language.get('wcf.message.autosave.restored');
-					$autosaveNotice.addClass('redactorAutosaveNoticeIcons');
-					
-					var $uuid = '';
-					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + _textarea.id, (function(data) {
-						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + _textarea.id, $uuid);
-						
-						setTimeout(function() { $accept.trigger('click'); }, 3000);
-					}).bind(this));
-				break;
-				
-				case 'saved':
-					if ($autosaveNotice.hasClass('open')) {
-						return;
-					}
-					
-					setTimeout(function() {
-						$autosaveNotice.removeClass('open');
-					}, 2000);
-					
-					$message = WCF.Language.get('wcf.message.autosave.saved');
-				break;
-			}
-			
-			$autosaveNotice.children('span.redactorAutosaveMessage').text($message);
-			$autosaveNotice.addClass('open');
-			
-			if (type !== 'saved') {
-				WCF.DOMNodeInsertedHandler.execute();
-			}
-		},
+		/** @deprecated	2.2 - please use `wautosave.showNotice()` instead */
+		autosaveShowNotice: function(type, data) { this.wautosave.showNotice(type, data); },
 		
-		/**
-		 * Automatically purges autosaved content older than 7 days.
-		 */
-		autosavePurgeOutdated: function() {
-			var $lastChecked = 0;
-			var $prefix = this.wutil.getOption('woltlab.autosave').prefix;
-			var $master = $prefix + '_wcf_master';
-			
-			try {
-				$lastChecked = localStorage.getItem($master);
-			}
-			catch (e) {
-				console.debug("[wutil.autosavePurgeOutdated] Unable to access local storage: " + e.message);
-			}
-			
-			if ($lastChecked === 0) {
-				// unable to access local storage, skip check
-				return;
-			}
-			
-			// JavaScript timestamps are in miliseconds
-			var $oneWeekAgo = Date.now() - (7 * 24 * 3600 * 1000);
-			if ($lastChecked === null || $lastChecked < $oneWeekAgo) {
-				var $regExp = new RegExp('^' + $prefix + '_');
-				for (var $key in localStorage) {
-					if ($key.match($regExp) && $key !== $master) {
-						var $value = localStorage.getItem($key);
-						try {
-							$value = JSON.parse($value);
-						}
-						catch (e) {
-							$value = { timestamp: 0 };
-						}
-						
-						if ($value === null || !$value.timestamp || $value.timestamp < $oneWeekAgo) {
-							try {
-								localStorage.removeItem($key);
-							}
-							catch (e) {
-								console.debug("[wutil.autosavePurgeOutdated] Unable to access local storage: " + e.message);
-							}
-						}
-					}
-				}
-				
-				try {
-					localStorage.setItem($master, Date.now());
-				}
-				catch (e) {
-					console.debug("[wutil.autosavePurgeOutdated] Unable to access local storage: " + e.message);
-				}
-			}
-		},
+		/** @deprecated	2.2 - please use `wautosave.purgeOutdated()` instead */
+		autosavePurgeOutdated: function() { this.wautosave.purgeOutdated(); },
 		
-		/**
-		 * Temporarily pauses autosave worker.
-		 */
-		autosavePause: function() {
-			$autosavePaused = true;
-		},
+		/** @deprecated	2.2 - please use `wautosave.pause()` instead */
+		autosavePause: function() { this.wautosave.pause(); },
 		
-		/**
-		 * Resumes autosave worker.
-		 */
-		autosaveResume: function() {
-			$autosavePaused = false;
-		},
+		/** @deprecated	2.2 - please use `wautosave.resume()` instead */
+		autosaveResume: function() { this.wautosave.resume(); },
 		
 		/**
 		 * Replaces one button with a new one.
@@ -648,6 +314,7 @@ RedactorPlugins.wutil = function() {
 		/**
 		 * Returns source textarea object.
 		 * 
+		 * @deprecated	2.2 - please use `core.getTextarea()` instead
 		 * @return	jQuery
 		 */
 		getSource: function() {
@@ -851,7 +518,7 @@ RedactorPlugins.wutil = function() {
 		 * @param	Element		element
 		 */
 		setCaretBefore: function(element) {
-			this.wutil._setCaret(element, true);
+			this.caret.setBefore(element);
 		},
 		
 		/**
@@ -860,26 +527,18 @@ RedactorPlugins.wutil = function() {
 		 * @param	Element		element
 		 */
 		setCaretAfter: function(element) {
-			this.wutil._setCaret(element, false);
+			this.caret.setAfter(element);
 		},
 		
 		/**
 		 * Sets the caret at target position.
 		 * 
+		 * @deprecated	2.2 - please use `wutil.setCaret(Before|After)()` instead
 		 * @param	Element		element
 		 * @param	boolean		setBefore
 		 */
 		_setCaret: function(element, setBefore) {
-			var $node;
-			if ((element[0] || element).parentElement && (element[0] || element).parentElement.tagName === 'BLOCKQUOTE') {
-				$node = $('<div>' + this.opts.invisibleSpace + '</div>');
-			}
-			else {
-				$node = $('<p>' + this.opts.invisibleSpace + '</p>');
-			}
-			
-			$node[(setBefore ? 'insertBefore' : 'insertAfter')](element);
-			this.caret.setEnd($node[0]);
+			this.caret[(setBefore ? 'setBefore' : 'setAfter')](element);
 		},
 		
 		/**
@@ -888,22 +547,17 @@ RedactorPlugins.wutil = function() {
 		 *  - pasting lists/list-items in lists can yield empty <li></li>
 		 */
 		fixDOM: function() {
-			var element, elements = _editor.querySelectorAll('li'), parent;
+			var elements = _editor.querySelectorAll('li:empty'), parent;
 			for (var i = 0, length = elements.length; i < length; i++) {
-				element = elements[0];
-				if (element.innerHTML === '') {
-					parent = element.parentNode;
-					if (parent.childElementCount > 1) {
-						parent.removeChild(element);
-					}
+				parent = elements[i].parentNode;
+				if (parent.childElementCount > 1) {
+					parent.removeChild(elements[i]);
 				}
 			}
 			
 			// remove input elements
-			var inputElements = _editor.getElementsByTagName('INPUT');
-			while (inputElements.length) {
-				inputElements[0].parentNode.removeChild(inputElements[0]);
-			}
+			elements = _editor.getElementsByTagName('INPUT');
+			while (elements.length) elements[0].parentNode.removeChild(elements[0]);
 		}
 	};
 };
