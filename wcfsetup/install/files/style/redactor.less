@@ -304,6 +304,21 @@
 
 .redactor-toolbar-tooltip {
 	.balloonTooltip;
+	
+	opacity: 1;
+	visibility: visible;
+	
+	&:before {
+		border-color: @wcfTooltipBackgroundColor transparent;
+		border-style: solid;
+		border-width: 0 5px 5px;
+		content: "";
+		display: block;
+		left: 50%;
+		position: absolute;
+		top: -5px;
+		transform: translateX(-50%);
+	}
 }
 
 #redactor-image-box {
