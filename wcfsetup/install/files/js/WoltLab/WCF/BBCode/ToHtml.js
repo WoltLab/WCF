@@ -135,6 +135,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 				tt: 'kbd',
 				
 				// callback replacement
+				align: this._convertAlignment.bind(this),
 				attach: this._convertAttachment.bind(this),
 				color: this._convertColor.bind(this),
 				code: this._convertCode.bind(this),
@@ -210,6 +211,23 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			else {
 				return replace(stack, item, index);
 			}
+		},
+		
+		/**
+		 * Converts [align] into <div style="text-align: ...">.
+		 * 
+		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
+		 * @param	{object}	item	current BBCode tag object
+		 * @param	{integer}	index	current stack index representing `item`
+		 * @returns	{array}		first item represents the opening tag, the second the closing one
+		 */
+		_convertAlignment: function(stack, item, index) {
+			var align = (item.attributes.length) ? item.attributes[0] : '';
+			if (['center', 'justify', 'left', 'right'].indexOf(align) === -1) {
+				return [null, null];
+			}
+			
+			return ['<div style="text-align: ' + align + '">', '</div>'];
 		},
 		
 		/**

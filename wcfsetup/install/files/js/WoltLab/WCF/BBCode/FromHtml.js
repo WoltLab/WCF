@@ -466,8 +466,8 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 		 * @param	{Element}	element		target element
 		 */
 		_convertInlineTextAlign: function(element, value) {
-			if (value === 'left' || value === 'right' || value === 'justify') {
-				element.innerHTML = '[align=' + value + ']' + innerHTML + '[/align]';
+			if (['center', 'justify', 'left', 'right'].indexOf(value) !== -1) {
+				element.innerHTML = '[align=' + value + ']' + element.innerHTML + '[/align]';
 			}
 		},
 		
