@@ -16,6 +16,8 @@ RedactorPlugins.wutil = function() {
 	var $autosavePaused = false;
 	var $autosaveSaveNoticePE = null;
 	
+	var _textarea = null;
+	
 	return {
 		/**
 		 * autosave worker process
@@ -33,6 +35,8 @@ RedactorPlugins.wutil = function() {
 		 * Initializes the RedactorPlugins.wutil plugin.
 		 */
 		init: function() {
+			_textarea = this.$textarea[0];
+			
 			// convert HTML to BBCode upon submit
 			this.$textarea.parents('form').submit($.proxy(this.wutil.submit, this));
 			
@@ -120,15 +124,15 @@ RedactorPlugins.wutil = function() {
 				return false;
 			}
 			
-			this.$textarea.focus();
+			_textarea.focus();
 			var $position = this.$textarea.getCaret();
 			if ($position == -1) {
 				console.debug("insertAtCaret() failed: Source is not input[type=text], input[type=password] or textarea.");
 			}
 			
-			var $content = this.$textarea.val();
+			var $content = _textarea.value;
 			$content = $content.substr(0, $position) + string + $content.substr($position);
-			this.$textarea.val($content);
+			_textarea.value = $content;
 			
 			return true;
 		},
@@ -225,16 +229,11 @@ RedactorPlugins.wutil = function() {
 		getText: function() {
 			if (this.wutil.inWysiwygMode()) {
 				this.code.startSync();
-				var $html = this.$textarea.val();
 				
-				this.$textarea.val($.trim(this.wbbcode.convertFromHtml($html)));
+				_textarea.value = this.wbbcode.convertFromHtml(_textarea.value).trim();
 			}
 			
-			var $text = $.trim(this.$textarea.val());
-			
-			$text = this.wutil._removeSuperfluousNewlines($text);
-			
-			return $text;
+			return _textarea.value.trim();
 		},
 		
 		/**
@@ -247,7 +246,7 @@ RedactorPlugins.wutil = function() {
 				return this.utils.isEmpty(this.$editor.html());
 			}
 			
-			return (!$.trim(this.$textarea.val()));
+			return (_textarea.value.trim() === '');
 		},
 		
 		/**
@@ -257,46 +256,10 @@ RedactorPlugins.wutil = function() {
 			if (this.wutil.inWysiwygMode()) {
 				this.code.startSync();
 				
-				var $text = $.trim(this.wbbcode.convertFromHtml(this.$textarea.val()));
-				
-				$text = this.wutil._removeSuperfluousNewlines($text);
-				
-				this.$textarea.val($text);
+				_textarea = this.wbbcode.convertFromHtml(_textarea.value).trim();
 			}
 			
 			this.wutil.autosavePurge();
-		},
-		
-		/**
-		 * Removes newlines after certain elements which have been inserted for
-		 * readability but do not represent an actual newline.
-		 * 
-		 * @param	string		text
-		 * @return	string
-		 */
-		_removeSuperfluousNewlines: function(text) {
-			text = text.replace(/(\[\/(?:align|code|quote)\])\n/g, '$1');
-			
-			var $data = { text: text };
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'wutil_removeSuperfluousNewlines', $data);
-			
-			return $data.text;
-		},
-		
-		/**
-		 * Adds newlines after certain elements, this is actually the reverse of
-		 * _removeSuperfluousNewlines() which removes them prior to submitting.
-		 * 
-		 * @param	string
-		 * @return	string
-		 */
-		addNewlines: function(text) {
-			text = text.replace(/(\[\/(?:align|code|quote)\])/g, '$1\n');
-			
-			var $data = { text: text };
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'wutil_addNewlines', $data);
-			
-			return $data.text;
 		},
 		
 		/**
@@ -304,13 +267,13 @@ RedactorPlugins.wutil = function() {
 		 */
 		reset: function() {
 			if (this.opts.visual) {
-				this.$editor.html('<p>' + this.opts.invisibleSpace + '</p>');
+				this.$editor[0].innerHTML = '';
 				this.wutil.saveSelection();
 			}
 			
-			this.$textarea.val('');
+			_textarea.value = '';
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'reset', { wysiwygContainerID: this.$textarea.wcfIdentify() });
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'reset', { wysiwygContainerID: _textarea.id });
 		},
 		
 		/**
@@ -456,7 +419,7 @@ RedactorPlugins.wutil = function() {
 				this.wutil.setOption('woltlab.originalValue', $text.content);
 			}
 			else {
-				this.$textarea.val($text.content);
+				_textarea.value = $text.content;
 			}
 			
 			this.wutil.autosaveShowNotice('restored', { timestamp: $text.timestamp });
@@ -527,8 +490,8 @@ RedactorPlugins.wutil = function() {
 					$autosaveNotice.addClass('redactorAutosaveNoticeIcons');
 					
 					var $uuid = '';
-					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), (function(data) {
-						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), $uuid);
+					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + _textarea.id, (function(data) {
+						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + _textarea.id, $uuid);
 						
 						setTimeout(function() { $autosaveNotice.removeClass('open'); }, 3000);
 					}).bind(this));
@@ -556,8 +519,8 @@ RedactorPlugins.wutil = function() {
 					$autosaveNotice.addClass('redactorAutosaveNoticeIcons');
 					
 					var $uuid = '';
-					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), (function(data) {
-						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + this.$textarea.wcfIdentify(), $uuid);
+					$uuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + _textarea.id, (function(data) {
+						WCF.System.Event.removeListener('com.woltlab.wcf.redactor', 'keydown_' + _textarea.id, $uuid);
 						
 						setTimeout(function() { $accept.trigger('click'); }, 3000);
 					}).bind(this));
@@ -682,16 +645,7 @@ RedactorPlugins.wutil = function() {
 		 * @return	string
 		 */
 		removeZeroWidthSpace: function(string) {
-			var $string = '';
-			
-			for (var $i = 0, $length = string.length; $i < $length; $i++) {
-				var $byte = string.charCodeAt($i).toString(16);
-				if ($byte != '200b') {
-					$string += string[$i];
-				}
-			}
-			
-			return $string;
+			return string.replace(/\u200b/g, '');
 		},
 		
 		/**
@@ -709,7 +663,7 @@ RedactorPlugins.wutil = function() {
 		 * @return	string
 		 */
 		getName: function() {
-			return this.$textarea.wcfIdentify();
+			return _textarea.id;
 		},
 		
 		/**
@@ -734,28 +688,35 @@ RedactorPlugins.wutil = function() {
 		 * this method tries to find the best nearby insert location.
 		 */
 		adjustSelectionForBlockElement: function() {
-			if (document.activeElement !== this.$editor[0]) {
+			var editor = this.$editor[0];
+			
+			if (document.activeElement !== editor) {
 				this.wutil.restoreSelection();
 			}
 			
-			if (getSelection().getRangeAt(0).collapsed) {
-				var $startContainer = getSelection().getRangeAt(0).startContainer;
-				if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b' && $startContainer.parentElement && $startContainer.parentElement.tagName === 'P' && $startContainer.parentElement.parentElement === this.$editor[0]) {
+			if (!window.getSelection().rangeCount) {
+				return;
+			}
+			
+			var range = window.getSelection().getRangeAt(0);
+			if (range.collapsed) {
+				var element = range.startContainer;
+				if (element.nodeType === Node.TEXT_NODE && element.parentNode && element.parentNode.parentNode === editor) {
 					// caret position is fine
 					return;
 				}
 				else {
 					// walk tree up until we find a direct children of the editor and place the caret afterwards
-					var $insertAfter = $($startContainer).parentsUntil(this.$editor[0]).last();
-					if ($insertAfter[0] === document.body.parentElement) {
-						// work-around if selection never has been within the editor before
-						this.wutil.selectionEndOfEditor();
+					while (element && element !== editor) {
+						element = element.parentNode;
+					}
+					
+					if (element.parentNode === editor) {
+						this.caret.setAfter(element);
 					}
 					else {
-						this.caret.setAfter($insertAfter);
-						/*var $p = $('<p><br></p>').insertAfter($insertAfter);
-						
-						this.caret.setEnd($p);*/
+						// work-around if selection never has been within the editor before
+						this.wutil.selectionEndOfEditor();
 					}
 				}
 			}
@@ -792,7 +753,7 @@ RedactorPlugins.wutil = function() {
 				return false;
 			}
 			
-			if ($range.endContainer.nodeType === Element.TEXT_NODE) {
+			if ($range.endContainer.nodeType === Node.TEXT_NODE) {
 				// caret is not at the end
 				if ($range.endOffset < $range.endContainer.length) {
 					return false;
@@ -845,27 +806,20 @@ RedactorPlugins.wutil = function() {
 		 * @return	boolean
 		 */
 		containsTag: function(node, tagName) {
-			switch (node.nodeType) {
-				case Element.ELEMENT_NODE:
-					if (node.tagName === tagName) {
+			if (node.nodeType === Node.ELEMENT_NODE) {
+				if (node.nodeName === tagName) {
+					return true;
+				}
+			}
+			else if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+				for (var i = 0, length = node.childElementCount; i < length; i++) {
+					if (this.wutil.containsTag(node.childNodes[i], tagName)) {
 						return true;
 					}
-					
-				// fall through
-				case Element.DOCUMENT_FRAGMENT_NODE:
-					for (var $i = 0; $i < node.childNodes.length; $i++) {
-						if (this.wutil.containsTag(node.childNodes[$i], tagName)) {
-							return true;
-						}
-					}
-					
-					return false;
-				break;
-				
-				default:
-					return false;
-				break;
+				}
 			}
+			
+			return false;
 		},
 		
 		/**
@@ -883,8 +837,7 @@ RedactorPlugins.wutil = function() {
 				$wasInWysiwygMode = true;
 			}
 			
-			//value = this.wutil.addNewlines(value);
-			this.$textarea.val(value);
+			_textarea.value = value;
 			
 			if ($wasInWysiwygMode) {
 				this.code.toggle();
@@ -940,56 +893,14 @@ RedactorPlugins.wutil = function() {
 		 *  - pasting lists/list-items in lists can yield empty <li></li>
 		 */
 		fixDOM: function() {
-			var $listItems = this.$editor[0].getElementsByTagName('li');
-			for (var $i = 0, $length = $listItems.length; $i < $length; $i++) {
-				var $listItem = $listItems[$i];
-				if (!$listItem.innerHTML.length) {
-					var $parent = $listItem.parentElement;
-					if ($parent.children.length > 1) {
-						$listItem.parentElement.removeChild($listItem);
-						
-						// node list is live
-						$i--;
-						$length--;
+			var element, elements = this.$editor[0].querySelectorAll('li'), parent;
+			for (var i = 0, length = elements.length; i < length; i++) {
+				element = elements[0];
+				if (element.innerHTML === '') {
+					parent = element.parentNode;
+					if (parent.childElementCount > 1) {
+						parent.removeChild(element);
 					}
-				}
-			}
-			
-			// fix markup for empty lines
-			for (var $i = 0, $length = this.$editor[0].children.length; $i < $length; $i++) {
-				var $child = this.$editor[0].children[$i];
-				if ($child.nodeType !== Node.ELEMENT_NODE || $child.tagName !== 'P') {
-					// not a <p> element
-					continue;
-				}
-				
-				if ($child.innerHTML === "\n") {
-					$child.parentElement.removeChild($child);
-					
-					$i--;
-					$length--;
-					
-					continue;
-				}
-				
-				if ($child.textContent.length > 0) {
-					// element is non-empty
-					continue;
-				}
-				
-				if ($child.children.length > 1 || ($child.children.length === 1 && $child.children[0].tagName === 'BR')) {
-					// element contains more than one children or it is just a <br>
-					continue;
-				}
-				
-				// head all the way down to the most inner node
-				while ($child.children.length === 1) {
-					$child = $child.children[0];
-				}
-				
-				if ($child.childNodes.length === 0 && $child.tagName !== 'BR') {
-					var $node = document.createTextNode('\u200b');
-					$child.appendChild($node);
 				}
 			}
 			
