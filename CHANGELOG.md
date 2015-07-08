@@ -27,3 +27,6 @@
 * Replaced old user bulk processing with new implementation using the abstract bulk processing system.
 * `conditionContainers` template event in template `noticeAdd.tpl` added.
 * Use condition system for user search.
+* Overhauled Redactor integration
+	* Linebreaks mode instead of using paragraphs, works better with the PHP-side parser which works with linebreaks
+	* Ported the PHP-BBCode parser, massively improves accuracy and ensures validity
