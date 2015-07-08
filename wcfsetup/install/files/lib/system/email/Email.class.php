@@ -581,8 +581,6 @@ class Email {
 			$body .= $text;
 		}
 		
-		// TODO: Where to put the email signature?
-		
 		return $body;
 	}
 	
