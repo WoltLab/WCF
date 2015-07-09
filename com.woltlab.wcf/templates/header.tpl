@@ -72,11 +72,9 @@
 					
 					{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
 						<script data-relocate="true">
-							//<![CDATA[
-							$(function() {
-								new WCF.Collapsible.Sidebar();
+							require(['WoltLab/WCF/UI/Collapsible/Sidebar'], function(UICollapsibleSidebar) {
+								UICollapsibleSidebar.setup();
 							});
-							//]]>
 						</script>
 					{/if}
 				{/if}
