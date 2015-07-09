@@ -175,7 +175,6 @@ requirejs.config({
 		new WCF.Effect.SmoothScroll();
 		
 		WCF.System.PageNavigation.init('.pageNavigation');
-		WCF.Date.Picker.init();
 		WCF.User.Profile.ActivityPointList.init();
 		
 		{event name='javascriptInit'}
