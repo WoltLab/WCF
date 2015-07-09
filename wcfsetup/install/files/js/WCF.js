@@ -7989,7 +7989,7 @@ $.widget('ui.wcfSlideshow', {
 		/* cycle interval in seconds */
 		cycleInterval: 5,
 		/* gap between items in pixels */
-		itemGap: 50,
+		itemGap: 50
 	},
 	
 	/**
