@@ -212,7 +212,7 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 					}
 					
 					// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
-					if (data.returnValues && data.returnValues.template !== undefined) {
+					if (data && data.returnValues && data.returnValues.template !== undefined) {
 						data.returnValues.template = data.returnValues.template.trim();
 					}
 				}
