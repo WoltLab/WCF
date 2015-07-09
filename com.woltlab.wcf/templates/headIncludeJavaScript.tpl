@@ -102,6 +102,7 @@ requirejs.config({
 		});
 		
 		BootstrapFrontend.setup({
+			backgroundQueueUrl: '{link controller="BackgroundQueuePerform"}{/link}',
 			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
 		});
 	});
@@ -192,18 +193,6 @@ requirejs.config({
 				}
 			});
 		{/if}
-		
-		{* invoke background queue roughly every 10th request *}
-		if (Math.random() < 0.1) {
-			require(['Ajax'], function(Ajax) {
-				// fire and forget background queue perform task
-				Ajax.apiOnce({
-					url: '{link controller="BackgroundQueuePerform"}{/link}',
-					ignoreError: true,
-					silent: true
-				});
-			});
-		}
 		
 		{if $__sessionKeepAlive|isset}
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
