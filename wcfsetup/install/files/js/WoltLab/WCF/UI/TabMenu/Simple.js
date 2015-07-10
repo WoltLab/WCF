@@ -220,7 +220,9 @@ define(['Dictionary', 'DOM/Traverse', 'DOM/Util', 'EventHandler'], function(Dict
 			if (disableEvent !== true) {
 				EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this._containerId, 'select', {
 					active: tab,
+					activeName: name,
 					previous: oldTab,
+					previousName: oldTab.getAttribute('data-name')
 				});
 				
 				if (this._isLegacy && typeof window.jQuery === 'function') {
