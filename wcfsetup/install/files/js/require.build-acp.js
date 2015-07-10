@@ -1,23 +1,16 @@
 ({
 	mainConfigFile: 'require.config.js',
 	name: "WoltLab/_Meta",
-	out: "WCF.Core.min.js",
+	out: "WCF.ACP.min.js",
 	useStrict: true,
 	preserveLicenseComments: false,
 	optimize: 'uglify2',
 	uglify2: {},
-	paths: {
-		"requireLib": "require",
-		
-		"jquery": "empty:"
-	},
-	include: [
-		"requireLib",
-		"require.config",
-		"require.linearExecution"
-	],
 	excludeShallow: [
 		'WoltLab/_Meta'
+	],
+	exclude: [
+		'WoltLab/WCF/Bootstrap'
 	],
 	rawText: {
 		'WoltLab/_Meta': 'define([], function() {});'
@@ -33,13 +26,12 @@
 				    path = module.require('path');
 				global.allModules = [];
 				
-				var queue = ['WoltLab'];
+				var queue = ['WoltLab/WCF/Acp'];
 				var folder;
 				while (folder = queue.shift()) {
 					var files = fs.readdirSync(folder);
 					for (var i = 0; i < files.length; i++) {
 						var filename = path.join(folder, files[i]);
-						if (filename === 'WoltLab/WCF/Acp') continue;
 
 						if (path.extname(filename) == '.js') {
 							global.allModules.push(filename);
