@@ -4,11 +4,11 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/Mobile
+ * @module	WoltLab/WCF/Ui/Mobile
  */
 define(
-	[       'enquire', 'Environment', 'Language', 'DOM/ChangeListener', 'DOM/Traverse', 'UI/CloseOverlay'],
-	function(enquire,   Environment,   Language,   DOMChangeListener,    DOMTraverse,    UICloseOverlay)
+	[       'enquire', 'Environment', 'Language', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/CloseOverlay'],
+	function(enquire,   Environment,   Language,   DomChangeListener,    DomTraverse,    UiCloseOverlay)
 {
 	"use strict";
 	
@@ -18,9 +18,9 @@ define(
 	var _sidebar = null;
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/Mobile
+	 * @exports	WoltLab/WCF/Ui/Mobile
 	 */
-	var UIMobile = {
+	var UiMobile = {
 		/**
 		 * Initializes the mobile UI using enquire.js.
 		 */
@@ -80,8 +80,8 @@ define(
 			this._initSearchBar();
 			this._initButtonGroupNavigation();
 			
-			UICloseOverlay.add('WoltLab/WCF/UI/Mobile', this._closeAllMenus.bind(this));
-			DOMChangeListener.add('WoltLab/WCF/UI/Mobile', this._initButtonGroupNavigation.bind(this));
+			UiCloseOverlay.add('WoltLab/WCF/Ui/Mobile', this._closeAllMenus.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Ui/Mobile', this._initButtonGroupNavigation.bind(this));
 		},
 		
 		_initSidebarToggleButtons: function() {
@@ -155,7 +155,7 @@ define(
 				button.appendChild(span);
 				
 				button.addEventListener('click', function(ev) {
-					var next = DOMTraverse.next(button);
+					var next = DomTraverse.next(button);
 					if (next !== null) {
 						next.classList.toggle('open');
 						
@@ -178,5 +178,5 @@ define(
 		}
 	};
 	
-	return UIMobile;
+	return UiMobile;
 });

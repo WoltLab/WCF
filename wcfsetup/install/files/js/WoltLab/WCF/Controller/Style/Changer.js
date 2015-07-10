@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Style/Changer
  */
-define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
+define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 	"use strict";
 	
 	/**
@@ -42,7 +42,7 @@ define(['Ajax', 'Language', 'UI/Dialog'], function(Ajax, Language, UIDialog) {
 		showDialog: function(event) {
 			event.preventDefault();
 			
-			UIDialog.open(this);
+			UiDialog.open(this);
 		},
 		
 		_dialogSetup: function() {

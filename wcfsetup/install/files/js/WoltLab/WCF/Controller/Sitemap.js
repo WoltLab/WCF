@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Sitemap
  */
-define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu'], function(Ajax, EventHandler, Language, DOMUtil, UIDialog, UITabMenu) {
+define(['Ajax', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog', 'Ui/TabMenu'], function(Ajax, EventHandler, Language, DomUtil, UiDialog, UiTabMenu) {
 	"use strict";
 	
 	var _cache = [];
@@ -31,7 +31,7 @@ define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu
 		_click: function(event) {
 			event.preventDefault();
 			
-			UIDialog.open(this);
+			UiDialog.open(this);
 		},
 		
 		_ajaxSetup: function() {
@@ -65,9 +65,9 @@ define(['Ajax', 'EventHandler', 'Language', 'DOM/Util', 'UI/Dialog', 'UI/TabMenu
 						_cache.push(data.returnValues.sitemapName);
 						
 						var tabMenuContainer = content.querySelector('.tabMenuContainer');
-						var menuId = DOMUtil.identify(tabMenuContainer);
+						var menuId = DomUtil.identify(tabMenuContainer);
 						
-						UITabMenu.getTabMenu(menuId).select('sitemap_' + data.returnValues.sitemapName);
+						UiTabMenu.getTabMenu(menuId).select('sitemap_' + data.returnValues.sitemapName);
 						
 						EventHandler.add('com.woltlab.wcf.simpleTabMenu_' + menuId, 'select', this.showTab.bind(this));
 					}).bind(this)

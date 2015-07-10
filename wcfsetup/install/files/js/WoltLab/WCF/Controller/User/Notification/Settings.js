@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/User/Notification/Settings
  */
-define(['Dictionary', 'Language', 'DOM/Traverse', 'UI/SimpleDropdown'], function(Dictionary, Language, DOMTraverse, UISimpleDropdown) {
+define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function(Dictionary, Language, DomTraverse, UiSimpleDropdown) {
 	"use strict";
 	
 	var _data = new Dictionary();
@@ -52,9 +52,9 @@ define(['Dictionary', 'Language', 'DOM/Traverse', 'UI/SimpleDropdown'], function
 			var enabledNotification = document.getElementById('settings_' + groupId + '_enabled');
 			enabledNotification.addEventListener('click', function() { mailSetting.classList.add('active'); });
 			
-			var mailValue = DOMTraverse.childByTag(mailSetting, 'INPUT');
+			var mailValue = DomTraverse.childByTag(mailSetting, 'INPUT');
 			
-			var button = DOMTraverse.childByTag(mailSetting, 'A');
+			var button = DomTraverse.childByTag(mailSetting, 'A');
 			button.setAttribute('data-object-id', groupId);
 			button.addEventListener('click', _callbackClick);
 			
@@ -83,10 +83,10 @@ define(['Dictionary', 'Language', 'DOM/Traverse', 'UI/SimpleDropdown'], function
 				button.parentNode.classList.add('dropdown');
 				button.parentNode.appendChild(data.dropdownMenu);
 				
-				UISimpleDropdown.init(button, true);
+				UiSimpleDropdown.init(button, true);
 			}
 			else {
-				var items = DOMTraverse.childrenByTag(data.dropdownMenu, 'LI'), value = data.mailValue.value;
+				var items = DomTraverse.childrenByTag(data.dropdownMenu, 'LI'), value = data.mailValue.value;
 				for (var i = 0; i < 4; i++) {
 					items[i].classList[(items[i].getAttribute('data-value') === value) ? 'add' : 'remove']('active');
 				}

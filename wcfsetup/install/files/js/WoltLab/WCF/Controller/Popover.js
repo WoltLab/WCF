@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Popover
  */
-define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', 'UI/Alignment'], function(Ajax, Dictionary, Environment, DOMChangeListener, DOMUtil, UIAlignment) {
+define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Alignment'], function(Ajax, Dictionary, Environment, DomChangeListener, DomUtil, UiAlignment) {
 	"use strict";
 	
 	var _activeId = null;
@@ -92,7 +92,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', '
 				this._hide(true);
 			}).bind(this));
 			
-			DOMChangeListener.add('WoltLab/WCF/Controller/Popover', this._init.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Controller/Popover', this._init.bind(this));
 		},
 		
 		/**
@@ -162,7 +162,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', '
 			for (var i = 0, length = elements.length; i < length; i++) {
 				var element = elements[i];
 				
-				var id = DOMUtil.identify(element);
+				var id = DomUtil.identify(element);
 				if (_cache.has(id)) {
 					return;
 				}
@@ -211,7 +211,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', '
 				throw new Error("Unable to find element for object id '" + objectId + "' (identifier: '" + identifier + "').");
 			}
 			
-			data.content = DOMUtil.createFragmentFromHtml(content);
+			data.content = DomUtil.createFragmentFromHtml(content);
 			data.state = STATE_READY;
 			
 			if (_activeId) {
@@ -238,7 +238,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', '
 				_timeoutEnter = null;
 			}
 			
-			var id = DOMUtil.identify(event.currentTarget);
+			var id = DomUtil.identify(event.currentTarget);
 			if (_activeId === id && _timeoutLeave !== null) {
 				window.clearTimeout(_timeoutLeave);
 				_timeoutLeave = null;
@@ -393,7 +393,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'DOM/ChangeListener', 'DOM/Util', '
 				}
 			}
 			
-			UIAlignment.set(_popover, _elements.get(_activeId).element, {
+			UiAlignment.set(_popover, _elements.get(_activeId).element, {
 				pointer: true,
 				vertical: 'top',
 				verticalOffset: 3

@@ -4,15 +4,15 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/BBCode/Parser
+ * @module	WoltLab/WCF/Bbcode/Parser
  */
 define([], function() {
 	"use strict";
 	
 	/**
-	 * @module	WoltLab/WCF/BBCode/Parser
+	 * @module	WoltLab/WCF/Bbcode/Parser
 	 */
-	var BBCodeParser = {
+	var BbcodeParser = {
 		/**
 		 * Parses a message and returns an XML-conform linear tree.
 		 * 
@@ -197,5 +197,5 @@ define([], function() {
 		}
 	};
 	
-	return BBCodeParser;
+	return BbcodeParser;
 });

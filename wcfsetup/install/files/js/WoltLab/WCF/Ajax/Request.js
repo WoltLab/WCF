@@ -8,7 +8,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ajax/Request
  */
-define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'WoltLab/WCF/Ajax/Status'], function(Core, Language, DOMChangeListener, DOMUtil, UIDialog, AjaxStatus) {
+define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'WoltLab/WCF/Ajax/Status'], function(Core, Language, DomChangeListener, DomUtil, UiDialog, AjaxStatus) {
 	"use strict";
 	
 	var _didInit = false;
@@ -270,7 +270,7 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 				
 				var html = '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
 				
-				UIDialog.openStatic(DOMUtil.getUniqueId(), html, {
+				UiDialog.openStatic(DomUtil.getUniqueId(), html, {
 					title: Language.get('wcf.global.error.title')
 				});
 			}
@@ -290,7 +290,7 @@ define(['Core', 'Language', 'DOM/ChangeListener', 'DOM/Util', 'UI/Dialog', 'Wolt
 			
 			this._previousXhr = null;
 			
-			DOMChangeListener.trigger();
+			DomChangeListener.trigger();
 			
 			// fix anchor tags generated through WCF::getAnchor()
 			var links = document.querySelectorAll('a[href*="#"]');

@@ -11,14 +11,14 @@
 define(
 	[
 		'favico',                 'enquire',                'perfect-scrollbar',      'WoltLab/WCF/Date/Time/Relative',
-		'UI/SimpleDropdown',      'WoltLab/WCF/UI/Mobile',  'WoltLab/WCF/UI/TabMenu', 'WoltLab/WCF/UI/FlexibleMenu',
-		'UI/Dialog',              'WoltLab/WCF/UI/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment',
+		'Ui/SimpleDropdown',      'WoltLab/WCF/Ui/Mobile',  'WoltLab/WCF/Ui/TabMenu', 'WoltLab/WCF/Ui/FlexibleMenu',
+		'Ui/Dialog',              'WoltLab/WCF/Ui/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment',
 		'WoltLab/WCF/Date/Picker'
 	], 
 	function(
 		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
-		 UISimpleDropdown,         UIMobile,                 UITabMenu,                UIFlexibleMenu,
-		 UIDialog,                 UITooltip,                Language,                 Environment,
+		 UiSimpleDropdown,         UiMobile,                 UiTabMenu,                UiFlexibleMenu,
+		 UiDialog,                 UiTooltip,                Language,                 Environment,
 		 DatePicker
 	)
 {
@@ -47,12 +47,12 @@ define(
 			DateTimeRelative.setup();
 			DatePicker.init();
 			
-			UISimpleDropdown.setup();
-			UIMobile.setup();
-			UITabMenu.setup();
-			UIFlexibleMenu.setup();
-			UIDialog.setup();
-			UITooltip.setup();
+			UiSimpleDropdown.setup();
+			UiMobile.setup();
+			UiTabMenu.setup();
+			UiFlexibleMenu.setup();
+			UiDialog.setup();
+			UiTooltip.setup();
 			
 			// convert method=get into method=post
 			var forms = document.querySelectorAll('form[method=get]');

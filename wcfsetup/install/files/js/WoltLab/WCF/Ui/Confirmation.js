@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/Confirmation
+ * @module	WoltLab/WCF/Ui/Confirmation
  */
-define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
+define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 	"use strict";
 	
 	var _active = false;
@@ -18,9 +18,9 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 	/**
 	 * Confirmation dialog overlay.
 	 * 
-	 * @exports	WoltLab/WCF/UI/Confirmation
+	 * @exports	WoltLab/WCF/Ui/Confirmation
 	 */
-	var UIConfirmation = {
+	var UiConfirmation = {
 		/**
 		 * Shows the confirmation dialog.
 		 * 
@@ -35,7 +35,7 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 		 * @param	{object<string, *>}	options		confirmation options
 		 */
 		show: function(options) {
-			if (UIDialog === undefined) UIDialog = require('UI/Dialog');
+			if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
 			
 			if (_active) {
 				return;
@@ -68,7 +68,7 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 			
 			_active = true;
 			
-			UIDialog.open(this);
+			UiDialog.open(this);
 		},
 		
 		_dialogSetup: function() {
@@ -118,7 +118,7 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 			
 			var cancelButton = document.createElement('button');
 			cancelButton.textContent = Language.get('wcf.global.confirmation.cancel');
-			cancelButton.addEventListener('click', function() { UIDialog.close('wcfSystemConfirmation'); });
+			cancelButton.addEventListener('click', function() { UiDialog.close('wcfSystemConfirmation'); });
 			formSubmit.appendChild(cancelButton);
 			
 			document.body.appendChild(dialog);
@@ -136,7 +136,7 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 			}
 			
 			_active = false;
-			UIDialog.close('wcfSystemConfirmation');
+			UiDialog.close('wcfSystemConfirmation');
 		},
 		
 		/**
@@ -165,5 +165,5 @@ define(['Core', 'Language', 'UI/Dialog'], function(Core, Language, UIDialog) {
 		}
 	};
 	
-	return UIConfirmation;
+	return UiConfirmation;
 });

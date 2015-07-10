@@ -4,17 +4,17 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/TabMenu
+ * @module	WoltLab/WCF/Ui/TabMenu
  */
-define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], function(Dictionary, DOMChangeListener, DOMUtil, SimpleTabMenu) {
+define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', './TabMenu/Simple'], function(Dictionary, DomChangeListener, DomUtil, SimpleTabMenu) {
 	"use strict";
 	
 	var _tabMenus = new Dictionary();
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/TabMenu
+	 * @exports	WoltLab/WCF/Ui/TabMenu
 	 */
-	var UITabMenu = {
+	var UiTabMenu = {
 		/**
 		 * Sets up tab menus and binds listeners.
 		 */
@@ -22,7 +22,7 @@ define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], fun
 			this._init();
 			this._selectErroneousTabs();
 			
-			DOMChangeListener.add('WoltLab/WCF/UI/TabMenu', this._init.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Ui/TabMenu', this._init.bind(this));
 		},
 		
 		/**
@@ -32,7 +32,7 @@ define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], fun
 			var tabMenus = document.querySelectorAll('.tabMenuContainer:not(.staticTabMenuContainer)');
 			for (var i = 0, length = tabMenus.length; i < length; i++) {
 				var container = tabMenus[i];
-				var containerId = DOMUtil.identify(container);
+				var containerId = DomUtil.identify(container);
 				
 				if (_tabMenus.has(containerId)) {
 					continue;
@@ -74,5 +74,5 @@ define(['Dictionary', 'DOM/ChangeListener', 'DOM/Util', './TabMenu/Simple'], fun
 		}
 	};
 	
-	return UITabMenu;
+	return UiTabMenu;
 });

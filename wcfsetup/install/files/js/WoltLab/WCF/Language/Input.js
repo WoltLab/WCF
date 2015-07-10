@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Language/Input
  */
-define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], function(Dictionary, Language, ObjectMap, StringUtil, DOMTraverse, DOMUtil, UISimpleDropdown) {
+define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown'], function(Dictionary, Language, ObjectMap, StringUtil, DomTraverse, DomUtil, UiSimpleDropdown) {
 	"use strict";
 	
 	var _elements = new Dictionary();
@@ -97,12 +97,12 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'DOM/Traverse', 'DO
 			
 			var dropdownMenu = document.createElement('ul');
 			dropdownMenu.className = 'dropdownMenu';
-			DOMUtil.insertAfter(dropdownMenu, button);
+			DomUtil.insertAfter(dropdownMenu, button);
 			
 			var callbackClick = (function(event, isInit) {
 				var languageId = ~~event.currentTarget.getAttribute('data-language-id');
 				
-				var activeItem = DOMTraverse.childByClass(dropdownMenu, 'active');
+				var activeItem = DomTraverse.childByClass(dropdownMenu, 'active');
 				if (activeItem !== null) activeItem.classList.remove('active');
 				
 				if (languageId) event.currentTarget.classList.add('active');
@@ -149,8 +149,8 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'DOM/Traverse', 'DO
 				}
 			}
 			
-			UISimpleDropdown.init(button);
-			UISimpleDropdown.registerCallback(container.id, _callbackDropdownToggle);
+			UiSimpleDropdown.init(button);
+			UiSimpleDropdown.registerCallback(container.id, _callbackDropdownToggle);
 			
 			_elements.set(elementId, {
 				buttonLabel: button.children[0],
@@ -159,7 +159,7 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'DOM/Traverse', 'DO
 			});
 			
 			// bind to submit event
-			var submit = DOMTraverse.parentByTag(element, 'FORM');
+			var submit = DomTraverse.parentByTag(element, 'FORM');
 			if (submit !== null) {
 				submit.addEventListener('submit', _callbackSubmit);
 				
@@ -225,7 +225,7 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'DOM/Traverse', 'DO
 				return;
 			}
 			
-			var dropdownMenu = UISimpleDropdown.getDropdownMenu(containerId);
+			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(containerId);
 			var elementId = document.getElementById(containerId).getAttribute('data-input-id');
 			var values = _values.get(elementId);
 			

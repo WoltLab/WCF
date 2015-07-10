@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/ItemList
+ * @module	WoltLab/WCF/Ui/ItemList
  */
-define(['Core', 'Dictionary', 'Language', 'DOM/Traverse', 'WoltLab/WCF/UI/Suggestion'], function(Core, Dictionary, Language, DOMTraverse, UISuggestion) {
+define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Suggestion'], function(Core, Dictionary, Language, DomTraverse, UiSuggestion) {
 	"use strict";
 	
 	var _activeId = '';
@@ -19,9 +19,9 @@ define(['Core', 'Dictionary', 'Language', 'DOM/Traverse', 'WoltLab/WCF/UI/Sugges
 	var _callbackRemoveItem = null;
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/ItemList
+	 * @exports	WoltLab/WCF/Ui/ItemList
 	 */
-	var UIItemList = {
+	var UiItemList = {
 		/**
 		 * Initializes an item list.
 		 * 
@@ -66,7 +66,7 @@ define(['Core', 'Dictionary', 'Language', 'DOM/Traverse', 'WoltLab/WCF/UI/Sugges
 				submitFieldName: ''
 			}, options);
 			
-			var form = DOMTraverse.parentByTag(element, 'FORM');
+			var form = DomTraverse.parentByTag(element, 'FORM');
 			if (form !== null) {
 				if (options.isCSV === false) {
 					if (!options.submitFieldName.length && typeof options.callbackSubmit !== 'function') {
@@ -96,7 +96,7 @@ define(['Core', 'Dictionary', 'Language', 'DOM/Traverse', 'WoltLab/WCF/UI/Sugges
 			this._setup();
 			
 			var data = this._createUI(element, options, values);
-			var suggestion = new UISuggestion(elementId, {
+			var suggestion = new UiSuggestion(elementId, {
 				ajax: options.ajax,
 				callbackSelect: this._addItem.bind(this),
 				excludedSearchValues: options.excludedSearchValues
@@ -138,13 +138,13 @@ define(['Core', 'Dictionary', 'Language', 'DOM/Traverse', 'WoltLab/WCF/UI/Sugges
 			}
 			
 			var data = _data.get(elementId);
-			var items = DOMTraverse.childrenByClass(data.list, 'item');
+			var items = DomTraverse.childrenByClass(data.list, 'item');
 			var values = [], value, item;
 			for (var i = 0, length = items.length; i < length; i++) {
 				item = items[i];
 				value = {
 					objectId: item.getAttribute('data-object-id'),
-					value: DOMTraverse.childByTag(item, 'SPAN').textContent
+					value: DomTraverse.childByTag(item, 'SPAN').textContent
 				};
 				
 				values.push(value);
@@ -409,5 +409,5 @@ define(['Core', 'Dictionary', 'Language', 'DOM/Traverse', 'WoltLab/WCF/UI/Sugges
 		}
 	};
 	
-	return UIItemList;
+	return UiItemList;
 });

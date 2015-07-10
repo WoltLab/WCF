@@ -5,9 +5,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/FlexibleMenu
+ * @module	WoltLab/WCF/Ui/FlexibleMenu
  */
-define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 'UI/SimpleDropdown'], function(Core, Dictionary, DOMChangeListener, DOMTraverse, DOMUtil, SimpleDropdown) {
+define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown'], function(Core, Dictionary, DomChangeListener, DomTraverse, DomUtil, SimpleDropdown) {
 	"use strict";
 	
 	var _containers = new Dictionary();
@@ -16,19 +16,19 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 	var _itemLists = new Dictionary();
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/FlexibleMenu
+	 * @exports	WoltLab/WCF/Ui/FlexibleMenu
 	 */
-	var UIFlexibleMenu = {
+	var UiFlexibleMenu = {
 		/**
 		 * Register default menus and set up event listeners.
 		 */
 		setup: function() {
 			if (document.getElementById('mainMenu') !== null) this.register('mainMenu');
 			var navigationHeader = document.querySelector('.navigationHeader');
-			if (navigationHeader !== null) this.register(DOMUtil.identify(navigationHeader));
+			if (navigationHeader !== null) this.register(DomUtil.identify(navigationHeader));
 			
 			window.addEventListener('resize', this.rebuildAll.bind(this));
-			DOMChangeListener.add('WoltLab/WCF/UI/FlexibleMenu', this.registerTabMenus.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Ui/FlexibleMenu', this.registerTabMenus.bind(this));
 		},
 		
 		/**
@@ -46,7 +46,7 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 				return;
 			}
 			
-			var list = DOMTraverse.childByTag(container, 'UL');
+			var list = DomTraverse.childByTag(container, 'UL');
 			if (list === null) {
 				throw "Expected an <ul> element as child of container '" + containerId + "'.";
 			}
@@ -64,10 +64,10 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 			var tabMenus = document.querySelectorAll('.tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)');
 			for (var i = 0, length = tabMenus.length; i < length; i++) {
 				var tabMenu = tabMenus[i];
-				var nav = DOMTraverse.childByTag(tabMenu, 'NAV');
+				var nav = DomTraverse.childByTag(tabMenu, 'NAV');
 				if (nav !== null) {
 					tabMenu.classList.add('jsFlexibleMenuEnabled');
-					this.register(DOMUtil.identify(nav));
+					this.register(DomUtil.identify(nav));
 				}
 			}
 		},
@@ -95,11 +95,11 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 			var styles = window.getComputedStyle(container);
 			
 			var availableWidth = container.parentNode.clientWidth;
-			availableWidth -= DOMUtil.styleAsInt(styles, 'margin-left');
-			availableWidth -= DOMUtil.styleAsInt(styles, 'margin-right');
+			availableWidth -= DomUtil.styleAsInt(styles, 'margin-left');
+			availableWidth -= DomUtil.styleAsInt(styles, 'margin-right');
 			
 			var list = _itemLists.get(containerId);
-			var items = DOMTraverse.childrenByTag(list, 'LI');
+			var items = DomTraverse.childrenByTag(list, 'LI');
 			var dropdown = _dropdowns.get(containerId);
 			var dropdownWidth = 0;
 			if (dropdown !== undefined) {
@@ -114,7 +114,7 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 				}
 				
 				if (dropdown.parentNode !== null) {
-					dropdownWidth = DOMUtil.outerWidth(dropdown);
+					dropdownWidth = DomUtil.outerWidth(dropdown);
 				}
 			}
 			
@@ -196,5 +196,5 @@ define(['Core', 'Dictionary', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 
 		}
 	};
 	
-	return UIFlexibleMenu;
+	return UiFlexibleMenu;
 });

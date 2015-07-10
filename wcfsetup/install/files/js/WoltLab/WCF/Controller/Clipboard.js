@@ -9,13 +9,13 @@
 define(
 	[
 		'Ajax',         'Core',     'Dictionary',      'EventHandler',
-		'Language',     'List',     'ObjectMap',       'DOM/ChangeListener',
-		'DOM/Traverse', 'DOM/Util', 'UI/Confirmation', 'UI/SimpleDropdown'
+		'Language',     'List',     'ObjectMap',       'Dom/ChangeListener',
+		'Dom/Traverse', 'Dom/Util', 'Ui/Confirmation', 'Ui/SimpleDropdown'
 	],
 	function(
 		Ajax,            Core,       Dictionary,        EventHandler,
-		Language,        List,       ObjectMap,         DOMChangeListener,
-		DOMTraverse,     DOMUtil,    UIConfirmation,    UISimpleDropdown
+		Language,        List,       ObjectMap,         DomChangeListener,
+		DomTraverse,     DomUtil,    UiConfirmation,    UiSimpleDropdown
 	)
 {
 	"use strict";
@@ -63,7 +63,7 @@ define(
 				this._loadMarkedItems();
 			}
 			
-			DOMChangeListener.add('WoltLab/WCF/Controller/Clipboard', this._initContainers.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Controller/Clipboard', this._initContainers.bind(this));
 		},
 		
 		/**
@@ -81,7 +81,7 @@ define(
 		_initContainers: function() {
 			for (var i = 0, length = _elements.length; i < length; i++) {
 				var container = _elements[i];
-				var containerId = DOMUtil.identify(container);
+				var containerId = DomUtil.identify(container);
 				var containerData = _containers.get(containerId);
 				
 				if (containerData === undefined) {
@@ -125,7 +125,7 @@ define(
 					}
 				}
 				catch (e) {
-					throw new Error("Expected a valid 'data-type' attribute for element '" + DOMUtil.identify(editor) + "'.");
+					throw new Error("Expected a valid 'data-type' attribute for element '" + DomUtil.identify(editor) + "'.");
 				}
 				
 				return [];
@@ -190,7 +190,7 @@ define(
 					}
 				}
 				
-				var clipboardObject = DOMTraverse.parentByClass(checkbox, 'jsClipboardObject');
+				var clipboardObject = DomTraverse.parentByClass(checkbox, 'jsClipboardObject');
 				if (clipboardObject !== null) {
 					clipboardObject.classList[(isMarked ? 'addClass' : 'removeClass')]('jsMarked');
 				}
@@ -212,7 +212,7 @@ define(
 			var data = _containers.get(containerId);
 			var type = data.element.getAttribute('data-type');
 			
-			var clipboardObject = DOMTraverse.parentByClass(checkbox, 'jsClipboardObject');
+			var clipboardObject = DomTraverse.parentByClass(checkbox, 'jsClipboardObject');
 			data.markedObjectIds[(isMarked ? 'add' : 'delete')](objectId);
 			clipboardObject.classList[(isMarked) ? 'add' : 'remove']('jsMarked');
 			
@@ -285,12 +285,12 @@ define(
 					if (confirmMessage.length) {
 						var template = (typeof data.internalData.template === 'string') ? data.internalData.template : '';
 						
-						UIConfirmation.show({
+						UiConfirmation.show({
 							confirm: (function() {
 								var formData = {};
 								
 								if (template.length) {
-									var items = UIConfirmation.getContentElement().querySelectorAll('input, select, textarea');
+									var items = UiConfirmation.getContentElement().querySelectorAll('input, select, textarea');
 									for (var i = 0, length = items.length; i < length; i++) {
 										var item = items[i];
 										var name = item.getAttribute('name');
@@ -327,7 +327,7 @@ define(
 			else if (confirmMessage.length) {
 				fireEvent = false;
 				
-				UIConfirmation.show({
+				UiConfirmation.show({
 					confirm: triggerEvent,
 					message: confirmMessage
 				});
@@ -467,7 +467,7 @@ define(
 				var typeData = data.returnValues.items[typeName];
 				
 				var editor = _editors.get(typeName);
-				var lists = DOMTraverse.childrenByTag(editor, 'UL');
+				var lists = DomTraverse.childrenByTag(editor, 'UL');
 				var list = lists[0] || null;
 				if (list === null) {
 					list = document.createElement('ul');
@@ -521,7 +521,7 @@ define(
 				unmarkAll.addEventListener('click', _callbackUnmarkAll);
 				editor.appendChild(fragment);
 				
-				UISimpleDropdown.init(toggleButton, false);
+				UiSimpleDropdown.init(toggleButton, false);
 			}
 		},
 		
@@ -536,7 +536,7 @@ define(
 			
 			for (var i = 0, length = data.checkboxes.length; i < length; i++) {
 				var checkbox = data.checkboxes[i];
-				var clipboardObject = DOMTraverse.parentByClass(checkbox, 'jsClipboardObject');
+				var clipboardObject = DomTraverse.parentByClass(checkbox, 'jsClipboardObject');
 				
 				var isMarked = (objectIds.indexOf(~~checkbox.getAttribute('data-object-id')) !== -1);
 				if (!isMarked) markAll = false;

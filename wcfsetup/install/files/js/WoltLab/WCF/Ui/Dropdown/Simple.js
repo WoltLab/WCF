@@ -4,11 +4,11 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/Dropdown/Simple
+ * @module	WoltLab/WCF/Ui/Dropdown/Simple
  */
 define(
-	[       'CallbackList', 'Core', 'Dictionary', 'UI/Alignment', 'DOM/ChangeListener', 'DOM/Traverse', 'DOM/Util', 'UI/CloseOverlay'],
-	function(CallbackList,   Core,   Dictionary,   UIAlignment,    DOMChangeListener,    DOMTraverse,    DOMUtil,    UICloseOverlay)
+	[       'CallbackList', 'Core', 'Dictionary', 'Ui/Alignment', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'Ui/CloseOverlay'],
+	function(CallbackList,   Core,   Dictionary,   UiAlignment,    DomChangeListener,    DomTraverse,    DomUtil,    UiCloseOverlay)
 {
 	"use strict";
 	
@@ -20,7 +20,7 @@ define(
 	var _menuContainer = null;
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/Dropdown/Simple
+	 * @exports	WoltLab/WCF/Ui/Dropdown/Simple
 	 */
 	var SimpleDropdown = {
 		/**
@@ -38,8 +38,8 @@ define(
 			
 			this.initAll();
 			
-			UICloseOverlay.add('WoltLab/WCF/UI/Dropdown/Simple', this.closeAll.bind(this));
-			DOMChangeListener.add('WoltLab/WCF/UI/Dropdown/Simple', this.initAll.bind(this));
+			UiCloseOverlay.add('WoltLab/WCF/Ui/Dropdown/Simple', this.closeAll.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Ui/Dropdown/Simple', this.initAll.bind(this));
 			
 			document.addEventListener('scroll', this._onScroll.bind(this));
 			
@@ -69,20 +69,20 @@ define(
 				return false;
 			}
 			
-			var dropdown = DOMTraverse.parentByClass(button, 'dropdown');
+			var dropdown = DomTraverse.parentByClass(button, 'dropdown');
 			if (dropdown === null) {
-				throw new Error("Invalid dropdown passed, button '" + DOMUtil.identify(button) + "' does not have a parent with .dropdown.");
+				throw new Error("Invalid dropdown passed, button '" + DomUtil.identify(button) + "' does not have a parent with .dropdown.");
 			}
 			
-			var menu = DOMTraverse.nextByClass(button, 'dropdownMenu');
+			var menu = DomTraverse.nextByClass(button, 'dropdownMenu');
 			if (menu === null) {
-				throw new Error("Invalid dropdown passed, button '" + DOMUtil.identify(button) + "' does not have a menu as next sibling.");
+				throw new Error("Invalid dropdown passed, button '" + DomUtil.identify(button) + "' does not have a menu as next sibling.");
 			}
 			
 			// move menu into global container
 			_menuContainer.appendChild(menu);
 			
-			var containerId = DOMUtil.identify(dropdown);
+			var containerId = DomUtil.identify(dropdown);
 			if (!_dropdowns.has(containerId)) {
 				button.classList.add('jsDropdownEnabled');
 				button.addEventListener('click', this._toggle.bind(this));
@@ -115,7 +115,7 @@ define(
 				return;
 			}
 			
-			var containerId = DOMUtil.identify(dropdown);
+			var containerId = DomUtil.identify(dropdown);
 			_dropdowns.set(containerId, dropdown);
 			_menuContainer.appendChild(menu);
 			
@@ -173,7 +173,7 @@ define(
 				refDimensionsElement = button;
 			}
 			
-			UIAlignment.set(dropdownMenu, dropdown, {
+			UiAlignment.set(dropdownMenu, dropdown, {
 				pointerClassNames: ['dropdownArrowBottom', 'dropdownArrowRight'],
 				refDimensionsElement: refDimensionsElement
 			});
@@ -282,9 +282,9 @@ define(
 			
 			for (var i = 0, length = dropdowns.length; i < length; i++) {
 				var dropdown = dropdowns[i];
-				var containerId = DOMUtil.identify(dropdown);
-				var offset = DOMUtil.offset(dropdown);
-				var dialogOffset = DOMUtil.offset(dialogContent);
+				var containerId = DomUtil.identify(dropdown);
+				var offset = DomUtil.offset(dropdown);
+				var dialogOffset = DomUtil.offset(dialogContent);
 				
 				// check if dropdown toggle is still (partially) visible
 				if (offset.top + dropdown.clientHeight <= dialogOffset.top) {
@@ -351,7 +351,7 @@ define(
 			// the dropdown toggle is in an overlay
 			var dropdown = _dropdowns.get(targetId);
 			if (dropdown !== undefined && dropdown.getAttribute('data-is-overlay-dropdown-button') === null) {
-				var dialogContent = DOMTraverse.parentByClass(dropdown, 'dialogContent');
+				var dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
 				dropdown.setAttribute('data-is-overlay-dropdown-button', (dialogContent !== null));
 				
 				if (dialogContent !== null) {

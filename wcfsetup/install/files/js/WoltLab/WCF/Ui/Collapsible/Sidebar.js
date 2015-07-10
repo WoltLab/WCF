@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/Collapsible/Sidebar
+ * @module	WoltLab/WCF/Ui/Collapsible/Sidebar
  */
-define(['Ajax', 'Language', 'DOM/Util'], function(Ajax, Language, DOMUtil) {
+define(['Ajax', 'Language', 'Dom/Util'], function(Ajax, Language, DomUtil) {
 	"use strict";
 	
 	var _isOpen = false;
@@ -14,9 +14,9 @@ define(['Ajax', 'Language', 'DOM/Util'], function(Ajax, Language, DOMUtil) {
 	var _name = '';
 	
 	/**
-	 * @module	WoltLab/WCF/UI/Collapsible/Sidebar
+	 * @module	WoltLab/WCF/Ui/Collapsible/Sidebar
 	 */
-	var UICollapsibleSidebar = {
+	var UiCollapsibleSidebar = {
 		/**
 		 * Sets up the toggle button.
 		 */
@@ -48,7 +48,7 @@ define(['Ajax', 'Language', 'DOM/Util'], function(Ajax, Language, DOMUtil) {
 			
 			var span = document.createElement('span');
 			span.appendChild(button);
-			DOMUtil.prepend(span, sidebar);
+			DomUtil.prepend(span, sidebar);
 			
 			button.addEventListener('click', this._click.bind(this));
 		},
@@ -84,5 +84,5 @@ define(['Ajax', 'Language', 'DOM/Util'], function(Ajax, Language, DOMUtil) {
 		}
 	};
 	
-	return UICollapsibleSidebar;
+	return UiCollapsibleSidebar;
 });

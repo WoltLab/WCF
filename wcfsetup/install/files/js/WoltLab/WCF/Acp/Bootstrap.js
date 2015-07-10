@@ -4,7 +4,7 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/ACP/Bootstrap
+ * @module	WoltLab/WCF/Acp/Bootstrap
  */
 define(['WoltLab/WCF/Bootstrap'], function(Bootstrap) {
 	"use strict";
@@ -12,9 +12,9 @@ define(['WoltLab/WCF/Bootstrap'], function(Bootstrap) {
 	/**
 	 * ACP Boostrapper.
 	 * 
-	 * @exports	WoltLab/WCF/ACP/Bootstrap
+	 * @exports	WoltLab/WCF/Acp/Bootstrap
 	 */
-	var ACPBootstrap = {
+	var AcpBootstrap = {
 		/**
 		 * Bootstraps general modules and frontend exclusive ones.
 		 * 
@@ -25,5 +25,5 @@ define(['WoltLab/WCF/Bootstrap'], function(Bootstrap) {
 		}
 	};
 	
-	return ACPBootstrap;
+	return AcpBootstrap;
 });

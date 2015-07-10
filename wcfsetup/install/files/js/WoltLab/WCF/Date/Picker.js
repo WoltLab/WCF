@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Date/Picker
  */
-define(['DateUtil', 'Language', 'ObjectMap', 'DOM/ChangeListener', 'UI/Alignment', 'WoltLab/WCF/UI/CloseOverlay'], function(DateUtil, Language, ObjectMap, DOMChangeListener, UIAlignment, UICloseOverlay) {
+define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment', 'WoltLab/WCF/Ui/CloseOverlay'], function(DateUtil, Language, ObjectMap, DomChangeListener, UiAlignment, UiCloseOverlay) {
 	"use strict";
 	
 	var _didInit = false;
@@ -175,8 +175,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'DOM/ChangeListener', 'UI/Alignment
 			_firstDayOfWeek = ~~Language.get('wcf.date.firstDayOfTheWeek');
 			_callbackOpen = this._open.bind(this);
 			
-			DOMChangeListener.add('WoltLab/WCF/Date/Picker', this.init.bind(this));
-			UICloseOverlay.add('WoltLab/WCF/Date/Picker', this._close.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Date/Picker', this.init.bind(this));
+			UiCloseOverlay.add('WoltLab/WCF/Date/Picker', this._close.bind(this));
 		},
 		
 		/**
@@ -224,7 +224,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'DOM/ChangeListener', 'UI/Alignment
 			
 			this._renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
 			
-			UIAlignment.set(_datePicker, _input, { pointer: true });
+			UiAlignment.set(_datePicker, _input, { pointer: true });
 		},
 		
 		/**

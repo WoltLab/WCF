@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/DOM/Traverse
+ * @module	WoltLab/WCF/Dom/Traverse
  */
-define(['DOM/Util'], function(DOMUtil) {
+define(['Dom/Util'], function(DomUtil) {
 	"use strict";
 	
 	/** @const */ var NONE = 0;
@@ -16,7 +16,7 @@ define(['DOM/Util'], function(DOMUtil) {
 	
 	var _probe = [
 		function(el, none) { return true; },
-		function(el, selector) { return DOMUtil.matches(el, selector); },
+		function(el, selector) { return DomUtil.matches(el, selector); },
 		function(el, className) { return el.classList.contains(className); },
 		function(el, tagName) { return el.nodeName === tagName; }
 	];
@@ -74,9 +74,9 @@ define(['DOM/Util'], function(DOMUtil) {
 	};
 	
 	/**
-	 * @exports	WoltLab/WCF/DOM/Traverse
+	 * @exports	WoltLab/WCF/Dom/Traverse
 	 */
-	var DOMTraverse = {
+	var DomTraverse = {
 		/**
 		 * Examines child elements and returns the first child matching the given selector.
 		 * 
@@ -266,5 +266,5 @@ define(['DOM/Util'], function(DOMUtil) {
 		}
 	};
 	
-	return DOMTraverse;
+	return DomTraverse;
 });

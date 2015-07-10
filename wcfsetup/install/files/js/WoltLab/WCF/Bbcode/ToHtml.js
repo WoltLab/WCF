@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/BBCode/ToHtml
+ * @module	WoltLab/WCF/Bbcode/ToHtml
  */
-define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Parser'], function(Core, EventHandler, Language, StringUtil, BBCodeParser) {
+define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Parser'], function(Core, EventHandler, Language, StringUtil, BbcodeParser) {
 	"use strict";
 	
 	var _bbcodes = null;
@@ -46,9 +46,9 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 	}
 	
 	/**
-	 * @module	WoltLab/WCF/BBCode/ToHtml
+	 * @module	WoltLab/WCF/Bbcode/ToHtml
 	 */
-	var BBCodeToHtml = {
+	var BbcodeToHtml = {
 		/**
 		 * Converts a message containing BBCodes to HTML.
 		 * 
@@ -66,7 +66,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 			
 			this._convertSpecials(message);
 			
-			var stack = BBCodeParser.parse(message);
+			var stack = BbcodeParser.parse(message);
 			
 			if (stack.length) {
 				this._initBBCodes();
@@ -619,5 +619,5 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/BBCode/Pa
 		}
 	};
 	
-	return BBCodeToHtml;
+	return BbcodeToHtml;
 });

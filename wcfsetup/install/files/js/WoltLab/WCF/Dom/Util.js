@@ -4,7 +4,7 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/DOM/Util
+ * @module	WoltLab/WCF/Dom/Util
  */
 define([], function() {
 	"use strict";
@@ -21,9 +21,9 @@ define([], function() {
 	var _idCounter = 0;
 	
 	/**
-	 * @exports	WoltLab/WCF/DOM/Util
+	 * @exports	WoltLab/WCF/Dom/Util
 	 */
-	var DOMUtil = {
+	var DomUtil = {
 		/**
 		 * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
 		 * 
@@ -217,7 +217,7 @@ define([], function() {
 	};
 	
 	// expose on window object for backward compatibility
-	window.bc_wcfDOMUtil = DOMUtil;
+	window.bc_wcfDomUtil = DomUtil;
 	
-	return DOMUtil;
+	return DomUtil;
 });

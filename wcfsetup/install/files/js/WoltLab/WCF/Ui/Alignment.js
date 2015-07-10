@@ -4,15 +4,15 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/Alignment
+ * @module	WoltLab/WCF/Ui/Alignment
  */
-define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language, DOMTraverse, DOMUtil) {
+define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language, DomTraverse, DomUtil) {
 	"use strict";
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/Alignment
+	 * @exports	WoltLab/WCF/Ui/Alignment
 	 */
-	var UIAlignment = {
+	var UiAlignment = {
 		/**
 		 * Sets the alignment for target element relatively to the reference element.
 		 * 
@@ -51,16 +51,16 @@ define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language
 			if (['both', 'horizontal', 'vertical', 'none'].indexOf(options.allowFlip) === -1) options.allowFlip = 'both';
 			
 			// place element in the upper left corner to prevent calculation issues due to possible scrollbars
-			DOMUtil.setStyles(el, {
+			DomUtil.setStyles(el, {
 				bottom: 'auto !important',
 				left: '0 !important',
 				right: 'auto !important',
 				top: '0 !important'
 			});
 			
-			var elDimensions = DOMUtil.outerDimensions(el);
-			var refDimensions = DOMUtil.outerDimensions((options.refDimensionsElement instanceof Element ? options.refDimensionsElement : ref));
-			var refOffsets = DOMUtil.offset(ref);
+			var elDimensions = DomUtil.outerDimensions(el);
+			var refDimensions = DomUtil.outerDimensions((options.refDimensionsElement instanceof Element ? options.refDimensionsElement : ref));
+			var refOffsets = DomUtil.offset(ref);
 			var windowHeight = window.innerHeight;
 			var windowWidth = document.body.clientWidth;
 			
@@ -117,7 +117,7 @@ define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language
 			
 			// set pointer position
 			if (options.pointer) {
-				var pointer = DOMTraverse.childrenByClass(el, 'elementPointer');
+				var pointer = DomTraverse.childrenByClass(el, 'elementPointer');
 				pointer = pointer[0] || null;
 				if (pointer === null) {
 					throw new Error("Expected the .elementPointer element to be a direct children.");
@@ -151,7 +151,7 @@ define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language
 				el.classList[(left === 'auto' ? 'add' : 'remove')](options.pointerClassNames[pointerRight]);
 			}
 			
-			DOMUtil.setStyles(el, {
+			DomUtil.setStyles(el, {
 				bottom: bottom + (bottom !== 'auto' ? 'px' : ''),
 				left: left + (left !== 'auto' ? 'px' : ''),
 				right: right + (right !== 'auto' ? 'px' : ''),
@@ -242,5 +242,5 @@ define(['Core', 'Language', 'DOM/Traverse', 'DOM/Util'], function(Core, Language
 		}
 	};
 	
-	return UIAlignment;
+	return UiAlignment;
 });

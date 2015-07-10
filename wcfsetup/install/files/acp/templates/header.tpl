@@ -32,7 +32,7 @@
 	</script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
-		require(['Language', 'WoltLab/WCF/ACP/Bootstrap'], function(Language, ACPBootstrap) {
+		require(['Language', 'WoltLab/WCF/Acp/Bootstrap'], function(Language, AcpBootstrap) {
 			Language.addObject({
 				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
 				'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
@@ -93,7 +93,7 @@
 				{event name='javascriptLanguageImport'}
 			});
 			
-			ACPBootstrap.setup();
+			AcpBootstrap.setup();
 		});
 		});
 	</script>

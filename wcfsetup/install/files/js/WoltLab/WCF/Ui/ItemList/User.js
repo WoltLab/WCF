@@ -4,15 +4,15 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/ItemList/User
+ * @module	WoltLab/WCF/Ui/ItemList/User
  */
-define(['WoltLab/WCF/UI/ItemList'], function(UIItemList) {
+define(['WoltLab/WCF/Ui/ItemList'], function(UiItemList) {
 	"use strict";
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/ItemList/User
+	 * @exports	WoltLab/WCF/Ui/ItemList/User
 	 */
-	var UIItemListUser = {
+	var UiItemListUser = {
 		/**
 		 * Initializes user suggestion support for an element.
 		 * 
@@ -20,7 +20,7 @@ define(['WoltLab/WCF/UI/ItemList'], function(UIItemList) {
 		 * @param	{object}	options		option list
 		 */
 		init: function(elementId, options) {
-			UIItemList.init(elementId, [], {
+			UiItemList.init(elementId, [], {
 				ajax: {
 					className: 'wcf\\data\\user\\UserAction',
 					parameters: {
@@ -38,12 +38,12 @@ define(['WoltLab/WCF/UI/ItemList'], function(UIItemList) {
 		},
 		
 		/**
-		 * @see	WoltLab/WCF/UI/ItemList::getValues()
+		 * @see	WoltLab/WCF/Ui/ItemList::getValues()
 		 */
 		getValues: function(elementId) {
-			return UIItemList.getValues(elementId);
+			return UiItemList.getValues(elementId);
 		}
 	};
 	
-	return UIItemListUser;
+	return UiItemListUser;
 });

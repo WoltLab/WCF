@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/Suggestion
+ * @module	WoltLab/WCF/Ui/Suggestion
  */
-define(['Ajax', 'Core', 'UI/SimpleDropdown'], function(Ajax, Core, UISimpleDropdown) {
+define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropdown) {
 	"use strict";
 	
 	/**
@@ -14,8 +14,8 @@ define(['Ajax', 'Core', 'UI/SimpleDropdown'], function(Ajax, Core, UISimpleDropd
 	 * @param	{string}		elementId	input element id
 	 * @param	{object<mixed>}		options		option list
 	 */
-	function UISuggestion(elementId, options) { this.init(elementId, options); };
-	UISuggestion.prototype = {
+	function UiSuggestion(elementId, options) { this.init(elementId, options); };
+	UiSuggestion.prototype = {
 		/**
 		 * Initializes a new suggestion input.
 		 * 
@@ -87,7 +87,7 @@ define(['Ajax', 'Core', 'UI/SimpleDropdown'], function(Ajax, Core, UISimpleDropd
 		 * @param	{object}	event		event object
 		 */
 		_keyDown: function(event) {
-			if (this._dropdownMenu === null || !UISimpleDropdown.isOpen(this._element.id)) {
+			if (this._dropdownMenu === null || !UiSimpleDropdown.isOpen(this._element.id)) {
 				return true;
 			}
 			
@@ -107,13 +107,13 @@ define(['Ajax', 'Core', 'UI/SimpleDropdown'], function(Ajax, Core, UISimpleDropd
 			
 			if (event.keyCode === 13) {
 				// Enter
-				UISimpleDropdown.close(this._element.id);
+				UiSimpleDropdown.close(this._element.id);
 				
 				this._select(active);
 			}
 			else if (event.keyCode === 27) {
-				if (UISimpleDropdown.isOpen(this._element.id)) {
-					UISimpleDropdown.close(this._element.id);
+				if (UiSimpleDropdown.isOpen(this._element.id)) {
+					UiSimpleDropdown.close(this._element.id);
 				}
 				else {
 					// let the event pass through
@@ -174,7 +174,7 @@ define(['Ajax', 'Core', 'UI/SimpleDropdown'], function(Ajax, Core, UISimpleDropd
 			}
 			else if (value.length < this._options.treshold) {
 				if (this._dropdownMenu !== null) {
-					UISimpleDropdown.close(this._element.id);
+					UiSimpleDropdown.close(this._element.id);
 				}
 				
 				this._value = value;
@@ -210,7 +210,7 @@ define(['Ajax', 'Core', 'UI/SimpleDropdown'], function(Ajax, Core, UISimpleDropd
 				this._dropdownMenu = document.createElement('div');
 				this._dropdownMenu.className = 'dropdownMenu';
 				
-				UISimpleDropdown.initFragment(this._element, this._dropdownMenu);
+				UiSimpleDropdown.initFragment(this._element, this._dropdownMenu);
 			}
 			else {
 				this._dropdownMenu.innerHTML = '';
@@ -233,13 +233,13 @@ define(['Ajax', 'Core', 'UI/SimpleDropdown'], function(Ajax, Core, UISimpleDropd
 					this._dropdownMenu.appendChild(listItem);
 				}
 				
-				UISimpleDropdown.open(this._element.id);
+				UiSimpleDropdown.open(this._element.id);
 			}
 			else {
-				UISimpleDropdown.close(this._element.id);
+				UiSimpleDropdown.close(this._element.id);
 			}
 		}
 	};
 	
-	return UISuggestion;
+	return UiSuggestion;
 });

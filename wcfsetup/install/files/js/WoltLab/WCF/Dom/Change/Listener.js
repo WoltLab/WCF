@@ -5,7 +5,7 @@
  * @author	Tim Duesterhus
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/DOM/Change/Listener
+ * @module	WoltLab/WCF/Dom/Change/Listener
  */
 define(['CallbackList'], function(CallbackList) {
 	"use strict";
@@ -14,7 +14,7 @@ define(['CallbackList'], function(CallbackList) {
 	var _hot = false;
 	
 	/**
-	 * @exports	WoltLab/WCF/DOM/Change/Listener
+	 * @exports	WoltLab/WCF/Dom/Change/Listener
 	 */
 	var Listener = {
 		/**

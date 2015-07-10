@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Date/Time/Relative
  */
-define(['DOM/ChangeListener', 'Language', 'WoltLab/WCF/Date/Util', 'WoltLab/WCF/Timer/Repeating'], function(DOMChangeListener, Language, DateUtil, Repeating) {
+define(['Dom/ChangeListener', 'Language', 'WoltLab/WCF/Date/Util', 'WoltLab/WCF/Timer/Repeating'], function(DomChangeListener, Language, DateUtil, Repeating) {
 	"use strict";
 	
 	var _elements = document.getElementsByTagName('time');
@@ -24,7 +24,7 @@ define(['DOM/ChangeListener', 'Language', 'WoltLab/WCF/Date/Util', 'WoltLab/WCF/
 			
 			new Repeating(this._refresh.bind(this), 60000);
 			
-			DOMChangeListener.add('WoltLab/WCF/Date/Time/Relative', this._refresh.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Date/Time/Relative', this._refresh.bind(this));
 		},
 		
 		_refresh: function() {

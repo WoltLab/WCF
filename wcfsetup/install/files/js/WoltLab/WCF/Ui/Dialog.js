@@ -4,18 +4,18 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/Dialog
+ * @module	WoltLab/WCF/Ui/Dialog
  */
 define(
 	[
 		'enquire',     'Ajax',       'Core',      'Dictionary',
-		'Environment', 'Language',   'ObjectMap', 'DOM/ChangeListener',
-		'DOM/Util',    'UI/Confirmation'
+		'Environment', 'Language',   'ObjectMap', 'Dom/ChangeListener',
+		'Dom/Util',    'Ui/Confirmation'
 	],
 	function(
 		enquire,        Ajax,         Core,        Dictionary,
-		Environment,    Language,     ObjectMap,   DOMChangeListener,
-		DOMUtil,        UIConfirmation
+		Environment,    Language,     ObjectMap,   DomChangeListener,
+		DomUtil,        UiConfirmation
 	)
 {
 	"use strict";
@@ -28,9 +28,9 @@ define(
 	var _keyupListener = null;
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/Dialog
+	 * @exports	WoltLab/WCF/Ui/Dialog
 	 */
-	var UIDialog = {
+	var UiDialog = {
 		/**
 		 * Sets up global container and internal variables.
 		 */
@@ -178,7 +178,7 @@ define(
 				if (!options.closable) options.backdropCloseOnClick = false;
 				if (options.closeConfirmMessage) {
 					options.onBeforeClose = (function(id) {
-						UIConfirmation.show({
+						UiConfirmation.show({
 							confirm: this.close.bind(this, id),
 							message: options.closeConfirmMessage
 						});
@@ -203,8 +203,8 @@ define(
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			
-			var header = DOMTraverse.childrenByTag(data.dialog, 'HEADER');
-			DOMTraverse.childrenByTag(header[0], 'SPAN').textContent = title;
+			var header = DomTraverse.childrenByTag(data.dialog, 'HEADER');
+			DomTraverse.childrenByTag(header[0], 'SPAN').textContent = title;
 		},
 		
 		/**
@@ -238,7 +238,7 @@ define(
 			dialog.appendChild(header);
 			
 			if (options.title) {
-				var titleId = DOMUtil.getUniqueId();
+				var titleId = DomUtil.getUniqueId();
 				dialog.setAttribute('aria-labelledby', titleId);
 				
 				var title = document.createElement('span');
@@ -304,7 +304,7 @@ define(
 				onShow: options.onShow
 			});
 			
-			DOMUtil.prepend(dialog, _container);
+			DomUtil.prepend(dialog, _container);
 			
 			if (createOnly !== true) {
 				this._updateDialog(id, null);
@@ -349,7 +349,7 @@ define(
 				}
 			}
 			
-			DOMChangeListener.trigger();
+			DomChangeListener.trigger();
 		},
 		
 		/**
@@ -376,14 +376,14 @@ define(
 				contentContainer.classList.add('dialogForm');
 				formSubmit.classList.add('dialogFormSubmit');
 				
-				unavailableHeight += DOMUtil.outerHeight(formSubmit);
+				unavailableHeight += DomUtil.outerHeight(formSubmit);
 				contentContainer.style.setProperty('margin-bottom', unavailableHeight + 'px');
 			}
 			else {
 				contentContainer.classList.remove('dialogForm');
 			}
 			
-			unavailableHeight += DOMUtil.outerHeight(data.header);
+			unavailableHeight += DomUtil.outerHeight(data.header);
 			
 			var maximumHeight = (window.innerHeight * (_dialogFullHeight ? 1 : 0.8)) - unavailableHeight;
 			contentContainer.style.setProperty('max-height', ~~maximumHeight + 'px');
@@ -507,5 +507,5 @@ define(
 		}
 	};
 	
-	return UIDialog;
+	return UiDialog;
 });

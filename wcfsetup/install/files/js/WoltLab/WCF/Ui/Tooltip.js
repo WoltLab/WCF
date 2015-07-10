@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/Tooltip
+ * @module	WoltLab/WCF/Ui/Tooltip
  */
-define(['Environment', 'DOM/ChangeListener', 'UI/Alignment'], function(Environment, DOMChangeListener, UIAlignment) {
+define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environment, DomChangeListener, UiAlignment) {
 	"use strict";
 	
 	var _elements = null;
@@ -15,9 +15,9 @@ define(['Environment', 'DOM/ChangeListener', 'UI/Alignment'], function(Environme
 	var _tooltip = null;
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/Tooltip
+	 * @exports	WoltLab/WCF/Ui/Tooltip
 	 */
-	var UITooltip = {
+	var UiTooltip = {
 		/**
 		 * Initializes the tooltip element and binds event listener.
 		 */
@@ -43,7 +43,7 @@ define(['Environment', 'DOM/ChangeListener', 'UI/Alignment'], function(Environme
 			
 			this.init();
 			
-			DOMChangeListener.add('WoltLab/WCF/UI/Tooltip', this.init.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Ui/Tooltip', this.init.bind(this));
 		},
 		
 		/**
@@ -100,7 +100,7 @@ define(['Environment', 'DOM/ChangeListener', 'UI/Alignment'], function(Environme
 			
 			_text.textContent = title;
 			
-			UIAlignment.set(_tooltip, element, {
+			UiAlignment.set(_tooltip, element, {
 				horizontal: 'center',
 				pointer: true,
 				pointerClassNames: ['inverse'],
@@ -118,5 +118,5 @@ define(['Environment', 'DOM/ChangeListener', 'UI/Alignment'], function(Environme
 		}
 	};
 	
-	return UITooltip;
+	return UiTooltip;
 });

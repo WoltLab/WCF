@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/TabMenu/Simple
+ * @module	WoltLab/WCF/Ui/TabMenu/Simple
  */
-define(['Dictionary', 'DOM/Traverse', 'DOM/Util', 'EventHandler'], function(Dictionary, DOMTraverse, DOMUtil, EventHandler) {
+define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dictionary, DomTraverse, DomUtil, EventHandler) {
 	"use strict";
 	
 	/**
@@ -46,7 +46,7 @@ define(['Dictionary', 'DOM/Traverse', 'DOM/Util', 'EventHandler'], function(Dict
 				return false;
 			}
 			
-			var nav = DOMTraverse.childByTag(this._container, 'NAV');
+			var nav = DomTraverse.childByTag(this._container, 'NAV');
 			if (nav === null) {
 				return false;
 			}
@@ -57,13 +57,13 @@ define(['Dictionary', 'DOM/Traverse', 'DOM/Util', 'EventHandler'], function(Dict
 				return false;
 			}
 			
-			var containers = DOMTraverse.childrenByTag(this._container, 'DIV');
+			var containers = DomTraverse.childrenByTag(this._container, 'DIV');
 			for (var i = 0, length = containers.length; i < length; i++) {
 				var container = containers[i];
 				var name = container.getAttribute('data-name');
 				
 				if (!name) {
-					name = DOMUtil.identify(container);
+					name = DomUtil.identify(container);
 				}
 				
 				container.setAttribute('data-name', name);

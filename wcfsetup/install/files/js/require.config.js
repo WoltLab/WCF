@@ -18,21 +18,21 @@ requirejs.config({
 			'Core': 'WoltLab/WCF/Core',
 			'DateUtil': 'WoltLab/WCF/Date/Util',
 			'Dictionary': 'WoltLab/WCF/Dictionary',
-			'DOM/ChangeListener': 'WoltLab/WCF/DOM/Change/Listener',
-			'DOM/Traverse': 'WoltLab/WCF/DOM/Traverse',
-			'DOM/Util': 'WoltLab/WCF/DOM/Util',
+			'Dom/ChangeListener': 'WoltLab/WCF/Dom/Change/Listener',
+			'Dom/Traverse': 'WoltLab/WCF/Dom/Traverse',
+			'Dom/Util': 'WoltLab/WCF/Dom/Util',
 			'Environment': 'WoltLab/WCF/Environment',
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
 			'Language': 'WoltLab/WCF/Language',
 			'List': 'WoltLab/WCF/List',
 			'ObjectMap': 'WoltLab/WCF/ObjectMap',
 			'StringUtil': 'WoltLab/WCF/StringUtil',
-			'UI/Alignment': 'WoltLab/WCF/UI/Alignment',
-			'UI/CloseOverlay': 'WoltLab/WCF/UI/CloseOverlay',
-			'UI/Confirmation': 'WoltLab/WCF/UI/Confirmation',
-			'UI/Dialog': 'WoltLab/WCF/UI/Dialog',
-			'UI/SimpleDropdown': 'WoltLab/WCF/UI/Dropdown/Simple',
-			'UI/TabMenu': 'WoltLab/WCF/UI/TabMenu'
+			'Ui/Alignment': 'WoltLab/WCF/Ui/Alignment',
+			'Ui/CloseOverlay': 'WoltLab/WCF/Ui/CloseOverlay',
+			'Ui/Confirmation': 'WoltLab/WCF/Ui/Confirmation',
+			'Ui/Dialog': 'WoltLab/WCF/Ui/Dialog',
+			'Ui/SimpleDropdown': 'WoltLab/WCF/Ui/Dropdown/Simple',
+			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu'
 		}
 	}
 });

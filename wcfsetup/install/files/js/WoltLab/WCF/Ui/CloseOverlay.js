@@ -4,7 +4,7 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/UI/CloseOlveray
+ * @module	WoltLab/WCF/Ui/CloseOlveray
  */
 define(['CallbackList'], function(CallbackList) {
 	"use strict";
@@ -12,9 +12,9 @@ define(['CallbackList'], function(CallbackList) {
 	var _callbackList = new CallbackList();
 	
 	/**
-	 * @exports	WoltLab/WCF/UI/CloseOverlay
+	 * @exports	WoltLab/WCF/Ui/CloseOverlay
 	 */
-	var UICloseOverlay = {
+	var UiCloseOverlay = {
 		/**
 		 * Sets up global event listener for bubbled clicks events.
 		 */
@@ -42,7 +42,7 @@ define(['CallbackList'], function(CallbackList) {
 		}
 	};
 	
-	UICloseOverlay.setup();
+	UiCloseOverlay.setup();
 	
-	return UICloseOverlay;
+	return UiCloseOverlay;
 });

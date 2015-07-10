@@ -4,9 +4,9 @@
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/BBCode/FromHtml
+ * @module	WoltLab/WCF/Bbcode/FromHtml
  */
-define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, StringUtil, DOMTraverse) {
+define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, StringUtil, DomTraverse) {
 	"use strict";
 	
 	var _converter = [];
@@ -30,9 +30,9 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 	}
 	
 	/**
-	 * @module	WoltLab/WCF/BBCode/FromHtml
+	 * @module	WoltLab/WCF/Bbcode/FromHtml
 	 */
-	var BBCodeFromHtml = {
+	var BbcodeFromHtml = {
 		/**
 		 * Converts a message containing HTML elements into BBCodes.
 		 * 
@@ -259,10 +259,10 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 				}
 			}
 			
-			var header = DOMTraverse.childByTag(element, 'HEADER');
+			var header = DomTraverse.childByTag(element, 'HEADER');
 			if (header !== null) element.removeChild(header);
 			
-			var divs = DOMTraverse.childrenByTag(element, 'DIV');
+			var divs = DomTraverse.childrenByTag(element, 'DIV');
 			for (var i = 0, length = divs.length; i < length; i++) {
 				divs[i].outerHTML = divs[i].innerHTML + '\n';
 			}
@@ -487,7 +487,7 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 				elements[0].outerHTML = '\n[tr]\n' + elements[0].innerHTML + '[/tr]';
 			}
 			
-			var tbody = DOMTraverse.childByTag(element, 'TBODY');
+			var tbody = DomTraverse.childByTag(element, 'TBODY');
 			var innerHtml = (tbody === null) ? element.innerHTML : tbody.innerHTML;
 			element.outerHTML = '\n[table]' + innerHtml + '\n[/table]\n';
 		},
@@ -528,7 +528,7 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 			var filename = element.getAttribute('data-filename').trim() || '';
 			var highlighter = element.getAttribute('data-highlighter') || '';
 			window.dtdesign = element;
-			var list = DOMTraverse.childByTag(element.children[0], 'OL');
+			var list = DomTraverse.childByTag(element.children[0], 'OL');
 			var lineNumber = ~~list.getAttribute('start') || 1;
 			
 			var content = '';
@@ -543,5 +543,5 @@ define(['EventHandler', 'StringUtil', 'DOM/Traverse'], function(EventHandler, St
 		}
 	};
 	
-	return BBCodeFromHtml;
+	return BbcodeFromHtml;
 });
