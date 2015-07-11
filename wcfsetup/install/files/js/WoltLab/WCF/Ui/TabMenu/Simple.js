@@ -10,17 +10,13 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 	"use strict";
 	
 	/**
-	 * @param	{string}	containerId	container id
 	 * @param	{Element}	container	container element
 	 * @constructor
 	 */
-	function TabMenuSimple(containerId, container) {
+	function TabMenuSimple(container) {
 		this._container = container;
 		this._containers = new Dictionary();
-		this._containerId = containerId;
 		this._isLegacy = null;
-		this._isParent = false;
-		this._parent = null;
 		this._tabs = new Dictionary();
 	};
 	
@@ -57,10 +53,10 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				return false;
 			}
 			
-			var containers = DomTraverse.childrenByTag(this._container, 'DIV');
+			var container, containers = DomTraverse.childrenByTag(this._container, 'DIV'), name;
 			for (var i = 0, length = containers.length; i < length; i++) {
-				var container = containers[i];
-				var name = container.getAttribute('data-name');
+				container = containers[i];
+				name = container.getAttribute('data-name');
 				
 				if (!name) {
 					name = DomUtil.identify(container);
@@ -70,36 +66,37 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				this._containers.set(name, container);
 			}
 			
+			var containerId = this._container.id, tab;
 			for (var i = 0, length = tabs.length; i < length; i++) {
-				var tab = tabs[i];
-				var name = this._getTabName(tab);
+				tab = tabs[i];
+				name = this._getTabName(tab);
 				
 				if (!name) {
 					continue;
 				}
 				
 				if (this._tabs.has(name)) {
-					throw new Error("Tab names must be unique, li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "') exists more than once.");
+					throw new Error("Tab names must be unique, li[data-name='" + name + "'] (tab menu id: '" + containerId + "') exists more than once.");
 				}
 				
-				var container = this._containers.get(name);
+				container = this._containers.get(name);
 				if (container === undefined) {
-					throw new Error("Expected content element for li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "').");
+					throw new Error("Expected content element for li[data-name='" + name + "'] (tab menu id: '" + containerId + "').");
 				}
 				else if (container.parentNode !== this._container) {
-					throw new Error("Expected content element '" + name + "' (tab menu id: '" + this._containerId + "') to be a direct children.");
+					throw new Error("Expected content element '" + name + "' (tab menu id: '" + containerId + "') to be a direct children.");
 				}
 				
 				// check if tab holds exactly one children which is an anchor element
 				if (tab.childElementCount !== 1 || tab.children[0].nodeName !== 'A') {
-					throw new Error("Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + this._containerId + "').");
+					throw new Error("Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + containerId + "').");
 				}
 				
 				this._tabs.set(name, tab);
 			}
 			
 			if (!this._tabs.size) {
-				throw new Error("Expected at least one tab (tab menu id: '" + this._containerId + "').");
+				throw new Error("Expected at least one tab (tab menu id: '" + containerId + "').");
 			}
 			
 			if (this._isLegacy) {
@@ -117,47 +114,56 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		 * Initializes this tab menu.
 		 * 
 		 * @param	{Dictionary=}	oldTabs		previous list of tabs
+		 * @return	{?Element}	parent tab for selection or null
 		 */
 		init: function(oldTabs) {
 			oldTabs = oldTabs || null;
 			
 			// bind listeners
 			this._tabs.forEach((function(tab) {
-				if (oldTabs === null || oldTabs.get(tab.getAttribute('data-name')) !== tab) {
+				if (!oldTabs || oldTabs.get(tab.getAttribute('data-name')) !== tab) {
 					tab.children[0].addEventListener('click', this._onClick.bind(this));
 				}
 			}).bind(this));
 			
-			if (oldTabs === null) {
-				var preselect = this._container.getAttribute('data-preselect');
-				if (preselect === "true" || preselect === null || preselect === "") preselect = true;
-				if (preselect === "false") preselect = false;
-				
-				this._containers.forEach(function(container) {
-					container.classList.add('hidden');
-				});
-				
-				if (preselect !== false) {
-					if (preselect !== true) {
-						var tab = this._tabs.get(preselect);
-						if (tab !== undefined) {
-							this.select(null, tab, true);
-						}
-					}
-					else {
-						var selectTab = null;
-						this._tabs.forEach(function(tab) {
-							if (selectTab === null && tab.previousElementSibling === null) {
-								selectTab = tab; 
-							}
-						});
-						
-						if (selectTab !== null) {
-							this.select(null, selectTab, true);
-						}
+			var returnValue = null;
+			if (!oldTabs) {
+				var hash = window.location.hash.replace(/^#/, ''), selectTab = null;
+				if (hash !== '') {
+					selectTab = this._tabs.get(hash);
+					
+					// check for parent tab menu
+					if (selectTab && this._container.parentNode.classList.contains('tabMenuContainer')) {
+						returnValue = this._container;
 					}
 				}
+				
+				if (!selectTab) {
+					var preselect = this._container.getAttribute('data-preselect') || '';
+					if (preselect === "true" || !preselect) preselect = true;
+					
+					if (preselect === true) {
+						this._tabs.forEach(function(tab) {
+							if (!selectTab && !tab.previousElementSibling) {
+								selectTab = tab;
+							}
+						});
+					}
+					else if (preselect !== "false") {
+						selectTab = this._tabs.get(preselect);
+					}
+				}
+				
+				if (selectTab) {
+					this._containers.forEach(function(container) {
+						container.classList.add('hidden');
+					});
+					
+					this.select(null, selectTab, true);
+				}
 			}
+			
+			return returnValue;
 		},
 		
 		/**
@@ -168,9 +174,9 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		 * @param	{boolean=}		disableEvent	suppress event handling
 		 */
 		select: function(name, tab, disableEvent) {
-			tab = tab || this._tabs.get(name) || null;
+			tab = tab || this._tabs.get(name);
 			
-			if (tab === null) {
+			if (!tab) {
 				// check if name is an integer
 				if (~~name == name) {
 					name = ~~name;
@@ -185,17 +191,17 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 					});
 				}
 				
-				if (tab === null) {
-					throw new Error("Expected a valid tab name, '" + name + "' given (tab menu id: '" + this._containerId + "').");
+				if (!tab) {
+					throw new Error("Expected a valid tab name, '" + name + "' given (tab menu id: '" + this._container.id + "').");
 				}
 			}
 			
-			if (!name) name = tab.getAttribute('data-name');
+			name = name || tab.getAttribute('data-name');
 			
 			// unmark active tab
-			var oldTab = document.querySelector('#' + this._containerId + ' > nav > ul > li.active');
+			var oldTab = document.querySelector('#' + this._container.id + ' > nav > ul > li.active');
 			var oldContent = null;
-			if (oldTab !== null) {
+			if (oldTab) {
 				oldTab.classList.remove('active');
 				oldContent = this._containers.get(oldTab.getAttribute('data-name'));
 				oldContent.classList.remove('active');
@@ -217,23 +223,31 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				newContent.classList.remove('hidden');
 			}
 			
-			if (disableEvent !== true) {
-				EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this._containerId, 'select', {
+			if (!disableEvent) {
+				EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this._container.id, 'select', {
 					active: tab,
 					activeName: name,
 					previous: oldTab,
-					previousName: oldTab.getAttribute('data-name')
+					previousName: oldTab ? oldTab.getAttribute('data-name') : null
 				});
 				
-				if (this._isLegacy && typeof window.jQuery === 'function') {
+				var jQuery = (this._isLegacy && typeof window.jQuery === 'function') ? window.jQuery : null;
+				if (jQuery) {
 					// simulate jQuery UI Tabs event
-					window.jQuery(this._container).trigger('wcftabsbeforeactivate', {
-						newTab: window.jQuery(tab),
-						oldTab: window.jQuery(oldTab),
-						newPanel: window.jQuery(newContent),
-						oldPanel: window.jQuery(oldContent)
+					jQuery(this._container).trigger('wcftabsbeforeactivate', {
+						newTab: jQuery(tab),
+						oldTab: jQuery(oldTab),
+						newPanel: jQuery(newContent),
+						oldPanel: jQuery(oldContent)
 					});
 				}
+				
+				// update history
+				window.history.replaceState(
+					undefined,
+					undefined,
+					window.location.href.replace(/#[^#]+$/, '') + '#' + name
+				);
 			}
 		},
 		
@@ -244,7 +258,8 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		 *          to prevent issues with already bound event listeners. Consider hiding them via CSS.
 		 */
 		rebuild: function() {
-			var oldTabs = this._tabs;
+			var oldTabs = new Dictionary();
+			oldTabs.merge(this._tabs);
 			
 			this.validate();
 			this.init(oldTabs);
@@ -258,9 +273,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		_onClick: function(event) {
 			event.preventDefault();
 			
-			var tab = event.currentTarget.parentNode;
-			
-			this.select(null, tab);
+			this.select(null, event.currentTarget.parentNode);
 		},
 		
 		/**
@@ -275,8 +288,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			// handle legacy tab menus
 			if (!name) {
 				if (tab.childElementCount === 1 && tab.children[0].nodeName === 'A') {
-					var href = tab.children[0].getAttribute('href');
-					if (href.match(/#([^#]+)$/)) {
+					if (tab.children[0].href.match(/#([^#]+)$/)) {
 						name = RegExp.$1;
 						
 						if (document.getElementById(name) === null) {

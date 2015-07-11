@@ -38,11 +38,16 @@ define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', './TabMenu/Simple'], fun
 					continue;
 				}
 				
-				var tabMenu = new SimpleTabMenu(containerId, container);
+				var tabMenu = new SimpleTabMenu(container), returnValue;
 				if (tabMenu.validate()) {
-					tabMenu.init();
+					returnValue = tabMenu.init();
 					
 					_tabMenus.set(containerId, tabMenu);
+					
+					if (returnValue instanceof Element) {
+						tabMenu = this.getTabMenu(returnValue.parentNode.id);
+						tabMenu.select(returnValue.id, null, true);
+					}
 				}
 			}
 		},
