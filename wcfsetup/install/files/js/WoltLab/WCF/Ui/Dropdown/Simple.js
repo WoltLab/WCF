@@ -30,11 +30,11 @@ define(
 			if (_didInit) return;
 			_didInit = true;
 			
-			_menuContainer = document.createElement('div');
-			_menuContainer.setAttribute('id', 'dropdownMenuContainer');
+			_menuContainer = elCreate('div');
+			elAttr(_menuContainer, 'id', 'dropdownMenuContainer');
 			document.body.appendChild(_menuContainer);
 			
-			_availableDropdowns = document.getElementsByClassName('dropdownToggle');
+			_availableDropdowns = elByClass('dropdownToggle');
 			
 			this.initAll();
 			
@@ -65,7 +65,7 @@ define(
 		init: function(button, isLazyInitialization) {
 			this.setup();
 			
-			if (button.classList.contains('jsDropdownEnabled') || button.getAttribute('data-target')) {
+			if (button.classList.contains('jsDropdownEnabled') || elAttr(button, 'data-target')) {
 				return false;
 			}
 			
@@ -91,11 +91,11 @@ define(
 				_menus.set(containerId, menu);
 				
 				if (!containerId.match(/^wcf\d+$/)) {
-					menu.setAttribute('data-source', containerId);
+					elAttr(menu, 'data-source', containerId);
 				}
 			}
 			
-			button.setAttribute('data-target', containerId);
+			elAttr(button, 'data-target', containerId);
 			
 			if (isLazyInitialization) {
 				setTimeout(function() { Core.triggerEvent(button, 'click'); }, 10);
@@ -167,7 +167,7 @@ define(
 		 */
 		setAlignment: function(dropdown, dropdownMenu) {
 			// check if button belongs to an i18n textarea
-			var button = dropdown.querySelector('.dropdownToggle');
+			var button = elBySel('.dropdownToggle', dropdown);
 			var refDimensionsElement = null;
 			if (button !== null && button.classList.contains('dropdownCaptionTextarea')) {
 				refDimensionsElement = button;
@@ -278,7 +278,7 @@ define(
 		 */
 		_onDialogScroll: function(event) {
 			var dialogContent = event.currentTarget;
-			var dropdowns = dialogContent.querySelectorAll('.dropdown.dropdownOpen');
+			var dropdowns = elBySelAll('.dropdown.dropdownOpen', dialogContent);
 			
 			for (var i = 0, length = dropdowns.length; i < length; i++) {
 				var dropdown = dropdowns[i];
@@ -314,7 +314,7 @@ define(
 		 */
 		_onScroll: function() {
 			_dropdowns.forEach((function(dropdown, containerId) {
-				if (dropdown.getAttribute('data-is-overlay-dropdown-button') === true && dropdown.classList.contains('dropdownOpen')) {
+				if (elAttr(dropdown, 'data-is-overlay-dropdown-button') === true && dropdown.classList.contains('dropdownOpen')) {
 					this.setAlignment(dropdown, _menus.get(containerId));
 				}
 			}).bind(this));
@@ -344,15 +344,15 @@ define(
 				event.preventDefault();
 				event.stopPropagation();
 				
-				targetId = event.currentTarget.getAttribute('data-target');
+				targetId = elAttr(event.currentTarget, 'data-target');
 			}
 			
 			// check if 'isOverlayDropdownButton' is set which indicates if
 			// the dropdown toggle is in an overlay
 			var dropdown = _dropdowns.get(targetId);
-			if (dropdown !== undefined && dropdown.getAttribute('data-is-overlay-dropdown-button') === null) {
+			if (dropdown !== undefined && elAttr(dropdown, 'data-is-overlay-dropdown-button') === null) {
 				var dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
-				dropdown.setAttribute('data-is-overlay-dropdown-button', (dialogContent !== null));
+				elAttr(dropdown, 'data-is-overlay-dropdown-button', (dialogContent !== null));
 				
 				if (dialogContent !== null) {
 					dialogContent.addEventListener('scroll', this._onDialogScroll.bind(this));

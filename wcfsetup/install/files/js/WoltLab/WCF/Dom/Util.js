@@ -31,7 +31,7 @@ define([], function() {
 		 * @return	{DocumentFragment}	fragment containing DOM nodes
 		 */
 		createFragmentFromHtml: function(html) {
-			var tmp = document.createElement('div');
+			var tmp = elCreate('div');
 			tmp.innerHTML = html;
 			
 			var fragment = document.createDocumentFragment();
@@ -53,7 +53,7 @@ define([], function() {
 			do {
 				elementId = 'wcf' + _idCounter++;
 			}
-			while (document.getElementById(elementId) !== null);
+			while (elById(elementId) !== null);
 			
 			return elementId;
 		},
@@ -70,10 +70,10 @@ define([], function() {
 				return null;
 			}
 			
-			var id = el.getAttribute('id');
+			var id = elAttr(el, 'id');
 			if (!id) {
 				id = this.getUniqueId();
-				el.setAttribute('id', id);
+				elAttr(el, 'id', id);
 			}
 			
 			return id;

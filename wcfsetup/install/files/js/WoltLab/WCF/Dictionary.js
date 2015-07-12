@@ -11,7 +11,7 @@
 define([], function() {
 	"use strict";
 	
-	var _hasMap = window.hasOwnProperty('Map') && typeof window.Map === 'function';
+	var _hasMap = objOwns(window, 'Map') && typeof window.Map === 'function';
 	
 	/**
 	 * @constructor

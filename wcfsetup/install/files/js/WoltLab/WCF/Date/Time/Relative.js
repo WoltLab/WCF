@@ -9,7 +9,7 @@
 define(['Dom/ChangeListener', 'Language', 'WoltLab/WCF/Date/Util', 'WoltLab/WCF/Timer/Repeating'], function(DomChangeListener, Language, DateUtil, Repeating) {
 	"use strict";
 	
-	var _elements = document.getElementsByTagName('time');
+	var _elements = elByTag('time');
 	var _offset = null;
 	
 	/**
@@ -35,14 +35,14 @@ define(['Dom/ChangeListener', 'Language', 'WoltLab/WCF/Date/Util', 'WoltLab/WCF/
 			for (var i = 0, length = _elements.length; i < length; i++) {
 				var element = _elements[i];
 				
-				if (!element.classList.contains('datetime') || element.getAttribute('data-is-future-date')) continue;
+				if (!element.classList.contains('datetime') || elAttr(element, 'data-is-future-date')) continue;
 				
-				if (!element.getAttribute('title')) element.setAttribute('title', element.textContent.trim());
+				if (!element.getAttribute('title')) elAttr(element, 'title', element.textContent.trim());
 				
 				var elTimestamp = ~~element.getAttribute('data-timestamp') + _offset;
-				var elDate = element.getAttribute('data-date');
-				var elTime = element.getAttribute('data-time');
-				var elOffset = element.getAttribute('data-offset');
+				var elDate = elAttr(element, 'data-date');
+				var elTime = elAttr(element, 'data-time');
+				var elOffset = elAttr(element, 'data-offset');
 				
 				// timestamp is less than 60 seconds ago
 				if (elTimestamp >= timestamp || timestamp < (elTimestamp + 60)) {

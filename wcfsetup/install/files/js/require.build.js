@@ -14,7 +14,8 @@
 	include: [
 		"requireLib",
 		"require.config",
-		"require.linearExecution"
+		"require.linearExecution",
+		"wcf.globalHelper"
 	],
 	excludeShallow: [
 		'WoltLab/_Meta'

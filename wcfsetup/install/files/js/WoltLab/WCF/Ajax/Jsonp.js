@@ -55,9 +55,9 @@ define(['Core'], function(Core) {
 			url += (url.indexOf('?') === -1) ? '?' : '&';
 			url += options.parameterName + '=' + callbackName;
 			
-			var script = document.createElement('script');
+			var script = elCreate('script');
 			script.async = true;
-			script.setAttribute('src', url);
+			elAttr(script, 'src', url);
 			
 			document.head.appendChild(script);
 		}

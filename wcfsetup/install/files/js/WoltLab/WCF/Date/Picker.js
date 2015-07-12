@@ -40,22 +40,22 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		init: function() {
 			this._setup();
 			
-			var elements = document.querySelectorAll('input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)');
+			var elements = elBySelAll('input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)');
 			var now = new Date();
 			for (var i = 0, length = elements.length; i < length; i++) {
 				var element = elements[i];
 				element.classList.add('inputDatePicker');
 				element.readOnly = true;
 				
-				var isDateTime = (element.getAttribute('type') === 'datetime');
+				var isDateTime = (elAttr(element, 'type') === 'datetime');
 				
-				element.setAttribute('data-is-date-time', isDateTime);
+				elAttr(element, 'data-is-date-time', isDateTime);
 				
 				// convert value
-				var date = null, value = element.getAttribute('value') || '';
-				if (element.getAttribute('value')) {
+				var date = null, value = elAttr(element, 'value');
+				if (elAttr(element, 'value')) {
 					date = new Date(value);
-					element.setAttribute('data-value', date.getTime());
+					elAttr(element, 'data-value', date.getTime());
 					value = DateUtil['formatDate' + (isDateTime ? 'Time' : '')](date);
 				}
 				
@@ -63,28 +63,28 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				// handle birthday input
 				if (element.classList.contains('birthday')) {
-					element.setAttribute('data-min-date', '100');
-					element.setAttribute('data-max-date', 'now');
+					elAttr(element, 'data-min-date', '100');
+					elAttr(element, 'data-max-date', 'now');
 				}
 				
 				this._initDateRange(element, now, true);
 				this._initDateRange(element, now, false);
 				
-				if (element.getAttribute('data-min-date') === element.getAttribute('data-max-date')) {
+				if (elAttr(element, 'data-min-date') === elAttr(element, 'data-max-date')) {
 					throw new Error("Minimum and maximum date cannot be the same (element id '" + element.id + "').");
 				}
 				
 				// change type to prevent browser's datepicker to trigger
 				element.type = 'text';
 				element.value = value;
-				element.setAttribute('data-empty', isEmpty);
+				elAttr(element, 'data-empty', isEmpty);
 				
-				if (element.getAttribute('data-placeholder')) {
-					element.setAttribute('placeholder', element.getAttribute('data-placeholder'));
+				if (elAttr(element, 'data-placeholder')) {
+					elAttr(element, 'placeholder', elAttr(element, 'data-placeholder'));
 				}
 				
 				// add a hidden element to hold the actual date
-				var shadowElement = document.createElement('input');
+				var shadowElement = elCreate('input');
 				shadowElement.id = element.id + 'DatePicker';
 				shadowElement.name = element.name;
 				shadowElement.type = 'hidden';
@@ -99,15 +99,15 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				element.addEventListener('click', _callbackOpen);
 				
 				// create input addon
-				var container = document.createElement('div');
+				var container = elCreate('div');
 				container.className = 'inputAddon';
 				
-				var button = document.createElement('a');
+				var button = elCreate('a');
 				button.className = 'inputSuffix';
 				button.addEventListener('click', _callbackOpen);
 				container.appendChild(button);
 				
-				var icon = document.createElement('span');
+				var icon = elCreate('span');
 				icon.className = 'icon icon16 fa-calendar';
 				button.appendChild(icon);
 				
@@ -134,7 +134,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		 */
 		_initDateRange: function(element, now, isMinDate) {
 			var attribute = 'data-' + (isMinDate ? 'min' : 'max') + '-date';
-			var value = (element.hasAttribute(attribute)) ? element.getAttribute(attribute).trim() : '';
+			var value = (element.hasAttribute(attribute)) ? elAttr(element, attribute).trim() : '';
 			
 			if (value.match(/^(\d{4})-(\d{2})-(\d{2})$/)) {
 				// YYYY-mm-dd
@@ -154,7 +154,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				// element id, e.g. `datePicker-someOtherElement`
 				value = RegExp.$1;
 				
-				if (document.getElementById(value) === null) {
+				if (elById(value) === null) {
 					throw new Error("Reference date picker identified by '" + value + "' does not exists (element id: '" + element.id + "').");
 				}
 			}
@@ -162,7 +162,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				value = new Date((isMinDate ? 1970 : 2038), 0, 1).getTime();
 			}
 			
-			element.setAttribute(attribute, value);
+			elAttr(element, attribute, value);
 		},
 		
 		/**
@@ -196,7 +196,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			_input = input;
-			var data = _data.get(_input), date, value = _input.getAttribute('data-value');
+			var data = _data.get(_input), date, value = elAttr(_input, 'data-value');
 			if (value) {
 				date = new Date(+value);
 				
@@ -209,12 +209,12 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			// set min/max date
-			_minDate = _input.getAttribute('data-min-date');
-			if (_minDate.match(/^datePicker-(.+)$/)) _minDate = document.getElementById(RegExp.$1).getAttribute('data-value');
+			_minDate = elAttr(_input, 'data-min-date');
+			if (_minDate.match(/^datePicker-(.+)$/)) _minDate = elById(RegExp.$1).getAttribute('data-value');
 			_minDate = new Date(+_minDate);
 			
-			_maxDate = _input.getAttribute('data-max-date');
-			if (_maxDate.match(/^datePicker-(.+)$/)) _maxDate = document.getElementById(RegExp.$1).getAttribute('data-value');
+			_maxDate = elAttr(_input, 'data-max-date');
+			if (_maxDate.match(/^datePicker-(.+)$/)) _maxDate = elById(RegExp.$1).getAttribute('data-value');
 			_maxDate = new Date(+_maxDate);
 			
 			if (data.isDateTime) {
@@ -338,8 +338,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					date.setDate(date.getDate() + 1); 
 				}
 				
-				_dateGrid.setAttribute('data-month', month);
-				_dateGrid.setAttribute('data-year', year);
+				elAttr(_dateGrid, 'data-month', month);
+				elAttr(_dateGrid, 'data-year', year);
 				
 				_datePicker.insertBefore(fragment, _dateTime);
 				
@@ -382,7 +382,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					cell.classList[(!cell.classList.contains('otherMonth') && ~~cell.textContent === day) ? 'add' : 'remove']('active');
 				}
 				
-				_dateGrid.setAttribute('data-day', day);
+				elAttr(_dateGrid, 'data-day', day);
 			}
 			
 			this._formatValue();
@@ -394,15 +394,15 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		_formatValue: function() {
 			var data = _data.get(_input), date, value, shadowValue;
 			
-			if (_input.getAttribute('data-empty') === 'true') {
+			if (elAttr(_input, 'data-empty') === 'true') {
 				return;
 			}
 			
 			if (data.isDateTime) {
 				date = new Date(
-					_dateGrid.getAttribute('data-year'),
-					_dateGrid.getAttribute('data-month'),
-					_dateGrid.getAttribute('data-day'),
+					elAttr(_dateGrid, 'data-year'),
+					elAttr(_dateGrid, 'data-month'),
+					elAttr(_dateGrid, 'data-day'),
 					_dateHour.value,
 					_dateMinute.value
 				);
@@ -412,9 +412,9 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			else {
 				date = new Date(
-					_dateGrid.getAttribute('data-year'),
-					_dateGrid.getAttribute('data-month'),
-					_dateGrid.getAttribute('data-day')
+					elAttr(_dateGrid, 'data-year'),
+					elAttr(_dateGrid, 'data-month'),
+					elAttr(_dateGrid, 'data-day')
 				);
 				
 				value = DateUtil.formatDate(date);
@@ -422,7 +422,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			_input.value = value;
-			_input.setAttribute('data-value', date.getTime());
+			elAttr(_input, 'data-value', date.getTime());
 			data.shadow.value = shadowValue;
 		},
 		
@@ -434,27 +434,27 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				return;
 			}
 			
-			_datePicker = document.createElement('div');
+			_datePicker = elCreate('div');
 			_datePicker.className = 'datePicker';
 			_datePicker.addEventListener('click', function(event) { event.stopPropagation(); });
 			
-			var pointer = document.createElement('span');
+			var pointer = elCreate('span');
 			pointer.className = 'elementPointer';
 			pointer.innerHTML = '<span></span>';
 			_datePicker.appendChild(pointer);
 			
-			var header = document.createElement('header');
+			var header = elCreate('header');
 			_datePicker.appendChild(header);
 			
-			_dateMonthPrevious = document.createElement('a');
+			_dateMonthPrevious = elCreate('a');
 			_dateMonthPrevious.className = 'icon icon16 fa-arrow-left previous';
 			_dateMonthPrevious.addEventListener('click', this.previousMonth.bind(this));
 			header.appendChild(_dateMonthPrevious);
 			
-			var monthYearContainer = document.createElement('span');
+			var monthYearContainer = elCreate('span');
 			header.appendChild(monthYearContainer);
 			
-			_dateMonth = document.createElement('select');
+			_dateMonth = elCreate('select');
 			_dateMonth.className = 'month';
 			_dateMonth.addEventListener('change', this._changeMonth.bind(this));
 			monthYearContainer.appendChild(_dateMonth);
@@ -465,20 +465,20 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			_dateMonth.innerHTML = months;
 			
-			_dateYear = document.createElement('select');
+			_dateYear = elCreate('select');
 			_dateYear.className = 'year';
 			_dateYear.addEventListener('change', this._changeYear.bind(this));
 			monthYearContainer.appendChild(_dateYear);
 			
-			_dateMonthNext = document.createElement('a');
+			_dateMonthNext = elCreate('a');
 			_dateMonthNext.className = 'icon icon16 fa-arrow-right next';
 			_dateMonthNext.addEventListener('click', this.nextMonth.bind(this));
 			header.appendChild(_dateMonthNext);
 			
-			_dateGrid = document.createElement('ul');
+			_dateGrid = elCreate('ul');
 			_datePicker.appendChild(_dateGrid);
 			
-			var item = document.createElement('li');
+			var item = elCreate('li');
 			item.className = 'weekdays';
 			_dateGrid.appendChild(item);
 			
@@ -487,7 +487,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				var day = i + _firstDayOfWeek;
 				if (day > 6) day -= 7;
 				
-				span = document.createElement('span');
+				span = elCreate('span');
 				span.textContent = weekdays[day];
 				item.appendChild(span);
 			}
@@ -495,11 +495,11 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			// create date grid
 			var callbackClick = this._click.bind(this), cell, row;
 			for (var i = 0; i < 5; i++) {
-				row = document.createElement('li');
+				row = elCreate('li');
 				_dateGrid.appendChild(row);
 				
 				for (var j = 0; j < 7; j++) {
-					cell = document.createElement('a');
+					cell = elCreate('a');
 					cell.addEventListener('click', callbackClick);
 					_dateCells.push(cell);
 					
@@ -507,10 +507,10 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				}
 			}
 			
-			_dateTime = document.createElement('footer');
+			_dateTime = elCreate('footer');
 			_datePicker.appendChild(_dateTime);
 			
-			_dateHour = document.createElement('select');
+			_dateHour = elCreate('select');
 			_dateHour.className = 'hour';
 			_dateHour.addEventListener('change', this._formatValue.bind(this));
 			
@@ -527,7 +527,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			_dateTime.appendChild(document.createTextNode('\u00A0:\u00A0'));
 			
-			_dateMinute = document.createElement('select');
+			_dateMinute = elCreate('select');
 			_dateMinute.className = 'minute';
 			_dateMinute.addEventListener('change', this._formatValue.bind(this));
 			
@@ -600,7 +600,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				return;
 			}
 			
-			_input.setAttribute('data-empty', false);
+			elAttr(_input, 'data-empty', false);
 			
 			this._renderGrid(event.currentTarget.textContent);
 			
@@ -633,7 +633,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			element = this._getElement(element);
 			var data = _data.get(element);
 			
-			element.setAttribute('data-value', date.getTime());
+			elAttr(element, 'data-value', date.getTime());
 			element.value = DateUtil['formatDate' + (data.isDateTime ? 'Time' : '')](date);
 			
 			data.shadow.value = DateUtil.format(date, (data.isDateTime ? 'c' : 'Y-m-d'));
@@ -668,7 +668,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			container.parentNode.insertBefore(element, container);
 			container.parentNode.removeChild(container);
 			
-			element.setAttribute('type', 'date' + (data.isDateTime ? 'time' : ''));
+			elAttr(element, 'type', 'date' + (data.isDateTime ? 'time' : ''));
 			element.value = data.shadow.value;
 			
 			element.removeAttribute('data-value');
@@ -698,7 +698,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		 * @return	{Element}		input element
 		 */
 		_getElement: function(element) {
-			if (typeof element === 'string') element = document.getElementById(element);
+			if (typeof element === 'string') element = elById(element);
 			
 			if (!(element instanceof Element) || !element.classList.contains('inputDatePicker') || !_data.has(element)) {
 				throw new Error("Expected a valid date picker input element or id.");

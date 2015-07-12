@@ -42,14 +42,14 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		convert: function(message) {
 			if (message.length) this._setup();
 			
-			var container = document.createElement('div');
+			var container = elCreate('div');
 			container.innerHTML = message;
 			
 			// convert line breaks
-			var elements = container.getElementsByTagName('P');
+			var elements = elByTag('P', container);
 			while (elements.length) elements[0].outerHTML = elements[0].innerHTML;
 			
-			elements = container.getElementsByTagName('BR');
+			elements = elByTag('BR', container);
 			while (elements.length) elements[0].outerHTML = "\n";
 			
 			// prevent conversion taking place inside source bbcodes
@@ -66,7 +66,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 			this._restoreSourceElements(container, sourceElements);
 			
 			// remove remaining HTML elements
-			elements = container.getElementsByTagName('*');
+			elements = elByTag('*', container);
 			while (elements.length) elements[0].outerHTML = elements[0].innerHTML;
 			
 			message = this._convertSpecials(container.innerHTML);
@@ -85,7 +85,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 			var elements, sourceElements = [], tmp;
 			
 			for (var i = 0, length = _sourceConverter.length; i < length; i++) {
-				elements = container.querySelectorAll(_sourceConverter[i].selector);
+				elements = elBySelAll(_sourceConverter[i].selector, container);
 				
 				tmp = [];
 				for (var j = 0, innerLength = elements.length; j < innerLength; j++) {
@@ -105,8 +105,8 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		 * @param	{array<object>}	list of removed elements and their placeholders
 		 */
 		_preserveSourceElement: function(element, sourceElements) {
-			var placeholder = document.createElement('var');
-			placeholder.setAttribute('data-source', 'wcf');
+			var placeholder = elCreate('var');
+			elAttr(placeholder, 'data-source', 'wcf');
 			element.parentNode.insertBefore(placeholder, element);
 			
 			var fragment = document.createDocumentFragment();
@@ -226,7 +226,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 				return;
 			}
 			
-			var element, elements = container.getElementsByTagName(converter.tagName);
+			var element, elements = elByTag(converter.tagName, container);
 			while (elements.length) {
 				element = elements[0];
 				
@@ -245,8 +245,8 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		 * @param	{Element}	element		target element
 		 */
 		_convertBlockquote: function(element) {
-			var author = element.getAttribute('data-author') || '';
-			var link = element.getAttribute('cite') || '';
+			var author = elAttr(element, 'data-author');
+			var link = elAttr(element, 'cite');
 			
 			var open = '[quote]';
 			if (author) {
@@ -278,7 +278,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		_convertImage: function(element) {
 			if (element.classList.contains('smiley')) {
 				// smiley
-				element.outerHTML = (addSmileyPadding(element, true) ? ' ' : '') + element.getAttribute('alt') + (addSmileyPadding(element, false) ? ' ' : '');
+				element.outerHTML = (addSmileyPadding(element, true) ? ' ' : '') + elAttr(element, 'alt') + (addSmileyPadding(element, false) ? ' ' : '');
 				return;
 			}
 			
@@ -287,7 +287,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 			width = (typeof width === 'string') ? ~~width.replace(/px$/, '') : 0;
 			
 			if (element.classList.contains('redactorEmbeddedAttachment')) {
-				var attachmentId = element.getAttribute('data-attachment-id');
+				var attachmentId = elAttr(element, 'data-attachment-id');
 				
 				if (width > 0) {
 					element.outerHTML = "[attach=" + attachmentId + "," + float + "," + width + "][/attach]";
@@ -477,12 +477,12 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		 * @param	{Element}	element		target element
 		 */
 		_convertTable: function(element) {
-			var elements = element.getElementsByTagName('TD');
+			var elements = elByTag('TD', element);
 			while (elements.length) {
 				elements[0].outerHTML = '[td]' + elements[0].innerHTML + '[/td]\n';
 			}
 			
-			elements = element.getElementsByTagName('TR');
+			elements = elByTag('TR', element);
 			while (elements.length) {
 				elements[0].outerHTML = '\n[tr]\n' + elements[0].innerHTML + '[/tr]';
 			}
@@ -525,8 +525,8 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		 * @param	{Element}	element		target element
 		 */
 		_convertSourceCodeBox: function(element) {
-			var filename = element.getAttribute('data-filename').trim() || '';
-			var highlighter = element.getAttribute('data-highlighter') || '';
+			var filename = elAttr(element, 'data-filename').trim() || '';
+			var highlighter = elAttr(element, 'data-highlighter');
 			window.dtdesign = element;
 			var list = DomTraverse.childByTag(element.children[0], 'OL');
 			var lineNumber = ~~list.getAttribute('start') || 1;

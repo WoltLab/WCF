@@ -38,9 +38,9 @@ define(
 			// Fetch Ajax, as it cannot be provided because of a circular dependency
 			if (Ajax === undefined) Ajax = require('Ajax');
 			
-			_container = document.createElement('div');
+			_container = elCreate('div');
 			_container.classList.add('dialogOverlay');
-			_container.setAttribute('aria-hidden', 'true');
+			elAttr(_container, 'aria-hidden', 'true');
 			_container.addEventListener('click', this._closeOnBackdrop.bind(this));
 			
 			document.body.appendChild(_container);
@@ -93,7 +93,7 @@ define(
 			
 			var createOnly = true;
 			if (setupData.source === undefined) {
-				var dialogElement = document.getElementById(setupData.id);
+				var dialogElement = elById(setupData.id);
 				if (dialogElement === null) {
 					throw new Error("Element id '" + setupData.id + "' is invalid and no source attribute was given.");
 				}
@@ -122,8 +122,8 @@ define(
 			}
 			else {
 				if (typeof setupData.source === 'string') {
-					var dialogElement = document.createElement('div');
-					dialogElement.setAttribute('id', setupData.id);
+					var dialogElement = elCreate('div');
+					elAttr(dialogElement, 'id', setupData.id);
 					dialogElement.innerHTML = setupData.source;
 					
 					setupData.source = document.createDocumentFragment();
@@ -218,57 +218,57 @@ define(
 		_createDialog: function(id, html, options, createOnly) {
 			var element = null;
 			if (html === null) {
-				element = document.getElementById(id);
+				element = elById(id);
 				if (element === null) {
 					throw new Error("Expected either a HTML string or an existing element id.");
 				}
 			}
 			
-			var dialog = document.createElement('div');
+			var dialog = elCreate('div');
 			dialog.classList.add('dialogContainer');
-			dialog.setAttribute('aria-hidden', 'true');
-			dialog.setAttribute('role', 'dialog');
-			dialog.setAttribute('data-id', id);
+			elAttr(dialog, 'aria-hidden', 'true');
+			elAttr(dialog, 'role', 'dialog');
+			elAttr(dialog, 'data-id', id);
 			
 			if (options.disposeOnClose) {
-				dialog.setAttribute('data-dispose-on-close', true);
+				elAttr(dialog, 'data-dispose-on-close', true);
 			}
 			
-			var header = document.createElement('header');
+			var header = elCreate('header');
 			dialog.appendChild(header);
 			
 			if (options.title) {
 				var titleId = DomUtil.getUniqueId();
-				dialog.setAttribute('aria-labelledby', titleId);
+				elAttr(dialog, 'aria-labelledby', titleId);
 				
-				var title = document.createElement('span');
+				var title = elCreate('span');
 				title.classList.add('dialogTitle');
 				title.textContent = options.title;
-				title.setAttribute('id', titleId);
+				elAttr(title, 'id', titleId);
 				header.appendChild(title);
 			}
 			
 			if (options.closable) {
-				var closeButton = document.createElement('a');
+				var closeButton = elCreate('a');
 				closeButton.className = 'dialogCloseButton jsTooltip';
-				closeButton.setAttribute('title', options.closeButtonLabel);
-				closeButton.setAttribute('aria-label', options.closeButtonLabel);
+				elAttr(closeButton, 'title', options.closeButtonLabel);
+				elAttr(closeButton, 'aria-label', options.closeButtonLabel);
 				closeButton.addEventListener('click', this._close.bind(this));
 				header.appendChild(closeButton);
 				
-				var span = document.createElement('span');
+				var span = elCreate('span');
 				span.textContent = options.closeButtonLabel;
 				closeButton.appendChild(span);
 			}
 			
-			var contentContainer = document.createElement('div');
+			var contentContainer = elCreate('div');
 			contentContainer.classList.add('dialogContent');
 			if (options.disableContentPadding) contentContainer.classList.add('dialogContentNoPadding');
 			dialog.appendChild(contentContainer);
 			
 			var content;
 			if (element === null) {
-				content = document.createElement('div');
+				content = elCreate('div');
 				
 				if (typeof html === 'string') {
 					content.innerHTML = html;
@@ -326,20 +326,20 @@ define(
 			if (typeof html === 'string') {
 				data.content.innerHTML = '';
 				
-				var content = document.createElement('div');
+				var content = elCreate('div');
 				content.innerHTML = html;
 				
 				data.content.appendChild(content);
 			}
 			
-			if (data.dialog.getAttribute('aria-hidden') === 'true') {
-				if (_container.getAttribute('aria-hidden') === 'true') {
+			if (elAttr(data.dialog, 'aria-hidden') === 'true') {
+				if (elAttr(_container, 'aria-hidden') === 'true') {
 					window.addEventListener('keyup', _keyupListener);
 				}
 				
-				data.dialog.setAttribute('aria-hidden', 'false');
-				_container.setAttribute('aria-hidden', 'false');
-				_container.setAttribute('data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+				elAttr(data.dialog, 'aria-hidden', 'false');
+				elAttr(_container, 'aria-hidden', 'false');
+				elAttr(_container, 'data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 				_activeDialog = id;
 				
 				this.rebuild(id);
@@ -364,13 +364,13 @@ define(
 			}
 			
 			// ignore non-active dialogs
-			if (data.dialog.getAttribute('aria-hidden') === 'true') {
+			if (elAttr(data.dialog, 'aria-hidden') === 'true') {
 				return;
 			}
 			
 			var contentContainer = data.content.parentNode;
 			
-			var formSubmit = data.content.querySelector('.formSubmit');
+			var formSubmit = elBySel('.formSubmit', data.content);
 			var unavailableHeight = 0;
 			if (formSubmit !== null) {
 				contentContainer.classList.add('dialogForm');
@@ -428,7 +428,7 @@ define(
 				return true;
 			}
 			
-			if (_container.getAttribute('data-close-on-click') === 'true') {
+			if (elAttr(_container, 'data-close-on-click') === 'true') {
 				this._close(event);
 			}
 			else {
@@ -458,37 +458,37 @@ define(
 				data.onClose(id);
 			}
 			
-			if (data.dialog.getAttribute('data-dispose-on-close')) {
+			if (elAttr(data.dialog, 'data-dispose-on-close')) {
 				setTimeout(function() {
-					if (data.dialog.getAttribute('aria-hidden') === 'true') {
+					if (elAttr(data.dialog, 'aria-hidden') === 'true') {
 						_container.removeChild(data.dialog);
 						_dialogs['delete'](id);
 					}
 				}, 5000);
 			}
 			else {
-				data.dialog.setAttribute('aria-hidden', 'true');
+				elAttr(data.dialog, 'aria-hidden', 'true');
 			}
 			
 			// get next active dialog
 			_activeDialog = null;
 			for (var i = 0; i < _container.childElementCount; i++) {
 				var child = _container.children[i];
-				if (child.getAttribute('aria-hidden') === 'false') {
-					_activeDialog = child.getAttribute('data-id');
+				if (elAttr(child, 'aria-hidden') === 'false') {
+					_activeDialog = elAttr(child, 'data-id');
 					break;
 				}
 			}
 			
 			if (_activeDialog === null) {
-				_container.setAttribute('aria-hidden', 'true');
-				_container.setAttribute('data-close-on-click', 'false');
+				elAttr(_container, 'aria-hidden', 'true');
+				elAttr(_container, 'data-close-on-click', 'false');
 				
 				window.removeEventListener('keyup', _keyupListener);
 			}
 			else {
 				data = _dialogs.get(_activeDialog);
-				_container.setAttribute('data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+				elAttr(_container, 'data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 			}
 		},
 		

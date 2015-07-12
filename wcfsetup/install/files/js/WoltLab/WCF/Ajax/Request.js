@@ -293,13 +293,13 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			DomChangeListener.trigger();
 			
 			// fix anchor tags generated through WCF::getAnchor()
-			var links = document.querySelectorAll('a[href*="#"]');
+			var links = elBySelAll('a[href*="#"]');
 			for (var i = 0, length = links.length; i < length; i++) {
 				var link = links[i];
-				var href = link.getAttribute('href');
+				var href = elAttr(link, 'href');
 				if (href.indexOf('AJAXProxy') !== -1 || href.indexOf('ajax-proxy') !== -1) {
 					href = href.substr(href.indexOf('#'));
-					link.setAttribute('href', document.location.toString().replace(/#.*/, '') + href);
+					elAttr(link, 'href', document.location.toString().replace(/#.*/, '') + href);
 				}
 			}
 		}

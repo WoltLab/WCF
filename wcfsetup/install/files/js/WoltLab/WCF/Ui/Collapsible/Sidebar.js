@@ -21,14 +21,14 @@ define(['Ajax', 'Language', 'Dom/Util'], function(Ajax, Language, DomUtil) {
 		 * Sets up the toggle button.
 		 */
 		setup: function() {
-			var sidebar = document.querySelector('.sidebar');
+			var sidebar = elBySel('.sidebar');
 			if (sidebar === null) {
 				return;
 			}
 			
-			_isOpen = (sidebar.getAttribute('data-is-open') === 'true');
-			_main = document.getElementById('main');
-			_name = sidebar.getAttribute('data-sidebar-name');
+			_isOpen = (elAttr(sidebar, 'data-is-open') === 'true');
+			_main = elById('main');
+			_name = elAttr(sidebar, 'data-sidebar-name');
 			
 			this._createUI(sidebar);
 			
@@ -41,12 +41,12 @@ define(['Ajax', 'Language', 'Dom/Util'], function(Ajax, Language, DomUtil) {
 		 * @param	{Element}	sidebar		sidebar element
 		 */
 		_createUI: function(sidebar) {
-			var button = document.createElement('a');
+			var button = elCreate('a');
 			button.href = '#';
 			button.className = 'collapsibleButton jsTooltip';
-			button.setAttribute('title', Language.get('wcf.global.button.collapsible'));
+			elAttr(button, 'title', Language.get('wcf.global.button.collapsible'));
 			
-			var span = document.createElement('span');
+			var span = elCreate('span');
 			span.appendChild(button);
 			DomUtil.prepend(span, sidebar);
 			

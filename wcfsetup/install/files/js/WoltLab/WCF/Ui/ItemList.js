@@ -33,7 +33,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		 * @param	{object<string>}	options		option list
 		 */
 		init: function(elementId, values, options) {
-			var element = document.getElementById(elementId);
+			var element = elById(elementId);
 			if (element === null) {
 				throw new Error("Expected a valid element id.");
 			}
@@ -78,7 +78,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 						if (options.submitFieldName.length) {
 							var input;
 							for (var i = 0, length = values.length; i < length; i++) {
-								input = document.createElement('input');
+								input = elCreate('input');
 								input.type = 'hidden';
 								input.name = options.submitFieldName.replace(/{$objectId}/, values[i].objectId);
 								input.value = values[i].value;
@@ -143,7 +143,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			for (var i = 0, length = items.length; i < length; i++) {
 				item = items[i];
 				value = {
-					objectId: item.getAttribute('data-object-id'),
+					objectId: elAttr(item, 'data-object-id'),
 					value: DomTraverse.childByTag(item, 'SPAN').textContent
 				};
 				
@@ -177,14 +177,14 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		 * @param	{object<string>}	options		option list
 		 */
 		_createUI: function(element, options) {
-			var list = document.createElement('ol');
+			var list = elCreate('ol');
 			list.className = 'inputItemList';
-			list.setAttribute('data-element-id', element.id);
+			elAttr(list, 'data-element-id', element.id);
 			list.addEventListener('click', function(event) {
 				if (event.target === list) element.focus();
 			});
 			
-			var listItem = document.createElement('li');
+			var listItem = elCreate('li');
 			listItem.className = 'input';
 			list.appendChild(listItem);
 			
@@ -196,12 +196,12 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			listItem.appendChild(element);
 			
 			if (options.maxLength !== -1) {
-				element.setAttribute('maxLength', options.maxLength);
+				elAttr(element, 'maxLength', options.maxLength);
 			}
 			
 			var shadow = null, values = [];
 			if (options.isCSV) {
-				shadow = document.createElement('input');
+				shadow = elCreate('input');
 				shadow.className = 'itemListInputShadow';
 				shadow.type = 'hidden';
 				shadow.name = element.name;
@@ -218,7 +218,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 						}
 					}
 					
-					var inputElement = document.createElement('input');
+					var inputElement = elCreate('input');
 					element.parentNode.insertBefore(inputElement, element);
 					inputElement.id = element.id;
 					
@@ -254,7 +254,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			}
 			else if (!data.element.disabled) {
 				data.element.disabled = true;
-				data.element.setAttribute('placeholder', Language.get('wcf.global.form.input.maxItems'));
+				elAttr(data.element, 'placeholder', Language.get('wcf.global.form.input.maxItems'));
 			}
 		},
 		
@@ -337,15 +337,15 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		_addItem: function(elementId, value) {
 			var data = _data.get(elementId);
 			
-			var listItem = document.createElement('li');
+			var listItem = elCreate('li');
 			listItem.className = 'item';
 			
-			var content = document.createElement('span');
+			var content = elCreate('span');
 			content.className = 'content';
-			content.setAttribute('data-object-id', value.objectId);
+			elAttr(content, 'data-object-id', value.objectId);
 			content.textContent = value.value;
 			
-			var button = document.createElement('a');
+			var button = elCreate('a');
 			button.className = 'icon icon16 fa-times';
 			button.addEventListener('click', _callbackRemoveItem);
 			listItem.appendChild(content);
@@ -374,7 +374,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			item = (event === null) ? item : event.currentTarget.parentNode;
 			
 			var parent = item.parentNode;
-			var elementId = parent.getAttribute('data-element-id');
+			var elementId = elAttr(parent, 'data-element-id');
 			var data = _data.get(elementId);
 			
 			data.suggestion.removeExcludedValue(item.children[0].textContent);

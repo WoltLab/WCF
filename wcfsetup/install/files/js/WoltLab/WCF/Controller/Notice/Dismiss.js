@@ -17,7 +17,7 @@ define(['Ajax'], function(Ajax) {
 		 * Initializes dismiss buttons.
 		 */
 		setup: function() {
-			var buttons = document.getElementsByClassName('jsDismissNoticeButton');
+			var buttons = elByClass('jsDismissNoticeButton');
 			
 			if (buttons.length) {
 				var clickCallback = this._click.bind(this);
@@ -37,7 +37,7 @@ define(['Ajax'], function(Ajax) {
 				data: {
 					actionName: 'dismiss',
 					className: 'wcf\\data\\notice\\NoticeAction',
-					objectIDs: [ button.getAttribute('data-object-id') ]
+					objectIDs: [ elAttr(button, 'data-object-id') ]
 				},
 				success: function() {
 					var parent = button.parentNode;

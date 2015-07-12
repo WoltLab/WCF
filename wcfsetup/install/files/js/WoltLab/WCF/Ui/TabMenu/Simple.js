@@ -48,7 +48,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			}
 			
 			// get children
-			var tabs = nav.getElementsByTagName('li');
+			var tabs = elByTag('li', nav);
 			if (tabs.length === null) {
 				return false;
 			}
@@ -56,13 +56,13 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			var container, containers = DomTraverse.childrenByTag(this._container, 'DIV'), name;
 			for (var i = 0, length = containers.length; i < length; i++) {
 				container = containers[i];
-				name = container.getAttribute('data-name');
+				name = elAttr(container, 'data-name');
 				
 				if (!name) {
 					name = DomUtil.identify(container);
 				}
 				
-				container.setAttribute('data-name', name);
+				elAttr(container, 'data-name', name);
 				this._containers.set(name, container);
 			}
 			
@@ -100,10 +100,10 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			}
 			
 			if (this._isLegacy) {
-				this._container.setAttribute('data-is-legacy', true);
+				elAttr(this._container, 'data-is-legacy', true);
 				
 				this._tabs.forEach(function(tab, name) {
-					tab.setAttribute('aria-controls', name);
+					elAttr(tab, 'aria-controls', name);
 				});
 			}
 			
@@ -121,7 +121,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			
 			// bind listeners
 			this._tabs.forEach((function(tab) {
-				if (!oldTabs || oldTabs.get(tab.getAttribute('data-name')) !== tab) {
+				if (!oldTabs || oldTabs.get(elAttr(tab, 'data-name')) !== tab) {
 					tab.children[0].addEventListener('click', this._onClick.bind(this));
 				}
 			}).bind(this));
@@ -139,7 +139,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				}
 				
 				if (!selectTab) {
-					var preselect = this._container.getAttribute('data-preselect') || '';
+					var preselect = elAttr(this._container, 'data-preselect');
 					if (preselect === "true" || !preselect) preselect = true;
 					
 					if (preselect === true) {
@@ -196,14 +196,14 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				}
 			}
 			
-			name = name || tab.getAttribute('data-name');
+			name = name || elAttr(tab, 'data-name');
 			
 			// unmark active tab
-			var oldTab = document.querySelector('#' + this._container.id + ' > nav > ul > li.active');
+			var oldTab = elBySel('#' + this._container.id + ' > nav > ul > li.active');
 			var oldContent = null;
 			if (oldTab) {
 				oldTab.classList.remove('active');
-				oldContent = this._containers.get(oldTab.getAttribute('data-name'));
+				oldContent = this._containers.get(elAttr(oldTab, 'data-name'));
 				oldContent.classList.remove('active');
 				oldContent.classList.add('hidden');
 				
@@ -228,7 +228,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 					active: tab,
 					activeName: name,
 					previous: oldTab,
-					previousName: oldTab ? oldTab.getAttribute('data-name') : null
+					previousName: oldTab ? elAttr(oldTab, 'data-name') : null
 				});
 				
 				var jQuery = (this._isLegacy && typeof window.jQuery === 'function') ? window.jQuery : null;
@@ -283,7 +283,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		 * @return	{string}	tab name
 		 */
 		_getTabName: function(tab) {
-			var name = tab.getAttribute('data-name');
+			var name = elAttr(tab, 'data-name');
 			
 			// handle legacy tab menus
 			if (!name) {
@@ -291,12 +291,12 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 					if (tab.children[0].href.match(/#([^#]+)$/)) {
 						name = RegExp.$1;
 						
-						if (document.getElementById(name) === null) {
+						if (elById(name) === null) {
 							name = null;
 						}
 						else {
 							this._isLegacy = true;
-							tab.setAttribute('data-name', name);
+							elAttr(tab, 'data-name', name);
 						}
 					}
 				}

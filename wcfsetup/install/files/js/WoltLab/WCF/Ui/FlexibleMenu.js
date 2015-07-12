@@ -23,8 +23,8 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 		 * Register default menus and set up event listeners.
 		 */
 		setup: function() {
-			if (document.getElementById('mainMenu') !== null) this.register('mainMenu');
-			var navigationHeader = document.querySelector('.navigationHeader');
+			if (elById('mainMenu') !== null) this.register('mainMenu');
+			var navigationHeader = elBySel('.navigationHeader');
 			if (navigationHeader !== null) this.register(DomUtil.identify(navigationHeader));
 			
 			window.addEventListener('resize', this.rebuildAll.bind(this));
@@ -37,7 +37,7 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 		 * @param	{string}	containerId	element id
 		 */
 		register: function(containerId) {
-			var container = document.getElementById(containerId);
+			var container = elById(containerId);
 			if (container === null) {
 				throw "Expected a valid element id, '" + containerId + "' does not exist.";
 			}
@@ -61,7 +61,7 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 		 * Registers tab menus.
 		 */
 		registerTabMenus: function() {
-			var tabMenus = document.querySelectorAll('.tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)');
+			var tabMenus = elBySelAll('.tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)');
 			for (var i = 0, length = tabMenus.length; i < length; i++) {
 				var tabMenu = tabMenus[i];
 				var nav = DomTraverse.childByTag(tabMenu, 'NAV');
@@ -142,13 +142,13 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 			if (hiddenItems.length) {
 				var dropdownMenu;
 				if (dropdown === undefined) {
-					dropdown = document.createElement('li');
+					dropdown = elCreate('li');
 					dropdown.className = 'dropdown jsFlexibleMenuDropdown';
-					var icon = document.createElement('a');
+					var icon = elCreate('a');
 					icon.className = 'icon icon16 fa-list';
 					dropdown.appendChild(icon);
 					
-					dropdownMenu = document.createElement('ul');
+					dropdownMenu = elCreate('ul');
 					dropdownMenu.classList.add('dropdownMenu');
 					dropdown.appendChild(dropdownMenu);
 					
@@ -170,7 +170,7 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 				
 				var self = this;
 				hiddenItems.forEach(function(hiddenItem) {
-					var item = document.createElement('li');
+					var item = elCreate('li');
 					item.innerHTML = hiddenItem.innerHTML;
 					
 					item.addEventListener('click', (function(event) {

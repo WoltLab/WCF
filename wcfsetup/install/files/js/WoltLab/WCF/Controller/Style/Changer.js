@@ -17,17 +17,17 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 		 * Adds the style changer to the bottom navigation.
 		 */
 		setup: function() {
-			var list = document.querySelector('#footerNavigation > ul.navigationItems');
+			var list = elBySel('#footerNavigation > ul.navigationItems');
 			if (list === null) {
 				return;
 			}
 			
-			var listItem = document.createElement('li');
+			var listItem = elCreate('li');
 			listItem.classList.add('styleChanger');
 			listItem.addEventListener('click', this.showDialog.bind(this));
 			
-			var link = document.createElement('a');
-			link.setAttribute('href', '#');
+			var link = elCreate('a');
+			elAttr(link, 'href', '#');
 			link.textContent = Language.get('wcf.style.changeStyle');
 			listItem.appendChild(link);
 			
@@ -58,7 +58,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 						className: 'wcf\\data\\style\\StyleAction'
 					},
 					after: (function(content) {
-						var styles = content.querySelectorAll('.styleList > li');
+						var styles = elBySelAll('.styleList > li', content);
 						for (var i = 0, length = styles.length; i < length; i++) {
 							var style = styles[i];
 							
@@ -82,7 +82,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 				data: {
 					actionName: 'changeStyle',
 					className: 'wcf\\data\\style\\StyleAction',
-					objectIDs: [ event.currentTarget.getAttribute('data-style-id') ]
+					objectIDs: [ elAttr(event.currentTarget, 'data-style-id') ]
 				},
 				success: function() { window.location.reload(); }
 			});

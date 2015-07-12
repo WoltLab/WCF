@@ -25,9 +25,9 @@ define(
 		 * Initializes the mobile UI using enquire.js.
 		 */
 		setup: function() {
-			_buttonGroupNavigations = document.getElementsByClassName('buttonGroupNavigation');
-			_main = document.getElementById('main');
-			_sidebar = _main.querySelector('#main > div > div > .sidebar');
+			_buttonGroupNavigations = elByClass('buttonGroupNavigation');
+			_main = elById('main');
+			_sidebar = elBySel('#main > div > div > .sidebar', _main);
 			
 			if (Environment.touch()) {
 				document.documentElement.classList.add('touch');
@@ -97,35 +97,35 @@ define(
 			// use icons if language item is empty/non-existant
 			var languageShowSidebar = 'wcf.global.sidebar.show' + sidebarPosition + 'Sidebar';
 			if (languageShowSidebar === Language.get(languageShowSidebar) || Language.get(languageShowSidebar) === '') {
-				languageShowSidebar = document.createElement('span');
+				languageShowSidebar = elCreate('span');
 				languageShowSidebar.className = 'icon icon16 fa-angle-double-' + sidebarPosition.toLowerCase();
 			}
 			
 			var languageHideSidebar = 'wcf.global.sidebar.hide' + sidebarPosition + 'Sidebar';
 			if (languageHideSidebar === Language.get(languageHideSidebar) || Language.get(languageHideSidebar) === '') {
-				languageHideSidebar = document.createElement('span');
+				languageHideSidebar = elCreate('span');
 				languageHideSidebar.className = 'icon icon16 fa-angle-double-' + (sidebarPosition === 'Left' ? 'right' : 'left');
 			}
 			
 			// add toggle buttons
-			var showSidebar = document.createElement('span');
+			var showSidebar = elCreate('span');
 			showSidebar.className = 'button small mobileSidebarToggleButton';
 			showSidebar.addEventListener('click', function() { _main.classList.add('mobileShowSidebar'); });
 			if (languageShowSidebar instanceof Element) showSidebar.appendChild(languageShowSidebar);
 			else showSidebar.textContent = languageShowSidebar;
 			
-			var hideSidebar = document.createElement('span');
+			var hideSidebar = elCreate('span');
 			hideSidebar.className = 'button small mobileSidebarToggleButton';
 			hideSidebar.addEventListener('click', function() { _main.classList.remove('mobileShowSidebar'); });
 			if (languageHideSidebar instanceof Element) hideSidebar.appendChild(languageHideSidebar);
 			else hideSidebar.textContent = languageHideSidebar;
 			
-			document.querySelector('.content').appendChild(showSidebar);
+			elBySel('.content').appendChild(showSidebar);
 			_sidebar.appendChild(hideSidebar);
 		},
 		
 		_initSearchBar: function() {
-			var _searchBar = document.querySelector('.searchBar');
+			var _searchBar = elBySel('.searchBar');
 			
 			_searchBar.addEventListener('click', function() {
 				if (_enabled) {
@@ -147,10 +147,10 @@ define(
 				if (navigation.classList.contains('jsMobileButtonGroupNavigation')) continue;
 				else navigation.classList.add('jsMobileButtonGroupNavigation');
 				
-				var button = document.createElement('a');
+				var button = elCreate('a');
 				button.classList.add('dropdownLabel');
 				
-				var span = document.createElement('span');
+				var span = elCreate('span');
 				span.className = 'icon icon24 fa-list';
 				button.appendChild(span);
 				
@@ -171,7 +171,7 @@ define(
 		},
 		
 		_closeAllMenus: function() {
-			var openMenus = document.querySelectorAll('.jsMobileButtonGroupNavigation > ul.open');
+			var openMenus = elBySelAll('.jsMobileButtonGroupNavigation > ul.open');
 			for (var i = 0, length = openMenus.length; i < length; i++) {
 				openMenus[i].classList.remove('open');
 			}

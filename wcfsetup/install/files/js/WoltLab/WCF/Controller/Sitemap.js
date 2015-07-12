@@ -20,7 +20,7 @@ define(['Ajax', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog', 'Ui/TabMenu
 		 * Binds click handler.
 		 */
 		setup: function() {
-			document.getElementById('sitemap').addEventListener('click', this._click.bind(this));
+			elById('sitemap').addEventListener('click', this._click.bind(this));
 		},
 		
 		/**
@@ -46,7 +46,7 @@ define(['Ajax', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog', 'Ui/TabMenu
 		_ajaxSuccess: function(data) {
 			_cache.push(data.returnValues.sitemapName);
 			
-			document.getElementById('sitemap_' + data.returnValues.sitemapName).innerHTML = data.returnValues.template;
+			elById('sitemap_' + data.returnValues.sitemapName).innerHTML = data.returnValues.template;
 		},
 		
 		_dialogSetup: function() {
@@ -64,7 +64,7 @@ define(['Ajax', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog', 'Ui/TabMenu
 					after: (function(content, data) {
 						_cache.push(data.returnValues.sitemapName);
 						
-						var tabMenuContainer = content.querySelector('.tabMenuContainer');
+						var tabMenuContainer = elBySel('.tabMenuContainer', content);
 						var menuId = DomUtil.identify(tabMenuContainer);
 						
 						UiTabMenu.getTabMenu(menuId).select('sitemap_' + data.returnValues.sitemapName);
@@ -81,7 +81,7 @@ define(['Ajax', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog', 'Ui/TabMenu
 		 * @param	{object<string, Element>}	tabData		tab data
 		 */
 		showTab: function(tabData) {
-			var name = tabData.active.getAttribute('data-name').replace(/^sitemap_/, '');
+			var name = elAttr(tabData.active, 'data-name').replace(/^sitemap_/, '');
 			
 			if (_cache.indexOf(name) === -1) {
 				Ajax.api(this, {

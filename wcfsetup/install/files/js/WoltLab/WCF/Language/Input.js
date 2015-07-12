@@ -34,7 +34,7 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 				return;
 			}
 			
-			var element = document.getElementById(elementId);
+			var element = elById(elementId);
 			if (element === null) {
 				throw new Error("Expected a valid element id, cannot find '" + elementId + "'.");
 			}
@@ -77,25 +77,25 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 		_initElement: function(elementId, element, values, availableLanguages, forceSelection) {
 			var container = element.parentNode;
 			if (!container.classList.contains('inputAddon')) {
-				container = document.createElement('div');
+				container = elCreate('div');
 				container.className = 'inputAddon' + (element.nodeName === 'TEXTAREA' ? ' inputAddonTextarea' : '');
-				container.setAttribute('data-input-id', elementId);
+				elAttr(container, 'data-input-id', elementId);
 				
 				element.parentNode.insertBefore(container, element);
 				container.appendChild(element);
 			}
 			
 			container.classList.add('dropdown');
-			var button = document.createElement('span');
+			var button = elCreate('span');
 			button.className = 'button dropdownToggle inputPrefix';
 			
-			var span = document.createElement('span');
+			var span = elCreate('span');
 			span.textContent = Language.get('wcf.global.button.disabledI18n');
 			
 			button.appendChild(span);
 			container.insertBefore(button, element);
 			
-			var dropdownMenu = document.createElement('ul');
+			var dropdownMenu = elCreate('ul');
 			dropdownMenu.className = 'dropdownMenu';
 			DomUtil.insertAfter(dropdownMenu, button);
 			
@@ -113,10 +113,10 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 			// build language dropdown
 			for (var languageId in availableLanguages) {
 				if (availableLanguages.hasOwnProperty(languageId)) {
-					var listItem = document.createElement('li');
-					listItem.setAttribute('data-language-id', languageId);
+					var listItem = elCreate('li');
+					elAttr(listItem, 'data-language-id', languageId);
 					
-					span = document.createElement('span');
+					span = elCreate('span');
 					span.textContent = availableLanguages[languageId];
 					
 					listItem.appendChild(span);
@@ -126,13 +126,13 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 			}
 			
 			if (forceSelection !== true) {
-				var listItem = document.createElement('li');
+				var listItem = elCreate('li');
 				listItem.className = 'dropdownDivider';
-				listItem.setAttribute('data-language-id', 0);
+				elAttr(listItem, 'data-language-id', 0);
 				dropdownMenu.appendChild(listItem);
 				
-				listItem = document.createElement('li');
-				span = document.createElement('span');
+				listItem = elCreate('li');
+				span = elCreate('span');
 				span.textContent = Language.get('wcf.global.button.disabledI18n');
 				listItem.appendChild(span);
 				listItem.addEventListener('click', callbackClick);
@@ -226,7 +226,7 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 			}
 			
 			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(containerId);
-			var elementId = document.getElementById(containerId).getAttribute('data-input-id');
+			var elementId = elById(containerId).getAttribute('data-input-id');
 			var values = _values.get(elementId);
 			
 			var item, languageId;
@@ -261,7 +261,7 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 				
 				if (values.size) {
 					values.forEach(function(value, languageId) {
-						input = document.createElement('input');
+						input = elCreate('input');
 						input.type = 'hidden';
 						input.name = elementId + '_i18n[' + languageId + ']';
 						input.value = value;

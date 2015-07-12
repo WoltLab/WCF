@@ -47,19 +47,19 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				return;
 			}
 			
-			_popover = document.createElement('div');
+			_popover = elCreate('div');
 			_popover.classList.add('popover');
 			
-			_popoverContent = document.createElement('div');
+			_popoverContent = elCreate('div');
 			_popoverContent.classList.add('popoverContent');
 			_popover.appendChild(_popoverContent);
 			
-			var pointer = document.createElement('span');
+			var pointer = elCreate('span');
 			pointer.classList.add('elementPointer');
-			pointer.appendChild(document.createElement('span'));
+			pointer.appendChild(elCreate('span'));
 			_popover.appendChild(pointer);
 			
-			_popoverLoading = document.createElement('span');
+			_popoverLoading = elCreate('span');
 			_popoverLoading.className = 'icon icon32 fa-spinner';
 			_popover.appendChild(_popoverLoading);
 			
@@ -129,7 +129,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			
 			_handlers.set(options.identifier, {
 				attributeName: options.attributeName,
-				elements: options.legacy ? options.className : document.getElementsByClassName(options.className),
+				elements: options.legacy ? options.className : elByClass(options.className),
 				legacy: options.legacy,
 				loadCallback: options.loadCallback
 			});
@@ -158,7 +158,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		 * @param	{string}		identifier	handler identifier
 		 */
 		_initElements: function(options, identifier) {
-			var elements = options.legacy ? document.querySelectorAll(options.elements) : options.elements;
+			var elements = options.legacy ? elBySelAll(options.elements) : options.elements;
 			for (var i = 0, length = elements.length; i < length; i++) {
 				var element = elements[i];
 				
@@ -175,12 +175,12 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				element.addEventListener('mouseenter', _callbackMouseEnter);
 				element.addEventListener('mouseleave', _callbackMouseLeave);
 				
-				if (element.nodeName === 'A' && element.getAttribute('href')) {
+				if (element.nodeName === 'A' && elAttr(element, 'href')) {
 					element.addEventListener('click', _callbackClick);
 				}
 				
 				var cacheId = identifier + "-" + objectId;
-				element.setAttribute('data-cache-id', cacheId);
+				elAttr(element, 'data-cache-id', cacheId);
 				
 				_elements.set(id, {
 					element: element,
@@ -217,7 +217,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			if (_activeId) {
 				var activeElement = _elements.get(_activeId).element;
 				
-				if (activeElement.getAttribute('data-cache-id') === cacheId) {
+				if (elAttr(activeElement, 'data-cache-id') === cacheId) {
 					this._show();
 				}
 			}
@@ -307,7 +307,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			_activeId = _hoverId;
 			
 			var elData = _elements.get(_activeId);
-			var data = _cache.get(elData.element.getAttribute('data-cache-id'));
+			var data = _cache.get(elAttr(elData.element, 'data-cache-id'));
 			
 			if (data.state === STATE_READY) {
 				_popoverContent.appendChild(data.content);

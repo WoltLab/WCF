@@ -55,7 +55,7 @@ define(
 			UiTooltip.setup();
 			
 			// convert method=get into method=post
-			var forms = document.querySelectorAll('form[method=get]');
+			var forms = elBySelAll('form[method=get]');
 			for (var i = 0, length = forms.length; i < length; i++) {
 				forms[i].setAttribute('method', 'post');
 			}

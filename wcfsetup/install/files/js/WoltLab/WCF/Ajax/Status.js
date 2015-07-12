@@ -21,14 +21,14 @@ define(['Language'], function(Language) {
 		 * Initializes the status overlay on first usage.
 		 */
 		_init: function() {
-			_overlay = document.createElement('div');
+			_overlay = elCreate('div');
 			_overlay.classList.add('spinner');
 			
-			var icon = document.createElement('span');
+			var icon = elCreate('span');
 			icon.className = 'icon icon48 fa-spinner';
 			_overlay.appendChild(icon);
 			
-			var title = document.createElement('span');
+			var title = elCreate('span');
 			title.textContent = Language.get('wcf.global.loading');
 			_overlay.appendChild(title);
 			

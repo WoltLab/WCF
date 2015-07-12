@@ -95,28 +95,28 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 		 * Creates the dialog DOM elements.
 		 */
 		_createDialog: function() {
-			var dialog = document.createElement('div');
-			dialog.setAttribute('id', 'wcfSystemConfirmation');
+			var dialog = elCreate('div');
+			elAttr(dialog, 'id', 'wcfSystemConfirmation');
 			dialog.classList.add('systemConfirmation');
 			
-			_text = document.createElement('p');
+			_text = elCreate('p');
 			dialog.appendChild(_text);
 			
-			_content = document.createElement('div');
-			_content.setAttribute('id', 'wcfSystemConfirmationContent');
+			_content = elCreate('div');
+			elAttr(_content, 'id', 'wcfSystemConfirmationContent');
 			dialog.appendChild(_content);
 			
-			var formSubmit = document.createElement('div');
+			var formSubmit = elCreate('div');
 			formSubmit.classList.add('formSubmit');
 			dialog.appendChild(formSubmit);
 			
-			_confirmButton = document.createElement('button');
+			_confirmButton = elCreate('button');
 			_confirmButton.classList.add('buttonPrimary');
 			_confirmButton.textContent = Language.get('wcf.global.confirmation.confirm');
 			_confirmButton.addEventListener('click', this._confirm.bind(this));
 			formSubmit.appendChild(_confirmButton);
 			
-			var cancelButton = document.createElement('button');
+			var cancelButton = elCreate('button');
 			cancelButton.textContent = Language.get('wcf.global.confirmation.cancel');
 			cancelButton.addEventListener('click', function() { UiDialog.close('wcfSystemConfirmation'); });
 			formSubmit.appendChild(cancelButton);

@@ -25,11 +25,11 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 			_callbackClick = this._click.bind(this);
 			_callbackSelectType = this._selectType.bind(this);
 			
-			var group, mailSetting, groups = document.querySelectorAll('#notificationSettings .flexibleButtonGroup');
+			var group, mailSetting, groups = elBySelAll('#notificationSettings .flexibleButtonGroup');
 			for (var i = 0, length = groups.length; i < length; i++) {
 				group = groups[i];
 				
-				mailSetting = group.querySelector('.notificationSettingsEmail');
+				mailSetting = elBySel('.notificationSettingsEmail', group);
 				if (mailSetting === null) {
 					continue;
 				}
@@ -47,15 +47,15 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 		_initGroup: function(group, mailSetting) {
 			var groupId = ~~group.getAttribute('data-object-id');
 			
-			var disabledNotification = document.getElementById('settings_' + groupId + '_disabled');
+			var disabledNotification = elById('settings_' + groupId + '_disabled');
 			disabledNotification.addEventListener('click', function() { mailSetting.classList.remove('active'); });
-			var enabledNotification = document.getElementById('settings_' + groupId + '_enabled');
+			var enabledNotification = elById('settings_' + groupId + '_enabled');
 			enabledNotification.addEventListener('click', function() { mailSetting.classList.add('active'); });
 			
 			var mailValue = DomTraverse.childByTag(mailSetting, 'INPUT');
 			
 			var button = DomTraverse.childByTag(mailSetting, 'A');
-			button.setAttribute('data-object-id', groupId);
+			elAttr(button, 'data-object-id', groupId);
 			button.addEventListener('click', _callbackClick);
 			
 			_data.set(groupId, {
@@ -101,23 +101,23 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 		 * @returns	{Element}	dropdown menu object
 		 */
 		_createDropdown: function(objectId, initialValue) {
-			var dropdownMenu = document.createElement('ul');
+			var dropdownMenu = elCreate('ul');
 			dropdownMenu.className = 'dropdownMenu';
-			dropdownMenu.setAttribute('data-object-id', objectId);
+			elAttr(dropdownMenu, 'data-object-id', objectId);
 			
 			var link, listItem, value, items = ['instant', 'daily', 'divider', 'none'];
 			for (var i = 0; i < 4; i++) {
 				value = items[i];
 				
-				listItem = document.createElement('li');
+				listItem = elCreate('li');
 				if (value === 'divider') {
 					listItem.className = 'dropdownDivider';
 				}
 				else {
-					link = document.createElement('a');
+					link = elCreate('a');
 					link.textContent = Language.get('wcf.user.notification.mailNotificationType.' + value);
 					listItem.appendChild(link);
-					listItem.setAttribute('data-value', value);
+					elAttr(listItem, 'data-value', value);
 					listItem.addEventListener('click', _callbackSelectType);
 					
 					if (initialValue === value) {
@@ -137,12 +137,12 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 		 * @param	{Object}	event		event object
 		 */
 		_selectType: function(event) {
-			var value = event.currentTarget.getAttribute('data-value');
+			var value = elAttr(event.currentTarget, 'data-value');
 			var groupId = ~~event.currentTarget.parentNode.getAttribute('data-object-id');
 			
 			var data = _data.get(groupId);
 			data.mailValue.value = value;
-			data.mailSetting.querySelector('span.title').textContent = Language.get('wcf.user.notification.mailNotificationType.' + value);
+			elBySel('span.title', data.mailSetting).textContent = Language.get('wcf.user.notification.mailNotificationType.' + value);
 			
 			data.button.classList[(value === 'none') ? 'remove' : 'add']('yellow');
 			data.button.classList[(value === 'none') ? 'remove' : 'add']('active');

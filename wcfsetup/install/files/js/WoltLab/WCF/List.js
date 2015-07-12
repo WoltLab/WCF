@@ -9,7 +9,7 @@
 define([], function() {
 	"use strict";
 	
-	var _hasSet = window.hasOwnProperty('Set') && typeof window.Set === 'function';
+	var _hasSet = objOwns(window, 'Set') && typeof window.Set === 'function';
 	
 	/**
 	 * @constructor

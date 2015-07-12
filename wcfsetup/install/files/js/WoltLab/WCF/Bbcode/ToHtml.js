@@ -42,7 +42,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 	 * @return	{boolean}	true if `value` is a known highlighter
 	 */
 	function isHighlighter(value) {
-		return __REDACTOR_CODE_HIGHLIGHTERS.hasOwnProperty(value);
+		return objOwns(__REDACTOR_CODE_HIGHLIGHTERS, value);
 	}
 	
 	/**

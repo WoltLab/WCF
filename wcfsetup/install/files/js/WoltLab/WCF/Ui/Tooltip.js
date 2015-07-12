@@ -24,22 +24,22 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 		setup: function() {
 			if (Environment.platform() !== 'desktop') return;
 			
-			_tooltip = document.createElement('div');
-			_tooltip.setAttribute('id', 'balloonTooltip');
+			_tooltip = elCreate('div');
+			elAttr(_tooltip, 'id', 'balloonTooltip');
 			_tooltip.classList.add('balloonTooltip');
 			
-			_text = document.createElement('span');
-			_text.setAttribute('id', 'balloonTooltipText');
+			_text = elCreate('span');
+			elAttr(_text, 'id', 'balloonTooltipText');
 			_tooltip.appendChild(_text);
 			
-			_pointer = document.createElement('span');
+			_pointer = elCreate('span');
 			_pointer.classList.add('elementPointer');
-			_pointer.appendChild(document.createElement('span'));
+			_pointer.appendChild(elCreate('span'));
 			_tooltip.appendChild(_pointer);
 			
 			document.body.appendChild(_tooltip);
 			
-			_elements = document.getElementsByClassName('jsTooltip');
+			_elements = elByClass('jsTooltip');
 			
 			this.init();
 			
@@ -54,11 +54,11 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 				var element = _elements[0];
 				element.classList.remove('jsTooltip');
 				
-				var title = element.getAttribute('title');
+				var title = elAttr(element, 'title');
 				title = (typeof title === 'string') ? title.trim() : '';
 				
 				if (title.length) {
-					element.setAttribute('data-tooltip', title);
+					elAttr(element, 'data-tooltip', title);
 					element.removeAttribute('title');
 					
 					element.addEventListener('mouseenter', this._mouseEnter.bind(this));
@@ -75,15 +75,15 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 		 */
 		_mouseEnter: function(event) {
 			var element = event.currentTarget;
-			var title = element.getAttribute('title');
+			var title = elAttr(element, 'title');
 			title = (typeof title === 'string') ? title.trim() : '';
 			
 			if (title !== '') {
-				element.setAttribute('data-tooltip', title);
+				elAttr(element, 'data-tooltip', title);
 				element.removeAttribute('title');
 			}
 			
-			title = element.getAttribute('data-tooltip');
+			title = elAttr(element, 'data-tooltip');
 			
 			// reset tooltip position
 			_tooltip.style.removeProperty('top');

@@ -22,7 +22,7 @@ define(
 	
 	var _containers = new Dictionary();
 	var _editors = new Dictionary();
-	var _elements = document.getElementsByClassName('jsClipboardContainer');
+	var _elements = elByClass('jsClipboardContainer');
 	var _itemData = new ObjectMap();
 	var _knownCheckboxes = new List();
 	var _options = {};
@@ -85,14 +85,14 @@ define(
 				var containerData = _containers.get(containerId);
 				
 				if (containerData === undefined) {
-					var markAll = container.querySelector('.jsClipboardMarkAll');
+					var markAll = elBySel('.jsClipboardMarkAll', container);
 					if (markAll !== null) {
-						markAll.setAttribute('data-container-id', containerId);
+						elAttr(markAll, 'data-container-id', containerId);
 						markAll.addEventListener('click', this._markAll.bind(this));
 					}
 					
 					containerData = {
-						checkboxes: container.getElementsByClassName('jsClipboardItem'),
+						checkboxes: elByClass('jsClipboardItem', container),
 						element: container,
 						markAll: markAll,
 						markedObjectIds: new List()
@@ -104,7 +104,7 @@ define(
 					var checkbox = containerData.checkboxes[j];
 					
 					if (!_knownCheckboxes.has(checkbox)) {
-						checkbox.setAttribute('data-container-id', containerId);
+						elAttr(checkbox, 'data-container-id', containerId);
 						checkbox.addEventListener('click', _callbackCheckbox);
 						
 						_knownCheckboxes.add(checkbox);
@@ -119,7 +119,7 @@ define(
 		_initEditors: function() {
 			var getTypes = function(editor) {
 				try {
-					var types = editor.getAttribute('data-types');
+					var types = elAttr(editor, 'data-types');
 					if (typeof types === 'string') {
 						return JSON.parse('{ "types": ' + types.replace(/'/g, '"') + '}').types;
 					}
@@ -131,7 +131,7 @@ define(
 				return [];
 			};
 			
-			var editors = document.getElementsByClassName('jsClipboardEditor');
+			var editors = elByClass('jsClipboardEditor');
 			for (var i = 0, length = editors.length; i < length; i++) {
 				var editor = editors[i];
 				var types = getTypes(editor);
@@ -165,9 +165,9 @@ define(
 			var isMarked = (checkbox.nodeName !== 'INPUT' || checkbox.checked);
 			var objectIds = [];
 			
-			var containerId = checkbox.getAttribute('data-container-id');
+			var containerId = elAttr(checkbox, 'data-container-id');
 			var data = _containers.get(containerId);
-			var type = data.element.getAttribute('data-type');
+			var type = elAttr(data.element, 'data-type');
 			
 			for (var i = 0, length = data.checkboxes.length; i < length; i++) {
 				var item = data.checkboxes[i];
@@ -208,9 +208,9 @@ define(
 			var checkbox = event.currentTarget;
 			var objectId = ~~checkbox.getAttribute('data-object-id');
 			var isMarked = checkbox.checked;
-			var containerId = checkbox.getAttribute('data-container-id');
+			var containerId = elAttr(checkbox, 'data-container-id');
 			var data = _containers.get(containerId);
-			var type = data.element.getAttribute('data-type');
+			var type = elAttr(data.element, 'data-type');
 			
 			var clipboardObject = DomTraverse.parentByClass(checkbox, 'jsClipboardObject');
 			data.markedObjectIds[(isMarked ? 'add' : 'delete')](objectId);
@@ -264,7 +264,7 @@ define(
 			}
 			
 			var triggerEvent = function() {
-				var type = listItem.getAttribute('data-type');
+				var type = elAttr(listItem, 'data-type');
 				
 				EventHandler.fire('com.woltlab.wcf.clipboard', type, {
 					data: data,
@@ -293,12 +293,12 @@ define(
 									var items = UiConfirmation.getContentElement().querySelectorAll('input, select, textarea');
 									for (var i = 0, length = items.length; i < length; i++) {
 										var item = items[i];
-										var name = item.getAttribute('name');
+										var name = elAttr(item, 'name');
 										
 										switch (item.nodeName) {
 											case 'INPUT':
 												if (item.checked) {
-													formData[name] = item.getAttribute('value');
+													formData[name] = elAttr(item, 'value');
 												}
 												break;
 											
@@ -366,7 +366,7 @@ define(
 				parameters: parameters
 			}, (function(responseData) {
 				if (data.actionName !== 'unmarkAll') {
-					var type = listItem.getAttribute('data-type');
+					var type = elAttr(listItem, 'data-type');
 					
 					EventHandler.fire('com.woltlab.wcf.clipboard', type, {
 						data: data,
@@ -389,7 +389,7 @@ define(
 		 * @param	{object}	event		event object
 		 */
 		_unmarkAll: function(event) {
-			var type = event.currentTarget.getAttribute('data-type');
+			var type = elAttr(event.currentTarget, 'data-type');
 			
 			Ajax.api(this, {
 				actionName: 'unmarkAll',
@@ -420,8 +420,8 @@ define(
 		_ajaxSuccess: function(data) {
 			if (data.actionName === 'unmarkAll') {
 				_containers.forEach((function(containerData) {
-					if (containerData.element.getAttribute('data-type') === data.returnValues.objectType) {
-						var clipboardObjects = containerData.element.getElementsByClassName('jsMarked');
+					if (elAttr(containerData.element, 'data-type') === data.returnValues.objectType) {
+						var clipboardObjects = elByClass('jsMarked', containerData.element);
 						while (clipboardObjects.length) {
 							clipboardObjects[0].classList.remove('jsMarked');
 						}
@@ -446,9 +446,9 @@ define(
 			
 			// rebuild markings
 			_containers.forEach((function(containerData) {
-				var typeName = containerData.element.getAttribute('data-type');
+				var typeName = elAttr(containerData.element, 'data-type');
 				
-				var objectIds = (data.returnValues.markedItems && data.returnValues.markedItems.hasOwnProperty(typeName)) ? data.returnValues.markedItems[typeName] : [];
+				var objectIds = (data.returnValues.markedItems && objOwns(data.returnValues.markedItems, typeName)) ? data.returnValues.markedItems[typeName] : [];
 				this._rebuildMarkings(containerData, objectIds);
 			}).bind(this));
 			
@@ -470,21 +470,21 @@ define(
 				var lists = DomTraverse.childrenByTag(editor, 'UL');
 				var list = lists[0] || null;
 				if (list === null) {
-					list = document.createElement('ul');
+					list = elCreate('ul');
 				}
 				
 				fragment.appendChild(list);
 				
-				var listItem = document.createElement('li');
+				var listItem = elCreate('li');
 				listItem.classList.add('dropdown');
 				list.appendChild(listItem);
 				
-				var toggleButton = document.createElement('span');
+				var toggleButton = elCreate('span');
 				toggleButton.className = 'dropdownToggle button';
 				toggleButton.textContent = typeData.label;
 				listItem.appendChild(toggleButton);
 				
-				var itemList = document.createElement('ol');
+				var itemList = elCreate('ol');
 				itemList.classList.add('dropdownMenu');
 				
 				// create editor items
@@ -493,26 +493,26 @@ define(
 					
 					var itemData = typeData.items[itemIndex];
 					
-					var item = document.createElement('li');
-					var label = document.createElement('span');
+					var item = elCreate('li');
+					var label = elCreate('span');
 					label.textContent = itemData.label;
 					item.appendChild(label);
 					itemList.appendChild(item);
 					
-					item.setAttribute('data-type', typeName);
+					elAttr(item, 'data-type', typeName);
 					item.addEventListener('click', _callbackItem);
 					
 					_itemData.set(item, itemData);
 				}
 				
-				var divider = document.createElement('li');
+				var divider = elCreate('li');
 				divider.classList.add('dropdownDivider');
 				itemList.appendChild(divider);
 				
 				// add 'unmark all'
-				var unmarkAll = document.createElement('li');
-				unmarkAll.setAttribute('data-type', typeName);
-				var label = document.createElement('span');
+				var unmarkAll = elCreate('li');
+				elAttr(unmarkAll, 'data-type', typeName);
+				var label = elCreate('span');
 				label.textContent = Language.get('wcf.clipboard.item.unmarkAll');
 				unmarkAll.appendChild(label);
 				itemList.appendChild(unmarkAll);

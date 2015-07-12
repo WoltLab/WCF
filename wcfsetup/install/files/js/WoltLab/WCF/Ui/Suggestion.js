@@ -26,7 +26,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 			this._dropdownMenu = null;
 			this._value = '';
 			
-			this._element = document.getElementById(elementId);
+			this._element = elById(elementId);
 			if (this._element === null) {
 				throw new Error("Expected a valid element id.");
 			}
@@ -207,7 +207,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 		 */
 		_ajaxSuccess: function(data) {
 			if (this._dropdownMenu === null) {
-				this._dropdownMenu = document.createElement('div');
+				this._dropdownMenu = elCreate('div');
 				this._dropdownMenu.className = 'dropdownMenu';
 				
 				UiSimpleDropdown.initFragment(this._element, this._dropdownMenu);
@@ -221,12 +221,12 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 				for (var i = 0, length = data.returnValues.length; i < length; i++) {
 					item = data.returnValues[i];
 					
-					anchor = document.createElement('a');
+					anchor = elCreate('a');
 					anchor.textContent = item.label;
-					anchor.setAttribute('data-object-id', item.objectID);
+					elAttr(anchor, 'data-object-id', item.objectID);
 					anchor.addEventListener('click', this._select.bind(this));
 					
-					listItem = document.createElement('li');
+					listItem = elCreate('li');
 					if (i === 0) listItem.className = 'active';
 					listItem.appendChild(anchor);
 					
