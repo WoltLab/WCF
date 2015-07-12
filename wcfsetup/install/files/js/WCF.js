@@ -410,7 +410,7 @@ $.fn.extend({
 	 * @return	string
 	 */
 	wcfIdentify: function() {
-		return window.bc_wcfDOMUtil.identify(this[0]);
+		return window.bc_wcfDomUtil.identify(this[0]);
 	},
 	
 	/**
@@ -652,7 +652,7 @@ $.extend(WCF, {
 	 * @return	string
 	 */
 	getRandomID: function() {
-		return window.bc_wcfDOMUtil.getUniqueId();
+		return window.bc_wcfDomUtil.getUniqueId();
 	},
 	
 	/**
@@ -3974,16 +3974,16 @@ WCF.CloseOverlayHandler = {
 };
 
 /**
- * @deprecated Use WoltLab/WCF/DOM/Change/Listener
+ * @deprecated Use WoltLab/WCF/Dom/Change/Listener
  */
 WCF.DOMNodeInsertedHandler = {
 	addCallback: function(identifier, callback) {
-		require(['WoltLab/WCF/DOM/Change/Listener'], function (ChangeListener) {
+		require(['WoltLab/WCF/Dom/Change/Listener'], function (ChangeListener) {
 			ChangeListener.add('__legacy__', callback);
 		});
 	},
 	_executeCallbacks: function() {
-		require(['WoltLab/WCF/DOM/Change/Listener'], function (ChangeListener) {
+		require(['WoltLab/WCF/Dom/Change/Listener'], function (ChangeListener) {
 			ChangeListener.trigger();
 		});
 	},
@@ -7907,7 +7907,7 @@ jQuery.fn.extend({
 	wcfDialog: function(method) {
 		var args = arguments;
 		
-		require(['DOM/Util', 'UI/Dialog'], (function(DOMUtil, UIDialog) {
+		require(['Dom/Util', 'Ui/Dialog'], (function(DOMUtil, UIDialog) {
 			var id = DOMUtil.identify(this[0]);
 			
 			if (method === 'close') {
@@ -8192,7 +8192,7 @@ jQuery.fn.extend({
 	wcfTabs: function(method) {
 		var element = this[0], parameters = Array.prototype.slice.call(arguments, 1);
 		
-		require(['DOM/Util', 'WoltLab/WCF/UI/TabMenu'], function(DOMUtil, TabMenu) {
+		require(['Dom/Util', 'WoltLab/WCF/Ui/TabMenu'], function(DOMUtil, TabMenu) {
 			var container = TabMenu.getTabMenu(DOMUtil.identify(element));
 			if (container !== null) {
 				container[method].apply(container, parameters);
