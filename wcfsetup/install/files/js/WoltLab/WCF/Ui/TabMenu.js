@@ -29,16 +29,16 @@ define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', './TabMenu/Simple'], fun
 		 * Initializes available tab menus.
 		 */
 		_init: function() {
-			var tabMenus = document.querySelectorAll('.tabMenuContainer:not(.staticTabMenuContainer)');
+			var container, containerId, returnValue, tabMenu, tabMenus = document.querySelectorAll('.tabMenuContainer:not(.staticTabMenuContainer)');
 			for (var i = 0, length = tabMenus.length; i < length; i++) {
-				var container = tabMenus[i];
-				var containerId = DomUtil.identify(container);
+				container = tabMenus[i];
+				containerId = DomUtil.identify(container);
 				
 				if (_tabMenus.has(containerId)) {
 					continue;
 				}
 				
-				var tabMenu = new SimpleTabMenu(container), returnValue;
+				tabMenu = new SimpleTabMenu(container);
 				if (tabMenu.validate()) {
 					returnValue = tabMenu.init();
 					
