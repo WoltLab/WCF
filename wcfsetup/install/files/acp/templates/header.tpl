@@ -25,6 +25,8 @@
 	
 	{js application='wcf' file='require' bundle='WCF.Core' core='true'}
 	{js application='wcf' file='require.config' bundle='WCF.Core' core='true'}
+	{js application='wcf' file='require.linearExecution' bundle='WCF.Core' core='true'}
+	{js application='wcf' file='wcf.globalHelper' bundle='WCF.Core' core='true'}
 	<script>
 		requirejs.config({
 			baseUrl: '{@$__wcf->getPath()}js'
