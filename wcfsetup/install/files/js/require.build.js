@@ -11,11 +11,13 @@
 		
 		"jquery": "empty:"
 	},
+	deps: [
+		"require.config",
+		"wcf.globalHelper"
+	],
 	include: [
 		"requireLib",
-		"require.config",
-		"require.linearExecution",
-		"wcf.globalHelper"
+		"require.linearExecution"
 	],
 	excludeShallow: [
 		'WoltLab/_Meta'

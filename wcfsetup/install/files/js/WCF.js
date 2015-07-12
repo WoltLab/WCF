@@ -831,7 +831,7 @@ WCF.Browser = {
 /**
  * Dropdown API
  * 
- * @deprecated	2.2 - please use `UI/SimpleDropdown` instead
+ * @deprecated	2.2 - please use `Ui/SimpleDropdown` instead
  */
 WCF.Dropdown = {
 	/**
@@ -2864,8 +2864,8 @@ WCF.TabMenu = {
 	 * Initializes all TabMenus
 	 */
 	init: function() {
-		require(['WoltLab/WCF/UI/TabMenu'], function(UITabMenu) {
-			UITabMenu.setup();
+		require(['WoltLab/WCF/Ui/TabMenu'], function(UiTabMenu) {
+			UiTabMenu.setup();
 		});
 		
 		return;
@@ -3937,7 +3937,7 @@ WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
  * always handle clicks on your overlay's container and return 'false' to
  * prevent bubbling.
  * 
- * @deprecated	2.2 - please use `UI/CloseOverlay` instead
+ * @deprecated	2.2 - please use `Ui/CloseOverlay` instead
  */
 WCF.CloseOverlayHandler = {
 	/**
@@ -3947,8 +3947,8 @@ WCF.CloseOverlayHandler = {
 	 * @param	object		callback
 	 */
 	addCallback: function(identifier, callback) {
-		require(['UI/CloseOverlay'], function(UICloseOverlay) {
-			UICloseOverlay.add(identifier, callback);
+		require(['Ui/CloseOverlay'], function(UiCloseOverlay) {
+			UiCloseOverlay.add(identifier, callback);
 		});
 	},
 	
@@ -3958,8 +3958,8 @@ WCF.CloseOverlayHandler = {
 	 * @param	string		identifier
 	 */
 	removeCallback: function(identifier) {
-		require(['UI/CloseOverlay'], function(UICloseOverlay) {
-			UICloseOverlay.remove(identifier);
+		require(['Ui/CloseOverlay'], function(UiCloseOverlay) {
+			UiCloseOverlay.remove(identifier);
 		});
 	},
 	
@@ -3967,8 +3967,8 @@ WCF.CloseOverlayHandler = {
 	 * Triggers the callbacks programmatically.
 	 */
 	forceExecution: function() {
-		require(['UI/CloseOverlay'], function(UICloseOverlay) {
-			UICloseOverlay.execute();
+		require(['Ui/CloseOverlay'], function(UiCloseOverlay) {
+			UiCloseOverlay.execute();
 		});
 	}
 };
@@ -5229,8 +5229,8 @@ WCF.System.FlexibleMenu = {
 	 * @param	string		containerID
 	 */
 	registerMenu: function(containerID) {
-		require(['WoltLab/WCF/UI/FlexibleMenu'], function(UIFlexibleMenu) {
-			UIFlexibleMenu.register(containerID);
+		require(['WoltLab/WCF/Ui/FlexibleMenu'], function(UiFlexibleMenu) {
+			UiFlexibleMenu.register(containerID);
 		});
 	},
 	
@@ -5240,8 +5240,8 @@ WCF.System.FlexibleMenu = {
 	 * @param	string		containerID
 	 */
 	rebuild: function(containerID) {
-		require(['WoltLab/WCF/UI/FlexibleMenu'], function(UIFlexibleMenu) {
-			UIFlexibleMenu.rebuild(containerID);
+		require(['WoltLab/WCF/Ui/FlexibleMenu'], function(UiFlexibleMenu) {
+			UiFlexibleMenu.rebuild(containerID);
 		});
 	}
 };
@@ -5514,7 +5514,7 @@ WCF.System.Notification = Class.extend({
 /**
  * Provides dialog-based confirmations.
  *
- * @deprecated	2.2 - please use `UI/Confirmation` instead
+ * @deprecated	2.2 - please use `Ui/Confirmation` instead
  */
 WCF.System.Confirmation = {
 	/**
@@ -5526,8 +5526,8 @@ WCF.System.Confirmation = {
 	 * @param	jQuery		template
 	 */
 	show: function(message, callback, parameters, template) {
-		require(['UI/Confirmation'], function(UIConfirmation) {
-			UIConfirmation.show({
+		require(['Ui/Confirmation'], function(UiConfirmation) {
+			UiConfirmation.show({
 				legacyCallback: callback,
 				message: message,
 				parameters: parameters,
@@ -7907,27 +7907,27 @@ jQuery.fn.extend({
 	wcfDialog: function(method) {
 		var args = arguments;
 		
-		require(['Dom/Util', 'Ui/Dialog'], (function(DOMUtil, UIDialog) {
-			var id = DOMUtil.identify(this[0]);
+		require(['Dom/Util', 'Ui/Dialog'], (function(DomUtil, UiDialog) {
+			var id = DomUtil.identify(this[0]);
 			
 			if (method === 'close') {
-				UIDialog.close(id);
+				UiDialog.close(id);
 			}
 			else if (method === 'render') {
-				UIDialog.rebuild(id);
+				UiDialog.rebuild(id);
 			}
 			else if (method === 'option') {
 				if (args.length === 3 && args[1] === 'title' && typeof args[2] === 'string') {
-					UIDialog.setTitle(id, args[2]);
+					UiDialog.setTitle(id, args[2]);
 				}
 			}
 			else {
 				if (this[0].parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-					// if element is not already part of the DOM, UIDialog.open() will fail
+					// if element is not already part of the DOM, UiDialog.open() will fail
 					document.body.appendChild(this[0]);
 				}
 				
-				UIDialog.openStatic(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
+				UiDialog.openStatic(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
 			}
 		}).bind(this));
 	}
@@ -8192,8 +8192,8 @@ jQuery.fn.extend({
 	wcfTabs: function(method) {
 		var element = this[0], parameters = Array.prototype.slice.call(arguments, 1);
 		
-		require(['Dom/Util', 'WoltLab/WCF/Ui/TabMenu'], function(DOMUtil, TabMenu) {
-			var container = TabMenu.getTabMenu(DOMUtil.identify(element));
+		require(['Dom/Util', 'WoltLab/WCF/Ui/TabMenu'], function(DomUtil, TabMenu) {
+			var container = TabMenu.getTabMenu(DomUtil.identify(element));
 			if (container !== null) {
 				container[method].apply(container, parameters);
 			}
