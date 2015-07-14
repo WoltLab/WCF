@@ -26,6 +26,7 @@ define(
 	var _dialogObjects = new ObjectMap();
 	var _dialogFullHeight = false;
 	var _keyupListener = null;
+	var _staticDialogs = elByClass('jsStaticDialog');
 	
 	/**
 	 * @exports	WoltLab/WCF/Ui/Dialog
@@ -63,6 +64,26 @@ define(
 				setup: function() { _dialogFullHeight = true; },
 				deferSetup: true
 			});
+			
+			this._initStaticDialogs();
+			DomChangeListener.add('Ui/Dialog', this._initStaticDialogs.bind(this));
+		},
+		
+		_initStaticDialogs: function() {
+			var button, container, id;
+			while (_staticDialogs.length) {
+				button = _staticDialogs[0];
+				button.classList.remove('jsStaticDialog');
+				
+				id = elAttr(button, 'data-dialog-id');
+				if (id && (container = elById(id))) {
+					((function(button, container) {
+						container.classList.remove('jsStaticDialogContent');
+						button.addEventListener('click', this.openStatic.bind(this, container.id, null, { title: elAttr(container, 'data-title') }));
+					}).bind(this))(button, container);
+				}
+				
+			}
 		},
 		
 		/**
