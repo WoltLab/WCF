@@ -3,6 +3,7 @@ namespace wcf\system\email;
 use wcf\system\background\job\EmailDeliveryBackgroundJob;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\email\mime\AbstractMimePart;
+use wcf\system\email\mime\IRecipientAwareMimePart;
 use wcf\system\email\mime\TextMimePart;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -405,6 +406,24 @@ class Email {
 	}
 	
 	/**
+	 * Returns the text mime parts of this email.
+	 * 
+	 * @return	array<\wcf\system\email\mime\TextMimePart>
+	 */
+	public function getText() {
+		return $this->text;
+	}
+	
+	/**
+	 * Returns the attachments (i.e. the mime parts that are not a TextMimePart) of this email.
+	 * 
+	 * @return	array<\wcf\system\email\mime\AbstractMimePart>
+	 */
+	public function getAttachments() {
+		return $this->attachments;
+	}
+	
+	/**
 	 * Returns an array of [ name, value ] tuples representing the email's headers.
 	 * Note: You must have set a Subject and at least one recipient, otherwise fetching the
 	 *       headers will fail.
@@ -562,8 +581,6 @@ class Email {
 			$body .= $text;
 		}
 		
-		// TODO: Where to put the email signature?
-		
 		return $body;
 	}
 	
@@ -583,6 +600,10 @@ class Email {
 			
 			if ($recipient[1] instanceof UserMailbox) {
 				$mail->addHeader('X-Community-Framework-Recipient', $recipient[1]->getUser()->username);
+			}
+			
+			foreach (array_merge($mail->getText(), $mail->getAttachments()) as $mimePart) {
+				if ($mimePart[1] instanceof IRecipientAwareMimePart) $mimePart[1]->setRecipient($recipient[1]);
 			}
 			
 			$data = [ 'mail' => $mail, 'recipient' => $recipient, 'skip' => false ];
