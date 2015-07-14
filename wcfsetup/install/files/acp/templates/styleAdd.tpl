@@ -1,31 +1,17 @@
 {include file='header' pageTitle='wcf.acp.style.'|concat:$action}
 
-<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@LAST_UPDATE_TIME}"></script>
+{js application='wcf' acp='true' file='WCF.ACP.Style'}
+{js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
-	//<![CDATA[
+	require(['WoltLab/WCF/Acp/Ui/Style/Editor'], function(AcpUiStyleEditor) {
+		AcpUiStyleEditor.setup({
+			isTainted: {if $isTainted}true{else}false{/if},
+			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if}
+		});
+	});
+	
 	$(function() {
 		new WCF.ColorPicker('.jsColorPicker');
-		WCF.TabMenu.init();
-		
-		var $useFluidLayout = $('#useFluidLayout');
-		var $fluidLayoutMinWidth = $('#fluidLayoutMinWidth');
-		var $fluidLayoutMaxWidth = $('#fluidLayoutMaxWidth');
-		var $fixedLayoutVariables = $('#fixedLayoutVariables');
-		function useFluidLayout() {
-			if ($useFluidLayout.is(':checked')) {
-				$fluidLayoutMinWidth.show();
-				$fluidLayoutMaxWidth.show();
-				$fixedLayoutVariables.hide();
-			}
-			else {
-				$fluidLayoutMinWidth.hide();
-				$fluidLayoutMaxWidth.hide();
-				$fixedLayoutVariables.show();
-			}
-		}
-		$useFluidLayout.change(useFluidLayout);
-		useFluidLayout();
 		
 		WCF.Language.addObject({
 			'wcf.style.colorPicker': '{lang}wcf.style.colorPicker{/lang}',
@@ -48,17 +34,7 @@
 			var $target = $(event.currentTarget);
 			$target.prev().attr('step', ($target.val() == 'em' ? '0.01' : '1'));
 		}).trigger('change');
-		
-		$('.tabMenuContainer').on('wcftabsactivate', function (event, ui) {
-			if (ui.newPanel.selector !== '#advanced') return;
-
-			setTimeout(function() {
-				$('#individualLess')[0].codemirror.refresh();
-				$('#overrideLess')[0].codemirror.refresh();
-			}, 10);
-		});
 	});
-	//]]>
 </script>
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.style.{$action}{/lang}</h1>
@@ -87,7 +63,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
-	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
+	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="styleTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.acp.style.general{/lang}</a></li>
@@ -122,7 +98,7 @@
 				<dl{if $errorField == 'authorName'} class="formError"{/if}>
 					<dt><label for="authorName">{lang}wcf.acp.style.authorName{/lang}</label></dt>
 					<dd>
-						<input type="text" name="authorName" id="authorName" value="{$authorName}" class="long" />
+						<input type="text" name="authorName" id="authorName" value="{$authorName}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'authorName'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -137,7 +113,7 @@
 				<dl{if $errorField == 'copyright'} class="formError"{/if}>
 					<dt><label for="copyright">{lang}wcf.acp.style.copyright{/lang}</label></dt>
 					<dd>
-						<input type="text" name="copyright" id="copyright" value="{$copyright}" class="long" />
+						<input type="text" name="copyright" id="copyright" value="{$copyright}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'copyright'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -152,7 +128,7 @@
 				<dl{if $errorField == 'styleVersion'} class="formError"{/if}>
 					<dt><label for="styleVersion">{lang}wcf.acp.style.styleVersion{/lang}</label></dt>
 					<dd>
-						<input type="text" name="styleVersion" id="styleVersion" value="{$styleVersion}" class="small" />
+						<input type="text" name="styleVersion" id="styleVersion" value="{$styleVersion}" class="small"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'styleVersion'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -167,7 +143,7 @@
 				<dl{if $errorField == 'styleDate'} class="formError"{/if}>
 					<dt><label for="styleDate">{lang}wcf.acp.style.styleDate{/lang}</label></dt>
 					<dd>
-						<input type="date" name="styleDate" id="styleDate" value="{$styleDate}" class="small" />
+						<input type="date" name="styleDate" id="styleDate" value="{$styleDate}" class="small"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'styleDate'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -182,7 +158,7 @@
 				<dl{if $errorField == 'license'} class="formError"{/if}>
 					<dt><label for="license">{lang}wcf.acp.style.license{/lang}</label></dt>
 					<dd>
-						<input type="text" name="license" id="license" value="{$license}" class="long" />
+						<input type="text" name="license" id="license" value="{$license}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'license'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -197,7 +173,7 @@
 				<dl{if $errorField == 'authorURL'} class="formError"{/if}>
 					<dt><label for="authorURL">{lang}wcf.acp.style.authorURL{/lang}</label></dt>
 					<dd>
-						<input type="text" name="authorURL" id="authorURL" value="{$authorURL}" class="long" />
+						<input type="text" name="authorURL" id="authorURL" value="{$authorURL}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'authorURL'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -206,6 +182,15 @@
 									{lang}wcf.acp.style.authorURL.error.{$errorType}{/lang}
 								{/if}
 							</small>
+						{/if}
+					</dd>
+				</dl>
+				<dl{if $errorField == 'packageName'} class="formError"{/if}>
+					<dt><label for="packageName">{lang}wcf.acp.style.packageName{/lang}</label></dt>
+					<dd>
+						<input type="text" name="packageName" id="packageName" value="{$packageName}" class="long"{if !$isTainted} readonly{/if} />
+						{if $errorField == 'packageName'}
+							<small class="innerError">{lang}wcf.acp.style.packageName.error.{$errorType}{/lang}</small>
 						{/if}
 					</dd>
 				</dl>
@@ -543,9 +528,57 @@
 		</div>
 		
 		{* advanced *}
-		<div id="advanced" class="container containerPadding tabMenuContent">
+		<div id="advanced" class="container containerPadding tabMenuContainer tabMenuContent">
+			{if !$isTainted}
+				<nav class="menu">
+					<ul>
+						<li data-name="advanced-custom"><a href="{@$__wcf->getAnchor('advanced-custom')}">{lang}wcf.acp.style.advanced.custom{/lang}</a></li>
+						<li data-name="advanced-original"><a href="{@$__wcf->getAnchor('advanced-original')}">{lang}wcf.acp.style.advanced.original{/lang}</a></li>
+					</ul>
+				</nav>
+				
+				<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
+				
+				{* custom declarations *}
+				<div id="advanced-custom">
+					<fieldset class="marginTop">
+						<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}</legend>
+						
+						<dl class="wide">
+							<dd>
+								<textarea id="individualLessCustom" rows="20" cols="40" name="individualLessCustom">{$variables[individualLessCustom]}</textarea>
+								<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
+							</dd>
+						</dl>
+					</fieldset>
+					
+					<fieldset{if $errorField == 'overrideLessCustom'} class="formError"{/if}>
+						<legend>{lang}wcf.acp.style.advanced.overrideLess{/lang}</legend>
+						
+						<dl class="wide">
+							<dd>
+								<textarea id="overrideLessCustom" rows="20" cols="40" name="overrideLessCustom">{$variables[overrideLessCustom]}</textarea>
+								{if $errorField == 'overrideLessCustom'}
+									<small class="innerError">
+										{lang}wcf.acp.style.advanced.overrideLess.error{/lang}
+										{implode from=$errorType item=error}{lang}wcf.acp.style.advanced.overrideLess.error.{$error.error}{/lang}{/implode}
+									</small>
+								{/if}
+								<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
+							</dd>
+						</dl>
+					</fieldset>
+					{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualLessCustom, #overrideLessCustom'}
+					
+					{event name='syntaxFieldsetsCustom'}
+				</div>
+				
+				{* original declarations / tainted style *}
+				<div id="advanced-original">
+			{/if}
+			
 			<fieldset class="marginTop">
-				<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}</legend>
+				<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</legend>
 				
 				<dl class="wide">
 					<dd>
@@ -556,7 +589,7 @@
 			</fieldset>
 			
 			<fieldset{if $errorField == 'overrideLess'} class="formError"{/if}>
-				<legend>{lang}wcf.acp.style.advanced.overrideLess{/lang}</legend>
+				<legend>{lang}wcf.acp.style.advanced.overrideLess{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</legend>
 				
 				<dl class="wide">
 					<dd>
@@ -571,9 +604,13 @@
 					</dd>
 				</dl>
 			</fieldset>
-			{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualLess, #overrideLess'}
+			{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualLess, #overrideLess' editable=$isTainted}
 			
-			{event name='syntaxFieldsets'}
+			{event name='syntaxFieldsetsOriginal'}
+			
+			{if !$isTainted}
+				</div>
+			{/if}
 		</div>
 		
 		{event name='tabMenuContents'}
@@ -585,5 +622,18 @@
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
+
+<div id="styleDisableProtection" class="jsStaticDialogContent" data-title="{lang}wcf.acp.style.protected.title{/lang}">
+	<p>{lang}wcf.acp.style.protected.description{/lang}</p>
+	
+	<dl class="marginTop">
+		<dt></dt>
+		<dd><label for="styleDisableProtectionConfirm"><input type="checkbox" id="styleDisableProtectionConfirm"> {lang}wcf.acp.style.protected.confirm{/lang}</label></dd>
+	</dl>
+	
+	<div class="formSubmit">
+		<button id="styleDisableProtectionSubmit" disabled>{lang}wcf.global.button.submit{/lang}</button>
+	</div>
+</div>
 
 {include file='footer'}

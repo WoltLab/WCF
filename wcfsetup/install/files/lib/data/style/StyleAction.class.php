@@ -14,6 +14,7 @@ use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Executes style-related actions.
@@ -49,7 +50,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('copy', 'delete', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadLogo');
+	protected $requireACP = array('copy', 'delete', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadLogo');
 	
 	/**
 	 * style object
@@ -632,5 +633,25 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			'actionName' => 'getStyleChooser',
 			'template' => WCF::getTPL()->fetch('styleChooser')
 		);
+	}
+	
+	public function validateMarkAsTainted() {
+		if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->styleEditor = $this->getSingleObject();
+	}
+	
+	public function markAsTainted() {
+		// merge definitions
+		$variables = $this->styleEditor->getVariables();
+		$variables['individualLess'] = str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['individualLess']);
+		$variables['overrideLess'] = str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['overrideLess']);
+		$this->styleEditor->setVariables($variables);
+		
+		$this->styleEditor->update([
+			'isTainted' => 1
+		]);
 	}
 }

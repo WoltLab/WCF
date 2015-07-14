@@ -61,6 +61,28 @@ class StyleEditForm extends StyleAddForm {
 			}
 		}
 		unset($variableValue);
+		
+		if (!$this->style->isTainted) {
+			$tmp = Style::splitLessVariables($this->variables['individualLess']);
+			$this->variables['individualLess'] = $tmp['original'];
+			$this->variables['individualLessCustom'] = $tmp['custom'];
+			
+			$tmp = Style::splitLessVariables($this->variables['overrideLess']);
+			$this->variables['overrideLess'] = $tmp['original'];
+			$this->variables['overrideLessCustom'] = $tmp['custom'];
+		}
+	}
+	
+	/**
+	 * @see	\wcf\acp\form\StyleAddForm::setVariables()
+	 */
+	protected function setVariables() {
+		parent::setVariables();
+		
+		if (!$this->style->isTainted) {
+			$this->specialVariables[] = 'individualLessCustom';
+			$this->specialVariables[] = 'overrideLessCustom';
+		}
 	}
 	
 	/**
@@ -76,7 +98,9 @@ class StyleEditForm extends StyleAddForm {
 			$this->authorURL = $this->style->authorURL;
 			$this->copyright = $this->style->copyright;
 			$this->imagePath = $this->style->imagePath;
+			$this->isTainted = $this->style->isTainted;
 			$this->license = $this->style->license;
+			$this->packageName = $this->style->packageName;
 			$this->styleDate = $this->style->styleDate;
 			$this->styleDescription = $this->style->styleDescription;
 			$this->styleName = $this->style->styleName;
@@ -91,6 +115,14 @@ class StyleEditForm extends StyleAddForm {
 	public function save() {
 		AbstractForm::save();
 		
+		if (!$this->style->isTainted) {
+			$this->variables['individualLess'] = Style::joinLessVariables($this->variables['individualLess'], $this->variables['individualLessCustom']);
+			$this->variables['overrideLess'] = Style::joinLessVariables($this->variables['overrideLess'], $this->variables['overrideLessCustom']);
+			
+			unset($this->variables['individualLessCustom']);
+			unset($this->variables['overrideLessCustom']);
+		}
+		
 		$this->objectAction = new StyleAction(array($this->style), 'update', array(
 			'data' => array_merge($this->additionalFields, array(
 				'styleName' => $this->styleName,
@@ -99,6 +131,7 @@ class StyleEditForm extends StyleAddForm {
 				'styleDate' => $this->styleDate,
 				'imagePath' => $this->imagePath,
 				'copyright' => $this->copyright,
+				'packageName' => $this->packageName,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
 				'authorURL' => $this->authorURL

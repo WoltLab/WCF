@@ -802,6 +802,15 @@ class PackageInstallationDispatcher {
 	}
 	
 	/**
+	 * Returns current package name.
+	 * 
+	 * @return	string		package name
+	 */
+	public function getPackageName() {
+		return $this->queue->packageName;
+	}
+	
+	/**
 	 * Returns current package installation type.
 	 * 
 	 * @return	string

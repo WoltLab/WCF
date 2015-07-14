@@ -303,7 +303,7 @@ RedactorPlugins.wbbcode = function() {
 			/** @deprecated legacy event */
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'convertFromHtml', obj);
 			
-			obj.html = __REDACTOR_AMD_DEPENDENCIES.BBCodeFromHTML.convert(obj.html);
+			obj.html = __REDACTOR_AMD_DEPENDENCIES.BbcodeFromHTML.convert(obj.html);
 			
 			/** @deprecated legacy event */
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', obj);
@@ -322,7 +322,7 @@ RedactorPlugins.wbbcode = function() {
 			/** @deprecated legacy event */
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertToHtml', obj);
 			
-			obj.data = __REDACTOR_AMD_DEPENDENCIES.BBCodeToHTML.convert(obj.data, {
+			obj.data = __REDACTOR_AMD_DEPENDENCIES.BbcodeToHTML.convert(obj.data, {
 				attachments: {
 					images: this.wbbcode._getImageAttachments(),
 					thumbnailUrl: this.wutil.getOption('woltlab.attachmentThumbnailUrl'),

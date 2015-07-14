@@ -100,6 +100,12 @@ class StyleAddForm extends AbstractForm {
 	public $imagePath = 'images/';
 	
 	/**
+	 * tainted style
+	 * @var	boolean
+	 */
+	public $isTainted = true;
+	
+	/**
 	 * license name
 	 * @var	string
 	 */
@@ -109,6 +115,12 @@ class StyleAddForm extends AbstractForm {
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.style.canManageStyle');
+	
+	/**
+	 * style package name
+	 * @var	string
+	 */
+	public $packageName = '';
 	
 	/**
 	 * last change date
@@ -225,6 +237,7 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['copyright'])) $this->copyright = StringUtil::trim($_POST['copyright']);
 		if (isset($_POST['imagePath'])) $this->imagePath = StringUtil::trim($_POST['imagePath']);
 		if (isset($_POST['license'])) $this->license = StringUtil::trim($_POST['license']);
+		if (isset($_POST['packageName'])) $this->packageName = StringUtil::trim($_POST['packageName']);
 		if (isset($_POST['styleDate'])) $this->styleDate = StringUtil::trim($_POST['styleDate']);
 		if (isset($_POST['styleDescription'])) $this->styleDescription = StringUtil::trim($_POST['styleDescription']);
 		if (isset($_POST['styleName'])) $this->styleName = StringUtil::trim($_POST['styleName']);
@@ -265,6 +278,18 @@ class StyleAddForm extends AbstractForm {
 		}
 		else if (!Package::isValidVersion($this->styleVersion)) {
 			throw new UserInputException('styleVersion', 'notValid');
+		}
+		
+		// validate style package name
+		if (!empty($this->packageName)) {
+			if (!Package::isValidPackageName($this->packageName)) {
+				throw new UserInputException('packageName', 'notValid');
+			}
+			
+			// 3rd party styles may never have com.woltlab.* as name
+			if (strpos($this->packageName, 'com.woltlab.') === 0) {
+				throw new UserInputException('packageName', 'reserved');
+			}
 		}
 		
 		// validate style description
@@ -473,7 +498,9 @@ class StyleAddForm extends AbstractForm {
 			'data' => array_merge($this->additionalFields, array(
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
+				'packageName' => $this->packageName,
 				'isDisabled' => 1, // styles are disabled by default
+				'isTainted' => 1,
 				'styleDescription' => '',
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
@@ -501,10 +528,11 @@ class StyleAddForm extends AbstractForm {
 		$this->saved();
 		
 		// reset variables
-		$this->authorName = $this->authorURL = $this->copyright = $this->image = '';
+		$this->authorName = $this->authorURL = $this->copyright = $this->packageName = $this->image = '';
 		$this->license = $this->styleDate = $this->styleDescription = $this->styleName = $this->styleVersion = '';
 		
 		$this->imagePath = 'images/';
+		$this->isTainted = true;
 		$this->templateGroupID = 0;
 		
 		I18nHandler::getInstance()->reset();
@@ -532,7 +560,9 @@ class StyleAddForm extends AbstractForm {
 			'availableUnits' => $this->availableUnits,
 			'copyright' => $this->copyright,
 			'imagePath' => $this->imagePath,
+			'isTainted' => $this->isTainted,
 			'license' => $this->license,
+			'packageName' => $this->packageName,
 			'styleDate' => $this->styleDate,
 			'styleDescription' => $this->styleDescription,
 			'styleName' => $this->styleName,

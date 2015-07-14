@@ -7,10 +7,10 @@ var __REDACTOR_SOURCE_BBCODES = [ {implode from=$__wcf->getBBCodeHandler()->getS
 var __REDACTOR_CODE_HIGHLIGHTERS = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{@$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
 var __REDACTOR_AMD_DEPENDENCIES = { };
 
-require(['Language', 'WoltLab/WCF/BBCode/FromHtml', 'WoltLab/WCF/BBCode/ToHtml'], function(Language, BBCodeFromHTML, BBCodeToHTML) {
+require(['Language', 'WoltLab/WCF/Bbcode/FromHtml', 'WoltLab/WCF/Bbcode/ToHtml'], function(Language, BbcodeFromHTML, BbcodeToHTML) {
 	__REDACTOR_AMD_DEPENDENCIES = {
-		BBCodeFromHTML: BBCodeFromHTML,
-		BBCodeToHTML: BBCodeToHTML
+		BbcodeFromHTML: BbcodeFromHTML,
+		BbcodeToHTML: BbcodeToHTML
 	};
 	
 	Language.addObject({
