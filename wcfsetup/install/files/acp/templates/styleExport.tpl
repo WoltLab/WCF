@@ -1,20 +1,5 @@
 {include file='header' pageTitle='wcf.acp.style.exportStyle'}
 
-<script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		$('#exportAsPackage').change(function (event) {
-			if ($('#exportAsPackage').is(':checked')) {
-				$('#packageNameDl').show();
-			}
-			else {
-				$('#packageNameDl').hide();
-			}
-		}).trigger('change');
-	});
-	//]]>
-</script>
-
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.style.exportStyle{/lang}</h1>
 </header>
@@ -53,37 +38,21 @@
 			{event name='componentFields'}
 		</fieldset>
 		
-		<fieldset>
-			<legend>{lang}wcf.acp.style.exportStyle.asPackage{/lang}</legend>
-			<small>{lang}wcf.acp.style.exportStyle.asPackage.description{/lang}</small>
-			
-			<dl>
-				<dt></dt>
-				<dd>
-					<label><input type="checkbox" id="exportAsPackage" name="exportAsPackage" value="1"{if $exportAsPackage} checked="checked"{/if} /> <span>{lang}wcf.acp.style.exportAsPackage{/lang}</span></label>
-				</dd>
-			</dl>
-			<dl id="packageNameDl"{if $errorField == 'packageName'} class="formError"{/if}>
-				<dt>
-					<label for="packageName">{lang}wcf.acp.style.packageName{/lang}</label>
-				</dt>
-				<dd>
-					<input type="text" name="packageName" id="packageName" class="long" value="{$packageName}" />
-					{if $errorField == 'packageName'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.style.packageName.error.{$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-					<small>{lang}wcf.acp.style.packageName.description{/lang}</small>
-				</dd>
-			</dl>
-			
-			{event name='exportAsPackageFields'}
-		</fieldset>
+		{if $style->packageName}
+			<fieldset>
+				<legend>{lang}wcf.acp.style.exportStyle.asPackage{/lang}</legend>
+				<small>{lang}wcf.acp.style.exportStyle.asPackage.description{/lang}</small>
+				
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" id="exportAsPackage" name="exportAsPackage" value="1"{if $exportAsPackage} checked="checked"{/if} /> <span>{lang}wcf.acp.style.exportAsPackage{/lang}</span></label>
+					</dd>
+				</dl>
+				
+				{event name='exportAsPackageFields'}
+			</fieldset>
+		{/if}
 		
 		{event name='fieldsets'}
 	</div>

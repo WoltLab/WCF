@@ -77,7 +77,9 @@
 		
 		{* general *}
 		<div id="general" class="container containerPadding tabMenuContent">
-			<fieldset>
+			<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
+			
+			<fieldset class="marginTop">
 				<legend>{lang}wcf.acp.style.general.data{/lang}</legend>
 				
 				<dl{if $errorField == 'styleName'} class="formError"{/if}>
