@@ -187,7 +187,7 @@ class UserOptionHandler extends OptionHandler {
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);
 		
-		if ($option->required && empty($this->optionValues[$option->optionName])) {
+		if ($option->required && $option->optionType != 'boolean' && empty($this->optionValues[$option->optionName])) {
 			throw new UserInputException($option->optionName);
 		}
 		
