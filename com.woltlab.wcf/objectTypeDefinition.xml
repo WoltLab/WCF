@@ -14,8 +14,8 @@
 		</definition>
 		
 		<definition>
-			<interfacename><![CDATA[wcf\system\category\ICategoryType]]></interfacename>
 			<name>com.woltlab.wcf.category</name>
+			<interfacename><![CDATA[wcf\system\category\ICategoryType]]></interfacename>
 		</definition>
 		
 		<definition>
