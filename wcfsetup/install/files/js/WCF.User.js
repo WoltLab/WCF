@@ -556,7 +556,7 @@ WCF.User.QuickLogin = {
 	 * Initializes the quick login box
 	 */
 	init: function() {
-		require(['UI/Dialog'], function(UIDialog) {
+		require(['Ui/Dialog'], function(UiDialog) {
 			var loginForm = document.getElementById('loginForm');
 			
 			var links = document.getElementsByClassName('loginLink');
@@ -566,7 +566,7 @@ WCF.User.QuickLogin = {
 					
 					loginForm.style.removeProperty('display');
 					
-					UIDialog.openStatic('loginForm', null, {
+					UiDialog.openStatic('loginForm', null, {
 						title: WCF.Language.get('wcf.user.login')
 					});
 				});
