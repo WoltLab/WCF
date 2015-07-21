@@ -379,7 +379,7 @@
 		<item name="wcf.acp.group.option.user.signature.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe in ihrer Signatur verwendet werden.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priorisierung]]></item>
 		<item name="wcf.acp.group.priority.description"><![CDATA[Bestimmt u.a. die Reihenfolge auf der Team-Seite sowie die Auswahl von Benutzerrängen und „Wer ist online“-Darstellungen auf Basis der höchsten Priorität.]]></item>
-		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[„Benutzer online“-Darstellung]]></item>
+		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[„Mitglieder online“-Darstellung]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Sie können die HTML-Formatierung für Mitglieder dieser Benutzergruppe in der „Wer ist online“-Anzeige anpassen. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> stellt Mitglieder dieser Gruppe beispielsweise in Fettdruck dar.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.error.notValid"><![CDATA[Die Darstellung muss „%s“ enthalten]]></item>
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Mitglieder dieser Benutzergruppe auf der Team-Seite anzeigen]]></item>
@@ -888,7 +888,7 @@
 		<item name="wcf.acp.option.category.user.cleanup"><![CDATA[Aufräumaktionen]]></item>
 		<item name="wcf.acp.option.category.user.list"><![CDATA[Mitgliederlisten]]></item>
 		<item name="wcf.acp.option.category.user.list.members"><![CDATA[Mitgliederliste]]></item>
-		<item name="wcf.acp.option.category.user.list.online"><![CDATA[„Benutzer online“-Liste]]></item>
+		<item name="wcf.acp.option.category.user.list.online"><![CDATA[„Mitglieder online“-Liste]]></item>
 		<item name="wcf.acp.option.category.user.register"><![CDATA[Registrierung]]></item>
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
@@ -897,7 +897,7 @@
 		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximale Avatar-Breite]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Aktiviert die Unterstützung für Gravatare („Global Recognized Avatar“).]]></item>
-		<item name="wcf.acp.option.module_users_online"><![CDATA[„Benutzer online“-Anzeige]]></item>
+		<item name="wcf.acp.option.module_users_online"><![CDATA[„Mitglieder online“-Anzeige]]></item>
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signaturen]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Team-Seite]]></item>
@@ -1013,7 +1013,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Standard-Kartenposition (Längengrad)]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Aktuelle Benutzerposition verwenden]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[Bei der Angabe von Positionen wird die aktuelle Position des Benutzers als Ausgangspunkt auf der Karte verwendet.]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[„Benutzer online“-Darstellung für Benutzernamen verwenden]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[„Mitglieder online“-Darstellung für Benutzernamen verwenden]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Datenschutzerklärung aktivieren]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Die Datenschutzerklärung informiert Nutzer über die Erfassung personenbezogener Daten.]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
@@ -1938,8 +1938,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysBirthdays"><![CDATA[Heutige Geburtstage]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysFollowingBirthdays"><![CDATA[Heutige Geburtstage von Nutzern, denen Sie folgen]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.usersOnlineSidebar"><![CDATA[Benutzer online]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[Benutzer online, denen Sie folgen]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.usersOnlineSidebar"><![CDATA[Mitglieder online]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[Mitglieder online, denen Sie folgen]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.staffOnlineSidebar"><![CDATA[Team-Mitglieder online]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.paidSubscriptions"><![CDATA[Bezahlte Mitgliedschaften]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.paidSubscriptionsSidebar"><![CDATA[Bezahlte Mitgliedschaften]]></item>
@@ -2473,7 +2473,7 @@ Fehler sind beispielsweise:
 <h2>Datenschutzerklärung für die Nutzung von Google +1</h2>
 		 <p><i>Erfassung und Weitergabe von Informationen:</i><br />
      Mithilfe der Google +1-Schaltfläche können Sie Informationen weltweit
-     veröffentlichen. Über die Google +1-Schaltfläche erhalten Sie und andere
+     veröffentlichen. Über die Google +1-Schaltfläche erhalten Sie und andere
      Nutzer personalisierte Inhalte von Google und unseren Partnern. Google
      speichert sowohl die Information, dass Sie für einen Inhalt +1 gegeben
      haben, als auch Informationen über die Seite, die Sie beim Klicken auf
@@ -2482,7 +2482,7 @@ Fehler sind beispielsweise:
      Suchergebnissen oder in Ihrem Google-Profil, oder an anderen Stellen auf
      Websites und Anzeigen im Internet eingeblendet werden.<br />
      Google zeichnet Informationen über Ihre +1-Aktivitäten auf, um die 
-     Google-Dienste für Sie und andere zu verbessern. Um die Google +1-Schaltfläche 
+     Google-Dienste für Sie und andere zu verbessern. Um die Google +1-Schaltfläche 
      verwenden zu können, benötigen Sie ein weltweit 
      sichtbares, öffentliches Google-Profil, das zumindest den für das 
      Profil gewählten Namen enthalten muss. Dieser Name wird in allen 
@@ -2577,7 +2577,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.com.woltlab.wcf.TaggedPage"><![CDATA[Inhalte mit bestimmtem Tag]]></item>
 		<item name="wcf.page.com.woltlab.wcf.TeamPage"><![CDATA[Team-Mitglieder]]></item>
 		<item name="wcf.page.com.woltlab.wcf.UserPage"><![CDATA[Benutzerprofil]]></item>
-		<item name="wcf.page.com.woltlab.wcf.UsersOnlineListPage"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.page.com.woltlab.wcf.UsersOnlineListPage"><![CDATA[Mitglieder online]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
@@ -2974,7 +2974,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 	</category>
 	
 	<category name="wcf.user.usersOnline">
-		<item name="wcf.user.usersOnline"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.user.usersOnline"><![CDATA[Mitglieder online]]></item>
 		<item name="wcf.user.usersOnline.detail"><![CDATA[
 {if $usersOnlineList->stats[members] > 0}
 	{#$usersOnlineList->stats[members]} Mitglied{if $usersOnlineList->stats[members] != 1}er{/if}
