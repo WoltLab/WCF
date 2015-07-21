@@ -78,7 +78,8 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 			
 			$sql = "INSERT INTO	wcf".WCF_N."_language_item
 						(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
-				VALUES		(?, ?, ?, ?, ?)";
+				VALUES		(?, ?, ?, ?, ?)
+				ON DUPLICATE KEY UPDATE languageItemValue = VALUES(languageItemValue)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($languages as $language) {
