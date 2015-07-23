@@ -2849,6 +2849,8 @@ WCF.User.List = Class.extend({
 			else {
 				this._dialog.wcfDialog('open').wcfDialog('render');
 			}
+			
+			WCF.DOMNodeInsertedHandler.execute();
 		}
 		else {
 			this._additionalParameters.pageNo = this._pageNo;

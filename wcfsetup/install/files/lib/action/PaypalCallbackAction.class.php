@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\SystemException;
 use wcf\system\payment\type\IPaymentType;
 use wcf\util\HTTPRequest;
+use wcf\util\StringUtil;
 
 /**
  * Handles Paypal callbacks.
@@ -46,6 +47,13 @@ class PaypalCallbackAction extends AbstractAction {
 			
 			if (strstr($content, "VERIFIED") === false) {
 				throw new SystemException('request not validated');
+			}
+			
+			// fix encoding
+			if (!empty($_POST['charset']) && strtoupper($_POST['charset']) != 'UTF-8') {
+				foreach ($_POST as &$value) {
+					$value = StringUtil::convertEncoding(strtoupper($_POST['charset']), 'UTF-8', $value);
+				}
 			}
 			
 			// Check that receiver_email is your Primary PayPal email

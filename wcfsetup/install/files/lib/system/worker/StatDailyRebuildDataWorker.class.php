@@ -17,11 +17,6 @@ use wcf\util\DateUtil;
  */
 class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::$objectListClassName
-	 */
-	protected $objectListClassName = 'wcf\data\attachment\AttachmentList';
-	
-	/**
 	 * @see	\wcf\system\worker\AbstractWorker::$limit
 	 */
 	protected $limit = 30;
