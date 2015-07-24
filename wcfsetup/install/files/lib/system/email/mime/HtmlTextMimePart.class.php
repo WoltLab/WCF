@@ -4,8 +4,7 @@ use wcf\system\email\UserMailbox;
 use wcf\system\WCF;
 
 /**
- * HtmlTextMimePart is a text/html implementation of an
- * AbstractRecipientAwareTextMimePart.
+ * HtmlTextMimePart is a text/html implementation of a RecipientAwareTextMimePart.
  * 
  * @author	Tim Duesterhus
  * @copyright	2001-2015 WoltLab GmbH
@@ -14,19 +13,13 @@ use wcf\system\WCF;
  * @subpackage	system.email.mime
  * @category	Community Framework
  */
-class HtmlTextMimePart extends AbstractRecipientAwareTextMimePart {
-	/**
-	 * template to use for this email
-	 * @var	string
-	 */
-	protected $template = 'emailTextHtml';
-	
+class HtmlTextMimePart extends RecipientAwareTextMimePart {
 	/**
 	 * Creates a new HtmlTextMimePart.
 	 * 
 	 * @param	string	$content	Content of this text part.
 	 */
 	public function __construct($content) {
-		parent::__construct($content, 'text/html');
+		parent::__construct($content, 'text/html', 'email');
 	}
 }
