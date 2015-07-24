@@ -628,6 +628,7 @@ class Email {
 	public function send() {
 		$jobs = $this->getJobs();
 		BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
+		BackgroundQueueHandler::getInstance()->forceCheck();
 	}
 	
 	/**
