@@ -737,6 +737,9 @@ class SessionHandler extends SingletonFactory {
 		$this->languageID = $this->user->languageID;
 		$this->styleID = $this->user->styleID;
 		
+		// change language
+		WCF::setLanguage($this->languageID ?: 0);
+		
 		// in some cases the language id can be stuck in the session variables
 		$this->unregister('languageID');
 		
