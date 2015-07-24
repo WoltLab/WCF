@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\email;
+use wcf\data\language\Language;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 
 /**
  * Represents a RFC 5322 mailbox.
@@ -28,16 +30,21 @@ class Mailbox {
 	/**
 	 * Creates a new Mailbox.
 	 * 
-	 * @param	string	$address	email address of this mailbox
-	 * @param	string	$name		human readable name of this mailbox (or null)
+	 * @param	string				$address	email address of this mailbox
+	 * @param	string				$name		human readable name of this mailbox (or null)
+	 * @param	\wcf\data\language\Language	$language	Language to use for localization (or null for the default language)
 	 */
-	public function __construct($address, $name = null) {
+	public function __construct($address, $name = null, Language $language = null) {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('addr-spec').'$)', $address)) {
 			throw new SystemException("The given email address '".$address."' is invalid.");
 		}
 		
 		$this->address = $address;
 		$this->name = $name;
+		if ($language === null) {
+			$language = LanguageFactory::getInstance()->getLanguage(LanguageFactory::getInstance()->getDefaultLanguageID());
+		}
+		$this->language = $language;
 	}
 	
 	/**
@@ -56,6 +63,16 @@ class Mailbox {
 	 */
 	public function getAddress() {
 		return $this->address;
+	}
+	
+	/**
+	 * Returns the language the recipient of this mailbox wants.
+	 * This is used for localization of the email template.
+	 * 
+	 * @return	\wcf\data\language\Language
+	 */
+	public function getLanguage() {
+		return $this->language;
 	}
 	
 	/**
