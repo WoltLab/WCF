@@ -18,6 +18,16 @@ use wcf\system\WCF;
  */
 class BackgroundQueueHandler extends SingletonFactory {
 	/**
+	 * Forces checking whether a background queue item is due.
+	 * This means that the AJAX request to BackgroundQueuePerformAction is triggered.
+	 */
+	public function forceCheck() {
+		WCF::getTPL()->assign([
+			'forceBackgroundQueuePerform' => true
+		]);
+	}
+	
+	/**
 	 * Enqueues the given job(s) for execution in the specified number of
 	 * seconds. Defaults to "as soon as possible" (0 seconds).
 	 * 

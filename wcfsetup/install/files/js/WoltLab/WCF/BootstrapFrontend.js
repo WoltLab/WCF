@@ -37,7 +37,7 @@ define(
 			}
 			
 			this._initUserPopover();
-			this._invokeBackgroundQueue(options.backgroundQueueUrl);
+			this._invokeBackgroundQueue(options.backgroundQueue.url, options.backgroundQueue.force);
 		},
 		
 		/**
@@ -66,9 +66,10 @@ define(
 		 * Invokes the background queue roughly every 10th request.
 		 * 
 		 * @param	{string}	url	background queue url
+		 * @param	{boolean}	force	whether execution should be forced
 		 */
-		_invokeBackgroundQueue: function(url) {
-			if (Math.random() < 0.1) {
+		_invokeBackgroundQueue: function(url, force) {
+			if (Math.random() < 0.1 || force) {
 				// 'fire and forget' background queue perform task
 				Ajax.apiOnce({
 					url: url,
