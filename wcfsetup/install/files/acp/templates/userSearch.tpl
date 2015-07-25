@@ -4,7 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
-		new WCF.Search.User('#username');
+		new WCF.Search.User('input[name=username]');
 	});
 	//]]>
 </script>
