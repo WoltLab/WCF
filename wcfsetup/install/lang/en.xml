@@ -802,7 +802,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.page_title"><![CDATA[Page Title]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Session Timeout]]></item>
-		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Timeout in seconds]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Validate IP address]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Enabling this validation might cause troubles for users with rotating IP addresses.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
@@ -870,7 +869,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
 		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores old versions of user created items.]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage time]]></item>
-		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Items in the edit history will be discarded if they are older than the given period. [time in days, 0 to disable]]]></item>
+		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Items in the edit history will be discarded if they are older than the given period. [0 to disable]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a>. The Callback URL is: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -942,7 +941,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of user titles unavailable for members, one title per line.]]></item>
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Show Previous Username]]></item>
-		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous username will be additionally displayed for the given period. [time in days]]]></item>
+		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous username will be additionally displayed for the given period.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members Per Page]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Default Sort Field]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Default Sort Order]]></item>
@@ -951,14 +950,14 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Default Sort Field]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Default Sort Order]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Refresh Page Every]]></item>
-		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Page will be periodically refreshed. [time in seconds, 0 to disable]]]></item>
+		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Page will be periodically refreshed. [0 to disable]]]></item>
 		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Exclude guests from the most-online record]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Notification]]></item>
-		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Notifications will be discarded if they are older than the given period. [time in days]]]></item>
+		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Notifications will be discarded if they are older than the given period.]]></item>
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime"><![CDATA[Recent Activity]]></item>
-		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Activities will be discarded if they are older than the given period. [time in days]]]></item>
+		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Activities will be discarded if they are older than the given period.]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profile Visitors]]></item>
-		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be discarded if they are older than the given period. [time in days]]]></item>
+		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be discarded if they are older than the given period.]]></item>
 		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Like System]]></item>

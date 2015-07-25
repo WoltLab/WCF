@@ -803,7 +803,6 @@
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Gültigkeitslänge einer Sitzung]]></item>
-		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Angabe in Sekunden]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[IP-Adresse der Sitzung überprüfen]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Eine Aktivierung dieser Einstellung kann Benutzer ausschließen, die mit wechselnden IP-Adressen im Internet unterwegs sind.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Browser-Kennung der Sitzung überprüfen]]></item>
@@ -871,7 +870,7 @@
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Bearbeitungsverlauf aktivieren]]></item>
 		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Speichert die alten Versionen von Benutzerinhalten.]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Speicherzeit]]></item>
-		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [Zeitraum in Tagen, 0 um die Entfernung gänzlich zu deaktivieren]]]></item>
+		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [0 um die Entfernung gänzlich zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[Sie können Ihre Client ID und Ihr Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -943,7 +942,7 @@
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reservierte Benutzertitel]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[Benutzertitel, die nicht verwendet werden dürfen. Ein Titel pro Zeile]]></item>
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Alten Namen anzeigen]]></item>
-		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Zeitraum in dem bei Änderungen des Benutzernamens zusätzlich der alte Benutzername im Profil angezeigt wird. [Zeit in Tagen]]]></item>
+		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Zeitraum in dem bei Änderungen des Benutzernamens zusätzlich der alte Benutzername im Profil angezeigt wird.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Mitglieder pro Seite]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Standard-Sortierung]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Standard-Reihenfolge]]></item>
@@ -952,13 +951,13 @@
 		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Standard-Sortierung]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Standard-Reihenfolge]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Seite automatisch neu laden]]></item>
-		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Zeitraum nachdem die Seite automatisch neu geladen wird. [Zeit in Sekunden, 0 um Neuladen abzuschalten]]]></item>
+		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Zeitraum nachdem die Seite automatisch neu geladen wird. [0 um Neuladen abzuschalten]]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Benachrichtigungen]]></item>
-		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Zeitraum nach dem Benachrichtigungen automatisch verworfen werden. [Zeitraum in Tagen]]]></item>
+		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Zeitraum nach dem Benachrichtigungen automatisch verworfen werden.]]></item>
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime"><![CDATA[Letzte Aktivitäten]]></item>
-		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Zeitraum nach dem letzte Aktivitäten automatisch verworfen werden. [Zeitraum in Tagen]]]></item>
+		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Zeitraum nach dem letzte Aktivitäten automatisch verworfen werden.]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profil-Besucher]]></item>
-		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Zeitraum nach dem Profil-Besucher automatisch verworfen werden. [Zeitraum in Tagen]]]></item>
+		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Zeitraum nach dem Profil-Besucher automatisch verworfen werden.]]></item>
 		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Anzahl Einträge]]></item>
 		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Anzahl Einträge]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Like-System]]></item>
@@ -1045,7 +1044,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[Benutzer-Authentifikation]]></item>
 		<item name="wcf.acp.option.enable_user_authentication_failure"><![CDATA[Fehlgeschlagene Anmeldeversuche protokollieren]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_timeout"><![CDATA[Zeitraum der Überwachung]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[Zeitraum aus dem fehlgeschlagene Anmeldeversuche für unten genannte Maßnahmen berücksichtigt werden. [Zeitraum in Sekunden]]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[Zeitraum aus dem fehlgeschlagene Anmeldeversuche für unten genannte Maßnahmen berücksichtigt werden.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_ip_captcha"><![CDATA[Captcha bei Anmeldung (IP)]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_ip_captcha.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen von einer IP-Adresse überschritten, muss der Benutzer ein Captcha ausfüllen.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_ip_block"><![CDATA[Blockierung der Anmeldung]]></item>
@@ -1053,7 +1052,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_user_captcha"><![CDATA[Captcha bei Anmeldung (Benutzer)]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen auf einen Benutzer-Account überschritten, muss der Benutzer ein Captcha ausfüllen.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[Löschung von alten Protokolleinträgen]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Legt fest nach welchem Zeitraum protokollierte Anmeldeversuche gelöscht werden. [Zeitraum in Tagen]]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Legt fest nach welchem Zeitraum protokollierte Anmeldeversuche gelöscht werden.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Standard Gravatar-Typ]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[Der <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">Standard-Gravatar-Typ</a>, wenn einer E-Mail kein Gravatar zugeordnet werden kann.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[Kein Standard-Gravatar]]></item>
