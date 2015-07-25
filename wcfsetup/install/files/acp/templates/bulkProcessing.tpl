@@ -38,7 +38,7 @@
 	<p class="success">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.success{/lang}</p>
 {/if}
 
-<form method="post" action="{link controller=$controller}{/link}">
+<form id="formContainer" method="post" action="{link controller=$controller}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.action{/lang}</legend>
