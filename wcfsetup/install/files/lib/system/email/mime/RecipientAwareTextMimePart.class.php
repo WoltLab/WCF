@@ -5,12 +5,11 @@ use wcf\system\email\UserMailbox;
 use wcf\system\WCF;
 
 /**
- * Abstract implementation of a recipient aware TextMimePart.
+ * Default implementation of a recipient aware TextMimePart.
  * 
  * This implementation generates the final content by passing the content
- * to a specified template. If the recipient is a UserMailbox the language
- * will be changed to the user's interface language, before evaluating the
- * template.
+ * to a specified template. The language will be changed to the Mailbox' language,
+ * before evaluating the template.
  * 
  * @author	Tim Duesterhus
  * @copyright	2001-2015 WoltLab GmbH
@@ -19,7 +18,7 @@ use wcf\system\WCF;
  * @subpackage	system.email.mime
  * @category	Community Framework
  */
-abstract class AbstractRecipientAwareTextMimePart extends TextMimePart implements IRecipientAwareMimePart {
+class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAwareMimePart {
 	/**
 	 * template to use for this email
 	 * @var	string
@@ -39,6 +38,21 @@ abstract class AbstractRecipientAwareTextMimePart extends TextMimePart implement
 	protected $mailbox = null;
 	
 	/**
+	 * Creates a new AbstractRecipientAwareTextMimePart.
+	 * 
+	 * @param	string	$content	Content of this text part (this is passed to the template).
+	 * @param	string	$mimeType	Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
+	 * @param	string	$template	Template to evaluate
+	 * @param	string	$application	Application of the template to evaluate (default: wcf)
+	 */
+	public function __construct($content, $mimeType, $template, $application = 'wcf') {
+		parent::__construct($content, $mimeType);
+		
+		$this->template = $template;
+		$this->application = $application;
+	}
+	
+	/**
 	 * @see	\wcf\system\email\mime\IRecipientAwareMimePart::setRecipient()
 	 */
 	public function setRecipient(Mailbox $mailbox = null) {
@@ -52,12 +66,11 @@ abstract class AbstractRecipientAwareTextMimePart extends TextMimePart implement
 		$language = WCF::getLanguage();
 		
 		try {
-			if ($this->mailbox instanceof UserMailbox) {
-				WCF::setLanguage($this->mailbox->getUser()->getLanguage()->languageID);
-			}
+			WCF::setLanguage($this->mailbox->getLanguage()->languageID);
 			
 			return WCF::getTPL()->fetch($this->template, $this->application, [
 				'content' => $this->content,
+				'mimeType' => $this->mimeType,
 				'mailbox' => $this->mailbox
 			], true);
 		}

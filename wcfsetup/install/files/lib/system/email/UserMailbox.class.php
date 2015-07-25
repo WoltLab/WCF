@@ -25,7 +25,7 @@ class UserMailbox extends Mailbox {
 	 * @param	\wcf\data\user\User $user	User object belonging to this Mailbox
 	 */
 	public function __construct(User $user) {
-		parent::__construct($user->email, $user->username);
+		parent::__construct($user->email, $user->username, $user->getLanguage());
 		
 		$this->user = $user;
 	}

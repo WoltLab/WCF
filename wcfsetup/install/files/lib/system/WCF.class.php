@@ -585,6 +585,8 @@ class WCF {
 	 * @param	integer		$languageID
 	 */
 	public static final function setLanguage($languageID) {
+		if (!$languageID) $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+		
 		self::$languageObj = LanguageFactory::getInstance()->getLanguage($languageID);
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
 	}

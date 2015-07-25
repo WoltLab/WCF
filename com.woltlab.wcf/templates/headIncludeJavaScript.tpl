@@ -103,7 +103,10 @@ requirejs.config({
 		});
 		
 		BootstrapFrontend.setup({
-			backgroundQueueUrl: '{link controller="BackgroundQueuePerform"}{/link}',
+			backgroundQueue: {
+				url: '{link controller="BackgroundQueuePerform"}{/link}',
+				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
+			},
 			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
 		});
 	});
