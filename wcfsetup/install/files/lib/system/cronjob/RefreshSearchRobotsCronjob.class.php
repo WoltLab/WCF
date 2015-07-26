@@ -21,6 +21,8 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 	 * @see	\wcf\system\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
+		parent::execute($cronjob);
+		
 		$filename = FileUtil::downloadFileFromHttp('http://assets.woltlab.com/spiderlist/typhoon/list.xml', 'spiders');
 		$xml = new XML();
 		$xml->load($filename);

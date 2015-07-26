@@ -18,6 +18,8 @@ class GetUpdateInfoCronjob implements ICronjob {
 	 * @see	\wcf\system\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
+		parent::execute($cronjob);
+		
 		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 	}
 }
