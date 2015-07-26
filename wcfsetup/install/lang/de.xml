@@ -2843,7 +2843,7 @@ Sie können Ihr Kennwort unter folgender Adresse jederzeit ändern:
 		*}enthalten{/if}.]]></item>
 		<item name="wcf.user.changeUsername.success"><![CDATA[Ihr Benutzername wurde erfolgreich geändert.]]></item>
 		<item name="wcf.user.changeEmail.success"><![CDATA[Ihre E-Mail-Adresse wurde erfolgreich geändert.]]></item>
-		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[Ihre neue E-Mail-Adresse muss noch aktiviert werden. Dazu wurde eine E-Mail mit einem Aktivierungslink an die neue Adresse gesandt. Sie müssen diesen Aktivierungslink aufrufen, um die neue E-Mail-Adresse zu aktivieren.]]></item>
+		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[Ihre neue E-Mail-Adresse{if $newEmail|isset} („{$newEmail}“){/if} muss noch aktiviert werden. Dazu wurde eine E-Mail mit einem Aktivierungslink an die neue Adresse gesandt. Sie müssen diesen Aktivierungslink aufrufen, um die neue E-Mail-Adresse zu aktivieren.]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail"><![CDATA[Hallo {@$username},
 
 Sie haben Ihre E-Mail-Adresse auf der Website: {@PAGE_TITLE|language} geändert. Zum Abschließen dieser Änderung müssen Sie einmalig die Gültigkeit Ihrer neuen E-Mail-Adresse bestätigen.

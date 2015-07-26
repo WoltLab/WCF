@@ -181,6 +181,7 @@
 							<ul class="buttonList smallButtons">
 								<li><a class="button small" href="{link controller='EmailActivation'}{/link}"><span>{lang}wcf.user.emailActivation{/lang}</span></a></li>
 							</ul>
+							<small>{lang newEmail=$__wcf->user->email}wcf.user.changeEmail.needReactivation{/lang}</small>
 						</dd>
 					</dl>
 				{/if}

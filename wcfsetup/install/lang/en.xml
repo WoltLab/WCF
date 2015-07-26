@@ -2838,7 +2838,7 @@ You can change your password any time at:
 		*}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT} and {/if}special chars{/if}{/if}.]]></item>
 		<item name="wcf.user.changeUsername.success"><![CDATA[Username was changed.]]></item>
 		<item name="wcf.user.changeEmail.success"><![CDATA[Email Address was changed.]]></item>
-		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[Your new email address must be verified first. You should’ve received an email sent to your new email address containing an activation link. Open the link to verify your new email address.]]></item>
+		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[Your new email address{if $newEmail|isset} (“{$newEmail}”){/if} must be verified first. You should’ve received an email sent to your new email address containing an activation link. Open the link to verify your new email address.]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail"><![CDATA[Dear {@$username},
 
 you’ve changed your email address on: {@PAGE_TITLE|language}. It is required to open the link below in order to verify this email address.
