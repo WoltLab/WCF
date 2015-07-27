@@ -72,8 +72,8 @@
 					
 					{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
 						<script data-relocate="true">
-							require(['WoltLab/WCF/UI/Collapsible/Sidebar'], function(UICollapsibleSidebar) {
-								UICollapsibleSidebar.setup();
+							require(['WoltLab/WCF/Ui/Collapsible/Sidebar'], function(UiCollapsibleSidebar) {
+								UiCollapsibleSidebar.setup();
 							});
 						</script>
 					{/if}
