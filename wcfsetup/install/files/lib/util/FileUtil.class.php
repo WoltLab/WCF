@@ -198,7 +198,7 @@ final class FileUtil {
 					
 					break;
 				}
-			}	
+			}
 			// go up one level
 			else if (isset($current[$i]) && !isset($target[$i])) {
 				$relPath .= '../';
@@ -527,7 +527,7 @@ final class FileUtil {
 		
 		if (self::$mode === null) {
 			// WCFSetup
-			if (defined('INSTALL_SCRIPT')) {
+			if (defined('INSTALL_SCRIPT') && file_exists(INSTALL_SCRIPT)) {
 				// do not use PHP_OS here, as this represents the system it was built on != running on
 				// php_uname() is forbidden on some strange hosts; PHP_EOL is reliable 
 				if (PHP_EOL == "\r\n") {
