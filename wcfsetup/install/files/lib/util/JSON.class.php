@@ -17,10 +17,12 @@ final class JSON {
 	 * Returns the JSON representation of a value.
 	 * 
 	 * @param	mixed		$data
+	 * @param	integer		$options
+	 * @param	integer		$depth
 	 * @return	string
 	 */
-	public static function encode($data) {
-		return json_encode($data);
+	public static function encode($data, $options = 0, $depth = 512) {
+		return json_encode($data, $options, $depth);
 	}
 	
 	/**
