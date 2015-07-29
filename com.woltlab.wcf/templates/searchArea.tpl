@@ -5,7 +5,7 @@
 
 {event name='settings'}
 
-<aside id="search" class="searchBar dropdown" data-disable-auto-focus="true">
+<div id="search" class="searchBar dropdown" data-disable-auto-focus="true">
 	<form method="post" action="{@$__searchFormLink}">
 		<input type="search" name="q" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="{if $query|isset}{$query}{/if}" class="dropdownToggle" data-toggle="search" />
 		
@@ -24,7 +24,7 @@
 		{@$__searchHiddenInputFields}
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</form>
-</aside>
+</div>
 
 {if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 	<script data-relocate="true">

@@ -1,0 +1,45 @@
+.quoteBox {
+	border-left: 2px solid rgb(79, 129, 189);
+	padding: 10px;
+	margin: 10px 0;
+	
+	&:first-child {
+		margin-top: 0;
+	}
+	
+	.quoteBox {
+		margin-left: 10px;
+		
+		> .quoteBoxHeader > .quoteBoxIcon {
+			display: none;
+		}
+	}
+}
+
+.quoteBoxHeader {
+	align-items: center;
+	display: flex;
+	margin-bottom: 10px;
+}
+
+.quoteBoxIcon {
+	flex: 0 0 auto;
+	min-height: 36px;
+	
+	> a {
+		display: block;
+		font-size: 0;
+		margin-right: 5px;
+	}
+	
+	> .icon {
+		margin-right: 7px;
+		position: relative;
+		top: 10px;
+	}
+}
+
+.quoteBoxTitle {
+	flex: 1 auto;
+	font-size: 1.2rem;
+}

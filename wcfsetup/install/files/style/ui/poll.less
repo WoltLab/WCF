@@ -1,0 +1,88 @@
+#pollOptionContainer .sortableList {
+	padding: @wcfGapSmall 0;
+	
+	.sortableNode {
+		margin-top: @wcfGapSmall;
+		
+		.sortableButtonContainer > img {
+			cursor: pointer;
+			margin-right: @wcfGapMedium;
+		}
+	}
+}
+
+.pollContainer {
+	float: left;
+	margin: 0 15px 10px 0;
+	max-width: 50%;
+	min-width: 300px;
+	
+	> .formSubmit {
+		background-color: @wcfContainerAccentBackgroundColor;
+		border-top: 1px solid @wcfContainerBorderColor;
+		margin-top: 20px;
+		padding: 10px 0;
+	}
+}
+
+.pollInnerContainer {
+	> dl {
+		flex-wrap: wrap;
+	}
+	
+	> p:first-of-type {
+		margin-top: @wcfGapSmall;
+	}
+}
+
+.pollResultList {
+	li {
+		margin-bottom: 8px;
+		padding: 1px 0;
+		position: relative;
+		z-index: 0;
+		
+		.transition(background-color, .1s);
+		
+		&:last-child {
+			margin-bottom: 0px;
+		}
+		
+		&:hover {
+			background-color: @wcfContainerAccentBackgroundColor;
+			border-radius: 0 5px 5px 0;
+		}
+		
+		.pollMeter {
+			background-color: @wcfContainerHoverBackgroundColor;
+			border-radius: 0 5px 5px 0;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			z-index: -1;
+		}
+		
+		.caption {
+			color: @wcfLinkColor;
+			padding: 2px 0;
+			
+			.optionName {
+				display: block;
+				padding: 0 3.5em 0 @wcfGapSmall;
+			}
+			
+			.relativeVotes {
+				position: absolute;
+				right: 7px;
+				top: 3px;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.pollContainer > .formSubmit {
+		margin: @wcfGapMedium -@wcfGapMedium -@wcfGapSmall -@wcfGapMedium;
+	}
+}

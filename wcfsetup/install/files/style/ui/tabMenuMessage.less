@@ -1,0 +1,169 @@
+.messageTabMenu {
+	border: 1px solid @wcfContainerBorderColor;
+	border-top-width: 0;
+	border-radius: 0 0 3px 3px;
+	line-height: @wcfBaseLineHeight;
+	
+	> div,
+	> fieldset{
+		background-color: @wcfContainerBackgroundColor;
+		border-width: 0;
+		border-radius: 0;
+		border-top: 1px solid @wcfContainerBorderColor;
+		display: none;
+		padding: 15px 10px;
+		position: static;
+		
+		&.active {
+			display: block;
+		}
+	}
+	
+	> div {
+		> nav {
+			background-color: @wcfContainerBackgroundColor;
+			border-bottom: 1px solid @wcfContainerBorderColor;
+			margin: -14px -21px 14px -21px;
+			padding: @wcfGapTiny @wcfGapSmall;
+			
+			ul {
+				display: inline-block;
+				font-size: 0;
+				white-space: nowrap;
+				
+				li {
+					display: inline-block;
+					outline: 0;
+					vertical-align: baseline;
+					
+					&.active a,
+					&.active a:hover {
+						color: @wcfButtonPrimaryColor;
+						cursor: default;
+					}
+					
+					a {
+						color: @wcfButtonColor;
+						display: block;
+						font-size: @wcfSmallFontSize;
+						outline: 0;
+						padding: 0 @wcfGapSmall;
+						
+						-webkit-touch-callout: none;
+						-webkit-user-select: none;
+						-khtml-user-select: none;
+						-moz-user-select: none;
+						-ms-user-select: none;
+						user-select: none;
+						
+						&:hover {
+							color: @wcfButtonHoverColor;
+							text-decoration: none;
+						}
+					}
+					
+					&:not(:last-child) {
+						padding-right: @wcfGapTiny;
+					}
+					
+					&.dropdown > a {
+						font-size: 1.0rem;
+						padding: 4px 7px 2px;
+					}
+				}
+			}
+		}
+		
+		> div,
+		> fieldset {
+			border-top-width: 0;
+		}
+	}
+}
+
+.messageTabMenuNavigation > ul {
+	background-color: @wcfContainerBackgroundColor;
+	font-size: 0;
+	white-space: nowrap;
+	
+	> li {
+		display: inline-block;
+		
+		> a {
+			border-right: 1px solid @wcfContainerBorderColor;
+			border-bottom: 1px solid transparent;
+			color: @wcfButtonColor;
+			display: block;
+			font-size: 1rem;
+			line-height: @wcfBaseLineHeight;
+			margin-bottom: -1px;
+			padding: 7px 14px 8px 14px;
+			text-decoration: none;
+			
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			
+			&:hover {
+				color: @wcfLinkColor;
+			}
+			
+			> span.icon {
+				display: none;
+			}
+		}
+		
+		&.active {
+			> a {
+				background-color: @wcfContainerBackgroundColor;
+				color: @wcfLinkColor;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.redactor-toolbar > li > a:hover {
+		background-color: transparent !important;
+	}
+	
+	.messageTabMenu {
+		> nav > ul > li:not(.active) > a {
+			> span.icon {
+				display: block;
+			}
+			
+			> span:not(.icon) {
+				display: none;
+			}
+		}
+		
+		> div > nav {
+			margin: (@wcfGapTiny - @wcfGapSmall) -@wcfGapSmall @wcfGapSmall -@wcfGapSmall;
+		}
+	}
+}
+
+/* fix for Firefox - fieldsets are set to display: table-column which cause an odd gap between the fieldset
+   and the next element, similar to gaps with display: inline-block and font-size > 0 */
+@-moz-document url-prefix() {
+	fieldset + .messageTabMenu {
+		margin-top: -3px;
+	}
+}
+
+.uploadButton {
+	overflow: hidden;
+	position: relative;
+	
+	> input {
+		left: -4px;
+		opacity: 0;
+		padding: 4px;
+		position: absolute;
+		top: -2px;
+	}
+}

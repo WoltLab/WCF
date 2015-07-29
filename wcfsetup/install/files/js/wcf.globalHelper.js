@@ -96,4 +96,22 @@
 	window.objOwns = function(obj, property) {
 		return obj.hasOwnProperty(property);
 	};
+	
+	/**
+	 * Shorthand function to hide an element by setting its 'display' value to 'none'.
+	 * 
+	 * @param	{Element}	element		DOM element
+	 */
+	window.elHide = function(element) {
+		element.style.setProperty('display', 'none');
+	};
+	
+	/**
+	 * Shorthand function to show an element previously hidden by using `elHide()`.
+	 * 
+	 * @param	{Element}	element		DOM element
+	 */
+	window.elShow = function(element) {
+		element.style.removeProperty('display');
+	};
 })(window, document);

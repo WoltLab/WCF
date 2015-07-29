@@ -1,0 +1,142 @@
+.navigation {
+	background-color: rgba(44, 62, 80, 1);
+	flex: 0 auto;
+	padding: 5px 0;
+	z-index: 25;
+	
+	> div {
+		align-items: center;
+		display: flex;
+		justify-content: flex-end;
+		height: 30px;
+	}
+}
+
+.navigationIcons {
+	display: flex;
+	flex: 0 auto;
+	flex-direction: row-reverse;
+	
+	> li {
+		flex: 0 auto;
+		
+		&:not(:last-child) {
+			margin-left: 10px;
+		}
+		
+		> a {
+			opacity: .8;
+			transition: opacity .2s linear;
+			
+			&:hover {
+				opacity: 1;
+			}
+			
+			> .icon {
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+	}
+}
+
+.contentNavigation {
+	align-items: center;
+	display: flex;
+	
+	&:not(:first-child) {
+		margin-top: 20px;
+	}
+	
+	&:not(:last-child) {
+		margin-bottom: 20px;
+	}
+	
+	> nav {
+		flex: 1 auto;
+		
+		& + nav {
+			flex: 0 0 auto;
+		}
+		
+		&:not(.pageNavigation) {
+			text-align: right;
+		}
+	}
+	
+	ul {
+		display: inline-flex;
+		
+		> li {
+			flex: 0 0 auto;
+			
+			&:not(:last-child) {
+				margin-right: 5px;
+			}
+		}
+	}
+}
+
+.pageNavigation > ul {
+	background-color: rgb(79, 129, 189);
+	border-radius: 3px;
+	display: inline-flex;
+	overflow: hidden;
+	
+	> li {
+		background-color: transparent;
+		border-radius: 0;
+		border-width: 0;
+		flex: 0 0 auto;
+		padding: 0;
+		transition: background-color .2s linear;
+		
+		&:not(.active):not(.disabled):hover {
+			background-color: #3498db;
+		}
+		
+		&:not(:last-child) {
+			border-right: 1px solid rgb(112, 152, 200);
+			margin-right: 0;
+		}
+		
+		&.active {
+			background-color: rgb(255, 255, 255);
+			
+			> span:not(.invisible) {
+				color: rgb(79, 129, 189);
+				cursor: default;
+				
+				&:hover {
+					color: rgb(79, 129, 189);
+				}
+			}
+		}
+		
+		&.jumpTo {
+			cursor: pointer;
+		}
+		
+		&.skip {
+			align-items: center;
+			display: flex;
+		}
+		
+		> a,
+		> span:not(.invisible) {
+			color: rgb(255, 255, 255);
+			display: block;
+			padding: 3px 7px;
+			
+			&:hover {
+				color: rgb(255, 255, 255);
+			}
+		}
+	}
+}
+
+.pageNavigation.small > ul > li {
+	> a,
+	> span:not(.invisible) {
+		padding: 1px 5px;
+	}
+}

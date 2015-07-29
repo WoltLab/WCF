@@ -1,5 +1,5 @@
-<fieldset class="dashboardBox dashboardBoxSignedInAs">
-	<legend class="invisible">{lang}wcf.dashboard.box.{$box->boxName}{/lang}</legend>
+<section class="dashboardBox dashboardBoxSignedInAs">
+	<h1 class="invisible">{lang}wcf.dashboard.box.{$box->boxName}{/lang}</h1>
 	
 	<div class="box96 framed">
 		{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
@@ -20,4 +20,4 @@
 			{include file='userInformationStatistics' user=$__wcf->user}
 		</div>
 	</div>
-</fieldset>
+</section>

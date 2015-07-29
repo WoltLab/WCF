@@ -107,6 +107,9 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				});
 			}
 			
+			// create pointer element
+			nav.appendChild(elCreate('span'));
+			
 			return true;
 		},
 		
@@ -202,6 +205,11 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			var oldTab = elBySel('#' + this._container.id + ' > nav > ul > li.active');
 			var oldContent = null;
 			if (oldTab) {
+				if (elAttr(oldTab, 'data-name') === name) {
+					// same tab
+					return;
+				}
+				
 				oldTab.classList.remove('active');
 				oldContent = this._containers.get(elAttr(oldTab, 'data-name'));
 				oldContent.classList.remove('active');
@@ -221,6 +229,13 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				tab.classList.add('ui-state-active');
 				newContent.classList.add('ui-state-active');
 				newContent.classList.remove('hidden');
+			}
+			
+			// set pointer position
+			var span = DomTraverse.childByTag(tab.parentNode.parentNode, 'SPAN');
+			if (span !== null) {
+				span.style.setProperty('transform', 'translateX(' + tab.offsetLeft + 'px)');
+				span.style.setProperty('width', tab.clientWidth + 'px');
 			}
 			
 			if (!disableEvent) {

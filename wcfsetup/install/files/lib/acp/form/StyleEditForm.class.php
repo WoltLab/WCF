@@ -64,11 +64,11 @@ class StyleEditForm extends StyleAddForm {
 		
 		if (!$this->style->isTainted) {
 			$tmp = Style::splitLessVariables($this->variables['individualLess']);
-			$this->variables['individualLess'] = $tmp['original'];
+			$this->variables['individualLess'] = $tmp['preset'];
 			$this->variables['individualLessCustom'] = $tmp['custom'];
 			
 			$tmp = Style::splitLessVariables($this->variables['overrideLess']);
-			$this->variables['overrideLess'] = $tmp['original'];
+			$this->variables['overrideLess'] = $tmp['preset'];
 			$this->variables['overrideLessCustom'] = $tmp['custom'];
 		}
 	}

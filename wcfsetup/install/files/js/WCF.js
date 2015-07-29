@@ -3647,7 +3647,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_createButton: function(containerID, buttonContainer) {
 		var $isOpen = this._containers[containerID].data('isOpen');
-		var $button = $('<span class="collapsibleButton jsTooltip pointer icon icon16 icon-' + ($isOpen ? 'chevron-down' : 'chevron-right') + '" title="'+WCF.Language.get('wcf.global.button.collapsible')+'">').prependTo(buttonContainer);
+		var $button = $('<span class="collapsibleButton jsTooltip pointer icon icon16 fa-chevron-down" title="'+WCF.Language.get('wcf.global.button.collapsible')+'">').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
 		
 		return $button;

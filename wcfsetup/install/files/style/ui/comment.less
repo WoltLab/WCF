@@ -1,0 +1,37 @@
+.commentContent {
+	position: relative;
+	
+	&:hover > .buttonGroupNavigation {
+		opacity: 1;
+	}
+	
+	> .buttonGroupNavigation {
+		opacity: 0;
+		position: absolute;
+		top: 5px;
+		transition: opacity .2s linear;
+		right: 10px;
+	}
+	
+	> .containerHeadline {
+		margin-bottom: 5px;
+	}
+	
+	& + .commentOptionContainer {
+		margin-top: 10px;
+	}
+}
+
+.commentResponseList {
+	margin-top: 10px;
+}
+
+.commentResponse {
+	border-top: 1px solid rgb(238, 238, 238);
+	padding: 10px 0;
+}
+
+.commentOptionContainer {
+	border-top: 1px solid rgb(238, 238, 238);
+	padding-top: 10px;
+}

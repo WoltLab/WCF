@@ -488,7 +488,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertList: function(stack, item, index) {
-			var type = (items.attributes.length) ? item.attributes[0] : '';
+			var type = (item.attributes.length) ? item.attributes[0] : '';
 			
 			// replace list items
 			for (var i = index + 1; i < item.pair; i++) {

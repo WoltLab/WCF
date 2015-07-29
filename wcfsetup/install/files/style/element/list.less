@@ -1,0 +1,69 @@
+.inlineList {
+	display: flex;
+	flex-wrap: wrap;
+	
+	> li {
+		flex: 0 auto;
+		
+		&:not(:last-child) {
+			margin-right: 5px;
+		}
+		
+		> a {
+			cursor: pointer;
+			display: flex;
+		}
+	}
+}
+
+.nativeList {
+	margin: 1em 0 1em 40px;
+	
+	li {
+		margin: 7px 0;
+	}
+}
+
+ol.dataList,
+ul.dataList {
+	.inlineList;
+	
+	font-size: .85rem;
+	
+	> li {
+		&:not(:last-child):after {
+			content: ",";
+			padding-left: 1px;
+		}
+	}
+}
+
+.framedIconList {
+	display: flex;
+	flex-wrap: wrap;
+	padding-top: 10px;
+	
+	> li {
+		flex: 0 0 25%;
+		text-align: center;
+		
+		> a {
+			display: block;
+		}
+	}
+	
+	& + .more {
+		float: right;
+		margin-top: 10px;
+	}
+}
+
+.tagList {
+	.inlineList;
+	
+	align-items: baseline;
+}
+
+.smileyList {
+	align-items: center;
+}

@@ -1,0 +1,114 @@
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button {
+	background-color: @wcfButtonBackgroundColor;
+	border: 1px solid @wcfButtonBorderColor;
+	border-radius: 3px;
+	color: @wcfButtonColor !important;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 10px;
+	transition-duration: .2s;
+	transition-property: background-color, border-color, color;
+	transition-timing-function: linear;
+	
+	.icon {
+		color: @wcfButtonColor;
+		transition: color .2s linear;
+	}
+	
+	&:hover {
+		background-color: @wcfButtonHoverBackgroundColor;
+		border-color: @wcfButtonHoverBorderColor;
+		color: @wcfButtonHoverColor !important;
+		
+		.icon {
+			color: @wcfButtonHoverColor;
+		}
+	}
+	
+	&.small {
+		font-size: .85rem;
+		padding: 4px 7px;
+	}
+}
+
+button.buttonPrimary,
+input[type="button"].buttonPrimary,
+input[type="submit"],
+.button.buttonPrimary {
+	background-color: @wcfButtonPrimaryBackgroundColor;
+	border-color: @wcfButtonPrimaryBorderColor;
+	color: @wcfButtonPrimaryColor !important;
+	
+	.icon {
+		color: @wcfButtonPrimaryColor;
+	}
+	
+	/* @TODO */
+	&:hover {
+		background-color: @wcfButtonPrimaryBackgroundColor;
+		border-color: @wcfButtonHoverBorderColor;
+		color: @wcfButtonHoverColor;
+		
+		.icon {
+			color: @wcfButtonHoverColor;
+		}
+	}
+	/* @TODO END */
+}
+
+.buttonList {
+	.inlineList;
+	
+	&.smallButtons .button {
+		font-size: .85rem;
+		padding: 4px 7px;
+	}
+	
+	/* members list */
+	&.letters {
+		margin-bottom: -10px;
+		
+		> li {
+			flex: 0 0 10%;
+			margin-bottom: 10px;
+			
+			> a {
+				display: block;
+				text-align: center;
+			}
+		}
+	}
+}
+
+.buttonGroupNavigation > ul {
+	.inlineList;
+}
+
+.buttonGroup {
+	.inlineList;
+	
+	> li {
+		&:not(:last-child) {
+			border-right: 1px solid @wcfButtonHoverBackgroundColor;
+			margin-right: 0;
+		}
+		
+		&:first-child .button {
+			border-bottom-left-radius: 3px;
+			border-top-left-radius: 3px;
+		}
+		
+		&:last-child .button {
+			border-bottom-right-radius: 3px;
+			border-top-right-radius: 3px;
+		}
+		
+		.button {
+			border-radius: 0;
+		}
+	}
+}

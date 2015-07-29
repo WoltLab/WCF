@@ -1,0 +1,88 @@
+.sidebar {
+	> div,
+	> fieldset,
+	> section {
+		background-color: rgb(240, 240, 240);
+		border-radius: 3px;
+		padding: 20px;
+		
+		&:after {
+			clear: both;
+			content: "";
+			display: block;
+			height: 0;
+		}
+	}
+	
+	> div + *,
+	> fieldset + *,
+	> section + * {
+		margin-top: 30px;
+	}
+	
+	> div {
+		fieldset + fieldset,
+		section + section {
+			margin-top: 20px;
+		}
+	}
+	
+	fieldset > legend {
+		float: left;
+		width: 100%;
+		
+		& + * {
+			clear: left;
+		}
+	}
+	
+	section > h1,
+	fieldset > legend {
+		.wcfFontLarge;
+		
+		color: rgba(67, 67, 67, 1);
+		margin-bottom: 10px;
+	}
+	
+	dl.dataList {
+		font-size: .85rem;
+		overflow: hidden;
+	}
+	
+	dl:not(.dataList) {
+		&:not(:first-child) {
+			margin-top: 10px;
+		}
+	}
+	
+	dl:not(.plain) {
+		display: block;
+		
+		> dt,
+		> dd {
+			display: block;
+			margin: 0;
+			text-align: left;
+			width: 100%;
+		}
+	}
+}
+
+.sidebarNavigation > li {
+	&.active {
+		background-color: rgb(255, 255, 255);
+		margin: 0 -20px;
+		padding: 0 20px;
+	}
+	
+	> a {
+		display: block;
+		padding: 5px 0;
+	}
+}
+
+.sidebarBoxHeadline > h3 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

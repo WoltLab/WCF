@@ -1,0 +1,50 @@
+.content {
+	fieldset > legend {
+		float: left;
+		width: 100%;
+		
+		&+ * {
+			clear: left;
+		}
+	}
+	
+	fieldset > legend,
+	section > h1 {
+		.wcfFontLarge;
+		
+		color: rgb(67, 67, 67);
+		margin-bottom: 20px;
+	}
+	
+	.container {
+		fieldset {
+			&:not(:first-child) {
+				margin-top: 20px;
+			}
+			
+			> legend {
+				border-bottom: 1px solid rgb(238, 238, 238);
+				padding-bottom: 5px;
+			}
+		}
+		
+		section {
+			&:not(:first-child) {
+				margin-top: 20px;
+			}
+			
+			> h1 {
+				border-bottom: 1px solid rgb(238, 238, 238);
+				padding-bottom: 5px;
+			}
+		}
+	}
+	
+	label {
+		display: block;
+		
+		&:not(:first-child) {
+			margin-top: 5px;
+		}
+	}
+}

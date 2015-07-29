@@ -1,0 +1,46 @@
+#pageHeader.sticky {
+	flex-wrap: nowrap;
+	z-index: 300;
+	
+	> div {
+		background-color: rgba(52, 73, 94, 1); /* @TODO */
+		left: 0;
+		position: fixed;
+		top: 0;
+		right: 0;
+		
+		> div {
+			padding: 10px 0;
+		}
+	}
+	
+	#logo {
+		flex: 0 auto;
+		order: 1;
+		
+		> a > .large {
+			display: none;
+		}
+		
+		> a > .small {
+			display: block;
+		}
+	}
+	
+	#mainMenu {
+		flex: 1 auto;
+		order: 2;
+		margin: 0 20px;
+	}
+	
+	#topMenu {
+		flex: 0 auto;
+		order: 3;
+		margin-right: 10px;
+	}
+	
+	#search {
+		flex: 0 auto;
+		order: 4;
+	}
+}

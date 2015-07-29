@@ -1,0 +1,41 @@
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="text"] {
+	background-color: @wcfInputBackgroundColor;
+	border: 1px solid @wcfInputBorderColor;
+	border-radius: 3px;
+	color: @wcfInputColor;
+	padding: 4px;
+	transition: background-color .2s linear, border-color .2s linear;
+	
+	&:hover {
+		background-color: @wcfInputHoverBackgroundColor;
+		border-color: @wcfInputHoverBorderColor;
+	}
+}
+
+input {
+	box-sizing: border-box;
+	
+	&.tiny {
+		width: 80px;
+	}
+	
+	&.short {
+		min-width: 80px;
+		width: 10%;
+	}
+
+	&.medium {
+		min-width: 150px;
+		width: 30%;
+	}
+
+	&.long {
+		min-width: 150px;
+		width: 100%;
+	}
+}

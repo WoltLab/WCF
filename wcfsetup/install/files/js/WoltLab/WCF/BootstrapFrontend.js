@@ -30,10 +30,10 @@ define(
 		setup: function(options) {
 			Bootstrap.setup();
 			
-			ControllerSitemap.setup();
+			//ControllerSitemap.setup();
 			
 			if (options.styleChanger) {
-				ControllerStyleChanger.setup();
+				//ControllerStyleChanger.setup();
 			}
 			
 			this._initUserPopover();

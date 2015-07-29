@@ -1,0 +1,46 @@
+.tabMenuContainer {
+	> .tabMenu {
+		margin-bottom: 20px;
+		position: relative;
+		
+		> ul {
+			.inlineList;
+			
+			> li {
+				&:not(:last-child) {
+					margin-right: 20px;
+				}
+				
+				&.active > a {
+					cursor: default;
+				}
+				
+				> a {
+					display: block;
+					padding: 5px 0;
+				}
+			}
+		}
+		
+		> span {
+			border-top: 1px solid rgb(231, 76, 60);
+			bottom: 0;
+			position: absolute;
+			transition: transform .2s linear, width .2s linear;
+		}
+	}
+	
+	> .tabMenuContent {
+		border: 1px solid rgb(79, 129, 189);
+		border-radius: 3px;
+		padding: 10px;
+		
+		border-width: 0;
+		border-radius: 0;
+		padding: 0;
+		
+		&.hidden {
+			display: none;
+		}
+	}
+}

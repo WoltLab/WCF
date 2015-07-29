@@ -51,18 +51,18 @@
 </div>
 
 {foreach from=$objects->getTeams() item=team}
-	<header class="boxHeadline boxSubHeadline">
-		<h2 id="group{@$team->groupID}">{$team->groupName|language} <span class="badge">{#$team->getMembers()|count}</span></h2>
-		<p>{$team->groupDescription|language}</p>
-	</header>
+	<section>
+		<div class="containerHeadline">
+			<h3 id="group{@$team->groupID}">{$team->groupName|language} <span class="badge">{#$team->getMembers()|count}</span></h3>
+			<p>{$team->groupDescription|language}</p>
+		</div>
 		
-	<div class="container marginTop">
 		<ol class="containerList userList">
 			{foreach from=$team->getMembers() item=user}
 				{include file='userListItem'}
 			{/foreach}
 		</ol>
-	</div>
+	</section>
 {/foreach}
 
 <div class="contentNavigation">

@@ -1,0 +1,114 @@
+.userProfile .sidebar {
+	position: relative;
+	
+	> section {
+		background-color: rgb(79, 129, 189);
+		border-radius: 0;
+		color: rgb(255, 255, 255);
+		
+		a,
+		dd,
+		h1 {
+			color: rgb(255, 255, 255);
+		}
+		
+		&:first-child {
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+		}
+		
+		&:last-child {
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+		}
+		
+		&:not(:first-child) {
+			margin-top: 0;
+			
+			&:before {
+				border-top: 2px solid rgb(112, 152, 200);
+				content: "";
+				left: 0;
+				margin-top: -15px;
+				position: absolute;
+				right: 0;
+			}
+		}
+	}
+	
+	> .userDetails {
+		position: relative;
+		text-align: center;
+		
+		> .buttonGroupNavigation > .buttonGroup,
+		> .dataList {
+			justify-content: center;
+		}
+		
+		> .buttonGroupNavigation,
+		> .dataList,
+		> .userActivity {
+			margin-top: 10px;
+		}
+		
+		> .dataList {
+			margin-top: 25px;
+			
+			&:before {
+				border-top: 2px solid rgb(112, 152, 200);
+				content: "";
+				left: 0;
+				margin-top: -10px;
+				position: absolute;
+				right: 0;
+			}
+		}
+		
+		> .userActivity > span {
+			display: block;
+			font-size: .85rem;
+		}
+	}
+}
+
+.userProfile #profileContent {
+	> .tabMenu {
+		margin-bottom: 30px;
+		
+		> ul > li {
+			&:not(:last-child) {
+				margin-right: 30px;
+			}
+			
+			> a {
+				font-size: 1.4rem;
+				padding: 0;
+				text-transform: uppercase;
+			}
+		}
+		
+		> span {
+			border-width: 2px;
+			bottom: -5px;
+		}
+	}
+}
+
+#profileButtonContainer > li {
+	border-width: 0;
+	
+	> a {
+		background-color: transparent;
+		border-width: 0;
+		color: rgb(255, 255, 255) !important;
+		padding: 5px;
+		
+		> .icon {
+			color: rgb(255, 255, 255);
+		}
+	}
+}
+
+.username {
+	font-size: 1.2rem;
+}

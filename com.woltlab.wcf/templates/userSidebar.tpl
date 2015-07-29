@@ -1,6 +1,17 @@
-<fieldset>
-	<legend class="invisible">{lang}wcf.user.avatar{/lang}</legend>
-	
+<section class="userDetails"
+	{if $isAccessible}
+		data-object-id="{@$user->userID}"
+		{if $__wcf->session->getPermission('admin.user.canBanUser')}
+			data-banned="{@$user->banned}"
+		{/if}
+		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
+			data-disable-avatar="{@$user->disableAvatar}"
+		{/if}
+		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
+			data-disable-signature="{@$user->disableSignature}"
+		{/if}
+	{/if}
+>
 	<div class="userAvatar">
 		{if $user->userID == $__wcf->user->userID}
 			<a href="{link controller='AvatarEdit'}{/link}" class="framed jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{@$user->getAvatar()->getImageTag()}</a>
@@ -8,11 +19,74 @@
 			<span class="framed">{@$user->getAvatar()->getImageTag()}</span>
 		{/if}
 	</div>
-</fieldset>
+	
+	<h1>{$user->username}{if $user->banned} <span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}</h1>
+	
+	{if MODULE_USER_RANK}
+		<div class="userRank">
+			{if $user->getUserTitle()}
+				<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+			{/if}
+			{if $user->getRank() && $user->getRank()->rankImage}
+				<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+			{/if}
+		</div>
+	{/if}
+	
+	<ul class="dataList">
+		{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
+		{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
+		{if $user->isVisibleOption('location') && $user->location}<li>{lang}wcf.user.membersList.location{/lang}</li>{/if}
+		{if $user->getOldUsername()}<li>{lang}wcf.user.profile.oldUsername{/lang}</li>{/if}
+		<li>{lang}wcf.user.membersList.registrationDate{/lang}</li>
+		{event name='userDataRow1'}
+	</ul>
+	{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
+		<p class="userActivity">
+			<span>{lang}wcf.user.usersOnline.lastActivity{/lang}: {@$user->getLastActivityTime()|time}</span>
+			{if $user->getCurrentLocation()}<span>{@$user->getCurrentLocation()}</span>{/if}
+		</p>
+	{/if}
+	<nav class="jsMobileNavigation buttonGroupNavigation">
+		<ul id="profileButtonContainer" class="buttonGroup">
+			{hascontent}
+				<li class="dropdown">
+					<a href="#" class="button dropdownToggle jsTooltip" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon16 icon-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
+					<ul class="dropdownMenu">
+						{content}
+							{event name='quickSearchItems'}
+						{/content}
+					</ul>
+				</li>
+			{/hascontent}
+			
+			{if $__wcf->session->getPermission('user.profile.canReportContent')}
+				<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a href="#" title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
+			{/if}
+			
+			{if $user->userID != $__wcf->user->userID}
+				{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
+					<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
+				{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
+					<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
+				{/if}
+			{/if}
+			
+			{event name='buttons'}
+			
+			{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
+				<li class="dropdown">
+					<a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="button jsTooltip jsUserInlineEditor" title="{lang}wcf.user.moderate{/lang}"><span class="icon icon16 fa-wrench"></span> <span class="invisible">{lang}wcf.user.moderate{/lang}</span></a>
+					<ul class="dropdownMenu"></ul>
+				</li>
+			{/if}
+		</ul>
+	</nav>
+</section>
 
 {hascontent}
-	<fieldset>
-		<legend class="invisible">{lang}wcf.user.stats{/lang}</legend>
+	<section>
+		<h1 class="invisible">{lang}wcf.user.stats{/lang}</h1>
 		
 		<dl class="plain statsDataList">
 			{content}
@@ -34,15 +108,15 @@
 				{/if}
 			{/content}
 		</dl>
-	</fieldset>
+	</section>
 {/hascontent}
 
 {event name='afterStatistics'}
 
 {if !$user->isProtected()}
 	{if $followingCount}
-		<fieldset>
-			<legend>{lang}wcf.user.profile.following{/lang} <span class="badge">{#$followingCount}</span></legend>
+		<section>
+			<h1>{lang}wcf.user.profile.following{/lang} <span class="badge">{#$followingCount}</span></h1>
 			
 			<div>
 				<ul class="framedIconList">
@@ -51,16 +125,16 @@
 					{/foreach}
 				</ul>
 				
-				{if $followingCount > 10}
+				{if $followingCount > 8}
 					<a id="followingAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
 				{/if}
 			</div>
-		</fieldset>
+		</section>
 	{/if}
 	
 	{if $followerCount}
-		<fieldset>
-			<legend>{lang}wcf.user.profile.followers{/lang} <span class="badge">{#$followerCount}</span></legend>
+		<section>
+			<h1>{lang}wcf.user.profile.followers{/lang} <span class="badge">{#$followerCount}</span></h1>
 			
 			<div>
 				<ul class="framedIconList">
@@ -69,16 +143,16 @@
 					{/foreach}
 				</ul>
 					
-				{if $followerCount > 10}
+				{if $followerCount > 8}
 					<a id="followerAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
 				{/if}
 			</div>
-		</fieldset>
+		</section>
 	{/if}
 	
 	{if $visitorCount}
-		<fieldset>
-			<legend>{lang}wcf.user.profile.visitors{/lang} <span class="badge">{#$visitorCount}</span></legend>
+		<section>
+			<h1>{lang}wcf.user.profile.visitors{/lang} <span class="badge">{#$visitorCount}</span></h1>
 			
 			<div>
 				<ul class="framedIconList">
@@ -87,11 +161,11 @@
 					{/foreach}
 				</ul>
 					
-				{if $visitorCount > 10}
+				{if $visitorCount > 8}
 					<a id="visitorAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
 				{/if}
 			</div>
-		</fieldset>
+		</section>
 	{/if}
 	
 	{event name='boxes'}

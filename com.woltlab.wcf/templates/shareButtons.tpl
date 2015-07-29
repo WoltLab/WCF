@@ -1,5 +1,5 @@
 <div class="messageShareButtons jsOnly">
-	<ul>
+	<ul class="inlineList">
 		<li class="jsShareFacebook">
 			<a>
 				<span class="icon icon32 icon-facebook-sign jsTooltip" title="{lang}wcf.message.share.facebook{/lang}"></span>

@@ -50,7 +50,7 @@ define(
 			UiSimpleDropdown.setup();
 			UiMobile.setup();
 			UiTabMenu.setup();
-			UiFlexibleMenu.setup();
+			//UiFlexibleMenu.setup();
 			UiDialog.setup();
 			UiTooltip.setup();
 			

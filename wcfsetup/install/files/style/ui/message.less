@@ -1,0 +1,303 @@
+.messageList {
+	border: 1px solid rgb(79, 129, 189);
+	border-width: 1px 0;
+	margin: 30px 0;
+	
+	> li {
+		margin-top: 0;
+		padding: 40px 0;
+		
+		&:not(:first-child) {
+			border-top: 1px solid rgb(79, 129, 189);
+		}
+	}
+}
+
+.message {
+	display: flex;
+}
+
+/* sidebar */
+.messageSidebar {
+	align-self: flex-start;
+	background-color: rgb(79, 129, 189);
+	border-radius: 3px;
+	color: rgb(255, 255, 255);
+	flex: 0 0 170px;
+	padding: 20px;
+	position: relative;
+	text-align: center;
+	
+	a {
+		color: rgb(255, 255, 255);
+	}
+	
+	.dataList {
+		font-size: .85rem;
+	}
+}
+
+.messageAuthor + * {
+	margin-top: 25px;
+	
+	&:before {
+		border-top: 2px solid rgb(112, 152, 200);
+		content: "";
+		left: 0;
+		margin-top: -10px;
+		position: absolute;
+		right: 0;
+	}
+}
+
+.messageAuthorContainer:not(:last-child) {
+	margin-bottom: 5px;
+}
+
+/* content */
+.messageContent {
+	display: flex;
+	flex: 1 auto;
+	flex-direction: column;
+	margin-left: 30px;
+}
+
+/* content - header */
+.messageHeader {
+	display: flex;
+	flex: 0 0 auto;
+	margin-bottom: 20px;
+}
+
+.messageQuickOptions {
+	.inlineList;
+	
+	flex: 0 0 auto;
+	opacity: .3;
+	order: 2;
+	transition: opacity .2s linear;
+	
+	.badge {
+		color: rgb(255, 255, 255);
+		font-size: .85rem;
+	}
+}
+
+.message:hover .messageQuickOptions {
+	opacity: .6;
+}
+
+.message .messageHeader .messageQuickOptions:hover {
+	opacity: 1;
+}
+
+.messageHeadline {
+	flex: 1 auto;
+	order: 1;
+	
+	> h1 {
+		font-family: "Segoe UI Light";
+		font-size: 1.4rem;
+		margin-bottom: 5px;
+	}
+	
+	> p {
+		font-size: .85rem;
+	}
+}
+
+/* content - body */
+.messageBody {
+	flex: 1 auto;
+}
+
+/* content - footer */
+.messageFooter {
+	flex: 0 0 auto;
+	margin-top: 20px;
+}
+
+.messageFooterNote {
+	border-left: 2px solid rgb(238, 238, 238);
+	padding-left: 5px;
+	
+	&:not(:first-child) {
+		margin-top: 5px;
+	}
+}
+
+.messageSignature {
+	border-top: 1px solid rgb(238, 238, 238);
+	opacity: .6;
+	padding-top: 10px;
+	transition: opacity .2s linear;
+}
+
+.message:hover .messageSignature {
+	opacity: 1;
+}
+
+.message .messageFooter .messageFooterButtons {
+	.inlineList;
+	
+	justify-content: flex-end;
+	margin-top: 10px;
+	opacity: .3;
+	transition: opacity .2s linear;
+	
+	> li:not(:last-child) {
+		margin-right: 5px;
+	}
+}
+
+.message:hover .messageFooterButtons {
+	opacity: .6;
+}
+
+.message .messageFooter .messageFooterButtons:hover {
+	opacity: 1;
+}
+
+/* ### message groups ### */
+.messageGroupList {
+	.columnSubject {
+		> .labelList {
+			float: right;
+			padding-left: 7px;
+		}
+		
+		> h3 {
+			> .messageGroupLink {
+				font-size: @wcfTitleFontSize;
+			}
+			
+			> .badge.label {
+				top: -2px;
+			}
+		}
+		
+		> small {
+			display: block;
+		}
+		
+		> nav {
+			font-size: @wcfSmallFontSize;
+			
+			> ul > li {
+				display: inline;
+			}
+		}
+	}
+	
+	tr {
+		&.new .columnSubject > h3 > .messageGroupLink {
+			font-weight: bold;
+		}
+		
+		&.new .columnAvatar div > p > img,
+		&:hover .columnAvatar div > p > img {
+			opacity: 1;
+		}
+		
+		&.messageDisabled {
+			color: @wcfDisabledColor;
+			
+			> td {
+				background-color: @wcfDisabledBackgroundColor !important;
+			}
+			
+			a:not(.badge) {
+				color: @wcfDisabledColor;
+			}
+		}
+		
+		&.messageDeleted {
+			color: @wcfDeletedColor;
+			
+			> td {
+				background-color: @wcfDeletedBackgroundColor !important;
+			}
+			
+			a:not(.badge) {
+				color: @wcfDeletedColor;
+			}
+		}
+		
+		.columnSubject .statusDisplay .pageNavigation {
+			opacity: 0;
+			
+			.transition(opacity, .2s);
+		}
+		
+		&:hover .columnSubject .statusDisplay .pageNavigation {
+			opacity: 1;
+		}
+		
+		&.new .columnAvatar > div {
+			&::after {
+				color: @wcfLinkColor;
+				content: "\f069";
+				font-family: FontAwesome;
+				font-weight: normal !important;
+				font-style: normal !important;
+				font-size: 14px;
+				position: absolute;
+				text-decoration: none !important;
+				top: -4px;
+				right: -2px;
+				
+				.textShadow(@wcfContainerBackgroundColor);
+			}
+		}
+	}
+	
+	.columnAvatar {
+		div {
+			position: relative;
+			width: 40px;
+			height: 38px;
+			
+			> p > img {
+				opacity: .6;
+				
+				.transition(opacity, .2s);
+			}
+		}
+		
+		.myAvatar {
+			position: absolute;
+			width: 16px;
+			height: 16px;
+			bottom: -2px;
+			left: 24px;
+			opacity: 1;
+			
+			> img {
+				.boxShadow(0, 0, rgba(0, 0, 0, .3), 3px);
+			}
+		}
+	}
+	
+	.columnLastPost {
+		white-space: nowrap;
+		word-wrap: normal;
+		
+		> div > div > small {
+			color: @wcfDimmedColor;
+		}
+	}
+	
+	.messageGroupInfo {
+		.inlineList;
+		
+		font-size: @wcfSmallFontSize;
+		
+		> li:not(:last-child) {
+			margin-right: 5px;
+			
+			&:after {
+				content: " - ";
+			}
+		}
+	}
+}

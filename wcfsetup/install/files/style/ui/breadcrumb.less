@@ -1,0 +1,35 @@
+.breadcrumbs {
+	flex: 1;
+	
+	> ul {
+		display: flex;
+		
+		> li {
+			flex: 0 auto;
+			font-size: .85rem;
+			
+			&:not(:last-child) {
+				margin-right: 10px;
+				
+				&:after {
+					content: "/";
+				}
+				
+				> a {
+					margin-right: 10px;
+				}
+			}
+			
+			> a {
+				color: rgba(255, 255, 255, 1);
+				opacity: .8;
+				text-decoration: none;
+				transition: opacity .2s linear;
+				
+				&:hover {
+					opacity: 1;
+				}
+			}
+		}
+	}
+}

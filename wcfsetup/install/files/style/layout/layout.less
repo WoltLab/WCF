@@ -1,0 +1,131 @@
+/* @TODO */
+.userAvatarImage { border-radius: 50%; }
+/* @TODO END */
+
+html, body {
+	font-size: @wcfBaseFontSize;
+	height: 100%;
+}
+
+body {
+	background-color: @wcfPageBackgroundColor;
+	color: @wcfPageColor;
+	line-height: 1.428571429;
+	position: relative;
+	word-wrap: break-word;
+	
+	.wcfFontDefault;
+}
+
+a {
+	color: @wcfPageLinkColor;
+	cursor: pointer;
+	
+	&:hover {
+		color: @wcfPageLinkHoverColor;
+	}
+	
+	&:not(:hover) {
+		text-decoration: none;
+	}
+}
+
+strong {
+	.wcfFontBold;
+}
+
+#pageContainer {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+}
+
+/* COLUMN LAYOUT */
+#pageHeader {
+	flex: 0 auto;
+	z-index: 100;
+}
+
+.main {
+	background-color: @wcfContentBackgroundColor;
+	color: @wcfColor;
+	flex: 1 auto;
+	padding: 40px 0;
+	z-index: 50;
+	
+	> div {
+		display: flex;
+	}
+	
+	a {
+		color: @wcfLinkColor;
+		text-decoration: none;
+		
+		&:hover {
+			color: @wcfLinkHoverColor;
+		}
+	}
+}
+
+#content {
+	flex: 1 auto;
+}
+
+.sidebar {
+	flex: 0 0 310px;
+	
+	&:first-child {
+		margin-right: 30px;
+	}
+}
+
+#content + .sidebar {
+	margin-left: 30px;
+}
+
+#pageFooter {
+	flex: 0 auto;
+}
+
+/* CONTENT AREA */
+.boxHeadline {
+	border-bottom: 1px solid rgba(238, 238, 238, 1);
+	margin-bottom: 30px;
+	padding-bottom: 10px;
+	
+	> h1 {
+		.wcfFontLarge;
+		
+		color: rgba(67, 67, 67, 1);
+		font-size: 2rem;
+	}
+	
+	&.labeledHeadline {
+		font-size: 0;
+		
+		> h1,
+		> h2 {
+			display: inline-block;
+			margin-right: 10px;
+		}
+		
+		> ul {
+			display: inline-block;
+			font-size: 1rem;
+			
+			&:not(:empty) {
+				margin-right: 10px;
+			}
+		}
+	}
+}
+
+.containerHeadline {
+	> h3 {
+		.wcfFontLarger;
+		
+		> .badge {
+			margin-left: 5px;
+		}
+	}
+}

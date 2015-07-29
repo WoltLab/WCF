@@ -28,6 +28,11 @@ class SmallpagesFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 	const SHOW_LINKS = 7;
 	
 	/**
+	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::$cssClassName
+	 */
+	protected $cssClassName = 'pageNavigation small';
+	
+	/**
 	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::makePreviousLink()
 	 */
 	protected function makePreviousLink($link, $pageNo) {

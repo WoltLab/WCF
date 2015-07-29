@@ -1,0 +1,113 @@
+.layoutFluid {
+	margin-left: auto;
+	margin-right: auto;
+	min-width: @wcfLayoutMinWidth;
+	max-width: @wcfLayoutMaxWidth;
+}
+
+.marginTop {
+	margin-top: 20px;
+}
+
+.framed {
+	> canvas,
+	> img,
+	> .icon {
+		background-color: @wcfContentBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		padding: 1px;
+	}
+}
+
+.invisible {
+	display: none;
+}
+
+/* boxes with an image */
+.box(@imageSize, @margin: 0) {
+	display: flex;
+	
+	&:not(:last-child) {
+		margin-bottom: (@margin + 3px);
+	}
+	
+	> :first-child:not(:last-child) {
+		flex: 0 auto;
+		margin-right: @margin;
+	}
+	
+	> :last-child {
+		flex: 1;
+	}
+}
+
+.box16 { .box(16px, 4px); }
+.box24 { .box(24px, 4px); }
+.box32 { .box(32px, 7px); }
+.box48 { .box(48px, 7px); }
+.box64 { .box(64px, 7px); }
+.box96 { .box(96px, 11px); }
+.box128 { .box(128px, 11px); }
+.box256 { .box(256px, 21px); }
+
+small {
+	font-size: .85rem;
+}
+
+.wcfFontDefault {
+	font-family: "Open Sans";
+	font-weight: 400;
+}
+
+.wcfFontSmall {
+	font-family: "Open Sans";
+	font-size: .85rem;
+	font-weight: 400;
+}
+
+.wcfFontBold {
+	font-family: "Open Sans";
+	font-weight: 600;
+}
+
+.wcfFontLarger {
+	font-family: "Open Sans";
+	font-size: 1.2rem;
+	font-weight: 300;
+}
+
+.wcfFontLarge {
+	font-family: "Open Sans";
+	font-size: 1.4rem;
+	font-weight: 300;
+}
+
+.elementPointer {
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	transform: translateY(-100%);
+	
+	&.center {
+		left: 50%;
+		transform: translateX(-50%) translateY(-100%);
+	}
+	
+	&.left {
+		left: 4px;
+	}
+	
+	&.right {
+		right: 4px;
+	}
+	
+	&.flipVertical {
+		bottom: 0;
+		top: auto;
+		transform: translateY(100%);
+		
+		&.center {
+			transform: translateX(-50%) translateY(100%);
+		}
+	}
+}

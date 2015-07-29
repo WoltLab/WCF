@@ -55,7 +55,7 @@ define([], function() {
 				return this._set['delete'](value);
 			}
 			else {
-				var index = this._set.indexOf(index);
+				var index = this._set.indexOf(value);
 				if (index === -1) {
 					return false;
 				}
