@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\bbcode\attribute\BBCodeAttributeEditor;
 use wcf\data\package\PackageCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -158,15 +159,14 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::postImport()
 	 */
 	protected function postImport() {
+		$condition = new PreparedStatementConditionBuilder();
+		$condition->add('bbcodeID IN (?)', array(array_keys($this->attributes)));
+		
 		// clear attributes
 		$sql = "DELETE FROM	wcf".WCF_N."_bbcode_attribute
-			WHERE		bbcodeID IN (
-						SELECT	bbcodeID
-						FROM	wcf".WCF_N."_bbcode
-						WHERE	packageID = ?
-					)";
+			".$condition;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute($condition->getParameters());
 		
 		if (!empty($this->attributes)) {
 			foreach ($this->attributes as $bbcodeID => $bbcodeAttributes) {
