@@ -7,7 +7,7 @@ use wcf\system\WCF;
 /**
  * Represents a user option.
  * 
- * @author	Marcel Werk
+ * @author	Marcel Werk, Joshua Rüsweg
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -74,6 +74,12 @@ class UserOption extends Option {
 	 * @var	integer
 	 */
 	const EDITABILITY_ALL = 3;
+
+	/**
+	 * editable for owner on registration and admins
+	 * @var	integer
+	 */
+	const EDITABILITY_OWNER_ONLY_REGISTRATION = 8;
 	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
@@ -139,15 +145,20 @@ class UserOption extends Option {
 	
 	/**
 	 * Returns true if this option is editable.
-	 * 
+	 *
+	 * @param	boolean		$inRegistration
 	 * @return	boolean
 	 */
-	public function isEditable() {
+	public function isEditable($inRegistration = false) {
 		// check admin permissions
-		if ($this->editable & self::EDITABILITY_ADMINISTRATOR) {
+		if ($this->editable & self::EDITABILITY_ADMINISTRATOR || $this->editable & self::EDITABILITY_OWNER_ONLY_REGISTRATION) {
 			if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
 				return true;
 			}
+		}
+
+		if ($inRegistration && $this->editable & self::EDITABILITY_OWNER_ONLY_REGISTRATION) {
+			return true;
 		}
 		
 		// check owner state
