@@ -365,14 +365,14 @@ RedactorPlugins.wautosave = function() {
 		/**
 		 * Temporarily pauses autosave worker.
 		 */
-		autosavePause: function() {
+		pause: function() {
 			_paused = true;
 		},
 		
 		/**
 		 * Resumes autosave worker.
 		 */
-		autosaveResume: function() {
+		resume: function() {
 			_paused = false;
 		}
 	};
