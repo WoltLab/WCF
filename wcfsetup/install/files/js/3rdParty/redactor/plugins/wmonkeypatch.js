@@ -1339,7 +1339,7 @@ RedactorPlugins.wmonkeypatch = function() {
 					+ '<legend>' + WCF.Language.get('wcf.bbcode.code') + '</legend>'
 					+ '<dl class="wide">'
 						+ '<dt></dt>'
-						+ '<dd><textarea id="redactorCodeBox" class="long" rows="12" /></dd>'
+						+ '<dd><textarea id="redactorCodeBox" class="long monospace" rows="12" /></dd>'
 					+ '</dl>'
 				+ '</fieldset>';
 			
