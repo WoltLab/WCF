@@ -45,12 +45,12 @@
 					<span>{@$userProfile->username}</span>
 				</h2>
 				
-				<div class="userTitle">
-					<p class="badge">{lang}wcf.user.guest{/lang}</p>
-				</div>
-				
 				{event name='header'}
 			</header>
+			
+			<div class="userTitle">
+				<p class="badge">{lang}wcf.user.guest{/lang}</p>
+			</div>
 		{/if}
 		
 		{event name='beforeCredits'}
