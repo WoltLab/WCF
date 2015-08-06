@@ -295,12 +295,7 @@ define(
 					content.innerHTML = html;
 				}
 				else if (html instanceof DocumentFragment) {
-					if (html.children[0].nodeName !== 'div' || html.childElementCount > 1) {
-						content.appendChild(html);
-					}
-					else {
-						content = html.children[0];
-					}
+					content.appendChild(html);
 				}
 				
 				content.id = id;

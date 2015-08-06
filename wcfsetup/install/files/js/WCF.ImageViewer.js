@@ -1217,7 +1217,7 @@ $.widget('ui.wcfImageViewer', {
 			
 			$images.push({
 				image: {
-					fullURL: $link.prop('href'),
+					fullURL: $thumbnail.data('source') ? $thumbnail.data('source').replace(/\\\//g, '/') : $link.prop('href'),
 					link: '',
 					title: $link.prop('title'),
 					url: $link.prop('href'),

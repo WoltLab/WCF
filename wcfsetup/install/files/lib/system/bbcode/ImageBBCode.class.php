@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\util\StringUtil;
+use wcf\system\WCF;
+use wcf\system\request\LinkHandler;
 
 /**
  * Parses the [img] bbcode tag.
@@ -23,6 +25,12 @@ class ImageBBCode extends AbstractBBCode {
 		}
 		
 		if ($parser->getOutputType() == 'text/html') {
+			$dataSource = '';
+			if (MODULE_IMAGE_PROXY) {
+				$dataSource = $src;
+				$src = $this->getProxyLink($src);
+			}
+			
 			$float = '';
 			if (isset($openingTag['attributes'][1])) {
 				$float = $openingTag['attributes'][1];
@@ -40,7 +48,7 @@ class ImageBBCode extends AbstractBBCode {
 				$style .= 'width: ' . $width . 'px;';
 			}
 			
-			return '<img src="'.$src.'" class="jsResizeImage" alt=""'.($style ? ' style="' . $style . '"' : '').' />';
+			return '<img src="'.$src.'" class="jsResizeImage" alt=""'.($style ? ' style="' . $style . '"' : '').($dataSource ? ' data-source="'.StringUtil::encodeJS($dataSource).'"' : '').' />';
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
 			$src = StringUtil::decodeHTML($src);
@@ -51,5 +59,32 @@ class ImageBBCode extends AbstractBBCode {
 			
 			return '';
 		}
+	}
+	
+	/**
+	 * Returns the link to the cached image (or the link to fetch the image
+	 * using the image proxy).
+	 * 
+	 * @param	string		$link
+	 * @return	string
+	 */
+	protected function getProxyLink($link) {
+		$hash = sha1(IMAGE_PROXY_SECRET.$link);
+		$fileExtension = '';
+		if (($position = mb_strrpos($link, '.')) !== false) {
+			$fileExtension = mb_strtolower(mb_substr($link, $position + 1));
+		}
+		
+		$path = 'images/proxy/'.substr($hash, 0, 2).'/'.$hash.($fileExtension ? '.'.$fileExtension : '');
+		
+		$fileLocation = WCF_DIR.$path;
+		if (file_exists($fileLocation)) {
+			return WCF::getPath().$path;
+		}
+		
+		return LinkHandler::getInstance()->getLink('ImageProxy', [
+			'hash' => $hash,
+			'url' => urlencode($link)
+		]);
 	}
 }

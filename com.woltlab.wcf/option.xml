@@ -204,6 +204,9 @@
 					<category name="message.general.edit">
 						<parent>message.general</parent>
 					</category>
+					<category name="message.general.image">
+						<parent>message.general</parent>
+					</category>
 				
 				<category name="message.attachment">
 					<parent>message</parent>
@@ -970,6 +973,27 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /message.general.share -->
+			
+			<!-- message.general.image -->
+			<option name="module_image_proxy">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions><![CDATA[image_proxy_secret]]></enableoptions>
+			</option>
+			<option name="image_proxy_secret">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>text</optiontype>
+				<allowemptyvalue>0</allowemptyvalue>
+			</option>
+			<option name="image_proxy_expiration">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>14</defaultvalue>
+				<maxvalue>30</maxvalue>
+				<minvalue>7</minvalue>
+			</option>
+			<!-- /message.general.image -->
 			
 			<!-- message.censorship -->
 			<option name="enable_censorship">

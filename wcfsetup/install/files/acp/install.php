@@ -2,6 +2,7 @@
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
+use wcf\util\StringUtil;
 
 /**
  * @author	Marcel Werk
@@ -64,3 +65,14 @@ if ($timezone = @date_default_timezone_get()) {
 		$statement->execute(array($timezone, 'timezone'));
 	}
 }
+
+// set image proxy secret
+$sql = "UPDATE	wcf".WCF_N."_option
+	SET	optionValue = ?
+	WHERE	optionName = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute([
+	StringUtil::getRandomID(),
+	'image_proxy_secret'
+]);
+
