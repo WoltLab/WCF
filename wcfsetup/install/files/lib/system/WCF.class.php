@@ -233,8 +233,10 @@ class WCF {
 	 * 
 	 * @param	\Exception	$e
 	 */
-	public static final function handleException(\Exception $e) {
+	public static final function handleException($e) {
 		try {
+			if (!($e instanceof \Exception)) throw $e;
+			
 			if ($e instanceof IPrintableException) {
 				$e->show();
 				exit;
@@ -242,6 +244,9 @@ class WCF {
 			
 			// repack Exception
 			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
+		}
+		catch (\Throwable $exception) {
+			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
 		}
 		catch (\Exception $exception) {
 			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
