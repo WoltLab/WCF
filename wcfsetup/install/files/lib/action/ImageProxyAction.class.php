@@ -4,6 +4,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
 use wcf\util\HTTPRequest;
+use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -35,7 +36,7 @@ class ImageProxyAction extends AbstractAction {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['url'])) $this->url = urldecode(StringUtil::trim($_REQUEST['url']));
+		if (isset($_REQUEST['url'])) $this->url = rawurldecode(StringUtil::trim($_REQUEST['url']));
 		if (isset($_REQUEST['hash'])) $this->hash = StringUtil::trim($_REQUEST['hash']);
 	}
 	
@@ -46,39 +47,37 @@ class ImageProxyAction extends AbstractAction {
 		parent::execute();
 		
 		$hash = sha1(IMAGE_PROXY_SECRET.$this->url);
-		if ($this->hash != $hash) {
+		if (!PasswordUtil::secureCompare($this->hash, $hash)) {
 			throw new IllegalLinkException();
 		}
 		
 		try {
 			$request = new HTTPRequest($this->url);
 			$request->execute();
-			$reply = $request->getReply();
+			$image = $request->getReply()['body'];
 			
-			$fileExtension = '';
-			if (($position = mb_strrpos($this->url, '.')) !== false) {
-				$fileExtension = mb_strtolower(mb_substr($this->url, $position + 1));
-			}
-			
-			// check if requested content is image
-			if (!isset($reply['headers']['Content-Type']) || !StringUtil::startsWith($reply['headers']['Content-Type'], 'image/')) {
+			// check if image is linked
+			// TODO: handle SVGs
+			$imageData = getimagesizefromstring($image);
+			if (!$imageData) {
 				throw new IllegalLinkException();
 			}
 			
 			// save image
+			$fileExtension = pathinfo($this->url, PATHINFO_EXTENSION);
 			$fileLocation = WCF_DIR.'images/proxy/'.substr($hash, 0, 2).'/'.$hash.($fileExtension ? '.'.$fileExtension : '');
 			$dir = dirname($fileLocation);
 			if (!@file_exists($dir)) {
 				FileUtil::makePath($dir, 0777);
 			}
-			file_put_contents($fileLocation, $reply['body']);
+			file_put_contents($fileLocation, $image);
 			
 			// update mtime for correct expiration calculation
 			@touch($fileLocation);
 			
 			$this->executed();
 			
-			@header('Content-Type: '.$reply['headers']['Content-Type']);
+			@header('Content-Type: '.$imageData['mime']);
 			@readfile($fileLocation);
 			exit;
 		}

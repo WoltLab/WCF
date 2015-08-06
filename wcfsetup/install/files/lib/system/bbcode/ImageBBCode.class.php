@@ -84,7 +84,7 @@ class ImageBBCode extends AbstractBBCode {
 		
 		return LinkHandler::getInstance()->getLink('ImageProxy', [
 			'hash' => $hash,
-			'url' => urlencode($link)
+			'url' => rawurlencode($link)
 		]);
 	}
 }
