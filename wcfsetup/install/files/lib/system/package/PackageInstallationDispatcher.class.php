@@ -31,6 +31,8 @@ use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\exception\CryptoException;
+use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -186,6 +188,17 @@ class PackageInstallationDispatcher {
 						StringUtil::getUUID(),
 						'wcf_uuid'
 					));
+					
+					try {
+						$statement->execute([
+							bin2hex(CryptoUtil::randomBytes(20)),
+							'signature_secret'
+						]);
+					}
+					catch (CryptoException $e) {
+						// ignore, the secret will stay empty and crypto operations
+						// depending on it will fail
+					}
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
 						$statement->execute(array(

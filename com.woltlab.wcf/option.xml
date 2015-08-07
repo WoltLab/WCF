@@ -162,6 +162,10 @@
 					<category name="security.general.authentication">
 						<parent>security.general</parent>
 					</category>
+					<category name="security.general.secrets">
+						<parent>security.general</parent>
+						<showorder>15</showorder>
+					</category>
 				<category name="security.blacklist">
 					<parent>security</parent>
 				</category>
@@ -609,6 +613,16 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<suffix>days</suffix>
 			</option>
 			<!-- /security.general.authentication -->
+			
+			<!-- security.general.secrets -->
+			<option name="signature_secret">
+				<categoryname>security.general.secrets</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+				<allowempty>0</allowempty>
+				<validationpattern>^.{15,}$</validationpattern>
+			</option>
+			<!-- /security.general.secrets -->
 			
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">

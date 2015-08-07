@@ -733,6 +733,7 @@
 		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sitzungen]]></item>
+		<item name="wcf.acp.option.category.security.general.secrets"><![CDATA[Geheimschlüssel]]></item>
 		<item name="wcf.acp.option.category.general.offline"><![CDATA[Wartungsmodus]]></item>
 		<item name="wcf.acp.option.category.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.option.category.user.general"><![CDATA[Allgemein]]></item>
@@ -1053,6 +1054,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[Wird die angegebene Anzahl von fehlgeschlagenen Anmeldeversuchen auf einen Benutzer-Account überschritten, muss der Benutzer ein Captcha ausfüllen.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[Löschung von alten Protokolleinträgen]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Legt fest nach welchem Zeitraum protokollierte Anmeldeversuche gelöscht werden.]]></item>
+		<item name="wcf.acp.option.signature_secret"><![CDATA[Geheimer Schlüssel]]></item>
+		<item name="wcf.acp.option.signature_secret.description"><![CDATA[Ein geheimer Schlüssel, welcher zur Überprüfung von übertragenen Daten bestimmter Funktionen dient. Dieser Schlüssel ist vertraulich zu behandeln! Der Schlüssel wurde bei der Installation zufällig generiert und sollte nur in Ausnahmefällen geändert werden. Achtung: Dieser Schlüssel muss mindestens 15 Zeichen lang sein.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Standard Gravatar-Typ]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[Der <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">Standard-Gravatar-Typ</a>, wenn einer E-Mail kein Gravatar zugeordnet werden kann.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[Kein Standard-Gravatar]]></item>

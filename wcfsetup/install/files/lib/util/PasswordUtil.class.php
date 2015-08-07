@@ -227,28 +227,11 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Compares two password hashes. This function is protected against timing attacks.
-	 * 
-	 * @see		http://codahale.com/a-lesson-in-timing-attacks/
-	 * 
-	 * @param	string		$hash1
-	 * @param	string		$hash2
-	 * @return	boolean
+	 * @see	\wcf\util\CryptoUtil::secureCompare()
+	 * @deprecated	Use \wcf\util\CryptoUtil::secureCompare()
 	 */
 	public static function secureCompare($hash1, $hash2) {
-		$hash1 = (string)$hash1;
-		$hash2 = (string)$hash2;
-		
-		if (strlen($hash1) !== strlen($hash2)) {
-			return false;
-		}
-		
-		$result = 0;
-		for ($i = 0, $length = strlen($hash1); $i < $length; $i++) {
-			$result |= ord($hash1[$i]) ^ ord($hash2[$i]);
-		}
-		
-		return ($result === 0);
+		return CryptoUtil::secureCompare($hash1, $hash2);
 	}
 	
 	/**
@@ -614,11 +597,8 @@ final class PasswordUtil {
 		if (self::secureCompare($dbHash, sha1(sha1($password) . $salt))) {
 			return true;
 		}
-		else if (extension_loaded('hash')) {
-			return self::secureCompare($dbHash, hash('sha256', hash('sha256', $password) . $salt));
-		}
 		
-		return false;
+		return self::secureCompare($dbHash, hash('sha256', hash('sha256', $password) . $salt));
 	}
 	
 	/**
