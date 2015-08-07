@@ -162,6 +162,10 @@
 					<category name="security.general.authentication">
 						<parent>security.general</parent>
 					</category>
+					<category name="security.general.secrets">
+						<parent>security.general</parent>
+						<showorder>15</showorder>
+					</category>
 				<category name="security.blacklist">
 					<parent>security</parent>
 				</category>
@@ -610,6 +614,16 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /security.general.authentication -->
 			
+			<!-- security.general.secrets -->
+			<option name="signature_secret">
+				<categoryname>security.general.secrets</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+				<allowempty>0</allowempty>
+				<validationpattern>^.{15,}$</validationpattern>
+			</option>
+			<!-- /security.general.secrets -->
+			
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
 				<categoryname>security.blacklist</categoryname>
@@ -980,11 +994,6 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<enableoptions><![CDATA[image_proxy_secret]]></enableoptions>
-			</option>
-			<option name="image_proxy_secret">
-				<categoryname>message.general.image</categoryname>
-				<optiontype>text</optiontype>
-				<allowemptyvalue>0</allowemptyvalue>
 			</option>
 			<option name="image_proxy_expiration">
 				<categoryname>message.general.image</categoryname>

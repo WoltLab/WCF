@@ -2,9 +2,10 @@
 namespace wcf\action;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\util\exception\CryptoException;
+use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HTTPRequest;
-use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -19,16 +20,10 @@ use wcf\util\StringUtil;
  */
 class ImageProxyAction extends AbstractAction {
 	/**
-	 * hashed image proxy secret and image url
+	 * The image key created by CryptoUtil::createSignedString()
 	 * @var	string
 	 */
-	public $hash = '';
-	
-	/**
-	 * image url
-	 * @var	string
-	 */
-	public $url = '';
+	public $key = '';
 	
 	/**
 	 * @see	\wcf\action\IAction::readParameters()
@@ -36,8 +31,7 @@ class ImageProxyAction extends AbstractAction {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['url'])) $this->url = rawurldecode(StringUtil::trim($_REQUEST['url']));
-		if (isset($_REQUEST['hash'])) $this->hash = StringUtil::trim($_REQUEST['hash']);
+		if (isset($_REQUEST['key'])) $this->key = StringUtil::trim($_REQUEST['key']);
 	}
 	
 	/**
@@ -46,13 +40,13 @@ class ImageProxyAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		$hash = sha1(IMAGE_PROXY_SECRET.$this->url);
-		if (!PasswordUtil::secureCompare($this->hash, $hash)) {
-			throw new IllegalLinkException();
-		}
-		
 		try {
-			$request = new HTTPRequest($this->url);
+			$url = CryptoUtil::getValueFromSignedString($this->key);
+			if ($url === null) throw new IllegalLinkException();
+			
+			$fileName = sha1($this->key);
+			
+			$request = new HTTPRequest($url);
 			$request->execute();
 			$image = $request->getReply()['body'];
 			
@@ -64,8 +58,8 @@ class ImageProxyAction extends AbstractAction {
 			}
 			
 			// save image
-			$fileExtension = pathinfo($this->url, PATHINFO_EXTENSION);
-			$fileLocation = WCF_DIR.'images/proxy/'.substr($hash, 0, 2).'/'.$hash.($fileExtension ? '.'.$fileExtension : '');
+			$fileExtension = pathinfo($url, PATHINFO_EXTENSION);
+			$fileLocation = WCF_DIR.'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
 			$dir = dirname($fileLocation);
 			if (!@file_exists($dir)) {
 				FileUtil::makePath($dir, 0777);
@@ -82,6 +76,9 @@ class ImageProxyAction extends AbstractAction {
 			exit;
 		}
 		catch (SystemException $e) {
+			throw new IllegalLinkException();
+		}
+		catch (CryptoException $e) {
 			throw new IllegalLinkException();
 		}
 	}
