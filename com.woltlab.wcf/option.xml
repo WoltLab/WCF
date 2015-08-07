@@ -995,11 +995,6 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>0</defaultvalue>
 				<enableoptions><![CDATA[image_proxy_secret]]></enableoptions>
 			</option>
-			<option name="image_proxy_secret">
-				<categoryname>message.general.image</categoryname>
-				<optiontype>text</optiontype>
-				<allowemptyvalue>0</allowemptyvalue>
-			</option>
 			<option name="image_proxy_expiration">
 				<categoryname>message.general.image</categoryname>
 				<optiontype>integer</optiontype>

@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\util\exception\CryptoException;
+use wcf\util\CryptoUtil;
 use wcf\util\StringUtil;
 use wcf\system\WCF;
 use wcf\system\request\LinkHandler;
@@ -69,22 +71,26 @@ class ImageBBCode extends AbstractBBCode {
 	 * @return	string
 	 */
 	protected function getProxyLink($link) {
-		$hash = sha1(IMAGE_PROXY_SECRET.$link);
-		$fileExtension = '';
-		if (($position = mb_strrpos($link, '.')) !== false) {
-			$fileExtension = mb_strtolower(mb_substr($link, $position + 1));
+		try {
+			$key = CryptoUtil::createSignedString($link);
+			// does not need to be secure, just sufficiently "random"
+			$fileName = sha1($key);
+			
+			$fileExtension = pathinfo($this->url, PATHINFO_EXTENSION);
+			
+			$path = 'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
+			
+			$fileLocation = WCF_DIR.$path;
+			if (file_exists($fileLocation)) {
+				return WCF::getPath().$path;
+			}
+			
+			return LinkHandler::getInstance()->getLink('ImageProxy', [
+				'key' => $key
+			]);
 		}
-		
-		$path = 'images/proxy/'.substr($hash, 0, 2).'/'.$hash.($fileExtension ? '.'.$fileExtension : '');
-		
-		$fileLocation = WCF_DIR.$path;
-		if (file_exists($fileLocation)) {
-			return WCF::getPath().$path;
+		catch (CryptoException $e) {
+			return $link;
 		}
-		
-		return LinkHandler::getInstance()->getLink('ImageProxy', [
-			'hash' => $hash,
-			'url' => rawurlencode($link)
-		]);
 	}
 }
