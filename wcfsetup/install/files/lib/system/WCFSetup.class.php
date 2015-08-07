@@ -161,6 +161,10 @@ class WCFSetup extends WCF {
 	 * Gets the selected wcf dir from request.
 	 */
 	protected static function getWCFDir() {
+		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
+			$_REQUEST['wcfDir'] = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
+		}
+		
 		if (isset($_REQUEST['wcfDir']) && $_REQUEST['wcfDir'] != '') {
 			self::$wcfDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($_REQUEST['wcfDir']));
 			if (@file_exists(self::$wcfDir)) {
@@ -274,9 +278,11 @@ class WCFSetup extends WCF {
 				}
 			
 			case 'searchWcfDir':
-				$this->calcProgress(3);
-				$this->searchWcfDir();
-			break;
+				if (!self::$developerMode || !isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
+					$this->calcProgress(3);
+					$this->searchWcfDir();
+					break;
+				}
 			
 			case 'unzipFiles':
 				$this->calcProgress(4);
@@ -571,19 +577,29 @@ class WCFSetup extends WCF {
 	 */
 	protected function configureDB() {
 		$availableDBClasses = self::getAvailableDBClasses();
-		$dbHost = 'localhost';
-		$dbUser = 'root';
-		$dbPassword = '';
-		$dbName = 'wcf';
-		$dbNumber = 1;
-		$dbClass = '';
+		if (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST']))  {
+			$dbHost = $_ENV['WCFSETUP_DBHOST'];
+			$dbUser = $_ENV['WCFSETUP_DBUSER'];
+			$dbPassword = $_ENV['WCFSETUP_DBPASSWORD'];
+			$dbName = $_ENV['WCFSETUP_DBNAME'];
+			$dbNumber = 1;
+		}
+		else {
+			$dbHost = 'localhost';
+			$dbUser = 'root';
+			$dbPassword = '';
+			$dbName = 'wcf';
+			$dbNumber = 1;
+			$dbClass = '';
+		}
+		
 		// set $dbClass to first item in $availableDBClasses
 		foreach ($availableDBClasses as $dbClass) {
 			$dbClass = $dbClass['class'];
 			break;
 		}
 		
-		if (isset($_POST['send'])) {
+		if (isset($_POST['send']) || (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST']))) {
 			if (isset($_POST['dbHost'])) $dbHost = $_POST['dbHost'];
 			if (isset($_POST['dbUser'])) $dbUser = $_POST['dbUser'];
 			if (isset($_POST['dbPassword'])) $dbPassword = $_POST['dbPassword'];
