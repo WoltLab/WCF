@@ -161,6 +161,10 @@ class WCFSetup extends WCF {
 	 * Gets the selected wcf dir from request.
 	 */
 	protected static function getWCFDir() {
+		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
+			$_REQUEST['wcfDir'] = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
+		}
+		
 		if (isset($_REQUEST['wcfDir']) && $_REQUEST['wcfDir'] != '') {
 			self::$wcfDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($_REQUEST['wcfDir']));
 			if (@file_exists(self::$wcfDir)) {
@@ -274,9 +278,11 @@ class WCFSetup extends WCF {
 				}
 			
 			case 'searchWcfDir':
-				$this->calcProgress(3);
-				$this->searchWcfDir();
-			break;
+				if (!self::$developerMode || !isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
+					$this->calcProgress(3);
+					$this->searchWcfDir();
+					break;
+				}
 			
 			case 'unzipFiles':
 				$this->calcProgress(4);
