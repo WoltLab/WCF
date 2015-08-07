@@ -46,29 +46,32 @@ class ImageProxyAction extends AbstractAction {
 			
 			$fileName = sha1($this->key);
 			
-			$request = new HTTPRequest($url);
-			$request->execute();
-			$image = $request->getReply()['body'];
-			
-			// check if image is linked
-			// TODO: handle SVGs
-			$imageData = getimagesizefromstring($image);
-			if (!$imageData) {
-				throw new IllegalLinkException();
-			}
-			
-			// save image
+			// prepare path
 			$fileExtension = pathinfo($url, PATHINFO_EXTENSION);
 			$fileLocation = WCF_DIR.'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
 			$dir = dirname($fileLocation);
 			if (!@file_exists($dir)) {
 				FileUtil::makePath($dir, 0777);
 			}
-			file_put_contents($fileLocation, $image);
 			
-			// update mtime for correct expiration calculation
-			@touch($fileLocation);
-			
+			// download image
+			if (!file_exists($fileLocation)) {
+				$request = new HTTPRequest($url);
+				$request->execute();
+				$image = $request->getReply()['body'];
+				
+				// check if image is linked
+				// TODO: handle SVGs
+				$imageData = getimagesizefromstring($image);
+				if (!$imageData) {
+					throw new IllegalLinkException();
+				}
+				
+				file_put_contents($fileLocation, $image);
+				
+				// update mtime for correct expiration calculation
+				@touch($fileLocation);
+			}
 			$this->executed();
 			
 			@header('Content-Type: '.$imageData['mime']);
