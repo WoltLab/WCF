@@ -20,6 +20,11 @@
 				</dt>
 				<dd>
 					<input type="text" name="pollQuestion" id="pollQuestion" value="{$pollQuestion}" class="long" maxlength="255" />
+					{if $errorField == 'pollQuestion'}
+						<small class="innerError">
+							{lang}wcf.global.form.error.empty{/lang}
+						</small>
+					{/if}
 				</dd>
 				<dt>
 					<label>{lang}wcf.poll.options{/lang}</label>
