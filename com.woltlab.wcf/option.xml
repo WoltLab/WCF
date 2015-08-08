@@ -811,9 +811,9 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
 debug:wcf.acp.option.mail_send_method.debug]]></selectoptions>
-				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password
-smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_user,mail_smtp_password
-debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
+				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
+smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
