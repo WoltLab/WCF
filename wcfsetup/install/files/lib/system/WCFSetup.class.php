@@ -577,7 +577,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function configureDB() {
 		$availableDBClasses = self::getAvailableDBClasses();
-		if (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST']))  {
+		if (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST'])) {
 			$dbHost = $_ENV['WCFSETUP_DBHOST'];
 			$dbUser = $_ENV['WCFSETUP_DBUSER'];
 			$dbPassword = $_ENV['WCFSETUP_DBPASSWORD'];

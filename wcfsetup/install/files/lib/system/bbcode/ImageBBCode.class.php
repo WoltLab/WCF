@@ -3,8 +3,8 @@ namespace wcf\system\bbcode;
 use wcf\util\exception\CryptoException;
 use wcf\util\CryptoUtil;
 use wcf\util\StringUtil;
-use wcf\system\WCF;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Parses the [img] bbcode tag.
