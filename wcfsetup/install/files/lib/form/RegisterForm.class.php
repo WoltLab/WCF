@@ -300,7 +300,7 @@ class RegisterForm extends UserAddForm {
 					if (WCF::getSession()->getVar('__githubData')) {
 						$githubData = WCF::getSession()->getVar('__githubData');
 						
-						$this->additionalFields['authData'] = 'github:'.WCF::getSession()->getVar('__githubToken');
+						$this->additionalFields['authData'] = 'github:'.$githubData['id'];
 						
 						WCF::getSession()->unregister('__githubData');
 						WCF::getSession()->unregister('__githubToken');
