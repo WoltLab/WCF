@@ -64,8 +64,26 @@ class GithubAuthAction extends AbstractAction {
 			// check whether the token is okay
 			if (isset($data['error'])) throw new IllegalLinkException();
 			
+			try {
+				// fetch userdata
+				$request = new HTTPRequest('https://api.github.com/user?access_token='.$data['access_token']);
+				$request->execute();
+				$reply = $request->getReply();
+				$userData = JSON::decode(StringUtil::trim($reply['body']));
+			}
+			catch (SystemException $e) {
+				// force logging
+				$e->getExceptionID();
+				throw new IllegalLinkException();
+			}
+			
 			// check whether a user is connected to this github account
-			$user = $this->getUser($data['access_token']);
+			$user = $this->getUser($userData['id']);
+			if (!$user->userID) {
+				$user = $this->getUser($data['access_token']);
+				$userEditor = new UserEditor($user);
+				$userEditor->update(array('authData' => 'github:'.$userData['id']));
+			}
 			
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
@@ -91,19 +109,6 @@ class GithubAuthAction extends AbstractAction {
 				}
 			}
 			else {
-				try {
-					// fetch userdata
-					$request = new HTTPRequest('https://api.github.com/user?access_token='.$data['access_token']);
-					$request->execute();
-					$reply = $request->getReply();
-					$userData = JSON::decode(StringUtil::trim($reply['body']));
-				}
-				catch (SystemException $e) {
-					// force logging
-					$e->getExceptionID();
-					throw new IllegalLinkException();
-				}
-				
 				WCF::getSession()->register('__3rdPartyProvider', 'github');
 				// save data for connection
 				if (WCF::getUser()->userID) {
@@ -117,34 +122,22 @@ class GithubAuthAction extends AbstractAction {
 					WCF::getSession()->register('__githubData', $userData);
 					WCF::getSession()->register('__username', $userData['login']);
 					
-					// check whether user has entered a public email
-					if (isset($userData) && isset($userData['email']) && $userData['email'] !== null) {
-						WCF::getSession()->register('__email', $userData['email']);
-					}
-					// fetch emails via api
-					else {
-						try {
-							$request = new HTTPRequest('https://api.github.com/user/emails?access_token='.$data['access_token']);
-							$request->execute();
-							$reply = $request->getReply();
-							$emails = JSON::decode(StringUtil::trim($reply['body']));
-							
-							// handle future response as well a current response (see. http://developer.github.com/v3/users/emails/)
-							if (is_string($emails[0])) {
-								$email = $emails[0];
-							}
-							else {
-								$email = $emails[0]['email'];
-								foreach ($emails as $tmp) {
-									if ($tmp['primary']) $email = $tmp['email'];
-									break;
-								}
-							}
-							WCF::getSession()->register('__email', $email);
+					try {
+						$request = new HTTPRequest('https://api.github.com/user/emails?access_token='.$data['access_token']);
+						$request->execute();
+						$reply = $request->getReply();
+						$emails = JSON::decode(StringUtil::trim($reply['body']));
+						
+						// search primary email
+						$email = $emails[0]['email'];
+						foreach ($emails as $tmp) {
+							if ($tmp['primary']) $email = $tmp['email'];
+							break;
 						}
-						catch (SystemException $e) { }
+						WCF::getSession()->register('__email', $email);
 					}
-					
+					catch (SystemException $e) {
+					}
 					WCF::getSession()->register('__githubToken', $data['access_token']);
 					
 					// we assume that bots won't register on github first
@@ -175,17 +168,17 @@ class GithubAuthAction extends AbstractAction {
 	}
 	
 	/**
-	 * Fetches the User with the given access-token.
+	 * Fetches the User with the given identifier.
 	 * 
-	 * @param	string			$token
+	 * @param	string			$identifier
 	 * @return	\wcf\data\user\User
 	 */
-	public function getUser($token) {
+	public function getUser($identifier) {
 		$sql = "SELECT	userID
 			FROM	wcf".WCF_N."_user
 			WHERE	authData = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('github:'.$token));
+		$statement->execute(array('github:'.$identifier));
 		$row = $statement->fetchArray();
 		
 		if ($row === false) {
