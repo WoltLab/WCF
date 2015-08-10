@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\user\option\category\UserOptionCategoryList;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionAction;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\form\AbstractForm;
@@ -119,7 +120,19 @@ class UserOptionAddForm extends AbstractForm {
 	 * @var	array<\wcf\data\user\option\UserOptionCategory>
 	 */
 	public $availableCategories = array();
-	
+
+	/**
+	 * valid editability bits for UserOptions
+	 * @var	array<int>
+	 */
+	public $validEditableBits = array(
+		UserOption::EDITABILITY_NONE,
+		UserOption::EDITABILITY_OWNER,
+		UserOption::EDITABILITY_ADMINISTRATOR,
+		UserOption::EDITABILITY_ALL,
+		UserOption::EDITABILITY_OWNER_ONLY_REGISTRATION_AND_ADMINISTRATOR
+	);
+
 	/**
 	 * available option types
 	 * @var	array<string>
@@ -238,8 +251,8 @@ class UserOptionAddForm extends AbstractForm {
 			throw new UserInputException('outputClass', 'doesNotExist');
 		}
 		
-		if ($this->editable < 1 || $this->editable > 3) {
-			$this->editable = 3;
+		if (!in_array($this->editable, $this->validEditableBits)) {
+			$this->editable = UserOption::EDITABILITY_ALL;
 		}
 	}
 	
