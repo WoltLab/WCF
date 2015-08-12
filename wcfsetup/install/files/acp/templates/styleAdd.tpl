@@ -17,7 +17,8 @@
 			'wcf.style.colorPicker': '{lang}wcf.style.colorPicker{/lang}',
 			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
 			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}',
-			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}'
+			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}',
+			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
 		new WCF.ACP.Style.ImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
 		new WCF.ACP.Style.LogoUpload('{$tmpHash}', '{@$__wcf->getPath()}images/');
