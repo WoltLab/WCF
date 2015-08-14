@@ -114,7 +114,7 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 		$sql = "SELECT		objectID
 					".($relevanceCalc ? ','.$relevanceCalc : '')."
 			FROM		".SearchIndexManager::getTableName($objectTypeName)."
-			WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
+			WHERE		".($fulltextCondition !== null ? $fulltextCondition : ", '0' AS relevance")."
 					".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
 			".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
 			LIMIT		".($limit == 1000 ? SearchEngine::INNER_SEARCH_LIMIT : $limit);
