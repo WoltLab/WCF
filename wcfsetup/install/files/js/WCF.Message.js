@@ -2866,7 +2866,7 @@ WCF.Message.Quote.Manager = Class.extend({
 					}
 				}
 				
-				if (insert) this._editorElement.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
+				if (insert && this._editorElement.length) this._editorElement.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
 			}
 			else {
 				this._editorElementAlternative.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
