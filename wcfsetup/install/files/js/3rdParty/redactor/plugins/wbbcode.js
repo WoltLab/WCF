@@ -150,13 +150,13 @@ RedactorPlugins.wbbcode = function() {
 			
 			// insert a new line if user clicked into the editor and the last children is a quote (same behavior as arrow down)
 			this.wutil.setOption('clickCallback', (function(event) {
-				this.wutil.saveSelection();
-				
 				if (event.target === this.$editor[0]) {
 					if (this.$editor[0].lastElementChild && this.$editor[0].lastElementChild.tagName === 'BLOCKQUOTE') {
 						this.wutil.setCaretAfter($(this.$editor[0].lastElementChild));
 					}
 				}
+				
+				setTimeout(this.wutil.saveSelection.bind(this), 10);
 			}).bind(this));
 			
 			// drop ul to prevent being touched by this.clean.clearUnverifiedRemove()
@@ -212,6 +212,8 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			if (this.opts.visual) {
+				this.wutil.restoreSelection();
+				
 				var $parentBefore = null;
 				if (window.getSelection().rangeCount && window.getSelection().getRangeAt(0).collapsed) {
 					$parentBefore = window.getSelection().getRangeAt(0).startContainer;
@@ -268,6 +270,8 @@ RedactorPlugins.wbbcode = function() {
 						$parent.insertBefore($node, $smiley.nextSibling);
 					}
 				}
+				
+				this.wutil.saveSelection();
 			}
 			else {
 				this.wutil.insertAtCaret(' ' + smileyCode + ' ');
