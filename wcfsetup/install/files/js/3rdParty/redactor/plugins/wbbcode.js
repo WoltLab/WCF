@@ -133,6 +133,7 @@ RedactorPlugins.wbbcode = function() {
 					this.$textarea.val(this.wbbcode.convertToHtml(this.$textarea.val()));
 					this.code.offset = this.$textarea.val().length;
 					this.code.showVisual();
+					this.wutil.fixDOM();
 					this.wbbcode.fixBlockLevelElements();
 					this.wutil.selectionEndOfEditor();
 					this.wbbcode.observeQuotes();
