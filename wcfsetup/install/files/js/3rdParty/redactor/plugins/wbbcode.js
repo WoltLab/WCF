@@ -1552,6 +1552,11 @@ RedactorPlugins.wbbcode = function() {
 			});
 			html = html.replace(/<\/h[1-6]>/g, '[/size]');
 			
+			// fix weird newlines found when pasting from Microsoft Word
+			if (/<p class="MsoNormal">/.test(html)) {
+				html = html.replace(/([^>\s])\n([^<\s])/g, '$1 $2');
+			}
+			
 			// fix empty paragraphs when pasting from Microsoft Word
 			html = html.replace(/<o:p>&nbsp;<\/o:p>/g, '<br>');
 			
