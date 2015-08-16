@@ -110,13 +110,15 @@
 			{/if}
 		{/if}
 		
-		{foreach from=$optionTree[0][categories][0][categories] item=optionCategory}
-			<fieldset>
-				<legend>{lang}wcf.user.option.category.{@$optionCategory[object]->categoryName}{/lang}</legend>
-				
-				{include file='userProfileOptionFieldList' options=$optionCategory[options] langPrefix='wcf.user.option.'}
-			</fieldset>
-		{/foreach}
+		{if !$optionTree|empty}
+			{foreach from=$optionTree[0][categories][0][categories] item=optionCategory}
+				<fieldset>
+					<legend>{lang}wcf.user.option.category.{@$optionCategory[object]->categoryName}{/lang}</legend>
+					
+					{include file='userProfileOptionFieldList' options=$optionCategory[options] langPrefix='wcf.user.option.'}
+				</fieldset>
+			{/foreach}
+		{/if}
 		
 		{event name='fieldsets'}
 	</div>
