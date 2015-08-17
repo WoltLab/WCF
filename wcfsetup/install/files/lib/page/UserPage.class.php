@@ -122,7 +122,7 @@ class UserPage extends AbstractPage {
 			UserProfileMenu::getInstance()->setActiveMenuItem('about');
 		}
 		
-		$activeMenuItem = UserProfileMenu::getInstance()->getActiveMenuItem();
+		$activeMenuItem = UserProfileMenu::getInstance()->getActiveMenuItem($this->user->userID);
 		$contentManager = $activeMenuItem->getContentManager();
 		$this->profileContent = $contentManager->getContent($this->user->userID);
 		$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.profileEditableContent', 'com.woltlab.wcf.user.profileAbout');
