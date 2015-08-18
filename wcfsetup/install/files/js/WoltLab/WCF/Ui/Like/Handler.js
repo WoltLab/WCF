@@ -1,10 +1,38 @@
-define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog'], function(Ajax, Core, Dictionary, Language, ObjectMap, StringUtil, DomChangeListener, DomUtil, UiDialog) {
+/**
+ * Provides interface elements to display and review likes.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	WoltLab/WCF/Ui/Like/Handler
+ */
+define(
+	[
+		'Ajax',      'Core',                     'Dictionary',         'Language',
+		'ObjectMap', 'StringUtil',               'Dom/ChangeListener', 'Dom/Util',
+		'Ui/Dialog', 'WoltLab/WCF/Ui/User/List'
+	],
+	function(
+		Ajax,        Core,                        Dictionary,           Language,
+		ObjectMap,   StringUtil,                  DomChangeListener,    DomUtil,
+		UiDialog,    UiUserList
+	)
+{
 	"use strict";
 	
 	var _isBusy = false;
 	
+	/**
+	 * @constructor
+	 */
 	function UiLikeHandler(objectType, options) { this.init(objectType, options); };
 	UiLikeHandler.prototype = {
+		/**
+		 * Initializes the like handler.
+		 * 
+		 * @param	{string}	objectType	object type
+		 * @param	{object}	options		initilization options
+		 */
 		init: function(objectType, options) {
 			if (options.containerSelector === '') {
 				throw new Error("[WoltLab/WCF/Ui/Like/Handler] Expected a non-emtpy string for option 'containerSelector'.");
@@ -32,6 +60,9 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Do
 			this.initContainers(options, objectType);
 		},
 		
+		/**
+		 * Initializes all applicable containers.
+		 */
 		initContainers: function() {
 			var element, elements = elBySelAll(this._options.containerSelector), elementData, triggerChange = false;
 			for (var i = 0, length = elements.length; i < length; i++) {
@@ -64,6 +95,12 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Do
 			}
 		},
 		
+		/**
+		 * Creates the interface elements.
+		 * 
+		 * @param	{Element}	element		container element
+		 * @param	{object}	elementData	like data
+		 */
 		_buildWidget: function(element, elementData) {
 			// build summary
 			if (this._options.canViewSummary) {
@@ -114,6 +151,14 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Do
 			}
 		},
 		
+		/**
+		 * Creates a like or dislike button.
+		 * 
+		 * @param	{Element}	element		container element
+		 * @param	{Element}	insertBefore	insert button before given element
+		 * @param	{boolean}	isLike		false if this is a dislike button
+		 * @return	{Element}	button element 
+		 */
 		_createButton: function(element, insertBefore, isLike) {
 			var title = Language.get('wcf.like.button.' + (isLike ? 'like' : 'dislike'));
 			
@@ -134,16 +179,25 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Do
 			return button;
 		},
 		
+		/**
+		 * Shows the summary of likes/dislikes.
+		 * 
+		 * @param	{Element}	element		container element
+		 * @param	{object}	event		event object
+		 */
 		_showSummary: function(element, event) {
 			event.preventDefault();
 			
 			if (!this._details.has(element)) {
-				// @TODO
-				this._details.set(element, new WCF.User.List('wcf\\data\\like\\LikeAction', Language.get('wcf.like.details'), {
-					data: {
-						containerID: DomUtil.identify(element),
-						objectID: this._containers.get(element).objectId,
-						objectType: this._objectType
+				this._details.set(element, new UiUserList({
+					className: 'wcf\\data\\like\\LikeAction',
+					dialogTitle: Language.get('wcf.like.details'),
+					parameters: {
+						data: {
+							containerID: DomUtil.identify(element),
+							objectID: this._containers.get(element).objectId,
+							objectType: this._objectType
+						}
 					}
 				}));
 			}
@@ -151,6 +205,11 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Do
 			this._details.get(element).open();
 		},
 		
+		/**
+		 * Updates the display of cumulative likes.
+		 * 
+		 * @param	{Element}	element		container element
+		 */
 		_updateBadge: function(element) {
 			var data = this._containers.get(element);
 			
@@ -183,6 +242,11 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Do
 			}
 		},
 		
+		/**
+		 * Updates the like summary.
+		 * 
+		 * @param	{Element}	element		container element
+		 */
 		_updateSummary: function(element) {
 			var data = this._containers.get(element);
 			
@@ -203,6 +267,11 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Do
 			}
 		},
 		
+		/**
+		 * Updates the active like/dislike button state.
+		 * 
+		 * @param	{Element}	element		container element
+		 */
 		_updateActiveState: function(element) {
 			var data = this._containers.get(element);
 			
@@ -217,6 +286,12 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Do
 			}
 		},
 		
+		/**
+		 * Likes or dislikes an element.
+		 * 
+		 * @param	{Element}	element		container element
+		 * @param	{object}	event		event object
+		 */
 		_like: function(element, event) {
 			event.preventDefault();
 			

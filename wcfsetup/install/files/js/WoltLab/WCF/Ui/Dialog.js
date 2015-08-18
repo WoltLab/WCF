@@ -327,6 +327,10 @@ define(
 			
 			DomUtil.prepend(dialog, _container);
 			
+			if (typeof options.onSetup === 'function') {
+				options.onSetup(content);
+			}
+			
 			if (createOnly !== true) {
 				this._updateDialog(id, null);
 			}
