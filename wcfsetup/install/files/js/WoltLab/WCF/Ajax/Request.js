@@ -270,6 +270,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				
 				var html = '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
 				
+				if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
 				UiDialog.openStatic(DomUtil.getUniqueId(), html, {
 					title: Language.get('wcf.global.error.title')
 				});
