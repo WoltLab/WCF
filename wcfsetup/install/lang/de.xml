@@ -71,7 +71,7 @@
 	
 	<category name="wcf.acp.bbcode">
 		<item name="wcf.acp.bbcode.add"><![CDATA[BBCode hinzufügen]]></item>
-		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Beachten Sie, dass der neu erstellte BBCode standardmäßig überall verwenden werden kann. Soll das nicht der Fall sein, bearbeiten Sie nach der Erstellung des BBCodes die entsprechenden Benutzergruppenrechte.]]></item>
+		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Beachten Sie, dass der neu erstellte BBCode standardmäßig überall verwendet werden kann. Soll das nicht der Fall sein, bearbeiten Sie nach der Erstellung des BBCodes die entsprechenden Benutzergruppenrechte.]]></item>
 		<item name="wcf.acp.bbcode.allowedChildren"><![CDATA[Erlaubte Kindelemente]]></item>
 		<item name="wcf.acp.bbcode.allowedChildren.error.notValid"><![CDATA[Die Form für die erlaubten Kindelemente ist ungültig.]]></item>
 		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribut]]></item>
