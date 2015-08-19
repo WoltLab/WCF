@@ -86,9 +86,14 @@ class PreparedStatement {
 		try {
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
 			
-			if (empty($parameters)) $this->pdoStatement->execute();
-			else $this->pdoStatement->execute($parameters);
+			if (empty($parameters)) $result = $this->pdoStatement->execute();
+			else $result = $this->pdoStatement->execute($parameters);
 			
+			if (!$result) {
+				$errorInfo = $this->pdoStatement->errorInfo();
+				throw new DatabaseException('Could not execute prepared statement: '.$errorInfo[0].' '.$errorInfo[2], $this->database, $this);
+			}
+
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
 		}
 		catch (\PDOException $e) {
