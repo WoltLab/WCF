@@ -170,6 +170,17 @@ RedactorPlugins.wbbcode = function() {
 			}).bind(this));
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'fixFormatting_' + $identifier, $.proxy(this.wbbcode.fixFormatting, this));
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'destroy_' + $identifier, (function() {
+				this.wautosave.disable();
+				this.wautosave.purge();
+				this.core.destroy();
+				
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.messageOptionsInline', 'submit_' + $identifier);
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor', 'destroy_' + $identifier);
+				
+				WCF.System.Dependency.Manager.reset('Redactor_' + $identifier);
+			}).bind(this));
 		},
 		
 		/**

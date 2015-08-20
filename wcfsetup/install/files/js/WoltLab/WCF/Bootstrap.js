@@ -10,16 +10,16 @@
  */
 define(
 	[
-		'favico',                 'enquire',                'perfect-scrollbar',      'WoltLab/WCF/Date/Time/Relative',
-		'Ui/SimpleDropdown',      'WoltLab/WCF/Ui/Mobile',  'WoltLab/WCF/Ui/TabMenu', 'WoltLab/WCF/Ui/FlexibleMenu',
-		'Ui/Dialog',              'WoltLab/WCF/Ui/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment',
-		'WoltLab/WCF/Date/Picker'
+		'favico',                  'enquire',                'perfect-scrollbar',      'WoltLab/WCF/Date/Time/Relative',
+		'Ui/SimpleDropdown',       'WoltLab/WCF/Ui/Mobile',  'WoltLab/WCF/Ui/TabMenu', 'WoltLab/WCF/Ui/FlexibleMenu',
+		'Ui/Dialog',               'WoltLab/WCF/Ui/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment',
+		'WoltLab/WCF/Date/Picker', 'EventHandler'
 	], 
 	function(
 		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
 		 UiSimpleDropdown,         UiMobile,                 UiTabMenu,                UiFlexibleMenu,
 		 UiDialog,                 UiTooltip,                Language,                 Environment,
-		 DatePicker
+		 DatePicker,               EventHandler
 	)
 {
 	"use strict";
@@ -33,6 +33,9 @@ define(
 	window.WCF.Language.get = Language.get;
 	window.WCF.Language.add = Language.add;
 	window.WCF.Language.addObject = Language.addObject;
+	
+	// WCF.System.Event compatibility
+	window.__wcf_bc_eventHandler = EventHandler;
 	
 	/**
 	 * @exports	WoltLab/WCF/Bootstrap

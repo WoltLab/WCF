@@ -36,6 +36,10 @@ RedactorPlugins.wutil = function() {
 			
 			// convert HTML to BBCode upon submit
 			this.$textarea.parents('form').submit($.proxy(this.wutil.submit, this));
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'getText_' + _textarea.id, (function(data) {
+				data.message = this.wutil.getText();
+			}).bind(this));
 		},
 		
 		/**

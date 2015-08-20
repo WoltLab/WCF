@@ -109,6 +109,20 @@
 /* content - body */
 .messageBody {
 	flex: 1 auto;
+	
+	&.editor {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		
+		> .icon {
+			flex: 0 0 auto;
+		}
+		
+		> .editorContainer {
+			flex: 1 auto;
+		}
+	}
 }
 
 /* content - footer */

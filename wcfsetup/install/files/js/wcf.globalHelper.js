@@ -23,6 +23,19 @@
 	};
 	
 	/**
+	 * Shorthand function to retrieve a boolean attribute.
+	 * 
+	 * @param	{Element}	element		target element
+	 * @param	{string}	attribute	attribute name
+	 * @return	{boolean}	true if value is either `1` or `true`
+	 */
+	window.elAttrBool = function(element, attribute) {
+		var value = elAttr(element, attribute);
+		
+		return (value === "1" || value === "true");
+	};
+	
+	/**
 	 * Shorthand function to find elements by class name.
 	 * 
 	 * @param	{string}	className	CSS class name
@@ -87,17 +100,6 @@
 	};
 	
 	/**
-	 * Shorthand function to check if an object has a property while ignoring the chain.
-	 * 
-	 * @param	{object}	obj		target object
-	 * @param	{string}	property	property name
-	 * @return	{boolean}	false if property does not exist or belongs to the chain
-	 */
-	window.objOwns = function(obj, property) {
-		return obj.hasOwnProperty(property);
-	};
-	
-	/**
 	 * Shorthand function to hide an element by setting its 'display' value to 'none'.
 	 * 
 	 * @param	{Element}	element		DOM element
@@ -107,11 +109,31 @@
 	};
 	
 	/**
+	 * Shorthand function to remove an element.
+	 * 
+	 * @param	{Element}	element		DOM element
+	 */
+	window.elRemove = function(element) {
+		element.parentNode.removeChild(element);
+	};
+	
+	/**
 	 * Shorthand function to show an element previously hidden by using `elHide()`.
 	 * 
 	 * @param	{Element}	element		DOM element
 	 */
 	window.elShow = function(element) {
 		element.style.removeProperty('display');
+	};
+	
+	/**
+	 * Shorthand function to check if an object has a property while ignoring the chain.
+	 * 
+	 * @param	{object}	obj		target object
+	 * @param	{string}	property	property name
+	 * @return	{boolean}	false if property does not exist or belongs to the chain
+	 */
+	window.objOwns = function(obj, property) {
+		return obj.hasOwnProperty(property);
 	};
 })(window, document);

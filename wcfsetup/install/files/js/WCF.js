@@ -5201,6 +5201,13 @@ WCF.System.Dependency.Manager = {
 			
 			delete this._callbacks[identifier];
 		}
+	},
+	
+	reset: function(identifier) {
+		var index = this._loaded.indexOf(identifier);
+		if (index !== -1) {
+			this._loaded.splice(index, 1);
+		}
 	}
 };
 
@@ -5811,14 +5818,10 @@ WCF.System.PushNotification = {
 
 /**
  * System-wide event system.
+ * 
+ * @deprecated	2.2 - please use `EventHandler` instead
  */
 WCF.System.Event = {
-	/**
-	 * list of event listeners grouped by identifier and action.
-	 * @var	object<object>
-	 */
-	_listeners: { },
-	
 	/**
 	 * Registers a new event listener.
 	 * 
@@ -5828,21 +5831,7 @@ WCF.System.Event = {
 	 * @return	string
 	 */
 	addListener: function(identifier, action, listener) {
-		if (typeof this._listeners[identifier] === 'undefined') {
-			this._listeners[identifier] = { };
-		}
-		
-		if (typeof this._listeners[identifier][action] === 'undefined') {
-			this._listeners[identifier][action] = [ ];
-		}
-		
-		var $uuid = WCF.getUUID();
-		this._listeners[identifier][action].push({
-			callback: listener,
-			uuid: $uuid
-		});
-		
-		return $uuid;
+		return window.__wcf_bc_eventHandler.add(identifier, action, listener);
 	},
 	
 	/**
@@ -5854,17 +5843,7 @@ WCF.System.Event = {
 	 * @return	boolean
 	 */
 	removeListener: function(identifier, action, uuid) {
-		if (this._listeners[identifier] && this._listeners[identifier][action]) {
-			for (var $i = 0; $i < this._listeners[identifier][action].length; $i++) {
-				if (this._listeners[identifier][action][$i].uuid == uuid) {
-					this._listeners[identifier][action].splice($i, 1);
-					
-					return true;
-				}
-			}
-		}
-		
-		return false;
+		return window.__wcf_bc_eventHandler.remove(identifier, action, uuid);
 	},
 	
 	/**
@@ -5875,13 +5854,7 @@ WCF.System.Event = {
 	 * @return	boolean
 	 */
 	removeAllListeners: function(identifier, action) {
-		if (this._listeners[identifier] && this._listeners[identifier][action]) {
-			delete this._listeners[identifier][action];
-			
-			return true;
-		}
-		
-		return false;
+		return window.__wcf_bc_eventHandler.removeAll(identifier, action);
 	},
 	
 	/**
@@ -5892,13 +5865,7 @@ WCF.System.Event = {
 	 * @param	object		data
 	 */
 	fireEvent: function(identifier, action, data) {
-		data = data || { };
-		
-		if (this._listeners[identifier] && this._listeners[identifier][action]) {
-			for (var $i = 0; $i < this._listeners[identifier][action].length; $i++) {
-				this._listeners[identifier][action][$i].callback(data);
-			}
-		}
+		window.__wcf_bc_eventHandler.fire(identifier, action, data);
 	}
 };
 

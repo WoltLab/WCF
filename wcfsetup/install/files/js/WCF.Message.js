@@ -1509,13 +1509,12 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		var $messageBody = this._container[this._activeElementID].addClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
-		var $content = $messageBody.children('div:eq(0)');
 		
 		// insert wysiwyg
-		$('' + data.returnValues.template).appendTo($content);
+		$('' + data.returnValues.template).appendTo($messageBody);
 		
 		// bind buttons
-		var $formSubmit = $content.find('.formSubmit');
+		var $formSubmit = $messageBody.find('.formSubmit');
 		var $saveButton = $formSubmit.find('button[data-type=save]').click($.proxy(this._save, this));
 		if (this._supportExtendedForm) $formSubmit.find('button[data-type=extended]').click($.proxy(this._prepareExtended, this));
 		$formSubmit.find('button[data-type=cancel]').click($.proxy(this._cancel, this));

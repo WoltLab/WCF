@@ -107,7 +107,7 @@ dl {
 	
 	&:not(.plain) > dd {
 		&:not(.floated) > label ~ small {
-			margin-left: 20px;
+			margin-left: 24px;
 		}
 		
 		> small:not(.innerError) {
@@ -124,7 +124,16 @@ dl {
 		> dd {
 			display: block;
 			margin: 0;
+			text-align: left;
 			width: 100%;
+		}
+		
+		> dd + dt {
+			margin-top: 15px;
+		}
+		
+		> dt:not(:empty) {
+			margin-bottom: 5px;
 		}
 	}
 }

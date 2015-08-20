@@ -213,6 +213,32 @@ define([], function() {
 			}
 			
 			return parseInt(value);
+		},
+		
+		/**
+		 * Sets the inner HTML of given element and reinjects <script> elements to be properly executed.
+		 * 
+		 * @see		http://www.w3.org/TR/2008/WD-html5-20080610/dom.html#innerhtml0
+		 * @param	{Element}	element		target element
+		 * @param	{string}	innerHtml	HTML string
+		 */
+		setInnerHtml: function(element, innerHtml) {
+			element.innerHTML = innerHtml;
+			
+			var newScript, script, scripts = elBySelAll('script', element);
+			for (var i = 0, length = scripts.length; i < length; i++) {
+				script = scripts[i];
+				newScript = elCreate('script');
+				if (script.src) {
+					newScript.src = script.src;
+				}
+				else {
+					newScript.textContent = script.textContent;
+				}
+				
+				element.appendChild(newScript);
+				script.parentNode.removeChild(script);
+			}
 		}
 	};
 	
