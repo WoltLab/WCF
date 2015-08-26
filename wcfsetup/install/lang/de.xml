@@ -3093,7 +3093,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.conditionGroup.general"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.user.condition.conditionGroup.userOptions"><![CDATA[Persönliche Daten]]></item>
 		<item name="wcf.user.condition.groupIDs"><![CDATA[in Benutzergruppen]]></item>
-		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Benutzer müssen in den ausgewählten Benutzergruppen Mitglied sein.]]></item>
+		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Benutzer müssen in allen ausgewählten Benutzergruppen Mitglied sein.]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Sprachen]]></item>
 		<item name="wcf.user.condition.likesReceived"><![CDATA[Erhaltene Likes]]></item>
 		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobiler Browser]]></item>
@@ -3101,7 +3101,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[„Verwendet mobilen Browser“ und „Verwendet keinen mobilen Browser“ können nicht gleichzeitig ausgewählt werden.]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Verwendet keinen mobilen Browser]]></item>
 		<item name="wcf.user.condition.notGroupIDs"><![CDATA[nicht in Benutzergruppen]]></item>
-		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Benutzer dürfen in den ausgewählten Benutzergruppen nicht Mitglied sein.]]></item>
+		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Benutzer dürfen in keiner der ausgewählten Benutzergruppen Mitglied sein.]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[Die ausgewählten Benutzergruppen in „in Benutzergruppen“ und „nicht in Benutzergruppen“ sind widersprüchlich.]]></item>
 		<item name="wcf.user.condition.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
