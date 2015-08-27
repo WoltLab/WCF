@@ -151,7 +151,7 @@
 	opacity: 1;
 }
 
-.message .messageFooter .messageFooterButtons {
+.messageFooterButtons {
 	.inlineList;
 	
 	justify-content: flex-end;
@@ -159,17 +159,23 @@
 	opacity: .3;
 	transition: opacity .2s linear;
 	
+	&.forceVisible {
+		opacity: 1 !important;
+	}
+	
 	> li:not(:last-child) {
 		margin-right: 5px;
 	}
 }
 
-.message:hover .messageFooterButtons {
-	opacity: .6;
-}
-
-.message .messageFooter .messageFooterButtons:hover {
-	opacity: 1;
+.message:hover {
+	.messageFooterButtons {
+		opacity: .6;
+		
+		&:hover {
+			opacity: 1;
+		}
+	}
 }
 
 /* ### message groups ### */

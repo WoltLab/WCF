@@ -100,6 +100,37 @@
 	};
 	
 	/**
+	 * Shorthand function to retrieve or set a 'data-' attribute.
+	 * 
+	 * @param	{Element}	element		target element
+	 * @param	{string}	attribute	attribute name
+	 * @param	{mixed=}	value		attribute value, omit if attribute should be read
+	 * @return	{(string|undefined)}		attribute value, empty string if attribute is not set or undefined if `value` was omitted
+	 */
+	window.elData = function(element, attribute, value) {
+		attribute = 'data-' + attribute;
+		
+		if (value === undefined) {
+			return element.getAttribute(attribute) || '';
+		}
+		
+		element.setAttribute(attribute, value);
+	};
+	
+	/**
+	 * Shorthand function to retrieve a boolean 'data-' attribute.
+	 * 
+	 * @param	{Element}	element		target element
+	 * @param	{string}	attribute	attribute name
+	 * @return	{boolean}	true if value is either `1` or `true`
+	 */
+	window.elDataBool = function(element, attribute) {
+		var value = elData(element, attribute);
+		
+		return (value === "1" || value === "true");
+	}; 
+	
+	/**
 	 * Shorthand function to hide an element by setting its 'display' value to 'none'.
 	 * 
 	 * @param	{Element}	element		DOM element
@@ -124,6 +155,20 @@
 	 */
 	window.elShow = function(element) {
 		element.style.removeProperty('display');
+	};
+	
+	/**
+	 * Shorthand function to iterative over an array-like object, arguments passed are the value and the index second.
+	 * 
+	 * Do not use this function if a simple `for()` is enough or `list` is a plain object.
+	 * 
+	 * @param	{object}	list		array-like object
+	 * @param	{function}	callback	callback function
+	 */
+	window.forEach = function(list, callback) {
+		for (var i = 0, length = list.length; i < length; i++) {
+			callback(list[i], i);
+		}
 	};
 	
 	/**

@@ -5346,113 +5346,17 @@ WCF.System.Captcha = {
 
 WCF.System.Page = { };
 
-WCF.System.Page.Multiple = Class.extend({
-	_cache: { },
-	_options: { },
-	_pageNo: 1,
-	_pages: 0,
-	_previousPageNo: 0,
-	
-	init: function(options) {
-		this._options = $.extend({
-			// elements
-			container: null,
-			pagination: null,
-			
-			// callbacks
-			loadItems: null
-		}, options);
-		
-		this._cache = { };
-		this._pageNo = 1;
-		this._pages = 0;
-		this._previousPageNo = 0;
-		
-		if (this._pagination.data('pages')) {
-			this._pagination.wcfPages({
-				maxPage: this._pagination.data('pages')
-			}).on('wcfpagesswitched', $.proxy(this._showPage, this));
-		}
-	},
-	
-	/**
-	 * Callback after page has changed.
-	 * 
-	 * @param	object		event
-	 * @param	object		data
-	 */
-	_showPage: function(event, data) {
-		if (data && data.activePage) {
-			if (!data.template) {
-				this._previousPageNo = this._pageNo;
-			}
-			
-			this._pageNo = data.activePage;
-		}
-		
-		if (this._cache[this._pageNo] || (data && data.template)) {
-			this._cache[this._previousPageNo] = this._list.children().detach();
-			
-			if (data && data.template) {
-				this._list.html(data.template);
-			}
-			else {
-				this._list.append(this._cache[this._pageNo]);
-			}
-		}
-		else {
-			this._options.loadItems();
-		}
-	},
-	
-	showPage: function(pageNo, template) {
-		this._showPage(null, {
-			activePage: pageNo,
-			template: template
-		});
-	},
-	
-	getPageNo: function() {
-		return this._pageNo;
-	}
-});
-
 /**
  * System notification overlays.
+ * 
+ * @deprecated	2.2 - please use `Ui/Notification` instead
  * 
  * @param	string		message
  * @param	string		cssClassNames
  */
 WCF.System.Notification = Class.extend({
-	/**
-	 * callback on notification close
-	 * @var	object
-	 */
-	_callback: null,
-	
-	/**
-	 * CSS class names
-	 * @var	string
-	 */
 	_cssClassNames: '',
-	
-	/**
-	 * notification message
-	 * @var	string
-	 */
 	_message: '',
-	
-	/**
-	 * notification overlay
-	 * @var	jQuery
-	 */
-	_overlay: null,
-	
-	/**
-	 * periodical timer
-	 * @var	WCF.PeriodicalExecuter
-	 */
-	_timer: null,
 	
 	/**
 	 * Creates a new system notification overlay.
@@ -5461,17 +5365,8 @@ WCF.System.Notification = Class.extend({
 	 * @param	string		cssClassNames
 	 */
 	init: function(message, cssClassNames) {
-		this._cssClassNames = cssClassNames || 'success';
-		this._message = message || WCF.Language.get('wcf.global.success');
-		this._overlay = $('#systemNotification');
-		this._timer = null;
-		
-		if (!this._overlay.length) {
-			this._overlay = $('<div id="systemNotification"><p></p></div>').hide().appendTo(document.body);
-			this._overlay.children('p').click((function() {
-				this._hide();
-			}).bind(this));
-		}
+		this._cssClassNames = cssClassNames || '';
+		this._message = message || '';
 	},
 	
 	/**
@@ -5483,38 +5378,13 @@ WCF.System.Notification = Class.extend({
 	 * @param	string		cssClassName
 	 */
 	show: function(callback, duration, message, cssClassNames) {
-		duration = parseInt(duration);
-		if (!duration) duration = 2000;
-		
-		if (callback && $.isFunction(callback)) {
-			this._callback = callback;
-		}
-		
-		this._overlay.children('p').html((message || this._message));
-		this._overlay.children('p').removeClass().addClass((cssClassNames || this._cssClassNames));
-		
-		// hide overlay after specified duration
-		this._timer = new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
-		
-		this._overlay.wcfFadeIn(undefined, 300);
-	},
-	
-	/**
-	 * Hides the notification overlay after executing the callback.
-	 * 
-	 * @param	WCF.PeriodicalExecuter		pe
-	 */
-	_hide: function(pe) {
-		pe = (pe) ? pe : this._timer;
-		
-		if (this._callback !== null) {
-			this._callback();
-		}
-		
-		this._overlay.wcfFadeOut(undefined, 300);
-		
-		pe.stop();
-		pe = null;
+		require(['Ui/Notification'], (function(UiNotification) {
+			UiNotification.show(
+				message || this._message,
+				callback,
+				cssClassNames || this._cssClassNames
+			);
+		}).bind(this));
 	}
 });
 

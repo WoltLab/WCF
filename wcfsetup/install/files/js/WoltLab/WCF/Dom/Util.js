@@ -239,6 +239,25 @@ define([], function() {
 				element.appendChild(newScript);
 				script.parentNode.removeChild(script);
 			}
+		},
+		
+		/**
+		 * Returns true if `element` contains the `child` element.
+		 * 
+		 * @param	{Element}	element		container element
+		 * @param	{Element}	child		child element
+		 * @returns	{boolean}	true if `child` is a (in-)direct child of `element`
+		 */
+		contains: function(element, child) {
+			while (child !== null) {
+				child = child.parentNode;
+				
+				if (element === child) {
+					return true;
+				}
+			}
+			
+			return false;
 		}
 	};
 	

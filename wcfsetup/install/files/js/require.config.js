@@ -31,6 +31,7 @@ requirejs.config({
 			'Ui/CloseOverlay': 'WoltLab/WCF/Ui/CloseOverlay',
 			'Ui/Confirmation': 'WoltLab/WCF/Ui/Confirmation',
 			'Ui/Dialog': 'WoltLab/WCF/Ui/Dialog',
+			'Ui/Notification': 'WoltLab/WCF/Ui/Notification',
 			'Ui/SimpleDropdown': 'WoltLab/WCF/Ui/Dropdown/Simple',
 			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu'
 		}

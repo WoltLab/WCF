@@ -1,5 +1,6 @@
 .error,
-.info {
+.info,
+.success {
 	border-radius: 3px;
 	padding: 10px 20px;
 }
@@ -12,4 +13,33 @@
 .info {
 	background-color: rgb(217, 237, 247);
 	color: rgb(49, 112, 143);
+}
+
+.success {
+	background-color: rgb(223, 240, 216);
+	color: rgb(60, 118, 61);
+}
+
+/* inline errors */
+.innerError {
+	background-color: rgb(242, 222, 222);
+	color: rgb(169, 68, 66);
+	display: table;
+	line-height: 1.5;
+	margin-top: 8px;
+	padding: 5px 10px;
+	position: relative;
+	
+	/* pointer */
+	&::before {
+		border: 6px solid transparent;
+		border-bottom-color: rgb(242, 222, 222);
+		border-top-width: 0;
+		content: "";
+		display: inline-block;
+		left: 10px;
+		position: absolute;
+		top: -6px;
+		z-index: 101;
+	}
 }
