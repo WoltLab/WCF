@@ -1277,7 +1277,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.opts.modal.link =
 				'<fieldset id="redactor-modal-link">'
 					+ '<dl>'
-						+ '<dt><label for="redactor-link-url" />URL</label></dt>' /* TODO: use a phrase instead of hardcoding it! */
+						+ '<dt><label for="redactor-link-url">URL</label></dt>' /* TODO: use a phrase instead of hardcoding it! */
 						+ '<dd><input type="url" id="redactor-link-url" class="long" /></dd>'
 					+ '</dl>'
 					+ '<dl>'
