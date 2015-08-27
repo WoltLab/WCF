@@ -1187,7 +1187,7 @@ RedactorPlugins.wbbcode = function() {
 			// line-breaks within list items must be a <br> instead of <p></p>
 			var $listItems = [ ];
 			data = data.replace(/(<li>[\s\S]*?<\/li>)/g, function(match) {
-				match = $.trim(match).replace(/\n/, '<br>');
+				match = $.trim(match).replace(/\n/g, '<br>');
 				
 				var $key = WCF.getUUID();
 				$listItems.push({
