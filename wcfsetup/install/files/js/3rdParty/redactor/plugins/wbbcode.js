@@ -43,6 +43,16 @@ RedactorPlugins.wbbcode = function() {
 				
 				$(document).trigger('resize');
 				this.wutil.saveSelection();
+				
+				var editor = this.$editor[0], textarea = this.$textarea[0];
+				setTimeout(function() {
+					if ($.browser.iOS && editor.scrollHeight === 0) {
+						// work-around for iOS 8 bug causing the browser to zoom in on tap
+						if (document.activeElement === editor || document.activeElement === textarea) {
+							document.activeElement.blur();
+						}
+					}
+				}, 10);
 			}).bind(this);
 			
 			this.opts.pasteBeforeCallback = $.proxy(this.wbbcode._pasteBeforeCallback, this);
