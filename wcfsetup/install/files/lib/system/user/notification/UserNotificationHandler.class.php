@@ -10,6 +10,7 @@ use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\mail\Mail;
 use wcf\system\user\notification\event\IUserNotificationEvent;
@@ -101,6 +102,30 @@ class UserNotificationHandler extends SingletonFactory {
 		if ($userProfile === null) {
 			$userProfile = new UserProfile(new User(null, array()));
 		}
+		
+		$parameters = array(
+			'eventName' => $eventName,
+			'objectType' => $objectType,
+			'notificationObject' => $notificationObject,
+			'recipientIDs' => $recipientIDs,
+			'additionalData' => $additionalData,
+			'baseObjectID' => $baseObjectID,
+			'objectTypeObject' => $objectTypeObject,
+			'userProfile' => $userProfile,
+			'event' => $event
+		);
+
+		EventHandler::getInstance()->fireAction($this, 'fireEvent', $parameters);
+
+		$eventName = $parameters['eventName'];
+		$objectType = $parameters['objectType'];
+		$notificationObject = $parameters['notificationObject'];
+		$recipientIDs = $parameters['recipientIDs'];
+		$additionalData = $parameters['additionalData'];
+		$baseObjectID = $parameters['baseObjectID'];
+		$objectTypeObject = $parameters['objectTypeObject'];
+		$userProfile = $parameters['userProfile'];
+		$event = $parameters['event'];
 		
 		// set object data
 		$event->setObject(new UserNotification(null, array()), $notificationObject, $userProfile, $additionalData);
