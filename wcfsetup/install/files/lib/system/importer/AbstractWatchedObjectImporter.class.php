@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\user\object\watch\UserObjectWatchEditor;
-use wcf\system\database\DatabaseException
+use wcf\system\database\DatabaseException;
 
 /**
  * Imports watched objects.
