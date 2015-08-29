@@ -34,6 +34,7 @@ class AbstractWatchedObjectImporter extends AbstractImporter {
 		
 		try {
 			$watch = UserObjectWatchEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+			return $watch->watchID;
 		}
 		catch (DatabaseException $e) {
 			// 23000 = INTEGRITY CONSTRAINT VIOLATION a.k.a. duplicate key
@@ -42,6 +43,6 @@ class AbstractWatchedObjectImporter extends AbstractImporter {
 			}
 		}
 		
-		return $watch->watchID;
+		return 0;
 	}
 }
