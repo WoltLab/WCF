@@ -235,7 +235,7 @@ class BBCodeParser extends SingletonFactory {
 	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {
 		if ($definedTagAttribute->validationPattern && isset($tagAttributes[$definedTagAttribute->attributeNo])) {
 			// validate attribute
-			if (!preg_match('~'.$definedTagAttribute->validationPattern.'~i', $tagAttributes[$definedTagAttribute->attributeNo])) {
+			if (!preg_match('~'.str_replace('~', '\~', $definedTagAttribute->validationPattern).'~i', $tagAttributes[$definedTagAttribute->attributeNo])) {
 				return false;
 			}
 		}
