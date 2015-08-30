@@ -154,6 +154,15 @@ RedactorPlugins.wbbcode = function() {
 					this.wutil.fixDOM();
 					$fixBR(this.$editor);
 					
+					if (/ Edge\//.test(navigator.userAgent)) {
+						var editor = this.$editor[0];
+						window.dtdesign = editor;
+						if (editor.childElementCount > 1 && editor.children[0].innerHTML === '\u200b') {
+							// strip empty newline created by Redactor's selection marker
+							editor.removeChild(editor.children[0]);
+						}
+					}
+					
 					this.wutil.saveSelection();
 				}
 			}).bind(this);
@@ -786,7 +795,7 @@ RedactorPlugins.wbbcode = function() {
 			if ($.getLength($cachedMarkers)) {
 				for (var $key in $cachedMarkers) {
 					var $regex = new RegExp('@@' + $key + '@@', 'g');
-					data = data.replace($regex, $cachedMarkers[$key]);
+					html = html.replace($regex, $cachedMarkers[$key]);
 				}
 			}
 			
