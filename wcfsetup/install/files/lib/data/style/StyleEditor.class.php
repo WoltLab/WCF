@@ -36,6 +36,7 @@ use wcf\util\XMLWriter;
  * @category	Community Framework
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
+	const EXCLUDE_WCF_VERSION = '2.2.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
 	
 	/**
@@ -752,6 +753,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			$xml->startElement('requiredpackages');
 			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', array('minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion));
+			$xml->endElement();
+			
+			$xml->startElement('excludedpackages');
+			$xml->writeElement('excludedpackage', 'com.woltlab.wcf', array('version' => self::EXCLUDE_WCF_VERSION));
 			$xml->endElement();
 			
 			$xml->startElement('instructions', array('type' => 'install'));
