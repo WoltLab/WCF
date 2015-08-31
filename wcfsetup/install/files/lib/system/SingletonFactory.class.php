@@ -47,7 +47,7 @@ abstract class SingletonFactory {
 	/**
 	 * Returns an unique instance of current child class.
 	 * 
-	 * @return	\wcf\system\SingletonFactory
+	 * @return	static
 	 */
 	public static final function getInstance() {
 		$className = get_called_class();
