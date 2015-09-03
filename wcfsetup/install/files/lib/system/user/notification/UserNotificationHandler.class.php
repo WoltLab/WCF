@@ -10,6 +10,7 @@ use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\mail\Mail;
 use wcf\system\user\notification\event\IUserNotificationEvent;
@@ -104,6 +105,18 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// set object data
 		$event->setObject(new UserNotification(null, array()), $notificationObject, $userProfile, $additionalData);
+		
+		EventHandler::getInstance()->fireAction($this, 'fireEvent', array(
+			'eventName' => $eventName,
+			'objectType' => $objectType,
+			'notificationObject' => $notificationObject,
+			'recipientIDs' => $recipientIDs,
+			'additionalData' => $additionalData,
+			'baseObjectID' => $baseObjectID,
+			'objectTypeObject' => $objectTypeObject,
+			'userProfile' => $userProfile,
+			'event' => $event
+		));
 		
 		// find existing notifications
 		$conditions = new PreparedStatementConditionBuilder();
