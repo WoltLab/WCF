@@ -106,7 +106,7 @@ class UserNotificationHandler extends SingletonFactory {
 		// set object data
 		$event->setObject(new UserNotification(null, array()), $notificationObject, $userProfile, $additionalData);
 		
-		EventHandler::getInstance()->fireAction($this, 'fireEvent', array(
+		$parameters = array(
 			'eventName' => $eventName,
 			'objectType' => $objectType,
 			'notificationObject' => $notificationObject,
@@ -116,7 +116,8 @@ class UserNotificationHandler extends SingletonFactory {
 			'objectTypeObject' => $objectTypeObject,
 			'userProfile' => $userProfile,
 			'event' => $event
-		));
+		);
+		EventHandler::getInstance()->fireAction($this, 'fireEvent', $parameters);
 		
 		// find existing notifications
 		$conditions = new PreparedStatementConditionBuilder();
