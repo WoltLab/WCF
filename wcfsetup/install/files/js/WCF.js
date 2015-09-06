@@ -1601,7 +1601,7 @@ WCF.Action.Proxy = Class.extend({
 					
 					autoAbort: options.autoAbortPrevious,
 					ignoreError: options.suppressErrors,
-					silent: options.suppressErrors,
+					silent: !options.showLoadingOverlay,
 					
 					failure: options.failure,
 					finalize: options.after,
