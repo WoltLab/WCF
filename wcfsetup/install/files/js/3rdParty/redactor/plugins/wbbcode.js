@@ -844,8 +844,7 @@ RedactorPlugins.wbbcode = function() {
 					}
 					
 					var $bbcode = '[code' + ($attributes.length ? '=' + $attributes : '') + ']' + listing.codeContent + '[/code]\n';
-					
-					html = html.replace(new RegExp('@@@' + uuid + '@@@\n?', 'g'), $bbcode);
+					html = html.replace(new RegExp('@@@' + uuid + '@@@\n?', 'g'), $bbcode.replace(/\$/g, '$$$'));
 				});
 			}
 			
