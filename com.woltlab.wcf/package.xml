@@ -89,6 +89,15 @@
 		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 	
+	<instructions type="update" fromversion="2.1.6">
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" run="standalone">language/*.xml</instruction>
+		
+		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+	</instructions>
+	
 	<instructions type="update" fromversion="2.1.7">
 		<instruction type="file">files_update.tar</instruction>
 	</instructions>
