@@ -3,6 +3,7 @@ namespace wcf\system\exception;
 use wcf\system\WCF;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 /**
  * A logged exceptions prevents information disclosures and provides an easy
@@ -96,9 +97,12 @@ class LoggedException extends \Exception {
 			'File: '.$e->getFile().' ('.$e->getLine().")\n".
 			'PHP version: '.phpversion()."\n".
 			'WCF version: '.WCF_VERSION."\n".
+			'Webserver: '.(isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '')."\n".
+			'SQL version: '.(WCF::getDB() ? WCF::getDB()->getVersion() : '')."\n".
 			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
 			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '')."\n".
-			'User-Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '')."\n".
+			'User-Agent: '.UserUtil::getUserAgent()."\n".
+			'IP Address: '.UserUtil::convertIPv6To4(UserUtil::getIpAddress())."\n".
 			'Information: '.JSON::encode($this->information)."\n".
 			"Stacktrace: \n  ".implode("\n  ", explode("\n", $this->__getTraceAsString()))."\n";
 		

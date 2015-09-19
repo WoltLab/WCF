@@ -96,6 +96,10 @@
 						<dt>{lang}wcf.acp.exceptionLog.exception.userAgent{/lang}</dt>
 						<dd>{$exception[userAgent]}</dd>
 					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.ipAddress{/lang}</dt>
+						<dd>{$exception[ipAddress]}</dd>
+					</dl>
 					{if $exception[information]}
 						<dl>
 							<dt>{lang}wcf.acp.exceptionLog.exception.information{/lang}</dt>

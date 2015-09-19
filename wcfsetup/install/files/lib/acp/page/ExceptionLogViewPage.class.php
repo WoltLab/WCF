@@ -139,9 +139,12 @@ Message: (?P<message>.*?)
 File: (?P<file>.*?) \((?P<line>\d+)\)
 PHP version: (?P<phpVersion>.*?)
 WCF version: (?P<wcfVersion>.*?)
+Webserver: (?P<webserver>.*?)
+SQL version: (?P<mySQLVersion>.*?)
 Request URI: (?P<requestURI>.*?)
 Referrer: (?P<referrer>.*?)
 User-Agent: (?P<userAgent>.*?)
+IP Address: (?P<ipAddress>.*?)
 Information: (?P<information>.*?)
 Stacktrace: 
 (?P<stacktrace>.*)', Regex::DOT_ALL);

@@ -260,6 +260,7 @@
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Datei]]></item>
 		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[Browser]]></item>
+		<item name="wcf.acp.exceptionLog.exception.ipAddress"><![CDATA[IP-Adresse]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
