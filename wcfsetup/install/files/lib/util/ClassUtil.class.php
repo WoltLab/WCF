@@ -34,6 +34,8 @@ final class ClassUtil {
 	 * @param	string		$className
 	 * @param	string		$targetClass
 	 * @return	boolean
+	 * 
+	 * @deprecated	use is_subclass_of() instead
 	 */
 	public static function isInstanceOf($className, $targetClass) {
 		// validate parameters

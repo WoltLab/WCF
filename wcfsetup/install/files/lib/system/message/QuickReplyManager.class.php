@@ -11,7 +11,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\ClassUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
@@ -134,7 +133,7 @@ class QuickReplyManager extends SingletonFactory {
 		
 		$this->container = new $containerClassName($parameters['objectID']);
 		if (!empty($containerDecoratorClassName)) {
-			if (!ClassUtil::isInstanceOf($containerDecoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
+			if (!is_subclass_of($containerDecoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
 				throw new SystemException("'".$containerDecoratorClassName."' does not extend 'wcf\data\DatabaseObjectDecorator'");
 			}
 			
@@ -233,7 +232,7 @@ class QuickReplyManager extends SingletonFactory {
 			}
 			
 			// update visit time (messages shouldn't occur as new upon next visit)
-			if (ClassUtil::isInstanceOf($containerActionClassName, 'wcf\data\IVisitableObjectAction')) {
+			if (is_subclass_of($containerActionClassName, 'wcf\data\IVisitableObjectAction')) {
 				$containerAction = new $containerActionClassName(array(($this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container)), 'markAsRead');
 				$containerAction->executeAction();
 			}

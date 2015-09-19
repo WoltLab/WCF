@@ -3,7 +3,6 @@ namespace wcf\page;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Provides default implementations for a multiple link page.
@@ -131,7 +130,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 			throw new SystemException('DatabaseObjectList class name not specified.');
 		}
 		
-		if (!ClassUtil::isInstanceOf($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
+		if (!is_subclass_of($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
 			throw new SystemException("'".$this->objectListClassName."' does not extend 'wcf\data\DatabaseObjectList'");
 		}
 		

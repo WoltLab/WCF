@@ -5,7 +5,6 @@ use wcf\data\user\group\UserGroup;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\OptionHandler;
-use wcf\util\ClassUtil;
 use wcf\system\WCF;
 
 /**
@@ -84,7 +83,7 @@ class UserGroupOptionHandler extends OptionHandler {
 		if (!class_exists($className)) {
 			return null;
 		}
-		if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
+		if (!is_subclass_of($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\option\user\group\IUserGroupOptionType'");
 		}
 		
