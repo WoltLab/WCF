@@ -10,10 +10,18 @@
 	
 	fieldset > legend,
 	section > h1 {
-		.wcfFontLarge;
+		@extend .wcfFontLarge;
 		
-		color: rgb(67, 67, 67);
+		color: $wcfContentHeadlineText;
 		margin-bottom: 20px;
+		
+		a {
+			color: $wcfContentHeadlineLink;
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive;
+			}
+		}
 	}
 	
 	.container {
@@ -23,7 +31,7 @@
 			}
 			
 			> legend {
-				border-bottom: 1px solid rgb(238, 238, 238);
+				border-bottom: 1px solid $wcfContentBorder;
 				padding-bottom: 5px;
 			}
 		}
@@ -34,7 +42,7 @@
 			}
 			
 			> h1 {
-				border-bottom: 1px solid rgb(238, 238, 238);
+				border-bottom: 1px solid $wcfContentBorder;
 				padding-bottom: 5px;
 			}
 		}

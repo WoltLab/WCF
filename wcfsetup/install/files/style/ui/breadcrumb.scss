@@ -12,6 +12,7 @@
 				margin-right: 10px;
 				
 				&:after {
+					color: $wcfHeaderText;
 					content: "/";
 				}
 				
@@ -21,12 +22,13 @@
 			}
 			
 			> a {
-				color: rgba(255, 255, 255, 1);
+				color: $wcfHeaderLink;
 				opacity: .8;
 				text-decoration: none;
 				transition: opacity .2s linear;
 				
 				&:hover {
+					color: $wcfHeaderLinkActive;
 					opacity: 1;
 				}
 			}

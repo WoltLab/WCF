@@ -10,7 +10,7 @@
 /* @TODO END */
 
 #pageHeader {
-	background-color: rgba(52, 73, 94, 1); /* @TODO */
+	background-color: $wcfUserPanelBackground;
 }
 
 #pageHeader > div > div {
@@ -38,16 +38,16 @@
 		display: flex;
 		
 		> li {
-			.wcfFontLarger;
+			@extend .wcfFontLarger;
 			
 			flex: 0 auto;
 			
 			&:not(:last-child) {
-				margin-right: @wcfGapMedium;
+				margin-right: $wcfGapMedium;
 			}
 			
 			&.active > a {
-				.wcfFontBold;
+				@extend .wcfFontBold;
 				
 				color: rgba(255, 255, 255, 1);
 			}
@@ -79,7 +79,8 @@
 		padding-right: 15px;
 		
 		&:after {
-			content: @fa-var-caret-down;
+			// @TODO
+			//content: @fa-var-caret-down;
 			display: block;
 			font-family: FontAwesome;
 			position: absolute;
@@ -109,7 +110,7 @@
 		}
 		
 		> a {
-			.wcfFontDefault;
+			@extend .wcfFontDefault;
 			
 			color: rgb(255, 255, 255);
 			display: block;
@@ -145,6 +146,7 @@
 			}
 			
 			&.active > a {
+				// @TODO
 				color: rgba(255, 255, 255, 1);
 				font-family: "Segoe UI Semibold";
 				font-weight: bold;
@@ -169,7 +171,7 @@
 					color: rgba(255, 255, 255, .8);
 					transition: color .2s linear;
 					
-					.icon24;
+					@extend .icon24;
 				}
 				
 				> span:not(.icon) {

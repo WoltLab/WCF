@@ -3,27 +3,20 @@
 /* @TODO END */
 
 html, body {
-	font-size: @wcfBaseFontSize;
+	font-size: $wcfBaseFontSize;
 	height: 100%;
 }
 
 body {
-	background-color: @wcfPageBackgroundColor;
-	color: @wcfPageColor;
 	line-height: 1.428571429;
 	position: relative;
 	word-wrap: break-word;
 	
-	.wcfFontDefault;
+	@extend .wcfFontDefault;
 }
 
 a {
-	color: @wcfPageLinkColor;
 	cursor: pointer;
-	
-	&:hover {
-		color: @wcfPageLinkHoverColor;
-	}
 	
 	&:not(:hover) {
 		text-decoration: none;
@@ -31,7 +24,7 @@ a {
 }
 
 strong {
-	.wcfFontBold;
+	@extend .wcfFontBold;
 }
 
 #pageContainer {
@@ -47,8 +40,8 @@ strong {
 }
 
 .main {
-	background-color: @wcfContentBackgroundColor;
-	color: @wcfColor;
+	background-color: $wcfContentBackground;
+	color: $wcfContentText;
 	flex: 1 auto;
 	padding: 40px 0;
 	z-index: 50;
@@ -58,11 +51,11 @@ strong {
 	}
 	
 	a {
-		color: @wcfLinkColor;
+		color: $wcfContentLink;
 		text-decoration: none;
 		
 		&:hover {
-			color: @wcfLinkHoverColor;
+			color: $wcfContentLinkActive;
 		}
 	}
 }
@@ -89,15 +82,23 @@ strong {
 
 /* CONTENT AREA */
 .boxHeadline {
-	border-bottom: 1px solid rgba(238, 238, 238, 1);
+	border-bottom: 1px solid $wcfContentBorder;
+	color: $wcfContentHeadlineText;
 	margin-bottom: 30px;
 	padding-bottom: 10px;
 	
 	> h1 {
-		.wcfFontLarge;
+		@extend .wcfFontLarge;
 		
-		color: rgba(67, 67, 67, 1);
 		font-size: 2rem;
+	}
+	
+	a {
+		color: $wcfContentHeadlineLink;
+		
+		&:hover {
+			color: $wcfContentHeadlineLinkActive;
+		}
 	}
 	
 	&.labeledHeadline {
@@ -122,7 +123,7 @@ strong {
 
 .containerHeadline {
 	> h3 {
-		.wcfFontLarger;
+		@extend .wcfFontLarger;
 		
 		> .badge {
 			margin-left: 5px;

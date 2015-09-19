@@ -1,8 +1,8 @@
 .layoutFluid {
 	margin-left: auto;
 	margin-right: auto;
-	min-width: @wcfLayoutMinWidth;
-	max-width: @wcfLayoutMaxWidth;
+	min-width: $wcfLayoutMinWidth;
+	max-width: $wcfLayoutMaxWidth;
 }
 
 .marginTop {
@@ -13,8 +13,8 @@
 	> canvas,
 	> img,
 	> .icon {
-		background-color: @wcfContentBackgroundColor;
-		border: 1px solid @wcfContainerBorderColor;
+		//background-color: @wcfContentBackgroundColor;
+		//border: 1px solid @wcfContainerBorderColor;
 		padding: 1px;
 	}
 }
@@ -23,17 +23,22 @@
 	display: none;
 }
 
+.grayscale {
+	filter: gray;
+	-webkit-filter: grayscale(1);
+}
+
 /* boxes with an image */
-.box(@imageSize, @margin: 0) {
+@mixin box($imageSize, $margin: 0) {
 	display: flex;
 	
 	&:not(:last-child) {
-		margin-bottom: (@margin + 3px);
+		margin-bottom: ($margin + 3px);
 	}
 	
 	> :first-child:not(:last-child) {
 		flex: 0 auto;
-		margin-right: @margin;
+		margin-right: $margin;
 	}
 	
 	> :last-child {
@@ -41,14 +46,14 @@
 	}
 }
 
-.box16 { .box(16px, 4px); }
-.box24 { .box(24px, 4px); }
-.box32 { .box(32px, 7px); }
-.box48 { .box(48px, 7px); }
-.box64 { .box(64px, 7px); }
-.box96 { .box(96px, 11px); }
-.box128 { .box(128px, 11px); }
-.box256 { .box(256px, 21px); }
+.box16 { @include box(16px, 4px); }
+.box24 { @include box(24px, 4px); }
+.box32 { @include box(32px, 7px); }
+.box48 { @include box(48px, 7px); }
+.box64 { @include box(64px, 7px); }
+.box96 { @include box(96px, 11px); }
+.box128 { @include box(128px, 11px); }
+.box256 { @include box(256px, 21px); }
 
 small {
 	font-size: .85rem;

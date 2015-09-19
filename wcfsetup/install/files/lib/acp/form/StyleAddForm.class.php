@@ -47,7 +47,7 @@ class StyleAddForm extends AbstractForm {
 	 * list of available font families
 	 * @var	array<string>
 	 */
-	public $availableFontFamilies = array(
+	public $availableFontFamilies = [
 		'Arial, Helvetica, sans-serif' => 'Arial',
 		'Chicago, Impact, Compacta, sans-serif' => 'Chicago',
 		'"Comic Sans MS", sans-serif' => 'Comic Sans',
@@ -61,25 +61,25 @@ class StyleAddForm extends AbstractForm {
 		'"Times New Roman", Times, Georgia, serif' => 'Times New Roman',
 		'"Trebuchet MS", Arial, sans-serif' => 'Trebuchet MS',
 		'Verdana, Helvetica, sans-serif' => 'Verdana'
-	);
+	];
 	
 	/**
 	 * list of available template groups
 	 * @var	array<\wcf\data\template\group\TemplateGroup>
 	 */
-	public $availableTemplateGroups = array();
+	public $availableTemplateGroups = [];
 	
 	/**
 	 * list of available units
 	 * @var	array<string>
 	 */
-	public $availableUnits = array('px', 'em', '%', 'pt');
+	public $availableUnits = ['px', 'em', '%', 'pt'];
 	
 	/**
 	 * list of color variables
 	 * @var	array<string>
 	 */
-	public $colors = array();
+	public $colors = [];
 	
 	/**
 	 * copyright message
@@ -91,7 +91,7 @@ class StyleAddForm extends AbstractForm {
 	 * list of global variables
 	 * @var	array
 	 */
-	public $globals = array();
+	public $globals = [];
 	
 	/**
 	 * image path
@@ -114,7 +114,7 @@ class StyleAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.style.canManageStyle');
+	public $neededPermissions = ['admin.style.canManageStyle'];
 	
 	/**
 	 * style package name
@@ -162,13 +162,13 @@ class StyleAddForm extends AbstractForm {
 	 * list of variables and their value
 	 * @var	array<string>
 	 */
-	public $variables = array();
+	public $variables = [];
 	
 	/**
 	 * list of specialized variables
 	 * @var	array<string>
 	 */
-	public $specialVariables = array();
+	public $specialVariables = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -204,9 +204,20 @@ class StyleAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->readValues();
 		
+		// @TODO
+		$colors = [];
+		foreach ($this->colors as $k => $v) {
+			foreach ($v as $vv) {
+				$prefix = (isset($vv['overridePrefix'])) ? $vv['overridePrefix'] : $k;
+				foreach ($vv['items'] as $vvv) {
+					$colors[] = $prefix . ucfirst($vvv);
+				}
+			}
+		}
+		
 		// ignore everything except well-formed rgba()
 		$regEx = new Regex('rgba\(\d{1,3}, \d{1,3}, \d{1,3}, (1|1\.00?|0|0?\.[0-9]{1,2})\)');
-		foreach ($this->colors as $variableName) {
+		foreach ($colors as $variableName) {
 			if (isset($_POST[$variableName]) && $regEx->match($_POST[$variableName])) {
 				$this->variables[$variableName] = $_POST[$variableName];
 			}
@@ -329,14 +340,14 @@ class StyleAddForm extends AbstractForm {
 			FROM	wcf".WCF_N."_style_variable";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$variables = array();
+		$variables = [];
 		while ($row = $statement->fetchArray()) {
 			$variables[] = $row['variableName'];
 		}
 		
 		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideLess']));
 		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$');
-		$errors = array();
+		$errors = [];
 		foreach ($lines as $index => &$line) {
 			$line = StringUtil::trim($line);
 			
@@ -351,17 +362,17 @@ class StyleAddForm extends AbstractForm {
 				
 				// cannot override variables covered by style editor
 				if (in_array($matches[1], $this->colors) || in_array($matches[1], $this->globals) || in_array($matches[1], $this->specialVariables)) {
-					$errors[] = array(
+					$errors[] = [
 						'error' => 'predefined',
 						'text' => $matches[1]
-					);
+					];
 				}
 				else if (!in_array($matches[1], $variables)) {
 					// unknown style variable
-					$errors[] = array(
+					$errors[] = [
 						'error' => 'unknown',
 						'text' => $matches[1]
-					);
+					];
 				}
 				else {
 					$this->variables[$matches[1]] = $matches[2];
@@ -369,10 +380,10 @@ class StyleAddForm extends AbstractForm {
 			}
 			else {
 				// not valid
-				$errors[] = array(
+				$errors[] = [
 					'error' => 'notValid',
 					'text' => $line
-				);
+				];
 			}
 		}
 		
@@ -418,7 +429,90 @@ class StyleAddForm extends AbstractForm {
 	 */
 	protected function setVariables() {
 		// set color variables
-		$this->colors = array(
+		$this->colors = [
+			'wcfPage' => [
+				[
+					'overridePrefix' => 'wcfHeader',
+					'items' => ['background', 'text', 'link', 'linkActive']
+				],
+				[
+					'overridePrefix' => 'wcfMenu',
+					'items' => ['background', 'backgroundActive', 'border', 'text', 'textActive', 'link', 'linkActive']
+				],
+				[
+					'overridePrefix' => 'wcfMenuContent',
+					'items' => ['background', 'backgroundActive', 'border', 'text', 'textActive', 'link', 'linkActive']
+				],
+				[
+					'overridePrefix' => 'wcfSearchBox',
+					'items' => ['background', 'backgroundActive', 'border', 'borderActive', 'text', 'textActive', 'link', 'linkActive']
+				],
+				[
+					'overridePrefix' => 'wcfHeaderBox',
+					'items' => ['background', 'text', 'link', 'linkActive']
+				],
+				[
+					'overridePrefix' => 'wcfHeaderNavigation',
+					'items' => ['background', 'text', 'link', 'linkActive']
+				],
+				[
+					'overridePrefix' => 'wcfFooterBox',
+					'items' => ['background', 'text', 'link', 'linkActive']
+				],
+				[
+					'overridePrefix' => 'wcfFooter',
+					'items' => ['background', 'text', 'link', 'linkActive']
+				]
+			],
+			'wcfContent' => [
+				[
+					'items' => ['background', 'text', 'link', 'linkActive', 'border'],
+				],
+				[
+					'overridePrefix' => 'wcfContentHeadline',
+					'items' => ['text', 'link', 'linkActive']
+				],
+				[
+					'items' => ['textDimmed', 'linkDimmed', 'linkDimmedActive']
+				],
+				[
+					'items' => ['backgroundAccent', 'textAccent', 'linkAccent', 'linkAccentActive', 'borderAccent']
+				]
+			],
+			'wcfSidebar' => [
+				[
+					'items' => ['background', 'border']
+				],
+				[
+					'overridePrefix' => 'wcfSidebarBox',
+					'items' => ['background', 'text', 'link', 'linkActive', 'border', 'textDimmed', 'linkDimmed', 'linkDimmedActive']
+				],
+				[
+					'overridePrefix' => 'wcfSidebarBoxHeadline',
+					'items' => ['text', 'link', 'linkActive', 'border']
+				]
+			],
+			'wcfButton' => [
+				[
+					'items' => ['background', 'backgroundActive', 'text', 'textActive', 'border', 'borderActive']
+				],
+				[
+					'items' => ['backgroundAccent', 'backgroundAccentActive', 'textAccent', 'textAccentActive', 'borderAccent', 'borderAccentActive']
+				]
+			],
+			'wcfInput' => [
+				[
+					'items' => ['background', 'backgroundActive', 'border', 'borderActive', 'text', 'textActive']
+				]
+			],
+			'wcfDropdown' => [
+				[
+					'items' => ['background', 'backgroundActive', 'text', 'textActive', 'link', 'linkActive']
+				]
+			]
+		];
+		/*
+		$this->colors = [
 			'wcfButtonBackgroundColor',
 			'wcfButtonBorderColor',
 			'wcfButtonColor',
@@ -453,24 +547,24 @@ class StyleAddForm extends AbstractForm {
 			'wcfUserPanelColor',
 			'wcfUserPanelHoverBackgroundColor',
 			'wcfUserPanelHoverColor',
-		);
-		
+		];
+		*/
 		// set global variables
-		$this->globals = array(
+		$this->globals = [
 			'wcfBaseFontSize',
 			'wcfLayoutFixedWidth',
 			'wcfLayoutMinWidth',
 			'wcfLayoutMaxWidth'
-		);
+		];
 		
 		// set specialized variables
-		$this->specialVariables = array(
+		$this->specialVariables = [
 			'individualLess',
 			'overrideLess',
 			'pageLogo',
 			'useFluidLayout',
 			'wcfBaseFontFamily'
-		);
+		];
 		
 		EventHandler::getInstance()->fireAction($this, 'setVariables');
 	}
@@ -494,8 +588,8 @@ class StyleAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new StyleAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new StyleAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
 				'packageName' => $this->packageName,
@@ -509,10 +603,10 @@ class StyleAddForm extends AbstractForm {
 				'license' => $this->license,
 				'authorName' => $this->authorName,
 				'authorURL' => $this->authorURL
-			)),
+			]),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
-		));
+		]);
 		$returnValues = $this->objectAction->executeAction();
 		$style = $returnValues['returnValues'];
 		
@@ -520,9 +614,9 @@ class StyleAddForm extends AbstractForm {
 		I18nHandler::getInstance()->save('styleDescription', 'wcf.style.styleDescription'.$style->styleID, 'wcf.style');
 		
 		$styleEditor = new StyleEditor($style);
-		$styleEditor->update(array(
+		$styleEditor->update([
 			'styleDescription' => 'wcf.style.styleDescription'.$style->styleID
-		));
+		]);
 		
 		// call saved event
 		$this->saved();
@@ -551,13 +645,14 @@ class StyleAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'authorName' => $this->authorName,
 			'authorURL' => $this->authorURL,
 			'availableFontFamilies' => $this->availableFontFamilies,
 			'availableTemplateGroups' => $this->availableTemplateGroups,
 			'availableUnits' => $this->availableUnits,
+			'colors' => $this->colors,
 			'copyright' => $this->copyright,
 			'imagePath' => $this->imagePath,
 			'isTainted' => $this->isTainted,
@@ -570,6 +665,6 @@ class StyleAddForm extends AbstractForm {
 			'templateGroupID' => $this->templateGroupID,
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
-		));
+		]);
 	}
 }

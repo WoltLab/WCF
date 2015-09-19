@@ -1,5 +1,5 @@
 .navigation {
-	background-color: rgba(44, 62, 80, 1);
+	background-color: $wcfHeaderBackground;
 	flex: 0 auto;
 	padding: 5px 0;
 	z-index: 25;
@@ -33,7 +33,7 @@
 			}
 			
 			> .icon {
-				color: rgba(255, 255, 255, 1);
+				color: $wcfHeaderLink;
 			}
 		}
 	}

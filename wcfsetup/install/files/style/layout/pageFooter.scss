@@ -1,0 +1,59 @@
+#pageFooterBoxes {
+	background-color: $wcfFooterBoxBackground;
+	color: $wcfFooterBoxText;
+	padding: 30px;
+	z-index: 40;
+	
+	a {
+		color: $wcfFooterBoxLink;
+		
+		&:hover {
+			color: $wcfFooterBoxLinkActive;
+		}
+	}
+	
+	> div > ul {
+		display: flex;
+		flex-wrap: wrap;
+		
+		> li {
+			flex: 0 0 50%;
+			
+			> .icon:first-child {
+				display: none;
+			}
+			
+			> div > .containerHeadline > h3 {
+				font-family: "Segoe UI Light";
+				font-size: 1.4rem;
+				margin-bottom: 10px;
+			}
+		}
+	}
+}
+
+#pageFooter {
+	background-color: $wcfFooterBackground;
+	color: $wcfFooterText;
+	padding: 20px 0;
+	z-index: 20;
+	
+	a {
+		color: $wcfFooterLink;
+		
+		&:hover {
+			color: $wcfFooterLinkActive;
+		}
+	}
+	
+	address {
+		font-style: normal;
+		opacity: .8;
+		text-align: center;
+		transition: opacity .2s linear;
+		
+		&:hover {
+			opacity: 1;
+		}
+	}
+}

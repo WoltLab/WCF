@@ -1,5 +1,5 @@
 .messageList {
-	border: 1px solid rgb(79, 129, 189);
+	border: 1px solid $wcfContentBackgroundAccent;
 	border-width: 1px 0;
 	margin: 30px 0;
 	
@@ -8,7 +8,7 @@
 		padding: 40px 0;
 		
 		&:not(:first-child) {
-			border-top: 1px solid rgb(79, 129, 189);
+			border-top: 1px solid $wcfContentBackgroundAccent;
 		}
 	}
 }
@@ -20,16 +20,20 @@
 /* sidebar */
 .messageSidebar {
 	align-self: flex-start;
-	background-color: rgb(79, 129, 189);
+	background-color: $wcfContentBackgroundAccent;
 	border-radius: 3px;
-	color: rgb(255, 255, 255);
+	color: $wcfContentTextAccent;
 	flex: 0 0 170px;
 	padding: 20px;
 	position: relative;
 	text-align: center;
 	
 	a {
-		color: rgb(255, 255, 255);
+		color: $wcfContentLinkAccent;
+		
+		&:hover {
+			color: $wcfContentLinkAccentActive;
+		}
 	}
 	
 	.dataList {
@@ -41,7 +45,7 @@
 	margin-top: 25px;
 	
 	&:before {
-		border-top: 2px solid rgb(112, 152, 200);
+		border-top: 2px solid $wcfContentBorderAccent;
 		content: "";
 		left: 0;
 		margin-top: -10px;
@@ -70,7 +74,7 @@
 }
 
 .messageQuickOptions {
-	.inlineList;
+	@extend .inlineList;
 	
 	flex: 0 0 auto;
 	opacity: .3;
@@ -152,7 +156,7 @@
 }
 
 .messageFooterButtons {
-	.inlineList;
+	@extend .inlineList;
 	
 	justify-content: flex-end;
 	margin-top: 10px;
@@ -188,7 +192,7 @@
 		
 		> h3 {
 			> .messageGroupLink {
-				font-size: @wcfTitleFontSize;
+				font-size: $wcfTitleFontSize;
 			}
 			
 			> .badge.label {
@@ -201,7 +205,7 @@
 		}
 		
 		> nav {
-			font-size: @wcfSmallFontSize;
+			font-size: $wcfSmallFontSize;
 			
 			> ul > li {
 				display: inline;
@@ -220,33 +224,32 @@
 		}
 		
 		&.messageDisabled {
-			color: @wcfDisabledColor;
+			color: $wcfDisabledColor;
 			
 			> td {
-				background-color: @wcfDisabledBackgroundColor !important;
+				background-color: $wcfDisabledBackgroundColor !important;
 			}
 			
 			a:not(.badge) {
-				color: @wcfDisabledColor;
+				color: $wcfDisabledColor;
 			}
 		}
 		
 		&.messageDeleted {
-			color: @wcfDeletedColor;
+			color: $wcfDeletedColor;
 			
 			> td {
-				background-color: @wcfDeletedBackgroundColor !important;
+				background-color: $wcfDeletedBackgroundColor !important;
 			}
 			
 			a:not(.badge) {
-				color: @wcfDeletedColor;
+				color: $wcfDeletedColor;
 			}
 		}
 		
 		.columnSubject .statusDisplay .pageNavigation {
 			opacity: 0;
-			
-			.transition(opacity, .2s);
+			transition: opacity .2s linear;
 		}
 		
 		&:hover .columnSubject .statusDisplay .pageNavigation {
@@ -255,7 +258,7 @@
 		
 		&.new .columnAvatar > div {
 			&::after {
-				color: @wcfLinkColor;
+				color: $wcfLinkColor;
 				content: "\f069";
 				font-family: FontAwesome;
 				font-weight: normal !important;
@@ -266,7 +269,7 @@
 				top: -4px;
 				right: -2px;
 				
-				.textShadow(@wcfContainerBackgroundColor);
+				@include textShadow($wcfContainerBackgroundColor);
 			}
 		}
 	}
@@ -279,8 +282,7 @@
 			
 			> p > img {
 				opacity: .6;
-				
-				.transition(opacity, .2s);
+				transition: opacity .2s linear;
 			}
 		}
 		
@@ -293,7 +295,7 @@
 			opacity: 1;
 			
 			> img {
-				.boxShadow(0, 0, rgba(0, 0, 0, .3), 3px);
+				@include boxShadow(0, 0, rgba(0, 0, 0, .3), 3px);
 			}
 		}
 	}
@@ -303,14 +305,14 @@
 		word-wrap: normal;
 		
 		> div > div > small {
-			color: @wcfDimmedColor;
+			color: $wcfDimmedColor;
 		}
 	}
 	
 	.messageGroupInfo {
-		.inlineList;
+		@extend .inlineList;
 		
-		font-size: @wcfSmallFontSize;
+		font-size: $wcfSmallFontSize;
 		
 		> li:not(:last-child) {
 			margin-right: 5px;

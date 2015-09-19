@@ -26,7 +26,7 @@
 
 ol.dataList,
 ul.dataList {
-	.inlineList;
+	@extend .inlineList;
 	
 	font-size: .85rem;
 	
@@ -59,7 +59,7 @@ ul.dataList {
 }
 
 .tagList {
-	.inlineList;
+	@extend .inlineList;
 	
 	align-items: baseline;
 }
