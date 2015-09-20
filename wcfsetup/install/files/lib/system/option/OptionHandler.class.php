@@ -7,7 +7,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
-use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -376,7 +375,7 @@ class OptionHandler implements IOptionHandler {
 			return null;
 		}
 		
-		if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
+		if (!is_subclass_of($className, 'wcf\system\option\IOptionType')) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\option\IOptionType'");
 		}
 		

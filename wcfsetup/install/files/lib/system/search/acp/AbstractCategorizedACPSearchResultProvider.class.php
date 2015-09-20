@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
 use wcf\system\exception\SystemException;
-use wcf\util\ClassUtil;
 
 /**
  * Abstract implementation of a ACP search result provider with nested categories.
@@ -88,7 +87,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 */
 	protected function loadCategories() {
 		// validate list class name
-		if (empty($this->listClassName) || !ClassUtil::isInstanceOf($this->listClassName, 'wcf\data\DatabaseObjectList')) {
+		if (empty($this->listClassName) || !is_subclass_of($this->listClassName, 'wcf\data\DatabaseObjectList')) {
 			throw new SystemException("Given class '".$this->listClassName."' is empty or invalid");
 		}
 		

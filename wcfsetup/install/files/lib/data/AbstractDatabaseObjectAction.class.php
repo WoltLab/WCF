@@ -7,7 +7,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\ClassUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -214,7 +213,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Resets cache of database object.
 	 */
 	protected function resetCache() {
-		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\IEditableCachedObject')) {
+		if (is_subclass_of($this->className, 'wcf\data\IEditableCachedObject')) {
 			call_user_func(array($this->className, 'resetCache'));
 		}
 	}

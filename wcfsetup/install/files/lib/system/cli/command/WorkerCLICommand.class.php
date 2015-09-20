@@ -3,7 +3,6 @@ namespace wcf\system\cli\command;
 use phpline\internal\Log;
 use wcf\system\CLIWCF;
 use wcf\system\Regex;
-use wcf\util\ClassUtil;
 use wcf\util\CLIUtil;
 use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
@@ -78,7 +77,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			if (!$reflection->isInstantiable()) {
 				$invalid = true;
 			}
-			else if (!ClassUtil::isInstanceOf($class, 'wcf\system\worker\IWorker')) {
+			else if (!is_subclass_of($class, 'wcf\system\worker\IWorker')) {
 				$invalid = true;
 			}
 		}
@@ -155,7 +154,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			$reflection = new \ReflectionClass($class);
 			if (!$reflection->isInstantiable()) continue;
 			
-			if (!ClassUtil::isInstanceOf($class, 'wcf\system\worker\IWorker')) {
+			if (!is_subclass_of($class, 'wcf\system\worker\IWorker')) {
 				Log::info('Invalid worker file: ', $worker);
 				continue;
 			}

@@ -8,7 +8,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Handles dashboard boxes.
@@ -67,7 +66,7 @@ class DashboardHandler extends SingletonFactory {
 		);
 		foreach ($boxIDs as $boxID) {
 			$className = $this->boxCache[$boxID]->className;
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\dashboard\box\IDashboardBox')) {
+			if (!is_subclass_of($className, 'wcf\system\dashboard\box\IDashboardBox')) {
 				throw new SystemException("'".$className."' does not implement 'wcf\system\dashboard\box\IDashboardBox'");
 			}
 			

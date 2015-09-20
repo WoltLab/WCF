@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data;
 use wcf\system\exception\SystemException;
-use wcf\util\ClassUtil;
 
 /**
  * Abstract class for all processible data holder classes.
@@ -37,15 +36,15 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 				if (!class_exists($this->className)) {
 					throw new SystemException("Unable to find class '".$this->className."'");
 				}
-				if (!ClassUtil::isInstanceOf($this->className, static::$processorInterface)) {
+				if (!is_subclass_of($this->className, static::$processorInterface)) {
 					throw new SystemException("'".$this->className."' does not implement '".static::$processorInterface."'");
 				}
 				
-				if (ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
+				if (is_subclass_of($this->className, 'wcf\system\SingletonFactory')) {
 					$this->processor = call_user_func(array($this->className, 'getInstance'));
 				}
 				else {
-					if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectProcessor')) {
+					if (!is_subclass_of($this->className, 'wcf\data\IDatabaseObjectProcessor')) {
 						throw new SystemException("'".$this->className."' does not implement 'wcf\data\IDatabaseObjectProcessor'");
 					}
 					

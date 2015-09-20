@@ -10,7 +10,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -418,10 +417,10 @@ class PollManager extends SingletonFactory {
 		
 		// validates against object type's class
 		$className = $this->cache[$objectType]->className;
-		if (!ClassUtil::isInstanceOf($className, 'wcf\system\poll\IPollHandler')) {
+		if (!is_subclass_of($className, 'wcf\system\poll\IPollHandler')) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\poll\IPollHandler'");
 		}
-		else if (!ClassUtil::isInstanceOf($className, 'wcf\system\SingletonFactory')) {
+		else if (!is_subclass_of($className, 'wcf\system\SingletonFactory')) {
 			throw new SystemException("'".$className."' does not extend 'wcf\system\SingletonFactory'");
 		}
 		
