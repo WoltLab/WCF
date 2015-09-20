@@ -70,23 +70,6 @@ body, .tabularBox, .dialogTitlebar {
 			}
 		}
 	}
-	
-	// rtl fix
-	html[dir='rtl'] {
-		.mainMenu {
-			> ul {
-				> li.active > a {
-					&::after {
-						.boxShadow(2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
-					}
-					
-					&::before {
-						.boxShadow(-2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
-					}
-				}
-			}
-		}
-	}
 }
 
 /* navigation header / footer */
@@ -595,27 +578,6 @@ button.active:hover {
 							width: 5px;
 							
 							.boxShadow(-2px, 1px, @wcfContainerBackgroundColor, 0);
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	// rtl fix
-	html[dir='rtl'] {
-		.tabMenu {
-			> ul {
-				> li {
-					&.ui-state-active {
-						> a {
-							&::before {
-								.boxShadow(-2px, 1px, @wcfContainerBackgroundColor, 0);
-							}
-							
-							&::after {
-								.boxShadow(2px, 1px, @wcfContainerBackgroundColor, 0);
-							}
 						}
 					}
 				}
