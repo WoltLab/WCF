@@ -62,9 +62,9 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * etag for this attachment
-	 * @var string
+	 * @var	string
 	 */ 
-	public $eTag = null; 
+	public $eTag = null;
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
