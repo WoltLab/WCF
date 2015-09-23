@@ -50,6 +50,8 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				failure: null,
 				finalize: null,
 				success: null,
+				progress: null,
+				uploadProgress: null,
 				
 				callbackObject: null
 			}, options);
@@ -68,6 +70,8 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				if (typeof this._options.callbackObject._ajaxFailure === 'function') this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
 				if (typeof this._options.callbackObject._ajaxFinalize === 'function') this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
 				if (typeof this._options.callbackObject._ajaxSuccess === 'function') this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
+				if (typeof this._options.callbackObject._ajaxProgress === 'function') this._options.progress = this._options.callbackObject._ajaxProgress.bind(this._options.callbackObject);
+				if (typeof this._options.callbackObject._ajaxUploadProgress === 'function') this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(this._options.callbackObject);
 			}
 			
 			if (_didInit === false) {
@@ -123,6 +127,13 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			this._xhr.onerror = function() {
 				self._failure(this, options);
 			};
+			
+			if (this._options.progress) {
+				this._xhr.onprogress = this._options.progress;
+			}
+			if (this._options.uploadProgress) {
+				this._xhr.upload.onprogress = this._options.uploadProgress;
+			}
 			
 			if (this._options.type === 'POST') {
 				var data = this._options.data;
