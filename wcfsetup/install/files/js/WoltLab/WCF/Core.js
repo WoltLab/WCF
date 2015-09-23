@@ -114,6 +114,37 @@ define([], function() {
 		},
 		
 		/**
+		 * Inherits the prototype methods from one constructor to another
+		 * constructor.
+		 * 
+		 * @see	https://github.com/nodejs/node/blob/7d14dd9b5e78faabb95d454a79faa513d0bbc2a5/lib/util.js#L697-L735
+		 * @param	{function}	constructor		inheriting constructor function
+		 * @param	{function}	superConstructor	inherited constructor function
+		 * @param	{object=}	propertiesObject	additional prototype properties
+		 */
+		inherit: function(constructor, superConstructor, propertiesObject) {
+			if (constructor === undefined || constructor === null) {
+				throw new TypeError("The constructor must not be undefined or null.");
+			}
+			if (superConstructor === undefined || superConstructor === null) {
+				throw new TypeError("The super constructor must not be undefined or null.");
+			}
+			if (superConstructor.prototype === undefined) {
+				throw new TypeError("The super constructor must have a prototype.");
+			}
+			
+			constructor._super = superConstructor;
+			constructor.prototype = Core.extend(Object.create(superConstructor.prototype, {
+				constructor: {
+					configurable: true,
+					enumerable: false,
+					value: constructor,
+					writable: true,
+				}
+			}), propertiesObject || {});
+		},
+		
+		/**
 		 * Returns true if `obj` is an object literal.
 		 * 
 		 * @param	{*}	obj	target object
