@@ -35,6 +35,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			this._options = Core.extend({
 				// request data
 				data: {},
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 				responseType: 'application/json',
 				type: 'POST',
 				url: '',
@@ -96,7 +97,9 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			
 			this._xhr = new XMLHttpRequest();
 			this._xhr.open(this._options.type, this._options.url, true);
-			this._xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+			if (this._options.contentType) {
+				this._xhr.setRequestHeader('Content-Type', this._options.contentType);
+			}
 			this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 			
 			var self = this;
