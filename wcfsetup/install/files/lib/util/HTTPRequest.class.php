@@ -219,8 +219,16 @@ final class HTTPRequest {
 	 */
 	private function setURL($url) {
 		$parsedUrl = $originUrl = parse_url($url);
+		
+		$this->originUseSSL = $originUrl['scheme'] === 'https';
+		$this->originHost = $originUrl['host'];
+		$this->originPort = isset($originUrl['port']) ? $originUrl['port'] : ($this->originUseSSL ? 443 : 80);
+		
 		if (PROXY_SERVER_HTTP) {
 			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
+		}
+		
+		if (PROXY_SERVER_HTTP && !$this->originUseSSL) {
 			$this->path = $url;
 		}
 		else {
@@ -231,10 +239,6 @@ final class HTTPRequest {
 		$this->host = $parsedUrl['host'];
 		$this->port = isset($parsedUrl['port']) ? $parsedUrl['port'] : ($this->useSSL ? 443 : 80);
 		$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
-		
-		$this->originUseSSL = $originUrl['scheme'] === 'https';
-		$this->originHost = $originUrl['host'];
-		$this->originPort = isset($originUrl['port']) ? $originUrl['port'] : ($this->originUseSSL ? 443 : 80);
 		
 		// update the 'Host:' header if URL has changed
 		if ($this->url != $url) {
