@@ -137,7 +137,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			
 			if (this._options.type === 'POST') {
 				var data = this._options.data;
-				if (typeof data === 'object') {
+				if (typeof data === 'object' && Core.getType(data) !== 'FormData') {
 					data = Core.serialize(data);
 				}
 				
@@ -194,7 +194,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 		 * @param	{object<string, *>}	data	request data
 		 */
 		setData: function(data) {
-			if (this._data !== null) {
+			if (this._data !== null && Core.getType(data) !== 'FormData') {
 				data = Core.extend(this._data, data);
 			}
 			
