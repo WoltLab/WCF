@@ -224,15 +224,15 @@ final class HTTPRequest {
 		$this->originHost = $originUrl['host'];
 		$this->originPort = isset($originUrl['port']) ? $originUrl['port'] : ($this->originUseSSL ? 443 : 80);
 		
-		if (PROXY_SERVER_HTTP) {
-			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
-		}
-		
 		if (PROXY_SERVER_HTTP && !$this->originUseSSL) {
 			$this->path = $url;
 		}
 		else {
 			$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
+		}
+		
+		if (PROXY_SERVER_HTTP) {
+			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
 		}
 		
 		$this->useSSL = $parsedUrl['scheme'] === 'https';
