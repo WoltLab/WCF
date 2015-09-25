@@ -1210,7 +1210,13 @@ RedactorPlugins.wmonkeypatch = function() {
 					$node = marker.previousSibling;
 				}
 				
-				$(marker).remove();
+				// iOS sometimes pastes right into the marker, this work-around will unwrap the pasted content
+				if (marker.innerHTML.length) {
+					marker.outerHTML = marker.innerHTML;
+				}
+				else {
+					marker.parentNode.removeChild(marker);
+				}
 				
 				if ($node !== null) {
 					this.selection.implicitRange = document.createRange();
