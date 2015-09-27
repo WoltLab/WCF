@@ -154,7 +154,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getFormattedMessage() {
-		return SimpleMessageParser::getInstance()->parse($this->message);
+		return SimpleMessageParser::getInstance()->parse($this->message, true, false);
 	}
 	
 	/**
