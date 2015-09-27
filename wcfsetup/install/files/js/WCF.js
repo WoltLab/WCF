@@ -6514,7 +6514,9 @@ WCF.InlineEditor = Class.extend({
 });
 
 /**
- * Default implementation for ajax file uploads
+ * Default implementation for ajax file uploads.
+ * 
+ * @deprecated	Use WoltLab/WCF/Upload
  * 
  * @param	jquery		buttonSelector
  * @param	jquery		fileListSelector
@@ -6891,6 +6893,8 @@ WCF.Upload = Class.extend({
 
 /**
  * Default implementation for parallel AJAX file uploads.
+ * 
+ * @deprecated	Use WoltLab/WCF/Upload
  */
 WCF.Upload.Parallel = WCF.Upload.extend({
 	/**
