@@ -3,7 +3,7 @@ namespace wcf\data;
 
 /**
  * Provides legacy access to the properties of the related user profile object.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

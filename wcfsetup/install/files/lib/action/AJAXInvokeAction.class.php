@@ -10,7 +10,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -111,10 +110,10 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 */
 	protected function invoke() {
 		// check for interface and inheritance of SingletonFactory
-		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\IAJAXInvokeAction')) {
+		if (!is_subclass_of($this->className, 'wcf\system\IAJAXInvokeAction')) {
 			throw new SystemException("'".$this->className."' does not implement 'wcf\system\IAJAXInvokeAction'");
 		}
-		else if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
+		else if (!is_subclass_of($this->className, 'wcf\system\SingletonFactory')) {
 			throw new SystemException("'".$this->className."' does not extend 'wcf\system\SingletonFactory'");
 		}
 		

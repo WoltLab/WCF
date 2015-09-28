@@ -2,6 +2,7 @@
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
+use wcf\util\StringUtil;
 
 /**
  * @author	Marcel Werk

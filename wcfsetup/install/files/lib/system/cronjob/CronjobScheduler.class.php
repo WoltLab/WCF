@@ -7,7 +7,6 @@ use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Provides functions to execute cronjobs.
@@ -173,7 +172,7 @@ class CronjobScheduler extends SingletonFactory {
 		}
 		
 		// verify class signature
-		if (!(ClassUtil::isInstanceOf($className, 'wcf\system\cronjob\ICronjob'))) {
+		if (!(is_subclass_of($className, 'wcf\system\cronjob\ICronjob'))) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\cronjob\ICronjob'");
 		}
 		

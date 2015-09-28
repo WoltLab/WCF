@@ -43,6 +43,16 @@ RedactorPlugins.wbbcode = function() {
 				
 				$(document).trigger('resize');
 				this.wutil.saveSelection();
+				
+				var editor = this.$editor[0], textarea = this.$textarea[0];
+				setTimeout(function() {
+					if ($.browser.iOS && editor.scrollHeight === 0) {
+						// work-around for iOS 8 bug causing the browser to zoom in on tap
+						if (document.activeElement === editor || document.activeElement === textarea) {
+							document.activeElement.blur();
+						}
+					}
+				}, 10);
 			}).bind(this);
 			
 			this.opts.pasteBeforeCallback = $.proxy(this.wbbcode._pasteBeforeCallback, this);
@@ -132,6 +142,7 @@ RedactorPlugins.wbbcode = function() {
 					this.$textarea.val(this.wbbcode.convertToHtml(this.$textarea.val()));
 					this.code.offset = this.$textarea.val().length;
 					this.code.showVisual();
+					this.wutil.fixDOM();
 					this.wbbcode.fixBlockLevelElements();
 					this.wutil.selectionEndOfEditor();
 					this.wbbcode.observeQuotes();
@@ -142,19 +153,28 @@ RedactorPlugins.wbbcode = function() {
 					this.wutil.fixDOM();
 					$fixBR(this.$editor);
 					
+					if (/ Edge\//.test(navigator.userAgent)) {
+						var editor = this.$editor[0];
+						window.dtdesign = editor;
+						if (editor.childElementCount > 1 && editor.children[0].innerHTML === '\u200b') {
+							// strip empty newline created by Redactor's selection marker
+							editor.removeChild(editor.children[0]);
+						}
+					}
+					
 					this.wutil.saveSelection();
 				}
 			}).bind(this);
 			
 			// insert a new line if user clicked into the editor and the last children is a quote (same behavior as arrow down)
 			this.wutil.setOption('clickCallback', (function(event) {
-				this.wutil.saveSelection();
-				
 				if (event.target === this.$editor[0]) {
 					if (this.$editor[0].lastElementChild && this.$editor[0].lastElementChild.tagName === 'BLOCKQUOTE') {
 						this.wutil.setCaretAfter($(this.$editor[0].lastElementChild));
 					}
 				}
+				
+				setTimeout(this.wutil.saveSelection.bind(this), 10);
 			}).bind(this));
 			
 			// drop ul to prevent being touched by this.clean.clearUnverifiedRemove()
@@ -221,6 +241,8 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			if (this.opts.visual) {
+				this.wutil.restoreSelection();
+				
 				var $parentBefore = null;
 				if (window.getSelection().rangeCount && window.getSelection().getRangeAt(0).collapsed) {
 					$parentBefore = window.getSelection().getRangeAt(0).startContainer;
@@ -277,6 +299,8 @@ RedactorPlugins.wbbcode = function() {
 						$parent.insertBefore($node, $smiley.nextSibling);
 					}
 				}
+				
+				this.wutil.saveSelection();
 			}
 			else {
 				this.wutil.insertAtCaret(' ' + smileyCode + ' ');

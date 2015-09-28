@@ -23,7 +23,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -97,7 +96,7 @@ class WCF {
 	
 	/**
 	 * language object
-	 * @var	\wcf\system\language\Language
+	 * @var	\wcf\data\language\Language
 	 */
 	protected static $languageObj = null;
 	
@@ -476,7 +475,7 @@ class WCF {
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
 		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
-		if (class_exists($className) && ClassUtil::isInstanceOf($className, 'wcf\system\application\IApplication')) {
+		if (class_exists($className) && is_subclass_of($className, 'wcf\system\application\IApplication')) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
 			if (file_exists($configPath)) {
@@ -519,7 +518,7 @@ class WCF {
 	/**
 	 * Returns the corresponding application object. Does not support the 'wcf' pseudo application.
 	 * 
-	 * @param	wcf\data\application\Application	$application
+	 * @param	\wcf\data\application\Application	$application
 	 * @return	\wcf\system\application\IApplication
 	 */
 	public static function getApplicationObject(Application $application) {
@@ -649,7 +648,7 @@ class WCF {
 		}
 		
 		if (class_exists($objectName)) {
-			if (!(ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
+			if (!(is_subclass_of($objectName, 'wcf\system\SingletonFactory'))) {
 				throw new SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
 			}
 			

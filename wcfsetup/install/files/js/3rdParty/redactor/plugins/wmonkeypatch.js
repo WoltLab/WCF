@@ -1155,7 +1155,13 @@ RedactorPlugins.wmonkeypatch = function() {
 					$node = marker.previousSibling;
 				}
 				
-				$(marker).remove();
+				// iOS sometimes pastes right into the marker, this work-around will unwrap the pasted content
+				if (marker.innerHTML.length) {
+					marker.outerHTML = marker.innerHTML;
+				}
+				else {
+					marker.parentNode.removeChild(marker);
+				}
 				
 				if ($node !== null) {
 					this.selection.implicitRange = document.createRange();
@@ -1222,7 +1228,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.opts.modal.link =
 				'<fieldset id="redactor-modal-link">'
 					+ '<dl>'
-						+ '<dt><label for="redactor-link-url" />URL</label></dt>' /* TODO: use a phrase instead of hardcoding it! */
+						+ '<dt><label for="redactor-link-url">URL</label></dt>' /* TODO: use a phrase instead of hardcoding it! */
 						+ '<dd><input type="url" id="redactor-link-url" class="long" /></dd>'
 					+ '</dl>'
 					+ '<dl>'
@@ -1284,7 +1290,7 @@ RedactorPlugins.wmonkeypatch = function() {
 					+ '<legend>' + WCF.Language.get('wcf.bbcode.code') + '</legend>'
 					+ '<dl class="wide">'
 						+ '<dt></dt>'
-						+ '<dd><textarea id="redactorCodeBox" class="long" rows="12" /></dd>'
+						+ '<dd><textarea id="redactorCodeBox" class="long monospace" rows="12" /></dd>'
 					+ '</dl>'
 				+ '</fieldset>';
 			

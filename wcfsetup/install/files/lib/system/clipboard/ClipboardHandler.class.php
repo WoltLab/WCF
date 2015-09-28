@@ -7,7 +7,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Handles clipboard-related actions.
@@ -320,7 +319,7 @@ class ClipboardHandler extends SingletonFactory {
 			$actionClassName = $actionObject->actionClassName;
 			if (!isset($actions[$actionClassName])) {
 				// validate class
-				if (!ClassUtil::isInstanceOf($actionClassName, 'wcf\system\clipboard\action\IClipboardAction')) {
+				if (!is_subclass_of($actionClassName, 'wcf\system\clipboard\action\IClipboardAction')) {
 					throw new SystemException("'".$actionClassName."' does not implement 'wcf\system\clipboard\action\IClipboardAction'");
 				}
 				

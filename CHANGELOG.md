@@ -19,14 +19,18 @@
 * `wcf\system\event\listener\PreParserAtUserListener` removed.
 * `wcf\action\AJAXProxyAction::getData()` removed.
 * Version system removed.
+* Support for query string based sessions in Frontend removed.
 * `wcf\system\cache\source\RedisCacheSource` added.
 * Background queue (`wcf\system\background\*`) added.
 * Rewritten email system (`wcf\system\email\*`) added.
+* CryptoUtil (`wcf\util\CryptoUtil`) added.
 * Old email system (`wcf\system\mail\*`) deprecated.
 * Abstract bulk processing system added.
 * Replaced old user bulk processing with new implementation using the abstract bulk processing system.
 * `conditionContainers` template event in template `noticeAdd.tpl` added.
 * Use condition system for user search.
+* Image proxy for images included with the image BBCode.
 * Overhauled Redactor integration
 	* Linebreaks mode instead of using paragraphs, works better with the PHP-side parser which works with linebreaks
 	* Ported the PHP-BBCode parser, massively improves accuracy and ensures validity
+* Show error message if poll options are given but not question instead of discarding poll options.

@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Language/Input
  */
-define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown'], function(Dictionary, Language, ObjectMap, StringUtil, DomTraverse, DomUtil, UiSimpleDropdown) {
+define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown'], function(Core, Dictionary, Language, ObjectMap, StringUtil, DomTraverse, DomUtil, UiSimpleDropdown) {
 	"use strict";
 	
 	var _elements = new Dictionary();
@@ -107,7 +107,7 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 				
 				if (languageId) event.currentTarget.classList.add('active');
 				
-				this._select(elementId, languageId, event.currentTarget.children[0].textContent, isInit || false);
+				this._select(elementId, languageId, isInit || false);
 			}).bind(this);
 			
 			// build language dropdown
@@ -128,10 +128,10 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 			if (forceSelection !== true) {
 				var listItem = elCreate('li');
 				listItem.className = 'dropdownDivider';
-				elAttr(listItem, 'data-language-id', 0);
 				dropdownMenu.appendChild(listItem);
 				
 				listItem = elCreate('li');
+				elAttr(listItem, 'data-language-id', 0);
 				span = elCreate('span');
 				span.textContent = Language.get('wcf.global.button.disabledI18n');
 				listItem.appendChild(span);
@@ -155,7 +155,9 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 			_elements.set(elementId, {
 				buttonLabel: button.children[0],
 				element: element,
-				languageId: 0
+				languageId: 0,
+				isEnabled: true,
+				forceSelection: forceSelection
 			});
 			
 			// bind to submit event
@@ -182,11 +184,21 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 		 * 
 		 * @param	{string}	elementId	input element id
 		 * @param	{integer}	languageId	language id or `0` to disable i18n
-		 * @param	{string}	label		new dropdown label for selection
 		 * @param	{boolean}	isInit		triggers pre-selection on init
 		 */
-		_select: function(elementId, languageId, label, isInit) {
+		_select: function(elementId, languageId, isInit) {
 			var data = _elements.get(elementId);
+			
+			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(data.element.parentNode.id);
+			var item, label = '';
+			for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
+				item = dropdownMenu.children[i];
+				
+				var itemLanguageId = elAttr(item, 'data-language-id');
+				if (itemLanguageId.length && languageId === ~~itemLanguageId) {
+					label = item.children[0].textContent;
+				}
+			}
 			
 			// save current value
 			if (data.languageId !== languageId) {
@@ -252,27 +264,195 @@ define(['Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Do
 			for (var i = 0, length = elementIds.length; i < length; i++) {
 				elementId = elementIds[i];
 				data = _elements.get(elementId);
-				values = _values.get(elementId);
-				
-				// update with current value
-				if (data.languageId) {
-					values.set(data.languageId, data.element.value);
-				}
-				
-				if (values.size) {
-					values.forEach(function(value, languageId) {
-						input = elCreate('input');
-						input.type = 'hidden';
-						input.name = elementId + '_i18n[' + languageId + ']';
-						input.value = value;
-						
-						event.currentTarget.appendChild(input);
-					});
+				if (data.isEnabled) {
+					values = _values.get(elementId);
 					
-					// remove name attribute to enforce i18n values
-					data.element.removeAttribute('name');
+					// update with current value
+					if (data.languageId) {
+						values.set(data.languageId, data.element.value);
+					}
+					
+					if (values.size) {
+						values.forEach(function(value, languageId) {
+							input = elCreate('input');
+							input.type = 'hidden';
+							input.name = elementId + '_i18n[' + languageId + ']';
+							input.value = value;
+							
+							event.currentTarget.appendChild(input);
+						});
+						
+						// remove name attribute to enforce i18n values
+						data.element.removeAttribute('name');
+					}
 				}
 			}
+		},
+		
+		/**
+		 * Returns the values of an input field.
+		 * 
+		 * @param	{string}	elementId	input element id
+		 * @return	{Dictionary}	values stored for the different languages
+		 */
+		getValues: function(elementId) {
+			var element = _elements.get(elementId);
+			if (element === undefined) {
+				throw new Error("Expected a valid i18n input element, '" + elementId + "' is not i18n input field.");
+			}
+			
+			var values = _values.get(elementId);
+			
+			// update with current value
+			values.set(element.languageId, element.element.value);
+			
+			return values;
+		},
+		
+		/**
+		 * Sets the values of an input field.
+		 * 
+		 * @param	{string}	elementId	input element id
+		 * @param	{Dictionary}	values		values for the different languages
+		 */
+		setValues: function(elementId, values) {
+			var element = _elements.get(elementId);
+			if (element === undefined) {
+				throw new Error("Expected a valid i18n input element, '" + elementId + "' is not i18n input field.");
+			}
+			
+			if (Core.isPlainObject(values)) {
+				values = Dictionary.fromObject(values);
+			}
+			
+			element.element.value = '';
+			
+			if (values.has(0)) {
+				element.element.value = values.get(0);
+				values['delete'](0);
+			}
+			
+			_values.set(elementId, values);
+			
+			element.languageId = 0;
+			this._select(elementId, LANGUAGE_ID, true);
+		},
+		
+		/**
+		 * Disables the i18n interface for an input field.
+		 * 
+		 * @param	{string}	elementId	input element id
+		 */
+		disable: function(elementId) {
+			var element = _elements.get(elementId);
+			if (element === undefined) {
+				throw new Error("Expected a valid i18n input element, '" + elementId + "' is not i18n input field.");
+			}
+			
+			if (!element.isEnabled) return;
+			
+			element.isEnabled = false;
+			
+			// hide language dropdown
+			element.buttonLabel.parentNode.style.setProperty('display', 'none');
+			var dropdownContainer = element.buttonLabel.parentNode.parentNode;
+			dropdownContainer.classList.remove('inputAddon');
+			dropdownContainer.classList.remove('dropdown');
+		},
+		
+		/**
+		 * Enables the i18n interface for an input field.
+		 * 
+		 * @param	{string}	elementId	input element id
+		 */
+		enable: function(elementId) {
+			var element = _elements.get(elementId);
+			if (element === undefined) {
+				throw new Error("Expected a valid i18n input element, '" + elementId + "' is not i18n input field.");
+			}
+			
+			if (element.isEnabled) return;
+			
+			element.isEnabled = true;
+			
+			// show language dropdown
+			element.buttonLabel.parentNode.style.removeProperty('display');
+			var dropdownContainer = element.buttonLabel.parentNode.parentNode;
+			dropdownContainer.classList.add('inputAddon');
+			dropdownContainer.classList.add('dropdown');
+		},
+		
+		/**
+		 * Returns true if i18n input is enabled for an input field.
+		 * 
+		 * @param	{string}	elementId	input element id
+		 * @return	{boolean}
+		 */
+		isEnabled: function(elementId) {
+			var element = _elements.get(elementId);
+			if (element === undefined) {
+				throw new Error("Expected a valid i18n input element, '" + elementId + "' is not i18n input field.");
+			}
+			
+			return element.isEnabled;
+		},
+		
+		/**
+		 * Returns true if the value of an i18n input field is valid.
+		 * 
+		 * If the element is disabled, true is returned.
+		 * 
+		 * @param	{string}	elementId		input element id
+		 * @param	{boolean}	permitEmptyValue	if true, input may be empty for all languages
+		 * @return	{boolean}	true if input is valid
+		 */
+		validate: function(elementId, permitEmptyValue) {
+			var element = _elements.get(elementId);
+			if (element === undefined) {
+				throw new Error("Expected a valid i18n input element, '" + elementId + "' is not i18n input field.");
+			}
+			
+			if (!element.isEnabled) return true;
+			
+			var values = _values.get(elementId);
+			
+			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(element.element.parentNode.id);
+			
+			if (element.languageId) {
+				values.set(element.languageId, element.element.value);
+			}
+			
+			var item, languageId;
+			var hasEmptyValue = false, hasNonEmptyValue = false;
+			for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
+				item = dropdownMenu.children[i];
+				languageId = ~~item.getAttribute('data-language-id');
+				
+				if (languageId) {
+					if (!values.has(languageId) || values.get(languageId).length === 0) {
+						// input has non-empty value for previously checked language
+						if (hasNonEmptyValue) {
+							return false;
+						}
+						
+						hasEmptyValue = true;
+					}
+					else {
+						// input has empty value for previously checked language
+						if (hasEmptyValue) {
+							return false;
+						}
+						
+						hasNonEmptyValue = true;
+					}
+				}
+			}
+			
+			if (hasEmptyValue && !permitEmptyValue) {
+				return false;
+			}
+			
+			return true;
 		}
 	};
 	

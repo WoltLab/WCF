@@ -3,7 +3,6 @@ namespace wcf\system\user\authentication;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\util\ClassUtil;
 
 /**
  * Gets the user authentication instance.
@@ -35,7 +34,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 		// call loadInstance event
 		EventHandler::getInstance()->fireAction($this, 'init');
 		
-		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\user\authentication\IUserAuthentication')) {
+		if (!is_subclass_of($this->className, 'wcf\system\user\authentication\IUserAuthentication')) {
 			throw new SystemException("'" . $this->className . "' does not implement 'wcf\system\user\authentication\IUserAuthentication'");
 		}
 		

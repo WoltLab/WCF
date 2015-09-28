@@ -5,7 +5,6 @@ use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\event\IEventListener as ILegacyEventListener;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\util\ClassUtil;
 
 /**
  * EventHandler executes all registered actions for a specific event.
@@ -111,9 +110,9 @@ class EventHandler extends SingletonFactory {
 									if (!class_exists($eventListener->listenerClassName)) {
 										throw new SystemException("Unable to find class '".$eventListener->listenerClassName."'");
 									}
-									if (!ClassUtil::isInstanceOf($eventListener->listenerClassName, 'wcf\system\event\listener\IParameterizedEventListener')) {
+									if (!is_subclass_of($eventListener->listenerClassName, 'wcf\system\event\listener\IParameterizedEventListener')) {
 										// legacy event listeners
-										if (!ClassUtil::isInstanceOf($eventListener->listenerClassName, 'wcf\system\event\IEventListener')) {
+										if (!is_subclass_of($eventListener->listenerClassName, 'wcf\system\event\IEventListener')) {
 											throw new SystemException("'".$eventListener->listenerClassName."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
 										}
 									}
@@ -196,9 +195,9 @@ class EventHandler extends SingletonFactory {
 						if (!class_exists($eventListener->listenerClassName)) {
 							throw new SystemException("Unable to find class '".$eventListener->listenerClassName."'");
 						}
-						if (!ClassUtil::isInstanceOf($eventListener->listenerClassName, 'wcf\system\event\listener\IParameterizedEventListener')) {
+						if (!is_subclass_of($eventListener->listenerClassName, 'wcf\system\event\listener\IParameterizedEventListener')) {
 							// legacy event listeners
-							if (!ClassUtil::isInstanceOf($eventListener->listenerClassName, 'wcf\system\event\IEventListener')) {
+							if (!is_subclass_of($eventListener->listenerClassName, 'wcf\system\event\IEventListener')) {
 								throw new SystemException("'".$eventListener->listenerClassName."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
 							}
 						}

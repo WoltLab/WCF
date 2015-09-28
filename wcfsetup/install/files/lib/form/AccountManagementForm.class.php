@@ -375,8 +375,9 @@ class AccountManagementForm extends AbstractForm {
 		
 		// 3rdParty
 		if (GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== '') {
-			if ($this->githubConnect && WCF::getSession()->getVar('__githubToken')) {
-				$updateParameters['authData'] = 'github:'.WCF::getSession()->getVar('__githubToken');
+			if ($this->githubConnect && WCF::getSession()->getVar('__githubData')) {
+				$githubData = WCF::getSession()->getVar('__githubData');
+				$updateParameters['authData'] = 'github:'.$githubData['id'];
 				$success[] = 'wcf.user.3rdparty.github.connect.success';
 				
 				WCF::getSession()->unregister('__githubToken');

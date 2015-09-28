@@ -162,6 +162,10 @@
 					<category name="security.general.authentication">
 						<parent>security.general</parent>
 					</category>
+					<category name="security.general.secrets">
+						<parent>security.general</parent>
+						<showorder>15</showorder>
+					</category>
 				<category name="security.blacklist">
 					<parent>security</parent>
 				</category>
@@ -202,6 +206,9 @@
 						<options>module_poll</options>
 					</category>
 					<category name="message.general.edit">
+						<parent>message.general</parent>
+					</category>
+					<category name="message.general.image">
 						<parent>message.general</parent>
 					</category>
 				
@@ -607,6 +614,16 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /security.general.authentication -->
 			
+			<!-- security.general.secrets -->
+			<option name="signature_secret">
+				<categoryname>security.general.secrets</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+				<allowempty>0</allowempty>
+				<validationpattern>^.{15,}$</validationpattern>
+			</option>
+			<!-- /security.general.secrets -->
+			
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
 				<categoryname>security.blacklist</categoryname>
@@ -794,9 +811,9 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
 debug:wcf.acp.option.mail_send_method.debug]]></selectoptions>
-				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password
-smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_user,mail_smtp_password
-debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
+				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
+smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
@@ -970,6 +987,22 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /message.general.share -->
+			
+			<!-- message.general.image -->
+			<option name="module_image_proxy">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions><![CDATA[image_proxy_secret]]></enableoptions>
+			</option>
+			<option name="image_proxy_expiration">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>14</defaultvalue>
+				<maxvalue>30</maxvalue>
+				<minvalue>7</minvalue>
+			</option>
+			<!-- /message.general.image -->
 			
 			<!-- message.censorship -->
 			<option name="enable_censorship">

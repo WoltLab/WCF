@@ -124,7 +124,7 @@ window.shuffle = function(array) {
 /**
  * User-Agent based browser detection and touch detection.
  */
-(function() {
+(function(jQuery) {
 	var ua = navigator.userAgent.toLowerCase();
 	var match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
 		/(webkit)[ \/]([\w.]+)/.exec( ua ) ||
@@ -181,7 +181,14 @@ window.shuffle = function(array) {
 	
 	// Redactor support
 	jQuery.browser.redactor = true;
-})();
+	
+	// work-around for zoom bug on iOS when using .focus()
+	if (jQuery.browser.iOS) {
+		jQuery.fn.focus = function() {
+			return arguments[0];
+		};
+	}
+})(jQuery);
 
 /**
  * Initialize WCF namespace
@@ -1601,7 +1608,7 @@ WCF.Action.Proxy = Class.extend({
 					
 					autoAbort: options.autoAbortPrevious,
 					ignoreError: options.suppressErrors,
-					silent: options.suppressErrors,
+					silent: !options.showLoadingOverlay,
 					
 					failure: options.failure,
 					finalize: options.after,
@@ -6223,7 +6230,9 @@ WCF.InlineEditor = Class.extend({
 });
 
 /**
- * Default implementation for ajax file uploads
+ * Default implementation for ajax file uploads.
+ * 
+ * @deprecated	Use WoltLab/WCF/Upload
  * 
  * @param	jquery		buttonSelector
  * @param	jquery		fileListSelector
@@ -6600,6 +6609,8 @@ WCF.Upload = Class.extend({
 
 /**
  * Default implementation for parallel AJAX file uploads.
+ * 
+ * @deprecated	Use WoltLab/WCF/Upload
  */
 WCF.Upload.Parallel = WCF.Upload.extend({
 	/**

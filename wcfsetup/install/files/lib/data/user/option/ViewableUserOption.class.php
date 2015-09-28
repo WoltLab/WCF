@@ -4,7 +4,6 @@ use wcf\data\user\User;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\SystemException;
-use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -73,7 +72,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 			}
 			
 			// validate interface
-			if (!ClassUtil::isInstanceOf($this->outputClass, 'wcf\system\option\user\IUserOptionOutput')) {
+			if (!is_subclass_of($this->outputClass, 'wcf\system\option\user\IUserOptionOutput')) {
 				throw new SystemException("'".$this->outputClass."' does not implement 'wcf\system\option\user\IUserOptionOutput'");
 			}
 			
