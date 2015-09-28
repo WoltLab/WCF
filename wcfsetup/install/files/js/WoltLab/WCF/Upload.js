@@ -306,15 +306,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 			var request = new AjaxRequest({
 				data: formData,
 				contentType: false,
-				failure: function(data, responseText, xhr, requestOptions) {
-					this._failure(uploadId, data, responseText, xhr, options.data);
-				}.bind(this),
-				success: function(data, responseText, xhr, requestOptions) {
-					this._success(uploadId, data, responseText, xhr, requestOptions);
-				}.bind(this),
-				uploadProgress: (function(event) {
-					this._progress(uploadId, event);
-				}).bind(this),
+				failure: this._failure.bind(this, uploadId),
+				success: this._success.bind(this, uploadId),
+				uploadProgress: this._progress.bind(this, uploadId),
 				url: this._options.url
 			});
 			request.sendRequest();
