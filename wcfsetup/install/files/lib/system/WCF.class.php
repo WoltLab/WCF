@@ -233,22 +233,31 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
+		// backwards compatibility
+		if ($e instanceof IPrintableException) {
+			$e->show();
+			exit;
+		}
+		
+		@header('HTTP/1.1 503 Service Unavailable');
 		try {
-			if (!($e instanceof \Exception)) throw $e;
-			
-			if ($e instanceof IPrintableException) {
-				$e->show();
-				exit;
-			}
-			
-			// repack Exception
-			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
+			\wcf\functions\exception\printThrowable($e);
 		}
-		catch (\Throwable $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		catch (\Throwable $e2) {
+			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+			echo $e2;
+			echo "\n\nwas thrown while:\n\n";
+			echo $e;
+			echo "\n\nwas handled.</pre>";
+			exit;
 		}
-		catch (\Exception $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		catch (\Exception $e2) {
+			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+			echo $e2;
+			echo "\n\nwas thrown while:\n\n";
+			echo $e;
+			echo "\n\nwas handled.</pre>";
+			exit;
 		}
 	}
 	
