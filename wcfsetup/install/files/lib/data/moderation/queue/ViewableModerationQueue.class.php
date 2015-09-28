@@ -6,6 +6,7 @@ use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IUserContent;
+use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\visitTracker\VisitTracker;
 
@@ -153,7 +154,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getFormattedMessage() {
-		return nl2br(htmlspecialchars($this->message));
+		return SimpleMessageParser::getInstance()->parse($this->message, true, false);
 	}
 	
 	/**
