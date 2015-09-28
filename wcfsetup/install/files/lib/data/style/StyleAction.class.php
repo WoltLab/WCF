@@ -266,7 +266,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		}
 		
 		// check max filesize, allowed file extensions etc.
-		$this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, array('jpg', 'jpeg', 'png')));
+		$this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, array('jpg', 'jpeg', 'png', 'gif')));
 	}
 	
 	/**

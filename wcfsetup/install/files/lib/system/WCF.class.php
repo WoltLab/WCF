@@ -96,7 +96,7 @@ class WCF {
 	
 	/**
 	 * language object
-	 * @var	\wcf\system\language\Language
+	 * @var	\wcf\data\language\Language
 	 */
 	protected static $languageObj = null;
 	
@@ -518,7 +518,7 @@ class WCF {
 	/**
 	 * Returns the corresponding application object. Does not support the 'wcf' pseudo application.
 	 * 
-	 * @param	wcf\data\application\Application	$application
+	 * @param	\wcf\data\application\Application	$application
 	 * @return	\wcf\system\application\IApplication
 	 */
 	public static function getApplicationObject(Application $application) {

@@ -306,7 +306,7 @@ class RequestHandler extends SingletonFactory {
 			
 			// use alias if defined to prevent incorrect recognition
 			$alias = $this->getAliasByController($routeData['controller']);
-			if ($alias !== null) {
+			if ($alias !== null && empty($routeData['isImplicitController'])) {
 				$routeData['controller'] = $alias;
 			}
 			

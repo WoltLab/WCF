@@ -197,7 +197,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['subject'])) $this->subject = StringUtil::trim($_POST['subject']);
+		if (isset($_POST['subject'])) $this->subject = StringUtil::trim(MessageUtil::stripCrap($_POST['subject']));
 		if (isset($_POST['text'])) $this->text = StringUtil::trim(MessageUtil::stripCrap($_POST['text']));
 		
 		// settings

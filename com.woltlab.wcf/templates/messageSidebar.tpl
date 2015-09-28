@@ -42,7 +42,7 @@
 		{else}
 			<header>
 				<h2 class="username">
-					<span>{@$userProfile->username}</span>
+					<span>{$userProfile->username}</span>
 				</h2>
 				
 				{event name='header'}

@@ -3130,7 +3130,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.conditionGroup.general"><![CDATA[General Data]]></item>
 		<item name="wcf.user.condition.conditionGroup.userOptions"><![CDATA[Personal Data]]></item>
 		<item name="wcf.user.condition.groupIDs"><![CDATA[in User Groups]]></item>
-		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Users have to be a member of the selected user groups.]]></item>
+		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Users have to be a member of all selected user groups.]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Languages]]></item>
 		<item name="wcf.user.condition.likesReceived"><![CDATA[Likes Received]]></item>
 		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile browser]]></item>
@@ -3138,7 +3138,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You may not simultaneously select “Uses mobile browser“ and “Uses no mobile browser“.]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Uses no mobile browser]]></item>
 		<item name="wcf.user.condition.notGroupIDs"><![CDATA[not in User Groups]]></item>
-		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Users may not be a member of the selected user groups.]]></item>
+		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Users may not be a member of any selected user group.]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user groups in “in User Groups“ and “not in User Groups“ are conflicting.]]></item>
 		<item name="wcf.user.condition.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Days since registration]]></item>

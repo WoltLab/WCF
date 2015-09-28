@@ -120,6 +120,12 @@ WCF.Poll.Management = Class.extend({
 		
 		// insert input field
 		var $input = $('<input type="text" value="' + optionValue + '" maxlength="255" />').css({ width: this._inputSize + "px" }).keydown($.proxy(this._keyDown, this)).appendTo($listItem);
+		$input.click(function() {
+			// work-around for some weird focus issue on iOS/Android
+			if (document.activeElement !== this) {
+				this.focus();
+			}
+		});
 		
 		if (insertAfter !== null) {
 			$input.focus();

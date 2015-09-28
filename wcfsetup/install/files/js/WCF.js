@@ -124,7 +124,7 @@ window.shuffle = function(array) {
 /**
  * User-Agent based browser detection and touch detection.
  */
-(function() {
+(function(jQuery) {
 	var ua = navigator.userAgent.toLowerCase();
 	var match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
 		/(webkit)[ \/]([\w.]+)/.exec( ua ) ||
@@ -181,7 +181,14 @@ window.shuffle = function(array) {
 	
 	// Redactor support
 	jQuery.browser.redactor = true;
-})();
+	
+	// work-around for zoom bug on iOS when using .focus()
+	if (jQuery.browser.iOS) {
+		jQuery.fn.focus = function() {
+			return arguments[0];
+		};
+	}
+})(jQuery);
 
 /**
  * Initialize WCF namespace

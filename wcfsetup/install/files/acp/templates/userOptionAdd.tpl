@@ -46,7 +46,11 @@
 				<dl{if $errorField == 'optionDescription'} class="formError"{/if}>
 					<dt><label for="optionDescription">{lang}wcf.acp.user.option.description{/lang}</label></dt>
 					<dd>
-						<textarea name="optionDescription" id="optionDescription" cols="40" rows="10">{lang __optional=true}{$i18nPlainValues['optionDescription']}{/lang}</textarea>
+						{* dirty work-around for non-i18n environments *}
+						{capture assign=__optionDescription}{lang __optional=true}{$i18nPlainValues['optionDescription']}{/lang}{/capture}
+						{if !$__optionDescription && !"~^[a-zA-Z0-9\-\_\.]+$~"|preg_match:$i18nPlainValues['optionDescription']}{assign var=__optionDescription value=$i18nPlainValues['optionDescription']}{/if}
+						
+						<textarea name="optionDescription" id="optionDescription" cols="40" rows="10">{$__optionDescription}</textarea>
 						{if $errorField == 'optionDescription'}
 							<small class="innerError">
 								{if $errorType == 'empty'}

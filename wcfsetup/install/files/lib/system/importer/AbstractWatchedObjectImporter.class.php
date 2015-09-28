@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\user\object\watch\UserObjectWatchEditor;
+use wcf\system\database\DatabaseException;
 
 /**
  * Imports watched objects.
@@ -31,7 +32,17 @@ class AbstractWatchedObjectImporter extends AbstractImporter {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
 		
-		$watch = UserObjectWatchEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
-		return $watch->watchID;
+		try {
+			$watch = UserObjectWatchEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+			return $watch->watchID;
+		}
+		catch (DatabaseException $e) {
+			// 23000 = INTEGRITY CONSTRAINT VIOLATION a.k.a. duplicate key
+			if ($e->getCode() != 23000) {
+				throw $e;
+			}
+		}
+		
+		return 0;
 	}
 }

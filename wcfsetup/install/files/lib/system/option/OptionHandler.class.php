@@ -300,7 +300,7 @@ class OptionHandler implements IOptionHandler {
 		
 		// validate with pattern
 		if ($option->validationPattern) {
-			if (!preg_match('~'.$option->validationPattern.'~', $this->optionValues[$option->optionName])) {
+			if (!preg_match('~'.str_replace('~', '\~', $option->validationPattern).'~', $this->optionValues[$option->optionName])) {
 				throw new UserInputException($option->optionName, 'validationFailed');
 			}
 		}
