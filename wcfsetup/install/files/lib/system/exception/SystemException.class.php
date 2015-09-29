@@ -58,7 +58,5 @@ class SystemException extends LoggedException {
 	/**
 	 * @see	\wcf\system\exception\IPrintableException::show()
 	 */
-	public function show() {
-		
-	}
+	public function show() { }
 }
