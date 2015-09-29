@@ -42,6 +42,7 @@ namespace {
 }
 
 namespace wcf\functions\exception {
+	use wcf\system\exception\IExtraInformationException;
 	use wcf\system\exception\SystemException;
 	use wcf\system\WCF;
 	use wcf\util\FileUtil;
@@ -148,15 +149,15 @@ namespace wcf\functions\exception {
 				</div>
 				<?php if (WCF::debugModeIsEnabled()) { ?>
 					<div>
-						<h2>System Information:</h2>
+						<h2>System Information</h2>
 						<dl>
-							<dt>PHP Version:</dt> <dd><?php echo StringUtil::encodeHTML(phpversion()); ?></dd>
-							<dt>WCF Version:</dt> <dd><?php echo StringUtil::encodeHTML(WCF_VERSION); ?></dd>
-							<dt>Date:</dt> <dd><?php echo gmdate('r'); ?></dd>
-							<dt>Request URI:</dt> <dd><?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?></dd>
-							<dt>Referrer:</dt> <dd><?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?></dd>
-							<dt>User Agent:</dt> <dd><?php if (isset($_SERVER['HTTP_USER_AGENT'])) echo StringUtil::encodeHTML($_SERVER['HTTP_USER_AGENT']); ?></dd>
-							<dt>Peak Memory Usage:</dt> <dd><?php echo $peakMemory = memory_get_peak_usage(); ?>/<?php echo $memoryLimit = FileUtil::getMemoryLimit(); ?> Byte (<?php echo round($peakMemory / 1024 / 1024, 3); ?>/<?php echo round($memoryLimit / 1024 / 1024, 3); ?> MiB)</dd>
+							<dt>PHP Version</dt> <dd><?php echo StringUtil::encodeHTML(phpversion()); ?></dd>
+							<dt>WCF Version</dt> <dd><?php echo StringUtil::encodeHTML(WCF_VERSION); ?></dd>
+							<dt>Date</dt> <dd><?php echo gmdate('r'); ?></dd>
+							<dt>Request URI</dt> <dd><?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?></dd>
+							<dt>Referrer</dt> <dd><?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?></dd>
+							<dt>User Agent</dt> <dd><?php if (isset($_SERVER['HTTP_USER_AGENT'])) echo StringUtil::encodeHTML($_SERVER['HTTP_USER_AGENT']); ?></dd>
+							<dt>Peak Memory Usage</dt> <dd><?php echo $peakMemory = memory_get_peak_usage(); ?>/<?php echo $memoryLimit = FileUtil::getMemoryLimit(); ?> Byte (<?php echo round($peakMemory / 1024 / 1024, 3); ?>/<?php echo round($memoryLimit / 1024 / 1024, 3); ?> MiB)</dd>
 						</dl>
 					</div>
 					<?php
@@ -164,15 +165,15 @@ namespace wcf\functions\exception {
 					do {
 					?>
 					<div>
-						<h2><?php if (!$e->getPrevious() && !$first) { echo "Original "; } else if ($e->getPrevious() && $first) { echo "Final "; } ?>Error:</h2>
+						<h2><?php if (!$e->getPrevious() && !$first) { echo "Original "; } else if ($e->getPrevious() && $first) { echo "Final "; } ?>Error</h2>
 						<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
 							<p><?php echo $e->getDescription(); ?></p>
 						<?php } ?>
 						<dl>
-							<dt>Error Class:</dt> <dd><?php echo get_class($e); ?></dd>
-							<dt>Error Message:</dt> <dd><?php echo StringUtil::encodeHTML($e->getMessage()); ?></dd>
-							<dt>Error Code:</dt> <dd><?php echo intval($e->getCode()); ?></dd>
-							<dt>File:</dt> <dd><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile())); ?> (<?php echo $e->getLine(); ?>)</dd>
+							<dt>Error Class</dt> <dd><?php echo get_class($e); ?></dd>
+							<dt>Error Message</dt> <dd><?php echo StringUtil::encodeHTML($e->getMessage()); ?></dd>
+							<?php if ($e->getCode()) { ?><dt>Error Code</dt> <dd><?php echo intval($e->getCode()); ?></dd><?php } ?>
+							<dt>File</dt> <dd><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile())); ?> (<?php echo $e->getLine(); ?>)</dd>
 							<?php
 							if ($e instanceof SystemException) {
 								ob_start();
@@ -186,8 +187,13 @@ namespace wcf\functions\exception {
 									throw new \Exception("Using the 'information' property of SystemException is not supported any more.");
 								}
 							}
+							if ($e instanceof IExtraInformationException) {
+								foreach ($e->getExtraInformation() as list($key, $value)) {
+									echo "<dt>".StringUtil::encodeHTML($key)."</dt> <dd>".StringUtil::encodeHTML($value)."</dd>";
+								}
+							}
 							?>
-							<dt>Stack Trace:</dt>
+							<dt>Stack Trace</dt>
 							<dd class="pre"><?php
 								$trace = array_map(function ($item) {
 									if (!isset($item['file'])) $item['file'] = '[internal function]';
@@ -216,7 +222,7 @@ namespace wcf\functions\exception {
 												return $item ? 'true' : 'false';
 											case 'array':
 												$keys = array_keys($item);
-												if (count($keys) > 5) return "[ ".StringUtil::HELLIP." ]";
+												if (count($keys) > 5) return "[ ".count($keys)." items ]";
 												return '[ '.implode(', ', array_map(function ($item) {
 													return $item.' => ';
 												}, $keys)).']';
@@ -257,6 +263,8 @@ namespace wcf\functions\exception {
 			
 			if (!$ignorePaths) {
 				$item['args'] = array_map(function ($item) {
+					if (!is_string($item)) return $item;
+					
 					if (preg_match('~^'.preg_quote($_SERVER['DOCUMENT_ROOT'], '~').'~', $item)) {
 						$item = sanitizePath($item);
 					}

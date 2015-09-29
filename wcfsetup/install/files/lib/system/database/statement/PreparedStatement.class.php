@@ -2,7 +2,8 @@
 namespace wcf\system\database\statement;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\database\Database;
-use wcf\system\database\DatabaseException;
+use wcf\system\database\exception\DatabaseQueryException;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -70,7 +71,7 @@ class PreparedStatement {
 			return call_user_func_array(array($this->pdoStatement, $name), $arguments);
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException('Could not handle prepared statement: '.$e->getMessage(), $this->database, $this);
+			throw new DatabaseQueryException("Could call '".$name."' on '".$this->query."'", $e);
 		}
 	}
 	
@@ -86,12 +87,11 @@ class PreparedStatement {
 		try {
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
 			
-			if (empty($parameters)) $result = $this->pdoStatement->execute();
-			else $result = $this->pdoStatement->execute($parameters);
+			$result = $this->pdoStatement->execute($parameters);
 			
 			if (!$result) {
 				$errorInfo = $this->pdoStatement->errorInfo();
-				throw new DatabaseException('Could not execute prepared statement: '.$errorInfo[0].' '.$errorInfo[2], $this->database, $this);
+				throw new DatabaseQueryExecutionException("Could not execute statement '".$this->query."': ".$errorInfo[0].' '.$errorInfo[2], $parameters);
 			}
 
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
@@ -99,7 +99,7 @@ class PreparedStatement {
 		catch (\PDOException $e) {
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
 			
-			throw new DatabaseException('Could not execute prepared statement: '.$e->getMessage(), $this->database, $this);
+			throw new DatabaseQueryExecutionException("Could not execute statement '".$this->query."'", $parameters, $e);
 		}
 	}
 	
@@ -192,7 +192,7 @@ class PreparedStatement {
 			return $this->pdoStatement->rowCount();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Can not fetch affected rows: ".$e->getMessage(), $this);
+			throw new DatabaseQueryException("Could fetch affected rows for '".$this->query."'", $e);
 		}
 	}
 	
