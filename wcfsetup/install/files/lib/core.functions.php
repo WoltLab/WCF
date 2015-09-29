@@ -48,8 +48,55 @@ namespace wcf\functions\exception {
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
 	
+	function logThrowable($e) {
+		$logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
+		touch($logFile);
+		
+		// don't forget to update ExceptionLogViewPage, when changing the log file format
+		$message = gmdate('r', TIME_NOW)."\n".
+			'Message: '.str_replace("\n", ' ', $e->getMessage())."\n".
+			'PHP version: '.phpversion()."\n".
+			'WCF version: '.WCF_VERSION."\n".
+			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
+			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? str_replace("\n", ' ', $_SERVER['HTTP_REFERER']) : '')."\n".
+			'User Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? str_replace("\n", ' ', $_SERVER['HTTP_USER_AGENT']) : '')."\n".
+			'Peak Memory Usage: '.memory_get_peak_usage().'/'.FileUtil::getMemoryLimit()."\n";
+		do {
+			$message .= "======\n".
+			'Error Class: '.get_class($e)."\n".
+			'Error Message: '.str_replace("\n", ' ', $e->getMessage())."\n".
+			'Error Code: '.intval($e->getCode())."\n".
+			'File: '.str_replace("\n", ' ', $e->getFile()).' ('.$e->getLine().')'."\n".
+			'Extra Information: '.($e instanceof IExtraInformationException ? base64_encode(serialize($e->getExtraInformation())) : '-')."\n".
+			'Stack Trace: '.base64_encode(serialize(array_map(function ($item) {
+				$item['args'] = array_map(function ($item) {
+					switch (gettype($item)) {
+						case 'object':
+							return get_class($item);
+						case 'array':
+							return array_map(function () {
+								return '[redacted]';
+							}, $item);
+						default:
+							return $item;
+					}
+				}, $item['args']);
+				
+				return $item;
+			}, sanitizeStacktrace($e, true))))."\n";
+		}
+		while ($e = $e->getPrevious());
+		
+		// calculate Exception-ID
+		$exceptionID = sha1($message);
+		$entry = "<<<<<<<<".$exceptionID."<<<<\n".$message."<<<<\n";
+		
+		file_put_contents($logFile, $entry, FILE_APPEND);
+		return $exceptionID;
+	}
+	
 	function printThrowable($e) {
-		$exceptionID = '123456'; // TODO
+		$exceptionID = logThrowable($e); // TODO
 	?><!DOCTYPE html>
 	<html>
 		<head>

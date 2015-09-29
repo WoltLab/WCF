@@ -134,6 +134,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
+		// TODO: This needs to be adapted for WCF 2.2
 		$exceptionRegex = new Regex('(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})
 Message: (?P<message>.*?)
 File: (?P<file>.*?) \((?P<line>\d+)\)
