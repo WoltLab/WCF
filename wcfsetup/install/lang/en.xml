@@ -2219,7 +2219,10 @@ Errors are:
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation Required]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
-		<item name="wcf.global.error.exception"><![CDATA[Please send the ID above to the site administrator.<br />The error message can be looked up at “ACP » Logs » Errors”.]]></item>
+		<item name="wcf.global.error.exception"><![CDATA[<h2>What happened?</h2>
+		<p>An unrecoverable error occured while trying to handle your request. The internal error code is as follows: <code>{$exceptionID}</code></p>
+		<p>Please send this code to the administrator to help him fix the issue.</p>
+		<p>If you are the administrator you can view the complete error message at “ACP » Logs » Errors” einsehen. The error code itself is worthless for the support!</p>]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>

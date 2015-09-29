@@ -190,9 +190,24 @@ namespace wcf\functions\exception {
 				<h1>Fatal Error <!-- :( --></h1>
 				<?php } ?>
 				<div>
+					<?php
+					$message = '
 					<h2>What happened?</h2>
 					<p>An unrecoverable error occured while trying to handle your request. The internal error code is as follows: <code><?php echo $exceptionID; ?></code></p>
 					<p>Please send this code to the administrator to help him fix the issue.</p>
+					<p>If you are the administrator you can view the complete error message at "ACP > Logs > Errors" einsehen. The error code itself is worthless for the support!</p>
+					';
+					try {
+						$message = str_replace('{$exceptionID}', $exceptionID, WCF::getLanguage()->get('wcf.global.error.exception', true));
+					}
+					catch (\Exception $e) {
+						
+					}
+					catch (\Throwable $e) {
+						
+					}
+					echo $message;
+					?>
 				</div>
 				<?php if (!defined('EXCEPTION_PRIVACY') || EXCEPTION_PRIVACY !== 'private') { ?>
 					<div>
