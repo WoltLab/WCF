@@ -105,21 +105,6 @@ final class ArrayUtil {
 	}
 	
 	/**
-	 * Alias to php array_intersect_key() function.
-	 * 
-	 * @deprecated	as of WCF 2.0, use PHP's array_intersect_key() function directly
-	 * @see	array_intersect_key()
-	 * 
-	 * @param	array		$array1
-	 * @param	array		$array2
-	 * @return	array
-	 */
-	public static function intersectKeys($array1, $array2) {
-		$parameters = func_get_args();
-		return call_user_func_array('array_intersect_key', $parameters);
-	}
-	
-	/**
 	 * Converts dos to unix newlines.
 	 * 
 	 * @param	array		$array
