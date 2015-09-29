@@ -104,16 +104,6 @@ class PreparedStatement {
 	}
 	
 	/**
-	 * Executes a prepared statement.
-	 * 
-	 * @deprecated	2.1 - Please use execute() instead
-	 * @param	array		$parameters
-	 */
-	public function executeUnbuffered(array $parameters = array()) {
-		$this->execute($parameters);
-	}
-	
-	/**
 	 * Fetches the next row from a result set in an array.
 	 * 
 	 * @param	integer		$type		fetch type
