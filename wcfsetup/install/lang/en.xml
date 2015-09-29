@@ -709,6 +709,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date &amp; Time]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Graphics]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.option.category.general.system.error"><![CDATA[Error messages]]></item>
 		<item name="wcf.acp.option.category.general.system.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
@@ -739,6 +740,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
 		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
+		<item name="wcf.acp.option.exception_privacy"><![CDATA[Privacy]]></item>
+		<item name="wcf.acp.option.exception_privacy.description"><![CDATA[Specifies how detailed the error messages are. Private completely hides the error message, reduced tries to hide sensitive information and public (only supported in debug mode) shows everything.]]></item>
+		<item name="wcf.acp.option.exception_privacy.public"><![CDATA[Public]]></item>
+		<item name="wcf.acp.option.exception_privacy.reduced"><![CDATA[Reduced]]></item>
+		<item name="wcf.acp.option.exception_privacy.private"><![CDATA[Private]]></item>
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie Path]]></item>

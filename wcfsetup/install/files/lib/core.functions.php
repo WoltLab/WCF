@@ -100,7 +100,7 @@ namespace wcf\functions\exception {
 	?><!DOCTYPE html>
 	<html>
 		<head>
-			<?php if (WCF::debugModeIsEnabled()) { ?>
+			<?php if (!defined('EXCEPTION_PRIVACY') || EXCEPTION_PRIVACY !== 'private') { ?>
 			<title>Fatal Error: <?php echo StringUtil::encodeHTML($e->getMessage()); ?></title>
 			<?php } else { ?>
 			<title>Fatal Error</title>
@@ -184,7 +184,7 @@ namespace wcf\functions\exception {
 		</head>
 		<body>
 			<div class="exception">
-				<?php if (WCF::debugModeIsEnabled()) { ?>
+				<?php if (!defined('EXCEPTION_PRIVACY') || EXCEPTION_PRIVACY !== 'private') { ?>
 				<h1>Fatal Error: <?php echo StringUtil::encodeHTML($e->getMessage()); ?></h1>
 				<?php } else { ?>
 				<h1>Fatal Error <!-- :( --></h1>
@@ -194,7 +194,7 @@ namespace wcf\functions\exception {
 					<p>An unrecoverable error occured while trying to handle your request. The internal error code is as follows: <code><?php echo $exceptionID; ?></code></p>
 					<p>Please send this code to the administrator to help him fix the issue.</p>
 				</div>
-				<?php if (WCF::debugModeIsEnabled()) { ?>
+				<?php if (!defined('EXCEPTION_PRIVACY') || EXCEPTION_PRIVACY !== 'private') { ?>
 					<div>
 						<h2>System Information</h2>
 						<dl>
@@ -327,6 +327,10 @@ namespace wcf\functions\exception {
 	}
 
 	function sanitizePath($path) {
+		if (WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
+			return $path;
+		}
+		
 		return '*/'.FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
 	}
 }
