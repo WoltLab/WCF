@@ -1213,6 +1213,10 @@
 		<name>Unpartisan</name>
 		<url>http://www.unpartisan.com</url>
 	</spider>
+	<spider ident="UptimeRobot/2.0">
+		<name>Uptime Robot</name>
+		<url>http://uptimerobot.com/</url>
+	</spider>
 	<spider ident="urlck">
 		<name>URL Check</name>
 	</spider>
