@@ -17,6 +17,7 @@ use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
+use wcf\util\XMLWriter;
 
 /**
  * Provides functions to edit languages.
@@ -111,21 +112,18 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Exports this language.
+	 *
+	 * @param	array<integer>		$packageIDs
+	 * @param	boolean			$exportCustomValues
 	 */
-	public function export($packageIDArray = array(), $exportCustomValues = false) {
+	public function export($packageIDs = array(), $exportCustomValues = false) {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("language_item.languageID = ?", array($this->languageID));
-		
-		// bom
-		echo "\xEF\xBB\xBF";
-		
-		// header
-		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd\" languagecode=\"".$this->languageCode."\" languagename=\"".$this->languageName."\" countrycode=\"".$this->countryCode."\">\n";
-		
+
 		// get items
 		$items = array();
-		if (!empty($packageIDArray)) {
-			$conditions->add("language_item.packageID IN (?)", array($packageIDArray));
+		if (!empty($packageIDs)) {
+			$conditions->add("language_item.packageID IN (?)", array($packageIDs));
 		}
 		
 		$sql = "SELECT		languageItem, " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ", languageCategory
@@ -141,25 +139,32 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// sort categories
 		ksort($items);
-		
+
+		// write language file
+		$filename = FileUtil::getTemporaryFilename($this->languageCode, '.xml');
+
+		$xml = new XMLWriter();
+		$xml->beginDocument('language', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/language.xsd', array('languagecode' => $this->languageCode, 'languagename' => $this->languageName, 'countrycode' => $this->countryCode));
+
 		foreach ($items as $category => $categoryItems) {
 			// sort items
 			ksort($categoryItems);
-			
-			// category header
-			echo "\t<category name=\"".$category."\">\n";
+
+			$xml->startElement('category', array('name' => $category));
 			
 			// items
 			foreach ($categoryItems as $item => $value) {
-				echo "\t\t<item name=\"".$item."\"><![CDATA[".StringUtil::escapeCDATA($value)."]]></item>\n";
+				$xml->writeElement('item', StringUtil::escapeCDATA($value), array('name' => $item));
 			}
 			
-			// category footer
-			echo "\t</category>\n";
+			$xml->endElement();
 		}
 		
-		// footer
-		echo "</language>";
+		$xml->endDocument($filename);
+
+		// send language file to client
+		readfile($filename);
+		@unlink($filename);
 	}
 	
 	/**
