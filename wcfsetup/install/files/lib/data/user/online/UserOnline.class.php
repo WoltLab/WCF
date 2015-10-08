@@ -175,8 +175,14 @@ class UserOnline extends UserProfile {
 			return 'Internet Explorer '.(isset($match[2]) ? $match[2] : $match[1]);
 		}
 		
+		// edge
 		if (preg_match('~edge/(\d{2}\.\d+)~i', $this->userAgent, $match)) {
 			return 'Microsoft Edge '.$match[1];
+		}
+		
+		// vivaldi
+		if (preg_match('~vivaldi/([\d\.]+)~i', $this->userAgent, $match)) {
+			return 'Vivaldi '.$match[1];
 		}
 		
 		// iron
