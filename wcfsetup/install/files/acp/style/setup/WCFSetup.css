@@ -557,7 +557,7 @@ body > iframe[src="about:blank"] {display: none;}
 .textJustify {text-align: justify;}
 .pointer {cursor: pointer;}
 .dimmed {color: #808080;}
-.monospace {font-family: Consolas, 'Courier New', monospace;}
+.monospace {font-family: Consolas, 'Courier New', monospace !important;}
 .iconFlag {background-color: #ffffff;border: 1px solid #cccccc;padding: 1px;height: 15px;width: 24px;}
 .framed > canvas, .framed > img, .framed > .icon {background-color: #ffffff;border: 1px solid #cccccc;padding: 1px;}
 .highlight {background-color: #ffff66;}

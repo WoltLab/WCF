@@ -40,7 +40,7 @@
 			<dl>
 				<dt><label for="selectedPackages">{lang}wcf.acp.language.export.selectPackages{/lang}</label></dt>
 				<dd>
-					<select id="selectedPackages" name="selectedPackages[]" multiple="multiple" size="20" class="long monospace">
+					<select id="selectedPackages" name="selectedPackages[]" multiple="multiple" size="20" class="long monospace" dir="ltr">
 						<option value="*"{if $selectAllPackages} selected="selected"{/if}>{lang}wcf.acp.language.export.allPackages{/lang}</option>
 						<option value="-">--------------------</option>
 						{foreach from=$packages item=package}
