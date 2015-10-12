@@ -946,6 +946,10 @@
 		<name>SecretSearchEngineLabs.com</name>
 		<url>http://www.secretsearchenginelabs.com/secret-web-crawler.php</url>
 	</spider>
+	<spider ident="SemrushBot">
+		<name>SemrushBot</name>
+		<url>http://semrush.com/bot/</url>
+	</spider>
 	<spider ident="StackRambler">
 		<name>Rambler</name>
 		<url>http://www.rambler.ru/</url>
