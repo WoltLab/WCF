@@ -103,7 +103,7 @@ class KeywordHighlighter extends SingletonFactory {
 		$keywordString = preg_replace('/(?<!\w)\*/', '', $keywordString);
 		
 		// remove search operators
-		$keywordString = preg_replace('/[\+\-><()~]+/', '', $keywordString);
+		$keywordString = preg_replace('/[\+\-><()~]+/', ' ', $keywordString);
 		
 		if (mb_substr($keywordString, 0, 1) == '"' && mb_substr($keywordString, -1) == '"') {
 			// phrases search
