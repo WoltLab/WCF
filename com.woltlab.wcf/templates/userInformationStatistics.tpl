@@ -2,7 +2,7 @@
 	{event name='statistics'}
 	
 	{if MODULE_LIKE && $user->likesReceived}
-		<dt>{if !$user->isProtected()}<a href="{link controller='User' object=$user}{/link}#likes" class="jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a>{else}{lang}wcf.like.likesReceived{/lang}{/if}</dt>
+		<dt><a href="{link controller='User' object=$user}{/link}#likes" class="jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
 		<dd>{#$user->likesReceived}</dd>
 	{/if}
 	
