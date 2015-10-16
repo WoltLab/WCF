@@ -1927,7 +1927,7 @@ RedactorPlugins.wbbcode = function() {
 				// [S]
 				case 83:
 					// not supported on mobile devices anyway
-					if ($.browser.mobile) {
+					if ($.browser.mobile || $.browser.touch) {
 						return;
 					}
 					
