@@ -2308,6 +2308,23 @@ RedactorPlugins.wbbcode = function() {
 				this.selection.get();
 				var $selectedText = this.selection.getText();
 				
+				if ($.browser.mozilla) {
+					// window.getSelection().toString() returns superflous newlines
+					$selectedText = $selectedText.replace(/\r/g,  '').replace(/\u200b/g, '');
+					$selectedText = $selectedText.replace(/(\n+)/g, function(match, newlines) {
+						var count = newlines.match(/\n/g).length;
+						count = ~~(count / 2);
+						
+						newlines = '';
+						while (count > 0) {
+							newlines += "\n";
+							count--;
+						}
+						
+						return newlines;
+					});
+				}
+				
 				this.selection.save();
 				this.modal.show();
 				
