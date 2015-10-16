@@ -9,21 +9,28 @@
 .interactiveDropdown { display: none; }
 /* @TODO END */
 
-#pageHeader {
-	background-color: $wcfUserPanelBackground;
-}
-
-#pageHeader > div > div {
-	align-items: center;
-	display: flex;
-	flex-wrap: wrap;
-	padding: 20px 0;
+.pageHeader {
+	background-color: $wcfHeaderBackground;
+	
+	a {
+		color: $wcfHeaderLink;
+		
+		&:hover {
+			color: $wcfHeaderLinkActive;
+		}
+	}
+	
+	> div > div {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		padding: 20px 0;
+	}
 }
 
 /* LOGO */
 #logo {
 	flex: 0 0 50%;
-	//margin-right: @wcfGapMedium;
 	
 	> a > img.small {
 		display: none;
@@ -46,21 +53,28 @@
 				margin-right: $wcfGapMedium;
 			}
 			
-			&.active > a {
-				@extend .wcfFontBold;
-				
-				color: rgba(255, 255, 255, 1);
+			&::before {
+				border-top: 1px solid $wcfMenuBorder;
+				content: "";
+				display: block;
+				transition: width .12s ease-out;
+				width: 0;
+			}
+			
+			&:hover::before {
+				width: 100%;
 			}
 			
 			> a {
-				color: rgba(255, 255, 255, .8);
 				transition: color .2s linear;
 				text-decoration: none;
 				text-transform: uppercase;
+			}
+			
+			&.active > a {
+				@extend .wcfFontBold;
 				
-				&:hover {
-					color: rgba(255, 255, 255, 1);
-				}
+				color: $wcfHeaderLinkActive;
 			}
 		}
 	}
@@ -69,59 +83,64 @@
 .subMenuItems {
 	position: relative;
 	
-	&:hover > .subMenu {
-		opacity: 1;
-		transition-delay: 0s;
-		visibility: visible;
+	&:hover {
+		> a::after {
+			transform: rotateX(180deg);
+		}
+		
+		> .subMenu {
+			opacity: 1;
+			transition-delay: 0s;
+			visibility: visible;
+		}
 	}
 	
 	> a {
 		padding-right: 15px;
 		
-		&:after {
-			// @TODO
-			//content: @fa-var-caret-down;
+		&::after {
+			content: $fa-var-caret-down;
 			display: block;
 			font-family: FontAwesome;
 			position: absolute;
 			right: 0;
-			top: 0;
+			top: 1px;
+			transition: transform .12s ease-out;
 		}
 	}
 }
 
 .subMenu {
-	background-color: rgba(52, 73, 94, 1);
-	border-radius: 3px;
+	background-color: $wcfHeaderMenuBackground;
+	border: 1px solid $wcfHeaderMenuBorder;
 	opacity: 0;
-	padding: 5px 0;
+	padding: 3px 0;
 	position: absolute;
 	transition: visibility .2s linear .2s, opacity .2s linear;
 	visibility: hidden;
 	
+	@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
+	
 	> li {
-		&:not(:first-child) {
-			margin-top: 5px;
-		}
-		
-		&.active > a {
-			background-color: rgb(79, 129, 189);
-			cursor: default;
-		}
-		
 		> a {
 			@extend .wcfFontDefault;
 			
-			color: rgb(255, 255, 255);
+			color: $wcfHeaderMenuLink;
 			display: block;
 			font-size: 1rem;
-			padding: 5px 10px;
-			transition: background-color .2s linear;
+			padding: 5px 20px;
 			white-space: nowrap;
-			
-			&:hover {
-				background-color: rgb(79, 129, 189);
-			}
+		}
+		
+		&.active > a,
+		> a:hover {
+			background-color: $wcfMenuContentBackgroundActive;
+			color: $wcfMenuContentLinkActive;
+			text-decoration: none;
+		}
+		
+		&.active > a {
+			cursor: default;
 		}
 	}
 }
@@ -186,5 +205,21 @@
 #search {
 	flex: 0 50%;
 	text-align: right;
+	
+	> form {
+		display: inline-block;
+	}
 }
 
+#pageHeaderSearch {
+	background-color: $wcfHeaderSearchBoxBackground;
+	border-width: 0;
+	color: $wcfHeaderSearchBoxText;
+	padding: 5px 10px;
+	
+	&:focus,
+	&:hover {
+		background-color: $wcfHeaderSearchBoxBackgroundAccent;
+		color: $wcfHeaderSearchBoxTextActive;
+	}
+}

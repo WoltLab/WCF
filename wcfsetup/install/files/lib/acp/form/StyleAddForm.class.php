@@ -75,6 +75,8 @@ class StyleAddForm extends AbstractForm {
 	 */
 	public $availableUnits = ['px', 'em', '%', 'pt'];
 	
+	public $colorCategories = [];
+	
 	/**
 	 * list of color variables
 	 * @var	array<string>
@@ -206,12 +208,9 @@ class StyleAddForm extends AbstractForm {
 		
 		// @TODO
 		$colors = [];
-		foreach ($this->colors as $k => $v) {
-			foreach ($v as $vv) {
-				$prefix = (isset($vv['overridePrefix'])) ? $vv['overridePrefix'] : $k;
-				foreach ($vv['items'] as $vvv) {
-					$colors[] = $prefix . ucfirst($vvv);
-				}
+		foreach ($this->colors as $categoryName => $variables) {
+			foreach ($variables as $variable) {
+				$colors[] = $categoryName . ucfirst($variable);
 			}
 		}
 		
@@ -428,127 +427,54 @@ class StyleAddForm extends AbstractForm {
 	 * Sets available variables
 	 */
 	protected function setVariables() {
-		// set color variables
-		$this->colors = [
-			'wcfPage' => [
-				[
-					'overridePrefix' => 'wcfHeader',
-					'items' => ['background', 'text', 'link', 'linkActive']
-				],
-				[
-					'overridePrefix' => 'wcfMenu',
-					'items' => ['background', 'backgroundActive', 'border', 'text', 'textActive', 'link', 'linkActive']
-				],
-				[
-					'overridePrefix' => 'wcfMenuContent',
-					'items' => ['background', 'backgroundActive', 'border', 'text', 'textActive', 'link', 'linkActive']
-				],
-				[
-					'overridePrefix' => 'wcfSearchBox',
-					'items' => ['background', 'backgroundActive', 'border', 'borderActive', 'text', 'textActive', 'link', 'linkActive']
-				],
-				[
-					'overridePrefix' => 'wcfHeaderBox',
-					'items' => ['background', 'text', 'link', 'linkActive']
-				],
-				[
-					'overridePrefix' => 'wcfHeaderNavigation',
-					'items' => ['background', 'text', 'link', 'linkActive']
-				],
-				[
-					'overridePrefix' => 'wcfFooterBox',
-					'items' => ['background', 'text', 'link', 'linkActive']
-				],
-				[
-					'overridePrefix' => 'wcfFooter',
-					'items' => ['background', 'text', 'link', 'linkActive']
-				]
-			],
-			'wcfContent' => [
-				[
-					'items' => ['background', 'text', 'link', 'linkActive', 'border'],
-				],
-				[
-					'overridePrefix' => 'wcfContentHeadline',
-					'items' => ['text', 'link', 'linkActive']
-				],
-				[
-					'items' => ['textDimmed', 'linkDimmed', 'linkDimmedActive']
-				],
-				[
-					'items' => ['backgroundAccent', 'textAccent', 'linkAccent', 'linkAccentActive', 'borderAccent']
-				]
-			],
-			'wcfSidebar' => [
-				[
-					'items' => ['background', 'border']
-				],
-				[
-					'overridePrefix' => 'wcfSidebarBox',
-					'items' => ['background', 'text', 'link', 'linkActive', 'border', 'textDimmed', 'linkDimmed', 'linkDimmedActive']
-				],
-				[
-					'overridePrefix' => 'wcfSidebarBoxHeadline',
-					'items' => ['text', 'link', 'linkActive', 'border']
-				]
-			],
-			'wcfButton' => [
-				[
-					'items' => ['background', 'backgroundActive', 'text', 'textActive', 'border', 'borderActive']
-				],
-				[
-					'items' => ['backgroundAccent', 'backgroundAccentActive', 'textAccent', 'textAccentActive', 'borderAccent', 'borderAccentActive']
-				]
-			],
-			'wcfInput' => [
-				[
-					'items' => ['background', 'backgroundActive', 'border', 'borderActive', 'text', 'textActive']
-				]
-			],
-			'wcfDropdown' => [
-				[
-					'items' => ['background', 'backgroundActive', 'text', 'textActive', 'link', 'linkActive']
-				]
-			]
+		$this->colorCategories = [
+			'wcfHeader' => ['wcfHeader', 'wcfHeaderSearchBox', 'wcfHeaderMenu'],
+			'wcfNavigation' => 'wcfNavigation',
+			'wcfSidebar' => ['wcfSidebar', 'wcfSidebarHeadline'],
+			'wcfContent' => ['wcfContent', 'wcfContentHeadline'],
+			'wcfTabularBox' => 'wcfTabularBox',
+			'wcfInput' => ['wcfInput', 'wcfInputDisabled'],
+			'wcfButton' => ['wcfButton', 'wcfButtonPrimary', 'wcfButtonDisabled'],
+			'wcfDropdown' => 'wcfDropdown',
+			'wcfFooterBox' => ['wcfFooterBox', 'wcfFooterBoxHeadline'],
+			'wcfFooter' => 'wcfFooter'
 		];
-		/*
+		
 		$this->colors = [
-			'wcfButtonBackgroundColor',
-			'wcfButtonBorderColor',
-			'wcfButtonColor',
-			'wcfButtonHoverBackgroundColor',
-			'wcfButtonHoverBorderColor',
-			'wcfButtonHoverColor',
-			'wcfButtonPrimaryBackgroundColor',
-			'wcfButtonPrimaryBorderColor',
-			'wcfButtonPrimaryColor',
-			'wcfColor',
-			'wcfContainerAccentBackgroundColor',
-			'wcfContainerBackgroundColor',
-			'wcfContainerBorderColor',
-			'wcfContainerHoverBackgroundColor',
-			'wcfContentBackgroundColor',
-			'wcfDimmedColor',
-			'wcfInputBackgroundColor',
-			'wcfInputBorderColor',
-			'wcfInputColor',
-			'wcfInputHoverBackgroundColor',
-			'wcfInputHoverBorderColor',
-			'wcfLinkColor',
-			'wcfLinkHoverColor',
-			'wcfPageBackgroundColor',
-			'wcfPageColor',
-			'wcfPageLinkColor',
-			'wcfPageLinkHoverColor',
-			'wcfTabularBoxBackgroundColor',
-			'wcfTabularBoxColor',
-			'wcfTabularBoxHoverColor',
-			'wcfUserPanelBackgroundColor',
-			'wcfUserPanelColor',
-			'wcfUserPanelHoverBackgroundColor',
-			'wcfUserPanelHoverColor',
+			'wcfHeader' => ['background', 'link', 'linkActive'],
+			'wcfHeaderSearchBox' => ['background', 'border', 'text', 'backgroundAccent', 'borderActive', 'textActive'],
+			'wcfHeaderMenu' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
+			'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
+			'wcfSidebar' => ['background', 'text', 'link', 'linkActive'],
+			'wcfSidebarHeadline' => ['text', 'link', 'linkActive'],
+			'wcfContent' => ['background', 'text', 'link', 'linkActive'],
+			'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
+			'wcfTabularBox' => ['border', 'headline', 'headlineActive'],
+			'wcfInput' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfInputDisabled' => ['background', 'border', 'text'],
+			'wcfButton' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfButtonPrimary' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfButtonDisabled' => ['background', 'border', 'text'],
+			'wcfDropdown' => ['background', 'border', 'text', 'link', 'backgroundActive', 'linkActive'],
+			'wcfFooterBox' => ['background', 'text', 'link', 'linkActive'],
+			'wcfFooterBoxHeadline' => ['text', 'link', 'linkActive'],
+			'wcfFooter' => ['background', 'text', 'link', 'linkActive']
 		];
-		*/
+		
+		// DEBUG ONLY
+		if (false) {
+			echo "<pre>";
+			foreach ($this->colors as $key => $values) {
+				foreach ($values as $v) {
+					$variableName = $key . ucfirst($v);
+					
+					echo "INSERT IGNORE INTO wcf1_style_variable (variableName, defaultValue) VALUES ('{$variableName}', 'rgba(255, 255, 255, 1)');\n";
+				}
+			}
+			exit;
+		}
+		// DEBUG ONLY
+		
 		// set global variables
 		$this->globals = [
 			'wcfBaseFontSize',
@@ -652,6 +578,7 @@ class StyleAddForm extends AbstractForm {
 			'availableFontFamilies' => $this->availableFontFamilies,
 			'availableTemplateGroups' => $this->availableTemplateGroups,
 			'availableUnits' => $this->availableUnits,
+			'colorCategories' => $this->colorCategories,
 			'colors' => $this->colors,
 			'copyright' => $this->copyright,
 			'imagePath' => $this->imagePath,

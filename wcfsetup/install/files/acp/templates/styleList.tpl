@@ -19,8 +19,8 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-			<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+			<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+			<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 				
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -52,13 +52,13 @@
 						</dl>
 						<nav class="jsMobileNavigation buttonGroupNavigation">
 							<ul class="buttonList iconList" data-style-id="{@$style->styleID}">
-								<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a></li>
+								<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a></li>
 								<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip"><span class="icon icon16 icon-download-alt"></span></a></li>
 								
 								{if !$style->isDefault}
 									<li><span class="icon icon16 icon-check{if $style->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$style->styleID}"></span></li>
 									<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><span class="icon icon16 icon-ok-sign"></span></a></li>
-									<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><span class="icon icon16 icon-remove"></span></a></li>
+									<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><span class="icon icon16 fa-times"></span></a></li>
 								{/if}
 								
 								{event name='itemButtons'}
@@ -76,8 +76,8 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-			<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+			<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+			<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 				
 			{event name='contentNavigationButtonsBottom'}
 		</ul>

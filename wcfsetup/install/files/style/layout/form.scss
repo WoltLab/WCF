@@ -1,0 +1,339 @@
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+input[type="url"],
+select,
+textarea {
+	background-color: $wcfInputBackground;
+	border: 1px solid $wcfInputBorder;
+	border-radius: 0;
+	border-width: 0 0 1px 0;
+	color: $wcfInputText;
+	outline: none;
+	padding: 4px;
+	
+	&:focus,
+	&:hover {
+		background-color: $wcfInputBackgroundActive;
+		border-color: $wcfInputBorderActive;
+		color: $wcfInputTextActive;
+	}
+	
+	&[disabled] {
+		background-color: $wcfInputBackgroundInactive !important;
+		border-color: $wcfInputBorderInactive !important;
+		color: $wcfInputTextInactive !important;
+	}
+}
+
+textarea {
+	border-width: 1px;
+	width: 100%;
+	
+	@extend .wcfFontDefault;
+}
+
+.selectDropdown {
+	position: relative;
+	
+	&::after {
+		content: $fa-var-caret-down;
+		display: block;
+		font-family: FontAwesome;
+		font-size: 14px;
+		pointer-events: none;
+		position: absolute;
+		right: 7px;
+		top: 0px;
+	}
+	
+	> select {
+		padding-right: 18px;
+		
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+}
+
+input {
+	box-sizing: border-box;
+	
+	&.tiny {
+		width: 80px;
+	}
+	
+	&.short {
+		min-width: 80px;
+		width: 10%;
+	}
+	
+	&.medium {
+		min-width: 150px;
+		width: 30%;
+	}
+	
+	&.long {
+		min-width: 150px;
+		width: 100%;
+	}
+}
+
+dl {
+	&:not(.plain) {
+		display: block;
+		
+		&:not(:first-child) {
+			margin-top: 10px;
+		}
+		
+		&:not(:last-child) {
+			margin-bottom: 10px;
+		}
+		
+		> dt {
+			display: block;
+			
+			&:not(:empty) {
+				margin-bottom: 5px;
+			}
+		}
+		
+		> dd {
+			display: block;
+		}
+		
+		&.wide > dt {
+			display: none;
+		}
+		
+		& + dl:not(.plain) {
+			padding-top: 10px;
+		}
+	}
+	
+	&.dataList {
+		@extend .clearfix;
+		
+		> dt {
+			clear: right;
+			color: rgba(128, 128, 128, 1);
+			float: left;
+			margin-right: 4px;
+			text-align: left;
+			
+			&:after {
+				content: ":";
+			}
+		}
+		
+		> dd {
+			float: right;
+			text-align: right;
+			
+			&:not(:last-child) {
+				margin-bottom: 3px;
+			}
+		}
+	}
+	
+	&.inlineDataList {
+		font-size: .85rem;
+		
+		> dt {
+			display: inline-block;
+			
+			&:after {
+				content: ":";
+				padding-left: 1px;
+			}
+		}
+		
+		> dd {
+			display: inline-block;
+			
+			&:not(:last-of-type):after {
+				content: ",";
+				padding-left: 1px;
+			}
+		}
+	}
+	
+	&.statsDataList {
+		align-items: center;
+		display: flex;
+		flex-direction: row-reverse;
+		flex-wrap: wrap;
+		
+		> dt {
+			color: $wcfDimmedColor;
+			flex: 0 0 60%;
+			font-size: .85rem;
+			margin-left: 5px;
+			overflow: hidden;
+			text-align: left;
+			white-space: nowrap;
+		}
+		
+		> dd {
+			flex: 0 0 35%;
+			overflow: hidden;
+			text-align: right;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+	
+	&:not(.plain) > dd {
+		> small:not(.innerError) {
+			color: $wcfDimmedColor;
+			display: block;
+			margin-top: 5px;
+		}
+	}
+	
+	&.condensed {
+		display: block;
+		
+		> dt,
+		> dd {
+			display: block;
+			margin: 0;
+			text-align: left;
+			width: 100%;
+		}
+		
+		> dd + dt {
+			margin-top: 15px;
+		}
+		
+		> dt:not(:empty) {
+			margin-bottom: 5px;
+		}
+	}
+}
+
+.formSubmit {
+	text-align: center;
+	
+	&:not(:first-child) {
+		margin-top: 20px;
+	}
+	
+	> :not(:first-child) {
+		margin-left: 10px;
+	}
+}
+
+.flexibleButtonGroup {
+	display: flex;
+	
+	> li {
+		flex: 0 0 auto;
+		
+		&:not(:last-child) {
+			margin-right: 5px;
+		}
+		
+		> input[type="radio"] {
+			display: none;
+			
+			&:checked + label {
+				cursor: default;
+				
+				> .icon {
+					cursor: default !important;
+				}
+			}
+			
+			&:checked + label,
+			& + label:hover {
+				color: #fff;
+				
+				&.green {
+					background-color: rgb(148, 170, 114);
+					//background-color: rgb(92, 184, 92);
+				}
+				
+				&.red {
+					background-color: rgb(232, 151, 149);
+					//background-color: rgb(217, 83, 79);
+				}
+				
+				&.yellow {
+					background-color: rgb(203, 172, 91);
+					//background-color: rgb(240, 173, 78);
+				}
+				
+				> .icon {
+					color: #fff;
+				}
+			}
+		}
+		
+		> label {
+			background-color: rgb(242, 242, 242);
+			cursor: pointer;
+			padding: 5px 10px;
+			
+			&.green,
+			&.green > .icon {
+				color: rgb(54, 125, 54);
+			}
+			
+			&.red,
+			&.red > .icon {
+				color: rgb(201, 48, 44);
+			}
+			
+			&.yellow,
+			&.yellow > .icon {
+				color: rgb(236, 151, 31);
+			}
+			
+			> .icon {
+				cursor: pointer !important;
+			}
+		}
+	}
+}
+
+.inputAddon:not(.inputAddonTextarea) {
+	display: flex;
+	
+	&:not(:last-child) {
+		margin-bottom: 5px;
+	}
+	
+	> .inputPrefix {
+		flex: 0 0 auto;
+		
+		&.button {
+			border-radius: 0;
+			margin-right: 5px;
+		}
+	}
+	
+	> .inputSuffix {
+		flex: 0 0 auto;
+		
+		&.button {
+			border-radius: 0;
+			margin-left: 5px;
+		}
+	}
+	
+	> input,
+	> textarea {
+		flex: 1 auto;
+	}
+}
+
+.inputAddonTextarea > .inputPrefix.button {
+	border-bottom-width: 0;
+	border-radius: 0;
+}

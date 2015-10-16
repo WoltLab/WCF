@@ -45,3 +45,18 @@ q::after {
 	content: '';
 	content: none;
 }
+
+/**
+ * sane box-sizing value for all elements
+ * 
+ * https://css-tricks.com/box-sizing/
+ */
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}

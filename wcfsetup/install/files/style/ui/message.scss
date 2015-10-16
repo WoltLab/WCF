@@ -156,7 +156,7 @@
 }
 
 .messageFooterButtons {
-	@extend .inlineList;
+	@extend .buttonGroup;
 	
 	justify-content: flex-end;
 	margin-top: 10px;
@@ -165,10 +165,6 @@
 	
 	&.forceVisible {
 		opacity: 1 !important;
-	}
-	
-	> li:not(:last-child) {
-		margin-right: 5px;
 	}
 }
 

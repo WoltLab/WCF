@@ -19,7 +19,7 @@
 		<dl>
 			<dt>{lang}wcf.acp.cache.data.source{/lang}</dt>
 			<dd>
-				{assign var='__source' value='\\'|explode:$cacheData.source}
+				{assign var='__source' value="\\"|explode:$cacheData.source}
 				{lang}wcf.acp.cache.source.type.{$__source|array_pop}{/lang}
 				<small>{$cacheData.source}</small>
 			</dd>
@@ -47,7 +47,7 @@
 	<nav>
 		<ul>
 			{if $cacheData.files}
-				<li><a onclick="WCF.System.Confirmation.show('{lang}wcf.acp.cache.clear.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+				<li><a onclick="WCF.System.Confirmation.show('{lang}wcf.acp.cache.clear.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
 			{/if}
 			
 			{event name='contentNavigationButtonsTop'}
@@ -60,8 +60,8 @@
 		{counter name=cacheIndex assign=cacheIndex print=false start=0}
 		
 		{if $files|count}
-			<div class="tabularBox tabularBoxTitle marginTop">
-				<header>
+			<section class="tabularBox tabularBoxTitle marginTop">
+				<header class="boxHeadline">
 					<h2><a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-right"></span></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse">{#$files|count}</span></h2>
 					<small>{$cache}</small>
 				</header>
@@ -91,7 +91,7 @@
 						{/foreach}
 					</tbody>
 				</table>
-			</div>
+			</section>
 		{/if}
 	{/foreach}
 {/foreach}
@@ -100,7 +100,7 @@
 	<nav>
 		<ul>
 			{if $cacheData.files}
-				<li><a onclick="WCF.System.Confirmation.show('{lang}wcf.acp.cache.clear.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+				<li><a onclick="WCF.System.Confirmation.show('{lang}wcf.acp.cache.clear.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
 			{/if}
 			
 			{event name='contentNavigationButtonsBottom'}

@@ -1,15 +1,15 @@
 .messageTabMenu {
-	border: 1px solid @wcfContainerBorderColor;
+	border: 1px solid $wcfContentBorder;
 	border-top-width: 0;
 	border-radius: 0 0 3px 3px;
-	line-height: @wcfBaseLineHeight;
+	line-height: $wcfBaseLineHeight;
 	
 	> div,
 	> fieldset{
-		background-color: @wcfContainerBackgroundColor;
+		background-color: $wcfContentBackground;
 		border-width: 0;
 		border-radius: 0;
-		border-top: 1px solid @wcfContainerBorderColor;
+		border-top: 1px solid $wcfContentBorder;
 		display: none;
 		padding: 15px 10px;
 		position: static;
@@ -21,10 +21,10 @@
 	
 	> div {
 		> nav {
-			background-color: @wcfContainerBackgroundColor;
-			border-bottom: 1px solid @wcfContainerBorderColor;
+			background-color: $wcfContentBackground;
+			border-bottom: 1px solid $wcfContentBorder;
 			margin: -14px -21px 14px -21px;
-			padding: @wcfGapTiny @wcfGapSmall;
+			padding: $wcfGapTiny $wcfGapSmall;
 			
 			ul {
 				display: inline-block;
@@ -38,16 +38,16 @@
 					
 					&.active a,
 					&.active a:hover {
-						color: @wcfButtonPrimaryColor;
+						color: $wcfButtonTextAccent;
 						cursor: default;
 					}
 					
 					a {
-						color: @wcfButtonColor;
+						color: $wcfButtonText;
 						display: block;
-						font-size: @wcfSmallFontSize;
+						font-size: $wcfSmallFontSize;
 						outline: 0;
-						padding: 0 @wcfGapSmall;
+						padding: 0 $wcfGapSmall;
 						
 						-webkit-touch-callout: none;
 						-webkit-user-select: none;
@@ -57,13 +57,13 @@
 						user-select: none;
 						
 						&:hover {
-							color: @wcfButtonHoverColor;
+							color: $wcfButtonTextActive;
 							text-decoration: none;
 						}
 					}
 					
 					&:not(:last-child) {
-						padding-right: @wcfGapTiny;
+						padding-right: $wcfGapTiny;
 					}
 					
 					&.dropdown > a {
@@ -88,7 +88,7 @@
 }
 
 .messageTabMenuNavigation > ul {
-	background-color: @wcfContainerBackgroundColor;
+	background-color: $wcfContentBackground;
 	font-size: 0;
 	white-space: nowrap;
 	
@@ -96,12 +96,12 @@
 		display: inline-block;
 		
 		> a {
-			border-right: 1px solid @wcfContainerBorderColor;
+			border-right: 1px solid $wcfContentBorder;
 			border-bottom: 1px solid transparent;
-			color: @wcfButtonColor;
+			color: $wcfButtonText;
 			display: block;
 			font-size: 1rem;
-			line-height: @wcfBaseLineHeight;
+			line-height: $wcfBaseLineHeight;
 			margin-bottom: -1px;
 			padding: 7px 14px 8px 14px;
 			text-decoration: none;
@@ -114,7 +114,7 @@
 			user-select: none;
 			
 			&:hover {
-				color: @wcfLinkColor;
+				color: $wcfContentLink;
 			}
 			
 			> span.icon {
@@ -124,8 +124,8 @@
 		
 		&.active {
 			> a {
-				background-color: @wcfContainerBackgroundColor;
-				color: @wcfLinkColor;
+				background-color: $wcfContentBackground;
+				color: $wcfContentLink;
 			}
 		}
 	}
@@ -148,7 +148,7 @@
 		}
 		
 		> div > nav {
-			margin: (@wcfGapTiny - @wcfGapSmall) -@wcfGapSmall @wcfGapSmall -@wcfGapSmall;
+			margin: ($wcfGapTiny - $wcfGapSmall) -$wcfGapSmall $wcfGapSmall -$wcfGapSmall;
 		}
 	}
 }

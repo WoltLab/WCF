@@ -52,11 +52,11 @@
 	<nav>
 		<ul>
 			{if $action == 'edit'}
-				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 icon-download-alt"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-				<li><a class="jsCopyStyle button"><span class="icon icon16 icon-copy"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
+				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 fa-download"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+				<li><a class="jsCopyStyle button"><span class="icon icon16 fa-copy"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
 			{/if}
 			
-			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>
@@ -396,9 +396,18 @@
 		</div>
 		
 		{* colors *}
-		<div id="colors" class="container containerPadding tabMenuContent">
+		<div id="colors" class="container containerPadding tabMenuContainer tabMenuContent">
+			<nav class="menu">
+				<ul>
+					{foreach from=$colors key=itemPrefix item=items}
+						{capture assign=_anchorName}colors-{$itemPrefix}{/capture}
+						<li data-name="colors-{$itemPrefix}"><a href="{@$__wcf->getAnchor($_anchorName)}">{$itemPrefix}</a> </li>
+					{/foreach}
+				</ul>
+			</nav>
+			
 			{foreach from=$colors key=itemPrefix item=items}
-				<section>
+				<div id="colors-{$itemPrefix}">
 					<h1>{$itemPrefix}</h1>
 					
 					{foreach from=$items item=colorItems}
@@ -410,141 +419,8 @@
 							{/foreach}
 						</ul>
 					{/foreach}
-				</section>
+				</div>
 			{/foreach}
-			{*
-			<fieldset>
-				<legend>{lang}wcf.acp.style.colors.page{/lang}</legend>
-				
-				{* page *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfPageBackgroundColor' languageVariable='backgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfPageColor' languageVariable='color'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfPageLinkColor' languageVariable='linkColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfPageLinkHoverColor' languageVariable='linkHoverColor'}</li>
-					
-					{event name='pageColorListItems'}
-				</ul>
-				
-				{event name='pageColorLists'}
-			</fieldset>
-			
-			<fieldset>
-				<legend>{lang}wcf.acp.style.colors.content{/lang}</legend>
-				
-				{* content *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfContentBackgroundColor' languageVariable='backgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfColor' languageVariable='color'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfDimmedColor' languageVariable='dimmedColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfLinkColor' languageVariable='linkColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfLinkHoverColor' languageVariable='linkHoverColor'}</li>
-					
-					{event name='contentColorListItems'}
-				</ul>
-				
-				{event name='contentColorLists'}
-			</fieldset>
-			
-			<fieldset>
-				<legend>{lang}wcf.acp.style.colors.container{/lang}</legend>
-				
-				{* general *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfContainerBackgroundColor' languageVariable='backgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfContainerAccentBackgroundColor' languageVariable='accentBackgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfContainerBorderColor' languageVariable='borderColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfContainerHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
-					
-					{event name='containerColorListItems'}
-				</ul>
-				
-				{event name='containerColorLists'}
-			</fieldset>
-			
-			<fieldset>
-				<legend>{lang}wcf.acp.style.colors.userPanel{/lang}</legend>
-				
-				{* user panel *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfUserPanelBackgroundColor' languageVariable='backgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfUserPanelColor' languageVariable='color'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfUserPanelHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfUserPanelHoverColor' languageVariable='hoverColor'}</li>
-					
-					{event name='userPanelColorListItems'}
-				</ul>
-				
-				{event name='userPanelColorLists'}
-			</fieldset>
-			
-			<fieldset>
-				<legend>{lang}wcf.acp.style.colors.tabular{/lang}</legend>
-				
-				{* general *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfTabularBoxBackgroundColor' languageVariable='backgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfTabularBoxColor' languageVariable='color'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfTabularBoxHoverColor' languageVariable='hoverColor'}</li>
-					
-					{event name='tabularColorListItems'}
-				</ul>
-				
-				{event name='tabularColorLists'}
-			</fieldset>
-			
-			<fieldset>
-				<legend>{lang}wcf.acp.style.colors.buttons{/lang}</legend>
-				
-				{* default button *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfButtonBackgroundColor' languageVariable='backgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfButtonBorderColor' languageVariable='borderColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfButtonColor' languageVariable='color'}</li>
-					
-					{event name='defaultButtonColorListItems'}
-				</ul>
-				
-				{* button:hover *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfButtonHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfButtonHoverBorderColor' languageVariable='hoverBorderColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfButtonHoverColor' languageVariable='hoverColor'}</li>
-					
-					{event name='hoverButtonColorListItems'}
-				</ul>
-				
-				{* primary button *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfButtonPrimaryBackgroundColor' languageVariable='primaryBackgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfButtonPrimaryBorderColor' languageVariable='primaryBorderColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfButtonPrimaryColor' languageVariable='primaryColor'}</li>
-					
-					{event name='primaryButtonColorListItems'}
-				</ul>
-				
-				{event name='buttonsColorLists'}
-			</fieldset>
-			
-			<fieldset>
-				<legend>{lang}wcf.acp.style.colors.formInput{/lang}</legend>
-				
-				{* form input *}{*
-				<ul class="colorList">
-					<li>{include file='styleVariableColor' variableName='wcfInputBackgroundColor' languageVariable='backgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfInputBorderColor' languageVariable='borderColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfInputColor' languageVariable='color'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfInputHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
-					<li>{include file='styleVariableColor' variableName='wcfInputHoverBorderColor' languageVariable='hoverBorderColor'}</li>
-					
-					{event name='formInputColorListItems'}
-				</ul>
-				
-				{event name='formInputColorLists'}
-			</fieldset>
-			
-			{event name='colorFieldsets'}
-			*}
 		</div>
 		
 		{* advanced *}
@@ -560,7 +436,7 @@
 				<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
 				
 				{* custom declarations *}
-				<div id="advanced-custom">
+				<div id="advanced-custom" class="tabMenuContent">
 					<fieldset class="marginTop">
 						<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}</legend>
 						

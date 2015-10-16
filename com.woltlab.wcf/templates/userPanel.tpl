@@ -77,12 +77,12 @@
 				</script>
 			</li>
 			
-			<li><a href="{link controller='Settings'}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 icon-cogs"></span> <span>{lang}wcf.user.menu.settings{/lang}</span></a></li>
+			<li><a href="{link controller='Settings'}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 fa-cogs"></span> <span>{lang}wcf.user.menu.settings{/lang}</span></a></li>
 			
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
 				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
-					<a href="{link controller='NotificationList'}{/link}"><span class="icon icon16 icon-bell-alt"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeInverse">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
+					<a href="{link controller='NotificationList'}{/link}"><span class="icon icon16 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeInverse">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
 							//<![CDATA[
@@ -109,25 +109,25 @@
 						{capture assign='__3rdPartyButtons'}
 							{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 								<li id="githubAuth" class="3rdPartyAuth">
-									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 icon-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
+									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fagithub"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
 								</li>
 							{/if}
 							
 							{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
 								<li id="twitterAuth" class="3rdPartyAuth">
-									<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 icon-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
+									<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
 								</li>
 							{/if}
 							
 							{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
 								<li id="facebookAuth" class="3rdPartyAuth">
-									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 icon-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
+									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
 								</li>
 							{/if}
 							
 							{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
 								<li id="googleAuth" class="3rdPartyAuth">
-									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 								</li>
 							{/if}
 							
@@ -235,7 +235,7 @@
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
 				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}">
 					<a href="{link controller='ModerationList'}{/link}">
-						<span class="icon icon16 icon-warning-sign"></span>
+						<span class="icon icon16 fa-exclamation-triangle"></span>
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
 						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeInverse">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
 					</a>
@@ -262,7 +262,7 @@
 		{/if}
 		
 		{if $__wcf->user->userID}
-			<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 icon-signout"></span> <span>{lang}wcf.user.logout{/lang}</span></a></li>
+			<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 fa-sign-out"></span> <span>{lang}wcf.user.logout{/lang}</span></a></li>
 		{/if}
 	</ul>
 </nav>

@@ -2,14 +2,14 @@
 	position: relative;
 	
 	> section {
-		background-color: rgb(79, 129, 189);
+		background-color: $wcfContentBackgroundAccent;
 		border-radius: 0;
-		color: rgb(255, 255, 255);
+		color: $wcfContentTextAccent;
 		
 		a,
 		dd,
 		h1 {
-			color: rgb(255, 255, 255);
+			color: $wcfContentTextAccent;
 		}
 		
 		&:first-child {
@@ -26,7 +26,7 @@
 			margin-top: 0;
 			
 			&:before {
-				border-top: 2px solid rgb(112, 152, 200);
+				border-top: 2px solid $wcfContentBorderAccent;
 				content: "";
 				left: 0;
 				margin-top: -15px;
@@ -55,7 +55,7 @@
 			margin-top: 25px;
 			
 			&:before {
-				border-top: 2px solid rgb(112, 152, 200);
+				border-top: 2px solid $wcfContentBorderAccent;
 				content: "";
 				left: 0;
 				margin-top: -10px;
@@ -100,11 +100,11 @@
 	> a {
 		background-color: transparent;
 		border-width: 0;
-		color: rgb(255, 255, 255) !important;
+		color: $wcfContentTextAccent !important;
 		padding: 5px;
 		
 		> .icon {
-			color: rgb(255, 255, 255);
+			color: $wcfContentTextAccent;
 		}
 	}
 }

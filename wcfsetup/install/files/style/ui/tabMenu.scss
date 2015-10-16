@@ -1,0 +1,62 @@
+.tabMenuContainer:not(:first-child) {
+	margin-top: 30px;
+}
+
+/* main tabs */
+.tabMenu {
+	margin-bottom: 20px;
+	position: relative;
+	
+	> ul {
+		@extend .inlineList;
+		
+		> li {
+			&:not(:last-child) {
+				margin-right: 20px;
+			}
+			
+			&.active > a {
+				cursor: default;
+			}
+			
+			> a {
+				display: block;
+				padding: 5px 0;
+				
+				@extend .wcfFontLarge;
+			}
+		}
+	}
+	
+	> span {
+		border-top: 1px solid $wcfContentLink;
+		bottom: 0;
+		position: absolute;
+		transition: transform .2s linear, width .2s linear;
+	}
+}
+
+.tabMenuContent.hidden {
+	display: none;
+}
+
+/* sub tabs */
+.menu {
+	margin: -10px 0 40px 0;
+	position: relative;
+	
+	> ul {
+		@extend .inlineList;
+		
+		> li:not(:last-child) {
+			margin-right: 20px;
+		}
+	}
+	
+	> span {
+		border-top: 1px solid $wcfContentLink;
+		bottom: -5px;
+		position: absolute;
+		transition: transform .2s linear, width .2s linear;
+	}
+}

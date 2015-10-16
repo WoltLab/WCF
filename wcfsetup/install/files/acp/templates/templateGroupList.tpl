@@ -29,7 +29,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -58,8 +58,8 @@
 				{foreach from=$objects item=templateGroup}
 					<tr class="jsTemplateGroupRow">
 						<td class="columnIcon">
-							<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message="{lang}wcf.acp.template.group.delete.sure{/lang}"></span>
+							<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message="{lang}wcf.acp.template.group.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
@@ -81,7 +81,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

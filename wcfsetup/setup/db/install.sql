@@ -47,6 +47,7 @@ CREATE TABLE wcf1_acp_menu_item (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
+  icon VARCHAR(255) NOT NULL DEFAULT '',
 	UNIQUE KEY menuItem (menuItem, packageID)
 );
 

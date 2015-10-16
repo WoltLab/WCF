@@ -9,7 +9,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
+			<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -60,7 +60,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
+				<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

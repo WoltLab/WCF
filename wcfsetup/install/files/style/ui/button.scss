@@ -10,15 +10,12 @@ input[type="submit"],
 	cursor: pointer;
 	display: inline-block;
 	padding: 5px 10px;
-	transition-duration: .2s;
-	transition-property: background-color, border-color, color;
-	transition-timing-function: linear;
 	
 	.icon {
 		color: $wcfButtonText;
-		transition: color .2s linear;
 	}
 	
+	&.active,
 	&:hover {
 		background-color: $wcfButtonBackgroundActive;
 		border-color: $wcfButtonBorderActive;
@@ -39,21 +36,52 @@ button.buttonPrimary,
 input[type="button"].buttonPrimary,
 input[type="submit"],
 .button.buttonPrimary {
-	background-color: $wcfButtonBackgroundAccent;
-	border-color: $wcfButtonBorderAccent;
-	color: $wcfButtonTextAccent !important;
+	background-color: $wcfButtonPrimaryBackground;
+	border-color: $wcfButtonPrimaryBorder;
+	color: $wcfButtonPrimaryText !important;
 	
 	.icon {
-		color: $wcfButtonTextAccent;
+		color: $wcfButtonPrimaryText;
 	}
 	
+	&.active,
 	&:hover {
-		background-color: $wcfButtonBackgroundAccentActive;
-		border-color: $wcfButtonBorderAccentActive;
-		color: $wcfButtonTextAccentActive;
+		background-color: $wcfButtonPrimaryBackgroundActive;
+		border-color: $wcfButtonPrimaryBorderActive;
+		color: $wcfButtonPrimaryTextActive !important;
 		
 		.icon {
-			color: $wcfButtonTextAccentActive;
+			color: $wcfButtonPrimaryTextActive;
+		}
+	}
+}
+
+/* force active state for buttons toggling a dropdown */
+.dropdownOpen {
+	> button,
+	> input[type="button"],
+	> input[type="reset"],
+	> input[type="submit"],
+	> .button {
+		background-color: $wcfButtonBackgroundActive;
+		border-color: $wcfButtonBorderActive;
+		color: $wcfButtonTextActive !important;
+		
+		.icon {
+			color: $wcfButtonTextActive;
+		}
+	}
+	
+	> button.buttonPrimary,
+	> input[type="button"].buttonPrimary,
+	> input[type="submit"],
+	> .button.buttonPrimary {
+		background-color: $wcfButtonPrimaryBackgroundActive;
+		border-color: $wcfButtonPrimaryBorderActive;
+		color: $wcfButtonPrimaryTextActive !important;
+		
+		.icon {
+			color: $wcfButtonPrimaryTextActive;
 		}
 	}
 }
@@ -91,22 +119,21 @@ input[type="submit"],
 	
 	> li {
 		&:not(:last-child) {
-			border-right: 1px solid $wcfButtonBackgroundAccentActive;
+			border-right: 1px solid $wcfContentBorder;
 			margin-right: 0;
 		}
 		
 		&:first-child .button {
-			border-bottom-left-radius: 3px;
-			border-top-left-radius: 3px;
+			border-radius: 3px 0 0 3px;
 		}
 		
 		&:last-child .button {
-			border-bottom-right-radius: 3px;
-			border-top-right-radius: 3px;
+			border-radius: 0 3px 3px 0;
 		}
 		
 		.button {
 			border-radius: 0;
+			border-width: 0;
 		}
 	}
 }

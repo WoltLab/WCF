@@ -47,10 +47,10 @@
 .re-gallery:before { content: "\e61f"; }
 
 .redactor-box {
-	border: 1px solid @wcfContainerBorderColor;
+	border: 1px solid $wcfContentBorder;
 	border-radius: 3px 3px 0 0;
 	font-size: 0;
-	line-height: @wcfBaseLineHeight;
+	line-height: $wcfBaseLineHeight;
 	position: relative;
 	
 	& + .messageTabMenu {
@@ -70,13 +70,13 @@
 	}
 	
 	> .redactorAutosaveNotice {
-		background-color: @wcfContainerBackgroundColor;
-		border: 1px solid @wcfContainerBorderColor;
+		background-color: $wcfContentBackground;
+		border: 1px solid $wcfContentBorder;
 		border-width: 1px 0 0 1px;
 		bottom: 0;
 		font-size: 1rem;
 		opacity: 0;
-		padding: @wcfGapSmall;
+		padding: $wcfGapSmall;
 		position: absolute;
 		right: 0;
 		transition: visibility 0s linear .3s, opacity .3s linear;
@@ -89,11 +89,11 @@
 		}
 		
 		&.redactorAutosaveNoticeIcons > span.fa-check {
-			margin-right: @wcfGapSmall;
+			margin-right: $wcfGapSmall;
 		}
 		
 		> span.redactorAutosaveMessage {
-			padding: 0 @wcfGapSmall;
+			padding: 0 $wcfGapSmall;
 		}
 	}
 }
@@ -109,7 +109,7 @@
 		border-width: 0;
 		box-shadow: none;
 		font-size: 1rem;
-		line-height: @wcfBaseLineHeight;
+		line-height: $wcfBaseLineHeight;
 		outline: none;
 		padding: 10px;
 		resize: vertical;
@@ -121,7 +121,7 @@
 	
 	ul,
 	ol {
-		.nativeList;
+		@extend .nativeList;
 	}
 	
 	ul {
@@ -156,12 +156,12 @@
 			position: relative;
 			
 			> .redactorQuoteEdit {
-				bottom: -@wcfGapSmall;
-				left: -@wcfGapMedium;
-				right: -@wcfGapMedium;
-				top: -@wcfGapMedium;
-				padding-top: @wcfGapMedium;
-				padding-left: @wcfGapMedium;
+				bottom: -$wcfGapSmall;
+				left: -$wcfGapMedium;
+				right: -$wcfGapMedium;
+				top: -$wcfGapMedium;
+				padding-top: $wcfGapMedium;
+				padding-left: $wcfGapMedium;
 				position: absolute;
 			}
 		}
@@ -180,9 +180,8 @@
 			right: 0;
 			text-align: center;
 			top: 0;
+			transition: opacity .2s linear;
 			z-index: 200;
-			
-			.transition(opacity, .3s, linear);
 			
 			> div {
 				cursor: pointer;
@@ -191,9 +190,7 @@
 				padding: 1em 3em;
 				position: absolute;
 				top: 50%;
-				
 				transform: translate(-50%, -50%);
-				-ms-transform: translate(-50%, -50%);
 			}
 		}
 		
@@ -228,7 +225,7 @@
 }
 
 .redactor-toolbar {
-	background: repeating-linear-gradient(0deg, @wcfContainerBorderColor 0px, @wcfContainerBorderColor 3%, @wcfContainerBackgroundColor 3%, @wcfContainerAccentBackgroundColor 100%);
+	background: repeating-linear-gradient(0deg, $wcfContentBorder 0px, $wcfContentBorder 3%, $wcfContentBackground 3%, $wcfContentBackground 100%);
 	background-size: 100% 31px;
 	
 	> li {
@@ -238,12 +235,12 @@
 		
 		&:last-of-type,
 		&.separator {
-			border-right: 1px solid @wcfContainerBorderColor;
+			border-right: 1px solid $wcfContentBorder;
 		}
 		
 		> a {
 			box-sizing: border-box;
-			color: @wcfButtonColor;
+			color: $wcfButtonColor;
 			display: block;
 			font-size: 14px;
 			height: 30px;
@@ -253,17 +250,14 @@
 			text-decoration: none;
 			width: 30px;
 			
-			.textShadow(@wcfButtonBackgroundColor);
-			
 			&.redactor-button-disabled,
 			&.redactor-button-disabled:before,
 			&.redactor-button-disabled > i:before {
-				color: fade(@wcfColor, 40%);
-				cursor: default;
+				color: $wcfButtonTextInactive;
 			}
 			
 			&:before {
-				color: @wcfColor;
+				color: $wcfButtonText;
 			}
 			
 			> i {
@@ -271,18 +265,19 @@
 				width: 12px;
 				
 				&:before {
-					color: @wcfColor;
+					color: $wcfButtonText;
 				}
 			}
 			
-			&:not(.redactor-button-disabled):hover,
+			&:hover,
 			&.redactor-act,
 			&.dropact {
-				background-color: @wcfContainerHoverBackgroundColor;
+				background-color: $wcfButtonBackgroundActive;
+				color: $wcfButtonTextActive;
 				
-				.textShadow(@wcfButtonHoverBackgroundColor);
-				
-				> i {
+				&::before,
+				> i::before {
+					color: $wcfButtonTextActive;
 					text-shadow: none;
 				}
 			}
@@ -304,13 +299,13 @@
 }
 
 .redactor-toolbar-tooltip {
-	.balloonTooltip;
+	@extend .balloonTooltip;
 	
 	opacity: 1;
 	visibility: visible;
 	
 	&:before {
-		border-color: @wcfTooltipBackgroundColor transparent;
+		border-color: $wcfTooltipBackgroundColor transparent;
 		border-style: solid;
 		border-width: 0 5px 5px;
 		content: "";
@@ -336,11 +331,11 @@
 }
 
 #redactor-image-editter {
-	.balloonTooltip;
+	@extend .balloonTooltip;
 	
 	cursor: pointer;
 	left: 50%;
-	line-height: @wcfSmallFontSize;
+	line-height: $wcfSmallFontSize;
 	margin-top: -13px;
 	opacity: 1;
 	top: 50%;
@@ -375,7 +370,7 @@
 		padding: 0 4px;
 		
 		&:hover {
-			background-color: @wcfDropdownBackgroundColor !important;
+			background-color: $wcfDropdownBackground !important;
 		}
 		
 		> a {
@@ -408,17 +403,17 @@
 }
 
 .redactor-link-tooltip {
-	background-color: @wcfTooltipBackgroundColor;
+	background-color: $wcfTooltipBackgroundColor;
 	border-radius: 6px;
-	color: @wcfTooltipColor;
-	font-size: @wcfSmallFontSize;
+	color: $wcfTooltipColor;
+	font-size: $wcfSmallFontSize;
 	padding: 5px 10px 7px;
 	position: absolute;
 	z-index: 800;
 	
-	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	@include boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
 	
 	> a {
-		color: @wcfTooltipColor;
+		color: $wcfTooltipColor;
 	}
 }

@@ -19,7 +19,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='AdAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
+			<li><a href="{link controller='AdAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -34,8 +34,8 @@
 					<span class="sortableNodeLabel">
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 icon-check{if $ad->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$ad->adID}"></span>
-							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$ad->adID}" data-confirm-message="{lang}wcf.acp.ad.delete.confirmMessage{/lang}"></span>
+							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$ad->adID}" data-confirm-message="{lang}wcf.acp.ad.delete.confirmMessage{/lang}"></span>
 							
 							{event name='itemButtons'}
 						</span>
@@ -56,7 +56,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='AdAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
+				<li><a href="{link controller='AdAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

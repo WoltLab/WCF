@@ -1,9 +1,14 @@
+#pageHeader > div {
+	/* huge performance increase when scrolling */
+	will-change: transform;
+}
+
 #pageHeader.sticky {
 	flex-wrap: nowrap;
 	z-index: 300;
 	
 	> div {
-		background-color: rgba(52, 73, 94, 1); /* @TODO */
+		background-color: $wcfHeaderBackground; /* @TODO */
 		left: 0;
 		position: fixed;
 		top: 0;

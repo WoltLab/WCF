@@ -35,14 +35,14 @@ strong {
 
 /* COLUMN LAYOUT */
 #pageHeader {
-	flex: 0 auto;
+	flex: 0 0 auto;
 	z-index: 100;
 }
 
 .main {
 	background-color: $wcfContentBackground;
 	color: $wcfContentText;
-	flex: 1 auto;
+	flex: 1 0 auto;
 	padding: 40px 0;
 	z-index: 50;
 	
@@ -77,7 +77,7 @@ strong {
 }
 
 #pageFooter {
-	flex: 0 auto;
+	flex: 0 0 auto;
 }
 
 /* CONTENT AREA */

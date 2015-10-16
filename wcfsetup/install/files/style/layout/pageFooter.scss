@@ -7,9 +7,21 @@
 	a {
 		color: $wcfFooterBoxLink;
 		
+		.icon {
+			color: $wcfFooterBoxLink;
+		}
+		
 		&:hover {
 			color: $wcfFooterBoxLinkActive;
+			
+			.icon {
+				color: $wcfFooterBoxLinkActive;
+			}
 		}
+	}
+	
+	.icon {
+		color: $wcfFooterBoxText;
 	}
 	
 	> div > ul {

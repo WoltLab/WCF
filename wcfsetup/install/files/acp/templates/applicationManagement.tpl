@@ -37,14 +37,14 @@
 		<tbody>
 			{foreach from=$applicationList item=application}
 				<tr>
-					<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 icon-pencil"></span></a></td>
+					<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a></td>
 					<td class="columnID columnPackageID">{#$application->packageID}</td>
 					<td class="columnText columnPackageName">
 						<a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()}</a>
 						{if $application->isPrimary}
 							<aside class="statusDisplay">
 								<ul class="statusIcons">
-									<li><span class="icon icon16 icon-ok-sign jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span></li>
+									<li><span class="icon icon16 fa-home jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span></li>
 								</ul>
 							</aside>
 						{/if}

@@ -15,7 +15,7 @@
 	<nav>
 		<ul>
 			{if $action == 'edit'}<li><a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" class="button"><span class="icon icon16 icon-exchange"></span> <span>{lang}wcf.acp.template.diff{/lang}</span></a></li>{/if}
-			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={@$template->templateGroupID}{/if}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={@$template->templateGroupID}{/if}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>

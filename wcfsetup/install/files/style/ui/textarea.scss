@@ -1,0 +1,18 @@
+textarea {
+	background-color: $wcfInputBackground;
+	border: 1px solid $wcfInputBorder;
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: $wcfInputText;
+	padding: 5px;
+	transition: background-color .2s linear, border-color .2s linear;
+	width: 100%;
+	
+	@extend .wcfFontDefault;
+	
+	&:hover {
+		background-color: $wcfInputBackgroundActive;
+		border-color: $wcfInputBorderActive;
+		color: $wcfInputTextActive;
+	}
+}

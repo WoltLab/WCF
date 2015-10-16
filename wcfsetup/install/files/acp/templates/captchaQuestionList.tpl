@@ -30,7 +30,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
+			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -58,9 +58,9 @@
 					{foreach from=$objects item='question'}
 						<tr class="jsQuestionRow">
 							<td class="columnIcon">
-								<span class="icon icon16 icon-check{if $question->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $question->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$question->questionID}"></span>
-								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$question->questionID}" data-confirm-message="{lang}wcf.acp.captcha.question.delete.confirmMessage{/lang}"></span>
+								<span class="icon icon16 fa-{if !$question->isDisabled}-check{/if}-square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $question->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$question->questionID}"></span>
+								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$question->questionID}" data-confirm-message="{lang}wcf.acp.captcha.question.delete.confirmMessage{/lang}"></span>
 								
 								{event name='rowButtons'}
 							</td>
@@ -83,7 +83,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
+			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsBottom'}
 		</ul>

@@ -25,7 +25,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a id="updateEvents" class="button"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
+			<li><a id="updateEvents" class="button"><span class="icon icon16 fa-repeat"></span> <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>

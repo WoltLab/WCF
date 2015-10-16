@@ -21,7 +21,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='UserRankList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.user.rank.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserRankList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.user.rank.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>

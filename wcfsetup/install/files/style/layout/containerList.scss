@@ -2,7 +2,7 @@
 	padding: 20px 0;
 	
 	&:not(:last-child) {
-		border-bottom: 1px solid rgb(238, 238, 238);
+		border-bottom: 1px solid $wcfContentBorder;
 	}
 	
 	&.showMore {
@@ -40,7 +40,7 @@
 	&.tripleColumned > li {
 		flex: 0 0 auto;
 		/* work-around for IE10 */
-		width: calc(~"100% / 3");
+		width: calc(unquote("100% / 3"));
 	}
 }
 

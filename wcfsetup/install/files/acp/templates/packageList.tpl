@@ -46,7 +46,7 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsTop'}
@@ -80,9 +80,9 @@
 					<tr class="jsPackageRow">
 						<td class="columnIcon">
 							{if $package->canUninstall()}
-								<span class="icon icon16 icon-remove pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
+								<span class="icon icon16 fa-times pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
 							{else}
-								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
+								<span class="icon icon16 fa-times disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -119,7 +119,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentNavigationButtonsBottom'}

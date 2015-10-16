@@ -1,8 +1,8 @@
 <header class="boxHeadline boxSubHeadline dashboardBoxRecentActivityHeadline" id="dashboardBoxRecentActivity">
-	<h2>{lang}wcf.user.recentActivity{/lang}</h2>
+	<h1>{lang}wcf.user.recentActivity{/lang}</h1>
 	
 	{if $canFilterByFollowedUsers}
-		<nav class="jsMobileNavigation buttonGroupNavigation jsOnly jsRecentActivitySwitchContext">
+		<nav class="marginTop jsMobileNavigation buttonGroupNavigation jsOnly jsRecentActivitySwitchContext">
 			<ul class="buttonGroup">
 				<li><a href="#" class="button small{if !$filteredByFollowedUsers} active{/if}">{lang}wcf.user.recentActivity.scope.all{/lang}</a></li>
 				<li><a href="#" class="button small{if $filteredByFollowedUsers} active{/if}">{lang}wcf.user.recentActivity.scope.followedUsers{/lang}</a></li>				

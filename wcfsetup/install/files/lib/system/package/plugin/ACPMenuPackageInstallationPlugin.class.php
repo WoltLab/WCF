@@ -18,6 +18,17 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	public $className = 'wcf\data\acp\menu\item\ACPMenuItemEditor';
 	
 	/**
+	 * @see \wcf\system\package\plugin\AbstractMenuPackageInstallationPlugin::prepareImport()
+	 */
+	protected function prepareImport(array $data) {
+		$returnValue = parent::prepareImport($data);
+		
+		$returnValue['icon'] = (isset($data['elements']['icon'])) ? $data['elements']['icon'] : '';
+		
+		return $returnValue;
+	}
+	
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
 	 */
 	public static function getDefaultFilename() {

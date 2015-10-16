@@ -19,7 +19,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='NoticeAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.notice.add{/lang}</span></a></li>
+			<li><a href="{link controller='NoticeAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.notice.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -35,9 +35,9 @@
 						<a href="{link controller='NoticeEdit' object=$notice}{/link}">{$notice->noticeName}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
-							<span class="icon icon16 icon-check{if $notice->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $notice->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$notice->noticeID}"></span>
-							<a href="{link controller='NoticeEdit' object=$notice}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$notice->noticeID}" data-confirm-message="{lang}wcf.acp.notice.delete.confirmMessage{/lang}"></span>
+							<span class="icon icon16 fa-{if $notice->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $notice->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$notice->noticeID}"></span>
+							<a href="{link controller='NoticeEdit' object=$notice}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$notice->noticeID}" data-confirm-message="{lang}wcf.acp.notice.delete.confirmMessage{/lang}"></span>
 							
 							{event name='itemButtons'}
 						</span>
@@ -56,7 +56,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='NoticeAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.notice.add{/lang}</span></a></li>
+				<li><a href="{link controller='NoticeAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.notice.add{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

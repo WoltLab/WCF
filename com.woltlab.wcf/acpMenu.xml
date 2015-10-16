@@ -75,9 +75,10 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
 			<controller><![CDATA[wcf\acp\form\CronjobAddForm]]></controller>
-			<parent>wcf.acp.menu.link.cronjob</parent>
+			<parent>wcf.acp.menu.link.cronjob.list</parent>
 			<permissions>admin.system.canManageCronjob</permissions>
 			<showorder>2</showorder>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		<!-- /cronjobs -->
 		
@@ -91,9 +92,10 @@
 			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
-			<parent>wcf.acp.menu.link.captcha</parent>
+			<parent>wcf.acp.menu.link.captcha.question.list</parent>
 			<controller><![CDATA[wcf\acp\form\CaptchaQuestionAddForm]]></controller>
 			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<!-- maintenance -->
@@ -169,22 +171,22 @@
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canSearchUser</permissions>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.user.list">
 			<controller><![CDATA[wcf\acp\page\UserListPage]]></controller>
 			<parent>wcf.acp.menu.link.user.management</parent>
 			<permissions>admin.user.canSearchUser</permissions>
 		</acpmenuitem>
-		
+		<acpmenuitem name="wcf.acp.menu.link.user.search">
+			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
+			<parent>wcf.acp.menu.link.user.list</parent>
+			<permissions>admin.user.canSearchUser</permissions>
+			<icon>fa-search</icon>
+		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.user.add">
 			<controller><![CDATA[wcf\acp\form\UserAddForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
+			<parent>wcf.acp.menu.link.user.list</parent>
 			<permissions>admin.user.canAddUser</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.bulkProcessing">
@@ -224,11 +226,11 @@
 			<parent>wcf.acp.menu.link.group</parent>
 			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
 		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.group.add">
 			<controller><![CDATA[wcf\acp\form\UserGroupAddForm]]></controller>
-			<parent>wcf.acp.menu.link.group</parent>
+			<parent>wcf.acp.menu.link.group.list</parent>
 			<permissions>admin.user.canAddGroup</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.mail">
@@ -256,11 +258,11 @@
 			<controller><![CDATA[wcf\acp\page\UserRankListPage]]></controller>
 			<permissions>admin.user.rank.canManageRank</permissions>
 		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.user.rank.add">
-			<parent>wcf.acp.menu.link.user.rank</parent>
+			<parent>wcf.acp.menu.link.user.rank.list</parent>
 			<controller><![CDATA[wcf\acp\form\UserRankAddForm]]></controller>
 			<permissions>admin.user.rank.canManageRank</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<!-- user options -->
@@ -276,8 +278,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.user.option.add">
 			<controller><![CDATA[wcf\acp\form\UserOptionAddForm]]></controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
+			<parent>wcf.acp.menu.link.user.option.list</parent>
 			<permissions>admin.user.canManageUserOption</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.option.category.list">
@@ -287,8 +290,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.user.option.category.add">
 			<controller><![CDATA[wcf\acp\form\UserOptionCategoryAddForm]]></controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
+			<parent>wcf.acp.menu.link.user.option.category.list</parent>
 			<permissions>admin.user.canManageUserOption</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.option.setDefaults">
@@ -309,8 +313,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.notice.add">
 			<controller><![CDATA[wcf\acp\form\NoticeAddForm]]></controller>
-			<parent>wcf.acp.menu.link.notice</parent>
+			<parent>wcf.acp.menu.link.notice.list</parent>
 			<permissions>admin.notice.canManageNotice</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.paidSubscription">
@@ -362,17 +367,17 @@
 			<parent>wcf.acp.menu.link.style</parent>
 			<permissions>admin.style.canManageStyle</permissions>
 		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.style.add">
-			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
-			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canManageStyle</permissions>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.style.import">
 			<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
-			<parent>wcf.acp.menu.link.style</parent>
+			<parent>wcf.acp.menu.link.style.list</parent>
 			<permissions>admin.style.canManageStyle</permissions>
+			<icon>fa-upload</icon>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.style.add">
+			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
+			<parent>wcf.acp.menu.link.style.list</parent>
+			<permissions>admin.style.canManageStyle</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		<!-- /style -->
 		
@@ -387,11 +392,11 @@
 			<parent>wcf.acp.menu.link.pageMenu</parent>
 			<permissions>admin.display.canManagePageMenu</permissions>
 		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
 			<controller><![CDATA[wcf\acp\form\PageMenuItemAddForm]]></controller>
-			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<parent>wcf.acp.menu.link.pageMenu.list</parent>
 			<permissions>admin.display.canManagePageMenu</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		<!-- /page menu -->
 		
@@ -407,9 +412,11 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.template.add">
 			<controller><![CDATA[wcf\acp\form\TemplateAddForm]]></controller>
-			<parent>wcf.acp.menu.link.template</parent>
+			<parent>wcf.acp.menu.link.template.list</parent>
 			<permissions>admin.template.canManageTemplate</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.template.group.list">
 			<controller><![CDATA[wcf\acp\page\TemplateGroupListPage]]></controller>
 			<parent>wcf.acp.menu.link.template</parent>
@@ -417,8 +424,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.template.group.add">
 			<controller><![CDATA[wcf\acp\form\TemplateGroupAddForm]]></controller>
-			<parent>wcf.acp.menu.link.template</parent>
+			<parent>wcf.acp.menu.link.template.group.list</parent>
 			<permissions>admin.template.canManageTemplate</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		<!-- /template -->
 		
@@ -433,11 +441,11 @@
 			<controller><![CDATA[wcf\acp\page\LanguageListPage]]></controller>
 			<permissions>admin.language.canManageLanguage</permissions>
 		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.language.import">
-			<parent>wcf.acp.menu.link.language</parent>
+			<parent>wcf.acp.menu.link.language.list</parent>
 			<controller><![CDATA[wcf\acp\form\LanguageImportForm]]></controller>
 			<permissions>admin.language.canManageLanguage</permissions>
+			<icon>fa-upload</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.language.item.list">
@@ -476,8 +484,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.ad.add">
 			<controller><![CDATA[wcf\acp\form\AdAddForm]]></controller>
-			<parent>wcf.acp.menu.link.ad</parent>
+			<parent>wcf.acp.menu.link.ad.list</parent>
 			<permissions>admin.ad.canManageAd</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">
@@ -496,9 +505,11 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.smiley.add">
 			<controller><![CDATA[wcf\acp\form\SmileyAddForm]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
+			<parent>wcf.acp.menu.link.smiley.list</parent>
 			<permissions>admin.content.smiley.canManageSmiley</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.smiley.category.list">
 			<controller><![CDATA[wcf\acp\page\SmileyCategoryListPage]]></controller>
 			<parent>wcf.acp.menu.link.smiley</parent>
@@ -506,8 +517,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.smiley.category.add">
 			<controller><![CDATA[wcf\acp\form\SmileyCategoryAddForm]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
+			<parent>wcf.acp.menu.link.smiley.category.list</parent>
 			<permissions>admin.content.smiley.canManageSmiley</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.label">
@@ -521,9 +533,11 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.label.add">
 			<controller><![CDATA[wcf\acp\form\LabelAddForm]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
+			<parent>wcf.acp.menu.link.label.list</parent>
 			<permissions>admin.content.label.canManageLabel</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.label.group.list">
 			<controller><![CDATA[wcf\acp\page\LabelGroupListPage]]></controller>
 			<parent>wcf.acp.menu.link.label</parent>
@@ -531,8 +545,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.label.group.add">
 			<controller><![CDATA[wcf\acp\form\LabelGroupAddForm]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
+			<parent>wcf.acp.menu.link.label.group.list</parent>
 			<permissions>admin.content.label.canManageLabel</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.bbcode">
@@ -546,8 +561,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.bbcode.add">
 			<controller><![CDATA[wcf\acp\form\BBCodeAddForm]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
+			<parent>wcf.acp.menu.link.bbcode.list</parent>
 			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.list">
 			<controller><![CDATA[wcf\acp\page\BBCodeMediaProviderListPage]]></controller>
@@ -556,8 +572,9 @@
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.add">
 			<controller><![CDATA[wcf\acp\form\BBCodeMediaProviderAddForm]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
+			<parent>wcf.acp.menu.link.bbcode.mediaProvider.list</parent>
 			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.tag">
@@ -571,11 +588,11 @@
 			<parent>wcf.acp.menu.link.tag</parent>
 			<permissions>admin.content.tag.canManageTag</permissions>
 		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.tag.add">
 			<controller><![CDATA[wcf\acp\form\TagAddForm]]></controller>
-			<parent>wcf.acp.menu.link.tag</parent>
+			<parent>wcf.acp.menu.link.tag.list</parent>
 			<permissions>admin.content.tag.canManageTag</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.attachment">

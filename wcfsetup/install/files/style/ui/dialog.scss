@@ -8,11 +8,10 @@
 	visibility: hidden;
 	z-index: 399;
 	
-	transition: visibility 0s linear .3s;
+	transition: visibility 0s linear .3s, background-color .12s linear;
 	
 	&[aria-hidden=false] {
-		/* do not animate opacity or background-color, the transition is anything but smooth due to the large area covered */
-		background-color: rgba(255, 255, 255, .4);
+		background-color: rgba(0, 0, 0, .4);
 		visibility: visible;
 		
 		transition-delay: 0s;
@@ -30,11 +29,8 @@
 }
 
 .dialogContainer {
-	background-color: rgba(0, 0, 0, .4);
-	border: 3px solid transparent;
-	border-radius: 3px;
+	border: 1px solid rgb(52, 152, 219);
 	box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
-	box-sizing: border-box;
 	left: 50%;
 	max-height: 80%;
 	max-width: 80%;
@@ -42,6 +38,7 @@
 	position: absolute;
 	top: 10%;
 	transform: translateX(-50%);
+	will-change: opacity, transform;
 	
 	-webkit-animation: wcfDialogOut .3s;
 	-webkit-animation-fill-mode: forwards;
@@ -52,31 +49,28 @@
 	}
 	
 	> header {
-		background: linear-gradient(to right, @wcfTabularBoxBackgroundColor, lighten(@wcfTabularBoxBackgroundColor, 10%));
-		border-top-left-radius: 3px;
-		border-top-right-radius: 3px;
-		color: @wcfTabularBoxColor;
+		background-color: $wcfContentBackground;
+		border-bottom: 1px solid $wcfContentBorder;
+		color: $wcfContentHeadlineText;
 		display: flex;
 		padding: 7px 10px;
 		
-		.textShadow(@wcfTabularBoxBackgroundColor);
-		
 		> span {
 			flex: 1 auto;
-			font-family: "Segoe UI Light";
-			font-size: 1.4rem;
+			
+			@extend .wcfFontLarge;
 		}
 		
 		> a {
-			color: @wcfTabularBoxColor;
+			color: $wcfContentHeadlineLink;
 			flex: 0 0 20px;
 			font-family: FontAwesome;
 			font-size: 18px;
 			text-align: right;
 			text-decoration: none;
 			
-			&:before {
-				content: @fa-var-times-circle;
+			&::before {
+				content: $fa-var-times;
 			}
 			
 			> span {
@@ -86,22 +80,20 @@
 	}
 	
 	> .dialogContent {
-		background-color: @wcfContainerBackgroundColor;
-		box-sizing: border-box;
-		color: @wcfColor;
+		background-color: $wcfContentBackground;
+		color: $wcfContentText;
 		overflow: auto;
 		
 		&:not(.dialogContentNoPadding) {
-			padding: 10px;
-			padding-bottom: 0;
+			padding: 30px 20px 0 20px;
 			
-			&:after {
+			&::after {
 				content: "";
 				display: block;
 				height: 10px;
 			}
 			
-			&.dialogForm:after {
+			&.dialogForm::after {
 				height: 17px;
 			}
 		}
@@ -114,7 +106,6 @@
 		dl:not(.plain) {
 			> dt {
 				float: none;
-				margin-bottom: @wcfGapTiny;
 				text-align: left;
 				width: auto !important;
 				
@@ -129,10 +120,8 @@
 		}
 		
 		.dialogFormSubmit {
-			background-color: @wcfContainerBackgroundColor;
-			border-top: 1px solid #3F7FBF;
-			border-bottom-left-radius: 3px;
-			border-bottom-right-radius: 3px;
+			background-color: $wcfContentBackground;
+			border-top: 1px solid $wcfContentBorder;
 			bottom: 0;
 			left: 0;
 			padding: 10px;
@@ -150,42 +139,23 @@
 	display: none;
 }
 
-.dialogContentX {
-	
-	> .icon-spinner {
-		left: 50%;
-		margin: -21px -21px 0 0;
-		padding: 0 21px 0 21px;
-		position: absolute;
-		top: 50%;
-	}
-	
-	.formSubmit {
-		background-color: @wcfContainerAccentBackgroundColor;
-		border-bottom-left-radius: 7px;
-		border-bottom-right-radius: 7px;
-		border-top: 1px solid @wcfContainerBorderColor;
-		bottom: 0;
-		left: 0;
-		padding: 10px 0;
-		position: absolute;
-		width: 100%;
-	}
-}
-
 /* package (un-)installation */
 #packageInstallationDialogContainer > .boxHeadline {
 	margin-top: 0;
 }
 
+@keyframes wcfSpinner {
+	to { transform: rotate(360deg); }
+}
+
 .spinner {
-	border: 1px solid rgba(0, 0, 0, .3);
-	border-radius: 6px;
-	box-sizing: border-box;
-	color: #fff;
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgb(204, 204, 204);
+	box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .2);
+	color: rgb(44, 62, 80);
 	left: 50%;
 	opacity: 0;
-	padding: 7px;
+	padding: 10px;
 	position: fixed;
 	text-align: center;
 	top: 200px;
@@ -193,9 +163,6 @@
 	z-index: 401;
 	
 	transform: translateX(-50%);
-	
-	.boxShadow(0, 1px, rgba(0, 0, 0, .5), 7px);
-	.linearGradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0), rgba(0, 0, 0, .7));
 	
 	transition: visibility 0s linear .1s, opacity .1s linear;
 	
@@ -207,17 +174,26 @@
 	}
 	
 	> .icon {
-		color: #fff;
+		border: 2px solid rgb(204, 204, 204);
+		border-top-color: rgb(79, 129, 189);
+		border-radius: 50%;
+		height: 48px;
+		animation: wcfSpinner .6s linear infinite;
+		width: 48px;
+		
+		&::before {
+			display: none;
+		}
 	}
 	
 	> span:not(.icon) {
 		display: block;
-		margin-top: @wcfGapSmall;
+		margin-top: 5px;
 	}
 }
 
 .systemConfirmation p {
-	padding-top: @wcfGapSmall;
+	//padding-top: @wcfGapSmall;
 }
 
 /* notification overlay */
@@ -250,6 +226,6 @@
 		max-width: 80%;
 		pointer-events: auto;
 		
-		.userSelectNone;
+		//.userSelectNone;
 	}
 }

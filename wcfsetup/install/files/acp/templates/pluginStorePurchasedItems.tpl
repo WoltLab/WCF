@@ -23,7 +23,7 @@
 {*<div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageMenuItemAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
+			<li><a href="{link controller='PageMenuItemAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -86,7 +86,7 @@
 {*<div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageMenuItemAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
+			<li><a href="{link controller='PageMenuItemAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsBottom'}
 		</ul>

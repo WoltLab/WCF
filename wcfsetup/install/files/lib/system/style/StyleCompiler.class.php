@@ -137,9 +137,51 @@ class StyleCompiler extends SingletonFactory {
 	 * Compiles SCSS stylesheets for ACP usage.
 	 */
 	public function compileACP() {
-		$files = glob(WCF_DIR.'style/*.less');
+		// read stylesheets by dependency order
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("filename REGEXP ?", ['style/([a-zA-Z0-9\_\-\.]+)\.(less|scss)']);
+		
+		// TESTING ONLY
+		$conditions->add("packageID <> ?", [1]);
+		// TESTING ONLY
+		
+		$sql = "SELECT		filename, application
+			FROM		wcf".WCF_N."_package_installation_file_log
+			".$conditions."
+			ORDER BY	packageID";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		
+		$files = [];
+		
+		// TESTING ONLY
+		if ($handle = opendir(WCF_DIR.'style/')) {
+			while (($file = readdir($handle)) !== false) {
+				if ($file === '.' || $file === '..' || $file === 'bootstrap' || is_file(WCF_DIR.'style/'.$file)) {
+					continue;
+				}
+				
+				$file = WCF_DIR."style/{$file}/";
+				if ($innerHandle = opendir($file)) {
+					while (($innerFile = readdir($innerHandle)) !== false) {
+						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile)) {
+							continue;
+						}
+						
+						$files[] = $file.$innerFile;
+					}
+					closedir($innerHandle);
+				}
+			}
+			
+			closedir($handle);
+		}
+		// TESTING ONLY
+		
+		//$files = glob(WCF_DIR.'style/*.less');
 		
 		// read default values
+		/*
 		$sql = "SELECT		variableName, defaultValue
 			FROM		wcf".WCF_N."_style_variable
 			ORDER BY	variableID ASC";
@@ -154,9 +196,12 @@ class StyleCompiler extends SingletonFactory {
 			
 			$variables[$row['variableName']] = $value;
 		}
+		*/
+		$style = new Style(1);
+		$variables = $style->getVariables();
 		
 		// insert blue temptation files
-		array_unshift($files, WCF_DIR.'acp/style/blueTemptation/variables.scss', WCF_DIR.'acp/style/blueTemptation/override.scss');
+		//array_unshift($files, WCF_DIR.'acp/style/blueTemptation/variables.scss', WCF_DIR.'acp/style/blueTemptation/override.scss');
 		
 		$variables['style_image_path'] = "'../images/blueTemptation/'";
 		
@@ -164,7 +209,7 @@ class StyleCompiler extends SingletonFactory {
 			WCF_DIR.'acp/style/style',
 			$files,
 			$variables,
-			file_get_contents(WCF_DIR.'acp/style/blueTemptation/individual.scss'),
+			'',//file_get_contents(WCF_DIR.'acp/style/blueTemptation/individual.scss'),
 			new Callback(function($content) {
 				// fix relative paths
 				$content = str_replace('../font/', '../../font/', $content);

@@ -44,7 +44,7 @@
 			{if $action == 'edit'}
 				{if $availableUserGroups|count > 1}
 					<li class="dropdown">
-						<a class="button dropdownToggle"><span class="icon icon16 icon-sort"></span> <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
+						<a class="button dropdownToggle"><span class="icon icon16 fa-sort"></span> <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
 						<div class="dropdownMenu">
 							<ul class="scrollableDropdownMenu">
 								{foreach from=$availableUserGroups item='availableUserGroup'}
@@ -56,11 +56,11 @@
 				{/if}
 				
 				{if $__wcf->session->getPermission('admin.user.canAddGroup') && $group->groupType == 4}
-					<li><a class="jsButtonUserGroupCopy button"><span class="icon icon16 icon-copy"></span> <span>{lang}wcf.acp.group.button.copy{/lang}</span></a></li>
+					<li><a class="jsButtonUserGroupCopy button"><span class="icon icon16 fa-copy"></span> <span>{lang}wcf.acp.group.button.copy{/lang}</span></a></li>
 				{/if}
 			{/if}
 			
-			<li><a href="{link controller='UserGroupList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserGroupList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>

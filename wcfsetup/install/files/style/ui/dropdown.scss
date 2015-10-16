@@ -6,10 +6,10 @@
 	
 	&.inputAddon {
 		> .dropdownToggle {
-			padding: @wcfGapTiny;
+			padding: $wcfGapTiny;
 			
 			> span.active:after {
-				content: "\f0d7";
+				content: "\f0d7"; // @TODO: use a variable instead
 				font-family: FontAwesome;
 				font-size: 14px;
 				margin-left: 7px;
@@ -22,14 +22,14 @@
 		width: 100%;
 		
 		input {
-			border-radius: 0 @wcfInputBorderRadius @wcfInputBorderRadius 0;
+			border-radius: 0 3px 3px 0;
 			display: table-cell;
 			margin: 0;
 			width: 99%;
 		}
 		
 		textarea {
-			border-radius: 0 @wcfInputBorderRadius @wcfInputBorderRadius;
+			border-radius: 0 3px 3px;
 			display: block;
 			margin-top: 0;
 		}
@@ -38,23 +38,23 @@
 			cursor: pointer;
 			display: table-cell;
 			letter-spacing: -1px;
-			padding: 0 @wcfGapSmall 0 @wcfGapTiny;
+			padding: 0 $wcfGapSmall 0 $wcfGapTiny;
 			vertical-align: middle;
 			width: 1%;
 			
 			&.button {
 				border-right-width: 0;
-				border-radius: @wcfInputBorderRadius 0 0 @wcfInputBorderRadius;
+				border-radius: $wcfInputBorderRadius 0 0 $wcfInputBorderRadius;
 			}
 			
 			span {
 				margin-right: -1px;
-				padding-left: @wcfGapTiny;
+				padding-left: $wcfGapTiny;
 				white-space: nowrap;
 				word-wrap: normal;
 				
 				&.active::after {
-					content: "\f0d7";
+					content: "\f0d7"; // @TODO: use a variable instead
 					font-family: FontAwesome;
 					font-size: 14px;
 					margin-left: 7px;
@@ -65,11 +65,11 @@
 		.dropdownCaptionTextarea {
 			cursor: pointer;
 			margin: 0 0 -1px 0;
-			padding-left: @wcfGapSmall;
-			padding-right: @wcfGapSmall;
+			padding-left: $wcfGapSmall;
+			padding-right: $wcfGapSmall;
 			
 			&.button {
-				border-radius: @wcfInputBorderRadius @wcfInputBorderRadius 0 0;
+				border-radius: 3px 3px 0 0;
 			}
 			
 			&~ .dropdownMenu {
@@ -81,7 +81,7 @@
 				word-wrap: normal;
 				
 				&.active::after {
-					content: "\f0d7";
+					content: "\f0d7"; // @TODO: use a variable instead
 					font-family: FontAwesome;
 					font-size: 14px;
 					margin-left: 7px;
@@ -106,22 +106,22 @@
 }
 
 .dropdownMenu {
-	background-color: @wcfDropdownBackgroundColor;
-	border: 1px solid @wcfDropdownBorderColor;
-	color: @wcfDropdownColor;
+	background-color: $wcfDropdownBackground;
+	border: 1px solid $wcfDropdownBorder;
+	color: $wcfDropdownText;
 	display: none;
 	float: left;
 	min-width: 160px;
-	padding: 4px 0;
+	padding: 3px 0;
 	position: absolute;
 	text-align: left;
 	z-index: 450;
 	
-	.boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
+	@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
 	
 	&::after {
 		border: 7px solid transparent;
-		border-bottom-color: @wcfDropdownBorderColor;
+		border-bottom-color: $wcfDropdownBorder;
 		border-top-width: 0;
 		content: "";
 		display: inline-block;
@@ -133,7 +133,7 @@
 	
 	&::before {
 		border: 6px solid transparent;
-		border-bottom-color: @wcfDropdownBackgroundColor;
+		border-bottom-color: $wcfDropdownBackground;
 		border-top-width: 0;
 		content: "";
 		display: inline-block;
@@ -158,7 +158,7 @@
 	&.dropdownArrowBottom {
 		&::after {
 			border: 7px transparent solid;
-			border-top-color: @wcfDropdownBorderColor;
+			border-top-color: $wcfDropdownBorder;
 			border-bottom-width: 0;
 			bottom: -7px;
 			top: auto;
@@ -166,7 +166,7 @@
 		
 		&::before {
 			border: 6px transparent solid;
-			border-top-color: @wcfDropdownBackgroundColor;
+			border-top-color: $wcfDropdownBackground;
 			border-bottom-width: 0;
 			bottom: -6px;
 			top: auto;
@@ -180,27 +180,34 @@
 	li {
 		display: block;
 		
+		@include textShadow($wcfDropdownText);
+		
 		&:hover:not(.dropdownDivider):not(.dropdownList):not(.dropdownText),
 		&.dropdownList > li:hover:not(.dropdownDivider),
 		&.dropdownNavigationItem,
 		&.active {
-			background-color: @wcfDropdownHoverBackgroundColor;
+			background-color: $wcfDropdownBackgroundActive;
+			color: $wcfDropdownTextActive;
+			
+			@include textShadow($wcfDropdownTextActive);
 		}
 		
 		&.dropdownDivider {
-			border-top: 1px dotted @wcfDropdownBorderColor;
-			margin: @wcfGapTiny;
+			border-top: 1px solid $wcfDropdownBorderAccent;
+			margin: 3px 0;
 		}
 		
 		&.dropdownText {
-			font-size: @wcfSmallFontSize;
-			padding: @wcfGapTiny @wcfGapMedium;
+			font-size: $wcfSmallFontSize;
+			padding: $wcfGapTiny $wcfGapMedium;
 		}
 		
 		&.boxFlag {
 			padding-top: 2px;
 		}
 		
+		/*
+		// @TODO
 		&.missingValue > span {
 			position: relative;
 			
@@ -213,32 +220,34 @@
 				top: @wcfGapTiny;
 			}
 		}
+		*/
 		
 		> a,
 		> span {
 			clear: both;
-			color: @wcfDropdownColor;
 			cursor: pointer;
 			display: block;
 			max-width: 350px;
 			overflow: hidden;
-			padding: @wcfGapTiny @wcfGapMedium;
+			padding: 5px 20px;
 			text-decoration: none;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			word-wrap: normal;
 			
-			.textShadow(@wcfDropdownBackgroundColor);
-			
-			&:hover {
-				color: @wcfDropdownColor;
-				
-				.textShadow(@wcfDropdownHoverBackgroundColor);
-			}
-			
 			> div > h3 {
 				overflow: hidden;
 				text-overflow: ellipsis;
+			}
+		}
+		
+		> a {
+			color: $wcfDropdownLink;
+			
+			&:hover {
+				color: $wcfDropdownLinkActive;
+				
+				@include textShadow($wcfDropdownLinkActive);
 			}
 		}
 		
@@ -253,7 +262,7 @@
 		> .box16 {
 			cursor: pointer;
 			min-height: 0;
-			padding: @wcfGapTiny @wcfGapTiny @wcfGapTiny @wcfGapSmall;
+			padding: $wcfGapTiny $wcfGapTiny $wcfGapTiny $wcfGapSmall;
 			
 			> div {
 				margin-left: 21px;
@@ -268,7 +277,7 @@
 			margin-bottom: 0;
 			
 			> p {
-				font-size: @wcfSmallFontSize;
+				font-size: $wcfSmallFontSize;
 			}
 		}
 	}

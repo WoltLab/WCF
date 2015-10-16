@@ -107,14 +107,14 @@
 	}
 	
 	> .hex {
-		margin-top: @wcfGapLarge;
+		margin-top: $wcfGapLarge;
 	}
 	
 	> .rgba {
-		margin-top: @wcfGapLarge;
+		margin-top: $wcfGapLarge;
 		
 		> li.a {
-			margin-top: @wcfGapSmall;
+			margin-top: $wcfGapSmall;
 		}
 		
 		> li.g,
@@ -128,7 +128,7 @@
 		text-align: right;
 		
 		input {
-			margin-left: @wcfGapSmall;
+			margin-left: $wcfGapSmall;
 			width: 80px;
 		}
 	}

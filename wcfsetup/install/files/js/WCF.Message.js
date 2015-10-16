@@ -1255,16 +1255,18 @@ WCF.Message.InlineEditor = Class.extend({
 	 */
 	init: function(containerID, supportExtendedForm, quoteManager) {
 		require(['WoltLab/WCF/Ui/Message/InlineEditor'], (function(UiMessageInlineEditor) {
-			extendedForm: (supportExtendedForm === true),
-			
-			className: this._getClassName(),
-			containerId: containerID,
-			editorPrefix: this._messageEditorIDPrefix,
-			
-			messageSelector: this._messageContainerSelector,
-			
-			callbackDropdownInit: this._callbackDropdownInit.bind(this),
-			callbackLegacyInitElements: this._callbackInitElements.bind(this)
+			UiMessageInlineEditor.init({
+				extendedForm: (supportExtendedForm === true),
+				
+				className: this._getClassName(),
+				containerId: containerID,
+				editorPrefix: this._messageEditorIDPrefix,
+				
+				messageSelector: this._messageContainerSelector,
+				
+				callbackDropdownInit: this._callbackDropdownInit.bind(this),
+				callbackLegacyInitElements: this._callbackInitElements.bind(this)
+			});
 		}).bind(this));
 	},
 	

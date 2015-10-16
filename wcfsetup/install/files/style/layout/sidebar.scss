@@ -1,8 +1,11 @@
 .sidebar {
+	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarBoxText;
+	
 	> div,
 	> fieldset,
 	> section {
-		background-color: $wcfContentBackgroundAlternate;
+		background-color: $wcfSidebarBoxBackground;
 		border-radius: 3px;
 		padding: 20px;
 		
@@ -12,12 +15,10 @@
 			display: block;
 			height: 0;
 		}
-	}
-	
-	> div + *,
-	> fieldset + *,
-	> section + * {
-		margin-top: 30px;
+		
+		& + * {
+			margin-top: 30px;
+		}
 	}
 	
 	> div {
@@ -38,10 +39,42 @@
 	
 	section > h1,
 	fieldset > legend {
-		.wcfFontLarge;
+		@extend .wcfFontLarge;
 		
-		color: rgba(67, 67, 67, 1);
+		color: $wcfSidebarBoxHeadlineText;
 		margin-bottom: 10px;
+		
+		> a {
+			color: $wcfSidebarBoxHeadlineLink;
+			
+			> .icon {
+				color: $wcfSidebarBoxHeadlineLink;
+			}
+			
+			&:hover {
+				color: $wcfSidebarBoxHeadlineLinkActive;
+				
+				> .icon {
+					color: $wcfSidebarBoxHeadlineLinkActive;
+				}
+			}
+		}
+	}
+	
+	a {
+		color: $wcfSidebarBoxLink;
+		
+		> .icon {
+			color: $wcfSidebarBoxLink;
+		}
+		
+		&:hover {
+			color: $wcfSidebarBoxLinkActive;
+			
+			> .icon {
+				color: $wcfSidebarBoxLinkActive;
+			}
+		}
 	}
 	
 	dl.dataList {

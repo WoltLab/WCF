@@ -103,7 +103,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				container.className = 'inputAddon';
 				
 				var button = elCreate('a');
-				button.className = 'inputSuffix';
+				button.className = 'inputSuffix button';
 				button.addEventListener('click', _callbackOpen);
 				container.appendChild(button);
 				

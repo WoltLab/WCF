@@ -30,19 +30,19 @@
 
 /* boxes with an image */
 @mixin box($imageSize, $margin: 0) {
-	display: flex;
+	display: flex !important;
 	
 	&:not(:last-child) {
 		margin-bottom: ($margin + 3px);
 	}
 	
 	> :first-child:not(:last-child) {
-		flex: 0 auto;
+		flex: 0 auto !important;
 		margin-right: $margin;
 	}
 	
 	> :last-child {
-		flex: 1;
+		flex: 1 !important;
 	}
 }
 
@@ -60,29 +60,29 @@ small {
 }
 
 .wcfFontDefault {
-	font-family: "Open Sans";
+	font-family: "Open Sans", "Segoe UI";
 	font-weight: 400;
 }
 
 .wcfFontSmall {
-	font-family: "Open Sans";
+	font-family: "Open Sans", "Segoe UI";
 	font-size: .85rem;
 	font-weight: 400;
 }
 
 .wcfFontBold {
-	font-family: "Open Sans";
+	font-family: "Open Sans", "Segoe UI Semibold";
 	font-weight: 600;
 }
 
 .wcfFontLarger {
-	font-family: "Open Sans";
+	font-family: "Open Sans", "Segoe UI Light";
 	font-size: 1.2rem;
 	font-weight: 300;
 }
 
 .wcfFontLarge {
-	font-family: "Open Sans";
+	font-family: "Open Sans", "Segoe UI Light";
 	font-size: 1.4rem;
 	font-weight: 300;
 }

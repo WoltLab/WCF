@@ -1559,7 +1559,7 @@ WCF.ACP.Package.Update.Search = Class.extend({
 			$('.jsButtonPackageUpdate').click($.proxy(this._click, this));
 		}
 		else {
-			var $button = $('<li><a class="button"><span class="icon icon16 icon-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
+			var $button = $('<li><a class="button"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
 			$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul'));
 		}
 	},

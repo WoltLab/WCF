@@ -7,6 +7,7 @@
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	
 	<!-- Stylesheets -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
 	{@$__wcf->getStyleHandler()->getStylesheet(true)}
 	{event name='stylesheets'}
 	
@@ -146,6 +147,18 @@
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
 	<a id="top"></a>
 	
+	<div id="pageContainer" class="pageContainer">
+		{event name='beforePageHeader'}
+		
+		{include file='pageHeader'}
+		
+		{event name='afterPageHeader'}
+		
+		{*include file='pageNavbarTop'*}
+		
+		<section id="main" class="main" role="main">
+	
+	{*
 	<header id="pageHeader" class="layoutFluid">
 		<div>
 			{if $__wcf->user->userID}
@@ -228,7 +241,7 @@
 				</a>
 			</div>
 			
-			{* work-around for unknown core-object during WCFSetup *}
+			*}{* work-around for unknown core-object during WCFSetup *}{*
 			{if PACKAGE_ID && $__wcf->user->userID}
 				{hascontent}
 					<nav id="mainMenu" class="mainMenu">
@@ -245,6 +258,7 @@
 			</nav>
 		</div>
 	</header>
+	*}
 	
 	<div id="main" class="layoutFluid{if PACKAGE_ID && $__wcf->user->userID && $__wcf->getACPMenu()->getMenuItems('')|count} sidebarOrientationLeft{/if}">
 		<div>

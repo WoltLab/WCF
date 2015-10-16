@@ -2,7 +2,7 @@
 
 {capture assign='attributeTemplate'}
 	<fieldset>
-		<legend><span class="icon icon16 icon-remove pointer jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span>{lang}wcf.acp.bbcode.attribute{/lang} {ldelim}#$attributeNo}</span></legend>
+		<legend><span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span>{lang}wcf.acp.bbcode.attribute{/lang} {ldelim}#$attributeNo}</span></legend>
 		<dl>
 			<dt><label for="attributes[{ldelim}@$attributeNo}][attributeHtml]">{lang}wcf.acp.bbcode.attribute.attributeHtml{/lang}</label></dt>
 			<dd>
@@ -88,7 +88,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='BBCodeList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
+			<li><a href="{link controller='BBCodeList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>
@@ -224,7 +224,7 @@
 			
 			{foreach from=$attributes item='attribute'}
 				<fieldset>
-					<legend><span class="icon icon16 icon-remove pointer jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span>{lang}wcf.acp.bbcode.attribute{/lang} {#$attribute->attributeNo}</span></legend>
+					<legend><span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span>{lang}wcf.acp.bbcode.attribute{/lang} {#$attribute->attributeNo}</span></legend>
 					
 					<dl{if $errorField == 'attributeHtml'|concat:$attribute->attributeNo} class="formError"{/if}>
 						<dt><label for="attributes[{@$attribute->attributeNo}][attributeHtml]">{lang}wcf.acp.bbcode.attribute.attributeHtml{/lang}</label></dt>

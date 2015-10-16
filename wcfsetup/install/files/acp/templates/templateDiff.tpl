@@ -76,7 +76,7 @@
 					<div class="contentNavigation">
 						<nav>
 							<ul>
-								<li><a href="{link controller='TemplateEdit' id=$parent->templateID}{/link}" class="button"><span class="icon icon16 icon-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+								<li><a href="{link controller='TemplateEdit' id=$parent->templateID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
 							</ul>
 						</nav>
 					</div>
@@ -113,7 +113,7 @@
 				<div class="contentNavigation">
 					<nav>
 						<ul>
-							<li><a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" class="button"><span class="icon icon16 icon-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+							<li><a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
 						</ul>
 					</nav>
 				</div>
