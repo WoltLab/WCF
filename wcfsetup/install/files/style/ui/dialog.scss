@@ -8,13 +8,24 @@
 	visibility: hidden;
 	z-index: 399;
 	
-	transition: visibility 0s linear .3s, background-color .12s linear;
+	transition: visibility 0s linear .3s;
 	
 	&[aria-hidden=false] {
-		background-color: rgba(0, 0, 0, .4);
 		visibility: visible;
 		
 		transition-delay: 0s;
+	}
+	
+	&::before {
+		background-color: rgba(0, 0, 0, .4);
+		bottom: 0;
+		content: "";
+		display: block;
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 100;
 	}
 }
 
@@ -39,6 +50,7 @@
 	top: 10%;
 	transform: translateX(-50%);
 	will-change: opacity, transform;
+	z-index: 200;
 	
 	-webkit-animation: wcfDialogOut .3s;
 	-webkit-animation-fill-mode: forwards;
@@ -46,6 +58,10 @@
 	&[aria-hidden=false] {
 		-webkit-animation: wcfDialog .3s;
 		-webkit-animation-fill-mode: forwards;
+		
+		& ~ .dialogContainer[aria-hidden=false] {
+			z-index: 50;
+		}
 	}
 	
 	> header {
@@ -53,7 +69,7 @@
 		border-bottom: 1px solid $wcfContentBorder;
 		color: $wcfContentHeadlineText;
 		display: flex;
-		padding: 7px 10px;
+		padding: 10px 20px;
 		
 		> span {
 			flex: 1 auto;
