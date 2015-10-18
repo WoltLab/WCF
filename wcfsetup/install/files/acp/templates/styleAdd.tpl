@@ -509,7 +509,7 @@
 								
 								<div class="spHeadline">Tabular Box</div>
 								
-								<table id="spTable">
+								<table id="spTable" data-region="wcfTabularBox">
 									<thead>
 										<tr>
 											<th><a>Lorem</a></th>
@@ -533,11 +533,11 @@
 								
 								<div class="spHeadline">Input</div>
 								
-								<dl>
+								<dl data-region="wcfInput">
 									<dt><label for="spInput">Lorem Ipsum</label></dt>
 									<dd><input type="text" id="spInput" class="long" value="Consetetur sadipscing elitr"></dd>
 								</dl>
-								<dl>
+								<dl data-region="wcfInputDisabled">
 									<dt><label for="spInputDisabled">Dolor Sit Amet</label></dt>
 									<dd><input type="text" id="spInputDisabled" class="long" value="Disabled" disabled></dd>
 								</dl>
@@ -559,7 +559,7 @@
 								<div class="spHeadline">Dropdown</div>
 								
 								<div style="position: relative">
-									<ul class="dropdownMenu" id="spDropdown">
+									<ul class="dropdownMenu" id="spDropdown" data-region="wcfDropdown">
 										<li><a>Lorem Ipsum</a></li>
 										<li class="active"><a>Dolor Sit Amet</a></li>
 										<li><a>Consetetur Sadipscing</a></li>
@@ -570,8 +570,8 @@
 							</div>
 							
 							<div id="spContentSidebar">
-								<div class="spContentSidebarBox">
-									<div class="spContentSidebarHeadline">Sidebar</div>
+								<div class="spContentSidebarBox" data-region="wcfSidebar">
+									<div class="spContentSidebarHeadline" data-region="wcfSidebarHeadline">Sidebar</div>
 									
 									<p>
 										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <a>sed diam nonumy eirmod tempor</a> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam <a>et justo</a> duo dolores et ea rebum.
@@ -589,10 +589,10 @@
 						</div>
 					</div>
 					
-					<div id="spFooterBox">
+					<div id="spFooterBox" data-region="wcfFooterBox">
 						<div class="spBoundary">
 							<div class="spFooterBoxItem">
-								<div class="spFooterBoxHeadline">Lorem Ipsum</div>
+								<div class="spFooterBoxHeadline" data-region="wcfFooterBoxHeadline">Lorem Ipsum</div>
 								
 								<p>
 									Lorem ipsum dolor sit amet, consetetur <a>sadipscing elitr</a>, sed diam nonumy eirmod tempor <a>invidunt ut labore</a> et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
@@ -609,55 +609,57 @@
 						</div>
 					</div>
 					
-					<div id="spFooter">
+					<div id="spFooter" data-region="wcfFooter">
 						<div class="spBoundary">
 							Copyright &copy; 1970-2038 <a>Example Company</a>
 						</div>
 					</div>
 				</div>
 				<div id="spSidebar">
-					<div class="spSidebarBox">
-						<label class="selectDropdown">
-							<select id="spCategories">
-								<option value="none" selected>{lang}wcf.global.noSelection{/lang}</option>
-								{foreach from=$colorCategories key=spName item=spCategory}
-									<optgroup label="{$spName}">
-										{if $spCategory|is_array}
-											{foreach from=$spCategory item=spChildCategory}
-												<option value="{$spChildCategory}">{$spChildCategory}</option>
-											{/foreach}
-										{else}
-											<option value="{$spCategory}">{$spCategory}</option>
-										{/if}
-									</optgroup>
-								{/foreach}
-							</select>
-						</label>
-					</div>
-					
-					<div class="spSidebarBox" data-category="none" style="display: none;">
-						foo
-					</div>
-					
-					{foreach from=$colors key=spCategory item=spColors}
-						<div class="spSidebarBox" data-category="{$spCategory}" style="display: none;">
-							<ul>
-								{foreach from=$spColors item=spType}
-									{capture assign=spColor}{$spCategory}{$spType|ucfirst}{/capture}
-									<li class="box24 spColor">
-										<div class="spColorBox">
-											<span class="styleVariableColor jsColorPicker" style="background-color: {$variables[$spColor]};" data-color="{$variables[$spColor]}" data-store="{$spColor}_value"></span>
-											<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}" />
-										</div>
-										<div>
-											<span class="spVariable">${$spColor}</span>
-											<span class="spDescription">{$spType}</span>
-										</div>
-									</li>
-								{/foreach}
-							</ul>
+					<div id="spVariablesWrapper">
+						<div class="spSidebarBox">
+							<label class="selectDropdown">
+								<select id="spCategories">
+									<option value="none" selected>{lang}wcf.global.noSelection{/lang}</option>
+									{foreach from=$colorCategories key=spName item=spCategory}
+										<optgroup label="{$spName}">
+											{if $spCategory|is_array}
+												{foreach from=$spCategory item=spChildCategory}
+													<option value="{$spChildCategory}">{$spChildCategory}</option>
+												{/foreach}
+											{else}
+												<option value="{$spCategory}">{$spCategory}</option>
+											{/if}
+										</optgroup>
+									{/foreach}
+								</select>
+							</label>
 						</div>
-					{/foreach}
+						
+						<div class="spSidebarBox" data-category="none">
+							foo
+						</div>
+						
+						{foreach from=$colors key=spCategory item=spColors}
+							<div class="spSidebarBox" data-category="{$spCategory}" style="display: none;">
+								<ul>
+									{foreach from=$spColors item=spType}
+										{capture assign=spColor}{$spCategory}{$spType|ucfirst}{/capture}
+										<li class="box24 spColor">
+											<div class="spColorBox">
+												<span class="styleVariableColor jsColorPicker" style="background-color: {$variables[$spColor]};" data-color="{$variables[$spColor]}" data-store="{$spColor}_value"></span>
+												<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}" />
+											</div>
+											<div>
+												<span class="spVariable">${$spColor}</span>
+												<span class="spDescription">{$spType}</span>
+											</div>
+										</li>
+									{/foreach}
+								</ul>
+							</div>
+						{/foreach}
+					</div>
 				</div>
 			</div>
 		</div>

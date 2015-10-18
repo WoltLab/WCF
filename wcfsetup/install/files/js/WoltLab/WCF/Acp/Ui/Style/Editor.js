@@ -145,16 +145,18 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 				scrollToRegion(top);
 			}
 			
-			var variablesWrapper = elById('stylePreviewVariablesWrapper');
+			var variablesWrapper = elById('spVariablesWrapper');
 			function updateWrapperPosition(region) {
 				var fromTop = 0;
 				if (region !== null) {
+					console.debug(region.offsetTop + " | " + variablesWrapper.offsetTop);
 					fromTop = (region.offsetTop - variablesWrapper.offsetTop) - 10;
-					
+					window.dtdesign = region;
 					var styles = window.getComputedStyle(region);
-					if (styles.getPropertyValue('position') === 'absolute') {
+					if (styles.getPropertyValue('position') === 'absolute' || styles.getPropertyValue('position') === 'relative') {
 						fromTop += region.offsetParent.offsetTop;
 					}
+					console.debug(fromTop);
 				}
 				
 				if (fromTop <= 0) {
@@ -167,7 +169,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 					if (wrapperHeight + fromTop > maxHeight) {
 						fromTop = maxHeight - wrapperHeight;
 					}
-					
+					console.debug(fromTop);
 					variablesWrapper.style.setProperty('transform', 'translateY(' + fromTop + 'px)');
 				}
 			}
@@ -188,7 +190,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 				window.scrollTo(0, top);
 			}
 			
-			var selectContainer = elBySel('.stylePreviewVariablesContainer:first-child');
+			var selectContainer = elBySel('.spSidebarBox:first-child');
 			var element;
 			select.addEventListener('change', function() {
 				element = elBySel('.spSidebarBox[data-category="' + lastValue + '"]', container);
@@ -235,11 +237,11 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 					style.sheet.insertRule(rules[i], style.sheet.cssRules.length);
 				}
 			}
-			console.debug(styleRuleMap);
+			
 			var elements = elByClass('styleVariableColor', variablesWrapper);
 			[].forEach.call(elements, function(colorField) {
 				var variableName = elData(colorField, 'store').replace(/_value$/, '');
-				console.debug(variableName);
+				
 				var observer = new MutationObserver(function(mutations) {
 					mutations.forEach(function(mutation) {
 						if (mutation.attributeName === 'style') {

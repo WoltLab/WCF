@@ -64,8 +64,19 @@
 
 /* ### wrapper sidebar ### */
 .spSidebarBox { background-color: rgb(217, 237, 247); margin-bottom: 10px; padding: 10px; }
+.spSidebarBox.pointer { position: relative; }
+.spSidebarBox.pointer::before { border: 10px solid transparent; border-right-color: rgb(217, 237, 247); content: ""; display: block; left: -20px; position: absolute; }
 .spColor { align-items: center; }
 .spColorBox { background-color: #fff; border: 1px solid #ccc; margin-right: 10px !important; padding: 1px; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
 .spVariable { font-family: Consolas, Courier, monospace; }
+
+/* ### style region marker ### */
+#stylePreviewRegionMarker { border: 3px solid rgba(255, 0, 0, .4); position: absolute; pointer-events: none; }
+#stylePreviewRegionMarkerBottom { height: 100%; }
+#stylePreviewRegionMarkerBottom::after, #stylePreviewRegionMarkerBottom::before, #stylePreviewRegionMarker::after, #stylePreviewRegionMarker::before { border: 3px solid red; content: ""; display: block; height: 20px; position: absolute; width: 20px; }
+#stylePreviewRegionMarker::after { border-width: 0 0 3px 3px; right: -20px; top: -20px; }
+#stylePreviewRegionMarker::before { border-width: 0 3px 3px 0; left: -20px; top: -20px; }
+#stylePreviewRegionMarkerBottom::after { border-width: 3px 0 0 3px; right: -20px; bottom: -20px; }
+#stylePreviewRegionMarkerBottom::before { border-width: 3px 3px 0 0; left: -20px; bottom: -20px; }
