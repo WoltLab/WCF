@@ -751,9 +751,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[The controller “{$urlControllerReplacementError}” is unknown.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Below the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
-		<item name="wcf.acp.option.export"><![CDATA[Download Options]]></item>
-		<item name="wcf.acp.option.export.download"><![CDATA[Download Options]]></item>
-		<item name="wcf.acp.option.export.download.description"><![CDATA[Downloads a backup of the configuration settings to your local machine. This is not a replacement for a backup!]]></item>
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable gzip-compression]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transferred to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent browser-caching]]></item>
@@ -764,12 +761,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
-		<item name="wcf.acp.option.import"><![CDATA[Restore Options]]></item>
-		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Unable to restore options.]]></item>
-		<item name="wcf.acp.option.import.success"><![CDATA[Options have been restored.]]></item>
-		<item name="wcf.acp.option.import.upload"><![CDATA[Upload Options]]></item>
-		<item name="wcf.acp.option.import.upload.description"><![CDATA[Upload previously downloaded options file.]]></item>
-		<item name="wcf.acp.option.importAndExport"><![CDATA[Save &amp; Restore Options]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-generated content, e.g. sessions, profiles or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator]]></item>

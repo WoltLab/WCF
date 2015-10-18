@@ -752,9 +752,6 @@
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[Der Controller „{$urlControllerReplacementError}“ ist unbekannt.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
-		<item name="wcf.acp.option.export"><![CDATA[Optionen sichern]]></item>
-		<item name="wcf.acp.option.export.download"><![CDATA[Sicherung der Optionen herunterladen]]></item>
-		<item name="wcf.acp.option.export.download.description"><![CDATA[Laden Sie eine Sicherung der Optionen auf Ihren lokalen Rechner herunter.]]></item>
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Gzip-Komprimierung aktivieren]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Seitencaching im Client-Browser verhindern]]></item>
@@ -765,12 +762,6 @@
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken, wird z.B. für die Skalierung von hochgeladenen Bildern verwendet. „ImageMagick“ ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
-		<item name="wcf.acp.option.import"><![CDATA[Optionen importieren]]></item>
-		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Die Optionen konnten nicht erfolgreich importiert werden.]]></item>
-		<item name="wcf.acp.option.import.success"><![CDATA[Die Optionen wurden erfolgreich importiert.]]></item>
-		<item name="wcf.acp.option.import.upload"><![CDATA[Sicherung der Optionen vom lokalen Computer hochladen]]></item>
-		<item name="wcf.acp.option.import.upload.description"><![CDATA[Wählen Sie eine Sicherung der Optionen von Ihrem lokalen Rechner aus.]]></item>
-		<item name="wcf.acp.option.importAndExport"><![CDATA[Optionen sichern &amp; wiederherstellen]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Speicherung von IP-Adressen]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die Speicherung von IP-Adressen der Benutzer in z.B. Sitzungen, Benutzerprofilen, Forenbeiträgen.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
