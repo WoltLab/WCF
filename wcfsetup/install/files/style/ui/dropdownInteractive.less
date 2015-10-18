@@ -99,10 +99,10 @@
 	
 	&.loading,
 	&.noItems {
-		font-family: "Segoe UI Light";
-		font-size: 1.2rem;
 		padding: @wcfGapLarge @wcfGapMedium;
 		text-align: center;
+		
+		@extend .wcfFontHeadline;
 	}
 	
 	&:not(.loading):not(.noItems) {
@@ -186,8 +186,7 @@
 	
 	> .box32 > .containerHeadline {
 		> h3 {
-			font-family: "Segoe UI Light";
-			font-size: 1.2rem;
+			@extend .wcfFontHeadline
 		}
 	}
 	
@@ -202,7 +201,8 @@
 	
 	.interactiveDropdownUserMenuLinkList > li {
 		display: inline-block;
-		font-size: .85rem;
+	
+		@extend .wcfFontSmall;
 		
 		&:after {
 			content: " \2013 ";

@@ -78,8 +78,9 @@
 	}
 	
 	dl.dataList {
-		font-size: .85rem;
 		overflow: hidden;
+		
+		@extend .wcfFontSmall;
 	}
 	
 	dl:not(.dataList) {

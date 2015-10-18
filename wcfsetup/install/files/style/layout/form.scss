@@ -142,7 +142,7 @@ dl {
 	}
 	
 	&.inlineDataList {
-		font-size: .85rem;
+		@extend .wcfFontSmall;
 		
 		> dt {
 			display: inline-block;
@@ -172,11 +172,12 @@ dl {
 		> dt {
 			color: $wcfDimmedColor;
 			flex: 0 0 60%;
-			font-size: .85rem;
 			margin-left: 5px;
 			overflow: hidden;
 			text-align: left;
 			white-space: nowrap;
+			
+			@extend .wcfFontSmall;
 		}
 		
 		> dd {

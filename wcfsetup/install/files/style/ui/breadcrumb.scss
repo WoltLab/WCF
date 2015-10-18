@@ -6,7 +6,8 @@
 		
 		> li {
 			flex: 0 auto;
-			font-size: .85rem;
+			
+			@extend .wcfFontSmall;
 			
 			&:not(:last-child) {
 				margin-right: 10px;

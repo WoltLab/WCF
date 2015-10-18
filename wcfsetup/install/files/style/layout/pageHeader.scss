@@ -123,13 +123,12 @@
 	
 	> li {
 		> a {
-			@extend .wcfFontDefault;
-			
 			color: $wcfHeaderMenuLink;
 			display: block;
-			font-size: 1rem;
 			padding: 5px 20px;
 			white-space: nowrap;
+			
+			@extend .wcfFontDefault;
 		}
 		
 		&.active > a,

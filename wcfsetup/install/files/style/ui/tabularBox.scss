@@ -22,7 +22,7 @@
 						color: $wcfContentTabularLink;
 						display: block;
 						
-						@extend .wcfFontLarge;
+						@extend .wcfFontHeadline;
 					}
 					
 					&.ASC > a,
@@ -89,7 +89,7 @@
 		> h1,
 		> h2,
 		> h3 {
-			@extend .wcfFontLarge;
+			@extend .wcfFontHeadline;
 		}
 		
 		a,
@@ -138,7 +138,7 @@ div.tabularBoxTitle > header {
 		text-align: left;
 		white-space: nowrap;
 		
-		@extend .wcfFontLarge;
+		@extend .wcfFontHeadline;
 		
 		> a {
 			color: $wcfTabularBoxHeadline;
@@ -216,16 +216,19 @@ div.tabularBoxTitle > header {
 		}
 		
 		&.columnDate {
-			font-size: .85rem;
 			text-align: right;
 			width: 1px;
 			white-space: nowrap;
 			word-wrap: normal;
+			
+			@extend .wcfFontSmall;
 		}
 		
 		&.columnURL, &.columnSmallText {
-			font-size: .85rem;
 			text-align: left;
+			
+			@extend .wcfFontSmall;
+			
 		}
 	}
 	

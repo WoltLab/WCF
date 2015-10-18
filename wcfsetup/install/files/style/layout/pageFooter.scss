@@ -36,9 +36,9 @@
 			}
 			
 			> div > .containerHeadline > h3 {
-				font-family: "Segoe UI Light";
-				font-size: 1.4rem;
 				margin-bottom: 10px;
+				
+				@extend .wcfFontHeadline;
 			}
 		}
 	}

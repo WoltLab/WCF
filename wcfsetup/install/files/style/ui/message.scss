@@ -37,7 +37,7 @@
 	}
 	
 	.dataList {
-		font-size: .85rem;
+		@extend .wcfFontSmall;
 	}
 }
 
@@ -83,7 +83,8 @@
 	
 	.badge {
 		color: rgb(255, 255, 255);
-		font-size: .85rem;
+		
+		@extend .wcfFontSmall;
 	}
 }
 
@@ -100,13 +101,13 @@
 	order: 1;
 	
 	> h1 {
-		font-family: "Segoe UI Light";
-		font-size: 1.4rem;
 		margin-bottom: 5px;
+		
+		@extend .wcfFontHeadline;
 	}
 	
 	> p {
-		font-size: .85rem;
+		@extend .wcfFontSmall;
 	}
 }
 
@@ -188,7 +189,7 @@
 		
 		> h3 {
 			> .messageGroupLink {
-				font-size: $wcfTitleFontSize;
+				@extend .wcfFontHeadline;
 			}
 			
 			> .badge.label {
@@ -201,7 +202,7 @@
 		}
 		
 		> nav {
-			font-size: $wcfSmallFontSize;
+			@extend .wcfFontSmall;
 			
 			> ul > li {
 				display: inline;
@@ -307,8 +308,7 @@
 	
 	.messageGroupInfo {
 		@extend .inlineList;
-		
-		font-size: $wcfSmallFontSize;
+		@extend .wcfFontSmall;
 		
 		> li:not(:last-child) {
 			margin-right: 5px;

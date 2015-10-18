@@ -198,8 +198,9 @@
 		}
 		
 		&.dropdownText {
-			font-size: $wcfSmallFontSize;
 			padding: $wcfGapTiny $wcfGapMedium;
+			
+			@extend .wcfFontSmall;
 		}
 		
 		&.boxFlag {
@@ -277,7 +278,7 @@
 			margin-bottom: 0;
 			
 			> p {
-				font-size: $wcfSmallFontSize;
+				@extend .wcfFontSmall;
 			}
 		}
 	}

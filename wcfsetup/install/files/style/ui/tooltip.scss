@@ -2,17 +2,17 @@
 	background-color: $wcfTooltipBackgroundColor;
 	border-radius: 6px;
 	color: $wcfTooltipColor;
-	font-size: $wcfSmallFontSize;
 	max-width: 300px;
 	opacity: 0;
 	padding: 5px 10px 7px;
 	pointer-events: none;
 	position: absolute;
 	top: 0;
+	transition: visibility 0s linear .2s, opacity .2s linear .2s;
 	visibility: hidden;
 	z-index: 800;
 	
-	transition: visibility 0s linear .2s, opacity .2s linear .2s;
+	@extend .wcfFontSmall;
 	
 	> .elementPointer {
 		border-color: $wcfTooltipBackgroundColor transparent;

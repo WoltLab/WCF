@@ -27,8 +27,9 @@ input[type="submit"],
 	}
 	
 	&.small {
-		font-size: .85rem;
 		padding: 4px 7px;
+		
+		@extend .wcfFontSmall;
 	}
 }
 
@@ -90,8 +91,9 @@ input[type="submit"],
 	@extend .inlineList;
 	
 	&.smallButtons .button {
-		font-size: .85rem;
 		padding: 4px 7px;
+		
+		@extend .wcfFontSmall;
 	}
 	
 	/* members list */

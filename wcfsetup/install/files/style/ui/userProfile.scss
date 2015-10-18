@@ -66,7 +66,8 @@
 		
 		> .userActivity > span {
 			display: block;
-			font-size: .85rem;
+			
+			@extend .wcfFontSmall;
 		}
 	}
 }
@@ -81,9 +82,10 @@
 			}
 			
 			> a {
-				font-size: 1.4rem;
 				padding: 0;
 				text-transform: uppercase;
+				
+				@extend .wcfFontHeadline;
 			}
 		}
 		
@@ -110,5 +112,5 @@
 }
 
 .username {
-	font-size: 1.2rem;
+	@extend .wcfFontHeadline;
 }
