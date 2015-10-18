@@ -1,13 +1,13 @@
-<header id="pageHeader" class="header">
+<header id="pageHeader" class="pageHeader">
 	<div>
 		<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
 			{include file='pageLogo'}
 			
-			{include file='searchArea'}
+			{include file='pageSearchArea'}
 			
-			{include file='mainMenu'}
+			{include file='pageMenu'}
 			
-			{include file='userPanel'}
+			{include file='pageMenuUser'}
 		</div>
 	</div>
 	

@@ -7,13 +7,13 @@
 
 <div id="search" class="searchBar" data-disable-auto-focus="true">
 	<form method="post" action="{@$__searchFormLink}" class="dropdown">
-		<input type="search" name="q" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="{if $query|isset}{$query}{/if}" class="dropdownToggle" data-toggle="search" />
+		<input type="search" name="q" id="pageHeaderSearch" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="{if $query|isset}{$query}{/if}" class="dropdownToggle" data-toggle="search" />
 		
 		<ul class="dropdownMenu">
 			{hascontent}
 				<li class="dropdownText">
 					{content}
-						{@$__searchDropdownOptions}
+					{@$__searchDropdownOptions}
 					{/content}
 				</li>
 				<li class="dropdownDivider"></li>
@@ -30,7 +30,7 @@
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
-			new WCF.Search.Message.SearchArea($('#search'));
+			//new WCF.Search.Message.SearchArea($('#search'));
 		});
 		//]]>
 	</script>
