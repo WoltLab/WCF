@@ -55,36 +55,36 @@
 .box128 { @include box(128px, 11px); }
 .box256 { @include box(256px, 21px); }
 
-small {
-	font-size: .85rem;
-}
-
 .wcfFontDefault {
-	font-family: "Open Sans", "Segoe UI";
+	font-size: $wcfFontSizeDefault;
 	font-weight: 400;
 }
 
 .wcfFontSmall {
-	font-family: "Open Sans", "Segoe UI";
-	font-size: .85rem;
+	font-size: $wcfFontSizeSmall;
 	font-weight: 400;
 }
 
 .wcfFontBold {
-	font-family: "Open Sans", "Segoe UI Semibold";
 	font-weight: 600;
 }
 
-.wcfFontLarger {
-	font-family: "Open Sans", "Segoe UI Light";
-	font-size: 1.2rem;
+.wcfFontHeadline {
+	font-size: $wcfFontSizeHeadline;
 	font-weight: 300;
 }
 
-.wcfFontLarge {
-	font-family: "Open Sans", "Segoe UI Light";
-	font-size: 1.4rem;
+.wcfFontTitle {
+	font-size: $wcfFontSizeTitle;
 	font-weight: 300;
+}
+
+small {
+	@extend .wcfFontSmall;
+}
+
+strong {
+	@extend .wcfFontBold;
 }
 
 .elementPointer {

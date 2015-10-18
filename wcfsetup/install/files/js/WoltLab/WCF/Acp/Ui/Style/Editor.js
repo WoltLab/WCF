@@ -104,7 +104,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 		},
 		
 		_initVisualEditor: function(styleRuleMap) {
-			var regions = elBySelAll('.stylePreview [data-region]');
+			var regions = elBySelAll('#spWindow [data-region]');
 			for (var i = 0, length = regions.length; i < length; i++) {
 				_stylePreviewRegions.set(elData(regions[i], 'region'), regions[i]);
 			}
@@ -115,8 +115,8 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 			elHide(_stylePreviewRegionMarker);
 			elById('colors').appendChild(_stylePreviewRegionMarker);
 			
-			var container = elBySel('.stylePreviewVariables');
-			var select = elById('stylePreviewVariablesCategories');
+			var container = elById('spSidebar');
+			var select = elById('spCategories');
 			var lastValue = select.value;
 			
 			function updateRegionMarker() {
@@ -191,11 +191,11 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 			var selectContainer = elBySel('.stylePreviewVariablesContainer:first-child');
 			var element;
 			select.addEventListener('change', function() {
-				element = elBySel('.stylePreviewVariablesContainer[data-category="' + lastValue + '"]', container);
+				element = elBySel('.spSidebarBox[data-category="' + lastValue + '"]', container);
 				elHide(element);
 				
 				lastValue = select.value;
-				element = elBySel('.stylePreviewVariablesContainer[data-category="' + lastValue + '"]', container);
+				element = elBySel('.spSidebarBox[data-category="' + lastValue + '"]', container);
 				elShow(element);
 				
 				// set region marker
@@ -217,19 +217,29 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 					return;
 				}
 				
-				var rule = styleRuleMap[identifier].replace(/VALUE/, value + ' !important');
+				var rule = styleRuleMap[identifier].replace(/VALUE/g, value + ' !important');
 				if (!rule) {
 					console.debug(identifier);
 					return;
 				}
 				
-				style.sheet.insertRule(rule, style.sheet.cssRules.length);
+				var rules = [];
+				if (rule.indexOf('__COMBO_RULE__')) {
+					rules = rule.split('__COMBO_RULE__');
+				}
+				else {
+					rules = [rule];
+				}
+				
+				for (var i = 0, length = rules.length; i < length; i++) {
+					style.sheet.insertRule(rules[i], style.sheet.cssRules.length);
+				}
 			}
-			
+			console.debug(styleRuleMap);
 			var elements = elByClass('styleVariableColor', variablesWrapper);
 			[].forEach.call(elements, function(colorField) {
 				var variableName = elData(colorField, 'store').replace(/_value$/, '');
-				
+				console.debug(variableName);
 				var observer = new MutationObserver(function(mutations) {
 					mutations.forEach(function(mutation) {
 						if (mutation.attributeName === 'style') {

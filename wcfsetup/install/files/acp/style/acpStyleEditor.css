@@ -1,0 +1,71 @@
+/* ### wrapper ### */
+#spWrapper { display: flex; }
+#spWindow { background-color: #eee; border: 1px solid rgb(52, 152, 219); flex: 1 1 auto; margin-right: 40px; padding: 1px; }
+#spSidebar { flex: 0 0 300px; }
+.spBoundary { margin: 0 40px; }
+
+/* ### header ### */
+#spHeader > .spBoundary { display: flex; flex-wrap: wrap; padding: 15px 0; }
+#spLogo { flex: 0 0 50%; }
+#spLogo > img { height: 40px; }
+#spSearch { flex: 0 0 50%; }
+#spSearchBox { border-width: 0; }
+#spMenu { flex: 0 0 50%; }
+#spUser { flex: 0 0 50%; }
+#spLogo, #spSearch, #spMenu, #spUser { align-items: center; display: flex; }
+#spSearch, #spUser { justify-content: flex-end; }
+
+/* ### menu ### */
+#spMenu > ol > li:not(:last-child) { margin-right: 10px; }
+#spMenu > ol > li > a { font-size: 16px; font-weight: 300; }
+#spMenu > ol > li.active > a { font-weight: 600; }
+#spMenu > ol > li.active > a::after { content: "\f0d7"; display: inline-block; font-family: FontAwesome; margin-left: 5px; }
+#spMenu > ol > li.active { position: relative; }
+#spSubMenu { border: 1px solid #fff; padding: 3px 0; position: absolute; }
+#spSubMenu > li > a { display: block; padding: 5px 20px; white-space: nowrap; width: 120px; }
+
+/* ### navigation ### */
+#spNavigation { font-size: 11px; padding: 7px 0; }
+#spNavigation li:first-child { position: relative; }
+#spNavigation li:first-child::after { content: "/"; display: inline-block; margin-left: 5px; }
+
+/* ### content ### */
+#spContent { padding: 20px 0; }
+.spHeadline { border-bottom: 1px solid #000; font-size: 1.2rem; font-weight: 300; margin: 20px 0; padding-bottom: 5px; }
+.spHeadline:first-child { margin-top: 10px; }
+
+/* ### tabular box ### */
+#spTable { border-bottom: 1px solid #000; border-spacing: 0; width: 100%; }
+#spTable th { border-bottom: 2px solid currentColor; font-size: 16px; font-weight: 300; text-align: left; }
+#spTable th, #spTable td { padding: 10px; }
+#spTable tr:not(:last-child) > td { border-bottom: 1px solid #000; }
+
+/* ### button ### */
+#spButton .button.disabled, #spButtonPrimary .button.disabled { cursor: default; }
+
+/* ### dropdown ### */
+#spDropdown { display: inline-block; float: none; position: relative; }
+
+/* ### footer box ### */
+#spFooterBox > .spBoundary { display: flex; justify-content: space-between; padding: 15px 0; }
+#spFooterBox .spFooterBoxItem { flex: 0 0 auto; width: calc(50% - 15px); /* work-around for IE which does not support calc() for flex-basis */ }
+#spFooterBox .spFooterBoxHeadline { font-size: 1.2rem; font-weight: 300; margin-bottom: 10px; }
+
+/* ### footer ### */
+#spFooter > .spBoundary { padding: 15px 0; text-align: center; }
+
+/* ### content sidebar ### */
+#spContent > .spBoundary { display: flex; }
+#spContentWrapper { flex: 1 1 auto; }
+#spContentSidebar { flex: 0 0 250px; margin-left: 20px; }
+#spContentSidebar .spContentSidebarBox { padding: 20px; }
+#spContentSidebar .spContentSidebarBox:not(:last-child) { margin-bottom: 20px; }
+#spContentSidebar .spContentSidebarHeadline { font-size: 1.2rem; font-weight: 300; margin-bottom: 10px; }
+
+/* ### wrapper sidebar ### */
+.spSidebarBox { background-color: rgb(217, 237, 247); margin-bottom: 10px; padding: 10px; }
+.spColor { align-items: center; }
+.spColorBox { background-color: #fff; border: 1px solid #ccc; margin-right: 10px !important; padding: 1px; }
+.spColorBox > span { display: block; height: 24px; width: 24px; }
+.spVariable, .spDescription { display: block; font-size: 12px; }
+.spVariable { font-family: Consolas, Courier, monospace; }

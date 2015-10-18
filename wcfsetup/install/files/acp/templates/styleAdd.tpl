@@ -1,12 +1,15 @@
 {include file='header' pageTitle='wcf.acp.style.'|concat:$action}
 
+<link href="{@$__wcf->getPath()}acp/style/acpStyleEditor.css" type="text/css" rel="stylesheet">
+
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
 	require(['WoltLab/WCF/Acp/Ui/Style/Editor'], function(AcpUiStyleEditor) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
-			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if}
+			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
+			styleRuleMap: styleRuleMap
 		});
 	});
 	
@@ -301,22 +304,26 @@
 					<dt><label for="wcfLayoutMinWidth">{lang}wcf.acp.style.globals.fluidLayoutMinWidth{/lang}</label></dt>
 					<dd>
 						<input type="number" id="wcfLayoutMinWidth" name="wcfLayoutMinWidth" value="{@$variables[wcfLayoutMinWidth]}" class="tiny" />
-						<select name="wcfLayoutMinWidth_unit" class="jsUnitSelect">
-							{foreach from=$availableUnits item=unit}
-								<option value="{@$unit}"{if $variables[wcfLayoutMinWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
-							{/foreach}
-						</select>
+						<label class="selectDropdown">
+							<select name="wcfLayoutMinWidth_unit" class="jsUnitSelect">
+								{foreach from=$availableUnits item=unit}
+									<option value="{@$unit}"{if $variables[wcfLayoutMinWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								{/foreach}
+							</select>
+						</label>
 					</dd>
 				</dl>
 				<dl id="fluidLayoutMaxWidth">
 					<dt><label for="wcfLayoutMaxWidth">{lang}wcf.acp.style.globals.fluidLayoutMaxWidth{/lang}</label></dt>
 					<dd>
 						<input type="number" id="wcfLayoutMaxWidth" name="wcfLayoutMaxWidth" value="{@$variables[wcfLayoutMaxWidth]}" class="tiny" />
-						<select name="wcfLayoutMaxWidth_unit" class="jsUnitSelect">
-							{foreach from=$availableUnits item=unit}
-								<option value="{@$unit}"{if $variables[wcfLayoutMaxWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
-							{/foreach}
-						</select>
+						<label class="selectDropdown">
+							<select name="wcfLayoutMaxWidth_unit" class="jsUnitSelect">
+								{foreach from=$availableUnits item=unit}
+									<option value="{@$unit}"{if $variables[wcfLayoutMaxWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								{/foreach}
+							</select>
+						</label>
 					</dd>
 				</dl>
 				
@@ -324,11 +331,13 @@
 					<dt><label for="wcfLayoutFixedWidth">{lang}wcf.acp.style.globals.fixedLayoutWidth{/lang}</label></dt>
 					<dd>
 						<input type="number" id="wcfLayoutFixedWidth" name="wcfLayoutFixedWidth" value="{@$variables[wcfLayoutFixedWidth]}" class="tiny" />
-						<select name="wcfLayoutFixedWidth_unit" class="jsUnitSelect">
-							{foreach from=$availableUnits item=unit}
-								<option value="{@$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
-							{/foreach}
-						</select>
+						<label class="selectDropdown">
+							<select name="wcfLayoutFixedWidth_unit" class="jsUnitSelect">
+								{foreach from=$availableUnits item=unit}
+									<option value="{@$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								{/foreach}
+							</select>
+						</label>
 					</dd>
 				</dl>
 				
@@ -368,24 +377,81 @@
 				<legend>{lang}wcf.acp.style.globals.font{/lang}</legend>
 				
 				<dl>
-					<dt><label for="wcfBaseFontSize">{lang}wcf.acp.style.globals.fontSize{/lang}</label></dt>
+					<dt><label for="wcfFontSizeDefault">{lang}wcf.acp.style.globals.fontSizeDefault{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfBaseFontSize" name="wcfBaseFontSize" value="{@$variables[wcfBaseFontSize]}" class="tiny" />
-						<select name="wcfBaseFontSize_unit" class="jsUnitSelect">
-							{foreach from=$availableUnits item=unit}
-								<option value="{@$unit}"{if $variables[wcfBaseFontSize_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
-							{/foreach}
-						</select>
+						<input type="number" id="wcfFontSizeDefault" name="wcfFontSizeDefault" value="{@$variables[wcfFontSizeDefault]}" class="tiny" />
+						<label class="selectDropdown">
+							<select name="wcfFontSizeDefault_unit" class="jsUnitSelect">
+								{foreach from=$availableUnits item=unit}
+									<option value="{@$unit}"{if $variables[wcfFontSizeDefault_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								{/foreach}
+							</select>
+						</label>
 					</dd>
 				</dl>
 				<dl>
-					<dt><label for="wcfBaseFontFamily">{lang}wcf.acp.style.globals.fontFamily{/lang}</label></dt>
+					<dt><label for="wcfFontSizeSmall">{lang}wcf.acp.style.globals.fontSizeSmall{/lang}</label></dt>
 					<dd>
-						<select name="wcfBaseFontFamily" id="wcfBaseFontFamily">
-							{foreach from=$availableFontFamilies key=fontFamily item=primaryFont}
-								<option value='{@$fontFamily}'{if $variables[wcfBaseFontFamily] == $fontFamily} selected="selected"{/if}>{@$primaryFont}</option>
-							{/foreach}
-						</select>
+						<input type="number" id="wcfFontSizeSmall" name="wcfFontSizeSmall" value="{@$variables[wcfFontSizeSmall]}" class="tiny" />
+						<label class="selectDropdown">
+							<select name="wcfFontSizeSmall_unit" class="jsUnitSelect">
+								{foreach from=$availableUnits item=unit}
+									<option value="{@$unit}"{if $variables[wcfFontSizeSmall_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								{/foreach}
+							</select>
+						</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="wcfFontSizeHeadline">{lang}wcf.acp.style.globals.fontSizeHeadline{/lang}</label></dt>
+					<dd>
+						<input type="number" id="wcfFontSizeHeadline" name="wcfFontSizeHeadline" value="{@$variables[wcfFontSizeHeadline]}" class="tiny" />
+						<label class="selectDropdown">
+							<select name="wcfFontSizeHeadline_unit" class="jsUnitSelect">
+								{foreach from=$availableUnits item=unit}
+									<option value="{@$unit}"{if $variables[wcfFontSizeHeadline_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								{/foreach}
+							</select>
+						</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="wcfFontSizeTitle">{lang}wcf.acp.style.globals.fontSizeTitle{/lang}</label></dt>
+					<dd>
+						<input type="number" id="wcfFontSizeTitle" name="wcfFontSizeTitle" value="{@$variables[wcfFontSizeTitle]}" class="tiny" />
+						<label class="selectDropdown">
+							<select name="wcfFontSizeTitle_unit" class="jsUnitSelect">
+								{foreach from=$availableUnits item=unit}
+									<option value="{@$unit}"{if $variables[wcfFontSizeTitle_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								{/foreach}
+							</select>
+						</label>
+					</dd>
+				</dl>
+				
+				<dl class="marginTop">
+					<dt></dt>
+					<dd><label>
+						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if $variables[useGoogleFont]} checked="checked"{/if} />
+						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
+					</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="wcfFontFamilyGoogle">{lang}wcf.acp.style.globals.fontFamilyGoogle{/lang}</label></dt>
+					<dd>
+						<input type="text" id="wcfFontFamilyGoogle" name="wcfFontFamilyGoogle" value="{$variables[wcfFontFamilyGoogle]}" class="medium">
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="wcfFontFamilyFallback">{lang}wcf.acp.style.globals.fontFamilyFallback{/lang}</label></dt>
+					<dd>
+						<label class="selectDropdown">
+							<select name="wcfFontFamilyFallback" id="wcfFontFamilyFallback">
+								{foreach from=$availableFontFamilies key=fontFamily item=primaryFont}
+									<option value='{@$fontFamily}'{if $variables[wcfFontFamilyFallback] == $fontFamily} selected="selected"{/if}>{@$primaryFont}</option>
+								{/foreach}
+							</select>
+						</label>
 					</dd>
 				</dl>
 				
@@ -397,31 +463,286 @@
 		
 		{* colors *}
 		<div id="colors" class="container containerPadding tabMenuContainer tabMenuContent">
-			<nav class="menu">
-				<ul>
-					{foreach from=$colors key=itemPrefix item=items}
-						{capture assign=_anchorName}colors-{$itemPrefix}{/capture}
-						<li data-name="colors-{$itemPrefix}"><a href="{@$__wcf->getAnchor($_anchorName)}">{$itemPrefix}</a> </li>
-					{/foreach}
-				</ul>
-			</nav>
-			
-			{foreach from=$colors key=itemPrefix item=items}
-				<div id="colors-{$itemPrefix}">
-					<h1>{$itemPrefix}</h1>
+			<div id="spWrapper">
+				<div id="spWindow">
+					<div id="spHeader" data-region="wcfHeader">
+						<div class="spBoundary">
+							<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/wcfLogo.png"></div>
+							<div id="spSearch"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" data-region="wcfHeaderSearchBox"></div>
+							<div id="spMenu">
+								<ol class="inlineList">
+									<li><a>Lorem</a></li>
+									<li><a>Ipsum Dolor</a></li>
+									<li class="active">
+										<a>Sit Amet</a>
+										<ol id="spSubMenu" data-region="wcfHeaderMenu">
+											<li><a>Lorem</a></li>
+											<li><a>Ipsum</a></li>
+											<li class="active"><a>Dolor Sit</a></li>
+										</ol>
+									</li>
+								</ol>
+							</div>
+							<div id="spUser"></div>
+						</div>
+					</div>
 					
-					{foreach from=$items item=colorItems}
-						<ul class="colorList">
-							{foreach from=$colorItems[items] item=colorItem}
-								{capture assign=variableName}{if $colorItems[overridePrefix]|isset}{@$colorItems[overridePrefix]}{else}{@$itemPrefix}{/if}{@$colorItem|ucfirst}{/capture}
+					<div id="spNavigation" data-region="wcfNavigation">
+						<div class="spBoundary">
+							<ol class="inlineList">
+								<li><a>Lorem</a></li>
+								<li><a>Ipsum</a></li>
+							</ol>
+						</div>
+					</div>
+					
+					<div id="spContent">
+						<div class="spBoundary">
+							<div id="spContentWrapper">
+								<div class="spHeadline" data-region="wcfContentHeadline">Lorem Ipsum</div>
 								
-								<li>{include file='styleVariableColor' variableName=$variableName languageVariable=$colorItem}</li>
-							{/foreach}
-						</ul>
+								<p data-region="wcfContent">
+									Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <a>At vero eos</a> et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br>
+									<br>
+									Stet clita kasd gubergren, no sea <a>takimata</a> sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor <a>invidunt</a> ut labore et dolore magna aliquyam erat, sed diam voluptua.
+								</p>
+								
+								<div class="spHeadline">Tabular Box</div>
+								
+								<table id="spTable">
+									<thead>
+										<tr>
+											<th><a>Lorem</a></th>
+											<th><a>Ipsum</a></th>
+											<th><a>Dolor Sit Amet</a></th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr>
+											<td>Lorem ipsum dolor</td><td>sit amet, consetetur sadipscing elitr</td><td>sed diam nonumy</td>
+										</tr>
+										<tr>
+											<td>eirmod tempor</td><td>invidunt ut labore et dolore</td><td>magna aliquyam erat</td>
+										</tr>
+										<tr>
+											<td>sed diam voluptua</td><td>At vero eos</td><td>et accusam et justo</td>
+										</tr>
+									</tbody>
+								</table>
+								
+								<div class="spHeadline">Input</div>
+								
+								<dl>
+									<dt><label for="spInput">Lorem Ipsum</label></dt>
+									<dd><input type="text" id="spInput" class="long" value="Consetetur sadipscing elitr"></dd>
+								</dl>
+								<dl>
+									<dt><label for="spInputDisabled">Dolor Sit Amet</label></dt>
+									<dd><input type="text" id="spInputDisabled" class="long" value="Disabled" disabled></dd>
+								</dl>
+								
+								<div class="spHeadline">Button</div>
+								
+								<ol id="spButton" class="inlineList" data-region="wcfButton">
+									<li><a class="button">Button</a></li>
+									<li><a class="button active">Button (Active)</a></li>
+									<li><a class="button disabled" data-region="wcfButtonDisabled">Button (Disabled)</a></li>
+								</ol>
+								
+								<ol id="spButtonPrimary" class="inlineList marginTop" data-region="wcfButtonPrimary">
+									<li><a class="button buttonPrimary">Primary Button</a></li>
+									<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
+									<li><a class="button disabled">Primary Button (Disabled)</a></li>
+								</ol>
+								
+								<div class="spHeadline">Dropdown</div>
+								
+								<div style="position: relative">
+									<ul class="dropdownMenu" id="spDropdown">
+										<li><a>Lorem Ipsum</a></li>
+										<li class="active"><a>Dolor Sit Amet</a></li>
+										<li><a>Consetetur Sadipscing</a></li>
+										<li class="dropdownDivider"></li>
+										<li><a>Sed diam nonumy</a></li>
+									</ul>
+								</div>
+							</div>
+							
+							<div id="spContentSidebar">
+								<div class="spContentSidebarBox">
+									<div class="spContentSidebarHeadline">Sidebar</div>
+									
+									<p>
+										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <a>sed diam nonumy eirmod tempor</a> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam <a>et justo</a> duo dolores et ea rebum.
+									</p>
+								</div>
+								
+								<div class="spContentSidebarBox">
+									<div class="spContentSidebarHeadline"><a>Dolor Sit Amet</a></div>
+									
+									<p>
+										<a>Stet clita kasd gubergren</a>, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut <a>labore et dolore magna</a> aliquyam erat, sed diam voluptua.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div id="spFooterBox">
+						<div class="spBoundary">
+							<div class="spFooterBoxItem">
+								<div class="spFooterBoxHeadline">Lorem Ipsum</div>
+								
+								<p>
+									Lorem ipsum dolor sit amet, consetetur <a>sadipscing elitr</a>, sed diam nonumy eirmod tempor <a>invidunt ut labore</a> et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+								</p>
+							</div>
+							
+							<div class="spFooterBoxItem">
+								<div class="spFooterBoxHeadline"><a>Dolor Sit Amet</a></div>
+								
+								<p>
+									Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, <a>sed diam voluptua</a>.
+								</p>
+							</div>
+						</div>
+					</div>
+					
+					<div id="spFooter">
+						<div class="spBoundary">
+							Copyright &copy; 1970-2038 <a>Example Company</a>
+						</div>
+					</div>
+				</div>
+				<div id="spSidebar">
+					<div class="spSidebarBox">
+						<label class="selectDropdown">
+							<select id="spCategories">
+								<option value="none" selected>{lang}wcf.global.noSelection{/lang}</option>
+								{foreach from=$colorCategories key=spName item=spCategory}
+									<optgroup label="{$spName}">
+										{if $spCategory|is_array}
+											{foreach from=$spCategory item=spChildCategory}
+												<option value="{$spChildCategory}">{$spChildCategory}</option>
+											{/foreach}
+										{else}
+											<option value="{$spCategory}">{$spCategory}</option>
+										{/if}
+									</optgroup>
+								{/foreach}
+							</select>
+						</label>
+					</div>
+					
+					<div class="spSidebarBox" data-category="none" style="display: none;">
+						foo
+					</div>
+					
+					{foreach from=$colors key=spCategory item=spColors}
+						<div class="spSidebarBox" data-category="{$spCategory}" style="display: none;">
+							<ul>
+								{foreach from=$spColors item=spType}
+									{capture assign=spColor}{$spCategory}{$spType|ucfirst}{/capture}
+									<li class="box24 spColor">
+										<div class="spColorBox">
+											<span class="styleVariableColor jsColorPicker" style="background-color: {$variables[$spColor]};" data-color="{$variables[$spColor]}" data-store="{$spColor}_value"></span>
+											<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}" />
+										</div>
+										<div>
+											<span class="spVariable">${$spColor}</span>
+											<span class="spDescription">{$spType}</span>
+										</div>
+									</li>
+								{/foreach}
+							</ul>
+						</div>
 					{/foreach}
 				</div>
-			{/foreach}
+			</div>
 		</div>
+		
+		<script>
+			var styleRuleMap = {
+				'wcfHeaderBackground': '#spHeader { background-color: VALUE; }',
+				'wcfHeaderLink': '#spHeader a { color: VALUE; }',
+				'wcfHeaderLinkActive': '#spHeader a:hover { color: VALUE; }',
+				'wcfHeaderSearchBoxBackground': '#spSearchBox { background-color: VALUE; }',
+				'wcfHeaderSearchBoxText': '#spSearchBox { color: VALUE; }',
+				'wcfHeaderSearchBoxBackgroundActive': '#spSearchBox:focus, #spSearchBox:hover { background-color: VALUE; }',
+				'wcfHeaderSearchBoxTextActive': '#spSearchBox:focus, #spSearchBox:hover { color: VALUE; }',
+				'wcfHeaderMenuBackground': '#spSubMenu { background-color: VALUE; }',
+				'wcfHeaderMenuBorder': '#spSubMenu { border-color: VALUE; }',
+				'wcfHeaderMenuLink': '#spSubMenu li > a { color: VALUE; }',
+				'wcfHeaderMenuBackgroundActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { background-color: VALUE; }',
+				'wcfHeaderMenuLinkActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { color: VALUE; }',
+				'wcfNavigationBackground': '#spNavigation { background-color: VALUE; }',
+				'wcfNavigationText': '#spNavigation { color: VALUE; }',
+				'wcfNavigationLink': '#spNavigation a { color: VALUE; }',
+				'wcfNavigationLinkActive': '#spNavigation a:hover { color: VALUE; }',
+				'wcfContentBackground': '#spContent { background-color: VALUE; }',
+				'wcfContentText': '#spContent { color: VALUE; }',
+				'wcfContentLink': '#spContent a { color: VALUE; }',
+				'wcfContentLinkActive': '#spContent a:hover { color: VALUE; }',
+				'wcfContentHeadlineBorder': '.spHeadline { border-color: VALUE; }',
+				'wcfContentHeadlineText': '.spHeadline { color: VALUE; }',
+				'wcfContentHeadlineLink': '.spHeadline a { color: VALUE; }',
+				'wcfContentHeadlineLinkActive': '.spHeadline a:hover { color: VALUE; }',
+				'wcfTabularBoxBorderInner': '#spTable td { border-color: VALUE; }',
+				'wcfTabularBoxHeadline': '#spTable { border-color: VALUE; } __COMBO_RULE__ #spTable th, #spTable th a { color: VALUE; }',
+				'wcfTabularBoxBackgroundActive': '#spTable tr:hover > td { background-color: VALUE; }',
+				'wcfTabularBoxHeadlineActive': '#spTable th a:hover { color: VALUE; }',
+				'wcfInputBackground': '#spInput { background-color: VALUE; }',
+				'wcfInputBorder': '#spInput { border-color: VALUE; }',
+				'wcfInputText': '#spInput { color: VALUE; }',
+				'wcfInputBackgroundActive': '#spInput:focus, #spInput:hover { background-color: VALUE; }',
+				'wcfInputBorderActive': '#spInput:focus, #spInput:hover { border-color: VALUE; }',
+				'wcfInputTextActive': '#spInput:focus, #spInput:hover { color: VALUE; }',
+				'wcfInputDisabledBackground': '#spInputDisabled { background-color: VALUE; }',
+				'wcfInputDisabledBorder': '#spInputDisabled { border-color: VALUE; }',
+				'wcfInputDisabledText': '#spInputDisabled { color: VALUE; }',
+				'wcfButtonBackground': '#spButton .button { background-color: VALUE; }',
+				'wcfButtonBorder': '#spButton .button { border-color: VALUE; }',
+				'wcfButtonText': '#spButton .button { color: VALUE; }',
+				'wcfButtonBackgroundActive': '#spButton .button.active, #spButton .button:hover { background-color: VALUE; }',
+				'wcfButtonBorderActive': '#spButton .button.active, #spButton .button:hover { border-color: VALUE; }',
+				'wcfButtonTextActive': '#spButton .button.active, #spButton .button:hover { color: VALUE; }',
+				'wcfButtonPrimaryBackground': '#spButtonPrimary .button { background-color: VALUE; }',
+				'wcfButtonPrimaryBorder': '#spButtonPrimary .button { border-color: VALUE; }',
+				'wcfButtonPrimaryText': '#spButtonPrimary .button { color: VALUE; }',
+				'wcfButtonPrimaryBackgroundActive': '#spButtonPrimary .button.active, #spButtonPrimary .button:hover { background-color: VALUE; }',
+				'wcfButtonPrimaryBorderActive': '#spButtonPrimary .button.active, #spButtonPrimary .button:hover { border-color: VALUE; }',
+				'wcfButtonPrimaryTextActive': '#spButtonPrimary .button.active, #spButtonPrimary .button:hover { color: VALUE; }',
+				'wcfButtonDisabledBackground': '#spButton .button.disabled, #spButtonPrimary .button.disabled { background-color: VALUE; }',
+				'wcfButtonDisabledBorder': '#spButton .button.disabled, #spButtonPrimary .button.disabled { border-color: VALUE; }',
+				'wcfButtonDisabledText': '#spButton .button.disabled, #spButtonPrimary .button.disabled { color: VALUE; }',
+				'wcfDropdownBackground': '#spDropdown { background-color: VALUE; }',
+				'wcfDropdownBorder': '#spDropdown { border-color: VALUE; }',
+				'wcfDropdownBorderInner': '#spDropdown .dropdownDivider { border-color: VALUE; }',
+				'wcfDropdownText': '#spDropdown { color: VALUE; }',
+				'wcfDropdownLink': '#spDropdown a { color: VALUE; }',
+				'wcfDropdownBackgroundActive': '#spDropdown li.active > a, #spDropdown a:hover { background-color: VALUE; }',
+				'wcfDropdownLinkActive': '#spDropdown li.active > a, #spDropdown a:hover { color: VALUE; }',
+				'wcfFooterBoxBackground': '#spFooterBox { background-color: VALUE; }',
+				'wcfFooterBoxText': '#spFooterBox { color: VALUE; }',
+				'wcfFooterBoxLink': '#spFooterBox a { color: VALUE; }',
+				'wcfFooterBoxLinkActive': '#spFooterBox a:hover { color: VALUE; }',
+				'wcfFooterBoxHeadlineText': '#spFooterBox .spFooterBoxHeadline { color: VALUE; }',
+				'wcfFooterBoxHeadlineLink': '#spFooterBox .spFooterBoxHeadline a { color: VALUE; }',
+				'wcfFooterBoxHeadlineLinkActive': '#spFooterBox .spFooterBoxHeadline a:hover { color: VALUE; }',
+				'wcfFooterBackground': '#spFooter { background-color: VALUE; }',
+				'wcfFooterText': '#spFooter { color: VALUE; }',
+				'wcfFooterLink': '#spFooter a { color: VALUE; }',
+				'wcfFooterLinkActive': '#spFooter a:active { color: VALUE; }',
+				'wcfSidebarBackground': '#spContentSidebar .spContentSidebarBox { background-color: VALUE; }',
+				'wcfSidebarText': '#spContentSidebar .spContentSidebarBox { color: VALUE; }',
+				'wcfSidebarLink': '#spContentSidebar .spContentSidebarBox a { color: VALUE; }',
+				'wcfSidebarLinkActive': '#spContentSidebar .spContentSidebarBox a:hover { color: VALUE; }',
+				'wcfSidebarHeadlineText': '#spContentSidebar .spContentSidebarBox .spContentSidebarHeadline { color: VALUE; }',
+				'wcfSidebarHeadlineLink': '#spContentSidebar .spContentSidebarBox .spContentSidebarHeadline a { color: VALUE; }',
+				'wcfSidebarHeadlineLinkActive': '#spContentSidebar .spContentSidebarBox .spContentSidebarHeadline a:hover { color: VALUE; }',
+			};
+		</script>
 		
 		{* advanced *}
 		<div id="advanced" class="container containerPadding tabMenuContainer tabMenuContent">

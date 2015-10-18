@@ -200,6 +200,11 @@ class StyleCompiler extends SingletonFactory {
 		$style = new Style(1);
 		$variables = $style->getVariables();
 		
+		$variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
+		if (!empty($variables['wcfFontFamilyGoogle'])) {
+			$variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
+		}
+		
 		// insert blue temptation files
 		//array_unshift($files, WCF_DIR.'acp/style/blueTemptation/variables.scss', WCF_DIR.'acp/style/blueTemptation/override.scss');
 		

@@ -3,11 +3,11 @@
 /* @TODO END */
 
 html, body {
-	font-size: $wcfBaseFontSize;
 	height: 100%;
 }
 
 body {
+	font-family: $wcfFontFamily;
 	line-height: 1.428571429;
 	position: relative;
 	word-wrap: break-word;
@@ -21,10 +21,6 @@ a {
 	&:not(:hover) {
 		text-decoration: none;
 	}
-}
-
-strong {
-	@extend .wcfFontBold;
 }
 
 #pageContainer {
@@ -88,9 +84,7 @@ strong {
 	padding-bottom: 10px;
 	
 	> h1 {
-		@extend .wcfFontLarge;
-		
-		font-size: 2rem;
+		@extend .wcfFontTitle;
 	}
 	
 	a {
@@ -123,7 +117,7 @@ strong {
 
 .containerHeadline {
 	> h3 {
-		@extend .wcfFontLarger;
+		@extend .wcfFontHeadline;
 		
 		> .badge {
 			margin-left: 5px;

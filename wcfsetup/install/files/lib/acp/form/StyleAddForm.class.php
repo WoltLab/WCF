@@ -57,6 +57,7 @@ class StyleAddForm extends AbstractForm {
 		'Helvetica, Verdana, sans-serif' => 'Helvetica',
 		'Impact, Compacta, Chicago, sans-serif' => 'Impact',
 		'"Lucida Sans", "Lucida Grande", Monaco, Geneva, sans-serif' => 'Lucida',
+		'"Segoe UI", "Lucida Grande", "Helveltica", sans-serif' => 'Segoe UI',
 		'Tahoma, Arial, Helvetica, sans-serif' => 'Tahoma',
 		'"Times New Roman", Times, Georgia, serif' => 'Times New Roman',
 		'"Trebuchet MS", Arial, sans-serif' => 'Trebuchet MS',
@@ -442,20 +443,20 @@ class StyleAddForm extends AbstractForm {
 		
 		$this->colors = [
 			'wcfHeader' => ['background', 'link', 'linkActive'],
-			'wcfHeaderSearchBox' => ['background', 'border', 'text', 'backgroundAccent', 'borderActive', 'textActive'],
+			'wcfHeaderSearchBox' => ['background', 'text', 'backgroundActive', 'textActive'],
 			'wcfHeaderMenu' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
 			'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
 			'wcfSidebar' => ['background', 'text', 'link', 'linkActive'],
 			'wcfSidebarHeadline' => ['text', 'link', 'linkActive'],
 			'wcfContent' => ['background', 'text', 'link', 'linkActive'],
 			'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
-			'wcfTabularBox' => ['border', 'headline', 'headlineActive'],
+			'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
 			'wcfInput' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfInputDisabled' => ['background', 'border', 'text'],
 			'wcfButton' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfButtonPrimary' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfButtonDisabled' => ['background', 'border', 'text'],
-			'wcfDropdown' => ['background', 'border', 'text', 'link', 'backgroundActive', 'linkActive'],
+			'wcfDropdown' => ['background', 'border', 'borderInner', 'text', 'link', 'backgroundActive', 'linkActive'],
 			'wcfFooterBox' => ['background', 'text', 'link', 'linkActive'],
 			'wcfFooterBoxHeadline' => ['text', 'link', 'linkActive'],
 			'wcfFooter' => ['background', 'text', 'link', 'linkActive']
@@ -477,7 +478,11 @@ class StyleAddForm extends AbstractForm {
 		
 		// set global variables
 		$this->globals = [
-			'wcfBaseFontSize',
+			'wcfFontSizeSmall',
+			'wcfFontSizeDefault',
+			'wcfFontSizeHeadline',
+			'wcfFontSizeTitle',
+			
 			'wcfLayoutFixedWidth',
 			'wcfLayoutMinWidth',
 			'wcfLayoutMaxWidth'
@@ -489,7 +494,9 @@ class StyleAddForm extends AbstractForm {
 			'overrideLess',
 			'pageLogo',
 			'useFluidLayout',
-			'wcfBaseFontFamily'
+			'useGoogleFont',
+			'wcfFontFamilyGoogle',
+			'wcfFontFamilyFallback'
 		];
 		
 		EventHandler::getInstance()->fireAction($this, 'setVariables');

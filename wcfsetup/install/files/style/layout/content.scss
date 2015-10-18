@@ -10,7 +10,7 @@
 	
 	fieldset > legend,
 	section > h1 {
-		@extend .wcfFontLarge;
+		@extend .wcfFontHeadline;
 		
 		color: $wcfContentHeadlineText;
 		margin-bottom: 20px;
@@ -50,6 +50,10 @@
 	
 	label {
 		display: block;
+		
+		&.selectDropdown {
+			display: inline;
+		}
 		
 		&:not(:first-child) {
 			margin-top: 5px;
