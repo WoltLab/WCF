@@ -44,8 +44,9 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.install">
 			<controller><![CDATA[wcf\acp\form\PackageStartInstallForm]]></controller>
-			<parent>wcf.acp.menu.link.package</parent>
+			<parent>wcf.acp.menu.link.package.list</parent>
 			<permissions>admin.system.package.canInstallPackage</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.server.list">
