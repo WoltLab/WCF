@@ -36,6 +36,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.wmonkeypatch.keydown();
 			this.wmonkeypatch.keyup();
 			this.wmonkeypatch.link();
+			this.wmonkeypatch.list();
 			this.wmonkeypatch.modal();
 			this.wmonkeypatch.paste();
 			this.wmonkeypatch.observe();
@@ -956,6 +957,40 @@ RedactorPlugins.wmonkeypatch = function() {
 						this.wutil.saveSelection();
 					}
 				}
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'list' module.
+		 * 
+		 *  - adds a wrapper div before inserting a list to prevent removal of <blockquote> inside quotes
+		 */
+		list: function() {
+			// list.insert
+			var $mpInsert = this.list.insert;
+			this.list.insert = (function(cmd) {
+				var selection = window.getSelection();
+				if (selection.rangeCount) {
+					var range = selection.getRangeAt(0);
+					
+					if (range.collapsed) {
+						var element = range.startContainer;
+						if (element.nodeType === Node.TEXT_NODE) {
+							element = element.parentNode;
+						}
+						
+						if (element.nodeName === 'DIV') {
+							if (element.parentNode.nodeName === 'BLOCKQUOTE') {
+								// wrap selection in another div to sabotage Redactor's parent block removal
+								var div = document.createElement('div');
+								element.parentNode.insertBefore(div, element);
+								div.appendChild(element);
+							}
+						}
+					}
+				}
+				
+				$mpInsert.call(this, cmd);
 			}).bind(this);
 		},
 		
