@@ -943,23 +943,20 @@ RedactorPlugins.wmonkeypatch = function() {
 			}).bind(this);
 			
 			// link.set
-			/*var $mpSet = this.link.set;
+			var $mpSet = this.link.set;
 			this.link.set = (function(text, link, target) {
 				$mpSet.call(this, text, link, target);
 				
-				if (text.length && this.link.text !== text) {
-					this.selection.get();
-					
-					var $current = this.selection.getCurrent();
-					if ($current.nodeType === Node.TEXT_NODE) {
-						$current = $current.parentElement;
-					}
-					
-					if ($current.tagName === 'A') {
-						$($current).text(text);
+				var selection = window.getSelection();
+				if (selection.rangeCount) {
+					var range = selection.getRangeAt(0);
+					if (!range.collapsed) {
+						range.collapse(false);
+						
+						this.wutil.saveSelection();
 					}
 				}
-			}).bind(this);*/
+			}).bind(this);
 		},
 		
 		/**
@@ -1211,7 +1208,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				
 				// iOS sometimes pastes right into the marker, this work-around will unwrap the pasted content
-				if (marker.innerHTML.length) {
+				if ($.browser.iOS && marker.innerHTML.length) {
 					marker.outerHTML = marker.innerHTML;
 				}
 				else {
