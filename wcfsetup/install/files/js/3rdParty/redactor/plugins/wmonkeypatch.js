@@ -925,6 +925,7 @@ RedactorPlugins.wmonkeypatch = function() {
 		 * Partially overwrites the 'link' module.
 		 * 
 		 * - force consistent caret position upon link insert
+		 * - inserting a link failed with Microsoft Edge, but forcing utils.browser('msie') to return true is potentially dangerous
 		 */
 		link: function() {
 			// link.insert
@@ -946,7 +947,39 @@ RedactorPlugins.wmonkeypatch = function() {
 			// link.set
 			var $mpSet = this.link.set;
 			this.link.set = (function(text, link, target) {
-				$mpSet.call(this, text, link, target);
+				// work-around for Microsoft Edge
+				if (/\sEdge\//.test(window.navigator.userAgent)) {
+					text = $.trim(text.replace(/<|>/g, ''));
+					
+					this.selection.restore();
+					var blocks = this.selection.getBlocks();
+					
+					if (text === '' && link === '') return;
+					if (text === '' && link !== '') text = link;
+					
+					if (!this.link.$node) {
+						var $a = $('<a href="' + link + '">').text(text);
+						if (target !== '') $a.attr('target', target);
+						
+						$a = $(this.insert.node($a));
+						
+						if (this.selection.getText().match(/\s$/))
+						{
+							$a.after(" ");
+						}
+						
+						this.selection.selectElement($a);
+						
+						this.code.sync();
+						this.core.setCallback('insertedLink', $a);
+					}
+					else {
+						$mpSet.call(this, text, link, target);
+					}
+				}
+				else {
+					$mpSet.call(this, text, link, target);
+				}
 				
 				var selection = window.getSelection();
 				if (selection.rangeCount) {
