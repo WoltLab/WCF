@@ -1,7 +1,11 @@
 .dialogOverlay {
+	align-items: flex-start;
 	background-color: transparent;
 	bottom: 0;
+	display: flex;
+	justify-content: center;
 	left: 0;
+	padding: 100px 0;
 	position: fixed;
 	right: 0;
 	top: 0;
@@ -42,13 +46,9 @@
 .dialogContainer {
 	border: 1px solid rgb(52, 152, 219);
 	box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
-	left: 50%;
 	max-height: 80%;
 	max-width: 80%;
 	min-width: 400px;
-	position: absolute;
-	top: 10%;
-	transform: translateX(-50%);
 	will-change: opacity, transform;
 	z-index: 200;
 	
@@ -66,7 +66,7 @@
 	
 	> header {
 		background-color: $wcfContentBackground;
-		border-bottom: 1px solid $wcfContentBorder;
+		// TODO: border-bottom: 1px solid $wcfContentBorder;
 		color: $wcfContentHeadlineText;
 		display: flex;
 		padding: 10px 20px;
@@ -137,7 +137,7 @@
 		
 		.dialogFormSubmit {
 			background-color: $wcfContentBackground;
-			border-top: 1px solid $wcfContentBorder;
+			// TODO: border-top: 1px solid $wcfContentBorder;
 			bottom: 0;
 			left: 0;
 			padding: 10px;

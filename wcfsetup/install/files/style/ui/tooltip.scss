@@ -1,7 +1,7 @@
 .balloonTooltip {
-	background-color: $wcfTooltipBackgroundColor;
+	// TODO: background-color: $wcfTooltipBackgroundColor;
 	border-radius: 6px;
-	color: $wcfTooltipColor;
+	// TODO: color: $wcfTooltipColor;
 	max-width: 300px;
 	opacity: 0;
 	padding: 5px 10px 7px;
@@ -15,7 +15,7 @@
 	@extend .wcfFontSmall;
 	
 	> .elementPointer {
-		border-color: $wcfTooltipBackgroundColor transparent;
+		// TODO: border-color: $wcfTooltipBackgroundColor transparent;
 		border-style: solid;
 		border-width: 0 5px 5px;
 		

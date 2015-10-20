@@ -33,10 +33,12 @@
 #spContent { padding: 20px 0; }
 .spHeadline { border-bottom: 1px solid #000; font-size: 1.2rem; font-weight: 300; margin: 20px 0; padding-bottom: 5px; }
 .spHeadline:first-child { margin-top: 10px; }
+#spContentBorder { border-bottom: 1px solid #000; margin: 10px 0; }
+#spContentBorderInner { border-bottom: 1px solid #000; margin: 10px 0; }
 
 /* ### tabular box ### */
 #spTable { border-bottom: 1px solid #000; border-spacing: 0; width: 100%; }
-#spTable th { border-bottom: 2px solid currentColor; font-size: 16px; font-weight: 300; text-align: left; }
+#spTable th { border-bottom: 2px solid currentColor; font-size: 1.2rem; font-weight: 300; text-align: left; }
 #spTable th, #spTable td { padding: 10px; }
 #spTable tr:not(:last-child) > td { border-bottom: 1px solid #000; }
 
@@ -61,6 +63,12 @@
 #spContentSidebar .spContentSidebarBox { padding: 20px; }
 #spContentSidebar .spContentSidebarBox:not(:last-child) { margin-bottom: 20px; }
 #spContentSidebar .spContentSidebarHeadline { font-size: 1.2rem; font-weight: 300; margin-bottom: 10px; }
+
+/* ### status messages ### */
+#spStatus { display: flex; flex-wrap: wrap; justify-content: space-between; }
+#spStatus > li { flex: 0 0 auto; width: calc(50% - 10px); /* work-around for IE which does not support calc() for flex-basis */ }
+#spStatus > li:first-child { margin-bottom: 10px; }
+#spStatus > li > div { border-left: 5px solid #000; padding: 5px 10px; }
 
 /* ### wrapper sidebar ### */
 .spSidebarBox { background-color: rgb(217, 237, 247); margin-bottom: 10px; padding: 10px; }

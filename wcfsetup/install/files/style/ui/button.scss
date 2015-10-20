@@ -121,7 +121,7 @@ input[type="submit"],
 	
 	> li {
 		&:not(:last-child) {
-			border-right: 1px solid $wcfContentBorder;
+			// TODO: border-right: 1px solid $wcfContentBorder;
 			margin-right: 0;
 		}
 		

@@ -30,7 +30,7 @@
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
-			//new WCF.Search.Message.SearchArea($('#search'));
+			new WCF.Search.Message.SearchArea($('#search'));
 		});
 		//]]>
 	</script>

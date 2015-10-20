@@ -279,6 +279,11 @@ class StyleCompiler extends SingletonFactory {
 		}
 		unset($value);
 		
+		$variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
+		if (!empty($variables['wcfFontFamilyGoogle'])) {
+			$variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
+		}
+		
 		// add options as SCSS variables
 		if (PACKAGE_ID) {
 			foreach (Option::getOptions() as $constantName => $option) {

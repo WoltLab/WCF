@@ -1,23 +1,19 @@
 .sidebar {
 	background-color: $wcfSidebarBackground;
-	color: $wcfSidebarBoxText;
+	color: $wcfSidebarText;
 	
 	> div,
 	> fieldset,
 	> section {
-		background-color: $wcfSidebarBoxBackground;
+		background-color: $wcfSidebarBackground;
 		border-radius: 3px;
 		padding: 20px;
 		
-		&:after {
+		&::after {
 			clear: both;
 			content: "";
 			display: block;
 			height: 0;
-		}
-		
-		& + * {
-			margin-top: 30px;
 		}
 	}
 	
@@ -39,40 +35,40 @@
 	
 	section > h1,
 	fieldset > legend {
-		@extend .wcfFontLarge;
-		
-		color: $wcfSidebarBoxHeadlineText;
+		color: $wcfSidebarHeadlineText;
 		margin-bottom: 10px;
 		
+		@extend .wcfFontHeadline;
+		
 		> a {
-			color: $wcfSidebarBoxHeadlineLink;
+			color: $wcfSidebarHeadlineLink;
 			
 			> .icon {
-				color: $wcfSidebarBoxHeadlineLink;
+				color: $wcfSidebarHeadlineLink;
 			}
 			
 			&:hover {
-				color: $wcfSidebarBoxHeadlineLinkActive;
+				color: $wcfSidebarHeadlineLinkActive;
 				
 				> .icon {
-					color: $wcfSidebarBoxHeadlineLinkActive;
+					color: $wcfSidebarHeadlineLinkActive;
 				}
 			}
 		}
 	}
 	
 	a {
-		color: $wcfSidebarBoxLink;
+		color: $wcfSidebarLink;
 		
 		> .icon {
-			color: $wcfSidebarBoxLink;
+			color: $wcfSidebarLink;
 		}
 		
 		&:hover {
-			color: $wcfSidebarBoxLinkActive;
+			color: $wcfSidebarLinkActive;
 			
 			> .icon {
-				color: $wcfSidebarBoxLinkActive;
+				color: $wcfSidebarLinkActive;
 			}
 		}
 	}

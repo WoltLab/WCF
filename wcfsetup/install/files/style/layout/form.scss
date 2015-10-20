@@ -24,9 +24,9 @@ textarea {
 	}
 	
 	&[disabled] {
-		background-color: $wcfInputBackgroundInactive !important;
-		border-color: $wcfInputBorderInactive !important;
-		color: $wcfInputTextInactive !important;
+		background-color: $wcfInputDisabledBackground !important;
+		border-color: $wcfInputDisabledBorder !important;
+		color: $wcfInputDisabledText !important;
 	}
 }
 
@@ -170,7 +170,7 @@ dl {
 		flex-wrap: wrap;
 		
 		> dt {
-			color: $wcfDimmedColor;
+			color: $wcfContentDimmedText;
 			flex: 0 0 60%;
 			margin-left: 5px;
 			overflow: hidden;
@@ -181,7 +181,9 @@ dl {
 		}
 		
 		> dd {
-			flex: 0 0 35%;
+			flex: 0 0 auto;
+			width: calc(40% - 5px); /* IE work-around */
+			
 			overflow: hidden;
 			text-align: right;
 			text-overflow: ellipsis;
@@ -191,7 +193,7 @@ dl {
 	
 	&:not(.plain) > dd {
 		> small:not(.innerError) {
-			color: $wcfDimmedColor;
+			color: $wcfContentDimmedText;
 			display: block;
 			margin-top: 5px;
 		}

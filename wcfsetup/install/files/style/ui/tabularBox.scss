@@ -1,82 +1,78 @@
-.tabularBox {
-	> .content {
-		border-width: 0;
+.tabularBox > .content {
+	border-width: 0;
+}
+
+.tabularList {
+	display: flex;
+	flex-direction: column;
+}
+
+.tabularListRow {
+	flex: 0 0 auto;
+	padding: 5px 0;
+	
+	&.divider + li:not(.divider) {
+		border-top-color: $wcfContentBorderInner;
+	}
+}
+
+.tabularListRowHead {
+	border-bottom: 2px solid currentColor;
+	color: $wcfTabularBoxHeadline;
+	
+	& + li {
+		border-top-width: 0;
+	}
+}
+
+.tabularListRow:not(.tabularListRowHead) {
+	border-top: 1px solid $wcfContentBorderInner;
+}
+
+.tabularListColumns {
+	align-items: center;
+	display: flex;
+	
+	> li {
+		flex: 0 0 auto;
+		padding: 5px 10px;
+	}
+}
+
+.tabularListRowHead > .tabularListColumns > li {
+	> a {
+		color: $wcfTabularBoxHeadline;
+		display: block;
+		
+		@extend .wcfFontHeadline;
 	}
 	
-	.tabularList {
-		background-color: $wcfContentTabularBackground;
-		display: flex;
-		flex-direction: column;
+	&.ASC > a,
+	&.DESC > a {
+		padding-right: 14px;
+		position: relative;
 		
-		> li {
-			flex: 0 0 auto;
-			padding: 5px 0;
-			
-			&.head {
-				border-bottom: 2px solid $wcfContentTabularBorder;
-				
-				> ol > li {
-					color: $wcfContentTabularLink;
-					
-					> a {
-						color: $wcfContentTabularLink;
-						display: block;
-						
-						@extend .wcfFontHeadline;
-					}
-					
-					&.ASC > a,
-					&.DESC > a {
-						padding-right: 14px;
-						position: relative;
-						
-						&:after {
-							display: inline-block;
-							font-family: FontAwesome;
-							margin-left: 7px;
-							position: absolute;
-						}
-					}
-					
-					&.ASC > a:after {
-						content: $fa-var-caret-up;
-						top: 1px;
-					}
-					
-					&.DESC > a:after {
-						content: $fa-var-caret-down;
-						top: 2px;
-					}
-					
-					&.active > a,
-					> a:hover {
-						color: $wcfContentTabularLinkActive;
-					}
-				}
-				
-				& + li {
-					border-top-width: 0;
-				}
-			}
-			
-			&:not(.head) {
-				border-top: 1px solid $wcfContentTabularBorderAccent;
-			}
-			
-			&.divider + li:not(.divider) {
-				border-top-color: $wcfContentTabularBorder;
-			}
-			
-			> ol {
-				align-items: center;
-				display: flex;
-				
-				> li {
-					flex: 0 0 auto;
-					padding: 5px 10px;
-				}
-			}
+		&:after {
+			display: inline-block;
+			font-family: FontAwesome;
+			margin-left: 7px;
+			position: absolute;
 		}
+	}
+	
+	&.ASC > a:after {
+		content: $fa-var-caret-up;
+		top: 1px;
+	}
+	
+	&.DESC > a:after {
+		content: $fa-var-caret-down;
+		top: 2px;
+	}
+	
+	&.active > a,
+	> a:hover {
+		color: $wcfTabularBoxHeadlineActive;
 	}
 }
 
@@ -238,7 +234,7 @@ div.tabularBoxTitle > header {
 		}
 		
 		&:not(:last-child) > td {
-			border-bottom: 1px solid $wcfTabularBoxBorderInner;
+			// TODO: border-bottom: 1px solid $wcfTabularBoxBorderInner;
 		}
 	}
 	

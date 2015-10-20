@@ -53,18 +53,6 @@
 				margin-right: $wcfGapMedium;
 			}
 			
-			&::before {
-				border-top: 1px solid $wcfMenuBorder;
-				content: "";
-				display: block;
-				transition: width .12s ease-out;
-				width: 0;
-			}
-			
-			&:hover::before {
-				width: 100%;
-			}
-			
 			> a {
 				transition: color .2s linear;
 				text-decoration: none;
@@ -133,8 +121,8 @@
 		
 		&.active > a,
 		> a:hover {
-			background-color: $wcfMenuContentBackgroundActive;
-			color: $wcfMenuContentLinkActive;
+			background-color: $wcfHeaderMenuBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
 			text-decoration: none;
 		}
 		
@@ -218,7 +206,7 @@
 	
 	&:focus,
 	&:hover {
-		background-color: $wcfHeaderSearchBoxBackgroundAccent;
+		background-color: $wcfHeaderSearchBoxBackgroundActive;
 		color: $wcfHeaderSearchBoxTextActive;
 	}
 }

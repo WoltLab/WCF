@@ -502,9 +502,17 @@
 								<div class="spHeadline" data-region="wcfContentHeadline">Lorem Ipsum</div>
 								
 								<p data-region="wcfContent">
-									Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <a>At vero eos</a> et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br>
-									<br>
+									Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <a>At vero eos</a> et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+								
+									<div id="spContentBorderInner"></div>
+									
 									Stet clita kasd gubergren, no sea <a>takimata</a> sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor <a>invidunt</a> ut labore et dolore magna aliquyam erat, sed diam voluptua.
+									
+									<div id="spContentBorder"></div>
+									
+									<div id="spContentDimmed" data-region="wcfContentDimmed">
+										Stet clita kasd gubergren, <a>no sea takimata</a> sanctus est Lorem ipsum dolor sit amet.
+									</div>
 								</p>
 								
 								<div class="spHeadline">Tabular Box</div>
@@ -567,6 +575,23 @@
 										<li><a>Sed diam nonumy</a></li>
 									</ul>
 								</div>
+								
+								<div class="spHeadline">Status</div>
+								
+								<ol id="spStatus">
+									<li>
+										<div id="spStatusInfo" data-region="wcfStatusInfo">Lorem ipsum dolor <a>sit amet</a>.</div>
+									</li>
+									<li>
+										<div id="spStatusSuccess" data-region="wcfStatusSuccess"><a>Sed diam nonumy</a> eirmod tempor.</div>
+									</li>
+									<li>
+										<div id="spStatusWarning" data-region="wcfStatusWarning">At vero eos <a>et accusam et justo duo</a>.</div>
+									</li>
+									<li>
+										<div id="spStatusError" data-region="wcfStatusError">Stet clita <a>kasd gubergren</a>, no sea.</div>
+									</li>
+								</ol>
 							</div>
 							
 							<div id="spContentSidebar">
@@ -584,6 +609,10 @@
 									<p>
 										<a>Stet clita kasd gubergren</a>, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut <a>labore et dolore magna</a> aliquyam erat, sed diam voluptua.
 									</p>
+									
+									<div id="spContentSidebarBoxDimmed" style="margin-top: 10px;" data-region="wcfSidebarDimmed">
+										Stet clita kasd gubergren, <a>no sea takimata</a> sanctus est Lorem ipsum dolor sit amet.
+									</div>
 								</div>
 							</div>
 						</div>
@@ -683,9 +712,14 @@
 				'wcfNavigationLink': '#spNavigation a { color: VALUE; }',
 				'wcfNavigationLinkActive': '#spNavigation a:hover { color: VALUE; }',
 				'wcfContentBackground': '#spContent { background-color: VALUE; }',
+				'wcfContentBorder': '#spContentBorder { border-color: VALUE; }',
+				'wcfContentBorderInner': '#spContentBorderInner { border-color: VALUE; }',
 				'wcfContentText': '#spContent { color: VALUE; }',
 				'wcfContentLink': '#spContent a { color: VALUE; }',
 				'wcfContentLinkActive': '#spContent a:hover { color: VALUE; }',
+				'wcfContentDimmedText': '#spContentDimmed { color: VALUE; }',
+				'wcfContentDimmedLink': '#spContentDimmed a { color: VALUE; }',
+				'wcfContentDimmedLinkActive': '#spContentDimmed a:hover { color: VALUE; }',
 				'wcfContentHeadlineBorder': '.spHeadline { border-color: VALUE; }',
 				'wcfContentHeadlineText': '.spHeadline { color: VALUE; }',
 				'wcfContentHeadlineLink': '.spHeadline a { color: VALUE; }',
@@ -740,9 +774,32 @@
 				'wcfSidebarText': '#spContentSidebar .spContentSidebarBox { color: VALUE; }',
 				'wcfSidebarLink': '#spContentSidebar .spContentSidebarBox a { color: VALUE; }',
 				'wcfSidebarLinkActive': '#spContentSidebar .spContentSidebarBox a:hover { color: VALUE; }',
+				'wcfSidebarDimmedText': '#spContentSidebar .spContentSidebarBox #spContentSidebarBoxDimmed { color: VALUE; }',
+				'wcfSidebarDimmedLink': '#spContentSidebar .spContentSidebarBox #spContentSidebarBoxDimmed a { color: VALUE; }',
+				'wcfSidebarDimmedLinkActive': '#spContentSidebar .spContentSidebarBox #spContentSidebarBoxDimmed a:hover { color: VALUE; }',
 				'wcfSidebarHeadlineText': '#spContentSidebar .spContentSidebarBox .spContentSidebarHeadline { color: VALUE; }',
 				'wcfSidebarHeadlineLink': '#spContentSidebar .spContentSidebarBox .spContentSidebarHeadline a { color: VALUE; }',
 				'wcfSidebarHeadlineLinkActive': '#spContentSidebar .spContentSidebarBox .spContentSidebarHeadline a:hover { color: VALUE; }',
+				'wcfStatusInfoBackground': '#spStatusInfo { background-color: VALUE; }',
+				'wcfStatusInfoBorder': '#spStatusInfo { border-color: VALUE; }',
+				'wcfStatusInfoText': '#spStatusInfo { color: VALUE; }',
+				'wcfStatusInfoLink': '#spStatusInfo a { color: VALUE; }',
+				'wcfStatusInfoLinkActive': '#spStatusInfo a:hover { color: VALUE; }',
+				'wcfStatusSuccessBackground': '#spStatusSuccess { background-color: VALUE; }',
+				'wcfStatusSuccessBorder': '#spStatusSuccess { border-color: VALUE; }',
+				'wcfStatusSuccessText': '#spStatusSuccess { color: VALUE; }',
+				'wcfStatusSuccessLink': '#spStatusSuccess a { color: VALUE; }',
+				'wcfStatusSuccessLinkActive': '#spStatusSuccess a:hover { color: VALUE; }',
+				'wcfStatusWarningBackground': '#spStatusWarning { background-color: VALUE; }',
+				'wcfStatusWarningBorder': '#spStatusWarning { border-color: VALUE; }',
+				'wcfStatusWarningText': '#spStatusWarning { color: VALUE; }',
+				'wcfStatusWarningLink': '#spStatusWarning a { color: VALUE; }',
+				'wcfStatusWarningLinkActive': '#spStatusWarning a:hover { color: VALUE; }',
+				'wcfStatusErrorBackground': '#spStatusError { background-color: VALUE; }',
+				'wcfStatusErrorBorder': '#spStatusError { border-color: VALUE; }',
+				'wcfStatusErrorText': '#spStatusError { color: VALUE; }',
+				'wcfStatusErrorLink': '#spStatusError a { color: VALUE; }',
+				'wcfStatusErrorLinkActive': '#spStatusError a:hover { color: VALUE; }'
 			};
 		</script>
 		

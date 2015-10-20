@@ -431,12 +431,13 @@ class StyleAddForm extends AbstractForm {
 		$this->colorCategories = [
 			'wcfHeader' => ['wcfHeader', 'wcfHeaderSearchBox', 'wcfHeaderMenu'],
 			'wcfNavigation' => 'wcfNavigation',
-			'wcfSidebar' => ['wcfSidebar', 'wcfSidebarHeadline'],
-			'wcfContent' => ['wcfContent', 'wcfContentHeadline'],
+			'wcfSidebar' => ['wcfSidebar', 'wcfSidebarDimmed', 'wcfSidebarHeadline'],
+			'wcfContent' => ['wcfContent', 'wcfContentDimmed', 'wcfContentHeadline'],
 			'wcfTabularBox' => 'wcfTabularBox',
 			'wcfInput' => ['wcfInput', 'wcfInputDisabled'],
 			'wcfButton' => ['wcfButton', 'wcfButtonPrimary', 'wcfButtonDisabled'],
 			'wcfDropdown' => 'wcfDropdown',
+			'wcfStatus' => ['wcfStatusInfo', 'wcfStatusSuccess', 'wcfStatusWarning', 'wcfStatusError'],
 			'wcfFooterBox' => ['wcfFooterBox', 'wcfFooterBoxHeadline'],
 			'wcfFooter' => 'wcfFooter'
 		];
@@ -447,8 +448,10 @@ class StyleAddForm extends AbstractForm {
 			'wcfHeaderMenu' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
 			'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
 			'wcfSidebar' => ['background', 'text', 'link', 'linkActive'],
+			'wcfSidebarDimmed' => ['text', 'link', 'linkActive'],
 			'wcfSidebarHeadline' => ['text', 'link', 'linkActive'],
-			'wcfContent' => ['background', 'text', 'link', 'linkActive'],
+			'wcfContent' => ['background', 'border', 'borderInner', 'text', 'link', 'linkActive'],
+			'wcfContentDimmed' => ['text', 'link', 'linkActive'],
 			'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
 			'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
 			'wcfInput' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
@@ -457,6 +460,10 @@ class StyleAddForm extends AbstractForm {
 			'wcfButtonPrimary' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfButtonDisabled' => ['background', 'border', 'text'],
 			'wcfDropdown' => ['background', 'border', 'borderInner', 'text', 'link', 'backgroundActive', 'linkActive'],
+			'wcfStatusInfo' => ['background', 'border', 'text', 'link', 'linkActive'],
+			'wcfStatusSuccess' => ['background', 'border', 'text', 'link', 'linkActive'],
+			'wcfStatusWarning' => ['background', 'border', 'text', 'link', 'linkActive'],
+			'wcfStatusError' => ['background', 'border', 'text', 'link', 'linkActive'],
 			'wcfFooterBox' => ['background', 'text', 'link', 'linkActive'],
 			'wcfFooterBoxHeadline' => ['text', 'link', 'linkActive'],
 			'wcfFooter' => ['background', 'text', 'link', 'linkActive']

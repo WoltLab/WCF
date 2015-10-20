@@ -44,7 +44,7 @@
 			
 			&.button {
 				border-right-width: 0;
-				border-radius: $wcfInputBorderRadius 0 0 $wcfInputBorderRadius;
+				border-radius: 3px 0 0 3px;
 			}
 			
 			span {
@@ -187,13 +187,13 @@
 		&.dropdownNavigationItem,
 		&.active {
 			background-color: $wcfDropdownBackgroundActive;
-			color: $wcfDropdownTextActive;
+			color: $wcfDropdownLinkActive;
 			
-			@include textShadow($wcfDropdownTextActive);
+			@include textShadow($wcfDropdownLinkActive);
 		}
 		
 		&.dropdownDivider {
-			border-top: 1px solid $wcfDropdownBorderAccent;
+			border-top: 1px solid $wcfDropdownBorderInner;
 			margin: 3px 0;
 		}
 		

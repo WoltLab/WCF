@@ -1,5 +1,5 @@
 .messageTabMenu {
-	border: 1px solid $wcfContentBorder;
+	// TODO: border: 1px solid $wcfContentBorder;
 	border-top-width: 0;
 	border-radius: 0 0 3px 3px;
 	line-height: $wcfBaseLineHeight;
@@ -9,7 +9,7 @@
 		background-color: $wcfContentBackground;
 		border-width: 0;
 		border-radius: 0;
-		border-top: 1px solid $wcfContentBorder;
+		// TODO: border-top: 1px solid $wcfContentBorder;
 		display: none;
 		padding: 15px 10px;
 		position: static;
@@ -22,7 +22,7 @@
 	> div {
 		> nav {
 			background-color: $wcfContentBackground;
-			border-bottom: 1px solid $wcfContentBorder;
+			// TODO: border-bottom: 1px solid $wcfContentBorder;
 			margin: -14px -21px 14px -21px;
 			padding: $wcfGapTiny $wcfGapSmall;
 			
@@ -38,7 +38,7 @@
 					
 					&.active a,
 					&.active a:hover {
-						color: $wcfButtonTextAccent;
+						color: $wcfButtonTextActive;
 						cursor: default;
 					}
 					
@@ -91,7 +91,7 @@
 		display: inline-block;
 		
 		> a {
-			border-right: 1px solid $wcfContentBorder;
+			// TODO: border-right: 1px solid $wcfContentBorder;
 			border-bottom: 1px solid transparent;
 			color: $wcfButtonText;
 			display: block;
@@ -101,12 +101,7 @@
 			padding: 7px 14px 8px 14px;
 			text-decoration: none;
 			
-			-webkit-touch-callout: none;
-			-webkit-user-select: none;
-			-khtml-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
+			@extend .userSelectNone;
 			
 			&:hover {
 				color: $wcfContentLink;

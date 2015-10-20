@@ -1,6 +1,6 @@
 .navigation {
-	background-color: $wcfHeaderNavigationBackground;
-	color: $wcfHeaderNavigationText;
+	background-color: $wcfNavigationBackground;
+	color: $wcfNavigationText;
 	flex: 0 auto;
 	padding: 5px 0;
 	z-index: 25;
@@ -13,14 +13,14 @@
 	}
 	
 	.icon {
-		color: $wcfHeaderNavigationText;
+		color: $wcfNavigationText;
 	}
 	
 	a {
-		color: $wcfHeaderNavigationLink;
+		color: $wcfNavigationLink;
 		
 		&:hover {
-			color: $wcfHeaderNavigationLinkActive;
+			color: $wcfNavigationLinkActive;
 		}
 	}
 }

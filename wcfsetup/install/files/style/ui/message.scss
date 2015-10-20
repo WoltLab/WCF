@@ -1,5 +1,5 @@
 .messageList {
-	border: 1px solid $wcfContentBackgroundAccent;
+	border: 1px solid $wcfSidebarBackground;
 	border-width: 1px 0;
 	margin: 30px 0;
 	
@@ -8,7 +8,7 @@
 		padding: 40px 0;
 		
 		&:not(:first-child) {
-			border-top: 1px solid $wcfContentBackgroundAccent;
+			border-top: 1px solid $wcfSidebarBackground;
 		}
 	}
 }
@@ -20,19 +20,19 @@
 /* sidebar */
 .messageSidebar {
 	align-self: flex-start;
-	background-color: $wcfContentBackgroundAccent;
+	background-color: $wcfSidebarBackground;
 	border-radius: 3px;
-	color: $wcfContentTextAccent;
+	color: $wcfSidebarText;
 	flex: 0 0 170px;
 	padding: 20px;
 	position: relative;
 	text-align: center;
 	
 	a {
-		color: $wcfContentLinkAccent;
+		color: $wcfSidebarLink;
 		
 		&:hover {
-			color: $wcfContentLinkAccentActive;
+			color: $wcfSidebarLinkActive;
 		}
 	}
 	
@@ -45,7 +45,7 @@
 	margin-top: 25px;
 	
 	&:before {
-		border-top: 2px solid $wcfContentBorderAccent;
+		// TODO: border-top: 2px solid $wcfContentBorderAccent;
 		content: "";
 		left: 0;
 		margin-top: -10px;
@@ -220,6 +220,8 @@
 			opacity: 1;
 		}
 		
+		/*
+		TODO
 		&.messageDisabled {
 			color: $wcfDisabledColor;
 			
@@ -231,7 +233,10 @@
 				color: $wcfDisabledColor;
 			}
 		}
+		*/
 		
+		/*
+		TODO
 		&.messageDeleted {
 			color: $wcfDeletedColor;
 			
@@ -243,6 +248,7 @@
 				color: $wcfDeletedColor;
 			}
 		}
+		*/
 		
 		.columnSubject .statusDisplay .pageNavigation {
 			opacity: 0;
@@ -255,7 +261,7 @@
 		
 		&.new .columnAvatar > div {
 			&::after {
-				color: $wcfLinkColor;
+				color: $wcfContentLink;
 				content: "\f069";
 				font-family: FontAwesome;
 				font-weight: normal !important;
@@ -266,7 +272,7 @@
 				top: -4px;
 				right: -2px;
 				
-				@include textShadow($wcfContainerBackgroundColor);
+				@include textShadow($wcfContentLink);
 			}
 		}
 	}
@@ -302,7 +308,7 @@
 		word-wrap: normal;
 		
 		> div > div > small {
-			color: $wcfDimmedColor;
+			// TODO: color: $wcfDimmedColor;
 		}
 	}
 	
