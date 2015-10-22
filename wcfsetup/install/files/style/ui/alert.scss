@@ -1,23 +1,33 @@
 .error,
 .info,
-.success {
-	border-radius: 3px;
+.success,
+.warning {
+	border-left: 5px solid transparent;
 	padding: 10px 20px;
 }
 
 .error {
-	background-color: rgb(242, 222, 222);
-	color: rgb(169, 68, 66);
+	background-color: $wcfStatusErrorBackground;
+	border-color: $wcfStatusErrorBorder;
+	color: $wcfStatusErrorText;
 }
 
 .info {
-	background-color: rgb(217, 237, 247);
-	color: rgb(49, 112, 143);
+	background-color: $wcfStatusInfoBackground;
+	border-color: $wcfStatusInfoBorder;
+	color: $wcfStatusInfoText;
 }
 
 .success {
-	background-color: rgb(223, 240, 216);
-	color: rgb(60, 118, 61);
+	background-color: $wcfStatusSuccessBackground;
+	border-color: $wcfStatusSuccessBorder;
+	color: $wcfStatusSuccessText;
+}
+
+.warning {
+	background-color: $wcfStatusWarningBackground;
+	border-color: $wcfStatusWarningBorder;
+	color: $wcfStatusWarningText;
 }
 
 /* inline errors */

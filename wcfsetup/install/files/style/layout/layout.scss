@@ -8,7 +8,8 @@ html, body {
 
 body {
 	font-family: $wcfFontFamily;
-	line-height: 1.428571429;
+	//line-height: 1.428571429;
+	line-height: 1.61803399;
 	position: relative;
 	word-wrap: break-word;
 	
@@ -78,7 +79,7 @@ a {
 
 /* CONTENT AREA */
 .boxHeadline {
-	// TODO: border-bottom: 1px solid $wcfContentBorder;
+	border-bottom: 1px solid $wcfContentBorderInner;
 	color: $wcfContentHeadlineText;
 	margin-bottom: 30px;
 	padding-bottom: 10px;

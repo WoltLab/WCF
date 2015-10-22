@@ -105,6 +105,26 @@ dl {
 		
 		> dd {
 			display: block;
+			
+			> small:not(.innerError) {
+				color: $wcfContentDimmedText;
+				display: block;
+				margin-top: 5px;
+			}
+			
+			&.floated {
+				display: flex;
+				flex-wrap: wrap;
+				
+				> label {
+					flex: 0 0 auto;
+					margin: 0 10px 5px 0;
+					
+					&:last-child {
+						margin-right: 0;
+					}
+				}
+			}
 		}
 		
 		&.wide > dt {
@@ -188,14 +208,6 @@ dl {
 			text-align: right;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-		}
-	}
-	
-	&:not(.plain) > dd {
-		> small:not(.innerError) {
-			color: $wcfContentDimmedText;
-			display: block;
-			margin-top: 5px;
 		}
 	}
 	

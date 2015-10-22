@@ -469,20 +469,6 @@ class StyleAddForm extends AbstractForm {
 			'wcfFooter' => ['background', 'text', 'link', 'linkActive']
 		];
 		
-		// DEBUG ONLY
-		if (false) {
-			echo "<pre>";
-			foreach ($this->colors as $key => $values) {
-				foreach ($values as $v) {
-					$variableName = $key . ucfirst($v);
-					
-					echo "INSERT IGNORE INTO wcf1_style_variable (variableName, defaultValue) VALUES ('{$variableName}', 'rgba(255, 255, 255, 1)');\n";
-				}
-			}
-			exit;
-		}
-		// DEBUG ONLY
-		
 		// set global variables
 		$this->globals = [
 			'wcfFontSizeSmall',

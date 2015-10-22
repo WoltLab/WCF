@@ -234,7 +234,7 @@ div.tabularBoxTitle > header {
 		}
 		
 		&:not(:last-child) > td {
-			// TODO: border-bottom: 1px solid $wcfTabularBoxBorderInner;
+			border-bottom: 1px solid $wcfContentBorderInner;
 		}
 	}
 	

@@ -1,5 +1,5 @@
 .messageList {
-	border: 1px solid $wcfSidebarBackground;
+	border: 1px solid $wcfContentBorder;
 	border-width: 1px 0;
 	margin: 30px 0;
 	
@@ -8,7 +8,7 @@
 		padding: 40px 0;
 		
 		&:not(:first-child) {
-			border-top: 1px solid $wcfSidebarBackground;
+			border-top: 1px solid $wcfContentBorder;
 		}
 	}
 }
@@ -23,7 +23,7 @@
 	background-color: $wcfSidebarBackground;
 	border-radius: 3px;
 	color: $wcfSidebarText;
-	flex: 0 0 170px;
+	flex: 0 0 240px;
 	padding: 20px;
 	position: relative;
 	text-align: center;

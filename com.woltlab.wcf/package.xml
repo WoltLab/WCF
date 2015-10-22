@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.2.0 Alpha 3</version> <!-- codename: vortex -->
-		<date>2015-05-03</date>
+		<version>2.2.0 Alpha 1</version> <!-- codename: vortex -->
+		<date>2015-10-22</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -28,8 +28,7 @@
 		<instruction type="objectTypeDefinition" />
 		<instruction type="objectType" />
 		<instruction type="acpSearchProvider" />
-		<instruction type="style">blue-temptation-style.tgz</instruction>
-		<instruction type="style">woltlab-basic-style.tgz</instruction>
+		<instruction type="style">defaultStyle.tar</instruction>
 		<instruction type="userOption" />
 		<instruction type="bbcode" />
 		<instruction type="smiley" />
@@ -41,9 +40,5 @@
 		<instruction type="userNotificationEvent" />
 		<instruction type="aclOption" />
 		<instruction type="script">acp/post_install.php</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.2.0 Alpha 2">
-		<instruction type="acpMenu" />
 	</instructions>
 </package>

@@ -1,26 +1,26 @@
-.badge {
-	background-color: @wcfColor;
-	border: 1px solid rgb(255, 255, 255);
-	border-radius: 3px;
-	color: @wcfContentBackgroundColor;
+.badge,
+a.badge {
+	background-color: $wcfContentText;
+	color: $wcfContentBackground;
 	display: inline-block;
-	font-size: .85rem;
-	padding: 2px 5px;
+	padding: 3px 5px;
 	position: relative;
 	text-shadow: none !important; /* necessary to avoid ugly text shadows in comment lists; @todo: better solution without "!important" */
 	vertical-align: middle;
 	white-space: nowrap;
 	word-wrap: normal;
 	
+	@extend .wcfFontSmall;
+	
 	/* colors */
 	&.badgeUpdate {
-		background-color: @wcfTabularBoxBackgroundColor;
-		color: @wcfTabularBoxColor;
+		//background-color: @wcfTabularBoxBackgroundColor;
+		//color: @wcfTabularBoxColor;
 	}
 	
 	&.badgeInverse {
-		background-color: @wcfTabularBoxColor;
-		color: @wcfTabularBoxBackgroundColor;
+		background-color: $wcfContentBackground;
+		color: $wcfContentText;
 	}
 	
 	/* default label colors */
@@ -71,7 +71,7 @@
 }
 
 a.badge:hover {
-	color: @wcfContentBackgroundColor;
+	//color: @wcfContentBackgroundColor;
 	text-decoration: none;
 	
 	&.black {

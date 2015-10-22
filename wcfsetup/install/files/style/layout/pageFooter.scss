@@ -1,7 +1,8 @@
 #pageFooterBoxes {
 	background-color: $wcfFooterBoxBackground;
 	color: $wcfFooterBoxText;
-	padding: 30px;
+	flex: 0 0 auto;
+	padding: 20px;
 	z-index: 40;
 	
 	a {
@@ -47,7 +48,7 @@
 #pageFooter {
 	background-color: $wcfFooterBackground;
 	color: $wcfFooterText;
-	padding: 20px 0;
+	padding: 10px 0;
 	z-index: 20;
 	
 	a {

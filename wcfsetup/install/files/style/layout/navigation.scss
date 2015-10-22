@@ -1,7 +1,7 @@
 .navigation {
 	background-color: $wcfNavigationBackground;
 	color: $wcfNavigationText;
-	flex: 0 auto;
+	flex: 0 0 auto;
 	padding: 5px 0;
 	z-index: 25;
 	
@@ -27,11 +27,11 @@
 
 .navigationIcons {
 	display: flex;
-	flex: 0 auto;
+	flex: 0 0 auto;
 	flex-direction: row-reverse;
 	
 	> li {
-		flex: 0 auto;
+		flex: 0 0 auto;
 		
 		&:not(:last-child) {
 			margin-left: 10px;
@@ -65,7 +65,7 @@
 	}
 	
 	> nav {
-		flex: 1 auto;
+		flex: 1 1 auto;
 		
 		& + nav {
 			flex: 0 0 auto;

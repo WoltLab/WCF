@@ -86,7 +86,7 @@
 				<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 					<dt><label for="cssClassName">{lang}wcf.acp.label.cssClassName{/lang}</label></dt>
 					<dd>
-						<ul id="labelList">
+						<ul id="labelList" class="inlineList">
 							{foreach from=$availableCssClassNames item=className}
 								{if $className == 'custom'}
 									<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if} /> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long" /></span></li>
