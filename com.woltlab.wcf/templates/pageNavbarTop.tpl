@@ -1,5 +1,5 @@
 <div class="navigation navigationTop">
-	<div class="layoutFluid">
+	<div class="layoutBoundary">
 		{if $skipBreadcrumbs|empty}{include file='breadcrumbs'}{/if}
 		
 		<ul class="navigationIcons">

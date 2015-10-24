@@ -3,6 +3,7 @@
 }
 
 .tabularList {
+	border-bottom: 1px solid $wcfTabularBoxHeadline;
 	display: flex;
 	flex-direction: column;
 }

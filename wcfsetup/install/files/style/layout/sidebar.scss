@@ -96,6 +96,19 @@
 			width: 100%;
 		}
 	}
+	
+	small,
+	.dimmed {
+		color: $wcfSidebarDimmedText;
+		
+		a {
+			color: $wcfSidebarDimmedLink;
+			
+			&:hover {
+				color: $wcfSidebarDimmedLinkActive;
+			}
+		}
+	}
 }
 
 .sidebarNavigation > li {
