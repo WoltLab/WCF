@@ -1,0 +1,116 @@
+.popover {
+	background-color: $wcfContentBackground;
+	border: 1px solid $wcfContentBorder;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	vertical-align: middle;
+	visibility: hidden;
+	width: 400px !important;
+	z-index: 500;
+	
+	@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
+	
+	transition: visibility 0s linear .3s, opacity .3s linear;
+	
+	&.active {
+		opacity: 1;
+		visibility: visible;
+		
+		transition-delay: 0s;
+	}
+	
+	&.disableAnimation {
+		transition: none !important;
+		
+		> .popoverContent {
+			transition: none !important;
+		}
+		
+		> .elementPointer > span {
+			transition: none !important;
+		}
+	}
+	
+	> .popoverContent {
+		background-color: $wcfContentBackground;
+		border-radius: 3px;
+		color: $wcfContentText;
+		max-height: 320px;
+		min-height: 36px;
+		opacity: 1;
+		overflow: hidden;
+		padding: 10px;
+		
+		transition: opacity .3s linear;
+		
+		a {
+			color: $wcfContentLink;
+			
+			&:hover {
+				color: $wcfContentLinkActive;
+			}
+		}
+		
+		&:not(.loading) {
+			~ .fa-spinner {
+				display: none;
+			}
+			
+			~ .elementPointer {
+				> span {
+					border-color: $wcfContentBackground $wcfContentBorder;
+					border-style: solid;
+					border-width: 0 5px 5px;
+					left: -5px;
+					opacity: 1;
+					position: absolute;
+					top: 3px;
+					
+					transition: opacity .3s linear;
+				}
+				
+				&.flipVertical > span {
+					border-width: 5px 5px 0;
+					bottom: 3px;
+					top: auto;
+				}
+			}
+		}
+		
+		&.loading {
+			opacity: 0;
+			transition: height .3s linear, opacity 0s;
+			
+			~ .elementPointer > span {
+				opacity: 0;
+				
+				transition: opacity 0s;
+			}
+		}
+	}
+	
+	> .elementPointer {
+		border-color: rgba(0, 0, 0, .4) transparent;
+		border-style: solid;
+		border-width: 0 6px 6px;
+		top: -2px;
+		
+		&.flipVertical {
+			border-width: 6px 6px 0;
+			bottom: -2px;
+			top: auto;
+		}
+	}
+	
+	> .fa-spinner {
+		color: rgba(255, 255, 255, 1);
+		left: 50%;
+		margin-left: -14px;
+		margin-top: -14px;
+		position: absolute;
+		top: 50%;
+		
+		@include textShadow(black);
+	}
+}
