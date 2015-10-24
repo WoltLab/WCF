@@ -173,7 +173,7 @@ class UserSearchForm extends UserOptionListForm {
 		$this->buildDynamicConditions();
 		
 		// if no conditions exists, no need to send query
-		if (!count($this->conditions->getParameters())) {
+		if (!$this->conditions->__toString()) {
 			return;
 		}
 		

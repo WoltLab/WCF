@@ -85,7 +85,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 		parent::show();
 		
 		// set correct content-type
-		@header('Content-Type: application/rss+xml');
+		@header('Content-Type: application/rss+xml; charset=UTF-8');
 		
 		// show template
 		WCF::getTPL()->display($this->templateName, $this->application, false);
