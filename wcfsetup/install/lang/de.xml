@@ -3032,7 +3032,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.usersOnline.location.LostPasswordForm"><![CDATA[Fordert ein neues Kennwort an]]></item>
 		<item name="wcf.user.usersOnline.location.LoginForm"><![CDATA[Führt die Anmeldung durch]]></item>
 		<item name="wcf.user.usersOnline.location.AccountManagementForm"><![CDATA[Verwaltet das Benutzerkonto]]></item>
-		<item name="wcf.user.usersOnline.location.AvatarEditForm"><![CDATA[Verwaltet das Avatar]]></item>
+		<item name="wcf.user.usersOnline.location.AvatarEditForm"><![CDATA[Verwaltet den Avatar]]></item>
 		<item name="wcf.user.usersOnline.location.SettingsForm"><![CDATA[Passt Einstellungen an]]></item>
 		<item name="wcf.user.usersOnline.location.SignatureEditForm"><![CDATA[Bearbeitet die Signatur]]></item>
 		<item name="wcf.user.usersOnline.guests"><![CDATA[Gäste]]></item>

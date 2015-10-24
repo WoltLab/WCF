@@ -386,6 +386,11 @@ class UserEditForm extends UserAddForm {
 	 * @see	\wcf\acp\form\UserAddForm::validateEmail()
 	 */
 	protected function validateEmail($email, $confirmEmail) {
+		// check confirm input
+		if (mb_strtolower($email) != mb_strtolower($confirmEmail)) {
+			throw new UserInputException('confirmEmail', 'notEqual');
+		}
+		
 		if (mb_strtolower($this->user->email) != mb_strtolower($email)) {
 			parent::validateEmail($email, $this->confirmEmail);
 		}

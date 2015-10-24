@@ -185,7 +185,7 @@ window.shuffle = function(array) {
 	// work-around for zoom bug on iOS when using .focus()
 	if (jQuery.browser.iOS) {
 		jQuery.fn.focus = function() {
-			return arguments[0];
+			return this;
 		};
 	}
 })(jQuery);
@@ -8100,12 +8100,6 @@ WCF.Category.FlexibleCategoryList = Class.extend({
 			this._list.addClass('flexibleCategoryListDisabled');
 			return;
 		}
-		
-		if ($.browser.chrome) {
-			this._resize();
-			
-			$(window).resize(this._resize.bind(this));
-		}
 	},
 	
 	_buildStructure: function() {
@@ -8135,25 +8129,6 @@ WCF.Category.FlexibleCategoryList = Class.extend({
 			
 			self._categories[$categoryID] = $childCategories;
 		});
-	},
-	
-	_resize: function() {
-		var $referenceOffset = -1;
-		var $realBottom = 0;
-		var $items = this._list.children('li');
-		
-		$items.each(function(index, item) {
-			if ($referenceOffset === -1 || index + 1 === $items.length || $items[index + 1].offsetLeft != $referenceOffset) {
-				var $item = $(item);
-				var $height = $item.outerHeight(true);
-				var $offset = $item.position();
-				
-				$realBottom = Math.max($realBottom, $offset.top + $height);
-				$referenceOffset = item.offsetLeft;
-			}
-		});
-		
-		this._list.css('max-height', $realBottom + 'px');
 	},
 	
 	_updateSelection: function(event) {

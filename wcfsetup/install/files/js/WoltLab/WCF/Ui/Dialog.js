@@ -79,10 +79,10 @@ define(
 				if (id && (container = elById(id))) {
 					((function(button, container) {
 						container.classList.remove('jsStaticDialogContent');
+						container.style.setProperty('display', 'none');
 						button.addEventListener('click', this.openStatic.bind(this, container.id, null, { title: elAttr(container, 'data-title') }));
 					}).bind(this))(button, container);
 				}
-				
 			}
 		},
 		

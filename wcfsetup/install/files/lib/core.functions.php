@@ -6,21 +6,20 @@
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
+use wcf\system\WCF;
+
 // set exception handler
-set_exception_handler(array('wcf\system\WCF', 'handleException'));
-
+set_exception_handler([ WCF::class, 'handleException' ]);
 // set php error handler
-set_error_handler(array('wcf\system\WCF', 'handleError'), E_ALL);
-
+set_error_handler([ WCF::class, 'handleError' ], E_ALL);
 // set shutdown function
-register_shutdown_function(array('wcf\system\WCF', 'destruct'));
-
+register_shutdown_function([ WCF::class, 'destruct' ]);
 // set autoload function
-spl_autoload_register(array('wcf\system\WCF', 'autoload'));
+spl_autoload_register([ WCF::class, 'autoload' ]);
 
 // define escape string shortcut
 function escapeString($string) {
-	return wcf\system\WCF::getDB()->escapeString($string);
+	return WCF::getDB()->escapeString($string);
 }
 
 // define DOCUMENT_ROOT on IIS if not set
