@@ -52,7 +52,7 @@ class StyleCompiler extends SingletonFactory {
 	public function compile(Style $style) {
 		// read stylesheets by dependency order
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("filename REGEXP ?", ['style/([a-zA-Z0-9\_\-\.]+)\.(less|scss)']);
+		$conditions->add("filename REGEXP ?", ['style/([a-zA-Z0-9\_\-\.]+)\.scss']);
 		
 		// TESTING ONLY
 		$conditions->add("packageID <> ?", [1]);
@@ -77,7 +77,7 @@ class StyleCompiler extends SingletonFactory {
 				$file = WCF_DIR."style/{$file}/";
 				if ($innerHandle = opendir($file)) {
 					while (($innerFile = readdir($innerHandle)) !== false) {
-						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || preg_match('~\.less$~', $innerFile)) {
+						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || !preg_match('~^[a-zA-Z]+\.scss~$', $innerFile)) {
 							continue;
 						}
 						
@@ -139,7 +139,7 @@ class StyleCompiler extends SingletonFactory {
 	public function compileACP() {
 		// read stylesheets by dependency order
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("filename REGEXP ?", ['style/([a-zA-Z0-9\_\-\.]+)\.(less|scss)']);
+		$conditions->add("filename REGEXP ?", ['style/([a-zA-Z0-9\_\-\.]+)\.scss']);
 		
 		// TESTING ONLY
 		$conditions->add("packageID <> ?", [1]);
@@ -164,7 +164,7 @@ class StyleCompiler extends SingletonFactory {
 				$file = WCF_DIR."style/{$file}/";
 				if ($innerHandle = opendir($file)) {
 					while (($innerFile = readdir($innerHandle)) !== false) {
-						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || preg_match('~\.less$~', $innerFile)) {
+						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || !preg_match('~^[a-zA-Z]+\.scss~$', $innerFile)) {
 							continue;
 						}
 						
