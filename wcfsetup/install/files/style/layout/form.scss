@@ -30,6 +30,12 @@ textarea {
 	}
 }
 
+textarea[readonly] {
+	background-color: $wcfInputDisabledBackground !important;
+	border-color: $wcfInputDisabledBorder !important;
+	color: $wcfInputDisabledText !important;
+}
+
 textarea {
 	border-width: 1px;
 	width: 100%;
