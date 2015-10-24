@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\style;
+use Leafo\ScssPhp\Compiler;
 use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
@@ -40,7 +41,7 @@ class StyleCompiler extends SingletonFactory {
 	 */
 	protected function init() {
 		require_once(WCF_DIR.'lib/system/style/scssphp/scss.inc.php');
-		$this->compiler = new \Leafo\ScssPhp\Compiler();
+		$this->compiler = new Compiler();
 		$this->compiler->setImportPaths([WCF_DIR]);
 	}
 	
@@ -210,7 +211,7 @@ class StyleCompiler extends SingletonFactory {
 			WCF_DIR.'acp/style/style',
 			$files,
 			$variables,
-			'',//file_get_contents(WCF_DIR.'acp/style/blueTemptation/individual.scss'),
+			'',
 			new Callback(function($content) {
 				// fix relative paths
 				$content = str_replace('../font/', '../../font/', $content);
