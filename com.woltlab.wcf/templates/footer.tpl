@@ -12,7 +12,7 @@
 	</section>
 	
 	<div id="pageFooterBoxes">
-		<div class="layoutFluid">
+		<div class="layoutBoundary">
 			{hascontent}
 				<ul>
 					{content}{if !$footerBoxes|empty}{@$footerBoxes}{/if}{/content}
@@ -40,7 +40,7 @@
 	</nav>*}
 	
 	<footer id="pageFooter" class="footer{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
-		<div class="layoutFluid">
+		<div class="layoutBoundary">
 			<div class="footerContent">
 				{event name='footerContents'}
 				

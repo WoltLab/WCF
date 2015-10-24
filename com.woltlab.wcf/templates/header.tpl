@@ -10,7 +10,7 @@
 	{include file='pageNavbarTop'}
 	
 	<section id="main" class="main" role="main">
-		<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
+		<div class="layoutBoundary">
 			{capture assign='__sidebar'}
 				{if $sidebar|isset}
 					<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>

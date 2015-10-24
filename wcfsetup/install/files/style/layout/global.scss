@@ -1,8 +1,13 @@
-.layoutFluid {
-	margin-left: auto;
-	margin-right: auto;
-	min-width: $wcfLayoutMinWidth;
-	max-width: $wcfLayoutMaxWidth;
+.layoutBoundary {
+	margin: 0 auto;
+	
+	@if $useFluidLayout {
+		min-width: $wcfLayoutMinWidth;
+		max-width: $wcfLayoutMaxWidth;
+	}
+	@else {
+		width: $wcfLayoutFixedWidth;
+	}
 }
 
 .marginTop {

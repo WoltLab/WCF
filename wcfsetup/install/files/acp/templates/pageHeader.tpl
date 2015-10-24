@@ -1,6 +1,6 @@
 <header id="pageHeader" class="pageHeader">
 	<div>
-		<div class="layoutFluid">
+		<div class="layoutBoundary">
 			{include file='pageLogo'}
 			
 			{include file='pageSearchArea'}

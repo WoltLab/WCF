@@ -160,11 +160,11 @@
 		<section id="main" class="main" role="main">
 	
 	{*
-	<header id="pageHeader" class="layoutFluid">
+	<header id="pageHeader" class="layoutBoundary">
 		<div>
 			{if $__wcf->user->userID}
 				<nav id="topMenu" class="userPanel">
-					<div class="layoutFluid">
+					<div class="layoutBoundary">
 						<ul class="userPanelItems">
 							<li id="userMenu" class="dropdown">
 								<a class="dropdownToggle framed" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} {/if}{lang}wcf.user.userNote{/lang}</a>
@@ -261,6 +261,6 @@
 	</header>
 	*}
 	
-	<div class="layoutFluid">
+	<div class="layoutBoundary">
 		<div id="content" class="content">
 				
