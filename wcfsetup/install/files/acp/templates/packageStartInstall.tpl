@@ -49,8 +49,8 @@
 	</nav>
 	
 	<div id="packageSearch" class="container containerPadding tabMenuContent">
-		<fieldset>
-			<legend>{lang}wcf.acp.package.search.conditions{/lang}</legend>
+		<section>
+			<h1>{lang}wcf.acp.package.search.conditions{/lang}</h1>
 			
 			<dl>
 				<dt><label for="packageName">{lang}wcf.acp.package.search.packageName{/lang}</label></dt>
@@ -67,7 +67,7 @@
 					<small>{lang}wcf.acp.package.search.package.description{/lang}</small>
 				</dd>
 			</dl>
-		</fieldset>
+		</section>
 		
 		<div class="formSubmit">
 			<button class="jsButtonPackageSearch">{lang}wcf.global.button.submit{/lang}</button>
@@ -84,8 +84,8 @@
 	
 	<div id="upload" class="container containerPadding tabMenuContent">
 		<form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
-			<fieldset>
-				<legend>{lang}wcf.acp.package.source{/lang}</legend>
+			<section>
+				<h1>{lang}wcf.acp.package.source{/lang}</h1>
 				
 				<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
 					<dt><label for="uploadPackage">{lang}wcf.acp.package.source.upload{/lang}</label></dt>
@@ -106,24 +106,7 @@
 						<small>{lang}wcf.acp.package.source.upload.description{/lang}</small>
 					</dd>
 				</dl>
-				
-				<dl{if $errorField == 'downloadPackage'} class="formError"{/if}>
-					<dt><label for="downloadPackage">{lang}wcf.acp.package.source.download{/lang}</label></dt>
-					<dd>
-						<input type="text" id="downloadPackage" name="downloadPackage" value="" class="long" />
-						{if $errorField == 'downloadPackage'}
-							<small class="innerError">
-								{lang}wcf.acp.package.error.{@$errorType}{/lang}
-							</small>
-						{/if}
-						<small>{lang}wcf.acp.package.source.download.description{/lang}</small>
-					</dd>
-				</dl>
-				
-				{event name='sourceFields'}
-			</fieldset>
-			
-			{event name='fieldsets'}
+			</section>
 			
 			<div class="formSubmit">
 				<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />

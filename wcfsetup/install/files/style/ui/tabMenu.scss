@@ -8,6 +8,8 @@
 	position: relative;
 	
 	> ul {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		
 		@extend .inlineList;
 		
 		> li {

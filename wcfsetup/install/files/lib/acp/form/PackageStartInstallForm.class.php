@@ -38,12 +38,6 @@ class PackageStartInstallForm extends AbstractForm {
 	public $package = null;
 	
 	/**
-	 * url to the package to download
-	 * @var	string
-	 */
-	public $downloadPackage = '';
-	
-	/**
 	 * data of the uploaded package
 	 * @var	array<string>
 	 */
@@ -86,7 +80,6 @@ class PackageStartInstallForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (!$this->stylePackageImportLocation) {
-			if (isset($_POST['downloadPackage'])) $this->downloadPackage = StringUtil::trim($_POST['downloadPackage']);
 			if (isset($_FILES['uploadPackage'])) $this->uploadPackage = $_FILES['uploadPackage'];
 		}
 	}
@@ -109,9 +102,6 @@ class PackageStartInstallForm extends AbstractForm {
 		}
 		else if (!empty($this->uploadPackage['name'])) {
 			$this->validateUploadPackage();
-		}
-		else if (!empty($this->downloadPackage)) {
-			$this->validateDownloadPackage();
 		}
 		else {
 			throw new UserInputException('uploadPackage');
@@ -157,46 +147,6 @@ class PackageStartInstallForm extends AbstractForm {
 	}
 	
 	/**
-	 * Validates the download package input.
-	 */
-	protected function validateDownloadPackage() {
-		$this->activeTabMenuItem = 'upload';
-		
-		if (FileUtil::isURL($this->downloadPackage)) {
-			// download package
-			$this->archive = new PackageArchive($this->downloadPackage, $this->package);
-			
-			try {
-				$this->downloadPackage = $this->archive->downloadArchive();
-			}
-			catch (SystemException $e) {
-				throw new UserInputException('downloadPackage', 'downloadFailed');
-			}
-		}
-		else {
-			// probably local path
-			if (!file_exists($this->downloadPackage)) {
-				throw new UserInputException('downloadPackage', 'downloadFailed');
-			}
-		}
-		
-		if (!PackageValidationManager::getInstance()->validate($this->downloadPackage, false)) {
-			$exception = PackageValidationManager::getInstance()->getException();
-			if ($exception instanceof PackageValidationException) {
-				switch ($exception->getCode()) {
-					case PackageValidationException::INVALID_PACKAGE_NAME:
-					case PackageValidationException::MISSING_PACKAGE_XML:
-						throw new UserInputException('downloadPackage', 'noValidPackage');
-					break;
-				}
-			}
-		}
-		
-		$this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
-		
-	}
-	
-	/**
 	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
@@ -208,7 +158,6 @@ class PackageStartInstallForm extends AbstractForm {
 		// obey foreign key
 		$packageID = ($this->package) ? $this->package->packageID : null;
 		
-		$archive = $this->downloadPackage;
 		if ($this->stylePackageImportLocation) {
 			$archive = $this->stylePackageImportLocation;
 		}
