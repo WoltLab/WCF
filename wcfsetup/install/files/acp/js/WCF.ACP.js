@@ -71,7 +71,7 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				// insert icon
 				$headline = $('.boxHeadline > h1');
 				$headline.html($headline.html() + ' ');
-				$('<span class="icon icon16 icon-ok-sign jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($headline);
+				$('<span class="icon icon16 fa-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($headline);
 				
 				WCF.DOMNodeInsertedHandler.execute();
 			}, this)
@@ -437,7 +437,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	_failure: function() {
 		if (this._dialog !== null) {
 			$('#packageInstallationProgress').removeAttr('value');
-			this._setIcon('remove');
+			this._setIcon('times');
 		}
 		
 		if (!this._allowRollback) {
@@ -549,7 +549,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		// handle success
 		if (data.step === 'success') {
-			this._setIcon('ok');
+			this._setIcon('check');
 			
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
@@ -705,7 +705,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	string		iconName
 	 */
 	_setIcon: function(iconName) {
-		this._dialog.find('.jsPackageInstallationStatus').removeClass('icon-ok icon-question icon-remove icon-spinner').addClass('icon-' + iconName);
+		this._dialog.find('.jsPackageInstallationStatus').removeClass('fa-check fa-question fa-times fa-spinner').addClass('icon-' + iconName);
 	}
 });
 
@@ -2161,10 +2161,10 @@ WCF.ACP.User.BanHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'unban') {
-					$button.data('banned', false).data('tooltip', $button.data('banMessage')).removeClass('icon-lock').addClass('icon-unlock');
+					$button.data('banned', false).data('tooltip', $button.data('banMessage')).removeClass('fa-lock').addClass('fa-unlock');
 				}
 				else {
-					$button.data('banned', true).data('tooltip', $button.data('unbanMessage')).removeClass('icon-unlock').addClass('icon-lock');
+					$button.data('banned', true).data('tooltip', $button.data('unbanMessage')).removeClass('fa-unlock').addClass('fa-lock');
 				}
 			}
 		});
@@ -2331,10 +2331,10 @@ WCF.ACP.User.EnableHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'disable') {
-					$button.data('enabled', false).data('tooltip', $button.data('enableMessage')).removeClass('icon-check').addClass('icon-check-empty');
+					$button.data('enabled', false).data('tooltip', $button.data('enableMessage')).removeClass('fa-check-square-o').addClass('fa-square-o');
 				}
 				else {
-					$button.data('enabled', true).data('tooltip', $button.data('disableMessage')).removeClass('icon-check-empty').addClass('icon-check');
+					$button.data('enabled', true).data('tooltip', $button.data('disableMessage')).removeClass('fa-square-o').addClass('fa-check-square-o');
 				}
 			}
 		});
@@ -2467,7 +2467,7 @@ WCF.ACP.Import.Manager = Class.extend({
 	_invoke: function() {
 		this._index++;
 		if (this._index >= this._objectTypes.length) {
-			this._dialog.find('.icon-spinner').removeClass('icon-spinner').addClass('icon-ok');
+			this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check');
 			this._dialog.find('h1').text(WCF.Language.get('wcf.acp.dataImport.completed'));
 			
 			var $form = $('<div class="formSubmit" />').appendTo(this._dialog.find('#workerContainer'));

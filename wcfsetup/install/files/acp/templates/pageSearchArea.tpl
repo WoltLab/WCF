@@ -25,13 +25,3 @@
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</form>
 </div>
-
-{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			//new WCF.Search.Message.SearchArea($('#search'));
-		});
-		//]]>
-	</script>
-{/if}

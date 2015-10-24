@@ -1,6 +1,6 @@
 <header id="pageHeader" class="pageHeader">
 	<div>
-		<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
+		<div class="layoutFluid">
 			{include file='pageLogo'}
 			
 			{include file='pageSearchArea'}

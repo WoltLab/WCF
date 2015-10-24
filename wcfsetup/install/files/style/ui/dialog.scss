@@ -66,7 +66,7 @@
 	
 	> header {
 		background-color: $wcfContentBackground;
-		// TODO: border-bottom: 1px solid $wcfContentBorder;
+		border-bottom: 1px solid $wcfContentBorderInner;
 		color: $wcfContentHeadlineText;
 		display: flex;
 		padding: 10px 20px;
@@ -137,7 +137,7 @@
 		
 		.dialogFormSubmit {
 			background-color: $wcfContentBackground;
-			// TODO: border-top: 1px solid $wcfContentBorder;
+			border-top: 1px solid $wcfContentBorderInner;
 			bottom: 0;
 			left: 0;
 			padding: 10px;

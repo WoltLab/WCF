@@ -77,7 +77,7 @@ class StyleCompiler extends SingletonFactory {
 				$file = WCF_DIR."style/{$file}/";
 				if ($innerHandle = opendir($file)) {
 					while (($innerFile = readdir($innerHandle)) !== false) {
-						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile)) {
+						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || preg_match('~\.less$~', $innerFile)) {
 							continue;
 						}
 						
@@ -164,7 +164,7 @@ class StyleCompiler extends SingletonFactory {
 				$file = WCF_DIR."style/{$file}/";
 				if ($innerHandle = opendir($file)) {
 					while (($innerFile = readdir($innerHandle)) !== false) {
-						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile)) {
+						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || preg_match('~\.less$~', $innerFile)) {
 							continue;
 						}
 						
@@ -181,7 +181,6 @@ class StyleCompiler extends SingletonFactory {
 		//$files = glob(WCF_DIR.'style/*.less');
 		
 		// read default values
-		/*
 		$sql = "SELECT		variableName, defaultValue
 			FROM		wcf".WCF_N."_style_variable
 			ORDER BY	variableID ASC";
@@ -196,9 +195,6 @@ class StyleCompiler extends SingletonFactory {
 			
 			$variables[$row['variableName']] = $value;
 		}
-		*/
-		$style = new Style(1);
-		$variables = $style->getVariables();
 		
 		$variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
 		if (!empty($variables['wcfFontFamilyGoogle'])) {

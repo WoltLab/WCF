@@ -147,7 +147,7 @@
 				<dt>{lang}wcf.acp.index.credits.designer{/lang}</dt>
 				<dd>
 					<ul class="dataList">
-						<li>Harald Szekely</li>
+						<li>Alexander Ebert</li>
 						<li>Marcel Werk</li>
 					</ul>
 				</dd>
