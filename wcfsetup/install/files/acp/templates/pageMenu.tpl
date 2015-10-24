@@ -4,7 +4,7 @@
 		<ul>
 			{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
 				<li class="subMenuItems{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" data-menu-item="{$_sectionMenuItem->menuItem}">
-					<a href="#">{@$_sectionMenuItem}</a>
+					<a>{@$_sectionMenuItem}</a>
 					
 					{assign var=_menuItemCategories value=$__wcf->getACPMenu()->getMenuItems($_sectionMenuItem->menuItem)}
 					<ol class="wcfAcpMenu subMenu{if $_menuItemCategories|count > 3} doubleColumned {/if}">
