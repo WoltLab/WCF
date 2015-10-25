@@ -3,7 +3,7 @@ a.badge {
 	background-color: $wcfContentText;
 	color: $wcfContentBackground;
 	display: inline-block;
-	padding: 3px 5px;
+	padding: 1px 5px;
 	position: relative;
 	text-shadow: none !important; /* necessary to avoid ugly text shadows in comment lists; @todo: better solution without "!important" */
 	vertical-align: middle;

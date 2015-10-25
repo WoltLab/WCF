@@ -180,7 +180,7 @@
 					@extend .icon24;
 				}
 				
-				> span:not(.icon) {
+				> span:not(.icon):not(.badge) {
 					display: none;
 				}
 			}

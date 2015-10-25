@@ -1126,7 +1126,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 			
 			var $header = $('<div class="interactiveDropdownHeader" />').appendTo(this._container);
 			$('<span class="interactiveDropdownTitle">' + options.title + '</span>').appendTo($header);
-			this._linkList = $('<ul class="interactiveDropdownLinks"></ul>').appendTo($header);
+			this._linkList = $('<ul class="interactiveDropdownLinks inlineList"></ul>').appendTo($header);
 			
 			$itemContainer = $('<div class="interactiveDropdownItemsContainer" />').appendTo(this._container);
 			this._itemList = $('<ul class="interactiveDropdownItems" />').appendTo($itemContainer);
