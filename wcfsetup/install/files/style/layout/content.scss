@@ -12,8 +12,11 @@
 	section > h1 {
 		@extend .wcfFontHeadline;
 		
+		border-left: 5px solid $wcfContentBorderInner;
 		color: $wcfContentHeadlineText;
+		font-weight: 400;
 		margin-bottom: 20px;
+		padding-left: 10px;
 		
 		a {
 			color: $wcfContentHeadlineLink;

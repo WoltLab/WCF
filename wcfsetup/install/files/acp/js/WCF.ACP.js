@@ -665,18 +665,14 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	function	callback
 	 */
 	_purgeTemplateContent: function(callback) {
-		if ($('#packageInstallationInnerContent').children().length > 1) {
-			$('#packageInstallationInnerContentContainer').wcfBlindOut('vertical', $.proxy(function() {
-				$('#packageInstallationInnerContent').empty();
-				this._shouldRender = true;
-				
-				// execute callback
-				callback();
-			}, this));
+		if ($('#packageInstallationInnerContent').children().length) {
+			$('#packageInstallationInnerContentContainer').hide();
+			$('#packageInstallationInnerContent').empty();
+			
+			this._shouldRender = true;
 		}
-		else {
-			callback();
-		}
+		
+		callback();
 	},
 	
 	/**

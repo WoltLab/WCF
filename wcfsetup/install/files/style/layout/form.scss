@@ -66,29 +66,6 @@ textarea {
 	}
 }
 
-input {
-	box-sizing: border-box;
-	
-	&.tiny {
-		width: 80px;
-	}
-	
-	&.short {
-		min-width: 80px;
-		width: 10%;
-	}
-	
-	&.medium {
-		min-width: 150px;
-		width: 30%;
-	}
-	
-	&.long {
-		min-width: 150px;
-		width: 100%;
-	}
-}
-
 dl {
 	&:not(.plain) {
 		display: block;
@@ -323,7 +300,7 @@ dl {
 	}
 }
 
-.inputAddon:not(.inputAddonTextarea) {
+.inputAddon {
 	display: flex;
 	
 	&:not(:last-child) {
@@ -346,15 +323,58 @@ dl {
 			border-radius: 0;
 			margin-left: 5px;
 		}
+		
+		&:not(.button) {
+			background-color: $wcfButtonBackground;
+			border: 1px solid $wcfButtonBorder;
+			color: $wcfButtonText;
+			cursor: default;
+			margin-left: 5px;
+			padding: 3px 5px;
+		}
 	}
 	
-	> input,
-	> textarea {
+	input {
 		flex: 1 auto;
 	}
 }
 
-.inputAddonTextarea > .inputPrefix.button {
-	border-bottom-width: 0;
-	border-radius: 0;
+.inputAddonTextarea {
+	flex-wrap: wrap;
+	
+	> .inputPrefix.button {
+		border-bottom-width: 0;
+		border-radius: 0;
+	}
+	
+	> textarea {
+		flex: 0 0 100%;
+	}
+}
+
+.inputAddon input,
+input {
+	box-sizing: border-box;
+	
+	&.tiny {
+		flex-grow: 0;
+		width: 80px;
+	}
+	
+	&.short {
+		flex-grow: 0;
+		min-width: 80px;
+		width: 10%;
+	}
+	
+	&.medium {
+		flex-grow: 0;
+		min-width: 150px;
+		width: 30%;
+	}
+	
+	&.long {
+		min-width: 150px;
+		width: 100%;
+	}
 }

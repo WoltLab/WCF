@@ -47,8 +47,7 @@
 .re-gallery:before { content: "\e61f"; }
 
 .redactor-box {
-	// TODO: border: 1px solid $wcfContentBorder;
-	border-radius: 3px 3px 0 0;
+	border: 1px solid $wcfContentBorder;
 	font-size: 0;
 	line-height: $wcfBaseLineHeight;
 	position: relative;
@@ -71,7 +70,7 @@
 	
 	> .redactorAutosaveNotice {
 		background-color: $wcfContentBackground;
-		// TODO: border: 1px solid $wcfContentBorder;
+		border: 1px solid $wcfContentBorderInner;
 		border-width: 1px 0 0 1px;
 		bottom: 0;
 		font-size: 1rem;
@@ -225,7 +224,7 @@
 }
 
 .redactor-toolbar {
-	// TODO: background: repeating-linear-gradient(0deg, $wcfContentBorder 0px, $wcfContentBorder 3%, $wcfContentBackground 3%, $wcfContentBackground 100%);
+	background: repeating-linear-gradient(0deg, $wcfContentBorderInner 0px, $wcfContentBorderInner 3%, $wcfContentBackground 3%, $wcfContentBackground 100%);
 	background-size: 100% 31px;
 	
 	> li {
@@ -235,7 +234,7 @@
 		
 		&:last-of-type,
 		&.separator {
-			// TODO: border-right: 1px solid $wcfContentBorder;
+			border-right: 1px solid $wcfContentBorderInner;
 		}
 		
 		> a {
