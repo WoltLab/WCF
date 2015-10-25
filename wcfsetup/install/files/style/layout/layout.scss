@@ -4,16 +4,15 @@
 
 html, body {
 	height: 100%;
+	line-height: 1.61803399;
+	
+	@extend .wcfFontDefault;
 }
 
 body {
 	font-family: $wcfFontFamily;
-	//line-height: 1.428571429;
-	line-height: 1.61803399;
 	position: relative;
 	word-wrap: break-word;
-	
-	@extend .wcfFontDefault;
 }
 
 a {

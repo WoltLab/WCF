@@ -180,7 +180,7 @@
 	li {
 		display: block;
 		
-		@include textShadow($wcfDropdownText);
+		//@include textShadow($wcfDropdownText);
 		
 		&:hover:not(.dropdownDivider):not(.dropdownList):not(.dropdownText),
 		&.dropdownList > li:hover:not(.dropdownDivider),
@@ -189,7 +189,7 @@
 			background-color: $wcfDropdownBackgroundActive;
 			color: $wcfDropdownLinkActive;
 			
-			@include textShadow($wcfDropdownLinkActive);
+			//@include textShadow($wcfDropdownLinkActive);
 		}
 		
 		&.dropdownDivider {
