@@ -1276,8 +1276,11 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				
 				// iOS sometimes pastes right into the marker, this work-around will unwrap the pasted content
-				if ($.browser.iOS && marker.innerHTML.length) {
+				var fixApple = false;
+				if ($.browser.iOS && marker.innerHTML.replace(/\u200b/g, '').length) {
 					marker.outerHTML = marker.innerHTML;
+					
+					fixApple = true;
 				}
 				else {
 					marker.parentNode.removeChild(marker);
@@ -1290,6 +1293,12 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				else {
 					this.selection.implicitRange = null;
+				}
+				
+				if ($.browser.iOS && fixApple) {
+					window.setTimeout((function() {
+						this.focus.setEnd();
+					}).bind(this), 10);
 				}
 			}).bind(this);
 			
