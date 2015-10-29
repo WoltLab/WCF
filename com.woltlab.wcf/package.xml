@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.1.8</version> <!-- codename: typhoon -->
-		<date>2015-10-23</date>
+		<version>2.1.8 pl 1</version> <!-- codename: typhoon -->
+		<date>2015-10-29</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -89,20 +89,7 @@
 		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.1.7">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+	<instructions type="update" fromversion="2.1.8">
 		<instruction type="file">files_update.tar</instruction>
-		
-		<instruction type="language">language/*.xml</instruction>
-		
-		<instruction type="style">blue-temptation-style.tgz</instruction>
-	</instructions>
-	<instructions type="update" fromversion="2.1.7 pl 1">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		
-		<instruction type="language">language/*.xml</instruction>
-		
-		<instruction type="style">blue-temptation-style.tgz</instruction>
 	</instructions>
 </package>
