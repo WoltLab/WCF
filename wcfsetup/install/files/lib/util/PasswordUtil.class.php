@@ -697,7 +697,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	 protected static function phpfox3($username, $password, $salt, $dbHash) {
-		 if(self::secureCompare($dbHash, md5(md5($password) . md5($salt)))) {
+		 if (self::secureCompare($dbHash, md5(md5($password) . md5($salt)))) {
 			 return true;
 		 }
 		 
