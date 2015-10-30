@@ -49,6 +49,7 @@ final class PasswordUtil {
 		'joomla1',	// Joomla 1.x
 		'joomla2',	// Joomla 2.x
 		'joomla3',	// Joomla 3.x
+		'phpfox3',	// phpFox 3.x
 		'cryptMD5',
 		'invalid',	// Never going to match anything
 	);
@@ -683,6 +684,25 @@ final class PasswordUtil {
 	protected static function joomla3($username, $password, $salt, $dbHash) {
 		return self::joomla1($username, $password, $salt, $dbHash);
 	}
+	
+	/**
+	 * Validates the password hash for phpFox 3.x
+	 * Merge phpfox_user.password and phpfox_user.password_salt with ':' before importing all data row values
+	 * See PasswordUtil::checkPassword() for more info
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	 protected static function phpfox3($username, $password, $salt, $dbHash) {
+		 if(self::secureCompare($dbHash, md5(md5($password) . md5($salt)))) {
+			 return true;
+		 }
+		 
+		 return false;
+	 }
 	
 	/**
 	 * Validates the password hash for MD5 mode of crypt()
