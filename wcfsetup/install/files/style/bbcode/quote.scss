@@ -1,5 +1,5 @@
 .quoteBox {
-	border-left: 2px solid rgb(79, 129, 189);
+	border-left: 2px solid $wcfContentBorder;
 	padding: 10px;
 	margin: 10px 0;
 	
@@ -41,5 +41,6 @@
 
 .quoteBoxTitle {
 	flex: 1 auto;
-	font-size: 1.2rem;
+	
+	@extend .wcfFontHeadline;
 }

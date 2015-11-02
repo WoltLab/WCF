@@ -8,14 +8,14 @@
  */
 define(
 	[
-		'enquire',     'Ajax',       'Core',      'Dictionary',
-		'Environment', 'Language',   'ObjectMap', 'Dom/ChangeListener',
-		'Dom/Util',    'Ui/Confirmation'
+		'enquire',      'Ajax',       'Core',      'Dictionary',
+		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
+		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation'
 	],
 	function(
 		enquire,        Ajax,         Core,        Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
-		DomUtil,        UiConfirmation
+		DomTraverse,    DomUtil,      UiConfirmation
 	)
 {
 	"use strict";
@@ -215,17 +215,26 @@ define(
 		/**
 		 * Sets the dialog title.
 		 * 
-		 * @param	{string}	id		element id
-		 * @param	{string}	title		dialog title
+		 * @param	{(string|object)}	id		element id
+		 * @param	{string}	        title		dialog title
 		 */
 		setTitle: function(id, title) {
+			if (typeof id === 'object') {
+				var dialogData = _dialogObjects.get(id);
+				if (dialogData !== undefined) {
+					id = dialogData.id;
+				}
+			}
+			
 			var data = _dialogs.get(id);
 			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			
-			var header = DomTraverse.childrenByTag(data.dialog, 'HEADER');
-			DomTraverse.childrenByTag(header[0], 'SPAN').textContent = title;
+			var dialogTitle = elByClass('dialogTitle', data.dialog);
+			if (dialogTitle.length) {
+				dialogTitle[0].textContent = title;
+			}
 		},
 		
 		/**
@@ -258,16 +267,14 @@ define(
 			var header = elCreate('header');
 			dialog.appendChild(header);
 			
-			if (options.title) {
-				var titleId = DomUtil.getUniqueId();
-				elAttr(dialog, 'aria-labelledby', titleId);
-				
-				var title = elCreate('span');
-				title.classList.add('dialogTitle');
-				title.textContent = options.title;
-				elAttr(title, 'id', titleId);
-				header.appendChild(title);
-			}
+			var titleId = DomUtil.getUniqueId();
+			elAttr(dialog, 'aria-labelledby', titleId);
+			
+			var title = elCreate('span');
+			title.classList.add('dialogTitle');
+			title.textContent = options.title;
+			elAttr(title, 'id', titleId);
+			header.appendChild(title);
 			
 			if (options.closable) {
 				var closeButton = elCreate('a');

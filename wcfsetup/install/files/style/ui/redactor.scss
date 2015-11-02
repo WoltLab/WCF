@@ -101,21 +101,26 @@
 		}
 	}
 	
-	.TODO_quoteBox {
-		clear: none;
+	.quoteBox {
+		position: relative;
 		
-		> header {
-			position: relative;
+		&::before {
+			content: attr(data-quote-header);
+			cursor: pointer;
+			display: block;
+			margin-bottom: 10px;
+			padding-right: 20px;
 			
-			> .redactorQuoteEdit {
-				bottom: -$wcfGapSmall;
-				left: -$wcfGapMedium;
-				right: -$wcfGapMedium;
-				top: -$wcfGapMedium;
-				padding-top: $wcfGapMedium;
-				padding-left: $wcfGapMedium;
-				position: absolute;
-			}
+			@extend .wcfFontHeadline;
+		}
+		
+		&::after {
+			content: $fa-var-pencil;
+			font-family: FontAwesome;
+			font-size: $wcfFontSizeHeadline;
+			position: absolute;
+			right: 10px;
+			top: 10px;
 		}
 	}
 	

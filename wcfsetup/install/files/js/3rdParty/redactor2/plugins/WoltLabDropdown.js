@@ -8,11 +8,11 @@ $.Redactor.prototype.WoltLabDropdown = function() {
 			this.utils.enableBodyScroll = function() {};
 			
 			// disable slideUp effect for dropdowns on close
-			this._hideAll();
+			this.WoltLabDropdown._hideAll();
 			
 			// disable slideDown effect for dropdowns on open
 			// enforce dropdownMenu-like DOM
-			this._show();
+			this.WoltLabDropdown._show();
 		},
 		
 		_hideAll: function() {

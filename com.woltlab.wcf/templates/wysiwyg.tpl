@@ -14,7 +14,7 @@
 		
 		var config = {
 			buttons: buttons,
-			plugins: ['WoltLabButton', 'WoltLabDropdown'],
+			plugins: ['WoltLabButton', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabQuote'],
 			woltlab: {
 				autosave: autosave
 			}
@@ -28,7 +28,9 @@
 		
 		{* WoltLab *}
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
-		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}'
+		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}', 
+		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
+		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabQuote.js?v={@LAST_UPDATE_TIME}'
 		
 		], function() {
 			WCF.System.Dependency.Manager.invoke(callbackIdentifier);
