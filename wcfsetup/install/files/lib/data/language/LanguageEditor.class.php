@@ -140,31 +140,24 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		// sort categories
 		ksort($items);
 
-		// write language file
-		$filename = FileUtil::getTemporaryFilename($this->languageCode, '.xml');
-
 		$xml = new XMLWriter();
-		$xml->beginDocument('language', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/language.xsd', array('languagecode' => $this->languageCode, 'languagename' => $this->languageName, 'countrycode' => $this->countryCode));
+		$xml->beginDocument('language', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/language.xsd', ['languagecode' => $this->languageCode, 'languagename' => $this->languageName, 'countrycode' => $this->countryCode]);
 
 		foreach ($items as $category => $categoryItems) {
 			// sort items
 			ksort($categoryItems);
 
-			$xml->startElement('category', array('name' => $category));
+			$xml->startElement('category', ['name' => $category]);
 			
 			// items
 			foreach ($categoryItems as $item => $value) {
-				$xml->writeElement('item', StringUtil::escapeCDATA($value), array('name' => $item));
+				$xml->writeElement('item', $value, ['name' => $item]);
 			}
 			
 			$xml->endElement();
 		}
 		
-		$xml->endDocument($filename);
-
-		// send language file to client
-		readfile($filename);
-		@unlink($filename);
+		echo $xml->endDocument();
 	}
 	
 	/**
