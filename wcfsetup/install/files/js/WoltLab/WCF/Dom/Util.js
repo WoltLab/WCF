@@ -95,7 +95,7 @@ define([], function() {
 		 * 
 		 * @param	{Element}		el		element
 		 * @param	{CSSStyleDeclaration=}	styles		result of window.getComputedStyle()
-		 * @return	{integer}	outer height in px
+		 * @return	{int}	                outer height in px
 		 */
 		outerHeight: function(el, styles) {
 			styles = styles || window.getComputedStyle(el);

@@ -438,19 +438,14 @@
 			</option>
 			
 			<option name="url_legacy_mode">
-				<categoryname>general.page.seo</categoryname>
+				<categoryname>hidden</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>!url_controller_replacement</enableoptions>
 			</option>
 			<option name="url_omit_index_php">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="url_controller_replacement">
-				<categoryname>general.page.seo</categoryname>
-				<optiontype>urlControllerReplacement</optiontype>
 			</option>
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>

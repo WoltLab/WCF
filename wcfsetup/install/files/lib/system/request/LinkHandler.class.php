@@ -155,10 +155,7 @@ class LinkHandler extends SingletonFactory {
 			
 			// trim to 80 characters
 			$parameters['title'] = rtrim(mb_substr($parameters['title'], 0, 80), '-');
-			
-			if (!URL_LEGACY_MODE) {
-				$parameters['title'] = mb_strtolower($parameters['title']);
-			}
+			$parameters['title'] = mb_strtolower($parameters['title']);
 			
 			// encode title
 			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);

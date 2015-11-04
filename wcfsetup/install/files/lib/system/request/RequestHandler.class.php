@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\builder\ControllerCacheBuilder;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
@@ -29,16 +28,9 @@ class RequestHandler extends SingletonFactory {
 	protected $activeRequest = null;
 	
 	/**
-	 * list of known controllers grouped by application and type
-	 * @var	array<array>
+	 * @var \wcf\system\request\ControllerMap
 	 */
-	protected $controllers = null;
-	
-	/**
-	 * list of controller aliases
-	 * @var	array<string>
-	 */
-	protected $controllerAliases = array();
+	protected $controllerMap = null;
 	
 	/**
 	 * true, if current domain mismatch any known domain
@@ -56,6 +48,8 @@ class RequestHandler extends SingletonFactory {
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
+		$this->controllerMap = new ControllerMap();
+		
 		if (isset($_SERVER['HTTP_HOST'])) {
 			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 				if ($application->domainName == $_SERVER['HTTP_HOST']) {
@@ -78,20 +72,6 @@ class RequestHandler extends SingletonFactory {
 		
 		if (class_exists('wcf\system\WCFACP', false)) {
 			$this->isACPRequest = true;
-		}
-		
-		if (PACKAGE_ID) {
-			$this->controllers = ControllerCacheBuilder::getInstance()->getData(array(
-				'environment' => ($this->isACPRequest ? 'admin' : 'user')
-			));
-			
-			if (!URL_LEGACY_MODE && URL_CONTROLLER_REPLACEMENT) {
-				$controllerAliases = explode("\n", URL_CONTROLLER_REPLACEMENT);
-				for ($i = 0, $length = count($controllerAliases); $i < $length; $i++) {
-					$tmp = explode('=', $controllerAliases[$i]);
-					$this->controllerAliases[$tmp[0]] = $tmp[1];
-				}
-			}
 		}
 	}
 	
@@ -159,14 +139,6 @@ class RequestHandler extends SingletonFactory {
 						// build URL, e.g. http://example.net/forum/
 						$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
 						
-						if (URL_LEGACY_MODE) {
-							// add path info, e.g. index.php/Board/2/
-							$pathInfo = RouteHandler::getPathInfo();
-							if (!empty($pathInfo)) {
-								$url .= 'index.php' . $pathInfo;
-							}
-						}
-						
 						// query string, e.g. ?foo=bar
 						if (!empty($_SERVER['QUERY_STRING'])) {
 							$url .= '?' . $_SERVER['QUERY_STRING'];
@@ -178,7 +150,8 @@ class RequestHandler extends SingletonFactory {
 				}
 				
 				// handle controller aliasing
-				if (empty($routeData['isImplicitController']) && !URL_LEGACY_MODE && isset($routeData['controller'])) {
+				/*
+				if (empty($routeData['isImplicitController']) && isset($routeData['controller'])) {
 					$ciController = mb_strtolower($routeData['controller']);
 					
 					// aliased controller, redirect to new URL
@@ -199,40 +172,18 @@ class RequestHandler extends SingletonFactory {
 						$routeData['controller'] = $controller;
 					}
 				}
+				*/
 			}
 			else if (empty($routeData['controller'])) {
-				$routeData['controller'] = 'Index';
+				$routeData['controller'] = 'index';
 			}
 			
 			$controller = $routeData['controller'];
 			
-			// validate class name
-			if (!preg_match('~^[a-z0-9-]+$~i', $controller)) {
-				throw new SystemException("Illegal class name '".$controller."'");
-			}
-			
-			// work-around for WCFSetup
-			if (!PACKAGE_ID) {
-				$parts = explode('-', $controller);
-				$parts = array_map(function($part) {
-					return ucfirst($part);
-				}, $parts);
-				$controller = implode('', $parts);
-			}
-			
-			// find class
-			$classData = $this->getClassData($controller, 'page', $application);
-			if ($classData === null) $classData = $this->getClassData($controller, 'form', $application);
-			if ($classData === null) $classData = $this->getClassData($controller, 'action', $application);
-			
-			if ($classData === null) {
-				throw new SystemException("unable to find class for controller '".$controller."'");
-			}
-			else if (!class_exists($classData['className'])) {
-				throw new SystemException("unable to find class '".$classData['className']."'");
-			}
+			$classData = $this->controllerMap->resolve($application, $controller, $this->isACPRequest());
 			
 			// check if controller was provided exactly as it should
+			/*
 			if (!URL_LEGACY_MODE && !$this->isACPRequest()) {
 				if (preg_match('~([A-Za-z0-9]+)(?:Action|Form|Page)$~', $classData['className'], $matches)) {
 					$realController = self::getTokenizedController($matches[1]);
@@ -242,6 +193,7 @@ class RequestHandler extends SingletonFactory {
 					}
 				}
 			}
+			*/
 			
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
@@ -302,13 +254,7 @@ class RequestHandler extends SingletonFactory {
 		// check if currently invoked application matches the landing page
 		if ($landingPageApplication == $application) {
 			$routeData['controller'] = $landingPage->getController();
-			if (!URL_LEGACY_MODE) $routeData['controller'] = self::getTokenizedController($routeData['controller']);
-			
-			// use alias if defined to prevent incorrect recognition
-			$alias = $this->getAliasByController($routeData['controller']);
-			if ($alias !== null && empty($routeData['isImplicitController'])) {
-				$routeData['controller'] = $alias;
-			}
+			$routeData['controller'] = $this->getControllerMap()->lookup($routeData['controller']);
 			
 			return;
 		}
@@ -322,71 +268,7 @@ class RequestHandler extends SingletonFactory {
 		// set default controller
 		$applicationObj = WCF::getApplicationObject(ApplicationHandler::getInstance()->getApplication($application));
 		$routeData['controller'] = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $applicationObj->getPrimaryController());
-		if (!URL_LEGACY_MODE) $routeData['controller'] = self::getTokenizedController($routeData['controller']);
-	}
-	
-	/**
-	 * Returns the class data for the active request or null if for the given
-	 * configuration no proper class exist.
-	 * 
-	 * @param	string		$controller
-	 * @param	string		$pageType
-	 * @param	string		$application
-	 * @return	array
-	 */
-	protected function getClassData($controller, $pageType, $application) {
-		$className = false;
-		if ($this->controllers !== null) {
-			$className = $this->lookupController($controller, $pageType, $application);
-			if ($className === false && $application != 'wcf') {
-				$className = $this->lookupController($controller, $pageType, 'wcf');
-			}
-		}
-		
-		// controller is either unknown or within WCFSetup
-		if ($className === false) {
-			$className = $application.'\\'.($this->isACPRequest() ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
-			if ($application != 'wcf' && !class_exists($className)) {
-				$className = 'wcf\\'.($this->isACPRequest() ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
-			}
-		}
-		
-		if (!class_exists($className)) {
-			return null;
-		}
-		
-		// check whether the class is abstract
-		$reflectionClass = new \ReflectionClass($className);
-		if ($reflectionClass->isAbstract()) {
-			return null;
-		}
-		
-		return array(
-			'className' => $className,
-			'controller' => $controller,
-			'pageType' => $pageType
-		);
-	}
-	
-	/**
-	 * Lookups a controller from the list of known controllers using a case-insensitive search.
-	 * 
-	 * @param	string		$controller
-	 * @param	string		$pageType
-	 * @param	string		$application
-	 * @return	boolean
-	 */
-	protected function lookupController($controller, $pageType, $application) {
-		if (isset($this->controllers[$application]) && isset($this->controllers[$application][$pageType])) {
-			$ciController = mb_strtolower($controller);
-			if (!URL_LEGACY_MODE || $this->isACPRequest) $ciController = str_replace('-', '', $ciController);
-			
-			if (isset($this->controllers[$application][$pageType][$ciController])) {
-				return $this->controllers[$application][$pageType][$ciController];
-			}
-		}
-		
-		return false;
+		$routeData['controller'] = $this->getControllerMap()->lookup($routeData['controller']);
 	}
 	
 	/**
@@ -417,44 +299,11 @@ class RequestHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the alias by controller or null if there is no match.
+	 * Returns the controller map instance.
 	 * 
-	 * @param	string		$controller
-	 * @return	string
+	 * @return      \wcf\system\request\ControllerMap
 	 */
-	public function getAliasByController($controller) {
-		if (isset($this->controllerAliases[$controller])) {
-			return $this->controllerAliases[$controller];
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Returns the controller by alias or null if there is no match.
-	 * 
-	 * @param	string		$alias
-	 * @return	string
-	 */
-	public function getControllerByAlias($alias) {
-		$controller = array_search($alias, $this->controllerAliases);
-		if ($controller !== false) {
-			return $controller;
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Returns the tokenized controller name, e.g. BoardList -> board-list.
-	 * 
-	 * @param	string		controller
-	 * @return	string
-	 */
-	public static function getTokenizedController($controller) {
-		$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-		$parts = array_map('strtolower', $parts);
-		
-		return implode('-', $parts);
+	public function getControllerMap() {
+		return $this->controllerMap;
 	}
 }
