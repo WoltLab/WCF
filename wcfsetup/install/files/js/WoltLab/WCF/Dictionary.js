@@ -23,8 +23,8 @@ define([], function() {
 		/**
 		 * Sets a new key with given value, will overwrite an existing key.
 		 * 
-		 * @param	{string}	key	key
-		 * @param	{*}		value	value
+		 * @param	{(number|string)}	key	key
+		 * @param	{?}		        value	value
 		 */
 		set: function(key, value) {
 			if (typeof key === 'number') key = key.toString();
@@ -40,7 +40,7 @@ define([], function() {
 		/**
 		 * Removes a key from the dictionary.
 		 * 
-		 * @param	{string}	key	key
+		 * @param	{(number|string)}	key	key
 		 */
 		'delete': function(key) {
 			if (typeof key === 'number') key = key.toString();
@@ -52,7 +52,7 @@ define([], function() {
 		/**
 		 * Returns true if dictionary contains a value for given key and is not undefined.
 		 * 
-		 * @param	{string}	key	key
+		 * @param	{(number|string)}	key	key
 		 * @return	{boolean}	true if key exists and value is not undefined
 		 */
 		has: function(key) {
@@ -67,7 +67,7 @@ define([], function() {
 		/**
 		 * Retrieves a value by key, returns undefined if there is no match.
 		 * 
-		 * @param	{string}	key	key
+		 * @param	{(number|string)}	key	key
 		 * @return	{*}
 		 */
 		get: function(key) {
