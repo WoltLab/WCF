@@ -10,43 +10,40 @@ define(
 	[
 		'Ajax',         'Core',            'Dictionary',        'Environment',
 		'EventHandler', 'Language',        'ObjectMap',         'Dom/Traverse',
-		'Dom/Util',     'Ui/Notification', 'Ui/SimpleDropdown'
+		'Dom/Util',     'Ui/Notification', 'Ui/ReusableDropdown'
 	],
 	function(
 		Ajax,            Core,              Dictionary,          Environment,
 		EventHandler,    Language,          ObjectMap,           DomTraverse,
-		DomUtil,         UiNotification,    UiSimpleDropdown
+		DomUtil,         UiNotification,    UiReusableDropdown
 	)
 {
 	"use strict";
 	
-	var _activeElement = null;
-	var _dropdownMenus = new Dictionary();
-	var _elements = new ObjectMap();
-	var _options = {};
-	
 	/**
-	 * @exports	WoltLab/WCF/Ui/Message/InlineEditor
+	 * @constructor
 	 */
-	var UiMessageInlineEditor = {
+	function UiMessageInlineEditor(options) { this.init(options); }
+	UiMessageInlineEditor.prototype = {
 		/**
 		 * Initializes the message inline editor.
 		 * 
-		 * @param	{object<mixed>}		options		list of configuration options
+		 * @param	{Object<string, *>}		options		list of configuration options
 		 */
 		init: function(options) {
-			_options = Core.extend({
+			this._activeElement = null;
+			this._dropdownMenu = null;
+			this._elements = new ObjectMap();
+			this._options = Core.extend({
 				canEditInline: false,
 				extendedForm: true,
 				
 				className: '',
 				containerId: 0,
+				dropdownIdentifier: '',
 				editorPrefix: 'messageEditor',
 				
-				messageSelector: '.jsMessage',
-				
-				callbackDropdownInit: null,
-				callbackDropdownOpen: null
+				messageSelector: '.jsMessage'
 			}, options);
 			
 			this._initElements();
@@ -54,21 +51,25 @@ define(
 		
 		/**
 		 * Initializes each applicable message.
+		 * 
+		 * @protected
 		 */
 		_initElements: function() {
-			var button, canEdit, element, elements = elBySelAll(_options.messageSelector);
+			var button, canEdit, element, elements = elBySelAll(this._options.messageSelector);
+			
 			for (var i = 0, length = elements.length; i < length; i++) {
 				element = elements[i];
-				if (_elements.has(element)) {
+				if (this._elements.has(element)) {
 					continue;
 				}
 				
 				button = elBySel('.jsMessageEditButton', element);
 				if (button !== null) {
-					canEdit = elAttrBool(element, 'data-can-edit');
+					canEdit = elDataBool(element, 'can-edit');
 					
-					if (_options.canEditInline) {
+					if (this._options.canEditInline) {
 						button.addEventListener('click', this._clickDropdown.bind(this, element));
+						button.classList.add('jsDropdownEnabled');
 						
 						if (canEdit) {
 							button.addEventListener('dblclick', this._click.bind(this, element));
@@ -79,11 +80,11 @@ define(
 					}
 				}
 				
-				
 				var messageBody = elBySel('.messageBody', element);
 				var messageFooter = elBySel('.messageFooter', element);
 				
-				_elements.set(element, {
+				this._elements.set(element, {
+					button: button,
 					messageBody: messageBody,
 					messageBodyEditor: null,
 					messageFooter: messageFooter,
@@ -97,20 +98,21 @@ define(
 		 * Handles clicks on the edit button or the edit dropdown item.
 		 * 
 		 * @param	{Element}	element		message element
-		 * @param	{?object}	event		event object
+		 * @param	{?Event}	event		event object
+		 * @protected
 		 */
 		_click: function(element, event) {
 			if (event !== null) event.preventDefault();
 			
-			if (_activeElement === null) {
-				_activeElement = element;
+			if (this._activeElement === null) {
+				this._activeElement = element;
 				
 				this._prepare();
 				
 				Ajax.api(this, {
 					actionName: 'beginEdit',
 					parameters: {
-						containerID: _options.containerId,
+						containerID: this._options.containerId,
 						objectID: this._getObjectId(element)
 					}
 				});
@@ -124,7 +126,8 @@ define(
 		 * Creates and opens the dropdown on first usage.
 		 * 
 		 * @param	{Element}	element		message element
-		 * @param	{object}	event		event object
+		 * @param	{Object}	event		event object
+		 * @protected
 		 */
 		_clickDropdown: function(element, event) {
 			event.preventDefault();
@@ -134,98 +137,169 @@ define(
 				return;
 			}
 			
-			// build dropdown
 			button.classList.add('dropdownToggle');
 			button.parentNode.classList.add('dropdown');
+			(function(button, element) {
+				button.addEventListener('click', (function(event) {
+					event.preventDefault();
+					event.stopPropagation();
+					
+					this._activeElement = element;
+					UiReusableDropdown.toggleDropdown(this._options.dropdownIdentifier, button);
+				}).bind(this));
+			}).bind(this)(button, element);
 			
-			var dropdownMenu = elCreate('ul');
-			dropdownMenu.className = 'dropdownMenu';
+			// build dropdown
+			if (this._dropdownMenu === null) {
+				this._dropdownMenu = elCreate('ul');
+				this._dropdownMenu.className = 'dropdownMenu';
+				
+				var items = this._dropdownGetItems();
+				
+				EventHandler.fire('com.woltlab.wcf.inlineEditor', 'dropdownInit_' + this._options.dropdownIdentifier, {
+					items: items
+				});
+				
+				this._dropdownBuild(items);
+				
+				UiReusableDropdown.init(this._options.dropdownIdentifier, this._dropdownMenu);
+				UiReusableDropdown.registerCallback(this._options.dropdownIdentifier, this._dropdownToggle.bind(this));
+			}
 			
-			var items = _options.callbackDropdownInit(element, dropdownMenu);
-			if (items !== null) this._dropdownBuild(element, dropdownMenu, items);
-			
-			DomUtil.insertAfter(dropdownMenu, button);
-			
-			_dropdownMenus.set(this._getObjectId(element), dropdownMenu);
-			
-			UiSimpleDropdown.init(button, true);
-			
-			var id = DomUtil.identify(button.parentNode);
-			UiSimpleDropdown.registerCallback(id, this._dropdownToggle.bind(this, element));
+			setTimeout(function() {
+				Core.triggerEvent(button, 'click');
+			}, 10);
 		},
 		
 		/**
 		 * Creates the dropdown menu on first usage.
 		 * 
-		 * @param	{Element}		element		message element
-		 * @param	{Element}		dropdownMenu	dropdown menu
-		 * @param	{array<object>}		items		list of dropdown items
+		 * @param	{Object}        items   list of dropdown items
+		 * @protected
 		 */
-		_dropdownBuild: function(element, dropdownMenu, items) {
+		_dropdownBuild: function(items) {
 			var item, label, listItem;
-			var callbackClick = this._clickDropdownItem.bind(this, element);
+			var callbackClick = this._clickDropdownItem.bind(this);
 			
 			for (var i = 0, length = items.length; i < length; i++) {
 				item = items[i];
 				listItem = elCreate('li');
+				elData(listItem, 'item', item.item);
 				
-				if (item.special === 'divider') {
+				if (item.item === 'divider') {
 					listItem.className = 'dropdownDivider';
 				}
 				else {
-					elData(listItem, 'action', item.action);
 					label = elCreate('span');
 					label.textContent = Language.get(item.label);
 					listItem.appendChild(label);
 					
-					if (item.special === 'edit') {
-						listItem.addEventListener('click', this._click.bind(this, element));
+					if (item.action === 'editItem') {
+						listItem.addEventListener('click', this._click.bind(this));
 					}
 					else {
 						listItem.addEventListener('click', callbackClick);
 					}
-					
-					if (item.visible === false) {
-						elHide(listItem);
-					}
 				}
 				
-				dropdownMenu.appendChild(listItem);
+				this._dropdownMenu.appendChild(listItem);
 			}
 		},
 		
 		/**
 		 * Callback for dropdown toggle.
 		 * 
-		 * @param	{Element}	element		message element
-		 * @param	{integer}	containerId	container id
+		 * @param	{int}           containerId	container id
 		 * @param	{string}	action		toggle action, either 'open' or 'close'
+		 * @protected
 		 */
-		_dropdownToggle: function(element, containerId, action) {
-			_elements.get(element).messageFooterButtons.classList[(action === 'open' ? 'add' : 'remove')]('forceVisible');
+		_dropdownToggle: function(containerId, action) {
+			var elementData = this._elements.get(this._activeElement);
+			elementData.button.parentNode.classList[(action === 'open' ? 'add' : 'remove')]('dropdownOpen');
+			elementData.messageFooterButtons.classList[(action === 'open' ? 'add' : 'remove')]('forceVisible');
 			
-			if (action === 'open' && typeof _options.callbackDropdownOpen === 'function') {
-				_options.callbackDropdownOpen(element, this._getObjectId(element));
+			if (action === 'open') {
+				var visibility = this._dropdownOpen();
+				
+				EventHandler.fire('com.woltlab.wcf.inlineEditor', 'dropdownOpen_' + this._options.dropdownIdentifier, {
+					element: this._activeElement,
+					visibility: visibility
+				});
+				
+				var item, listItem, visiblePredecessor = false;
+				for (var i = 0; i < this._dropdownMenu.childElementCount; i++) {
+					listItem = this._dropdownMenu.children[i];
+					item = elData(listItem, 'item');
+					
+					if (item === 'divider') {
+						if (visiblePredecessor) {
+							elShow(listItem);
+							
+							visiblePredecessor = false;
+						}
+						else {
+							elHide(listItem);
+						}
+					}
+					else {
+						if (visibility.hasOwnProperty(item) && visibility[item] === false) {
+							elHide(listItem);
+						}
+						else {
+							elShow(listItem);
+							
+							visiblePredecessor = true;
+						}
+					}
+				}
 			}
 		},
 		
 		/**
+		 * Returns the list of dropdown items for this type.
+		 * 
+		 * @return      {Array<Object>}         list of objects containing the type name and label
+		 * @protected
+		 */
+		_dropdownGetItems: function() {},
+		
+		/**
+		 * Invoked once the dropdown for this type is shown, expects a list of type name and a boolean value
+		 * to represent the visibility of each item. Items that do not appear in this list will be considered
+		 * visible.
+		 * 
+		 * @return      {Object<string, boolean>}
+		 * @protected
+		 */
+		_dropdownOpen: function() {},
+		
+		/**
+		 * Invoked whenever the user selects an item from the dropdown menu, the selected item is passed as argument.
+		 * 
+		 * @param       {string}        item    selected dropdown item
+		 * @protected
+		 */
+		_dropdownSelect: function(item) {},
+		
+		/**
 		 * Handles clicks on a dropdown item.
 		 * 
-		 * @param	{Element}	element		message element
-		 * @param	{object}	event		event object
+		 * @param	{Event}         event   event object
+		 * @protected
 		 */
-		_clickDropdownItem: function(element, event) {
+		_clickDropdownItem: function(event) {
 			event.preventDefault();
 			
-			_options.callbackDropdownSelect(element, this._getObjectId(element), elAttr(event.currentTarget, 'data-class-name'));
+			this._dropdownSelect(elData(event.currentTarget, 'item'));
 		},
 		
 		/**
 		 * Prepares the message for editor display.
+		 * 
+		 * @protected
 		 */
 		_prepare: function() {
-			var data = _elements.get(_activeElement);
+			var data = this._elements.get(this._activeElement);
 			
 			var messageBodyEditor = elCreate('div');
 			messageBodyEditor.className = 'messageBody editor';
@@ -243,13 +317,14 @@ define(
 		/**
 		 * Shows the message editor.
 		 * 
-		 * @param	{object}	data		ajax response data
+		 * @param	{Object}	data		ajax response data
+		 * @protected
 		 */
 		_showEditor: function(data) {
 			var id = this._getEditorId();
-			var elementData = _elements.get(_activeElement);
+			var elementData = this._elements.get(this._activeElement);
 			
-			_activeElement.classList.add('jsInvalidQuoteTarget');
+			this._activeElement.classList.add('jsInvalidQuoteTarget');
 			var icon = DomTraverse.childByClass(elementData.messageBodyEditor, 'icon');
 			icon.parentNode.removeChild(icon);
 			
@@ -265,7 +340,7 @@ define(
 			var buttonSave = elBySel('button[data-type="save"]', formSubmit);
 			buttonSave.addEventListener('click', this._save.bind(this));
 			
-			if (_options.extendedForm) {
+			if (this._options.extendedForm) {
 				var buttonExtended = elBySel('button[data-type="extended"]', formSubmit);
 				buttonExtended.addEventListener('click', this._prepareExtended.bind(this));
 			}
@@ -291,7 +366,7 @@ define(
 					}
 					
 					// TODO
-					new WCF.Effect.Scroll().scrollTo(_activeElement, true);
+					new WCF.Effect.Scroll().scrollTo(this._activeElement, true);
 				}).bind(this), 250);
 			}
 			else {
@@ -301,9 +376,11 @@ define(
 		
 		/**
 		 * Restores the message view.
+		 * 
+		 * @protected
 		 */
 		_restoreMessage: function() {
-			var elementData = _elements.get(_activeElement);
+			var elementData = this._elements.get(this._activeElement);
 			
 			this._destroyEditor();
 			
@@ -312,9 +389,9 @@ define(
 			
 			elShow(elementData.messageBody);
 			elShow(elementData.messageFooter);
-			_activeElement.classList.remove('jsInvalidQuoteTarget');
+			this._activeElement.classList.remove('jsInvalidQuoteTarget');
 			
-			_activeElement = null;
+			this._activeElement = null;
 			
 			// @TODO
 			if (this._quoteManager) {
@@ -324,10 +401,12 @@ define(
 		
 		/**
 		 * Saves the editor message.
+		 * 
+		 * @protected
 		 */
 		_save: function() {
 			var parameters = {
-				containerID: _options.containerId,
+				containerID: this._options.containerId,
 				data: {
 					message: ''
 				},
@@ -350,10 +429,11 @@ define(
 		/**
 		 * Shows the update message.
 		 * 
-		 * @param	{object}	data		ajax response data
+		 * @param	{Object}	data		ajax response data
+		 * @protected
 		 */
 		_showMessage: function(data) {
-			var elementData = _elements.get(_activeElement);
+			var elementData = this._elements.get(this._activeElement);
 			var attachmentLists = elBySelAll('.attachmentThumbnailList, .attachmentFileList', elementData.messageBody);
 			
 			// set new content
@@ -390,12 +470,14 @@ define(
 		
 		/**
 		 * Initiates the jump to the extended edit form.
+		 * 
+		 * @protected
 		 */
 		_prepareExtended: function() {
 			var data = {
 				actionName: 'jumpToExtended',
 				parameters: {
-					containerID: _options.containerId,
+					containerID: this._options.containerId,
 					message: '',
 					messageID: this._getObjectId()
 				}
@@ -409,9 +491,11 @@ define(
 		
 		/**
 		 * Hides the editor from view.
+		 * 
+		 * @protected
 		 */
 		_hideEditor: function() {
-			var elementData = _elements.get(_activeElement);
+			var elementData = this._elements.get(this._activeElement);
 			elHide(DomTraverse.childByClass(elementData.messageBodyEditor, 'editorContainer'));
 			
 			var icon = elCreate('span');
@@ -421,9 +505,11 @@ define(
 		
 		/**
 		 * Restores the previously hidden editor.
+		 * 
+		 * @protected
 		 */
 		_restoreEditor: function() {
-			var elementData = _elements.get(_activeElement);
+			var elementData = this._elements.get(this._activeElement);
 			var icon = elBySel('.fa-spinner', elementData.messageBodyEditor);
 			elRemove(icon);
 			console.debug(icon);
@@ -432,6 +518,8 @@ define(
 		
 		/**
 		 * Destroys the editor instance.
+		 * 
+		 * @protected
 		 */
 		_destroyEditor: function() {
 			EventHandler.fire('com.woltlab.wcf.redactor', 'destroy_' + this._getEditorId());
@@ -440,8 +528,9 @@ define(
 		/**
 		 * Returns the hash added to the url after successfully editing a message.
 		 * 
-		 * @param	{integer}	objectId	message object id
+		 * @param	{int}   objectId        message object id
 		 * @return	string
+		 * @protected
 		 */
 		_getHash: function(objectId) {
 			return '#message' + objectId;
@@ -451,7 +540,8 @@ define(
 		 * Updates the history to avoid old content when going back in the browser
 		 * history.
 		 * 
-		 * @param	hash
+		 * @param	{string}        hash    location hash
+		 * @protected
 		 */
 		_updateHistory: function(hash) {
 			window.location.hash = hash;
@@ -461,19 +551,21 @@ define(
 		 * Returns the unique editor id.
 		 * 
 		 * @return	{string}	editor id
+		 * @protected
 		 */
 		_getEditorId: function() {
-			return _options.editorPrefix + this._getObjectId();
+			return this._options.editorPrefix + this._getObjectId();
 		},
 		
 		/**
 		 * Returns the element's `data-object-id` value.
 		 * 
-		 * @param	{Element=}	element		target element, `_activeElement` if empty
-		 * @return	{integer}
+		 * @param	{Element=}	element		target element, `this._activeElement` if empty
+		 * @return	{int}
+		 * @protected
 		 */
 		_getObjectId: function(element) {
-			return ~~elAttr(element || _activeElement, 'data-object-id');
+			return ~~elData(element || this._activeElement, 'object-id');
 		},
 		
 		_ajaxFailure: function(data) {
@@ -483,7 +575,7 @@ define(
 				return true;
 			}
 			
-			var elementData = _elements.get(_activeElement);
+			var elementData = this._elements.get(this._activeElement);
 			var innerError = elBySel('.innerError', elementData.messageBodyEditor);
 			if (innerError === null) {
 				innerError = elCreate('small');
@@ -518,17 +610,17 @@ define(
 		_ajaxSetup: function() {
 			return {
 				data: {
-					className: _options.className,
+					className: this._options.className,
 					interfaceName: 'wcf\\data\\IMessageInlineEditorAction'
 				}
 			};
 		},
 		
 		/** @deprecated	2.2 - used only for backward compatibility with `WCF.Message.InlineEditor` */
-		legacyGetDropdownMenus: function() { return _dropdownMenus; },
+		legacyGetDropdownMenus: function() { return this._dropdownMenus; },
 		
 		/** @deprecated	2.2 - used only for backward compatibility with `WCF.Message.InlineEditor` */
-		legacyGetElements: function() { return _elements; },
+		legacyGetElements: function() { return this._elements; },
 		
 		/** @deprecated	2.2 - used only for backward compatibility with `WCF.Message.InlineEditor` */
 		legacyEdit: function(containerId) {

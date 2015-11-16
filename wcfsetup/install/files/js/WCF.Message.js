@@ -1224,7 +1224,7 @@ WCF.Message.InlineEditor = Class.extend({
 	
 	/**
 	 * container id
-	 * @var	integer
+	 * @var	int
 	 */
 	_containerID: 0,
 	
@@ -1264,8 +1264,7 @@ WCF.Message.InlineEditor = Class.extend({
 				
 				messageSelector: this._messageContainerSelector,
 				
-				callbackDropdownInit: this._callbackDropdownInit.bind(this),
-				callbackLegacyInitElements: this._callbackInitElements.bind(this)
+				callbackDropdownInit: this._callbackDropdownInit.bind(this)
 			});
 		}).bind(this));
 	},
