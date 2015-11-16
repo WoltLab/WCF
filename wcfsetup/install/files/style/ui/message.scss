@@ -167,6 +167,18 @@
 	&.forceVisible {
 		opacity: 1 !important;
 	}
+	
+	> li {
+		display: flex;
+		
+		> a {
+			align-items: center;
+		}
+	}
+	
+	.icon + span:not(.invisible)  {
+		margin-left: 5px;
+	}
 }
 
 .message:hover {

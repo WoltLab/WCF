@@ -2,12 +2,11 @@
 	background-color: $wcfTooltipBackground;
 	color: $wcfTooltipText;
 	max-width: 300px;
-	opacity: 0;
 	padding: 5px 10px;
 	pointer-events: none;
 	position: absolute;
 	top: 0;
-	transition: visibility 0s linear .2s, opacity .2s linear .2s;
+	transition: visibility 0s linear .2s;
 	visibility: hidden;
 	z-index: 800;
 	
@@ -26,7 +25,6 @@
 	@include boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
 	
 	&.active {
-		opacity: 1;
 		visibility: visible;
 		
 		transition-delay: 0s;
