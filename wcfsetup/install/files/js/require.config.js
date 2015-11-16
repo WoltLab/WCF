@@ -32,6 +32,7 @@ requirejs.config({
 			'Ui/Confirmation': 'WoltLab/WCF/Ui/Confirmation',
 			'Ui/Dialog': 'WoltLab/WCF/Ui/Dialog',
 			'Ui/Notification': 'WoltLab/WCF/Ui/Notification',
+			'Ui/ReusableDropdown': 'WoltLab/WCF/Ui/Dropdown/Reusable',
 			'Ui/SimpleDropdown': 'WoltLab/WCF/Ui/Dropdown/Simple',
 			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu'
 		}

@@ -22,7 +22,7 @@ define(
 	/**
 	 * @exports	WoltLab/WCF/Ui/Dropdown/Simple
 	 */
-	var SimpleDropdown = {
+	return {
 		/**
 		 * Performs initial setup such as setting up dropdowns and binding listeners.
 		 */
@@ -65,7 +65,7 @@ define(
 		init: function(button, isLazyInitialization) {
 			this.setup();
 			
-			if (button.classList.contains('jsDropdownEnabled') || elAttr(button, 'data-target')) {
+			if (button.classList.contains('jsDropdownEnabled') || elData(button, 'target')) {
 				return false;
 			}
 			
@@ -91,11 +91,11 @@ define(
 				_menus.set(containerId, menu);
 				
 				if (!containerId.match(/^wcf\d+$/)) {
-					elAttr(menu, 'data-source', containerId);
+					elData(menu, 'source', containerId);
 				}
 			}
 			
-			elAttr(button, 'data-target', containerId);
+			elData(button, 'target', containerId);
 			
 			if (isLazyInitialization) {
 				setTimeout(function() { Core.triggerEvent(button, 'click'); }, 10);
@@ -111,11 +111,11 @@ define(
 		initFragment: function(dropdown, menu) {
 			this.setup();
 			
-			if (_dropdowns.has(dropdown)) {
+			var containerId = DomUtil.identify(dropdown);
+			if (_dropdowns.has(containerId)) {
 				return;
 			}
 			
-			var containerId = DomUtil.identify(dropdown);
 			_dropdowns.set(containerId, dropdown);
 			_menuContainer.appendChild(menu);
 			
@@ -153,29 +153,30 @@ define(
 		/**
 		 * Toggles the requested dropdown between opened and closed.
 		 * 
-		 * @param	{string}	containerId	dropdown wrapper id
+		 * @param	{string}	containerId	        dropdown wrapper id
+		 * @param       {Element=}      referenceElement        alternative reference element, used for reusable dropdown menus
 		 */
-		toggleDropdown: function(containerId) {
-			this._toggle(null, containerId);
+		toggleDropdown: function(containerId, referenceElement) {
+			this._toggle(null, containerId, referenceElement);
 		},
 		
 		/**
 		 * Calculates and sets the alignment of given dropdown.
 		 * 
-		 * @param	{Element}	dropdown	dropdown wrapper element
-		 * @param	{Element}	dropdownMenu	menu list element
+		 * @param	{Element}	dropdown	        dropdown wrapper element
+		 * @param	{Element}	dropdownMenu	        menu list element
+		 * @param       {Element=}      alternateElement        alternative reference element for alignment
 		 */
-		setAlignment: function(dropdown, dropdownMenu) {
+		setAlignment: function(dropdown, dropdownMenu, alternateElement) {
 			// check if button belongs to an i18n textarea
-			var button = elBySel('.dropdownToggle', dropdown);
-			var refDimensionsElement = null;
+			var button = elBySel('.dropdownToggle', dropdown), refDimensionsElement;
 			if (button !== null && button.classList.contains('dropdownCaptionTextarea')) {
 				refDimensionsElement = button;
 			}
 			
-			UiAlignment.set(dropdownMenu, dropdown, {
+			UiAlignment.set(dropdownMenu, alternateElement || dropdown, {
 				pointerClassNames: ['dropdownArrowBottom', 'dropdownArrowRight'],
-				refDimensionsElement: refDimensionsElement
+				refDimensionsElement: refDimensionsElement || null
 			});
 		},
 		
@@ -203,11 +204,7 @@ define(
 		 */
 		isOpen: function(containerId) {
 			var menu = _menus.get(containerId);
-			if (menu !== undefined && menu.classList.contains('dropdownOpen')) {
-				return true;
-			}
-			
-			return false;
+			return (menu !== undefined && menu.classList.contains('dropdownOpen'));
 		},
 		
 		/**
@@ -314,7 +311,7 @@ define(
 		 */
 		_onScroll: function() {
 			_dropdowns.forEach((function(dropdown, containerId) {
-				if (elAttr(dropdown, 'data-is-overlay-dropdown-button') === true && dropdown.classList.contains('dropdownOpen')) {
+				if (elData(dropdown, 'is-overlay-dropdown-button') === true && dropdown.classList.contains('dropdownOpen')) {
 					this.setAlignment(dropdown, _menus.get(containerId));
 				}
 			}).bind(this));
@@ -335,24 +332,25 @@ define(
 		/**
 		 * Toggles the dropdown's state between open and close.
 		 * 
-		 * @param	{?Event}	event		event object, should be 'null' if targetId is given
-		 * @param	{string=}	targetId	dropdown wrapper id
+		 * @param	{?Event}	event		        event object, should be 'null' if targetId is given
+		 * @param	{string=}	targetId	        dropdown wrapper id
+		 * @param       {Element=}      alternateElement        alternative reference element for alignment
 		 * @return	{boolean}	'false' if event is not null
 		 */
-		_toggle: function(event, targetId) {
+		_toggle: function(event, targetId, alternateElement) {
 			if (event !== null) {
 				event.preventDefault();
 				event.stopPropagation();
 				
-				targetId = elAttr(event.currentTarget, 'data-target');
+				targetId = elData(event.currentTarget, 'target');
 			}
 			
 			// check if 'isOverlayDropdownButton' is set which indicates if
 			// the dropdown toggle is in an overlay
 			var dropdown = _dropdowns.get(targetId);
-			if (dropdown !== undefined && elAttr(dropdown, 'data-is-overlay-dropdown-button') === null) {
+			if (dropdown !== undefined && elData(dropdown, 'is-overlay-dropdown-button') === null) {
 				var dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
-				elAttr(dropdown, 'data-is-overlay-dropdown-button', (dialogContent !== null));
+				elData(dropdown, 'is-overlay-dropdown-button', (dialogContent !== null));
 				
 				if (dialogContent !== null) {
 					dialogContent.addEventListener('scroll', this._onDialogScroll.bind(this));
@@ -375,7 +373,7 @@ define(
 					
 					this._notifyCallbacks(containerId, 'open');
 					
-					this.setAlignment(dropdown, menu);
+					this.setAlignment(dropdown, menu, alternateElement);
 				}
 			}).bind(this));
 			
@@ -385,6 +383,4 @@ define(
 			return (event === null);
 		}
 	};
-	
-	return SimpleDropdown;
 });
