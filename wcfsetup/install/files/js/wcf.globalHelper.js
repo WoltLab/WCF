@@ -11,7 +11,7 @@
 	 * 
 	 * @param	{Element}	element		target element
 	 * @param	{string}	attribute	attribute name
-	 * @param	{mixed=}	value		attribute value, omit if attribute should be read
+	 * @param	{?=}            value		attribute value, omit if attribute should be read
 	 * @return	{(string|undefined)}		attribute value, empty string if attribute is not set or undefined if `value` was omitted
 	 */
 	window.elAttr = function(element, attribute, value) {
@@ -104,7 +104,7 @@
 	 * 
 	 * @param	{Element}	element		target element
 	 * @param	{string}	attribute	attribute name
-	 * @param	{mixed=}	value		attribute value, omit if attribute should be read
+	 * @param	{?=}            value		attribute value, omit if attribute should be read
 	 * @return	{(string|undefined)}		attribute value, empty string if attribute is not set or undefined if `value` was omitted
 	 */
 	window.elData = function(element, attribute, value) {
@@ -136,7 +136,7 @@
 	 * @param	{Element}	element		DOM element
 	 */
 	window.elHide = function(element) {
-		element.style.setProperty('display', 'none');
+		element.style.setProperty('display', 'none', '');
 	};
 	
 	/**
