@@ -30,6 +30,7 @@ class ControllerMap {
 	 * @param       string          $controller     url controller
 	 * @param       boolean         $isAcpRequest   true if this is an ACP request
 	 * @return      array<string>   className, controller and pageType
+	 * @throws      SystemException
 	 */
 	public function resolve($application, $controller, $isAcpRequest) {
 		// validate controller

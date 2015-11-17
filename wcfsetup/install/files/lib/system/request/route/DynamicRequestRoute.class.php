@@ -1,34 +1,33 @@
 <?php
-namespace wcf\system\request;
+namespace wcf\system\request\route;
+
 use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\PageMenu;
+use wcf\system\request\RequestHandler;
+use wcf\system\request\RouteHandler;
 
-/**
- * Flexible route implementation to resolve HTTP requests.
- * 
- * Inspired by routing mechanism used by ASP.NET MVC and released under the terms of
- * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.request
- * @category	Community Framework
- * @deprecated  2.2:2.3 Consider using \wcf\system\request\route\DynamicRequestRoute
- */
-class FlexibleRoute implements IRoute {
+class DynamicRequestRoute implements IRequestRoute {
+	/**
+	 * @var \wcf\system\application\ApplicationHandler
+	 */
+	protected $applicationHandler;
+	
 	/**
 	 * schema for outgoing links
 	 * @var	array<array>
 	 */
-	protected $buildSchema = array();
+	protected $buildSchema = [];
 	
 	/**
 	 * route is restricted to ACP
 	 * @var	boolean
 	 */
 	protected $isACP = false;
+	
+	/**
+	 * @var \wcf\system\menu\page\PageMenu;
+	 */
+	protected $pageMenu;
 	
 	/**
 	 * pattern for incoming requests
@@ -43,26 +42,49 @@ class FlexibleRoute implements IRoute {
 	protected $primaryApplication = '';
 	
 	/**
+	 * @var \wcf\system\request\RequestHandler
+	 */
+	protected $requestHandler;
+	
+	/**
 	 * list of required components
 	 * @var	array<string>
 	 */
-	protected $requireComponents = array();
+	protected $requireComponents = [];
 	
 	/**
 	 * parsed request data
 	 * @var	array<mixed>
 	 */
-	protected $routeData = array();
+	protected $routeData = [];
 	
 	/**
-	 * Creates a new flexible route instace.
-	 * 
-	 * @param	boolean		$isACP
+	 * @var \wcf\system\request\RouteHandler;
 	 */
-	public function __construct($isACP) {
-		$this->isACP = $isACP;
+	protected $routeHandler;
+	
+	/**
+	 * DynamicRequestRoute constructor.
+	 * 
+	 * @param       \wcf\system\application\ApplicationHandler      $applicationHandler
+	 * @param       \wcf\system\menu\page\PageMenu                  $pageMenu
+	 * @param       \wcf\system\request\RequestHandler              $requestHandler
+	 * @param       \wcf\system\request\RouteHandler                $routeHandler
+	 */
+	public function __construct(ApplicationHandler $applicationHandler, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
+		$this->applicationHandler = $applicationHandler;
+		$this->pageMenu = $pageMenu;
+		$this->requestHandler = $requestHandler;
+		$this->routeHandler = $routeHandler;
 		
-		$this->pattern = '~
+		$this->init();
+	}
+	
+	/**
+	 * Sets default routing information.
+	 */
+	protected function init() {
+		$this->setPattern('~
 			/?
 			(?:
 				(?P<controller>[A-Za-z0-9\-]+)
@@ -75,21 +97,28 @@ class FlexibleRoute implements IRoute {
 					)?
 				)?
 			)?
-		~x';
+		~x');
 		$this->setBuildSchema('/{controller}/{id}-{title}/');
 	}
 	
 	/**
+	 * {@inheritdoc}
+	 */
+	public function setIsACP($isACP) {
+		$this->isACP = $isACP;
+	}
+	
+	/**
 	 * Sets the build schema used to build outgoing links.
-	 * 
+	 *
 	 * @param	string		$buildSchema
 	 */
 	public function setBuildSchema($buildSchema) {
-		$this->buildSchema = array();
+		$this->buildSchema = [];
 		
 		$buildSchema = ltrim($buildSchema, '/');
 		$components = preg_split('~({(?:[a-z]+)})~', $buildSchema, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-		$delimiters = array('/', '-', '.', '_');
+		$delimiters = ['/', '-', '.', '_'];
 		
 		foreach ($components as $component) {
 			$type = 'component';
@@ -100,16 +129,16 @@ class FlexibleRoute implements IRoute {
 				$type = 'separator';
 			}
 			
-			$this->buildSchema[] = array(
+			$this->buildSchema[] = [
 				'type' => $type,
 				'value' => $component
-			);
+			];
 		}
 	}
 	
 	/**
 	 * Sets the route pattern used to evaluate an incoming request.
-	 * 
+	 *
 	 * @param	string		$pattern
 	 */
 	public function setPattern($pattern) {
@@ -118,7 +147,7 @@ class FlexibleRoute implements IRoute {
 	
 	/**
 	 * Sets the list of required components.
-	 * 
+	 *
 	 * @param	array<string>	$requiredComponents
 	 */
 	public function setRequiredComponents(array $requiredComponents) {
@@ -126,7 +155,7 @@ class FlexibleRoute implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::buildLink()
+	 * @see	IRoute::buildLink()
 	 */
 	public function buildLink(array $components) {
 		$application = (isset($components['application'])) ? $components['application'] : null;
@@ -181,7 +210,7 @@ class FlexibleRoute implements IRoute {
 	/**
 	 * Builds the actual link, the parameter $useBuildSchema can be set to false for
 	 * empty routes, e.g. for the default page.
-	 * 
+	 *
 	 * @param	array		$components
 	 * @param	string		$application
 	 * @param	boolean		$useBuildSchema
@@ -247,7 +276,7 @@ class FlexibleRoute implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::canHandle()
+	 * @see	IRoute::canHandle()
 	 */
 	public function canHandle(array $components) {
 		if (!empty($this->requireComponents)) {
@@ -266,21 +295,21 @@ class FlexibleRoute implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::getRouteData()
+	 * @see	IRoute::getRouteData()
 	 */
 	public function getRouteData() {
 		return $this->routeData;
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::isACP()
+	 * @see	IRoute::isACP()
 	 */
 	public function isACP() {
 		return $this->isACP;
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::matches()
+	 * @see	IRoute::matches()
 	 */
 	public function matches($requestURL) {
 		if (preg_match($this->pattern, $requestURL, $matches)) {
@@ -300,7 +329,7 @@ class FlexibleRoute implements IRoute {
 	
 	/**
 	 * Returns the transformed controller name.
-	 * 
+	 *
 	 * @param	string		$application
 	 * @param	string		$controller
 	 * @return	string

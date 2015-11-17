@@ -11,13 +11,14 @@ use wcf\system\exception\SystemException;
  * @package	com.woltlab.wcf
  * @subpackage	system
  * @category	Community Framework
+ * @deprecated  2.2
  */
 abstract class SingletonFactory {
 	/**
 	 * Singletons do not support a public constructor. Override init() if
 	 * your class needs to initialize components on creation.
 	 */
-	public final function __construct() {
+	public function __construct() {
 		$this->init();
 	}
 	

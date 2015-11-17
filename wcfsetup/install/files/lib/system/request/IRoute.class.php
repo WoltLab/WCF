@@ -10,6 +10,7 @@ namespace wcf\system\request;
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
+ * @deprecated 2.2:2.3 will be replaced with \wcf\system\request\route\IRequestRoute
  */
 interface IRoute {
 	/**

@@ -24,6 +24,11 @@ class EventHandler extends SingletonFactory {
 	protected $actions = null;
 	
 	/**
+	 * @var EventListenerCacheBuilder
+	 */
+	protected $eventListenerCacheBuilder;
+	
+	/**
 	 * registered inherit actions
 	 * @var	array
 	 */
@@ -33,26 +38,37 @@ class EventHandler extends SingletonFactory {
 	 * instances of registerd actions
 	 * @var	array
 	 */
-	protected $actionsObjects = array();
+	protected $actionsObjects = [];
 	
 	/**
 	 * instances of registered inherit actions
 	 * @var	array
 	 */
-	protected $inheritedActionsObjects = array();
+	protected $inheritedActionsObjects = [];
 	
 	/**
 	 * instances of listener objects
-	 * @var	array<\wcf\system\event\IEventListener>
+	 * @var	IEventListener[]
 	 */
-	protected $listenerObjects = array();
+	protected $listenerObjects = [];
+	
+	/**
+	 * EventHandler constructor.
+	 * 
+	 * @param       EventListenerCacheBuilder       $eventListenerCacheBuilder
+	 */
+	public function __construct(EventListenerCacheBuilder $eventListenerCacheBuilder) {
+		$this->eventListenerCacheBuilder = $eventListenerCacheBuilder;
+		
+		parent::__construct();
+	}
 	
 	/**
 	 * Loads all registered actions of the active package.
 	 */
 	protected function loadActions() {
 		$environment = ((class_exists('wcf\system\WCFACP', false) || class_exists('wcf\system\CLIWCF', false)) ? 'admin' : 'user');
-		$cache = EventListenerCacheBuilder::getInstance()->getData();
+		$cache = $this->eventListenerCacheBuilder->getData();
 		
 		if (isset($cache['actions'][$environment])) {
 			$this->actions = $cache['actions'][$environment];
@@ -63,10 +79,10 @@ class EventHandler extends SingletonFactory {
 		unset($cache);
 		
 		if (!is_array($this->actions)) {
-			$this->actions = array();
+			$this->actions = [];
 		}
 		if (!is_array($this->inheritedActions)) {
-			$this->inheritedActions = array();
+			$this->inheritedActions = [];
 		}
 	}
 	
@@ -78,14 +94,15 @@ class EventHandler extends SingletonFactory {
 	 * @param	string		$className
 	 * @param	string		$name
 	 * @param	array		&$parameters
+	 * @throws      SystemException
 	 */
 	protected function executeInheritedActions($eventObj, $eventName, $className, $name, array &$parameters) {
 		// create objects of the actions
 		if (!isset($this->inheritedActionsObjects[$name]) || !is_array($this->inheritedActionsObjects[$name])) {
-			$this->inheritedActionsObjects[$name] = array();
+			$this->inheritedActionsObjects[$name] = [];
 			
 			// get parent classes
-			$familyTree = array();
+			$familyTree = [];
 			$member = (is_object($eventObj) ? get_class($eventObj) : $eventObj);
 			while ($member != false) {
 				$familyTree[] = $member;
@@ -155,6 +172,7 @@ class EventHandler extends SingletonFactory {
 	 * @param	mixed		$eventObj
 	 * @param	string		$eventName
 	 * @param	array		&$parameters
+	 * @throws      SystemException
 	 */
 	public function fireAction($eventObj, $eventName, array &$parameters = array()) {
 		// get class name
@@ -178,10 +196,10 @@ class EventHandler extends SingletonFactory {
 		if (!isset($this->actionsObjects[$name]) || !is_array($this->actionsObjects[$name])) {
 			if (!isset($this->actions[$name]) || !is_array($this->actions[$name])) {
 				// no action registered
-				return false;
+				return;
 			}
 			
-			$this->actionsObjects[$name] = array();
+			$this->actionsObjects[$name] = [];
 			foreach ($this->actions[$name] as $eventListener) {
 				if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
 					if (isset($this->actionsObjects[$name][$eventListener->listenerClassName])) continue;
@@ -229,8 +247,9 @@ class EventHandler extends SingletonFactory {
 	/**
 	 * Generates an unique name for an action.
 	 * 
-	 * @param	string		$className
-	 * @param	string		$eventName
+	 * @param	string  $className
+	 * @param	string  $eventName
+	 * @return      string  unique action name
 	 */
 	public static function generateKey($className, $eventName) {
 		return $eventName.'@'.$className;

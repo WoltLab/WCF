@@ -1,18 +1,27 @@
 <?php
-namespace wcf\system\request;
+namespace wcf\system\request\route;
+use wcf\system\application\ApplicationHandler;
+use wcf\system\menu\page\PageMenu;
+use wcf\system\request\ControllerMap;
+use wcf\system\request\RequestHandler;
+use wcf\system\request\RouteHandler;
 
 /**
  * Static route implementation to resolve HTTP requests, handling a single controller.
- * 
+ *
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
- * @deprecated  2.2:2.3 Consider using \wcf\system\request\route\StaticRequestRoute
  */
-class StaticRoute extends FlexibleRoute {
+class StaticRequestRoute extends DynamicRequestRoute {
+	/**
+	 * @var \wcf\system\request\ControllerMap
+	 */
+	protected $controllerMap;
+	
 	/**
 	 * static application identifier
 	 * @var	string
@@ -26,16 +35,31 @@ class StaticRoute extends FlexibleRoute {
 	protected $staticController = '';
 	
 	/**
-	 * Creates a new static route instace.
+	 * StaticRequestRoute constructor.
+	 * 
+	 * @param       \wcf\system\application\ApplicationHandler      $applicationHandler
+	 * @param       \wcf\system\request\ControllerMap               $controllerMap
+	 * @param       \wcf\system\menu\page\PageMenu                  $pageMenu
+	 * @param       \wcf\system\request\RequestHandler              $requestHandler
+	 * @param       \wcf\system\request\RouteHandler                $routeHandler
 	 */
-	public function __construct() {
+	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
+		parent::__construct($applicationHandler, $pageMenu, $requestHandler, $routeHandler);
+		
+		$this->controllerMap = $controllerMap;
+	}
+	
+	/**
+	 * @see \wcf\system\request\route\IRequestRoute::setIsACP()
+	 */
+	public function setIsACP($isACP) {
 		// static routes are disallowed for ACP
-		parent::__construct(false);
+		parent::setIsACP(false);
 	}
 	
 	/**
 	 * Sets the static controller for this route.
-	 * 
+	 *
 	 * @param	string		$application
 	 * @param	string		$controller
 	 */
@@ -76,7 +100,7 @@ class StaticRoute extends FlexibleRoute {
 	public function matches($requestURL) {
 		if (parent::matches($requestURL)) {
 			$this->routeData['application'] = $this->staticApplication;
-			$this->routeData['controller'] = RequestHandler::getTokenizedController($this->staticController);
+			$this->routeData['controller'] = $this->controllerMap->lookup($this->staticController);
 			$this->routeData['isDefaultController'] = false;
 			
 			return true;

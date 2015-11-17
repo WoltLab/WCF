@@ -3,6 +3,7 @@ namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\request\route\DynamicRequestRoute;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -52,10 +53,20 @@ class RouteHandler extends SingletonFactory {
 	protected static $secure = null;
 	
 	/**
+	 * @var ApplicationHandler
+	 */
+	protected $applicationHandler;
+	
+	/**
 	 * list of application abbreviation and default controller name
 	 * @var	array<string>
 	 */
 	protected $defaultControllers = null;
+	
+	/**
+	 * @var EventHandler
+	 */
+	protected $eventHandler;
 	
 	/**
 	 * true, if default controller is used (support for custom landing page)
@@ -64,8 +75,13 @@ class RouteHandler extends SingletonFactory {
 	protected $isDefaultController = false;
 	
 	/**
+	 * @var RequestHandler
+	 */
+	protected $requestHandler;
+	
+	/**
 	 * list of available routes
-	 * @var	array<\wcf\system\request\IRoute>
+	 * @var IRoute[]
 	 */
 	protected $routes = array();
 	
@@ -76,39 +92,48 @@ class RouteHandler extends SingletonFactory {
 	protected $routeData = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * RouteHandler constructor.
+	 * 
+	 * @param       ApplicationHandler      $applicationHandler
+	 * @param       EventHandler            $eventHandler
 	 */
-	protected function init() {
-		$this->addDefaultRoutes();
+	public function __construct(ApplicationHandler $applicationHandler, EventHandler $eventHandler) {
+		$this->applicationHandler = $applicationHandler;
+		$this->eventHandler = $eventHandler;
 		
-		// fire event
-		EventHandler::getInstance()->fireAction($this, 'didInit');
+		parent::__construct();
 	}
 	
 	/**
-	 * Adds default routes.
+	 * Sets default routes.
 	 */
-	protected function addDefaultRoutes() {
-		$acpRoute = new FlexibleRoute(true);
-		$this->addRoute($acpRoute);
+	public function setDefaultRoutes() {
+		/** @var \wcf\system\request\route\DynamicRequestRoute $route */
+		$route = WCF::getDIContainer()->make(DynamicRequestRoute::class);
+		$route->setIsACP(true);
+		$this->addRoute($route);
 		
-		if (URL_LEGACY_MODE) {
-			$defaultRoute = new Route('default');
-			$defaultRoute->setSchema('/{controller}/{id}');
-			$defaultRoute->setParameterOption('controller', null, null, true);
-			$defaultRoute->setParameterOption('id', null, '\d+', true);
-			$this->addRoute($defaultRoute);
-		}
-		else {
-			$defaultRoute = new FlexibleRoute(false);
-			$this->addRoute($defaultRoute);
-		}
+		$route = WCF::getDIContainer()->make(DynamicRequestRoute::class);
+		$route->setIsACP(false);
+		$this->addRoute($route);
+		
+		// fire event
+		$this->eventHandler->fireAction($this, 'didInit');
+	}
+	
+	/**
+	 * Sets the required request handler, setter function to avoid circular dependencies.
+	 * 
+	 * @param       RequestHandler  $requestHandler
+	 */
+	public function setRequestHandler(RequestHandler $requestHandler) {
+		$this->requestHandler = $requestHandler;
 	}
 	
 	/**
 	 * Adds a new route to the beginning of all routes.
 	 * 
-	 * @param	\wcf\system\request\IRoute	$route
+	 * @param	IRoute  $route
 	 */
 	public function addRoute(IRoute $route) {
 		array_unshift($this->routes, $route);
@@ -117,7 +142,7 @@ class RouteHandler extends SingletonFactory {
 	/**
 	 * Returns all registered routes. 
 	 * 
-	 * @return	array<\wcf\system\request\IRoute>
+	 * @return	IRoute[]
 	 **/
 	public function getRoutes() {
 		return $this->routes; 
@@ -132,7 +157,7 @@ class RouteHandler extends SingletonFactory {
 	 */
 	public function matches() {
 		foreach ($this->routes as $route) {
-			if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
+			if ($this->requestHandler->isACPRequest() != $route->isACP()) {
 				continue;
 			}
 			
@@ -185,9 +210,10 @@ class RouteHandler extends SingletonFactory {
 	 * @param	array		$components
 	 * @param	boolean		$isACP
 	 * @return	string
+	 * @throws      SystemException
 	 */
 	public function buildRoute(array $components, $isACP = null) {
-		if ($isACP === null) $isACP = RequestHandler::getInstance()->isACPRequest();
+		if ($isACP === null) $isACP = $this->requestHandler->isACPRequest();
 		
 		foreach ($this->routes as $route) {
 			if ($isACP != $route->isACP()) {
@@ -282,8 +308,9 @@ class RouteHandler extends SingletonFactory {
 	public static function getPathInfo() {
 		if (self::$pathInfo === null) {
 			self::$pathInfo = '';
+			$requestHandler = WCF::getDIContainer()->get(RequestHandler::class);
 			
-			if (!URL_LEGACY_MODE || RequestHandler::getInstance()->isACPRequest()) {
+			if (!URL_LEGACY_MODE || $requestHandler->isACPRequest()) {
 				// WCF 2.1: ?Foo/Bar/
 				if (!empty($_SERVER['QUERY_STRING'])) {
 					// don't use parse_str as it replaces dots with underscores
@@ -306,7 +333,7 @@ class RouteHandler extends SingletonFactory {
 			}
 			
 			// WCF 2.0: index.php/Foo/Bar/
-			if ((URL_LEGACY_MODE && !RequestHandler::getInstance()->isACPRequest()) || (RequestHandler::getInstance()->isACPRequest() && empty(self::$pathInfo))) {
+			if ((URL_LEGACY_MODE && !$requestHandler->isACPRequest()) || ($requestHandler->isACPRequest() && empty(self::$pathInfo))) {
 				if (isset($_SERVER['PATH_INFO'])) {
 					self::$pathInfo = $_SERVER['PATH_INFO'];
 				}
@@ -358,7 +385,7 @@ class RouteHandler extends SingletonFactory {
 		if ($this->defaultControllers === null) {
 			$this->defaultControllers = array();
 			
-			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			foreach ($this->applicationHandler->getApplications() as $application) {
 				$app = WCF::getApplicationObject($application);
 				
 				if (!$app) {

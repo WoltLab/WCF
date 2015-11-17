@@ -23,14 +23,19 @@ use wcf\util\HeaderUtil;
 class RequestHandler extends SingletonFactory {
 	/**
 	 * active request object
-	 * @var	\wcf\system\request\Request
+	 * @var	Request
 	 */
 	protected $activeRequest = null;
 	
 	/**
-	 * @var \wcf\system\request\ControllerMap
+	 * @var ApplicationHandler
 	 */
-	protected $controllerMap = null;
+	protected $applicationHandler;
+	
+	/**
+	 * @var ControllerMap
+	 */
+	protected $controllerMap;
 	
 	/**
 	 * true, if current domain mismatch any known domain
@@ -45,13 +50,31 @@ class RequestHandler extends SingletonFactory {
 	protected $isACPRequest = false;
 	
 	/**
+	 * @var RouteHandler
+	 */
+	protected $routeHandler;
+	
+	/**
+	 * RequestHandler constructor.
+	 * 
+	 * @param       ApplicationHandler      $applicationHandler
+	 * @param       ControllerMap           $controllerMap
+	 * @param       RouteHandler            $routeHandler
+	 */
+	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, RouteHandler $routeHandler) {
+		$this->applicationHandler = $applicationHandler;
+		$this->controllerMap = $controllerMap;
+		$this->routeHandler = $routeHandler;
+		
+		parent::__construct();
+	}
+	
+	/**
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		$this->controllerMap = new ControllerMap();
-		
 		if (isset($_SERVER['HTTP_HOST'])) {
-			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			foreach ($this->applicationHandler->getApplications() as $application) {
 				if ($application->domainName == $_SERVER['HTTP_HOST']) {
 					$this->inRescueMode = false;
 					break;
@@ -60,7 +83,7 @@ class RequestHandler extends SingletonFactory {
 			
 			// check if WCF is running as standalone
 			if ($this->inRescueMode() && PACKAGE_ID == 1) {
-				if (ApplicationHandler::getInstance()->getWCF()->domainName == $_SERVER['HTTP_HOST']) {
+				if ($this->applicationHandler->getWCF()->domainName == $_SERVER['HTTP_HOST']) {
 					$this->inRescueMode = false;
 				}
 			}
@@ -77,14 +100,21 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Handles a http request.
-	 * 
+	 *
 	 * @param	string		$application
 	 * @param	boolean		$isACPRequest
+	 * @throws      AJAXException
+	 * @throws      IllegalLinkException
+	 * @throws      SystemException
 	 */
 	public function handle($application = 'wcf', $isACPRequest = false) {
 		$this->isACPRequest = $isACPRequest;
 		
-		if (!RouteHandler::getInstance()->matches()) {
+		// initialize route handler
+		$this->routeHandler->setRequestHandler($this);
+		$this->routeHandler->setDefaultRoutes();
+		
+		if (!$this->routeHandler->matches()) {
 			if (ENABLE_DEBUG_MODE) {
 				throw new SystemException("Cannot handle request, no valid route provided.");
 			}
@@ -123,10 +153,11 @@ class RequestHandler extends SingletonFactory {
 	 * Builds a new request.
 	 * 
 	 * @param	string		$application
+	 * @throws      IllegalLinkException
 	 */
 	protected function buildRequest($application) {
 		try {
-			$routeData = RouteHandler::getInstance()->getRouteData();
+			$routeData = $this->routeHandler->getRouteData();
 			
 			// handle landing page for frontend requests
 			if (!$this->isACPRequest()) {
@@ -134,7 +165,7 @@ class RequestHandler extends SingletonFactory {
 				
 				// check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
 				if (!defined('WCF_RUN_MODE') || WCF_RUN_MODE != 'embedded') {
-					$applicationObject = ApplicationHandler::getInstance()->getApplication($application);
+					$applicationObject = $this->applicationHandler->getApplication($application);
 					if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
 						// build URL, e.g. http://example.net/forum/
 						$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
@@ -232,7 +263,7 @@ class RequestHandler extends SingletonFactory {
 	 * @param	array		$routeData
 	 */
 	protected function handleDefaultController($application, array &$routeData) {
-		if (!RouteHandler::getInstance()->isDefaultController()) {
+		if (!$this->routeHandler->isDefaultController()) {
 			return;
 		}
 		
@@ -245,8 +276,8 @@ class RequestHandler extends SingletonFactory {
 		
 		// resolve implicit application abbreviation for landing page controller
 		$landingPageApplication = $landingPage->getApplication();
-		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
-		$primaryApplicationAbbr = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
+		$primaryApplication = $this->applicationHandler->getPrimaryApplication();
+		$primaryApplicationAbbr = $this->applicationHandler->getAbbreviation($primaryApplication->packageID);
 		if ($landingPageApplication == 'wcf') {
 			$landingPageApplication = $primaryApplicationAbbr;
 		}
@@ -266,7 +297,7 @@ class RequestHandler extends SingletonFactory {
 		}
 		
 		// set default controller
-		$applicationObj = WCF::getApplicationObject(ApplicationHandler::getInstance()->getApplication($application));
+		$applicationObj = WCF::getApplicationObject($this->applicationHandler->getApplication($application));
 		$routeData['controller'] = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $applicationObj->getPrimaryController());
 		$routeData['controller'] = $this->getControllerMap()->lookup($routeData['controller']);
 	}
