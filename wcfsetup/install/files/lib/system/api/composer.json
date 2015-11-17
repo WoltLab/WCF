@@ -1,0 +1,8 @@
+{
+    "config": {
+        "vendor-dir": "./"
+    },
+    "require": {
+        "php-di/php-di": "5.1.*"
+    }
+}
