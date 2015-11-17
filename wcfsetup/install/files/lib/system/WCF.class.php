@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system;
+use DI\ContainerBuilder;
 use wcf\data\application\Application;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
@@ -44,6 +45,7 @@ define('TIME_NOW', time());
 // wcf imports
 if (!defined('NO_IMPORTS')) {
 	require_once(WCF_DIR.'lib/core.functions.php');
+	require_once(WCF_DIR.'lib/system/api/autoload.php');
 }
 
 /**
@@ -95,6 +97,12 @@ class WCF {
 	protected static $dbObj = null;
 	
 	/**
+	 * dependency injection container
+	 * @var \DI\Container
+	 */
+	protected static $diContainer = null;
+	
+	/**
 	 * language object
 	 * @var	\wcf\data\language\Language
 	 */
@@ -134,6 +142,9 @@ class WCF {
 		// define tmp directory
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
+		$builder = new ContainerBuilder();
+		self::$diContainer = $builder->build();
+		
 		// start initialization
 		$this->initDB();
 		$this->loadOptions();
@@ -146,6 +157,15 @@ class WCF {
 		$this->initBlacklist();
 		
 		EventHandler::getInstance()->fireAction($this, 'initialized');
+	}
+	
+	/**
+	 * Returns the dependency injection container.
+	 * 
+	 * @return \DI\Container
+	 */
+	public static final function getDIContainer() {
+		return self::$diContainer;
 	}
 	
 	/**
@@ -308,7 +328,7 @@ class WCF {
 		$factory = new SessionFactory();
 		$factory->load();
 		
-		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj = self::$diContainer->get(SessionHandler::class);
 		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
@@ -333,7 +353,7 @@ class WCF {
 	 * Initialises the template engine.
 	 */
 	protected function initTPL() {
-		self::$tplObj = TemplateEngine::getInstance();
+		self::$tplObj = self::$diContainer->get(TemplateEngine::class);
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
 		$this->assignDefaultTemplateVariables();
 		
@@ -348,7 +368,9 @@ class WCF {
 			self::getSession()->setStyleID(intval($_REQUEST['styleID']));
 		}
 		
-		StyleHandler::getInstance()->changeStyle(self::getSession()->getStyleID());
+		/** @var $styleHandler \wcf\system\style\StyleHandler */
+		$styleHandler = self::$diContainer->get(StyleHandler::class);
+		$styleHandler->changeStyle(self::getSession()->getStyleID());
 	}
 	
 	/**
