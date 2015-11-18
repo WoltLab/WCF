@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\application;
+use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
