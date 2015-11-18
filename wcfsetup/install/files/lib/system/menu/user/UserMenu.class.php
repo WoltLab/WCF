@@ -1,7 +1,10 @@
 <?php
 namespace wcf\system\menu\user;
+use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\cache\builder\UserMenuCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\menu\ITreeMenuItem;
+use wcf\system\menu\page\IPageMenuItemProvider;
 use wcf\system\menu\TreeMenu;
 
 /**
@@ -16,20 +19,41 @@ use wcf\system\menu\TreeMenu;
  */
 class UserMenu extends TreeMenu {
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::loadCache()
+	 * @var UserMenuCacheBuilder
+	 */
+	protected $userMenuCacheBuilder;
+	
+	/**
+	 * UserMenu constructor.
+	 * 
+	 * @param       EventHandler            $eventHandler
+	 * @param       UserMenuCacheBuilder    $userMenuCacheBuilder
+	 */
+	public function __construct(EventHandler $eventHandler, UserMenuCacheBuilder $userMenuCacheBuilder) {
+		$this->userMenuCacheBuilder = $userMenuCacheBuilder;
+		
+		parent::__construct($eventHandler);
+	}
+	
+	/**
+	 * @see	TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
 		parent::loadCache();
 		
-		$this->menuItems = UserMenuCacheBuilder::getInstance()->getData();
+		$this->menuItems = $this->userMenuCacheBuilder->getData();
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::checkMenuItem()
+	 * @see	TreeMenu::checkMenuItem()
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {
 		if (!parent::checkMenuItem($item)) return false;
 		
-		return $item->getProcessor()->isVisible();
+		if ($item instanceof ProcessibleDatabaseObject && $item->getProcessor() instanceof IPageMenuItemProvider) {
+			return $item->getProcessor()->isVisible();
+		}
+		
+		return true;
 	}
 }

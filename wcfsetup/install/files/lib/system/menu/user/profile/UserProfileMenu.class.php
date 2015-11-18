@@ -18,16 +18,39 @@ use wcf\system\WCF;
  */
 class UserProfileMenu extends SingletonFactory {
 	/**
+	 * active menu item
+	 * @var	UserProfileMenuItem
+	 */
+	public $activeMenuItem = null;
+	
+	/**
+	 * @var EventHandler
+	 */
+	protected $eventHandler;
+	
+	/**
 	 * list of all menu items
-	 * @var	array<\wcf\data\user\profile\menu\item\UserProfileMenuItem>
+	 * @var	UserProfileMenuItem[]
 	 */
 	public $menuItems = null;
 	
 	/**
-	 * active menu item
-	 * @var	\wcf\data\user\profile\menu\item\UserProfileMenuItem
+	 * @var UserProfileMenuCacheBuilder
 	 */
-	public $activeMenuItem = null;
+	protected $userProfileMenuCacheBuilder;
+	
+	/**
+	 * UserProfileMenu constructor.
+	 * 
+	 * @param       EventHandler                    $eventHandler
+	 * @param       UserProfileMenuCacheBuilder     $userProfileMenuCacheBuilder
+	 */
+	public function __construct(EventHandler $eventHandler, UserProfileMenuCacheBuilder $userProfileMenuCacheBuilder) {
+		$this->eventHandler = $eventHandler;
+		$this->userProfileMenuCacheBuilder = $userProfileMenuCacheBuilder;
+		
+		parent::__construct();
+	}
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -40,7 +63,7 @@ class UserProfileMenu extends SingletonFactory {
 		$this->checkMenuItems();
 		
 		// call init event
-		EventHandler::getInstance()->fireAction($this, 'init');
+		$this->eventHandler->fireAction($this, 'init');
 	}
 	
 	/**
@@ -48,9 +71,9 @@ class UserProfileMenu extends SingletonFactory {
 	 */
 	protected function loadCache() {
 		// call loadCache event
-		EventHandler::getInstance()->fireAction($this, 'loadCache');
+		$this->eventHandler->fireAction($this, 'loadCache');
 		
-		$this->menuItems = UserProfileMenuCacheBuilder::getInstance()->getData();
+		$this->menuItems = $this->userProfileMenuCacheBuilder->getData();
 	}
 	
 	/**
@@ -68,7 +91,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Checks the options and permissions of given menu item.
 	 * 
-	 * @param	\wcf\data\user\profile\menu\item\UserProfileMenuItem	$item
+	 * @param	UserProfileMenuItem     $item
 	 * @return	boolean
 	 */
 	protected function checkMenuItem(UserProfileMenuItem $item) {
@@ -78,7 +101,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Returns the list of menu items.
 	 * 
-	 * @return	array<\wcf\data\user\profile\menu\item\UserProfileMenuItem>
+	 * @return	UserProfileMenuItem[]
 	 */
 	public function getMenuItems() {
 		return $this->menuItems;
@@ -104,7 +127,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Returns the first menu item.
 	 * 
-	 * @return	\wcf\data\user\profile\menu\item\UserProfileMenuItem
+	 * @return	UserProfileMenuItem
 	 */
 	public function getActiveMenuItem() {
 		if (empty($this->menuItems)) {
@@ -122,7 +145,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Returns a specific menu item.
 	 * 
-	 * @return	\wcf\data\user\profile\menu\item\UserProfileMenuItem
+	 * @return	UserProfileMenuItem
 	 */
 	public function getMenuItem($menuItem) {
 		foreach ($this->menuItems as $item) {

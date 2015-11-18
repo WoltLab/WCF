@@ -16,6 +16,11 @@ use wcf\system\WCF;
  */
 abstract class TreeMenu extends SingletonFactory {
 	/**
+	 * @var EventHandler
+	 */
+	protected $eventHandler;
+	
+	/**
 	 * list of visible menu items
 	 * @var	array<\wcf\system\menu\ITreeMenuItem>
 	 */
@@ -34,6 +39,17 @@ abstract class TreeMenu extends SingletonFactory {
 	public $menuItems = null;
 	
 	/**
+	 * TreeMenu constructor.
+	 * 
+	 * @param       EventHandler    $eventHandler
+	 */
+	public function __construct(EventHandler $eventHandler) {
+		$this->eventHandler = $eventHandler;
+		
+		parent::__construct();
+	}
+	
+	/**
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
@@ -50,7 +66,7 @@ abstract class TreeMenu extends SingletonFactory {
 		$this->buildMenuItemList();
 		
 		// call init event
-		EventHandler::getInstance()->fireAction($this, 'init');
+		$this->eventHandler->fireAction($this, 'init');
 	}
 	
 	/**
@@ -58,7 +74,7 @@ abstract class TreeMenu extends SingletonFactory {
 	 */
 	protected function loadCache() {
 		// call loadCache event
-		EventHandler::getInstance()->fireAction($this, 'loadCache');
+		$this->eventHandler->fireAction($this, 'loadCache');
 		
 		$this->menuItems = array();
 	}
@@ -166,7 +182,7 @@ abstract class TreeMenu extends SingletonFactory {
 			$newActiveMenuItems[] = $menuItem;
 			$menuItem = $this->menuItemList[$menuItem]->parentMenuItem;
 			
-			if ($menuItem && !isset($this->menuItemList[$menuItem])) return false;
+			if ($menuItem && !isset($this->menuItemList[$menuItem])) return;
 		}
 		
 		if (!empty($newActiveMenuItems)) $this->activeMenuItems = $newActiveMenuItems;

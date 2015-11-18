@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\menu\page;
+use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\cache\builder\PageMenuCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -24,7 +25,25 @@ class PageMenu extends TreeMenu {
 	protected $landingPage = null;
 	
 	/**
+	 * @var PageMenuCacheBuilder
+	 */
+	protected $pageMenuCacheBuilder;
+	
+	/**
+	 * PageMenu constructor.
+	 * 
+	 * @param       EventHandler            $eventHandler
+	 * @param       PageMenuCacheBuilder    $pageMenuCacheBuilder
+	 */
+	public function __construct(EventHandler $eventHandler, PageMenuCacheBuilder $pageMenuCacheBuilder) {
+		$this->pageMenuCacheBuilder = $pageMenuCacheBuilder;
+		
+		parent::__construct($eventHandler);
+	}
+	
+	/**
 	 * @see	\wcf\system\SingletonFactory::init()
+	 * @throws      SystemException
 	 */
 	protected function init() {
 		// get menu items from cache
@@ -39,7 +58,7 @@ class PageMenu extends TreeMenu {
 		$this->buildMenuItemList('footer');
 		
 		// call init event
-		EventHandler::getInstance()->fireAction($this, 'init');
+		$this->eventHandler->fireAction($this, 'init');
 		
 		foreach ($this->menuItems as $menuItems) {
 			foreach ($menuItems as $menuItem) {
@@ -73,7 +92,7 @@ class PageMenu extends TreeMenu {
 		parent::loadCache();
 		
 		// get cache
-		$this->menuItems = PageMenuCacheBuilder::getInstance()->getData();
+		$this->menuItems = $this->pageMenuCacheBuilder->getData();
 	}
 	
 	/**
@@ -87,7 +106,11 @@ class PageMenu extends TreeMenu {
 		
 		if (!parent::checkMenuItem($item)) return false;
 		
-		return $item->getProcessor()->isVisible();
+		if ($item instanceof ProcessibleDatabaseObject && $item->getProcessor() instanceof IPageMenuItemProvider) {
+			return $item->getProcessor()->isVisible();
+		}
+		
+		return true;
 	}
 	
 	/**

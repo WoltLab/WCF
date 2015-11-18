@@ -2,6 +2,7 @@
 namespace wcf\system\request\route;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\PageMenu;
+use wcf\system\request\ControllerMap;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 
@@ -26,6 +27,11 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @var	array<array>
 	 */
 	protected $buildSchema = [];
+	
+	/**
+	 * @var ControllerMap
+	 */
+	protected $controllerMap;
 	
 	/**
 	 * route is restricted to ACP
@@ -76,12 +82,14 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * DynamicRequestRoute constructor.
 	 * 
 	 * @param       ApplicationHandler      $applicationHandler
+	 * @param       ControllerMap           $controllerMap
 	 * @param       PageMenu                $pageMenu
 	 * @param       RequestHandler          $requestHandler
 	 * @param       RouteHandler            $routeHandler
 	 */
-	public function __construct(ApplicationHandler $applicationHandler, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
+	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
 		$this->applicationHandler = $applicationHandler;
+		$this->controllerMap = $controllerMap;
 		$this->pageMenu = $pageMenu;
 		$this->requestHandler = $requestHandler;
 		$this->routeHandler = $routeHandler;
@@ -344,6 +352,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @return	string
 	 */
 	protected function getControllerName($application, $controller) {
-		return RequestHandler::getInstance()->getControllerMap()->lookup($controller);
+		return $this->controllerMap->lookup($controller);
 	}
 }

@@ -267,7 +267,7 @@ class RequestHandler extends SingletonFactory {
 			return;
 		}
 		
-		$landingPage = PageMenu::getInstance()->getLandingPage();
+		$landingPage = WCF::getDIContainer()->get(PageMenu::class)->getLandingPage();
 		if ($landingPage === null) {
 			return;
 		}
@@ -285,7 +285,7 @@ class RequestHandler extends SingletonFactory {
 		// check if currently invoked application matches the landing page
 		if ($landingPageApplication == $application) {
 			$routeData['controller'] = $landingPage->getController();
-			$routeData['controller'] = $this->getControllerMap()->lookup($routeData['controller']);
+			$routeData['controller'] = $this->controllerMap->lookup($routeData['controller']);
 			
 			return;
 		}
@@ -299,7 +299,7 @@ class RequestHandler extends SingletonFactory {
 		// set default controller
 		$applicationObj = WCF::getApplicationObject($this->applicationHandler->getApplication($application));
 		$routeData['controller'] = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $applicationObj->getPrimaryController());
-		$routeData['controller'] = $this->getControllerMap()->lookup($routeData['controller']);
+		$routeData['controller'] = $this->controllerMap->lookup($routeData['controller']);
 	}
 	
 	/**
@@ -327,14 +327,5 @@ class RequestHandler extends SingletonFactory {
 	 */
 	public function inRescueMode() {
 		return $this->inRescueMode;
-	}
-	
-	/**
-	 * Returns the controller map instance.
-	 * 
-	 * @return      \wcf\system\request\ControllerMap
-	 */
-	public function getControllerMap() {
-		return $this->controllerMap;
 	}
 }

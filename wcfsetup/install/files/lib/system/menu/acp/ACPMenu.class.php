@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\menu\acp;
 use wcf\system\cache\builder\ACPMenuCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\menu\TreeMenu;
 
 /**
@@ -15,7 +16,24 @@ use wcf\system\menu\TreeMenu;
  */
 class ACPMenu extends TreeMenu {
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::loadCache()
+	 * @var ACPMenuCacheBuilder
+	 */
+	protected $acpMenuCacheBuilder;
+	
+	/**
+	 * ACPMenu constructor.
+	 * 
+	 * @param       ACPMenuCacheBuilder     $acpMenuCacheBuilder
+	 * @param       EventHandler            $eventHandler
+	 */
+	public function __construct(ACPMenuCacheBuilder $acpMenuCacheBuilder, EventHandler $eventHandler) {
+		$this->acpMenuCacheBuilder = $acpMenuCacheBuilder;
+		
+		parent::__construct($eventHandler);
+	}
+	
+	/**
+	 * @see	TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
 		parent::loadCache();
@@ -24,6 +42,6 @@ class ACPMenu extends TreeMenu {
 			return;
 		}
 		
-		$this->menuItems = ACPMenuCacheBuilder::getInstance()->getData();
+		$this->menuItems = $this->acpMenuCacheBuilder->getData();
 	}
 }
