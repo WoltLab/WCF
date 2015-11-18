@@ -108,7 +108,6 @@ class RouteHandler extends SingletonFactory {
 	 * Sets default routes.
 	 */
 	public function setDefaultRoutes() {
-		/** @var \wcf\system\request\route\DynamicRequestRoute $route */
 		$route = WCF::getDIContainer()->make(DynamicRequestRoute::class);
 		$route->setIsACP(true);
 		$this->addRoute($route);

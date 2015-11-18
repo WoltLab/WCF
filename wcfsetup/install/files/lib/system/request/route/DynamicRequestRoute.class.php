@@ -1,14 +1,23 @@
 <?php
 namespace wcf\system\request\route;
-
 use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 
+/**
+ * Dynamic route implementation to resolve HTTP requests, handling controllers using a distinct pattern.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.request
+ * @category	Community Framework
+ */
 class DynamicRequestRoute implements IRequestRoute {
 	/**
-	 * @var \wcf\system\application\ApplicationHandler
+	 * @var ApplicationHandler
 	 */
 	protected $applicationHandler;
 	
@@ -25,7 +34,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	protected $isACP = false;
 	
 	/**
-	 * @var \wcf\system\menu\page\PageMenu;
+	 * @var PageMenu;
 	 */
 	protected $pageMenu;
 	
@@ -42,7 +51,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	protected $primaryApplication = '';
 	
 	/**
-	 * @var \wcf\system\request\RequestHandler
+	 * @var RequestHandler
 	 */
 	protected $requestHandler;
 	
@@ -59,17 +68,17 @@ class DynamicRequestRoute implements IRequestRoute {
 	protected $routeData = [];
 	
 	/**
-	 * @var \wcf\system\request\RouteHandler;
+	 * @var RouteHandler;
 	 */
 	protected $routeHandler;
 	
 	/**
 	 * DynamicRequestRoute constructor.
 	 * 
-	 * @param       \wcf\system\application\ApplicationHandler      $applicationHandler
-	 * @param       \wcf\system\menu\page\PageMenu                  $pageMenu
-	 * @param       \wcf\system\request\RequestHandler              $requestHandler
-	 * @param       \wcf\system\request\RouteHandler                $routeHandler
+	 * @param       ApplicationHandler      $applicationHandler
+	 * @param       PageMenu                $pageMenu
+	 * @param       RequestHandler          $requestHandler
+	 * @param       RouteHandler            $routeHandler
 	 */
 	public function __construct(ApplicationHandler $applicationHandler, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
 		$this->applicationHandler = $applicationHandler;
@@ -102,7 +111,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	}
 	
 	/**
-	 * {@inheritdoc}
+	 * @see IRequestRoute::setIsACP()
 	 */
 	public function setIsACP($isACP) {
 		$this->isACP = $isACP;
