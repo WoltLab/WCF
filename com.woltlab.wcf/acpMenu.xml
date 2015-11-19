@@ -605,5 +605,17 @@
 		<acpmenuitem name="wcf.acp.menu.link.community">
 			<showorder>5</showorder>
 		</acpmenuitem>
+		
+		<!-- lantia -->
+		<acpmenuitem name="wcf.acp.menu.link.cms">
+			<parent>wcf.acp.menu.link.content</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cms.page.list">
+			<controller><![CDATA[wcf\acp\page\PageListPage]]></controller>
+			<parent>wcf.acp.menu.link.cms</parent>
+			<permissions>admin.content.cms.canManagePage</permissions>
+		</acpmenuitem> 
 	</import>
 </data>

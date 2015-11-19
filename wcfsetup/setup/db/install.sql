@@ -796,6 +796,35 @@ CREATE TABLE wcf1_package_update_version (
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
+DROP TABLE IF EXISTS wcf1_page;
+CREATE TABLE wcf1_page (
+	pageID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	parentPageID INT(10),
+	name VARCHAR(255) NOT NULL,
+	displayName VARCHAR(255) NOT NULL,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	isLandingPage TINYINT(1) NOT NULL DEFAULT 0,
+	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
+	packageID INT(10) NOT NULL,
+	controller VARCHAR(255) NOT NULL DEFAULT '',
+	controllerCustomURL VARCHAR(255) NOT NULL DEFAULT '',
+	lastUpdateTime INT(10) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS wcf1_page_content;
+CREATE TABLE wcf1_page_content (
+	pageID INT(10) NOT NULL,
+	languageID INT(10),
+	title VARCHAR(255) NOT NULL,
+	content MEDIUMTEXT,
+	metaDescription TEXT,
+	metaKeywords TEXT,
+	customURL VARCHAR(255) NOT NULL,
+
+	KEY (pageID, languageID)
+);
+
 DROP TABLE IF EXISTS wcf1_page_menu_item;
 CREATE TABLE wcf1_page_menu_item (
 	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1598,6 +1627,12 @@ ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (subscription
 ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (subscriptionID) REFERENCES wcf1_paid_subscription (subscriptionID) ON DELETE SET NULL;
 ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (paymentMethodObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_page ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
+ALTER TABLE wcf1_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_page_content ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
