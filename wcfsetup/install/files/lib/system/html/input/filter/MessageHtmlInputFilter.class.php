@@ -1,0 +1,32 @@
+<?php
+namespace wcf\system\html\input\filter;
+
+class MessageHtmlInputFilter implements IHtmlInputFilter {
+	/**
+	 * @var \HTMLPurifier
+	 */
+	protected static $purifier;
+	
+	public function apply($html) {
+		return $this->getPurifier()->purify($html);
+	}
+	
+	/**
+	 * @return      \HTMLPurifier
+	 */
+	protected function getPurifier() {
+		if (self::$purifier === null) {
+			$config = \HTMLPurifier_Config::createDefault();
+			$this->setAttributeDefinitions($config);
+			self::$purifier = new \HTMLPurifier($config);
+		}
+		
+		return self::$purifier;
+	}
+	
+	protected function setAttributeDefinitions(\HTMLPurifier_Config $config) {
+		$definition = $config->getHTMLDefinition(true);
+		$definition->addAttribute('blockquote', 'data-quote-title', 'Text');
+		$definition->addAttribute('blockquote', 'data-quote-url', 'URI');
+	}
+}

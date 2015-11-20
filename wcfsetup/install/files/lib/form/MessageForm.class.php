@@ -6,6 +6,7 @@ use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\bbcode\PreParser;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\WCF;
@@ -301,7 +302,11 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public function save() {
 		parent::save();
 		
+		$htmlInputProcessor = WCF::getDIContainer()->make(HtmlInputProcessor::class);
+		$this->text = $htmlInputProcessor->process($this->text);
+		
 		// parse URLs
+		/*
 		if ($this->preParse == 1) {
 			// BBCodes are enabled
 			if ($this->enableBBCodes) {
@@ -317,6 +322,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 				$this->text = PreParser::getInstance()->parse($this->text, array());
 			}
 		}
+		*/
 	}
 	
 	/**

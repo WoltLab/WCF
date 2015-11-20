@@ -7,4 +7,5 @@ $baseDir = $vendorDir;
 
 return array(
     $vendorDir . '/php-di/php-di/src/DI/functions.php',
+    $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
 );
