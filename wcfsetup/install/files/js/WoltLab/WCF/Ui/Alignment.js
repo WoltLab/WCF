@@ -12,13 +12,13 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 	/**
 	 * @exports	WoltLab/WCF/Ui/Alignment
 	 */
-	var UiAlignment = {
+	return {
 		/**
 		 * Sets the alignment for target element relatively to the reference element.
 		 * 
 		 * @param	{Element}		el		target element
 		 * @param	{Element}		ref		reference element
-		 * @param	{object<string, *>}	options		list of options to alter the behavior
+		 * @param	{Object<string, *>}	options		list of options to alter the behavior
 		 */
 		set: function(el, ref, options) {
 			options = Core.extend({
@@ -104,6 +104,7 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 			var right = horizontal.right;
 			
 			var vertical = this._tryAlignmentVertical(options.vertical, elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset);
+			console.debug(vertical);
 			if (!vertical.result && (options.allowFlip === 'both' || options.allowFlip === 'vertical')) {
 				var verticalFlipped = this._tryAlignmentVertical((options.vertical === 'top' ? 'bottom' : 'top'), elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset);
 				// only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
@@ -144,8 +145,8 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 				}
 			}
 			else if (options.pointerClassNames.length === 2) {
-				var pointerRight = 0;
-				var pointerBottom = 1;
+				var pointerBottom = 0;
+				var pointerRight = 1;
 				
 				el.classList[(top === 'auto' ? 'add' : 'remove')](options.pointerClassNames[pointerBottom]);
 				el.classList[(left === 'auto' ? 'add' : 'remove')](options.pointerClassNames[pointerRight]);
@@ -162,12 +163,12 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 		/**
 		 * Calculates left/right position and verifys if the element would be still within the page's boundaries.
 		 * 
-		 * @param	{string}			align		align to this side of the reference element
-		 * @param	{object<string, integer>}	elDimensions	element dimensions
-		 * @param	{object<string, integer>}	refDimensions	reference element dimensions
-		 * @param	{object<string, integer>}	refOffsets	position of reference element relative to the document
-		 * @param	{integer}			windowWidth	window width
-		 * @returns	{object<string, *>}	calculation results
+		 * @param	{string}		align		align to this side of the reference element
+		 * @param	{Object<string, int>}	elDimensions	element dimensions
+		 * @param	{Object<string, int>}	refDimensions	reference element dimensions
+		 * @param	{Object<string, int>}	refOffsets	position of reference element relative to the document
+		 * @param	{int}			windowWidth	window width
+		 * @returns	{Object<string, *>}	calculation results
 		 */
 		_tryAlignmentHorizontal: function(align, elDimensions, refDimensions, refOffsets, windowWidth) {
 			var left = 'auto';
@@ -206,12 +207,12 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 		/**
 		 * Calculates top/bottom position and verifys if the element would be still within the page's boundaries.
 		 * 
-		 * @param	{string}			align		align to this side of the reference element
-		 * @param	{object<string, integer>}	elDimensions	element dimensions
-		 * @param	{object<string, integer>}	refDimensions	reference element dimensions
-		 * @param	{object<string, integer>}	refOffsets	position of reference element relative to the document
-		 * @param	{integer}			windowHeight	window height
-		 * @param	{integer}			verticalOffset	desired gap between element and reference element
+		 * @param	{string}		align		align to this side of the reference element
+		 * @param	{Object<string, int>}	elDimensions	element dimensions
+		 * @param	{Object<string, int>}	refDimensions	reference element dimensions
+		 * @param	{Object<string, int>}	refOffsets	position of reference element relative to the document
+		 * @param	{int}			windowHeight	window height
+		 * @param	{int}			verticalOffset	desired gap between element and reference element
 		 * @returns	{object<string, *>}	calculation results
 		 */
 		_tryAlignmentVertical: function(align, elDimensions, refDimensions, refOffsets, windowHeight, verticalOffset) {
@@ -228,7 +229,7 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 			}
 			else {
 				top = refOffsets.top + refDimensions.height + verticalOffset;
-				if (top + elDimensions.height > windowHeight) {
+				if (top + elDimensions.height - document.body.scrollTop > windowHeight) {
 					result = false;
 				}
 			}
@@ -241,6 +242,4 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 			};
 		}
 	};
-	
-	return UiAlignment;
 });
