@@ -31,6 +31,7 @@ define(
 		 * @param	{Object<string, *>}		options		list of configuration options
 		 */
 		init: function(options) {
+			this._activeDropdownElement = null;
 			this._activeElement = null;
 			this._dropdownMenu = null;
 			this._elements = new ObjectMap();
@@ -102,7 +103,8 @@ define(
 		 * @protected
 		 */
 		_click: function(element, event) {
-			if (event !== null) event.preventDefault();
+			if (element === null) element = this._activeDropdownElement;
+			if (event) event.preventDefault();
 			
 			if (this._activeElement === null) {
 				this._activeElement = element;
@@ -144,7 +146,7 @@ define(
 					event.preventDefault();
 					event.stopPropagation();
 					
-					this._activeElement = element;
+					this._activeDropdownElement = element;
 					UiReusableDropdown.toggleDropdown(this._options.dropdownIdentifier, button);
 				}).bind(this));
 			}).bind(this)(button, element);
@@ -194,8 +196,8 @@ define(
 					label.textContent = Language.get(item.label);
 					listItem.appendChild(label);
 					
-					if (item.action === 'editItem') {
-						listItem.addEventListener('click', this._click.bind(this));
+					if (item.item === 'editItem') {
+						listItem.addEventListener('click', this._click.bind(this, null));
 					}
 					else {
 						listItem.addEventListener('click', callbackClick);
@@ -214,7 +216,7 @@ define(
 		 * @protected
 		 */
 		_dropdownToggle: function(containerId, action) {
-			var elementData = this._elements.get(this._activeElement);
+			var elementData = this._elements.get(this._activeDropdownElement);
 			elementData.button.parentNode.classList[(action === 'open' ? 'add' : 'remove')]('dropdownOpen');
 			elementData.messageFooterButtons.classList[(action === 'open' ? 'add' : 'remove')]('forceVisible');
 			
@@ -222,7 +224,7 @@ define(
 				var visibility = this._dropdownOpen();
 				
 				EventHandler.fire('com.woltlab.wcf.inlineEditor', 'dropdownOpen_' + this._options.dropdownIdentifier, {
-					element: this._activeElement,
+					element: this._activeDropdownElement,
 					visibility: visibility
 				});
 				
@@ -410,7 +412,7 @@ define(
 				data: {
 					message: ''
 				},
-				objectID: this._getObjectId(),
+				objectID: this._getObjectId(this._activeElement),
 				removeQuoteIDs: [] // @TODO
 			};
 			
@@ -455,7 +457,7 @@ define(
 			
 			this._restoreMessage();
 			
-			this._updateHistory(this._getHash(this._getObjectId()));
+			this._updateHistory(this._getHash(this._getObjectId(this._activeElement)));
 			
 			UiNotification.show();
 			
@@ -479,7 +481,7 @@ define(
 				parameters: {
 					containerID: this._options.containerId,
 					message: '',
-					messageID: this._getObjectId()
+					messageID: this._getObjectId(this._activeElement)
 				}
 			};
 			
@@ -512,8 +514,9 @@ define(
 			var elementData = this._elements.get(this._activeElement);
 			var icon = elBySel('.fa-spinner', elementData.messageBodyEditor);
 			elRemove(icon);
-			console.debug(icon);
-			elShow(DomTraverse.childByClass(elementData.messageBodyEditor, 'editorContainer'));
+			
+			var editorContainer = DomTraverse.childByClass(elementData.messageBodyEditor, 'editorContainer');
+			if (editorContainer !== null) elShow(editorContainer);
 		},
 		
 		/**
@@ -554,34 +557,42 @@ define(
 		 * @protected
 		 */
 		_getEditorId: function() {
-			return this._options.editorPrefix + this._getObjectId();
+			return this._options.editorPrefix + this._getObjectId(this._activeElement);
 		},
 		
 		/**
 		 * Returns the element's `data-object-id` value.
 		 * 
-		 * @param	{Element=}	element		target element, `this._activeElement` if empty
+		 * @param	{Element}	element         target element
 		 * @return	{int}
 		 * @protected
 		 */
 		_getObjectId: function(element) {
-			return ~~elData(element || this._activeElement, 'object-id');
+			return ~~elData(element, 'object-id');
 		},
 		
 		_ajaxFailure: function(data) {
+			var elementData = this._elements.get(this._activeElement);
+			var editor = elBySel('.redactor-editor', elementData.messageBodyEditor);
+			
+			// handle errors occuring on editor load
+			if (editor === null) {
+				this._restoreMessage();
+				
+				return true;
+			}
+			
 			this._restoreEditor();
 			
 			if (!data || data.returnValues === undefined || data.returnValues.errorType === undefined) {
 				return true;
 			}
 			
-			var elementData = this._elements.get(this._activeElement);
 			var innerError = elBySel('.innerError', elementData.messageBodyEditor);
 			if (innerError === null) {
 				innerError = elCreate('small');
 				innerError.className = 'innerError';
 				
-				var editor = elBySel('.redactor-editor', elementData.messageBodyEditor);
 				DomUtil.insertAfter(innerError, editor);
 			}
 			
