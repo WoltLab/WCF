@@ -50,6 +50,11 @@ class RequestHandler extends SingletonFactory {
 	protected $isACPRequest = false;
 	
 	/**
+	 * @var PageMenu
+	 */
+	protected $pageMenu;
+	
+	/**
 	 * @var RouteHandler
 	 */
 	protected $routeHandler;
@@ -61,9 +66,10 @@ class RequestHandler extends SingletonFactory {
 	 * @param       ControllerMap           $controllerMap
 	 * @param       RouteHandler            $routeHandler
 	 */
-	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, RouteHandler $routeHandler) {
+	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, PageMenu $pageMenu, RouteHandler $routeHandler) {
 		$this->applicationHandler = $applicationHandler;
 		$this->controllerMap = $controllerMap;
+		$this->pageMenu = $pageMenu;
 		$this->routeHandler = $routeHandler;
 		
 		parent::__construct();
@@ -267,7 +273,7 @@ class RequestHandler extends SingletonFactory {
 			return;
 		}
 		
-		$landingPage = WCF::getDIContainer()->get(PageMenu::class)->getLandingPage();
+		$landingPage = $this->pageMenu->getLandingPage();
 		if ($landingPage === null) {
 			return;
 		}

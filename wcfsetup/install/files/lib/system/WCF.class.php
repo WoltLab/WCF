@@ -325,7 +325,7 @@ class WCF {
 	 * Starts the session system.
 	 */
 	protected function initSession() {
-		$factory = new SessionFactory();
+		$factory = self::$diContainer->get(SessionFactory::class);
 		$factory->load();
 		
 		self::$sessionObj = self::$diContainer->get(SessionHandler::class);
@@ -346,7 +346,7 @@ class WCF {
 		mb_language('uni');
 		
 		// get language
-		self::$languageObj = LanguageFactory::getInstance()->getUserLanguage(self::getSession()->getLanguageID());
+		self::$languageObj = self::$diContainer->get(LanguageFactory::class)->getUserLanguage(self::getSession()->getLanguageID());
 	}
 	
 	/**
@@ -368,7 +368,6 @@ class WCF {
 			self::getSession()->setStyleID(intval($_REQUEST['styleID']));
 		}
 		
-		/** @var $styleHandler \wcf\system\style\StyleHandler */
 		$styleHandler = self::$diContainer->get(StyleHandler::class);
 		$styleHandler->changeStyle(self::getSession()->getStyleID());
 	}
