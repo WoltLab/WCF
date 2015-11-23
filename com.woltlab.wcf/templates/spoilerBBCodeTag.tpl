@@ -1,7 +1,7 @@
 <!-- begin:parser_nonessential -->
 <div class="container containerPadding spoilerBox jsSpoilerBox">
 	<header class="jsOnly">
-		<a class="button jsSpoilerToggle"{if $buttonTitle} data-button-title="{$buttonTitle}"{/if}>{if $buttonTitle}{@$buttonTitle}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
+		<a class="button jsSpoilerToggle"{if $buttonTitle} data-has-custom-label="true"{/if}>{if $buttonTitle}{@$buttonTitle}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
 	</header>
 	
 	<div style="display: none">
@@ -24,7 +24,7 @@
 								WCF.DOMNodeInsertedHandler.execute();
 							}
 							
-							if (!$toggle.data('buttonTitle')) {
+							if (!$toggle.data('hasCustomLabel')) {
 								if ($container.is(':visible')) {
 									$toggle.text('{lang}wcf.bbcode.spoiler.hide{/lang}');
 								}
