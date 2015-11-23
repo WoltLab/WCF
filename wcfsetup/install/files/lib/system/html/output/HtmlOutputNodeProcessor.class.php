@@ -1,33 +1,32 @@
 <?php
 namespace wcf\system\html\output;
 
+use wcf\system\html\node\HtmlNodeProcessor;
+use wcf\system\html\output\node\HtmlOutputNodeBlockquote;
+use wcf\system\html\output\node\HtmlOutputNodeWoltlabMention;
 use wcf\system\html\output\node\IHtmlOutputNode;
-use wcf\system\html\output\node\QuoteHtmlOutputNode;
 use wcf\system\WCF;
 
-class HtmlOutputNodeProcessor {
-	/**
-	 * @var \DOMDocument
-	 */
-	protected $document;
-	
+class HtmlOutputNodeProcessor extends HtmlNodeProcessor {
 	protected $nodeData = [];
 	
 	public function load($html) {
-		$this->document = new \DOMDocument();
-		$this->document->loadHTML($html);
+		parent::load($html);
+		
 		$this->nodeData = [];
 	}
 	
 	public function process() {
-		$quoteNode = WCF::getDIContainer()->get(QuoteHtmlOutputNode::class);
+		// TODO: this should be dynamic to some extent
+		$quoteNode = WCF::getDIContainer()->get(HtmlOutputNodeBlockquote::class);
 		$quoteNode->process($this);
 		
-		$html = $this->document->saveHTML();
-		
-		// remove nuisance added by PHP
-		$html = preg_replace('~^<!DOCTYPE[^>]+>\s<html><body>~', '', $html);
-		$html = preg_replace('~</body></html>$~', '', $html);
+		$woltlabMentionNode = WCF::getDIContainer()->get(HtmlOutputNodeWoltlabMention::class);
+		$woltlabMentionNode->process($this);
+	}
+	
+	public function getHtml() {
+		$html = parent::getHtml();
 		
 		/** @var IHtmlOutputNode $obj */
 		foreach ($this->nodeData as $data) {
@@ -44,35 +43,11 @@ class HtmlOutputNodeProcessor {
 		return $html;
 	}
 	
-	public function getDocument() {
-		return $this->document;
-	}
-	
 	public function addNodeData(IHtmlOutputNode $htmlOutputNode, $nodeIdentifier, array $data) {
 		$this->nodeData[] = [
 			'data' => $data,
 			'identifier' => $nodeIdentifier,
 			'object' => $htmlOutputNode
 		];
-	}
-	
-	public function renameTag(\DOMElement $element, $tagName) {
-		$newElement = $this->document->createElement($tagName);
-		$element->parentNode->insertBefore($newElement, $element);
-		while ($element->hasChildNodes()) {
-			$newElement->appendChild($element->firstChild);
-		}
-		
-		$element->parentNode->removeChild($element);
-		
-		return $newElement;
-	}
-	
-	public function unwrapContent(\DOMElement $element) {
-		while ($element->hasChildNodes()) {
-			$element->parentNode->insertBefore($element->firstChild, $element);
-		}
-		
-		$element->parentNode->removeChild($element);
 	}
 }

@@ -25,8 +25,14 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	}
 	
 	protected function setAttributeDefinitions(\HTMLPurifier_Config $config) {
+		// TODO: move this into own PHP classes
 		$definition = $config->getHTMLDefinition(true);
 		$definition->addAttribute('blockquote', 'data-quote-title', 'Text');
 		$definition->addAttribute('blockquote', 'data-quote-url', 'URI');
+		
+		$definition->addElement('woltlab-mention', 'Inline', 'Inline', '', [
+			'data-user-id' => 'Number',
+			'data-username' => 'Text'
+		]);
 	}
 }

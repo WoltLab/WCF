@@ -1,3 +1,12 @@
+<style>
+	woltlab-mention {
+		background-color: rgb(240, 248, 255);
+		border: 1px solid rgb(52, 152, 219);
+		display: inline-block;
+		margin: 0 3px;
+		padding: 0 2px;
+	}
+</style>
 <script data-relocate="true">
 (function() {
 	var buttons = ['format', 'wcfSeparator', 'bold', 'italic', 'underline', 'deleted', 'wcfSeparator', 'lists', 'image', 'link'];
@@ -20,6 +29,11 @@
 			}
 		};
 		
+		// user mentions
+		if (elDataBool(element, 'support-mention')) {
+			config.plugins.push('WoltLabMention');
+		}
+		
 		$(element).redactor(config);
 	});
 		
@@ -30,6 +44,7 @@
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}', 
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
+		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabQuote.js?v={@LAST_UPDATE_TIME}'
 		
 		], function() {

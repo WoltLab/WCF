@@ -7,7 +7,7 @@ use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
-class QuoteHtmlOutputNode implements IHtmlOutputNode {
+class HtmlOutputNodeBlockquote implements IHtmlOutputNode {
 	/**
 	 * @var ApplicationHandler
 	 */
@@ -59,12 +59,12 @@ class QuoteHtmlOutputNode implements IHtmlOutputNode {
 		}
 		*/
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'quoteLink' => $data['url'],
 			'quoteAuthor' => $data['title'],
 			'quoteAuthorObject' => $quoteAuthorObject,
 			'isExternalQuoteLink' => $externalQuoteLink
-		));
+		]);
 		return WCF::getTPL()->fetch('quoteMetaCode');
 	}
 }

@@ -1,8 +1,6 @@
 <?php
 namespace wcf\system\html\output;
 
-use wcf\system\WCF;
-
 class HtmlOutputProcessor {
 	/**
 	 * @var HtmlOutputNodeProcessor
@@ -15,8 +13,8 @@ class HtmlOutputProcessor {
 	
 	public function process($html) {
 		$this->htmlOutputNodeProcessor->load($html);
-		$html = $this->htmlOutputNodeProcessor->process();
+		$this->htmlOutputNodeProcessor->process();
 		
-		return $html;
+		return $this->htmlOutputNodeProcessor->getHtml();
 	}
 }
