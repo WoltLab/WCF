@@ -395,8 +395,8 @@ class PackageInstallationSQLParser extends SQLParser {
 			}
 		}
 		else {
-			// log
-			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => '', 'packageID' => $this->package->packageID, 'action' => 'delete');
+// 			// log
+// 			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => '', 'packageID' => $this->package->packageID, 'action' => 'delete');
 			
 			// execute
 			parent::executeDropPrimaryKeyStatement($tableName);
