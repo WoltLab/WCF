@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system;
+use DI\ContainerBuilder;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -103,6 +104,11 @@ class WCFSetup extends WCF {
 	 */
 	public function __construct() {
 		@set_time_limit(0);
+		
+		require('api/autoload.php');
+		$builder = new ContainerBuilder();
+		self::$diContainer = $builder->build();
+		
 		$this->getDeveloperMode();
 		$this->getLanguageSelection();
 		$this->getWCFDir();
