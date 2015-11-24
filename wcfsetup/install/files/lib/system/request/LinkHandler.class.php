@@ -25,11 +25,6 @@ class LinkHandler extends SingletonFactory {
 	protected $applicationHandler;
 	
 	/**
-	 * @var PageMenu
-	 */
-	protected $pageMenu;
-	
-	/**
 	 * @var RequestHandler
 	 */
 	protected $requestHandler;
@@ -64,9 +59,8 @@ class LinkHandler extends SingletonFactory {
 	 * @param       RequestHandler          $requestHandler
 	 * @param       RouteHandler            $routeHandler
 	 */
-	public function __construct(ApplicationHandler $applicationHandler, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
+	public function __construct(ApplicationHandler $applicationHandler, RequestHandler $requestHandler, RouteHandler $routeHandler) {
 		$this->applicationHandler = $applicationHandler;
-		$this->pageMenu = $pageMenu;
 		$this->requestHandler = $requestHandler;
 		$this->routeHandler = $routeHandler;
 		
@@ -163,7 +157,8 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
-				return $this->pageMenu->getLandingPage()->getProcessor()->getLink();
+				// loading the PageMenu object as a dependency in ACP requests breaks everything
+				return WCF::getDIContainer()->get(PageMenu::class)->getLandingPage()->getProcessor()->getLink();
 			}
 		}
 		

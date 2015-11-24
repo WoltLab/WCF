@@ -221,19 +221,15 @@ class WCFSetup extends WCF {
 	 * @return	array
 	 */
 	protected static function getAvailableLanguages() {
-		$languages = $match = array();
-		$tar = new Tar(SETUP_FILE);
-		foreach ($tar->getContentList() as $file) {
-			if (strpos($file['filename'], 'setup/lang/') === 0 && substr($file['filename'], -4) == '.xml') {
-				$xml = new XML();
-				$xml->load(TMP_DIR.$file['filename']);
-				$languageCode = LanguageEditor::readLanguageCodeFromXML($xml);
-				$languageName = LanguageEditor::readLanguageNameFromXML($xml);
-				
-				$languages[$languageCode] = $languageName;
-			}
+		$languages = $match = [];
+		foreach (glob(TMP_DIR.'setup/lang/*.xml') as $file) {
+			$xml = new XML();
+			$xml->load($file);
+			$languageCode = LanguageEditor::readLanguageCodeFromXML($xml);
+			$languageName = LanguageEditor::readLanguageNameFromXML($xml);
+			
+			$languages[$languageCode] = $languageName;
 		}
-		$tar->close();
 		
 		// sort languages by language name
 		asort($languages);
@@ -1163,7 +1159,7 @@ class WCFSetup extends WCF {
 		}
 		
 		// login as admin
-		$factory = new ACPSessionFactory();
+		$factory = WCF::getDIContainer()->make(ACPSessionFactory::class);
 		$factory->load();
 		
 		SessionHandler::getInstance()->changeUser($admin);

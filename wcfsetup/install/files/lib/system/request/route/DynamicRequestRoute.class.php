@@ -5,6 +5,7 @@ use wcf\system\menu\page\PageMenu;
 use wcf\system\request\ControllerMap;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\WCF;
 
 /**
  * Dynamic route implementation to resolve HTTP requests, handling controllers using a distinct pattern.
@@ -38,11 +39,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @var	boolean
 	 */
 	protected $isACP = false;
-	
-	/**
-	 * @var PageMenu;
-	 */
-	protected $pageMenu;
 	
 	/**
 	 * pattern for incoming requests
@@ -83,14 +79,12 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * 
 	 * @param       ApplicationHandler      $applicationHandler
 	 * @param       ControllerMap           $controllerMap
-	 * @param       PageMenu                $pageMenu
 	 * @param       RequestHandler          $requestHandler
 	 * @param       RouteHandler            $routeHandler
 	 */
-	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
+	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, RequestHandler $requestHandler, RouteHandler $routeHandler) {
 		$this->applicationHandler = $applicationHandler;
 		$this->controllerMap = $controllerMap;
-		$this->pageMenu = $pageMenu;
 		$this->requestHandler = $requestHandler;
 		$this->routeHandler = $routeHandler;
 		
@@ -185,15 +179,16 @@ class DynamicRequestRoute implements IRequestRoute {
 		if (count($components) == 1 && isset($components['controller'])) {
 			$ignoreController = false;
 			
-			if (!RequestHandler::getInstance()->isACPRequest()) {
-				$landingPage = PageMenu::getInstance()->getLandingPage();
+			if (!$this->requestHandler->isACPRequest()) {
+				// loading the PageMenu object as a dependency in ACP requests breaks everything
+				$landingPage = WCF::getDIContainer()->get(PageMenu::class)->getLandingPage();
 				if ($this->primaryApplication === '') {
-					$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
-					$this->primaryApplication = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
+					$primaryApplication = $this->applicationHandler->getPrimaryApplication();
+					$this->primaryApplication = $this->applicationHandler->getAbbreviation($primaryApplication->packageID);
 				}
 				
 				// check if this is the default controller
-				if (strcasecmp(RouteHandler::getInstance()->getDefaultController($application), $components['controller']) === 0) {
+				if (strcasecmp($this->routeHandler->getDefaultController($application), $components['controller']) === 0) {
 					// check if this matches the primary application
 					if ($this->primaryApplication === $application) {
 						if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
