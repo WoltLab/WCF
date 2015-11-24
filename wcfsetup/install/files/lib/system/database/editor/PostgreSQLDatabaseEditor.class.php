@@ -318,6 +318,15 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
+	 * @see	\wcf\system\database\editor\DatabaseEditor::dropPrimaryKey()
+	 */
+	public function dropPrimaryKey($tableName) {
+		$sql = "ALTER TABLE ".$tableName." DROP CONSTRAINT ".$indexName." CASCADE";
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute();
+	}
+	
+	/**
 	 * @see	\wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {

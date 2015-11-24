@@ -181,6 +181,15 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
+	 * @see	\wcf\system\database\editor\DatabaseEditor::dropPrimaryKey()
+	 */
+	public function dropPrimaryKey($tableName) {
+		$sql = "ALTER TABLE ".$tableName." DROP PRIMARY KEY";
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute();
+	}
+	
+	/**
 	 * @see	\wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {
