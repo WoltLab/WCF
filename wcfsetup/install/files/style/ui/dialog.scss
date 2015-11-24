@@ -160,10 +160,6 @@
 	margin-top: 0;
 }
 
-@keyframes wcfSpinner {
-	to { transform: rotate(360deg); }
-}
-
 .spinner {
 	background-color: rgb(255, 255, 255);
 	border: 1px solid rgb(204, 204, 204);
@@ -175,31 +171,16 @@
 	position: fixed;
 	text-align: center;
 	top: 200px;
+	transform: translateX(-50%);
+	transition: visibility 0s linear .1s, opacity .1s linear;
 	visibility: hidden;
 	z-index: 401;
-	
-	transform: translateX(-50%);
-	
-	transition: visibility 0s linear .1s, opacity .1s linear;
 	
 	&.active {
 		opacity: 1;
 		visibility: visible;
 		
 		transition-delay: 0s;
-	}
-	
-	> .icon {
-		border: 2px solid rgb(204, 204, 204);
-		border-top-color: rgb(79, 129, 189);
-		border-radius: 50%;
-		height: 48px;
-		animation: wcfSpinner .6s linear infinite;
-		width: 48px;
-		
-		&::before {
-			display: none;
-		}
 	}
 	
 	> span:not(.icon) {
