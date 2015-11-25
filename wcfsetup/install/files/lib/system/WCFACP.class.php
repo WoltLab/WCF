@@ -116,10 +116,10 @@ class WCFACP extends WCF {
 	 * @see	\wcf\system\WCF::initSession()
 	 */
 	protected function initSession() {
-		$factory = self::$diContainer->get(ACPSessionFactory::class);
+		$factory = new ACPSessionFactory();
 		$factory->load();
 		
-		self::$sessionObj = self::$diContainer->get(SessionHandler::class);
+		self::$sessionObj = SessionHandler::getInstance();
 	}
 	
 	/**
