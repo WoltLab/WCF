@@ -4,7 +4,6 @@ namespace wcf\system\html\input;
 use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
-use wcf\system\WCF;
 
 class HtmlInputProcessor {
 	/**
@@ -34,11 +33,10 @@ class HtmlInputProcessor {
 	
 	/**
 	 * @return IHtmlInputFilter|MessageHtmlInputFilter
-	 * @throws \DI\NotFoundException
 	 */
 	public function getHtmlInputFilter() {
 		if ($this->htmlInputFilter === null) {
-			$this->htmlInputFilter = WCF::getDIContainer()->make(MessageHtmlInputFilter::class);
+			$this->htmlInputFilter = new MessageHtmlInputFilter();
 		}
 		
 		return $this->htmlInputFilter;
@@ -50,11 +48,10 @@ class HtmlInputProcessor {
 	
 	/**
 	 * @return HtmlInputNodeProcessor
-	 * @throws \DI\NotFoundException
 	 */
 	public function getHtmlInputNodeProcessor() {
 		if ($this->htmlInputNodeProcessor === null) {
-			$this->htmlInputNodeProcessor = WCF::getDIContainer()->make(HtmlInputNodeProcessor::class);
+			$this->htmlInputNodeProcessor = new HtmlInputNodeProcessor();
 		}
 		
 		return $this->htmlInputNodeProcessor;

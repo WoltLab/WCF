@@ -6,16 +6,7 @@ use wcf\system\request\ControllerMap;
 use wcf\util\FileUtil;
 
 class LookupRequestRoute implements IRequestRoute {
-	/**
-	 * @var ControllerMap
-	 */
-	protected $controllerMap;
-	
 	protected $routeData = [];
-	
-	public function __construct(ControllerMap $controllerMap) {
-		$this->controllerMap = $controllerMap;
-	}
 	
 	/**
 	 * @inheritDoc
@@ -44,12 +35,12 @@ class LookupRequestRoute implements IRequestRoute {
 		if (preg_match($regex, $requestURL, $matches)) {
 			if (!empty($matches['id'])) {
 				// check for static controller URLs
-				$this->routeData = $this->controllerMap->resolveCustomController($application, $matches['controller']);
+				$this->routeData = ControllerMap::getInstance()->resolveCustomController($application, $matches['controller']);
 			}
 			
 			if (empty($this->routeData)) {
 				// try to match the entire url
-				$this->routeData = $this->controllerMap->resolveCustomController($application, $requestURL);
+				$this->routeData = ControllerMap::getInstance()->resolveCustomController($application, $requestURL);
 			}
 		}
 		

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system;
-use DI\ContainerBuilder;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -18,8 +17,6 @@ use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
 use wcf\system\template\SetupTemplateEngine;
-use wcf\system\Regex;
-use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -104,10 +101,6 @@ class WCFSetup extends WCF {
 	 */
 	public function __construct() {
 		@set_time_limit(0);
-		
-		require('api/autoload.php');
-		$builder = new ContainerBuilder();
-		self::$diContainer = $builder->build();
 		
 		$this->getDeveloperMode();
 		$this->getLanguageSelection();
@@ -1159,7 +1152,7 @@ class WCFSetup extends WCF {
 		}
 		
 		// login as admin
-		$factory = WCF::getDIContainer()->make(ACPSessionFactory::class);
+		$factory = new ACPSessionFactory();
 		$factory->load();
 		
 		SessionHandler::getInstance()->changeUser($admin);

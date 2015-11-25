@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system;
-use DI\ContainerBuilder;
 use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
 use wcf\system\application\ApplicationHandler;
@@ -35,9 +34,6 @@ class WCFACP extends WCF {
 		
 		// define tmp directory
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
-		
-		$builder = new ContainerBuilder();
-		self::$diContainer = $builder->build();
 		
 		// start initialization
 		$this->initDB();

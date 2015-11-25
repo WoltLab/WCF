@@ -5,7 +5,6 @@ use wcf\system\menu\page\PageMenu;
 use wcf\system\request\ControllerMap;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
-use wcf\system\WCF;
 
 /**
  * Dynamic route implementation to resolve HTTP requests, handling controllers using a distinct pattern.
@@ -19,20 +18,10 @@ use wcf\system\WCF;
  */
 class DynamicRequestRoute implements IRequestRoute {
 	/**
-	 * @var ApplicationHandler
-	 */
-	protected $applicationHandler;
-	
-	/**
 	 * schema for outgoing links
 	 * @var	array<array>
 	 */
 	protected $buildSchema = [];
-	
-	/**
-	 * @var ControllerMap
-	 */
-	protected $controllerMap;
 	
 	/**
 	 * route is restricted to ACP
@@ -53,11 +42,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	protected $primaryApplication = '';
 	
 	/**
-	 * @var RequestHandler
-	 */
-	protected $requestHandler;
-	
-	/**
 	 * list of required components
 	 * @var	array<string>
 	 */
@@ -68,28 +52,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @var	array<mixed>
 	 */
 	protected $routeData = [];
-	
-	/**
-	 * @var RouteHandler;
-	 */
-	protected $routeHandler;
-	
-	/**
-	 * DynamicRequestRoute constructor.
-	 * 
-	 * @param       ApplicationHandler      $applicationHandler
-	 * @param       ControllerMap           $controllerMap
-	 * @param       RequestHandler          $requestHandler
-	 * @param       RouteHandler            $routeHandler
-	 */
-	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, RequestHandler $requestHandler, RouteHandler $routeHandler) {
-		$this->applicationHandler = $applicationHandler;
-		$this->controllerMap = $controllerMap;
-		$this->requestHandler = $requestHandler;
-		$this->routeHandler = $routeHandler;
-		
-		$this->init();
-	}
 	
 	/**
 	 * Sets default routing information.
@@ -134,7 +96,6 @@ class DynamicRequestRoute implements IRequestRoute {
 		
 		$buildSchema = ltrim($buildSchema, '/');
 		$components = preg_split('~({(?:[a-z]+)})~', $buildSchema, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-		$delimiters = ['/', '-', '.', '_'];
 		
 		foreach ($components as $component) {
 			$type = 'component';
@@ -184,16 +145,15 @@ class DynamicRequestRoute implements IRequestRoute {
 		if (count($components) == 1 && isset($components['controller'])) {
 			$ignoreController = false;
 			
-			if (!$this->requestHandler->isACPRequest()) {
-				// loading the PageMenu object as a dependency in ACP requests breaks everything
-				$landingPage = WCF::getDIContainer()->get(PageMenu::class)->getLandingPage();
+			if (!RequestHandler::getInstance()->isACPRequest()) {
+				$landingPage = PageMenu::getInstance()->getLandingPage();
 				if ($this->primaryApplication === '') {
-					$primaryApplication = $this->applicationHandler->getPrimaryApplication();
-					$this->primaryApplication = $this->applicationHandler->getAbbreviation($primaryApplication->packageID);
+					$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+					$this->primaryApplication = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
 				}
 				
 				// check if this is the default controller
-				if (strcasecmp($this->routeHandler->getDefaultController($application), $components['controller']) === 0) {
+				if (strcasecmp(RouteHandler::getInstance()->getDefaultController($application), $components['controller']) === 0) {
 					// check if this matches the primary application
 					if ($this->primaryApplication === $application) {
 						if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
@@ -328,7 +288,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	/**
 	 * @see	IRoute::matches()
 	 */
-	public function matches($requestURL) {
+	public function matches($application, $requestURL) {
 		if (preg_match($this->pattern, $requestURL, $matches)) {
 			foreach ($matches as $key => $value) {
 				if (!is_numeric($key)) {
@@ -352,6 +312,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @return	string
 	 */
 	protected function getControllerName($application, $controller) {
-		return $this->controllerMap->lookup($controller);
+		return ControllerMap::getInstance()->lookup($controller);
 	}
 }

@@ -1,10 +1,6 @@
 <?php
 namespace wcf\system\request\route;
-use wcf\system\application\ApplicationHandler;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\request\ControllerMap;
-use wcf\system\request\RequestHandler;
-use wcf\system\request\RouteHandler;
 
 /**
  * Static route implementation to resolve HTTP requests, handling a single controller.
@@ -18,11 +14,6 @@ use wcf\system\request\RouteHandler;
  */
 class StaticRequestRoute extends DynamicRequestRoute {
 	/**
-	 * @var \wcf\system\request\ControllerMap
-	 */
-	protected $controllerMap;
-	
-	/**
 	 * static application identifier
 	 * @var	string
 	 */
@@ -33,21 +24,6 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	 * @var	string
 	 */
 	protected $staticController = '';
-	
-	/**
-	 * StaticRequestRoute constructor.
-	 * 
-	 * @param       \wcf\system\application\ApplicationHandler      $applicationHandler
-	 * @param       \wcf\system\request\ControllerMap               $controllerMap
-	 * @param       \wcf\system\menu\page\PageMenu                  $pageMenu
-	 * @param       \wcf\system\request\RequestHandler              $requestHandler
-	 * @param       \wcf\system\request\RouteHandler                $routeHandler
-	 */
-	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
-		parent::__construct($applicationHandler, $pageMenu, $requestHandler, $routeHandler);
-		
-		$this->controllerMap = $controllerMap;
-	}
 	
 	/**
 	 * @see \wcf\system\request\route\IRequestRoute::setIsACP()
@@ -97,10 +73,10 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	/**
 	 * @see	\wcf\system\request\IRoute::matches()
 	 */
-	public function matches($requestURL) {
-		if (parent::matches($requestURL)) {
+	public function matches($application, $requestURL) {
+		if (parent::matches($application, $requestURL)) {
 			$this->routeData['application'] = $this->staticApplication;
-			$this->routeData['controller'] = $this->controllerMap->lookup($this->staticController);
+			$this->routeData['controller'] = ControllerMap::getInstance()->lookup($this->staticController);
 			$this->routeData['isDefaultController'] = false;
 			
 			return true;

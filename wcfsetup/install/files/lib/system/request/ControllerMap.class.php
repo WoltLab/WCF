@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\request;
 use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
 
 /**
  * Resolves incoming requests and performs lookups for controller to url mappings.
@@ -12,14 +13,14 @@ use wcf\system\exception\SystemException;
  * @subpackage	system.request
  * @category	Community Framework
  */
-class ControllerMap {
+class ControllerMap extends SingletonFactory {
 	/**
 	 * list of <ControllerName> to <controller-name> mappings
 	 * @var array<string>
 	 */
 	protected $lookupCache = [];
 	
-	public function __construct() {
+	protected function init() {
 		// TODO: initialize custom controller mappings
 	}
 	

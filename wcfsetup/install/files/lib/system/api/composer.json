@@ -3,7 +3,6 @@
         "vendor-dir": "./"
     },
     "require": {
-        "ezyang/htmlpurifier": "4.7.*",
-        "php-di/php-di": "5.1.*"
+        "ezyang/htmlpurifier": "4.7.*"
     }
 }

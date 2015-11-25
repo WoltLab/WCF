@@ -302,7 +302,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public function save() {
 		parent::save();
 		
-		$htmlInputProcessor = WCF::getDIContainer()->make(HtmlInputProcessor::class);
+		$htmlInputProcessor = new HtmlInputProcessor();
 		$this->text = $htmlInputProcessor->process($this->text);
 		
 		// parse URLs
