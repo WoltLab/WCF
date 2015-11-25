@@ -4,6 +4,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\route\DynamicRequestRoute;
+use wcf\system\request\route\IRequestRoute;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -149,18 +150,28 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * Returns true if a route matches. Please bear in mind, that the
-	 * first route which is able to consume all path components is used,
+	 * first route that is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
 	 * 
+	 * @param       string  $application    application identifier
 	 * @return	boolean
 	 */
-	public function matches() {
+	public function matches($application) {
 		foreach ($this->routes as $route) {
 			if ($this->requestHandler->isACPRequest() != $route->isACP()) {
 				continue;
 			}
 			
-			if ($route->matches(self::getPathInfo())) {
+			$match = false;
+			if ($route instanceof IRequestRoute) {
+				$match = $route->matches($application, self::getPathInfo());
+			}
+			else if ($route instanceof IRoute) {
+				// legacy route
+				$match =  $route->matches(self::getPathInfo());
+			}
+			
+			if ($match) {
 				$this->routeData = $route->getRouteData();
 				
 				$this->isDefaultController = $this->routeData['isDefaultController'];

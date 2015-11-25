@@ -98,7 +98,12 @@ class DynamicRequestRoute implements IRequestRoute {
 		$this->setPattern('~
 			/?
 			(?:
-				(?P<controller>[A-Za-z0-9\-]+)
+				(?P<controller>
+					(?:
+						[a-z][a-z0-9]+
+						(?:-[a-z][a-z0-9]+)*
+					)+
+				)
 				(?:
 					/
 					(?P<id>\d+)

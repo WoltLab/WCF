@@ -61,6 +61,20 @@ class ControllerMap {
 	}
 	
 	/**
+	 * Attempts to resolve a custom controller, will return an empty array
+	 * regardless if given controller would match an actual controller class.
+	 * 
+	 * @param       string  $application    application identifier
+	 * @param       string  $controller     url controller
+	 * @return      array   empty array if there is no exact match
+	 */
+	public function resolveCustomController($application, $controller) {
+		// TODO: check custom controller mappings
+		
+		return [];
+	}
+	
+	/**
 	 * Transforms given controller into its url representation.
 	 * 
 	 * @param       string          $controller     controller class, e.g. 'MembersList'

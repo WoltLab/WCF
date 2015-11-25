@@ -114,7 +114,7 @@ class RequestHandler extends SingletonFactory {
 		$this->routeHandler->setRequestHandler($this);
 		$this->routeHandler->setDefaultRoutes();
 		
-		if (!$this->routeHandler->matches()) {
+		if (!$this->routeHandler->matches($application)) {
 			if (ENABLE_DEBUG_MODE) {
 				throw new SystemException("Cannot handle request, no valid route provided.");
 			}
