@@ -16,23 +16,6 @@ use wcf\system\menu\TreeMenu;
  */
 class ACPMenu extends TreeMenu {
 	/**
-	 * @var ACPMenuCacheBuilder
-	 */
-	protected $acpMenuCacheBuilder;
-	
-	/**
-	 * ACPMenu constructor.
-	 * 
-	 * @param       ACPMenuCacheBuilder     $acpMenuCacheBuilder
-	 * @param       EventHandler            $eventHandler
-	 */
-	public function __construct(ACPMenuCacheBuilder $acpMenuCacheBuilder, EventHandler $eventHandler) {
-		$this->acpMenuCacheBuilder = $acpMenuCacheBuilder;
-		
-		parent::__construct($eventHandler);
-	}
-	
-	/**
 	 * @see	TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
@@ -42,6 +25,6 @@ class ACPMenu extends TreeMenu {
 			return;
 		}
 		
-		$this->menuItems = $this->acpMenuCacheBuilder->getData();
+		$this->menuItems = ACPMenuCacheBuilder::getInstance()->getData();
 	}
 }

@@ -19,29 +19,12 @@ use wcf\system\menu\TreeMenu;
  */
 class UserMenu extends TreeMenu {
 	/**
-	 * @var UserMenuCacheBuilder
-	 */
-	protected $userMenuCacheBuilder;
-	
-	/**
-	 * UserMenu constructor.
-	 * 
-	 * @param       EventHandler            $eventHandler
-	 * @param       UserMenuCacheBuilder    $userMenuCacheBuilder
-	 */
-	public function __construct(EventHandler $eventHandler, UserMenuCacheBuilder $userMenuCacheBuilder) {
-		$this->userMenuCacheBuilder = $userMenuCacheBuilder;
-		
-		parent::__construct($eventHandler);
-	}
-	
-	/**
 	 * @see	TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
 		parent::loadCache();
 		
-		$this->menuItems = $this->userMenuCacheBuilder->getData();
+		$this->menuItems = UserMenuCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

@@ -12,46 +12,7 @@ use wcf\system\request\IRoute;
  * @subpackage  system.request
  * @category    Community Framework
  */
-interface IRequestRoute {
-	/**
-	 * Builds a link upon route components.
-	 *
-	 * @param	array		$components     list of url components
-	 * @return	string
-	 */
-	public function buildLink(array $components);
-	
-	/**
-	 * Returns true if current route can handle the build request.
-	 *
-	 * @param	array		$components     list of url components
-	 * @return	boolean
-	 */
-	public function canHandle(array $components);
-	
-	/**
-	 * Returns parsed route data.
-	 *
-	 * @return	array
-	 */
-	public function getRouteData();
-	
-	/**
-	 * Returns true if route applies for ACP.
-	 *
-	 * @return	boolean
-	 */
-	public function isACP();
-	
-	/**
-	 * Returns true if given request url matches this route.
-	 *
-	 * @param       string          $application    application identifier
-	 * @param	string		$requestURL     request url
-	 * @return	boolean
-	 */
-	public function matches($application, $requestURL);
-	
+interface IRequestRoute extends IRoute {
 	/**
 	 * Configures this route to handle either ACP or frontend requests.
 	 * 

@@ -54,6 +54,13 @@ class DynamicRequestRoute implements IRequestRoute {
 	protected $routeData = [];
 	
 	/**
+	 * DynamicRequestRoute constructor.
+	 */
+	public function __construct() {
+		$this->init();
+	}
+	
+	/**
 	 * Sets default routing information.
 	 */
 	protected function init() {
@@ -288,7 +295,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	/**
 	 * @see	IRoute::matches()
 	 */
-	public function matches($application, $requestURL) {
+	public function matches($requestURL) {
 		if (preg_match($this->pattern, $requestURL, $matches)) {
 			foreach ($matches as $key => $value) {
 				if (!is_numeric($key)) {

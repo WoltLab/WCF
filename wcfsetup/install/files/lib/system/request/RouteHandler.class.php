@@ -4,7 +4,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\route\DynamicRequestRoute;
-use wcf\system\request\route\IRequestRoute;
+use wcf\system\request\route\LookupRequestRoute;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -86,7 +86,9 @@ class RouteHandler extends SingletonFactory {
 		$this->addRoute($route);
 		
 		$route = new DynamicRequestRoute();
-		$route->setIsACP(false);
+		$this->addRoute($route);
+		
+		$route = new LookupRequestRoute();
 		$this->addRoute($route);
 		
 		// fire event
@@ -116,25 +118,15 @@ class RouteHandler extends SingletonFactory {
 	 * first route that is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
 	 * 
-	 * @param       string  $application    application identifier
 	 * @return	boolean
 	 */
-	public function matches($application) {
+	public function matches() {
 		foreach ($this->routes as $route) {
-			if ($this->requestHandler->isACPRequest() != $route->isACP()) {
+			if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
 				continue;
 			}
 			
-			$match = false;
-			if ($route instanceof IRequestRoute) {
-				$match = $route->matches($application, self::getPathInfo());
-			}
-			else if ($route instanceof IRoute) {
-				// legacy route
-				$match =  $route->matches(self::getPathInfo());
-			}
-			
-			if ($match) {
+			if ($route->matches(self::getPathInfo())) {
 				$this->routeData = $route->getRouteData();
 				
 				$this->isDefaultController = $this->routeData['isDefaultController'];
@@ -186,7 +178,7 @@ class RouteHandler extends SingletonFactory {
 	 * @throws      SystemException
 	 */
 	public function buildRoute(array $components, $isACP = null) {
-		if ($isACP === null) $isACP = $this->requestHandler->isACPRequest();
+		if ($isACP === null) $isACP = RequestHandler::getInstance()->isACPRequest();
 		
 		foreach ($this->routes as $route) {
 			if ($isACP != $route->isACP()) {

@@ -25,23 +25,6 @@ class PageMenu extends TreeMenu {
 	protected $landingPage = null;
 	
 	/**
-	 * @var PageMenuCacheBuilder
-	 */
-	protected $pageMenuCacheBuilder;
-	
-	/**
-	 * PageMenu constructor.
-	 * 
-	 * @param       EventHandler            $eventHandler
-	 * @param       PageMenuCacheBuilder    $pageMenuCacheBuilder
-	 */
-	public function __construct(EventHandler $eventHandler, PageMenuCacheBuilder $pageMenuCacheBuilder) {
-		$this->pageMenuCacheBuilder = $pageMenuCacheBuilder;
-		
-		parent::__construct($eventHandler);
-	}
-	
-	/**
 	 * @see	\wcf\system\SingletonFactory::init()
 	 * @throws      SystemException
 	 */
@@ -58,7 +41,7 @@ class PageMenu extends TreeMenu {
 		$this->buildMenuItemList('footer');
 		
 		// call init event
-		$this->eventHandler->fireAction($this, 'init');
+		EventHandler::getInstance()->fireAction($this, 'init');
 		
 		foreach ($this->menuItems as $menuItems) {
 			foreach ($menuItems as $menuItem) {
@@ -92,7 +75,7 @@ class PageMenu extends TreeMenu {
 		parent::loadCache();
 		
 		// get cache
-		$this->menuItems = $this->pageMenuCacheBuilder->getData();
+		$this->menuItems = PageMenuCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

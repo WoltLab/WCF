@@ -23,7 +23,7 @@ class SessionFactory extends ACPSessionFactory {
 	 */
 	public function hasValidCookie() {
 		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'])) {
-			if ($_COOKIE[COOKIE_PREFIX.'cookieHash'] == $this->sessionHandler->sessionID) {
+			if ($_COOKIE[COOKIE_PREFIX.'cookieHash'] == SessionHandler::getInstance()->sessionID) {
 				return true;
 			}
 		}
@@ -49,11 +49,12 @@ class SessionFactory extends ACPSessionFactory {
 	protected function init() {
 		if (!$this->hasValidCookie()) {
 			// cookie support will be enabled upon next request
-			HeaderUtil::setCookie('cookieHash', $this->sessionHandler->sessionID);
+			HeaderUtil::setCookie('cookieHash', SessionHandler::getInstance()->sessionID);
 		}
 		
 		// enable cookie support
-		$this->sessionHandler->enableCookies();
+		
+		SessionHandler::getInstance()->enableCookies();
 		
 		parent::init();
 	}

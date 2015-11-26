@@ -80,7 +80,7 @@ class RequestHandler extends SingletonFactory {
 	public function handle($application = 'wcf', $isACPRequest = false) {
 		$this->isACPRequest = $isACPRequest;
 		
-		if (!RouteHandler::getInstance()->matches($application)) {
+		if (!RouteHandler::getInstance()->matches()) {
 			if (ENABLE_DEBUG_MODE) {
 				throw new SystemException("Cannot handle request, no valid route provided.");
 			}

@@ -1,17 +1,32 @@
 <?php
 namespace wcf\system\request\route;
-
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\ControllerMap;
 use wcf\util\FileUtil;
 
+/**
+ * Attempts to resolve arbitrary request URLs against the list of known custom
+ * controller URLs, optionally recognizing id and title parameter.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.request
+ * @category	Community Framework
+ */
 class LookupRequestRoute implements IRequestRoute {
+	/**
+	 * list of parsed route information
+	 * @var array
+	 */
 	protected $routeData = [];
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function matches($application, $requestURL) {
+	public function matches($requestURL) {
 		$requestURL = FileUtil::addLeadingSlash($requestURL);
 		
 		if ($requestURL === '/') {
@@ -33,6 +48,7 @@ class LookupRequestRoute implements IRequestRoute {
 		$~x';
 		
 		if (preg_match($regex, $requestURL, $matches)) {
+			$application = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
 			if (!empty($matches['id'])) {
 				// check for static controller URLs
 				$this->routeData = ControllerMap::getInstance()->resolveCustomController($application, $matches['controller']);
