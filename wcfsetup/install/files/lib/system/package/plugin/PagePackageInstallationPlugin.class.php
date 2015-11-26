@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\page\PageEditor;
+use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes CMS pages.
@@ -16,7 +20,12 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	/**
 	 * @see	AbstractXMLPackageInstallationPlugin::$className
 	 */
-	public $className = 'wcf\data\clipboard\action\ClipboardActionEditor';
+	public $className = PageEditor::class;
+	
+	/**
+	 * @var array
+	 */
+	protected $content = [];
 	
 	/**
 	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
@@ -27,18 +36,19 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @see	AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE		actionName = ?
-					AND actionClassName = ?
+		$sql = "DELETE FROM     wcf".WCF_N."_page
+			WHERE           name = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
-				$item['elements']['actionclassname'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
+		WCF::getDB()->commitTransaction();
 	}
 	
 	/**
@@ -47,41 +57,90 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
 		
-		// read pages
-		if ($element->tagName == 'pages') {
-			$nodeValue = array();
+		// read content
+		if ($element->tagName === 'content') {
+			if (!isset($elements['content'])) $elements['content'] = [];
 			
-			$pages = $xpath->query('child::ns:page', $element);
-			foreach ($pages as $page) {
-				$nodeValue[] = $page->nodeValue;
+			$children = [];
+			/** @var \DOMElement $child */
+			foreach ($xpath->query('child::*', $element) as $child) {
+				$children[$child->tagName] = $child->nodeValue;
 			}
+			
+			$elements[$element->tagName][$element->getAttribute('language')] = $children;
 		}
-		
-		$elements[$element->tagName] = $nodeValue;
+		else if ($element->tagName === 'displayname') {
+			// <displayname> can occur multiple times using the `language` attribute
+			if (!isset($elements['displayName'])) $elements['displayName'] = [];
+			
+			$elements['displayName'][$element->getAttribute('language')] = $element->nodeValue;
+		}
+		else {
+			$elements[$element->tagName] = $nodeValue;
+		}
 	}
 	
 	/**
 	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @throws SystemException
 	 */
 	protected function prepareImport(array $data) {
-		$isStatic = (!empty($data['content']));
+		$isStatic = false;
+		if (!empty($data['elements']['content'])) {
+			$isStatic = true;
+			
+			$content = [];
+			foreach ($data['elements']['content'] as $language => $contentData) {
+				$content[$language] = [
+					'content' => $contentData['content'],
+					'customURL' => $contentData['customurl'],
+					'metaDescription' => (!empty($contentData['metadescription'])) ? StringUtil::trim($contentData['metadescription']) : '',
+					'metaKeywords' => (!empty($contentData['metakeywords'])) ? StringUtil::trim($contentData['metakeywords']) : '',
+					'title' => $contentData['title']
+				];
+			}
+			
+			$data['elements']['content'] = $content;
+		}
+		
+		// pick the display name by choosing the default language, or 'en' or '' (empty string)
+		$defaultLanguageCode = LanguageFactory::getInstance()->getDefaultLanguage()->getFixedLanguageCode();
+		if (isset($data['elements']['displayName'][$defaultLanguageCode])) {
+			// use the default language
+			$displayName = $data['elements']['displayName'][$defaultLanguageCode];
+		}
+		else if (isset($data['elements']['displayName']['en'])) {
+			// use the value for English
+			$displayName = $data['elements']['displayName']['en'];
+		}
+		else {
+			// fallback to the display name without/empty language attribute
+			$displayName = $data['elements']['displayName'][''];
+		}
+		
+		$parentPageID = null;
+		if (!empty($data['elements']['parent'])) {
+			$sql = "SELECT  pageID
+				FROM    wcf".WCF_N."_".$this->tableName."
+				WHERE   name = ?";
+			$statement = WCF::getDB()->prepareStatement($sql, 1);
+			$statement->execute([$data['elements']['parent']]);
+			$row = $statement->fetchSingleRow();
+			if ($row === false) {
+				throw new SystemException("Unknown parent page '" . $data['elements']['parent'] . "' for page identifier '" . $data['attributes']['name'] . "'");
+			}
+			
+			$parentPageID = $row['pageID'];
+		}
 		
 		return [
+			'content' => ($isStatic) ? $data['elements']['content'] : [],
 			'controller' => ($isStatic) ? '' : $data['elements']['controller'],
-			'controllerCustomURL' => ($isStatic) ? '' : $data['elements']['customurl'],
-			'displayName' => $data['elements']['displayname'],
-			'name' => $data['attributes']['name']
+			'controllerCustomURL' => ($isStatic || empty($data['elements']['customurl'])) ? '' : $data['elements']['customurl'],
+			'displayName' => $displayName,
+			'name' => $data['attributes']['name'],
+			'parentPageID' => $parentPageID
 		];
-		
-		$showOrder = (isset($data['elements']['showorder'])) ? intval($data['elements']['showorder']) : null;
-		$showOrder = $this->getShowOrder($showOrder, $data['elements']['actionclassname'], 'actionClassName');
-		
-		return array(
-			'actionClassName' => $data['elements']['actionclassname'],
-			'actionName' => $data['attributes']['name'],
-			'pages' => $data['elements']['pages'],
-			'showOrder' => $showOrder
-		);
 	}
 	
 	/**
@@ -90,12 +149,10 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE	actionName = ?
-				AND actionClassName = ?
+			WHERE	name = ?
 				AND packageID = ?";
 		$parameters = array(
-			$data['actionName'],
-			$data['actionClassName'],
+			$data['name'],
 			$this->installation->getPackageID()
 		);
 		
@@ -109,42 +166,45 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @see	AbstractXMLPackageInstallationPlugin::import()
 	 */
 	protected function import(array $row, array $data) {
-		// extract pages
-		$pages = $data['pages'];
-		unset($data['pages']);
+		// extract content
+		$content = $data['content'];
+		unset($data['content']);
 		
 		// import or update action
 		$object = parent::import($row, $data);
 		
-		// store pages for later import
-		$this->pages[$object->actionID] = $pages;
+		// store content for later import
+		$this->content[$object->pageID] = $content;
 	}
 	
 	/**
 	 * @see	AbstractXMLPackageInstallationPlugin::postImport()
 	 */
 	protected function postImport() {
-		// clear pages
-		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_page
-			WHERE		packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
-		
-		if (!empty($this->pages)) {
-			// insert pages
-			$sql = "INSERT INTO	wcf".WCF_N."_clipboard_page
-						(pageClassName, packageID, actionID)
-				VALUES		(?, ?, ?)";
+		if (!empty($this->content)) {
+			$sql = "INSERT IGNORE INTO      wcf".WCF_N."_page_content
+							(pageID, languageID, title, content, metaDescription, metaKeywords, customURL)
+				VALUES                  (?, ?, ?, ?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($this->pages as $actionID => $pages) {
-				foreach ($pages as $pageClassName) {
-					$statement->execute(array(
-						$pageClassName,
-						$this->installation->getPackageID(),
-						$actionID
-					));
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($this->content as $pageID => $contentData) {
+				foreach ($contentData as $languageCode => $content) {
+					$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+					if ($language !== null) {
+						$statement->execute([
+							$pageID,
+							$language->languageID,
+							$content['title'],
+							$content['content'],
+							$content['metaDescription'],
+							$content['metaKeywords'],
+							$content['customURL']
+						]);
+					}
 				}
 			}
+			WCF::getDB()->commitTransaction();
 		}
 	}
 }

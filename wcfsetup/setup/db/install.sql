@@ -822,7 +822,7 @@ CREATE TABLE wcf1_page_content (
 	metaKeywords TEXT,
 	customURL VARCHAR(255) NOT NULL,
 
-	KEY (pageID, languageID)
+	UNIQUE KEY (pageID, languageID)
 );
 
 DROP TABLE IF EXISTS wcf1_page_menu_item;
