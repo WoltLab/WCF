@@ -170,8 +170,20 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		$content = $data['content'];
 		unset($data['content']);
 		
-		// import or update action
-		$object = parent::import($row, $data);
+		if ($row !== false) {
+			// allow only updating of controller, everything else would overwrite user modifications
+			if (!empty($data['controller'])) {
+				$object = parent::import($row, ['controller' => $data['controller']]);
+			}
+			else {
+				$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+				$object = new $baseClass(null, $row);
+			}
+		}
+		else {
+			// import
+			$object = parent::import($row, $data);
+		}
 		
 		// store content for later import
 		$this->content[$object->pageID] = $content;
