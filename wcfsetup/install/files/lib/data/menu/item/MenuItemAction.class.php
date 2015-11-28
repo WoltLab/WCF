@@ -18,7 +18,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements IToggleActi
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
-	protected $className = 'wcf\data\menu\item\MenuItemEditor';
+	protected $className = MenuItemEditor::class;
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
@@ -27,12 +27,12 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements IToggleActi
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
-	*/
+	 */
 	protected $permissionsDelete = array('admin.content.cms.canManageMenu');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
-	*/
+	 */
 	protected $permissionsUpdate = array('admin.content.cms.canManageMenu');
 	
 	/**

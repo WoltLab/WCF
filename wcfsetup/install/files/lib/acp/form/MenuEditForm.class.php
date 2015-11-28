@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\menu\MenuAction;
 use wcf\data\menu\Menu;
+use wcf\data\menu\MenuAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;

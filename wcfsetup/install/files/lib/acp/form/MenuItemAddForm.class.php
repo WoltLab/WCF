@@ -1,18 +1,18 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\menu\item\MenuItem;
+use wcf\data\menu\item\MenuItemAction;
+use wcf\data\menu\item\MenuItemEditor;
+use wcf\data\menu\item\MenuItemNodeTree;
+use wcf\data\menu\Menu;
+use wcf\data\page\Page;
+use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
-use wcf\data\menu\Menu;
-use wcf\system\exception\IllegalLinkException;
-use wcf\data\menu\item\MenuItemNodeTree;
-use wcf\data\page\Page;
-use wcf\data\menu\item\MenuItem;
-use wcf\data\menu\item\MenuItemAction;
-use wcf\data\menu\item\MenuItemEditor;
-use wcf\data\page\PageNodeTree;
 
 /**
  * Shows the menu item add form.
@@ -91,7 +91,7 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * menu item node tree
-	 * @var	wcf\data\menu\item\MenuItemNodeTree
+	 * @var MenuItemNodeTree
 	 */
 	public $menuItems = null;
 	

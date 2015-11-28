@@ -17,7 +17,7 @@ class MenuAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
-	protected $className = 'wcf\data\menu\MenuEditor';
+	protected $className = MenuEditor::class;
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
@@ -26,12 +26,12 @@ class MenuAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
-	*/
+	 */
 	protected $permissionsDelete = array('admin.content.cms.canManageMenu');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
-	*/
+	 */
 	protected $permissionsUpdate = array('admin.content.cms.canManageMenu');
 	
 	/**
