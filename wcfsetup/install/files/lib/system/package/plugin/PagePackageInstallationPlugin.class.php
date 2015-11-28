@@ -45,7 +45,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		WCF::getDB()->beginTransaction();
 		foreach ($items as $item) {
 			$statement->execute([
-				$item['attributes']['name'],
+				$item['attributes']['identifier'],
 				$this->installation->getPackageID()
 			]);
 		}
@@ -93,7 +93,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$content = [];
 			foreach ($data['elements']['content'] as $language => $contentData) {
 				if (!RouteHandler::isValidCustomUrl($contentData['customurl'])) {
-					throw new SystemException("Invalid custom url for page content '" . $language . "', page identifier '" . $data['attributes']['name'] . "'");
+					throw new SystemException("Invalid custom url for page content '" . $language . "', page identifier '" . $data['attributes']['identifier'] . "'");
 				}
 				
 				$content[$language] = [
@@ -132,7 +132,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$statement->execute([$data['elements']['parent']]);
 			$row = $statement->fetchSingleRow();
 			if ($row === false) {
-				throw new SystemException("Unknown parent page '" . $data['elements']['parent'] . "' for page identifier '" . $data['attributes']['name'] . "'");
+				throw new SystemException("Unknown parent page '" . $data['elements']['parent'] . "' for page identifier '" . $data['attributes']['identifier'] . "'");
 			}
 			
 			$parentPageID = $row['pageID'];
@@ -140,7 +140,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		$customUrl = ($isStatic || empty($data['elements']['customurl'])) ? '' : $data['elements']['customurl'];
 		if ($customUrl && !RouteHandler::isValidCustomUrl($customUrl)) {
-			throw new SystemException("Invalid custom url for page identifier '" . $data['attributes']['name'] . "'");
+			throw new SystemException("Invalid custom url for page identifier '" . $data['attributes']['identifier'] . "'");
 		}
 		
 		return [
@@ -148,7 +148,10 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'controller' => ($isStatic) ? '' : $data['elements']['controller'],
 			'controllerCustomURL' => $customUrl,
 			'displayName' => $displayName,
-			'name' => $data['attributes']['name'],
+			'identifier' => $data['attributes']['identifier'],
+			'isMultilingual' => ($isStatic) ? 1 : 0,
+			'lastUpdateTime' => TIME_NOW,
+			'originIsSystem' => 1,
 			'parentPageID' => $parentPageID
 		];
 	}
@@ -162,7 +165,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			WHERE	name = ?
 				AND packageID = ?";
 		$parameters = array(
-			$data['name'],
+			$data['identifier'],
 			$this->installation->getPackageID()
 		);
 		

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
@@ -8,6 +9,7 @@ use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -31,7 +33,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.cms.canManagePage');
+	public $neededPermissions = ['admin.content.cms.canManagePage'];
 	
 	/**
 	 * true if created page is multi-lingual
@@ -71,39 +73,39 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * list of available applications (standalone packages)
-	 * @var array<\wcf\data\application\Application>
+	 * @var Application[]
 	 */
-	public $availableApplications = array();
+	public $availableApplications = [];
 	
 	/**
 	 * page custom URL
 	 * @var array<string>
 	 */
-	public $customURL = array();
+	public $customURL = [];
 	
 	/**
 	 * page titles
 	 * @var array<string>
 	 */
-	public $title = array();
+	public $title = [];
 	
 	/**
 	 * page contents
 	 * @var array<string>
 	 */
-	public $content = array();
+	public $content = [];
 	
 	/**
 	 * page meta descriptions
 	 * @var array<string>
 	 */
-	public $metaDescription = array();
+	public $metaDescription = [];
 	
 	/**
 	 * page meta keywords
 	 * @var array<string>
 	 */
-	public $metaKeywords = array();
+	public $metaKeywords = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -149,6 +151,8 @@ class PageAddForm extends AbstractForm {
 		$this->validateParentPageID();
 		
 		$this->validatePackageID();
+		
+		$this->validateCustomUrl();
 	}
 	
 	protected function validateDisplayName() {
@@ -175,35 +179,43 @@ class PageAddForm extends AbstractForm {
 		}
 	}
 	
+	protected function validateCustomUrl() {
+		foreach ($this->customURL as $type => $customURL) {
+			if (!empty($customURL) && !RouteHandler::isValidCustomUrl($customURL)) {
+				throw new UserInputException('customURL_' . $type, 'invalid');
+			}
+		}
+	}
+	
 	/**
 	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
 		
-		$content = array();
+		$content = [];
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-				$content[$language->languageID] = array(
+				$content[$language->languageID] = [
 					'customURL' => (!empty($_POST['customURL'][$language->languageID]) ? $_POST['customURL'][$language->languageID] : ''),
 					'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
 					'content' => (!empty($_POST['content'][$language->languageID]) ? $_POST['content'][$language->languageID] : ''),
 					'metaDescription' => (!empty($_POST['metaDescription'][$language->languageID]) ? $_POST['metaDescription'][$language->languageID] : ''),
 					'metaKeywords' => (!empty($_POST['metaKeywords'][$language->languageID]) ? $_POST['metaKeywords'][$language->languageID] : '')
-				);
+				];
 			}
 		}
 		else {
-			$content[0] = array(
+			$content[0] = [
 				'customURL' => (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : ''),
 				'title' => (!empty($_POST['title'][0]) ? $_POST['title'][0] : ''),
 				'content' => (!empty($_POST['content'][0]) ? $_POST['content'][0] : ''),
 				'metaDescription' => (!empty($_POST['metaDescription'][0]) ? $_POST['metaDescription'][0] : ''),
 				'metaKeywords' => (!empty($_POST['metaKeywords'][0]) ? $_POST['metaKeywords'][0] : '')
-			);
+			];
 		}
 		
-		$this->objectAction = new PageAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PageAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'parentPageID' => ($this->parentPageID ?: null),
 			'displayName' => $this->displayName,
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
@@ -212,13 +224,13 @@ class PageAddForm extends AbstractForm {
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
 			'name' => ''
-		)), 'content' => $content));
+		]), 'content' => $content]);
 		$returnValues = $this->objectAction->executeAction();
 		// set generic page name
 		$pageEditor = new PageEditor($returnValues['returnValues']);
-		$pageEditor->update(array(
+		$pageEditor->update([
 			'name' => 'com.woltlab.wcf.generic'.$pageEditor->pageID
-		));
+		]);
 		
 		// call saved event
 		$this->saved();
@@ -230,7 +242,7 @@ class PageAddForm extends AbstractForm {
 		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
 		$this->packageID = 1;
 		$this->displayName = '';
-		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = array();
+		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = [];
 	}
 	
 	/**
@@ -241,7 +253,7 @@ class PageAddForm extends AbstractForm {
 		
 		$pageNodeList = new PageNodeTree();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'parentPageID' => $this->parentPageID,
 			'displayName' => $this->displayName,
@@ -257,6 +269,6 @@ class PageAddForm extends AbstractForm {
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'pageNodeList' => $pageNodeList->getNodeList()
-		));
+		]);
 	}
 }
