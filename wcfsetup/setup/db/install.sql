@@ -506,6 +506,29 @@ CREATE TABLE wcf1_like_object (
 	UNIQUE KEY (objectTypeID, objectID)
 );
 
+DROP TABLE IF EXISTS wcf1_menu;
+CREATE TABLE wcf1_menu (
+	menuID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	identifier VARCHAR(255) NOT NULL,
+	title VARCHAR(255) NOT NULL,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
+	packageID INT(10) NOT NULL
+);
+
+DROP TABLE IF EXISTS wcf1_menu_item;
+CREATE TABLE wcf1_menu_item (
+	itemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	menuID INT(10) NOT NULL,
+	parentItemID INT(10),
+	identifier VARCHAR(255) NOT NULL,
+	title VARCHAR(255) NOT NULL,
+	pageID INT(10),
+	externalURL VARCHAR(255) NOT NULL DEFAULT '',
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
+);
+
 DROP TABLE IF EXISTS wcf1_message_embedded_object;
 CREATE TABLE wcf1_message_embedded_object (
 	messageObjectTypeID INT(10) NOT NULL,
@@ -1575,6 +1598,12 @@ ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_pack
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_menu ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE; 
+
+ALTER TABLE wcf1_menu_item ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON DELETE CASCADE;
+ALTER TABLE wcf1_menu_item ADD FOREIGN KEY (parentItemID) REFERENCES wcf1_menu_item (itemID) ON DELETE SET NULL;
+ALTER TABLE wcf1_menu_item ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE; 
 
 ALTER TABLE wcf1_modification_log ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_modification_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;

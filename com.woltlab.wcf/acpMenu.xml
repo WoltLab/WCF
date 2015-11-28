@@ -616,6 +616,12 @@
 			<controller><![CDATA[wcf\acp\page\PageListPage]]></controller>
 			<parent>wcf.acp.menu.link.cms</parent>
 			<permissions>admin.content.cms.canManagePage</permissions>
-		</acpmenuitem> 
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cms.menu.list">
+			<controller><![CDATA[wcf\acp\page\MenuListPage]]></controller>
+			<parent>wcf.acp.menu.link.cms</parent>
+			<permissions>admin.content.cms.canManageMenu</permissions>
+		</acpmenuitem>
 	</import>
 </data>

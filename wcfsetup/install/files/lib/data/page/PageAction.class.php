@@ -122,7 +122,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	
 	/**
 	 * @see	\wcf\data\IToggleAction::validateToggle()
-	*/
+	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 		

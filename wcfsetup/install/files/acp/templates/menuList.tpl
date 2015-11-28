@@ -1,0 +1,83 @@
+{include file='header' pageTitle='wcf.acp.menu.list'}
+
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Action.Delete('wcf\\data\\menu\\MenuAction', '.jsMenuRow');
+	});
+	//]]>
+</script>
+
+<header class="boxHeadline">
+	<h1>{lang}wcf.acp.menu.list{/lang}</h1>
+</header>
+
+<div class="contentNavigation">
+	{pages print=true assign=pagesLinks controller="MenuList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	
+	<nav>
+		<ul>
+			<li><a href="{link controller='MenuAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.add{/lang}</span></a></li>
+			
+			{event name='contentNavigationButtonsTop'}
+		</ul>
+	</nav>
+</div>
+
+{if $objects|count}
+	<div class="tabularBox tabularBoxTitle marginTop">
+		<header>
+			<h2>{lang}wcf.acp.menu.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
+		
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="columnPageID{if $sortField == 'menuID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=menuID&sortOrder={if $sortField == 'menuID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
+					<th class="columnDigits columnItems{if $sortField == 'customURL'} active {@$sortOrder}{/if}"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=items&sortOrder={if $sortField == 'items' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.menu.items{/lang}</a></th>
+					
+					{event name='columnHeads'}
+				</tr>
+			</thead>
+			
+			<tbody>
+				{foreach from=$objects item=menu}
+					<tr class="jsMenuRow">
+						<td class="columnIcon">
+							<a href="{link controller='MenuEdit' id=$menu->menuID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
+							<a href="{link controller='MenuItemList' id=$menu->menuID}{/link}" title="{lang}wcf.acp.menu.item.list{/lang}" class="jsTooltip"><span class="icon icon16 icon-list"></span></a>
+							{if $menu->canDelete()}
+								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menu->menuID}" data-confirm-message="{lang}wcf.acp.menu.delete.confirmMessage{/lang}"></span>
+							{else}
+								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+							{/if}
+							
+							{event name='rowButtons'}
+						</td>
+						<td class="columnID columnPageID">{@$menu->menuID}</td>
+						<td class="columnTitle"><a href="{link controller='MenuItemList' id=$menu->menuID}{/link}">{lang}{$menu->title}{/lang}</a></td>
+						<td class="columnDigits columnItems">{#$menu->items}</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="contentNavigation">
+		{@$pagesLinks}
+		
+		
+		<nav>
+			<ul>
+				<li><a href="{link controller='MenuAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.add{/lang}</span></a></li>
+			
+				{event name='contentNavigationButtonsBottom'}
+			</ul>
+		</nav>
+	</div>
+{/if}
+
+{include file='footer'}
