@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\html\output;
-
 use wcf\system\html\node\HtmlNodeProcessor;
 use wcf\system\html\output\node\HtmlOutputNodeBlockquote;
 use wcf\system\html\output\node\HtmlOutputNodeWoltlabMention;

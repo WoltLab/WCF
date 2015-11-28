@@ -1,10 +1,10 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\application\ApplicationList;
+use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
 use wcf\data\page\PageNodeTree;
-use wcf\data\page\Page;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;

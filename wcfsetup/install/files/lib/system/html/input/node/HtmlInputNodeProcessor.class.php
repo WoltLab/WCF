@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\html\input\node;
-
 use wcf\system\html\node\HtmlNodeProcessor;
 
 class HtmlInputNodeProcessor extends HtmlNodeProcessor {

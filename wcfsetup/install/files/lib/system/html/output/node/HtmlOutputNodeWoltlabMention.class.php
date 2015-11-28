@@ -1,9 +1,7 @@
 <?php
 namespace wcf\system\html\output\node;
-
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileCache;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\html\output\HtmlOutputNodeProcessor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;

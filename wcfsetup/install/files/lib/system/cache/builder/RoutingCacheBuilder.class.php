@@ -139,8 +139,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 				$data['lookup'][$abbreviations[$packageID]][$customUrl] = $cmsIdentifier;
 				$data['reverse'][$abbreviations[$packageID]][$cmsIdentifier] = $customUrl;
 			}
-			
-			
 		}
 		
 		return $data;

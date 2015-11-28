@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\page\PageAction;
 use wcf\data\page\Page;
+use wcf\data\page\PageAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;

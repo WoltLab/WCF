@@ -2,9 +2,8 @@
 namespace wcf\system\menu\user;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\cache\builder\UserMenuCacheBuilder;
-use wcf\system\event\EventHandler;
-use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\page\IPageMenuItemProvider;
+use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
 
 /**

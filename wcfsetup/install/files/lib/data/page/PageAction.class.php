@@ -28,12 +28,12 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
-	*/
+	 */
 	protected $permissionsDelete = array('admin.content.cms.canManagePage');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
-	*/
+	 */
 	protected $permissionsUpdate = array('admin.content.cms.canManagePage');
 	
 	/**
@@ -122,7 +122,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	
 	/**
 	 * @see	\wcf\data\IToggleAction::validateToggle()
-	*/
+	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 		

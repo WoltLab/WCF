@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\html\input;
-
 use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
