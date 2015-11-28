@@ -8,7 +8,7 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{include file='header'}
+{include file='header' __disableAds=true}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.user.register.disclaimer{/lang}</h1>

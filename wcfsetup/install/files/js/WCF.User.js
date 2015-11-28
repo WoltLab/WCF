@@ -1149,7 +1149,7 @@ WCF.User.Profile.Editor = Class.extend({
 				if ($value === null) $value = $element.val();
 				
 				// check for checkboxes
-				if (/\[\]$/.test($name)) {
+				if ($element.attr('type') === 'checkbox' && /\[\]$/.test($name)) {
 					if (!Array.isArray($values[$fieldName])) {
 						$values[$fieldName] = [];
 					}
