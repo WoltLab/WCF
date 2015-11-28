@@ -27,15 +27,14 @@ class LookupRequestRoute implements IRequestRoute {
 	 * @inheritDoc
 	 */
 	public function matches($requestURL) {
-		$requestURL = FileUtil::addLeadingSlash($requestURL);
+		$requestURL = FileUtil::removeLeadingSlash($requestURL);
 		
-		if ($requestURL === '/') {
+		if ($requestURL === '') {
 			// ignore empty urls and let them be handled by regular routes
 			return false;
 		}
 		
 		$regex = '~^
-			/
 			(?P<controller>.+?)
 			(?:
 				(?P<id>[0-9]+)
@@ -51,23 +50,49 @@ class LookupRequestRoute implements IRequestRoute {
 			$application = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
 			if (!empty($matches['id'])) {
 				// check for static controller URLs
-				$this->routeData = ControllerMap::getInstance()->resolveCustomController($application, $matches['controller']);
+				$this->routeData = ControllerMap::getInstance()->resolveCustomController($application, FileUtil::removeTrailingSlash($matches['controller']));
+				
+				// lookup WCF controllers unless initial request targeted WCF itself
+				if (empty($this->routeData) && $application !== 'wcf') {
+					$this->routeData = ControllerMap::getInstance()->resolveCustomController('wcf', FileUtil::removeTrailingSlash($matches['controller']));
+				}
+				
+				if (!empty($this->routeData)) {
+					if (!empty($matches['id'])) {
+						$this->routeData['id'] = $matches['id'];
+						
+						if (!empty($matches['title'])) {
+							$this->routeData['title'] = $matches['title'];
+						}
+					}
+				}
 			}
 			
 			if (empty($this->routeData)) {
 				// try to match the entire url
-				$this->routeData = ControllerMap::getInstance()->resolveCustomController($application, $requestURL);
+				$this->routeData = ControllerMap::getInstance()->resolveCustomController($application, FileUtil::removeTrailingSlash($requestURL));
+				
+				// lookup WCF controllers unless initial request targeted WCF itself
+				if (empty($this->routeData) && $application !== 'wcf') {
+					$this->routeData = ControllerMap::getInstance()->resolveCustomController('wcf', FileUtil::removeTrailingSlash($requestURL));
+				}
 			}
 		}
 		
-		return (!empty($this->routeData));
+		if (!empty($this->routeData)) {
+			$this->routeData['isDefaultController'] = false;
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getRouteData() {
-		return $this->getRouteData();
+		return $this->routeData;
 	}
 	
 	/**

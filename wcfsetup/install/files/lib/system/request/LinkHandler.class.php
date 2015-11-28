@@ -163,7 +163,7 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		$parameters['controller'] = $controller;
-		$routeURL = RouteHandler::getInstance()->buildRoute($parameters, $isACP);
+		$routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
 		}

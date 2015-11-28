@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\page\PageEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -91,6 +92,10 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$content = [];
 			foreach ($data['elements']['content'] as $language => $contentData) {
+				if (!RouteHandler::isValidCustomUrl($contentData['customurl'])) {
+					throw new SystemException("Invalid custom url for page content '" . $language . "', page identifier '" . $data['attributes']['name'] . "'");
+				}
+				
 				$content[$language] = [
 					'content' => $contentData['content'],
 					'customURL' => $contentData['customurl'],
@@ -133,10 +138,15 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$parentPageID = $row['pageID'];
 		}
 		
+		$customUrl = ($isStatic || empty($data['elements']['customurl'])) ? '' : $data['elements']['customurl'];
+		if ($customUrl && !RouteHandler::isValidCustomUrl($customUrl)) {
+			throw new SystemException("Invalid custom url for page identifier '" . $data['attributes']['name'] . "'");
+		}
+		
 		return [
 			'content' => ($isStatic) ? $data['elements']['content'] : [],
 			'controller' => ($isStatic) ? '' : $data['elements']['controller'],
-			'controllerCustomURL' => ($isStatic || empty($data['elements']['customurl'])) ? '' : $data['elements']['customurl'],
+			'controllerCustomURL' => $customUrl,
 			'displayName' => $displayName,
 			'name' => $data['attributes']['name'],
 			'parentPageID' => $parentPageID

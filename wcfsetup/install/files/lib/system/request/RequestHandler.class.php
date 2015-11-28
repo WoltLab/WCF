@@ -145,31 +145,6 @@ class RequestHandler extends SingletonFactory {
 						exit;
 					}
 				}
-				
-				// handle controller aliasing
-				/*
-				if (empty($routeData['isImplicitController']) && isset($routeData['controller'])) {
-					$ciController = mb_strtolower($routeData['controller']);
-					
-					// aliased controller, redirect to new URL
-					$alias = $this->getAliasByController($ciController);
-					if ($alias !== null) {
-						$this->redirect($routeData, $application);
-					}
-					
-					$controller = $this->getControllerByAlias($ciController);
-					if ($controller !== null) {
-						// check if controller was provided explicitly as it should
-						$alias = $this->getAliasByController($controller);
-						if ($alias != $routeData['controller']) {
-							$routeData['controller'] = $controller;
-							$this->redirect($routeData, $application);
-						}
-						
-						$routeData['controller'] = $controller;
-					}
-				}
-				*/
 			}
 			else if (empty($routeData['controller'])) {
 				$routeData['controller'] = 'index';
@@ -177,20 +152,23 @@ class RequestHandler extends SingletonFactory {
 			
 			$controller = $routeData['controller'];
 			
-			$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest());
-			
-			// check if controller was provided exactly as it should
-			/*
-			if (!URL_LEGACY_MODE && !$this->isACPRequest()) {
-				if (preg_match('~([A-Za-z0-9]+)(?:Action|Form|Page)$~', $classData['className'], $matches)) {
-					$realController = self::getTokenizedController($matches[1]);
-					
-					if ($controller != $realController) {
-						$this->redirect($routeData, $application, $matches[1]);
-					}
+			if (isset($routeData['className'])) {
+				$classData = [
+					'className' => $routeData['className'],
+					'controller' => $routeData['controller'],
+					'pageType' => $routeData['pageType']
+				];
+				
+				unset($routeData['className']);
+				unset($routeData['controller']);
+				unset($routeData['pageType']);
+			}
+			else {
+				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest());
+				if (is_string($classData)) {
+					$this->redirect($routeData, $application, $classData);
 				}
 			}
-			*/
 			
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
@@ -251,7 +229,7 @@ class RequestHandler extends SingletonFactory {
 		// check if currently invoked application matches the landing page
 		if ($landingPageApplication == $application) {
 			$routeData['controller'] = $landingPage->getController();
-			$routeData['controller'] = ControllerMap::getInstance()->lookup($routeData['controller']);
+			$routeData['controller'] = ControllerMap::getInstance()->lookup($application, $routeData['controller']);
 			
 			return;
 		}

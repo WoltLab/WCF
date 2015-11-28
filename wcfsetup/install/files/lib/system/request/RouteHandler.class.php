@@ -172,13 +172,15 @@ class RouteHandler extends SingletonFactory {
 	 * Builds a route based upon route components, this is nothing
 	 * but a reverse lookup.
 	 * 
+	 * @param       string          $application    application identifier
 	 * @param	array		$components
 	 * @param	boolean		$isACP
 	 * @return	string
 	 * @throws      SystemException
 	 */
-	public function buildRoute(array $components, $isACP = null) {
+	public function buildRoute($application, array $components, $isACP = null) {
 		if ($isACP === null) $isACP = RequestHandler::getInstance()->isACPRequest();
+		$components['application'] = $application;
 		
 		foreach ($this->routes as $route) {
 			if ($isACP != $route->isACP()) {
@@ -191,6 +193,24 @@ class RouteHandler extends SingletonFactory {
 		}
 		
 		throw new SystemException("Unable to build route, no available route is satisfied.");
+	}
+	
+	/**
+	 * Returns true if `$customUrl` contains only the letters a-z/A-Z, numbers, dashes,
+	 * underscores and forward slashes.
+	 * 
+	 * All other characters including those from the unicode range are potentially unsafe,
+	 * especially when dealing with url rewriting and resulting encoding issues with some
+	 * webservers.
+	 * 
+	 * This heavily limits the abilities for end-users to define appealing urls, but at
+	 * the same time this ensures a sufficient level of stability.
+	 * 
+	 * @param       string  $customUrl      url to perform sanitiy checks on
+	 * @return      bool    true if `$customUrl` passes the sanity check
+	 */
+	public static function isValidCustomUrl($customUrl) {
+		return preg_match('~^[a-zA-Z0-9\-_/]+$~', $customUrl) === 1;
 	}
 	
 	/**
