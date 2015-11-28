@@ -90,7 +90,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	public static function isBlowfish($hash) {
-		return (Regex::compile('^\$2[afx]\$')->match($hash) ? true : false);
+		return (Regex::compile('^\$2[afxy]\$')->match($hash) ? true : false);
 	}
 	
 	/**

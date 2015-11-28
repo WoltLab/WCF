@@ -8,7 +8,7 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{include file='header'}
+{include file='header' __disableAds=true}
 
 <p class="error">{lang}wcf.global.error.permissionDenied{/lang}</p>
 

@@ -120,6 +120,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			
 			// execute worker
 			$worker->execute();
+			$worker->finalize();
 			
 			// update progress
 			$progress = $worker->getProgress();
