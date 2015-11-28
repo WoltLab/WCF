@@ -40,6 +40,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			'reverse' => []
 		];
 		
+		if (!PACKAGE_ID) {
+			return $data;
+		}
+		
 		$applications = ApplicationHandler::getInstance()->getApplications();
 		$applications[1] = ApplicationHandler::getInstance()->getWCF();
 		foreach ($applications as $application) {
@@ -93,6 +97,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			'lookup' => [],
 			'reverse' => []
 		];
+		
+		if (!PACKAGE_ID) {
+			return $data;
+		}
 		
 		// fetch pages with a controller and a custom url
 		$sql = "SELECT  controller, controllerCustomURL, packageID
