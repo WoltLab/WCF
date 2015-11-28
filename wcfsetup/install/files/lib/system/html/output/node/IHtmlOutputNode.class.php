@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\html\output\node;
-
 use wcf\system\html\output\HtmlOutputNodeProcessor;
 
 interface IHtmlOutputNode {

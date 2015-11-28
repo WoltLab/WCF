@@ -158,7 +158,7 @@ class SystemException extends \Exception implements IPrintableException {
 /**
  * Loads the required classes automatically.
  */
-function __autoload($className) {
+spl_autoload_register(function($className) {
 	$namespaces = explode('\\', $className);
 	if (count($namespaces) > 1) {
 		// remove 'wcf' component
@@ -170,7 +170,7 @@ function __autoload($className) {
 			require_once($classPath);
 		}
 	}
-}
+});
 
 /**
  * Escapes strings for execution in sql queries.
@@ -577,15 +577,33 @@ class Tar {
 		$i = 0;
 		
 		// Read the 512 bytes header
+		$longFilename = null;
 		while (strlen($binaryData = $this->file->read(512)) != 0) {
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {
 				continue;
 			}
-			$this->contentList[$i] = $header;
-			$this->contentList[$i]['index'] = $i;
-			$i++;
+			
+			// fixes a bug that files with long names aren't correctly
+			// extracted
+			if ($longFilename !== null) {
+				$header['filename'] = $longFilename;
+				$longFilename = null;
+			}
+			if ($header['typeflag'] == 'L') {
+				$format = 'Z'.$header['size'].'filename';
+				
+				$fileData = unpack($format, $this->file->read(512));
+				$longFilename = $fileData['filename'];
+				$header['size'] = 0;
+			}
+			// don't include the @LongLink file in the content list
+			else {
+				$this->contentList[$i] = $header;
+				$this->contentList[$i]['index'] = $i;
+				$i++;
+			}
 			
 			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
 		}
@@ -593,7 +611,7 @@ class Tar {
 	
 	/**
 	 * Unpacks file header for one file entry.
-	 *
+	 * 
 	 * @param	string		$binaryData
 	 * @return	array		$fileheader
 	 */
@@ -618,14 +636,8 @@ class Tar {
 			$checksum += ord(substr($binaryData, $i, 1));
 		}
 		
-		// Extract the values
-		//$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $binaryData);
-		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-			$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
-		}
-		else {
-			$format = 'a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix';
-		}
+		// extract values
+		$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
 		
 		$data = unpack($format, $binaryData);
 		

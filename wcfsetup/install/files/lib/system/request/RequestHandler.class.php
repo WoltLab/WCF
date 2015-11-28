@@ -28,16 +28,6 @@ class RequestHandler extends SingletonFactory {
 	protected $activeRequest = null;
 	
 	/**
-	 * @var ApplicationHandler
-	 */
-	protected $applicationHandler;
-	
-	/**
-	 * @var ControllerMap
-	 */
-	protected $controllerMap;
-	
-	/**
 	 * true, if current domain mismatch any known domain
 	 * @var	boolean
 	 */
@@ -50,37 +40,11 @@ class RequestHandler extends SingletonFactory {
 	protected $isACPRequest = false;
 	
 	/**
-	 * @var PageMenu
-	 */
-	protected $pageMenu;
-	
-	/**
-	 * @var RouteHandler
-	 */
-	protected $routeHandler;
-	
-	/**
-	 * RequestHandler constructor.
-	 * 
-	 * @param       ApplicationHandler      $applicationHandler
-	 * @param       ControllerMap           $controllerMap
-	 * @param       RouteHandler            $routeHandler
-	 */
-	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, PageMenu $pageMenu, RouteHandler $routeHandler) {
-		$this->applicationHandler = $applicationHandler;
-		$this->controllerMap = $controllerMap;
-		$this->pageMenu = $pageMenu;
-		$this->routeHandler = $routeHandler;
-		
-		parent::__construct();
-	}
-	
-	/**
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		if (isset($_SERVER['HTTP_HOST'])) {
-			foreach ($this->applicationHandler->getApplications() as $application) {
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 				if ($application->domainName == $_SERVER['HTTP_HOST']) {
 					$this->inRescueMode = false;
 					break;
@@ -89,7 +53,7 @@ class RequestHandler extends SingletonFactory {
 			
 			// check if WCF is running as standalone
 			if ($this->inRescueMode() && PACKAGE_ID == 1) {
-				if ($this->applicationHandler->getWCF()->domainName == $_SERVER['HTTP_HOST']) {
+				if (ApplicationHandler::getInstance()->getWCF()->domainName == $_SERVER['HTTP_HOST']) {
 					$this->inRescueMode = false;
 				}
 			}
@@ -116,11 +80,7 @@ class RequestHandler extends SingletonFactory {
 	public function handle($application = 'wcf', $isACPRequest = false) {
 		$this->isACPRequest = $isACPRequest;
 		
-		// initialize route handler
-		$this->routeHandler->setRequestHandler($this);
-		$this->routeHandler->setDefaultRoutes();
-		
-		if (!$this->routeHandler->matches()) {
+		if (!RouteHandler::getInstance()->matches()) {
 			if (ENABLE_DEBUG_MODE) {
 				throw new SystemException("Cannot handle request, no valid route provided.");
 			}
@@ -163,7 +123,7 @@ class RequestHandler extends SingletonFactory {
 	 */
 	protected function buildRequest($application) {
 		try {
-			$routeData = $this->routeHandler->getRouteData();
+			$routeData = RouteHandler::getInstance()->getRouteData();
 			
 			// handle landing page for frontend requests
 			if (!$this->isACPRequest()) {
@@ -171,7 +131,7 @@ class RequestHandler extends SingletonFactory {
 				
 				// check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
 				if (!defined('WCF_RUN_MODE') || WCF_RUN_MODE != 'embedded') {
-					$applicationObject = $this->applicationHandler->getApplication($application);
+					$applicationObject = ApplicationHandler::getInstance()->getApplication($application);
 					if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
 						// build URL, e.g. http://example.net/forum/
 						$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
@@ -185,31 +145,6 @@ class RequestHandler extends SingletonFactory {
 						exit;
 					}
 				}
-				
-				// handle controller aliasing
-				/*
-				if (empty($routeData['isImplicitController']) && isset($routeData['controller'])) {
-					$ciController = mb_strtolower($routeData['controller']);
-					
-					// aliased controller, redirect to new URL
-					$alias = $this->getAliasByController($ciController);
-					if ($alias !== null) {
-						$this->redirect($routeData, $application);
-					}
-					
-					$controller = $this->getControllerByAlias($ciController);
-					if ($controller !== null) {
-						// check if controller was provided explicitly as it should
-						$alias = $this->getAliasByController($controller);
-						if ($alias != $routeData['controller']) {
-							$routeData['controller'] = $controller;
-							$this->redirect($routeData, $application);
-						}
-						
-						$routeData['controller'] = $controller;
-					}
-				}
-				*/
 			}
 			else if (empty($routeData['controller'])) {
 				$routeData['controller'] = 'index';
@@ -217,20 +152,23 @@ class RequestHandler extends SingletonFactory {
 			
 			$controller = $routeData['controller'];
 			
-			$classData = $this->controllerMap->resolve($application, $controller, $this->isACPRequest());
-			
-			// check if controller was provided exactly as it should
-			/*
-			if (!URL_LEGACY_MODE && !$this->isACPRequest()) {
-				if (preg_match('~([A-Za-z0-9]+)(?:Action|Form|Page)$~', $classData['className'], $matches)) {
-					$realController = self::getTokenizedController($matches[1]);
-					
-					if ($controller != $realController) {
-						$this->redirect($routeData, $application, $matches[1]);
-					}
+			if (isset($routeData['className'])) {
+				$classData = [
+					'className' => $routeData['className'],
+					'controller' => $routeData['controller'],
+					'pageType' => $routeData['pageType']
+				];
+				
+				unset($routeData['className']);
+				unset($routeData['controller']);
+				unset($routeData['pageType']);
+			}
+			else {
+				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest());
+				if (is_string($classData)) {
+					$this->redirect($routeData, $application, $classData);
 				}
 			}
-			*/
 			
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
@@ -269,11 +207,11 @@ class RequestHandler extends SingletonFactory {
 	 * @param	array		$routeData
 	 */
 	protected function handleDefaultController($application, array &$routeData) {
-		if (!$this->routeHandler->isDefaultController()) {
+		if (!RouteHandler::getInstance()->isDefaultController()) {
 			return;
 		}
 		
-		$landingPage = $this->pageMenu->getLandingPage();
+		$landingPage = PageMenu::getInstance()->getLandingPage();
 		if ($landingPage === null) {
 			return;
 		}
@@ -282,8 +220,8 @@ class RequestHandler extends SingletonFactory {
 		
 		// resolve implicit application abbreviation for landing page controller
 		$landingPageApplication = $landingPage->getApplication();
-		$primaryApplication = $this->applicationHandler->getPrimaryApplication();
-		$primaryApplicationAbbr = $this->applicationHandler->getAbbreviation($primaryApplication->packageID);
+		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+		$primaryApplicationAbbr = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
 		if ($landingPageApplication == 'wcf') {
 			$landingPageApplication = $primaryApplicationAbbr;
 		}
@@ -291,7 +229,7 @@ class RequestHandler extends SingletonFactory {
 		// check if currently invoked application matches the landing page
 		if ($landingPageApplication == $application) {
 			$routeData['controller'] = $landingPage->getController();
-			$routeData['controller'] = $this->controllerMap->lookup($routeData['controller']);
+			$routeData['controller'] = ControllerMap::getInstance()->lookup($application, $routeData['controller']);
 			
 			return;
 		}
@@ -303,9 +241,9 @@ class RequestHandler extends SingletonFactory {
 		}
 		
 		// set default controller
-		$applicationObj = WCF::getApplicationObject($this->applicationHandler->getApplication($application));
+		$applicationObj = WCF::getApplicationObject(ApplicationHandler::getInstance()->getApplication($application));
 		$routeData['controller'] = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $applicationObj->getPrimaryController());
-		$routeData['controller'] = $this->controllerMap->lookup($routeData['controller']);
+		$routeData['controller'] = ControllerMap::getInstance()->lookup($routeData['controller']);
 	}
 	
 	/**

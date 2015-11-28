@@ -24,33 +24,10 @@ class UserProfileMenu extends SingletonFactory {
 	public $activeMenuItem = null;
 	
 	/**
-	 * @var EventHandler
-	 */
-	protected $eventHandler;
-	
-	/**
 	 * list of all menu items
 	 * @var	UserProfileMenuItem[]
 	 */
 	public $menuItems = null;
-	
-	/**
-	 * @var UserProfileMenuCacheBuilder
-	 */
-	protected $userProfileMenuCacheBuilder;
-	
-	/**
-	 * UserProfileMenu constructor.
-	 * 
-	 * @param       EventHandler                    $eventHandler
-	 * @param       UserProfileMenuCacheBuilder     $userProfileMenuCacheBuilder
-	 */
-	public function __construct(EventHandler $eventHandler, UserProfileMenuCacheBuilder $userProfileMenuCacheBuilder) {
-		$this->eventHandler = $eventHandler;
-		$this->userProfileMenuCacheBuilder = $userProfileMenuCacheBuilder;
-		
-		parent::__construct();
-	}
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -63,7 +40,7 @@ class UserProfileMenu extends SingletonFactory {
 		$this->checkMenuItems();
 		
 		// call init event
-		$this->eventHandler->fireAction($this, 'init');
+		EventHandler::getInstance()->fireAction($this, 'init');
 	}
 	
 	/**
@@ -71,9 +48,9 @@ class UserProfileMenu extends SingletonFactory {
 	 */
 	protected function loadCache() {
 		// call loadCache event
-		$this->eventHandler->fireAction($this, 'loadCache');
+		EventHandler::getInstance()->fireAction($this, 'loadCache');
 		
-		$this->menuItems = $this->userProfileMenuCacheBuilder->getData();
+		$this->menuItems = UserProfileMenuCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

@@ -674,6 +674,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * Please consider replacing your calls with markAsConfirmed().
 	 * 
 	 * @deprecated
+	 * 
 	 * @param	string		$eventName
 	 * @param	string		$objectType
 	 * @param	array<integer>	$recipientIDs

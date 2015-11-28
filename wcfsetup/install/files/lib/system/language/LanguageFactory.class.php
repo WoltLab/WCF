@@ -26,11 +26,6 @@ class LanguageFactory extends SingletonFactory {
 	protected $cache = null;
 	
 	/**
-	 * @var LanguageCacheBuilder
-	 */
-	protected $languageCacheBuilder;
-	
-	/**
 	 * initialized languages
 	 * @var	Language[]
 	 */
@@ -41,17 +36,6 @@ class LanguageFactory extends SingletonFactory {
 	 * @var	TemplateScriptingCompiler
 	 */
 	protected $scriptingCompiler = null;
-	
-	/**
-	 * LanguageFactory constructor.
-	 * 
-	 * @param       LanguageCacheBuilder    $languageCacheBuilder
-	 */
-	public function __construct(LanguageCacheBuilder $languageCacheBuilder) {
-		$this->languageCacheBuilder = $languageCacheBuilder;
-		
-		parent::__construct();
-	}
 	
 	/**
 	 * @see	SingletonFactory::init()
@@ -232,7 +216,7 @@ class LanguageFactory extends SingletonFactory {
 	 */
 	protected function loadCache() {
 		if (defined('WCF_N')) {
-			$this->cache = $this->languageCacheBuilder->getData();
+			$this->cache = LanguageCacheBuilder::getInstance()->getData();
 		}
 	}
 	
@@ -240,7 +224,7 @@ class LanguageFactory extends SingletonFactory {
 	 * Clears languages cache.
 	 */
 	public function clearCache() {
-		$this->languageCacheBuilder->reset();
+		LanguageCacheBuilder::getInstance()->reset();
 	}
 	
 	/**
@@ -252,6 +236,15 @@ class LanguageFactory extends SingletonFactory {
 	 */
 	public static function fixLanguageCode($languageCode) {
 		return preg_replace('/-[a-z0-9]+/', '', $languageCode);
+	}
+	
+	/**
+	 * Returns the default language object.
+	 * 
+	 * @return      Language
+	 */
+	public function getDefaultLanguage() {
+		return $this->getLanguage($this->cache['default']);
 	}
 	
 	/**

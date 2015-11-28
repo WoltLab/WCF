@@ -20,26 +20,6 @@ use wcf\util\StringUtil;
  */
 class LinkHandler extends SingletonFactory {
 	/**
-	 * @var ApplicationHandler
-	 */
-	protected $applicationHandler;
-	
-	/**
-	 * @var PageMenu
-	 */
-	protected $pageMenu;
-	
-	/**
-	 * @var RequestHandler
-	 */
-	protected $requestHandler;
-	
-	/**
-	 * @var RouteHandler
-	 */
-	protected $routeHandler;
-	
-	/**
 	 * regex object to filter title
 	 * @var	\wcf\system\RegEx
 	 */
@@ -57,21 +37,6 @@ class LinkHandler extends SingletonFactory {
 	 */
 	protected $titleReplace = array();
 	
-	/**
-	 * LinkHandler constructor.
-	 * 
-	 * @param       ApplicationHandler      $applicationHandler
-	 * @param       RequestHandler          $requestHandler
-	 * @param       RouteHandler            $routeHandler
-	 */
-	public function __construct(ApplicationHandler $applicationHandler, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
-		$this->applicationHandler = $applicationHandler;
-		$this->pageMenu = $pageMenu;
-		$this->requestHandler = $requestHandler;
-		$this->routeHandler = $routeHandler;
-		
-		parent::__construct();
-	}
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -101,7 +66,7 @@ class LinkHandler extends SingletonFactory {
 	public function getLink($controller = null, array $parameters = array(), $url = '') {
 		$abbreviation = 'wcf';
 		$anchor = '';
-		$isACP = $originIsACP = $this->requestHandler->isACPRequest();
+		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
 		$forceWCF = $isRaw = false;
 		$appendSession = $encodeTitle = true;
 		
@@ -163,7 +128,7 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
-				return $this->pageMenu->getLandingPage()->getProcessor()->getLink();
+				return PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
 			}
 		}
 		
@@ -198,7 +163,7 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		$parameters['controller'] = $controller;
-		$routeURL = $this->routeHandler->buildRoute($parameters, $isACP);
+		$routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
 		}
@@ -220,22 +185,22 @@ class LinkHandler extends SingletonFactory {
 			$url = RouteHandler::getHost() . RouteHandler::getPath(array('acp')) . ($isACP ? 'acp/' : '') . $url;
 		}
 		else {
-			if ($this->requestHandler->inRescueMode()) {
+			if (RequestHandler::getInstance()->inRescueMode()) {
 				$pageURL = RouteHandler::getHost() . str_replace('//', '/', RouteHandler::getPath(array('acp')));
 			}
 			else {
 				// try to resolve abbreviation
 				$application = null;
 				if ($abbreviation != 'wcf') {
-					$application = $this->applicationHandler->getApplication($abbreviation);
+					$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
 				}
 				
 				// fallback to primary application if abbreviation is 'wcf' or unknown
 				if ($forceWCF) {
-					$application = $this->applicationHandler->getWCF();
+					$application = ApplicationHandler::getInstance()->getWCF();
 				}
 				else if ($application === null) {
-					$application = $this->applicationHandler->getPrimaryApplication();
+					$application = ApplicationHandler::getInstance()->getPrimaryApplication();
 				}
 				
 				$pageURL = $application->getPageURL();

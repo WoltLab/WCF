@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\event;
+use wcf\data\event\listener\EventListener;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\event\IEventListener as ILegacyEventListener;
@@ -22,11 +23,6 @@ class EventHandler extends SingletonFactory {
 	 * @var	array
 	 */
 	protected $actions = null;
-	
-	/**
-	 * @var EventListenerCacheBuilder
-	 */
-	protected $eventListenerCacheBuilder;
 	
 	/**
 	 * registered inherit actions
@@ -53,22 +49,11 @@ class EventHandler extends SingletonFactory {
 	protected $listenerObjects = [];
 	
 	/**
-	 * EventHandler constructor.
-	 * 
-	 * @param       EventListenerCacheBuilder       $eventListenerCacheBuilder
-	 */
-	public function __construct(EventListenerCacheBuilder $eventListenerCacheBuilder) {
-		$this->eventListenerCacheBuilder = $eventListenerCacheBuilder;
-		
-		parent::__construct();
-	}
-	
-	/**
 	 * Loads all registered actions of the active package.
 	 */
 	protected function loadActions() {
 		$environment = ((class_exists('wcf\system\WCFACP', false) || class_exists('wcf\system\CLIWCF', false)) ? 'admin' : 'user');
-		$cache = $this->eventListenerCacheBuilder->getData();
+		$cache = EventListenerCacheBuilder::getInstance()->getData();
 		
 		if (isset($cache['actions'][$environment])) {
 			$this->actions = $cache['actions'][$environment];
@@ -113,6 +98,7 @@ class EventHandler extends SingletonFactory {
 				if (isset($this->inheritedActions[$member])) {
 					$actions = $this->inheritedActions[$member];
 					if (isset($actions[$eventName]) && !empty($actions[$eventName])) {
+						/** @var EventListener $eventListener */
 						foreach ($actions[$eventName] as $eventListener) {
 							if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
 								if (isset($this->inheritedActionsObjects[$name][$eventListener->listenerClassName])) continue;
@@ -200,6 +186,7 @@ class EventHandler extends SingletonFactory {
 			}
 			
 			$this->actionsObjects[$name] = [];
+			/** @var EventListener $eventListener */
 			foreach ($this->actions[$name] as $eventListener) {
 				if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
 					if (isset($this->actionsObjects[$name][$eventListener->listenerClassName])) continue;

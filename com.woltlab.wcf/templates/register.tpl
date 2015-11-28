@@ -36,7 +36,7 @@
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-{include file='header' __disableLoginLink=true}
+{include file='header' __disableLoginLink=true __disableAds=true}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.user.register{/lang}</h1>

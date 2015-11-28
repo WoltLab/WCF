@@ -1,6 +1,9 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
+use wcf\util\StringUtil;
 
 /**
  * Resolves incoming requests and performs lookups for controller to url mappings.
@@ -12,24 +15,31 @@ use wcf\system\exception\SystemException;
  * @subpackage	system.request
  * @category	Community Framework
  */
-class ControllerMap {
+class ControllerMap extends SingletonFactory {
+	protected $ciControllers;
+	
+	protected $customUrls;
+	
 	/**
 	 * list of <ControllerName> to <controller-name> mappings
 	 * @var array<string>
 	 */
 	protected $lookupCache = [];
 	
-	public function __construct() {
-		// TODO: initialize custom controller mappings
+	protected function init() {
+		$this->ciControllers = RoutingCacheBuilder::getInstance()->getData([], 'ciControllers');
+		$this->customUrls = RoutingCacheBuilder::getInstance()->getData([], 'customUrls');
 	}
 	
 	/**
 	 * Resolves class data for given controller.
 	 * 
+	 * URL -> Controller
+	 * 
 	 * @param       string          $application    application identifier
 	 * @param       string          $controller     url controller
 	 * @param       boolean         $isAcpRequest   true if this is an ACP request
-	 * @return      array<string>   className, controller and pageType
+	 * @return      mixed           array containing className, controller and pageType or a string containing the controller name for aliased controllers
 	 * @throws      SystemException
 	 */
 	public function resolve($application, $controller, $isAcpRequest) {
@@ -49,36 +59,87 @@ class ControllerMap {
 		if ($classData === null) $classData = $this->getClassData($application, $controller, $isAcpRequest, 'action');
 		
 		if ($classData === null) {
-			// TODO: check custom controller mappings
-			
 			throw new SystemException("Unknown controller '" . $controller . "'");
 		}
 		else {
-			// TODO: check if controller was aliased and force a redirect
+			// handle controllers with a custom url
+			$controller = $classData['controller'];
+			
+			if (isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
+				return $this->customUrls['reverse'][$application][$controller];
+			}
+			else if ($application !== 'wcf') {
+				if (isset($this->customUrls['reverse']['wcf']) && isset($this->customUrls['reverse']['wcf'][$controller])) {
+					return $this->customUrls['reverse']['wcf'][$controller];
+				}
+			}
 		}
 		
 		return $classData;
 	}
 	
 	/**
+	 * Attempts to resolve a custom controller, will return an empty array
+	 * regardless if given controller would match an actual controller class.
+	 * 
+	 * URL -> Controller
+	 * 
+	 * @param       string  $application    application identifier
+	 * @param       string  $controller     url controller
+	 * @return      array   empty array if there is no exact match
+	 */
+	public function resolveCustomController($application, $controller) {
+		if (isset($this->customUrls['lookup'][$application]) && isset($this->customUrls['lookup'][$application][$controller])) {
+			$data = $this->customUrls['lookup'][$application][$controller];
+			if (preg_match('~^__WCF_CMS__(?P<pageID>\d+)-(?P<languageID>\d+)$~', $data, $matches)) {
+				// TODO: this does not work, it should match the returned array below
+				return [
+					'controller' => '\\wcf\\page\\CmsPage',
+					'languageID' => $matches['languageID'],
+					'pageID' => $matches['pageID']
+				];
+			}
+			else {
+				preg_match('~([^\\\]+)(Action|Form|Page)$~', $data, $matches);
+				
+				return [
+					'className' => $data,
+					'controller' => $matches[1],
+					'pageType' => strtolower($matches[2])
+				];
+			}
+		}
+		
+		return [];
+	}
+	
+	/**
 	 * Transforms given controller into its url representation.
 	 * 
+	 * Controller -> URL
+	 * 
+	 * @param       string          $application    application identifier
 	 * @param       string          $controller     controller class, e.g. 'MembersList'
 	 * @return      string          url representation of controller, e.g. 'members-list'
 	 */
-	public function lookup($controller) {
-		if (isset($this->lookupCache[$controller])) {
-			return $this->lookupCache[$controller];
+	public function lookup($application, $controller) {
+		$lookupKey = $application . '-' . $controller;
+		
+		if (isset($this->lookupCache[$lookupKey])) {
+			return $this->lookupCache[$lookupKey];
 		}
 		
-		$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-		$parts = array_map('strtolower', $parts);
+		if (isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
+			$urlController = $this->customUrls['reverse'][$application][$controller];
+		}
+		else {
+			$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+			$parts = array_map('strtolower', $parts);
+			
+			$urlController = implode('-', $parts);
+		}
 		
-		$urlController = implode('-', $parts);
-		
-		// TODO: lookup custom controller mappings
-		
-		$this->lookupCache[$controller] = $urlController;
+		$this->lookupCache[$lookupKey] = $urlController;
 		
 		return $urlController;
 	}

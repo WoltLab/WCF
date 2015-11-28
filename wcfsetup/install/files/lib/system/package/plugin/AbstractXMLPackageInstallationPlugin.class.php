@@ -204,6 +204,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			// update existing item
 			$baseClass = call_user_func(array($this->className, 'getBaseClass'));
 			
+			/** @var \wcf\data\DatabaseObjectEditor $itemEditor */
 			$itemEditor = new $this->className(new $baseClass(null, $row));
 			$itemEditor->update($data);
 			
@@ -373,7 +374,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 					return false;
 				}
 			}
-			catch (\SystemException $e) {
+			catch (SystemException $e) {
 				return false;
 			}
 			

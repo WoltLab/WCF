@@ -14,31 +14,10 @@ use wcf\system\event\EventHandler;
  */
 class ACPSessionFactory {
 	/**
-	 * @var EventHandler
-	 */
-	protected $eventHandler;
-	
-	/**
 	 * session editor class name
 	 * @var	string
 	 */
 	protected $sessionEditor = 'wcf\data\acp\session\ACPSessionEditor';
-	
-	/**
-	 * @var SessionHandler
-	 */
-	protected $sessionHandler;
-	
-	/**
-	 * ACPSessionFactory constructor.
-	 * 
-	 * @param       EventHandler    $eventHandler
-	 * @param       SessionHandler  $sessionHandler
-	 */
-	public function __construct(EventHandler $eventHandler, SessionHandler $sessionHandler) {
-		$this->eventHandler = $eventHandler;
-		$this->sessionHandler = $sessionHandler;
-	}
 	
 	/**
 	 * Loads the object of the active session.
@@ -46,18 +25,18 @@ class ACPSessionFactory {
 	public function load() {
 		// get session
 		$sessionID = $this->readSessionID();
-		$this->sessionHandler->load($this->sessionEditor, $sessionID);
+		SessionHandler::getInstance()->load($this->sessionEditor, $sessionID);
 		
 		// call beforeInit event
 		if (!defined('NO_IMPORTS')) {
-			$this->eventHandler->fireAction($this, 'beforeInit');
+			EventHandler::getInstance()->fireAction($this, 'beforeInit');
 		}
 		
 		$this->init();
 		
 		// call afterInit event
 		if (!defined('NO_IMPORTS')) {
-			$this->eventHandler->fireAction($this, 'afterInit');
+			EventHandler::getInstance()->fireAction($this, 'afterInit');
 		}
 	}
 	
@@ -74,7 +53,7 @@ class ACPSessionFactory {
 	 * Initializes the session system.
 	 */
 	protected function init() {
-		$this->sessionHandler->initSession();
+		SessionHandler::getInstance()->initSession();
 	}
 	
 	/**

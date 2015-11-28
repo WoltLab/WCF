@@ -1,11 +1,9 @@
 <?php
 namespace wcf\system\html\output;
-
 use wcf\system\html\node\HtmlNodeProcessor;
 use wcf\system\html\output\node\HtmlOutputNodeBlockquote;
 use wcf\system\html\output\node\HtmlOutputNodeWoltlabMention;
 use wcf\system\html\output\node\IHtmlOutputNode;
-use wcf\system\WCF;
 
 class HtmlOutputNodeProcessor extends HtmlNodeProcessor {
 	protected $nodeData = [];
@@ -18,10 +16,10 @@ class HtmlOutputNodeProcessor extends HtmlNodeProcessor {
 	
 	public function process() {
 		// TODO: this should be dynamic to some extent
-		$quoteNode = WCF::getDIContainer()->get(HtmlOutputNodeBlockquote::class);
+		$quoteNode = new HtmlOutputNodeBlockquote();
 		$quoteNode->process($this);
 		
-		$woltlabMentionNode = WCF::getDIContainer()->get(HtmlOutputNodeWoltlabMention::class);
+		$woltlabMentionNode = new HtmlOutputNodeWoltlabMention();
 		$woltlabMentionNode->process($this);
 	}
 	

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system;
-use DI\ContainerBuilder;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -18,8 +17,6 @@ use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
 use wcf\system\template\SetupTemplateEngine;
-use wcf\system\Regex;
-use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -104,10 +101,6 @@ class WCFSetup extends WCF {
 	 */
 	public function __construct() {
 		@set_time_limit(0);
-		
-		require('api/autoload.php');
-		$builder = new ContainerBuilder();
-		self::$diContainer = $builder->build();
 		
 		$this->getDeveloperMode();
 		$this->getLanguageSelection();
@@ -221,19 +214,15 @@ class WCFSetup extends WCF {
 	 * @return	array
 	 */
 	protected static function getAvailableLanguages() {
-		$languages = $match = array();
-		$tar = new Tar(SETUP_FILE);
-		foreach ($tar->getContentList() as $file) {
-			if (strpos($file['filename'], 'setup/lang/') === 0 && substr($file['filename'], -4) == '.xml') {
-				$xml = new XML();
-				$xml->load(TMP_DIR.$file['filename']);
-				$languageCode = LanguageEditor::readLanguageCodeFromXML($xml);
-				$languageName = LanguageEditor::readLanguageNameFromXML($xml);
-				
-				$languages[$languageCode] = $languageName;
-			}
+		$languages = $match = [];
+		foreach (glob(TMP_DIR.'setup/lang/*.xml') as $file) {
+			$xml = new XML();
+			$xml->load($file);
+			$languageCode = LanguageEditor::readLanguageCodeFromXML($xml);
+			$languageName = LanguageEditor::readLanguageNameFromXML($xml);
+			
+			$languages[$languageCode] = $languageName;
 		}
-		$tar->close();
 		
 		// sort languages by language name
 		asort($languages);

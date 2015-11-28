@@ -113,65 +113,6 @@
         ]
     },
     {
-        "name": "php-di/php-di",
-        "version": "5.1.0",
-        "version_normalized": "5.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/PHP-DI/PHP-DI.git",
-            "reference": "f4a8088fa4eb480ee66c51b5ee4e4e30cce78489"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/PHP-DI/PHP-DI/zipball/f4a8088fa4eb480ee66c51b5ee4e4e30cce78489",
-            "reference": "f4a8088fa4eb480ee66c51b5ee4e4e30cce78489",
-            "shasum": ""
-        },
-        "require": {
-            "container-interop/container-interop": "~1.0",
-            "php": ">=5.4.0",
-            "php-di/invoker": "^1.0.1",
-            "php-di/phpdoc-reader": "~2.0"
-        },
-        "replace": {
-            "mnapoli/php-di": "*"
-        },
-        "require-dev": {
-            "doctrine/annotations": "~1.2",
-            "doctrine/cache": "~1.4",
-            "mnapoli/phpunit-easymock": "~0.1.4",
-            "ocramius/proxy-manager": "~1.0",
-            "phpunit/phpunit": "~4.5"
-        },
-        "suggest": {
-            "doctrine/annotations": "Install it if you want to use annotations (version ~1.2)",
-            "doctrine/cache": "Install it if you want to use the cache (version ~1.4)",
-            "ocramius/proxy-manager": "Install it if you want to use lazy injection (version ~1.0)"
-        },
-        "time": "2015-09-08 08:56:29",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "DI\\": "src/DI/"
-            },
-            "files": [
-                "src/DI/functions.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "description": "The dependency injection container for humans",
-        "homepage": "http://php-di.org/",
-        "keywords": [
-            "container",
-            "dependency injection",
-            "di"
-        ]
-    },
-    {
         "name": "ezyang/htmlpurifier",
         "version": "v4.7.0",
         "version_normalized": "4.7.0.0",

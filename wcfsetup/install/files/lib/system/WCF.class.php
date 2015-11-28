@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system;
-use DI\ContainerBuilder;
 use wcf\data\application\Application;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\application\IApplication;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
@@ -62,7 +62,7 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of currently loaded applications
-	 * @var	array<\wcf\data\application\Application>
+	 * @var Application[]
 	 */
 	protected static $applications = array();
 	
@@ -95,12 +95,6 @@ class WCF {
 	 * @var	\wcf\system\database\Database
 	 */
 	protected static $dbObj = null;
-	
-	/**
-	 * dependency injection container
-	 * @var \DI\Container
-	 */
-	protected static $diContainer = null;
 	
 	/**
 	 * language object
@@ -142,9 +136,6 @@ class WCF {
 		// define tmp directory
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
-		$builder = new ContainerBuilder();
-		self::$diContainer = $builder->build();
-		
 		// start initialization
 		$this->initDB();
 		$this->loadOptions();
@@ -157,15 +148,6 @@ class WCF {
 		$this->initBlacklist();
 		
 		EventHandler::getInstance()->fireAction($this, 'initialized');
-	}
-	
-	/**
-	 * Returns the dependency injection container.
-	 * 
-	 * @return \DI\Container
-	 */
-	public static final function getDIContainer() {
-		return self::$diContainer;
 	}
 	
 	/**
@@ -325,10 +307,10 @@ class WCF {
 	 * Starts the session system.
 	 */
 	protected function initSession() {
-		$factory = self::$diContainer->get(SessionFactory::class);
+		$factory = new SessionFactory();
 		$factory->load();
 		
-		self::$sessionObj = self::$diContainer->get(SessionHandler::class);
+		self::$sessionObj = SessionHandler::getInstance();
 		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
@@ -346,14 +328,14 @@ class WCF {
 		mb_language('uni');
 		
 		// get language
-		self::$languageObj = self::$diContainer->get(LanguageFactory::class)->getUserLanguage(self::getSession()->getLanguageID());
+		self::$languageObj = LanguageFactory::getInstance()->getUserLanguage(self::getSession()->getLanguageID());
 	}
 	
 	/**
 	 * Initialises the template engine.
 	 */
 	protected function initTPL() {
-		self::$tplObj = self::$diContainer->get(TemplateEngine::class);
+		self::$tplObj = TemplateEngine::getInstance();
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
 		$this->assignDefaultTemplateVariables();
 		
@@ -368,7 +350,7 @@ class WCF {
 			self::getSession()->setStyleID(intval($_REQUEST['styleID']));
 		}
 		
-		$styleHandler = self::$diContainer->get(StyleHandler::class);
+		$styleHandler = StyleHandler::getInstance();
 		$styleHandler->changeStyle(self::getSession()->getStyleID());
 	}
 	
@@ -458,6 +440,7 @@ class WCF {
 		
 		// step 2) run each application
 		if (!class_exists('wcf\system\WCFACP', false)) {
+			/** @var IApplication $application */
 			foreach ($loadedApplications as $application) {
 				$application->__run();
 			}

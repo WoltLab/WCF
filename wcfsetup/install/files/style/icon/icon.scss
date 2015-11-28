@@ -116,11 +116,25 @@ a > span.fa:not(.pointer) {
 
 // spinner animation
 .fa-spinner {
-	height: auto;
+	animation: wcfSpinner .6s linear infinite;
+	// TODO: these colors shouldn't be hard-coded
+	border: 2px solid rgb(204, 204, 204);
+	border-top-color: rgb(79, 129, 189);
+	border-radius: 50%;
 	
-	-webkit-animation: spin 1s infinite steps(8);
-	animation: spin 1s infinite steps(8);
+	&::before {
+		display: none;
+	}
 }
+
+@-webkit-keyframes wcfSpinner {
+	to { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes wcfSpinner {
+	to { transform: rotate(360deg); }
+}
+
 @-webkit-keyframes spin {
 	0% { -webkit-transform: rotate(0deg); }
 	100% { -webkit-transform: rotate(359deg); }

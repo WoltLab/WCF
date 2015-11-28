@@ -4,6 +4,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\route\DynamicRequestRoute;
+use wcf\system\request\route\LookupRequestRoute;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -53,31 +54,16 @@ class RouteHandler extends SingletonFactory {
 	protected static $secure = null;
 	
 	/**
-	 * @var ApplicationHandler
-	 */
-	protected $applicationHandler;
-	
-	/**
 	 * list of application abbreviation and default controller name
 	 * @var	array<string>
 	 */
 	protected $defaultControllers = null;
 	
 	/**
-	 * @var EventHandler
-	 */
-	protected $eventHandler;
-	
-	/**
 	 * true, if default controller is used (support for custom landing page)
 	 * @var	boolean
 	 */
 	protected $isDefaultController = false;
-	
-	/**
-	 * @var RequestHandler
-	 */
-	protected $requestHandler;
 	
 	/**
 	 * list of available routes
@@ -92,41 +78,21 @@ class RouteHandler extends SingletonFactory {
 	protected $routeData = null;
 	
 	/**
-	 * RouteHandler constructor.
-	 * 
-	 * @param       ApplicationHandler      $applicationHandler
-	 * @param       EventHandler            $eventHandler
-	 */
-	public function __construct(ApplicationHandler $applicationHandler, EventHandler $eventHandler) {
-		$this->applicationHandler = $applicationHandler;
-		$this->eventHandler = $eventHandler;
-		
-		parent::__construct();
-	}
-	
-	/**
 	 * Sets default routes.
 	 */
-	public function setDefaultRoutes() {
-		$route = WCF::getDIContainer()->make(DynamicRequestRoute::class);
+	protected function init() {
+		$route = new DynamicRequestRoute();
 		$route->setIsACP(true);
 		$this->addRoute($route);
 		
-		$route = WCF::getDIContainer()->make(DynamicRequestRoute::class);
-		$route->setIsACP(false);
+		$route = new DynamicRequestRoute();
+		$this->addRoute($route);
+		
+		$route = new LookupRequestRoute();
 		$this->addRoute($route);
 		
 		// fire event
-		$this->eventHandler->fireAction($this, 'didInit');
-	}
-	
-	/**
-	 * Sets the required request handler, setter function to avoid circular dependencies.
-	 * 
-	 * @param       RequestHandler  $requestHandler
-	 */
-	public function setRequestHandler(RequestHandler $requestHandler) {
-		$this->requestHandler = $requestHandler;
+		EventHandler::getInstance()->fireAction($this, 'didInit');
 	}
 	
 	/**
@@ -149,14 +115,14 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * Returns true if a route matches. Please bear in mind, that the
-	 * first route which is able to consume all path components is used,
+	 * first route that is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
 	 * 
 	 * @return	boolean
 	 */
 	public function matches() {
 		foreach ($this->routes as $route) {
-			if ($this->requestHandler->isACPRequest() != $route->isACP()) {
+			if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
 				continue;
 			}
 			
@@ -206,13 +172,15 @@ class RouteHandler extends SingletonFactory {
 	 * Builds a route based upon route components, this is nothing
 	 * but a reverse lookup.
 	 * 
+	 * @param       string          $application    application identifier
 	 * @param	array		$components
 	 * @param	boolean		$isACP
 	 * @return	string
 	 * @throws      SystemException
 	 */
-	public function buildRoute(array $components, $isACP = null) {
-		if ($isACP === null) $isACP = $this->requestHandler->isACPRequest();
+	public function buildRoute($application, array $components, $isACP = null) {
+		if ($isACP === null) $isACP = RequestHandler::getInstance()->isACPRequest();
+		$components['application'] = $application;
 		
 		foreach ($this->routes as $route) {
 			if ($isACP != $route->isACP()) {
@@ -225,6 +193,24 @@ class RouteHandler extends SingletonFactory {
 		}
 		
 		throw new SystemException("Unable to build route, no available route is satisfied.");
+	}
+	
+	/**
+	 * Returns true if `$customUrl` contains only the letters a-z/A-Z, numbers, dashes,
+	 * underscores and forward slashes.
+	 * 
+	 * All other characters including those from the unicode range are potentially unsafe,
+	 * especially when dealing with url rewriting and resulting encoding issues with some
+	 * webservers.
+	 * 
+	 * This heavily limits the abilities for end-users to define appealing urls, but at
+	 * the same time this ensures a sufficient level of stability.
+	 * 
+	 * @param       string  $customUrl      url to perform sanitiy checks on
+	 * @return      bool    true if `$customUrl` passes the sanity check
+	 */
+	public static function isValidCustomUrl($customUrl) {
+		return preg_match('~^[a-zA-Z0-9\-_/]+$~', $customUrl) === 1;
 	}
 	
 	/**
@@ -307,9 +293,8 @@ class RouteHandler extends SingletonFactory {
 	public static function getPathInfo() {
 		if (self::$pathInfo === null) {
 			self::$pathInfo = '';
-			$requestHandler = WCF::getDIContainer()->get(RequestHandler::class);
 			
-			if (!URL_LEGACY_MODE || $requestHandler->isACPRequest()) {
+			if (!URL_LEGACY_MODE || RequestHandler::getInstance()->isACPRequest()) {
 				// WCF 2.1: ?Foo/Bar/
 				if (!empty($_SERVER['QUERY_STRING'])) {
 					// don't use parse_str as it replaces dots with underscores
@@ -332,7 +317,7 @@ class RouteHandler extends SingletonFactory {
 			}
 			
 			// WCF 2.0: index.php/Foo/Bar/
-			if ((URL_LEGACY_MODE && !$requestHandler->isACPRequest()) || ($requestHandler->isACPRequest() && empty(self::$pathInfo))) {
+			if ((URL_LEGACY_MODE && !RequestHandler::getInstance()->isACPRequest()) || (RequestHandler::getInstance()->isACPRequest() && empty(self::$pathInfo))) {
 				if (isset($_SERVER['PATH_INFO'])) {
 					self::$pathInfo = $_SERVER['PATH_INFO'];
 				}
@@ -384,7 +369,7 @@ class RouteHandler extends SingletonFactory {
 		if ($this->defaultControllers === null) {
 			$this->defaultControllers = array();
 			
-			foreach ($this->applicationHandler->getApplications() as $application) {
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 				$app = WCF::getApplicationObject($application);
 				
 				if (!$app) {

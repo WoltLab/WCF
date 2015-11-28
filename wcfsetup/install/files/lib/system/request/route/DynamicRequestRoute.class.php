@@ -18,31 +18,16 @@ use wcf\system\request\RouteHandler;
  */
 class DynamicRequestRoute implements IRequestRoute {
 	/**
-	 * @var ApplicationHandler
-	 */
-	protected $applicationHandler;
-	
-	/**
 	 * schema for outgoing links
 	 * @var	array<array>
 	 */
 	protected $buildSchema = [];
 	
 	/**
-	 * @var ControllerMap
-	 */
-	protected $controllerMap;
-	
-	/**
 	 * route is restricted to ACP
 	 * @var	boolean
 	 */
 	protected $isACP = false;
-	
-	/**
-	 * @var PageMenu;
-	 */
-	protected $pageMenu;
 	
 	/**
 	 * pattern for incoming requests
@@ -57,11 +42,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	protected $primaryApplication = '';
 	
 	/**
-	 * @var RequestHandler
-	 */
-	protected $requestHandler;
-	
-	/**
 	 * list of required components
 	 * @var	array<string>
 	 */
@@ -74,26 +54,9 @@ class DynamicRequestRoute implements IRequestRoute {
 	protected $routeData = [];
 	
 	/**
-	 * @var RouteHandler;
-	 */
-	protected $routeHandler;
-	
-	/**
 	 * DynamicRequestRoute constructor.
-	 * 
-	 * @param       ApplicationHandler      $applicationHandler
-	 * @param       ControllerMap           $controllerMap
-	 * @param       PageMenu                $pageMenu
-	 * @param       RequestHandler          $requestHandler
-	 * @param       RouteHandler            $routeHandler
 	 */
-	public function __construct(ApplicationHandler $applicationHandler, ControllerMap $controllerMap, PageMenu $pageMenu, RequestHandler $requestHandler, RouteHandler $routeHandler) {
-		$this->applicationHandler = $applicationHandler;
-		$this->controllerMap = $controllerMap;
-		$this->pageMenu = $pageMenu;
-		$this->requestHandler = $requestHandler;
-		$this->routeHandler = $routeHandler;
-		
+	public function __construct() {
 		$this->init();
 	}
 	
@@ -104,7 +67,12 @@ class DynamicRequestRoute implements IRequestRoute {
 		$this->setPattern('~
 			/?
 			(?:
-				(?P<controller>[A-Za-z0-9\-]+)
+				(?P<controller>
+					(?:
+						[a-z][a-z0-9]+
+						(?:-[a-z][a-z0-9]+)*
+					)+
+				)
 				(?:
 					/
 					(?P<id>\d+)
@@ -135,7 +103,6 @@ class DynamicRequestRoute implements IRequestRoute {
 		
 		$buildSchema = ltrim($buildSchema, '/');
 		$components = preg_split('~({(?:[a-z]+)})~', $buildSchema, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-		$delimiters = ['/', '-', '.', '_'];
 		
 		foreach ($components as $component) {
 			$type = 'component';
@@ -352,6 +319,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @return	string
 	 */
 	protected function getControllerName($application, $controller) {
-		return $this->controllerMap->lookup($controller);
+		return ControllerMap::getInstance()->lookup($application, $controller);
 	}
 }

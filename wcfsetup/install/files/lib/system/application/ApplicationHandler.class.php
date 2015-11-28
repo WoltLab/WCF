@@ -19,10 +19,6 @@ use wcf\system\SingletonFactory;
  */
 class ApplicationHandler extends SingletonFactory {
 	/**
-	 * @var ApplicationCacheBuilder
-	 */
-	protected $applicationCacheBuilder;
-	/**
 	 * application cache
 	 * @var	array<array>
 	 */
@@ -35,21 +31,10 @@ class ApplicationHandler extends SingletonFactory {
 	protected $pageURLs = array();
 	
 	/**
-	 * ApplicationHandler constructor.
-	 * 
-	 * @param       ApplicationCacheBuilder $applicationCacheBuilder
-	 */
-	public function __construct(ApplicationCacheBuilder $applicationCacheBuilder) {
-		$this->applicationCacheBuilder = $applicationCacheBuilder;
-		
-		parent::__construct();
-	}
-	
-	/**
 	 * Initializes cache.
 	 */
 	protected function init() {
-		$this->cache = $this->applicationCacheBuilder->getData();
+		$this->cache = ApplicationCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

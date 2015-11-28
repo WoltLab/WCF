@@ -1,34 +1,16 @@
 <?php
 namespace wcf\system\html\output\node;
-
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileCache;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\html\output\HtmlOutputNodeProcessor;
-use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 class HtmlOutputNodeWoltlabMention implements IHtmlOutputNode {
 	/**
-	 * @var ApplicationHandler
-	 */
-	protected $applicationHandler;
-	
-	/**
 	 * @var UserProfile[]
 	 */
 	protected $userProfiles;
-	
-	/**
-	 * @var UserProfileCache
-	 */
-	protected $userProfileCache;
-	
-	public function __construct(ApplicationHandler $applicationHandler, UserProfileCache $userProfileCache) {
-		$this->applicationHandler = $applicationHandler;
-		$this->userProfileCache = $userProfileCache;
-	}
 	
 	public function process(HtmlOutputNodeProcessor $htmlOutputNodeProcessor) {
 		$this->userProfiles = [];
@@ -58,7 +40,7 @@ class HtmlOutputNodeWoltlabMention implements IHtmlOutputNode {
 		}
 		
 		if (!empty($userIds)) {
-			$this->userProfiles = $this->userProfileCache->getUserProfiles($userIds);
+			$this->userProfiles = UserProfileCache::getInstance()->getUserProfiles($userIds);
 		}
 	}
 	
