@@ -618,10 +618,24 @@
 			<permissions>admin.content.cms.canManagePage</permissions>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.cms.page.add">
+			<controller><![CDATA[wcf\acp\form\PageAddForm]]></controller>
+			<parent>wcf.acp.menu.link.cms.page.list</parent>
+			<permissions>admin.content.cms.canManagePage</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.cms.menu.list">
 			<controller><![CDATA[wcf\acp\page\MenuListPage]]></controller>
 			<parent>wcf.acp.menu.link.cms</parent>
 			<permissions>admin.content.cms.canManageMenu</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cms.menu.add">
+			<controller><![CDATA[wcf\acp\form\MenuAddForm]]></controller>
+			<parent>wcf.acp.menu.link.cms.menu.list</parent>
+			<permissions>admin.content.cms.canManageMenu</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 	</import>
 </data>

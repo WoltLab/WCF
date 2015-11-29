@@ -20,26 +20,26 @@ class MenuItemNodeTree {
 	
 	/**
 	 * list of menu items
-	 * @var	array<\wcf\data\menu\item\MenuItem>
+	 * @var	MenuItem[]
 	 */
 	public $menuItems = array();
 	
 	/**
 	 * menu item structure
-	 * @var	array<array>
+	 * @var	mixed[]
 	 */
 	public $menuItemStructure = array();
 	
 	/**
 	 * root node
-	 * @var	\wcf\data\menu\item\MenuItemNode
+	 * @var	MenuItemNode
 	 */
 	public $node = null;
 	
 	/**
 	 * Creates a new MenuItemNodeTree object.
 	 *
-	 * @param	integer			$menuID
+	 * @param	integer		$menuID
 	 */
 	public function __construct($menuID) {
 		$this->menuID = $menuID;
@@ -67,10 +67,10 @@ class MenuItemNodeTree {
 	/**
 	 * Generates the node tree recursively
 	 * 
-	 * @param	integer					$parentID
-	 * @param	\wcf\data\menu\item\MenuItemNode	$parentNode
-	 * @param	array<integer>				$filter
-	 * @return	array<\wcf\data\menu\item\MenuItemNode>
+	 * @param	integer			$parentID
+	 * @param	MenuItemNode		$parentNode
+	 * @param	int[]			$filter
+	 * @return	MenuItemNode[]
 	 */
 	protected function generateNodeTree($parentID = null, MenuItemNode $parentNode = null) {
 		$nodes = array();
@@ -91,7 +91,7 @@ class MenuItemNodeTree {
 	/**
 	 * Returns the menu item node tree.
 	 * 
-	 * @return	array<\wcf\data\menu\item\MenuItemNode>
+	 * @return	MenuItemNode[]
 	 */
 	public function getNodeTree() {
 		return $this->node->getChildren();

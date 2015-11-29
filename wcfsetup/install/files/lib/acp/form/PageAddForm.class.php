@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
@@ -26,12 +25,12 @@ use wcf\util\StringUtil;
  */
 class PageAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.cms.page.list';
+	public $activeMenuItem = 'wcf.acp.menu.link.cms.page.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.cms.canManagePage'];
 	
@@ -108,7 +107,7 @@ class PageAddForm extends AbstractForm {
 	public $metaKeywords = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -122,7 +121,7 @@ class PageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -141,7 +140,7 @@ class PageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -188,7 +187,7 @@ class PageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -246,7 +245,7 @@ class PageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

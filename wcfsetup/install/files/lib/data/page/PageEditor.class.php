@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class PageEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
 	protected static $baseClass = 'wcf\data\page\Page';
 }

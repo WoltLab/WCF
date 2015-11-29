@@ -26,19 +26,19 @@ class PageNodeTree {
 	
 	/**
 	 * list of pages
-	 * @var	array<\wcf\data\page\Page>
+	 * @var	Page[]
 	 */
-	public $pages = array();
+	public $pages = [];
 	
 	/**
 	 * page structure
-	 * @var	array<array>
+	 * @var	mixed[]
 	 */
-	public $pageStructure = array();
+	public $pageStructure = [];
 	
 	/**
 	 * root node
-	 * @var	\wcf\data\page\PageNode
+	 * @var	PageNode
 	 */
 	public $node = null;
 	
@@ -61,7 +61,7 @@ class PageNodeTree {
 			$this->pages[$page->pageID] = $page;
 				
 			if (!isset($this->pageStructure[$page->parentPageID])) {
-				$this->pageStructure[$page->parentPageID] = array();
+				$this->pageStructure[$page->parentPageID] = [];
 			}
 			$this->pageStructure[$page->parentPageID][] = $page->pageID;
 		}
@@ -72,17 +72,17 @@ class PageNodeTree {
 	}
 	
 	/**
-	 * Generates the node tree recursively
+	 * Generates the node tree recursively.
 	 * 
-	 * @param	integer				$parentID
-	 * @param	\wcf\data\page\PageNode		$parentNode
-	 * @param	array<integer>			$filter
-	 * @return	array<\wcf\data\page\PageNode>
+	 * @param	integer			$parentID
+	 * @param	PageNode		$parentNode
+	 * @param	int[]			$filter
+	 * @return	PageNode[]
 	 */
 	protected function generateNodeTree($parentID, PageNode $parentNode = null) {
-		$nodes = array();
+		$nodes = [];
 		
-		$pageIDs = (isset($this->pageStructure[$parentID]) ? $this->pageStructure[$parentID] : array());
+		$pageIDs = (isset($this->pageStructure[$parentID]) ? $this->pageStructure[$parentID] : []);
 		foreach ($pageIDs as $pageID) {
 			$page = $this->pages[$pageID];
 			$node = new PageNode($parentNode, $page, ($parentNode !== null ? ($parentNode->getDepth() + 1) : 0));
@@ -98,14 +98,14 @@ class PageNodeTree {
 	/**
 	 * Returns the page node tree.
 	 * 
-	 * @return	array<\wcf\data\page\PageNode>
+	 * @return	PageNode[]
 	 */
 	public function getNodeTree() {
 		return $this->node->getChildren();
 	}
 	
 	/**
-	 * Returns the iteratable node list
+	 * Returns the iteratable node list.
 	 *
 	 * @return	\RecursiveIteratorIterator
 	 */

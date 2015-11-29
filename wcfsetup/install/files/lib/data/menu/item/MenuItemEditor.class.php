@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class MenuItemEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\menu\item\MenuItem';
+	protected static $baseClass = MenuItem::class;
 }

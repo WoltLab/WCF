@@ -26,14 +26,14 @@ use wcf\util\StringUtil;
  */
 class MenuItemAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cms.menu.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.cms.canManageMenu');
+	public $neededPermissions = ['admin.content.cms.canManageMenu'];
 	
 	/**
 	 * menu id
@@ -43,7 +43,7 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * menu object
-	 * @var	\wcf\data\menu\Menu
+	 * @var	Menu
 	 */
 	public $menu = null;
 	
@@ -96,7 +96,7 @@ class MenuItemAddForm extends AbstractForm {
 	public $menuItems = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -112,7 +112,7 @@ class MenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -130,7 +130,7 @@ class MenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -171,7 +171,7 @@ class MenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -224,7 +224,7 @@ class MenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -233,7 +233,7 @@ class MenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

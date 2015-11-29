@@ -19,14 +19,14 @@ use wcf\system\WCF;
  */
 class MenuAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.cms.menu.list';
+	public $activeMenuItem = 'wcf.acp.menu.link.cms.menu.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.cms.canManageMenu');
+	public $neededPermissions = ['admin.content.cms.canManageMenu'];
 	
 	/**
 	 * menu title
@@ -35,7 +35,7 @@ class MenuAddForm extends AbstractForm {
 	public $title = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -44,7 +44,7 @@ class MenuAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -55,7 +55,7 @@ class MenuAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -72,7 +72,7 @@ class MenuAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -112,7 +112,7 @@ class MenuAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

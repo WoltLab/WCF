@@ -19,6 +19,11 @@ use wcf\system\WCF;
  */
 class MenuEditForm extends MenuAddForm {
 	/**
+	 * @inheritDoc
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.cms.menu.list';
+	
+	/**
 	 * menu id
 	 * @var	integer
 	 */
@@ -26,12 +31,12 @@ class MenuEditForm extends MenuAddForm {
 	
 	/**
 	 * menu object
-	 * @var	\wcf\data\menu\Menu
+	 * @var	Menu
 	 */
 	public $menu = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -44,7 +49,7 @@ class MenuEditForm extends MenuAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -72,7 +77,7 @@ class MenuEditForm extends MenuAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -85,7 +90,7 @@ class MenuEditForm extends MenuAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

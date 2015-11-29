@@ -14,19 +14,19 @@ namespace wcf\data\menu\item;
 class MenuItemNode implements \Countable, \RecursiveIterator {
 	/**
 	 * parent node
-	 * @var	\wcf\data\menu\item\MenuItemNode
+	 * @var	MenuItemNode
 	 */
 	protected $parentNode = null;
 	
 	/**
 	 * children of this node
-	 * @var	array<\wcf\data\menu\item\MenuItemNode>
+	 * @var	MenuItemNode[]
 	 */
 	protected $children = array();
 	
 	/**
 	 * menu item object
-	 * @var	\wcf\data\menu\item\MenuItem
+	 * @var	MenuItem
 	 */
 	protected $menuItem = null;
 	
@@ -45,9 +45,9 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	/**
 	 * Creates a new MenuItemNode object.
 	 * 
-	 * @param	\wcf\data\menu\item\MenuItemNode	$parentNode
-	 * @param	\wcf\data\menu\item\MenuItem		$menuItem
-	 * @param	integer					$depth
+	 * @param	MenuItemNode		$parentNode
+	 * @param	MenuItem		$menuItem
+	 * @param	integer			$depth
 	 */
 	public function __construct($parentNode = null, MenuItem $menuItem = null, $depth = 0) {
 		$this->parentNode = $parentNode;
@@ -58,7 +58,7 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	/**
 	 * Sets the children of this node.
 	 * 
-	 * @param	array<\wcf\data\menu\item\MenuItemNode>		$children
+	 * @param	MenuItemNode[]		$children
 	 */
 	public function setChildren(array $children) {
 		$this->children = $children;
@@ -67,7 +67,7 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	/**
 	 * Returns the parent node
 	 * 
-	 * @return	\wcf\data\menu\item\MenuItemNode
+	 * @return	MenuItemNode
 	 */
 	public function getParentNode() {
 		return $this->parentNode;
@@ -76,7 +76,7 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	/**
 	 * Returns the menu item object of this node.
 	 * 
-	 * @return	\wcf\data\menu\item\MenuItem
+	 * @return	MenuItem
 	 */
 	public function getMenuItem() {
 		return $this->menuItem;
@@ -123,49 +123,49 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->position = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->children[$this->position]);
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		$this->position++;
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		return $this->children[$this->position];
 	}
 	
 	/**
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->position;
 	}
 	
 	/**
-	 * @see	\RecursiveIterator::getChildren()
+	 * @inheritDoc
 	 */
 	public function getChildren() {
 		return $this->children[$this->position];
 	}
 	
 	/**
-	 * @see	\RecursiveIterator::hasChildren()
+	 * @inheritDoc
 	 */
 	public function hasChildren() {
 		return count($this->children) > 0;

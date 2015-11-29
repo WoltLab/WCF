@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class MenuItemList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\menu\item\MenuItem';
+	public $className = MenuItem::class;
 }

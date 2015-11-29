@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class Page extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'page';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'pageID';
 	
@@ -79,7 +79,7 @@ class Page extends DatabaseObject {
 	 * Returns the page with the given display name.
 	 * 
 	 * @param	string		$name
-	 * @return	\wcf\data\page\Page
+	 * @return	Page
 	 */
 	public static function getPageByDisplayName($name) {
 		$sql = "SELECT	*
