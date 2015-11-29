@@ -16,5 +16,5 @@ class PageEditor extends DatabaseObjectEditor {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\page\Page';
+	protected static $baseClass = Page::class;
 }
