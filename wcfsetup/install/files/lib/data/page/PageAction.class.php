@@ -19,7 +19,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
-	protected $className = 'wcf\data\page\PageEditor';
+	protected $className = PageEditor::class;
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate

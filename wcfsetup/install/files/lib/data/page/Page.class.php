@@ -79,7 +79,7 @@ class Page extends DatabaseObject {
 	 * Returns the page with the given display name.
 	 * 
 	 * @param	string		$name
-	 * @return	\wcf\data\page\Page
+	 * @return	Page
 	 */
 	public static function getPageByDisplayName($name) {
 		$sql = "SELECT	*

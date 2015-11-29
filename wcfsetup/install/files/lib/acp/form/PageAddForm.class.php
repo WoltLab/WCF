@@ -223,13 +223,13 @@ class PageAddForm extends AbstractForm {
 			'packageID' => ($this->packageID ?: null),
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
-			'name' => ''
+			'identifier' => ''
 		]), 'content' => $content]);
 		$returnValues = $this->objectAction->executeAction();
 		// set generic page name
 		$pageEditor = new PageEditor($returnValues['returnValues']);
 		$pageEditor->update([
-			'name' => 'com.woltlab.wcf.generic'.$pageEditor->pageID
+			'identifier' => 'com.woltlab.wcf.generic'.$pageEditor->pageID
 		]);
 		
 		// call saved event
