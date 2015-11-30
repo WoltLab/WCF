@@ -15,32 +15,32 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class MenuAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = MenuEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.content.cms.canManageMenu');
+	protected $permissionsCreate = ['admin.content.cms.canManageMenu'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.cms.canManageMenu');
+	protected $permissionsDelete = ['admin.content.cms.canManageMenu'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.cms.canManageMenu');
+	protected $permissionsUpdate = ['admin.content.cms.canManageMenu'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		parent::validateDelete();

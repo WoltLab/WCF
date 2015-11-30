@@ -27,12 +27,12 @@ class MenuItemEditForm extends MenuItemAddForm {
 	
 	/**
 	 * menu object
-	 * @var	\wcf\data\menu\Menu
+	 * @var	Menu
 	 */
 	public $menuItem = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		AbstractForm::readParameters();
@@ -51,7 +51,7 @@ class MenuItemEditForm extends MenuItemAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -92,7 +92,7 @@ class MenuItemEditForm extends MenuItemAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -114,7 +114,7 @@ class MenuItemEditForm extends MenuItemAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

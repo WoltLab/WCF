@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class Page extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'page';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'pageID';
 	

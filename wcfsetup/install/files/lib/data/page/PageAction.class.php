@@ -17,32 +17,32 @@ use wcf\system\WCF;
  */
 class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = PageEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
 	protected $permissionsCreate = array('admin.content.cms.canManagePage');
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
 	protected $permissionsDelete = array('admin.content.cms.canManagePage');
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = array('admin.content.cms.canManagePage');
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = array('create', 'delete', 'toggle', 'update');
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
 	 */
 	public function create() {
 		$page = parent::create();
@@ -71,7 +71,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();
@@ -108,7 +108,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		parent::validateDelete();
@@ -121,7 +121,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -134,7 +134,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
 		foreach ($this->objects as $object) {

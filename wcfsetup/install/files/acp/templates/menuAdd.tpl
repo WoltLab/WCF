@@ -21,33 +21,31 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='MenuAdd'}{/link}{else}{link controller='MenuEdit' id=$menuID}{/link}{/if}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.form.data{/lang}</legend>
+	<section class="marginTop">
+		<h1>{lang}wcf.global.form.data{/lang}</h1>
 			
-			<dl{if $errorField == 'title'} class="formError"{/if}>
-				<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
-				<dd>
-					<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus="autofocus" class="long" />
-					{if $errorField == 'title'}
-						<small class="innerError">
-							{if $errorType == 'title' || $errorType == 'multilingual'}
-								{lang}wcf.global.form.error.{@$errorType}{/lang}
-							{else}
-								{lang}wcf.acp.menu.title.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-					<small>{lang}wcf.acp.menu.title.description{/lang}</small>
-					{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
-				</dd>
-			</dl>
-			
-			{event name='dataFields'}
-		</fieldset>
+		<dl{if $errorField == 'title'} class="formError"{/if}>
+			<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
+			<dd>
+				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus="autofocus" class="long" />
+				{if $errorField == 'title'}
+					<small class="innerError">
+						{if $errorType == 'title' || $errorType == 'multilingual'}
+							{lang}wcf.global.form.error.{@$errorType}{/lang}
+						{else}
+							{lang}wcf.acp.menu.title.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.menu.title.description{/lang}</small>
+				{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
+			</dd>
+		</dl>
 		
-		{event name='fieldsets'}
-	</div>
+		{event name='dataFields'}
+	</section>
+	
+	{event name='sections'}
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />

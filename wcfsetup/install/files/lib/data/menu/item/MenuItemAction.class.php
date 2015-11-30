@@ -16,32 +16,32 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class MenuItemAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = MenuItemEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.content.cms.canManageMenu');
+	protected $permissionsCreate = ['admin.content.cms.canManageMenu'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.cms.canManageMenu');
+	protected $permissionsDelete = ['admin.content.cms.canManageMenu'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.cms.canManageMenu');
+	protected $permissionsUpdate = ['admin.content.cms.canManageMenu'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -54,7 +54,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements IToggleActi
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
 		foreach ($this->objects as $object) {
