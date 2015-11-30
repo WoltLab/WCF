@@ -19,12 +19,12 @@ use wcf\util\StringUtil;
  */
 class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = PageEditor::class;
 	
 	/**
-	 * @var array
+	 * @inheritDoc
 	 */
 	protected $content = [];
 	
@@ -34,7 +34,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	public $tagName = 'page';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM     wcf".WCF_N."_page
@@ -53,7 +53,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::getElement()
+	 * @inheritDoc
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
@@ -82,8 +82,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
-	 * @throws SystemException
+	 * @inheritDoc
+	 * @throws      SystemException
 	 */
 	protected function prepareImport(array $data) {
 		$isStatic = false;
@@ -157,7 +157,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -176,7 +176,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::import()
+	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
 		// extract content
@@ -203,7 +203,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::postImport()
+	 * @inheritDoc
 	 */
 	protected function postImport() {
 		if (!empty($this->content)) {
