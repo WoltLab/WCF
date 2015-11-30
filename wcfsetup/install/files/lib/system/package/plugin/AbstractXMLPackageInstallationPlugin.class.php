@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
@@ -184,6 +185,58 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$elements[$element->tagName] = $element->nodeValue;
+	}
+	
+	/**
+	 * Returns i18n values by validating each value against the list of installed
+	 * languages, optionally returning only the best matching value.
+	 * 
+	 * @param       string[]        $values                 list of values by language code
+	 * @param       boolean         $singleValueOnly        true to return only the best matching value
+	 * @return      string[]|string matching i18n values controller by `$singleValueOnly`
+	 */
+	protected function getI18nValues(array $values, $singleValueOnly = false) {
+		if (empty($values)) {
+			return ($singleValueOnly) ? '' : [];
+		}
+		
+		// check for a value with an empty language code and treat it as 'en' unless 'en' exists
+		if (isset($values[''])) {
+			if (!isset($values['en'])) {
+				$values['en'] = $values[''];
+			}
+			
+			unset($values['']);
+		}
+		
+		$matchingValues = [];
+		foreach ($values as $languageCode => $value) {
+			if (LanguageFactory::getInstance()->getLanguageByCode($languageCode) !== null) {
+				$matchingValues[$languageCode] = $value;
+			}
+		}
+		
+		// no matching value found
+		if (empty($matchingValues)) {
+			if (isset($values['en'])) {
+				// safest route: pick English
+				$matchingValues['en'] = $values['en'];
+			}
+			else if (isset($values[''])) {
+				// fallback: use the value w/o a language code
+				$matchingValues[''] = $values[''];
+			}
+			else {
+				// failsafe: just use the first found value in whatever language
+				$matchingValues = array_splice($values, 0, 1);
+			}
+		}
+		
+		if ($singleValueOnly) {
+			return array_shift($matchingValues);
+		}
+		
+		return $matchingValues;
 	}
 	
 	/**
