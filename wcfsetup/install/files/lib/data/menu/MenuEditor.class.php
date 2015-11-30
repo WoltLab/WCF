@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\menu;
 use wcf\data\DatabaseObjectEditor;
+use wcf\system\language\LanguageFactory;
+use wcf\system\WCF;
 
 /**
  * Provides functions to edit menus.
@@ -17,4 +19,57 @@ class MenuEditor extends DatabaseObjectEditor {
 	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\menu\Menu';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function create(array $parameters = []) {
+		$title = '';
+		if (is_array($parameters['title'])) {
+			$title = $parameters['title'];
+			$parameters['title'] = '';
+		}
+		
+		$menu = parent::create($parameters);
+		
+		if (is_array($title)) {
+			if (count($title) > 1) {
+				$sql = "SELECT  languageCategoryID
+					FROM    wcf".WCF_N."_language_category
+					WHERE   languageCategory = ?";
+				$statement = WCF::getDB()->prepareStatement($sql, 1);
+				$statement->execute(['wcf.menu']);
+				$languageCategoryID = $statement->fetchSingleColumn();
+				
+				$sql = "INSERT INTO     wcf".WCF_N."_language_item
+							(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+					VALUES          (?, ?, ?, ?, ?, ?)";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				
+				WCF::getDB()->beginTransaction();
+				foreach ($title as $languageCode => $value) {
+					$statement->execute([
+						LanguageFactory::getInstance()->getLanguageByCode($languageCode)->languageID,
+						'wcf.menu.menu' . $menu->menuID,
+						$value,
+						1,
+						$languageCategoryID,
+						$menu->packageID
+					]);
+				}
+				WCF::getDB()->commitTransaction();
+				
+				$title = 'wcf.menu.menu' . $menu->menuID;
+			}
+			else {
+				$title = reset($title);
+			}
+			
+			//$menuEditor = new MenuItemEditor($menu);
+			$menuEditor = new self($menu);
+			$menuEditor->update(['title' => $title]);
+		}
+		
+		return $menu;
+	}
 }

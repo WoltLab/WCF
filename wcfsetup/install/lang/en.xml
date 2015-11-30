@@ -2377,6 +2377,10 @@ Errors are:
 		<item name="wcf.message.error.tooLong"><![CDATA[Message is too long, must be below {#$maxTextLength} characters.]]></item>
 	</category>
 	
+	<category name="wcf.menu">
+		<!-- category for menus and menu items -->
+	</category>
+	
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Assigned User]]></item>
 		<item name="wcf.moderation.assignedUser.change"><![CDATA[(Change)]]></item>

@@ -2380,6 +2380,10 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.error.tooLong"><![CDATA[Ihre Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
 	</category>
 	
+	<category name="wcf.menu">
+		<!-- category for menus and menu items -->
+	</category>
+	
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Zugewiesener Benutzer]]></item>
 		<item name="wcf.moderation.assignedUser.change"><![CDATA[(Ändern)]]></item>
