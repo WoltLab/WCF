@@ -29,7 +29,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	protected $content = [];
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 * @inheritDoc
 	 */
 	public $tagName = 'page';
 	
@@ -70,11 +70,11 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$elements[$element->tagName][$element->getAttribute('language')] = $children;
 		}
-		else if ($element->tagName === 'displayname') {
-			// <displayname> can occur multiple times using the `language` attribute
-			if (!isset($elements['displayName'])) $elements['displayName'] = [];
+		else if ($element->tagName === 'name') {
+			// <name> can occur multiple times using the `language` attribute
+			if (!isset($elements['name'])) $elements['name'] = [];
 			
-			$elements['displayName'][$element->getAttribute('language')] = $element->nodeValue;
+			$elements['name'][$element->getAttribute('language')] = $element->nodeValue;
 		}
 		else {
 			$elements[$element->tagName] = $nodeValue;
@@ -110,17 +110,17 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		// pick the display name by choosing the default language, or 'en' or '' (empty string)
 		$defaultLanguageCode = LanguageFactory::getInstance()->getDefaultLanguage()->getFixedLanguageCode();
-		if (isset($data['elements']['displayName'][$defaultLanguageCode])) {
+		if (isset($data['elements']['name'][$defaultLanguageCode])) {
 			// use the default language
-			$displayName = $data['elements']['displayName'][$defaultLanguageCode];
+			$name = $data['elements']['name'][$defaultLanguageCode];
 		}
-		else if (isset($data['elements']['displayName']['en'])) {
+		else if (isset($data['elements']['name']['en'])) {
 			// use the value for English
-			$displayName = $data['elements']['displayName']['en'];
+			$name = $data['elements']['name']['en'];
 		}
 		else {
 			// fallback to the display name without/empty language attribute
-			$displayName = $data['elements']['displayName'][''];
+			$name = $data['elements']['name'][''];
 		}
 		
 		$parentPageID = null;
@@ -147,10 +147,10 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'content' => ($isStatic) ? $data['elements']['content'] : [],
 			'controller' => ($isStatic) ? '' : $data['elements']['controller'],
 			'controllerCustomURL' => $customUrl,
-			'displayName' => $displayName,
 			'identifier' => $data['attributes']['identifier'],
 			'isMultilingual' => ($isStatic) ? 1 : 0,
 			'lastUpdateTime' => TIME_NOW,
+			'name' => $name,
 			'originIsSystem' => 1,
 			'parentPageID' => $parentPageID
 		];
@@ -183,7 +183,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		$content = $data['content'];
 		unset($data['content']);
 		
-		if ($row !== false) {
+		if (!empty($row)) {
 			// allow only updating of controller, everything else would overwrite user modifications
 			if (!empty($data['controller'])) {
 				$object = parent::import($row, ['controller' => $data['controller']]);
