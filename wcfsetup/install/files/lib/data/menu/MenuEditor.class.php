@@ -65,9 +65,9 @@ class MenuEditor extends DatabaseObjectEditor {
 				$title = reset($title);
 			}
 			
-			//$menuEditor = new MenuItemEditor($menu);
 			$menuEditor = new self($menu);
 			$menuEditor->update(['title' => $title]);
+			$menu = new static::$baseClass($menu->menuID);
 		}
 		
 		return $menu;
