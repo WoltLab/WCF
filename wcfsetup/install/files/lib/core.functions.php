@@ -8,7 +8,7 @@
  */
 namespace {
 	use wcf\system\WCF;
-	
+
 	// set exception handler
 	set_exception_handler([ WCF::class, 'handleException' ]);
 	// set php error handler
@@ -17,12 +17,12 @@ namespace {
 	register_shutdown_function([ WCF::class, 'destruct' ]);
 	// set autoload function
 	spl_autoload_register([ WCF::class, 'autoload' ]);
-	
+
 	// define escape string shortcut
 	function escapeString($string) {
 		return WCF::getDB()->escapeString($string);
 	}
-	
+
 	// define DOCUMENT_ROOT on IIS if not set
 	if (PHP_EOL == "\r\n") {
 		if (!isset($_SERVER['DOCUMENT_ROOT']) && isset($_SERVER['SCRIPT_FILENAME'])) {
@@ -31,7 +31,7 @@ namespace {
 		if (!isset($_SERVER['DOCUMENT_ROOT']) && isset($_SERVER['PATH_TRANSLATED'])) {
 			$_SERVER['DOCUMENT_ROOT'] = str_replace( '\\', '/', substr(str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']), 0, 0 - strlen($_SERVER['PHP_SELF'])));
 		}
-		
+
 		if (!isset($_SERVER['REQUEST_URI'])) {
 			$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
 			if (isset($_SERVER['QUERY_STRING'])) {
@@ -47,11 +47,11 @@ namespace wcf\functions\exception {
 	use wcf\system\WCF;
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
-	
+
 	function logThrowable($e) {
 		$logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
 		touch($logFile);
-		
+
 		// don't forget to update ExceptionLogViewPage, when changing the log file format
 		$message = gmdate('r', TIME_NOW)."\n".
 			'Message: '.str_replace("\n", ' ', $e->getMessage())."\n".
@@ -81,20 +81,20 @@ namespace wcf\functions\exception {
 							return $item;
 					}
 				}, $item['args']);
-				
+
 				return $item;
 			}, sanitizeStacktrace($e, true))))."\n";
 		}
 		while ($e = $e->getPrevious());
-		
+
 		// calculate Exception-ID
 		$exceptionID = sha1($message);
-		$entry = "<<<<<<<<".$exceptionID."<<<<\n".$message."<<<<\n";
-		
+		$entry = "<<<<<<<<".$exceptionID."<<<<\n".$message."<<<<\n\n";
+
 		file_put_contents($logFile, $entry, FILE_APPEND);
 		return $exceptionID;
 	}
-	
+
 	function printThrowable($e) {
 		$exceptionID = logThrowable($e); // TODO
 	?><!DOCTYPE html>
@@ -201,10 +201,10 @@ namespace wcf\functions\exception {
 						$message = str_replace('{$exceptionID}', $exceptionID, WCF::getLanguage()->get('wcf.global.error.exception', true));
 					}
 					catch (\Exception $e) {
-						
+
 					}
 					catch (\Throwable $e) {
-						
+
 					}
 					echo $message;
 					?>
@@ -241,7 +241,7 @@ namespace wcf\functions\exception {
 								ob_start();
 								$e->show();
 								ob_end_clean();
-								
+
 								$reflection = new \ReflectionClass($e);
 								$property = $reflection->getProperty('information');
 								$property->setAccessible(true);
@@ -257,14 +257,7 @@ namespace wcf\functions\exception {
 							?>
 							<dt>Stack Trace</dt>
 							<dd class="pre"><?php
-								$trace = array_map(function ($item) {
-									if (!isset($item['file'])) $item['file'] = '[internal function]';
-									if (!isset($item['line'])) $item['line'] = '?';
-									if (!isset($item['class'])) $item['class'] = '';
-									if (!isset($item['type'])) $item['type'] = '';
-									
-									return $item;
-								}, sanitizeStacktrace($e));
+								$trace = sanitizeStacktrace($e);
 								$pathLength = array_reduce($trace, function ($carry, $item) {
 									return max($carry, mb_strlen($item['file'].$item['line']));
 								}, 0) + 3;
@@ -310,33 +303,36 @@ namespace wcf\functions\exception {
 
 	function sanitizeStacktrace($e, $ignorePaths = false) {
 		$trace = $e->getTrace();
-		
+
 		return array_map(function ($item) use ($ignorePaths) {
+			if (!isset($item['file'])) $item['file'] = '[internal function]';
+			if (!isset($item['line'])) $item['line'] = '?';
+			if (!isset($item['class'])) $item['class'] = '';
+			if (!isset($item['type'])) $item['type'] = '';
+			
 			// strip database credentials
-			if (isset($item['class'])) {
-				if (preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class']) || $item['class'] === 'PDO') {
-					if ($item['function'] === '__construct') {
-						$item['args'] = array_map(function () {
-							return '[redacted]';
-						}, $item['args']);
-					}
+			if (preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class']) || $item['class'] === 'PDO') {
+				if ($item['function'] === '__construct') {
+					$item['args'] = array_map(function () {
+						return '[redacted]';
+					}, $item['args']);
 				}
 			}
-			
+
 			if (!$ignorePaths) {
 				$item['args'] = array_map(function ($item) {
 					if (!is_string($item)) return $item;
-					
+
 					if (preg_match('~^'.preg_quote($_SERVER['DOCUMENT_ROOT'], '~').'~', $item)) {
 						$item = sanitizePath($item);
 					}
-					
+
 					return preg_replace('~^'.preg_quote(WCF_DIR, '~').'~', '*/', $item);
 				}, $item['args']);
-				
-				if (isset($item['file'])) $item['file'] = sanitizePath($item['file']);
+
+				$item['file'] = sanitizePath($item['file']);
 			}
-			
+
 			return $item;
 		}, $trace);
 	}
@@ -345,7 +341,7 @@ namespace wcf\functions\exception {
 		if (WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
 			return $path;
 		}
-		
+
 		return '*/'.FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
 	}
 }

@@ -249,10 +249,11 @@
 	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Protokollierte Fehler]]></item>
+		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Fehlermeldung]]></item>
+		<item name="wcf.acp.exceptionLog.exception.class"><![CDATA[Art]]></item>
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[Datei (Zeile)]]></item>
 		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Aufgerufene URL]]></item>
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
-		<item name="wcf.acp.exceptionLog.exception.information"><![CDATA[Zusatzinformationen]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Fehlermeldung kopieren]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>

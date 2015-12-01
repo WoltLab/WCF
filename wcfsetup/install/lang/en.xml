@@ -248,10 +248,11 @@ Examples for medium ID detection:
 	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
+		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Error Message]]></item>
+		<item name="wcf.acp.exceptionLog.exception.class"><![CDATA[Type]]></item>
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[File (Line)]]></item>
 		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Requested URL]]></item>
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
-		<item name="wcf.acp.exceptionLog.exception.information"><![CDATA[Additional information]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID}” was found.]]></item>
