@@ -76,6 +76,20 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns an application by package id.
+	 * 
+	 * @param       integer         $packageID      package id
+	 * @return      Application     application object
+	 */
+	public function getApplicationByID($packageID) {
+		if (isset($this->cache['application'][$packageID])) {
+			return $this->cache['application'][$packageID];
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Returns pseudo-application representing WCF used for special cases,
 	 * e.g. cross-domain files requestable through the webserver.
 	 * 
