@@ -76,15 +76,15 @@ class Page extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the page with the given display name.
+	 * Returns the page with the given name.
 	 * 
 	 * @param	string		$name
 	 * @return	Page
 	 */
-	public static function getPageByDisplayName($name) {
+	public static function getPageByName($name) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_page
-			WHERE	displayName = ?";
+			WHERE	name = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($name));
 		$row = $statement->fetchArray();

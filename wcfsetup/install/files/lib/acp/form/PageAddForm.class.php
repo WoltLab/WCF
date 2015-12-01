@@ -47,10 +47,10 @@ class PageAddForm extends AbstractForm {
 	public $parentPageID = 0;
 	
 	/**
-	 * page's display name
+	 * page name
 	 * @var string
 	 */
-	public $displayName = '';
+	public $name = '';
 	
 	/**
 	 * true if page is disabled
@@ -127,7 +127,7 @@ class PageAddForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['parentPageID'])) $this->parentPageID = intval($_POST['parentPageID']);
-		if (isset($_POST['displayName'])) $this->displayName = StringUtil::trim($_POST['displayName']);
+		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
 		if (isset($_POST['packageID'])) $this->packageID = intval($_POST['packageID']);
@@ -145,7 +145,7 @@ class PageAddForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
-		$this->validateDisplayName();
+		$this->validateName();
 		
 		$this->validateParentPageID();
 		
@@ -154,12 +154,12 @@ class PageAddForm extends AbstractForm {
 		$this->validateCustomUrl();
 	}
 	
-	protected function validateDisplayName() {
-		if (empty($this->displayName)) {
-			throw new UserInputException('displayName');
+	protected function validateName() {
+		if (empty($this->name)) {
+			throw new UserInputException('name');
 		}
-		if (Page::getPageByDisplayName($this->displayName)) {
-			throw new UserInputException('displayName', 'notUnique');
+		if (Page::getPageByName($this->name)) {
+			throw new UserInputException('name', 'notUnique');
 		}
 	}
 	
@@ -216,7 +216,7 @@ class PageAddForm extends AbstractForm {
 		
 		$this->objectAction = new PageAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'parentPageID' => ($this->parentPageID ?: null),
-			'displayName' => $this->displayName,
+			'name' => $this->name,
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 			'packageID' => ($this->packageID ?: null),
@@ -240,7 +240,7 @@ class PageAddForm extends AbstractForm {
 		// reset variables
 		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
 		$this->packageID = 1;
-		$this->displayName = '';
+		$this->name = '';
 		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = [];
 	}
 	
@@ -255,7 +255,7 @@ class PageAddForm extends AbstractForm {
 		WCF::getTPL()->assign([
 			'action' => 'add',
 			'parentPageID' => $this->parentPageID,
-			'displayName' => $this->displayName,
+			'name' => $this->name,
 			'isDisabled' => $this->isDisabled,
 			'isLandingPage' => $this->isLandingPage,
 			'isMultilingual' => $this->isMultilingual,

@@ -109,7 +109,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$pageNodeList item=pageNode}
-						<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $pageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->displayName}</option>
+						<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $pageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'pageID'}

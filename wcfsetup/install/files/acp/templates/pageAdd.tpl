@@ -49,16 +49,16 @@
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
-			<dl{if $errorField == 'displayName'} class="formError"{/if}>
-				<dt><label for="displayName">{lang}wcf.global.name{/lang}</label></dt>
+			<dl{if $errorField == 'name'} class="formError"{/if}>
+				<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
-					<input type="text" id="displayName" name="displayName" value="{$displayName}" required="required" autofocus="autofocus" class="long" />
-					{if $errorField == 'displayName'}
+					<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long" />
+					{if $errorField == 'name'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.page.displayName.error.{@$errorType}{/lang}
+								{lang}wcf.acp.page.name.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -73,7 +73,7 @@
 							<option value="0">{lang}wcf.acp.page.parentPageID.noParentPage{/lang}</option>
 							
 							{foreach from=$pageNodeList item=pageNode}
-								<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $parentPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->displayName}</option>
+								<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $parentPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'parentPageID'}

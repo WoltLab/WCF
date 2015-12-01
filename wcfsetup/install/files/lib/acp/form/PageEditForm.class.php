@@ -53,9 +53,9 @@ class PageEditForm extends PageAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	protected function validateDisplayName() {
-		if ($this->displayName != $this->page->displayName) {
-			parent::validateDisplayName();
+	protected function validateName() {
+		if (mb_strtolower($this->name) != mb_strtolower($this->page->name)) {
+			parent::validateName();
 		}
 	}
 	
@@ -88,7 +88,7 @@ class PageEditForm extends PageAddForm {
 		
 		if ($this->page->controller) {
 			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, array(
-				'displayName' => $this->displayName,
+				'name' => $this->name,
 				'isDisabled' => ($this->isDisabled) ? 1 : 0,
 				'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 				'controllerCustomURL' => (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : ''),
@@ -121,7 +121,7 @@ class PageEditForm extends PageAddForm {
 			
 			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, array(
 				'parentPageID' => ($this->parentPageID ?: null),
-				'displayName' => $this->displayName,
+				'name' => $this->name,
 				'isDisabled' => ($this->isDisabled) ? 1 : 0,
 				'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 				'packageID' => ($this->packageID ?: null),
@@ -145,7 +145,7 @@ class PageEditForm extends PageAddForm {
 		parent::readData();
 	
 		if (empty($_POST)) {
-			$this->displayName = $this->page->displayName;
+			$this->name = $this->page->name;
 			$this->parentPageID = $this->page->parentPageID;
 			$this->packageID = $this->page->packageID;
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;

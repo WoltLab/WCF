@@ -31,10 +31,10 @@ class PageListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
-	public $defaultSortField = 'displayName';
+	public $defaultSortField = 'name';
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('pageID', 'displayName', 'customURL', 'lastUpdateTime');
+	public $validSortFields = array('pageID', 'name', 'customURL', 'lastUpdateTime');
 }

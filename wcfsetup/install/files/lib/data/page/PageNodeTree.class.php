@@ -54,7 +54,7 @@ class PageNodeTree {
 		
 		// load pages
 		$pageList = new PageList();
-		$pageList->sqlOrderBy = "page.displayName";
+		$pageList->sqlOrderBy = "page.name";
 		$pageList->readObjects();
 		
 		foreach ($pageList as $page) {

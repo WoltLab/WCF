@@ -36,7 +36,7 @@
 			<thead>
 				<tr>
 					<th class="columnPageID{if $sortField == 'pageID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=pageID&sortOrder={if $sortField == 'pageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnTitle columnName{if $sortField == 'displayName'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=displayName&sortOrder={if $sortField == 'displayName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
+					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
 					<th class="columnText columnCustomURL{if $sortField == 'customURL'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=customURL&sortOrder={if $sortField == 'customURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.page.customURL{/lang}</a></th>
 					<th class="columnDate columnLastUpdateTime{if $sortField == 'lastUpdateTime'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=lastUpdateTime&sortOrder={if $sortField == 'lastUpdateTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.page.lastUpdateTime{/lang}</a></th>
 					
@@ -63,7 +63,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnPageID">{@$page->pageID}</td>
-						<td class="columnTitle columnName"><a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->displayName}</a></td>
+						<td class="columnTitle columnName"><a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
 						<td class="columnText columnCustomURL">{$page->controllerCustomURL}</td>
 						<td class="columnDate columnLastUpdateTime">{@$page->lastUpdateTime|time}</td>
 						
