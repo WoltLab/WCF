@@ -41,10 +41,11 @@ namespace {
 	}
 }
 
+// @codingStandardsIgnoreStart
 namespace wcf\functions\exception {
+	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
 	use wcf\system\exception\SystemException;
-	use wcf\system\WCF;
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
 
@@ -345,3 +346,4 @@ namespace wcf\functions\exception {
 		return '*/'.FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
 	}
 }
+// @codingStandardsIgnoreEnd

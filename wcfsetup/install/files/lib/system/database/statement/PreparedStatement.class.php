@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\database\statement;
 use wcf\system\benchmark\Benchmark;
-use wcf\system\database\Database;
 use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\exception\DatabaseQueryExecutionException;
+use wcf\system\database\Database;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
