@@ -39,6 +39,7 @@
 		<instruction type="userMenu" />
 		<instruction type="userNotificationEvent" />
 		<instruction type="aclOption" />
+		<instruction type="page" />
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 </package>
