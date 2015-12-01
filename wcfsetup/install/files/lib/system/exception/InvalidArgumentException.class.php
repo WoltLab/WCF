@@ -1,0 +1,16 @@
+<?php
+namespace wcf\system\exception;
+
+/**
+ * This is a custom implementation of the default \InvalidArgumentException.
+ * It is used for backwards compatibility reasons. Do not rely on it
+ * inheriting \wcf\system\exception\SystemException.
+ * 
+ * @author	Tim Duesterhus
+ * @copyright	2001-2015 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.exception
+ * @category	Community Framework
+ */
+class InvalidArgumentException extends SystemException { }
