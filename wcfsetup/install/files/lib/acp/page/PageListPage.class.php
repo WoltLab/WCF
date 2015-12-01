@@ -36,5 +36,5 @@ class PageListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('pageID', 'name', 'customURL', 'lastUpdateTime');
+	public $validSortFields = array('pageID', 'name', 'lastUpdateTime');
 }

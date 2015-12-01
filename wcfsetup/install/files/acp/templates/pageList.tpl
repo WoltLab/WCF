@@ -18,8 +18,8 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
-			<li><a href="{link controller='PageAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.page.addMultilingual{/lang}</span></a></li>
+			<li><a href="{link controller='PageAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
+			<li><a href="{link controller='PageAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.addMultilingual{/lang}</span></a></li>
 		
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -37,7 +37,7 @@
 				<tr>
 					<th class="columnPageID{if $sortField == 'pageID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=pageID&sortOrder={if $sortField == 'pageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
-					<th class="columnText columnCustomURL{if $sortField == 'customURL'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=customURL&sortOrder={if $sortField == 'customURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.page.customURL{/lang}</a></th>
+					<th class="columnText columnURL">{lang}wcf.acp.page.url{/lang}</th>
 					<th class="columnDate columnLastUpdateTime{if $sortField == 'lastUpdateTime'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=lastUpdateTime&sortOrder={if $sortField == 'lastUpdateTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.page.lastUpdateTime{/lang}</a></th>
 					
 					{event name='columnHeads'}
@@ -64,7 +64,7 @@
 						</td>
 						<td class="columnID columnPageID">{@$page->pageID}</td>
 						<td class="columnTitle columnName"><a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
-						<td class="columnText columnCustomURL">{$page->controllerCustomURL}</td>
+						<td class="columnText columnURL">{$page->getURL()}</td>
 						<td class="columnDate columnLastUpdateTime">{@$page->lastUpdateTime|time}</td>
 						
 						{event name='columns'}
@@ -80,8 +80,8 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='PageAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
-				<li><a href="{link controller='PageAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.page.addMultilingual{/lang}</span></a></li>
+				<li><a href="{link controller='PageAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
+				<li><a href="{link controller='PageAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.addMultilingual{/lang}</span></a></li>
 		
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

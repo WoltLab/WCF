@@ -76,6 +76,15 @@ class Page extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the page URL.
+	 * 
+	 * @return string
+	 */
+	public function getURL() {
+		// @todo
+	}
+	
+	/**
 	 * Returns the page with the given name.
 	 * 
 	 * @param	string		$name
