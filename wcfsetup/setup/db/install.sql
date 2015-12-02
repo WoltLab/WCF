@@ -214,6 +214,33 @@ CREATE TABLE wcf1_bbcode_media_provider (
 	html TEXT NOT NULL
 );
 
+DROP TABLE IF EXISTS wcf1_box;
+CREATE TABLE wcf1_box (
+	boxID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	identifier VARCHAR(255) NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	boxType VARCHAR(255) NOT NULL,
+	position VARCHAR(255) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	visibleEverywhere TINYINT(1) NOT NULL DEFAULT 1,
+	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
+	cssClassName VARCHAR(255) NOT NULL DEFAULT '',
+	showHeader TINYINT(1) NOT NULL DEFAULT 1,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
+	packageID INT(10) NOT NULL,
+	className VARCHAR(255) NOT NULL DEFAULT ''
+);
+
+DROP TABLE IF EXISTS wcf1_box_content;
+CREATE TABLE wcf1_box_content (
+	boxID INT(10) NOT NULL,
+	languageID INT(10),
+	title VARCHAR(255) NOT NULL,
+	content MEDIUMTEXT,
+	
+	KEY (boxID, languageID)
+);
+
 DROP TABLE IF EXISTS wcf1_captcha_question;
 CREATE TABLE wcf1_captcha_question (
 	questionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1570,6 +1597,11 @@ ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userI
 ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_bbcode_attribute ADD FOREIGN KEY (bbcodeID) REFERENCES wcf1_bbcode (bbcodeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_box_content ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
+ALTER TABLE wcf1_box_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE; 
 
 ALTER TABLE wcf1_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 

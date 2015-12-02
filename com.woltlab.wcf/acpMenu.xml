@@ -637,5 +637,18 @@
 			<permissions>admin.content.cms.canManageMenu</permissions>
 			<icon>fa-plus</icon>
 		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cms.box.list">
+			<controller><![CDATA[wcf\acp\page\BoxListPage]]></controller>
+			<parent>wcf.acp.menu.link.cms</parent>
+			<permissions>admin.content.cms.canManageBox</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cms.box.add">
+			<controller><![CDATA[wcf\acp\form\BoxAddForm]]></controller>
+			<parent>wcf.acp.menu.link.cms.box.list</parent>
+			<permissions>admin.content.cms.canManageBox</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
 	</import>
 </data>

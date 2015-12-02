@@ -154,6 +154,9 @@ class PageAddForm extends AbstractForm {
 		$this->validateCustomUrl();
 	}
 	
+	/**
+	 * Validates page name.
+	 */
 	protected function validateName() {
 		if (empty($this->name)) {
 			throw new UserInputException('name');
@@ -163,6 +166,9 @@ class PageAddForm extends AbstractForm {
 		}
 	}
 	
+	/**
+	 * Validates parent page id.
+	 */
 	protected function validateParentPageID() {
 		if ($this->parentPageID) {
 			$page = new Page($this->parentPageID);
@@ -172,12 +178,18 @@ class PageAddForm extends AbstractForm {
 		}
 	}
 	
+	/**
+	 * Validates package id.
+	 */
 	protected function validatePackageID() {
 		if (!isset($this->availableApplications[$this->packageID])) {
 			throw new UserInputException('packageID', 'invalid');
 		}
 	}
 	
+	/**
+	 * Validates custom urls.
+	 */
 	protected function validateCustomUrl() {
 		foreach ($this->customURL as $type => $customURL) {
 			if (!empty($customURL) && !RouteHandler::isValidCustomUrl($customURL)) {
@@ -225,7 +237,7 @@ class PageAddForm extends AbstractForm {
 			'identifier' => ''
 		]), 'content' => $content]);
 		$returnValues = $this->objectAction->executeAction();
-		// set generic page name
+		// set generic page identifier
 		$pageEditor = new PageEditor($returnValues['returnValues']);
 		$pageEditor->update([
 			'identifier' => 'com.woltlab.wcf.generic'.$pageEditor->pageID
