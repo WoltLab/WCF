@@ -2,6 +2,7 @@
 namespace wcf\system\request;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
@@ -213,5 +214,55 @@ class LinkHandler extends SingletonFactory {
 		$url .= $anchor;
 		
 		return $url;
+	}
+	
+	/**
+	 * Returns the full URL to a CMS page. The `$languageID` parameter is optional and if not
+	 * present (or the integer value `-1` is given) will cause the handler to pick the correct
+	 * language version based upon the user's language.
+	 *
+	 * Passing in an illegal page id will cause this method to fail silently, returning an
+	 * empty string.
+	 * 
+	 * @param       integer         $pageID         page id
+	 * @param       integer         $languageID     language id, optional
+	 * @return      string          full URL of empty string if `$pageID` is invalid
+	 * @throws      \wcf\system\exception\SystemException
+	 */
+	public function getCmsLink($pageID, $languageID = -1) {
+		// use current language
+		if ($languageID === -1) {
+			$data = ControllerMap::getInstance()->lookupCmsPage($pageID, WCF::getLanguage()->languageID);
+			
+			// no result
+			if ($data === null) {
+				// attempt to use the default language instead
+				if (LanguageFactory::getInstance()->getDefaultLanguageID() != WCF::getLanguage()->languageID) {
+					$data = ControllerMap::getInstance()->lookupCmsPage($pageID, LanguageFactory::getInstance()->getDefaultLanguageID());
+				}
+				
+				// no result, possibly this is a non-multilingual page
+				if ($data === null) {
+					$data = ControllerMap::getInstance()->lookupCmsPage($pageID, null);
+				}
+				
+				// still no result, page does not exist at all
+				if ($data === null) {
+					return '';
+				}
+			}
+		}
+		else {
+			$data = ControllerMap::getInstance()->lookupCmsPage($pageID, $languageID);
+			
+			// no result, page does not exist or at least not in the given language
+			if ($data === null) {
+				return '';
+			}
+		}
+		
+		return $this->getLink($data['controller'], [
+			'application' => $data['application']
+		]);
 	}
 }

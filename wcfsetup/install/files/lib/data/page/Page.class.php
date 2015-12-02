@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\page;
 use wcf\data\DatabaseObject;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -53,26 +54,51 @@ class Page extends DatabaseObject {
 	/**
 	 * Returns the page content.
 	 * 
-	 * @return array
+	 * @return      array           content data
 	 */
 	public function getPageContent() {
-		$content = array();
+		$content = [];
+		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_page_content
-			WHERE	pageID = ?";
+			WHERE   pageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->pageID));
+		$statement->execute([$this->pageID]);
 		while ($row = $statement->fetchArray()) {
-			$content[($row['languageID'] ?: 0)] = array(
+			$content[($row['languageID'] ?: 0)] = [
 				'title' => $row['title'],
 				'content' => $row['content'],
 				'metaDescription' => $row['metaDescription'],
 				'metaKeywords' => $row['metaKeywords'],
 				'customURL' => $row['customURL']
-			);
+			];
 		}
 		
 		return $content;
+	}
+	
+	/**
+	 * Returns content for a single language, passing `null` for `$languageID` is undefined
+	 * for multilingual pages.
+	 * 
+	 * @param       integer         $languageID     language id or `null` if there are no localized versions
+	 * @return      string[]        page content data
+	 * @throws      \wcf\system\database\DatabaseException
+	 */
+	public function getPageContentByLanguage($languageID = null) {
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("pageID = ?", [$this->pageID]);
+		if ($this->isMultilingual) $conditions->add("languageID = ?", [$languageID]);
+		else $conditions->add("languageID IS NULL");
+		
+		$sql = "SELECT  *
+			FROM    wcf".WCF_N."_page_content
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute($conditions->getParameters());
+		$row = $statement->fetchSingleRow();
+		
+		return ($row !== false) ? $row : [];
 	}
 	
 	/**
@@ -82,6 +108,22 @@ class Page extends DatabaseObject {
 	 */
 	public function getURL() {
 		// @todo
+	}
+	
+	/**
+	 * Returns the page with the given identifier.
+	 * 
+	 * @param       string          $identifier     unique page identifier
+	 * @return      Page
+	 */
+	public static function getPageByIdentifier($identifier) {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_page
+			WHERE	identifier = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$identifier]);
+		
+		return $statement->fetchObject(Page::class);
 	}
 	
 	/**
@@ -95,10 +137,8 @@ class Page extends DatabaseObject {
 			FROM	wcf".WCF_N."_page
 			WHERE	name = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($name));
-		$row = $statement->fetchArray();
-		if ($row !== false) return new Page(null, $row);
+		$statement->execute([$name]);
 		
-		return null;
+		return $statement->fetchObject(Page::class);
 	}
 }

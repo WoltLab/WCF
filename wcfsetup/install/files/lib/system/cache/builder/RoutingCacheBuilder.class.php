@@ -143,7 +143,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 				$data['reverse'][$abbreviations[$packageID]][preg_replace('~^.*?([A-Za-z0-9]+)(?:Action|Form|Page)~', '$1', $row['controller'])] = $customUrl;
 			}
 			else {
-				$cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . $row['languageID'];
+				$cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
 				$data['lookup'][$abbreviations[$packageID]][$customUrl] = $cmsIdentifier;
 				$data['reverse'][$abbreviations[$packageID]][$cmsIdentifier] = $customUrl;
 			}

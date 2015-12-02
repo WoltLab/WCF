@@ -173,6 +173,7 @@ class RequestHandler extends SingletonFactory {
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
 		catch (SystemException $e) {
+			die("<pre>".$e->getMessage());
 			throw new IllegalLinkException();
 		}
 	}
@@ -243,7 +244,7 @@ class RequestHandler extends SingletonFactory {
 		// set default controller
 		$applicationObj = WCF::getApplicationObject(ApplicationHandler::getInstance()->getApplication($application));
 		$routeData['controller'] = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $applicationObj->getPrimaryController());
-		$routeData['controller'] = ControllerMap::getInstance()->lookup($routeData['controller']);
+		$routeData['controller'] = ControllerMap::getInstance()->lookup($application, $routeData['controller']);
 	}
 	
 	/**

@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\request;
+use wcf\page\CmsPage;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\util\StringUtil;
 
 /**
  * Resolves incoming requests and performs lookups for controller to url mappings.
@@ -16,8 +16,14 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class ControllerMap extends SingletonFactory {
+	/**
+	 * @var string[][]
+	 */
 	protected $ciControllers;
 	
+	/**
+	 * @var string[][]
+	 */
 	protected $customUrls;
 	
 	/**
@@ -26,6 +32,10 @@ class ControllerMap extends SingletonFactory {
 	 */
 	protected $lookupCache = [];
 	
+	/**
+	 * @inheritDoc
+	 * @throws      SystemException
+	 */
 	protected function init() {
 		$this->ciControllers = RoutingCacheBuilder::getInstance()->getData([], 'ciControllers');
 		$this->customUrls = RoutingCacheBuilder::getInstance()->getData([], 'customUrls');
@@ -92,9 +102,10 @@ class ControllerMap extends SingletonFactory {
 		if (isset($this->customUrls['lookup'][$application]) && isset($this->customUrls['lookup'][$application][$controller])) {
 			$data = $this->customUrls['lookup'][$application][$controller];
 			if (preg_match('~^__WCF_CMS__(?P<pageID>\d+)-(?P<languageID>\d+)$~', $data, $matches)) {
-				// TODO: this does not work, it should match the returned array below
 				return [
-					'controller' => '\\wcf\\page\\CmsPage',
+					'className' => CmsPage::class,
+					'controller' => 'cms',
+					'pageType' => 'page',
 					'languageID' => $matches['languageID'],
 					'pageID' => $matches['pageID']
 				];
@@ -142,6 +153,28 @@ class ControllerMap extends SingletonFactory {
 		$this->lookupCache[$lookupKey] = $urlController;
 		
 		return $urlController;
+	}
+	
+	/**
+	 * Looks up a cms page URL, returns an array containing the application identifier
+	 * and url controller name or null if there was no match.
+	 * 
+	 * @param       integer         $pageID         page id
+	 * @param       integer         $languageID     content language id
+	 * @return      string[]|null
+	 */
+	public function lookupCmsPage($pageID, $languageID) {
+		$key = '__WCF_CMS__' . $pageID . '-' . ($languageID ?: 0);
+		foreach ($this->customUrls['reverse'] as $application => $reverseURLs) {
+			if (isset($reverseURLs[$key])) {
+				return [
+					'application' => $application,
+					'controller' => $reverseURLs[$key]
+				];
+			}
+		}
+		
+		return null;
 	}
 	
 	/**

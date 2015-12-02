@@ -121,3 +121,56 @@ strong {
 		}
 	}
 }
+
+.nativeList {
+	margin: 1em 0 1em 40px;
+	
+	ul,
+	ol {
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+	
+	li {
+		margin: 5px 0;
+	}
+}
+
+ul.nativeList {
+	list-style-type: disc;
+}
+ol.nativeList {
+	list-style-type: decimal;
+}
+
+/* simulate native HTML styles for certain elements */
+.htmlContent {
+	p {
+		margin: 1em 0;
+	}
+	
+	h1 {
+		@extend .wcfFontTitle;
+	}
+	
+	h2 {
+		@extend .wcfFontHeadline;
+	}
+	
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: bold;
+		margin: 0.5em 0;
+	}
+	
+	ul, ol {
+		@extend .nativeList;
+	}
+	
+	ul {
+		list-style-type: disc;
+	}
+	
+	ol {
+		list-style-type: decimal;
+	}
+}
