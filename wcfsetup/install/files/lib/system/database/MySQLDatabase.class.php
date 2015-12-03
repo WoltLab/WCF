@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database;
+use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 
 /**
  * This is the database implementation for MySQL 5.1 or higher using PDO.
@@ -43,7 +44,7 @@ class MySQLDatabase extends Database {
 			$this->setAttributes();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Connecting to MySQL server '".$this->host."' failed:\n".$e->getMessage(), $this);
+			throw new GenericDatabaseException("Connecting to MySQL server '".$this->host."' failed", $e);
 		}
 	}
 	

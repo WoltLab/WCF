@@ -11,6 +11,7 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -233,45 +234,49 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
+		// backwards compatibility
+		if ($e instanceof IPrintableException) {
+			$e->show();
+			exit;
+		}
+		
+		@header('HTTP/1.1 503 Service Unavailable');
 		try {
-			if (!($e instanceof \Exception)) throw $e;
-			
-			if ($e instanceof IPrintableException) {
-				$e->show();
-				exit;
-			}
-			
-			// repack Exception
-			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
+			// @codingStandardsIgnoreStart
+			\wcf\functions\exception\printThrowable($e);
+			// @codingStandardsIgnoreEnd
 		}
-		catch (\Throwable $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		catch (\Throwable $e2) {
+			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+			echo $e2;
+			echo "\n\nwas thrown while:\n\n";
+			echo $e;
+			echo "\n\nwas handled.</pre>";
+			exit;
 		}
-		catch (\Exception $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		catch (\Exception $e2) {
+			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+			echo $e2;
+			echo "\n\nwas thrown while:\n\n";
+			echo $e;
+			echo "\n\nwas handled.</pre>";
+			exit;
 		}
 	}
 	
 	/**
-	 * Catches php errors and throws instead a system exception.
+	 * Turns PHP errors into an ErrorException.
 	 * 
 	 * @param	integer		$errorNo
 	 * @param	string		$message
 	 * @param	string		$filename
 	 * @param	integer		$lineNo
 	 */
-	public static final function handleError($errorNo, $message, $filename, $lineNo) {
-		if (error_reporting() != 0) {
-			$type = 'error';
-			switch ($errorNo) {
-				case 2: $type = 'warning';
-					break;
-				case 8: $type = 'notice';
-					break;
-			}
-			
-			throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
-		}
+	public static final function handleError($severity, $message, $file, $line) {
+		// this is neccessary for the shut-up operator
+		if (error_reporting() == 0) return;
+		
+		throw new ErrorException($message, 0, $severity, $file, $line);
 	}
 	
 	/**

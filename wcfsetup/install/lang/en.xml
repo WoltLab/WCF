@@ -248,10 +248,11 @@ Examples for medium ID detection:
 	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
+		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Error Message]]></item>
+		<item name="wcf.acp.exceptionLog.exception.class"><![CDATA[Type]]></item>
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[File (Line)]]></item>
 		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Requested URL]]></item>
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
-		<item name="wcf.acp.exceptionLog.exception.information"><![CDATA[Additional information]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID}” was found.]]></item>
@@ -709,6 +710,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date &amp; Time]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Graphics]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.option.category.general.system.error"><![CDATA[Error messages]]></item>
 		<item name="wcf.acp.option.category.general.system.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
@@ -739,6 +741,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
 		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
+		<item name="wcf.acp.option.exception_privacy"><![CDATA[Privacy]]></item>
+		<item name="wcf.acp.option.exception_privacy.description"><![CDATA[Specifies how detailed the error messages are. Private completely hides the error message, reduced tries to hide sensitive information and public (only supported in debug mode) shows everything.]]></item>
+		<item name="wcf.acp.option.exception_privacy.public"><![CDATA[Public]]></item>
+		<item name="wcf.acp.option.exception_privacy.reduced"><![CDATA[Reduced]]></item>
+		<item name="wcf.acp.option.exception_privacy.private"><![CDATA[Private]]></item>
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie Path]]></item>
@@ -2213,7 +2220,10 @@ Errors are:
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation Required]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
-		<item name="wcf.global.error.exception"><![CDATA[Please send the ID above to the site administrator.<br />The error message can be looked up at “ACP » Logs » Errors”.]]></item>
+		<item name="wcf.global.error.exception"><![CDATA[<h2>What happened?</h2>
+		<p>An unrecoverable error occured while trying to handle your request. The internal error code is as follows: <code>{$exceptionID}</code></p>
+		<p>Please send this code to the administrator to help him fix the issue.</p>
+		<p>If you are the administrator you can view the complete error message at “ACP » Logs » Errors” einsehen. The error code itself is worthless for the support!</p>]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>

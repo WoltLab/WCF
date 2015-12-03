@@ -14,11 +14,6 @@ use wcf\system\WCF;
  */
 class NamedUserException extends UserException {
 	/**
-	 * @see	\wcf\system\exception\LoggedException::$ignoreDebugMode
-	 */
-	protected $ignoreDebugMode = true;
-	
-	/**
 	 * Shows a styled page with the given error message.
 	 */
 	public function show() {

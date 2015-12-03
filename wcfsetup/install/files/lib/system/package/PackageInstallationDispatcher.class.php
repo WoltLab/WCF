@@ -205,6 +205,10 @@ class PackageInstallationDispatcher {
 							1,
 							'enable_debug_mode'
 						));
+						$statement->execute(array(
+							'public',
+							'exception_privacy'
+						));
 					}
 					
 					// update options.inc.php
