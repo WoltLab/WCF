@@ -2467,118 +2467,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[Benutzerkonto]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Website nutzen zu können, muss JavaScript aktiviert sein.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Aufgerufene Seite]]></item>
-		<item name="wcf.page.privacyPolicy"><![CDATA[Datenschutzerklärung]]></item>
-		<item name="wcf.page.privacyPolicy.text"><![CDATA[<h2>Datenschutz</h2>
-    <p>Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, 
-      Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.   
-    </p>
-    <p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. 
-      bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. 
-      Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht 
-      möglich. </p>
-    <p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten 
-      durch Dritte zur Übersendung von nicht ausdrücklich angeforderter 
-      Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. 
-      Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte 
-      im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, 
-      vor.</p>
-<h2>Datenschutzerklärung für die Nutzung von Facebook-Plugins
-		 (Like-Button)</h2>
-		 <p>Auf unseren Seiten sind Plugins des sozialen Netzwerks Facebook
-		 (Facebook Inc., 1601 Willow Road, Menlo Park, California, 94025, USA) integriert.
-		 Die Facebook-Plugins erkennen Sie an dem Facebook-Logo oder
-		 dem "Like-Button" ("Gefällt mir") auf unserer Seite. Eine Übersicht
-		 über die Facebook-Plugins finden Sie hier:
-		 <a href="http://developers.facebook.com/docs/plugins/" 
-		 target="_blank">http://developers.facebook.com/docs/plugins/</a>.<br />
-		 Wenn Sie unsere Seiten
-		 besuchen, wird über das Plugin eine direkte Verbindung zwischen Ihrem
-		 Browser und dem Facebook-Server hergestellt. Facebook erhält dadurch
-		 die Information, dass Sie mit Ihrer IP-Adresse unsere Seite
-		 besucht haben. Wenn Sie den Facebook "Like-Button" anklicken während
-		 Sie in Ihrem Facebook-Account eingeloggt sind, können Sie die Inhalte
-		 unserer Seiten auf Ihrem Facebook-Profil verlinken. Dadurch kann
-		 Facebook den Besuch unserer Seiten Ihrem Benutzerkonto zuordnen. Wir
-		 weisen darauf hin, dass wir als Anbieter der Seiten keine Kenntnis vom
-		 Inhalt der übermittelten Daten sowie deren Nutzung durch Facebook
-		 erhalten. Weitere Informationen hierzu finden Sie in der
-		 Datenschutzerklärung von facebook unter
-		 <a href="http://de-de.facebook.com/policy.php" target="_blank">
-		 http://de-de.facebook.com/policy.php</a></p>
-     <p>Wenn Sie nicht wünschen, dass Facebook den Besuch unserer Seiten Ihrem 
-     Facebook-Nutzerkonto zuordnen kann, loggen Sie sich bitte aus Ihrem
-     Facebook-Benutzerkonto aus.</p>
-<h2>Datenschutzerklärung für die Nutzung von Google +1</h2>
-		 <p><i>Erfassung und Weitergabe von Informationen:</i><br />
-     Mithilfe der Google +1-Schaltfläche können Sie Informationen weltweit
-     veröffentlichen. Über die Google +1-Schaltfläche erhalten Sie und andere
-     Nutzer personalisierte Inhalte von Google und unseren Partnern. Google
-     speichert sowohl die Information, dass Sie für einen Inhalt +1 gegeben
-     haben, als auch Informationen über die Seite, die Sie beim Klicken auf
-     +1 angesehen haben. Ihre +1 können als Hinweise zusammen mit Ihrem
-     Profilnamen und Ihrem Foto in Google-Diensten, wie etwa in
-     Suchergebnissen oder in Ihrem Google-Profil, oder an anderen Stellen auf
-     Websites und Anzeigen im Internet eingeblendet werden.<br />
-     Google zeichnet Informationen über Ihre +1-Aktivitäten auf, um die 
-     Google-Dienste für Sie und andere zu verbessern. Um die Google +1-Schaltfläche 
-     verwenden zu können, benötigen Sie ein weltweit 
-     sichtbares, öffentliches Google-Profil, das zumindest den für das 
-     Profil gewählten Namen enthalten muss. Dieser Name wird in allen 
-     Google-Diensten verwendet. In manchen Fällen kann dieser Name auch 
-     einen anderen Namen ersetzen, den Sie beim Teilen von Inhalten über 
-     Ihr Google-Konto verwendet haben. Die Identität Ihres Google-Profils 
-     kann Nutzern angezeigt werden, die Ihre E-Mail-Adresse kennen oder 
-     über andere identifizierende Informationen von Ihnen verfügen.<br />
-     <br />
-     <i>Verwendung der erfassten Informationen:</i><br />
-     Neben den oben erläuterten Verwendungszwecken werden die von Ihnen 
-     bereitgestellten Informationen gemäß den geltenden 
-     Google-Datenschutzbestimmungen genutzt. Google veröffentlicht 
-     möglicherweise zusammengefasste Statistiken über die +1-Aktivitäten 
-     der Nutzer bzw. gibt diese an Nutzer und Partner weiter, wie etwa
-     Publisher, Inserenten oder verbundene Websites. </p>
-<h2>Datenschutzerklärung für die Nutzung von Twitter</h2>
-		 <p>Auf unseren Seiten sind Funktionen des Dienstes Twitter eingebunden.
-		 Diese Funktionen werden angeboten durch die Twitter Inc., Twitter, Inc. 
-		 1355 Market St, Suite 900, San Francisco, CA 94103, USA. Durch das Benutzen
-		 von Twitter und der Funktion "Re-Tweet" werden die von Ihnen
-		 besuchten Websites mit Ihrem Twitter-Account verknüpft und anderen
-		 Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter übertragen.</p>
-     <p>Wir weisen darauf hin, dass wir als Anbieter der Seiten keine
-     Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch
-     Twitter erhalten. Weitere Informationen hierzu finden Sie in der
-     Datenschutzerklärung von Twitter unter
-     <a href="http://twitter.com/privacy" target="_blank">http://twitter.com/privacy</a>.</p>
-     <p>Ihre Datenschutzeinstellungen bei Twitter können Sie in den
-     Konto-Einstellungen unter
-     <a href="http://twitter.com/account/settings" target="_blank">http://twitter.com/account/settings</a> ändern.</p>
-
-<p><small><em>Quellenangaben: <a rel="nofollow" href="http://www.e-recht24.de/muster-datenschutzerklaerung.html" target="_blank">eRecht24</a>, <a rel="nofollow" href="http://www.e-recht24.de/artikel/datenschutz/6590-facebook-like-button-datenschutz-disclaimer.html" target="_blank">Facebook-Disclaimer von eRecht24</a>, <a rel="nofollow" href="http://www.google.com/intl/de/+/policy/+1button.html" target="_blank">Google +1 Bedingungen</a>, <a rel="nofollow" href="http://twitter.com/privacy" target="_blank">Datenschutzerklärung Twitter</a></em></small></p>]]></item>
-		
-		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{link controller='CookiePolicy'}{/link}">Weitere Informationen</a>]]></item>
-		<item name="wcf.page.cookiePolicy"><![CDATA[Einsatz von Cookies]]></item>
-		<item name="wcf.page.cookiePolicy.text"><![CDATA[<p>Wie viele Internetseiten nutzt auch diese Seite Cookies. An dieser Stelle wird erklärt was Cookies sind und wie sie genutzt werden.</p>
-		
-<h2>Was sind Cookies</h2>
-<p>Cookies sind kleine Dateien, die beim Aufruf von Internetseiten durch den Internet Browser auf Ihrem lokalen Rechner gespeichert werden. In den Dateien speichern Internetseiten verschiedene Informationen, um die Nutzung von besuchten Internetseiten für Sie komfortabler zu gestalten. Oftmals wird in Cookies z.B. Ihr Login gespeichert, um Sie bei einem späteren Besuch der Internetseite automatisch anzumelden, ohne dass Sie Ihre Zugangsdaten noch einmal manuell eingeben müssen.</p>
-
-<h2>Wie wir Cookies nutzen</h2>
-<p>Wir setzen Cookies für folgende Zwecke ein:</p>
-<ul>
-<li>Anmeldung: Bei der Anmeldung werden Ihre Zugangsdaten in verschlüsselter Form als Cookies gespeichert, um Sie bei einem späteren Seitenaufruf automatisiert anzumelden. Im Anmeldefenster können Sie mit der Option „Dauerhaft angemeldet bleiben“ festlegen, ob diese Cookies angelegt werden sollen.</li>
-<li>Sitzung: Beim ersten Aufruf unserer Seite wird eine neue Sitzung gestartet, diese wird durch ein eindeutiges Cookies Ihrem Computer zugeordnet. Sitzungen erlauben es, Sie zwischen zwei Seitenaufrufen wieder zu erkennen und Ihnen alle Funktionalitäten bereitstellen zu können. Es handelt sich um ein temporäres Cookies, dass beim Beenden des Internet Browsers automatisch gelöscht wird.</li>
-<li>Drittanbieter-Dienste: Die Einblendung von Werbeanzeigen oder das Teilen von Inhalten auf sozialen Netzwerken oder vergleichbaren Internetseiten kann die Erzeugung eines Cookies zur Folge haben. Diese Cookies werden nicht direkt von unserer Seite erzeugt, sondern durch den Drittanbieter selbst.</li>
-</ul>
-
-<h2>Wie Sie Cookies deaktivieren und entfernen</h2>
-<p>Cookies können in den Einstellungen Ihres Internet Browsers verwaltet und entfernt werden. Darüber hinaus lässt sich in den Einstellungen das Speichern von Cookies zudem vollständig deaktivieren. Bitte entnehmen Sie der folgenden Auflistung die passende Anleitung für den Umgang mit Cookies zu dem von Ihnen genutzten Internet Browser.</p>
-<ul>
-<li><a href="https://support.google.com/chrome/answer/95647?hl=de" class="externalURL" rel="nofollow">Google Chrome</a></li>
-<li><a href="https://support.mozilla.org/de/kb/cookies-informationen-websites-auf-ihrem-computer" class="externalURL" rel="nofollow">Mozilla Firefox</a></li>
-<li><a href="http://help.opera.com/Windows/12.00/de/cookies.html" class="externalURL" rel="nofollow">Opera</a></li>
-<li><a href="https://support.apple.com/kb/ph17191?locale=de_DE" class="externalURL" rel="nofollow">Safari</a></li>
-<li><a href="http://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
-</ul>]]></item>
+		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">Weitere Informationen</a>]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.other"><![CDATA[Weitere Seiten]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
@@ -2609,7 +2498,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.com.woltlab.wcf.ModerationListPage"><![CDATA[Moderation]]></item>
 		<item name="wcf.page.com.woltlab.wcf.NotificationListPage"><![CDATA[Benachrichtigungen]]></item>
 		<item name="wcf.page.com.woltlab.wcf.PaidSubscriptionListPage"><![CDATA[Bezahlte Mitgliedschaften]]></item>
-		<item name="wcf.page.com.woltlab.wcf.PrivacyPolicyPage"><![CDATA[Datenschutzerklärung]]></item>
 		<item name="wcf.page.com.woltlab.wcf.RecentActivityListPage"><![CDATA[Letzte Aktivitäten]]></item>
 		<item name="wcf.page.com.woltlab.wcf.SearchResultPage"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.page.com.woltlab.wcf.TaggedPage"><![CDATA[Inhalte mit bestimmtem Tag]]></item>
