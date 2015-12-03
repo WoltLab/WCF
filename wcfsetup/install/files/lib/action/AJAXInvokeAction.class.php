@@ -157,7 +157,8 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		if ($this->inDebugMode) {
 			throw $e;
 		}
-		
+		// TODO: This needs to be updated to the new exception handling code.
+		throw new \Exception('TODO: AJAXInvokeAction::throwException()');
 		if ($e instanceof InvalidSecurityTokenException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}

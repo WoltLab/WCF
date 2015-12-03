@@ -10,6 +10,7 @@ namespace wcf\system\exception;
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
  * @category	Community Framework
+ * @deprecated	2.2 - Fatal Exceptions are printed automatically, if you need a well styled page use: NamedUserException
  */
 interface IPrintableException {
 	/**

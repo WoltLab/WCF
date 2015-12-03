@@ -81,10 +81,6 @@
 					</dl>
 					
 					<dl>
-						<dt>{lang}wcf.acp.exceptionLog.exception.file{/lang}</dt>
-						<dd>{$exception[file]} ({$exception[line]})</dd>
-					</dl>
-					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.requestURI{/lang}</dt>
 						<dd>{$exception[requestURI]}</dd>
 					</dl>
@@ -96,20 +92,34 @@
 						<dt>{lang}wcf.acp.exceptionLog.exception.userAgent{/lang}</dt>
 						<dd>{$exception[userAgent]}</dd>
 					</dl>
-					{if $exception[information]}
-						<dl>
-							<dt>{lang}wcf.acp.exceptionLog.exception.information{/lang}</dt>
-							<dd>{@$exception[information]}</dd>
-						</dl>
-					{/if}
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.memory{/lang}</dt>
+						<dd>{$exception[peakMemory]|filesizeBinary} / {$exception[maxMemory]|filesizeBinary}</dd>
+					</dl>
+					{foreach from=$exception[chain] item=chain}
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.message{/lang}</dt>
+						<dd>{$chain[message]}</dd>
+					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.class{/lang}</dt>
+						<dd>{$chain[class]}</dd>
+					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.file{/lang}</dt>
+						<dd>{$chain[file]} ({$chain[line]})</dd>
+					</dl>
 					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.stacktrace{/lang}</dt>
-						<dd class="monospace" style="word-wrap: wrap-all; word-break: break-all;">
-							<ul>
-								<li>{@"</li><li>"|implode:$exception[stacktrace]}</li>
+						<dd>
+							<ol start="0" class="nativeList">
+								{foreach from=$chain[stack] item=stack}
+								<li>{$stack[file]} ({$stack[line]}): {$stack[class]}{$stack[type]}{$stack[function]}(&hellip;)</li>
+								{/foreach}
 							</ul>
 						</dd>
 					</dl>
+					{/foreach}
 					<dl>
 						<dt><label for="copyException{$exceptionKey}">{lang}wcf.acp.exceptionLog.exception.copy{/lang}</label></dt>
 						<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly="readonly">{$exception[0]}</textarea></dd>

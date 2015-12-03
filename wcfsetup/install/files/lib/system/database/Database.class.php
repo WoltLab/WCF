@@ -1,6 +1,9 @@
 <?php
 namespace wcf\system\database;
 use wcf\system\benchmark\Benchmark;
+use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
+use wcf\system\database\exception\DatabaseQueryException;
+use wcf\system\database\exception\DatabaseTransactionException;
 use wcf\system\WCF;
 
 /**
@@ -124,7 +127,7 @@ abstract class Database {
 			return $this->pdo->lastInsertId();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot fetch last insert id: " . $e->getMessage(), $this);
+			throw new GenericDatabaseException("Cannot fetch last insert id", $e);
 		}
 	}
 	
@@ -150,7 +153,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot begin transaction: " . $e->getMessage(), $this);
+			throw new DatabaseTransactionException("Could not begin transaction", $e);
 		}
 	}
 	
@@ -179,7 +182,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot commit transaction: " . $e->getMessage(), $this);
+			throw new DatabaseTransactionException("Could not commit transaction", $e);
 		}
 	}
 	
@@ -207,7 +210,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot rollback transaction: " . $e->getMessage(), $this);
+			throw new DatabaseTransactionException("Could not roll back transaction", $e);
 		}
 	}
 	
@@ -228,7 +231,7 @@ abstract class Database {
 			return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException($e->getMessage(), $this, null, $statement);
+			throw new DatabaseQueryException("Could not prepare statement '".$statement."'", $e);
 		}
 	}
 	

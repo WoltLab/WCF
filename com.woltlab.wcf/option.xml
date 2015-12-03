@@ -42,6 +42,9 @@
 					<parent>general</parent>
 					<showorder>3</showorder>
 				</category>
+					<category name="general.system.error">
+						<parent>general.system</parent>
+					</category>
 					<category name="general.system.cookie">
 						<parent>general.system</parent>
 					</category>
@@ -490,6 +493,17 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<selectoptions><![CDATA[mysql:wcf.acp.option.search_engine.mysql]]></selectoptions>
 			</option>
 			<!-- /general.system.search -->
+			
+			<!-- general.system.error -->
+			<option name="exception_privacy">
+				<categoryname>general.system.error</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue><![CDATA[mysql]]></defaultvalue>
+				<selectoptions><![CDATA[public:wcf.acp.option.exception_privacy.public
+reduced:wcf.acp.option.exception_privacy.reduced
+private:wcf.acp.option.exception_privacy.private]]></selectoptions>
+			</option>
+			<!-- /general.system.error-->
 			
 			<!-- general.system.cookie -->
 			<option name="cookie_prefix">
