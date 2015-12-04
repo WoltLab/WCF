@@ -3,6 +3,7 @@ namespace wcf\page;
 use wcf\data\page\Page;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
 /**
@@ -43,8 +44,12 @@ class CmsPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_GET['languageID'])) $this->languageID = intval($_GET['languageID']);
-		if (isset($_GET['pageID'])) $this->pageID = intval($_GET['pageID']);
+		$metaData = RequestHandler::getInstance()->getActiveRequest()->getMetaData();
+		if (isset($metaData['cms'], $metaData['cms']['pageID'])) {
+			$this->pageID = $metaData['cms']['pageID'];
+			
+			if (isset($metaData['cms']['languageID'])) $this->languageID = $metaData['cms']['languageID'];
+		}
 		
 		if ($this->pageID) {
 			$this->page = new Page($this->pageID);

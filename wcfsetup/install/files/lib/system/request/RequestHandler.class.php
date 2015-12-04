@@ -177,10 +177,21 @@ class RequestHandler extends SingletonFactory {
 				}
 			}
 			
-			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
+			// handle CMS page meta data
+			$metaData = [];
+			if (isset($routeData['cmsPageID'])) {
+				$metaData['cms'] = [
+					'pageID' => $routeData['cmsPageID'],
+					'languageID' => $routeData['cmsPageLanguageID']
+				];
+				
+				unset($routeData['cmsPageID']);
+				unset($routeData['cmsPageLanguageID']);
+			}
+			
+			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType'], $metaData);
 		}
 		catch (SystemException $e) {
-			die("<pre>".$e->getMessage());
 			throw new IllegalLinkException();
 		}
 	}
@@ -188,9 +199,9 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Redirects to the actual URL, e.g. controller has been aliased or mistyped (boardlist instead of board-list).
 	 * 
-	 * @param	array<string>		$routeData
-	 * @param	string			$application
-	 * @param	string			$controller
+	 * @param	string[]	$routeData
+	 * @param	string		$application
+	 * @param	string		$controller
 	 */
 	protected function redirect(array $routeData, $application, $controller = null) {
 		$routeData['application'] = $application;
