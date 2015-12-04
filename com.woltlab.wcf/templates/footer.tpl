@@ -1,46 +1,87 @@
 				{event name='contents'}
 				
+				{hascontent}
+					<div class="boxesContentBottom">
+						{content}
+							{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
+								{@$box}
+							{/foreach}
+						{/content}
+					</div>
+				{/hascontent}
+				
 				{if MODULE_WCF_AD && $__disableAds|empty}
 					{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
 				{/if}
 			</div>
-			
-			{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
-				{@$__sidebar}
-			{/if}
+				
+			{hascontent}
+				<aside class="sidebar boxesSidebarRight">
+					{content}
+						{event name='boxesSidebarRightTop'}
+												
+						{* WCF2.1 Fallback *}
+						{if !$sidebar|empty}
+							{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
+								{@$sidebar}
+							{/if}
+						{/if}
+						
+						{if !$sidebarRight|empty}
+							{@$sidebarLeft}
+						{/if}
+						
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
+							{@$box}
+						{/foreach}
+					
+						{event name='boxesSidebarRightBottom'}
+					{/content}
+				</aside>
+			{/hascontent}
 		</div>
 	</section>
-	
-	<div id="pageFooterBoxes">
+				
+	{hascontent}
+		<div class="boxesBottom">
+			<div class="layoutBoundary">
+				{content}
+					{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
+						{@$box}
+					{/foreach}
+				{/content}
+			</div>	
+		</div>
+	{/hascontent}
+				
+	<div class="boxesFooterBoxes">			
 		<div class="layoutBoundary">
 			{hascontent}
 				<ul>
-					{content}{if !$footerBoxes|empty}{@$footerBoxes}{/if}{/content}
+					{content}
+						{if !$footerBoxes|empty}{@$footerBoxes}{/if}
+					
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
 				</ul>
 			{/hascontent}
 		</div>
 	</div>
 	
-	{*include file='pageNavbarBottom'*}
-	
-	{*<nav id="footerNavigation" class="navigation navigationFooter">
-		{include file='footerMenu'}
-		
-		<ul class="navigationIcons">
-			<li id="toTopLink" class="toTopLink"><a href="{$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-up"></span> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
-			{event name='navigationIcons'}
-		</ul>
-		
-		<ul class="navigationItems">
-			{if SHOW_CLOCK}
-				<li title="{lang}wcf.date.timezone.{@'/'|str_replace:'.':$__wcf->getUser()->getTimeZone()->getName()|strtolower}{/lang}"><p><span class="icon icon16 icon-time"></span> <span>{@TIME_NOW|plainTime}</span></p></li>
-			{/if}
-			{event name='navigationItems'}
-		</ul>
-	</nav>*}
-	
-	<footer id="pageFooter" class="footer{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
+	<footer id="pageFooter" class="footer">
 		<div class="layoutBoundary">
+			{hascontent}
+				<div class="boxesFooter">
+					{content}
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('footer') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
+				</div>
+			{/hascontent}
+			
 			<div class="footerContent">
 				{event name='footerContents'}
 				

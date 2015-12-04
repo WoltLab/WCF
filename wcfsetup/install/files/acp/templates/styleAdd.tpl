@@ -696,6 +696,7 @@
 		<script>
 			var styleRuleMap = {
 				'wcfHeaderBackground': '#spHeader { background-color: VALUE; }',
+				'wcfHeaderText': '#spHeader { color: VALUE; }',
 				'wcfHeaderLink': '#spHeader a { color: VALUE; }',
 				'wcfHeaderLinkActive': '#spHeader a:hover { color: VALUE; }',
 				'wcfHeaderSearchBoxBackground': '#spSearchBox { background-color: VALUE; }',

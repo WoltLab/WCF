@@ -7,6 +7,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
+use wcf\system\box\BoxHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
@@ -801,6 +802,15 @@ class WCF {
 	 */
 	public function getStyleHandler() {
 		return StyleHandler::getInstance();
+	}
+	
+	/**
+	 * Returns box handler.
+	 *
+	 * @return	BoxHandler
+	 */
+	public function getBoxHandler() {
+		return BoxHandler::getInstance();
 	}
 	
 	/**

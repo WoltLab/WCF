@@ -1958,6 +1958,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapMedi
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapSmall', '7px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapTiny', '4px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderBackground', 'rgba(44, 62, 80, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderText', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderLink', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderLinkActive', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderMenuBackground', 'rgba(255, 255, 255, 1)');

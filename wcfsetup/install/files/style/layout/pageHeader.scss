@@ -9,8 +9,9 @@
 .interactiveDropdown { display: none; }
 /* @TODO END */
 
-.pageHeader {
+.pageHeaderContainer {
 	background-color: $wcfHeaderBackground;
+	color: $wcfHeaderText;
 	
 	a {
 		color: $wcfHeaderLink;
@@ -19,7 +20,9 @@
 			color: $wcfHeaderLinkActive;
 		}
 	}
-	
+}
+
+.pageHeader {
 	> div > div {
 		align-items: center;
 		display: flex;

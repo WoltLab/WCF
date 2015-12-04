@@ -3,10 +3,13 @@
 	will-change: transform;
 }
 
+.pageHeaderContainer.stickyPageHeader {
+	z-index: 300;
+}
+
 #pageHeader.sticky {
 	flex-wrap: nowrap;
-	z-index: 300;
-	
+		
 	> div {
 		background-color: $wcfHeaderBackground; /* @TODO */
 		left: 0;

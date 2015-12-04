@@ -2,6 +2,7 @@
 namespace wcf\data\box;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a box.
@@ -34,7 +35,7 @@ class Box extends DatabaseObject {
 	 * available box positions
 	 * @var string[]
 	 */
-	public static $availablePositions = ['header', 'headerBoxes', 'top', 'sidebarLeft', 'contentTop', 'sidebarRight', 'contentBottom', 'bottom', 'footerBoxes', 'footer'];
+	public static $availablePositions = ['hero', 'headerBoxes', 'top', 'sidebarLeft', 'contentTop', 'sidebarRight', 'contentBottom', 'bottom', 'footerBoxes', 'footer'];
 	
 	/**
 	 * Returns true if the active user can delete this box.
@@ -69,6 +70,112 @@ class Box extends DatabaseObject {
 		}
 	
 		return $content;
+	}
+	
+	/**
+	 * Gets the title for the rendered version of this box.
+	 *
+	 * @return      string
+	 */
+	public function getTitle() {
+		if ($this->boxType == 'system') {
+			return $this->getController()->getTitle();
+		}
+		else if ($this->boxType == 'menu') {
+			return $this->getMenu()->getTitle();
+		}
+		else {
+			$boxContent = $this->getBoxContent();
+			if ($this->isMultilingual) {
+				if (isset($boxContent[WCF::getLanguage()->languageID])) return $boxContent[WCF::getLanguage()->languageID]['title'];
+			}
+			else {
+				if (isset($boxContent[0])) return $boxContent[0]['title'];
+			}
+		}
+		
+		return '';
+	}
+	
+	/**
+	 * Gets the content for the rendered version of this box.
+	 * 
+	 * @return      string
+	 */
+	public function getContent() {
+		if ($this->boxType == 'system') {
+			return $this->getController()->getContent();
+		}
+		else if ($this->boxType == 'menu') {
+			return $this->getMenu()->getContent();
+		}
+		else {
+			$boxContent = $this->getBoxContent();
+			$content = '';
+			if ($this->isMultilingual) {
+				if (isset($boxContent[WCF::getLanguage()->languageID])) $content = $boxContent[WCF::getLanguage()->languageID]['content'];
+			}
+			else {
+				if (isset($boxContent[0])) $content = $boxContent[0]['content'];
+			}
+			
+			if ($this->boxType == 'text') {
+				// @todo parse text
+				$content = StringUtil::encodeHTML($content);
+			}
+			
+			return $content;
+		}
+		
+		return '';
+	}
+	
+	/**
+	 * Returns the rendered version of this box.
+	 * 
+	 * @return      string
+	 */
+	public function __toString() {
+		if (!$this->hasContent()) return ''; 
+		
+		WCF::getTPL()->assign([
+			'box' => $this
+		]);
+		return WCF::getTPL()->fetch('__box');
+	}
+	
+	/**
+	 * Returns false if this box has no content.
+	 * 
+	 * @return      boolean
+	 */
+	public function hasContent() {
+		if ($this->boxType == 'system') {
+			return $this->getController()->hasContent();
+		}
+		else if ($this->boxType == 'menu') {
+			return $this->getMenu()->hasContent();
+		}
+		else {
+			$boxContent = $this->getBoxContent();
+			$content = '';
+			if ($this->isMultilingual) {
+				if (isset($boxContent[WCF::getLanguage()->languageID])) $content = $boxContent[WCF::getLanguage()->languageID]['content'];
+			}
+			else {
+				if (isset($boxContent[0])) $content = $boxContent[0]['content'];
+			}
+			
+			return ($content != '');
+		}
+	}
+	
+	public function getController() {
+		// @todo
+	}
+	
+	public function getMenu() {
+		// @todo
 	}
 	
 	/**
