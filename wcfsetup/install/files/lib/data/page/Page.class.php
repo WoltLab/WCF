@@ -123,7 +123,7 @@ class Page extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$identifier]);
 		
-		return $statement->fetchObject(Page::class);
+		return $statement->fetchObject(self::class);
 	}
 	
 	/**
@@ -139,6 +139,6 @@ class Page extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$name]);
 		
-		return $statement->fetchObject(Page::class);
+		return $statement->fetchObject(self::class);
 	}
 }
