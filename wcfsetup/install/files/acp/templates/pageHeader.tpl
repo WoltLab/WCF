@@ -1,25 +1,27 @@
-<header id="pageHeader" class="pageHeader">
-	<div>
-		<div class="layoutBoundary">
-			{include file='pageLogo'}
-			
-			{include file='pageSearchArea'}
-			
-			{include file='pageMenu'}
-			
-			{include file='pageMenuUser'}
+<div class="pageHeaderContainer">
+	<header id="pageHeader" class="pageHeader">
+		<div>
+			<div class="layoutBoundary">
+				{include file='pageLogo'}
+
+				{include file='pageSearchArea'}
+
+				{include file='pageMenu'}
+
+				{include file='pageMenuUser'}
+			</div>
 		</div>
-	</div>
-	
-	<script data-relocate="true">
-		var header = elById('pageHeader');
-		header.style.setProperty('min-height', header.clientHeight + 'px');
-		
-		function stickyHeader() {
-			header.classList[(document.body.scrollTop > 50) ? 'add' : 'remove']('sticky');
-		}
-		
-		stickyHeader();
-		window.addEventListener('scroll', stickyHeader);
-	</script>
-</header>
+
+		<script data-relocate="true">
+			var header = elById('pageHeader');
+			header.style.setProperty('min-height', header.clientHeight + 'px');
+
+			function stickyHeader() {
+				header.classList[(document.body.scrollTop > 50) ? 'add' : 'remove']('sticky');
+			}
+
+			stickyHeader();
+			window.addEventListener('scroll', stickyHeader);
+		</script>
+	</header>
+</div>
