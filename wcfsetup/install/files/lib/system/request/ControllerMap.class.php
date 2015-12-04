@@ -106,8 +106,10 @@ class ControllerMap extends SingletonFactory {
 					'className' => CmsPage::class,
 					'controller' => 'cms',
 					'pageType' => 'page',
-					'languageID' => $matches['languageID'],
-					'pageID' => $matches['pageID']
+					
+					// CMS page meta data
+					'cmsPageID' => $matches['pageID'],
+					'cmsPageLanguageID' => $matches['languageID']
 				];
 			}
 			else {

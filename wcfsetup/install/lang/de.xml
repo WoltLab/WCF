@@ -249,10 +249,11 @@
 	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Protokollierte Fehler]]></item>
+		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Fehlermeldung]]></item>
+		<item name="wcf.acp.exceptionLog.exception.class"><![CDATA[Art]]></item>
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[Datei (Zeile)]]></item>
 		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Aufgerufene URL]]></item>
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
-		<item name="wcf.acp.exceptionLog.exception.information"><![CDATA[Zusatzinformationen]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Fehlermeldung kopieren]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>
@@ -709,6 +710,7 @@
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Datum &amp; Zeit]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Grafik]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.option.category.general.system.error"><![CDATA[Fehlermeldungen]]></item>
 		<item name="wcf.acp.option.category.general.system.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
@@ -739,6 +741,11 @@
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Zensur]]></item>
 		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
+		<item name="wcf.acp.option.exception_privacy"><![CDATA[Privatsphäre]]></item>
+		<item name="wcf.acp.option.exception_privacy.description"><![CDATA[Gibt an, wie detailliert die Fehlermeldungen sind. Privat versteckt Fehler vollständig, gekürzt versucht private Informationen zu verstecken und öffentlich (nur bei aktivem Debug-Modus) zeigt alle Informationen an.]]></item>
+		<item name="wcf.acp.option.exception_privacy.public"><![CDATA[Öffentlich]]></item>
+		<item name="wcf.acp.option.exception_privacy.reduced"><![CDATA[Gekürzt]]></item>
+		<item name="wcf.acp.option.exception_privacy.private"><![CDATA[Privat]]></item>
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookiedomain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Standardmäßig sollten Sie dieses Feld frei lassen, da ein Ausfüllen nur in wenigen Fällen notwendig ist.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookiepfad]]></item>
@@ -2205,7 +2212,10 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.confirmation.title"><![CDATA[Bestätigung erforderlich]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.description"><![CDATA[Beschreibung]]></item>
-		<item name="wcf.global.error.exception"><![CDATA[Bitte teilen Sie dem Betreiber die oben stehende ID mit.<br />Die Fehlermeldung kann mit dieser ID über „ACP » Protokoll » Fehler“ eingesehen werden.]]></item>
+		<item name="wcf.global.error.exception"><![CDATA[<h2>Was ist passiert?</h2>
+		<p>Ein nicht zu korrigierender Fehler ist bei der Verarbeitung Ihrer Anfrage aufgetreten. Der interne Fehlercode lautet: <code>{$exceptionID}</code></p>
+		<p>Leiten Sie diesen Code an den Administrator weiter, um ihm bei der Behebung zu helfen.</p>
+		<p>Wenn Sie der Administrator sind können Sie die vollständige Fehler bei „ACP » Protokoll » Fehler“ einsehen. Der Fehlercode selbst ist für den Support wertlos!</p>]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt. Sie besitzen nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Keine Antwort vom Server erhalten, Anfrage wurde abgebrochen.]]></item>

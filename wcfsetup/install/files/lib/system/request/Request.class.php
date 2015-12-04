@@ -19,6 +19,12 @@ class Request {
 	protected $className = '';
 	
 	/**
+	 * request meta data
+	 * @var string[]
+	 */
+	protected $metaData;
+	
+	/**
 	 * page name
 	 * @var	string
 	 */
@@ -34,17 +40,19 @@ class Request {
 	 * request object
 	 * @var	object
 	 */
-	protected $requestObject = null;
+	protected $requestObject;
 	
 	/**
 	 * Creates a new request object.
 	 * 
-	 * @param	string		$className
-	 * @param	string		$pageName
-	 * @param	string		$pageType
+	 * @param	string		$className      fully qualified name
+	 * @param	string		$pageName       class name
+	 * @param	string		$pageType       can be 'action', 'form' or 'page'
+	 * @param       string[]        $metaData       additional meta data
 	 */
-	public function __construct($className, $pageName, $pageType) {
+	public function __construct($className, $pageName, $pageType, array $metaData) {
 		$this->className = $className;
+		$this->metaData = $metaData;
 		$this->pageName = $pageName;
 		$this->pageType = $pageType;
 	}
@@ -75,6 +83,15 @@ class Request {
 	 */
 	public function getClassName() {
 		return $this->className;
+	}
+	
+	/**
+	 * Returns request meta data.
+	 * 
+	 * @return      string[]
+	 */
+	public function getMetaData() {
+		return $this->metaData;
 	}
 	
 	/**

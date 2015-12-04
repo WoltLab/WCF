@@ -3,6 +3,7 @@ namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
@@ -78,41 +79,47 @@ class RequestHandler extends SingletonFactory {
 	 * @throws      SystemException
 	 */
 	public function handle($application = 'wcf', $isACPRequest = false) {
-		$this->isACPRequest = $isACPRequest;
-		
-		if (!RouteHandler::getInstance()->matches()) {
-			if (ENABLE_DEBUG_MODE) {
-				throw new SystemException("Cannot handle request, no valid route provided.");
-			}
-			else {
-				throw new IllegalLinkException();
-			}
-		}
-		
-		// build request
-		$this->buildRequest($application);
-		
-		// handle offline mode
-		if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
-			if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
-				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+		try {
+			$this->isACPRequest = $isACPRequest;
+			
+			if (!RouteHandler::getInstance()->matches()) {
+				if (ENABLE_DEBUG_MODE) {
+					throw new SystemException("Cannot handle request, no valid route provided.");
 				}
 				else {
-					@header('HTTP/1.1 503 Service Unavailable');
-					WCF::getTPL()->assign(array(
-						'templateName' => 'offline',
-						'templateNameApplication' => 'wcf'
-					));
-					WCF::getTPL()->display('offline');
+					throw new IllegalLinkException();
 				}
-				
-				exit;
 			}
+			
+			// build request
+			$this->buildRequest($application);
+			
+			// handle offline mode
+			if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
+				if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
+					if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+						throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+					}
+					else {
+						@header('HTTP/1.1 503 Service Unavailable');
+						WCF::getTPL()->assign(array(
+							'templateName' => 'offline',
+							'templateNameApplication' => 'wcf'
+						));
+						WCF::getTPL()->display('offline');
+					}
+					
+					exit;
+				}
+			}
+			
+			// start request
+			$this->activeRequest->execute();
 		}
-		
-		// start request
-		$this->activeRequest->execute();
+		catch (NamedUserException $e) {
+			$e->show();
+			exit;
+		}
 	}
 	
 	/**
@@ -170,10 +177,21 @@ class RequestHandler extends SingletonFactory {
 				}
 			}
 			
-			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
+			// handle CMS page meta data
+			$metaData = [];
+			if (isset($routeData['cmsPageID'])) {
+				$metaData['cms'] = [
+					'pageID' => $routeData['cmsPageID'],
+					'languageID' => $routeData['cmsPageLanguageID']
+				];
+				
+				unset($routeData['cmsPageID']);
+				unset($routeData['cmsPageLanguageID']);
+			}
+			
+			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType'], $metaData);
 		}
 		catch (SystemException $e) {
-			die("<pre>".$e->getMessage());
 			throw new IllegalLinkException();
 		}
 	}
@@ -181,9 +199,9 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Redirects to the actual URL, e.g. controller has been aliased or mistyped (boardlist instead of board-list).
 	 * 
-	 * @param	array<string>		$routeData
-	 * @param	string			$application
-	 * @param	string			$controller
+	 * @param	string[]	$routeData
+	 * @param	string		$application
+	 * @param	string		$controller
 	 */
 	protected function redirect(array $routeData, $application, $controller = null) {
 		$routeData['application'] = $application;
