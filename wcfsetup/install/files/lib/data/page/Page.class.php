@@ -98,7 +98,7 @@ class Page extends DatabaseObject {
 		$statement->execute($conditions->getParameters());
 		$row = $statement->fetchSingleRow();
 		
-		return ($row !== false) ? $row : [];
+		return $row ?: [];
 	}
 	
 	/**
