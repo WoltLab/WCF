@@ -7,7 +7,7 @@
 {event name='metaTags'}
 
 <!-- Stylesheets -->
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
 {@$__wcf->getStyleHandler()->getStylesheet()}
 {event name='stylesheets'}
 
