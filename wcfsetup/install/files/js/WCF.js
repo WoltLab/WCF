@@ -184,8 +184,8 @@ window.shuffle = function(array) {
 	
 	// work-around for zoom bug on iOS when using .focus()
 	if (jQuery.browser.iOS) {
-		jQuery.fn.focus = function() {
-			return this;
+		jQuery.fn.focus = function(data, fn) {
+			return arguments.length > 0 ? this.on('focus', null, data, fn) : this.trigger('focus');
 		};
 	}
 })(jQuery);
