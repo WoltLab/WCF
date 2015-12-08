@@ -97,7 +97,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', array('object' => WCF::getUser()), '#wall');
+		return LinkHandler::getInstance()->getLink('User', array('id' => $this->userNotificationObject->objectID), '#wall');
 	}
 	
 	/**
