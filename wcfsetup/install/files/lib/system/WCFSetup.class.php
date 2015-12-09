@@ -3,6 +3,7 @@ namespace wcf\system;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\data\package\Package;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\cache\builder\LanguageCacheBuilder;
@@ -47,9 +48,15 @@ define('ENABLE_BENCHMARK', 0);
 class WCFSetup extends WCF {
 	/**
 	 * list of available languages
-	 * @var	array
+	 * @var	string[]
 	 */
-	protected static $availableLanguages = array();
+	protected static $availableLanguages = [];
+	
+	/**
+	 * installation directories
+	 * @var string[]
+	 */
+	protected static $directories = [];
 	
 	/**
 	 * language code of selected installation language
@@ -59,21 +66,15 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * selected languages to be installed
-	 * @var	array
+	 * @var	string[]
 	 */
-	protected static $selectedLanguages = array();
-	
-	/**
-	 * directory of the framework
-	 * @var	string
-	 */
-	protected static $wcfDir = '';
+	protected static $selectedLanguages = [];
 	
 	/**
 	 * list of installed files
-	 * @var	array
+	 * @var string[]
 	 */
-	protected static $installedFiles = array();
+	protected static $installedFiles = [];
 	
 	/**
 	 * name of installed primary application
@@ -89,12 +90,12 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * supported databases
-	 * @var	array<array>
+	 * @var	string[][]
 	 */
-	protected static $dbClasses = array(
-		'MySQLDatabase' => array('class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17')//,		// MySQL 5.1.17+
-		//'PostgreSQLDatabase' => array('class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0')	// PostgreSQL 8.2.0+
-	);
+	protected static $dbClasses = [
+		'MySQLDatabase' => ['class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17']//,		// MySQL 5.1.17+
+		//'PostgreSQLDatabase' => ['class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0']	// PostgreSQL 8.2.0+
+	];
 	
 	/**
 	 * Calls all init functions of the WCFSetup class and starts the setup process.
@@ -104,7 +105,7 @@ class WCFSetup extends WCF {
 		
 		$this->getDeveloperMode();
 		$this->getLanguageSelection();
-		$this->getWCFDir();
+		$this->getInstallationDirectories();
 		$this->initLanguage();
 		$this->initTPL();
 		self::getLanguage()->loadLanguage();
@@ -143,12 +144,12 @@ class WCFSetup extends WCF {
 	/**
 	 * Gets the available database classes.
 	 * 
-	 * @return	array
+	 * @return	string[]
 	 */
 	protected static function getAvailableDBClasses() {
-		$availableDBClasses = array();
+		$availableDBClasses = [];
 		foreach (self::$dbClasses as $class => $data) {
-			if (call_user_func(array($data['class'], 'isSupported'))) {
+			if (call_user_func([$data['class'], 'isSupported'])) {
 				$availableDBClasses[$class] = $data;
 			}
 		}
@@ -159,19 +160,23 @@ class WCFSetup extends WCF {
 	/**
 	 * Gets the selected wcf dir from request.
 	 */
-	protected static function getWCFDir() {
+	protected static function getInstallationDirectories() {
 		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
-			$_REQUEST['wcfDir'] = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
+			if (!is_array($_REQUEST['directories'])) $_REQUEST['directories'] = [];
+			$_REQUEST['directories']['wcf'] = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
 		}
 		
-		if (isset($_REQUEST['wcfDir']) && $_REQUEST['wcfDir'] != '') {
-			self::$wcfDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($_REQUEST['wcfDir']));
-			if (@file_exists(self::$wcfDir)) {
-				define('RELATIVE_WCF_DIR', FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$wcfDir));
+		if (!empty($_REQUEST['directories']) && is_array($_REQUEST['directories'])) {
+			foreach ($_REQUEST['directories'] as $application => $directory) {
+				self::$directories[$application] = $directory;
+				
+				if ($application === 'wcf' && @file_exists(self::$directories['wcf'])) {
+					define('RELATIVE_WCF_DIR', FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$directories['wcf']));	
+				}
 			}
 		}
 		
-		define('WCF_DIR', self::$wcfDir);
+		define('WCF_DIR', (isset(self::$directories['wcf']) ? self::$directories['wcf'] : ''));
 	}
 	
 	/**
@@ -184,9 +189,7 @@ class WCFSetup extends WCF {
 		mb_language('uni');
 		
 		// init setup language
-		self::$languageObj = new SetupLanguage(null, array(
-			'languageCode' => self::$selectedLanguageCode
-		));
+		self::$languageObj = new SetupLanguage(null, ['languageCode' => self::$selectedLanguageCode]);
 	}
 	
 	/**
@@ -196,22 +199,22 @@ class WCFSetup extends WCF {
 		self::$tplObj = SetupTemplateEngine::getInstance();
 		self::getTPL()->setLanguageID((self::$selectedLanguageCode == 'en' ? 0 : 1));
 		self::getTPL()->setCompileDir(TMP_DIR);
-		self::getTPL()->addApplication('wcf', PACKAGE_ID, TMP_DIR);
-		self::getTPL()->registerPrefilter(array('lang'));
-		self::getTPL()->assign(array(
+		self::getTPL()->addApplication('wcf', TMP_DIR);
+		self::getTPL()->registerPrefilter(['lang']);
+		self::getTPL()->assign([
 			'__wcf' => $this,
 			'tmpFilePrefix' => TMP_FILE_PREFIX,
 			'languageCode' => self::$selectedLanguageCode,
 			'selectedLanguages' => self::$selectedLanguages,
-			'wcfDir' => self::$wcfDir,
+			'directories' => self::$directories,
 			'developerMode' => self::$developerMode
-		));
+		]);
 	}
 	
 	/**
 	 * Returns all languages from WCFSetup.tar.gz.
 	 * 
-	 * @return	array
+	 * @return	string[]
 	 */
 	protected static function getAvailableLanguages() {
 		$languages = $match = [];
@@ -238,7 +241,7 @@ class WCFSetup extends WCF {
 	protected function calcProgress($currentStep) {
 		// calculate progress
 		$progress = round((100 / 18) * ++$currentStep, 0);
-		self::getTPL()->assign(array('progress' => $progress));
+		self::getTPL()->assign(['progress' => $progress]);
 	}
 	
 	/**
@@ -251,6 +254,7 @@ class WCFSetup extends WCF {
 		
 		// execute current step
 		switch ($step) {
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'selectSetupLanguage':
 				if (!self::$developerMode) {
 					$this->calcProgress(0);
@@ -258,6 +262,7 @@ class WCFSetup extends WCF {
 					break;
 				}
 			
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'showLicense':
 				if (!self::$developerMode) {
 					$this->calcProgress(1);
@@ -265,6 +270,7 @@ class WCFSetup extends WCF {
 					break;
 				}
 			
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'showSystemRequirements':
 				if (!self::$developerMode) {
 					$this->calcProgress(2);
@@ -272,10 +278,11 @@ class WCFSetup extends WCF {
 					break;
 				}
 			
-			case 'searchWcfDir':
+			/** @noinspection PhpMissingBreakStatementInspection */
+			case 'configureDirectories':
 				if (!self::$developerMode || !isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
 					$this->calcProgress(3);
-					$this->searchWcfDir();
+					$this->configureDirectories();
 					break;
 				}
 			
@@ -330,10 +337,10 @@ class WCFSetup extends WCF {
 	 * Shows the first setup page.
 	 */
 	protected function selectSetupLanguage() {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'availableLanguages' => self::$availableLanguages,
 			'nextStep' => 'showLicense'
-		));
+		]);
 		WCF::getTPL()->display('stepSelectSetupLanguage');
 	}
 	
@@ -347,7 +354,7 @@ class WCFSetup extends WCF {
 				exit;
 			}
 			else {
-				WCF::getTPL()->assign(array('missingAcception' => true));
+				WCF::getTPL()->assign(['missingAcception' => true]);
 			}
 		
 		}
@@ -359,10 +366,10 @@ class WCFSetup extends WCF {
 			$license = file_get_contents(TMP_DIR.'setup/license/license_en.txt');
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'license' => $license,
 			'nextStep' => 'showLicense'
-		));
+		]);
 		WCF::getTPL()->display('stepShowLicense');
 	}
 	
@@ -370,7 +377,7 @@ class WCFSetup extends WCF {
 	 * Shows the system requirements.
 	 */
 	protected function showSystemRequirements() {
-		$system = array();
+		$system = [];
 		
 		// php version
 		$system['phpVersion']['value'] = phpversion();
@@ -389,7 +396,7 @@ class WCFSetup extends WCF {
 		$system['gdLib']['value'] = '0.0.0';
 		if (function_exists('gd_info')) {
 			$temp = gd_info();
-			$match = array();
+			$match = [];
 			if (preg_match('!([0-9]+\.[0-9]+(?:\.[0-9]+)?)!', $temp['GD Version'], $match)) {
 				if (preg_match('/^[0-9]+\.[0-9]+$/', $match[1])) $match[1] .= '.0';
 				$system['gdLib']['value'] = $match[1];
@@ -401,10 +408,10 @@ class WCFSetup extends WCF {
 		$system['memoryLimit']['value'] = ini_get('memory_limit');
 		$system['memoryLimit']['result'] = $this->compareMemoryLimit();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'system' => $system,
-			'nextStep' => 'searchWcfDir'
-		));
+			'nextStep' => 'configureDirectories'
+		]);
 		WCF::getTPL()->display('stepShowSystemRequirements');
 	}
 	
@@ -451,38 +458,105 @@ class WCFSetup extends WCF {
 	/**
 	 * Searches the wcf dir.
 	 */
-	protected function searchWcfDir() {
-		if (self::$wcfDir) {
-			$wcfDir = self::$wcfDir;
+	protected function configureDirectories() {
+		// get available packages
+		$applications = $packages = [];
+		foreach (glob(TMP_DIR . 'install/packages/*') as $file) {
+			$filename = basename($file);
+			if (preg_match('~\.(?:tar|tar\.gz|tgz)$~', $filename)) {
+				$package = new PackageArchive($file);
+				$package->openArchive();
+				
+				$application = Package::getAbbreviation($package->getPackageInfo('name'));
+				
+				$applications[] = $application;
+				$packages[$application] = [
+					'directory' => ($package->getPackageInfo('applicationDirectory') ?: $application),
+					'packageDescription' => $package->getLocalizedPackageInfo('packageDescription'),
+					'packageName' => $package->getLocalizedPackageInfo('packageName')
+				];
+				
+			}
+		}
+		
+		uasort($packages, function($a, $b) {
+			return strcmp($a['packageName'], $b['packageName']);
+		});
+		
+		// force cms being shown first
+		$showOrder = ['wcf'];
+		foreach (array_keys($packages) as $application) {
+			if ($application !== 'wcf') $showOrder[] = $application;
+		}
+		
+		$documentRoot = FileUtil::unifyDirSeparator($_SERVER['DOCUMENT_ROOT']);
+		$errors = [];
+		if (!empty(self::$directories)) {
+			$applicationPaths = $knownPaths = [];
+			
+			// use $showOrder instead of $applications to ensure that the error message for
+			// duplicate directories will trigger in display order rather than the random
+			// sort order returned by glob() above
+			foreach ($showOrder as $application) {
+				$path = FileUtil::getRealPath($documentRoot . '/' . FileUtil::addTrailingSlash(FileUtil::removeLeadingSlash(self::$directories[$application])));
+				if (strpos($path, $documentRoot) !== 0) {
+					// verify that given path is still within the current document root
+					$errors[$application] = 'outsideDocumentRoot';
+				}
+				else if (in_array($path, $knownPaths)) {
+					// prevent the same path for two or more applications
+					$errors[$application] = 'duplicate';
+				}
+				else if (@is_file($path . 'global.php')) {
+					// check if directory is empty (dotfiles are okay)
+					$errors[$application] = 'notEmpty';
+				}
+				else {
+					// try to create directory if it does not exist
+					if (!is_dir($path) && !FileUtil::makePath($path)) {
+						$errors[$application] = 'makePath';
+					}
+					
+					try {
+						FileUtil::makeWritable($path);
+					}
+					catch (SystemException $e) {
+						$errors[$application] = 'makeWritable';
+					}
+				}
+				
+				$applicationPaths[$application] = $path;
+				$knownPaths[] = $path;
+			}
+			
+			if (empty($errors)) {
+				// copy over the actual paths
+				self::$directories = array_merge(self::$directories, $applicationPaths);
+				WCF::getTPL()->assign(['directories' => self::$directories]);
+				
+				$this->unzipFiles();
+				return;
+			}
 		}
 		else {
-			$wcfDir = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
+			// resolve path relative to document root
+			$relativePath = str_replace(FileUtil::unifyDirSeparator($_SERVER['DOCUMENT_ROOT']), '', FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR));
+			foreach ($packages as $application => $packageData) {
+				self::$directories[$application] = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
+			}
 		}
 		
-		$invalidDirectory = false;
-		if (@is_file($wcfDir.'lib/system/WCF.class.php')) {
-			$invalidDirectory = true;
-		}
+		WCF::getTPL()->assign([
+			'directories' => self::$directories,
+			'documentRoot' => $documentRoot,
+			'errors' => $errors,
+			'installScriptDir' => FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR),
+			'nextStep' => 'configureDirectories', // call this step again to validate paths
+			'packages' => $packages,
+			'showOrder' => $showOrder
+		]);
 		
-		// domain
-		$domainName = '';
-		if (!empty($_SERVER['SERVER_NAME'])) $domainName = 'http://' . $_SERVER['SERVER_NAME'];
-		// port
-		if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) $domainName .= ':' . $_SERVER['SERVER_PORT'];
-		// script url
-		$installScriptUrl = '';
-		if (!empty($_SERVER['REQUEST_URI'])) $installScriptUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash(FileUtil::unifyDirSeparator(dirname($_SERVER['REQUEST_URI']))));
-		
-		WCF::getTPL()->assign(array(
-			'nextStep' => 'unzipFiles',
-			'invalidDirectory' => $invalidDirectory,
-			'wcfDir' => $wcfDir,
-			'domainName' => $domainName,
-			'installScriptUrl' => $installScriptUrl,
-			'installScriptDir' => FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR)
-		));
-		
-		WCF::getTPL()->display('stepSearchWcfDir');
+		WCF::getTPL()->display('stepConfigureDirectories');
 	}
 	
 	/**
@@ -490,20 +564,12 @@ class WCFSetup extends WCF {
 	 */
 	protected function unzipFiles() {
 		// WCF seems to be installed, abort
-		if (@is_file(self::$wcfDir.'lib/system/WCF.class.php')) {
+		if (@is_file(self::$directories['wcf'].'lib/system/WCF.class.php')) {
 			throw new SystemException('Target directory seems to be an existing installation of WCF, unable to continue.');
-			exit;
 		}
 		// WCF not yet installed, install files first
 		else {
-			try {
-				$this->installFiles();
-			}
-			catch (\Exception $e) {
-				WCF::getTPL()->assign(array('exception' => $e));
-				$this->searchWcfDir();
-				return;
-			}
+			$this->installFiles();
 			
 			$this->gotoNextStep('selectLanguages');
 		}
@@ -518,12 +584,12 @@ class WCFSetup extends WCF {
 		// skip step in developer mode
 		// select all available languages automatically
 		if (self::$developerMode) {
-			self::$selectedLanguages = array();
+			self::$selectedLanguages = [];
 			foreach (self::$availableLanguages as $languageCode => $language) {
 				self::$selectedLanguages[] = $languageCode;
 			}
 			
-			self::getTPL()->assign(array('selectedLanguages' => self::$selectedLanguages));
+			self::getTPL()->assign(['selectedLanguages' => self::$selectedLanguages]);
 			$this->gotoNextStep('configureDB');
 			exit;
 		}
@@ -555,15 +621,15 @@ class WCFSetup extends WCF {
 		}
 		else {
 			self::$selectedLanguages[] = self::$selectedLanguageCode;
-			WCF::getTPL()->assign(array('selectedLanguages' => self::$selectedLanguages));
+			WCF::getTPL()->assign(['selectedLanguages' => self::$selectedLanguages]);
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'errorField' => $errorField,
 			'errorType' => $errorType,
 			'availableLanguages' => self::$availableLanguages,
 			'nextStep' => 'selectLanguages'
-		));
+		]);
 		WCF::getTPL()->display('stepSelectLanguages');
 	}
 	
@@ -572,6 +638,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function configureDB() {
 		$availableDBClasses = self::getAvailableDBClasses();
+		$dbClass = '';
 		if (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST'])) {
 			$dbHost = $_ENV['WCFSETUP_DBHOST'];
 			$dbUser = $_ENV['WCFSETUP_DBUSER'];
@@ -585,7 +652,6 @@ class WCFSetup extends WCF {
 			$dbPassword = '';
 			$dbName = 'wcf';
 			$dbNumber = 1;
-			$dbClass = '';
 		}
 		
 		// set $dbClass to first item in $availableDBClasses
@@ -627,6 +693,7 @@ class WCFSetup extends WCF {
 				}
 				
 				// check connection data
+				/** @var \wcf\system\database\Database $db */
 				$db = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true);
 				$db->connect();
 				
@@ -644,7 +711,7 @@ class WCFSetup extends WCF {
 					$statement->execute();
 					$hasInnoDB = false;
 					while ($row = $statement->fetchArray()) {
-						if ($row['Engine'] == 'InnoDB' && in_array($row['Support'], array('DEFAULT', 'YES'))) {
+						if ($row['Engine'] == 'InnoDB' && in_array($row['Support'], ['DEFAULT', 'YES'])) {
 							$hasInnoDB = true;
 							break;
 						}
@@ -679,14 +746,14 @@ class WCFSetup extends WCF {
 				}
 				// show configure template again
 				else {
-					WCF::getTPL()->assign(array('conflictedTables' => $conflictedTables));
+					WCF::getTPL()->assign(['conflictedTables' => $conflictedTables]);
 				}
 			}
 			catch (SystemException $e) {
-				WCF::getTPL()->assign(array('exception' => $e));
+				WCF::getTPL()->assign(['exception' => $e]);
 			}
 		}
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'dbHost' => $dbHost,
 			'dbUser' => $dbUser,
 			'dbPassword' => $dbPassword,
@@ -695,7 +762,7 @@ class WCFSetup extends WCF {
 			'dbClass' => $dbClass,
 			'availableDBClasses' => $availableDBClasses,
 			'nextStep' => 'configureDB'
-		));
+		]);
 		WCF::getTPL()->display('stepConfigureDB');
 	}
 	
@@ -705,6 +772,7 @@ class WCFSetup extends WCF {
 	 * 
 	 * @param	\wcf\system\database\Database	$db
 	 * @param	integer				$dbNumber
+	 * @return      string[]        list of already existing tables
 	 */
 	protected function getConflictedTables($db, $dbNumber) {
 		// get content of the sql structure file
@@ -720,7 +788,7 @@ class WCFSetup extends WCF {
 		$existingTables = $db->getEditor()->getTableNames();
 		
 		// check if existing tables are in conflict with wcf tables
-		$conflictedTables = array();
+		$conflictedTables = [];
 		foreach ($existingTables as $existingTableName) {
 			foreach ($matches[1] as $wcfTableName) {
 				if ($existingTableName == $wcfTableName) {
@@ -764,16 +832,16 @@ class WCFSetup extends WCF {
 				VALUES		(?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			foreach ($matches[1] as $tableName) {
-				$statement->execute(array($tableName));
+				$statement->execute([$tableName]);
 			}
 		}
 		
 		if ($offset < (count($sqlData) - 1)) {
-			WCF::getTPL()->assign(array(
-				'__additionalParameters' => array(
+			WCF::getTPL()->assign([
+				'__additionalParameters' => [
 					'offset' => $offset + 1
-				)
-			));
+				]
+			]);
 			
 			$this->gotoNextStep('createDB');
 		}
@@ -786,11 +854,11 @@ class WCFSetup extends WCF {
 						(pluginName, priority, className)
 				VALUES		(?, ?, ?)";
 			$statement = self::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				'packageInstallationPlugin',
 				1,
 				'wcf\system\package\plugin\PIPPackageInstallationPlugin'
-			));
+			]);
 			
 			$this->gotoNextStep('logFiles');
 		}
@@ -803,9 +871,9 @@ class WCFSetup extends WCF {
 		$this->initDB();
 		
 		$this->getInstalledFiles(WCF_DIR);
-		$acpTemplateInserts = $fileInserts = array();
+		$acpTemplateInserts = $fileInserts = [];
 		foreach (self::$installedFiles as $file) {
-			$match = array();
+			$match = [];
 			if (preg_match('!/acp/templates/([^/]+)\.tpl$!', $file, $match)) {
 				// acp template
 				$acpTemplateInserts[] = $match[1];
@@ -825,7 +893,7 @@ class WCFSetup extends WCF {
 			
 			self::getDB()->beginTransaction();
 			foreach ($acpTemplateInserts as $acpTemplate) {
-				$statement->execute(array($acpTemplate, 'wcf'));
+				$statement->execute([$acpTemplate, 'wcf']);
 			}
 			self::getDB()->commitTransaction();
 		}
@@ -839,7 +907,7 @@ class WCFSetup extends WCF {
 			
 			self::getDB()->beginTransaction();
 			foreach ($fileInserts as $file) {
-				$statement->execute(array($file, 'wcf'));
+				$statement->execute([$file, 'wcf']);
 			}
 			self::getDB()->commitTransaction();
 		}
@@ -965,7 +1033,7 @@ class WCFSetup extends WCF {
 					FROM	wcf".WCF_N."_language
 					WHERE	languageCode = ?";
 				$statement = self::getDB()->prepareStatement($sql);
-				$statement->execute(array(self::$selectedLanguageCode));
+				$statement->execute([self::$selectedLanguageCode]);
 				$row = $statement->fetchArray();
 				if (isset($row['languageID'])) $languageID = $row['languageID'];
 				
@@ -974,24 +1042,24 @@ class WCFSetup extends WCF {
 				}
 				
 				// create user
-				$data = array(
-					'data' => array(
+				$data = [
+					'data' => [
 						'email' => $email,
 						'languageID' => $languageID,
 						'password' => $password,
 						'username' => $username
-					),
-					'groups' => array(
+					],
+					'groups' => [
 						1,
 						3,
 						4
-					),
-					'languages' => array(
+					],
+					'languages' => [
 						$languageID
-					)
-				);
+					]
+				];
 				
-				$userAction = new UserAction(array(), 'create', $data);
+				$userAction = new UserAction([], 'create', $data);
 				$userAction->executeAction();
 				
 				// go to next step
@@ -1004,7 +1072,7 @@ class WCFSetup extends WCF {
 			}
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'errorField' => $errorField,
 			'errorType' => $errorType,
 			'username' => $username,
@@ -1013,7 +1081,7 @@ class WCFSetup extends WCF {
 			'password' => $password,
 			'confirmPassword' => $confirmPassword,
 			'nextStep' => 'createUser'
-		));
+		]);
 		WCF::getTPL()->display('stepCreateUser');
 	}
 	
@@ -1029,7 +1097,7 @@ class WCFSetup extends WCF {
 		
 		// get delivered packages
 		$wcfPackageFile = '';
-		$otherPackages = array();
+		$otherPackages = [];
 		$tar = new Tar(SETUP_FILE);
 		foreach ($tar->getContentList() as $file) {
 			if ($file['type'] != 'folder' && mb_strpos($file['filename'], 'install/packages/') === 0) {
@@ -1081,14 +1149,14 @@ class WCFSetup extends WCF {
 			}
 			
 			// register essential wcf package
-			$queue = PackageInstallationQueueEditor::create(array(
+			$queue = PackageInstallationQueueEditor::create([
 				'processNo' => $processNo,
 				'userID' => $admin->userID,
 				'package' => 'com.woltlab.wcf',
 				'packageName' => 'WoltLab Community Framework',
 				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile,
 				'isApplication' => 1
-			));
+			]);
 		}
 		
 		// register all other delivered packages
@@ -1105,12 +1173,12 @@ class WCFSetup extends WCF {
 					FROM	wcf".WCF_N."_package_installation_queue";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute();
-				$queues = array();
+				$queues = [];
 				while ($row = $statement->fetchArray()) {
 					$queues[$row['queueID']] = $row['parentQueueID'];
 				}
 				
-				$queueIDs = array();
+				$queueIDs = [];
 				$queueID = $queue->queueID;
 				while ($queueID) {
 					$queueIDs[] = $queueID;
@@ -1125,7 +1193,7 @@ class WCFSetup extends WCF {
 					$statement = WCF::getDB()->prepareStatement($sql);
 					WCF::getDB()->beginTransaction();
 					foreach ($queueIDs as $queueID) {
-						$statement->execute(array($queueID));
+						$statement->execute([$queueID]);
 					}
 					WCF::getDB()->commitTransaction();
 				}
@@ -1140,7 +1208,7 @@ class WCFSetup extends WCF {
 				throw new SystemException('', 0, '', $e);
 			}
 			
-			$queue = PackageInstallationQueueEditor::create(array(
+			$queue = PackageInstallationQueueEditor::create([
 				'parentQueueID' => $queue->queueID,
 				'processNo' => $processNo,
 				'userID' => $admin->userID,
@@ -1148,7 +1216,7 @@ class WCFSetup extends WCF {
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'archive' => TMP_DIR.'install/packages/'.$packageFile,
 				'isApplication' => 1
-			));
+			]);
 		}
 		
 		// login as admin
@@ -1158,6 +1226,7 @@ class WCFSetup extends WCF {
 		SessionHandler::getInstance()->changeUser($admin);
 		SessionHandler::getInstance()->register('masterPassword', 1);
 		SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
+		SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
 		SessionHandler::getInstance()->update();
 		
 		$installPhpDeleted = @unlink('./install.php');
@@ -1165,10 +1234,10 @@ class WCFSetup extends WCF {
 		$wcfSetupTarDeleted = @unlink('./WCFSetup.tar.gz');
 		
 		// print page
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'installPhpDeleted' => $installPhpDeleted,
 			'wcfSetupTarDeleted' => $wcfSetupTarDeleted
-		));
+		]);
 		WCF::getTPL()->display('stepInstallPackages');
 		
 		// delete tmp files
@@ -1182,7 +1251,7 @@ class WCFSetup extends WCF {
 	 * @param	string		$nextStep
 	 */
 	protected function gotoNextStep($nextStep) {
-		WCF::getTPL()->assign(array('nextStep' => $nextStep));
+		WCF::getTPL()->assign(['nextStep' => $nextStep]);
 		WCF::getTPL()->display('stepNext');
 	}
 	
@@ -1190,7 +1259,7 @@ class WCFSetup extends WCF {
 	 * Installs the files of the tar archive.
 	 */
 	protected static function installFiles() {
-		new Installer(self::$wcfDir, SETUP_FILE, null, 'install/files/');
+		new Installer(self::$directories['wcf'], SETUP_FILE, null, 'install/files/');
 	}
 	
 	/**
@@ -1219,6 +1288,6 @@ class WCFSetup extends WCF {
 		$tar->close();
 		
 		// assign package name
-		WCF::getTPL()->assign(array('setupPackageName' => self::$setupPackageName));
+		WCF::getTPL()->assign(['setupPackageName' => self::$setupPackageName]);
 	}
 }

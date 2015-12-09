@@ -686,8 +686,14 @@ class PackageInstallationDispatcher {
 	 * @return	\wcf\system\form\FormDocument
 	 */
 	protected function promptPackageDir() {
-		if (!PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
-			
+		// check for pre-defined directories originating from WCFSetup
+		$directory = WCF::getSession()->getVar('__wcfSetup_directories');
+		if ($directory !== null) {
+			$abbreviation = Package::getAbbreviation($this->getPackage()->package);
+			$directory = (isset($directory[$abbreviation])) ? $directory[$abbreviation] : null;
+		}
+		
+		if ($directory === null && !PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
 			$container = new GroupFormElementContainer();
 			$packageDir = new TextInputFormElement($container);
 			$packageDir->setName('packageDir');
@@ -716,14 +722,20 @@ class PackageInstallationDispatcher {
 			return $document;
 		}
 		else {
-			$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
-			$document->handleRequest();
-			$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(FileUtil::unifyDirSeparator($document->getValue('packageDir'))));
-			if ($packageDir === '/') $packageDir = '';
+			if ($directory !== null) {
+				$document = null;
+				$packageDir = $directory;
+			}
+			else {
+				$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
+				$document->handleRequest();
+				$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(FileUtil::unifyDirSeparator($document->getValue('packageDir'))));
+				if ($packageDir === '/') $packageDir = '';
+			}
 			
 			if ($packageDir !== null) {
 				// validate package dir
-				if (file_exists($packageDir . 'global.php')) {
+				if ($document !== null && file_exists($packageDir . 'global.php')) {
 					$document->setError('packageDir', WCF::getLanguage()->get('wcf.acp.package.packageDir.notAvailable'));
 					return $document;
 				}

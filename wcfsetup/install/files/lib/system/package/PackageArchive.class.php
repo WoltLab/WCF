@@ -164,6 +164,7 @@ class PackageArchive {
 		
 		// parse xml
 		$xpath = $xml->xpath();
+		/** @var \DOMElement $package */
 		$package = $xpath->query('/ns:package')->item(0);
 		
 		// package name
@@ -178,6 +179,7 @@ class PackageArchive {
 		// get package information
 		$packageInformation = $xpath->query('./ns:packageinformation', $package)->item(0);
 		$elements = $xpath->query('child::*', $packageInformation);
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			switch ($element->tagName) {
 				case 'packagename':
@@ -201,6 +203,12 @@ class PackageArchive {
 				
 				case 'isapplication':
 					$this->packageInfo['isApplication'] = intval($element->nodeValue);
+				break;
+				
+				case 'applicationdirectory':
+					if (preg_match('~^[a-z0-9\-\_]+$~', $element->nodeValue)) {
+						$this->packageInfo['applicationDirectory'] = $element->nodeValue;
+					}
 				break;
 				
 				case 'packageurl':
@@ -287,6 +295,7 @@ class PackageArchive {
 		foreach ($elements as $element) {
 			$instructionData = array();
 			$instructions = $xpath->query('./ns:instruction', $element);
+			/** @var \DOMElement $instruction */
 			foreach ($instructions as $instruction) {
 				$data = array();
 				$attributes = $xpath->query('attribute::*', $instruction);
