@@ -1,9 +1,11 @@
 <?php
 namespace wcf\system\request;
 use wcf\page\CmsPage;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Resolves incoming requests and performs lookups for controller to url mappings.
@@ -27,6 +29,11 @@ class ControllerMap extends SingletonFactory {
 	protected $customUrls;
 	
 	/**
+	 * @var string[]
+	 */
+	protected $landingPages;
+	
+	/**
 	 * list of <ControllerName> to <controller-name> mappings
 	 * @var array<string>
 	 */
@@ -39,6 +46,7 @@ class ControllerMap extends SingletonFactory {
 	protected function init() {
 		$this->ciControllers = RoutingCacheBuilder::getInstance()->getData([], 'ciControllers');
 		$this->customUrls = RoutingCacheBuilder::getInstance()->getData([], 'customUrls');
+		$this->landingPages = RoutingCacheBuilder::getInstance()->getData([], 'landingPages');
 	}
 	
 	/**
@@ -146,10 +154,7 @@ class ControllerMap extends SingletonFactory {
 			$urlController = $this->customUrls['reverse'][$application][$controller];
 		}
 		else {
-			$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-			$parts = array_map('strtolower', $parts);
-			
-			$urlController = implode('-', $parts);
+			$urlController = self::transformController($controller);
 		}
 		
 		$this->lookupCache[$lookupKey] = $urlController;
@@ -180,6 +185,68 @@ class ControllerMap extends SingletonFactory {
 	}
 	
 	/**
+	 * Lookups default controller for given application.
+	 * 
+	 * @param       string  $application    application identifier
+	 * @return      null|string[]           default controller
+	 */
+	public function lookupDefaultController($application) {
+		$controller = $this->landingPages[$application][1];
+		
+		if ($application === 'wcf' && empty($controller)) {
+			return null;
+		}
+		else if (preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $controller, $matches)) {
+			$cmsPageData = $this->lookupCmsPage($matches['pageID'], 0);
+			if ($cmsPageData === null) {
+				// page is multilingual, use current language id to resolve request
+				$cmsPageData = $this->lookupCmsPage($matches['pageID'], WCF::getLanguage()->languageID);
+				
+				if ($cmsPageData === null) {
+					throw new SystemException("Unable to resolve CMS page");
+				}
+			}
+			
+			// different application, redirect instead
+			if ($cmsPageData['application'] !== $application) {
+				return ['redirect' => LinkHandler::getInstance()->getCmsLink($matches['pageID'])];
+			}
+			else {
+				return $this->resolveCustomController($cmsPageData['application'], $cmsPageData['controller']);
+			}
+		}
+		
+		return [
+			'application' => $application,
+			'controller' => $controller
+		];
+	}
+	
+	/**
+	 * Returns true if given controller is the application's default.
+	 * 
+	 * @param       string  $application    application identifier
+	 * @param       string  $controller     url controller name
+	 * @return      boolean true if controller is the application's default
+	 */
+	public function isDefaultController($application, $controller) {
+		// lookup custom urls first
+		if (isset($this->customUrls['lookup'][$application], $this->customUrls['lookup'][$application][$controller])) {
+			$controller = $this->customUrls['lookup'][$application][$controller];
+			if (strpos($controller, '__WCF_CMS__') !== false) {
+				// remove language id component
+				$controller = preg_replace('~\-\d+$~', '', $controller);
+			}
+		}
+		
+		if ($this->landingPages[$application][0] === $controller) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Returns the class data for the active request or null if for the given
 	 * configuration no proper class exist.
 	 *
@@ -187,7 +254,7 @@ class ControllerMap extends SingletonFactory {
 	 * @param	string		$controller     controller name
 	 * @param       boolean         $isAcpRequest   true if this is an ACP request
 	 * @param	string		$pageType       page type, e.g. 'form' or 'action'
-	 * @return	array<string>   className, controller and pageType
+	 * @return	string[]        className, controller and pageType
 	 */
 	protected function getClassData($application, $controller, $isAcpRequest, $pageType) {
 		$className = $application . '\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . ucfirst($pageType);
@@ -213,5 +280,18 @@ class ControllerMap extends SingletonFactory {
 			'controller' => $controller,
 			'pageType' => $pageType
 		];
+	}
+	
+	/**
+	 * Transforms a controller into its URL representation.
+	 *
+	 * @param       string  $controller     controller, e.g. 'BoardList'
+	 * @return      string  url representation, e.g. 'board-list'
+	 */
+	public static function transformController($controller) {
+		$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$parts = array_map('strtolower', $parts);
+		
+		return implode('-', $parts);
 	}
 }

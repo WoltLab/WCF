@@ -1,8 +1,6 @@
 <?php
 namespace wcf\system\breadcrumb;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 
 /**
  * Manages breadcrumbs.
@@ -17,9 +15,9 @@ use wcf\system\WCF;
 class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * list of breadcrumbs
-	 * @var	array<\wcf\system\breadcrumb\Breadcrumb>
+	 * @var Breadcrumb[]
 	 */
-	protected $items = array();
+	protected $items = [];
 	
 	/**
 	 * Current iterator-index
@@ -27,17 +25,18 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	protected $index = 0;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// add main breadcrumbs entry
-		$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink()));
+		// TODO: there is no longer a global landing page, what should be displayed instead?
+		//$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink()));
 	}
 	
 	/**
 	 * Adds a breadcrumb (insertion order is crucial!).
 	 * 
-	 * @param	\wcf\system\breadcrumb\Breadcrumb	$item
+	 * @param	Breadcrumb	$item
 	 */
 	public function add(Breadcrumb $item) {
 		$this->items[] = $item;
@@ -46,7 +45,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * Returns the list of breadcrumbs.
 	 * 
-	 * @return	array<\wcf\system\breadcrumb\Breadcrumb>
+	 * @return	Breadcrumb[]
 	 */
 	public function get() {
 		return $this->items;
@@ -55,8 +54,8 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * Replaces a breadcrumb, returns true if replacement was successful.
 	 * 
-	 * @param	\wcf\system\breadcrumb\Breadcrumb	$item
-	 * @param	integer					$index
+	 * @param	Breadcrumb	$item
+	 * @param	integer		$index
 	 * @return	boolean
 	 */
 	public function replace(Breadcrumb $item, $index) {
@@ -86,42 +85,42 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->items);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		return $this->items[$this->index];
 	}
 	
 	/**
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->items[$this->index]);
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		$this->index++;

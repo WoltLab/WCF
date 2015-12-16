@@ -111,6 +111,15 @@ class Page extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the page's internal name.
+	 * 
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->name;
+	}
+	
+	/**
 	 * Returns the page with the given identifier.
 	 * 
 	 * @param       string          $identifier     unique page identifier

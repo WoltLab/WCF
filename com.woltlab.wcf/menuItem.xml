@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/menuItem.xsd">
+	<import>
+		<item identifier="com.woltlab.wcf.Dashboard">
+			<menu>com.woltlab.wcf.MainMenu</menu>
+			<title language="de"><![CDATA[Dashboard]]></title>
+			<title language="en"><![CDATA[Dashboard]]></title>
+			<page>com.woltlab.wcf.Dashboard</page>
+		</item>
+		
+		<item identifier="com.woltlab.wcf.MembersList">
+			<menu>com.woltlab.wcf.MainMenu</menu>
+			<title language="de"><![CDATA[Mitglieder]]></title>
+			<title language="en"><![CDATA[Members]]></title>
+			<page>com.woltlab.wcf.MembersList</page>
+		</item>
+		<item identifier="com.woltlab.wcf.RecentActivityList">
+			<parent>com.woltlab.wcf.MembersList</parent>
+			<title language="de"><![CDATA[Letzte Aktivitäten]]></title>
+			<title language="en"><![CDATA[Recent Activities]]></title>
+			<page>com.woltlab.wcf.RecentActivityList</page>
+		</item>
+		<item identifier="com.woltlab.wcf.UsersOnlineList">
+			<parent>com.woltlab.wcf.MembersList</parent>
+			<title language="de"><![CDATA[Benutzer Online]]></title>
+			<title language="en"><![CDATA[Users Online]]></title>
+			<page>com.woltlab.wcf.UsersOnlineList</page>
+		</item>
+		<item identifier="com.woltlab.wcf.Team">
+			<parent>com.woltlab.wcf.MembersList</parent>
+			<title language="de"><![CDATA[Team]]></title>
+			<title language="en"><![CDATA[Team]]></title>
+			<page>com.woltlab.wcf.Team</page>
+		</item>
+		<item identifier="com.woltlab.wcf.UserSearch">
+			<parent>com.woltlab.wcf.MembersList</parent>
+			<title language="de"><![CDATA[Benutzer suchen]]></title>
+			<title language="en"><![CDATA[Search Users]]></title>
+			<page>com.woltlab.wcf.UserSearch</page>
+		</item>
+		
+		<!-- TODO: privacy policy / footer menu? -->
+	</import>
+</data>

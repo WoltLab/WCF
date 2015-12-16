@@ -59,9 +59,6 @@
 		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Anwendungen]]></item>
-		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
-		<item name="wcf.acp.application.setAsPrimary"><![CDATA[Als primäre Anwendung festlegen]]></item>
-		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Wollen Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">

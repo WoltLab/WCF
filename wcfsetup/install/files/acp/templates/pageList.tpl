@@ -18,6 +18,7 @@
 	
 	<nav>
 		<ul>
+			<li><a href="{link controller='PageLanding'}{/link}" class="button"><span class="icon icon16 fa-home"></span> {lang}wcf.acp.page.landing{/lang}</a></li>
 			<li><a href="{link controller='PageAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
 			<li><a href="{link controller='PageAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.addMultilingual{/lang}</span></a></li>
 		
@@ -80,6 +81,7 @@
 		
 		<nav>
 			<ul>
+				<li><a href="{link controller='PageLanding'}{/link}" class="button"><span class="icon icon16 fa-home"></span> {lang}wcf.acp.page.landing{/lang}</a></li>
 				<li><a href="{link controller='PageAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
 				<li><a href="{link controller='PageAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.addMultilingual{/lang}</span></a></li>
 		

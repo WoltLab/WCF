@@ -1,22 +1,7 @@
 {include file='header' pageTitle='wcf.acp.application.edit'}
 
-{if $application->packageID != 1 && !$application->isPrimary}
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.acp.application.primaryApplication': '{lang}wcf.acp.application.primaryApplication{/lang}',
-				'wcf.acp.application.setAsPrimary.confirmMessage': '{lang}wcf.acp.application.setAsPrimary.confirmMessage{/lang}'
-			});
-			
-			new WCF.ACP.Application.SetAsPrimary({@$application->packageID});
-		});
-		//]]>
-	</script>
-{/if}
-
 <header class="boxHeadline">
-	<h1>{lang}wcf.acp.application.edit.title{/lang}{if $application->isPrimary} <span class="icon icon16 icon-ok-sign jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span>{/if}</h1>
+	<h1>{lang}wcf.acp.application.edit.title{/lang}</h1>
 </header>
 
 {include file='formError'}
@@ -28,9 +13,6 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if $application->packageID != 1 && !$application->isPrimary}
-				<li><a id="setAsPrimary" class="button"><span class="icon icon16 fa-home"></span> <span>{lang}wcf.acp.application.setAsPrimary{/lang}</span></a></li>
-			{/if}
 			<li><a href="{link controller='ApplicationManagement'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.application.management{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}

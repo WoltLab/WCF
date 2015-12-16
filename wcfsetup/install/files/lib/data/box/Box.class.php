@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\box;
 use wcf\data\DatabaseObject;
+use wcf\data\menu\Menu;
+use wcf\data\menu\MenuCache;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -36,6 +38,12 @@ class Box extends DatabaseObject {
 	 * @var string[]
 	 */
 	public static $availablePositions = ['hero', 'headerBoxes', 'top', 'sidebarLeft', 'contentTop', 'sidebarRight', 'contentBottom', 'bottom', 'footerBoxes', 'footer'];
+	
+	/**
+	 * menu object
+	 * @var Menu
+	 */
+	protected $menu;
 	
 	/**
 	 * Returns true if the active user can delete this box.
@@ -109,25 +117,22 @@ class Box extends DatabaseObject {
 		else if ($this->boxType == 'menu') {
 			return $this->getMenu()->getContent();
 		}
+		
+		$boxContent = $this->getBoxContent();
+		$content = '';
+		if ($this->isMultilingual) {
+			if (isset($boxContent[WCF::getLanguage()->languageID])) $content = $boxContent[WCF::getLanguage()->languageID]['content'];
+		}
 		else {
-			$boxContent = $this->getBoxContent();
-			$content = '';
-			if ($this->isMultilingual) {
-				if (isset($boxContent[WCF::getLanguage()->languageID])) $content = $boxContent[WCF::getLanguage()->languageID]['content'];
-			}
-			else {
-				if (isset($boxContent[0])) $content = $boxContent[0]['content'];
-			}
-			
-			if ($this->boxType == 'text') {
-				// @todo parse text
-				$content = StringUtil::encodeHTML($content);
-			}
-			
-			return $content;
+			if (isset($boxContent[0])) $content = $boxContent[0]['content'];
 		}
 		
-		return '';
+		if ($this->boxType == 'text') {
+			// @todo parse text
+			$content = StringUtil::encodeHTML($content);
+		}
+		
+		return $content;
 	}
 	
 	/**
@@ -166,7 +171,7 @@ class Box extends DatabaseObject {
 				if (isset($boxContent[0])) $content = $boxContent[0]['content'];
 			}
 			
-			return ($content != '');
+			return !empty($content);
 		}
 	}
 	
@@ -175,7 +180,11 @@ class Box extends DatabaseObject {
 	}
 	
 	public function getMenu() {
-		// @todo
+		if ($this->menu === null) {
+			$this->menu = MenuCache::getInstance()->getMenuByID($this->menuID);
+		}
+		
+		return $this->menu;
 	}
 	
 	/**
@@ -189,10 +198,8 @@ class Box extends DatabaseObject {
 			FROM	wcf".WCF_N."_box
 			WHERE	name = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($name));
-		$row = $statement->fetchArray();
-		if ($row !== false) return new Box(null, $row);
-	
-		return null;
+		$statement->execute([$name]);
+		
+		return $statement->fetchObject(Box::class);
 	}
 }

@@ -17,69 +17,6 @@ WCF.ACP = { };
 WCF.ACP.Application = { };
 
 /**
- * Provides the ability to set an application as primary.
- * 
- * @param	integer		packageID
- */
-WCF.ACP.Application.SetAsPrimary = Class.extend({
-	/**
-	 * application package id
-	 * @var	integer
-	 */
-	_packageID: 0,
-	
-	/**
-	 * Initializes the WCF.ACP.Application.SetAsPrimary class.
-	 * 
-	 * @param	integer		packageID
-	 */
-	init: function(packageID) {
-		this._packageID = packageID;
-		
-		$('#setAsPrimary').click($.proxy(this._click, this));
-	},
-	
-	/**
-	 * Shows a confirmation dialog to set current application as primary.
-	 */
-	_click: function() {
-		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.application.setAsPrimary.confirmMessage'), $.proxy(function(action) {
-			if (action === 'confirm') {
-				this._setAsPrimary();
-			}
-		}, this));
-	},
-	
-	/**
-	 * Sets an application as primary.
-	 */
-	_setAsPrimary: function() {
-		new WCF.Action.Proxy({
-			autoSend: true,
-			data: {
-				actionName: 'setAsPrimary',
-				className: 'wcf\\data\\application\\ApplicationAction',
-				objectIDs: [ this._packageID ]
-			},
-			success: $.proxy(function(data, textStatus, jqXHR) {
-				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
-				$notification.show();
-				
-				// remove button
-				$('#setAsPrimary').parent().remove();
-				
-				// insert icon
-				$headline = $('.boxHeadline > h1');
-				$headline.html($headline.html() + ' ');
-				$('<span class="icon icon16 fa-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($headline);
-				
-				WCF.DOMNodeInsertedHandler.execute();
-			}, this)
-		});
-	}
-});
-
-/**
  * Namespace for ACP cronjob management.
  */
 WCF.ACP.Cronjob = { };

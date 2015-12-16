@@ -37,12 +37,6 @@ class FlexibleRoute implements IRoute {
 	protected $pattern = '';
 	
 	/**
-	 * primary application's abbreviation (e.g. "wbb")
-	 * @var	string
-	 */
-	protected $primaryApplication = '';
-	
-	/**
 	 * list of required components
 	 * @var	array<string>
 	 */
@@ -141,15 +135,14 @@ class FlexibleRoute implements IRoute {
 			
 			if (!RequestHandler::getInstance()->isACPRequest()) {
 				$landingPage = PageMenu::getInstance()->getLandingPage();
-				if ($this->primaryApplication === '') {
-					$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
-					$this->primaryApplication = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
-				}
 				
 				// check if this is the default controller
 				if (strcasecmp(RouteHandler::getInstance()->getDefaultController($application), $components['controller']) === 0) {
 					// check if this matches the primary application
-					if ($this->primaryApplication === $application) {
+					/*
+					 * TODO: what exactly is this doing?
+					 */
+					/*if ($this->primaryApplication === $application) {
 						if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
 							// skip controller if it matches the default controller
 							$ignoreController = true;
@@ -159,6 +152,7 @@ class FlexibleRoute implements IRoute {
 						// skip default controller
 						$ignoreController = true;
 					}
+					*/
 				}
 				else if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
 					// landing page

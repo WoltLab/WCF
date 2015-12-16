@@ -20,36 +20,21 @@ use wcf\system\SingletonFactory;
 class ApplicationHandler extends SingletonFactory {
 	/**
 	 * application cache
-	 * @var	array<array>
+	 * @var	Application[]
 	 */
-	protected $cache = null;
+	protected $cache;
 	
 	/**
 	 * list of page URLs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $pageURLs = array();
+	protected $pageURLs = [];
 	
 	/**
 	 * Initializes cache.
 	 */
 	protected function init() {
 		$this->cache = ApplicationCacheBuilder::getInstance()->getData();
-	}
-	
-	/**
-	 * Returns the primary application.
-	 * 
-	 * @return	Application
-	 */
-	public function getPrimaryApplication() {
-		$packageID = ($this->cache['primary']) ?: PACKAGE_ID;
-		
-		if (isset($this->cache['application'][$packageID])) {
-			return $this->cache['application'][$packageID];
-		}
-		
-		return $this->cache['wcf'];
 	}
 	
 	/**
@@ -60,10 +45,6 @@ class ApplicationHandler extends SingletonFactory {
 	 * @return	Application
 	 */
 	public function getApplication($abbreviation) {
-		if ($abbreviation == 'wcf') {
-			return $this->getPrimaryApplication();
-		}
-		
 		if (isset($this->cache['abbreviation'][$abbreviation])) {
 			$packageID = $this->cache['abbreviation'][$abbreviation];
 			
@@ -94,9 +75,10 @@ class ApplicationHandler extends SingletonFactory {
 	 * e.g. cross-domain files requestable through the webserver.
 	 * 
 	 * @return	Application
+	 * @deprecated  2.2 please use `getApplication()` instead
 	 */
 	public function getWCF() {
-		return $this->cache['wcf'];
+		return $this->getApplicationByID(1);
 	}
 	
 	/**

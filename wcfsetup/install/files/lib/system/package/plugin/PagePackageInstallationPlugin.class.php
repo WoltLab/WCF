@@ -38,7 +38,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM     wcf".WCF_N."_page
-			WHERE           name = ?
+			WHERE           identifier = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
@@ -127,7 +127,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		if (!empty($data['elements']['parent'])) {
 			$sql = "SELECT  pageID
 				FROM    wcf".WCF_N."_".$this->tableName."
-				WHERE   name = ?";
+				WHERE   identifier = ?";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$data['elements']['parent']]);
 			$row = $statement->fetchSingleRow();
@@ -162,7 +162,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE	name = ?
+			WHERE	identifier = ?
 				AND packageID = ?";
 		$parameters = array(
 			$data['identifier'],

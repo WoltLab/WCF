@@ -137,7 +137,7 @@ class RequestHandler extends SingletonFactory {
 				$this->handleDefaultController($application, $routeData);
 				
 				// check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
-				if (!defined('WCF_RUN_MODE') || WCF_RUN_MODE != 'embedded') {
+				if (!defined('WCF_RUN_MODE') || WCF_RUN_MODE !== 'embedded') {
 					$applicationObject = ApplicationHandler::getInstance()->getApplication($application);
 					if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
 						// build URL, e.g. http://example.net/forum/
@@ -223,52 +223,33 @@ class RequestHandler extends SingletonFactory {
 	 * Checks page access for possible mandatory redirects.
 	 * 
 	 * @param	string		$application
-	 * @param	array		$routeData
+	 * @param	string[]	$routeData
 	 */
 	protected function handleDefaultController($application, array &$routeData) {
 		if (!RouteHandler::getInstance()->isDefaultController()) {
 			return;
 		}
 		
-		$landingPage = PageMenu::getInstance()->getLandingPage();
-		if ($landingPage === null) {
-			return;
+		$data = ControllerMap::getInstance()->lookupDefaultController($application);
+		if ($data === null) {
+			// handle WCF which does not have a default controller
+			throw new IllegalLinkException();
+		}
+		else if (!empty($data['redirect'])) {
+			// force a redirect
+			HeaderUtil::redirect($data['redirect'], true);
 		}
 		
-		if (empty($routeData['controller'])) $routeData['isImplicitController'] = true;
-		
-		// resolve implicit application abbreviation for landing page controller
-		$landingPageApplication = $landingPage->getApplication();
-		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
-		$primaryApplicationAbbr = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
-		if ($landingPageApplication == 'wcf') {
-			$landingPageApplication = $primaryApplicationAbbr;
+		// copy route data
+		foreach ($data as $key => $value) {
+			$routeData[$key] = $value;
 		}
-		
-		// check if currently invoked application matches the landing page
-		if ($landingPageApplication == $application) {
-			$routeData['controller'] = $landingPage->getController();
-			$routeData['controller'] = ControllerMap::getInstance()->lookup($application, $routeData['controller']);
-			
-			return;
-		}
-		
-		// redirect if this is the primary application
-		if ($application === $primaryApplicationAbbr) {
-			HeaderUtil::redirect($landingPage->getLink());
-			exit;
-		}
-		
-		// set default controller
-		$applicationObj = WCF::getApplicationObject(ApplicationHandler::getInstance()->getApplication($application));
-		$routeData['controller'] = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $applicationObj->getPrimaryController());
-		$routeData['controller'] = ControllerMap::getInstance()->lookup($application, $routeData['controller']);
 	}
 	
 	/**
 	 * Returns the active request object.
 	 * 
-	 * @return	\wcf\system\request\Request
+	 * @return	Request
 	 */
 	public function getActiveRequest() {
 		return $this->activeRequest;

@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/page.xsd">
 	<import>
+		<!-- dynamic -->
+		<page identifier="com.woltlab.wcf.Dashboard">
+			<controller>wcf\page\DashboardPage</controller>
+			<name language="de"><![CDATA[Dashboard]]></name>
+			<name language="en"><![CDATA[Dashboard]]></name>
+		</page>
+		
+		<page identifier="com.woltlab.wcf.MembersList">
+			<controller>wcf\page\MembersListPage</controller>
+			<name language="de"><![CDATA[Mitglieder]]></name>
+			<name language="en"><![CDATA[Members]]></name>
+		</page>
+		<page identifier="com.woltlab.wcf.RecentActivityList">
+			<controller>wcf\page\RecentActivityListPage</controller>
+			<name language="de"><![CDATA[Letzte Aktivitäten]]></name>
+			<name language="en"><![CDATA[Recent Activities]]></name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+		</page>
+		<page identifier="com.woltlab.wcf.UsersOnlineList">
+			<controller>wcf\page\UsersOnlineListPage</controller>
+			<name language="de"><![CDATA[Benutzer Online]]></name>
+			<name language="en"><![CDATA[Users Online]]></name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+		</page>
+		<page identifier="com.woltlab.wcf.Team">
+			<controller>wcf\page\TeamPage</controller>
+			<name language="de"><![CDATA[Team]]></name>
+			<name language="en"><![CDATA[Team]]></name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+		</page>
+		<page identifier="com.woltlab.wcf.UserSearch">
+			<controller>wcf\page\UserSearchForm</controller>
+			<name language="de"><![CDATA[Benutzer suchen]]></name>
+			<name language="en"><![CDATA[Search Users]]></name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+		</page>
+		
+		<!-- static -->
 		<page identifier="com.woltlab.wcf.CookiePolicy">
 			<name language="en">Cookie Policy</name>
 			<name language="de">Cookie-Richtlinie</name>

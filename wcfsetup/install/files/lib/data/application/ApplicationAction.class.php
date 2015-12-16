@@ -22,20 +22,15 @@ use wcf\util\StringUtil;
  */
 class ApplicationAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\application\ApplicationEditor';
+	protected $className = ApplicationEditor::class;
 	
 	/**
 	 * application editor object
-	 * @var	\wcf\data\application\ApplicationEditor
+	 * @var	ApplicationEditor
 	 */
-	public $applicationEditor = null;
-	
-	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
-	 */
-	protected $requireACP = array('setAsPrimary');
+	public $applicationEditor;
 	
 	/**
 	 * Assigns a list of applications to a group and computes cookie domain and path.
@@ -52,7 +47,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		// calculate cookie path
-		$domains = array();
+		$domains = [];
 		$regex = new Regex(':[0-9]+');
 		foreach ($this->objects as $application) {
 			$domainName = $application->domainName;
@@ -61,7 +56,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 			}
 			
 			if (!isset($domains[$domainName])) {
-				$domains[$domainName] = array();
+				$domains[$domainName] = [];
 			}
 			
 			$domains[$domainName][$application->packageID] = explode('/', FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($application->domainPath)));
@@ -94,11 +89,11 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 			$path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(implode('/', $path)));
 			
 			foreach (array_keys($data) as $packageID) {
-				$statement->execute(array(
+				$statement->execute([
 					$domainName,
 					$path,
 					$packageID
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();
@@ -111,24 +106,14 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates parameters to set an application as primary.
+	 * Sets landing pages for applications.
 	 */
-	public function validateSetAsPrimary() {
-		WCF::getSession()->checkPermissions(array('admin.system.canManageApplication'));
-		
-		$this->applicationEditor = $this->getSingleObject();
-		if (!$this->applicationEditor->packageID || $this->applicationEditor->packageID == 1) {
-			throw new UserInputException('objectIDs');
+	public function setLandingPage() {
+		/** @var ApplicationEditor $applicationEditor */
+		foreach ($this->objects as $applicationEditor) {
+			$applicationEditor->update([
+				'landingPageID' => $this->parameters['landingPages'][$applicationEditor->packageID]
+			]);
 		}
-		else if ($this->applicationEditor->isPrimary) {
-			throw new PermissionDeniedException();
-		}
-	}
-	
-	/**
-	 * Sets an application as primary.
-	 */
-	public function setAsPrimary() {
-		$this->applicationEditor->setAsPrimary();
 	}
 }

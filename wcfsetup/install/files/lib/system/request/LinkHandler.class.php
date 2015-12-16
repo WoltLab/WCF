@@ -22,21 +22,21 @@ use wcf\util\StringUtil;
 class LinkHandler extends SingletonFactory {
 	/**
 	 * regex object to filter title
-	 * @var	\wcf\system\RegEx
+	 * @var	RegEx
 	 */
-	protected $titleRegex = null;
+	protected $titleRegex;
 	
 	/**
 	 * title search strings
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $titleSearch = array();
+	protected $titleSearch = [];
 	
 	/**
 	 * title replacement strings
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $titleReplace = array();
+	protected $titleReplace = [];
 	
 	
 	/**
@@ -64,11 +64,11 @@ class LinkHandler extends SingletonFactory {
 	 * @param	string		$url
 	 * @return	string
 	 */
-	public function getLink($controller = null, array $parameters = array(), $url = '') {
+	public function getLink($controller = null, array $parameters = [], $url = '') {
 		$abbreviation = 'wcf';
 		$anchor = '';
 		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
-		$forceWCF = $isRaw = false;
+		$isRaw = false;
 		$appendSession = $encodeTitle = true;
 		
 		// enforce a certain level of sanitation and protection for links embedded in emails
@@ -106,9 +106,7 @@ class LinkHandler extends SingletonFactory {
 			unset($parameters['forceFrontend']);
 		}
 		if (isset($parameters['forceWCF'])) {
-			if ($parameters['forceWCF'] && $isACP) {
-				$forceWCF = true;
-			}
+			/** @deprecated 2.2 */
 			unset($parameters['forceWCF']);
 		}
 		
@@ -129,7 +127,7 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
-				return PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
+				return '';// PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
 			}
 		}
 		
@@ -171,7 +169,7 @@ class LinkHandler extends SingletonFactory {
 		
 		// encode certain characters
 		if (!empty($url)) {
-			$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
+			$url = str_replace(['[', ']'], ['%5B', '%5D'], $url);
 		}
 		
 		$url = $routeURL . $url;
@@ -183,28 +181,14 @@ class LinkHandler extends SingletonFactory {
 		
 		// handle applications
 		if (!PACKAGE_ID) {
-			$url = RouteHandler::getHost() . RouteHandler::getPath(array('acp')) . ($isACP ? 'acp/' : '') . $url;
+			$url = RouteHandler::getHost() . RouteHandler::getPath(['acp']) . ($isACP ? 'acp/' : '') . $url;
 		}
 		else {
 			if (RequestHandler::getInstance()->inRescueMode()) {
-				$pageURL = RouteHandler::getHost() . str_replace('//', '/', RouteHandler::getPath(array('acp')));
+				$pageURL = RouteHandler::getHost() . str_replace('//', '/', RouteHandler::getPath(['acp']));
 			}
 			else {
-				// try to resolve abbreviation
-				$application = null;
-				if ($abbreviation != 'wcf') {
-					$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
-				}
-				
-				// fallback to primary application if abbreviation is 'wcf' or unknown
-				if ($forceWCF) {
-					$application = ApplicationHandler::getInstance()->getWCF();
-				}
-				else if ($application === null) {
-					$application = ApplicationHandler::getInstance()->getPrimaryApplication();
-				}
-				
-				$pageURL = $application->getPageURL();
+				$pageURL = ApplicationHandler::getInstance()->getApplication($abbreviation)->getPageURL();
 			}
 			
 			$url = $pageURL . ($isACP ? 'acp/' : '') . $url;
@@ -227,7 +211,6 @@ class LinkHandler extends SingletonFactory {
 	 * @param       integer         $pageID         page id
 	 * @param       integer         $languageID     language id, optional
 	 * @return      string          full URL of empty string if `$pageID` is invalid
-	 * @throws      \wcf\system\exception\SystemException
 	 */
 	public function getCmsLink($pageID, $languageID = -1) {
 		// use current language

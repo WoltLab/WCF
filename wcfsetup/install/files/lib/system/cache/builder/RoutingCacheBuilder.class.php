@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\application\Application;
+use wcf\data\page\Page;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\request\ControllerMap;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -22,7 +24,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	protected function rebuild(array $parameters) {
 		return [
 			'ciControllers' => $this->getCaseInsensitiveControllers(),
-			'customUrls' => $this->getCustomUrls()
+			'customUrls' => $this->getCustomUrls(),
+			'landingPages' => $this->getLandingPages()
 		];
 	}
 	
@@ -147,6 +150,47 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 				$data['lookup'][$abbreviations[$packageID]][$customUrl] = $cmsIdentifier;
 				$data['reverse'][$abbreviations[$packageID]][$cmsIdentifier] = $customUrl;
 			}
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * Returns the list of landing pages per application.
+	 * 
+	 * @return      string[]
+	 */
+	protected function getLandingPages() {
+		$data = [];
+		
+		if (!PACKAGE_ID) {
+			return $data;
+		}
+		
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			if ($application->landingPageID) {
+				$page = new Page($application->landingPageID);
+				if ($page->controller) {
+					$controller = $page->controller;
+				}
+				else {
+					$controller = '__WCF_CMS__' . $page->pageID;
+					$controller = [$controller, $controller];
+				}
+			}
+			else if ($application->packageID == 1) {
+				// WCF has no default controller
+				$controller = ['', ''];
+			}
+			else {
+				$controller = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', WCF::getApplicationObject($application)->getPrimaryController());
+				$controller = [
+					$controller,
+					ControllerMap::transformController($controller)
+				];
+			}
+			
+			$data[ApplicationHandler::getInstance()->getAbbreviation($application->packageID)] = $controller;
 		}
 		
 		return $data;

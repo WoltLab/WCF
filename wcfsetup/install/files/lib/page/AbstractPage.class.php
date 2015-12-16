@@ -222,6 +222,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			}
 			
 			if ($redirect) {
+				die("should redirect");
 				$redirectURL = $this->canonicalURL;
 				if (!empty($requestURL['query'])) {
 					$queryString = $requestURL['query'];

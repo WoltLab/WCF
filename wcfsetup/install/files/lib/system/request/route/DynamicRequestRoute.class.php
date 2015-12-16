@@ -36,12 +36,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	protected $pattern = '';
 	
 	/**
-	 * primary application's abbreviation (e.g. "wbb")
-	 * @var	string
-	 */
-	protected $primaryApplication = '';
-	
-	/**
 	 * list of required components
 	 * @var	array<string>
 	 */
@@ -139,7 +133,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	}
 	
 	/**
-	 * @see	IRoute::buildLink()
+	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
 		$application = (isset($components['application'])) ? $components['application'] : null;
@@ -150,37 +144,8 @@ class DynamicRequestRoute implements IRequestRoute {
 		// handle default values for controller
 		$useBuildSchema = true;
 		if (count($components) == 1 && isset($components['controller'])) {
-			$ignoreController = false;
-			
-			if (!RequestHandler::getInstance()->isACPRequest()) {
-				$landingPage = PageMenu::getInstance()->getLandingPage();
-				if ($this->primaryApplication === '') {
-					$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
-					$this->primaryApplication = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
-				}
-				
-				// check if this is the default controller
-				if (strcasecmp(RouteHandler::getInstance()->getDefaultController($application), $components['controller']) === 0) {
-					// check if this matches the primary application
-					if ($this->primaryApplication === $application) {
-						if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
-							// skip controller if it matches the default controller
-							$ignoreController = true;
-						}
-					}
-					else {
-						// skip default controller
-						$ignoreController = true;
-					}
-				}
-				else if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
-					// landing page
-					$ignoreController = true;
-				}
-			}
-			
-			// drops controller from route
-			if ($ignoreController) {
+			if (!RequestHandler::getInstance()->isACPRequest() && ControllerMap::getInstance()->isDefaultController($application, $components['controller'])) {
+				// drops controller from route
 				$useBuildSchema = false;
 				
 				// unset the controller, since it would otherwise be added with http_build_query()
@@ -195,7 +160,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * Builds the actual link, the parameter $useBuildSchema can be set to false for
 	 * empty routes, e.g. for the default page.
 	 *
-	 * @param	array		$components
+	 * @param	string[]	$components
 	 * @param	string		$application
 	 * @param	boolean		$useBuildSchema
 	 * @return	string
@@ -260,7 +225,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	}
 	
 	/**
-	 * @see	IRoute::canHandle()
+	 * @inheritDoc
 	 */
 	public function canHandle(array $components) {
 		if (!empty($this->requireComponents)) {
@@ -279,21 +244,21 @@ class DynamicRequestRoute implements IRequestRoute {
 	}
 	
 	/**
-	 * @see	IRoute::getRouteData()
+	 * @inheritDoc
 	 */
 	public function getRouteData() {
 		return $this->routeData;
 	}
 	
 	/**
-	 * @see	IRoute::isACP()
+	 * @inheritDoc
 	 */
 	public function isACP() {
 		return $this->isACP;
 	}
 	
 	/**
-	 * @see	IRoute::matches()
+	 * @inheritDoc
 	 */
 	public function matches($requestURL) {
 		if (preg_match($this->pattern, $requestURL, $matches)) {

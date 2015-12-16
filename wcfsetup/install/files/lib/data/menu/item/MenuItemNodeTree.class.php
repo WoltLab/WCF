@@ -16,25 +16,25 @@ class MenuItemNodeTree {
 	 * menu id
 	 * @var	integer
 	 */
-	public $menuID = null;
+	public $menuID;
 	
 	/**
 	 * list of menu items
 	 * @var	MenuItem[]
 	 */
-	public $menuItems = array();
+	public $menuItems = [];
 	
 	/**
 	 * menu item structure
 	 * @var	mixed[]
 	 */
-	public $menuItemStructure = array();
+	public $menuItemStructure = [];
 	
 	/**
 	 * root node
 	 * @var	MenuItemNode
 	 */
-	public $node = null;
+	public $node;
 	
 	/**
 	 * Creates a new MenuItemNodeTree object.
@@ -67,10 +67,9 @@ class MenuItemNodeTree {
 	/**
 	 * Generates the node tree recursively
 	 * 
-	 * @param	integer			$parentID
-	 * @param	MenuItemNode		$parentNode
-	 * @param	int[]			$filter
-	 * @return	MenuItemNode[]
+	 * @param	integer			$parentID       parent menu item id
+	 * @param	MenuItemNode		$parentNode     parent menu item object
+	 * @return	MenuItemNode[]          nested menu item tree
 	 */
 	protected function generateNodeTree($parentID = null, MenuItemNode $parentNode = null) {
 		$nodes = array();

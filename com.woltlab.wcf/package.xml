@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.2.0 Alpha 1</version> <!-- codename: vortex -->
+		<version>2.2.0 Alpha 2</version> <!-- codename: vortex -->
 		<date>2015-10-22</date>
 	</packageinformation>
 	
@@ -40,6 +40,13 @@
 		<instruction type="userNotificationEvent" />
 		<instruction type="aclOption" />
 		<instruction type="page" />
+		<instruction type="menu" />
+		<instruction type="menuItem" />
 		<instruction type="script">acp/post_install.php</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="2.2.0 Alpha 1">
+		<instruction type="page" />
+		<instruction type="menuItem" />
 	</instructions>
 </package>

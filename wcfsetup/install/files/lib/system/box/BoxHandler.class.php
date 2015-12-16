@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\box;
+use wcf\data\box\Box;
 use wcf\data\box\BoxList;
 use wcf\system\SingletonFactory;
 
@@ -16,7 +17,7 @@ use wcf\system\SingletonFactory;
 class BoxHandler extends SingletonFactory {
 	/**
 	 * boxes grouped by position
-	 * @var array
+	 * @var Box[][]
 	 */
 	protected $boxes = [];
 	
@@ -38,7 +39,7 @@ class BoxHandler extends SingletonFactory {
 	 * Returns boxes for the given position.
 	 * 
 	 * @param       string          $position
-	 * @return      \wcf\data\box\Box[]
+	 * @return      Box[]
 	 */
 	public function getBoxes($position) {
 		if (isset($this->boxes[$position])) {

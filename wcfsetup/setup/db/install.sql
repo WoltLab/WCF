@@ -129,7 +129,7 @@ CREATE TABLE wcf1_application (
 	domainPath VARCHAR(255) NOT NULL DEFAULT '/',
 	cookieDomain VARCHAR(255) NOT NULL,
 	cookiePath VARCHAR(255) NOT NULL DEFAULT '/',
-	isPrimary TINYINT(1) NOT NULL DEFAULT 0
+	landingPageID INT(10) NULL
 );
 
 DROP TABLE IF EXISTS wcf1_attachment;
@@ -228,7 +228,8 @@ CREATE TABLE wcf1_box (
 	showHeader TINYINT(1) NOT NULL DEFAULT 1,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	packageID INT(10) NOT NULL,
-	className VARCHAR(255) NOT NULL DEFAULT ''
+	className VARCHAR(255) NOT NULL DEFAULT '',
+	menuID INT(10) NULL
 );
 
 DROP TABLE IF EXISTS wcf1_box_content;
@@ -1590,6 +1591,7 @@ ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_packag
 ALTER TABLE wcf1_ad ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_application ADD FOREIGN KEY (landingPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -1599,6 +1601,7 @@ ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 ALTER TABLE wcf1_bbcode_attribute ADD FOREIGN KEY (bbcodeID) REFERENCES wcf1_bbcode (bbcodeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_box ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE; 

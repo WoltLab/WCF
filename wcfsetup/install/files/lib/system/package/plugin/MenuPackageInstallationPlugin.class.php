@@ -1,7 +1,10 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\box\Box;
+use wcf\data\box\BoxEditor;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuEditor;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -16,6 +19,12 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+	/**
+	 * box meta data per menu
+	 * @var string[]
+	 */
+	public $boxData = [];
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -62,6 +71,26 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$elements['title'][$element->getAttribute('language')] = $element->nodeValue;
 		}
+		else if ($element->tagName === 'box') {
+			$elements['box'] = [];
+			
+			/** @var \DOMElement $child */
+			foreach ($xpath->query('child::*', $element) as $child) {
+				if ($child->tagName === 'name') {
+					if (empty($child->getAttribute('language'))) {
+						throw new SystemException("Missing required attribute 'language' for box name (menu '" . $element->parentNode->getAttribute('identifier') . "')");
+					}
+					
+					// <title> can occur multiple times using the `language` attribute
+					if (!isset($elements['box']['name'])) $elements['box']['name'] = [];
+					
+					$elements['box']['name'][$element->getAttribute('language')] = $element->nodeValue;
+				}
+				else {
+					$elements['box'][$child->tagName] = $child->nodeValue;
+				}
+			}
+		}
 		else {
 			$elements[$element->tagName] = $nodeValue;
 		}
@@ -71,8 +100,36 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
+		$identifier = $data['attributes']['identifier'];
+		
+		if (!empty($data['elements']['box'])) {
+			$position = $data['elements']['box']['position'];
+			$visibleEverywhere = false;
+			
+			if ($identifier === 'com.woltlab.wcf.MainMenu') {
+				$position = 'mainMenu';
+				$visibleEverywhere = true;
+			}
+			else if (!in_array($position, ['bottom', 'contentBottom', 'contentTop', 'footer', 'footerBoxes', 'headerBoxes', 'hero', 'sidebarLeft', 'sidebarRight', 'top'])) {
+				throw new SystemException("Unknown box position '{$position}' for menu box '{$identifier}'");
+			}
+			
+			$this->boxData[$identifier] = [
+				'identifier' => $identifier,
+				'name' => $this->getI18nValues($data['elements']['title'], true),
+				'boxType' => 'menu',
+				'position' => $position,
+				'visibleEverywhere' => ($visibleEverywhere) ? 1 : 0,
+				'cssClassName' => (!empty($data['elements']['box']['cssclassname'])),
+				'originIsSystem' => 1,
+				'packageID' => $this->installation->getPackageID()
+			];
+			
+			unset($data['elements']['box']);
+		}
+		
 		return [
-			'identifier' => $data['attributes']['identifier'],
+			'identifier' => $identifier,
 			'title' => $this->getI18nValues($data['elements']['title']),
 			'originIsSystem' => 1
 		];
@@ -108,5 +165,41 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		return parent::import($row, $data);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function postImport() {
+		if (empty($this->boxData)) return;
+		
+		// all boxes belonging to the identifiers
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("identifier IN (?)", [array_keys($this->boxData)]);
+		$conditions->add("packageID = ?", [$this->installation->getPackageID()]);
+		
+		$sql = "SELECT  *
+			FROM    wcf".WCF_N."_box
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$boxes = [];
+		while ($box = $statement->fetchObject(Box::class)) {
+			$boxes[$box->identifier] = $box;
+		}
+		
+		foreach ($this->boxData as $identifier => $data) {
+			if (isset($boxes[$identifier])) {
+				// skip both 'identifier' and 'packageID' as these properties are immutable
+				unset($data['identifier']);
+				unset($data['packageID']);
+				
+				$boxEditor = new BoxEditor($boxes[$identifier]);
+				$boxEditor->update($data);
+			}
+			else {
+				BoxEditor::create($data);
+			}
+		}
 	}
 }

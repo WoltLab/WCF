@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
@@ -71,38 +72,38 @@ class PageAddForm extends AbstractForm {
 	public $packageID = 1;
 	
 	/**
-	 * list of available applications (standalone packages)
+	 * list of available applications
 	 * @var Application[]
 	 */
 	public $availableApplications = [];
 	
 	/**
 	 * page custom URL
-	 * @var array<string>
+	 * @var string[]
 	 */
 	public $customURL = [];
 	
 	/**
 	 * page titles
-	 * @var array<string>
+	 * @var string[]
 	 */
 	public $title = [];
 	
 	/**
 	 * page contents
-	 * @var array<string>
+	 * @var string[]
 	 */
 	public $content = [];
 	
 	/**
 	 * page meta descriptions
-	 * @var array<string>
+	 * @var string[]
 	 */
 	public $metaDescription = [];
 	
 	/**
 	 * page meta keywords
-	 * @var array<string>
+	 * @var string[]
 	 */
 	public $metaKeywords = [];
 	
@@ -262,8 +263,6 @@ class PageAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$pageNodeList = new PageNodeTree();
-		
 		WCF::getTPL()->assign([
 			'action' => 'add',
 			'parentPageID' => $this->parentPageID,
@@ -279,7 +278,7 @@ class PageAddForm extends AbstractForm {
 			'metaKeywords' => $this->metaKeywords,
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
-			'pageNodeList' => $pageNodeList->getNodeList()
+			'pageNodeList' => (new PageNodeTree())->getNodeList()
 		]);
 	}
 }

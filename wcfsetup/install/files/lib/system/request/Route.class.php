@@ -282,6 +282,8 @@ class Route implements IRoute {
 				}
 				
 				// check if this is the default controller of the requested application
+				/*
+				 * TODO: what exactly is the check for the primary application doing?
 				if (!URL_LEGACY_MODE && !$ignoreController && $application !== null) {
 					if (isset(self::$defaultControllers[$application]) && self::$defaultControllers[$application] == $components['controller']) {
 						// check if this is the primary application and the landing page originates to the same application
@@ -292,6 +294,7 @@ class Route implements IRoute {
 						}
 					}
 				}
+				*/
 			}
 			
 			// drops controller from route

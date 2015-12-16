@@ -424,23 +424,37 @@ class WCF {
 		$loadedApplications = array();
 		
 		// register WCF as application
-		self::$applications['wcf'] = ApplicationHandler::getInstance()->getWCF();
+		self::$applications['wcf'] = ApplicationHandler::getInstance()->getApplicationByID(1);
 		
+		// TODO: what exactly should the base href represent and how should it be calculated, also because
+		// defining it here eventually breaks the ACP due to tpl initialization occurs first
+		if (!class_exists(WCFACP::class, false)) {
+			$this->getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
+		}
+		
+		// TODO: this is required for the uninstallation of applications, find a different solution!
 		if (PACKAGE_ID == 1) {
-			return;
+			//return;
 		}
 		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$loadedApplications[] = $this->loadApplication($application);
-		
-		// register primary application
-		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-		self::$applications[$abbreviation] = $application;
+		if ($application->packageID != 1) {
+			$loadedApplications[] = $this->loadApplication($application);
+			
+			// register primary application
+			$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+			self::$applications[$abbreviation] = $application;
+		}
 		
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
 		foreach ($applications as $application) {
+			if ($application->packageID == 1) {
+				// ignore WCF
+				continue;
+			}
+			
 			$loadedApplications[] = $this->loadApplication($application, true);
 		}
 		
@@ -844,9 +858,9 @@ class WCF {
 	 */
 	public function getFavicon() {
 		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
-		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+		$wcf = ApplicationHandler::getInstance()->getWCF();
 		
-		if ($activeApplication->domainName != $primaryApplication->domainName) {
+		if ($activeApplication->domainName !== $wcf->domainName) {
 			if (file_exists(WCF_DIR.'images/favicon.ico')) {
 				$favicon = file_get_contents(WCF_DIR.'images/favicon.ico');
 				
