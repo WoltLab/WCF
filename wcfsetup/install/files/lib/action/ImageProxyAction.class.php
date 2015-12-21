@@ -51,7 +51,7 @@ class ImageProxyAction extends AbstractAction {
 			$fileLocation = WCF_DIR.'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
 			$dir = dirname($fileLocation);
 			if (!@file_exists($dir)) {
-				FileUtil::makePath($dir, 0777);
+				FileUtil::makePath($dir);
 			}
 			
 			// download image

@@ -95,7 +95,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 			return strcmp($groupA->getName(), $groupB->getName());
 		});
 		
-		$this->conditions = UserGroupAssignmentHandler::getInstance()->getGroupedObjectTypes('com.woltlab.wcf.condition.userGroupAssignment');
+		$this->conditions = UserGroupAssignmentHandler::getInstance()->getGroupedObjectTypes();
 		
 		parent::readData();
 	}

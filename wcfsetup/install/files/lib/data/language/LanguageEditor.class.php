@@ -455,7 +455,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		}
 		
 		// update the relevant language files
-		self::deleteLanguageFiles($this->languageID, $category->languageCategory, $packageID);
+		self::deleteLanguageFiles($this->languageID, $category->languageCategory);
 		
 		// delete relevant template compilations
 		$this->deleteCompiledTemplates();
