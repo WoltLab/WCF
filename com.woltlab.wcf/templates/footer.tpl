@@ -28,7 +28,7 @@
 						{/if}
 						
 						{if !$sidebarRight|empty}
-							{@$sidebarLeft}
+							{@$sidebarRight}
 						{/if}
 						
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
@@ -53,48 +53,22 @@
 			</div>	
 		</div>
 	{/hascontent}
+		
+	{hascontent}
+		<div class="boxesFooterBoxes">			
+			<div class="layoutBoundary">
+				{content}
+					{if !$footerBoxes|empty}{@$footerBoxes}{/if}
 				
-	<div class="boxesFooterBoxes">			
-		<div class="layoutBoundary">
-			{hascontent}
-				<ul>
-					{content}
-						{if !$footerBoxes|empty}{@$footerBoxes}{/if}
-					
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
-							{@$box}
-						{/foreach}
-					{/content}
-				</ul>
-			{/hascontent}
-		</div>
-	</div>
-	
-	<footer id="pageFooter" class="footer">
-		<div class="layoutBoundary">
-			{hascontent}
-				<div class="boxesFooter">
-					{content}
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('footer') item=box}
-							{@$box}
-						{/foreach}
-					{/content}
-				</div>
-			{/hascontent}
-			
-			<div class="footerContent">
-				{event name='footerContents'}
-				
-				{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
-				
-				{event name='copyright'}
+					{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
+						{@$box}
+					{/foreach}
+				{/content}
 			</div>
-			
-			{if MODULE_WCF_AD && $__disableAds|empty}
-				{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}
-			{/if}
 		</div>
-	</footer>
+	{/hascontent}
+	
+	{include file='pageFooter'}
 </div>
 
 {event name='footer'}

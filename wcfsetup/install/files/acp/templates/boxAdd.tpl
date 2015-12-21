@@ -161,7 +161,7 @@
 			<dl{if $errorField == 'content'} class="formError"{/if}>
 				<dt><label for="content0">{lang}wcf.acp.box.content{/lang}</label></dt>
 				<dd>
-					<textarea name="content[0]" id="content0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
+					<textarea name="content[0]" id="content0" rows="10">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
 					{if $errorField == 'content'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

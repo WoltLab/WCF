@@ -24,13 +24,10 @@
 			
 			> a {
 				color: $wcfNavigationLink;
-				opacity: .8;
 				text-decoration: none;
-				transition: opacity .2s linear;
 				
 				&:hover {
 					color: $wcfNavigationLinkActive;
-					opacity: 1;
 				}
 			}
 		}

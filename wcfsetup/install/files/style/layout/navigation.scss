@@ -38,13 +38,6 @@
 		}
 		
 		> a {
-			opacity: .8;
-			transition: opacity .2s linear;
-			
-			&:hover {
-				opacity: 1;
-			}
-			
 			> .icon {
 				color: $wcfHeaderLink;
 			}
