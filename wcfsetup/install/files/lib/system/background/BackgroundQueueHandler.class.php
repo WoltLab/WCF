@@ -15,6 +15,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.background.job
  * @category	Community Framework
+ * @since	2.2
  */
 class BackgroundQueueHandler extends SingletonFactory {
 	/**

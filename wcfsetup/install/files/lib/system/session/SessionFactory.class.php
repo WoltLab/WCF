@@ -20,6 +20,7 @@ class SessionFactory extends ACPSessionFactory {
 	
 	/**
 	 * @see	\wcf\system\session\ACPSessionFactory::hasValidCookie()
+	 * @since	2.2
 	 */
 	public function hasValidCookie() {
 		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'])) {

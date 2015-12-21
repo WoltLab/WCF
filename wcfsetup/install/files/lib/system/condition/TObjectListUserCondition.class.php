@@ -13,6 +13,7 @@ use wcf\data\user\UserList;
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
  * @category	Community Framework
+ * @since	2.2
  */
 trait TObjectListUserCondition {
 	/**

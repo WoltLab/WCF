@@ -11,6 +11,7 @@ use wcf\data\DatabaseObjectList;
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing
  * @category	Community Framework
+ * @since	2.2
  */
 interface IBulkProcessingAction {
 	/**

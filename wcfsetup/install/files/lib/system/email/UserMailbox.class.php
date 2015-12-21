@@ -11,6 +11,7 @@ use wcf\data\user\User;
  * @package	com.woltlab.wcf
  * @subpackage	system.email
  * @category	Community Framework
+ * @since	2.2
  */
 class UserMailbox extends Mailbox {
 	/**

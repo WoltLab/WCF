@@ -11,7 +11,6 @@ use wcf\system\exception\SystemException;
  * @package	com.woltlab.wcf
  * @subpackage	system.email.transport.exception
  * @category	Community Framework
+ * @since	2.2
  */
-class TransientFailure extends SystemException {
-	
-}
+class TransientFailure extends SystemException { }

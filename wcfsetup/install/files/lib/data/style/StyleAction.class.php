@@ -635,6 +635,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		);
 	}
 	
+	/**
+	 * TODO: add documentation
+	 * @since	2.2
+	 */
 	public function validateMarkAsTainted() {
 		if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
 			throw new PermissionDeniedException();
@@ -643,6 +647,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		$this->styleEditor = $this->getSingleObject();
 	}
 	
+	/**
+	 * TODO: add documentation
+	 * @since	2.2
+	 */
 	public function markAsTainted() {
 		// merge definitions
 		$variables = $this->styleEditor->getVariables();

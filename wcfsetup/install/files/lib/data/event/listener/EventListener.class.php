@@ -39,6 +39,7 @@ class EventListener extends DatabaseObject {
 	 * Returns the names of all events listened to.
 	 * 
 	 * @return	array<string>
+	 * @since	2.2
 	 */
 	public function getEventNames() {
 		return explode(',', $this->eventName);

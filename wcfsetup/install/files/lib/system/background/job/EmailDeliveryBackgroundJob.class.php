@@ -13,6 +13,7 @@ use wcf\system\email\Mailbox;
  * @package	com.woltlab.wcf
  * @subpackage	system.background.job
  * @category	Community Framework
+ * @since	2.2
  */
 class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	/**

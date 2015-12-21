@@ -10,12 +10,13 @@ namespace wcf\util\exception;
  * @package	com.woltlab.wcf
  * @subpackage	util.exception
  * @category	Community Framework
+ * @since	2.2
  */
 class CryptoException extends \Exception {
 	/**
 	 * @see	\Exception::__construct()
 	 */
-	public function __construct($message, $previous) {
+	public function __construct($message, $previous = null) {
 		parent::__construct($message, 0, $previous);
 	}
 }

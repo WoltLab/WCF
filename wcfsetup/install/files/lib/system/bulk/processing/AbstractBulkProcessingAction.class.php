@@ -11,6 +11,7 @@ use wcf\data\object\type\AbstractObjectTypeProcessor;
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractBulkProcessingAction extends AbstractObjectTypeProcessor implements IBulkProcessingAction {
 	/**

@@ -12,6 +12,7 @@ use wcf\system\email\Mailbox;
  * @package	com.woltlab.wcf
  * @subpackage	system.email.transport
  * @category	Community Framework
+ * @since	2.2
  */
 interface EmailTransport {
 	/**

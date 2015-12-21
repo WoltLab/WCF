@@ -160,6 +160,7 @@ class UserGroup extends DatabaseObject {
 	 * Returns true if this is the 'Everyone' group.
 	 * 
 	 * @return	boolean
+	 * @since	2.2
 	 */
 	public function isEveryone() {
 		return $this->groupType == self::EVERYONE;

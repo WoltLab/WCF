@@ -105,6 +105,8 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	
 	/**
 	 * Validates the 'setAsSynonyms' action.
+	 * 
+	 * @since	2.2
 	 */
 	public function validateSetAsSynonyms() {
 		WCF::getSession()->checkPermissions([ 'admin.content.tag.canManageTag' ]);
@@ -125,6 +127,8 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	
 	/**
 	 * Sets a number of tags as a synonyms of another tag.
+	 *
+	 * @since	2.2
 	 */
 	public function setAsSynonyms() {
 		// the "main" tag may not be a synonym itself
@@ -145,6 +149,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	 * Unmarks tags.
 	 * 
 	 * @param	array<integer>		$tagIDs
+	 * @since	2.2
 	 */
 	protected function unmarkItems(array $tagIDs = array()) {
 		if (empty($tagIDs)) {

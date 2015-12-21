@@ -69,6 +69,7 @@ class ImageBBCode extends AbstractBBCode {
 	 * 
 	 * @param	string		$link
 	 * @return	string
+	 * @since	2.2
 	 */
 	protected function getProxyLink($link) {
 		try {

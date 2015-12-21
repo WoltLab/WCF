@@ -402,6 +402,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	
 	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	2.2
 	 */
 	public static function getDefaultFilename() {
 		$classParts = explode('\\', get_called_class());
