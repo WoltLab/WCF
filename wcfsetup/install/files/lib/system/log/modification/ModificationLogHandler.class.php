@@ -16,6 +16,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.log.modification
  * @category	Community Framework
+ * @deprecated	since 2.2, use AbstractModificationLogHandler
  */
 class ModificationLogHandler extends SingletonFactory {
 	/**
