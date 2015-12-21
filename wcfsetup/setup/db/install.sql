@@ -549,6 +549,7 @@ CREATE TABLE wcf1_modification_log (
 	logID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	objectTypeID INT(10) NOT NULL,
 	objectID INT(10) NOT NULL,
+	parentObjectID INT(10),
 	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
