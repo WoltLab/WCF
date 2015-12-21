@@ -11,7 +11,6 @@ use wcf\system\exception\SystemException;
  * @package	com.woltlab.wcf
  * @subpackage	system.email.transport.exception
  * @category	Community Framework
+ * @since	2.2
  */
-class PermanentFailure extends SystemException {
-	
-}
+class PermanentFailure extends SystemException { }

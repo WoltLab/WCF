@@ -17,6 +17,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	action
  * @category	Community Framework
+ * @since	2.2
  */
 class ImageProxyAction extends AbstractAction {
 	/**

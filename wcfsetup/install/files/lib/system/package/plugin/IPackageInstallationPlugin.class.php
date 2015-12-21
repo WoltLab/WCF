@@ -41,6 +41,7 @@ interface IPackageInstallationPlugin {
 	 * file name is supported, null is returned.
 	 * 
 	 * @return	string
+	 * @since	2.2
 	 */
 	public static function getDefaultFilename();
 	

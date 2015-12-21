@@ -11,6 +11,7 @@ use wcf\system\background\BackgroundQueueHandler;
  * @package	com.woltlab.wcf
  * @subpackage	action
  * @category	Community Framework
+ * @since	2.2
  */
 class BackgroundQueuePerformAction extends AbstractAction {
 	/**

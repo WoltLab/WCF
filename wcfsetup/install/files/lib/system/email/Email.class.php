@@ -19,6 +19,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.email
  * @category	Community Framework
+ * @since	2.2
  */
 class Email {
 	/**

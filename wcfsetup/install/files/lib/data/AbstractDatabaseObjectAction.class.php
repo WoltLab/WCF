@@ -431,6 +431,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
+	 * @since	2.2
 	 */
 	protected function readIntegerArray($variableName, $allowEmpty = false, $arrayIndex = '') {
 		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER, self::STRUCT_ARRAY);
@@ -453,6 +454,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
+	 * @since	2.2
 	 */
 	protected function readStringArray($variableName, $allowEmpty = false, $arrayIndex = '') {
 		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING, self::STRUCT_ARRAY);

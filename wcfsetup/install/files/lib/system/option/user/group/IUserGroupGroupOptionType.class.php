@@ -11,6 +11,7 @@ use wcf\data\user\group\UserGroup;
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
  * @category	Community Framework
+ * @since	2.2
  */
 interface IUserGroupGroupOptionType {
 	/**

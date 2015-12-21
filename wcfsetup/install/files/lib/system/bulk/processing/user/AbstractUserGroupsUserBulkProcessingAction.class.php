@@ -20,6 +20,7 @@ use wcf\util\ArrayUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing.user
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**

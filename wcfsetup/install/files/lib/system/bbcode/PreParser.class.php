@@ -170,6 +170,8 @@ class PreParser extends SingletonFactory {
 	
 	/**
 	 * Parses user mentions.
+	 * 
+	 * @since	2.2
 	 */
 	protected function parseUserMentions() {
 		static $userRegex = null;
@@ -360,6 +362,7 @@ class PreParser extends SingletonFactory {
 	 * 
 	 * @param	string		$match
 	 * @return	string
+	 * @since	2.2
 	 */
 	public static function getUsername($match) {
 		// remove escaped single quotation mark

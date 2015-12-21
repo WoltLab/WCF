@@ -15,6 +15,7 @@ use wcf\util\exception\CryptoException;
  * @package	com.woltlab.wcf
  * @subpackage	util
  * @category	Community Framework
+ * @since	2.2
  */
 final class CryptoUtil {
 	/**

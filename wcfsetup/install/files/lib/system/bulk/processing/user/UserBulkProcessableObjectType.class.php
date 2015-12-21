@@ -11,6 +11,7 @@ use wcf\system\bulk\processing\AbstractBulkProcessableObjectType;
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing.user
  * @category	Community Framework
+ * @since	2.2
  */
 class UserBulkProcessableObjectType extends AbstractBulkProcessableObjectType {
 	/**

@@ -12,6 +12,7 @@ namespace wcf\system\exception;
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
  * @category	Community Framework
+ * @since	2.2
  */
 class ErrorException extends SystemException {
 	/**

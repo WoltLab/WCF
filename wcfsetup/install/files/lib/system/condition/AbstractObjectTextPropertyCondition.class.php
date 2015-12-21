@@ -13,6 +13,7 @@ use wcf\data\DatabaseObjectList;
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition implements IObjectCondition, IObjectListCondition {
 	/**
