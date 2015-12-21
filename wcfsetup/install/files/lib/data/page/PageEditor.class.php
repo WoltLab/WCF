@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\page;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\RoutingCacheBuilder;
 
 /**
  * Provides functions to edit pages.
@@ -13,9 +15,16 @@ use wcf\data\DatabaseObjectEditor;
  * @category	Community Framework
  * @since	2.2
  */
-class PageEditor extends DatabaseObjectEditor {
+class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @inheritDoc
 	 */
 	protected static $baseClass = Page::class;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function resetCache() {
+		RoutingCacheBuilder::getInstance()->reset();
+	}
 }
