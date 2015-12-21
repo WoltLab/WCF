@@ -16,6 +16,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
+ * @since	2.2k
  */
 class MenuAddForm extends AbstractForm {
 	/**

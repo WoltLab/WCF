@@ -12,6 +12,7 @@ use wcf\system\SingletonFactory;
  * @package	com.woltlab.wcf
  * @subpackage	system.box
  * @category	Community Framework
+ * @since	2.2
  */
 class BoxHandler extends SingletonFactory {
 	/**

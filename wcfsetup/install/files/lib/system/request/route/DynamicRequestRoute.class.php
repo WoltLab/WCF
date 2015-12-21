@@ -15,6 +15,7 @@ use wcf\system\request\RouteHandler;
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
+ * @since	2.2
  */
 class DynamicRequestRoute implements IRequestRoute {
 	/**

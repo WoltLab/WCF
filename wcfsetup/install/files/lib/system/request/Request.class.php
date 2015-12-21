@@ -88,7 +88,8 @@ class Request {
 	/**
 	 * Returns request meta data.
 	 * 
-	 * @return      string[]
+	 * @return	string[]
+	 * @since	2.2
 	 */
 	public function getMetaData() {
 		return $this->metaData;

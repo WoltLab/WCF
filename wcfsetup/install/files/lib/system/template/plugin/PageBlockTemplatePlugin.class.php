@@ -33,6 +33,7 @@ use wcf\system\template\TemplateEngine;
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category	Community Framework
+ * @since	2.2
  */
 class PageBlockTemplatePlugin implements IBlockTemplatePlugin {
 	/**

@@ -12,6 +12,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.menu
  * @category	Community Framework
+ * @since	2.2
  */
 class Menu extends DatabaseObject {
 	/**

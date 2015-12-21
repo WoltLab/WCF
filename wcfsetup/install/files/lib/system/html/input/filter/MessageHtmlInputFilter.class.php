@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\html\input\filter;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 class MessageHtmlInputFilter implements IHtmlInputFilter {
 	/**
 	 * @var \HTMLPurifier

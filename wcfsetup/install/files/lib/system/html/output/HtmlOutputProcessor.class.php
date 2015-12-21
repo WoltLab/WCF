@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\html\output;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 class HtmlOutputProcessor {
 	/**
 	 * @var HtmlOutputNodeProcessor

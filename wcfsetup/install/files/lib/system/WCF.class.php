@@ -813,6 +813,7 @@ class WCF {
 	 * Returns box handler.
 	 *
 	 * @return	BoxHandler
+	 * @since	2.2
 	 */
 	public function getBoxHandler() {
 		return BoxHandler::getInstance();
