@@ -10,7 +10,8 @@ namespace wcf\data;
  * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
- * @deprecated
+ * @since	2.2
+ * @deprecated	since 2.2
  */
 trait TLegacyUserPropertyAccess {
 	/**

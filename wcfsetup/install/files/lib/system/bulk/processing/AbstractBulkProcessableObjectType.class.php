@@ -12,6 +12,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProcessor implements IBulkProcessableObjectType {
 	/**

@@ -6,6 +6,10 @@ use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 class HtmlOutputNodeBlockquote implements IHtmlOutputNode {
 	public function process(HtmlOutputNodeProcessor $htmlOutputNodeProcessor) {
 		$elements = $htmlOutputNodeProcessor->getDocument()->getElementsByTagName('blockquote');

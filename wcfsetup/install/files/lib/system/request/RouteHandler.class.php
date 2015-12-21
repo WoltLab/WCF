@@ -206,8 +206,9 @@ class RouteHandler extends SingletonFactory {
 	 * This heavily limits the abilities for end-users to define appealing urls, but at
 	 * the same time this ensures a sufficient level of stability.
 	 * 
-	 * @param       string  $customUrl      url to perform sanitiy checks on
-	 * @return      bool    true if `$customUrl` passes the sanity check
+	 * @param	string	$customUrl	url to perform sanitiy checks on
+	 * @return	bool	true if `$customUrl` passes the sanity check
+	 * @since	2.2
 	 */
 	public static function isValidCustomUrl($customUrl) {
 		return preg_match('~^[a-zA-Z0-9\-_/]+$~', $customUrl) === 1;

@@ -14,6 +14,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
  * @category	Community Framework
+ * @since	2.2
  */
 class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 	/**

@@ -152,7 +152,7 @@ class Package extends DatabaseObject {
 		}
 		
 		// check if package is required by another package
-		if (self::isRequired($this->packageID)) {
+		if ($this->isRequired()) {
 			return false;
 		}
 		

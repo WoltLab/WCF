@@ -22,6 +22,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
+ * @since	2.2
  */
 class PageAddForm extends AbstractForm {
 	/**

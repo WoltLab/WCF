@@ -10,6 +10,7 @@ namespace wcf\system\database\exception;
  * @package	com.woltlab.wcf
  * @subpackage	system.database.exception
  * @category	Community Framework
+ * @since	2.2
  */
 class DatabaseException extends \wcf\system\database\DatabaseException {
 	/**

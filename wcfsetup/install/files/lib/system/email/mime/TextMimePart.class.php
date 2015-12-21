@@ -11,6 +11,7 @@ namespace wcf\system\email\mime;
  * @package	com.woltlab.wcf
  * @subpackage	system.email.mime
  * @category	Community Framework
+ * @since	2.2
  */
 class TextMimePart extends AbstractMimePart {
 	/**

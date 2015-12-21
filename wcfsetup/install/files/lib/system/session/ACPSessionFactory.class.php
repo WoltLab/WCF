@@ -44,6 +44,7 @@ class ACPSessionFactory {
 	 * Returns true if session was based upon a valid cookie.
 	 * 
 	 * @return	boolean
+	 * @since	2.2
 	 */
 	public function hasValidCookie() {
 		return false;

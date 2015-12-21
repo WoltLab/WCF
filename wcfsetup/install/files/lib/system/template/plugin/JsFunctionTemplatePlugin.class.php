@@ -32,6 +32,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category	Community Framework
+ * @since	2.2
  */
 class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**

@@ -11,6 +11,7 @@ use wcf\system\exception\IExtraInformationException;
  * @package	com.woltlab.wcf
  * @subpackage	system.database.exception
  * @category	Community Framework
+ * @since	2.2
  */
 class DatabaseQueryExecutionException extends DatabaseQueryException implements IExtraInformationException {
 	/**

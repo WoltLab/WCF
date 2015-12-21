@@ -12,6 +12,7 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
  * @category	Community Framework
+ * @since	2.2
  */
 interface IObjectCondition extends ICondition {
 	/**

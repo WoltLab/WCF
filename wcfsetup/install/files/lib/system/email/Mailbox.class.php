@@ -13,6 +13,7 @@ use wcf\system\language\LanguageFactory;
  * @package	com.woltlab.wcf
  * @subpackage	system.email
  * @category	Community Framework
+ * @since	2.2
  */
 class Mailbox {
 	/**

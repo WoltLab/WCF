@@ -15,6 +15,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * @since	2.2
  */
 class MenuItemListPage extends AbstractPage {
 	/**

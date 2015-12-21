@@ -13,6 +13,7 @@ use wcf\system\exception\PermissionDeniedException;
  * @package	com.woltlab.wcf
  * @subpackage	data.menu.item
  * @category	Community Framework
+ * @since	2.2
  */
 class MenuItemAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**

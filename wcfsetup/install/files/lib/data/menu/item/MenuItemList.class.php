@@ -11,6 +11,7 @@ use wcf\data\DatabaseObjectList;
  * @package	com.woltlab.wcf
  * @subpackage	data.menu.item
  * @category	Community Framework
+ * @since	2.2
  */
 class MenuItemList extends DatabaseObjectList {
 	/**

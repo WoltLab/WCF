@@ -80,6 +80,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * 
 	 * @param       integer         $packageID      package id
 	 * @return      Application     application object
+	 * @since	2.2
 	 */
 	public function getApplicationByID($packageID) {
 		if (isset($this->cache['application'][$packageID])) {

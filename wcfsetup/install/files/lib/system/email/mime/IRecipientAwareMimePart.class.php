@@ -11,6 +11,7 @@ use wcf\system\email\Mailbox;
  * @package	com.woltlab.wcf
  * @subpackage	system.email.mime
  * @category	Community Framework
+ * @since	2.2
  */
 interface IRecipientAwareMimePart {
 	/**

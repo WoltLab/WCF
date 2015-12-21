@@ -11,6 +11,7 @@ use wcf\system\request\IRoute;
  * @package     com.woltlab.wcf
  * @subpackage  system.request
  * @category    Community Framework
+ * @since	2.2
  */
 interface IRequestRoute extends IRoute {
 	/**

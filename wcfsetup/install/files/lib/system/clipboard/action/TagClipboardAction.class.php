@@ -12,6 +12,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard.action
  * @category	Community Framework
+ * @since	2.2
  */
 class TagClipboardAction extends AbstractClipboardAction {
 	/**

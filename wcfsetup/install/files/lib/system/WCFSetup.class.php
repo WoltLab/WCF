@@ -159,6 +159,8 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * Gets the selected wcf dir from request.
+	 * 
+	 * @since	2.2
 	 */
 	protected static function getInstallationDirectories() {
 		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
@@ -457,6 +459,8 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * Searches the wcf dir.
+	 * 
+	 * @since	2.2
 	 */
 	protected function configureDirectories() {
 		// get available packages

@@ -166,6 +166,7 @@ class SessionHandler extends SingletonFactory {
 	 * Sets a boolean value to determine if the client provided a valid session cookie.
 	 * 
 	 * @param	boolean		$hasValidCookie
+	 * @since	2.2
 	 */
 	public function setHasValidCookie($hasValidCookie) {
 		$this->hasValidCookie = $hasValidCookie;
@@ -175,6 +176,7 @@ class SessionHandler extends SingletonFactory {
 	 * Returns true if client provided a valid session cookie.
 	 * 
 	 * @return	boolean
+	 * @since	2.2
 	 */
 	public function hasValidCookie() {
 		return $this->hasValidCookie;

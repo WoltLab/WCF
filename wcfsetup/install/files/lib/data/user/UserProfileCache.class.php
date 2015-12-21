@@ -11,6 +11,7 @@ use wcf\system\SingletonFactory;
  * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
+ * @since	2.2
  */
 class UserProfileCache extends SingletonFactory {
 	/**

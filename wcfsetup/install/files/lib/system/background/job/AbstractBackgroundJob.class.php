@@ -11,6 +11,7 @@ namespace wcf\system\background\job;
  * @package	com.woltlab.wcf
  * @subpackage	system.background.job
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractBackgroundJob {
 	/**
