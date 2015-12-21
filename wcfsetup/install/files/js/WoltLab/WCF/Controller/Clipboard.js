@@ -216,16 +216,18 @@ define(
 			data.markedObjectIds[(isMarked ? 'add' : 'delete')](objectId);
 			clipboardObject.classList[(isMarked) ? 'add' : 'remove']('jsMarked');
 			
-			var markedAll = true;
-			for (var i = 0, length = data.checkboxes.length; i < length; i++) {
-				if (!data.checkboxes[i].checked) {
-					markedAll = false;
-					
-					break;
+			if (data.markAll !== null) {
+				var markedAll = true;
+				for (var i = 0, length = data.checkboxes.length; i < length; i++) {
+					if (!data.checkboxes[i].checked) {
+						markedAll = false;
+						
+						break;
+					}
 				}
+				
+				data.markAll.checked = markedAll;
 			}
-			
-			data.markAll.checked = markedAll;
 			
 			this._saveState(type, [ objectId ], isMarked);
 		},
@@ -545,7 +547,9 @@ define(
 				clipboardObject.classList[(isMarked ? 'add' : 'remove')]('jsMarked');
 			}
 			
-			data.markAll.checked = markAll;
+			if (data.markAll !== null) {
+				data.markAll.checked = markAll;
+			}
 		}
 	};
 	

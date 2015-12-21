@@ -108,6 +108,9 @@ WCF.ImageViewer = Class.extend({
 				$image[0].style.removeProperty('margin');
 			}
 		}
+		else {
+			$image.removeClass('embeddedAttachmentLink');
+		}
 	}
 });
 

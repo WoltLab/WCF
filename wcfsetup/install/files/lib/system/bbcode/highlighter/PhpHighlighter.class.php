@@ -49,8 +49,17 @@ class PhpHighlighter extends Highlighter {
 		
 		// remove added php tags
 		if ($phpTagsAdded) {
-			$regex = new Regex('([^\\2]*)(&lt;\?php&nbsp;)(.*)(&nbsp;.*\?&gt;)([^\\4]*)', Regex::CASE_INSENSITIVE | Regex::DOT_ALL);
-			$highlightedCode = $regex->replace($highlightedCode, '\\1\\3\\5');
+			// the opening and closing PHP tags were added previously, hence we actually do
+			// know that the first (last for the closing tag) occurence is the one inserted
+			// by us. The previously used regex was bad because it was significantly slower
+			// and could easily hit the backtrace limit for larger inputs
+			$openingTag = mb_strpos($highlightedCode, '&lt;?php&nbsp;');
+			$closingTag = mb_strrpos($highlightedCode, '?&gt;');
+			$tmp = mb_substr($highlightedCode, 0, $openingTag);
+			$tmp .= mb_substr($highlightedCode, $openingTag + 14, $closingTag - $openingTag - 14);
+			$tmp .= mb_substr($highlightedCode, $closingTag + 5);
+			
+			$highlightedCode = $tmp;
 		}
 		
 		// remove breaks
