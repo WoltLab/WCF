@@ -44,10 +44,10 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 		if (!($objectList instanceof UserList)) return;
 		
 		if (isset($conditionData['registrationDateEnd'])) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate < ?', array(strtotime($conditionData['registrationDateEnd']) + 86400));
+			$objectList->getConditionBuilder()->add('user_table.registrationDate < ?', array(strtotime($conditionData['registrationDateEnd']) + 86400));
 		}
 		if (isset($conditionData['registrationDateStart'])) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate >= ?', array(strtotime($conditionData['registrationDateStart'])));
+			$objectList->getConditionBuilder()->add('user_table.registrationDate >= ?', array(strtotime($conditionData['registrationDateStart'])));
 		}
 	}
 	

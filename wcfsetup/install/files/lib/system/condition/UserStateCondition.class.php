@@ -56,15 +56,15 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 		if (!($objectList instanceof UserList)) return;
 		
 		if (isset($conditionData['userIsBanned'])) {
-			$userList->getConditionBuilder()->add('user_table.banned = ?', array($conditionData['userIsBanned']));
+			$objectList->getConditionBuilder()->add('user_table.banned = ?', array($conditionData['userIsBanned']));
 		}
 		
 		if ($conditionData['userIsEnabled']) {
 			if ($conditionData['userIsEnabled']) {
-				$userList->getConditionBuilder()->add('user_table.activationCode = ?', array(0));
+				$objectList->getConditionBuilder()->add('user_table.activationCode = ?', array(0));
 			}
 			else {
-				$userList->getConditionBuilder()->add('user_table.activationCode <> ?', array(0));
+				$objectList->getConditionBuilder()->add('user_table.activationCode <> ?', array(0));
 			}
 		}
 	}
