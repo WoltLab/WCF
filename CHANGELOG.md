@@ -6,19 +6,7 @@
 
 * Clipboard support for tags in ACP ("delete" and "set as synonyms").
 * `wcf\data\user\UserProfileCache` for caching user profiles during runtime.
-* instruction file name for most PIPs has default value provided by `wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()`.
-* `options` support for cronjobs.
-* `name` attribute for cronjob PIP (`cronjobName` for cronjob objects).
-* `eventName` of event listener PIP supports multiple events.
-* `permissions` and `options` support for event listeners.
-* `name` attribute for event listener PIP (`listenerName` for event listener objects).
-* `permissions` and `options` support for template listeners.
 * `wcf\system\cache\builder\EventListenerCacheBuilder` returns `wcf\data\event\listener\EventListener` objects instead of data arrays.
-* `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
-* `wcf\system\event\listener\PreParserAtUserListener` removed.
-* `wcf\action\AJAXProxyAction::getData()` removed.
-* Version system removed.
-* Support for query string based sessions in Frontend removed.
 * `wcf\system\cache\source\RedisCacheSource` added.
 * Background queue (`wcf\system\background\*`) added.
 * Rewritten email system (`wcf\system\email\*`) added.
@@ -41,3 +29,21 @@
 * `wcf\data\TDatabaseObjectOptions` for database object-bound permissions validation.
 * `wcf\data\TMultiCategoryObject` provides category-related methods for objects with multiple categories.
 * `wcf\data\TUserContent` provides default implementations of the (non-inherited) methods of the IUserContent interface.
+
+#### Package Installation Plugin Improvements
+
+* instruction file name for most PIPs has default value provided by `wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()`.
+* `options` support for cronjob PIP.
+* `name` attribute for cronjob PIP (`cronjobName` for cronjob objects).
+* `eventName` of event listener PIP supports multiple events.
+* `permissions` and `options` support for event listener PIP.
+* `name` attribute for event listener PIP (`listenerName` for event listener objects).
+* `permissions` and `options` support for template listener PIP.
+
+#### Removed Code
+
+* `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
+* `wcf\system\event\listener\PreParserAtUserListener` removed.
+* `wcf\action\AJAXProxyAction::getData()` removed.
+* Version system removed.
+* Support for query string based sessions in Frontend removed.
