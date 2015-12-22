@@ -12,6 +12,11 @@
 			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
 			<listclassname><![CDATA[wcf\data\tag\TagList]]></listclassname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+			<listclassname><![CDATA[wcf\data\media\ViewableMediaList]]></listclassname>
+		</type>
 		<!-- /clipboard items -->
 		
 		<type>

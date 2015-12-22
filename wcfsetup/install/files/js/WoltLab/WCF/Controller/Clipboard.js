@@ -64,6 +64,7 @@ define(
 			}
 			
 			DomChangeListener.add('WoltLab/WCF/Controller/Clipboard', this._initContainers.bind(this));
+			DomChangeListener.add('WoltLab/WCF/Controller/Clipboard', this._initEditors.bind(this));
 		},
 		
 		/**

@@ -1,0 +1,95 @@
+#mediaManagerMediaUploadButton > .button {
+	box-sizing: border-box;
+	margin: 0;
+	text-align: center;
+	width: 100%;
+	
+	> input {
+		width: 100%;
+	}
+}
+
+#mediaManagerMediaList {
+	font-size: 0;
+	
+	@extend .clearfix;
+	
+	> li {
+		float: left;
+		height: 120px;
+		width: 120px;
+		position: relative;
+		border: 1px solid #aaa;
+		overflow: hidden;
+		font-size: 1rem;
+		margin: 0 $wcfGapSmall $wcfGapSmall 0;
+		
+		&:hover {
+			> .buttonGroupNavigation {
+				height: auto;
+				padding: $wcfGapSmall;
+			}
+		}
+		
+		&.jsMarked {
+			> .mediaInformation,
+			> .buttonGroupNavigation {
+				// TODO background-color: fade($wcfSelectedBackgroundColor, 90%);
+				// TODO color: $wcfSelectedColor;
+				
+				a {
+					//TODO: color: $wcfSelectedColor;
+				}
+				
+				.icon {
+					//TODO: color: $wcfSelectedColor;
+					text-shadow: none;
+				}
+			}
+		}
+		
+		> .mediaThumbnail {
+			height: 96px;
+			width: 96px;
+			padding: 12px;
+		}
+		
+		> .mediaInformation {
+			position: absolute;
+			bottom: 0;
+			background: rgba(0,0,0,0.6);
+			color: #fff;
+			width: 100%;
+			padding: $wcfGapSmall;
+			box-sizing: border-box;
+			
+			@extend .wcfFontSmall;
+		}
+		
+		> .buttonGroupNavigation {
+			position: absolute;
+			top: 0;
+			right: 0;
+			background: rgba(0,0,0,0.6);
+			height: 0;
+			overflow: hidden;
+			
+			/* TODO: transition */
+			
+			.icon {
+				color: #fff;
+				@include textShadow(#000);
+			}
+		}
+	}
+}
+
+#mediaEditor {
+	#mediaThumbnail {
+		text-align: center;
+		
+		+ .box48 > dl {
+			font-size: $wcfFontSizeSmall;
+		}
+	}
+}
