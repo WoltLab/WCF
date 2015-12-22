@@ -146,7 +146,7 @@ CREATE TABLE wcf1_attachment (
 	
 	isImage TINYINT(1) NOT NULL DEFAULT 0,
 	width SMALLINT(5) NOT NULL DEFAULT 0,
-	height SMALLINT(5) NOT NULL DEFAULT 0, 
+	height SMALLINT(5) NOT NULL DEFAULT 0,
 	
 	tinyThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	tinyThumbnailSize INT(10) NOT NULL DEFAULT 0,
@@ -531,6 +531,55 @@ CREATE TABLE wcf1_like_object (
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cachedUsers TEXT,
 	UNIQUE KEY (objectTypeID, objectID)
+);
+
+DROP TABLE IF EXISTS wcf1_media;
+CREATE TABLE wcf1_media (
+	mediaID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	
+	filename VARCHAR(255) NOT NULL DEFAULT '',
+	filesize INT(10) NOT NULL DEFAULT 0,
+	fileType VARCHAR(255) NOT NULL DEFAULT '',
+	fileHash VARCHAR(255) NOT NULL DEFAULT '',
+	uploadTime INT(10) NOT NULL DEFAULT 0,
+	userID INT(10),
+	username VARCHAR(255) NOT NULL,
+	languageID INT(10),
+	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
+	
+	isImage TINYINT(1) NOT NULL DEFAULT 0,
+	width SMALLINT(5) NOT NULL DEFAULT 0,
+	height SMALLINT(5) NOT NULL DEFAULT 0,
+	
+	tinyThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
+	tinyThumbnailSize INT(10) NOT NULL DEFAULT 0,
+	tinyThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
+	tinyThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
+	
+	smallThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
+	smallThumbnailSize INT(10) NOT NULL DEFAULT 0,
+	smallThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
+	smallThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
+	
+	mediumThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
+	mediumThumbnailSize INT(10) NOT NULL DEFAULT 0,
+	mediumThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
+	mediumThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
+	
+	largeThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
+	largeThumbnailSize INT(10) NOT NULL DEFAULT 0,
+	largeThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
+	largeThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS wcf1_media_content;
+CREATE TABLE wcf1_media_content (
+	mediaID INT(10) NOT NULL,
+	languageID INT(10),
+	title VARCHAR(255) NOT NULL,
+	caption TEXT,
+	altText VARCHAR(255) NOT NULL DEFAULT '',
+	UNIQUE KEY (mediaID, languageID)
 );
 
 DROP TABLE IF EXISTS wcf1_menu;
@@ -1632,6 +1681,12 @@ ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_pack
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_media ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE wcf1_media ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_media_content ADD FOREIGN KEY (mediaID) REFERENCES wcf1_media (mediaID) ON DELETE CASCADE;
+ALTER TABLE wcf1_media_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_menu ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE; 
 

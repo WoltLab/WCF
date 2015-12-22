@@ -69,6 +69,7 @@ WCF.ACP.Style.CopyStyle = Class.extend({
  * 
  * @param	integer		styleID
  * @param	string		tmpHash
+ * @deprecated	use WoltLab/WCF/Acp/Ui/Style/Image/Upload
  */
 WCF.ACP.Style.ImageUpload = WCF.Upload.extend({
 	/**

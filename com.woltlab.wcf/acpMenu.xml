@@ -617,7 +617,6 @@
 			<parent>wcf.acp.menu.link.cms</parent>
 			<permissions>admin.content.cms.canManagePage</permissions>
 		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.cms.page.add">
 			<controller><![CDATA[wcf\acp\form\PageAddForm]]></controller>
 			<parent>wcf.acp.menu.link.cms.page.list</parent>
@@ -630,7 +629,6 @@
 			<parent>wcf.acp.menu.link.cms</parent>
 			<permissions>admin.content.cms.canManageMenu</permissions>
 		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.cms.menu.add">
 			<controller><![CDATA[wcf\acp\form\MenuAddForm]]></controller>
 			<parent>wcf.acp.menu.link.cms.menu.list</parent>
@@ -643,11 +641,22 @@
 			<parent>wcf.acp.menu.link.cms</parent>
 			<permissions>admin.content.cms.canManageBox</permissions>
 		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.cms.box.add">
 			<controller><![CDATA[wcf\acp\form\BoxAddForm]]></controller>
 			<parent>wcf.acp.menu.link.cms.box.list</parent>
 			<permissions>admin.content.cms.canManageBox</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cms.media.list">
+			<controller><![CDATA[wcf\acp\page\MediaListPage]]></controller>
+			<parent>wcf.acp.menu.link.cms</parent>
+			<permissions>admin.content.cms.canManageMedia</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.cms.media.add">
+			<controller><![CDATA[wcf\acp\form\MediaAddForm]]></controller>
+			<parent>wcf.acp.menu.link.cms.media.list</parent>
+			<permissions>admin.content.cms.canManageMedia</permissions>
 			<icon>fa-plus</icon>
 		</acpmenuitem>
 	</import>

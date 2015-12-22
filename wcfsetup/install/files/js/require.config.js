@@ -26,6 +26,7 @@ requirejs.config({
 			'Language': 'WoltLab/WCF/Language',
 			'List': 'WoltLab/WCF/List',
 			'ObjectMap': 'WoltLab/WCF/ObjectMap',
+			'Permission': 'WoltLab/WCF/Permission',
 			'StringUtil': 'WoltLab/WCF/StringUtil',
 			'Ui/Alignment': 'WoltLab/WCF/Ui/Alignment',
 			'Ui/CloseOverlay': 'WoltLab/WCF/Ui/CloseOverlay',
@@ -34,7 +35,8 @@ requirejs.config({
 			'Ui/Notification': 'WoltLab/WCF/Ui/Notification',
 			'Ui/ReusableDropdown': 'WoltLab/WCF/Ui/Dropdown/Reusable',
 			'Ui/SimpleDropdown': 'WoltLab/WCF/Ui/Dropdown/Simple',
-			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu'
+			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu',
+			'Upload': 'WoltLab/WCF/Upload'
 		}
 	}
 });

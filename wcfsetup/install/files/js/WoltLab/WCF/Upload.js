@@ -102,9 +102,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 			else {
 				var p = elCreate('p');
 				p.appendChild(progress);
-				
+
 				this._target.appendChild(p);
-				
+
 				return p;
 			}
 		},
@@ -298,6 +298,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 			
 			formData.append('actionName', this._options.action);
 			formData.append('className', this._options.className);
+			formData.append('interfaceName', 'wcf\\data\\IUploadAction');
 			var additionalParameters = this._getParameters();
 			for (var name in additionalParameters) {
 				formData.append('parameters[' + name + ']', additionalParameters[name]);
@@ -307,6 +308,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 				data: formData,
 				contentType: false,
 				failure: this._failure.bind(this, uploadId),
+				silent: true,
 				success: this._success.bind(this, uploadId),
 				uploadProgress: this._progress.bind(this, uploadId),
 				url: this._options.url
