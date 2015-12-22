@@ -1,4 +1,6 @@
-
+/**
+ * TODO: complete implementation
+ */
 define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Upload'], function(Core, DomChangeListener, DomTraverse, Language, List, Upload) {
 	"use strict";
 	
@@ -112,10 +114,10 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 		 */
 		_getParameters: function() {
 			return {
-				objectID: this._objectIdh,
+				objectID: this._objectId,
 				objectType: this._objectType,
 				parentObjectID: this._parentObjectId,
-				tmpHash: this._tmpHas
+				tmpHash: this._tmpHash
 			};
 		},
 		

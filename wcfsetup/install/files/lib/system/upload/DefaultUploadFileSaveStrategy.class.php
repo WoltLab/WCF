@@ -124,7 +124,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			FileUtil::makePath($dir, 0777);
 		}
 		
-		// move uploaded filex
+		// move uploaded file
 		if (@move_uploaded_file($uploadFile->getLocation(), $object->getLocation())) {
 			// rotate image based on the exif data
 			if (!empty($this->options['rotateImages'])) {
@@ -165,7 +165,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 								
 								$adapter->writeImage($object->getLocation());
 								
-								// update width, height and filesize of the attachment
+								// update width, height and filesize of the object
 								if ($newImage !== null && ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE)) {
 									(new $this->editorClassName($object))->update([
 										'height' => $object->width,

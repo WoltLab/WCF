@@ -19,7 +19,7 @@
 			var languages = {
 				{implode from=$languages item=__language}
 					'{@$__language->languageID}': {
-						iconPath: '{@$__language->getIconPath()}',
+						iconPath: '{@$__language->getIconPath()|encodeJS}',
 						languageName: '{$__language}'
 					}
 				{/implode}

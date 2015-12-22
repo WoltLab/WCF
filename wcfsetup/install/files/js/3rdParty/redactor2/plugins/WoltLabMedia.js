@@ -6,9 +6,9 @@ $.Redactor.prototype.WoltLabMedia = function() {
 			var button = this.button.add('woltlabMedia', 'Media');
 			$(button).attr('id', 'mediaManagerButton');
 			
-			require(['WoltLab/WCF/Media/Manager'], (function(MediaManager) {
+			require(['WoltLab/WCF/Media/Manager'], function(MediaManager) {
 				new MediaManager();
-			}).bind(this));
+			});
 		},
 	};
 };
