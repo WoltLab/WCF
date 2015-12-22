@@ -13,7 +13,6 @@
 * `permissions` and `options` support for event listeners.
 * `name` attribute for event listener PIP (`listenerName` for event listener objects).
 * `permissions` and `options` support for template listeners.
-* `wcf\data\TDatabaseObjectOptions` and `wcf\data\TDatabaseObjectPermissions` for database object-bound options and permissions validation.
 * `wcf\system\cache\builder\EventListenerCacheBuilder` returns `wcf\data\event\listener\EventListener` objects instead of data arrays.
 * `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
 * `wcf\system\event\listener\PreParserAtUserListener` removed.
@@ -35,4 +34,10 @@
 	* Ported the PHP-BBCode parser, massively improves accuracy and ensures validity
 * Show error message if poll options are given but not question instead of discarding poll options.
 * `parentObjectID` column added to `modification_log` and `wcf\system\log\modification\AbstractModificationLogHandler` introduced as a replacement for `wcf\system\log\modification\ModificationLogHandler`.
-* `wcf\data\TUserContent` added.
+
+#### New Traits
+
+* `wcf\data\TDatabaseObjectOptions` for database object-bound options validation.
+* `wcf\data\TDatabaseObjectOptions` for database object-bound permissions validation.
+* `wcf\data\TMultiCategoryObject` provides category-related methods for objects with multiple categories.
+* `wcf\data\TUserContent` provides default implementations of the (non-inherited) methods of the IUserContent interface.
