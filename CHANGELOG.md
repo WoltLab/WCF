@@ -35,3 +35,4 @@
 	* Ported the PHP-BBCode parser, massively improves accuracy and ensures validity
 * Show error message if poll options are given but not question instead of discarding poll options.
 * `parentObjectID` column added to `modification_log` and `wcf\system\log\modification\AbstractModificationLogHandler` introduced as a replacement for `wcf\system\log\modification\ModificationLogHandler`.
+* `wcf\data\TUserContent` added.
