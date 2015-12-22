@@ -15,6 +15,30 @@
 	var callbackIdentifier = 'Redactor2_' + elementId;
 	
 	WCF.System.Dependency.Manager.setup(callbackIdentifier, function() {
+		// TODO: Should the media stuff be here?
+		{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+			require(['Language', 'Permission'], function(Language, Permission) {
+				Language.addObject({
+					'wcf.global.button.insert': '{lang}wcf.global.button.insert{/lang}',
+					
+					'wcf.media.insert': '{lang}wcf.media.insert{/lang}',
+					'wcf.media.insert.imageSize': '{lang}wcf.media.insert.imageSize{/lang}',
+					'wcf.media.insert.imageSize.small': '{lang __literal=true}wcf.media.insert.imageSize.small{/lang}',
+					'wcf.media.insert.imageSize.medium': '{lang __literal=true}wcf.media.insert.imageSize.medium{/lang}',
+					'wcf.media.insert.imageSize.large': '{lang __literal=true}wcf.media.insert.imageSize.large{/lang}',
+					'wcf.media.insert.imageSize.original': '{lang __literal=true}wcf.media.insert.imageSize.original{/lang}',
+					'wcf.media.manager': '{lang}wcf.media.manager{/lang}',
+					'wcf.media.edit': '{lang}wcf.media.edit{/lang}',
+					'wcf.media.imageDimensions.value': '{lang __literal=true}wcf.media.imageDimensions.value{/lang}',
+					'wcf.media.button.insert': '{lang}wcf.media.button.insert{/lang}',
+					'wcf.media.search.filetype': '{lang}wcf.media.search.filetype{/lang}',
+					'wcf.media.search.noResults': '{lang}wcf.media.search.noResults{/lang}'
+				});
+				
+				Permission.add('admin.content.cms.canManageMedia', {if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}true{else}false{/if});
+			});
+		{/if}
+		
 		var element = elById(elementId);
 		var autosave = elData(element, 'autosave') || '';
 		if (autosave) {
@@ -34,6 +58,11 @@
 			config.plugins.push('WoltLabMention');
 		}
 		
+		// media
+		{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+			config.plugins.push('WoltLabMedia');
+		{/if}
+		
 		$(element).redactor(config);
 	});
 		
@@ -44,6 +73,7 @@
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}', 
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
+		{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMedia.js?v={@LAST_UPDATE_TIME}',{/if}
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabQuote.js?v={@LAST_UPDATE_TIME}'
 		
