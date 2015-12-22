@@ -10,11 +10,13 @@
 	{hascontent}
 		<div class="boxesHeaderBoxes">
 			<div class="layoutBoundary">
-				{content}
-					{foreach from=$__wcf->getBoxHandler()->getBoxes('headerBoxes') item=box}
-						{@$box}
-					{/foreach}
-				{/content}
+				<div class="boxContainer">
+					{content}
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('headerBoxes') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
+				</div>	
 			</div>
 		</div>
 	{/hascontent}
@@ -24,11 +26,13 @@
 	{hascontent}
 		<div class="boxesTop">
 			<div class="layoutBoundary">
-				{content}
-					{foreach from=$__wcf->getBoxHandler()->getBoxes('top') item=box}
-						{@$box}
-					{/foreach}
-				{/content}
+				<div class="boxContainer">
+					{content}
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('top') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
+				</div>	
 			</div>
 		</div>
 	{/hascontent}
@@ -37,30 +41,32 @@
 		<div class="layoutBoundary">
 			{hascontent}
 				<aside class="sidebar boxesSidebarLeft">
-					{content}
-						{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}{/if}
-						
-						{event name='boxesSidebarLeftTop'}
-						
-						{* WCF2.1 Fallback *}
-						{if !$sidebar|empty}
-							{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
-								{@$sidebar}
-							{/if}	
-						{/if}
-						
-						{if !$sidebarLeft|empty}
-							{@$sidebarLeft}
-						{/if}
-						
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarLeft') item=box}
-							{@$box}
-						{/foreach}
-			
-						{event name='boxesSidebarLeftBottom'}
-			
-						{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}{/if}
-					{/content}
+					<div class="boxContainer">
+						{content}
+							{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}{/if}
+							
+							{event name='boxesSidebarLeftTop'}
+							
+							{* WCF2.1 Fallback *}
+							{if !$sidebar|empty}
+								{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
+									{@$sidebar}
+								{/if}	
+							{/if}
+							
+							{if !$sidebarLeft|empty}
+								{@$sidebarLeft}
+							{/if}
+							
+							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarLeft') item=box}
+								{@$box}
+							{/foreach}
+				
+							{event name='boxesSidebarLeftBottom'}
+				
+							{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}{/if}
+						{/content}
+					</div>	
 				</aside>
 			{/hascontent}
 			
@@ -69,11 +75,13 @@
 				
 				{hascontent}
 					<div class="boxesContentTop">
-						{content}
-							{foreach from=$__wcf->getBoxHandler()->getBoxes('contentTop') item=box}
-								{@$box}
-							{/foreach}
-						{/content}
+						<div class="boxContainer">
+							{content}
+								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentTop') item=box}
+									{@$box}
+								{/foreach}
+							{/content}
+						</div>	
 					</div>
 				{/hascontent}
 				

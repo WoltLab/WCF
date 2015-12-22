@@ -2,11 +2,13 @@
 	<div class="layoutBoundary">
 		{hascontent}
 			<div class="boxesFooter">
-				{content}
-					{foreach from=$__wcf->getBoxHandler()->getBoxes('footer') item=box}
-						{@$box}
-					{/foreach}
-				{/content}
+				<div class="boxContainer">
+					{content}
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('footer') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
+				</div>	
 			</div>
 		{/hascontent}
 		

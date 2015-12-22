@@ -2,11 +2,13 @@
 				
 				{hascontent}
 					<div class="boxesContentBottom">
-						{content}
-							{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
-								{@$box}
-							{/foreach}
-						{/content}
+						<div class="boxContainer">
+							{content}
+								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
+									{@$box}
+								{/foreach}
+							{/content}
+						</div>	
 					</div>
 				{/hascontent}
 				
@@ -17,26 +19,28 @@
 				
 			{hascontent}
 				<aside class="sidebar boxesSidebarRight">
-					{content}
-						{event name='boxesSidebarRightTop'}
-												
-						{* WCF2.1 Fallback *}
-						{if !$sidebar|empty}
-							{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
-								{@$sidebar}
+					<div class="boxContainer">
+						{content}
+							{event name='boxesSidebarRightTop'}
+													
+							{* WCF2.1 Fallback *}
+							{if !$sidebar|empty}
+								{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
+									{@$sidebar}
+								{/if}
 							{/if}
-						{/if}
+							
+							{if !$sidebarRight|empty}
+								{@$sidebarRight}
+							{/if}
+							
+							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
+								{@$box}
+							{/foreach}
 						
-						{if !$sidebarRight|empty}
-							{@$sidebarRight}
-						{/if}
-						
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
-							{@$box}
-						{/foreach}
-					
-						{event name='boxesSidebarRightBottom'}
-					{/content}
+							{event name='boxesSidebarRightBottom'}
+						{/content}
+					</div>	
 				</aside>
 			{/hascontent}
 		</div>
@@ -45,11 +49,13 @@
 	{hascontent}
 		<div class="boxesBottom">
 			<div class="layoutBoundary">
-				{content}
-					{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
-						{@$box}
-					{/foreach}
-				{/content}
+				<div class="boxContainer">
+					{content}
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
+				</div>	
 			</div>	
 		</div>
 	{/hascontent}
@@ -57,13 +63,15 @@
 	{hascontent}
 		<div class="boxesFooterBoxes">			
 			<div class="layoutBoundary">
-				{content}
-					{if !$footerBoxes|empty}{@$footerBoxes}{/if}
-				
-					{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
-						{@$box}
-					{/foreach}
-				{/content}
+				<div class="boxContainer">
+					{content}
+						{if !$footerBoxes|empty}{@$footerBoxes}{/if}
+					
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
+				</div>	
 			</div>
 		</div>
 	{/hascontent}
