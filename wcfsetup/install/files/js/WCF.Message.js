@@ -3231,7 +3231,7 @@ WCF.Message.Share.Page = Class.extend({
 				share: function() { self._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', true); }
 			},
 			twitter: {
-				fetch: function() { self._fetchTwitter(); },
+				fetch: function() { },
 				link: $container.find('.jsShareTwitter'),
 				share: function() { self._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false); }
 			}
@@ -3424,19 +3424,6 @@ WCF.Message.Share.Page = Class.extend({
 		this._fetchCount('https://graph.facebook.com/?id={pageURL}', $.proxy(function(data) {
 			if (data.shares) {
 				this._provider.facebook.link.children('span.badge').show().text(data.shares);
-			}
-		}, this));
-	},
-	
-	/**
-	 * Fetches tweet count from Twitter.
-	 */
-	_fetchTwitter: function() {
-		if (window.location.protocol.match(/^https/)) return;
-		
-		this._fetchCount('http://urls.api.twitter.com/1/urls/count.json?url={pageURL}', $.proxy(function(data) {
-			if (data.count) {
-				this._provider.twitter.link.children('span.badge').show().text(data.count);
 			}
 		}, this));
 	},
