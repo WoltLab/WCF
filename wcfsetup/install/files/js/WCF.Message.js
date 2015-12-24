@@ -3231,7 +3231,7 @@ WCF.Message.Share.Page = Class.extend({
 				share: function() { self._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', true); }
 			},
 			twitter: {
-				fetch: function() { },
+				fetch: undefined,
 				link: $container.find('.jsShareTwitter'),
 				share: function() { self._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false); }
 			}
