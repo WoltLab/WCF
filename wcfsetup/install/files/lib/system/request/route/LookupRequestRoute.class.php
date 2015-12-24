@@ -15,6 +15,7 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
+ * @since	2.2
  */
 class LookupRequestRoute implements IRequestRoute {
 	/**

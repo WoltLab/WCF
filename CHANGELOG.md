@@ -6,20 +6,7 @@
 
 * Clipboard support for tags in ACP ("delete" and "set as synonyms").
 * `wcf\data\user\UserProfileCache` for caching user profiles during runtime.
-* instruction file name for most PIPs has default value provided by `wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()`.
-* `options` support for cronjobs.
-* `name` attribute for cronjob PIP (`cronjobName` for cronjob objects).
-* `eventName` of event listener PIP supports multiple events.
-* `permissions` and `options` support for event listeners.
-* `name` attribute for event listener PIP (`listenerName` for event listener objects).
-* `permissions` and `options` support for template listeners.
-* `wcf\data\TDatabaseObjectOptions` and `wcf\data\TDatabaseObjectPermissions` for database object-bound options and permissions validation.
 * `wcf\system\cache\builder\EventListenerCacheBuilder` returns `wcf\data\event\listener\EventListener` objects instead of data arrays.
-* `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
-* `wcf\system\event\listener\PreParserAtUserListener` removed.
-* `wcf\action\AJAXProxyAction::getData()` removed.
-* Version system removed.
-* Support for query string based sessions in Frontend removed.
 * `wcf\system\cache\source\RedisCacheSource` added.
 * Background queue (`wcf\system\background\*`) added.
 * Rewritten email system (`wcf\system\email\*`) added.
@@ -34,3 +21,29 @@
 	* Linebreaks mode instead of using paragraphs, works better with the PHP-side parser which works with linebreaks
 	* Ported the PHP-BBCode parser, massively improves accuracy and ensures validity
 * Show error message if poll options are given but not question instead of discarding poll options.
+* `parentObjectID` column added to `modification_log` and `wcf\system\log\modification\AbstractModificationLogHandler` introduced as a replacement for `wcf\system\log\modification\ModificationLogHandler`.
+
+#### New Traits
+
+* `wcf\data\TDatabaseObjectOptions` for database object-bound options validation.
+* `wcf\data\TDatabaseObjectOptions` for database object-bound permissions validation.
+* `wcf\data\TMultiCategoryObject` provides category-related methods for objects with multiple categories.
+* `wcf\data\TUserContent` provides default implementations of the (non-inherited) methods of the IUserContent interface.
+
+#### Package Installation Plugin Improvements
+
+* instruction file name for most PIPs has default value provided by `wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()`.
+* `options` support for cronjob PIP.
+* `name` attribute for cronjob PIP (`cronjobName` for cronjob objects).
+* `eventName` of event listener PIP supports multiple events.
+* `permissions` and `options` support for event listener PIP.
+* `name` attribute for event listener PIP (`listenerName` for event listener objects).
+* `permissions` and `options` support for template listener PIP.
+
+#### Removed Code
+
+* `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
+* `wcf\system\event\listener\PreParserAtUserListener` removed.
+* `wcf\action\AJAXProxyAction::getData()` removed.
+* Version system removed.
+* Support for query string based sessions in Frontend removed.

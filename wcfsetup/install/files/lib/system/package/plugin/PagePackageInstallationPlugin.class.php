@@ -16,6 +16,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
  * @category	Community Framework
+ * @since	2.2
  */
 class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**

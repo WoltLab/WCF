@@ -11,6 +11,7 @@ use wcf\data\user\UserEditor;
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing.user
  * @category	Community Framework
+ * @since	2.2
  */
 class AssignToUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUserBulkProcessingAction {
 	/**

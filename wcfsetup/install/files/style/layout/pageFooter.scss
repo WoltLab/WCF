@@ -1,54 +1,8 @@
-#pageFooterBoxes {
-	background-color: $wcfFooterBoxBackground;
-	color: $wcfFooterBoxText;
-	flex: 0 0 auto;
-	padding: 20px;
-	z-index: 40;
-	
-	a {
-		color: $wcfFooterBoxLink;
-		
-		.icon {
-			color: $wcfFooterBoxLink;
-		}
-		
-		&:hover {
-			color: $wcfFooterBoxLinkActive;
-			
-			.icon {
-				color: $wcfFooterBoxLinkActive;
-			}
-		}
-	}
-	
-	.icon {
-		color: $wcfFooterBoxText;
-	}
-	
-	> div > ul {
-		display: flex;
-		flex-wrap: wrap;
-		
-		> li {
-			flex: 0 0 50%;
-			
-			> .icon:first-child {
-				display: none;
-			}
-			
-			> div > .containerHeadline > h3 {
-				margin-bottom: 10px;
-				
-				@extend .wcfFontHeadline;
-			}
-		}
-	}
-}
-
-#pageFooter {
+.pageFooter {
 	background-color: $wcfFooterBackground;
 	color: $wcfFooterText;
-	padding: 20px 0;
+	flex: 0 0 auto;
+	padding: 40px 0;
 	z-index: 20;
 	
 	a {
@@ -59,14 +13,8 @@
 		}
 	}
 	
-	address {
-		font-style: normal;
-		opacity: .8;
+	// copyright link styling
+	.copyright {
 		text-align: center;
-		transition: opacity .2s linear;
-		
-		&:hover {
-			opacity: 1;
-		}
 	}
 }

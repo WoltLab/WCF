@@ -15,6 +15,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing.user
  * @category	Community Framework
+ * @since	2.2
  */
 class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**

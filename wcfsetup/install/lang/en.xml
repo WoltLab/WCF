@@ -1906,6 +1906,9 @@ Errors are:
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
 		
+		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Delete ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Insert ({#$count})]]></item>
+		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} tag{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Set as Synonyms ({#$count})]]></item>
@@ -1922,6 +1925,7 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
 		
+		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{#$count} File{if $count != 1}s{/if} marked]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{#$count} Tag{if $count != 1}s{/if} marked]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{#$count} User{if $count != 1}s{/if} marked]]></item>
 	</category>
@@ -2191,6 +2195,7 @@ Errors are:
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.fullscreen"><![CDATA[Full Screen Mode]]></item>
 		<item name="wcf.global.button.hide"><![CDATA[Hide]]></item>
+		<item name="wcf.global.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Refresh]]></item>
@@ -2330,6 +2335,34 @@ Errors are:
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
 		<item name="wcf.map.showLocationSuggestions"><![CDATA[Suggest Locations]]></item>
 		<item name="wcf.map.useLocationSuggestion"><![CDATA[Use Location]]></item>
+	</category>
+	
+	<category name="wcf.media">
+		<item name="wcf.media.altText"><![CDATA[Alternate Text]]></item>
+		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
+		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
+		<item name="wcf.media.edit"><![CDATA[Edit Media File]]></item>
+		<item name="wcf.media.filename"><![CDATA[Filename]]></item>
+		<item name="wcf.media.filesize"><![CDATA[Filesize]]></item>
+		<item name="wcf.media.imageDimensions"><![CDATA[Dimensions]]></item>
+		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$width}×{#$height}]]></item>
+		<item name="wcf.media.insert"><![CDATA[Insert File]]></item>
+		<item name="wcf.media.insert.imageSize"><![CDATA[Image Size]]></item>
+		<item name="wcf.media.insert.imageSize.large"><![CDATA[Large Thumbnail ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.insert.imageSize.medium"><![CDATA[Medium Thumbnail ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.insert.imageSize.original"><![CDATA[Original Image ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.insert.imageSize.small"><![CDATA[Small Thumbnail ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.isMultilingual"><![CDATA[Enable Multilingualism]]></item>
+		<item name="wcf.media.languageID"><![CDATA[Language]]></item>
+		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>
+		<item name="wcf.media.search.cancel"><![CDATA[Cancel Search]]></item>
+		<item name="wcf.media.search.filetype"><![CDATA[File Types]]></item>
+		<item name="wcf.media.search.filetype.all"><![CDATA[All File Types]]></item>
+		<item name="wcf.media.search.filetype.image"><![CDATA[Images]]></item>
+		<item name="wcf.media.search.filetype.other"><![CDATA[Other]]></item>
+		<item name="wcf.media.search.filetype.text"><![CDATA[Texts]]></item>
+		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
+		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
 	</category>
 	
 	<category name="wcf.message">

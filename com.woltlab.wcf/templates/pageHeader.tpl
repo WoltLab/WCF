@@ -30,11 +30,13 @@
 	{hascontent}
 		<div class="boxesHero">
 			<div class="layoutBoundary">
-				{content}
-					{foreach from=$__wcf->getBoxHandler()->getBoxes('hero') item=box}
-						{@$box}
-					{/foreach}
-				{/content}
+				<div class="boxContainer">
+					{content}
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('hero') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
+				</div>	
 			</div>
 		</div>
 	{/hascontent}

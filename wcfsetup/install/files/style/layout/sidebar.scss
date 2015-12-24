@@ -1,12 +1,10 @@
-.sidebar {
-	background-color: $wcfSidebarBackground;
-	color: $wcfSidebarText;
+/*.sidebar {
+	
 	
 	> div,
 	> fieldset,
 	> section {
 		background-color: $wcfSidebarBackground;
-		border-radius: 3px;
 		padding: 20px;
 		
 		&::after {
@@ -57,21 +55,7 @@
 		}
 	}
 	
-	a {
-		color: $wcfSidebarLink;
-		
-		> .icon {
-			color: $wcfSidebarLink;
-		}
-		
-		&:hover {
-			color: $wcfSidebarLinkActive;
-			
-			> .icon {
-				color: $wcfSidebarLinkActive;
-			}
-		}
-	}
+	
 	
 	dl.dataList {
 		overflow: hidden;
@@ -97,23 +81,12 @@
 		}
 	}
 	
-	small,
-	.dimmed {
-		color: $wcfSidebarDimmedText;
-		
-		a {
-			color: $wcfSidebarDimmedLink;
-			
-			&:hover {
-				color: $wcfSidebarDimmedLinkActive;
-			}
-		}
-	}
+	
 }
 
 .sidebarNavigation > li {
 	&.active {
-		background-color: rgb(255, 255, 255);
+		background-color: rgb(255, 255, 255); // @todo
 		margin: 0 -20px;
 		padding: 0 20px;
 	}
@@ -128,4 +101,4 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-}
+}*/

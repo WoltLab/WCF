@@ -10,6 +10,7 @@ namespace wcf\util\exception;
  * @package	com.woltlab.wcf
  * @subpackage	util.exception
  * @category	Community Framework
+ * @since	2.2
  */
 class CryptoException extends \Exception {
 	/**

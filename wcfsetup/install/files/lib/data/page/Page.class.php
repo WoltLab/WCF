@@ -13,6 +13,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.page
  * @category	Community Framework
+ * @since	2.2
  */
 class Page extends DatabaseObject {
 	/**

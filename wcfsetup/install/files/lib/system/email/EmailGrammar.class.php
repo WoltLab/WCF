@@ -11,6 +11,7 @@ namespace wcf\system\email;
  * @package	com.woltlab.wcf
  * @subpackage	system.email
  * @category	Community Framework
+ * @since	2.2
  */
 final class EmailGrammar {
 	/**

@@ -241,7 +241,8 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns the default language object.
 	 * 
-	 * @return      Language
+	 * @return	Language
+	 * @since	2.2
 	 */
 	public function getDefaultLanguage() {
 		return $this->getLanguage($this->cache['default']);

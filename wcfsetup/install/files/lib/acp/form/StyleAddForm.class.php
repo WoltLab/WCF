@@ -303,11 +303,6 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		
-		// validate style description
-		if (!I18nHandler::getInstance()->validateValue('styleDescription', true, true)) {
-			throw new UserInputException('styleDescription');
-		}
-		
 		// validate template group id
 		if ($this->templateGroupID) {
 			if (!isset($this->availableTemplateGroups[$this->templateGroupID])) {

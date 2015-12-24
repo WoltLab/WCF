@@ -2,11 +2,13 @@
 				
 				{hascontent}
 					<div class="boxesContentBottom">
-						{content}
-							{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
-								{@$box}
-							{/foreach}
-						{/content}
+						<div class="boxContainer">
+							{content}
+								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
+									{@$box}
+								{/foreach}
+							{/content}
+						</div>	
 					</div>
 				{/hascontent}
 				
@@ -17,26 +19,28 @@
 				
 			{hascontent}
 				<aside class="sidebar boxesSidebarRight">
-					{content}
-						{event name='boxesSidebarRightTop'}
-												
-						{* WCF2.1 Fallback *}
-						{if !$sidebar|empty}
-							{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
-								{@$sidebar}
+					<div class="boxContainer">
+						{content}
+							{event name='boxesSidebarRightTop'}
+													
+							{* WCF2.1 Fallback *}
+							{if !$sidebar|empty}
+								{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
+									{@$sidebar}
+								{/if}
 							{/if}
-						{/if}
+							
+							{if !$sidebarRight|empty}
+								{@$sidebarRight}
+							{/if}
+							
+							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
+								{@$box}
+							{/foreach}
 						
-						{if !$sidebarRight|empty}
-							{@$sidebarLeft}
-						{/if}
-						
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
-							{@$box}
-						{/foreach}
-					
-						{event name='boxesSidebarRightBottom'}
-					{/content}
+							{event name='boxesSidebarRightBottom'}
+						{/content}
+					</div>	
 				</aside>
 			{/hascontent}
 		</div>
@@ -45,19 +49,21 @@
 	{hascontent}
 		<div class="boxesBottom">
 			<div class="layoutBoundary">
-				{content}
-					{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
-						{@$box}
-					{/foreach}
-				{/content}
+				<div class="boxContainer">
+					{content}
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
+							{@$box}
+						{/foreach}
+					{/content}
+				</div>	
 			</div>	
 		</div>
 	{/hascontent}
-				
-	<div class="boxesFooterBoxes">			
-		<div class="layoutBoundary">
-			{hascontent}
-				<ul>
+		
+	{hascontent}
+		<div class="boxesFooterBoxes">			
+			<div class="layoutBoundary">
+				<div class="boxContainer">
 					{content}
 						{if !$footerBoxes|empty}{@$footerBoxes}{/if}
 					
@@ -65,36 +71,12 @@
 							{@$box}
 						{/foreach}
 					{/content}
-				</ul>
-			{/hascontent}
-		</div>
-	</div>
-	
-	<footer id="pageFooter" class="footer">
-		<div class="layoutBoundary">
-			{hascontent}
-				<div class="boxesFooter">
-					{content}
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('footer') item=box}
-							{@$box}
-						{/foreach}
-					{/content}
-				</div>
-			{/hascontent}
-			
-			<div class="footerContent">
-				{event name='footerContents'}
-				
-				{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
-				
-				{event name='copyright'}
+				</div>	
 			</div>
-			
-			{if MODULE_WCF_AD && $__disableAds|empty}
-				{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}
-			{/if}
 		</div>
-	</footer>
+	{/hascontent}
+	
+	{include file='pageFooter'}
 </div>
 
 {event name='footer'}

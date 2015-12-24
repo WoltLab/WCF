@@ -16,6 +16,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
+ * @since	2.2
  */
 class ControllerMap extends SingletonFactory {
 	/**

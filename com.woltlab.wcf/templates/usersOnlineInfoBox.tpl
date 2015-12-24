@@ -1,13 +1,10 @@
 {if !$usersOnlineShowRecord|isset}{assign var='usersOnlineShowRecord' value=true}{/if}
 {if MODULE_USERS_ONLINE && $__wcf->session->getPermission('user.profile.canViewUsersOnlineList') && $usersOnlineList->stats[total]}
-	<li class="box32 usersOnlineInfoBox">
-		<span class="icon icon32 fa-user"></span>
+	<section class="box">
+		<h2 class="boxTitle"><a href="{link controller='UsersOnlineList'}{/link}">{lang}wcf.user.usersOnline{/lang}</a> <span class="badge">{#$usersOnlineList->stats[total]}</span></h2>
 		
-		<div>
-			<div class="containerHeadline">
-				<h3><a href="{link controller='UsersOnlineList'}{/link}">{lang}wcf.user.usersOnline{/lang}</a> <span class="badge">{#$usersOnlineList->stats[total]}</span></h3>
-				<p>{lang}wcf.user.usersOnline.detail{/lang}{if $usersOnlineShowRecord && USERS_ONLINE_RECORD} - {lang}wcf.user.usersOnline.record{/lang}{/if}</p>
-			</div>
+		<div class="boxContent">
+			<p>{lang}wcf.user.usersOnline.detail{/lang}{if $usersOnlineShowRecord && USERS_ONLINE_RECORD} - {lang}wcf.user.usersOnline.record{/lang}{/if}</p>
 			
 			{if $usersOnlineList|count}
 				<ul class="dataList">
@@ -28,5 +25,5 @@
 				</div>
 			{/if}
 		</div>
-	</li>
+	</section>
 {/if}

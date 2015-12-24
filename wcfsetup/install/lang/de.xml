@@ -1779,7 +1779,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.attachment.insertAll"><![CDATA[Alle einfügen]]></item>
 		<item name="wcf.attachment.insertFull"><![CDATA[Original einfügen]]></item>
 		<item name="wcf.attachment.insertThumbnail"><![CDATA[Vorschau einfügen]]></item>
-		<item name="wcf.attachment.delete.sure"><![CDATA[Wollen Sie den Dateianhang wirklich löschen?]]></item>
 		<item name="wcf.attachment.filename"><![CDATA[Dateiname]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Hochgeladen]]></item>
 		<item name="wcf.attachment.filesize"><![CDATA[Größe]]></item>

@@ -11,6 +11,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data
  * @category	Community Framework
+ * @since	2.2
  */
 trait TDatabaseObjectPermissions {
 	/**

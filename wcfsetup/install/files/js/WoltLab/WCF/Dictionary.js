@@ -8,7 +8,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Dictionary
  */
-define([], function() {
+define(['Core'], function(Core) {
 	"use strict";
 	
 	var _hasMap = objOwns(window, 'Map') && typeof window.Map === 'function';
@@ -119,6 +119,22 @@ define([], function() {
 					this.set(key, value);
 				}).bind(this));
 			}
+		},
+		
+		/**
+		 * Returns the object representation of the dictionary.
+		 * 
+		 * @return	{object}	dictionary's object representation
+		 */
+		toObject: function() {
+			if (!_hasMap) return Core.clone(this._dictionary);
+			
+			var object = { };
+			this._dictionary.forEach(function(value, key) {
+				object[key] = value;
+			});
+			
+			return object;
 		}
 	};
 	

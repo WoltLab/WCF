@@ -17,6 +17,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.email.mime
  * @category	Community Framework
+ * @since	2.2
  */
 class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAwareMimePart {
 	/**

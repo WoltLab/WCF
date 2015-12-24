@@ -17,6 +17,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.email.transport
  * @category	Community Framework
+ * @since	2.2
  */
 class SmtpEmailTransport implements EmailTransport {
 	/**

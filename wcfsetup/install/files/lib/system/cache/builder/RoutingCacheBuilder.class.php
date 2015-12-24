@@ -16,6 +16,7 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
+ * @since	2.2
  */
 class RoutingCacheBuilder extends AbstractCacheBuilder {
 	/**

@@ -13,6 +13,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.box
  * @category	Community Framework
+ * @since	2.2
  */
 class BoxAction extends AbstractDatabaseObjectAction {
 	/**

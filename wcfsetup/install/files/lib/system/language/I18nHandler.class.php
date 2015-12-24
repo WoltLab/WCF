@@ -166,7 +166,7 @@ class I18nHandler extends SingletonFactory {
 	 * Sets the value for the given element. If the element is multilingual,
 	 * the given value is set for every available language.
 	 * 
-	 * @param	integer		$elementID
+	 * @param	string		$elementID
 	 * @param	string		$plainValue
 	 */
 	public function setValue($elementID, $plainValue) {
@@ -189,8 +189,8 @@ class I18nHandler extends SingletonFactory {
 	 * Sets the values for the given element. If the element is not multilingual,
 	 * use I18nHandler::setValue() instead.
 	 * 
-	 * @param	integer		$elementID
-	 * @param	array<array>	$i18nValues
+	 * @param	string		$elementID
+	 * @param	string[]	$i18nValues
 	 */
 	public function setValues($elementID, array $i18nValues) {
 		if (empty($i18nValues)) {

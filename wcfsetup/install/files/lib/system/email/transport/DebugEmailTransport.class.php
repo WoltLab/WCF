@@ -15,6 +15,7 @@ use wcf\util\DateUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.email.transport
  * @category	Community Framework
+ * @since	2.2
  */
 class DebugEmailTransport implements EmailTransport {
 	/**

@@ -15,6 +15,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.box
  * @category	Community Framework
+ * @since	2.2
  */
 class Box extends DatabaseObject {
 	/**
@@ -185,6 +186,54 @@ class Box extends DatabaseObject {
 		}
 		
 		return $this->menu;
+	}
+	
+	/**
+	 * Returns the image of this box.
+	 * 
+	 * @return      \wcf\data\media\Media
+	 */
+	public function getImage() {
+		if ($this->boxType == 'system') {
+			return $this->getController()->getImage();
+		}
+		else if ($this->boxType == 'menu') {
+			return null;
+		}
+		else {
+			// @todo
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns true if this box has an image.
+	 *
+	 * @return      boolean
+	 */
+	public function hasImage() {
+		if ($this->boxType == 'system') {
+			return $this->getController()->hasImage();
+		}
+		else if ($this->boxType == 'menu') {
+			return false;
+		}
+		else {
+			// @todo
+		}
+		
+		return false;
+	}
+	
+	public function getLink() {
+		// @todo
+		return '';
+	}
+	
+	public function hasLink() {
+		// @todo
+		return false;
 	}
 	
 	/**

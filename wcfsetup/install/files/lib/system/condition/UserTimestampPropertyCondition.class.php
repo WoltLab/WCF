@@ -14,6 +14,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
  * @category	Community Framework
+ * @since	2.2
  */
 class UserTimestampPropertyCondition extends AbstractTimestampCondition implements IContentCondition, IUserCondition {
 	use TObjectListUserCondition;

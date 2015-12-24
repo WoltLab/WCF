@@ -11,6 +11,7 @@ use wcf\data\DatabaseObjectEditor;
  * @package	com.woltlab.wcf
  * @subpackage	data.box
  * @category	Community Framework
+ * @since	2.2
  */
 class BoxEditor extends DatabaseObjectEditor {
 	/**

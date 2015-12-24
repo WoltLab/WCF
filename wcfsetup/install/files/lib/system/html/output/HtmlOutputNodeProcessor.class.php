@@ -5,6 +5,10 @@ use wcf\system\html\output\node\HtmlOutputNodeBlockquote;
 use wcf\system\html\output\node\HtmlOutputNodeWoltlabMention;
 use wcf\system\html\output\node\IHtmlOutputNode;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 class HtmlOutputNodeProcessor extends HtmlNodeProcessor {
 	protected $nodeData = [];
 	

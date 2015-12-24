@@ -1,4 +1,4 @@
-#pageHeader > div {
+.pageHeader > div {
 	/* huge performance increase when scrolling */
 	will-change: transform;
 }
@@ -7,11 +7,12 @@
 	z-index: 300;
 }
 
-#pageHeader.sticky {
+.pageHeader.sticky {
 	flex-wrap: nowrap;
 		
 	> div {
 		background-color: $wcfHeaderBackground; /* @TODO */
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 		left: 0;
 		position: fixed;
 		top: 0;

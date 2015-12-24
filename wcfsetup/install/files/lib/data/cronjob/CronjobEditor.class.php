@@ -54,6 +54,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 	 * 
 	 * @param	array<string>		$descriptions
 	 * @param	boolean			$deleteOldDescriptions
+	 * @since	2.2
 	 */
 	protected function saveDescriptions(array $descriptions, $deleteOldDescriptions = true) {
 		// set default value

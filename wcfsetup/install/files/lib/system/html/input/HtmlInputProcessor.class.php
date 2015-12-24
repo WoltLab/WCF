@@ -4,6 +4,10 @@ use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 class HtmlInputProcessor {
 	/**
 	 * @var IHtmlInputFilter

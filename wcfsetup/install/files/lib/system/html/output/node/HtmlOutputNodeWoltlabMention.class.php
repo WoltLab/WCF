@@ -6,6 +6,10 @@ use wcf\system\html\output\HtmlOutputNodeProcessor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 class HtmlOutputNodeWoltlabMention implements IHtmlOutputNode {
 	/**
 	 * @var UserProfile[]

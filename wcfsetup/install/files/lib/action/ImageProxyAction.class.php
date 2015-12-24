@@ -17,6 +17,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	action
  * @category	Community Framework
+ * @since	2.2
  */
 class ImageProxyAction extends AbstractAction {
 	/**
@@ -51,7 +52,7 @@ class ImageProxyAction extends AbstractAction {
 			$fileLocation = WCF_DIR.'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
 			$dir = dirname($fileLocation);
 			if (!@file_exists($dir)) {
-				FileUtil::makePath($dir, 0777);
+				FileUtil::makePath($dir);
 			}
 			
 			// download image

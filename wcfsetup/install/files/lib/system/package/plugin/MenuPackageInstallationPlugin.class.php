@@ -17,6 +17,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
  * @category	Community Framework
+ * @since	2.2
  */
 class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**

@@ -361,6 +361,16 @@ define(
 				var content = elCreate('div');
 				content.innerHTML = html;
 				
+				var scripts = elBySelAll('script', content);
+				for (var i = 0, length = scripts.length; i < length; i++) {
+					var script = scripts[i];
+					var newScript = elCreate('script');
+					newScript.innerHTML = script.innerHTML;
+					content.appendChild(newScript);
+					
+					script.parentNode.removeChild(script);
+				}
+				
 				data.content.appendChild(content);
 			}
 			

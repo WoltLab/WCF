@@ -294,7 +294,7 @@ class UserListPage extends SortablePage {
 						
 						case 'lastActivityTime':
 							if ($user->{$column}) {
-								$this->columnValues[$user->userID][$column] = DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::DATE_FORMAT) . ' ' . DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::TIME_FORMAT);
+								$this->columnValues[$user->userID][$column] = str_replace('%time%', DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::TIME_FORMAT), str_replace('%date%', DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::DATE_FORMAT), WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
 							}
 						break;
 						

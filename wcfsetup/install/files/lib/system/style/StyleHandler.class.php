@@ -188,6 +188,7 @@ class StyleHandler extends SingletonFactory {
 	 * @param	string		$packageName	style package name
 	 * @param	boolean		$skipTainted	ignore tainted styles
 	 * @return	\wcf\data\style\StyleEditor
+	 * @since	2.2
 	 */
 	public function getStyleByName($packageName, $skipTainted = false) {
 		foreach ($this->cache['styles'] as $style) {

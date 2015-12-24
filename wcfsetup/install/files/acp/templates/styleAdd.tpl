@@ -5,12 +5,14 @@
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
-	require(['WoltLab/WCF/Acp/Ui/Style/Editor'], function(AcpUiStyleEditor) {
+	require(['WoltLab/WCF/Acp/Ui/Style/Image/Upload', 'WoltLab/WCF/Acp/Ui/Style/Editor'], function(AcpUiStyleImageUpload, AcpUiStyleEditor) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
 			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
 			styleRuleMap: styleRuleMap
 		});
+		
+		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
 	});
 	
 	$(function() {
@@ -23,7 +25,6 @@
 			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}',
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
-		new WCF.ACP.Style.ImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
 		new WCF.ACP.Style.LogoUpload('{$tmpHash}', '{@$__wcf->getPath()}images/');
 		
 		{if $action == 'edit'}
