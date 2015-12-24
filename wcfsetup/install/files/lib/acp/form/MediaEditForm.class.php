@@ -94,9 +94,9 @@ class MediaEditForm extends AbstractForm {
 			
 			$contentData = $this->media->getI18nData();
 			if (!empty($contentData)) {
-				I18nHandler::getInstance()->setValues('altText', $contentData['altText']);
-				I18nHandler::getInstance()->setValues('caption', $contentData['caption']);
-				I18nHandler::getInstance()->setValues('title', $contentData['title']);
+				if (!empty($contentData['altText'])) I18nHandler::getInstance()->setValues('altText', $contentData['altText']);
+				if (!empty($contentData['caption'])) I18nHandler::getInstance()->setValues('caption', $contentData['caption']);
+				if (!empty($contentData['title'])) I18nHandler::getInstance()->setValues('title', $contentData['title']);
 			}
 		}
 		
