@@ -9,7 +9,7 @@
 			
 			<li><a href="{link controller='Settings'}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 fa-cogs"></span> <span>{lang}wcf.user.menu.settings{/lang}</span></a></li>
 			
-			{if PACKAGE_ID > 1}
+			{if PACKAGE_ID}
 				<li id="jumpToPage" class="dropdown">
 					<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon16 fa-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
 					<ul class="dropdownMenu">
