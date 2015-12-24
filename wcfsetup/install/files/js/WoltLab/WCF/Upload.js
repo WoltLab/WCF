@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Upload
  */
-define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], function(AjaxRequest, Core, DomChangeListener, Language, DomUtil) {
+define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Traverse'], function(AjaxRequest, Core, DomChangeListener, Language, DomUtil, DomTraverse) {
 	"use strict";
 	
 	/**
@@ -102,9 +102,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 			else {
 				var p = elCreate('p');
 				p.appendChild(progress);
-
+				
 				this._target.appendChild(p);
-
+				
 				return p;
 			}
 		},
@@ -124,8 +124,8 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 					var fileElement = this._createFileElement(file);
 					
 					if (!fileElement.classList.contains('uploadFailed')) {
-						elAttr(fileElement, 'data-filename', file.name);
-						elAttr(fileElement, 'data-internal-file-id', this._internalFileId++);
+						elData(fileElement, 'filename', file.name);
+						elData(fileElement, 'internal-file-id', this._internalFileId++);
 						this._fileElements[uploadId][i] = fileElement;
 					}
 				}
@@ -217,6 +217,12 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 		 * @return	{(integer|Array.<integer>|null)}	identifier(s) for the uploaded files
 		 */
 		_upload: function(event, file, blob) {
+			// remove failed upload elements first
+			var failedUploads = DomTraverse.childrenByClass(this._target, 'uploadFailed');
+			for (var i = 0, length = failedUploads.length; i < length; i++) {
+				elRemove(failedUploads[i]);
+			}
+			
 			var uploadId = null;
 			
 			var files = [];
@@ -299,10 +305,22 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 			formData.append('actionName', this._options.action);
 			formData.append('className', this._options.className);
 			formData.append('interfaceName', 'wcf\\data\\IUploadAction');
-			var additionalParameters = this._getParameters();
-			for (var name in additionalParameters) {
-				formData.append('parameters[' + name + ']', additionalParameters[name]);
-			}
+			
+			// recursively append additional parameters to form data
+			var appendFormData = function(parameters, prefix) {
+				prefix = prefix || '';
+				
+				for (var name in parameters) {
+					if (typeof parameters[name] === 'object') {
+						appendFormData(parameters[name], prefix + '[' + name + ']');
+					}
+					else {
+						formData.append('parameters' + prefix + '[' + name + ']', parameters[name]);
+					}
+				}
+			};
+			
+			appendFormData(this._getParameters());
 			
 			var request = new AjaxRequest({
 				data: formData,

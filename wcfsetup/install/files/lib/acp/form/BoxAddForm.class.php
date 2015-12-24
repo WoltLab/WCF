@@ -3,6 +3,8 @@ namespace wcf\acp\form;
 use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
 use wcf\data\box\BoxEditor;
+use wcf\data\media\Media;
+use wcf\data\media\ViewableMediaList;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -34,69 +36,81 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * true if created box is multi-lingual
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $isMultilingual = 0;
 	
 	/**
 	 * box type
-	 * @var string
+	 * @var	string
 	 */
 	public $boxType = '';
 	
 	/**
 	 * box position
-	 * @var string
+	 * @var	string
 	 */
 	public $position = '';
 	
 	/**
 	 * show order
-	 * @var integer
+	 * @var	integer
 	 */
 	public $showOrder = 0;
 	
 	/**
 	 * true if created box is visible everywhere 
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $visibleEverywhere = 1;
 	
 	/**
 	 * css class name of created box
-	 * @var string
+	 * @var	string
 	 */
 	public $cssClassName = '';
 	
 	/**
 	 * true if box header is visible
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $showHeader = 1;
 	
 	/**
 	 * php class name
-	 * @var string
+	 * @var	string
 	 */
 	public $className = '';
 	
 	/**
 	 * box name
-	 * @var string
+	 * @var	string
 	 */
 	public $name = '';
 	
 	/**
 	 * page titles
-	 * @var array<string>
+	 * @var	string[]
 	 */
 	public $title = [];
 	
 	/**
 	 * page contents
-	 * @var array<string>
+	 * @var	string[]
 	 */
 	public $content = [];
+	
+	/**
+	 * image ids
+	 * @var	integer[]
+	 */
+	public $imageID = [];
+	
+	/**
+	 * images
+	 * @var	Media[]
+	 */
+	public $images = [];
 	
 	/**
 	 * @inheritDoc
@@ -126,6 +140,29 @@ class BoxAddForm extends AbstractForm {
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
 		
+		if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+			if (isset($_POST['imageID']) && is_array($_POST['imageID'])) $this->imageID = ArrayUtil::toIntegerArray($_POST['imageID']);
+			
+			$this->readBoxImages();
+		}
+	}
+	
+	/**
+	 * Reads the box images.
+	 */
+	protected function readBoxImages() {
+		if (!empty($this->imageID)) {
+			$mediaList = new ViewableMediaList();
+			$mediaList->setObjectIDs($this->imageID);
+			$mediaList->readObjects();
+			
+			foreach ($this->imageID as $languageID => $imageID) {
+				$image = $mediaList->search($imageID);
+				if ($image !== null && $image->isImage) {
+					$this->images[$languageID] = $image;
+				}
+			}
+		}
 	}
 	
 	/**
@@ -154,7 +191,15 @@ class BoxAddForm extends AbstractForm {
 			}
 			
 			// @todo check class
-			
+		}
+		
+		// validate images
+		if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+			foreach ($this->imageID as $languageID => $imageID) {
+				if (!isset($this->imageID[$languageID])) {
+					throw new UserInputException('imageID' . $languageID);
+				}
+			}
 		}
 	}
 	
@@ -180,15 +225,17 @@ class BoxAddForm extends AbstractForm {
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
-					'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
-					'content' => (!empty($_POST['content'][$language->languageID]) ? $_POST['content'][$language->languageID] : '')
+					'title' => (!empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : ''),
+					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+					'imageID' => (!empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null)
 				];
 			}
 		}
 		else {
 			$content[0] = [
-				'title' => (!empty($_POST['title'][0]) ? $_POST['title'][0] : ''),
-				'content' => (!empty($_POST['content'][0]) ? $_POST['content'][0] : '')
+				'title' => (!empty($this->title[0]) ? $this->title[0] : ''),
+				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
+				'imageID' => (!empty($this->imageID[0]) ? $this->imageID[0] : null)
 			];
 		}
 		
@@ -201,11 +248,12 @@ class BoxAddForm extends AbstractForm {
 			'showOrder' => $this->showOrder,
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'cssClassName' => $this->cssClassName,
-			'showHeader' => $this->showHeader,			
+			'showHeader' => $this->showHeader,
 			'className' => $this->className,
 			'identifier' => ''
 		]), 'content' => $content]);
 		$returnValues = $this->objectAction->executeAction();
+		
 		// set generic box identifier
 		$boxEditor = new BoxEditor($returnValues['returnValues']);
 		$boxEditor->update([
@@ -222,7 +270,7 @@ class BoxAddForm extends AbstractForm {
 		$this->boxType = $this->position = $this->cssClassName = $this->className = $this->name = '';
 		$this->showOrder = 0;
 		$this->visibleEverywhere = $this->showHeader = 1;
-		$this->title = $this->content = [];
+		$this->title = $this->content = $this->images = $this->imageID = [];
 	}
 	
 	/**
@@ -244,6 +292,8 @@ class BoxAddForm extends AbstractForm {
 			'showHeader' => $this->showHeader,
 			'title' => $this->title,
 			'content' => $this->content,
+			'imageID' => $this->imageID,
+			'images' => $this->images,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'availableBoxTypes' => Box::$availableBoxTypes,
 			'availablePositions' => Box::$availablePositions

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\media;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\exception\SystemException;
 use wcf\util\StringUtil;
 use wcf\util\FileUtil;
 
@@ -22,6 +23,19 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	protected static $baseClass = Media::class;
 	
 	/**
+	 * Returns a textual representation of the media file to be used in templates.
+	 * 
+	 * @return	string
+	 */
+	public function __toString() {
+		if ($this->isImage) {
+			return '<img src="'.$this->getLink().'" alt="'.StringUtil::encodeHTML($this->altText).'" />';
+		}
+		
+		return '<a href="'.$this->getLink().'>'.$this->getTitle().'</a>';
+	}
+	
+	/**
 	 * Returns a tag to display the media element.
 	 * 
 	 * @param	string		$size
@@ -30,9 +44,37 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	public function getElementTag($size) {
 		// todo: validate $size
 		if ($this->isImage && $this->tinyThumbnailType) {
-			return '<img src="'.$this->getThumbnailLink('tiny').'" alt="" style="width: '.$size.'px; height: '.$size.'px;" />';
+			return '<img src="'.$this->getThumbnailLink('tiny').'" alt="'.StringUtil::encodeHTML($this->altText).'" style="width: '.$size.'px; height: '.$size.'px;" />';
 		}
 		
 		return '<span class="icon icon'.$size.' '.FileUtil::getIconClassByMimeType($this->fileType).'"></span>';
+	}
+	
+	/**
+	 * Returns a tag to display a certain thumbnail.
+	 * 
+	 * @param	string		$size		thumbnail size
+	 * @return	string
+	 */
+	public function getThumbnailTag($size = '') {
+		if (!isset(Media::getThumbnailSizes()[$size])) {
+			throw new SystemException("Unknown thumbnail size '".$size."'");
+		}
+		
+		return '<img src="'.$this->getThumbnailLink($size).'" alt="'.StringUtil::encodeHTML($this->altText).'" />';
+	}
+	
+	/**
+	 * Returns the viewable media file with the given id.
+	 * 
+	 * @param	integer		$mediaID
+	 * @return	Media|null
+	 */
+	public static function getMedia($mediaID) {
+		$mediaList = new ViewableMediaList();
+		$mediaList->setObjectIDs([$mediaID]);
+		$mediaList->readObjects();
+		
+		return $mediaList->search($mediaID);
 	}
 }

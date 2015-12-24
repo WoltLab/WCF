@@ -56,7 +56,13 @@
 			
 			<dl>
 				<dt>{lang}wcf.media.file{/lang}</dt>
-				<dd>{$media->filename} {*TODO: better output *}</dd>
+				<dd>
+					{if $media->isImage}
+						{@$media->getThumbnailTag('small')}
+					{else}
+						{$media->filename}
+					{/if}
+				</dd>
 			</dl>
 			
 			<dl>

@@ -3,11 +3,11 @@
 		<div class="mediaThumbnail">
 			{@$media->getElementTag(144)}
 		</div>
-		
+
 		<div class="mediaInformation">
 			<p class="mediaTitle">{if $media->title}{$media->title}{else}{$media->filename}{/if}</p>
 		</div>
-		
+
 		<nav class="buttonGroupNavigation">
 			<ul class="smallButtons buttonGroup">
 				<li>

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\box;
+use wcf\data\media\ViewableMedia;
 use wcf\data\DatabaseObject;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
@@ -19,6 +20,18 @@ use wcf\util\StringUtil;
  */
 class Box extends DatabaseObject {
 	/**
+	 * box content grouped by language id
+	 * @var	string[][]
+	 */
+	protected $boxContent = null;
+	
+	/**
+	 * image media object
+	 * @var	Media
+	 */
+	protected $image = null;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'box';
@@ -30,13 +43,13 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * available box types
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public static $availableBoxTypes = ['text', 'html', 'system', 'menu'];
 	
 	/**
 	 * available box positions
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public static $availablePositions = ['hero', 'headerBoxes', 'top', 'sidebarLeft', 'contentTop', 'sidebarRight', 'contentBottom', 'bottom', 'footerBoxes', 'footer'];
 	
@@ -49,42 +62,46 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if the active user can delete this box.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageBox') && !$this->originIsSystem) {
 			return true;
 		}
-			
+		
 		return false;
 	}
 	
 	/**
 	 * Returns the box content.
-	 *
-	 * @return array
+	 * 
+	 * @return	string[][]
 	 */
 	public function getBoxContent() {
-		$content = array();
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_box_content
-			WHERE	boxID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->boxID));
-		while ($row = $statement->fetchArray()) {
-			$content[($row['languageID'] ?: 0)] = [
-				'title' => $row['title'],
-				'content' => $row['content']
-			];
+		if ($this->boxContent === null) {
+			$this->boxContent = [];
+			
+			$sql = "SELECT	*
+				FROM	wcf" . WCF_N . "_box_content
+				WHERE	boxID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->boxID]);
+			while ($row = $statement->fetchArray()) {
+				$this->boxContent[($row['languageID'] ?: 0)] = [
+					'title' => $row['title'],
+					'content' => $row['content'],
+					'imageID' => $row['imageID']
+				];
+			}
 		}
-	
-		return $content;
+		
+		return $this->boxContent;
 	}
 	
 	/**
-	 * Gets the title for the rendered version of this box.
-	 *
-	 * @return      string
+	 * Returns the title for the rendered version of this box.
+	 * 
+	 * @return	string
 	 */
 	public function getTitle() {
 		if ($this->boxType == 'system') {
@@ -107,9 +124,9 @@ class Box extends DatabaseObject {
 	}
 	
 	/**
-	 * Gets the content for the rendered version of this box.
+	 * Returns the content for the rendered version of this box.
 	 * 
-	 * @return      string
+	 * @return	string
 	 */
 	public function getContent() {
 		if ($this->boxType == 'system') {
@@ -139,7 +156,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns the rendered version of this box.
 	 * 
-	 * @return      string
+	 * @return	string
 	 */
 	public function __toString() {
 		if (!$this->hasContent()) return ''; 
@@ -153,7 +170,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns false if this box has no content.
 	 * 
-	 * @return      boolean
+	 * @return	boolean
 	 */
 	public function hasContent() {
 		if ($this->boxType == 'system') {
@@ -191,7 +208,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns the image of this box.
 	 * 
-	 * @return      \wcf\data\media\Media
+	 * @return	ViewableMedia
 	 */
 	public function getImage() {
 		if ($this->boxType == 'system') {
@@ -200,17 +217,28 @@ class Box extends DatabaseObject {
 		else if ($this->boxType == 'menu') {
 			return null;
 		}
-		else {
-			// @todo
+		
+		if ($this->image !== null) {
+			return $this->image;
 		}
 		
-		return null;
+		$boxContent = $this->getBoxContent();
+		if ($this->isMultilingual) {
+			if (isset($boxContent[WCF::getLanguage()->languageID]) && $boxContent[WCF::getLanguage()->languageID]['imageID']) {
+				$this->image = ViewableMedia::getMedia($boxContent[WCF::getLanguage()->languageID]['imageID']);
+			}
+		}
+		else if (isset($boxContent[0]) && $boxContent[0]['imageID']) {
+			$this->image = ViewableMedia::getMedia($boxContent[0]['imageID']);
+		}
+		
+		return $this->image;
 	}
 	
 	/**
 	 * Returns true if this box has an image.
-	 *
-	 * @return      boolean
+	 * 
+	 * @return	boolean
 	 */
 	public function hasImage() {
 		if ($this->boxType == 'system') {
@@ -219,11 +247,13 @@ class Box extends DatabaseObject {
 		else if ($this->boxType == 'menu') {
 			return false;
 		}
-		else {
-			// @todo
+		
+		$boxContent = $this->getBoxContent();
+		if ($this->isMultilingual) {
+			return (isset($boxContent[WCF::getLanguage()->languageID]) && $boxContent[WCF::getLanguage()->languageID]['imageID']);
 		}
 		
-		return false;
+		return (isset($boxContent[0]) && $boxContent[0]['imageID']);
 	}
 	
 	public function getLink() {

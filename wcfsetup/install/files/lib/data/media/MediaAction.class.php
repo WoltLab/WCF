@@ -6,10 +6,12 @@ use wcf\data\IUploadAction;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\Linkhandler;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
+use wcf\system\upload\MediaUploadFileValidationStrategy;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -37,7 +39,11 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	public function validateUpload() {
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
 		
-		// TODO
+		if (isset($this->parameters['fileTypeFilters']) && !is_array($this->parameters['fileTypeFilters'])) {
+			throw new UserInputException('fileTypeFilters');
+		}
+		
+		$this->parameters['__files']->validateFiles(new MediaUploadFileValidationStrategy(isset($this->parameters['fileTypeFilters']) ? $this->parameters['fileTypeFilters'] : []));
 	}
 	
 	/**
@@ -115,6 +121,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'largeThumbnailLink' => $media->largeThumbnailType ? $media->getThumbnailLink('large') : '',
 			'largeThumbnailType' => $media->largeThumbnailType,
 			'largeThumbnailWidth' => $media->largeThumbnailWidth,
+			'link' => $media->getLink(),
 			'mediaID' => $media->mediaID,
 			'mediumThumbnailHeight' => $media->mediumThumbnailHeight,
 			'mediumThumbnailLink' => $media->mediumThumbnailType ? $media->getThumbnailLink('medium') : '',
@@ -147,6 +154,15 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia') && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
 			throw new PermissionDeniedException();
 		}
+		
+		if (isset($this->parameters['fileTypeFilters']) && !is_array($this->parameters['fileTypeFilters'])) {
+			throw new UserInputException('fileTypeFilters');
+		}
+		
+		$this->readString('mode');
+		if ($this->parameters['mode'] != 'editor' && $this->parameters['mode'] != 'select') {
+			throw new UserInputException('mode');
+		}
 	}
 	
 	/**
@@ -156,13 +172,18 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 */
 	public function getManagementDialog() {
 		$mediaList = new ViewableMediaList();
+		if (!empty($this->parameters['fileTypeFilters'])) {
+			$mediaList->addFileTypeFilters($this->parameters['fileTypeFilters']);
+		}
 		$mediaList->readObjects();
 		
 		return [
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media')),
 			'media' => $this->getI18nMediaData($mediaList),
 			'template' => WCF::getTPL()->fetch('mediaManager', 'wcf', [
-				'mediaList' => $mediaList
+				'mediaList' => $mediaList,
+				'mode' => $this->parameters['mode'],
+				'showFileTypeFilter' => empty($this->parameters['fileTypeFilters'])
 			])
 		];
 	}
@@ -331,15 +352,15 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			throw new PermissionDeniedException();
 		}
 		
-		$this->readString('searchString', true, 'data');
-		$this->readString('fileType', true, 'data');
+		$this->readString('searchString', true);
+		$this->readString('fileType', true);
 		
-		if (!$this->parameters['data']['searchString'] && !$this->parameters['data']['fileType']) {
+		if (!$this->parameters['searchString'] && !$this->parameters['fileType']) {
 			throw new UserInputException('searchString');
 		}
 		
 		$this->fileTypeConditionBuilder = new PreparedStatementConditionBuilder(false);
-		switch ($this->parameters['data']['fileType']) {
+		switch ($this->parameters['fileType']) {
 			case 'other':
 				$this->fileTypeConditionBuilder->add('media.fileType NOT LIKE ?', ['image/%']);
 				$this->fileTypeConditionBuilder->add('media.fileType <> ?', ['application/pdf']);
@@ -358,52 +379,57 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 				$this->fileTypeConditionBuilder->add('media.fileType LIKE ?', ['text/%']);
 			break;
 		}
+		
+		if (isset($this->parameters['fileTypeFilters']) && !is_array($this->parameters['fileTypeFilters'])) {
+			throw new UserInputException('fileTypeFilters');
+		}
+		
+		$this->readString('mode');
+		if ($this->parameters['mode'] != 'editor' && $this->parameters['mode'] != 'select') {
+			throw new UserInputException('mode');
+		}
 	}
 	
 	/**
 	 * @inheritdoc
 	 */
 	public function getSearchResultList() {
-		$searchString = '%'.addcslashes($this->parameters['data']['searchString'], '_%').'%';
+		$searchString = '%'.addcslashes($this->parameters['searchString'], '_%').'%';
 		
-		$sql = "SELECT		media.mediaID
-			FROM		wcf".WCF_N."_media media
-			LEFT JOIN	wcf".WCF_N."_media_content media_content
-			ON		(media_content.mediaID = media.mediaID)
-			WHERE		(media_content.title LIKE ?
-					OR media_content.caption LIKE ?
-					OR media_content.altText LIKE ?
-					OR media.filename LIKE ?)";
+		$mediaList = new MediaList();
+		$mediaList->sqlConditionJoins = 'LEFT JOIN wcf'.WCF_N.'_media_content media_content ON (media_content.mediaID = media.mediaID)';
+		
+		$searchConditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
+		$searchConditionBuilder->add('media_content.title LIKE ?', [$searchString]);
+		$searchConditionBuilder->add('media_content.caption LIKE ?', [$searchString]);
+		$searchConditionBuilder->add('media_content.altText LIKE ?', [$searchString]);
+		$searchConditionBuilder->add('media.filename LIKE ?', [$searchString]);
+		$mediaList->getConditionBuilder()->add($searchConditionBuilder->__toString(), $searchConditionBuilder->getParameters());
+		
 		if (!empty($this->fileTypeConditionBuilder->__toString())) {
-			$sql .= " AND ".$this->fileTypeConditionBuilder;
+			$mediaList->getConditionBuilder()->add($this->fileTypeConditionBuilder->__toString(), $this->fileTypeConditionBuilder->getParameters());
 		}
-		$statement = WCF::getDB()->prepareStatement($sql, 0, 10);
-		$statement->execute(array_merge([
-			$searchString,
-			$searchString,
-			$searchString,
-			$searchString
-		], $this->fileTypeConditionBuilder->getParameters()));
-		
-		$mediaIDs = [];
-		while ($mediaID = $statement->fetchColumn()) {
-			$mediaIDs[] = $mediaID;
+		if (!empty($this->parameters['fileTypeFilters'])) {
+			$mediaList->addFileTypeFilters($this->parameters['fileTypeFilters']);
 		}
 		
-		if (empty($mediaIDs)) {
+		$mediaList->readObjectIDs();
+		
+		if (empty($mediaList->getObjectIDs())) {
 			return [
 				'template' => WCF::getLanguage()->getDynamicVariable('wcf.media.search.noResults')
 			];
 		}
 		
-		$mediaList = new ViewableMediaList();
-		$mediaList->setObjectIDs($mediaIDs);
-		$mediaList->readObjects();
+		$viewableMediaList = new ViewableMediaList();
+		$viewableMediaList->setObjectIDs($mediaList->getObjectIDs());
+		$viewableMediaList->readObjects();
 		
 		return [
-			'media' => $this->getI18nMediaData($mediaList),
+			'media' => $this->getI18nMediaData($viewableMediaList),
 			'template' => WCF::getTPL()->fetch('mediaListItems', 'wcf', [
-				'mediaList' => $mediaList
+				'mediaList' => $viewableMediaList,
+				'mode' => $this->parameters['mode']
 			])
 		];
 	}

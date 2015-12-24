@@ -4,7 +4,7 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/Controller/Media/Search
+ * @module	WoltLab/WCF/Media/Search
  */
 define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], function(Ajax, DomTraverse, DomUtil, Language, UiSimpleDropdown) {
 	"use strict";
@@ -23,13 +23,19 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 		this._cancelButton = elById('mediaManagerSearchCancelButton');
 		this._cancelButton.addEventListener('click', this._cancelSearch.bind(this));
 		
-		this._fileTypes = DomTraverse.childrenBySel(UiSimpleDropdown.getDropdownMenu('mediaManagerSearch'), 'li:not(.dropdownDivider)');
-		var selectFileType = this._selectFileType.bind(this);
-		for (var i = 0, length = this._fileTypes.length; i < length; i++) {
-			this._fileTypes[i].addEventListener('click', selectFileType);
+		var dropdown = UiSimpleDropdown.getDropdownMenu('mediaManagerSearch');
+		if (dropdown) {
+			this._fileTypes = DomTraverse.childrenBySel(dropdown, 'li:not(.dropdownDivider)');
+			var selectFileType = this._selectFileType.bind(this);
+			for (var i = 0, length = this._fileTypes.length; i < length; i++) {
+				this._fileTypes[i].addEventListener('click', selectFileType);
+			}
+			
+			UiSimpleDropdown.registerCallback('mediaManagerSearch', this._updateFileTypeDropdown.bind(this));
 		}
-		
-		UiSimpleDropdown.registerCallback('mediaManagerSearch', this._updateFileTypeDropdown.bind(this));
+		else {
+			this._fileType = null;
+		}
 	};
 	MediaSearch.prototype = {
 		/**
@@ -71,21 +77,21 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 		/**
 		 * Handles the `[ENTER]` key to submit the form.
 		 * 
-		 * @param	{Event}	event		event object
+		 * @param	{Event}		event		event object
 		 */
 		_keyPress: function(event) {
 			// 13 = [ENTER]
 			if (event.charCode === 13) {
 				event.preventDefault();
-
-				var innerInfo = DomTraverse.childByClass(this._input.parentNode, '.innerInfo');
+				
+				var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
 				
 				// TODO: treshold option?
 				if (this._input.value.length >= 3) {
 					if (innerInfo) {
 						elHide(innerInfo);
 					}
-
+					
 					this._search();
 				}
 				else {
@@ -96,8 +102,8 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 						innerInfo = elCreate('p');
 						innerInfo.className = 'innerInfo';
 						innerInfo.textContent = Language.get('wcf.media.search.info.searchStringTreshold');
-
-						this._input.parentNode.appendChild(innerInfo);
+						
+						DomUtil.insertAfter(innerInfo, this._input.parentNode);
 					}
 				}
 			}
@@ -111,20 +117,19 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 			
 			Ajax.api(this, {
 				parameters: {
-					data: {
-						fileType: this._fileType,
-						// TODO: treshold option?
-						searchString: this._input.value.length > 3 ? this._input.value : ''
-					}
+					fileType: this._fileType,
+					fileTypeFilters: this._mediaManager.getOption('fileTypeFilters'),
+					mode: this._mediaManager.getMode(),
+					searchString: this._input.value
 				}
 			});
 		},
-
+		
 		/**
 		 * Selects a certain file type after clicking on it in the dropdown menu.
 		 *
-		 * @param	{Event}	event
-         */
+		 * @param	{Event}		event
+		 */
 		_selectFileType: function(event) {
 			this._fileType = elData(event.currentTarget, 'file-type');
 			
@@ -132,10 +137,10 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 			
 			this._search();
 		},
-
+		
 		/**
 		 * Updates the label of the dropdown button based on the currently selected file type.
-         */
+		 */
 		_updateDropdownButtonLabel: function() {
 			var dropdown = UiSimpleDropdown.getDropdown('mediaManagerSearch');
 			var buttonLabel = DomTraverse.childBySel(DomTraverse.childByClass(dropdown, 'dropdownToggle'), 'SPAN');
@@ -147,14 +152,14 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 				buttonLabel.textContent = Language.get('wcf.media.search.filetype');
 			}
 		},
-
+		
 		/**
 		 * Updates the file type dropdown by correctly marking the currently selected file type.
-         */
+		 */
 		_updateFileTypeDropdown: function() {
 			for (var i = 0, length = this._fileTypes.length; i < length; i++) {
 				var listItem = this._fileTypes[i];
-
+				
 				listItem.classList[elData(listItem, 'file-type') === this._fileType ? 'add' : 'remove']('active');
 			}
 		},
@@ -165,7 +170,7 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 		hideSearch: function() {
 			elHide(elById('mediaManagerSearch'));
 		},
-
+		
 		/**
 		 * Resets the media search.
 		 */

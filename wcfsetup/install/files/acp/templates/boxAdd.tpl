@@ -1,5 +1,20 @@
 {include file='header' pageTitle='wcf.acp.box.'|concat:$action}
 
+{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+	<script data-relocate="true">
+		{include file='mediaJavaScript'}
+		
+		require(['WoltLab/WCF/Media/Manager/Select'], function(MediaManagerSelect) {
+			new MediaManagerSelect({
+				dialogTitle: '{lang}wcf.acp.box.image.dialog.title{/lang}',
+				fileTypeFilters: {
+					isImage: 1
+				}
+			});
+		});
+	</script>
+{/if}
+
 <header class="boxHeadline">
 	<h1>{if $action == 'add'}{if $isMultilingual}{lang}wcf.acp.box.addMultilingual{/lang}{else}{lang}wcf.acp.box.add{/lang}{/if}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
 </header>
@@ -14,7 +29,7 @@
 	<nav>
 		<ul>
 			<li><a href="{link controller='BoxList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.box.list{/lang}</span></a></li>
-				
+			
 			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
@@ -88,7 +103,7 @@
 				<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0" />
 			</dd>
 		</dl>
-	
+		
 		<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 			<dt><label for="cssClassName">{lang}wcf.acp.box.cssClassName{/lang}</label></dt>
 			<dd>
@@ -127,7 +142,7 @@
 				<label><input type="checkbox" id="showHeader" name="showHeader" value="1" {if $showHeader}checked="checked" {/if}/> {lang}wcf.acp.box.showHeader{/lang}</label>
 			</dd>
 		</dl>
-			
+		
 		<dl>
 			<dt></dt>
 			<dd>
@@ -137,15 +152,40 @@
 		
 		{event name='dataFields'}
 	</section>
-		
+	
 	{if !$isMultilingual}
 		<fieldset>
 			<legend>content</legend>
-		
+			
+			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+				<dl{if $errorField == 'image'} class="formError"{/if}>
+					<dt><label for="image">{lang}wcf.acp.box.image{/lang}</label></dt>
+					<dd>
+						<div id="imageDisplay">
+							{if $images[0]|isset}
+								{@$images[0]->getThumbnailTag('small')}
+							{/if}
+						</div>
+						<p class="button jsMediaSelectButton" data-store="imageID0" data-display="imageDisplay">{lang}wcf.acp.box.image.button.chooseImage{/lang}</p>
+						<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{@$imageID[0]}"{/if} />
+						{if $errorField == 'image'}
+							<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
+						{/if}
+					</dd>
+				</dl>
+			{elseif $action == 'edit' && $images[0]|isset}
+				<dl>
+					<dt>{lang}wcf.acp.box.image{/lang}</dt>
+					<dd>
+						<div id="imageDisplay">{@$images[0]->getThumbnailTag('small')}</div>
+					</dd>
+				</dl>
+			{/if}
+			
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title">{lang}wcf.acp.box.title{/lang}</label></dt>
 				<dd>
-					<input type="text" id="title" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" />
+					<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" />
 					{if $errorField == 'title'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -188,11 +228,32 @@
 			{foreach from=$availableLanguages item=availableLanguage}
 				<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
 					<div>
-						<dl{if $errorField == 'title'} class="formError"{/if}>
+						{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+							<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
+								<dt><label for="image{@$availableLanguage->languageID}">{lang}wcf.acp.box.image{/lang}</label></dt>
+								<dd>
+									<div id="imageDisplay{@$availableLanguage->languageID}"></div>
+									<p class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.acp.box.image.button.chooseImage{/lang}</p>
+									<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{@$imageID[$availableLanguage->languageID]}"{/if} />
+									{if $errorField == 'image'|concat:$availableLanguage->languageID}
+										<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
+									{/if}
+								</dd>
+							</dl>
+						{elseif $action == 'edit' && $images[$availableLanguage->languageID]|isset}
+							<dl>
+								<dt>{lang}wcf.acp.box.image{/lang}</dt>
+								<dd>
+									<div id="imageDisplay">{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
+								</dd>
+							</dl>
+						{/if}
+						
+						<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
 							<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.box.title{/lang}</label></dt>
 							<dd>
 								<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" />
-								{if $errorField == 'title'}
+								{if $errorField == 'title'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
 											{lang}wcf.global.form.error.empty{/lang}
@@ -204,11 +265,11 @@
 							</dd>
 						</dl>
 						
-						<dl{if $errorField == 'content'} class="formError"{/if}>
+						<dl{if $errorField == 'content'|concat:$availableLanguage->languageID} class="formError"{/if}>
 							<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.box.content{/lang}</label></dt>
 							<dd>
 								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
-								{if $errorField == 'content'}
+								{if $errorField == 'content'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
 											{lang}wcf.global.form.error.empty{/lang}
@@ -224,7 +285,7 @@
 			{/foreach}
 		</div>
 	{/if}
-		
+	
 	{event name='sections'}
 	
 	<div class="formSubmit">

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\media\Media;
 use wcf\data\media\MediaAction;
+use wcf\data\media\ViewableMedia;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -41,7 +41,7 @@ class MediaEditForm extends AbstractForm {
 	
 	/**
 	 * edited media
-	 * @var	Media
+	 * @var	ViewableMedia
 	 */
 	public $media = null;
 	
@@ -126,8 +126,8 @@ class MediaEditForm extends AbstractForm {
 		
 		if (isset($_REQUEST['id'])) $this->mediaID = intval($_REQUEST['id']);
 		
-		$this->media = new Media($this->mediaID);
-		if (!$this->media->mediaID) {
+		$this->media = ViewableMedia::getMedia($this->mediaID);
+		if ($this->media === null) {
 			throw new IllegalLinkException();
 		}
 		
@@ -142,7 +142,7 @@ class MediaEditForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new MediaAction([$this->media], 'update', [
+		$this->objectAction = new MediaAction([$this->media->getDecoratedObject()], 'update', array_merge($this->additionalFields, [
 			'data' => [
 				'isMultilingual' => $this->isMultilingual,
 				'languageID' => $this->languageID ?: null
@@ -150,7 +150,7 @@ class MediaEditForm extends AbstractForm {
 			'altText' => I18nHandler::getInstance()->getValues('altText'),
 			'caption' => I18nHandler::getInstance()->getValues('caption'),
 			'title' => I18nHandler::getInstance()->getValues('title')
-		]);
+		]));
 		$this->objectAction->executeAction();
 		
 		$this->saved();

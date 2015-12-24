@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\media;
 use wcf\data\DatabaseObject;
+use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -17,7 +18,7 @@ use wcf\system\WCF;
  * @category	Community Framework
  * @since	2.2
  */
-class Media extends DatabaseObject implements IRouteController, IThumbnailFile {
+class Media extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile {
 	/**
 	 * i18n media data grouped by language id for all language
 	 * @var	string[][]
@@ -62,14 +63,24 @@ class Media extends DatabaseObject implements IRouteController, IThumbnailFile {
 	];
 	
 	/**
-	 * @inheritcoc
+	 * @inheritDoc
+	 */
+	public function getLink() {
+		return LinkHandler::getInstance()->getLink('Media', [
+			'forceFrontend' => true,
+			'object' => $this
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function getLocation() {
 		return self::getStorage().substr($this->fileHash, 0, 2).'/'.$this->mediaID.'-'.$this->fileHash;
 	}
 	
 	/**
-	 * @inheritcoc
+	 * @inheritDoc
 	 */
 	public function getThumbnailLink($size) {
 		if (!isset(self::$thumbnailSizes[$size])) {
@@ -84,7 +95,7 @@ class Media extends DatabaseObject implements IRouteController, IThumbnailFile {
 	}
 	
 	/**
-	 * @inheritcoc
+	 * @inheritDoc
 	 */
 	public function getThumbnailLocation($size) {
 		if (!isset(self::$thumbnailSizes[$size])) {
@@ -95,7 +106,7 @@ class Media extends DatabaseObject implements IRouteController, IThumbnailFile {
 	}
 	
 	/**
-	 * @inheritcoc
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->filename;
@@ -140,7 +151,7 @@ class Media extends DatabaseObject implements IRouteController, IThumbnailFile {
 	}
 	
 	/**
-	 * @inheritcoc
+	 * @inheritDoc
 	 */
 	public static function getThumbnailSizes() {
 		return static::$thumbnailSizes;

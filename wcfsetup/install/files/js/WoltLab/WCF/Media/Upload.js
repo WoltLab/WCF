@@ -4,7 +4,7 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/Controller/Media/Upload
+ * @module	WoltLab/WCF/Media/Upload
  */
 define(
 	[
@@ -56,7 +56,7 @@ define(
 			fileElement.appendChild(thumbnail);
 			
 			var fileIcon = elCreate('span');
-			fileIcon.className = 'icon icon96 fa-spinner';
+			fileIcon.className = 'icon icon144 fa-spinner';
 			thumbnail.appendChild(fileIcon);
 			
 			var mediaInformation = elCreate('div');
@@ -80,6 +80,19 @@ define(
 		},
 		
 		/**
+		 * @see	WoltLab/WCF/Upload#_getParameters
+		 */
+		_getParameters: function() {
+			if (this._mediaManager) {
+				return Core.extend(MediaUpload._super.prototype._getParameters.call(this), {
+					fileTypeFilters: this._mediaManager.getOption('fileTypeFilters')
+				});
+			}
+			
+			return MediaUpload._super.prototype._getParameters.call(this);
+		},
+		
+		/**
 		 * @see	WoltLab/WCF/Upload#_success
 		 */
 		_success: function(uploadId, data) {
@@ -90,6 +103,8 @@ define(
 				var internalFileId = elData(file, 'internal-file-id');
 				var media = data.returnValues.media[internalFileId];
 				
+				elRemove(DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaInformation'), 'PROGRESS'));
+				
 				if (media) {
 					var fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaThumbnail'), 'SPAN');
 					if (media.tinyThumbnailType) {
@@ -99,8 +114,8 @@ define(
 						var img = elCreate('img');
 						elAttr(img, 'src', media.tinyThumbnailLink);
 						elAttr(img, 'alt', '');
-						img.style.setProperty('width', '96px');
-						img.style.setProperty('height', '96px');
+						img.style.setProperty('width', '144px');
+						img.style.setProperty('height', '144px');
 						parentNode.appendChild(img);
 					}
 					else {
@@ -111,75 +126,38 @@ define(
 					file.className = 'jsClipboardObject';
 					elData(file, 'object-id', media.mediaID);
 					
-					var mediaInformation = DomTraverse.childByClass(file, 'mediaInformation');
-					
-					elRemove(DomTraverse.childByTag(mediaInformation, 'PROGRESS'));
-					
 					if (this._mediaManager) {
-						var buttonGroupNavigation = elCreate('nav');
-						buttonGroupNavigation.className = 'buttonGroupNavigation';
-						mediaInformation.parentNode.appendChild(buttonGroupNavigation);
-						
-						var smallButtons = elCreate('ul');
-						smallButtons.className = 'smallButtons buttonGroup';
-						buttonGroupNavigation.appendChild(smallButtons);
-						
-						var listItem = elCreate('li');
-						smallButtons.appendChild(listItem);
-						
-						var checkbox = elCreate('input');
-						checkbox.className = 'jsClipboardItem jsMediaCheckbox';
-						elAttr(checkbox, 'type', 'checkbox');
-						elData(checkbox, 'object-id', media.mediaID);
-						listItem.appendChild(checkbox);
-						
-						if (Permission.get('admin.content.cms.canManageMedia')) {
-							listItem = elCreate('li');
-							smallButtons.appendChild(listItem);
-							
-							var a = elCreate('a');
-							listItem.appendChild(a);
-							
-							var icon = elCreate('span');
-							icon.className = 'icon icon16 fa-pencil jsTooltip jsMediaEditIcon';
-							elData(icon, 'object-id', media.mediaID);
-							elAttr(icon, 'title', Language.get('wcf.global.button.edit'));
-							a.appendChild(icon);
-							
-							listItem = elCreate('li');
-							smallButtons.appendChild(listItem);
-							
-							a = elCreate('a');
-							listItem.appendChild(a);
-							
-							icon = elCreate('span');
-							icon.className = 'icon icon16 fa-times jsTooltip jsMediaDeleteIcon';
-							elData(icon, 'object-id', media.mediaID);
-							elAttr(icon, 'title', Language.get('wcf.global.button.delete'));
-							a.appendChild(icon);
-						}
-						
-						listItem = elCreate('li');
-						smallButtons.appendChild(listItem);
-						
-						var a = elCreate('a');
-						listItem.appendChild(a);
-						
-						var icon = elCreate('span');
-						icon.className = 'icon icon16 fa-plus jsTooltip jsMediaInsertIcon';
-						elData(icon, 'object-id', media.mediaID);
-						elAttr(icon, 'title', Language.get('wcf.media.button.insert'));
-						a.appendChild(icon);
-						
+						this._mediaManager.setupMediaElement(media, file);
 						this._mediaManager.resetMedia();
 						this._mediaManager.addMedia(media, file);
 					}
-					
-					DomChangeListener.trigger();
 				}
 				else {
-					// error: TODO
+					var error = data.returnValues.errors[internalFileId];
+					if (!error) {
+						error = {
+							errorType: 'uploadFailed',
+							filename: elData(file, 'filename')
+						};
+					}
+					
+					var fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaThumbnail'), 'SPAN');
+					fileIcon.classList.remove('fa-spinner');
+					fileIcon.classList.add('fa-remove');
+					fileIcon.classList.add('pointer');
+					
+					file.classList.add('uploadFailed');
+					file.addEventListener('click', function() {
+						elRemove(this);
+					});
+					
+					var title = DomTraverse.childByClass(DomTraverse.childByClass(file, 'mediaInformation'), 'mediaTitle');
+					title.innerText = Language.get('wcf.media.upload.error.' + error.errorType, {
+						filename: error.filename
+					});
 				}
+				
+				DomChangeListener.trigger();
 			}
 			
 			EventHandler.fire('com.woltlab.wcf.media.upload', 'success', {

@@ -104,7 +104,6 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 			var right = horizontal.right;
 			
 			var vertical = this._tryAlignmentVertical(options.vertical, elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset);
-			console.debug(vertical);
 			if (!vertical.result && (options.allowFlip === 'both' || options.allowFlip === 'vertical')) {
 				var verticalFlipped = this._tryAlignmentVertical((options.vertical === 'top' ? 'bottom' : 'top'), elDimensions, refDimensions, refOffsets, windowHeight, options.verticalOffset);
 				// only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction

@@ -4,7 +4,7 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/Controller/Media/Manager
+ * @module	WoltLab/WCF/Media/Manager/Base
  */
 define(
 	[
@@ -12,8 +12,6 @@ define(
 		'Dom/Util',                 'EventHandler',             'Language',                'List',
 		'Permission',               'Ui/Dialog',                'Ui/Notification',         'WoltLab/WCF/Controller/Clipboard',
 		'WoltLab/WCF/Media/Editor', 'WoltLab/WCF/Media/Upload', 'WoltLab/WCF/Media/Search'
-		
-
 	],
 	function(
 		Core,                        Dictionary,                 DomChangeListener,         DomTraverse,
@@ -27,7 +25,12 @@ define(
 	/**
 	 * @constructor
 	 */
-	function MediaManager() {
+	function MediaManagerBase(options) {
+		this._options = Core.extend({
+			dialogTitle: Language.get('wcf.media.manager'),
+			fileTypeFilters: {}
+		}, options);
+		
 		this._media = new Dictionary();
 		this._mediaData = new Dictionary();
 		this._mediaCache = null;
@@ -38,11 +41,9 @@ define(
 			this._mediaEditor = new MediaEditor(this);
 		}
 		
-		elById('mediaManagerButton').addEventListener('click', this._click.bind(this));
-		
-		DomChangeListener.add('WoltLab/WCF/Controller/Media/Manager', this._addButtonEventListeners.bind(this));
+		DomChangeListener.add('WoltLab/WCF/Media/Manager', this._addButtonEventListeners.bind(this));
 	};
-	MediaManager.prototype = {
+	MediaManagerBase.prototype = {
 		/**
 		 * Adds click event listeners to media buttons.
 		 */
@@ -59,12 +60,6 @@ define(
 						editIcon.classList.remove('jsMediaEditIcon');
 						editIcon.addEventListener('click', this._editMedia.bind(this));
 					}
-				}
-				
-				var insertIcon = elByClass('jsMediaInsertIcon', listItem)[0];
-				if (insertIcon) {
-					insertIcon.classList.remove('jsMediaInsertIcon');
-					insertIcon.addEventListener('click', this._openInsertDialog.bind(this));
 				}
 			}
 		},
@@ -99,10 +94,6 @@ define(
 					}
 					
 					UiNotification.show();
-					
-					break;
-				case 'com.woltlab.wcf.media.insert':
-					// TODO
 					break;
 			}
 		},
@@ -116,13 +107,17 @@ define(
 			return {
 				id: 'mediaManager',
 				options: {
-					title: Language.get('wcf.media.manager')
+					title: this._options.dialogTitle
 				},
 				source: {
 					after: this._initDialog.bind(this),
 					data: {
 						actionName: 'getManagementDialog',
-						className: 'wcf\\data\\media\\MediaAction'
+						className: 'wcf\\data\\media\\MediaAction',
+						parameters: {
+							mode: this.getMode(),
+							fileTypeFilters: this._options.fileTypeFilters
+						}
 					}
 				}
 			};
@@ -220,96 +215,12 @@ define(
 			}
 		},
 		
-		_insertMedia: function() {
-			// TODO
-		},
-		
-		_openInsertDialog: function(event) {
-			var media = this._mediaData.get(~~elData(event.currentTarget, 'object-id'));
-			
-			// check if media file is image and has at least small thumbnail
-			// to show insertion options
-			if (media.isImage && media.smallThumbnailType) {
-				UiDialog.close(this);
-				var dialogId = 'mediaInsert' + media.mediaID;
-				if (UiDialog.getDialog(dialogId)) {
-					UiDialog.openStatic(dialogId);
-				}
-				else {
-					var dialog = elCreate('div');
-					
-					var fieldset = elCreate('fieldset');
-					dialog.appendChild(fieldset);
-					
-					var dl = elCreate('dl');
-					fieldset.appendChild(dl);
-					
-					var dt = elCreate('dt');
-					dt.textContent = Language.get('wcf.media.insert.imageSize');
-					dl.appendChild(dt);
-					
-					var dd = elCreate('dd');
-					dl.appendChild(dd);
-					
-					var select = elCreate('select');
-					dd.appendChild(select);
-					
-					var sizes = ['small', 'medium', 'large'];
-					var size, option;
-					for (var i = 0, length = sizes.length; i < length; i++) {
-						size = sizes[i];
-						
-						if (media[size + 'ThumbnailType']) {
-							option = elCreate('option');
-							elAttr(option, 'value', size);
-							option.textContent = Language.get('wcf.media.insert.imageSize.' + size, {
-								height: media[size + 'ThumbnailHeight'],
-								width: media[size + 'ThumbnailWidth']
-							});
-							select.appendChild(option);
-						}
-					}
-					
-					option = elCreate('option');
-					elAttr(option, 'value', 'original');
-					option.textContent = Language.get('wcf.media.insert.imageSize.original', {
-						height: media.height,
-						width: media.width
-					});
-					select.appendChild(option);
-					
-					var formSubmit = elCreate('div');
-					formSubmit.className = 'formSubmit';
-					dialog.appendChild(formSubmit);
-					
-					var submitButton = elCreate('button');
-					submitButton.className = 'buttonPrimary';
-					submitButton.textContent = Language.get('wcf.global.button.insert');
-					elData(submitButton, 'object-id', media.mediaID);
-					submitButton.addEventListener('click', this._insertMedia.bind(this));
-					formSubmit.appendChild(submitButton);
-					
-					UiDialog.open({
-						_dialogSetup: (function() {
-							return {
-								id: dialogId,
-								options: {
-									onClose: this._editorClose.bind(this),
-									title: Language.get('wcf.media.insert')
-								},
-								source: dialog.outerHTML
-							}
-						}).bind(this)
-					});
-				}
-			}
-			else {
-				// insert media
-				// TODO
-			}
-		},
-		
-		_setMedia: function(media, listItems) {
+		/**
+		 * Sets the displayed media (after a search).
+		 * 
+		 * @param	{Dictionary}	media		media to be set as active
+		 */
+		_setMedia: function(media) {
 			if (Core.isPlainObject(media)) {
 				this._media = Dictionary.fromObject(media);
 			}
@@ -372,22 +283,45 @@ define(
 				}
 			}
 		},
-
+		
+		/**
+		 * Returns the mode of the media manager.
+		 *
+		 * @return	{string}
+		 */
+		getMode: function() {
+			return '';
+		},
+		
+		/**
+		 * Returns the media manager option with the given name.
+		 * 
+		 * @param	{string}	name		option name
+		 * @return	{mixed}		option value or null
+		 */
+		getOption: function(name) {
+			if (this._options[name]) {
+				return this._options[name];
+			}
+			
+			return null;
+		},
+		
 		/**
 		 * Removes a media file.
 		 *
 		 * @param	{int}			mediaId		id of the removed media file
 		 * @param	{boolean|undefined}	checkCache	media file will also be removed from the local cache if true
-	     	 */
+	 	 */
 		removeMedia: function(mediaId, checkCache) {
 			if (this._media.has(mediaId)) {
 				// remove list item
 				elRemove(this._media.get(mediaId));
-
+				
 				this._media.delete(mediaId);
 				this._mediaData.delete(mediaId);
 			}
-
+			
 			if (checkCache && this._mediaCache && this._mediaCache.has(mediaId)) {
 				this._mediaCache.delete(mediaId);
 			}
@@ -441,8 +375,61 @@ define(
 			}
 			
 			this._setMedia(media);
+		},
+		
+		/**
+		 * Sets up a new media element.
+		 * 
+		 * @param	{object}	media		data of the media file
+		 * @param	{HTMLElement}	mediaElement	element representing the media file
+		 */
+		setupMediaElement: function(media, mediaElement) {
+			var mediaInformation = DomTraverse.childByClass(mediaElement, 'mediaInformation');
+			
+			var buttonGroupNavigation = elCreate('nav');
+			buttonGroupNavigation.className = 'buttonGroupNavigation';
+			mediaInformation.parentNode.appendChild(buttonGroupNavigation);
+			
+			var smallButtons = elCreate('ul');
+			smallButtons.className = 'smallButtons buttonGroup';
+			buttonGroupNavigation.appendChild(smallButtons);
+			
+			var listItem = elCreate('li');
+			smallButtons.appendChild(listItem);
+			
+			var checkbox = elCreate('input');
+			checkbox.className = 'jsClipboardItem jsMediaCheckbox';
+			elAttr(checkbox, 'type', 'checkbox');
+			elData(checkbox, 'object-id', media.mediaID);
+			listItem.appendChild(checkbox);
+			
+			if (Permission.get('admin.content.cms.canManageMedia')) {
+				listItem = elCreate('li');
+				smallButtons.appendChild(listItem);
+				
+				var a = elCreate('a');
+				listItem.appendChild(a);
+				
+				var icon = elCreate('span');
+				icon.className = 'icon icon16 fa-pencil jsTooltip jsMediaEditIcon';
+				elData(icon, 'object-id', media.mediaID);
+				elAttr(icon, 'title', Language.get('wcf.global.button.edit'));
+				a.appendChild(icon);
+				
+				listItem = elCreate('li');
+				smallButtons.appendChild(listItem);
+				
+				a = elCreate('a');
+				listItem.appendChild(a);
+				
+				icon = elCreate('span');
+				icon.className = 'icon icon16 fa-times jsTooltip jsMediaDeleteIcon';
+				elData(icon, 'object-id', media.mediaID);
+				elAttr(icon, 'title', Language.get('wcf.global.button.delete'));
+				a.appendChild(icon);
+			}
 		}
 	};
 	
-	return MediaManager;
+	return MediaManagerBase;
 });

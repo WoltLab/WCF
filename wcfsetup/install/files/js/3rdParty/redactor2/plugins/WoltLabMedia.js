@@ -4,10 +4,10 @@ $.Redactor.prototype.WoltLabMedia = function() {
 	return {
 		init: function() {
 			var button = this.button.add('woltlabMedia', 'Media');
-			$(button).attr('id', 'mediaManagerButton');
+			$(button).addClass('jsMediaEditorButton');
 			
-			require(['WoltLab/WCF/Media/Manager'], function(MediaManager) {
-				new MediaManager();
+			require(['WoltLab/WCF/Media/Manager/Editor'], function(MediaManagerEditor) {
+				new MediaManagerEditor();
 			});
 		},
 	};

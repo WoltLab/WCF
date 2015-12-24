@@ -26,13 +26,13 @@ class BoxEditForm extends BoxAddForm {
 	
 	/**
 	 * box id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $boxID = 0;
 	
 	/**
 	 * box object
-	 * @var Box
+	 * @var	Box
 	 */
 	public $box = null;
 	
@@ -71,6 +71,7 @@ class BoxEditForm extends BoxAddForm {
 				$content[$language->languageID] = [
 					'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
 					'content' => (!empty($_POST['content'][$language->languageID]) ? $_POST['content'][$language->languageID] : ''),
+					'imageID' => (!empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null)
 				];
 			}
 		}
@@ -78,6 +79,7 @@ class BoxEditForm extends BoxAddForm {
 			$content[0] = [
 				'title' => (!empty($_POST['title'][0]) ? $_POST['title'][0] : ''),
 				'content' => (!empty($_POST['content'][0]) ? $_POST['content'][0] : ''),
+				'imageID' => (!empty($this->imageID[0]) ? $this->imageID[0] : null)
 			];
 		}
 		
@@ -105,8 +107,16 @@ class BoxEditForm extends BoxAddForm {
 	 * @inheritDoc
 	 */
 	public function readData() {
+		if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+			foreach ($this->box->getBoxContent() as $languageID => $content) {
+				$this->imageID[$languageID] = $content['imageID'];
+			}
+			
+			$this->readBoxImages();
+		}
+		
 		parent::readData();
-	
+		
 		if (empty($_POST)) {
 			$this->name = $this->box->name;
 			$this->boxType = $this->box->boxType;
@@ -120,7 +130,10 @@ class BoxEditForm extends BoxAddForm {
 			foreach ($this->box->getBoxContent() as $languageID => $content) {
 				$this->title[$languageID] = $content['title'];
 				$this->content[$languageID] = $content['content'];
+				$this->imageID[$languageID] = $content['imageID'];
 			}
+			
+			$this->readBoxImages();
 		}
 	}
 	

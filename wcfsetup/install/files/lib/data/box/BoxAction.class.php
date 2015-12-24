@@ -50,20 +50,21 @@ class BoxAction extends AbstractDatabaseObjectAction {
 		// save box content
 		if (!empty($this->parameters['content'])) {
 			$sql = "INSERT INTO	wcf".WCF_N."_box_content
-						(boxID, languageID, title, content)
-				VALUES		(?, ?, ?, ?)";
+						(boxID, languageID, title, content, imageID)
+				VALUES		(?, ?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-				
+			
 			foreach ($this->parameters['content'] as $languageID => $content) {
 				$statement->execute([
 					$box->boxID,
 					($languageID ?: null),
 					$content['title'],
-					$content['content']
+					$content['content'],
+					$content['imageID']
 				]);
 			}
 		}
-	
+		
 		return $box;
 	}
 	
@@ -72,32 +73,33 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	 */
 	public function update() {
 		parent::update();
-	
+		
 		// update box content
 		if (!empty($this->parameters['content'])) {
 			$sql = "DELETE FROM	wcf".WCF_N."_box_content
 				WHERE		boxID = ?";
 			$deleteStatement = WCF::getDB()->prepareStatement($sql);
-				
+			
 			$sql = "INSERT INTO	wcf".WCF_N."_box_content
-						(boxID, languageID, title, content)
-				VALUES		(?, ?, ?, ?)";
+						(boxID, languageID, title, content, imageID)
+				VALUES		(?, ?, ?, ?, ?)";
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
-				
+			
 			foreach ($this->objects as $box) {
-				$deleteStatement->execute(array($box->boxID));
-	
+				$deleteStatement->execute([$box->boxID]);
+				
 				foreach ($this->parameters['content'] as $languageID => $content) {
 					$insertStatement->execute([
 						$box->boxID,
 						($languageID ?: null),
 						$content['title'],
-						$content['content']
+						$content['content'],
+						$content['imageID']
 					]);
 				}
 			}
 		}
-	
+		
 		return $box;
 	}
 	

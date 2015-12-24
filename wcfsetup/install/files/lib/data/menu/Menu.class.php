@@ -28,13 +28,13 @@ class Menu extends DatabaseObject {
 	/**
 	 * Returns true if the active user can delete this menu.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu') && !$this->originIsSystem) {
 			return true;
 		}
-			
+		
 		return false;
 	}
 }

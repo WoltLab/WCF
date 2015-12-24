@@ -29,7 +29,7 @@
 	<ul id="mediaManagerMediaList">
 		{include file='mediaListItems'}
 	</ul>
-	
+
 	<div class="contentNavigation">
 		<nav class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.media' ]"></nav>
 	</div>

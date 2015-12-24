@@ -114,6 +114,12 @@ a > span.fa:not(.pointer) {
 	width: 96px;
 }
 
+.icon144 {
+	font-size: 130px; // TODO
+	height: 144px;
+	width: 144px;
+}
+
 // spinner animation
 .fa-spinner {
 	animation: wcfSpinner .6s linear infinite;

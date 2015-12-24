@@ -16,8 +16,8 @@
 	
 	> li {
 		float: left;
-		height: 120px;
-		width: 120px;
+		height: 160px;
+		width: 160px;
 		position: relative;
 		border: 1px solid #aaa;
 		overflow: hidden;
@@ -48,16 +48,25 @@
 			}
 		}
 		
+		&.uploadFailed {
+			cursor: pointer;
+			
+			> .mediaInformation {
+				background-color: rgba(242, 222, 222, 0.6); // todo
+				color: rgb(169, 68, 66); // todo
+			}
+		}
+		
 		> .mediaThumbnail {
-			height: 96px;
-			width: 96px;
-			padding: 12px;
+			height: 144px;
+			width: 144px;
+			padding: 8px;
 		}
 		
 		> .mediaInformation {
 			position: absolute;
 			bottom: 0;
-			background: rgba(0,0,0,0.6);
+			background: rgba(0,0,0,0.6); // TOOD
 			color: #fff;
 			width: 100%;
 			padding: $wcfGapSmall;
@@ -70,7 +79,7 @@
 			position: absolute;
 			top: 0;
 			right: 0;
-			background: rgba(0,0,0,0.6);
+			background: rgba(0,0,0,0.6); // TOOD
 			height: 0;
 			overflow: hidden;
 			

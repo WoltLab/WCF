@@ -27,6 +27,6 @@ class ViewableMediaList extends MediaList {
 		
 		// fetch content data
 		$this->sqlSelects .= "media_content.*";
-		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_media_content media_content ON (media_content.mediaID = media.mediaID AND media_content.languageID = COALESCE(media.languageID, ".WCF::getUser()->languageID."))";
+		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_media_content media_content ON (media_content.mediaID = media.mediaID AND media_content.languageID = COALESCE(media.languageID, ".WCF::getLanguage()->languageID."))";
 	}
 }
