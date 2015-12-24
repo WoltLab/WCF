@@ -177,6 +177,8 @@ class Box extends DatabaseObject {
 			return $this->getController()->hasContent();
 		}
 		else if ($this->boxType == 'menu') {
+			// TODO:
+			return false;
 			return $this->getMenu()->hasContent();
 		}
 		else {

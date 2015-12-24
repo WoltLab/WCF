@@ -8,8 +8,11 @@
  */
 // ignore direct access
 if (!defined('PACKAGE_ID')) {
+	define('PACKAGE_ID', 1);
+	/* TODO:
 	@header("HTTP/1.0 404 Not Found");
 	exit;
+	*/
 }
 
 // define the wcf-root-dir
