@@ -37,10 +37,10 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 		if (!($objectList instanceof UserList)) return;
 		
 		if ($conditionData['greaterThan'] !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate < ?', array(TIME_NOW - $conditionData['greaterThan'] * 86400));
+			$objectList->getConditionBuilder()->add('user_table.registrationDate < ?', array(TIME_NOW - $conditionData['greaterThan'] * 86400));
 		}
 		if ($conditionData['lessThan'] !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate > ?', array(TIME_NOW - $conditionData['lessThan'] * 86400));
+			$objectList->getConditionBuilder()->add('user_table.registrationDate > ?', array(TIME_NOW - $conditionData['lessThan'] * 86400));
 		}
 	}
 	
