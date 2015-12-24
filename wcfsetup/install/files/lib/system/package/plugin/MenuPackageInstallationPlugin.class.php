@@ -4,6 +4,7 @@ use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuEditor;
+use wcf\data\menu\MenuList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -189,7 +190,22 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$boxes[$box->identifier] = $box;
 		}
 		
+		// fetch all menus relevant
+		$menuList = new MenuList();
+		$menuList->getConditionBuilder()->add('identifier IN (?)', [array_keys($this->boxData)]);
+		$menuList->readObjects();
+		
+		$menus = [];
+		foreach ($menuList as $menu) {
+			$menus[$menu->identifier] = $menu;
+		}
+		
 		foreach ($this->boxData as $identifier => $data) {
+			// connect box with menu
+			if (isset($menus[$identifier])) {
+				$data['menuID'] = $menus[$identifier]->menuID;
+			}
+			
 			if (isset($boxes[$identifier])) {
 				// skip both 'identifier' and 'packageID' as these properties are immutable
 				unset($data['identifier']);
