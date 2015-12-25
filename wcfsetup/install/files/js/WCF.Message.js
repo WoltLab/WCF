@@ -3418,7 +3418,7 @@ WCF.Message.Share.Page = Class.extend({
 	},
 	
 	/**
-	 * Fetches number of Facebook likes.
+	 * Fetches number of Facebook shares.
 	 */
 	_fetchFacebook: function() {
 		this._fetchCount('https://graph.facebook.com/fql?q=SELECT%20share_count%20FROM%20link_stat%20WHERE%20url=%27{pageURL}%27', $.proxy(function(data) {
