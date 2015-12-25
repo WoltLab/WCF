@@ -207,25 +207,23 @@
 			{if $__wcf->getLanguage()->getLanguages()|count > 1}
 				<li id="pageLanguageContainer">
 					<script data-relocate="true">
-						//<![CDATA[
-						$(function() {
-							var $languages = {
-								{implode from=$__wcf->getLanguage()->getLanguages() item=language}
-									'{@$language->languageID}': {
-										iconPath: '{@$language->getIconPath()}',
-										languageName: '{$language}'
+						require(['WoltLab/WCF/Language/Chooser'], function(LanguageChooser) {
+							var languages = {
+								{implode from=$__wcf->getLanguage()->getLanguages() item=__language}
+									'{@$__language->languageID}': {
+										iconPath: '{@$__language->getIconPath()|encodeJS}',
+										languageName: '{$__language}'
 									}
 								{/implode}
 							};
 							
-							new WCF.Language.Chooser('pageLanguageContainer', 'languageID', {@$__wcf->getLanguage()->languageID}, $languages, function(item) {
-								var $location = window.location.toString().replace(/#.*/, '').replace(/(\?|&)l=[0-9]+/g, '');
-								var $delimiter = ($location.indexOf('?') == -1) ? '?' : '&';
+							LanguageChooser.init('pageLanguageContainer', 'languageID', {@$__wcf->getLanguage()->languageID}, languages, function(listItem) {
+								var location = window.location.toString().replace(/#.*/, '').replace(/(\?|&)l=[0-9]+/g, '');
+								var delimiter = (location.indexOf('?') == -1) ? '?' : '&';
 								
-								window.location = $location + $delimiter + 'l=' + item.data('languageID') + window.location.hash;
+								window.location = location + delimiter + 'l=' + elData(listItem, 'language-id') + window.location.hash;
 							});
 						});
-						//]]>
 					</script>
 				</li>
 			{/if}

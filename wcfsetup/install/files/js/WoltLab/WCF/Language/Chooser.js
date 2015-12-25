@@ -6,19 +6,19 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Language/Chooser
  */
-define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown'], function(Dictionary, Language, DomTraverse, DomUtil, UiSimpleDropdown) {
+define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/SimpleDropdown'], function(Dictionary, Language, DomTraverse, DomUtil, ObjectMap, UiSimpleDropdown) {
 	"use strict";
 	
 	var _choosers = new Dictionary();
 	var _didInit = false;
+	var _forms = new ObjectMap();
 	
-	var _callbackDropdownToggle = null;
 	var _callbackSubmit = null;
 	
 	/**
 	 * @exports	WoltLab/WCF/Language/Chooser
 	 */
-	var LanguageChooser = {
+	return {
 		/**
 		 * Initializes a language chooser.
 		 * 
@@ -26,8 +26,8 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown
 		 * @param	{string}					chooserId		input element id
 		 * @param	{integer}					languageId		selected language id
 		 * @param	{object<integer, object<string, string>>}	languages		data of available languages
-		 * @param							callback		
-		 * @param							allowEmptyValue		
+		 * @param	{function}					callback		function called after a language is selected
+		 * @param	{boolean}					allowEmptyValue		true if no language may be selected
 		 */
 		init: function(containerId, chooserId, languageId, languages, callback, allowEmptyValue) {
 			if (_choosers.has(chooserId)) {
@@ -50,9 +50,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown
 				container.appendChild(element);
 			}
 			
-			// todo: callback
-			
-			this._initElement(chooserId, element, languageId, languages, allowEmptyValue);
+			this._initElement(chooserId, element, languageId, languages, callback, allowEmptyValue);
 		},
 		
 		/**
@@ -65,7 +63,16 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown
 			_callbackSubmit = this._submit.bind(this);
 		},
 		
-		_initElement: function(chooserId, element, languageId, languages, allowEmptyValue) {
+		/**
+		 * Sets up DOM and event listeners for a language chooser.
+		 *
+		 * @param	{string}					chooserId		chooser id
+		 * @param	{Element}					element			chooser element
+		 * @param	{integer}					languageId		selected language id
+		 * @param	{object<integer, object<string, string>>}	languages		data of available languages
+		 * @param	{boolean}					allowEmptyValue		true if no language may be selected
+		 */
+		_initElement: function(chooserId, element, languageId, languages, callback, allowEmptyValue) {
 			var container = element.parentNode;
 			if (!container.classList.contains('inputAddon')) {
 				container = elCreate('div');
@@ -176,22 +183,21 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown
 			UiSimpleDropdown.init(dropdownToggle);
 			
 			_choosers.set(chooserId, {
+				callback: callback,
 				dropdownMenu: dropdownMenu,
 				dropdownToggle: dropdownToggle,
 				element: element
 			});
 			
 			// bind to submit event
-			var submit = DomTraverse.parentByTag(element, 'FORM');
-			if (submit !== null) {
-				submit.addEventListener('submit', _callbackSubmit);
+			var form = DomTraverse.parentByTag(element, 'FORM');
+			if (form !== null) {
+				form.addEventListener('submit', _callbackSubmit);
 				
-				// TODO: WHAT?
-				return;
-				var chooserIds = _forms.get(submit);
+				var chooserIds = _forms.get(form);
 				if (chooserIds === undefined) {
 					chooserIds = [];
-					_forms.set(submit, chooserIds);
+					_forms.set(form, chooserIds);
 				}
 				
 				chooserIds.push(chooserId);
@@ -228,6 +234,30 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown
 			chooser.dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
 			
 			_choosers.set(chooserId, chooser);
+			
+			// execute callback
+			if (typeof chooser.callback === 'function') {
+				chooser.callback(listItem);
+			}
+		},
+		
+		/**
+		 * Inserts hidden fields for the language chooser value on submit.
+		 *
+		 * @param	{object}	event		event object
+		 */
+		_submit: function(event) {
+			var elementIds = _forms.get(event.currentTarget);
+			
+			var input;
+			for (var i = 0, length = elementIds.length; i < length; i++) {
+				input = elCreate('input');
+				input.type = 'hidden';
+				input.name = elementIds[i];
+				input.value = this.getLanguageId(elementId);
+				
+				event.currentTarget.appendChild(input);
+			}
 		},
 		
 		/**
@@ -269,6 +299,4 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown
 			this._select(chooserId, languageId);
 		}
 	};
-	
-	return LanguageChooser;
 });
