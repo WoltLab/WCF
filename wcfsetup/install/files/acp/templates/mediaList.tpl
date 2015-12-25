@@ -1,5 +1,42 @@
 {include file='header' pageTitle='wcf.acp.media.list'}
 
+<script data-relocate="true">
+	require(['EventHandler', 'WoltLab/WCF/Controller/Clipboard'], function(EventHandler, Clipboard) {
+		Clipboard.setup({
+			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if},
+			pageClassName: 'wcf\\acp\\page\\MediaListPage'
+		});
+		
+		EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', function(actionData) {
+			// only consider events if the action has been executed
+			if (actionData.responseData === null) {
+				return;
+			}
+			
+			if (actionData.data.actionName === 'com.woltlab.wcf.media.delete') {
+				var mediaIds = actionData.responseData.objectIDs;
+				
+				var mediaRows = elByClass('jsMediaRow');
+				for (var i = 0; i < mediaRows.length; i++) {
+					var media = mediaRows[i];
+					var mediaID = ~~elData(elByClass('jsClipboardItem', media)[0], 'object-id');
+					
+					if (mediaIds.indexOf(mediaID) !== -1) {
+						elRemove(media);
+						i--;
+					}
+				}
+				
+				if (!mediaRows.length) {
+					window.location.reload();
+				}
+			}
+		});
+		
+		new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
+	});
+</script>
+
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.media.list{/lang}</h1>
 	<p>{lang}wcf.acp.media.stats{/lang}</p>
@@ -72,9 +109,10 @@ TODO: add file search
 			<h2>{lang}wcf.acp.media.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
 		</header>
 		
-		<table class="table">
+		<table class="table jsClipboardContainer" data-type="com.woltlab.wcf.media">
 			<thead>
 				<tr>
+					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll" /></label></th>
 					<th class="columnID columnMediaID{if $sortField == 'mediaID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=mediaID&sortOrder={if $sortField == 'mediaID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle columnFilename{if $sortField == 'filename'} active {@$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=filename&sortOrder={if $sortField == 'filename' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.media.filename{/lang}</a></th>
 					<th class="columnDate columnUploadTime{if $sortField == 'uploadTime'} active {@$sortOrder}{/if}"><a href="{link controller='MediaList'}pageNo={@$pageNo}&sortField=uploadTime&sortOrder={if $sortField == 'uploadTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.media.uploadTime{/lang}</a></th>
@@ -86,9 +124,10 @@ TODO: add file search
 			
 			<tbody>
 				{foreach from=$objects item=media}
-					<tr class="jsMediaRow">
+					<tr class="jsMediaRow jsClipboardObject">
+						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$media->mediaID}" /></td>
 						<td class="columnIcon">
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$media->media}" data-confirm-message="{lang}wcf.media.delete.confirmMessage{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$media->mediaID}" data-confirm-message="{lang}wcf.media.delete.confirmMessage{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
@@ -123,6 +162,8 @@ TODO: add file search
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>
+
+		<nav class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.media' ]"></nav>
 	</div>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>

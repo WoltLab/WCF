@@ -2,6 +2,8 @@
 namespace wcf\acp\page;
 use wcf\data\media\ViewableMediaList;
 use wcf\page\SortablePage;
+use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the list of media entries.
@@ -16,32 +18,32 @@ use wcf\page\SortablePage;
  */
 class MediaListPage extends SortablePage {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.media.list';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'uploadTime';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.cms.canManageMedia'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $objectListClassName = ViewableMediaList::class;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $validSortFields = [
 		'filename',
@@ -52,7 +54,16 @@ class MediaListPage extends SortablePage {
 	];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign('hasMarkedItems', ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media')));
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	protected function readObjects() {
 		if ($this->sqlOrderBy && $this->sortField == 'mediaID') {

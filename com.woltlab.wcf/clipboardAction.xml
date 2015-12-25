@@ -100,6 +100,7 @@
 			<actionclassname><![CDATA[wcf\system\clipboard\action\MediaClipboardAction]]></actionclassname>
 			<showorder>2</showorder>
 			<pages>
+				<page><![CDATA[wcf\acp\page\MediaListPage]]></page>
 				<page><![CDATA[menuManagerDialog-editor]]></page>
 				<page><![CDATA[menuManagerDialog-select]]></page>
 			</pages>
