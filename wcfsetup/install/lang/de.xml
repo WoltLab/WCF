@@ -469,7 +469,7 @@
 		<item name="wcf.acp.index.system.load"><![CDATA[Aktueller UNIX Load]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
 		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Supportforum]]></item>
-		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket-]]></item>
+		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket-Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 	</category>
 	
