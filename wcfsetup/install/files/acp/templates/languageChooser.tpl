@@ -1,7 +1,7 @@
 {if !$label|isset}{assign var='label' value='wcf.user.language'}{/if}
 
 {if $languages|count}
-	<dl{if $errorField == 'languageID'} class="formError"{/if}>
+	<dl{if $errorField|isset && $errorField == 'languageID'} class="formError"{/if}>
 		<dt>{lang}{$label}{/lang}</dt>
 		<dd id="languageIDContainer">
 			<noscript>
