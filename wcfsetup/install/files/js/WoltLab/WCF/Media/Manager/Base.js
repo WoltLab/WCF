@@ -198,7 +198,7 @@ define(
 				
 				Clipboard.setup({
 					hasMarkedItems: data.returnValues.hasMarkedItems ? true : false,
-					pageClassName: '*'
+					pageClassName: 'menuManagerDialog-' + this.getMode()
 				});
 				
 				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
