@@ -271,7 +271,7 @@ define(
 				LanguageInput.setValues('title', Dictionary.fromObject(this._media.title || { }));
 			}
 			else {
-				this._elements.altText.value = this._media.altText ? this._media.altText[languageId] : '';
+				this._elements.altText.value = this._media.altText ? this._media.altText[this._media.languageID] : '';
 				this._elements.caption.value = this._media.caption ? this._media.caption[this._media.languageID] : '';
 				this._elements.title.value = this._media.title ? this._media.title[this._media.languageID] : '';
 			}
