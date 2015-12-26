@@ -1,39 +1,45 @@
 {include file='header' pageTitle='wcf.acp.media.list'}
 
 <script data-relocate="true">
-	require(['EventHandler', 'WoltLab/WCF/Controller/Clipboard'], function(EventHandler, Clipboard) {
-		Clipboard.setup({
-			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if},
-			pageClassName: 'wcf\\acp\\page\\MediaListPage'
-		});
-		
-		EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', function(actionData) {
-			// only consider events if the action has been executed
-			if (actionData.responseData === null) {
-				return;
-			}
+	document.addEventListener('DOMContentLoaded', function() {
+		require(['EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLab/WCF/Controller/Clipboard', 'WoltLab/WCF/Media/Search'], function (EventHandler, Language, UiSimpleDropdown, Clipboard, MediaSearch) {
+			Language.add('wcf.media.search.filetype', '{lang}wcf.media.search.filetype{/lang}');
 			
-			if (actionData.data.actionName === 'com.woltlab.wcf.media.delete') {
-				var mediaIds = actionData.responseData.objectIDs;
+			Clipboard.setup({
+				hasMarkedItems: {if $hasMarkedItems}true{else}false{/if},
+				pageClassName: 'wcf\\acp\\page\\MediaListPage'
+			});
+			
+			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', function (actionData) {
+				// only consider events if the action has been executed
+				if (actionData.responseData === null) {
+					return;
+				}
 				
-				var mediaRows = elByClass('jsMediaRow');
-				for (var i = 0; i < mediaRows.length; i++) {
-					var media = mediaRows[i];
-					var mediaID = ~~elData(elByClass('jsClipboardItem', media)[0], 'object-id');
+				if (actionData.data.actionName === 'com.woltlab.wcf.media.delete') {
+					var mediaIds = actionData.responseData.objectIDs;
 					
-					if (mediaIds.indexOf(mediaID) !== -1) {
-						elRemove(media);
-						i--;
+					var mediaRows = elByClass('jsMediaRow');
+					for (var i = 0; i < mediaRows.length; i++) {
+						var media = mediaRows[i];
+						var mediaID = ~~elData(elByClass('jsClipboardItem', media)[0], 'object-id');
+						
+						if (mediaIds.indexOf(mediaID) !== -1) {
+							elRemove(media);
+							i--;
+						}
+					}
+					
+					if (!mediaRows.length) {
+						window.location.reload();
 					}
 				}
-				
-				if (!mediaRows.length) {
-					window.location.reload();
-				}
-			}
+			});
+			
+			new MediaSearch('{$fileType}');
+			
+			new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
 		});
-		
-		new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
 	});
 </script>
 
@@ -44,53 +50,55 @@
 
 {include file='formError'}
 
-{*
-TODO: add file search
 <form method="post" action="{link controller='MediaList'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
-			
-			<dl>
-				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="long" />
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="filename">{lang}wcf.media.filename{/lang}</label></dt>
-				<dd>
+	<section>
+		<h1 class="subHeadline">{lang}wcf.global.filter{/lang}</h1>
+		
+		<dl>
+			<dt><label for="filename">{lang}wcf.media.filename{/lang}</label></dt>
+			<dd>
+				<div class="inputAddon dropdown" id="mediaSearch">
+					<span class="button dropdownToggle inputPrefix">
+						<span class="active">{lang}wcf.media.search.filetype{/lang}</span>
+					</span>
+					<ul class="dropdownMenu">
+						<li data-file-type="image"><span>{lang}wcf.media.search.filetype.image{/lang}</span></li>
+						<li data-file-type="text"><span>{lang}wcf.media.search.filetype.text{/lang}</span></li>
+						<li data-file-type="pdf"><span>{lang}wcf.media.search.filetype.pdf{/lang}</span></li>
+						<li data-file-type="other"><span>{lang}wcf.media.search.filetype.other{/lang}</span></li>
+						{event name='filetype'}
+						<li class="dropdownDivider"></li>
+						<li data-file-type="all"><span>{lang}wcf.media.search.filetype.all{/lang}</span></li>
+					</ul>
 					<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="fileType">{lang}wcf.media.fileType{/lang}</label></dt>
-				<dd>
-					<select name="fileType" id="fileType">
-						<option value="">{lang}wcf.global.noSelection{/lang}</option>
-						{htmlOptions options=$availableFileTypes selected=$fileType}
-					</select>
-				</dd>
-			</dl>
-		</fieldset>
-	</div>
+				</div>
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+			<dd>
+				<input type="text" id="username" name="username" value="{$username}" class="long" />
+			</dd>
+		</dl>
+		
+		{event name='filterFields'}
+	</section>
+	
+	{event name='sections'}
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
-*}
 
 <div class="contentNavigation">
 	{assign var='linkParameters' value=''}
-	{*
+	
 	{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
 	{if $filename}{capture append=linkParameters}&filename={@$filename|rawurlencode}{/capture}{/if}
 	{if $fileType}{capture append=linkParameters}&fileType={@$fileType|rawurlencode}{/capture}{/if}
-	*}
 	
 	{pages print=true assign=pagesLinks controller="MediaList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 	

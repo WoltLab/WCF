@@ -28,13 +28,7 @@ use wcf\util\FileUtil;
  */
 class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction, IUploadAction {
 	/**
-	 * condition builder for searched media file type
-	 * @var	PreparedStatementConditionBuilder
-	 */
-	public $fileTypeConditionBuilder = null;
-	
-	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateUpload() {
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
@@ -47,7 +41,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function upload() {
 		// save files
@@ -258,7 +252,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateUpdate() {
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
@@ -275,7 +269,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function update() {
 		if (empty($this->objects)) {
@@ -345,7 +339,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateGetSearchResultList() {
 		if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia') && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
@@ -359,27 +353,6 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			throw new UserInputException('searchString');
 		}
 		
-		$this->fileTypeConditionBuilder = new PreparedStatementConditionBuilder(false);
-		switch ($this->parameters['fileType']) {
-			case 'other':
-				$this->fileTypeConditionBuilder->add('media.fileType NOT LIKE ?', ['image/%']);
-				$this->fileTypeConditionBuilder->add('media.fileType <> ?', ['application/pdf']);
-				$this->fileTypeConditionBuilder->add('media.fileType NOT LIKE ?', ['text/%']);
-			break;
-			
-			case 'image':
-				$this->fileTypeConditionBuilder->add('media.fileType LIKE ?', ['image/%']);
-			break;
-			
-			case 'pdf':
-				$this->fileTypeConditionBuilder->add('media.fileType = ?', ['application/pdf']);
-			break;
-			
-			case 'text':
-				$this->fileTypeConditionBuilder->add('media.fileType LIKE ?', ['text/%']);
-			break;
-		}
-		
 		if (isset($this->parameters['fileTypeFilters']) && !is_array($this->parameters['fileTypeFilters'])) {
 			throw new UserInputException('fileTypeFilters');
 		}
@@ -391,24 +364,15 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getSearchResultList() {
-		$searchString = '%'.addcslashes($this->parameters['searchString'], '_%').'%';
-		
 		$mediaList = new MediaList();
-		$mediaList->sqlConditionJoins = 'LEFT JOIN wcf'.WCF_N.'_media_content media_content ON (media_content.mediaID = media.mediaID)';
-		
-		$searchConditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
-		$searchConditionBuilder->add('media_content.title LIKE ?', [$searchString]);
-		$searchConditionBuilder->add('media_content.caption LIKE ?', [$searchString]);
-		$searchConditionBuilder->add('media_content.altText LIKE ?', [$searchString]);
-		$searchConditionBuilder->add('media.filename LIKE ?', [$searchString]);
-		$mediaList->getConditionBuilder()->add($searchConditionBuilder->__toString(), $searchConditionBuilder->getParameters());
-		
-		if (!empty($this->fileTypeConditionBuilder->__toString())) {
-			$mediaList->getConditionBuilder()->add($this->fileTypeConditionBuilder->__toString(), $this->fileTypeConditionBuilder->getParameters());
+		$mediaList->addSearchConditions($this->parameters['searchString']);
+		if (!empty($this->parameters['fileType'])) {
+			$mediaList->addDefaultFileTypeFilter($this->parameters['fileType']);
 		}
+		$mediaList->getConditionBuilder()->add($searchConditionBuilder->__toString(), $searchConditionBuilder->getParameters());
 		if (!empty($this->parameters['fileTypeFilters'])) {
 			$mediaList->addFileTypeFilters($this->parameters['fileTypeFilters']);
 		}
@@ -435,7 +399,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
@@ -450,7 +414,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function delete() {
 		if (empty($this->objects)) {

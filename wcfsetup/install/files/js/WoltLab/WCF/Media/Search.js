@@ -12,26 +12,41 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 	/**
 	 * @constructor
 	 */
-	function MediaSearch(mediaManager) {
-		this._mediaManager = mediaManager;
-		this._searchMode = false;
+	function MediaSearch(initialFileType) {
 		this._fileType = 'all';
 		
-		this._input = elById('mediaManagerSearchField');
-		this._input.addEventListener('keypress', this._keyPress.bind(this));
-		
-		this._cancelButton = elById('mediaManagerSearchCancelButton');
-		this._cancelButton.addEventListener('click', this._cancelSearch.bind(this));
-		
-		var dropdown = UiSimpleDropdown.getDropdownMenu('mediaManagerSearch');
+		var dropdown = UiSimpleDropdown.getDropdownMenu(this._getIdPrefix() + 'Search');
 		if (dropdown) {
 			this._fileTypes = DomTraverse.childrenBySel(dropdown, 'li:not(.dropdownDivider)');
+			
 			var selectFileType = this._selectFileType.bind(this);
 			for (var i = 0, length = this._fileTypes.length; i < length; i++) {
+				var listItem = this._fileTypes[i];
+				
+				if (initialFileType && elData(listItem, 'file-type') == initialFileType) {
+					this._fileType = initialFileType;
+				}
+				
 				this._fileTypes[i].addEventListener('click', selectFileType);
 			}
 			
-			UiSimpleDropdown.registerCallback('mediaManagerSearch', this._updateFileTypeDropdown.bind(this));
+			if (initialFileType && initialFileType.length) {
+				this._updateDropdownButtonLabel();
+			}
+			
+			UiSimpleDropdown.registerCallback(this._getIdPrefix() + 'Search', this._updateFileTypeDropdown.bind(this));
+			
+			var form = DomTraverse.parentByTag(elById(this._getIdPrefix() + 'Search'), 'FORM');
+			if (form) {
+				form.addEventListener('submit', function() {
+					var fileTypeInput = elCreate('input');
+					elAttr(fileTypeInput, 'type', 'hidden');
+					elAttr(fileTypeInput, 'name', 'fileType');
+					elAttr(fileTypeInput, 'value', this._fileType);
+					
+					form.appendChild(fileTypeInput);
+				}.bind(this));
+			}
 		}
 		else {
 			this._fileType = null;
@@ -39,90 +54,12 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 	};
 	MediaSearch.prototype = {
 		/**
-		 * Returns the data for Ajax to setup the Ajax/Request object.
+		 * Returns the prefix to identify search-related elements.
 		 * 
-		 * @return	{object}	setup data for Ajax/Request object
+		 * @return	{string}
 		 */
-		_ajaxSetup: function() {
-			return {
-				data: {
-					actionName: 'getSearchResultList',
-					className: 'wcf\\data\\media\\MediaAction',
-					interfaceName: 'wcf\\data\\ISearchAction'
-				}
-			};
-		},
-		
-		/**
-		 * Handles successful AJAX requests.
-		 * 
-		 * @param	{object}	data	response data
-		 */
-		_ajaxSuccess: function(data) {
-			this._mediaManager.setMedia(data.returnValues.media || { }, data.returnValues.template || '');
-		},
-		
-		/**
-		 * Cancels the search after clicking on the cancel search button.
-		 */
-		_cancelSearch: function() {
-			if (this._searchMode) {
-				this._searchMode = false;
-				
-				this._mediaManager.resetMedia();
-				this.resetSearch();
-			}
-		},
-		
-		/**
-		 * Handles the `[ENTER]` key to submit the form.
-		 * 
-		 * @param	{Event}		event		event object
-		 */
-		_keyPress: function(event) {
-			// 13 = [ENTER]
-			if (event.charCode === 13) {
-				event.preventDefault();
-				
-				var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
-				
-				// TODO: treshold option?
-				if (this._input.value.length >= 3) {
-					if (innerInfo) {
-						elHide(innerInfo);
-					}
-					
-					this._search();
-				}
-				else {
-					if (innerInfo) {
-						elShow(innerInfo);
-					}
-					else {
-						innerInfo = elCreate('p');
-						innerInfo.className = 'innerInfo';
-						innerInfo.textContent = Language.get('wcf.media.search.info.searchStringTreshold');
-						
-						DomUtil.insertAfter(innerInfo, this._input.parentNode);
-					}
-				}
-			}
-		},
-		
-		/**
-		 * Sends an AJAX request to fetch seach results.
-		 */
-		_search: function() {
-			this._searchMode = true;
-			
-			Ajax.api(this, {
-				parameters: {
-					fileType: this._fileType,
-					fileTypeFilters: this._mediaManager.getOption('fileTypeFilters'),
-					mode: this._mediaManager.getMode(),
-					searchString: this._input.value
-				}
-			});
+		_getIdPrefix: function() {
+			return 'media';
 		},
 		
 		/**
@@ -133,20 +70,33 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 		_selectFileType: function(event) {
 			this._fileType = elData(event.currentTarget, 'file-type');
 			
-			this._updateDropdownButtonLabel();
-			
-			this._search();
+			this._updateDropdownButtonLabel(event);
 		},
 		
 		/**
 		 * Updates the label of the dropdown button based on the currently selected file type.
 		 */
-		_updateDropdownButtonLabel: function() {
-			var dropdown = UiSimpleDropdown.getDropdown('mediaManagerSearch');
+		_updateDropdownButtonLabel: function(event) {
+			var dropdown = UiSimpleDropdown.getDropdown(this._getIdPrefix() + 'Search');
 			var buttonLabel = DomTraverse.childBySel(DomTraverse.childByClass(dropdown, 'dropdownToggle'), 'SPAN');
 			
 			if (this._fileType !== 'all') {
-				buttonLabel.textContent = DomTraverse.childBySel(event.currentTarget, 'SPAN').textContent;
+				var listItem;
+				if (event) {
+					listItem = event.currentTarget;
+				}
+				else {
+					for (var i = 0, length = this._fileTypes.length; i < length; i++) {
+						var _listItem = this._fileTypes[i];
+						
+						if (elData(_listItem, 'file-type') == this._fileType) {
+							listItem = _listItem;
+							break;
+						}
+					}
+				}
+				
+				buttonLabel.textContent = DomTraverse.childBySel(listItem, 'SPAN').textContent;
 			}
 			else {
 				buttonLabel.textContent = Language.get('wcf.media.search.filetype');
@@ -162,30 +112,6 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 				
 				listItem.classList[elData(listItem, 'file-type') === this._fileType ? 'add' : 'remove']('active');
 			}
-		},
-		
-		/**
-		 * Hides the media search.
-		 */
-		hideSearch: function() {
-			elHide(elById('mediaManagerSearch'));
-		},
-		
-		/**
-		 * Resets the media search.
-		 */
-		resetSearch: function() {
-			this._input.value = '';
-			this._fileType = 'all';
-			
-			this._updateDropdownButtonLabel();
-		},
-		
-		/**
-		 * Shows the media search.
-		 */
-		showSearch: function() {
-			elShow(elById('mediaManagerSearch'));
 		}
 	};
 	
