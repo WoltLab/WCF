@@ -489,7 +489,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.label.group.groupName.description"><![CDATA[The title is visible for every user who can interact with the label group.]]></item>
-		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[This optional description is visible in the administration control panel only and is intended to help telling groups with the same title apart.]]></item>
+		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[This optional description is visible in the Administration Control Panel only and is intended to help telling groups with the same title apart.]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -831,7 +831,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Show WoltLab news]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Shows current WoltLab news on the administration control panel’s start page]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Shows current WoltLab news on the Administration Control Panel’s start page]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
@@ -1059,7 +1059,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.search_engine"><![CDATA[Search Engine]]></item>
 		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[MySQL FULLTEXT (default)]]></item>
 		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Show recommended products]]></item>
-		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Shows recommended products from the WoltLab® Plugin-Store on the administration control panel’s start page.]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Shows recommended products from the WoltLab® Plugin-Store on the Administration Control Panel’s start page.]]></item>
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Payments]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Supported Payment Methods]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal Email Address]]></item>
@@ -2215,7 +2215,7 @@ Errors are:
 		<item name="wcf.global.error.exception"><![CDATA[<h2>What happened?</h2>
 		<p>An unrecoverable error occured while trying to handle your request. The internal error code is as follows: <code>{$exceptionID}</code></p>
 		<p>Please send this code to the administrator to help him fix the issue.</p>
-		<p>If you are the administrator you can view the complete error message at “ACP » Logs » Errors” einsehen. The error code itself is worthless for the support!</p>]]></item>
+		<p>If you are the administrator you can access the full error message inside your Administration Control Panel at “Logs » Errors”. The error code itself is worthless for the support!</p>]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
