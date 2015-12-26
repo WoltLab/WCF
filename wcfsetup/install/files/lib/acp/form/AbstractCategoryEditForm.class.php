@@ -26,7 +26,7 @@ use wcf\system\WCF;
 class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	/**
 	 * edited category
-	 * @var	\wcf\data\category\Category
+	 * @var	Category
 	 */
 	public $category = null;
 	
@@ -37,7 +37,12 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	public $categoryID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
+	 */
+	public $pageTitle = 'wcf.category.edit';
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -45,15 +50,15 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
 		$availableCategories = new CategoryNodeTree($this->objectType->objectType, 0, true);
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'category' => $this->category,
 			'availableCategories' => $availableCategories->getIterator()
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractCategoryAddForm::checkCategoryPermissions()
+	 * @inheritDoc
 	 */
 	protected function checkCategoryPermissions() {
 		if (!$this->objectType->getProcessor()->canEditCategory()) {
@@ -62,14 +67,14 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractCategoryAddForm::readCategories()
+	 * @inheritDoc
 	 */
 	protected function readCategories() {
-		$this->categoryNodeTree = new CategoryNodeTree($this->objectType->objectType, 0, true, array($this->category->categoryID));
+		$this->categoryNodeTree = new CategoryNodeTree($this->objectType->objectType, 0, true, [$this->category->categoryID]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -84,7 +89,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -103,7 +108,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -132,16 +137,16 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		}
 		
 		// update category
-		$this->objectAction = new CategoryAction(array($this->category), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new CategoryAction([$this->category], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'additionalData' => serialize($this->additionalData),
 				'description' => $description,
 				'isDisabled' => $this->isDisabled,
 				'parentCategoryID' => $this->parentCategoryID,
 				'showOrder' => $this->showOrder,
 				'title' => $title
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// update acl
@@ -160,7 +165,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractCategoryAddForm::validateParentCategory()
+	 * @inheritDoc
 	 */
 	protected function validateParentCategory() {
 		parent::validateParentCategory();
