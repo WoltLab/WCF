@@ -41,10 +41,10 @@
 }
 
 /* MAIN MENU */
-#mainMenu {
+.mainMenu {
 	flex: 0 50%;
 	
-	> ul {
+	> ol {
 		display: flex;
 		
 		> li {
