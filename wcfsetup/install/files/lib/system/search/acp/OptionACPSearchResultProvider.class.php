@@ -55,7 +55,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("optionName IN (?)", array($optionNames));
 		
-		$sql = "SELECT	optionName, categoryName, options, permissions
+		$sql = "SELECT	optionName, categoryName, options, permissions, hidden
 			FROM	wcf".WCF_N."_option
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
@@ -70,7 +70,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 			}
 			
 			// option is not accessible
-			if (!$this->validate($option)) {
+			if (!$this->validate($option) || $option->hidden) {
 				continue;
 			}
 			
