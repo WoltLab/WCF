@@ -112,7 +112,6 @@ class MenuEditForm extends MenuAddForm {
 			$this->title = $this->menu->title;
 			$this->position = $this->menu->getBox()->position;
 			$this->cssClassName = $this->menu->getBox()->cssClassName;
-			$this->cssClassName = $this->menu->getBox()->cssClassName;
 			$this->showOrder = $this->menu->getBox()->showOrder;
 			$this->visibleEverywhere = $this->menu->getBox()->visibleEverywhere;
 			$this->showHeader = $this->menu->getBox()->showHeader;
