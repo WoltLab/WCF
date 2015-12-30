@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\box\BoxAction;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuAction;
 use wcf\form\AbstractForm;
@@ -52,6 +53,15 @@ class MenuEditForm extends MenuAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function validatePosition() {
+		if ($this->menu->identifier != 'com.woltlab.wcf.MainMenu') {
+			parent::validatePosition();
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function save() {
 		AbstractForm::save();
 	
@@ -69,6 +79,19 @@ class MenuEditForm extends MenuAddForm {
 			'title' => $this->title
 		))));
 		$this->objectAction->executeAction();
+		
+		// update box
+		if ($this->menu->identifier != 'com.woltlab.wcf.MainMenu') {
+			$boxAction = new BoxAction(array($this->menu->getBox()->boxID), 'update', array('data' => array_merge($this->additionalFields, array(
+				'position' => $this->position,
+				'visibleEverywhere' => ($this->visibleEverywhere) ? 1 : 0,
+				'showHeader' => ($this->showHeader) ? 1 : 0,
+				'showOrder' => $this->showOrder,
+				'cssClassName' => $this->cssClassName
+			))));
+			$boxAction->executeAction();
+		}
+		
 		$this->saved();
 	
 		// show success
@@ -87,6 +110,12 @@ class MenuEditForm extends MenuAddForm {
 			I18nHandler::getInstance()->setOptions('title', 1, $this->menu->title, 'wcf.menu.menu\d+');
 			
 			$this->title = $this->menu->title;
+			$this->position = $this->menu->getBox()->position;
+			$this->cssClassName = $this->menu->getBox()->cssClassName;
+			$this->cssClassName = $this->menu->getBox()->cssClassName;
+			$this->showOrder = $this->menu->getBox()->showOrder;
+			$this->visibleEverywhere = $this->menu->getBox()->visibleEverywhere;
+			$this->showHeader = $this->menu->getBox()->showHeader;
 		}
 	}
 	

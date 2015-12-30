@@ -39,6 +39,11 @@
 			<page>com.woltlab.wcf.UserSearch</page>
 		</item>
 		
-		<!-- TODO: privacy policy / footer menu? -->
+		<item identifier="com.woltlab.wcf.PrivacyPolicy">
+			<menu>com.woltlab.wcf.FooterMenu</menu>
+			<title language="de"><![CDATA[Datenschutzerklärung]]></title>
+			<title language="en"><![CDATA[Privacy Policy]]></title>
+			<page>com.woltlab.wcf.PrivacyPolicy</page>
+		</item>
 	</import>
 </data>

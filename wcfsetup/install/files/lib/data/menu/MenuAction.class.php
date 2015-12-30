@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\menu;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\box\BoxAction;
+use wcf\data\box\BoxEditor;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
@@ -39,6 +41,30 @@ class MenuAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'update'];
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function create() {
+		// create menu
+		$menu = parent::create();
+		
+		// create box
+		$boxData = $this->parameters['boxData'];
+		$boxData['menuID'] = $menu->menuID;
+		$boxData['identifier'] = '';
+		$boxAction = new BoxAction([], 'create', ['data' => $boxData]);
+		$returnValues = $boxAction->executeAction();
+		
+		// set generic box identifier
+		$boxEditor = new BoxEditor($returnValues['returnValues']);
+		$boxEditor->update([
+			'identifier' => 'com.woltlab.wcf.genericMenuBox'.$boxEditor->boxID
+		]);
+		
+		// return new menu
+		return $menu;
+	}
 	
 	/**
 	 * @inheritDoc

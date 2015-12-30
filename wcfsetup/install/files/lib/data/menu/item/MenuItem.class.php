@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\menu\item;
 use wcf\data\DatabaseObject;
+use wcf\data\page\Page;
 use wcf\system\WCF;
 
 /**
@@ -26,6 +27,12 @@ class MenuItem extends DatabaseObject {
 	protected static $databaseTableIndexName = 'itemID';
 	
 	/**
+	 * page object
+	 * @var Page
+	 */
+	protected $page = null;
+	
+	/**
 	 * Returns true if the active user can delete this menu item.
 	 *
 	 * @return boolean
@@ -49,5 +56,34 @@ class MenuItem extends DatabaseObject {
 		}
 			
 		return false;
+	}
+	
+	/**
+	 * Returns the URL of this menu item.
+	 * 
+	 * @return      string
+	 */
+	public function getURL() {
+		if ($this->pageID) {
+			return $this->getPage()->getURL();
+		}
+		else {
+			return $this->externalURL;
+		}
+	}
+	
+	/**
+	 * Returns the page that is linked by this menu item.
+	 * 
+	 * @return      Page
+	 */
+	public function getPage() {
+		if ($this->page === null) {
+			if ($this->pageID) {
+				$this->page = new Page($this->pageID);
+			}
+		}
+		
+		return $this->page;
 	}
 }

@@ -1,11 +1,13 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\box\Box;
 use wcf\data\menu\MenuAction;
 use wcf\data\menu\MenuEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows the menu add form.
@@ -36,6 +38,36 @@ class MenuAddForm extends AbstractForm {
 	public $title = '';
 	
 	/**
+	 * box position
+	 * @var	string
+	 */
+	public $position = '';
+	
+	/**
+	 * show order
+	 * @var	integer
+	 */
+	public $showOrder = 0;
+	
+	/**
+	 * true if created box is visible everywhere
+	 * @var	boolean
+	 */
+	public $visibleEverywhere = 1;
+	
+	/**
+	 * css class name of created box
+	 * @var	string
+	 */
+	public $cssClassName = '';
+	
+	/**
+	 * true if box header is visible
+	 * @var	boolean
+	 */
+	public $showHeader = 1;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -53,6 +85,13 @@ class MenuAddForm extends AbstractForm {
 		I18nHandler::getInstance()->readValues();
 		
 		if (I18nHandler::getInstance()->isPlainValue('title')) $this->title = I18nHandler::getInstance()->getValue('title');
+		
+		$this->visibleEverywhere = $this->showOrder = 0;
+		if (isset($_POST['position'])) $this->position = $_POST['position'];
+		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
+		if (isset($_POST['visibleEverywhere'])) $this->visibleEverywhere = intval($_POST['visibleEverywhere']);
+		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
+		if (isset($_POST['showHeader'])) $this->showHeader = intval($_POST['showHeader']);
 	}
 	
 	/**
@@ -70,6 +109,20 @@ class MenuAddForm extends AbstractForm {
 				throw new UserInputException('title', 'multilingual');
 			}
 		}
+		
+		// validate box position
+		$this->validatePosition();
+	}
+	
+	/**
+	 * Validates box position.
+	 * 
+	 * @throws      UserInputException
+	 */
+	protected function validatePosition() {
+		if (!in_array($this->position, Box::$availablePositions)) {
+			throw new UserInputException('position');
+		}
 	}
 	
 	/**
@@ -83,12 +136,21 @@ class MenuAddForm extends AbstractForm {
 			'title' => $this->title,
 			'packageID' => 1,
 			'identifier' => ''
-		))));
+		)), 'boxData' => array(
+			'name' => $this->title,
+			'boxType' => 'menu',
+			'position' => $this->position,
+			'visibleEverywhere' => ($this->visibleEverywhere) ? 1 : 0,
+			'showHeader' => ($this->showHeader) ? 1 : 0,
+			'showOrder' => $this->showOrder,
+			'cssClassName' => $this->cssClassName,
+			'packageID' => 1
+		)));
 		$returnValues = $this->objectAction->executeAction();
 		// set generic identifier
 		$menuEditor = new MenuEditor($returnValues['returnValues']);
 		$menuEditor->update(array(
-			'identifier' => 'com.woltlab.wcf.generic'.$menuEditor->menuID
+			'identifier' => 'com.woltlab.wcf.genericMenu'.$menuEditor->menuID
 		));
 		// save i18n
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
@@ -122,7 +184,13 @@ class MenuAddForm extends AbstractForm {
 		
 		WCF::getTPL()->assign(array(
 			'action' => 'add',
-			'title' => 'title'
+			'title' => 'title',
+			'position' => $this->position,
+			'cssClassName' => $this->cssClassName,
+			'showOrder' => $this->showOrder,
+			'visibleEverywhere' => $this->visibleEverywhere,
+			'showHeader' => $this->showHeader,
+			'availablePositions' => Box::$availableMenuPositions
 		));
 	}
 }

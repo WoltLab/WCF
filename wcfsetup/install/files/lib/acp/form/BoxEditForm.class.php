@@ -47,6 +47,10 @@ class BoxEditForm extends BoxAddForm {
 		if (!$this->box->boxID) {
 			throw new IllegalLinkException();
 		}
+		if ($this->box->boxType == 'menu') {
+			// it's not allowed to edit menu boxes directly
+			throw new IllegalLinkException();
+		}
 		if ($this->box->isMultilingual) $this->isMultilingual = 1;
 	}
 	

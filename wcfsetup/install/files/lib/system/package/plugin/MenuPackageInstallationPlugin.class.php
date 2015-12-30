@@ -106,13 +106,11 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		if (!empty($data['elements']['box'])) {
 			$position = $data['elements']['box']['position'];
-			$visibleEverywhere = false;
 			
 			if ($identifier === 'com.woltlab.wcf.MainMenu') {
 				$position = 'mainMenu';
-				$visibleEverywhere = true;
 			}
-			else if (!in_array($position, ['bottom', 'contentBottom', 'contentTop', 'footer', 'footerBoxes', 'headerBoxes', 'hero', 'sidebarLeft', 'sidebarRight', 'top'])) {
+			else if (!in_array($position, Box::$availableMenuPositions)) {
 				throw new SystemException("Unknown box position '{$position}' for menu box '{$identifier}'");
 			}
 			
@@ -121,7 +119,8 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				'name' => $this->getI18nValues($data['elements']['title'], true),
 				'boxType' => 'menu',
 				'position' => $position,
-				'visibleEverywhere' => ($visibleEverywhere) ? 1 : 0,
+				'showHeader' => (!empty($data['elements']['box']['showheader']) ? 1 : 0),
+				'visibleEverywhere' => (!empty($data['elements']['box']['visibleeveryhwere']) ? 1 : 0),
 				'cssClassName' => (!empty($data['elements']['box']['cssclassname'])),
 				'originIsSystem' => 1,
 				'packageID' => $this->installation->getPackageID()

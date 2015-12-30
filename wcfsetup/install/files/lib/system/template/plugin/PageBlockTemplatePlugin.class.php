@@ -5,6 +5,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\template\TemplateEngine;
+use wcf\util\StringUtil;
 
 /**
  * Template block plugin which generates a link to a CMS page.
@@ -68,7 +69,12 @@ class PageBlockTemplatePlugin implements IBlockTemplatePlugin {
 			if ($language !== null) $languageID = $language->languageID;
 		}
 		
-		return LinkHandler::getInstance()->getCmsLink($pageID, $languageID);
+		$link = LinkHandler::getInstance()->getCmsLink($pageID, $languageID);
+		if (!empty($tagArgs['encode'])) {
+			return StringUtil::encodeHTML($link);
+		}
+		
+		return $link;
 	}
 	
 	/**

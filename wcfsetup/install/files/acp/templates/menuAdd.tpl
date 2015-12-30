@@ -42,6 +42,66 @@
 			</dd>
 		</dl>
 		
+		{if $action == 'add' || $menu->identifier != 'com.woltlab.wcf.MainMenu'}
+			<dl{if $errorField == 'position'} class="formError"{/if}>
+				<dt><label for="position">{lang}wcf.acp.box.position{/lang}</label></dt>
+				<dd>
+					<select name="position" id="position">
+						{foreach from=$availablePositions item=availablePosition}
+							<option value="{@$availablePosition}"{if $availablePosition == $position} selected="selected"{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+						{/foreach}
+					</select>
+					
+					{if $errorField == 'position'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.box.position.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt><label for="showOrder">{lang}wcf.acp.box.showOrder{/lang}</label></dt>
+				<dd>
+					<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0" />
+				</dd>
+			</dl>
+			
+			<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
+				<dt><label for="cssClassName">{lang}wcf.acp.box.cssClassName{/lang}</label></dt>
+				<dd>
+					<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long" />
+					{if $errorField == 'cssClassName'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.box.cssClassName.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" id="showHeader" name="showHeader" value="1" {if $showHeader}checked="checked" {/if}/> {lang}wcf.acp.box.showHeader{/lang}</label>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1" {if $visibleEverywhere}checked="checked" {/if}/> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
+				</dd>
+			</dl>
+		{/if}
+		
 		{event name='dataFields'}
 	</section>
 	

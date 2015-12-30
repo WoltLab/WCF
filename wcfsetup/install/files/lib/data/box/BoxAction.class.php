@@ -99,8 +99,6 @@ class BoxAction extends AbstractDatabaseObjectAction {
 				}
 			}
 		}
-		
-		return $box;
 	}
 	
 	/**

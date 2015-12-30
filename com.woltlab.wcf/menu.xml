@@ -11,5 +11,16 @@
 				<visibleeveryhwere>1</visibleeveryhwere>
 			</box>
 		</menu>
+		
+		<menu identifier="com.woltlab.wcf.FooterMenu">
+			<title language="de">Footer-Menü</title>
+			<title language="en">Footer Menu</title>
+			
+			<box>
+				<position>footer</position>
+				<showheader>0</showheader>
+				<visibleeveryhwere>1</visibleeveryhwere>
+			</box>
+		</menu>
 	</import>
 </data>

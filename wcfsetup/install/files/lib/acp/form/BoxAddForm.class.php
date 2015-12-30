@@ -257,7 +257,7 @@ class BoxAddForm extends AbstractForm {
 		// set generic box identifier
 		$boxEditor = new BoxEditor($returnValues['returnValues']);
 		$boxEditor->update([
-			'identifier' => 'com.woltlab.wcf.generic'.$boxEditor->boxID
+			'identifier' => 'com.woltlab.wcf.genericBox'.$boxEditor->boxID
 		]);
 		
 		// call saved event

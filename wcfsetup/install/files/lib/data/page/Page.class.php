@@ -2,6 +2,7 @@
 namespace wcf\data\page;
 use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -108,7 +109,18 @@ class Page extends DatabaseObject {
 	 * @return string
 	 */
 	public function getURL() {
-		// @todo
+		if ($this->controller) {
+			// todo
+			$controllerParts = explode('\\', $this->controller);
+			$controllerName = $controllerParts[count($controllerParts) - 1];
+			$controllerName = preg_replace('/(page|action|form)$/i', '', $controllerName);
+			return LinkHandler::getInstance()->getLink($controllerName, [
+				'application' => $controllerParts[0]
+			]);
+		}
+		else {
+			return LinkHandler::getInstance()->getCmsLink($this->pageID);
+		}	
 	}
 	
 	/**

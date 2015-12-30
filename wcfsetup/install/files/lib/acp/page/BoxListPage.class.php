@@ -38,4 +38,14 @@ class BoxListPage extends SortablePage {
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('boxID', 'name', 'boxType', 'position', 'showOrder');
+	
+	/**
+	 * @inheritdoc
+	 */
+	protected function initObjectList() {
+		parent::initObjectList();
+		
+		// hide menu boxes
+		$this->objectList->getConditionBuilder()->add('box.boxType <> ?', array('menu'));
+	}
 }

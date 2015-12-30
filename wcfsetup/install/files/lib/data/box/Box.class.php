@@ -54,6 +54,12 @@ class Box extends DatabaseObject {
 	public static $availablePositions = ['hero', 'headerBoxes', 'top', 'sidebarLeft', 'contentTop', 'sidebarRight', 'contentBottom', 'bottom', 'footerBoxes', 'footer'];
 	
 	/**
+	 * available menu positions
+	 * @var	string[]
+	 */
+	public static $availableMenuPositions = ['top', 'sidebarLeft', 'sidebarRight', 'bottom', 'footer'];
+	
+	/**
 	 * menu object
 	 * @var Menu
 	 */
@@ -177,22 +183,19 @@ class Box extends DatabaseObject {
 			return $this->getController()->hasContent();
 		}
 		else if ($this->boxType == 'menu') {
-			// TODO:
-			return false;
 			return $this->getMenu()->hasContent();
 		}
-		else {
-			$boxContent = $this->getBoxContent();
-			$content = '';
-			if ($this->isMultilingual) {
-				if (isset($boxContent[WCF::getLanguage()->languageID])) $content = $boxContent[WCF::getLanguage()->languageID]['content'];
-			}
-			else {
-				if (isset($boxContent[0])) $content = $boxContent[0]['content'];
-			}
-			
-			return !empty($content);
+		
+		$boxContent = $this->getBoxContent();
+		$content = '';
+		if ($this->isMultilingual) {
+			if (isset($boxContent[WCF::getLanguage()->languageID])) $content = $boxContent[WCF::getLanguage()->languageID]['content'];
 		}
+		else {
+			if (isset($boxContent[0])) $content = $boxContent[0]['content'];
+		}
+		
+		return !empty($content);
 	}
 	
 	public function getController() {
@@ -280,6 +283,22 @@ class Box extends DatabaseObject {
 			WHERE	name = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$name]);
+		
+		return $statement->fetchObject(Box::class);
+	}
+	
+	/**
+	 * Returns the box with the menu id.
+	 *
+	 * @param	int		$menuID
+	 * @return	Box
+	 */
+	public static function getBoxByMenuID($menuID) {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_box
+			WHERE	menuID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$menuID]);
 		
 		return $statement->fetchObject(Box::class);
 	}
