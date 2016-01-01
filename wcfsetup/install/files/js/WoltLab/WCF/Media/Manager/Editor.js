@@ -2,7 +2,7 @@
  * Provides the media manager dialog for selecting media for input elements.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Media/Manager/Editor
  */
@@ -25,7 +25,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 	};
 	Core.inherit(MediaManagerEditor, MediaManagerBase, {
 		/**
-		 * @see	WoltLab/WCF/Media/Manager/base#_addButtonEventListeners
+		 * @see	WoltLab/WCF/Media/Manager/Base#_addButtonEventListeners
 		 */
 		_addButtonEventListeners: function() {
 			MediaManagerEditor._super.prototype._addButtonEventListeners.call(this);
@@ -45,7 +45,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 		},
 		
 		/**
-		 * @see	WoltLab/WCF/Media/Manager/base#_click
+		 * @see	WoltLab/WCF/Media/Manager/Base#_click
 		 */
 		_click: function(event) {
 			this._activeButton = event.currentTarget;
