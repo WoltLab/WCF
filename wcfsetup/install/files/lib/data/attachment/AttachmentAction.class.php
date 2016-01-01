@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\attachment;
-use wcf\data\ISortableAction;
-use wcf\data\IUploadAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISortableAction;
+use wcf\data\IUploadAction;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;

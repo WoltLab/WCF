@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\box;
 use wcf\data\media\ViewableMedia;
-use wcf\data\DatabaseObject;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -284,7 +284,7 @@ class Box extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$name]);
 		
-		return $statement->fetchObject(Box::class);
+		return $statement->fetchObject(self::class);
 	}
 	
 	/**
@@ -300,6 +300,6 @@ class Box extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$menuID]);
 		
-		return $statement->fetchObject(Box::class);
+		return $statement->fetchObject(self::class);
 	}
 }

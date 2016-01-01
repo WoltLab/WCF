@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\menu;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\box\BoxAction;
 use wcf\data\box\BoxEditor;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
 
 /**

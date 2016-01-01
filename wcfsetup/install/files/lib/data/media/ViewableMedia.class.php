@@ -2,8 +2,8 @@
 namespace wcf\data\media;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\exception\SystemException;
-use wcf\util\StringUtil;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents a viewable madia file.

@@ -1,13 +1,13 @@
 <?php
 namespace wcf\system\upload;
-use wcf\system\WCF;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IFile;
 use wcf\data\IThumbnailFile;
-use wcf\util\FileUtil;
-use wcf\system\image\ImageHandler;
-use wcf\util\ExifUtil;
 use wcf\system\event\EventHandler;
+use wcf\system\image\ImageHandler;
+use wcf\system\WCF;
+use wcf\util\ExifUtil;
+use wcf\util\FileUtil;
 
 /**
  * Default implementation for saving uploaded files.

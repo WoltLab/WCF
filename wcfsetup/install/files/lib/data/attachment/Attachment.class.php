@@ -4,9 +4,9 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\data\IThumbnailFile;
 use wcf\system\request\IRouteController;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\system\request\LinkHandler;
 
 /**
  * Represents an attachment.

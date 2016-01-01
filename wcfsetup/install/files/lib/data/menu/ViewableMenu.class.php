@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\menu;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\menu\item\MenuItemNodeTree;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\WCF;
 
 class ViewableMenu extends DatabaseObjectDecorator {

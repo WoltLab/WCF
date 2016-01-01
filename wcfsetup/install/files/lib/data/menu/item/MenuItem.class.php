@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\menu\item;
-use wcf\data\DatabaseObject;
 use wcf\data\page\Page;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
