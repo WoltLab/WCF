@@ -2,20 +2,20 @@
  * Handles editing media files via dialog.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Media/Editor
  */
 define(
 	[
-		'Ajax',                       'Core',     'Dictionary', 'Dom/ChangeListener',
-		'Dom/Traverse',               'Language', 'Ui/Dialog',  'WoltLab/WCF/Language/Chooser',
-		'WoltLab/WCF/Language/Input', 'WoltLab/WCF/File/Util'
+		'Ajax',                         'Core',                       'Dictionary',          'Dom/ChangeListener',
+		'Dom/Traverse',                 'Language',                   'Ui/Dialog',           'Ui/Notification',
+		'WoltLab/WCF/Language/Chooser', 'WoltLab/WCF/Language/Input', 'WoltLab/WCF/File/Util'
 	],
 	function(
-		Ajax,                          Core,       Dictionary,   DomChangeListener,
-		DomTraverse,                   Language,   UiDialog,     LanguageChooser,
-		LanguageInput,                 FileUtil
+		Ajax,                            Core,                         Dictionary,            DomChangeListener,
+		DomTraverse,                     Language,                     UiDialog,              UiNotification,
+		LanguageChooser,                 LanguageInput,                FileUtil
 	)
 {
 	"use strict";
@@ -24,7 +24,15 @@ define(
 	 * @constructor
 	 */
 	function MediaEditor(callbackObject) {
-		// todo: validate callbackObject
+		if (typeof callbackObject !== 'object') {
+			throw new TypeError("Parameter 'callbackObject' has to be an object, " + typeof callbackObject + " given.");
+		}
+		if (typeof callbackObject._editorClose !== 'function') {
+			throw new TypeError("Callback object has no function '_editorClose'.");
+		}
+		if (typeof callbackObject._editorSuccess !== 'function') {
+			throw new TypeError("Callback object has no function '_editorSuccess'.");
+		}
 		
 		this._callbackObject = callbackObject;
 		this._media = null;
@@ -52,9 +60,7 @@ define(
 		 * @param	{object}	data	response data
 		 */
 		_ajaxSuccess: function(data) {
-			// TODO: check if there are validation errors?
-			
-			// TODO: success message
+			UiNotification.show();
 			
 			this._callbackObject._editorSuccess(this._media);
 			
