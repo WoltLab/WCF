@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Media/Manager/Select
  */
-define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Manager/Base'], function(Core, DomTraverse, Language, UiDialog, MediaManagerBase) {
+define(['Core', 'Dom/Traverse', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/WCF/Media/Manager/Base'], function(Core, DomTraverse, Language, ObjectMap, UiDialog, MediaManagerBase) {
 	"use strict";
 	
 	/**
@@ -17,6 +17,8 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 		
 		this._activeButton = null;
 		this._buttons = elByClass(this._options.buttonClass || 'jsMediaSelectButton');
+		this._storeElements = new ObjectMap();
+		
 		for (var i = 0, length = this._buttons.length; i < length; i++) {
 			var button = this._buttons[i];
 			
@@ -26,6 +28,8 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 				var storeElement = elById(store);
 				if (storeElement && storeElement.tagName === 'INPUT') {
 					this._buttons[i].addEventListener('click', this._click.bind(this));
+					
+					this._storeElements.set(button, storeElement);
 				}
 			}
 		}
@@ -71,10 +75,11 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 			if (display) {
 				var displayElement = elById(display);
 				if (displayElement) {
-					// TODO: add visual representation of the media file to display element
-					
 					if (media.isImage) {
 						displayElement.innerHTML = '<img src="' + media.smallThumbnailLink + '" alt="' + media.altText + '" />';
+					}
+					else {
+						// TODO: add visual representation of the non-image media file
 					}
 				}
 			}
@@ -90,7 +95,19 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 			
 			MediaManagerSelect._super.prototype._click.call(this, event);
 			
-			// TODO: highlight selected medium?
+			if (!this._mediaManagerMediaList) return;
+			
+			var storeElement = this._storeElements.get(this._activeButton);
+			var listItems = DomTraverse.childrenByTag(this._mediaManagerMediaList, 'LI'), listItem;
+			for (var i = 0, length = listItems.length; i < length; i++) {
+				listItem = listItems[i];
+				if (storeElement.value && storeElement.value == elData(listItem, 'object-id')) {
+					listItem.classList.add('jsSelected');
+				}
+				else {
+					listItem.classList.remove('jsSelected');
+				}
+			}
 		},
 		
 		/**

@@ -48,6 +48,24 @@
 			}
 		}
 		
+		&.jsSelected {
+			// @todo colors
+			> .mediaInformation,
+			> .buttonGroupNavigation {
+				background-color: fade-out(green, 10%);
+				color: white;
+				
+				a {
+					color: white;
+				}
+				
+				.icon {
+					color: white;
+					text-shadow: none;
+				}
+			}
+		}
+		
 		&.uploadFailed {
 			cursor: pointer;
 			
