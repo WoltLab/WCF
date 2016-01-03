@@ -1,18 +1,18 @@
 {if PACKAGE_ID}{assign var=_activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()}{/if}
-<nav id="mainMenu" class="mainMenu jsMobileNavigation" data-button-label="{lang}wcf.page.mainMenu{/lang}">
+<nav id="mainMenu" class="mainMenu">
 	{if PACKAGE_ID}
-		<ul>
+		<ol class="boxMenu">
 			{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
-				<li class="subMenuItems{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" data-menu-item="{$_sectionMenuItem->menuItem}">
+				<li class="boxMenuHasChildren{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" data-menu-item="{$_sectionMenuItem->menuItem}">
 					<a>{@$_sectionMenuItem}</a>
 					
 					{assign var=_menuItemCategories value=$__wcf->getACPMenu()->getMenuItems($_sectionMenuItem->menuItem)}
-					<ol class="wcfAcpMenu subMenu{if $_menuItemCategories|count > 3} doubleColumned {/if}">
+					<ol class="wcfAcpMenu boxMenuDepth1 subMenu{if $_menuItemCategories|count > 3} doubleColumned {/if}">
 						{foreach from=$_menuItemCategories item=_menuItemCategory}
 							<li>
 								<span>{@$_menuItemCategory}</span>
 								
-								<ol class="menuItemList">
+								<ol class="boxMenuDepth2 menuItemList">
 									{foreach from=$__wcf->getACPMenu()->getMenuItems($_menuItemCategory->menuItem) item=_menuItem}
 										{assign var=_subMenuItems value=$__wcf->getACPMenu()->getMenuItems($_menuItem->menuItem)}
 										
@@ -43,6 +43,6 @@
 					</ol>
 				</li>
 			{/foreach}
-		</ul>
+		</ol>
 	{/if}
 </nav>
