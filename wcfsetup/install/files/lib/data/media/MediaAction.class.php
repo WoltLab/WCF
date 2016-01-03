@@ -19,7 +19,7 @@ use wcf\util\FileUtil;
  * Executes madia file-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.media
@@ -61,14 +61,13 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		];
 		
 		if (!empty($mediaFiles)) {
-			// get attachment ids
-			$mediaIDs = $mediaToFileID = array();
+			$mediaIDs = $mediaToFileID = [];
 			foreach ($mediaFiles as $internalFileID => $media) {
 				$mediaIDs[] = $media->mediaID;
 				$mediaToFileID[$media->mediaID] = $internalFileID;
 			}
 			
-			// get attachments from database (check thumbnail status)
+			// fetch media objects from database
 			$mediaList = new MediaList();
 			$mediaList->setObjectIDs($mediaIDs);
 			$mediaList->readObjects();
@@ -81,11 +80,11 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		$files = $this->parameters['__files']->getFiles();
 		foreach ($files as $file) {
 			if ($file->getValidationErrorType()) {
-				$result['errors'][$file->getInternalFileID()] = array(
+				$result['errors'][$file->getInternalFileID()] = [
 					'filename' => $file->getFilename(),
 					'filesize' => $file->getFilesize(),
 					'errorType' => $file->getValidationErrorType()
-				);
+				];
 			}
 		}
 		
