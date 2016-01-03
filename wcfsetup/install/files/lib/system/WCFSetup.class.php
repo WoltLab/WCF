@@ -164,7 +164,7 @@ class WCFSetup extends WCF {
 	 */
 	protected static function getInstallationDirectories() {
 		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
-			if (!is_array($_REQUEST['directories'])) $_REQUEST['directories'] = [];
+			if (!isset($_REQUEST['directories']) || !is_array($_REQUEST['directories'])) $_REQUEST['directories'] = [];
 			$_REQUEST['directories']['wcf'] = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
 		}
 		
