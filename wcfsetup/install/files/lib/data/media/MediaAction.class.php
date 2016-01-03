@@ -264,7 +264,24 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			}
 		}
 		
-		// TODO: check data
+		$this->readInteger('languageID', true, 'data');
+		$this->readBoolean('isMultilingual', true, 'data');
+		
+		// languageID: convert zero to null
+		if (!$this->parameters['data']['languageID']) $this->parameters['data']['languageID'] = null;
+		
+		// isMultilingual: convert boolean to integer
+		$this->parameters['data']['isMultilingual'] = intval($this->parameters['data']['isMultilingual']);
+		
+		// if data is not multilingual, a language id has to be given
+		if (!$this->parameters['data']['isMultilingual'] && !$this->parameters['data']['languageID']) {
+			throw new UserInputException('languageID');
+		}
+		
+		// check language id
+		if ($this->parameters['data']['languageID'] && !LanguageFactory::getInstance()->getLanguage($this->parameters['data']['languageID'])) {
+			throw new UserInputException('languageID');
+		}
 	}
 	
 	/**

@@ -165,12 +165,16 @@ class MediaEditForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
+		if (!$this->isMultilingual && !$this->languageID) {
+			throw new UserInputException('languageID');
+		}
+		
 		if ($this->languageID && !LanguageFactory::getInstance()->getLanguage($this->languageID)) {
 			throw new UserInputException('languageID');
 		}
 		
 		foreach (['title', 'caption', 'altText'] as $i18nData) {
-			if (!I18nHandler::getInstance()->validateValue($i18nData, $this->isMultilingual? true : false, false)) {
+			if (!I18nHandler::getInstance()->validateValue($i18nData, $this->isMultilingual? true : false, true)) {
 				if ($this->isMultilingual) {
 					// in contrast to I18nHandler::validateValues(), we allow all fields to be empty
 					if (empty(ArrayUtil::trim(I18nHandler::getInstance()->getValues($i18nData)))) {
