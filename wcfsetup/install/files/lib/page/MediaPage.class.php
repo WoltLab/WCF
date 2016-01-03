@@ -66,6 +66,8 @@ class MediaPage extends AbstractPage {
 		'image/pjpeg'
 	];
 	
+	// TODO: remove the following line once method is implemented
+	// @codingStandardsIgnoreStart
 	/**
 	 * @inheritdoc
 	 */
@@ -74,6 +76,8 @@ class MediaPage extends AbstractPage {
 		
 		// TODO
 	}
+	// TODO: remove the following line once method is implemented
+	// @codingStandardsIgnoreEnd
 	
 	/**
 	 * @inheritdoc
