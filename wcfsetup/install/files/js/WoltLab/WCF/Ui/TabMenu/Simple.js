@@ -231,11 +231,25 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				newContent.classList.remove('hidden');
 			}
 			
+			var menu = tab.parentNode.parentNode;
+			
 			// set pointer position
-			var span = DomTraverse.childByTag(tab.parentNode.parentNode, 'SPAN');
+			var span = DomTraverse.childByTag(menu, 'SPAN');
+			
+			// make sure that the tab is (temporarily) visible so that offsetLeft has the proper value
+			var toggleHidden = false;
+			if (menu.classList.contains('menu') && menu.parentNode.classList.contains('hidden')) {
+				toggleHidden = true;
+				menu.parentNode.classList.remove('hidden');
+			}
+			
 			if (span !== null) {
 				span.style.setProperty('transform', 'translateX(' + tab.offsetLeft + 'px)');
 				span.style.setProperty('width', tab.clientWidth + 'px');
+			}
+			
+			if (toggleHidden) {
+				menu.parentNode.classList.add('hidden');
 			}
 			
 			if (!disableEvent) {

@@ -169,7 +169,7 @@
 					</nav>
 					
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="hidden">
+						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="tabMenuContent hidden">
 							{if $categoryLevel2[options]|count}
 								<fieldset>
 									<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>

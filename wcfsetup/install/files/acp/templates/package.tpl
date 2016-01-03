@@ -108,7 +108,7 @@
 			</nav>
 			
 			{hascontent}
-				<div id="dependencies-required" class="tabularBox tabularBoxTitle hidden">
+				<div id="dependencies-required" class="tabMenuContent tabularBox tabularBoxTitle hidden">
 					<header>
 						<h2>{lang}wcf.acp.package.dependencies.required{/lang}</h2>
 						<small>{lang}wcf.acp.package.dependencies.required.description{/lang}</small>
@@ -154,7 +154,7 @@
 			{/hascontent}
 			
 			{hascontent}
-				<div id="dependencies-dependent" class="tabularBox tabularBoxTitle hidden">
+				<div id="dependencies-dependent" class="tabMenuContent tabularBox tabularBoxTitle hidden">
 					<header>
 						<h2>{lang}wcf.acp.package.dependencies.dependent{/lang}</h2>
 						<small>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</small>
