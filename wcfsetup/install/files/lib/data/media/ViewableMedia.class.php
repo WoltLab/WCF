@@ -42,9 +42,11 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getElementTag($size) {
-		// todo: validate $size
 		if ($this->isImage && $this->tinyThumbnailType) {
-			return '<img src="'.$this->getThumbnailLink('tiny').'" alt="'.StringUtil::encodeHTML($this->altText).'" style="width: '.$size.'px; height: '.$size.'px;" />';
+			$tinyThumbnail = Media::getThumbnailSizes()['tiny'];
+			if ($size <= $tinyThumbnail['width'] && $size <= $tinyThumbnail['height']) {
+				return '<img src="' . $this->getThumbnailLink('tiny') . '" alt="' . StringUtil::encodeHTML($this->altText) . '" style="width: ' . $size . 'px; height: ' . $size . 'px;" />';
+			}
 		}
 		
 		return '<span class="icon icon'.$size.' '.FileUtil::getIconClassByMimeType($this->fileType).'"></span>';
