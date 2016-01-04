@@ -14,28 +14,28 @@ namespace wcf\data\menu\item;
  */
 class MenuItemNode implements \Countable, \RecursiveIterator {
 	/**
-	 * parent node
-	 * @var	MenuItemNode
-	 */
-	protected $parentNode = null;
-	
-	/**
 	 * children of this node
 	 * @var	MenuItemNode[]
 	 */
-	protected $children = array();
-	
-	/**
-	 * menu item object
-	 * @var	MenuItem
-	 */
-	protected $menuItem = null;
+	protected $children = [];
 	
 	/**
 	 * node depth
 	 * @var	integer
 	 */
 	protected $depth = 0;
+	
+	/**
+	 * menu item object
+	 * @var	MenuItem
+	 */
+	protected $menuItem;
+	
+	/**
+	 * parent node
+	 * @var	MenuItemNode
+	 */
+	protected $parentNode;
 	
 	/**
 	 * iterator position

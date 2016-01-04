@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes CMS pages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
@@ -147,6 +147,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		return [
 			'content' => ($isStatic) ? $data['elements']['content'] : [],
 			'controller' => ($isStatic) ? '' : $data['elements']['controller'],
+			'handler' => (!$isStatic && !empty($data['elements']['handler'])) ? $data['elements']['handler'] : '',
 			'controllerCustomURL' => $customUrl,
 			'identifier' => $data['attributes']['identifier'],
 			'isMultilingual' => ($isStatic) ? 1 : 0,
@@ -165,15 +166,15 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	identifier = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['identifier'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**
@@ -190,7 +191,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				$object = parent::import($row, ['controller' => $data['controller']]);
 			}
 			else {
-				$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+				$baseClass = call_user_func([$this->className, 'getBaseClass']);
 				$object = new $baseClass(null, $row);
 			}
 		}

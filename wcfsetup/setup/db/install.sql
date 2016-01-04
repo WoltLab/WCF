@@ -911,6 +911,7 @@ CREATE TABLE wcf1_page (
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	packageID INT(10) NOT NULL,
 	controller VARCHAR(255) NOT NULL DEFAULT '',
+	handler VARCHAR(255) NOT NULL DEFAULT '',
 	controllerCustomURL VARCHAR(255) NOT NULL DEFAULT '',
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0
 );
