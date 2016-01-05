@@ -263,7 +263,7 @@ namespace wcf\functions\exception {
 									return max($carry, mb_strlen($item['file'].$item['line']));
 								}, 0) + 3;
 								for ($i = 0, $max = count($trace); $i < $max; $i++) {
-									echo '#'.$i.' '.str_pad(StringUtil::encodeHTML($trace[$i]['file']).' ('.$trace[$i]['line'].')', $pathLength, ' ', STR_PAD_RIGHT).':';
+									echo str_pad('#'.$i, strlen($max - 1) + 1, ' ', STR_PAD_RIGHT).' '.str_pad(StringUtil::encodeHTML($trace[$i]['file']).' ('.$trace[$i]['line'].')', $pathLength, ' ', STR_PAD_RIGHT).':';
 									echo ' '.$trace[$i]['class'].$trace[$i]['type'].$trace[$i]['function'].'(';
 									echo implode(', ', array_map(function ($item) {
 										switch (gettype($item)) {
