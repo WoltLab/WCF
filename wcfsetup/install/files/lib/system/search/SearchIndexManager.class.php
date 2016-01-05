@@ -156,11 +156,10 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	/**
 	 * Returns the database table name for the object type's search index.
 	 * 
-	 * @param	mixed				$objectType
-	 * @param	\wcf\data\package\Package	$package
+	 * @param	mixed		$objectType
 	 * @return	string
 	 */
-	public static function getTableName($objectType, $package = null) {
+	public static function getTableName($objectType) {
 		if (is_string($objectType)) {
 			$objectType = self::getInstance()->getObjectType($objectType);
 		}
