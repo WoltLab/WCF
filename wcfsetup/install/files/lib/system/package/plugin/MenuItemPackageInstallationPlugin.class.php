@@ -127,7 +127,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			$pageID = $row['pageID'];
 		}
 		
-		$externalURL = (!empty($data['elements']['externalurl'])) ? $data['elements']['externalurl'] : '';
+		$externalURL = (!empty($data['elements']['externalURL'])) ? $data['elements']['externalURL'] : '';
 		
 		if ($pageID === null && empty($externalURL)) {
 			throw new SystemException("The menu item '" . $data['attributes']['identifier'] . "' must either have an associated page or an external url set.");

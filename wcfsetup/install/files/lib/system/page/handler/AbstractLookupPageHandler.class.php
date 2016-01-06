@@ -16,11 +16,4 @@ namespace wcf\system\page\handler;
  * @category	Community Framework
  * @since	2.2
  */
-abstract class AbstractLookupPageHandler implements ILookupPageHandler {
-	/**
-	 * @inheritDoc
-	 */
-	public function lookup($searchString) {
-		return [];
-	}
-}
+abstract class AbstractLookupPageHandler extends AbstractMenuPageHandler implements ILookupPageHandler {}

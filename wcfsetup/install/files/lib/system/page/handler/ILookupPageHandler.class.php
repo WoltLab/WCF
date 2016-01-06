@@ -15,6 +15,14 @@ namespace wcf\system\page\handler;
  */
 interface ILookupPageHandler extends IMenuPageHandler {
 	/**
+	 * Returns the link for a page with an object id.
+	 * 
+	 * @param       integer         $objectID       page object id
+	 * @return      string          page url
+	 */
+	public function getLink($objectID);
+	
+	/**
 	 * Performs a search for pages using a query string, returning an array containing
 	 * an `objectID => title` relation.
 	 * 

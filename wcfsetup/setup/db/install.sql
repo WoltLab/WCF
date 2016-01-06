@@ -601,6 +601,7 @@ CREATE TABLE wcf1_menu_item (
 	identifier VARCHAR(255) NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	pageID INT(10),
+	pageObjectID INT(10) NOT NULL DEFAULT 0,
 	externalURL VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
@@ -913,6 +914,7 @@ CREATE TABLE wcf1_page (
 	controller VARCHAR(255) NOT NULL DEFAULT '',
 	handler VARCHAR(255) NOT NULL DEFAULT '',
 	controllerCustomURL VARCHAR(255) NOT NULL DEFAULT '',
+	requireObjectID TINYINT(1) NOT NULL DEFAULT 0,
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0
 );
 

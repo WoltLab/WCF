@@ -7,9 +7,9 @@
 			
 			<box>
 				<position>mainMenu</position>
-				<cssclassname>mainMenu</cssclassname>
-				<showheader>0</showheader>
-				<visibleeveryhwere>1</visibleeveryhwere>
+				<cssClassName>mainMenu</cssClassName>
+				<showHeader>0</showHeader>
+				<visibleEveryhwere>1</visibleEveryhwere>
 			</box>
 		</menu>
 		
@@ -19,8 +19,8 @@
 			
 			<box>
 				<position>footer</position>
-				<showheader>0</showheader>
-				<visibleeveryhwere>1</visibleeveryhwere>
+				<showHeader>0</showHeader>
+				<visibleEveryhwere>1</visibleEveryhwere>
 			</box>
 		</menu>
 	</import>
