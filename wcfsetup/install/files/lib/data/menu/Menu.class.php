@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\menu;
 use wcf\data\box\Box;
-use wcf\data\DatabaseObject;
 use wcf\data\menu\item\MenuItemNodeTree;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
@@ -31,13 +31,13 @@ class Menu extends DatabaseObject {
 	 * menu item node tree
 	 * @var MenuItemNodeTree
 	 */
-	protected $menuItemNodeTree = null;
+	protected $menuItemNodeTree;
 	
 	/**
 	 * box object
 	 * @var Box
 	 */
-	protected $box = null;
+	protected $box;
 	
 	/**
 	 * Returns true if the active user can delete this menu.
