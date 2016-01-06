@@ -242,9 +242,7 @@ class WCF {
 		
 		@header('HTTP/1.1 503 Service Unavailable');
 		try {
-			// @codingStandardsIgnoreStart
 			\wcf\functions\exception\printThrowable($e);
-			// @codingStandardsIgnoreEnd
 		}
 		catch (\Throwable $e2) {
 			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
