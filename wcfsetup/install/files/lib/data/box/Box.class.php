@@ -164,7 +164,7 @@ class Box extends DatabaseObject {
 	 * 
 	 * @return	string
 	 */
-	public function __toString() {
+	public function render() {
 		if (!$this->hasContent()) return ''; 
 		
 		WCF::getTPL()->assign([
