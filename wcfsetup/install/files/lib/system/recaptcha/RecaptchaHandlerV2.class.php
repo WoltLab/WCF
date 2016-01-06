@@ -44,9 +44,9 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 				throw new UserInputException('recaptchaString', 'false');
 			}
 		}
-		catch (SystemException $e) {
+		catch (\Exception $e) {
 			// log error, but accept captcha
-			$e->getExceptionID();
+			\wcf\functions\exception\logThrowable($e);
 		}
 		
 		WCF::getSession()->register('recaptchaDone', true);
