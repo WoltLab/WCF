@@ -92,6 +92,18 @@ class BackgroundQueueHandler extends SingletonFactory {
 			SessionHandler::getInstance()->changeUser(new User(null), true);
 			$job->perform();
 		}
+		catch (\Throwable $e) {
+			// gotta catch 'em all
+			$job->fail();
+			
+			if ($job->getFailures() <= $job::MAX_FAILURES) {
+				$this->enqueueIn($job, $job->retryAfter());
+			}
+			else {
+				// job failed too often: log
+				\wcf\functions\exception\logThrowable($e);
+			}
+		}
 		catch (\Exception $e) {
 			// gotta catch 'em all
 			$job->fail();
@@ -167,6 +179,10 @@ class BackgroundQueueHandler extends SingletonFactory {
 			if ($job) {
 				$this->performJob($job);
 			}
+		}
+		catch (\Throwable $e) {
+			// job is completely broken: log
+			\wcf\functions\exception\logThrowable($e);
 		}
 		catch (\Exception $e) {
 			// job is completely broken: log
