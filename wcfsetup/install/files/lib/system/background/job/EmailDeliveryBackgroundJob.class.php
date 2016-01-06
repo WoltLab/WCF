@@ -76,7 +76,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 		}
 		catch (PermanentFailure $e) {
 			// no need for retrying. Eat Exception and log the error.
-			$e->getExceptionID();
+			\wcf\functions\exception\logThrowable($e);
 		}
 	}
 }

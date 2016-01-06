@@ -101,7 +101,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 			}
 			else {
 				// job failed too often: log
-				if ($e instanceof LoggedException) $e->getExceptionID();
+				\wcf\functions\exception\logThrowable($e);
 			}
 		}
 		finally {
@@ -170,7 +170,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 		}
 		catch (\Exception $e) {
 			// job is completely broken: log
-			if ($e instanceof LoggedException) $e->getExceptionID();
+			\wcf\functions\exception\logThrowable($e);
 		}
 		finally {
 			// remove entry of processed job
