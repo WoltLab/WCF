@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\background;
+use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\exception\LoggedException;
 use wcf\system\exception\SystemException;
@@ -85,7 +86,10 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * @param	\wcf\system\background\job\AbstractBackgroundJob	$job	The job to perform.
 	 */
 	public function performJob(AbstractBackgroundJob $job) {
+		$user = WCF::getUser();
+		
 		try {
+			SessionHandler::getInstance()->changeUser(new User(null), true);
 			$job->perform();
 		}
 		catch (\Exception $e) {
@@ -99,6 +103,9 @@ class BackgroundQueueHandler extends SingletonFactory {
 				// job failed too often: log
 				if ($e instanceof LoggedException) $e->getExceptionID();
 			}
+		}
+		finally {
+			SessionHandler::getInstance()->changeUser($user, true);
 		}
 	}
 	
