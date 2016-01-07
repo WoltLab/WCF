@@ -10,11 +10,14 @@ select,
 textarea {
 	background-color: $wcfInputBackground;
 	border: 1px solid $wcfInputBorder;
-	border-radius: 0;
-	border-width: 0 0 1px 0;
 	color: $wcfInputText;
 	outline: none;
-	padding: 4px;
+	padding: 4px 8px;
+	
+	// input elements do not inherit font family, size and line-height from body
+	font-family: $wcfFontFamily;
+	@extend .wcfFontDefault;
+	@extend .wcfLineHeight;
 	
 	&:focus,
 	&:hover {
@@ -223,7 +226,7 @@ dl {
 	text-align: center;
 	
 	&:not(:first-child) {
-		margin-top: 20px;
+		margin-top: 30px;
 	}
 	
 	> :not(:first-child) {

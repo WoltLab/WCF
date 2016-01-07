@@ -45,7 +45,7 @@ class Box extends DatabaseObject {
 	 * available box types
 	 * @var	string[]
 	 */
-	public static $availableBoxTypes = ['text', 'html', 'system', 'menu'];
+	public static $availableBoxTypes = ['text', 'html', 'system'];
 	
 	/**
 	 * available box positions

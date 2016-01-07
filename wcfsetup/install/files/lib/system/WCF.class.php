@@ -608,6 +608,15 @@ class WCF {
 	}
 	
 	/**
+	 * Returns true if current application (WCF) is treated as active and was invoked directly.
+	 *
+	 * @return	boolean
+	 */
+	public function isActiveApplication() {
+		return (ApplicationHandler::getInstance()->getActiveApplication()->packageID == 1);
+	}
+	
+	/**
 	 * Changes the active language.
 	 * 
 	 * @param	integer		$languageID

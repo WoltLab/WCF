@@ -15,8 +15,8 @@
 	</script>
 {/if}
 
-<header class="boxHeadline">
-	<h1>{if $action == 'add'}{if $isMultilingual}{lang}wcf.acp.box.addMultilingual{/lang}{else}{lang}wcf.acp.box.add{/lang}{/if}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{if $action == 'add'}{if $isMultilingual}{lang}wcf.acp.box.addMultilingual{/lang}{else}{lang}wcf.acp.box.add{/lang}{/if}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
 </header>
 
 {include file='formError'}
@@ -36,8 +36,8 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">
-	<section class="marginTop">
-		<h1>{lang}wcf.global.form.data{/lang}</h1>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.form.data{/lang}</h2>
 		
 		<dl{if $errorField == 'name'} class="formError"{/if}>
 			<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
@@ -154,8 +154,8 @@
 	</section>
 	
 	{if !$isMultilingual}
-		<fieldset>
-			<legend>content</legend>
+		<section class="section">
+			<h2 class="sectionTitle">content</h2>
 			
 			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 				<dl{if $errorField == 'image'} class="formError"{/if}>
@@ -213,7 +213,7 @@
 					{/if}
 				</dd>
 			</dl>
-		</fieldset>
+		</section>
 	{else}
 		<div class="tabMenuContainer">
 			<nav class="tabMenu">

@@ -44,7 +44,7 @@
 }
 
 .dialogContainer {
-	border: 1px solid rgb(52, 152, 219);
+	border: 1px solid $wcfContentBorder;
 	box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
 	max-height: 80%;
 	max-width: 80%;

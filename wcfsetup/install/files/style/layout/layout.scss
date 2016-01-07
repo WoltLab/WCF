@@ -4,8 +4,8 @@
 
 html, body {
 	height: 100%;
-	line-height: 1.61803399;
 	
+	@extend .wcfLineHeight;
 	@extend .wcfFontDefault;
 }
 
@@ -17,8 +17,9 @@ body {
 
 a {
 	cursor: pointer;
+	text-decoration: none;
 	
-	&:not(:hover) {
+	&:hover {
 		text-decoration: none;
 	}
 }
@@ -48,7 +49,6 @@ a {
 	
 	a {
 		color: $wcfContentLink;
-		text-decoration: none;
 		
 		&:hover {
 			color: $wcfContentLinkActive;
@@ -73,43 +73,7 @@ a {
 }
 
 /* CONTENT AREA */
-.boxHeadline {
-	border-bottom: 1px solid $wcfContentBorderInner;
-	color: $wcfContentHeadlineText;
-	margin-bottom: 30px;
-	padding-bottom: 10px;
-	
-	> h1 {
-		@extend .wcfFontTitle;
-	}
-	
-	a {
-		color: $wcfContentHeadlineLink;
-		
-		&:hover {
-			color: $wcfContentHeadlineLinkActive;
-		}
-	}
-	
-	&.labeledHeadline {
-		font-size: 0;
-		
-		> h1,
-		> h2 {
-			display: inline-block;
-			margin-right: 10px;
-		}
-		
-		> ul {
-			display: inline-block;
-			font-size: 1rem;
-			
-			&:not(:empty) {
-				margin-right: 10px;
-			}
-		}
-	}
-}
+
 
 .containerHeadline {
 	> h3 {

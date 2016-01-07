@@ -5,21 +5,27 @@
 
 {event name='settings'}
 
-<div id="search" class="searchBar" data-disable-auto-focus="true">
-	<form method="post" action="{@$__searchFormLink}" class="dropdown">
-		<input type="search" name="q" id="pageHeaderSearch" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="{if $query|isset}{$query}{/if}" class="dropdownToggle" data-toggle="search" />
-		
-		<ul class="dropdownMenu">
-			{hascontent}
-				<li class="dropdownText">
-					{content}
-						{@$__searchDropdownOptions}
-					{/content}
-				</li>
-				<li class="dropdownDivider"></li>
-			{/hascontent}
-			<li><a href="{@$__searchFormLink}">{lang}wcf.search.extended{/lang}</a></li>
-		</ul>
+<div id="pageHeaderSearch" class="pageHeaderSearch" data-disable-auto-focus="true">
+	<form method="post" action="{@$__searchFormLink}">
+		<div class="pageHeaderSearchInputContainer dropdown">
+			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput dropdownToggle" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="{if $query|isset}{$query}{/if}" data-toggle="search" />
+			
+			<ul class="dropdownMenu">
+				{hascontent}
+					<li class="dropdownText">
+						{content}
+							{@$__searchDropdownOptions}
+						{/content}
+					</li>
+					<li class="dropdownDivider"></li>
+				{/hascontent}
+				<li><a href="{@$__searchFormLink}">{lang}wcf.search.extended{/lang}</a></li>
+			</ul>
+			
+			<button class="pageHeaderSearchInputButton" type="submit">
+				<span class="icon icon16 pointer fa-search" title="{lang}wcf.global.search{/lang}"></span>
+			</button>
+		</div>
 		
 		{@$__searchHiddenInputFields}
 		{@SECURITY_TOKEN_INPUT_TAG}
@@ -30,7 +36,7 @@
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
-			new WCF.Search.Message.SearchArea($('#search'));
+			new WCF.Search.Message.SearchArea($('#pageHeaderSearch'));
 		});
 		//]]>
 	</script>

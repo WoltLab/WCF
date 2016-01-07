@@ -84,12 +84,20 @@
 	font-weight: 300;
 }
 
+.wcfLineHeight {
+	line-height: 1.61803399;
+}
+
 small {
 	@extend .wcfFontSmall;
 }
 
 strong {
 	@extend .wcfFontBold;
+}
+
+img {
+	vertical-align: middle;
 }
 
 .elementPointer {
@@ -146,7 +154,7 @@ ol.nativeList {
 /* simulate native HTML styles for certain elements */
 .htmlContent {
 	p {
-		margin: 1em 0;
+		margin: 1.5em 0;
 	}
 	
 	h1 {
@@ -158,8 +166,7 @@ ol.nativeList {
 	}
 	
 	h1, h2, h3, h4, h5, h6 {
-		font-weight: bold;
-		margin: 0.5em 0;
+		margin: 1em 0;
 	}
 	
 	ul, ol {

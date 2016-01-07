@@ -36,7 +36,7 @@
 		}
 	}
 	
-	#mainMenu {
+	.mainMenu {
 		flex: 1 auto;
 		order: 2;
 		margin: 0 20px;
@@ -48,7 +48,7 @@
 		margin-right: 10px;
 	}
 	
-	#search {
+	#pageHeaderSearch {
 		flex: 0 auto;
 		order: 4;
 	}

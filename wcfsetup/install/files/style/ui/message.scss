@@ -39,6 +39,22 @@
 	.dataList {
 		@extend .wcfFontSmall;
 	}
+	
+	.userAvatar {
+		display: inline-block;
+		position: relative;
+		
+		> a {
+			display: inline-block;
+		}
+	}
+	
+	.badgeOnline {
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		bottom: 0;
+	}
 }
 
 .messageAuthor + * {

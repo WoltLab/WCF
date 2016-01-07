@@ -1,65 +1,96 @@
+/* style for content area */
 .content {
-	fieldset > legend {
-		float: left;
-		width: 100%;
+	/* content header */
+	.contentHeader,
+	.boxHeadline { // deprecated
+		border-bottom: 1px solid $wcfContentBorderInner;
+		color: $wcfContentHeadlineText; // todo: rename variable
+		margin-bottom: 30px;
+		padding-bottom: 10px;
 		
-		&+ * {
-			clear: left;
+		.contentTitle,
+		> h1 { // deprecated
+			@extend .wcfFontTitle;
 		}
-	}
-	
-	fieldset > legend,
-	section > h1.subHeadline {
-		@extend .wcfFontHeadline;
-		
-		border-left: 5px solid $wcfContentBorderInner;
-		color: $wcfContentHeadlineText;
-		font-weight: 400;
-		margin-bottom: 20px;
-		padding-left: 10px;
 		
 		a {
-			color: $wcfContentHeadlineLink;
+			color: $wcfContentHeadlineLink; // todo: rename variable
 			
 			&:hover {
-				color: $wcfContentHeadlineLinkActive;
+				color: $wcfContentHeadlineLinkActive; // todo: rename variable
 			}
 		}
 	}
 	
-	.container {
-		fieldset {
-			&:not(:first-child) {
-				margin-top: 20px;
+	/* todo
+	.boxHeadline {
+		&.labeledHeadline {
+			font-size: 0;
+			
+			> h1,
+			> h2 {
+				display: inline-block;
+				margin-right: 10px;
 			}
 			
-			> legend {
-				// TODO: border-bottom: 1px solid $wcfContentBorder;
-				padding-bottom: 5px;
+			> ul {
+				display: inline-block;
+				font-size: 1rem;
+				
+				&:not(:empty) {
+					margin-right: 10px;
+				}
 			}
 		}
+	}*/
+	
+	/* content sections */
+	.section {
+		margin-top: 30px;
 		
-		section {
-			&:not(:first-child) {
-				margin-top: 20px;
-			}
+		> .sectionTitle {
+			border-bottom: 1px solid $wcfContentBorderInner;
+			color: $wcfContentHeadlineText; // todo: rename variable
+			margin-bottom: 20px;
+			padding-bottom: 10px;
 			
-			> h1 {
-				// TODO: border-bottom: 1px solid $wcfContentBorder;
-				padding-bottom: 5px;
+			@extend .wcfFontHeadline;
+			
+			a {
+				color: $wcfContentHeadlineLink; // todo: rename variable
+				
+				&:hover {
+					color: $wcfContentHeadlineLinkActive; // todo: rename variable
+				}
 			}
 		}
 	}
 	
-	label {
-		display: block;
+	/* fieldset styling (old sections / deprecated) */
+	fieldset {
+		margin-top: 30px;
 		
-		&.selectDropdown {
-			display: inline;
-		}
-		
-		&:not(:first-child) {
-			margin-top: 5px;
+		> legend {
+			border-bottom: 1px solid $wcfContentBorderInner;
+			color: $wcfContentHeadlineText; // todo: rename variable
+			float: left;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			width: 100%;
+			
+			@extend .wcfFontHeadline;
+			
+			a {
+				color: $wcfContentHeadlineLink; // todo: rename variable
+				
+				&:hover {
+					color: $wcfContentHeadlineLinkActive; // todo: rename variable
+				}
+			}
+			
+			&+ * {
+				clear: left;
+			}
 		}
 	}
 }

@@ -180,6 +180,31 @@
 		&:not(:first-child) {
 			margin-top: 20px;
 		}
+		
+		&.boxAlternative {
+			background-color: transparent;
+			border: 1px solid $wcfContentBorderInner;
+		}
+		
+		&.boxError {
+			background-color: $wcfStatusErrorBackground;
+			color: $wcfStatusErrorText;
+		}
+		
+		&.boxInfo {
+			background-color: $wcfStatusInfoBackground;
+			color: $wcfStatusInfoText;
+		}
+		
+		&.boxSuccess {
+			background-color: $wcfStatusSuccessBackground;
+			color: $wcfStatusSuccessText;
+		}
+		
+		&.boxWarning {
+			background-color: $wcfStatusWarningBackground;
+			color: $wcfStatusWarningText;
+		}
 	}
 	
 	.boxWithImage {

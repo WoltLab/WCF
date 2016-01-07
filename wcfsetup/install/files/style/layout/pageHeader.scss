@@ -190,24 +190,73 @@
 }
 
 /* SEARCH AREA */
-#search {
+.pageHeaderSearch {
 	flex: 0 50%;
 	text-align: right;
-	
-	> form {
-		display: inline-block;
-	}
 }
 
-#pageHeaderSearch {
-	background-color: $wcfHeaderSearchBoxBackground;
-	border-width: 0;
-	color: $wcfHeaderSearchBoxText;
-	padding: 5px 10px;
+.pageHeaderSearchInputContainer {
+	display: inline-block;
+	position: relative;
 	
-	&:focus,
 	&:hover {
-		background-color: $wcfHeaderSearchBoxBackgroundActive;
-		color: $wcfHeaderSearchBoxTextActive;
+		.pageHeaderSearchInput {
+			background-color: $wcfHeaderSearchBoxBackgroundActive;
+			border-color: $wcfHeaderSearchBoxBorderActive;
+			color: $wcfHeaderSearchBoxTextActive;
+		}
+		
+		.pageHeaderSearchInputButton > .icon {
+			color: $wcfHeaderSearchBoxTextActive;
+		}
+	}
+	
+	.pageHeaderSearchInput {
+		background-color: $wcfHeaderSearchBoxBackground;
+		border-color: $wcfHeaderSearchBoxBorder;
+		color: $wcfHeaderSearchBoxText;
+		padding-right: 30px;
+		
+		&:focus {
+			background-color: $wcfHeaderSearchBoxBackgroundActive;
+			border-color: $wcfHeaderSearchBoxBorderActive;
+			color: $wcfHeaderSearchBoxTextActive;
+			
+			~ .pageHeaderSearchInputButton > .icon {
+				color: $wcfHeaderSearchBoxTextActive;
+			}
+		}
+		
+		/* set placeholder color */
+		&::-webkit-input-placeholder { /* WebKit browsers */
+			color: $wcfHeaderSearchBoxPlaceholderText;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $wcfHeaderSearchBoxPlaceholderText;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $wcfHeaderSearchBoxPlaceholderText;
+		}
+				
+		/* remove broken cancel-button (webkit) */
+		&::-webkit-search-cancel-button {
+			display:none;
+		}
+	}
+	
+	.pageHeaderSearchInputButton {
+		background: none;
+		border: 0 none;
+		height: 20px;
+		margin: -10px 5px 0 0;
+		padding: 0;
+		position: absolute;
+		right: 0;
+		top: 50%;
+		width: 20px;
+		
+		> .icon {
+			color: $wcfHeaderSearchBoxText;
+		}
 	}
 }

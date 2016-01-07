@@ -13,20 +13,22 @@
 {include file='header'}
 
 {if $page->isLandingPage}
-	<header class="boxHeadline">
-		<h1>{PAGE_TITLE|language}</h1>
+	<header class="contentHeader">
+		<h1 class="contentTitle">{PAGE_TITLE|language}</h1>
 		{hascontent}<p>{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
 	</header>
 {else}
-	<header class="boxHeadline">
-		<h1>{$content[title]}</h1>
-	</header>
+	{if $content[title]}
+		<header class="contentHeader">
+			<h1 class="contentTitle">{$content[title]}</h1>
+		</header>
+	{/if}	
 {/if}
 
 {include file='userNotice'}
 
-<div class="contentNavigation">
-	{hascontent}
+{hascontent}
+	<div class="contentNavigation">
 		<nav>
 			<ul>
 				{content}
@@ -34,15 +36,17 @@
 				{/content}
 			</ul>
 		</nav>
-	{/hascontent}
-</div>
+	</div>
+{/hascontent}
 
-<section class="cmsContent htmlContent">
-	{@$content[content]}
-</section>
+{if $content[content]}
+	<section class="section cmsContent htmlContent">
+		{@$content[content]}
+	</section>
+{/if}
 
-<div class="contentNavigation">
-	{hascontent}
+{hascontent}
+	<div class="contentNavigation">
 		<nav>
 			<ul>
 				{content}
@@ -50,8 +54,8 @@
 				{/content}
 			</ul>
 		</nav>
-	{/hascontent}
-</div>
+	</div>
+{/hascontent}
 
 {include file='footer'}
 
