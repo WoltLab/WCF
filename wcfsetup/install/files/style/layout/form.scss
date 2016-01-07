@@ -33,6 +33,26 @@ textarea {
 	}
 }
 
+/* set placeholder color */
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+input[type="url"] {
+	&::-webkit-input-placeholder { /* WebKit browsers */
+		color: $wcfInputPlaceholderText;
+	}
+	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: $wcfInputPlaceholderText;
+	}
+	&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: $wcfInputPlaceholderText;
+	}
+}
+
 textarea[readonly] {
 	background-color: $wcfInputDisabledBackground !important;
 	border-color: $wcfInputDisabledBorder !important;
