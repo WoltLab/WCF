@@ -233,18 +233,6 @@
 /* styling for boxes in <contentTop>/<contentBottom> position */
 .boxesContentTop,
 .boxesContentBottom {
-	.boxTitle {
-		color: $wcfContentHeadlineText;
-		
-		a {
-			color: $wcfContentHeadlineLink;
-			
-			&:hover {
-				color: $wcfContentHeadlineLinkActive;
-			}
-		}
-	}
-	
 	.box {
 		&:not(:first-child) {
 			margin-top: 30px;
@@ -257,6 +245,18 @@
 		.boxTitle,
 		.boxContent {
 			margin-left: calc(20% + 20px);
+		}
+	}
+	
+	.boxTitle {
+		color: $wcfContentHeadlineText;
+		
+		a {
+			color: $wcfContentHeadlineLink;
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive;
+			}
 		}
 	}
 	
@@ -316,6 +316,18 @@
 		
 		&:nth-child(n+3) {
 			margin-top: 40px;
+		}
+	}
+	
+	.boxTitle {
+		color: $wcfFooterBoxHeadlineText;
+		
+		a {
+			color: $wcfFooterBoxHeadlineLink;
+			
+			&:hover {
+				color: $wcfFooterBoxHeadlineLinkActive;
+			}
 		}
 	}
 	
