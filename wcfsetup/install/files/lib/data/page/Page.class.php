@@ -106,7 +106,7 @@ class Page extends DatabaseObject {
 	/**
 	 * Returns the page URL.
 	 * 
-	 * @return string
+	 * @return      string
 	 */
 	public function getURL() {
 		if ($this->controller) {
@@ -114,6 +114,7 @@ class Page extends DatabaseObject {
 			$controllerParts = explode('\\', $this->controller);
 			$controllerName = $controllerParts[count($controllerParts) - 1];
 			$controllerName = preg_replace('/(page|action|form)$/i', '', $controllerName);
+			
 			return LinkHandler::getInstance()->getLink($controllerName, [
 				'application' => $controllerParts[0]
 			]);

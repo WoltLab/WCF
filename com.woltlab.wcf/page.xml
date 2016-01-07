@@ -67,7 +67,7 @@
 <li><a href="https://support.apple.com/kb/ph17191?locale=en_US" class="externalURL" rel="nofollow">Safari</a></li>
 <li><a href="http://windows.microsoft.com/en-US/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
 </ul>]]></content>
-				<customurl>cookie-policy</customurl>
+				<customURL>cookie-policy</customURL>
 			</content>
 			
 			<content language="de">
@@ -94,7 +94,7 @@
 <li><a href="https://support.apple.com/kb/ph17191?locale=de_DE" class="externalURL" rel="nofollow">Safari</a></li>
 <li><a href="http://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
 </ul>]]></content>
-				<customurl>cookie-richtlinie</customurl>
+				<customURL>cookie-richtlinie</customURL>
 			</content>
 		</page>
 		
@@ -189,7 +189,7 @@
 <p>If you have questions regarding this privacy policy, please contact us.</p>
 
 <p><small><em>Source: <a rel="nofollow" href="http://forum-template.wikidot.com/legal:privacy-policy" target="_blank">forum-template.wikidot.com</a></em></small></p>]]></content>
-				<customurl>privacy-policy</customurl>
+				<customURL>privacy-policy</customURL>
 			</content>
 			
 			<content language="de">
@@ -280,7 +280,7 @@
      <a href="http://twitter.com/account/settings" target="_blank">http://twitter.com/account/settings</a> ändern.</p>
 
 <p><small><em>Quellenangaben: <a rel="nofollow" href="http://www.e-recht24.de/muster-datenschutzerklaerung.html" target="_blank">eRecht24</a>, <a rel="nofollow" href="http://www.e-recht24.de/artikel/datenschutz/6590-facebook-like-button-datenschutz-disclaimer.html" target="_blank">Facebook-Disclaimer von eRecht24</a>, <a rel="nofollow" href="http://www.google.com/intl/de/+/policy/+1button.html" target="_blank">Google +1 Bedingungen</a>, <a rel="nofollow" href="http://twitter.com/privacy" target="_blank">Datenschutzerklärung Twitter</a></em></small></p>]]></content>
-				<customurl>datenschutzerklaerung</customurl>
+				<customURL>datenschutzerklaerung</customURL>
 			</content>
 		</page>
 	</import>

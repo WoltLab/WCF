@@ -106,11 +106,11 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		
 		switch ($boxType) {
 			case 'system':
-				if (empty($data['elements']['classname'])) {
+				if (empty($data['elements']['className'])) {
 					throw new SystemException("Missing required element 'classname' for 'system'-type box '{$identifier}'");
 				}
 				
-				$className = $data['elements']['classname'];
+				$className = $data['elements']['className'];
 				break;
 			
 			case 'html':
@@ -145,10 +145,10 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			'boxType' => $boxType,
 			'position' => $position,
 			'showOrder' => $this->getItemOrder($position),
-			'visibleEverywhere' => (isset($data['elements']['visibleeverywhere']) && $data['elements']['visibleeverywhere'] === '1') ? '1' : '0',
+			'visibleEverywhere' => (!empty($data['elements']['visibleEverywhere'])) ? 1 : 0,
 			'isMultilingual' => ($isMultilingual) ? '1' : '0',
 			'cssClassName' => (!empty($data['elements']['cssClassName'])) ? $data['elements']['cssClassName'] : '',
-			'showHeader' => (isset($data['elements']['showheader']) && $data['elements']['showheader'] === '1') ? '1' : '0',
+			'showHeader' => (!empty($data['elements']['showHeader'])) ? 1 : 0,
 			'originIsSystem' => 1,
 			'className' => $className
 		];

@@ -5,7 +5,7 @@
 						<div class="boxContainer">
 							{content}
 								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
-									{@$box}
+									{@$box->render()}
 								{/foreach}
 							{/content}
 						</div>	
@@ -35,7 +35,7 @@
 							{/if}
 							
 							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
-								{@$box}
+								{@$box->render()}
 							{/foreach}
 						
 							{event name='boxesSidebarRightBottom'}
@@ -52,7 +52,7 @@
 				<div class="boxContainer">
 					{content}
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
-							{@$box}
+							{@$box->render()}
 						{/foreach}
 					{/content}
 				</div>	
@@ -68,7 +68,7 @@
 						{if !$footerBoxes|empty}{@$footerBoxes}{/if}
 					
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
-							{@$box}
+							{@$box->render()}
 						{/foreach}
 					{/content}
 				</div>	

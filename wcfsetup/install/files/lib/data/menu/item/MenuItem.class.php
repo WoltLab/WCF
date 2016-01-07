@@ -2,13 +2,16 @@
 namespace wcf\data\menu\item;
 use wcf\data\page\Page;
 use wcf\data\DatabaseObject;
+use wcf\system\exception\SystemException;
+use wcf\system\page\handler\ILookupPageHandler;
+use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
 
 /**
  * Represents a menu item.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.menu.item
@@ -27,10 +30,15 @@ class MenuItem extends DatabaseObject {
 	protected static $databaseTableIndexName = 'itemID';
 	
 	/**
+	 * @var IMenuPageHandler
+	 */
+	protected $handler;
+	
+	/**
 	 * page object
 	 * @var Page
 	 */
-	protected $page = null;
+	protected $page;
 	
 	/**
 	 * Returns true if the active user can delete this menu item.
@@ -64,6 +72,13 @@ class MenuItem extends DatabaseObject {
 	 * @return      string
 	 */
 	public function getURL() {
+		if ($this->pageObjectID) {
+			$handler = $this->getMenuPageHandler();
+			if ($handler && $handler instanceof ILookupPageHandler) {
+				return $handler->getLink($this->pageObjectID);
+			}
+		}
+		
 		if ($this->pageID) {
 			return $this->getPage()->getURL();
 		}
@@ -85,5 +100,49 @@ class MenuItem extends DatabaseObject {
 		}
 		
 		return $this->page;
+	}
+	
+	/**
+	 * Returns false if this item should be hidden from menu.
+	 * 
+	 * @return      boolean
+	 */
+	public function isVisible() {
+		if ($this->getMenuPageHandler() !== null) {
+			return $this->getMenuPageHandler()->isVisible($this->pageObjectID ?: null);
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Returns the number of outstanding items for this menu.
+	 * 
+	 * @return      integer
+	 */
+	public function getOutstandingItems() {
+		if ($this->getMenuPageHandler() !== null) {
+			return $this->getMenuPageHandler()->getOutstandingItemCount($this->pageObjectID ?: null);
+		}
+		
+		return 0;
+	}
+	
+	/**
+	 * @return      IMenuPageHandler
+	 */
+	protected function getMenuPageHandler() {
+		$page = $this->getPage();
+		if ($page !== null && $page->handler) {
+			if ($this->handler === null) {
+				$className = $this->getPage()->handler;
+				$this->handler = new $className;
+				if (!($this->handler instanceof IMenuPageHandler)) {
+					throw new SystemException("Expected a valid handler implementing '" . IMenuPageHandler::class . "'.");
+				}
+			}
+		}
+		
+		return $this->handler;
 	}
 }
