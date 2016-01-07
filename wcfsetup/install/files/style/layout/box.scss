@@ -173,6 +173,14 @@
 		}
 	}
 	
+	.boxTitle {
+		color: $wcfSidebarHeadlineLink;
+		
+		&:hover {
+			color: $wcfSidebarHeadlineLinkActive;
+		}
+	}
+	
 	.box {
 		background-color: $wcfSidebarBackground;
 		padding: 20px;
