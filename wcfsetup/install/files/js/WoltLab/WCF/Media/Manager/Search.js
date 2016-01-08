@@ -2,7 +2,7 @@
  * Provides the media search for the media manager.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Media/Manager/Search
  */
@@ -13,7 +13,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLab/WCF/Med
 	 * @constructor
 	 */
 	function MediaManagerSearch(mediaManager) {
-		MediaSearch.call();
+		MediaSearch.call(this);
 		
 		this._mediaManager = mediaManager;
 		this._searchMode = false;

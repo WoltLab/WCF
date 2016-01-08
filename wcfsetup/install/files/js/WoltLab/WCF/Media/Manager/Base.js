@@ -2,22 +2,22 @@
  * Provides the media manager dialog.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Media/Manager/Base
  */
 define(
 	[
-		'Core',                     'Dictionary',               'Dom/ChangeListener',      'Dom/Traverse',
-		'Dom/Util',                 'EventHandler',             'Language',                'List',
-		'Permission',               'Ui/Dialog',                'Ui/Notification',         'WoltLab/WCF/Controller/Clipboard',
-		'WoltLab/WCF/Media/Editor', 'WoltLab/WCF/Media/Upload', 'WoltLab/WCF/Media/Search'
+		'Core',                     'Dictionary',               'Dom/ChangeListener',              'Dom/Traverse',
+		'Dom/Util',                 'EventHandler',             'Language',                        'List',
+		'Permission',               'Ui/Dialog',                'Ui/Notification',                 'WoltLab/WCF/Controller/Clipboard',
+		'WoltLab/WCF/Media/Editor', 'WoltLab/WCF/Media/Upload', 'WoltLab/WCF/Media/Manager/Search'
 	],
 	function(
-		Core,                        Dictionary,                 DomChangeListener,         DomTraverse,
-		DomUtil,                     EventHandler,               Language,                  List,
-		Permission,                  UiDialog,                   UiNotification,            Clipboard,
-		MediaEditor,                 MediaUpload,                MediaSearch
+		Core,                        Dictionary,                 DomChangeListener,                 DomTraverse,
+		DomUtil,                     EventHandler,               Language,                          List,
+		Permission,                  UiDialog,                   UiNotification,                    Clipboard,
+		MediaEditor,                 MediaUpload,                MediaManagerSearch
 	)
 {
 	"use strict";
@@ -204,7 +204,7 @@ define(
 				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
 			}
 			
-			this._search = new MediaSearch(this);
+			this._search = new MediaManagerSearch(this);
 			
 			if (!listItems.length) {
 				this._search.hideSearch();
