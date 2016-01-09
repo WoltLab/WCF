@@ -85,7 +85,7 @@
 			<tbody>
 				<tr>
 					<td class="columnIcon">
-						<span class="icon icon16 icon-undo disabled"></span>
+						<span class="icon icon16 fa-undo disabled"></span>
 						<input type="radio" name="oldID" value="current"{if $oldID === 'current'} checked="checked"{/if} /> <input type="radio" name="newID" value="current"{if $newID === 'current'} checked="checked"{/if} />
 						{event name='rowButtons'}
 					</td>
@@ -99,7 +99,7 @@
 				{foreach from=$objects item=edit}
 					<tr class="jsEditRow">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-undo pointer jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang}wcf.edit.revert.sure{/lang}"></span>
+							<span class="icon icon16 fa-undo pointer jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang}wcf.edit.revert.sure{/lang}"></span>
 							<input type="radio" name="oldID" value="{@$edit->entryID}"{if $oldID == $edit->entryID} checked="checked"{/if} /> <input type="radio" name="newID" value="{@$edit->entryID}"{if $newID == $edit->entryID} checked="checked"{/if} />
 							{event name='rowButtons'}
 						</td>

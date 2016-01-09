@@ -44,10 +44,10 @@
 			
 			<dd class="jsOnly">
 				<ul class="buttonList smallButtons">
-					<li><a href="javascript:Recaptcha.reload()" class="button small"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.recaptcha.reload{/lang}</span></a></li>
-					<li class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')" class="button small"><span class="icon icon16 icon-volume-up"></span> <span>{lang}wcf.recaptcha.audio{/lang}</span></a></li>
-					<li class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')" class="button small"><span class="icon icon16 icon-eye-open"></span> <span>{lang}wcf.recaptcha.image{/lang}</span></a></li>
-					<li><a href="javascript:Recaptcha.showhelp()" class="button small"><span class="icon icon16 icon-question-sign"></span> <span>{lang}wcf.recaptcha.help{/lang}</span></a></li>
+					<li><a href="javascript:Recaptcha.reload()" class="button small"><span class="icon icon16 fa-repeat"></span> <span>{lang}wcf.recaptcha.reload{/lang}</span></a></li>
+					<li class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')" class="button small"><span class="icon icon16 fa-volume-up"></span> <span>{lang}wcf.recaptcha.audio{/lang}</span></a></li>
+					<li class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')" class="button small"><span class="icon icon16 fa-eye"></span> <span>{lang}wcf.recaptcha.image{/lang}</span></a></li>
+					<li><a href="javascript:Recaptcha.showhelp()" class="button small"><span class="icon icon16 fa-question"></span> <span>{lang}wcf.recaptcha.help{/lang}</span></a></li>
 					{event name='buttons'}
 				</ul>
 			</dd>

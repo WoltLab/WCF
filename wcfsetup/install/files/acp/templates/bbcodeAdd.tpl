@@ -220,7 +220,7 @@
 		</fieldset>
 		
 		<fieldset id="attributeFieldset">
-			<legend><span class="icon icon16 icon-plus pointer jsAddButton jsTooltip" title="{lang}wcf.global.button.add{/lang}"></span> {lang}wcf.acp.bbcode.attributes{/lang}</legend>
+			<legend><span class="icon icon16 fa-plus pointer jsAddButton jsTooltip" title="{lang}wcf.global.button.add{/lang}"></span> {lang}wcf.acp.bbcode.attributes{/lang}</legend>
 			
 			{foreach from=$attributes item='attribute'}
 				<fieldset>

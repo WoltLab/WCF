@@ -1,6 +1,6 @@
 <div id="packageInstallationDialogContainer">
 	<header class="box48 boxHeadline">
-		<span class="icon icon48 icon-spinner"></span>
+		<span class="icon icon48 fa-spinner"></span>
 		
 		<div>
 			<h1>{lang}wcf.acp.package.uninstallation.title{/lang}</h1>

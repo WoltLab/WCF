@@ -746,7 +746,7 @@ WCF.User.Profile.Follow = Class.extend({
 	 * Creates the (un-)follow button
 	 */
 	_createButton: function () {
-		this._button = $('<li id="followUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'"><span class="icon icon16 icon-plus"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'</span></a></li>').prependTo($('#profileButtonContainer'));
+		this._button = $('<li id="followUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'"><span class="icon icon16 fa-plus"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'</span></a></li>').prependTo($('#profileButtonContainer'));
 		this._button.click($.proxy(this._execute, this));
 	},
 	
@@ -773,10 +773,10 @@ WCF.User.Profile.Follow = Class.extend({
 	 */
 	_showButton: function () {
 		if (this._following) {
-			this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).addClass('active').children('.icon').removeClass('icon-plus').addClass('icon-minus');
+			this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).addClass('active').children('.icon').removeClass('fa-plus').addClass('fa-minus');
 		}
 		else {
-			this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.follow')).removeClass('active').children('.icon').removeClass('icon-minus').addClass('icon-plus');
+			this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.follow')).removeClass('active').children('.icon').removeClass('fa-minus').addClass('fa-plus');
 		}
 	},
 	
@@ -887,12 +887,12 @@ WCF.User.Profile.IgnoreUser = Class.extend({
 	 */
 	_updateButton: function() {
 		if (this._button === null) {
-			this._button = $('<li id="ignoreUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'"><span class="icon icon16 icon-ban-circle"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'</span></a></li>').prependTo($('#profileButtonContainer'));
+			this._button = $('<li id="ignoreUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'"><span class="icon icon16 fa-ban"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'</span></a></li>').prependTo($('#profileButtonContainer'));
 		}
 		
 		this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.' + (this._isIgnoredUser ? 'un' : '') + 'ignore'));
-		if (this._isIgnoredUser) this._button.find('.button').addClass('active').children('.icon').removeClass('icon-ban-circle').addClass('icon-circle-blank');
-		else this._button.find('.button').removeClass('active').children('.icon').removeClass('icon-circle-blank').addClass('icon-ban-circle');
+		if (this._isIgnoredUser) this._button.find('.button').addClass('active').children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
+		else this._button.find('.button').removeClass('active').children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
 	}
 });
 
@@ -1093,7 +1093,7 @@ WCF.User.Profile.Editor = Class.extend({
 		
 		// create buttons
 		this._buttons = {
-			beginEdit: $('<li><a class="button"><span class="icon icon16 icon-pencil" /> <span>' + WCF.Language.get('wcf.user.editProfile') + '</span></a></li>').click($.proxy(this._beginEdit, this)).appendTo($buttonContainer)
+			beginEdit: $('<li><a class="button"><span class="icon icon16 fa-pencil" /> <span>' + WCF.Language.get('wcf.user.editProfile') + '</span></a></li>').click($.proxy(this._beginEdit, this)).appendTo($buttonContainer)
 		};
 	},
 	
@@ -2275,10 +2275,10 @@ WCF.User.Action.Follow = Class.extend({
 				
 				// toogle icon title
 				if (data.returnValues.following) {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('icon-plus').addClass('icon-minus');
+					button.data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('fa-plus').addClass('fa-minus');
 				}
 				else {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('icon-minus').addClass('icon-plus');
+					button.data('tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('fa-minus').addClass('fa-plus');
 				}
 				
 				button.data('following', data.returnValues.following);
@@ -2388,10 +2388,10 @@ WCF.User.Action.Ignore = Class.extend({
 				
 				// toogle icon title
 				if (data.returnValues.isIgnoredUser) {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('icon-ban-circle').addClass('icon-circle-blank');
+					button.data('tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
 				}
 				else {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('icon-circle-blank').addClass('icon-ban-circle');
+					button.data('tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
 				}
 				
 				button.data('ignored', data.returnValues.isIgnoredUser);
@@ -3071,11 +3071,11 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		var $button = $(this._buttonSelector + '[data-object-id=' + data.objectID + ']');
 		var $icon = $button.children('.icon');
 		if (data.isSubscribed) {
-			$icon.removeClass('icon-bookmark-empty').addClass('icon-bookmark');
+			$icon.removeClass('fa-bookmark-o').addClass('fa-bookmark');
 			$button.data('isSubscribed', true);
 		}
 		else {
-			$icon.removeClass('icon-bookmark').addClass('icon-bookmark-empty');
+			$icon.removeClass('fa-bookmark').addClass('fa-bookmark-o');
 			$button.data('isSubscribed', false);
 			
 			if (this._reloadOnUnsubscribe) {

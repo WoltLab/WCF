@@ -1544,9 +1544,9 @@ WCF.LoadingOverlayHandler = {
 	updateIcon: function(target, loading) {
 		var $method = (loading === undefined || loading ? 'addClass' : 'removeClass');
 		
-		target.find('.icon')[$method]('icon-spinner');
+		target.find('.icon')[$method]('fa-spinner');
 		if (target.hasClass('icon')) {
-			target[$method]('icon-spinner');
+			target[$method]('fa-spinner');
 		}
 	}
 };
@@ -2094,13 +2094,13 @@ WCF.Action.Toggle = Class.extend({
 		
 		// toggle icon source
 		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
-		if ($toggleButton.hasClass('icon-check-empty')) {
-			$toggleButton.removeClass('icon-check-empty').addClass('icon-check');
+		if ($toggleButton.hasClass('fa-square-o')) {
+			$toggleButton.removeClass('fa-square-o').addClass('fa-check-square-o');
 			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
 			$toggleButton.attr('title', $newTitle);
 		}
 		else {
-			$toggleButton.removeClass('icon-check').addClass('icon-check-empty');
+			$toggleButton.removeClass('fa-check-square-o').addClass('fa-square-o');
 			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
 			$toggleButton.attr('title', $newTitle);
 		}
@@ -3525,10 +3525,10 @@ WCF.Collapsible.Simple = {
 	_toggleImage: function(button) {
 		var $icon = button.find('span.icon');
 		if (button.data('isOpen')) {
-			$icon.removeClass('icon-chevron-right').addClass('icon-chevron-down');
+			$icon.removeClass('fa-chevron-right').addClass('fa-chevron-down');
 		}
 		else {
-			$icon.removeClass('icon-chevron-down').addClass('icon-chevron-right');
+			$icon.removeClass('fa-chevron-down').addClass('fa-chevron-right');
 		}
 	}
 };
@@ -3701,7 +3701,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_exchangeIcon: function(button, newIcon) {
 		newIcon = newIcon || 'spinner';
-		button.removeClass('icon-chevron-down icon-chevron-right icon-spinner').addClass('icon-' + newIcon);
+		button.removeClass('fa-chevron-down fa-chevron-right fa-spinner').addClass('fa-' + newIcon);
 	},
 	
 	/**
@@ -5086,7 +5086,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 			$icon = $(item.icon);
 		}
 		else if (this._includeUserGroups && item.type === 'group') {
-			$icon = $('<span class="icon icon16 icon-group" />');
+			$icon = $('<span class="icon icon16 fa-users" />');
 		}
 		
 		if ($icon) {
@@ -7752,7 +7752,7 @@ $.widget('ui.wcfSlideshow', {
 		// create toggle buttons
 		this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
 		for (var $i = 0; $i < this._count; $i++) {
-			var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
+			var $link = $('<li><a><span class="icon icon16 fa-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
 			if ($i == 0) {
 				$link.find('.icon').addClass('active');
 			}

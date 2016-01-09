@@ -1,6 +1,6 @@
 <div id="workerContainer">
 	<header class="box48 boxHeadline">
-		<span class="icon icon48 icon-spinner"></span>
+		<span class="icon icon48 fa-spinner"></span>
 		
 		<div>
 			<h1>{lang}wcf.global.worker.executing{/lang}</h1>

@@ -67,7 +67,7 @@
 {/capture}
 
 {capture assign='headerNavigation'}
-	<li class="jsOnly"><a href="#" title="{lang}wcf.moderation.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 icon-ok"></span> <span class="invisible">{lang}wcf.moderation.markAllAsRead{/lang}</span></a></li>
+	<li class="jsOnly"><a href="#" title="{lang}wcf.moderation.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.moderation.markAllAsRead{/lang}</span></a></li>
 {/capture}
 
 {include file='header' sidebarOrientation='left'}
