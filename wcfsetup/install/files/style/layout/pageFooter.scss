@@ -16,5 +16,10 @@
 	// copyright link styling
 	.copyright {
 		text-align: center;
+		
+		a {
+			// use text color instead
+			color: $wcfFooterText;
+		}
 	}
 }

@@ -134,7 +134,7 @@
 			WCF.System.PageNavigation.init('.pageNavigation');
 			
 			{if $__wcf->user->userID}
-				new WCF.ACP.Search();
+				//new WCF.ACP.Search();
 			{/if}
 			
 			{event name='javascriptInit'}

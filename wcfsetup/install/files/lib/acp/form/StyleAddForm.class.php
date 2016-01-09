@@ -424,7 +424,7 @@ class StyleAddForm extends AbstractForm {
 	 */
 	protected function setVariables() {
 		$this->colorCategories = [
-			'wcfHeader' => ['wcfHeader', 'wcfHeaderSearchBox', 'wcfHeaderMenu'],
+			'wcfHeader' => ['wcfHeader', 'wcfHeaderSearchBox', 'wcfHeaderMenu', 'wcfHeaderMenuDropdown'],
 			'wcfNavigation' => 'wcfNavigation',
 			'wcfSidebar' => ['wcfSidebar', 'wcfSidebarDimmed', 'wcfSidebarHeadline'],
 			'wcfContent' => ['wcfContent', 'wcfContentDimmed', 'wcfContentHeadline'],
@@ -439,8 +439,9 @@ class StyleAddForm extends AbstractForm {
 		
 		$this->colors = [
 			'wcfHeader' => ['background', 'text', 'link', 'linkActive'],
-			'wcfHeaderSearchBox' => ['background', 'text', 'backgroundActive', 'textActive'],
-			'wcfHeaderMenu' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
+			'wcfHeaderSearchBox' => ['background', 'border', 'text', 'placeholder', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfHeaderMenu' => ['background', 'link', 'backgroundActive', 'linkActive'],
+			'wcfHeaderMenuDropdown' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
 			'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
 			'wcfSidebar' => ['background', 'text', 'link', 'linkActive'],
 			'wcfSidebarDimmed' => ['text', 'link', 'linkActive'],
@@ -449,7 +450,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfContentDimmed' => ['text', 'link', 'linkActive'],
 			'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
 			'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
-			'wcfInput' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfInput' => ['background', 'border', 'text', 'placeholder', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfInputDisabled' => ['background', 'border', 'text'],
 			'wcfButton' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfButtonPrimary' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
@@ -469,6 +470,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfFontSizeSmall',
 			'wcfFontSizeDefault',
 			'wcfFontSizeHeadline',
+			'wcfFontSizeSection',
 			'wcfFontSizeTitle',
 			
 			'wcfLayoutFixedWidth',
