@@ -2,7 +2,6 @@
 	// TODO: border: 1px solid $wcfContentBorder;
 	border-top-width: 0;
 	border-radius: 0 0 3px 3px;
-	line-height: $wcfBaseLineHeight;
 	
 	> div,
 	> fieldset{
@@ -96,7 +95,6 @@
 			color: $wcfButtonText;
 			display: block;
 			font-size: 1rem;
-			line-height: $wcfBaseLineHeight;
 			margin-bottom: -1px;
 			padding: 7px 14px 8px 14px;
 			text-decoration: none;

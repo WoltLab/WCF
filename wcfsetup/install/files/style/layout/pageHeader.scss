@@ -231,13 +231,13 @@
 		
 		/* set placeholder color */
 		&::-webkit-input-placeholder { /* WebKit browsers */
-			color: $wcfHeaderSearchBoxPlaceholderText;
+			color: $wcfHeaderSearchBoxPlaceholder;
 		}
 		&::-moz-placeholder { /* Mozilla Firefox 19+ */
-			color: $wcfHeaderSearchBoxPlaceholderText;
+			color: $wcfHeaderSearchBoxPlaceholder;
 		}
 		&:-ms-input-placeholder { /* Internet Explorer 10+ */
-			color: $wcfHeaderSearchBoxPlaceholderText;
+			color: $wcfHeaderSearchBoxPlaceholder;
 		}
 				
 		/* remove broken cancel-button (webkit) */

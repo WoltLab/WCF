@@ -43,13 +43,13 @@ input[type="search"],
 input[type="text"],
 input[type="url"] {
 	&::-webkit-input-placeholder { /* WebKit browsers */
-		color: $wcfInputPlaceholderText;
+		color: $wcfInputPlaceholder;
 	}
 	&::-moz-placeholder { /* Mozilla Firefox 19+ */
-		color: $wcfInputPlaceholderText;
+		color: $wcfInputPlaceholder;
 	}
 	&:-ms-input-placeholder { /* Internet Explorer 10+ */
-		color: $wcfInputPlaceholderText;
+		color: $wcfInputPlaceholder;
 	}
 }
 
