@@ -115,13 +115,14 @@ class StyleEditForm extends StyleAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		if (!$this->style->isTainted) {
+		// TODO: how should this actually work?
+		/*if (!$this->style->isTainted) {
 			$this->variables['individualLess'] = Style::joinLessVariables($this->variables['individualLess'], $this->variables['individualLessCustom']);
 			$this->variables['overrideLess'] = Style::joinLessVariables($this->variables['overrideLess'], $this->variables['overrideLessCustom']);
 			
 			unset($this->variables['individualLessCustom']);
 			unset($this->variables['overrideLessCustom']);
-		}
+		}*/
 		
 		$this->objectAction = new StyleAction(array($this->style), 'update', array(
 			'data' => array_merge($this->additionalFields, array(
