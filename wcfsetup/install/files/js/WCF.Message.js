@@ -43,7 +43,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		$('.codeBox:not(.jsCodeViewer)').each($.proxy(function(index, codeBox) {
 			var $codeBox = $(codeBox).addClass('jsCodeViewer');
 			
-			$('<span class="icon icon16 icon-copy pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('div > h3')).click($.proxy(this._click, this));
+			$('<span class="icon icon16 fa-files-o pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('div > h3')).click($.proxy(this._click, this));
 		}, this));
 	},
 	
@@ -965,7 +965,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// show spinner and hide Redactor
 		var $messageBody = this._container.find('.messageQuickReplyContent .messageBody');
-		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
+		$('<span class="icon icon48 fa-spinner" />').appendTo($messageBody);
 		var $redactorBox = $messageBody.children('.redactor-box').hide();
 		
 		// hide message tabs
@@ -1030,7 +1030,7 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		// display Redactor
-		$messageBody.children('.icon-spinner').remove();
+		$messageBody.children('.fa-spinner').remove();
 		$messageBody.children('.redactor-box').show().next().show();
 		
 		// display form submit

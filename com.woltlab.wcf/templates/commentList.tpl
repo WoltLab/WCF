@@ -29,7 +29,7 @@
 					<nav class="jsMobileNavigation buttonGroupNavigation">
 						<ul class="commentOptions">
 							{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-								<li class="jsReportCommentComment jsOnly" data-object-id="{@$comment->commentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+								<li class="jsReportCommentComment jsOnly" data-object-id="{@$comment->commentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 							{/if}
 							
 							{event name='commentOptions'}

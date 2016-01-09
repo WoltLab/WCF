@@ -149,14 +149,12 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 			function updateWrapperPosition(region) {
 				var fromTop = 0;
 				if (region !== null) {
-					console.debug(region.offsetTop + " | " + variablesWrapper.offsetTop);
 					fromTop = (region.offsetTop - variablesWrapper.offsetTop) - 10;
-					window.dtdesign = region;
+					
 					var styles = window.getComputedStyle(region);
 					if (styles.getPropertyValue('position') === 'absolute' || styles.getPropertyValue('position') === 'relative') {
 						fromTop += region.offsetParent.offsetTop;
 					}
-					console.debug(fromTop);
 				}
 				
 				if (fromTop <= 0) {
@@ -169,7 +167,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 					if (wrapperHeight + fromTop > maxHeight) {
 						fromTop = maxHeight - wrapperHeight;
 					}
-					console.debug(fromTop);
+					
 					variablesWrapper.style.setProperty('transform', 'translateY(' + fromTop + 'px)');
 				}
 			}
@@ -215,13 +213,13 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 			
 			function updateCSSRule(identifier, value, isInit) {
 				if (styleRuleMap[identifier] === undefined) {
-					console.debug(identifier);
+					console.debug("Unknown style identifier: " + identifier);
 					return;
 				}
 				
 				var rule = styleRuleMap[identifier].replace(/VALUE/g, value + ' !important');
 				if (!rule) {
-					console.debug(identifier);
+					console.debug("Invalid style rule for " + identifier);
 					return;
 				}
 				
@@ -234,7 +232,15 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 				}
 				
 				for (var i = 0, length = rules.length; i < length; i++) {
-					style.sheet.insertRule(rules[i], style.sheet.cssRules.length);
+					try {
+						style.sheet.insertRule(rules[i], style.sheet.cssRules.length);
+					}
+					catch (e) {
+						// ignore errors for unknown placeholder selectors
+						if (!/[a-z]+\-placeholder/.test(rules[i])) {
+							console.debug(e.message);
+						}
+					}
 				}
 			}
 			
@@ -246,7 +252,6 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 					mutations.forEach(function(mutation) {
 						if (mutation.attributeName === 'style') {
 							updateCSSRule(variableName, colorField.style.getPropertyValue('background-color'));
-							console.debug(mutation);
 						}
 					});
 				});

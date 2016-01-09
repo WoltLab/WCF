@@ -5,7 +5,7 @@
 				{if $attachment->tinyThumbnailType}
 					<img src="{link controller='Attachment' object=$attachment}tiny=1{/link}" alt="" class="attachmentTinyThumbnail" />
 				{else}
-					<span class="icon icon48 icon-paper-clip"></span>
+					<span class="icon icon48 fa-paperclip"></span>
 				{/if}
 				
 				<div>

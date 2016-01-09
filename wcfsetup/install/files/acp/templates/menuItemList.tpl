@@ -34,9 +34,9 @@
 							<a href="{link controller='MenuItemEdit' id=$menuItemNode->getMenuItem()->itemID}{/link}">{lang}{$menuItemNode->getMenuItem()->title}{/lang}</a>
 							<span class="statusDisplay sortableButtonContainer">
 								{if $menuItemNode->getMenuItem()->canDisable()}
-									<span class="icon icon16 icon-check{if $menuItemNode->getMenuItem()->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItemNode->getMenuItem()->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItemNode->getMenuItem()->itemID}"></span>
+									<span class="icon icon16 fa-{if !$menuItemNode->getMenuItem()->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItemNode->getMenuItem()->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItemNode->getMenuItem()->itemID}"></span>
 								{else}
-									<span class="icon icon16 icon-check{if $menuItemNode->getMenuItem()->isDisabled}-empty{/if} disabled" title="{lang}wcf.global.button.{if $menuItemNode->getMenuItem()->isDisabled}enable{else}disable{/if}{/lang}"></span>
+									<span class="icon icon16 fa-{if !$menuItemNode->getMenuItem()->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $menuItemNode->getMenuItem()->isDisabled}enable{else}disable{/if}{/lang}"></span>
 								{/if}
 								<a href="{link controller='MenuItemEdit' id=$menuItemNode->getMenuItem()->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
 								{if $menuItemNode->getMenuItem()->canDelete()}

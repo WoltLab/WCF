@@ -23,7 +23,7 @@
 	<nav>
 		<ul>
 			<li class="dropdown">
-				<a class="button dropdownToggle"><span class="icon icon16 icon-search"></span> <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
+				<a class="button dropdownToggle"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
 				<ul class="dropdownMenu">
 					<li><a href="{link controller='UserQuickSearch'}mode=banned{/link}">{lang}wcf.acp.user.quickSearch.banned{/lang}</a></li>
 					<li><a href="{link controller='UserQuickSearch'}mode=newest{/link}">{lang}wcf.acp.user.quickSearch.newest{/lang}</a></li>

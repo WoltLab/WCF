@@ -39,7 +39,7 @@
 		<div class="contentNavigation">
 			<nav>
 				<ul>
-					<li><a id="requestFullscreen" class="button" style="display: none;"><span class="icon icon16 icon-fullscreen"></span> <span>{lang}wcf.global.button.fullscreen{/lang}</span></a></li>
+					<li><a id="requestFullscreen" class="button" style="display: none;"><span class="icon icon16 fa-arrows-alt"></span> <span>{lang}wcf.global.button.fullscreen{/lang}</span></a></li>
 				</ul>
 			</nav>
 		</div>

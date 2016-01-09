@@ -32,7 +32,7 @@
 				{content}
 					{if $action == 'edit' && $availableCategories->hasChildren()}
 						<li class="dropdown">
-							<a class="button dropdownToggle"><span class="icon icon16 icon-sort"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.choose')}</span></a>
+							<a class="button dropdownToggle"><span class="icon icon16 fa-sort"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.choose')}</span></a>
 							<div class="dropdownMenu">
 								<ul class="scrollableDropdownMenu">
 									{foreach from=$availableCategories item='availableCategory'}

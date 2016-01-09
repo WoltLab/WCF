@@ -1,6 +1,6 @@
 <div id="packageInstallationDialogContainer">
 	<header class="box48 boxHeadline">
-		<span class="icon icon48 icon-spinner jsPackageInstallationStatus"></span>
+		<span class="icon icon48 fa-spinner jsPackageInstallationStatus"></span>
 		
 		<div>
 			<h1>{lang}wcf.acp.package.{@$installationType}.title{/lang}</h1>

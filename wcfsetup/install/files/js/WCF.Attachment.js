@@ -259,7 +259,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see	WCF.Upload._initFile()
 	 */
 	_initFile: function(file) {
-		var $li = $('<li class="box64"><span class="icon icon48 icon-spinner" /><div><div><p>'+file.name+'</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
+		var $li = $('<li class="box64"><span class="icon icon48 fa-spinner" /><div><div><p>'+file.name+'</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
 		this._fileListSelector.append($li);
 		this._fileListSelector.show();
 		
@@ -269,7 +269,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			$li.find('progress').remove();
 			
 			// upload icon
-			$li.children('.icon-spinner').removeClass('icon-spinner').addClass('icon-ban-circle');
+			$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
 			
 			// error message
 			$li.find('div > div').append($('<small class="innerError">' + WCF.Language.get('wcf.attachment.upload.error.tooLarge') + '</small>'));
@@ -296,14 +296,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			if (data.returnValues && data.returnValues.attachments[$internalFileID]) {
 				// show thumbnail
 				if (data.returnValues.attachments[$internalFileID].tinyURL) {
-					$li.children('.icon-spinner').replaceWith($('<img src="' + data.returnValues.attachments[$internalFileID]['tinyURL'] + '" alt="" class="attachmentTinyThumbnail" />'));
+					$li.children('.fa-spinner').replaceWith($('<img src="' + data.returnValues.attachments[$internalFileID]['tinyURL'] + '" alt="" class="attachmentTinyThumbnail" />'));
 					
 					$li.data('height', data.returnValues.attachments[$internalFileID].height);
 					$li.data('width', data.returnValues.attachments[$internalFileID].width);
 				}
 				// show file icon
 				else {
-					$li.children('.icon-spinner').removeClass('icon-spinner').addClass('icon-paper-clip');
+					$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-paperclip');
 				}
 				
 				// update attachment link
@@ -341,7 +341,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			}
 			else {
 				// upload icon
-				$li.children('.icon-spinner').removeClass('icon-spinner').addClass('icon-ban-circle');
+				$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
 				var $errorMessage = '';
 				
 				// error handling
@@ -415,9 +415,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		// mark uploads as failed
 		this._fileListSelector.find('li').each(function(index, listItem) {
 			var $listItem = $(listItem);
-			if ($listItem.children('.icon-spinner').length) {
+			if ($listItem.children('.fa-spinner').length) {
 				// upload icon
-				$listItem.addClass('uploadFailed').children('.icon-spinner').removeClass('icon-spinner').addClass('icon-ban-circle');
+				$listItem.addClass('uploadFailed').children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
 				$listItem.find('div > div').append($('<small class="innerError">' + (data.responseJSON && data.responseJSON.message ? data.responseJSON.message : WCF.Language.get('wcf.attachment.upload.error.uploadFailed')) + '</small>'));
 			}
 		});

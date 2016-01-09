@@ -633,13 +633,6 @@
 			<categoryname>com.woltlab.wcf.user</categoryname>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.PrivacyPolicyPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\PrivacyPolicyPage]]></classname>
-			<options>module_privacy_policy_page</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.PaidSubscriptionListPage</name>
 			<definitionname>com.woltlab.wcf.page</definitionname>
 			<classname><![CDATA[wcf\page\PaidSubscriptionListPage]]></classname>

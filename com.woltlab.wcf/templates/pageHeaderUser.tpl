@@ -109,7 +109,7 @@
 						{capture assign='__3rdPartyButtons'}
 							{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 								<li id="githubAuth" class="3rdPartyAuth">
-									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fagithub"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
+									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
 								</li>
 							{/if}
 							

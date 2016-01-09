@@ -1,11 +1,4 @@
 /* @TODO */
-#logo {
-	//width: 75px;
-	overflow: hidden;
-	> a > img {
-		//height: 60px;
-	}
-}
 .interactiveDropdown { display: none; }
 /* @TODO END */
 
@@ -22,18 +15,20 @@
 	}
 }
 
-.pageHeader {
-	> div > div {
-		align-items: center;
-		display: flex;
-		flex-wrap: wrap;
-		padding: 20px 0;
-	}
+.pageHeader > div > div {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 20px 0;
 }
 
 /* LOGO */
 #logo {
+	// use a fixed width of 50% together with the search bar to force a wrap
 	flex: 0 0 50%;
+	
+	// gap between the two rows formed by the wrapping flex box
+	margin-bottom: 15px;
 	
 	> a > img.small {
 		display: none;
@@ -42,7 +37,7 @@
 
 /* MAIN MENU */
 .mainMenu {
-	flex: 0 50%;
+	flex: 1 1 auto;
 	
 	.boxMenu {
 		display: flex;
@@ -50,22 +45,25 @@
 		> li {
 			@extend .wcfFontHeadline;
 			
-			flex: 0 auto;
+			flex: 0 0 auto;
 			
 			&:not(:last-child) {
-				margin-right: $wcfGapMedium;
+				margin-right: 12px;
 			}
 			
 			> a {
-				transition: color .2s linear;
-				text-decoration: none;
-				text-transform: uppercase;
+				background-color: $wcfHeaderMenuBackground;
+				color: $wcfHeaderMenuLink;
+				display: block;
+				font-size: 16px;
+				font-weight: 400;
+				padding: 4px 12px;
 			}
 			
-			&.active > a {
-				@extend .wcfFontBold;
-				
-				color: $wcfHeaderLinkActive;
+			&.active > a,
+			&:hover > a {
+				background-color: $wcfHeaderMenuBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
 			}
 		}
 		
@@ -78,41 +76,44 @@
 				}
 				
 				.boxMenuDepth1 {
-					opacity: 1;
-					transition-delay: 0s;
 					visibility: visible;
 				}
 			}
 			
 			> a {
-				padding-right: 15px;
+				padding-right: 21px;
 				
 				&::after {
 					content: $fa-var-caret-down;
 					display: block;
 					font-family: FontAwesome;
 					position: absolute;
-					right: 0;
-					top: 1px;
+					right: 6px;
+					top: 3px;
 					transition: transform .12s ease-out;
 				}
 			}
 		}
 		
 		.boxMenuDepth1 {
-			background-color: $wcfHeaderMenuBackground;
-			border: 1px solid $wcfHeaderMenuBorder;
-			opacity: 0;
+			background-color: $wcfHeaderMenuDropdownBackground;
+			border-bottom: 1px solid $wcfHeaderMenuDropdownBorder;
 			padding: 3px 0;
 			position: absolute;
-			transition: visibility .2s linear .2s, opacity .2s linear;
 			visibility: hidden;
+			
+			// offset the menu to prevent the staircase effect when two elements with dark and light
+			// colors are right below each other; uses a transparent border rather than a margin to
+			// prevent losing the hover on the <li> causing the menu to collapse when the cursor is
+			// right between the menu item and the menu itself
+			background-clip: padding-box;
+			border-top: 3px solid transparent;
 			
 			@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
 			
 			> li {
 				> a {
-					color: $wcfHeaderMenuLink;
+					color: $wcfHeaderMenuDropdownLink;
 					display: block;
 					padding: 5px 20px;
 					white-space: nowrap;
@@ -122,8 +123,8 @@
 				
 				&.active > a,
 				> a:hover {
-					background-color: $wcfHeaderMenuBackgroundActive;
-					color: $wcfHeaderMenuLinkActive;
+					background-color: $wcfHeaderMenuDropdownBackgroundActive;
+					color: $wcfHeaderMenuDropdownLinkActive;
 					text-decoration: none;
 				}
 				
@@ -137,7 +138,7 @@
 
 /* USER PANEL */
 #topMenu {
-	flex: 0 50%;
+	flex: 0 0 auto;
 	
 	> ul {
 		display: flex;
@@ -191,6 +192,7 @@
 
 /* SEARCH AREA */
 .pageHeaderSearch {
+	// use a fixed width of 50% together with the logo to force a wrap
 	flex: 0 50%;
 	text-align: right;
 }

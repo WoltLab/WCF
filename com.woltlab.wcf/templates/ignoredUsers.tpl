@@ -52,7 +52,7 @@
 							
 							<nav class="jsMobileNavigation buttonGroupNavigation">
 								<ul class="buttonList iconList jsOnly">
-									<li><a class="pointer jsTooltip jsDeleteButton" title="{lang}wcf.user.button.unignore{/lang}" data-object-id="{@$user->ignoreID}"><span class="icon icon16 icon-remove"></span> <span class="invisible">{lang}wcf.user.button.unignore{/lang}</span></a></li>
+									<li><a class="pointer jsTooltip jsDeleteButton" title="{lang}wcf.user.button.unignore{/lang}" data-object-id="{@$user->ignoreID}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.user.button.unignore{/lang}</span></a></li>
 									{event name='userButtons'}
 								</ul>
 							</nav>
