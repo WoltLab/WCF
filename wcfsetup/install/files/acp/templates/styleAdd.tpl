@@ -716,7 +716,7 @@
 				'wcfHeaderSearchBoxBackground': '#spSearchBox { background-color: VALUE; }',
 				'wcfHeaderSearchBoxBorder': '#spSearchBox { border-color: VALUE; }',
 				'wcfHeaderSearchBoxText': '#spSearchBox { color: VALUE; }',
-				'wcfHeaderSearchBoxPlaceholder': '#spSearchBox::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox:-ms-input-placeholder { color: VALUE; }',
+				'wcfHeaderSearchBoxPlaceholderText': '#spSearchBox::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox:-ms-input-placeholder { color: VALUE; }',
 				'wcfHeaderSearchBoxBackgroundActive': '#spSearchBox:focus, #spSearchBox:hover { background-color: VALUE; }',
 				'wcfHeaderSearchBoxBorderActive': '#spSearchBox:focus, #spSearchBox:hover { border-color: VALUE; }',
 				'wcfHeaderSearchBoxTextActive': '#spSearchBox:focus, #spSearchBox:hover { color: VALUE; }',
