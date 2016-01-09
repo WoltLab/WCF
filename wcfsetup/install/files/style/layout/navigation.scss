@@ -95,22 +95,19 @@
 		
 		> a,
 		> span {
-			background-color: $wcfButtonBackground;
-			border: 1px solid $wcfButtonBorder;
-			color: $wcfButtonText;
-			padding: 3px 5px;
+			color: $wcfContentText;
+			padding: 1px 8px;
+		}
+		
+		&.disabled > span {
+			color: $wcfContentDimmedText;
 		}
 		
 		&.active > a,
 		&.active > span,
 		> a:hover {
 			background-color: $wcfButtonBackgroundActive;
-			border-color: $wcfButtonBorderActive;
 			color: $wcfButtonTextActive;
-		}
-		
-		&:not(:last-child) {
-			margin-right: -1px;
 		}
 		
 		> .icon {
@@ -118,12 +115,16 @@
 			line-height: inherit;
 			width: auto;
 		}
+		
+		&:not(:last-child) {
+			margin-right: 1px;
+		}
 	}
 }
-
+/*@todo
 .pageNavigation.small > ul > li {
 	> a,
 	> span:not(.invisible) {
 		padding: 1px 5px;
 	}
-}
+}*/

@@ -13,7 +13,11 @@
 	padding: 5px 0;
 	
 	&.divider + li:not(.divider) {
-		border-top-color: $wcfContentBorderInner;
+		border-top-color: $wcfTabularBoxHeadline;
+	}
+	
+	&:not(.tabularListRowHead):hover {
+		background-color: $wcfTabularBoxBackgroundActive;
 	}
 }
 

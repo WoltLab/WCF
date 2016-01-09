@@ -209,13 +209,71 @@
 
 /* ### message groups ### */
 .messageGroupList {
-	.columnSubject {
-		> .labelList {
-			float: right;
-			padding-left: 7px;
+	.tabularList {
+		.tabularListColumns {
+			> .columnSubject {
+				flex: 1 1 auto;
+			}
+			
+			> .columnStats {
+				flex: 0 0 120px;
+				text-align: center;
+			}
+			
+			> .columnLastPost {
+				flex: 0 0 200px;
+			}
 		}
 		
+		.tabularListRow:not(.tabularListRowHead) {
+			.columnStats {
+				position: relative;
+				
+				> dl {
+					visibility: hidden;
+				}
+			}
+			
+			&:hover .columnStats {
+				> dl {
+					visibility: visible;
+				}
+				
+				.messageGroupListStatsSimple {
+					display: none;
+				}
+			}
+		}
+	}
+	
+	.columnAvatar {
+		div {
+			position: relative;
+			width: 48px;
+			height: 48px;
+			
+			> p > img {
+				opacity: .6;
+			}
+		}
+		
+		.myAvatar {
+			position: absolute;
+			width: 24px;
+			height: 24px;
+			bottom: -8px;
+			right: -8px;
+		}
+	}
+	
+	.columnSubject {
+		overflow: hidden;
+		
 		> h3 {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			
 			> .messageGroupLink {
 				@extend .wcfFontHeadline;
 			}
@@ -229,25 +287,133 @@
 			display: block;
 		}
 		
-		> nav {
-			@extend .wcfFontSmall;
+		> .statusDisplay {
+			display: flex;
+			float: right;
+			opacity: .6;
 			
-			> ul > li {
-				display: inline;
+			> .statusIcons {
+				align-items: center;
+				flex: 0 0 auto;
+				
+				> li {
+					align-items: center;
+					display: flex;
+				}
+			}
+		}
+		
+		> .labelList {
+			float: right;
+			padding-left: 7px;
+		}
+	}
+	
+	.columnLastPost {
+		time {
+			color: $wcfContentDimmedText;
+		}
+		
+		a {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+	
+	.messageGroupInfo {
+		@extend .inlineList;
+		@extend .wcfFontSmall;
+		
+		> li:not(:last-child) {
+			margin-right: 5px;
+			
+			&:after {
+				content: "\00b7";
+				margin-left: 5px;
 			}
 		}
 	}
 	
-	tr {
-		&.new .columnSubject > h3 > .messageGroupLink {
+	// hover
+	.tabularListRow:hover,
+	tr:hover { // deprecated
+		.columnSubject > .statusDisplay {
+			opacity: 1;
+			
+			> .pageNavigation {
+				opacity: 1;
+			}
+		}
+		
+		.columnAvatar div > p > img {
+			opacity: 1;
+		}
+	}
+	
+	// new status
+	.tabularListRow.new,
+	tr.new { // deprecated
+		.columnSubject > h3 > .messageGroupLink {
 			font-weight: bold;
 		}
 		
-		&.new .columnAvatar div > p > img,
-		&:hover .columnAvatar div > p > img {
+		.columnAvatar div > p > img {
 			opacity: 1;
 		}
 		
+		// new message icon
+		.columnAvatar > div {
+			&::after {
+				color: $wcfContentLink;
+				content: "\f069";
+				font-family: FontAwesome;
+				font-weight: normal !important;
+				font-style: normal !important;
+				font-size: 14px;
+				position: absolute;
+				text-decoration: none !important;
+				top: -4px;
+				right: -2px;
+				
+				@include textShadow($wcfContentLink);
+			}
+		}
+	}
+	
+	.pageNavigation {
+		flex: 0 0 auto;
+		opacity: 0;
+		
+		@extend .wcfFontSmall;
+		
+		&:not(:last-child) {
+			margin-right: 5px;
+		}
+	}
+
+	
+}
+
+.messageGroupListStatsSimple {
+	color: $wcfContentDimmedText;
+	font-size: 1rem;
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+
+/*
+.messageGroupList {
+	.columnSubject {
+		
+		
+		
+	}
+	
+	tr {
 		/*
 		TODO
 		&.messageDisabled {
@@ -277,79 +443,7 @@
 			}
 		}
 		*/
-		
-		.columnSubject .statusDisplay .pageNavigation {
-			opacity: 0;
-			transition: opacity .2s linear;
-		}
-		
-		&:hover .columnSubject .statusDisplay .pageNavigation {
-			opacity: 1;
-		}
-		
-		&.new .columnAvatar > div {
-			&::after {
-				color: $wcfContentLink;
-				content: "\f069";
-				font-family: FontAwesome;
-				font-weight: normal !important;
-				font-style: normal !important;
-				font-size: 14px;
-				position: absolute;
-				text-decoration: none !important;
-				top: -4px;
-				right: -2px;
-				
-				@include textShadow($wcfContentLink);
-			}
-		}
-	}
-	
-	.columnAvatar {
-		div {
-			position: relative;
-			width: 40px;
-			height: 38px;
-			
-			> p > img {
-				opacity: .6;
-				transition: opacity .2s linear;
-			}
-		}
-		
-		.myAvatar {
-			position: absolute;
-			width: 16px;
-			height: 16px;
-			bottom: -2px;
-			left: 24px;
-			opacity: 1;
-			
-			> img {
-				@include boxShadow(0, 0, rgba(0, 0, 0, .3), 3px);
-			}
-		}
-	}
-	
-	.columnLastPost {
-		white-space: nowrap;
-		word-wrap: normal;
-		
-		> div > div > small {
-			// TODO: color: $wcfDimmedColor;
-		}
-	}
-	
-	.messageGroupInfo {
-		@extend .inlineList;
-		@extend .wcfFontSmall;
-		
-		> li:not(:last-child) {
-			margin-right: 5px;
-			
-			&:after {
-				content: " - ";
-			}
-		}
+		/*
 	}
 }
+*/

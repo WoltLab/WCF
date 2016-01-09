@@ -14,8 +14,8 @@ a.badge {
 	
 	/* colors */
 	&.badgeUpdate {
-		//background-color: @wcfTabularBoxBackgroundColor;
-		//color: @wcfTabularBoxColor;
+		background-color: rgba(224, 48, 48, 1);
+		color: rgba(255, 238, 238, 1);
 	}
 	
 	&.badgeInverse {
@@ -71,7 +71,7 @@ a.badge {
 }
 
 a.badge:hover {
-	//color: @wcfContentBackgroundColor;
+	color: $wcfContentBackground;
 	text-decoration: none;
 	
 	&.black {
