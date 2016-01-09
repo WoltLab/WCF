@@ -20,14 +20,14 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label for="attributes[{ldelim}@$attributeNo}][required]"><input type="checkbox" id="attributes[{ldelim}@$attributeNo}][required]" name="attributes[{ldelim}@$attributeNo}][required]" value="1" /> {lang}{lang}wcf.acp.bbcode.attribute.required{/lang}{/lang}</label>
+				<label for="attributes[{ldelim}@$attributeNo}][required]"><input type="checkbox" id="attributes[{ldelim}@$attributeNo}][required]" name="attributes[{ldelim}@$attributeNo}][required]" value="1" /> {lang}wcf.acp.bbcode.attribute.required{/lang}</label>
 			</dd>
 		</dl>
 		
 		<dl>
 			<dt></dt>
 			<dd>
-				<label for="attributes[{ldelim}@$attributeNo}][useText]"><input type="checkbox" id="attributes[{ldelim}@$attributeNo}][useText]" name="attributes[{ldelim}@$attributeNo}][useText]" value="1" /> {lang}{lang}wcf.acp.bbcode.attribute.useText{/lang}{/lang}</label>
+				<label for="attributes[{ldelim}@$attributeNo}][useText]"><input type="checkbox" id="attributes[{ldelim}@$attributeNo}][useText]" name="attributes[{ldelim}@$attributeNo}][useText]" value="1" /> {lang}wcf.acp.bbcode.attribute.useText{/lang}</label>
 				<small>{lang}wcf.acp.bbcode.attribute.useText.description{/lang}</small>
 			</dd>
 		</dl>
