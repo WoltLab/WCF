@@ -305,7 +305,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
-		if (isset($this->parameters['data'])) {
+		if (isset($this->parameters['data']) || isset($this->parameters['counters'])) { 
 			parent::update();
 			
 			if (isset($this->parameters['data']['languageID'])) {
