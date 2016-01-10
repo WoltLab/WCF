@@ -246,6 +246,74 @@
 		}
 	}
 	
+	.columnMark > label {
+		cursor: pointer;
+		display: block;
+		height: 24px;
+		width: 24px;
+		
+		&::before {
+			content: $fa-var-square-o;
+			font-family: FontAwesome;
+			font-size: 24px;
+			position: relative;
+			top: -6px;
+		}
+		
+		> input {
+			display: none;
+		}
+	}
+	
+	.jsMarked .columnMark > label{
+		position: relative;
+		
+		&::after {
+			color: rgb(0, 150, 0);
+			content: $fa-var-check;
+			font-family: FontAwesome;
+			font-size: 13px;
+			left: 3px;
+			position: absolute;
+			top: 1px;
+		}
+	}
+	
+	.tabularListRowHead .columnMark > label::before {
+		top: -3px;
+	}
+	
+	
+	.messageDeleted .columnAvatar,
+	.messageDisabled .columnAvatar {
+		position: relative;
+		
+		&::before {
+			display: block;
+			font-family: FontAwesome;
+			font-size: 48px;
+			position: absolute;
+		}
+		
+		> div {
+			visibility: hidden;
+		}
+	}
+	
+	.messageDeleted .columnAvatar::before {
+		color: rgb(180, 0, 0);
+		content: $fa-var-trash-o;
+		left: 15px;
+		top: -7px;
+	}
+	
+	.messageDisabled .columnAvatar::before {
+		color: rgb(0, 140, 0);
+		content: $fa-var-play-circle-o;
+		left: 12px;
+		top: -3px;
+	}
+	
 	.columnAvatar {
 		div {
 			position: relative;
