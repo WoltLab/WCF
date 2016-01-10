@@ -13,8 +13,53 @@
 	}
 }
 
+.messageCheckboxLabel {
+	cursor: pointer;
+	display: block;
+	position: relative;
+	
+	&::before {
+		content: $fa-var-square-o;
+		display: block;
+		font-family: FontAwesome;
+		position: absolute;
+	}
+	
+	&::after {
+		color: rgb(0, 150, 0);
+		content: $fa-var-check;
+		display: none;
+		font-family: FontAwesome;
+		position: absolute;
+	}
+	
+	> input[type="checkbox"] {
+		display: none;
+	}
+}
+
 .message {
 	display: flex;
+	
+	.messageClipboardCheckbox {
+		height: 24px;
+		width: 24px;
+		
+		@extend .messageCheckboxLabel;
+		
+		&::before {
+			font-size: 25px;
+			left: 2px;
+			top: -6px;
+		}
+	}
+	
+	&.jsMarked .messageClipboardCheckbox::after {
+		display: block;
+		font-size: 14px;
+		left: 5px;
+		top: 1px;
+	}
 }
 
 /* sidebar */
@@ -61,7 +106,6 @@
 	margin-top: 25px;
 	
 	&:before {
-		// TODO: border-top: 2px solid $wcfContentBorderAccent;
 		content: "";
 		left: 0;
 		margin-top: -10px;
@@ -93,7 +137,7 @@
 	@extend .inlineList;
 	
 	flex: 0 0 auto;
-	opacity: .3;
+	//opacity: .3;
 	order: 2;
 	transition: opacity .2s linear;
 	
@@ -105,11 +149,11 @@
 }
 
 .message:hover .messageQuickOptions {
-	opacity: .6;
+	//opacity: .6;
 }
 
 .message .messageHeader .messageQuickOptions:hover {
-	opacity: 1;
+	//opacity: 1;
 }
 
 .messageHeadline {
@@ -177,11 +221,11 @@
 	
 	justify-content: flex-end;
 	margin-top: 10px;
-	opacity: .3;
+	//opacity: .3;
 	transition: opacity .2s linear;
 	
 	&.forceVisible {
-		opacity: 1 !important;
+		//opacity: 1 !important;
 	}
 	
 	> li {
@@ -199,12 +243,22 @@
 
 .message:hover {
 	.messageFooterButtons {
-		opacity: .6;
+		//opacity: .6;
 		
 		&:hover {
-			opacity: 1;
+			//opacity: 1;
 		}
 	}
+}
+
+%messageStatusIconDeleted {
+	color: rgb(180, 0, 0);
+	content: $fa-var-trash-o;
+}
+
+%messageStatusIconDisabled {
+	color: rgb(0, 140, 0);
+	content: $fa-var-eye-slash;
 }
 
 /* ### message groups ### */
@@ -252,31 +306,19 @@
 		height: 24px;
 		width: 24px;
 		
-		&::before {
-			content: $fa-var-square-o;
-			font-family: FontAwesome;
-			font-size: 24px;
-			position: relative;
-			top: -6px;
-		}
+		@extend .messageCheckboxLabel;
 		
-		> input {
-			display: none;
+		&::before {
+			font-size: 24px;
+			top: -6px;
 		}
 	}
 	
-	.jsMarked .columnMark > label{
-		position: relative;
-		
-		&::after {
-			color: rgb(0, 150, 0);
-			content: $fa-var-check;
-			font-family: FontAwesome;
-			font-size: 13px;
-			left: 3px;
-			position: absolute;
-			top: 1px;
-		}
+	.jsMarked .columnMark > label::after {
+		display: block;
+		font-size: 13px;
+		left: 3px;
+		top: 1px;
 	}
 	
 	.tabularListRowHead .columnMark > label::before {
@@ -301,17 +343,17 @@
 	}
 	
 	.messageDeleted .columnAvatar::before {
-		color: rgb(180, 0, 0);
-		content: $fa-var-trash-o;
 		left: 15px;
 		top: -7px;
+		
+		@extend %messageStatusIconDeleted;
 	}
 	
 	.messageDisabled .columnAvatar::before {
-		color: rgb(0, 140, 0);
-		content: $fa-var-eye-slash;
 		left: 10px;
 		top: -6px;
+		
+		@extend %messageStatusIconDisabled;
 	}
 	
 	.columnAvatar {
