@@ -309,9 +309,9 @@
 	
 	.messageDisabled .columnAvatar::before {
 		color: rgb(0, 140, 0);
-		content: $fa-var-play-circle-o;
-		left: 12px;
-		top: -3px;
+		content: $fa-var-eye-slash;
+		left: 10px;
+		top: -6px;
 	}
 	
 	.columnAvatar {
