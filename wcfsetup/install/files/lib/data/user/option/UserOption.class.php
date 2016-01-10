@@ -7,7 +7,7 @@ use wcf\system\WCF;
 /**
  * Represents a user option.
  * 
- * @author	Joshua Rüsweg, Marcel Werk
+ * @author	Joshua Ruesweg, Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf

@@ -14,7 +14,7 @@ use wcf\util\MessageUtil;
 /**
  * Handles user options.
  * 
- * @author	Alexander Ebert, Joshua Rüsweg
+ * @author	Alexander Ebert, Joshua Ruesweg
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
