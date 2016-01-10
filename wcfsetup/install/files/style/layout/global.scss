@@ -76,7 +76,12 @@
 
 .wcfFontHeadline {
 	font-size: $wcfFontSizeHeadline;
-	font-weight: 300;
+	font-weight: 400;
+}
+
+.wcfFontSection {
+	font-size: $wcfFontSizeSection;
+	font-weight: 400;
 }
 
 .wcfFontTitle {
