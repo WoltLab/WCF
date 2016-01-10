@@ -74,6 +74,18 @@ class UserOption extends Option {
 	 * @var	integer
 	 */
 	const EDITABILITY_ALL = 3;
+
+	/**
+	 * editable for owner on registration
+	 * @var	integer
+	 */
+	const EDITABILITY_OWNER_ONLY_REGISTRATION = 4;
+
+	/**
+	 * editable for owner on registration and admins (no valid bit)
+	 * @var	integer
+	 */
+	const EDITABILITY_OWNER_ONLY_REGISTRATION_AND_ADMINISTRATOR = 6;
 	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
@@ -139,17 +151,22 @@ class UserOption extends Option {
 	
 	/**
 	 * Returns true if this option is editable.
-	 * 
+	 *
+	 * @param	boolean		$inRegistration
 	 * @return	boolean
 	 */
-	public function isEditable() {
+	public function isEditable($inRegistration = false) {
 		// check admin permissions
 		if ($this->editable & self::EDITABILITY_ADMINISTRATOR) {
 			if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
 				return true;
 			}
 		}
-		
+
+		if ($inRegistration && $this->editable & self::EDITABILITY_OWNER_ONLY_REGISTRATION) {
+			return true;
+		}
+
 		// check owner state
 		if ($this->editable & self::EDITABILITY_OWNER) {
 			if ($this->user === null || $this->user->userID == WCF::getUser()->userID) {
