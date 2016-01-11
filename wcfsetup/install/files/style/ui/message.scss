@@ -252,13 +252,7 @@
 }
 
 %messageStatusIconDeleted {
-	color: rgb(180, 0, 0);
-	content: $fa-var-trash-o;
-}
-
-%messageStatusIconDisabled {
-	color: rgb(0, 140, 0);
-	content: $fa-var-eye-slash;
+	
 }
 
 /* ### message groups ### */
@@ -343,17 +337,17 @@
 	}
 	
 	.messageDeleted .columnAvatar::before {
+		color: rgb(180, 0, 0);
+		content: $fa-var-trash-o;
 		left: 15px;
 		top: -7px;
-		
-		@extend %messageStatusIconDeleted;
 	}
 	
 	.messageDisabled .columnAvatar::before {
+		color: rgb(0, 140, 0);
+		content: $fa-var-eye-slash;
 		left: 10px;
 		top: -6px;
-		
-		@extend %messageStatusIconDisabled;
 	}
 	
 	.columnAvatar {
