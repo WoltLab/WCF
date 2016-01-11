@@ -59,6 +59,16 @@
 	
 	> nav {
 		flex: 1 1 auto;
+		order: 3;
+		
+		&.pageNavigation {
+			order: 1;
+		}
+		
+		&.jsClipboardEditor {
+			margin-right: 5px;
+			order: 2;
+		}
 		
 		& + nav {
 			flex: 0 0 auto;
