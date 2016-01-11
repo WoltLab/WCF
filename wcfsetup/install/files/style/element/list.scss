@@ -1,3 +1,4 @@
+/* makes an inline-list */
 .inlineList {
 	display: flex;
 	flex-wrap: wrap;
@@ -14,8 +15,21 @@
 			display: inline-flex;
 		}
 	}
+	
+	/* adds a comma after each list item */
+	&.commaSeparated {
+		@extend .wcfFontSmall;
+		
+		> li {
+			&:not(:last-child):after {
+				content: ",";
+				padding-left: 1px;
+			}
+		}
+	}
 }
 
+/* restores the native styling for lists */
 .nativeList {
 	margin: 1em 0 1em 40px;
 	
@@ -23,21 +37,15 @@
 		margin: 7px 0;
 	}
 }
-
-ol.dataList,
-ul.dataList {
-	@extend .inlineList;
-	
-	font-size: .85rem;
-	
-	> li {
-		&:not(:last-child):after {
-			content: ",";
-			padding-left: 1px;
-		}
-	}
+ul.nativeList {
+	list-style-type: disc;
+}
+ol.nativeList {
+	list-style-type: decimal;
 }
 
+
+/*@todo*/
 .framedIconList {
 	display: flex;
 	flex-wrap: wrap;
@@ -58,12 +66,28 @@ ul.dataList {
 	}
 }
 
+/*@todo*/
 .tagList {
 	@extend .inlineList;
 	
 	align-items: baseline;
 }
 
+/*@todo*/
 .smileyList {
 	align-items: center;
+}
+
+/* legacy styling (deprecated) */
+ol.dataList,
+ul.dataList {
+	@extend .inlineList;
+	@extend .wcfFontSmall;
+	
+	> li {
+		&:not(:last-child):after {
+			content: ",";
+			padding-left: 1px;
+		}
+	}
 }

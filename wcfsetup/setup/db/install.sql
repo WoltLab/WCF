@@ -1980,7 +1980,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonP
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonText', 'rgba(127, 140, 141, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonTextActive', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBackground', 'rgba(255, 255, 255, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBorder', 'rgba(44, 62, 80, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBorder', 'rgba(79, 129, 189, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBorderInner', 'rgba(238, 238, 238, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentDimmedLink', 'rgba(52, 73, 94, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentDimmedLinkActive', 'rgba(52, 73, 94, 1)');
@@ -2027,7 +2027,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapSmal
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapTiny', '4px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderBackground', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderText', 'rgba(255, 255, 255, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderLink', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderLink', 'rgba(255, 255, 255, .8)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderLinkActive', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderMenuBackground', 'rgba(52, 73, 94, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeaderMenuBackgroundActive', 'rgba(41, 128, 185, 1)');

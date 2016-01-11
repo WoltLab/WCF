@@ -12,7 +12,7 @@
 		
 	> div {
 		background-color: $wcfHeaderBackground; /* @TODO */
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		//@todobox-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 		left: 0;
 		position: fixed;
 		top: 0;
@@ -43,13 +43,13 @@
 		margin: 0 20px;
 	}
 	
-	#topMenu {
+	.userPanel {
 		flex: 0 auto;
 		order: 3;
-		margin-right: 10px;
+		margin-right: 20px;
 	}
 	
-	#pageHeaderSearch {
+	.pageHeaderSearch {
 		flex: 0 auto;
 		order: 4;
 	}

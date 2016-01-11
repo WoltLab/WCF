@@ -1,9 +1,10 @@
 .badge,
 a.badge {
 	background-color: $wcfContentText;
+	border-radius: 3px;
 	color: $wcfContentBackground;
 	display: inline-block;
-	padding: 1px 5px;
+	padding: 2px 6px;
 	position: relative;
 	text-shadow: none !important; /* necessary to avoid ugly text shadows in comment lists; @todo: better solution without "!important" */
 	vertical-align: middle;
@@ -14,8 +15,9 @@ a.badge {
 	
 	/* colors */
 	&.badgeUpdate {
-		background-color: rgba(224, 48, 48, 1);
-		color: rgba(255, 238, 238, 1);
+		background-color: rgba(204, 0, 1, 1);
+		color: rgba(255, 255, 255, 1);
+		font-weight: 600;
 	}
 	
 	&.badgeInverse {

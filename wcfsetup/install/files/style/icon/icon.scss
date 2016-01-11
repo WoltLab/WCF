@@ -175,5 +175,20 @@ a > span.fa:not(.pointer) {
 	transform: scale(1, -1);
 }
 
+/* ringing animation for fa-bell */
+@keyframes fa-bell-ring {
+	0% { transform:rotate(-15deg) }
+	2% { transform:rotate(15deg) }
+	4% { transform:rotate(-18deg) }
+	6% { transform:rotate(18deg) }
+	8% { transform:rotate(-22deg) }
+	10% { transform:rotate(22deg) }
+	12% { transform:rotate(-18deg) }
+	14% { transform:rotate(18deg) }
+	16% { transform:rotate(-12deg) }
+	18% { transform:rotate(12deg) }
+	20%, 100% { transform:rotate(0deg) }
+}
+
 @import "variables";
 @import "icons";

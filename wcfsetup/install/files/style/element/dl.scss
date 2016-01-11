@@ -1,0 +1,140 @@
+dl {
+	&:not(.plain) {
+		display: block;
+		
+		&:not(:first-child) {
+			margin-top: 10px;
+		}
+		
+		&:not(:last-child) {
+			margin-bottom: 10px;
+		}
+		
+		> dt {
+			display: block;
+			
+			&:not(:empty) {
+				margin-bottom: 5px;
+			}
+		}
+		
+		> dd {
+			display: block;
+			
+			&.floated {
+				display: flex;
+				flex-wrap: wrap;
+				
+				> label {
+					flex: 0 0 auto;
+					margin: 0 10px 5px 0;
+					
+					&:last-child {
+						margin-right: 0;
+					}
+				}
+			}
+			
+			&:not(:last-child) {
+				margin-bottom: 10px;
+			}
+			
+			> small:not(.innerError) {
+				color: $wcfContentDimmedText;
+				display: block;
+				margin-top: 5px;
+			}
+			
+			> label {
+				display: block;
+			}
+			
+			> label:not(:first-child) {
+				margin-top: 3px;
+			}
+		}
+		
+		&.wide > dt {
+			display: none;
+		}
+		
+		& + dl:not(.plain) {
+			padding-top: 10px;
+		}
+	}
+	
+	&.dataList {
+		@extend .clearfix;
+		
+		> dt {
+			clear: right;
+			color: rgba(128, 128, 128, 1);
+			float: left;
+			margin-right: 4px;
+			text-align: left;
+			
+			&:after {
+				content: ":";
+			}
+		}
+		
+		> dd {
+			float: right;
+			text-align: right;
+			
+			&:not(:last-child) {
+				margin-bottom: 3px;
+			}
+		}
+	}
+	
+	&.inlineDataList {
+		@extend .wcfFontSmall;
+		
+		> dt {
+			display: inline-block;
+			
+			&:after {
+				content: ":";
+				padding-left: 1px;
+			}
+		}
+		
+		> dd {
+			display: inline-block;
+			
+			&:not(:last-of-type):after {
+				content: ",";
+				padding-left: 1px;
+			}
+		}
+	}
+	
+	&.statsDataList {
+		align-items: center;
+		display: flex;
+		flex-direction: row-reverse;
+		flex-wrap: wrap;
+		
+		> dt {
+			color: $wcfContentDimmedText;
+			flex: 0 0 60%;
+			margin-left: 5px;
+			overflow: hidden;
+			text-align: left;
+			white-space: nowrap;
+			
+			@extend .wcfFontSmall;
+		}
+		
+		> dd {
+			flex: 0 0 auto;
+			width: calc(40% - 5px); /* IE work-around */
+			
+			overflow: hidden;
+			text-align: right;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}

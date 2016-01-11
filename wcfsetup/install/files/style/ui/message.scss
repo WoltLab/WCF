@@ -5,7 +5,7 @@
 	
 	> li {
 		margin-top: 0;
-		padding: 40px 0;
+		padding: 30px 0;
 		
 		&:not(:first-child) {
 			border-top: 1px solid $wcfContentBorder;
@@ -378,6 +378,11 @@
 	}
 	
 	.columnLastPost {
+		> .box32 {
+			align-items: center;
+		}
+		
+		
 		time {
 			color: $wcfContentDimmedText;
 		}

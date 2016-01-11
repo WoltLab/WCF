@@ -2,7 +2,15 @@
 	padding: 20px 0;
 	
 	&:not(:last-child) {
-		// TODO: border-bottom: 1px solid $wcfContentBorder;
+		border-bottom: 1px solid $wcfContentBorderInner;
+	}
+	
+	&:first-child {
+		border-top: 1px solid $wcfContentBorder;
+	}
+	
+	&:last-child {
+		border-bottom: 1px solid $wcfContentBorder;
 	}
 	
 	&.showMore {
@@ -13,10 +21,14 @@
 		position: relative;
 		
 		> .containerContentType {
-			opacity: .6;
+			color: $wcfContentDimmedText;
 			position: absolute;
-			top: 0;
+			top: 5px;
 			right: 0;
+		}
+		
+		+ * {
+			margin-top: 10px;
 		}
 	}
 }

@@ -3,10 +3,8 @@
 	/* content header */
 	.contentHeader,
 	.boxHeadline { // deprecated
-		border-bottom: 1px solid $wcfContentBorderInner;
 		color: $wcfContentHeadlineText; // todo: rename variable
 		margin-bottom: 30px;
-		padding-bottom: 10px;
 		
 		.contentTitle,
 		> h1 { // deprecated

@@ -136,8 +136,8 @@
 	}
 }
 
-/* USER PANEL */
-#topMenu {
+/* user panel */
+.userPanel {
 	flex: 0 0 auto;
 	
 	> ul {
@@ -149,41 +149,55 @@
 			display: flex;
 			flex: 0 auto;
 			
-			&:not(:last-child) > a {
-				margin: 0 5px;
+			/* item margins (list item can contain <a> and <div>) */
+			> a,
+			> div {
+				margin-left: 10px;
+				
+				&:not(:last-child) {
+					margin-right: 10px;
+				}
 			}
-			
-			&.active > a {
-				// @TODO
-				color: rgba(255, 255, 255, 1);
-				font-family: "Segoe UI Semibold";
-				font-weight: bold;
+			&:not(:last-child) {
+				> a,
+				> div {
+					margin-right: 10px;
+				}
 			}
 			
 			> a {
-				color: rgba(255, 255, 255, .8);
 				flex: 0 auto;
-				transition: color .2s linear;
-				text-decoration: none;
-				text-transform: uppercase;
+				position: relative;
 				
+				/* set icon color */
+				> .icon {
+					color: $wcfHeaderLink;
+				}
 				&:hover {
-					color: rgba(255, 255, 255, 1);
-					
 					> .icon {
-						color: rgba(255, 255, 255, 1);
+						color: $wcfHeaderLinkActive;
 					}
 				}
 				
-				> .icon {
-					color: rgba(255, 255, 255, .8);
-					transition: color .2s linear;
-					
-					@extend .icon24;
-				}
-				
+				/* hide icon label */
 				> span:not(.icon):not(.badge) {
 					display: none;
+				}
+				
+				/* special styling for update badge */
+				> span.badgeUpdate {
+					box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
+					left: 16px;
+					position: absolute;
+					top: -5px;
+				}
+			}
+			
+			/* ringing animation for notification icon */
+			&#userNotifications:not([data-count="0"]) { 
+				> a > .icon {
+					animation: fa-bell-ring 5s ease 10s 6;
+					transform-origin: 50% 0;
 				}
 			}
 		}

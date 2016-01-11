@@ -439,7 +439,7 @@ class StyleAddForm extends AbstractForm {
 		
 		$this->colors = [
 			'wcfHeader' => ['background', 'text', 'link', 'linkActive'],
-			'wcfHeaderSearchBox' => ['background', 'border', 'text', 'placeholderText', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfHeaderSearchBox' => ['background', 'border', 'text', 'placeholder', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfHeaderMenu' => ['background', 'link', 'backgroundActive', 'linkActive'],
 			'wcfHeaderMenuDropdown' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
 			'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
@@ -450,7 +450,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfContentDimmed' => ['text', 'link', 'linkActive'],
 			'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
 			'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
-			'wcfInput' => ['background', 'border', 'text', 'placeholderText', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfInput' => ['background', 'border', 'text', 'placeholder', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfInputDisabled' => ['background', 'border', 'text'],
 			'wcfButton' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfButtonPrimary' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
