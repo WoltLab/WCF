@@ -49,6 +49,9 @@
 	align-items: center;
 	display: flex;
 	
+	// align <nav> to the right side
+	justify-content: flex-end;
+	
 	&:not(:first-child) {
 		margin-top: 20px;
 	}
@@ -58,11 +61,15 @@
 	}
 	
 	> nav {
-		flex: 1 1 auto;
+		flex: 0 0 auto;
 		order: 3;
 		
 		&.pageNavigation {
 			order: 1;
+			
+			// use up maximum space, causing it to stick to the left while all other
+			// <nav> elements will still be aligned to the right side
+			flex: 1 1 auto;
 		}
 		
 		&.jsClipboardEditor {
