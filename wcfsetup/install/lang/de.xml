@@ -2384,6 +2384,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Ihre Nachricht enthält die folgenden BBCodes, die Sie nicht verwenden dürfen: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Der Editor ist bereits aktiv, beenden Sie die Bearbeitung bevor Sie fortfahren.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[Ihre Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
+		<item name="wcf.message.status.deleted"><![CDATA[Gelöscht]]></item>
+		<item name="wcf.message.status.disabled"><![CDATA[Deaktiviert]]></item>
 	</category>
 	
 	<category name="wcf.menu">

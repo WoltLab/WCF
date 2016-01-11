@@ -2415,6 +2415,8 @@ Errors are:
 		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Editor is already in use, please finish editing before continuing.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[Message is too long, must be below {#$maxTextLength} characters.]]></item>
+		<item name="wcf.message.status.deleted"><![CDATA[Deleted]]></item>
+		<item name="wcf.message.status.disabled"><![CDATA[Disabled]]></item>
 	</category>
 	
 	<category name="wcf.menu">

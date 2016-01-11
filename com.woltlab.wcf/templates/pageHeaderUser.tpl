@@ -47,7 +47,6 @@
 							{event name='userMenuItemsBefore'}
 							
 							{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
-								<li class="dropdownDivider"></li>
 								<li class="interactiveDropdownUserMenuItem">
 									<div class="box32">
 										<div><span class="icon icon32 {@$menuCategory->getIconClassName()}"></span></div>
