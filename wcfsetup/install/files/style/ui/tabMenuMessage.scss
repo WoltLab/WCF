@@ -1,17 +1,8 @@
 .messageTabMenu {
-	// TODO: border: 1px solid $wcfContentBorder;
-	border-top-width: 0;
-	border-radius: 0 0 3px 3px;
-	
 	> div,
-	> fieldset{
-		background-color: $wcfContentBackground;
-		border-width: 0;
-		border-radius: 0;
-		// TODO: border-top: 1px solid $wcfContentBorder;
+	> fieldset,
+	> section {
 		display: none;
-		padding: 15px 10px;
-		position: static;
 		
 		&.active {
 			display: block;
@@ -20,110 +11,77 @@
 	
 	> div {
 		> nav {
-			background-color: $wcfContentBackground;
-			// TODO: border-bottom: 1px solid $wcfContentBorder;
-			margin: -14px -21px 14px -21px;
-			padding: $wcfGapTiny $wcfGapSmall;
-			
 			ul {
-				display: inline-block;
-				font-size: 0;
 				white-space: nowrap;
 				
 				li {
-					display: inline-block;
 					outline: 0;
-					vertical-align: baseline;
 					
 					&.active a,
 					&.active a:hover {
-						color: $wcfButtonTextActive;
-						cursor: default;
+						color: $wcfContentLinkActive;
 					}
 					
 					a {
-						color: $wcfButtonText;
+						color: $wcfContentLinkActive;
 						display: block;
 						outline: 0;
-						padding: 0 $wcfGapSmall;
 						
 						@extend .userSelectNone;
 						@extend .wcfFontSmall;
 						
 						&:hover {
-							color: $wcfButtonTextActive;
-							text-decoration: none;
+							color: $wcfContentLinkActive;
 						}
-					}
-					
-					&:not(:last-child) {
-						padding-right: $wcfGapTiny;
-					}
-					
-					&.dropdown > a {
-						font-size: 1.0rem;
-						padding: 4px 7px 2px;
 					}
 				}
 			}
-		}
-		
-		> div,
-		> fieldset {
-			border-top-width: 0;
 		}
 	}
 }
 
 .messageTabMenu + .innerError {
-	box-sizing: border-box;
-	margin-top: -1px;
+	margin-top: -1px; // TODO
 	width: 100%;
 }
 
-.messageTabMenuNavigation > ul {
-	background-color: $wcfContentBackground;
-	font-size: 0;
-	white-space: nowrap;
+.messageTabMenuNavigation {
+	position: relative;
 	
-	> li {
-		display: inline-block;
+	> ul {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		margin-bottom: 10px;
+		padding: 10px 0;
 		
-		> a {
-			// TODO: border-right: 1px solid $wcfContentBorder;
-			border-bottom: 1px solid transparent;
-			color: $wcfButtonText;
-			display: block;
-			font-size: 1rem;
-			margin-bottom: -1px;
-			padding: 7px 14px 8px 14px;
-			text-decoration: none;
-			
-			@extend .userSelectNone;
-			
-			&:hover {
-				color: $wcfContentLink;
+		@extend .inlineList;
+		
+		> li {
+			&:not(:last-child) {
+				margin-right: 20px;
 			}
 			
-			> span.icon {
-				display: none;
-			}
-		}
-		
-		&.active {
 			> a {
-				background-color: $wcfContentBackground;
-				color: $wcfContentLink;
+				display: block;
+				
+				@extend .userSelectNone;
+				
+				> span.icon {
+					display: none;
+				}
 			}
 		}
+	}
+	
+	> span {
+		border-top: 1px solid $wcfContentLink;
+		bottom: 0;
+		content: "";
+		position: absolute;
+		transition: transform .2s linear, width .2s linear;
 	}
 }
 
 @media only screen and (max-width: 800px) {
-	.redactor-toolbar > li > a:hover {
-		background-color: transparent !important;
-	}
-	
 	.messageTabMenu {
 		> nav > ul > li:not(.active) > a {
 			> span.icon {
@@ -136,7 +94,7 @@
 		}
 		
 		> div > nav {
-			margin: ($wcfGapTiny - $wcfGapSmall) -$wcfGapSmall $wcfGapSmall -$wcfGapSmall;
+			// TODO: margin: ($wcfGapTiny - $wcfGapSmall) -$wcfGapSmall $wcfGapSmall -$wcfGapSmall;
 		}
 	}
 }
