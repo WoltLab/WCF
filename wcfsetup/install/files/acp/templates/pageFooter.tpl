@@ -5,7 +5,7 @@
 			
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 			
-			<address class="copyright"><a href="http://www.woltlab.com">Copyright &copy; 2001-2015 WoltLab&reg; GmbH</a>{event name='copyright'}</address>
+			<address class="copyright"><a href="http://www.woltlab.com">Copyright &copy; 2001-2016 WoltLab&reg; GmbH</a>{event name='copyright'}</address>
 		</div>
 	</div>
 </footer>
