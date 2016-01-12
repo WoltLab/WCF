@@ -26,6 +26,7 @@
 		
 		var config = {
 			buttons: buttons,
+			minHeight: 200,
 			plugins: ['WoltLabButton', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabQuote'],
 			woltlab: {
 				autosave: autosave
