@@ -1,39 +1,47 @@
 .messageTabMenu {
-	> div,
-	> fieldset,
-	> section {
+	> .messageTabMenuContent {
 		display: none;
 		
 		&.active {
+			background-color: $wcfContentBackground;
 			display: block;
+			margin-top: 0;
 		}
 	}
 	
-	> div {
-		> nav {
-			ul {
-				white-space: nowrap;
+	// prevent double formatting with nested tab menus
+	&:not(.messageTabMenuContent) > .messageTabMenuContent.active {
+		border: 1px solid $wcfContentBorderInner;
+		border-top-width: 0;
+		padding: 20px;
+	}
+	
+	// sub tab menu
+	&.messageTabMenuContent > nav {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		margin: -20px -20px 20px -20px;
+		padding: 5px 20px;
+		
+		> ul {
+			@extend .inlineList;
+			
+			> li {
+				outline: 0;
 				
-				li {
+				&:not(:last-child) {
+					margin-right: 20px;
+				}
+				
+				&.active > a {
+					color: $wcfContentLinkActive;
+				}
+				
+				> a {
+					display: block;
 					outline: 0;
 					
-					&.active a,
-					&.active a:hover {
-						color: $wcfContentLinkActive;
-					}
-					
-					a {
-						color: $wcfContentLinkActive;
-						display: block;
-						outline: 0;
-						
-						@extend .userSelectNone;
-						@extend .wcfFontSmall;
-						
-						&:hover {
-							color: $wcfContentLinkActive;
-						}
-					}
+					@extend .userSelectNone;
+					@extend .wcfFontSmall;
 				}
 			}
 		}
@@ -46,22 +54,38 @@
 }
 
 .messageTabMenuNavigation {
-	position: relative;
-	
 	> ul {
-		border-bottom: 1px solid $wcfContentBorderInner;
-		margin-bottom: 10px;
-		padding: 10px 0;
+		background-color: $wcfContentBackground;
+		border: 1px solid $wcfContentBorderInner;
+		border-top-width: 0;
 		
 		@extend .inlineList;
 		
 		> li {
+			border-right: 1px solid $wcfContentBorderInner;
+			
 			&:not(:last-child) {
-				margin-right: 20px;
+				margin-right: 0;
+			}
+			
+			&.active > a {
+				color: $wcfContentLinkActive;
+				position: relative;
+				
+				&::after {
+					border-bottom: 1px solid $wcfContentBackground;
+					bottom: -1px;
+					content: "";
+					display: block;
+					left: 0;
+					position: absolute;
+					right: 0;
+				}
 			}
 			
 			> a {
 				display: block;
+				padding: 10px 20px;
 				
 				@extend .userSelectNone;
 				
@@ -73,11 +97,7 @@
 	}
 	
 	> span {
-		border-top: 1px solid $wcfContentLink;
-		bottom: 0;
-		content: "";
-		position: absolute;
-		transition: transform .2s linear, width .2s linear;
+		display: none;
 	}
 }
 
