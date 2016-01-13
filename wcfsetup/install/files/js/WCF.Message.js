@@ -648,6 +648,7 @@ WCF.Message.SmileyCategories = Class.extend({
 		// cache exists
 		if (this._cache[$categoryID] !== undefined) {
 			data.activeTab.container.html(this._cache[$categoryID]);
+			return;
 		}
 		
 		// load content
