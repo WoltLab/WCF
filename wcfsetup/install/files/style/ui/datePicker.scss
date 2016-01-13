@@ -1,15 +1,17 @@
+// TODO: overhaul file
+
 .inputAddon > .inputDatePicker {
-	background-color: @wcfInputBackgroundColor !important;
+	// TODO: background-color: @wcfInputBackgroundColor !important;
 	cursor: pointer;
 	flex: 0 1 150px;
 	min-width: 150px;
 }
 
 .datePicker {
-	background-color: @wcfDropdownBackgroundColor;
-	border: 1px solid @wcfDropdownBorderColor;
+	background-color: $wcfDropdownBackground;
+	border: 1px solid $wcfDropdownBorder;
 	border-radius: 3px;
-	color: @wcfDropdownColor;
+	color: $wcfDropdownText;
 	opacity: 0;
 	position: absolute;
 	transition: visibility .3s linear .3s, opacity .3s linear;
@@ -17,7 +19,7 @@
 	width: 240px;
 	z-index: 450;
 	
-	.boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
+	@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
 	
 	&.active {
 		opacity: 1;
@@ -30,12 +32,12 @@
 	}
 	
 	> .elementPointer {
-		border-color: @wcfDropdownBorderColor transparent;
+		border-color: $wcfDropdownBorder transparent;
 		border-style: solid;
 		border-width: 0 8px 8px;
 		
 		> span {
-			border-color: @wcfDropdownBackgroundColor transparent;
+			border-color: $wcfDropdownBackground transparent;
 			border-style: solid;
 			border-width: 0 6px 6px;
 			left: -6px;
@@ -54,7 +56,7 @@
 	
 	> header,
 	> footer {
-		padding: @wcfGapSmall;
+		padding: $wcfGapSmall;
 		position: relative;
 		text-align: center;
 	}
@@ -70,16 +72,16 @@
 		}
 		
 		&.previous {
-			left: @wcfGapSmall;
+			left: $wcfGapSmall;
 		}
 		
 		&.next {
-			right: @wcfGapSmall;
+			right: $wcfGapSmall;
 		}
 	}
 	
 	> ul {
-		border-top: 1px solid @wcfDropdownBorderColor;
+		border-top: 1px solid $wcfDropdownBorder;
 		
 		// hide borders
 		margin: 0 -1px -1px 0;
@@ -89,17 +91,17 @@
 			
 			> a,
 			> span {
-				border: 1px solid @wcfDropdownBorderColor;
+				border: 1px solid $wcfDropdownBorder;
 				border-width: 0 1px 1px 0;
 				display: block;
 				flex: 1;
-				padding: @wcfGapTiny 0;
+				padding: $wcfGapTiny 0;
 				text-align: center;
 			}
 			
 			> a {
-				background-color: @wcfContainerAccentBackgroundColor;
-				color: @wcfColor;
+				// TODO: background-color: @wcfContainerAccentBackgroundColor;
+				// TODO: color: @wcfColor;
 				
 				&:hover {
 					text-decoration: none;
@@ -107,24 +109,24 @@
 				
 				&.active,
 				&:not(.otherMonth):hover {
-					background-color: @wcfContainerHoverBackgroundColor;
+					// TODO: 	background-color: @wcfContainerHoverBackgroundColor;
 				}
 				
 				&.otherMonth {
-					background-color: @wcfContainerBackgroundColor;
-					color: @wcfDimmedColor;
+					// TODO: 	background-color: @wcfContainerBackgroundColor;
+					// TODO: color: @wcfDimmedColor;
 					cursor: default;
 				}
 			}
 			
 			> span {
-				background-color: @wcfTabularBoxBackgroundColor;
-				border-right-color: @wcfTabularBoxBackgroundColor;
-				color: @wcfTabularBoxColor;
+				// TODO: background-color: @wcfTabularBoxBackgroundColor;
+				// TODO: border-right-color: @wcfTabularBoxBackgroundColor;
+				// TODO: color: @wcfTabularBoxColor;
 				font-size: .85rem;
 				text-transform: uppercase;
 				
-				.textShadow(@wcfTabularBoxBackgroundColor);
+				// TODO: .textShadow(@wcfTabularBoxBackgroundColor);
 			}
 		}
 	}
@@ -132,5 +134,4 @@
 	> footer {
 		display: none;
 	}
-	
 }
