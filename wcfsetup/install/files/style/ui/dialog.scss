@@ -51,7 +51,6 @@
 	min-width: 400px;
 	position: absolute;
 	transform: translateX(-50%);
-	will-change: transform;
 	z-index: 200;
 	
 	&[aria-hidden=false] {
