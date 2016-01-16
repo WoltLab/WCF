@@ -109,7 +109,7 @@
 						{lang}wcf.user.guest{/lang}
 					{/if}
 					
-					<small> - {@$queue->time|time}</small>
+					<small class="separatorLeft">{@$queue->time|time}</small>
 				</h3>
 			</div>
 			

@@ -1,18 +1,59 @@
+.commentList {
+	> li {
+		> .box48 > div > .commentContent > .buttonGroupNavigation {
+			right: 40px;
+		}
+		
+		
+		&:hover {
+			background-color: transparent;
+			
+			.buttonGroupNavigation {
+				opacity: 0;
+			}
+		}
+	}
+	
+	.commentContent {
+		&:hover {
+			.buttonGroupNavigation {
+				opacity: 1;
+			}
+		}
+		
+		+ .commentOptionContainer {
+			.commentResponseAdd {
+				border-top: 1px solid $wcfContentBorderInner;
+				padding-top: 20px;
+				margin-top: 20px;
+			}
+		}
+	}
+	
+	.commentResponseList {
+		&:not(:empty) {
+			margin-top: 20px;
+		}
+		
+		> li {
+			&:first-child,
+			&:last-child {
+				border-color: $wcfContentBorderInner;
+			}
+		}
+	}
+	
+	.commentOptionContainer {
+		margin-top: 10px;
+	}
+	
+	.commentResponseAdd {
+		padding: 10px 20px 0 20px;
+	}
+}
+
+/*
 .commentContent {
-	position: relative;
-	
-	&:hover > .buttonGroupNavigation {
-		opacity: 1;
-	}
-	
-	> .buttonGroupNavigation {
-		opacity: 0;
-		position: absolute;
-		top: 5px;
-		transition: opacity .2s linear;
-		right: 10px;
-	}
-	
 	> .containerHeadline {
 		margin-bottom: 5px;
 	}
@@ -35,3 +76,4 @@
 	// TODO: border-top: 1px solid $wcfContentBorder;
 	padding-top: 10px;
 }
+*/

@@ -18,23 +18,23 @@
 							<h3><a href="{$message->getLink($query)}">{$message->getSubject()}</a></h3>
 							
 							{if $message->getUserProfile() || $message->getTime() || $message->getContainerTitle()}
-								<p>
+								<ul class="inlineList dotSeparated">
 									{if $message->getUserProfile()}
-										{if $message->getUserProfile()->userID}
-											<a href="{link controller='User' object=$message->getUserProfile()}{/link}" class="userLink" data-user-id="{@$message->getUserProfile()->userID}">{$message->getUserProfile()->username}</a>
-										{else}
-											{$message->getUserProfile()->username}
-										{/if}
+										<li>
+											{if $message->getUserProfile()->userID}
+												<a href="{link controller='User' object=$message->getUserProfile()}{/link}" class="userLink" data-user-id="{@$message->getUserProfile()->userID}">{$message->getUserProfile()->username}</a>
+											{else}
+												{$message->getUserProfile()->username}
+											{/if}
+										</li>
 									{/if}
-									
 									{if $message->getTime()}
-										<small>{if $message->getUserProfile()}- {/if}{@$message->getTime()|time}</small>
+										<li><small>{@$message->getTime()|time}</small></li>
 									{/if}
-									
 									{if $message->getContainerTitle()}
-										<small>{if $message->getUserProfile() || $message->getTime()}- {/if}<a href="{$message->getContainerLink()}">{$message->getContainerTitle()}</a></small>
+										<li><small><a href="{$message->getContainerLink()}">{$message->getContainerTitle()}</a></small></li>
 									{/if}
-								</p>
+								</ul>
 							{/if}
 							<small class="containerContentType">{lang}wcf.search.object.{@$message->getObjectTypeName()}{/lang}</small>
 						</div>

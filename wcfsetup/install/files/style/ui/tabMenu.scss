@@ -1,10 +1,10 @@
 .tabMenuContainer:not(:first-child) {
-	margin-top: 30px;
+	//margin-top: 30px;
 }
 
 /* main tabs */
 .tabMenu {
-	margin-bottom: 20px;
+	//margin-bottom: 20px;
 	position: relative;
 	
 	> ul {
@@ -40,6 +40,14 @@
 
 .tabMenuContent.hidden {
 	display: none;
+}
+
+.tabMenuContent {
+	// remove upper border if containerList is the first child
+	> .containerList:first-child > li:first-child {
+		border-top-width: 0;
+	}
+	
 }
 
 /* sub tabs */

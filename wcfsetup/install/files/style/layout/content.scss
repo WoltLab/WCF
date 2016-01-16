@@ -46,11 +46,8 @@
 	.section {
 		margin-top: 30px;
 		
-		> .sectionTitle {
-			border-bottom: 1px solid $wcfContentBorderInner;
+		.sectionTitle {
 			color: $wcfContentHeadlineText; // todo: rename variable
-			margin-bottom: 20px;
-			padding-bottom: 10px;
 			
 			@extend .wcfFontHeadline;
 			
@@ -60,6 +57,23 @@
 				&:hover {
 					color: $wcfContentHeadlineLinkActive; // todo: rename variable
 				}
+			}
+		}
+		
+		.sectionDescription {
+			color: $wcfContentDimmedText;
+		}
+		
+		> .sectionHeader,
+		> .sectionTitle {
+			margin-bottom: 20px;
+		}
+		
+		&:not(.sectionContainerList) {
+			> .sectionHeader,
+			> .sectionTitle {
+				border-bottom: 1px solid $wcfContentBorderInner;
+				padding-bottom: 10px;
 			}
 		}
 	}
@@ -88,6 +102,12 @@
 			
 			&+ * {
 				clear: left;
+			}
+			
+			+ small {
+				color: $wcfContentDimmedText;
+				position: relative;
+				top: -12px;
 			}
 		}
 	}

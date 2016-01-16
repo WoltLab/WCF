@@ -18,12 +18,20 @@
 	
 	/* adds a comma after each list item */
 	&.commaSeparated {
-		@extend .wcfFontSmall;
-		
 		> li {
 			&:not(:last-child):after {
 				content: ",";
 				padding-left: 1px;
+			}
+		}
+	}
+	
+	/* adds a dot after each list item */
+	&.dotSeparated {
+		> li {
+			&:not(:last-child):after {
+				content: "\00b7";
+				margin-left: 5px;
 			}
 		}
 	}
@@ -44,36 +52,14 @@ ol.nativeList {
 	list-style-type: decimal;
 }
 
-
-/*@todo*/
-.framedIconList {
-	display: flex;
-	flex-wrap: wrap;
-	padding-top: 10px;
-	
-	> li {
-		flex: 0 0 25%;
-		text-align: center;
-		
-		> a {
-			display: block;
-		}
-	}
-	
-	& + .more {
-		float: right;
-		margin-top: 10px;
-	}
-}
-
-/*@todo*/
+/* tag cloud list */
 .tagList {
 	@extend .inlineList;
 	
 	align-items: baseline;
 }
 
-/*@todo*/
+/* list of smileys */
 .smileyList {
 	align-items: center;
 }

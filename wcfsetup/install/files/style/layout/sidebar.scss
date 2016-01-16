@@ -49,6 +49,26 @@
 	.formSubmit:not(:first-child) {
 		margin-top: 20px;
 	}
+	
+	.boxContainer {
+		> div,
+		> fieldset,
+		> section {
+			overflow: hidden;
+			
+			.button.more {
+				float: right;
+				margin-top: 10px;
+			}
+		}
+	}
+	
+	.boxTitle {
+		.badge {
+			float: right;
+			margin-top: 5px;
+		}
+	}
 }
 
 /*.sidebar {

@@ -5,8 +5,11 @@
 			
 			<div>
 				<div class="containerHeadline">
-					<h3><a href="{link controller='User' object=$like->getUserProfile()}{/link}" class="userLink" data-user-id="{@$like->getUserProfile()->userID}">{$like->getUserProfile()->username}</a><small> - {@$like->time|time}</small></h3> 
-					<p><strong>{@$like->getTitle()}</strong></p>
+					<h3>
+						<a href="{link controller='User' object=$like->getUserProfile()}{/link}" class="userLink" data-user-id="{@$like->getUserProfile()->userID}">{$like->getUserProfile()->username}</a>
+						<small class="separatorLeft">{@$like->time|time}</small>
+					</h3> 
+					<p>{@$like->getTitle()}</p>
 					<small class="containerContentType">{lang}wcf.like.objectType.{@$like->getObjectTypeName()}{/lang}</small>
 				</div>
 				

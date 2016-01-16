@@ -1,5 +1,6 @@
 .containerList > li {
-	padding: 20px 0;
+	padding: 20px;
+	position: relative;
 	
 	&:not(:last-child) {
 		border-bottom: 1px solid $wcfContentBorderInner;
@@ -13,8 +14,16 @@
 		border-bottom: 1px solid $wcfContentBorder;
 	}
 	
+	&:hover {
+		background-color: $wcfTabularBoxBackgroundActive;
+	}
+		
 	&.showMore {
 		text-align: center;
+		
+		&:hover {
+			background-color: transparent;
+		}
 	}
 	
 	.containerHeadline {
@@ -30,6 +39,47 @@
 		+ * {
 			margin-top: 10px;
 		}
+	}
+	
+	.buttonGroupNavigation {
+		opacity: 0;
+		position: absolute;
+		right: 20px;
+		top: 18px;
+		
+		> ul {
+			background-color: $wcfContentBackground;
+			border: 1px solid rgba(0, 0, 0, .15);
+			border-radius: 6px;
+			
+			> li {
+				margin-right: 0;
+				
+				&:not(:last-child) {
+					border-right: 1px solid rgba(0, 0, 0, .15);
+				}
+				
+				> a {
+					padding: 6px;
+					
+					> .icon {
+						color: rgba(0, 0, 0, .5);
+					}
+				}
+				
+				&:hover {
+					> a {
+						> .icon {
+							color: $wcfContentText;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	&:hover .buttonGroupNavigation {
+		opacity: 1;
 	}
 }
 
@@ -64,18 +114,12 @@
 	}
 }
 
+/*
 .userList .userInformation {
 	position: relative;
 	
-	&:hover > .buttonGroupNavigation {
-		opacity: 1;
-	}
 	
-	> .buttonGroupNavigation {
-		opacity: 0;
-		position: absolute;
-		right: 0;
-		top: 0;
-		transition: opacity .2s linear;
-	}
+	
+	> 
 }
+*/
