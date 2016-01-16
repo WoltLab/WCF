@@ -1,23 +1,21 @@
 .dialogOverlay {
-	align-items: flex-start;
 	background-color: transparent;
 	bottom: 0;
-	display: flex;
-	justify-content: center;
 	left: 0;
+	opacity: 0;
 	padding: 100px 0;
 	position: fixed;
 	right: 0;
 	top: 0;
+	transition: opacity .12s linear, visibility 0s linear .3s;
 	visibility: hidden;
+	will-change: opacity;
 	z-index: 399;
 	
-	transition: visibility 0s linear .3s;
-	
 	&[aria-hidden=false] {
-		visibility: visible;
-		
+		opacity: 1;
 		transition-delay: 0s;
+		visibility: visible;
 	}
 	
 	&::before {
@@ -33,31 +31,31 @@
 	}
 }
 
-@-webkit-keyframes wcfDialog {
-	0%   { visibility: visible; opacity: 0; top: 8%; }
-	100% { visibility: visible; opacity: 1; top: 10%; }
+@keyframes wcfDialog {
+	0%   { visibility: visible; top: 8%; }
+	100% { visibility: visible; top: 10%; }
 }
 
-@-webkit-keyframes wcfDialogOut {
-	0% { visibility: visible; opacity: 1; top: 10%; }
-	100% { visibility: hidden; opacity: 0; top: 12%; }
+@keyframes wcfDialogOut {
+	0% { visibility: visible; top: 10%; }
+	100% { visibility: hidden; top: 12%; }
 }
 
 .dialogContainer {
-	border: 1px solid $wcfContentBorder;
+	animation: wcfDialogOut .3s;
+	animation-fill-mode: forwards;
 	box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
+	left: 50%;
 	max-height: 80%;
 	max-width: 80%;
 	min-width: 400px;
-	will-change: opacity, transform;
+	position: absolute;
+	transform: translateX(-50%);
 	z-index: 200;
 	
-	-webkit-animation: wcfDialogOut .3s;
-	-webkit-animation-fill-mode: forwards;
-	
 	&[aria-hidden=false] {
-		-webkit-animation: wcfDialog .3s;
-		-webkit-animation-fill-mode: forwards;
+		animation: wcfDialog .3s;
+		animation-fill-mode: forwards;
 		
 		& ~ .dialogContainer[aria-hidden=false] {
 			z-index: 50;
@@ -65,9 +63,8 @@
 	}
 	
 	> header {
-		background-color: $wcfContentBackground;
-		border-bottom: 1px solid $wcfContentBorderInner;
-		color: $wcfContentHeadlineText;
+		background-color: $wcfHeaderBackground;
+		color: $wcfHeaderText;
 		display: flex;
 		padding: 10px 20px;
 		
@@ -78,7 +75,7 @@
 		}
 		
 		> a {
-			color: $wcfContentHeadlineLink;
+			color: $wcfHeaderLink;
 			flex: 0 0 20px;
 			font-family: FontAwesome;
 			font-size: 18px;
@@ -87,6 +84,10 @@
 			
 			&::before {
 				content: $fa-var-times;
+			}
+			
+			&:hover {
+				color: $wcfHeaderLinkActive;
 			}
 			
 			> span {
@@ -119,6 +120,14 @@
 			border-bottom-right-radius: 3px;
 		}
 		
+		a {
+			color: $wcfContentLink;
+			
+			&:hover {
+				color: $wcfContentLinkActive;
+			}
+		}
+		
 		dl:not(.plain) {
 			> dt {
 				float: none;
@@ -136,7 +145,7 @@
 		}
 		
 		.dialogFormSubmit {
-			background-color: $wcfContentBackground;
+			background-color: $wcfSidebarBackground;
 			border-top: 1px solid $wcfContentBorderInner;
 			bottom: 0;
 			left: 0;
@@ -187,10 +196,6 @@
 		display: block;
 		margin-top: 5px;
 	}
-}
-
-.systemConfirmation p {
-	//padding-top: @wcfGapSmall;
 }
 
 /* notification overlay */
