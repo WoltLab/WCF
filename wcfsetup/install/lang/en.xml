@@ -636,7 +636,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Add Notice]]></item>
 		<item name="wcf.acp.menu.link.notice.list"><![CDATA[List Notices]]></item>
-		<item name="wcf.acp.menu.link.ad"><![CDATA[Ad]]></item>
+		<item name="wcf.acp.menu.link.ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.menu.link.ad.add"><![CDATA[Add Ad]]></item>
 		<item name="wcf.acp.menu.link.ad.list"><![CDATA[List Ads]]></item>
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
