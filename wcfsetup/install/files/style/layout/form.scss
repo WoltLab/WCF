@@ -69,6 +69,11 @@ textarea {
 .selectDropdown {
 	position: relative;
 	
+	// force inline-block to mimic the <select> display and make both its dimensions
+	// and flow behavior more predictable; !important is required to prevent styles
+	// applied to generic <label> in certain cases such as within <dd>
+	display: inline-block !important;
+	
 	&::after {
 		content: $fa-var-caret-down;
 		display: block;
@@ -77,7 +82,8 @@ textarea {
 		pointer-events: none;
 		position: absolute;
 		right: 7px;
-		top: 0px;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 	
 	> select {
