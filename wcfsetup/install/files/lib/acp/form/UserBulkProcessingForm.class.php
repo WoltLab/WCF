@@ -145,6 +145,15 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	public $activeOptions = array();
 	
 	/**
+	 * @see	\wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 */
+	protected function initOptionHandler() {
+		$this->optionHandler->enableSearchMode();
+		
+		parent::initOptionHandler();
+	}
+	
+	/**
 	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
@@ -269,10 +278,11 @@ class UserBulkProcessingForm extends UserOptionListForm {
 			$this->conditions->add('user_table.activationCode <> ?', array(0));
 		}
 		
-		// dynamic fields
-		foreach ($this->activeOptions as $name => $option) {
-			$value = isset($this->values[$option['optionName']]) ? $this->values[$option['optionName']] : null;
-			$this->getTypeObject($option['optionType'])->getCondition($this->conditions, $option, $value);
+		foreach ($this->optionHandler->getCategoryOptions('profile') as $option) {
+			$option = $option['object'];
+			
+			$value = isset($this->optionHandler->optionValues[$option->optionName]) ? $this->optionHandler->optionValues[$option->optionName] : null;
+			$this->optionHandler->getTypeObject($option->optionType)->getCondition($this->conditions, $option, $value);
 		}
 		
 		// call buildConditions event
@@ -464,12 +474,6 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		}
 		
 		$this->availableGroups = $this->getAvailableGroups();
-		
-		foreach ($this->activeOptions as $name => $option) {
-			if (isset($this->values[$name])) {
-				$this->activeOptions[$name]['optionValue'] = $this->values[$name];
-			}
-		}
 		
 		$this->options = $this->optionHandler->getCategoryOptions('profile');
 	}
