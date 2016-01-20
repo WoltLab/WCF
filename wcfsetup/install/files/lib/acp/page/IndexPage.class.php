@@ -2,14 +2,13 @@
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
 use wcf\system\package\PackageInstallationDispatcher;
-use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
 /**
  * Shows the welcome page in admin control panel.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -18,22 +17,22 @@ use wcf\system\WCF;
 class IndexPage extends AbstractPage {
 	/**
 	 * server information
-	 * @var	array
+	 * @var string[]
 	 */
-	public $server = array();
+	public $server = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
 		
-		$this->server = array(
+		$this->server = [
 			'os' => PHP_OS,
 			'webserver' => (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : ''),
 			'mySQLVersion' => WCF::getDB()->getVersion(),
 			'load' => ''
-		);
+		];
 		
 		// get load
 		if (function_exists('sys_getloadavg')) {
@@ -45,7 +44,7 @@ class IndexPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -61,15 +60,14 @@ class IndexPage extends AbstractPage {
 			$usersAwaitingApproval = $row['count'];
 		}
 		
-		WCF::getTPL()->assign(array(
-			'inRescueMode' => RequestHandler::getInstance()->inRescueMode(),
+		WCF::getTPL()->assign([
 			'server' => $this->server,
 			'usersAwaitingApproval' => $usersAwaitingApproval
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check package installation queue
@@ -77,9 +75,7 @@ class IndexPage extends AbstractPage {
 			$queueID = PackageInstallationDispatcher::checkPackageInstallationQueue();
 			
 			if ($queueID) {
-				WCF::getTPL()->assign(array(
-					'queueID' => $queueID
-				));
+				WCF::getTPL()->assign(['queueID' => $queueID]);
 				WCF::getTPL()->display('packageInstallationSetup');
 				exit;
 			}

@@ -189,21 +189,12 @@ textarea {
 		margin-bottom: 5px;
 	}
 	
-	> .inputPrefix {
-		flex: 0 0 auto;
-		
-		&.button {
-			border-radius: 0;
-			margin-right: 5px;
-		}
-	}
-	
+	> .inputPrefix,
 	> .inputSuffix {
 		flex: 0 0 auto;
 		
 		&.button {
 			border-radius: 0;
-			margin-left: 5px;
 		}
 		
 		&:not(.button) {
@@ -211,13 +202,24 @@ textarea {
 			border: 1px solid $wcfButtonBorder;
 			color: $wcfButtonText;
 			cursor: default;
-			margin-left: 5px;
 			padding: 3px 5px;
 		}
 	}
 	
+	> .inputPrefix {
+		margin-right: 5px;
+	}
+	
+	> .inputSuffix {
+		margin-left: 5px;
+	}
+	
 	input {
 		flex: 1 auto;
+		
+		& + .inputPrefix {
+			margin-left: 5px;
+		}
 	}
 }
 

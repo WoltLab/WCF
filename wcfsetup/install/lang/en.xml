@@ -1316,6 +1316,16 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[Rebuilds the daily statistics]]></item>
 	</category>
 	
+	<category name="wcf.acp.rescueMode">
+		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>
+		<item name="wcf.acp.rescueMode.application"><![CDATA[Installed Applications]]></item>
+		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Please adjust both domain and path for each application listed below to match the changed settings. The domain must be provided without an explicit protocol such as “http://” or “https://”.]]></item>
+		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Credentials]]></item>
+		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Changes to the configuration require valid credentials of an administrator with the permissions to manage installed applications.]]></item>
+		<item name="wcf.acp.rescueMode.description"><![CDATA[The configured domains and/or paths do not match the address used to access this page. This can happen when moving to a new domain or changing the directory structure. Please use the form below to provide the new values.]]></item>
+		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[This user is not authorized to manage installed applications.]]></item>
+	</category>
+	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[No results]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[ACP Menu]]></item>

@@ -26,13 +26,13 @@ class RequestHandler extends SingletonFactory {
 	 * active request object
 	 * @var	Request
 	 */
-	protected $activeRequest = null;
+	protected $activeRequest;
 	
 	/**
 	 * true, if current domain mismatch any known domain
 	 * @var	boolean
 	 */
-	protected $inRescueMode = true;
+	protected $inRescueMode = false;
 	
 	/**
 	 * indicates if the request is an acp request
@@ -44,29 +44,7 @@ class RequestHandler extends SingletonFactory {
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		if (isset($_SERVER['HTTP_HOST'])) {
-			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-				if ($application->domainName == $_SERVER['HTTP_HOST']) {
-					$this->inRescueMode = false;
-					break;
-				}
-			}
-			
-			// check if WCF is running as standalone
-			if ($this->inRescueMode() && PACKAGE_ID == 1) {
-				if (ApplicationHandler::getInstance()->getWCF()->domainName == $_SERVER['HTTP_HOST']) {
-					$this->inRescueMode = false;
-				}
-			}
-		}
-		else {
-			// when using cli, no rescue mode is provided
-			$this->inRescueMode = false;
-		}
-		
-		if (class_exists('wcf\system\WCFACP', false)) {
-			$this->isACPRequest = true;
-		}
+		$this->isACPRequest = class_exists('wcf\system\WCFACP', false);
 	}
 	
 	/**

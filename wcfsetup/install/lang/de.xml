@@ -1317,6 +1317,16 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[Erzeugt die täglichen Statistiken neu]]></item>
 	</category>
 	
+	<category name="wcf.acp.rescueMode">
+		<item name="wcf.acp.rescueMode"><![CDATA[Systemwiederherstellung]]></item>
+		<item name="wcf.acp.rescueMode.application"><![CDATA[Installierte Anwendungen]]></item>
+		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Bitte passen Sie sowohl die Domain als auch den Pfad jeder aufgeführten Anwendung an die geänderten Einstellung an, die Angabe der Domain erfolgt ohne Protokoll („http://“ bzw. „https://“).]]></item>
+		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Zugangsdaten]]></item>
+		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Die Änderung der Konfiguration erfordert gültige Zugangsdaten für ein Administrator-Konto mit der Berechtigung die installierten Anwendungen zu verwalten.]]></item>
+		<item name="wcf.acp.rescueMode.description"><![CDATA[Die eingestellte Domains und/oder Pfade stimmen nicht mit der für den Aufruf verwendeten Adresse überein; Dies kann in Folge eines Umzugs auf eine andere Domain oder Veränderung der Verzeichnisstruktur auftreten. Mit Hilfe des unten stehenden Formulars können Sie die Angaben schnell und einfach anpassen.]]></item>
+		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[Diese Benutzer ist nicht berechtigt die Konfiguration zu verändern.]]></item>
+	</category>
+	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[Keine Treffer]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Seiten]]></item>
