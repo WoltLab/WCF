@@ -209,7 +209,7 @@ class RescueModeForm extends AbstractCaptchaForm {
 			$this->applicationValues[$packageID]['domainPath'] = $domainPath;
 			
 			if (isset($usedPaths[$domainName])) {
-				if(isset($usedPaths[$domainName][$domainPath])) {
+				if (isset($usedPaths[$domainName][$domainPath])) {
 					WCF::getTPL()->assign('conflictApplication', $this->applications[$usedPaths[$domainName][$domainPath]]->getPackage());
 					throw new UserInputException("application_{$packageID}_domainPath", 'conflict');
 				}

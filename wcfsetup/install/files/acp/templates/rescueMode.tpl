@@ -6,7 +6,7 @@
 	<title>{lang}wcf.acp.rescueMode{/lang} - {lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600">
-	<link rel="stylesheet" href="{$pageURL}&proxy=css">
+	<link rel="stylesheet" href="{$pageURL}&amp;proxy=css">
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
@@ -19,7 +19,7 @@
 				<div class="layoutBoundary">
 					<div id="logo" class="logo">
 						<a href="{$pageURL}">
-							<img src="{$pageURL}&proxy=logo" alt="" class="large">
+							<img src="{$pageURL}&amp;proxy=logo" alt="" class="large">
 						</a>
 					</div>
 				</div>
