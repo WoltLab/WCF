@@ -1,5 +1,6 @@
 .layoutBoundary {
 	margin: 0 auto;
+	padding: 0 20px;
 	
 	@if $useFluidLayout {
 		min-width: $wcfLayoutMinWidth;

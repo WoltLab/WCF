@@ -56,8 +56,14 @@ a {
 	}
 }
 
-#content {
-	flex: 1 auto;
+.content {
+	flex: 0 0 auto;
+	
+	// sidebar follows
+	&:not(:last-child) {
+		flex-basis: calc(100% - 340px);
+		max-width: calc(100% - 340px); // IE fix
+	}
 }
 
 .sidebar {
@@ -66,9 +72,20 @@ a {
 	&:first-child {
 		margin-right: 30px;
 	}
+	
+	& + .content {
+		flex-basis: calc(100% - 340px);
+		max-width: calc(100% - 340px); // IE fix
+		
+		// sidebar follows
+		&:not(:last-child) {
+			flex-basis: calc(100% - 680px);
+			max-width: calc(100% - 680px); // IE fix
+		}
+	}
 }
 
-#content + .sidebar {
+.content + .sidebar {
 	margin-left: 30px;
 }
 

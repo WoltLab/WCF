@@ -2057,7 +2057,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputTe
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputPlaceholder', 'rgba(169, 169, 169, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFixedWidth', '1200px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMaxWidth', '1400px');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMinWidth', '980px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMinWidth', '1240px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationBackground', 'rgba(52, 73, 94, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationLink', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationLinkActive', 'rgba(255, 255, 255, 1)');

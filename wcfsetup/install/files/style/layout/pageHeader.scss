@@ -19,7 +19,8 @@
 	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
-	padding: 20px 0;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 /* LOGO */
@@ -94,6 +95,22 @@
 				}
 			}
 		}
+		
+		// TESTING
+		> .boxMenuHasChildren > a {
+			padding-right: 30px;
+			
+			&::before {
+				border-left: 1px solid $wcfHeaderBackground;
+				bottom: 0;
+				content: "";
+				display: block;
+				position: absolute;
+				right: 22px;
+				top: 0;
+			}
+		}
+		// TESTING
 		
 		.boxMenuDepth1 {
 			background-color: $wcfHeaderMenuDropdownBackground;
