@@ -6047,7 +6047,16 @@ WCF.InlineEditor = Class.extend({
 		// build dropdown
 		var $trigger = null;
 		if (!this._dropdowns[$elementID]) {
-			this._triggerElements[$elementID] = $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle').wrap('<span class="dropdown" />');
+			this._triggerElements[$elementID] = $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle');
+			var parent = $trigger[0].parentNode;
+			if (parent && parent.nodeName === 'LI' && parent.childElementCount === 1) {
+				// do not add a wrapper element if the trigger is the only child
+				parent.classList.add('dropdown');
+			}
+			else {
+				$trigger.wrap('<span class="dropdown" />');
+			}
+			
 			this._dropdowns[$elementID] = $('<ul class="dropdownMenu" />').insertAfter($trigger);
 		}
 		this._dropdowns[$elementID].empty();
