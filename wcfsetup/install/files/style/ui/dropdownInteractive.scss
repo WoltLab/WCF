@@ -23,7 +23,7 @@
 		
 		> span {
 			border: 8px solid transparent;
-			border-bottom-color: $wcfDropdownBackground;
+			border-bottom-color: rgb(247, 248, 250); // @todo
 			border-top-width: 0;
 			content: "";
 			display: block;
@@ -57,7 +57,7 @@
 
 .interactiveDropdownHeader {
 	align-items: center;
-	background-color: rgb(247, 248, 250);
+	background-color: rgb(247, 248, 250); // @todo
 	display: flex;
 	padding: 5px 10px;
 }
