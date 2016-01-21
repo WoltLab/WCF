@@ -25,10 +25,10 @@
 
 /* boxes with an image */
 @mixin box($imageSize, $margin: 0) {
-	display: flex;
+	display: flex !important;
 	
 	> :first-child:not(:last-child) {
-		flex: 0 auto;
+		flex: 0 0 auto;
 		margin-right: $margin;
 	}
 	

@@ -24,7 +24,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		 * 
 		 * @param	{string}					containerId		input element conainer id
 		 * @param	{string}					chooserId		input element id
-		 * @param	{integer}					languageId		selected language id
+		 * @param	{int}   					languageId		selected language id
 		 * @param	{object<integer, object<string, string>>}	languages		data of available languages
 		 * @param	{function}					callback		function called after a language is selected
 		 * @param	{boolean}					allowEmptyValue		true if no language may be selected
@@ -66,23 +66,15 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		/**
 		 * Sets up DOM and event listeners for a language chooser.
 		 *
-		 * @param	{string}					chooserId		chooser id
-		 * @param	{Element}					element			chooser element
-		 * @param	{integer}					languageId		selected language id
-		 * @param	{object<integer, object<string, string>>}	languages		data of available languages
-		 * @param	{boolean}					allowEmptyValue		true if no language may be selected
+		 * @param	{string}				chooserId		chooser id
+		 * @param	{Element}				element			chooser element
+		 * @param	{int}	        			languageId		selected language id
+		 * @param	{object<int, object<string, string>>}	languages		data of available languages
+		 * @param       {function}                              callback                callback function invoked on selection change
+		 * @param	{boolean}				allowEmptyValue		true if no language may be selected
 		 */
 		_initElement: function(chooserId, element, languageId, languages, callback, allowEmptyValue) {
 			var container = element.parentNode;
-			if (!container.classList.contains('inputAddon')) {
-				container = elCreate('div');
-				container.className = 'inputAddon';
-				elAttr(container, 'data-input-id', chooserId);
-				
-				element.parentNode.insertBefore(container, element);
-				container.appendChild(element);
-			}
-			
 			container.classList.add('dropdown');
 			var dropdownToggle = elCreate('div');
 			dropdownToggle.className = 'dropdownToggle boxFlag box24 inputPrefix';
@@ -93,7 +85,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			DomUtil.insertAfter(dropdownMenu, dropdownToggle);
 			
 			var callbackClick = (function(event) {
-				var languageId = ~~event.currentTarget.getAttribute('data-language-id');
+				var languageId = ~~elData(event.currentTarget, 'data-language-id');
 				
 				var activeItem = DomTraverse.childByClass(dropdownMenu, 'active');
 				if (activeItem !== null) activeItem.classList.remove('active');
@@ -104,25 +96,26 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			}).bind(this);
 			
 			// add language dropdown items
+			var a, div, h3, img, listItem;
 			for (var availableLanguageId in languages) {
 				if (languages.hasOwnProperty(availableLanguageId)) {
 					var language = languages[availableLanguageId];
 					
-					var listItem = elCreate('li');
+					listItem = elCreate('li');
 					listItem.className = 'boxFlag';
-					listItem.addEventListener('click', callbackClick)
-					elAttr(listItem, 'data-language-id', availableLanguageId);
+					listItem.addEventListener('click', callbackClick);
+					elData(listItem, 'language-id', availableLanguageId);
 					dropdownMenu.appendChild(listItem);
 					
-					var a = elCreate('a');
+					a = elCreate('a');
 					a.className = 'box24';
 					listItem.appendChild(a);
 					
-					var div = elCreate('div');
+					div = elCreate('div');
 					div.className = 'framed';
 					a.appendChild(div);
 					
-					var img = elCreate('img');
+					img = elCreate('img');
 					elAttr(img, 'src', language.iconPath);
 					elAttr(img, 'alt', '');
 					img.className = 'iconFlag';
@@ -131,7 +124,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 					div = elCreate('div');
 					a.appendChild(div);
 					
-					var h3 = elCreate('h3');
+					h3 = elCreate('h3');
 					h3.textContent = language.languageName;
 					div.appendChild(h3);
 					
@@ -143,16 +136,16 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			
 			// add dropdown item for "no selection"
 			if (allowEmptyValue) {
-				var listItem = elCreate('li');
+				listItem = elCreate('li');
 				listItem.className = 'dropdownDivider';
 				dropdownMenu.appendChild(listItem);
 				
 				listItem = elCreate('li');
-				elAttr(listItem, 'data-language-id', availableLanguageId);
+				elData(listItem, 'language-id', availableLanguageId);
 				listItem.addEventListener('click', callbackClick);
 				dropdownMenu.appendChild(listItem);
 				
-				var a = elCreate('a');
+				a = elCreate('a');
 				a.textContent = Language.get('wcf.global.language.noSelection');
 				listItem.appendChild(a);
 				
@@ -165,7 +158,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			else if (languageId === 0) {
 				dropdownToggle.innerHTML = null;
 				
-				var div = elCreate('div');
+				div = elCreate('div');
 				dropdownToggle.appendChild(div);
 				
 				var span = elCreate('span');
@@ -175,7 +168,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 				div = elCreate('div');
 				dropdownToggle.appendChild(div);
 				
-				var h3 = elCreate('h3');
+				h3 = elCreate('h3');
 				h3.textContent = Language.get('wcf.global.language.noSelection');
 				div.appendChild(h3);
 			}
@@ -208,8 +201,8 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		 * Selects a language from the dropdown list.
 		 * 
 		 * @param	{string}	chooserId	input element id
-		 * @param	{integer}	languageId	language id or `0` to disable i18n
-		 * @param	{Element}	listItem	selected list item
+		 * @param	{int}	        languageId	language id or `0` to disable i18n
+		 * @param	{Element=}	listItem	selected list item
 		 */
 		_select: function(chooserId, languageId, listItem) {
 			var chooser = _choosers.get(chooserId);
@@ -218,7 +211,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 				var listItems = chooser.dropdownMenu.childNodes;
 				for (var i = 0, length = listItems.length; i < length; i++) {
 					var _listItem = listItems[i];
-					if (elAttr(_listItem, 'data-language-id') == languageId) {
+					if (~~elData(_listItem, 'language-id') === languageId) {
 						listItem = _listItem;
 						break;
 					}
@@ -254,7 +247,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 				input = elCreate('input');
 				input.type = 'hidden';
 				input.name = elementIds[i];
-				input.value = this.getLanguageId(elementId);
+				input.value = this.getLanguageId(elementIds[i]);
 				
 				event.currentTarget.appendChild(input);
 			}
@@ -279,7 +272,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		 * Returns the selected language for a certain chooser.
 		 * 
 		 * @param	{string}	chooserId	input element id
-		 * @return	{integer}	choosen language id
+		 * @return	{int}	        choosen language id
 		 */
 		getLanguageId: function(chooserId) {
 			return ~~this.getChooser(chooserId).element.value;
@@ -289,7 +282,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		 * Sets the language for a certain chooser.
 		 * 
 		 * @param	{string}	chooserId	input element id
-		 * @param	{integer}	languageId	language id to be set
+		 * @param	{int}	        languageId	language id to be set
 		 */
 		setLanguageId: function(chooserId, languageId) {
 			if (_choosers.get(chooserId) === undefined) {
