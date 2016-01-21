@@ -24,7 +24,7 @@
 		
 		> span {
 			border: 8px solid transparent;
-			border-bottom-color: $wcfDropdownBackground;
+			border-bottom-color: rgb(247, 248, 250); // @todo
 			border-top-width: 0;
 			content: "";
 			display: inline-block;
@@ -40,22 +40,12 @@
 			overflow: visible;
 			max-height: none;
 		}
-		
-		> .pointer {
-			border-width: 0 7px 7px 7px;
-			top: -7px;
-			
-			> span {
-				border-width: 0 5px 5px 5px;
-				left: -5px;
-			}
-		}
 	}
 }
 
 .interactiveDropdownHeader {
 	align-items: center;
-	background-color: rgb(247, 248, 250);
+	background-color: rgb(247, 248, 250); // @todo
 	display: flex;
 	padding: 5px 10px;
 }

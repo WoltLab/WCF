@@ -41,6 +41,10 @@
 			> .icon {
 				color: $wcfHeaderLink;
 			}
+			
+			&:hover > .icon {
+				color: $wcfHeaderLinkActive;
+			}
 		}
 	}
 }
