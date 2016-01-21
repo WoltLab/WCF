@@ -93,6 +93,10 @@
 		&:first-child:nth-last-child(3) ~ .box {
 			flex-basis: 33.3333%;
 		}
+		
+		a:hover {
+			text-decoration: underline;
+		}
 	}
 	
 	.boxImage {
