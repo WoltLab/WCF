@@ -1,0 +1,50 @@
+.pageNavigation {
+	background-color: $wcfNavigationBackground;
+	color: $wcfNavigationText;
+	flex: 0 0 auto;
+	padding: 5px 0;
+	z-index: 25;
+	
+	> div {
+		align-items: center;
+		display: flex;
+		justify-content: flex-end;
+		height: 30px;
+	}
+	
+	.icon {
+		color: $wcfNavigationText;
+	}
+	
+	a {
+		color: $wcfNavigationLink;
+		
+		&:hover {
+			color: $wcfNavigationLinkActive;
+		}
+	}
+}
+
+.pageNavigationIcons {
+	display: flex;
+	flex: 0 0 auto;
+	flex-direction: row-reverse;
+	
+	> li {
+		flex: 0 0 auto;
+		
+		&:not(:last-child) {
+			margin-left: 10px;
+		}
+		
+		> a {
+			> .icon {
+				color: $wcfHeaderLink;
+			}
+			
+			&:hover > .icon {
+				color: $wcfHeaderLinkActive;
+			}
+		}
+	}
+}

@@ -1107,7 +1107,7 @@ WCF.ACP.Package.Search = Class.extend({
 	_setupPagination: function() {
 		// remove previous instances
 		this._content = { 1: this._packageSearchResultList.html() };
-		this._packageSearchResultContainer.find('.pageNavigation').wcfPages('destroy').remove();
+		this._packageSearchResultContainer.find('.pagination').wcfPages('destroy').remove();
 		
 		if (this._pageCount > 1) {
 			// TODO: Fix ui.wcfPages to properly synchronize multiple instances without triggering events
@@ -1493,7 +1493,7 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		}
 		else {
 			var $button = $('<li><a class="button"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
-			$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul'));
+			$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pagination) > ul'));
 		}
 	},
 	
@@ -1575,7 +1575,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 		});
 		
 		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search') + '</span></a></li>');
-		$button.prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul')).click($.proxy(this._click, this));
+		$button.prependTo($('.contentNavigation:eq(0) > nav:not(.pagination) > ul')).click($.proxy(this._click, this));
 	},
 	
 	/**

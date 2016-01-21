@@ -84,7 +84,7 @@
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
 				'wcf.global.page.jumpTo.description': '{lang}wcf.global.page.jumpTo.description{/lang}',
-				'wcf.global.page.pageNavigation': '{lang}wcf.global.page.pageNavigation{/lang}',
+				'wcf.global.page.pagination': '{lang}wcf.global.page.pagination{/lang}',
 				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 				'wcf.global.pageDirection': '{lang}wcf.global.pageDirection{/lang}',
@@ -131,7 +131,7 @@
 			if (jQuery.browser.touch) $('html').addClass('touch');
 			
 			new WCF.Effect.SmoothScroll();
-			WCF.System.PageNavigation.init('.pageNavigation');
+			WCF.System.PageNavigation.init('.pagination');
 			
 			{if $__wcf->user->userID}
 				//new WCF.ACP.Search();

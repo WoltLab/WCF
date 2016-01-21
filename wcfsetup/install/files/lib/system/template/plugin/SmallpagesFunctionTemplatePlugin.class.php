@@ -30,7 +30,7 @@ class SmallpagesFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 	/**
 	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::$cssClassName
 	 */
-	protected $cssClassName = 'pageNavigation small';
+	protected $cssClassName = 'pagination small';
 	
 	/**
 	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::makePreviousLink()

@@ -451,7 +451,7 @@
 		.columnSubject > .statusDisplay {
 			opacity: 1;
 			
-			> .pageNavigation {
+			> .pagination {
 				opacity: 1;
 			}
 		}
@@ -491,7 +491,7 @@
 		}
 	}
 	
-	.pageNavigation {
+	.pagination {
 		flex: 0 0 auto;
 		opacity: 0;
 		

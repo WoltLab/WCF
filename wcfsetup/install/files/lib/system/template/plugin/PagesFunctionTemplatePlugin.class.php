@@ -33,7 +33,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * CSS class name for <nav> element
 	 * @var	string
 	 */
-	protected $cssClassName = 'pageNavigation';
+	protected $cssClassName = 'pagination';
 	
 	/**
 	 * Inserts the page number into the link.

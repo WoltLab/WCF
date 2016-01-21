@@ -2234,7 +2234,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
-		<item name="wcf.global.page.pageNavigation"><![CDATA[Navigation]]></item>
+		<item name="wcf.global.page.pagination"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Vorherige Seite]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.redirect.title"><![CDATA[Weiterleitung]]></item>
