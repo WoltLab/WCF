@@ -85,7 +85,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			DomUtil.insertAfter(dropdownMenu, dropdownToggle);
 			
 			var callbackClick = (function(event) {
-				var languageId = ~~elData(event.currentTarget, 'data-language-id');
+				var languageId = ~~elData(event.currentTarget, 'language-id');
 				
 				var activeItem = DomTraverse.childByClass(dropdownMenu, 'active');
 				if (activeItem !== null) activeItem.classList.remove('active');
