@@ -1134,7 +1134,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 			$('<a href="' + options.showAllLink + '" class="interactiveDropdownShowAll">' + WCF.Language.get('wcf.user.panel.showAll') + '</a>').appendTo(this._container);
 		}
 		
-		this._pointer = $('<span class="pointer"><span /></span>').appendTo(this._container);
+		this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
 		
 		if (!$.browser.mobile && $itemContainer !== null) {
 			// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
@@ -1275,100 +1275,11 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * @param	string		pageDirection
 	 */
 	_renderDesktop: function(pageDirection) {
-		var $elementDimensions = this._triggerElement.getDimensions('outer');
-		var $elementOffsets = this._triggerElement.getOffsets('offset');
-		var $dropdownDimensions = this._container.getDimensions();
-		var $pageWidth = $(window).width();
-		
-		var $left = null;
-		var $right = null;
-		if (pageDirection === 'ltr') {
-			$left = this._getPositionLeft($elementOffsets, $dropdownDimensions, $pageWidth);
-			
-			if (!$left.result) {
-				$right = this._getPositionRight($elementOffsets, $dropdownDimensions, $elementDimensions, $pageWidth);
-				
-				if ($right.result) {
-					$left = null;
-				}
-				else {
-					$right = null;
-				}
-			}
-		}
-		else {
-			$right = this._getPositionRight($elementOffsets, $dropdownDimensions, $elementDimensions, $pageWidth);
-			
-			if (!$right.result) {
-				$left = this._getPositionLeft($elementOffsets, $dropdownDimensions, $pageWidth);
-				if ($left.result) {
-					$right = null;
-				}
-				else {
-					$left = null;
-				}
-			}
-		}
-		
-		if ($right === null) {
-			// align to the left
-			this._container.css({
-				left: $left.left + 'px',
-				top: $elementOffsets.top + $elementDimensions.height + 'px'
+		require(['Ui/Alignment'], (function(UiAlignment) {
+			UiAlignment.set(this._container[0], this._triggerElement[0], {
+				pointer: true
 			});
-			
-			this._pointer.css({
-				left: (this._options.pointerOffset ? this._options.pointerOffset : '4px')
-			});
-		}
-		else {
-			// align to the right
-			this._container.css({
-				right: $right.right + 'px',
-				top: $elementOffsets.top + $elementDimensions.height + 'px'
-			});
-			
-			this._pointer.css({
-				right: (this._options.pointerOffset ? this._options.pointerOffset : '4px')
-			});
-		}
-	},
-	
-	/**
-	 * Calculates the dropdown position aligned with its left side.
-	 * 
-	 * @param	object		elementOffsets
-	 * @param	object		dropdownDimensions
-	 * @param	integer		pageWidth
-	 * @return	object
-	 */
-	_getPositionLeft: function(elementOffsets, dropdownDimensions, pageWidth) {
-		var $left = elementOffsets.left;
-		var $right = elementOffsets.left + dropdownDimensions.width;
-		
-		return {
-			left: $left,
-			result: ($right < pageWidth)
-		};
-	},
-	
-	/**
-	 * Calculates the dropdown position aligned with its right side.
-	 * 
-	 * @param	object		elementOffsets
-	 * @param	object		dropdownDimensions
-	 * @param	object		elementDimensions
-	 * @param	integer		pageWidth
-	 * @return	object
-	 */
-	_getPositionRight: function(elementOffsets, dropdownDimensions, elementDimensions, pageWidth) {
-		var $left = (elementOffsets.left + elementDimensions.width) - dropdownDimensions.width;
-		var $right = pageWidth - (elementOffsets.left + elementDimensions.width);
-		
-		return {
-			result: ($left > 0),
-			right: $right
-		};
+		}).bind(this));
 	}
 });
 

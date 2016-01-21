@@ -12,14 +12,13 @@
 		display: none !important;
 	}
 	
-	> .pointer {
+	> .elementPointer {
 		border: 10px solid transparent;
 		border-bottom-color: $wcfDropdownBorder;
 		border-top-width: 0;
 		content: "";
-		display: inline-block;
+		display: block;
 		position: absolute;
-		top: -10px;
 		z-index: 100;
 		
 		> span {
@@ -27,29 +26,32 @@
 			border-bottom-color: $wcfDropdownBackground;
 			border-top-width: 0;
 			content: "";
-			display: inline-block;
-			left: -8px;
+			display: block;
 			position: absolute;
 			top: 2px;
 			z-index: 101;
 		}
-	}
-	
-	&.interactiveDropdownUserMenu {
-		> .interactiveDropdownItemsContainer {
-			overflow: visible;
-			max-height: none;
-		}
 		
-		> .pointer {
-			border-width: 0 7px 7px 7px;
-			top: -7px;
+		&.left {
+			left: 16px;
 			
 			> span {
-				border-width: 0 5px 5px 5px;
-				left: -5px;
+				left: -8px;
 			}
 		}
+		
+		&.right {
+			right: 16px;
+			
+			> span {
+				right: -7px;
+			}
+		}
+	}
+	
+	&.interactiveDropdownUserMenu > .interactiveDropdownItemsContainer {
+		overflow: visible;
+		max-height: none;
 	}
 }
 
