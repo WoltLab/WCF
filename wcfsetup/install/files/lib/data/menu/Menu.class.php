@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\menu;
 use wcf\data\box\Box;
+use wcf\data\menu\item\MenuItemNodeTree;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
@@ -27,16 +28,16 @@ class Menu extends DatabaseObject {
 	protected static $databaseTableIndexName = 'menuID';
 	
 	/**
-	 * menu item node list
-	 * @var \RecursiveIteratorIterator
+	 * menu item node tree
+	 * @var MenuItemNodeTree
 	 */
-	protected $menuItemNodeList = null;
+	protected $menuItemNodeTree;
 	
 	/**
 	 * box object
 	 * @var Box
 	 */
-	protected $box = null;
+	protected $box;
 	
 	/**
 	 * Returns true if the active user can delete this menu.
@@ -57,11 +58,7 @@ class Menu extends DatabaseObject {
 	 * @return      \RecursiveIteratorIterator
 	 */
 	public function getMenuItemNodeList() {
-		if ($this->menuItemNodeList === null) {
-			$this->menuItemNodeList = MenuCache::getInstance()->getMenuItemsByMenuID($this->menuID)->getNodeList();
-		}
-		
-		return $this->menuItemNodeList;
+		return $this->getMenuItemNodeTree()->getNodeList();
 	}
 	
 	/**
@@ -104,5 +101,16 @@ class Menu extends DatabaseObject {
 		}
 		
 		return $this->box;
+	}
+	
+	/**
+	 * @return MenuItemNodeTree
+	 */
+	protected function getMenuItemNodeTree() {
+		if ($this->menuItemNodeTree === null) {
+			$this->menuItemNodeTree = new MenuItemNodeTree($this->menuID, MenuCache::getInstance()->getMenuItemsByMenuID($this->menuID));
+		}
+		
+		return $this->menuItemNodeTree;
 	}
 }

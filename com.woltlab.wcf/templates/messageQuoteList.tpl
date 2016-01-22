@@ -28,7 +28,7 @@
 										<li data-quote-id="{@$quoteID}">
 											<span>
 												<input type="checkbox" value="1" id="quote_{@$quoteID}" class="jsCheckbox" />
-												{if $supportPaste}<span class="icon icon16 icon-plus jsTooltip jsInsertQuote" title="{lang}wcf.message.quote.insertQuote{/lang}"></span>{/if}
+												{if $supportPaste}<span class="icon icon16 fa-plus jsTooltip jsInsertQuote" title="{lang}wcf.message.quote.insertQuote{/lang}"></span>{/if}
 											</span>
 											
 											<div class="jsQuote">

@@ -114,6 +114,18 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				element.parentNode.insertBefore(container, element);
 				container.insertBefore(element, button);
 				
+				// check if the date input has one of the following classes set otherwise default to 'short'
+				var hasClass = false, knownClasses = ['tiny', 'short', 'medium', 'long'];
+				for (var i = 0; i < 4; i++) {
+					if (element.classList.contains(knownClasses[i])) {
+						hasClass = true;
+					}
+				}
+				
+				if (!hasClass) {
+					element.classList.add('short')
+				}
+				
 				_data.set(element, {
 					shadow: shadowElement,
 					
@@ -457,7 +469,11 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_dateMonth = elCreate('select');
 			_dateMonth.className = 'month';
 			_dateMonth.addEventListener('change', this._changeMonth.bind(this));
-			monthYearContainer.appendChild(_dateMonth);
+			
+			var selectWrapper = elCreate('label');
+			selectWrapper.className = 'selectDropdown';
+			selectWrapper.appendChild(_dateMonth);
+			monthYearContainer.appendChild(selectWrapper);
 			
 			var months = '', monthNames = Language.get('__monthsShort');
 			for (var i = 0; i < 12; i++) {
@@ -468,7 +484,11 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_dateYear = elCreate('select');
 			_dateYear.className = 'year';
 			_dateYear.addEventListener('change', this._changeYear.bind(this));
-			monthYearContainer.appendChild(_dateYear);
+			
+			selectWrapper = elCreate('label');
+			selectWrapper.className = 'selectDropdown';
+			selectWrapper.appendChild(_dateYear);
+			monthYearContainer.appendChild(selectWrapper);
 			
 			_dateMonthNext = elCreate('a');
 			_dateMonthNext.className = 'icon icon16 fa-arrow-right next';

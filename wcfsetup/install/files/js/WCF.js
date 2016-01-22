@@ -1134,7 +1134,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 			$('<a href="' + options.showAllLink + '" class="interactiveDropdownShowAll">' + WCF.Language.get('wcf.user.panel.showAll') + '</a>').appendTo(this._container);
 		}
 		
-		this._pointer = $('<span class="pointer"><span /></span>').appendTo(this._container);
+		this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
 		
 		if (!$.browser.mobile && $itemContainer !== null) {
 			// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
@@ -1275,100 +1275,11 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * @param	string		pageDirection
 	 */
 	_renderDesktop: function(pageDirection) {
-		var $elementDimensions = this._triggerElement.getDimensions('outer');
-		var $elementOffsets = this._triggerElement.getOffsets('offset');
-		var $dropdownDimensions = this._container.getDimensions();
-		var $pageWidth = $(window).width();
-		
-		var $left = null;
-		var $right = null;
-		if (pageDirection === 'ltr') {
-			$left = this._getPositionLeft($elementOffsets, $dropdownDimensions, $pageWidth);
-			
-			if (!$left.result) {
-				$right = this._getPositionRight($elementOffsets, $dropdownDimensions, $elementDimensions, $pageWidth);
-				
-				if ($right.result) {
-					$left = null;
-				}
-				else {
-					$right = null;
-				}
-			}
-		}
-		else {
-			$right = this._getPositionRight($elementOffsets, $dropdownDimensions, $elementDimensions, $pageWidth);
-			
-			if (!$right.result) {
-				$left = this._getPositionLeft($elementOffsets, $dropdownDimensions, $pageWidth);
-				if ($left.result) {
-					$right = null;
-				}
-				else {
-					$left = null;
-				}
-			}
-		}
-		
-		if ($right === null) {
-			// align to the left
-			this._container.css({
-				left: $left.left + 'px',
-				top: $elementOffsets.top + $elementDimensions.height + 'px'
+		require(['Ui/Alignment'], (function(UiAlignment) {
+			UiAlignment.set(this._container[0], this._triggerElement[0], {
+				pointer: true
 			});
-			
-			this._pointer.css({
-				left: (this._options.pointerOffset ? this._options.pointerOffset : '4px')
-			});
-		}
-		else {
-			// align to the right
-			this._container.css({
-				right: $right.right + 'px',
-				top: $elementOffsets.top + $elementDimensions.height + 'px'
-			});
-			
-			this._pointer.css({
-				right: (this._options.pointerOffset ? this._options.pointerOffset : '4px')
-			});
-		}
-	},
-	
-	/**
-	 * Calculates the dropdown position aligned with its left side.
-	 * 
-	 * @param	object		elementOffsets
-	 * @param	object		dropdownDimensions
-	 * @param	integer		pageWidth
-	 * @return	object
-	 */
-	_getPositionLeft: function(elementOffsets, dropdownDimensions, pageWidth) {
-		var $left = elementOffsets.left;
-		var $right = elementOffsets.left + dropdownDimensions.width;
-		
-		return {
-			left: $left,
-			result: ($right < pageWidth)
-		};
-	},
-	
-	/**
-	 * Calculates the dropdown position aligned with its right side.
-	 * 
-	 * @param	object		elementOffsets
-	 * @param	object		dropdownDimensions
-	 * @param	object		elementDimensions
-	 * @param	integer		pageWidth
-	 * @return	object
-	 */
-	_getPositionRight: function(elementOffsets, dropdownDimensions, elementDimensions, pageWidth) {
-		var $left = (elementOffsets.left + elementDimensions.width) - dropdownDimensions.width;
-		var $right = pageWidth - (elementOffsets.left + elementDimensions.width);
-		
-		return {
-			result: ($left > 0),
-			right: $right
-		};
+		}).bind(this));
 	}
 });
 
@@ -1544,9 +1455,9 @@ WCF.LoadingOverlayHandler = {
 	updateIcon: function(target, loading) {
 		var $method = (loading === undefined || loading ? 'addClass' : 'removeClass');
 		
-		target.find('.icon')[$method]('icon-spinner');
+		target.find('.icon')[$method]('fa-spinner');
 		if (target.hasClass('icon')) {
-			target[$method]('icon-spinner');
+			target[$method]('fa-spinner');
 		}
 	}
 };
@@ -2094,13 +2005,13 @@ WCF.Action.Toggle = Class.extend({
 		
 		// toggle icon source
 		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
-		if ($toggleButton.hasClass('icon-check-empty')) {
-			$toggleButton.removeClass('icon-check-empty').addClass('icon-check');
+		if ($toggleButton.hasClass('fa-square-o')) {
+			$toggleButton.removeClass('fa-square-o').addClass('fa-check-square-o');
 			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
 			$toggleButton.attr('title', $newTitle);
 		}
 		else {
-			$toggleButton.removeClass('icon-check').addClass('icon-check-empty');
+			$toggleButton.removeClass('fa-check-square-o').addClass('fa-square-o');
 			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
 			$toggleButton.attr('title', $newTitle);
 		}
@@ -3525,10 +3436,10 @@ WCF.Collapsible.Simple = {
 	_toggleImage: function(button) {
 		var $icon = button.find('span.icon');
 		if (button.data('isOpen')) {
-			$icon.removeClass('icon-chevron-right').addClass('icon-chevron-down');
+			$icon.removeClass('fa-chevron-right').addClass('fa-chevron-down');
 		}
 		else {
-			$icon.removeClass('icon-chevron-down').addClass('icon-chevron-right');
+			$icon.removeClass('fa-chevron-down').addClass('fa-chevron-right');
 		}
 	}
 };
@@ -3701,7 +3612,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_exchangeIcon: function(button, newIcon) {
 		newIcon = newIcon || 'spinner';
-		button.removeClass('icon-chevron-down icon-chevron-right icon-spinner').addClass('icon-' + newIcon);
+		button.removeClass('fa-chevron-down fa-chevron-right fa-spinner').addClass('fa-' + newIcon);
 	},
 	
 	/**
@@ -5086,7 +4997,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 			$icon = $(item.icon);
 		}
 		else if (this._includeUserGroups && item.type === 'group') {
-			$icon = $('<span class="icon icon16 icon-group" />');
+			$icon = $('<span class="icon icon16 fa-users" />');
 		}
 		
 		if ($icon) {
@@ -6047,7 +5958,16 @@ WCF.InlineEditor = Class.extend({
 		// build dropdown
 		var $trigger = null;
 		if (!this._dropdowns[$elementID]) {
-			this._triggerElements[$elementID] = $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle').wrap('<span class="dropdown" />');
+			this._triggerElements[$elementID] = $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle');
+			var parent = $trigger[0].parentNode;
+			if (parent && parent.nodeName === 'LI' && parent.childElementCount === 1) {
+				// do not add a wrapper element if the trigger is the only child
+				parent.classList.add('dropdown');
+			}
+			else {
+				$trigger.wrap('<span class="dropdown" />');
+			}
+			
 			this._dropdowns[$elementID] = $('<ul class="dropdownMenu" />').insertAfter($trigger);
 		}
 		this._dropdowns[$elementID].empty();
@@ -7752,7 +7672,7 @@ $.widget('ui.wcfSlideshow', {
 		// create toggle buttons
 		this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
 		for (var $i = 0; $i < this._count; $i++) {
-			var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
+			var $link = $('<li><a><span class="icon icon16 fa-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
 			if ($i == 0) {
 				$link.find('.icon').addClass('active');
 			}

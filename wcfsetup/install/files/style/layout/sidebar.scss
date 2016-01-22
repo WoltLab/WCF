@@ -1,27 +1,5 @@
-/*.sidebar {
-	
-	
-	> div,
-	> fieldset,
-	> section {
-		background-color: $wcfSidebarBackground;
-		padding: 20px;
-		
-		&::after {
-			clear: both;
-			content: "";
-			display: block;
-			height: 0;
-		}
-	}
-	
-	> div {
-		fieldset + fieldset,
-		section + section {
-			margin-top: 20px;
-		}
-	}
-	
+/* legacy styling for sidebars (deprecated) */
+.sidebar {
 	fieldset > legend {
 		float: left;
 		width: 100%;
@@ -31,32 +9,69 @@
 		}
 	}
 	
-	section > h1,
-	fieldset > legend {
-		color: $wcfSidebarHeadlineText;
-		margin-bottom: 10px;
-		
-		@extend .wcfFontHeadline;
-		
-		> a {
-			color: $wcfSidebarHeadlineLink;
+	.boxContainer {
+		> div,
+		> fieldset,
+		> section:not(.box) {
+			background-color: $wcfSidebarBackground;
+			padding: 20px;
 			
-			> .icon {
-				color: $wcfSidebarHeadlineLink;
+			&:not(:first-child) {
+				margin-top: 20px;
 			}
+		}
+		
+		section:not(.box) > h1,
+		fieldset > legend {
+			color: $wcfSidebarHeadlineText;
+			margin-bottom: 10px;
 			
-			&:hover {
-				color: $wcfSidebarHeadlineLinkActive;
+			@extend .wcfFontHeadline;
+			
+			> a {
+				color: $wcfSidebarHeadlineLink;
 				
 				> .icon {
+					color: $wcfSidebarHeadlineLink;
+				}
+				
+				&:hover {
 					color: $wcfSidebarHeadlineLinkActive;
+					
+					> .icon {
+						color: $wcfSidebarHeadlineLinkActive;
+					}
 				}
 			}
 		}
 	}
 	
+	.formSubmit:not(:first-child) {
+		margin-top: 20px;
+	}
 	
+	.boxContainer {
+		> div,
+		> fieldset,
+		> section {
+			overflow: hidden;
+			
+			.button.more {
+				float: right;
+				margin-top: 10px;
+			}
+		}
+	}
 	
+	.boxTitle {
+		.badge {
+			float: right;
+			margin-top: 5px;
+		}
+	}
+}
+
+/*.sidebar {
 	dl.dataList {
 		overflow: hidden;
 		

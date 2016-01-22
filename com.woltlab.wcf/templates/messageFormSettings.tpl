@@ -1,4 +1,4 @@
-<fieldset id="settings_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}" class="settingsContent tabMenuContent container containerPadding">
+<div id="settings_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}" class="settingsContent messageTabMenuContent">
 	<dl class="wide">
 		{if $__wcf->getSession()->getPermission($permissionCanUseBBCodes)}
 			<dt></dt>
@@ -38,4 +38,4 @@
 		
 		{event name='settings'}
 	</dl>
-</fieldset>
+</div>

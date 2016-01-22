@@ -1,65 +1,168 @@
+/* style for content area */
 .content {
-	fieldset > legend {
-		float: left;
-		width: 100%;
+	/* content header */
+	.contentHeader,
+	.boxHeadline { // deprecated
+		color: $wcfContentHeadlineText; // todo: rename variable
+		margin-bottom: 30px;
 		
-		&+ * {
-			clear: left;
+		.contentTitle,
+		> h1 { // deprecated
+			@extend .wcfFontTitle;
 		}
-	}
-	
-	fieldset > legend,
-	section > h1.subHeadline {
-		@extend .wcfFontHeadline;
-		
-		border-left: 5px solid $wcfContentBorderInner;
-		color: $wcfContentHeadlineText;
-		font-weight: 400;
-		margin-bottom: 20px;
-		padding-left: 10px;
 		
 		a {
-			color: $wcfContentHeadlineLink;
+			color: $wcfContentHeadlineLink; // todo: rename variable
 			
 			&:hover {
-				color: $wcfContentHeadlineLinkActive;
+				color: $wcfContentHeadlineLinkActive; // todo: rename variable
 			}
 		}
 	}
 	
-	.container {
-		fieldset {
-			&:not(:first-child) {
-				margin-top: 20px;
+	/* todo
+	.boxHeadline {
+		&.labeledHeadline {
+			font-size: 0;
+			
+			> h1,
+			> h2 {
+				display: inline-block;
+				margin-right: 10px;
 			}
 			
-			> legend {
-				// TODO: border-bottom: 1px solid $wcfContentBorder;
-				padding-bottom: 5px;
+			> ul {
+				display: inline-block;
+				font-size: 1rem;
+				
+				&:not(:empty) {
+					margin-right: 10px;
+				}
+			}
+		}
+	}*/
+	
+	/* content sections */
+	.section {
+		margin-top: 30px;
+		
+		.sectionTitle {
+			color: $wcfContentHeadlineText; // todo: rename variable
+			
+			@extend .wcfFontHeadline;
+			
+			a {
+				color: $wcfContentHeadlineLink; // todo: rename variable
+				
+				&:hover {
+					color: $wcfContentHeadlineLinkActive; // todo: rename variable
+				}
 			}
 		}
 		
-		section {
-			&:not(:first-child) {
-				margin-top: 20px;
-			}
-			
-			> h1 {
-				// TODO: border-bottom: 1px solid $wcfContentBorder;
-				padding-bottom: 5px;
+		.sectionDescription {
+			color: $wcfContentDimmedText;
+		}
+		
+		> .sectionHeader,
+		> .sectionTitle {
+			margin-bottom: 20px;
+		}
+		
+		&:not(.sectionContainerList) {
+			> .sectionHeader,
+			> .sectionTitle {
+				border-bottom: 1px solid $wcfContentBorderInner;
+				padding-bottom: 10px;
 			}
 		}
 	}
 	
-	label {
-		display: block;
+	/* fieldset styling (old sections / deprecated) */
+	fieldset {
+		margin-top: 30px;
 		
-		&.selectDropdown {
-			display: inline;
+		> legend {
+			border-bottom: 1px solid $wcfContentBorderInner;
+			color: $wcfContentHeadlineText; // todo: rename variable
+			float: left;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			width: 100%;
+			
+			@extend .wcfFontHeadline;
+			
+			a {
+				color: $wcfContentHeadlineLink; // todo: rename variable
+				
+				&:hover {
+					color: $wcfContentHeadlineLinkActive; // todo: rename variable
+				}
+			}
+			
+			&+ * {
+				clear: left;
+			}
+			
+			+ small {
+				color: $wcfContentDimmedText;
+				position: relative;
+				top: -12px;
+			}
+		}
+	}
+}
+
+.contentNavigation {
+	align-items: center;
+	display: flex;
+	
+	// align <nav> to the right side
+	justify-content: flex-end;
+	
+	&:not(:first-child) {
+		margin-top: 30px;
+	}
+	
+	&:not(:last-child) {
+		margin-bottom: 30px;
+	}
+	
+	> nav {
+		flex: 0 0 auto;
+		order: 3;
+		
+		&.pagination {
+			order: 1;
+			
+			// use up maximum space, causing it to stick to the left while all other
+			// <nav> elements will still be aligned to the right side
+			flex: 1 1 auto;
 		}
 		
-		&:not(:first-child) {
-			margin-top: 5px;
+		&.jsClipboardEditor {
+			margin-right: 5px;
+			order: 2;
+		}
+		
+		& + nav {
+			flex: 0 0 auto;
+		}
+		
+		&:not(.pagination) {
+			text-align: right;
+		}
+	}
+	
+	ul {
+		display: inline-flex;
+		
+		> li {
+			flex: 0 0 auto;
+			
+			&:not(:last-child) {
+				margin-right: 5px;
+			}
 		}
 	}
 }

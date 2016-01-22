@@ -13,8 +13,7 @@
 						{capture assign='__userAvatar'}{@$userProfile->getAvatar()->getImageTag(128)}{/capture}
 						<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="framed">{@'<img'|str_replace:'<img itemprop="photo"':$__userAvatar}</a>
 						
-						{* @TODO *}
-						{*if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if*}
+						{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
 					</div>
 				{/if}
 			{/if}

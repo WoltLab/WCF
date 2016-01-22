@@ -98,13 +98,13 @@
 {foreach from=$objects item=user}
 	{capture assign=locationData}
 		<p>
-			{if $user->getLocation()}{@$user->getLocation()}{else}{lang}wcf.user.usersOnline.location.unknown{/lang}{/if} <small>- {@$user->lastActivityTime|time}</small>
+			{if $user->getLocation()}{@$user->getLocation()}{else}{lang}wcf.user.usersOnline.location.unknown{/lang}{/if} <small class="separatorLeft">{@$user->lastActivityTime|time}</small>
 		</p>
 	{/capture}
 	
 	{capture assign=sessionData}
 		{if $__wcf->session->getPermission('admin.user.canViewIpAddress')}
-			<dl class="plain inlineDataList">
+			<dl class="plain inlineDataList small">
 				<dt>{lang}wcf.user.usersOnline.ipAddress{/lang}</dt>
 				<dd title="{$user->getFormattedIPAddress()}">{$user->getFormattedIPAddress()|truncate:30}</dd>
 				
@@ -124,17 +124,19 @@
 					<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" class="framed">{@$user->getAvatar()->getImageTag(48)}</a>
 					
 					<div class="details userInformation">
-						<a href="{link controller='User' object=$user}{/link}" class="username">{@$user->getFormattedUsername()}</a>
-						{if MODULE_USER_RANK}
-							{if $user->getUserTitle()}
-								<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
-							{/if}
-							{if $user->getRank() && $user->getRank()->rankImage}
-								<span class="userRankImage">{@$user->getRank()->getImage()}</span>
-							{/if}
-						{/if}
-						
-						{@$locationData}
+						<div class="containerHeadline">
+							<h3><a href="{link controller='User' object=$user}{/link}" class="username">{@$user->getFormattedUsername()}</a>
+								{if MODULE_USER_RANK}
+									{if $user->getUserTitle()}
+										<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+									{/if}
+									{if $user->getRank() && $user->getRank()->rankImage}
+										<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+									{/if}
+								{/if}
+							</h3>
+							{@$locationData}
+						</div>
 						
 						{@$sessionData}
 						
@@ -150,7 +152,7 @@
 		{capture append=robotsOnlineList}
 			<li>
 				<div class="box48">
-					<p class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="icon48" /></p>
+					<div class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="icon48" /></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
@@ -170,7 +172,7 @@
 		{capture append=guestsOnlineList}
 			<li>
 				<div class="box48">
-					<p class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon48" /></p>
+					<div class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon48" /></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">

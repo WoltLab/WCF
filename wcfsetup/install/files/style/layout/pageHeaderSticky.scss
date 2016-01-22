@@ -12,19 +12,22 @@
 		
 	> div {
 		background-color: $wcfHeaderBackground; /* @TODO */
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		//@todobox-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 		left: 0;
 		position: fixed;
 		top: 0;
 		right: 0;
+		z-index: 301;
 		
 		> div {
-			padding: 10px 0;
+			padding-bottom: 10px;
+			padding-top: 10px;
 		}
 	}
 	
 	#logo {
 		flex: 0 auto;
+		margin-bottom: 0;
 		order: 1;
 		
 		> a > .large {
@@ -36,19 +39,19 @@
 		}
 	}
 	
-	#mainMenu {
+	.mainMenu {
 		flex: 1 auto;
 		order: 2;
 		margin: 0 20px;
 	}
 	
-	#topMenu {
+	.userPanel {
 		flex: 0 auto;
 		order: 3;
-		margin-right: 10px;
+		margin-right: 20px;
 	}
 	
-	#search {
+	.pageHeaderSearch {
 		flex: 0 auto;
 		order: 4;
 	}

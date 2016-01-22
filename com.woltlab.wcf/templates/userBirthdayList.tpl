@@ -23,7 +23,9 @@
 							
 							{include file='userInformationButtons'}
 							
-							{include file='userInformationStatistics'}
+							<dl class="plain inlineDataList">
+								{include file='userInformationStatistics'}
+							</dl>	
 						</div>
 					</div>
 				</li>

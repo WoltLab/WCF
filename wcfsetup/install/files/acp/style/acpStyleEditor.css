@@ -9,7 +9,7 @@
 #spLogo { flex: 0 0 50%; }
 #spLogo > img { height: 40px; }
 #spSearch { flex: 0 0 50%; }
-#spSearchBox { border-width: 0; }
+#spSearchBox { border: 1px solid #fff; }
 #spMenu { flex: 0 0 50%; }
 #spUser { flex: 0 0 50%; }
 #spLogo, #spSearch, #spMenu, #spUser { align-items: center; display: flex; }
@@ -17,11 +17,11 @@
 
 /* ### menu ### */
 #spMenu > ol > li:not(:last-child) { margin-right: 10px; }
-#spMenu > ol > li > a { font-size: 16px; font-weight: 300; }
+#spMenu > ol > li > a { font-size: 14px; font-weight: 400; padding: 2px 7px; }
 #spMenu > ol > li.active > a { font-weight: 600; }
 #spMenu > ol > li.active > a::after { content: "\f0d7"; display: inline-block; font-family: FontAwesome; margin-left: 5px; }
 #spMenu > ol > li.active { position: relative; }
-#spSubMenu { border: 1px solid #fff; padding: 3px 0; position: absolute; }
+#spSubMenu { border-bottom: 1px solid #fff; box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2); margin-top: 3px; padding: 3px 0; position: absolute; }
 #spSubMenu > li > a { display: block; padding: 5px 20px; white-space: nowrap; width: 120px; }
 
 /* ### navigation ### */

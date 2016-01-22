@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\email\transport\exception;
-use wcf\system\exception\SystemException;
 
 /**
  * Denotes a transient failure during delivery. It may be retried later.
@@ -13,4 +12,4 @@ use wcf\system\exception\SystemException;
  * @category	Community Framework
  * @since	2.2
  */
-class TransientFailure extends SystemException { }
+class TransientFailure extends \Exception { }

@@ -18,7 +18,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		this._containers = new Dictionary();
 		this._isLegacy = null;
 		this._tabs = new Dictionary();
-	};
+	}
 	
 	TabMenuSimple.prototype = {
 		/**
@@ -49,7 +49,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			
 			// get children
 			var tabs = elByTag('li', nav);
-			if (tabs.length === null) {
+			if (tabs.length === 0) {
 				return false;
 			}
 			

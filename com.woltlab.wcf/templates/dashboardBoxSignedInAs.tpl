@@ -17,7 +17,9 @@
 				{/if}
 			</div>
 			
-			{include file='userInformationStatistics' user=$__wcf->user}
+			<dl class="plain dataList">
+				{include file='userInformationStatistics' user=$__wcf->user}
+			</dl>	
 		</div>
 	</div>
 </section>

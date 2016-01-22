@@ -108,9 +108,9 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 		
 		_dialogSetup: function() {
 			var source = '<dl>'
-					+ '<dt><label for="jsPageNavigationPageNo">' + Language.get('wcf.global.page.jumpTo') + '</label></dt>'
+					+ '<dt><label for="jsPaginationPageNo">' + Language.get('wcf.global.page.jumpTo') + '</label></dt>'
 					+ '<dd>'
-						+ '<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="tiny">'
+						+ '<input type="number" id="jsPaginationPageNo" value="1" min="1" max="1" class="tiny">'
 						+ '<small></small>'
 					+ '</dd>'
 				+ '</dl>'
@@ -119,7 +119,7 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 				+ '</div>';
 			
 			return {
-				id: 'pageNavigationOverlay',
+				id: 'paginationOverlay',
 				options: {
 					onSetup: (function(content) {
 						_input = elByTag('input', content)[0];
@@ -130,7 +130,7 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 						_buttonSubmit = elByTag('button', content)[0];
 						_buttonSubmit.addEventListener('click', this._submit.bind(this));
 					}).bind(this),
-					title: Language.get('wcf.global.page.pageNavigation')
+					title: Language.get('wcf.global.page.pagination')
 				},
 				source: source
 			};

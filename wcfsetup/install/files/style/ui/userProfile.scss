@@ -74,7 +74,7 @@
 
 .userProfile #profileContent {
 	> .tabMenu {
-		margin-bottom: 30px;
+		//margin-bottom: 30px;
 		
 		> ul > li {
 			&:not(:last-child) {
@@ -87,11 +87,6 @@
 				
 				@extend .wcfFontHeadline;
 			}
-		}
-		
-		> span {
-			border-width: 2px;
-			bottom: -5px;
 		}
 	}
 }
@@ -110,7 +105,33 @@
 		}
 	}
 }
-
+/*
 .username {
 	@extend .wcfFontHeadline;
+}*/
+
+.userAvatarList {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: -10px;
+	
+	> li {
+		flex: 0 0 25%;
+		margin-bottom: 10px;
+		text-align: center;
+		
+		> a {
+			display: block;
+		}
+	}
+}
+
+.userList {
+	.box48 {
+		align-items: center;
+	}
+	
+	li .containerHeadline + *:not(.buttonGroupNavigation) {
+		margin-top: 0;
+	}
 }

@@ -45,7 +45,7 @@ class Box extends DatabaseObject {
 	 * available box types
 	 * @var	string[]
 	 */
-	public static $availableBoxTypes = ['text', 'html', 'system', 'menu'];
+	public static $availableBoxTypes = ['text', 'html', 'system'];
 	
 	/**
 	 * available box positions
@@ -164,7 +164,7 @@ class Box extends DatabaseObject {
 	 * 
 	 * @return	string
 	 */
-	public function __toString() {
+	public function render() {
 		if (!$this->hasContent()) return ''; 
 		
 		WCF::getTPL()->assign([

@@ -120,26 +120,26 @@
 	@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
 	
 	&::after {
-		border: 7px solid transparent;
+		border: 10px solid transparent;
 		border-bottom-color: $wcfDropdownBorder;
 		border-top-width: 0;
 		content: "";
 		display: inline-block;
 		left: 9px;
 		position: absolute;
-		top: -7px;
+		top: -10px;
 		z-index: 100;
 	}
 	
 	&::before {
-		border: 6px solid transparent;
+		border: 9px solid transparent;
 		border-bottom-color: $wcfDropdownBackground;
 		border-top-width: 0;
 		content: "";
 		display: inline-block;
 		left: 10px;
 		position: absolute;
-		top: -6px;
+		top: -9px;
 		z-index: 101;
 	}
 	
@@ -157,18 +157,18 @@
 	
 	&.dropdownArrowBottom {
 		&::after {
-			border: 7px transparent solid;
+			border: 10px transparent solid;
 			border-top-color: $wcfDropdownBorder;
 			border-bottom-width: 0;
-			bottom: -7px;
+			bottom: -10px;
 			top: auto;
 		}
 		
 		&::before {
-			border: 6px transparent solid;
+			border: 9px transparent solid;
 			border-top-color: $wcfDropdownBackground;
 			border-bottom-width: 0;
-			bottom: -6px;
+			bottom: -9px;
 			top: auto;
 		}
 	}

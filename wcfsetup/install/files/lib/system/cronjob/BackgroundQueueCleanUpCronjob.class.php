@@ -55,7 +55,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 				}
 				catch (\Exception $e) {
 					// job is completely broken: log
-					if ($e instanceof LoggedException) $e->getExceptionID();
+					\wcf\functions\exception\logThrowable($e);
 				}
 			}
 			

@@ -76,8 +76,8 @@
 	<nav>
 		<ul>
 			{if !$queue->isDone()}
-				{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
-				<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
+				{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
+				<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
 			{/if}
 			{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
 			
@@ -109,7 +109,7 @@
 						{lang}wcf.user.guest{/lang}
 					{/if}
 					
-					<small> - {@$queue->time|time}</small>
+					<small class="separatorLeft">{@$queue->time|time}</small>
 				</h3>
 			</div>
 			
@@ -125,7 +125,7 @@
 
 {include file='__commentJavaScript' commentContainerID='moderationQueueCommentList'}
 
-<div class="container containerList marginTop moderationComments">
+<div class="container marginTop moderationComments">
 	<ul id="moderationQueueCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$queueID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{if $queue->comments}{@$commentList->countObjects()}{else}0{/if}" data-last-comment-time="{@$lastCommentTime}">
 		{include file='commentList'}
 	</ul>

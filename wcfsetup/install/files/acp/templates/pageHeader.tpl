@@ -4,11 +4,14 @@
 			<div class="layoutBoundary">
 				{include file='pageHeaderLogo'}
 				
-				{include file='pageHeaderSearch'}
-				
-				{include file='pageHeaderMenu'}
-				
-				{include file='pageHeaderUser'}
+				{* hide everything except the logo during login / in rescue mode *}
+				{if $__isLogin|empty}
+					{include file='pageHeaderSearch'}
+					
+					{include file='pageHeaderMenu'}
+					
+					{include file='pageHeaderUser'}
+				{/if}
 			</div>
 		</div>
 		

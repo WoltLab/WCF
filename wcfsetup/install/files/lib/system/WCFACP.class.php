@@ -26,6 +26,18 @@ use wcf\util\HeaderUtil;
  */
 class WCFACP extends WCF {
 	/**
+	 * rescue mode
+	 * @var boolean
+	 */
+	protected static $inRescueMode;
+	
+	/**
+	 * URL to WCF within rescue mode
+	 * @var string
+	 */
+	protected static $rescueModePageURL;
+	
+	/**
 	 * Calls all init functions of the WCF and the WCFACP class. 
 	 */
 	public function __construct() {
@@ -57,13 +69,63 @@ class WCFACP extends WCF {
 	}
 	
 	/**
+	 * Returns true if ACP is currently in rescue mode.
+	 * 
+	 * @return      boolean
+	 */
+	public static function inRescueMode() {
+		if (self::$inRescueMode === null) {
+			self::$inRescueMode = false;
+			
+			if (isset($_SERVER['HTTP_HOST'])) {
+				self::$inRescueMode = true;
+				
+				foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+					if ($application->domainName === $_SERVER['HTTP_HOST']) {
+						self::$inRescueMode = false;
+						break;
+					}
+				}
+				
+				if (self::$inRescueMode) {
+					self::$rescueModePageURL = RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . RouteHandler::getPath(['acp']);
+				}
+			}
+		}
+		
+		return self::$inRescueMode;
+	}
+	
+	/**
+	 * Returns URL for rescue mode page.
+	 * 
+	 * @return string
+	 */
+	public static function getRescueModePageURL() {
+		if (self::inRescueMode()) {
+			return self::$rescueModePageURL;
+		}
+		
+		return '';
+	}
+	
+	/**
 	 * Does the user authentication.
 	 */
 	protected function initAuth() {
 		// this is a work-around since neither RequestHandler
 		// nor RouteHandler are populated right now
 		$pathInfo = RouteHandler::getPathInfo();
-		if (empty($pathInfo) || !preg_match('~^/?(acp-?captcha|login|logout)/~i', $pathInfo)) {
+		
+		if (self::inRescueMode()) {
+			if (!preg_match('~^/?rescue-mode/~', $pathInfo)) {
+				$redirectURI =  self::$rescueModePageURL . 'acp/index.php?rescue-mode/';
+				
+				HeaderUtil::redirect($redirectURI);
+				exit;
+			}
+		}
+		else if (empty($pathInfo) || !preg_match('~^/?(acp-?captcha|login|logout)/~i', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
@@ -76,18 +138,10 @@ class WCFACP extends WCF {
 					throw new SystemException("You have aborted the installation, therefore this installation is unusable. You are required to reinstall the software.");
 				}
 				
-				// fallback for unknown host (rescue mode)
-				if ($application->domainName != $_SERVER['HTTP_HOST']) {
-					$pageURL = RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . RouteHandler::getPath(array('acp'));
-				}
-				else {
-					$pageURL = $application->getPageURL();
-				}
-				
 				// drop session id
 				$redirectURI = preg_replace('~[&\?]s=[a-f0-9]{40}(&|$)~', '', WCF::getSession()->requestURI);
 				
-				$path = $pageURL . 'acp/index.php?login/' . SID_ARG_2ND_NOT_ENCODED . '&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . $redirectURI);
+				$path = $application->getPageURL() . 'acp/index.php?login/' . SID_ARG_2ND_NOT_ENCODED . '&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . $redirectURI);
 				
 				HeaderUtil::redirect($path);
 				exit;

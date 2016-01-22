@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\email\transport\exception;
-use wcf\system\exception\SystemException;
 
 /**
  * Denotes a permanent failure during delivery. It should not be retried later.
@@ -13,4 +12,4 @@ use wcf\system\exception\SystemException;
  * @category	Community Framework
  * @since	2.2
  */
-class PermanentFailure extends SystemException { }
+class PermanentFailure extends \Exception { }

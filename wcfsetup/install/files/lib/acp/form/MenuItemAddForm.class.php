@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * Shows the menu item add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -68,7 +68,7 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * menu item title
-	 * @var string
+	 * @var	string
 	 */
 	public $title = '';
 	
@@ -92,7 +92,7 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * menu item node tree
-	 * @var MenuItemNodeTree
+	 * @var	MenuItemNodeTree
 	 */
 	public $menuItems = null;
 	
@@ -177,7 +177,7 @@ class MenuItemAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new MenuItemAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new MenuItemAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'title' => $this->title,
 			'pageID' => $this->pageID,
@@ -186,16 +186,16 @@ class MenuItemAddForm extends AbstractForm {
 			'parentItemID' => $this->parentItemID,
 			'showOrder' => $this->showOrder,
 			'identifier' => StringUtil::getRandomID()
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		$returnValues = $this->objectAction->getReturnValues();
 		$menuItem = $returnValues['returnValues'];
 		
 		// set generic identifier
-		$data = array(
+		$data = [
 			'identifier' => 'com.woltlab.wcf.generic'.$menuItem->itemID
-		);
+		];
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
 			I18nHandler::getInstance()->save('title', 'wcf.menu.item.title'.$menuItem->itemID, 'wcf.menu');
 			$data['title'] = 'wcf.menu.item.title'.$menuItem->itemID;
@@ -229,7 +229,7 @@ class MenuItemAddForm extends AbstractForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		$this->menuItems = new MenuItemNodeTree($this->menuID);
 	}
 	
@@ -239,10 +239,9 @@ class MenuItemAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		I18nHandler::getInstance()->assignVariables();
-		$pageNodeList = new PageNodeTree();
+		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'menuID' => $this->menuID,
 			'menu' => $this->menu,
@@ -254,7 +253,7 @@ class MenuItemAddForm extends AbstractForm {
 			'parentItemID' => $this->parentItemID,
 			'showOrder' => $this->showOrder,
 			'menuItemNodeList' => $this->menuItems->getNodeList(),
-			'pageNodeList' => $pageNodeList->getNodeList()
-		));
+			'pageNodeList' => (new PageNodeTree())->getNodeList()
+		]);
 	}
 }

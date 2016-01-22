@@ -18,7 +18,9 @@
 			</div>
 			
 			{if $userProfile->userID}
-				{include file='userInformationStatistics' user=$userProfile __userStatsClassname='dataList'}
+				<dl class="plain dataList">
+					{include file='userInformationStatistics'}
+				</dl>
 			{/if}
 		</div>
 	</div>

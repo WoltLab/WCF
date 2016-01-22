@@ -1,4 +1,4 @@
-{@$__wcf->getBoxHandler()->getBoxes('mainMenu')[0]}
+{@$__wcf->getBoxHandler()->getBoxes('mainMenu')[0]->render()}
 {*if $__wcf->getPageMenu()->getMenuItems('header')|count > 0}
 	<nav id="mainMenu" class="mainMenu jsMobileNavigation" data-button-label="{lang}wcf.page.mainMenu{/lang}">
 		<ul>

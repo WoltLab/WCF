@@ -5,8 +5,11 @@
 			
 			<div>
 				<div class="containerHeadline">
-					<h3><a href="{link controller='User' object=$event->getUserProfile()}{/link}" class="userLink" data-user-id="{@$event->getUserProfile()->userID}">{$event->getUserProfile()->username}</a><small> - {@$event->time|time}</small></h3> 
-					<p><strong>{@$event->getTitle()}</strong></p>
+					<h3>
+						<a href="{link controller='User' object=$event->getUserProfile()}{/link}" class="userLink" data-user-id="{@$event->getUserProfile()->userID}">{$event->getUserProfile()->username}</a>
+						<small class="separatorLeft">{@$event->time|time}</small>
+					</h3> 
+					<p>{@$event->getTitle()}</p>
 					<small class="containerContentType">{lang}wcf.user.recentActivity.{@$event->getObjectTypeName()}{/lang}</small>
 				</div>
 				

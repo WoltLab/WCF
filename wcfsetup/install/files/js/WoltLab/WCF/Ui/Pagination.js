@@ -39,7 +39,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 			if (typeof this._options.callbackShouldSwitch !== 'function') this._options.callbackShouldSwitch = null;
 			if (typeof this._options.callbackSwitch !== 'function') this._options.callbackSwitch = null;
 			
-			this._element.classList.add('pageNavigation');
+			this._element.classList.add('pagination');
 			this._element.classList.add('small');
 			
 			this._rebuild(this._element);

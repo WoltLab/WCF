@@ -3,14 +3,19 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"],
 .button,
-a.button {
+a.button { // a.button is required to override link formatting, such as drop-down buttons
 	background-color: $wcfButtonBackground;
 	border: 1px solid $wcfButtonBorder;
-	border-radius: 3px;
 	color: $wcfButtonText;
 	cursor: pointer;
 	display: inline-block;
-	padding: 5px 10px;
+	outline: none;
+	padding: 4px 12px;
+	
+	// input elements do not inherit font family, size and line-height from body
+	font-family: $wcfFontFamily;
+	@extend .wcfFontDefault;
+	@extend .wcfLineHeight;
 	
 	.icon {
 		color: $wcfButtonText;
@@ -38,7 +43,7 @@ button.buttonPrimary,
 input[type="button"].buttonPrimary,
 input[type="submit"],
 .button.buttonPrimary,
-a.button.buttonPrimary {
+a.button.buttonPrimary { // a.button is required to override link formatting, such as drop-down buttons
 	background-color: $wcfButtonPrimaryBackground;
 	border-color: $wcfButtonPrimaryBorder;
 	color: $wcfButtonPrimaryText;

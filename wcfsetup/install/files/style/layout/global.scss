@@ -1,5 +1,6 @@
 .layoutBoundary {
 	margin: 0 auto;
+	padding: 0 20px;
 	
 	@if $useFluidLayout {
 		min-width: $wcfLayoutMinWidth;
@@ -11,17 +12,7 @@
 }
 
 .marginTop {
-	margin-top: 20px;
-}
-
-.framed {
-	> canvas,
-	> img,
-	> .icon {
-		//background-color: @wcfContentBackgroundColor;
-		//border: 1px solid @wcfContainerBorderColor;
-		padding: 1px;
-	}
+	margin-top: 30px;
 }
 
 .invisible {
@@ -37,27 +28,23 @@
 @mixin box($imageSize, $margin: 0) {
 	display: flex !important;
 	
-	&:not(:last-child) {
-		margin-bottom: ($margin + 3px);
-	}
-	
 	> :first-child:not(:last-child) {
-		flex: 0 auto !important;
+		flex: 0 0 auto;
 		margin-right: $margin;
 	}
 	
 	> :last-child {
-		flex: 1 !important;
+		flex: 1;
 	}
 }
 
-.box16 { @include box(16px, 4px); }
-.box24 { @include box(24px, 4px); }
-.box32 { @include box(32px, 7px); }
-.box48 { @include box(48px, 7px); }
-.box64 { @include box(64px, 7px); }
-.box96 { @include box(96px, 11px); }
-.box128 { @include box(128px, 11px); }
+.box16 { @include box(16px, 5px); }
+.box24 { @include box(24px, 5px); }
+.box32 { @include box(32px, 8px); }
+.box48 { @include box(48px, 10px); }
+.box64 { @include box(64px, 10px); }
+.box96 { @include box(96px, 12px); }
+.box128 { @include box(128px, 12px); }
 .box256 { @include box(256px, 21px); }
 
 .wcfFontDefault {
@@ -76,7 +63,12 @@
 
 .wcfFontHeadline {
 	font-size: $wcfFontSizeHeadline;
-	font-weight: 300;
+	font-weight: 400;
+}
+
+.wcfFontSection {
+	font-size: $wcfFontSizeSection;
+	font-weight: 400;
 }
 
 .wcfFontTitle {
@@ -84,12 +76,20 @@
 	font-weight: 300;
 }
 
-small {
+.wcfLineHeight {
+	line-height: $wcfFontLineHeight;
+}
+
+small, .small {
 	@extend .wcfFontSmall;
 }
 
 strong {
 	@extend .wcfFontBold;
+}
+
+img {
+	vertical-align: middle;
 }
 
 .elementPointer {
@@ -146,7 +146,7 @@ ol.nativeList {
 /* simulate native HTML styles for certain elements */
 .htmlContent {
 	p {
-		margin: 1em 0;
+		margin: 1.5em 0;
 	}
 	
 	h1 {
@@ -158,8 +158,7 @@ ol.nativeList {
 	}
 	
 	h1, h2, h3, h4, h5, h6 {
-		font-weight: bold;
-		margin: 0.5em 0;
+		margin: 1em 0;
 	}
 	
 	ul, ol {
@@ -173,4 +172,14 @@ ol.nativeList {
 	ol {
 		list-style-type: decimal;
 	}
+}
+
+.separatorLeft::before {
+	content: "\00b7";
+	margin-right: 5px;
+}
+
+.separatorRight::after {
+	content: "\00b7";
+	margin-left: 5px;
 }

@@ -1,131 +1,107 @@
 .messageTabMenu {
-	// TODO: border: 1px solid $wcfContentBorder;
-	border-top-width: 0;
-	border-radius: 0 0 3px 3px;
-	line-height: $wcfBaseLineHeight;
-	
-	> div,
-	> fieldset{
-		background-color: $wcfContentBackground;
-		border-width: 0;
-		border-radius: 0;
-		// TODO: border-top: 1px solid $wcfContentBorder;
+	> .messageTabMenuContent {
 		display: none;
-		padding: 15px 10px;
-		position: static;
 		
 		&.active {
+			background-color: $wcfContentBackground;
 			display: block;
+			margin-top: 0;
 		}
 	}
 	
-	> div {
-		> nav {
-			background-color: $wcfContentBackground;
-			// TODO: border-bottom: 1px solid $wcfContentBorder;
-			margin: -14px -21px 14px -21px;
-			padding: $wcfGapTiny $wcfGapSmall;
+	// prevent double formatting with nested tab menus
+	&:not(.messageTabMenuContent) > .messageTabMenuContent.active {
+		border: 1px solid $wcfContentBorderInner;
+		border-top-width: 0;
+		padding: 20px;
+	}
+	
+	// sub tab menu
+	&.messageTabMenuContent > nav {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		margin: -20px -20px 20px -20px;
+		padding: 5px 20px;
+		
+		> ul {
+			@extend .inlineList;
 			
-			ul {
-				display: inline-block;
-				font-size: 0;
-				white-space: nowrap;
+			> li {
+				outline: 0;
 				
-				li {
-					display: inline-block;
+				&:not(:last-child) {
+					margin-right: 20px;
+				}
+				
+				&.active > a {
+					color: $wcfContentLinkActive;
+				}
+				
+				> a {
+					display: block;
 					outline: 0;
-					vertical-align: baseline;
 					
-					&.active a,
-					&.active a:hover {
-						color: $wcfButtonTextActive;
-						cursor: default;
-					}
-					
-					a {
-						color: $wcfButtonText;
-						display: block;
-						outline: 0;
-						padding: 0 $wcfGapSmall;
-						
-						@extend .userSelectNone;
-						@extend .wcfFontSmall;
-						
-						&:hover {
-							color: $wcfButtonTextActive;
-							text-decoration: none;
-						}
-					}
-					
-					&:not(:last-child) {
-						padding-right: $wcfGapTiny;
-					}
-					
-					&.dropdown > a {
-						font-size: 1.0rem;
-						padding: 4px 7px 2px;
-					}
+					@extend .userSelectNone;
+					@extend .wcfFontSmall;
 				}
 			}
-		}
-		
-		> div,
-		> fieldset {
-			border-top-width: 0;
 		}
 	}
 }
 
 .messageTabMenu + .innerError {
-	box-sizing: border-box;
-	margin-top: -1px;
+	margin-top: -1px; // TODO
 	width: 100%;
 }
 
-.messageTabMenuNavigation > ul {
-	background-color: $wcfContentBackground;
-	font-size: 0;
-	white-space: nowrap;
-	
-	> li {
-		display: inline-block;
+.messageTabMenuNavigation {
+	> ul {
+		background-color: $wcfContentBackground;
+		border: 1px solid $wcfContentBorderInner;
+		border-top-width: 0;
 		
-		> a {
-			// TODO: border-right: 1px solid $wcfContentBorder;
-			border-bottom: 1px solid transparent;
-			color: $wcfButtonText;
-			display: block;
-			font-size: 1rem;
-			line-height: $wcfBaseLineHeight;
-			margin-bottom: -1px;
-			padding: 7px 14px 8px 14px;
-			text-decoration: none;
+		@extend .inlineList;
+		
+		> li {
+			border-right: 1px solid $wcfContentBorderInner;
 			
-			@extend .userSelectNone;
-			
-			&:hover {
-				color: $wcfContentLink;
+			&:not(:last-child) {
+				margin-right: 0;
 			}
 			
-			> span.icon {
-				display: none;
+			&.active > a {
+				color: $wcfContentLinkActive;
+				position: relative;
+				
+				&::after {
+					border-bottom: 1px solid $wcfContentBackground;
+					bottom: -1px;
+					content: "";
+					display: block;
+					left: 0;
+					position: absolute;
+					right: 0;
+				}
 			}
-		}
-		
-		&.active {
+			
 			> a {
-				background-color: $wcfContentBackground;
-				color: $wcfContentLink;
+				display: block;
+				padding: 10px 20px;
+				
+				@extend .userSelectNone;
+				
+				> span.icon {
+					display: none;
+				}
 			}
 		}
+	}
+	
+	> span {
+		display: none;
 	}
 }
 
 @media only screen and (max-width: 800px) {
-	.redactor-toolbar > li > a:hover {
-		background-color: transparent !important;
-	}
-	
 	.messageTabMenu {
 		> nav > ul > li:not(.active) > a {
 			> span.icon {
@@ -138,7 +114,7 @@
 		}
 		
 		> div > nav {
-			margin: ($wcfGapTiny - $wcfGapSmall) -$wcfGapSmall $wcfGapSmall -$wcfGapSmall;
+			// TODO: margin: ($wcfGapTiny - $wcfGapSmall) -$wcfGapSmall $wcfGapSmall -$wcfGapSmall;
 		}
 	}
 }

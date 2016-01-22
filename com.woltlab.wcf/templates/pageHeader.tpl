@@ -33,7 +33,7 @@
 				<div class="boxContainer">
 					{content}
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('hero') item=box}
-							{@$box}
+							{@$box->render()}
 						{/foreach}
 					{/content}
 				</div>	

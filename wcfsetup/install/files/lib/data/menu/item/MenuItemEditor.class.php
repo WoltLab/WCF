@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Provides functions to edit menu items.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.menu.item
@@ -51,7 +51,7 @@ class MenuItemEditor extends DatabaseObjectEditor {
 				foreach ($title as $languageCode => $value) {
 					$statement->execute([
 						LanguageFactory::getInstance()->getLanguageByCode($languageCode)->languageID,
-						'wcf.menu.menuItem' . $menuItem->itemID,
+						'wcf.menu.item.title' . $menuItem->itemID,
 						$value,
 						1,
 						$languageCategoryID,
@@ -60,7 +60,7 @@ class MenuItemEditor extends DatabaseObjectEditor {
 				}
 				WCF::getDB()->commitTransaction();
 				
-				$title = 'wcf.menu.menuItem' . $menuItem->itemID;
+				$title = 'wcf.menu.item.title' . $menuItem->itemID;
 			}
 			else {
 				$title = reset($title);

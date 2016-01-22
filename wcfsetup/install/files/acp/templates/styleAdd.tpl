@@ -417,6 +417,19 @@
 					</dd>
 				</dl>
 				<dl>
+					<dt><label for="wcfFontSizeSection">{lang}wcf.acp.style.globals.fontSizeSection{/lang}</label></dt>
+					<dd>
+						<input type="number" id="wcfFontSizeSection" name="wcfFontSizeSection" value="{@$variables[wcfFontSizeSection]}" class="tiny" />
+						<label class="selectDropdown">
+							<select name="wcfFontSizeSection_unit" class="jsUnitSelect">
+								{foreach from=$availableUnits item=unit}
+									<option value="{@$unit}"{if $variables[wcfFontSizeSection_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								{/foreach}
+							</select>
+						</label>
+					</dd>
+				</dl>
+				<dl>
 					<dt><label for="wcfFontSizeTitle">{lang}wcf.acp.style.globals.fontSizeTitle{/lang}</label></dt>
 					<dd>
 						<input type="number" id="wcfFontSizeTitle" name="wcfFontSizeTitle" value="{@$variables[wcfFontSizeTitle]}" class="tiny" />
@@ -471,12 +484,12 @@
 							<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/wcfLogo.png"></div>
 							<div id="spSearch"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" data-region="wcfHeaderSearchBox"></div>
 							<div id="spMenu">
-								<ol class="inlineList">
+								<ol class="inlineList" data-region="wcfHeaderMenu">
 									<li><a>Lorem</a></li>
 									<li><a>Ipsum Dolor</a></li>
 									<li class="active">
 										<a>Sit Amet</a>
-										<ol id="spSubMenu" data-region="wcfHeaderMenu">
+										<ol id="spSubMenu" data-region="wcfHeaderMenuDropdown">
 											<li><a>Lorem</a></li>
 											<li><a>Ipsum</a></li>
 											<li class="active"><a>Dolor Sit</a></li>
@@ -548,7 +561,7 @@
 								</dl>
 								<dl data-region="wcfInputDisabled">
 									<dt><label for="spInputDisabled">Dolor Sit Amet</label></dt>
-									<dd><input type="text" id="spInputDisabled" class="long" value="Disabled" disabled></dd>
+									<dd><input type="text" id="spInputDisabled" class="long" placeholder="Disabled" disabled></dd>
 								</dl>
 								
 								<div class="spHeadline">Button</div>
@@ -701,14 +714,21 @@
 				'wcfHeaderLink': '#spHeader a { color: VALUE; }',
 				'wcfHeaderLinkActive': '#spHeader a:hover { color: VALUE; }',
 				'wcfHeaderSearchBoxBackground': '#spSearchBox { background-color: VALUE; }',
+				'wcfHeaderSearchBoxBorder': '#spSearchBox { border-color: VALUE; }',
 				'wcfHeaderSearchBoxText': '#spSearchBox { color: VALUE; }',
+				'wcfHeaderSearchBoxPlaceholder': '#spSearchBox::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox:-ms-input-placeholder { color: VALUE; }',
 				'wcfHeaderSearchBoxBackgroundActive': '#spSearchBox:focus, #spSearchBox:hover { background-color: VALUE; }',
+				'wcfHeaderSearchBoxBorderActive': '#spSearchBox:focus, #spSearchBox:hover { border-color: VALUE; }',
 				'wcfHeaderSearchBoxTextActive': '#spSearchBox:focus, #spSearchBox:hover { color: VALUE; }',
-				'wcfHeaderMenuBackground': '#spSubMenu { background-color: VALUE; }',
-				'wcfHeaderMenuBorder': '#spSubMenu { border-color: VALUE; }',
-				'wcfHeaderMenuLink': '#spSubMenu li > a { color: VALUE; }',
-				'wcfHeaderMenuBackgroundActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { background-color: VALUE; }',
-				'wcfHeaderMenuLinkActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { color: VALUE; }',
+				'wcfHeaderMenuBackground': '#spMenu > ol > li > a { background-color: VALUE; }',
+				'wcfHeaderMenuLink': '#spMenu > ol > li > a { color: VALUE; }',
+				'wcfHeaderMenuBackgroundActive': '#spMenu > ol > li.active > a, #spMenu > ol > li > a:hover { background-color: VALUE; }',
+				'wcfHeaderMenuLinkActive': '#spMenu > ol > li.active > a, #spMenu > ol > li > a:hover { color: VALUE; }',
+				'wcfHeaderMenuDropdownBackground': '#spSubMenu { background-color: VALUE; }',
+				'wcfHeaderMenuDropdownBorder': '#spSubMenu { border-color: VALUE; }',
+				'wcfHeaderMenuDropdownLink': '#spSubMenu li > a { color: VALUE; }',
+				'wcfHeaderMenuDropdownBackgroundActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { background-color: VALUE; }',
+				'wcfHeaderMenuDropdownLinkActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { color: VALUE; }',
 				'wcfNavigationBackground': '#spNavigation { background-color: VALUE; }',
 				'wcfNavigationText': '#spNavigation { color: VALUE; }',
 				'wcfNavigationLink': '#spNavigation a { color: VALUE; }',
@@ -733,6 +753,7 @@
 				'wcfInputBackground': '#spInput { background-color: VALUE; }',
 				'wcfInputBorder': '#spInput { border-color: VALUE; }',
 				'wcfInputText': '#spInput { color: VALUE; }',
+				'wcfInputPlaceholder': '#spInput::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInput::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spInput:-ms-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled:-ms-input-placeholder { color: VALUE; }',
 				'wcfInputBackgroundActive': '#spInput:focus, #spInput:hover { background-color: VALUE; }',
 				'wcfInputBorderActive': '#spInput:focus, #spInput:hover { border-color: VALUE; }',
 				'wcfInputTextActive': '#spInput:focus, #spInput:hover { color: VALUE; }',
@@ -754,8 +775,8 @@
 				'wcfButtonDisabledBackground': '#spButton .button.disabled, #spButtonPrimary .button.disabled { background-color: VALUE; }',
 				'wcfButtonDisabledBorder': '#spButton .button.disabled, #spButtonPrimary .button.disabled { border-color: VALUE; }',
 				'wcfButtonDisabledText': '#spButton .button.disabled, #spButtonPrimary .button.disabled { color: VALUE; }',
-				'wcfDropdownBackground': '#spDropdown { background-color: VALUE; }',
-				'wcfDropdownBorder': '#spDropdown { border-color: VALUE; }',
+				'wcfDropdownBackground': '#spDropdown { background-color: VALUE; } __COMBO_RULE__ #spDropdown::before { border-bottom-color: VALUE; }',
+				'wcfDropdownBorder': '#spDropdown { border-color: VALUE; } __COMBO_RULE__ #spDropdown::after { border-bottom-color: VALUE; }',
 				'wcfDropdownBorderInner': '#spDropdown .dropdownDivider { border-color: VALUE; }',
 				'wcfDropdownText': '#spDropdown { color: VALUE; }',
 				'wcfDropdownLink': '#spDropdown a { color: VALUE; }',

@@ -74,10 +74,16 @@ WCF.Comment.Handler = Class.extend({
 	_responses: { },
 	
 	/**
-	 * user's avatar
+	 * user's avatar (48px version)
 	 * @var	string
 	 */
 	_userAvatar: '',
+	
+	/**
+	 * user's avatar (32px version)
+	 * @var	string
+	 */
+	_userAvatarSmall: '',
 	
 	/**
 	 * data of the comment the active guest user is about to create
@@ -96,8 +102,9 @@ WCF.Comment.Handler = Class.extend({
 	 * 
 	 * @param	string		containerID
 	 * @param	string		userAvatar
+	 * @param	string		userAvatarSmall
 	 */
-	init: function(containerID, userAvatar) {
+	init: function(containerID, userAvatar, userAvatarSmall) {
 		this._commentAdd = null;
 		this._commentButtonList = { };
 		this._comments = { };
@@ -107,6 +114,7 @@ WCF.Comment.Handler = Class.extend({
 		this._loadNextResponses = { };
 		this._responses = { };
 		this._userAvatar = userAvatar;
+		this._userAvatarSmall = userAvatarSmall;
 		
 		this._container = $('#' + $.wcfEscapeID(this._containerID));
 		if (!this._container.length) {
@@ -138,7 +146,7 @@ WCF.Comment.Handler = Class.extend({
 	_handleLoadNextComments: function() {
 		if (this._displayedComments < this._container.data('comments')) {
 			if (this._loadNextComments === null) {
-				this._loadNextComments = $('<li class="commentLoadNext"><button class="small">' + WCF.Language.get('wcf.comment.more') + '</button></li>').appendTo(this._container);
+				this._loadNextComments = $('<li class="commentLoadNext showMore"><button class="small">' + WCF.Language.get('wcf.comment.more') + '</button></li>').appendTo(this._container);
 				this._loadNextComments.children('button').click($.proxy(this._loadComments, this));
 			}
 			
@@ -248,7 +256,7 @@ WCF.Comment.Handler = Class.extend({
 			if (!$insertAfter.length) $insertAfter = $comment.find('.commentContent');
 			
 			var $container = $('<div class="commentOptionContainer" />').hide().insertAfter($insertAfter);
-			self._commentButtonList[$commentID] = $('<ul />').appendTo($container);
+			self._commentButtonList[$commentID] = $('<ul class="inlineList dotSeparated" />').appendTo($container);
 			
 			self._handleLoadNextResponses($commentID);
 			self._initComment($commentID, $comment);
@@ -274,12 +282,12 @@ WCF.Comment.Handler = Class.extend({
 		}
 		
 		if (comment.data('canEdit')) {
-			var $editButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.edit') + '"><span class="icon icon16 icon-pencil" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.edit') + '</span></a></li>');
+			var $editButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.edit') + '"><span class="icon icon16 fa-pencil" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.edit') + '</span></a></li>');
 			$editButton.data('commentID', commentID).appendTo(comment.find('ul.commentOptions:eq(0)')).click($.proxy(this._prepareEdit, this));
 		}
 		
 		if (comment.data('canDelete')) {
-			var $deleteButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '"><span class="icon icon16 icon-remove" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.delete') + '</span></a></li>');
+			var $deleteButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '"><span class="icon icon16 fa-times" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.delete') + '</span></a></li>');
 			$deleteButton.data('commentID', commentID).appendTo(comment.find('ul.commentOptions:eq(0)')).click($.proxy(this._delete, this));
 		}
 	},
@@ -306,14 +314,14 @@ WCF.Comment.Handler = Class.extend({
 	 */
 	_initResponse: function(responseID, response) {
 		if (response.data('canEdit')) {
-			var $editButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.edit') + '"><span class="icon icon16 icon-pencil" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.edit') + '</span></a></li>');
+			var $editButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.edit') + '"><span class="icon icon16 fa-pencil" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.edit') + '</span></a></li>');
 			
 			var self = this;
 			$editButton.data('responseID', responseID).appendTo(response.find('ul.commentOptions:eq(0)')).click(function(event) { self._prepareEdit(event, true); });
 		}
 		
 		if (response.data('canDelete')) {
-			var $deleteButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '"><span class="icon icon16 icon-remove" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.delete') + '</span></a></li>');
+			var $deleteButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '"><span class="icon icon16 fa-times" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.delete') + '</span></a></li>');
 			
 			var self = this;
 			$deleteButton.data('responseID', responseID).appendTo(response.find('ul.commentOptions:eq(0)')).click(function(event) { self._delete(event, true); });
@@ -325,7 +333,7 @@ WCF.Comment.Handler = Class.extend({
 	 */
 	_initAddComment: function() {
 		// create UI
-		this._commentAdd = $('<li class="box32 jsCommentAdd"><span class="framed">' + this._userAvatar + '</span><div /></li>').prependTo(this._container);
+		this._commentAdd = $('<li class="box48 jsCommentAdd">' + this._userAvatar + '<div /></li>').prependTo(this._container);
 		var $inputContainer = this._commentAdd.children('div');
 		var $input = $('<textarea placeholder="' + WCF.Language.get('wcf.comment.add') + '" maxlength="65535" class="long" />').appendTo($inputContainer).flexible();
 		$('<button class="small">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._save, this)).appendTo($inputContainer);
@@ -342,7 +350,7 @@ WCF.Comment.Handler = Class.extend({
 	_initAddResponse: function(commentID, comment) {
 		var $placeholder = $('<li class="jsCommentShowAddResponse"><a>' + WCF.Language.get('wcf.comment.button.response.add') + '</a></li>').data('commentID', commentID).click($.proxy(this._showAddResponse, this)).appendTo(this._commentButtonList[commentID]);
 		
-		var $listItem = $('<div class="box32 commentResponseAdd jsCommentResponseAdd"><span class="framed">' + this._userAvatar + '</span><div /></div>').hide();
+		var $listItem = $('<div class="box32 commentResponseAdd jsCommentResponseAdd">' + this._userAvatarSmall + '<div /></div>').hide();
 		$listItem.appendTo(this._commentButtonList[commentID].parent().show());
 		
 		var $inputContainer = $listItem.children('div');

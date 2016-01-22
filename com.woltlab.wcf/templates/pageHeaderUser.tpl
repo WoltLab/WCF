@@ -47,7 +47,6 @@
 							{event name='userMenuItemsBefore'}
 							
 							{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
-								<li class="dropdownDivider"></li>
 								<li class="interactiveDropdownUserMenuItem">
 									<div class="box32">
 										<div><span class="icon icon32 {@$menuCategory->getIconClassName()}"></span></div>
@@ -77,12 +76,12 @@
 				</script>
 			</li>
 			
-			<li><a href="{link controller='Settings'}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 fa-cogs"></span> <span>{lang}wcf.user.menu.settings{/lang}</span></a></li>
+			<li><a href="{link controller='Settings'}{/link}" class="noJsOnly" style="display: none"><span class="icon icon32 fa-cogs"></span> <span>{lang}wcf.user.menu.settings{/lang}</span></a></li>
 			
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
 				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
-					<a href="{link controller='NotificationList'}{/link}"><span class="icon icon16 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeInverse">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
+					<a href="{link controller='NotificationList'}{/link}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
 							//<![CDATA[
@@ -109,7 +108,7 @@
 						{capture assign='__3rdPartyButtons'}
 							{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 								<li id="githubAuth" class="3rdPartyAuth">
-									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fagithub"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
+									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
 								</li>
 							{/if}
 							
@@ -233,9 +232,9 @@
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
 				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}">
 					<a href="{link controller='ModerationList'}{/link}">
-						<span class="icon icon16 fa-exclamation-triangle"></span>
+						<span class="icon icon32 fa-exclamation-triangle"></span>
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
-						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeInverse">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
+						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
 					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
@@ -260,7 +259,7 @@
 		{/if}
 		
 		{if $__wcf->user->userID}
-			<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" class="noJsOnly" style="display: none"><span class="icon icon16 fa-sign-out"></span> <span>{lang}wcf.user.logout{/lang}</span></a></li>
+			<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" class="noJsOnly" style="display: none"><span class="icon icon32 fa-sign-out"></span> <span>{lang}wcf.user.logout{/lang}</span></a></li>
 		{/if}
 	</ul>
 </nav>

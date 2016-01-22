@@ -93,6 +93,10 @@
 		&:first-child:nth-last-child(3) ~ .box {
 			flex-basis: 33.3333%;
 		}
+		
+		a:hover {
+			text-decoration: underline;
+		}
 	}
 	
 	.boxImage {
@@ -173,12 +177,45 @@
 		}
 	}
 	
+	.boxTitle {
+		color: $wcfSidebarHeadlineLink;
+		
+		&:hover {
+			color: $wcfSidebarHeadlineLinkActive;
+		}
+	}
+	
 	.box {
 		background-color: $wcfSidebarBackground;
 		padding: 20px;
 		
 		&:not(:first-child) {
 			margin-top: 20px;
+		}
+		
+		&.boxAlternative {
+			background-color: transparent;
+			border: 1px solid $wcfContentBorderInner;
+		}
+		
+		&.boxError {
+			background-color: $wcfStatusErrorBackground;
+			color: $wcfStatusErrorText;
+		}
+		
+		&.boxInfo {
+			background-color: $wcfStatusInfoBackground;
+			color: $wcfStatusInfoText;
+		}
+		
+		&.boxSuccess {
+			background-color: $wcfStatusSuccessBackground;
+			color: $wcfStatusSuccessText;
+		}
+		
+		&.boxWarning {
+			background-color: $wcfStatusWarningBackground;
+			color: $wcfStatusWarningText;
 		}
 	}
 	
@@ -200,18 +237,6 @@
 /* styling for boxes in <contentTop>/<contentBottom> position */
 .boxesContentTop,
 .boxesContentBottom {
-	.boxTitle {
-		color: $wcfContentHeadlineText;
-		
-		a {
-			color: $wcfContentHeadlineLink;
-			
-			&:hover {
-				color: $wcfContentHeadlineLinkActive;
-			}
-		}
-	}
-	
 	.box {
 		&:not(:first-child) {
 			margin-top: 30px;
@@ -224,6 +249,18 @@
 		.boxTitle,
 		.boxContent {
 			margin-left: calc(20% + 20px);
+		}
+	}
+	
+	.boxTitle {
+		color: $wcfContentHeadlineText;
+		
+		a {
+			color: $wcfContentHeadlineLink;
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive;
+			}
 		}
 	}
 	
@@ -283,6 +320,18 @@
 		
 		&:nth-child(n+3) {
 			margin-top: 40px;
+		}
+	}
+	
+	.boxTitle {
+		color: $wcfFooterBoxHeadlineText;
+		
+		a {
+			color: $wcfFooterBoxHeadlineLink;
+			
+			&:hover {
+				color: $wcfFooterBoxHeadlineLinkActive;
+			}
 		}
 	}
 	

@@ -119,9 +119,9 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				'name' => $this->getI18nValues($data['elements']['title'], true),
 				'boxType' => 'menu',
 				'position' => $position,
-				'showHeader' => (!empty($data['elements']['box']['showheader']) ? 1 : 0),
-				'visibleEverywhere' => (!empty($data['elements']['box']['visibleeveryhwere']) ? 1 : 0),
-				'cssClassName' => (!empty($data['elements']['box']['cssclassname'])),
+				'showHeader' => (!empty($data['elements']['box']['showHeader']) ? 1 : 0),
+				'visibleEverywhere' => (!empty($data['elements']['box']['visibleEverywhere']) ? 1 : 0),
+				'cssClassName' => (!empty($data['elements']['box']['cssClassName'])) ? $data['elements']['box']['cssClassName'] : '',
 				'originIsSystem' => 1,
 				'packageID' => $this->installation->getPackageID()
 			];

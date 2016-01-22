@@ -1,7 +1,4 @@
 .redactor-box {
-	border: 1px solid $wcfContentBorder;
-	font-size: 0;
-	line-height: $wcfBaseLineHeight;
 	position: relative;
 	
 	& + .messageTabMenu {
@@ -25,7 +22,6 @@
 		border: 1px solid $wcfContentBorderInner;
 		border-width: 1px 0 0 1px;
 		bottom: 0;
-		font-size: 1rem;
 		opacity: 0;
 		padding: $wcfGapSmall;
 		position: absolute;
@@ -50,8 +46,9 @@
 }
 
 .redactor-editor {
+	border: 1px solid $wcfContentBorderInner;
+	border-top-width: 0;
 	max-height: 500px;
-	min-height: 200px;
 	padding: 10px;
 	position: relative;
 	outline: none;
@@ -60,8 +57,6 @@
 	& + textarea {
 		border-width: 0;
 		box-shadow: none;
-		font-size: 1rem;
-		line-height: $wcfBaseLineHeight;
 		outline: none;
 		padding: 10px;
 		resize: vertical;
@@ -91,7 +86,7 @@
 	
 	table {
 		border-collapse: collapse;
-		font-size: 14px;
+		//font-size: 14px; TODO
 		line-height: 1.6em;
 		
 		td {
@@ -117,7 +112,7 @@
 		&::after {
 			content: $fa-var-pencil;
 			font-family: FontAwesome;
-			font-size: $wcfFontSizeHeadline;
+			font-size: $wcfFontSizeHeadline; // TODO
 			position: absolute;
 			right: 10px;
 			top: 10px;
@@ -142,7 +137,6 @@
 			
 			> div {
 				cursor: pointer;
-				font-size: 1.4rem;
 				left: 50%;
 				padding: 1em 3em;
 				position: absolute;
@@ -191,12 +185,6 @@
 	}
 }
 
-@media all and (min-width: 801px) {
-	.redactor-editor {
-		font-size: 1rem;
-	}
-}
-
 /* disable auto zoom in mobile safari */
 @media only screen and (max-width: 800px) {
 	.redactor-editor + textarea {
@@ -206,29 +194,29 @@
 }
 
 .redactor-toolbar {
-	background: repeating-linear-gradient(0deg, $wcfContentBorderInner 0px, $wcfContentBorderInner 3%, $wcfContentBackground 3%, $wcfContentBackground 100%);
-	background-size: 100% 31px;
+	background-color: $wcfHeaderBackground;
 	display: flex;
 	flex-wrap: wrap;
+	padding: 7px 10px;
 	
 	> li {
 		flex: 0 0 auto;
 		margin-bottom: 1px;
 		
-		&:last-of-type,
-		&.separator {
-			border-right: 1px solid $wcfContentBorderInner;
+		&:not(:last-child) {
+			margin-right: 10px;
 		}
 		
 		> a {
-			color: $wcfButtonText;
+			background-color: $wcfHeaderMenuBackground;
+			color: $wcfHeaderMenuLink;
 			display: block;
-			font-size: 14px;
-			height: 30px;
 			outline: none;
 			padding: 5px 8px;
 			text-align: center;
 			text-decoration: none;
+			
+			@extend .wcfFontSmall;
 			
 			&.redactor-button-disabled,
 			&.redactor-button-disabled:before,
@@ -239,8 +227,8 @@
 			&:hover,
 			&.redactor-act,
 			&.dropact {
-				background-color: $wcfButtonBackgroundActive;
-				color: $wcfButtonTextActive;
+				background-color: $wcfHeaderMenuBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
 			}
 		}
 	}
@@ -341,7 +329,7 @@
 			border: 2px solid rgba(255, 255, 255, 1);
 			border-bottom-width: 0;
 			display: inline-block;
-			font-size: 0;
+			font-size: 0; // TODO
 			height: 20px;
 			padding: 0;
 			margin: 0;
@@ -354,7 +342,7 @@
 	background-color: rgba(255, 255, 204, 1);
 	border: 5px dashed rgba(255, 204, 0);
 	box-sizing: border-box;
-	font-size: 1.4rem;
+	font-size: 1.4rem; // TODO
 	position: absolute;
 	text-align: center;
 	vertical-align: middle;
@@ -380,4 +368,8 @@
 	> a {
 		// TODO: color: $wcfTooltipColor;
 	}
+}
+
+.redactor-voice-label {
+	display: none;
 }

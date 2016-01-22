@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes CMS pages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
@@ -93,15 +93,15 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$content = [];
 			foreach ($data['elements']['content'] as $language => $contentData) {
-				if (!RouteHandler::isValidCustomUrl($contentData['customurl'])) {
+				if (!RouteHandler::isValidCustomUrl($contentData['customURL'])) {
 					throw new SystemException("Invalid custom url for page content '" . $language . "', page identifier '" . $data['attributes']['identifier'] . "'");
 				}
 				
 				$content[$language] = [
 					'content' => $contentData['content'],
-					'customURL' => $contentData['customurl'],
-					'metaDescription' => (!empty($contentData['metadescription'])) ? StringUtil::trim($contentData['metadescription']) : '',
-					'metaKeywords' => (!empty($contentData['metakeywords'])) ? StringUtil::trim($contentData['metakeywords']) : '',
+					'customURL' => $contentData['customURL'],
+					'metaDescription' => (!empty($contentData['metaDescription'])) ? StringUtil::trim($contentData['metaDescription']) : '',
+					'metaKeywords' => (!empty($contentData['metaKeywords'])) ? StringUtil::trim($contentData['metaKeywords']) : '',
 					'title' => $contentData['title']
 				];
 			}
@@ -139,21 +139,23 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$parentPageID = $row['pageID'];
 		}
 		
-		$customUrl = ($isStatic || empty($data['elements']['customurl'])) ? '' : $data['elements']['customurl'];
-		if ($customUrl && !RouteHandler::isValidCustomUrl($customUrl)) {
+		$controllerCustomURL = ($isStatic || empty($data['elements']['controllerCustomURL'])) ? '' : $data['elements']['controllerCustomURL'];
+		if ($controllerCustomURL && !RouteHandler::isValidCustomUrl($controllerCustomURL)) {
 			throw new SystemException("Invalid custom url for page identifier '" . $data['attributes']['identifier'] . "'");
 		}
 		
 		return [
 			'content' => ($isStatic) ? $data['elements']['content'] : [],
 			'controller' => ($isStatic) ? '' : $data['elements']['controller'],
-			'controllerCustomURL' => $customUrl,
+			'handler' => (!$isStatic && !empty($data['elements']['handler'])) ? $data['elements']['handler'] : '',
+			'controllerCustomURL' => $controllerCustomURL,
 			'identifier' => $data['attributes']['identifier'],
 			'isMultilingual' => ($isStatic) ? 1 : 0,
 			'lastUpdateTime' => TIME_NOW,
 			'name' => $name,
 			'originIsSystem' => 1,
-			'parentPageID' => $parentPageID
+			'parentPageID' => $parentPageID,
+			'requireObjectID' => (!empty($data['elements']['requireObjectID'])) ? 1 : 0
 		];
 	}
 	
@@ -165,15 +167,15 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	identifier = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['identifier'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**
@@ -190,7 +192,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				$object = parent::import($row, ['controller' => $data['controller']]);
 			}
 			else {
-				$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+				$baseClass = call_user_func([$this->className, 'getBaseClass']);
 				$object = new $baseClass(null, $row);
 			}
 		}

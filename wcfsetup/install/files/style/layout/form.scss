@@ -10,11 +10,14 @@ select,
 textarea {
 	background-color: $wcfInputBackground;
 	border: 1px solid $wcfInputBorder;
-	border-radius: 0;
-	border-width: 0 0 1px 0;
 	color: $wcfInputText;
 	outline: none;
-	padding: 4px;
+	padding: 4px 8px;
+	
+	// input elements do not inherit font family, size and line-height from body
+	font-family: $wcfFontFamily;
+	@extend .wcfFontDefault;
+	@extend .wcfLineHeight;
 	
 	&:focus,
 	&:hover {
@@ -27,6 +30,26 @@ textarea {
 		background-color: $wcfInputDisabledBackground !important;
 		border-color: $wcfInputDisabledBorder !important;
 		color: $wcfInputDisabledText !important;
+	}
+}
+
+/* set placeholder color */
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+input[type="url"] {
+	&::-webkit-input-placeholder { /* WebKit browsers */
+		color: $wcfInputPlaceholder;
+	}
+	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: $wcfInputPlaceholder;
+	}
+	&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: $wcfInputPlaceholder;
 	}
 }
 
@@ -46,6 +69,11 @@ textarea {
 .selectDropdown {
 	position: relative;
 	
+	// force inline-block to mimic the <select> display and make both its dimensions
+	// and flow behavior more predictable; !important is required to prevent styles
+	// applied to generic <label> in certain cases such as within <dd>
+	display: inline-block !important;
+	
 	&::after {
 		content: $fa-var-caret-down;
 		display: block;
@@ -54,7 +82,8 @@ textarea {
 		pointer-events: none;
 		position: absolute;
 		right: 7px;
-		top: 0px;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 	
 	> select {
@@ -66,164 +95,13 @@ textarea {
 	}
 }
 
-dl {
-	&:not(.plain) {
-		display: block;
-		
-		&:not(:first-child) {
-			margin-top: 10px;
-		}
-		
-		&:not(:last-child) {
-			margin-bottom: 10px;
-		}
-		
-		> dt {
-			display: block;
-			
-			&:not(:empty) {
-				margin-bottom: 5px;
-			}
-		}
-		
-		> dd {
-			display: block;
-			
-			> small:not(.innerError) {
-				color: $wcfContentDimmedText;
-				display: block;
-				margin-top: 5px;
-			}
-			
-			&.floated {
-				display: flex;
-				flex-wrap: wrap;
-				
-				> label {
-					flex: 0 0 auto;
-					margin: 0 10px 5px 0;
-					
-					&:last-child {
-						margin-right: 0;
-					}
-				}
-			}
-			
-			&:not(:last-child) {
-				margin-bottom: 10px;
-			}
-		}
-		
-		&.wide > dt {
-			display: none;
-		}
-		
-		& + dl:not(.plain) {
-			padding-top: 10px;
-		}
-	}
-	
-	&.dataList {
-		@extend .clearfix;
-		
-		> dt {
-			clear: right;
-			color: rgba(128, 128, 128, 1);
-			float: left;
-			margin-right: 4px;
-			text-align: left;
-			
-			&:after {
-				content: ":";
-			}
-		}
-		
-		> dd {
-			float: right;
-			text-align: right;
-			
-			&:not(:last-child) {
-				margin-bottom: 3px;
-			}
-		}
-	}
-	
-	&.inlineDataList {
-		@extend .wcfFontSmall;
-		
-		> dt {
-			display: inline-block;
-			
-			&:after {
-				content: ":";
-				padding-left: 1px;
-			}
-		}
-		
-		> dd {
-			display: inline-block;
-			
-			&:not(:last-of-type):after {
-				content: ",";
-				padding-left: 1px;
-			}
-		}
-	}
-	
-	&.statsDataList {
-		align-items: center;
-		display: flex;
-		flex-direction: row-reverse;
-		flex-wrap: wrap;
-		
-		> dt {
-			color: $wcfContentDimmedText;
-			flex: 0 0 60%;
-			margin-left: 5px;
-			overflow: hidden;
-			text-align: left;
-			white-space: nowrap;
-			
-			@extend .wcfFontSmall;
-		}
-		
-		> dd {
-			flex: 0 0 auto;
-			width: calc(40% - 5px); /* IE work-around */
-			
-			overflow: hidden;
-			text-align: right;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-	}
-	
-	&.condensed {
-		display: block;
-		
-		> dt,
-		> dd {
-			display: block;
-			margin: 0;
-			text-align: left;
-			width: 100%;
-		}
-		
-		> dd + dt {
-			margin-top: 15px;
-		}
-		
-		> dt:not(:empty) {
-			margin-bottom: 5px;
-		}
-	}
-}
+
 
 .formSubmit {
 	text-align: center;
 	
 	&:not(:first-child) {
-		margin-top: 20px;
+		margin-top: 30px;
 	}
 	
 	> :not(:first-child) {
@@ -311,21 +189,12 @@ dl {
 		margin-bottom: 5px;
 	}
 	
-	> .inputPrefix {
-		flex: 0 0 auto;
-		
-		&.button {
-			border-radius: 0;
-			margin-right: 5px;
-		}
-	}
-	
+	> .inputPrefix,
 	> .inputSuffix {
 		flex: 0 0 auto;
 		
 		&.button {
 			border-radius: 0;
-			margin-left: 5px;
 		}
 		
 		&:not(.button) {
@@ -333,13 +202,24 @@ dl {
 			border: 1px solid $wcfButtonBorder;
 			color: $wcfButtonText;
 			cursor: default;
-			margin-left: 5px;
 			padding: 3px 5px;
 		}
 	}
 	
+	> .inputPrefix {
+		margin-right: 5px;
+	}
+	
+	> .inputSuffix {
+		margin-left: 5px;
+	}
+	
 	input {
 		flex: 1 auto;
+		
+		& + .inputPrefix {
+			margin-left: 5px;
+		}
 	}
 }
 
