@@ -61,7 +61,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				if (!name) {
 					name = DomUtil.identify(container);
 				}
-
+				
 				elData(container, 'name', name);
 				this._containers.set(name, container);
 			}

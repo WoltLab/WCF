@@ -501,7 +501,7 @@ define(
 					label.textContent = itemData.label;
 					item.appendChild(label);
 					itemList.appendChild(item);
-
+					
 					elData(item, 'type', typeName);
 					item.addEventListener('click', _callbackItem);
 					

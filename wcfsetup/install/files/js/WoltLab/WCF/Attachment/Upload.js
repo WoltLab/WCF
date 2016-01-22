@@ -144,7 +144,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 						elAttr(img, 'src', attachment.tinyURL);
 						elAttr(img, 'alt', '');
 						icon.parentNode.replaceChild(icon, img);
-
+						
 						elData(listItem, 'height', attachment.height);
 						elData(listItem, 'width', attachment.width);
 					}

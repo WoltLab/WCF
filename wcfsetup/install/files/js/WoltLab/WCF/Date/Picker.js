@@ -48,7 +48,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				element.readOnly = true;
 				
 				var isDateTime = (elAttr(element, 'type') === 'datetime');
-
+				
 				elData(element, 'is-date-time', isDateTime);
 				
 				// convert value
@@ -652,7 +652,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		setDate: function(element, date) {
 			element = this._getElement(element);
 			var data = _data.get(element);
-
+			
 			elData(element, 'value', date.getTime());
 			element.value = DateUtil['formatDate' + (data.isDateTime ? 'Time' : '')](date);
 			
