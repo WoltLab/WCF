@@ -7,9 +7,8 @@
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	
 	<!-- Stylesheets -->
-	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet">
 	{@$__wcf->getStyleHandler()->getStylesheet(true)}
-	<link href="{@$__wcf->getPath()}acp/style/acpMenu.css" type="text/css" rel="stylesheet">
 	{event name='stylesheets'}
 	
 	<!-- Icons -->

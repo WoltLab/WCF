@@ -52,7 +52,8 @@
 				margin-right: 12px;
 			}
 			
-			> a {
+			> a,
+			> span {
 				background-color: $wcfHeaderMenuBackground;
 				color: $wcfHeaderMenuLink;
 				display: block;
@@ -61,8 +62,14 @@
 				padding: 4px 12px;
 			}
 			
+			> span {
+				cursor: default;
+			}
+			
 			&.active > a,
-			&:hover > a {
+			&:hover > a,
+			&.active > span,
+			&:hover > span {
 				background-color: $wcfHeaderMenuBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
 			}
@@ -82,35 +89,34 @@
 			}
 			
 			> a {
-				padding-right: 21px;
+				padding-right: 30px;
 				
-				&::after {
-					content: $fa-var-caret-down;
+				&::before {
+					border-left: 1px solid $wcfHeaderBackground;
+					bottom: 0;
+					content: "";
 					display: block;
-					font-family: FontAwesome;
 					position: absolute;
-					right: 6px;
-					top: 3px;
-					transition: transform .12s ease-out;
+					right: 22px;
+					top: 0;
 				}
 			}
-		}
-		
-		// TESTING
-		> .boxMenuHasChildren > a {
-			padding-right: 30px;
 			
-			&::before {
-				border-left: 1px solid $wcfHeaderBackground;
-				bottom: 0;
-				content: "";
+			> span {
+				padding-right: 21px;
+			}
+			
+			> a::after,
+			> span::after {
+				content: $fa-var-caret-down;
 				display: block;
+				font-family: FontAwesome;
 				position: absolute;
-				right: 22px;
-				top: 0;
+				right: 6px;
+				top: 3px;
+				transition: transform .12s ease-out;
 			}
 		}
-		// TESTING
 		
 		.boxMenuDepth1 {
 			background-color: $wcfHeaderMenuDropdownBackground;
@@ -131,6 +137,10 @@
 			> li {
 				> a {
 					color: $wcfHeaderMenuDropdownLink;
+				}
+				
+				> a,
+				> span {
 					display: block;
 					padding: 5px 20px;
 					white-space: nowrap;
@@ -144,10 +154,24 @@
 					color: $wcfHeaderMenuDropdownLinkActive;
 					text-decoration: none;
 				}
+			}
+		}
+		
+		.boxMenuDepth2 > li {
+			> a {
+				color: $wcfHeaderMenuDropdownLink;
+				display: block;
+				padding: 5px 20px 5px 40px;
+				white-space: nowrap;
 				
-				&.active > a {
-					cursor: default;
-				}
+				@extend .wcfFontDefault;
+			}
+			
+			&.active > a,
+			> a:hover {
+				background-color: $wcfHeaderMenuDropdownBackgroundActive;
+				color: $wcfHeaderMenuDropdownLinkActive;
+				text-decoration: none;
 			}
 		}
 	}

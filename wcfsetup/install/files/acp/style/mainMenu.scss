@@ -1,0 +1,62 @@
+.wcfAcpMenu {
+	&.doubleColumned {
+		-webkit-columns: 2;
+		-moz-columns: 2;
+		columns: 2;
+		
+		-webkit-column-gap: 1px;
+		-moz-column-gap: 1px;
+		column-gap: 1px;
+		
+		-webkit-column-rule: 1px solid $wcfContentBorderInner;
+		-moz-column-rule: 1px solid $wcfContentBorderInner;
+		column-rule: 1px solid $wcfContentBorderInner;
+		
+		> li {
+			-webkit-column-break-inside: avoid;
+			page-break-inside: avoid;
+			break-inside: avoid;
+		}
+	}
+	
+	> li {
+		min-width: 250px;
+	}
+}
+
+.boxMenuDepth1 > li > span {
+	color: $wcfTabularBoxHeadline;
+	cursor: default;
+	font-weight: 600 !important;
+	
+	@extend .wcfFontBold;
+}
+
+.menuItemWrapper {
+	display: flex;
+	
+	&:hover > a,
+	> .active {
+		background-color: $wcfDropdownBackgroundActive;
+		color: $wcfDropdownLinkActive;
+		
+		> .icon {
+			color: $wcfDropdownLinkActive;
+		}
+	}
+	
+	> a {
+		color: $wcfDropdownLink;
+		display: block;
+		flex: 0 0 auto;
+		padding: 5px 10px;
+		white-space: nowrap;
+		
+		@extend .wcfFontDefault;
+		
+		&:first-child {
+			flex: 1 1 auto;
+			padding: 5px 20px 5px 40px;
+		}
+	}
+}

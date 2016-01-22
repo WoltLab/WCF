@@ -4,10 +4,10 @@
 		<ol class="boxMenu">
 			{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
 				<li class="boxMenuHasChildren{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" data-menu-item="{$_sectionMenuItem->menuItem}">
-					<a>{@$_sectionMenuItem}</a>
+					<span>{@$_sectionMenuItem}</span>
 					
 					{assign var=_menuItemCategories value=$__wcf->getACPMenu()->getMenuItems($_sectionMenuItem->menuItem)}
-					<ol class="wcfAcpMenu boxMenuDepth1 subMenu{if $_menuItemCategories|count > 3} doubleColumned {/if}">
+					<ol class="wcfAcpMenu boxMenuDepth1 subMenu{if $_menuItemCategories|count > 3} doubleColumned{/if}">
 						{foreach from=$_menuItemCategories item=_menuItemCategory}
 							<li>
 								<span>{@$_menuItemCategory}</span>
