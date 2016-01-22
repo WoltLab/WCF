@@ -58,7 +58,7 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 				title = (typeof title === 'string') ? title.trim() : '';
 				
 				if (title.length) {
-					elAttr(element, 'data-tooltip', title);
+					elData(element, 'tooltip', title);
 					element.removeAttribute('title');
 					
 					element.addEventListener('mouseenter', this._mouseEnter.bind(this));
@@ -79,11 +79,11 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 			title = (typeof title === 'string') ? title.trim() : '';
 			
 			if (title !== '') {
-				elAttr(element, 'data-tooltip', title);
+				elData(element, 'tooltip', title);
 				element.removeAttribute('title');
 			}
 			
-			title = elAttr(element, 'data-tooltip');
+			title = elData(element, 'tooltip');
 			
 			// reset tooltip position
 			_tooltip.style.removeProperty('top');

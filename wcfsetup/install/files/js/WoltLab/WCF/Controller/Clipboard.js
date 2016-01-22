@@ -88,7 +88,7 @@ define(
 				if (containerData === undefined) {
 					var markAll = elBySel('.jsClipboardMarkAll', container);
 					if (markAll !== null) {
-						elAttr(markAll, 'data-container-id', containerId);
+						elData(markAll, 'container-id', containerId);
 						markAll.addEventListener('click', this._markAll.bind(this));
 					}
 					
@@ -105,7 +105,7 @@ define(
 					var checkbox = containerData.checkboxes[j];
 					
 					if (!_knownCheckboxes.has(checkbox)) {
-						elAttr(checkbox, 'data-container-id', containerId);
+						elData(checkbox, 'container-id', containerId);
 						checkbox.addEventListener('click', _callbackCheckbox);
 						
 						_knownCheckboxes.add(checkbox);
@@ -120,7 +120,7 @@ define(
 		_initEditors: function() {
 			var getTypes = function(editor) {
 				try {
-					var types = elAttr(editor, 'data-types');
+					var types = elData(editor, 'types');
 					if (typeof types === 'string') {
 						return JSON.parse('{ "types": ' + types.replace(/'/g, '"') + '}').types;
 					}
@@ -166,7 +166,7 @@ define(
 			var isMarked = (checkbox.nodeName !== 'INPUT' || checkbox.checked);
 			var objectIds = [];
 			
-			var containerId = elAttr(checkbox, 'data-container-id');
+			var containerId = elData(checkbox, 'container-id');
 			var data = _containers.get(containerId);
 			var type = elAttr(data.element, 'data-type');
 			
@@ -209,7 +209,7 @@ define(
 			var checkbox = event.currentTarget;
 			var objectId = ~~checkbox.getAttribute('data-object-id');
 			var isMarked = checkbox.checked;
-			var containerId = elAttr(checkbox, 'data-container-id');
+			var containerId = elData(checkbox, 'container-id');
 			var data = _containers.get(containerId);
 			var type = elAttr(data.element, 'data-type');
 			
@@ -267,7 +267,7 @@ define(
 			}
 			
 			var triggerEvent = function() {
-				var type = elAttr(listItem, 'data-type');
+				var type = elData(listItem, 'type');
 				
 				EventHandler.fire('com.woltlab.wcf.clipboard', type, {
 					data: data,
@@ -369,7 +369,7 @@ define(
 				parameters: parameters
 			}, (function(responseData) {
 				if (data.actionName !== 'unmarkAll') {
-					var type = elAttr(listItem, 'data-type');
+					var type = elData(listItem, 'type');
 					
 					EventHandler.fire('com.woltlab.wcf.clipboard', type, {
 						data: data,
@@ -501,8 +501,8 @@ define(
 					label.textContent = itemData.label;
 					item.appendChild(label);
 					itemList.appendChild(item);
-					
-					elAttr(item, 'data-type', typeName);
+
+					elData(item, 'type', typeName);
 					item.addEventListener('click', _callbackItem);
 					
 					_itemData.set(item, itemData);
@@ -514,7 +514,7 @@ define(
 				
 				// add 'unmark all'
 				var unmarkAll = elCreate('li');
-				elAttr(unmarkAll, 'data-type', typeName);
+				elData(unmarkAll, 'type', typeName);
 				var label = elCreate('span');
 				label.textContent = Language.get('wcf.clipboard.item.unmarkAll');
 				unmarkAll.appendChild(label);

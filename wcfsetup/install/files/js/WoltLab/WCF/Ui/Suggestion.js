@@ -223,7 +223,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 					
 					anchor = elCreate('a');
 					anchor.textContent = item.label;
-					elAttr(anchor, 'data-object-id', item.objectID);
+					elData(anchor, 'object-id', item.objectID);
 					anchor.addEventListener('click', this._select.bind(this));
 					
 					listItem = elCreate('li');

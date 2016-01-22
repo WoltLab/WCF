@@ -30,7 +30,7 @@ define([], function() {
 					var toggle = function() {
 						var expand = container.classList.contains('collapsed');
 						container.classList[expand ? 'remove' : 'add']('collapsed');
-						toggleButton.textContent = elAttr(toggleButton, 'data-title-' + (expand ? 'collapse' : 'expand'));
+						toggleButton.textContent = elData(toggleButton, 'title-' + (expand ? 'collapse' : 'expand'));
 					};
 					
 					toggleButton.addEventListener('click', toggle);

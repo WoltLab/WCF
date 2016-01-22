@@ -28,7 +28,7 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 		init: function(element, callback) {
 			callback = callback || null;
 			if (callback === null) {
-				var redirectUrl = elAttr(element, 'data-link');
+				var redirectUrl = elData(element, 'link');
 				if (redirectUrl) {
 					callback = function(pageNo) {
 						window.location = redirectUrl.replace(/pageNo=%d/, 'pageNo=' + pageNo);
@@ -68,7 +68,7 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 			
 			UiDialog.open(this);
 			
-			var pages = elAttr(element, 'data-pages');
+			var pages = elData(element, 'pages');
 			_input.value = pages;
 			_input.setAttribute('max', pages);
 			
