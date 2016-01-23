@@ -121,6 +121,7 @@
 		.boxMenuDepth1 {
 			background-color: $wcfHeaderMenuDropdownBackground;
 			border-bottom: 1px solid $wcfHeaderMenuDropdownBorder;
+			box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
 			padding: 3px 0;
 			position: absolute;
 			visibility: hidden;
@@ -132,7 +133,7 @@
 			background-clip: padding-box;
 			border-top: 3px solid transparent;
 			
-			@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
+			@extend .wcfFontDefault;
 			
 			> li {
 				> a {
@@ -144,8 +145,6 @@
 					display: block;
 					padding: 5px 20px;
 					white-space: nowrap;
-					
-					@extend .wcfFontDefault;
 				}
 				
 				&.active > a,
@@ -163,8 +162,6 @@
 				display: block;
 				padding: 5px 20px 5px 40px;
 				white-space: nowrap;
-				
-				@extend .wcfFontDefault;
 			}
 			
 			&.active > a,

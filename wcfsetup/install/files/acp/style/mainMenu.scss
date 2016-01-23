@@ -27,7 +27,6 @@
 .boxMenuDepth1 > li > span {
 	color: $wcfTabularBoxHeadline;
 	cursor: default;
-	font-weight: 600 !important;
 	
 	@extend .wcfFontBold;
 }
@@ -51,8 +50,6 @@
 		flex: 0 0 auto;
 		padding: 5px 10px;
 		white-space: nowrap;
-		
-		@extend .wcfFontDefault;
 		
 		&:first-child {
 			flex: 1 1 auto;
