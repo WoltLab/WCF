@@ -26,7 +26,7 @@
 #### New Traits
 
 * `wcf\data\TDatabaseObjectOptions` for database object-bound options validation.
-* `wcf\data\TDatabaseObjectOptions` for database object-bound permissions validation.
+* `wcf\data\TDatabaseObjectPermissions` for database object-bound permissions validation.
 * `wcf\data\TMultiCategoryObject` provides category-related methods for objects with multiple categories.
 * `wcf\data\TUserContent` provides default implementations of the (non-inherited) methods of the IUserContent interface.
 
