@@ -2052,6 +2052,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputBo
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputDisabledBackground', 'rgba(245, 245, 245, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputDisabledBorder', 'rgba(174, 176, 179, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputDisabledText', 'rgba(125, 130, 100, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputLabel', 'rgba(59, 109, 169, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputText', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputTextActive', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputPlaceholder', 'rgba(169, 169, 169, 1)');
