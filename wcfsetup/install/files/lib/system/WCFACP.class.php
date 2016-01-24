@@ -77,7 +77,7 @@ class WCFACP extends WCF {
 		if (self::$inRescueMode === null) {
 			self::$inRescueMode = false;
 			
-			if (isset($_SERVER['HTTP_HOST'])) {
+			if (PACKAGE_ID && isset($_SERVER['HTTP_HOST'])) {
 				self::$inRescueMode = true;
 				
 				foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
