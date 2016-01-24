@@ -133,13 +133,22 @@
 	margin-bottom: 20px;
 }
 
-.messageQuickOptions {
+.messageStatus {
+	flex: 1 1 auto;
+	
 	@extend .inlineList;
 	
+	.messagePublicationTime {
+		color: $wcfContentDimmedText;
+		
+		@extend .wcfFontSmall;
+	}
+}
+
+.messageQuickOptions {
 	flex: 0 0 auto;
-	//opacity: .3;
-	order: 2;
-	transition: opacity .2s linear;
+	
+	@extend .inlineList;
 	
 	.badge {
 		color: rgb(255, 255, 255);
@@ -148,32 +157,9 @@
 	}
 }
 
-.message:hover .messageQuickOptions {
-	//opacity: .6;
-}
-
-.message .messageHeader .messageQuickOptions:hover {
-	//opacity: 1;
-}
-
-.messageHeadline {
-	flex: 1 auto;
-	order: 1;
-	
-	> h1 {
-		margin-bottom: 5px;
-		
-		@extend .wcfFontHeadline;
-	}
-	
-	> p {
-		@extend .wcfFontSmall;
-	}
-}
-
 /* content - body */
 .messageBody {
-	flex: 1 auto;
+	flex: 1 1 auto;
 	
 	&.editor {
 		align-items: center;
@@ -196,12 +182,25 @@
 	margin-top: 20px;
 }
 
-.messageFooterNote {
-	border-left: 2px solid rgb(238, 238, 238);
-	padding-left: 5px;
+.messageFooterNote,
+.messageFooterNotes > .likesSummary {
+	border-left: 5px solid $wcfContentBorderInner;
+	color: $wcfContentDimmedText;
+	padding: 5px 10px;
+	
+	@extend .wcfFontSmall;
 	
 	&:not(:first-child) {
-		margin-top: 5px;
+		margin-top: 10px;
+	}
+	
+	a {
+		color: $wcfContentDimmedLink;
+		
+		&:hover {
+			color: $wcfContentDimmedLinkActive;
+			text-decoration: underline;
+		}
 	}
 }
 
