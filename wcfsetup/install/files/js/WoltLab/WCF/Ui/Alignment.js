@@ -55,7 +55,8 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 				bottom: 'auto !important',
 				left: '0 !important',
 				right: 'auto !important',
-				top: '0 !important'
+				top: '0 !important',
+				visibility: 'hidden !important'
 			});
 			
 			var elDimensions = DomUtil.outerDimensions(el);
@@ -157,6 +158,9 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 				right: right + (right !== 'auto' ? 'px' : ''),
 				top: top + (top !== 'auto' ? 'px' : '')
 			});
+			
+			el.style.removeProperty('display');
+			el.style.removeProperty('visibility');
 		},
 		
 		/**

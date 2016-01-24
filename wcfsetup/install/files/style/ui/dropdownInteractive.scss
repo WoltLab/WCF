@@ -1,3 +1,8 @@
+.dropdownMenuContainer > .interactiveDropdown {
+	/* hide dropdown during calculation */
+	left: -200%;
+}
+
 /* styling for interactive dropdowns (currently only used in the user panel) */
 .interactiveDropdown {
 	background-color: $wcfContentBackground;

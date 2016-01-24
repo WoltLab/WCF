@@ -1,3 +1,18 @@
+/* container for both regular and interactive dropdowns */
+.dropdownMenuContainer {
+	/* force positioning in the upper left corner to prevent elements from
+	   jumping during calculation */
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	
+	> .dropdown {
+		/* hide dropdown during calculation */
+		left: -200%;
+	}
+}
+
 .dropdown {
 	.dropdownToggle:active,
 	&.dropdownOpen .dropdownToggle {

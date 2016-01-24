@@ -31,7 +31,7 @@ define(
 			_didInit = true;
 			
 			_menuContainer = elCreate('div');
-			elAttr(_menuContainer, 'id', 'dropdownMenuContainer');
+			_menuContainer.className = 'dropdownMenuContainer';
 			document.body.appendChild(_menuContainer);
 			
 			_availableDropdowns = elByClass('dropdownToggle');
