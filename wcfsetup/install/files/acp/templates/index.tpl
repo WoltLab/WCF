@@ -8,8 +8,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.global.acp{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>
 
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
@@ -39,23 +39,34 @@
 	</nav>
 	
 	{if ENABLE_WOLTLAB_NEWS}
-		<div id="news" class="container containerPadding hidden tabMenuContent">
-			<div id="news-twitter-timeline">
-				{if $__wcf->language->languageCode == 'de'}
-					<a class="twitter-timeline" href="https://twitter.com/woltlab_de" data-chrome="nofooter transparent" data-widget-id="339042086949093376">Tweets von @woltlab_de</a>
-				{else}
-					<a class="twitter-timeline" href="https://twitter.com/woltlab" data-chrome="nofooter transparent" data-widget-id="335166618281865217">Tweets by @woltlab</a>
-				{/if}
-				{literal}
-					<script data-relocate="true">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-				{/literal}
+		<div id="news" class="hidden tabMenuContent">
+			<div class="section">
+				<div id="news-twitter-timeline">
+					{if $__wcf->language->languageCode == 'de'}
+						<a class="twitter-timeline" href="https://twitter.com/woltlab_de" data-chrome="noheader nofooter transparent" data-widget-id="339042086949093376">Tweets von @woltlab_de</a>
+						
+						<div style="margin-top: 20px">
+							<a class="twitter-follow-button" href="https://twitter.com/woltlab_de">Folge @woltlab_de</a>
+						</div>
+					{else}
+						<a class="twitter-timeline" href="https://twitter.com/woltlab" data-chrome="noheader nofooter transparent" data-widget-id="335166618281865217">Tweets by @woltlab</a>
+						
+						<div style="margin-top: 20px">
+							<a class="twitter-follow-button" href="https://twitter.com/woltlab_de">Follow @woltlab</a>
+						</div>
+					{/if}
+					
+					{literal}
+						<script data-relocate="true">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					{/literal}
+				</div>
 			</div>
 		</div>
 	{/if}
 	
-	<div id="system" class="container containerPadding hidden tabMenuContent">
-		<fieldset>
-			<legend>{lang}wcf.acp.index.system.software{/lang}</legend>
+	<div id="system" class="hidden tabMenuContent">
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.acp.index.system.software{/lang}</h2>
 			
 			{event name='softwareVersions'}
 			
@@ -65,10 +76,10 @@
 			</dl>
 			
 			{event name='softwareFields'}
-		</fieldset>
+		</section>
 		
-		<fieldset>
-			<legend>{lang}wcf.acp.index.system.server{/lang}</legend>
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.acp.index.system.server{/lang}</h2>
 			
 			<dl>
 				<dt>{lang}wcf.acp.index.system.os{/lang}</dt>
@@ -104,15 +115,13 @@
 			{/if}
 			
 			{event name='serverFields'}
-		</fieldset>
+		</section>
 		
 		{event name='systemFieldsets'}
 	</div>
 	
-	<div id="credits" class="container containerPadding hidden tabMenuContent">
-		<fieldset>
-			<legend>{lang}wcf.acp.index.credits{/lang}</legend>
-			
+	<div id="credits" class="hidden tabMenuContent">
+		<section class="section">
 			<dl>
 				<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
 				<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}" class="externalURL">WoltLab&reg; GmbH</a></dd>
@@ -121,7 +130,7 @@
 			<dl>
 				<dt>{lang}wcf.acp.index.credits.productManager{/lang}</dt>
 				<dd>
-					<ul class="dataList">
+					<ul class="inlineList commaSeparated">
 						<li>Marcel Werk</li>
 					</ul>
 				</dd>
@@ -130,7 +139,7 @@
 			<dl>
 				<dt>{lang}wcf.acp.index.credits.developer{/lang}</dt>
 				<dd>
-					<ul class="dataList">
+					<ul class="inlineList commaSeparated">
 						<li>Tim D&uuml;sterhus</li>
 						<li>Alexander Ebert</li>
 						<li>Matthias Schmidt</li>
@@ -142,7 +151,7 @@
 			<dl>
 				<dt>{lang}wcf.acp.index.credits.designer{/lang}</dt>
 				<dd>
-					<ul class="dataList">
+					<ul class="inlineList commaSeparated">
 						<li>Alexander Ebert</li>
 						<li>Marcel Werk</li>
 					</ul>
@@ -152,7 +161,7 @@
 			<dl>
 				<dt>{lang}wcf.acp.index.credits.contributor{/lang}</dt>
 				<dd>
-					<ul class="dataList">
+					<ul class="inlineList commaSeparated">
 						<li>Andrea Berg</li>
 						<li>Thorsten Buitkamp</li>
 						<li>
@@ -164,14 +173,14 @@
 			
 			<dl>
 				<dt></dt>
-				<dd>Copyright &copy; 2001-2015 WoltLab&reg; GmbH. All rights reserved.</dd>
+				<dd>Copyright &copy; 2001-2016 WoltLab&reg; GmbH. All rights reserved.</dd>
 			</dl>
 			
 			<dl>
 				<dt></dt>
 				<dd>{lang}wcf.acp.index.credits.trademarks{/lang}</dd>
 			</dl>
-		</fieldset>
+		</section>
 	</div>
 	
 	{event name='tabMenuContents'}
