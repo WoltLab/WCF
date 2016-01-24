@@ -2017,11 +2017,18 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.period.today"><![CDATA[Heute]]></item>
 		<item name="wcf.date.period.yesterday"><![CDATA[Gestern]]></item>
 		
-		<!-- variables for dynamic javascript datetime -->
+		<!-- variables for relative datetime for use in PHP -->
 		<item name="wcf.date.relative.now"><![CDATA[Vor einem Moment]]></item>
-		<item name="wcf.date.relative.minutes"><![CDATA[{literal}Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/literal}]]></item>
-		<item name="wcf.date.relative.hours"><![CDATA[{literal}Vor {if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/literal}]]></item>
-		<item name="wcf.date.relative.pastDays"><![CDATA[{literal}{if $days > 1}{$day}{else}Gestern{/if}, {$time}{/literal}]]></item>
+		<item name="wcf.date.relative.minutes"><![CDATA[Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}]]></item>
+		<item name="wcf.date.relative.hours"><![CDATA[Vor {if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}]]></item>
+		<item name="wcf.date.relative.pastDays"><![CDATA[{if $days > 1}{$day}{else}Gestern{/if}, {$time}]]></item>
+		
+		<!-- variables for relative datetime for use in JavaScript -->
+		<!-- should match the variables above but wrapped in {literal}…{/literal} -->
+		<item name="wcf.date.relative.nowJS"><![CDATA[Vor einem Moment]]></item>
+		<item name="wcf.date.relative.minutesJS"><![CDATA[{literal}Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/literal}]]></item>
+		<item name="wcf.date.relative.hoursJS"><![CDATA[{literal}Vor {if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/literal}]]></item>
+		<item name="wcf.date.relative.pastDaysJS"><![CDATA[{literal}{if $days > 1}{$day}{else}Gestern{/if}, {$time}{/literal}]]></item>
 		
 		<!-- variables for localized date formats -->
 		<item name="wcf.date.hour"><![CDATA[Stunde]]></item>

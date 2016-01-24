@@ -2020,7 +2020,14 @@ Errors are:
 		<item name="wcf.date.period.today"><![CDATA[Today]]></item>
 		<item name="wcf.date.period.yesterday"><![CDATA[Yesterday]]></item>
 		
-		<!-- variables for dynamic javascript datetime -->
+		<!-- variables for relative datetime for use in PHP -->
+		<item name="wcf.date.relative.now"><![CDATA[A moment ago]]></item>
+		<item name="wcf.date.relative.minutes"><![CDATA[{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago]]></item>
+		<item name="wcf.date.relative.hours"><![CDATA[{if $hours > 1}{#$hours} hours{else}An hour{/if} ago]]></item>
+		<item name="wcf.date.relative.pastDays"><![CDATA[{if $days > 1}{$day}{else}Yesterday{/if}, {$time}]]></item>
+		
+		<!-- variables for relative datetime for use in JavaScript -->
+		<!-- should match the variables above but wrapped in {literal}…{/literal} -->
 		<item name="wcf.date.relative.now"><![CDATA[A moment ago]]></item>
 		<item name="wcf.date.relative.minutes"><![CDATA[{literal}{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago{/literal}]]></item>
 		<item name="wcf.date.relative.hours"><![CDATA[{literal}{if $hours > 1}{#$hours} hours{else}An hour{/if} ago{/literal}]]></item>
