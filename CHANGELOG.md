@@ -39,6 +39,7 @@
 * `permissions` and `options` support for event listener PIP.
 * `name` attribute for event listener PIP (`listenerName` for event listener objects).
 * `permissions` and `options` support for template listener PIP.
+* file `{WCF_DIR}/acp/uninstall/{packageName}.php` is automatically executed if package is uninstalled right before the first file PIP is executed
 
 #### Removed Code
 
