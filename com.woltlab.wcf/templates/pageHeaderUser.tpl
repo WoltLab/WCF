@@ -3,7 +3,7 @@
 		{if $__wcf->user->userID}
 			<!-- user menu -->
 			<li id="userMenu">
-				<a class="framed" href="{link controller='User' object=$__wcf->user}{/link}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
+				<a class="jsTooltip" href="{link controller='User' object=$__wcf->user}{/link}" title="{lang}wcf.user.controlPanel{/lang}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
 				<div class="interactiveDropdown interactiveDropdownStatic interactiveDropdownUserMenu">
 					<div class="interactiveDropdownHeader">
 						<span class="interactiveDropdownTitle">{lang}wcf.user.controlPanel{/lang}</span>
@@ -19,23 +19,23 @@
 					<div class="interactiveDropdownItemsContainer">
 						<ul class="interactiveDropdownItems interactiveDropdownItemsUserMenu">
 							<li>
-								<div class="box64">
-									<a href="{link controller='User' object=$__wcf->user}{/link}" class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(64)}</a>
+								<div class="box48">
+									<a href="{link controller='User' object=$__wcf->user}{/link}" class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}</a>
 									
 									<div class="containerHeadline">
-										<h3><a href="{link controller='User' object=$__wcf->user}{/link}">{$__wcf->user->username}</a></h3>
-										{if MODULE_USER_RANK}
-											<p>
+										<h3>
+											<a href="{link controller='User' object=$__wcf->user}{/link}">{$__wcf->user->username}</a>
+											{if MODULE_USER_RANK}
 												{if $__wcf->getUserProfileHandler()->getUserTitle()}
 													<span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
 												{/if}
 												{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->rankImage}
 													<span class="userRankImage">{@$__wcf->getUserProfileHandler()->getRank()->getImage()}</span>
 												{/if}
-											</p>
-										{/if}
+											{/if}
+										</h3>
 										
-										<ul class="interactiveDropdownUserMenuLinkList">
+										<ul class="inlineList dotSeparated">
 											<li><a href="{link controller='User' object=$__wcf->user}{/link}">{lang}wcf.user.myProfile{/lang}</a></li>
 											{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
 											{if $__wcf->session->getPermission('admin.general.canUseAcp')}<li><a href="{link isACP=true}{/link}">{lang}wcf.global.acp.short{/lang}</a></li>{/if}
@@ -48,13 +48,13 @@
 							
 							{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
 								<li class="interactiveDropdownUserMenuItem">
-									<div class="box32">
-										<div><span class="icon icon32 {@$menuCategory->getIconClassName()}"></span></div>
+									<div class="box48">
+										<div><span class="icon icon48 {@$menuCategory->getIconClassName()}"></span></div>
 										
 										<div class="containerHeadline">
 											<h3>{lang}{$menuCategory->menuItem}{/lang}</h3>
 											
-											<ul class="interactiveDropdownUserMenuLinkList">
+											<ul class="inlineList dotSeparated">
 												{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
 													<li><a href="{$menuItem->getProcessor()->getLink()}">{@$menuItem}</a></li>
 												{/foreach}
@@ -76,12 +76,10 @@
 				</script>
 			</li>
 			
-			<li><a href="{link controller='Settings'}{/link}" class="noJsOnly" style="display: none"><span class="icon icon32 fa-cogs"></span> <span>{lang}wcf.user.menu.settings{/lang}</span></a></li>
-			
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
 				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
-					<a href="{link controller='NotificationList'}{/link}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
+					<a class="jsTooltip" href="{link controller='NotificationList'}{/link}" title="{lang}wcf.user.notification.notifications{/lang}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
 							//<![CDATA[
@@ -231,7 +229,7 @@
 		{if !$__hideUserMenu|isset}
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
 				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}">
-					<a href="{link controller='ModerationList'}{/link}">
+					<a class="jsTooltip" href="{link controller='ModerationList'}{/link}" title="{lang}wcf.moderation.moderation{/lang}">
 						<span class="icon icon32 fa-exclamation-triangle"></span>
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
 						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
@@ -256,10 +254,6 @@
 			{/if}
 			
 			{event name='menuItems'}
-		{/if}
-		
-		{if $__wcf->user->userID}
-			<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" class="noJsOnly" style="display: none"><span class="icon icon32 fa-sign-out"></span> <span>{lang}wcf.user.logout{/lang}</span></a></li>
 		{/if}
 	</ul>
 </nav>

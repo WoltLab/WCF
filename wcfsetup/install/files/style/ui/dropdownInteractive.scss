@@ -1,9 +1,8 @@
+/* styling for interactive dropdowns (currently only used in the user panel) */
 .interactiveDropdown {
-	background-color: $wcfDropdownBackground;
-	border: 1px solid $wcfDropdownBorder;
-	border-width: 1px 0;
+	background-color: $wcfContentBackground;
 	box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
-	color: $wcfDropdownLink;
+	color: $wcfContentText;
 	display: block;
 	position: absolute;
 	z-index: 450;
@@ -14,7 +13,7 @@
 	
 	> .elementPointer {
 		border: 10px solid transparent;
-		border-bottom-color: $wcfDropdownBorder;
+		//border-bottom-color: $wcfDropdownBorder;
 		border-top-width: 0;
 		content: "";
 		display: block;
@@ -23,7 +22,7 @@
 		
 		> span {
 			border: 8px solid transparent;
-			border-bottom-color: rgb(247, 248, 250); // @todo
+			border-bottom-color: $wcfSidebarBackground;
 			border-top-width: 0;
 			content: "";
 			display: block;
@@ -55,26 +54,39 @@
 	}
 }
 
+/* drop down header */
 .interactiveDropdownHeader {
 	align-items: center;
-	background-color: rgb(247, 248, 250); // @todo
+	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarHeadlineText;
 	display: flex;
-	padding: 5px 10px;
-}
-
-.interactiveDropdownTitle {
-	flex: 1 1 auto;
+	padding: 10px 20px;
 	
-	@extend .wcfFontHeadline;
+	a {
+		color: $wcfSidebarHeadlineLink;
+		
+		&:hover {
+			color: $wcfSidebarHeadlineLinkActive;
+			
+			text-decoration: underline;
+		}
+	}
+	
+	.interactiveDropdownTitle {
+		flex: 1 1 auto;
+		
+		@extend .wcfFontHeadline;
+	}
+	
+	.interactiveDropdownLinks {
+		flex: 0 0 auto;
+		margin-left: 5px;
+	}
 }
 
-.interactiveDropdownLinks {
-	flex: 0 0 auto;
-	margin-left: 5px;
-}
-
+/* container for dropdown items */
 .interactiveDropdownItemsContainer {
-	border: 1px solid $wcfDropdownBorderInner;
+	border: 1px solid $wcfContentBorderInner;
 	border-width: 1px 0;
 	max-height: 300px;
 	
@@ -90,24 +102,18 @@
 	}
 }
 
+/* dropdown item list */
 .interactiveDropdownItems {
-	background-color: $wcfDropdownBackground;
-	
 	> li {
-		color: $wcfContentText;
-		padding: 8px 10px;
+		padding: 15px 20px;
 		position: relative;
 		
 		&:not(:last-child) {
-			border-bottom: 1px solid $wcfDropdownBorderInner;
+			border-bottom: 1px solid $wcfContentBorderInner;
 		}
 		
 		&:hover {
-			background-color: rgb(242, 242, 242);
-		}
-		
-		> .box32 {
-			margin-bottom: 0;
+			background-color: $wcfTabularBoxBackgroundActive;
 		}
 		
 		a {
@@ -116,6 +122,11 @@
 			&:hover {
 				color: $wcfContentLinkActive;
 			}
+		}
+		
+		.box48 {
+			align-items: center;
+			overflow: hidden;
 		}
 	}
 	
@@ -126,45 +137,13 @@
 		
 		@extend .wcfFontHeadline;
 	}
-	
-	.notificationItem {
-		overflow: hidden;
-		padding: 5px 10px;
-		position: relative;
-		
-		&:not(:last-child) {
-			border-bottom: 1px solid $wcfDropdownBorderInner;
-		}
-		
-		a {
-			color: $wcfDropdownLink;
-		}
-		
-		&:hover {
-			background-color: $wcfDropdownBackgroundActive;
-			color: $wcfDropdownLinkActive;
-			
-			a {
-				color: $wcfDropdownLinkActive;
-				text-decoration: underline;
-			}
-		}
-		
-		> .box32 {
-			margin-bottom: 0;
-		}
-		
-		&.groupedNotificationItem .fa-users::before {
-			position: relative;
-			top: 3px;
-		}
-	}
 }
 
+/* outstanding / unread item */
 .interactiveDropdownItemOutstanding {
 	display: flex;
 	
-	> .box32 {
+	> .box48 {
 		flex: 1 1 auto;
 	}
 	
@@ -173,18 +152,22 @@
 	}
 }
 
+/* mark as read button for an item */
 .interactiveDropdownItemMarkAsRead {
 	align-self: center;
 	flex: 0 0 auto;
 	margin-left: 5px;
 }
 
-&.interactiveDropdownItemShadow {
-	> .box32 {
+/* Adds a link spanning the entire item while being placed behind all other links appearing
+   within the regular text using a lower z-index. Allows for regular links to be accessible,
+   but causes the item to act as a link. */
+.interactiveDropdownItemShadow {
+	> .box48 {
 		position: relative;
 	}
 	
-	> .box32,
+	> .box48,
 	> .interactiveDropdownItemMarkAsRead {
 		pointer-events: none;
 		z-index: 20;
@@ -203,51 +186,17 @@
 		z-index: 10;
 	}
 }
-	
-.interactiveDropdownItemsUserMenu > li {
-	h3 {
-		@extend .wcfFontHeadline
-	}
-	
-	.box64 {
-		position: relative;
-		
-		.containerHeadline {
-			padding-bottom: 10px;
-		}
-		
-		.interactiveDropdownUserMenuLinkList {
-			bottom: 0;
-			position: absolute;
-		}
-	}
-	
-	.icon {
-		position: relative;
-		top: 5px;
-	}
-	
-	.interactiveDropdownUserMenuLinkList > li {
-		display: inline-block;
-		
-		@extend .wcfFontSmall;
-		
-		&:not(:last-child)::after {
-			content: "\00b7";
-			margin-left: 5px;
-		}
-	}
-}
 
+/* show all button shown in dropdown menu bottom */
 .interactiveDropdownShowAll {
-	background-color: rgb(247, 248, 250);
-	color: $wcfDropdownLink;
+	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarHeadlineText;
 	display: block;
-	padding: 5px 10px;
+	padding: 10px 20px;
 	text-align: center;
 	
 	&:hover {
-		color: $wcfDropdownLink;
+		color: $wcfSidebarHeadlineText;
 		text-decoration: underline;
 	}
 }
@@ -262,11 +211,12 @@
 		position: relative;
 	}
 	
-	.interactiveDropdownItems .notificationItem {
+	.interactiveDropdownItems:not(.interactiveDropdownItemsUserMenu) > li {
 		max-width: 400px;
 	}
 }
 
+/* todo: mobile version
 @media only screen and (max-width: 800px) {
 	.DEBUG_ONLY_interactiveDropdown {
 		border-width: 1px 0;
@@ -303,3 +253,4 @@
 		}
 	}
 }
+*/

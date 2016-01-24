@@ -238,6 +238,17 @@
 					transform-origin: 50% 0;
 				}
 			}
+			
+			/* hover effect for user menu button */
+			&#userMenu {
+				> a {
+					&:hover {
+						> img {
+							box-shadow: 0 0 0 2px $wcfHeaderLink;
+						}
+					}
+				}
+			}
 		}
 	}
 }
