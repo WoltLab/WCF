@@ -189,9 +189,19 @@ define([], function() {
 		 * @param	{Object<string, mixed>}	styles	list of CSS styles
 		 */
 		setStyles: function(el, styles) {
+			var important = false;
 			for (var property in styles) {
 				if (styles.hasOwnProperty(property)) {
-					el.style.setProperty(property, styles[property]);
+					if (/ !important$/.test(styles[property])) {
+						important = true;
+						
+						styles[property] = styles[property].replace(/ !important$/, '');
+					}
+					else {
+						important = false;
+					}
+					
+					el.style.setProperty(property, styles[property], (important ? 'important' : ''));
 				}
 			}
 		},
