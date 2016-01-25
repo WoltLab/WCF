@@ -11,7 +11,7 @@
 			data-disable-signature="{@$user->disableSignature}"
 		{/if}
 	{/if}
->
+>{*todo*}
 	<div class="userAvatar">
 		{if $user->userID == $__wcf->user->userID}
 			<a href="{link controller='AvatarEdit'}{/link}" class="framed jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{@$user->getAvatar()->getImageTag()}</a>
@@ -33,7 +33,7 @@
 		</div>
 	{/if}
 	
-	<ul class="dataList">
+	<ul class="inlineList commaSeparated">
 		{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
 		{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
 		{if $user->isVisibleOption('location') && $user->location}<li>{lang}wcf.user.membersList.location{/lang}</li>{/if}
@@ -47,6 +47,29 @@
 			{if $user->getCurrentLocation()}<span>{@$user->getCurrentLocation()}</span>{/if}
 		</p>
 	{/if}
+	{hascontent}
+		<dl class="plain inlineDataList">
+			{content}
+				{event name='statistics'}
+				
+				{if MODULE_LIKE && $user->likesReceived}
+					<dt>{if !$user->isProtected()}<a href="{link controller='User' object=$user}{/link}#likes" class="jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a>{else}{lang}wcf.like.likesReceived{/lang}{/if}</dt>
+					<dd>{#$user->likesReceived}</dd>
+				{/if}
+				
+				{if $user->activityPoints}
+					<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
+					<dd>{#$user->activityPoints}</dd>
+				{/if}
+				
+				{if $user->profileHits}
+					<dt>{lang}wcf.user.profileHits{/lang}</dt>
+					<dd{if $user->getProfileAge() > 1} title="{lang}wcf.user.profileHits.hitsPerDay{/lang}"{/if}>{#$user->profileHits}</dd>
+				{/if}
+			{/content}
+		</dl>
+	{/hascontent}
+	
 	<nav class="jsMobileNavigation buttonGroupNavigation">
 		<ul id="profileButtonContainer" class="buttonGroup">
 			{hascontent}
@@ -83,35 +106,6 @@
 		</ul>
 	</nav>
 </section>
-
-{hascontent}
-	<section>
-		<h1 class="invisible">{lang}wcf.user.stats{/lang}</h1>
-		
-		<dl class="plain statsDataList">
-			{content}
-				{event name='statistics'}
-				
-				{if MODULE_LIKE && $user->likesReceived}
-					<dt>{if !$user->isProtected()}<a href="{link controller='User' object=$user}{/link}#likes" class="jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a>{else}{lang}wcf.like.likesReceived{/lang}{/if}</dt>
-					<dd>{#$user->likesReceived}</dd>
-				{/if}
-				
-				{if $user->activityPoints}
-					<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
-					<dd>{#$user->activityPoints}</dd>
-				{/if}
-				
-				{if $user->profileHits}
-					<dt>{lang}wcf.user.profileHits{/lang}</dt>
-					<dd{if $user->getProfileAge() > 1} title="{lang}wcf.user.profileHits.hitsPerDay{/lang}"{/if}>{#$user->profileHits}</dd>
-				{/if}
-			{/content}
-		</dl>
-	</section>
-{/hascontent}
-
-{event name='afterStatistics'}
 
 {if !$user->isProtected()}
 	{if $followingCount}

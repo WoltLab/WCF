@@ -26,7 +26,7 @@
 
 /* boxes with an image */
 @mixin box($imageSize, $margin: 0) {
-	display: flex !important;
+	display: flex;
 	
 	> :first-child:not(:last-child) {
 		flex: 0 0 auto;

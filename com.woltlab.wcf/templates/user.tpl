@@ -134,9 +134,9 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="userProfile">
 
-{include file='userSidebar' assign='sidebar'}
+{include file='userSidebar' assign='sidebarRight'}
 
-{include file='header' sidebarOrientation='left'}
+{include file='header'}
 
 {include file='userNotice'}
 
