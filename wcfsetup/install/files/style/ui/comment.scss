@@ -28,6 +28,10 @@
 				margin-top: 20px;
 			}
 		}
+		
+		.wcfLikeCounter {
+			@extend .wcfFontSmall;
+		}
 	}
 	
 	.commentResponseList {

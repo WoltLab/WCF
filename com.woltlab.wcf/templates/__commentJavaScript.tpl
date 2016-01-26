@@ -16,8 +16,49 @@
 		
 		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}', '{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}', '{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}');
 		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-			new WCF.Comment.Like({if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}1{else}0{/if}, {@LIKE_ENABLE_DISLIKE}, false, {@LIKE_ALLOW_FOR_OWN_CONTENT});
-			new WCF.Comment.Response.Like({if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}1{else}0{/if}, {@LIKE_ENABLE_DISLIKE}, false, {@LIKE_ALLOW_FOR_OWN_CONTENT});
+			require(['WoltLab/WCF/Ui/Like/Handler'], function(UiLikeHandler) {
+				var canDislike = {if LIKE_ENABLE_DISLIKE}true{else}false{/if};
+				var canLike = {if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}true{else}false{/if};
+				var canLikeOwnContent = {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if};
+				
+				new UiLikeHandler('com.woltlab.wcf.comment', {
+					// settings
+					badgeClassNames: 'separatorLeft',
+					markListItemAsActive: true,
+					renderAsButton: false,
+					
+					// permissions
+					canDislike: canDislike,
+					canLike: canLike,
+					canLikeOwnContent: canLikeOwnContent,
+					canViewSummary: false,
+					
+					// selectors
+					badgeContainerSelector: '.commentContent:not(.commentResponseContent) > .containerHeadline > h3',
+					buttonAppendToSelector: '.commentContent .buttonList',
+					containerSelector: '.comment',
+					summarySelector: ''
+				});
+				
+				new UiLikeHandler('com.woltlab.wcf.comment.response', {
+					// settings
+					badgeClassNames: 'separatorLeft',
+					markListItemAsActive: true,
+					renderAsButton: false,
+					
+					// permissions
+					canDislike: canDislike,
+					canLike: canLike,
+					canLikeOwnContent: canLikeOwnContent,
+					canViewSummary: false,
+					
+					// selectors
+					badgeContainerSelector: '.commentResponseContent > .containerHeadline > h3',
+					buttonAppendToSelector: '.commentContent .buttonList',
+					containerSelector: '.commentResponse',
+					summarySelector: ''
+				});
+			});
 		{/if}
 		
 		{if $commentList->getCommentManager()->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}

@@ -25,7 +25,7 @@ define(
 	/**
 	 * @constructor
 	 */
-	function UiLikeHandler(objectType, options) { this.init(objectType, options); };
+	function UiLikeHandler(objectType, options) { this.init(objectType, options); }
 	UiLikeHandler.prototype = {
 		/**
 		 * Initializes the like handler.
@@ -42,7 +42,11 @@ define(
 			this._details = new ObjectMap();
 			this._objectType = objectType;
 			this._options = Core.extend({
+				// settings
+				badgeClassNames: '',
 				isSingleItem: false,
+				markListItemAsActive: false,
+				renderAsButton: true,
 				
 				// permissions
 				canDislike: false,
@@ -52,6 +56,7 @@ define(
 				
 				// selectors
 				badgeContainerSelector: '.messageHeader .messageHeadline > p',
+				buttonAppendToSelector: '',
 				buttonBeforeSelector: '.messageFooterButtons > .toTopLink',
 				containerSelector: '',
 				summarySelector: '.messageFooterNotes'
@@ -125,7 +130,7 @@ define(
 			if (badgeContainer !== null) {
 				badge = elCreate('a');
 				badge.href = '#';
-				badge.className = 'wcfLikeCounter jsTooltip';
+				badge.className = 'wcfLikeCounter jsTooltip' + (this._options.badgeClassNames ? ' ' + this._options.badgeClassNames : '');
 				badge.addEventListener('click', this._showSummary.bind(this, element));
 				
 				badgeContainer.appendChild(badge);
@@ -134,16 +139,19 @@ define(
 				this._updateBadge(element);
 			}
 			
-			var insertPosition, userId = elAttr(element, 'data-user-id');
-			if (this._options.canLikeOwnContent || WCF.User.userID === userId) {
-				insertPosition = elBySel(this._options.buttonBeforeSelector, element);
-				if (insertPosition !== null) {
+			if (WCF.User.userID != elData(element, 'user-id') || this._options.canLikeOwnContent) {
+				var appendTo = (this._options.buttonAppendToSelector) ? elBySel(this._options.buttonAppendToSelector, element) : null;
+				var insertPosition = (this._options.buttonBeforeSelector) ? elBySel(this._options.buttonBeforeSelector, element) : null;
+				if (insertPosition === null && appendTo === null) {
+					throw new Error("Unable to find insert location for like/dislike buttons.");
+				}
+				else {
 					// like button
-					elementData.likeButton = this._createButton(element, insertPosition, true);
+					elementData.likeButton = this._createButton(element, true, insertPosition, appendTo);
 					
 					// dislike button
 					if (this._options.canDislike) {
-						elementData.dislikeButton = this._createButton(element, insertPosition, false);
+						elementData.dislikeButton = this._createButton(element, false, insertPosition, appendTo);
 					}
 					
 					this._updateActiveState(element);
@@ -155,18 +163,19 @@ define(
 		 * Creates a like or dislike button.
 		 * 
 		 * @param	{Element}	element		container element
-		 * @param	{Element}	insertBefore	insert button before given element
 		 * @param	{boolean}	isLike		false if this is a dislike button
+		 * @param	{Element?}	insertBefore	insert button before given element
+		 * @param       {Element?}      appendTo        append button to given element
 		 * @return	{Element}	button element 
 		 */
-		_createButton: function(element, insertBefore, isLike) {
+		_createButton: function(element, isLike, insertBefore, appendTo) {
 			var title = Language.get('wcf.like.button.' + (isLike ? 'like' : 'dislike'));
 			
 			var listItem = elCreate('li');
 			listItem.className = 'wcf' + (isLike ? 'Like' : 'Dislike') + 'Button';
 			
 			var button = elCreate('a');
-			button.className = 'button jsTooltip';
+			button.className = 'jsTooltip' + (this._options.renderAsButton ? ' button' : '');
 			button.href = '#';
 			button.title = title;
 			button.innerHTML = '<span class="icon icon16 fa-thumbs-o-' + (isLike ? 'up' : 'down') + '" /> <span class="invisible">' + title + '</span>';
@@ -174,7 +183,13 @@ define(
 			button.setAttribute('data-type', (isLike ? 'like' : 'dislike'));
 			
 			listItem.appendChild(button);
-			insertBefore.parentNode.insertBefore(listItem, insertBefore);
+			
+			if (insertBefore) {
+				insertBefore.parentNode.insertBefore(listItem, insertBefore);
+			}
+			else {
+				appendTo.appendChild(listItem);
+			}
 			
 			return button;
 		},
@@ -275,14 +290,17 @@ define(
 		_updateActiveState: function(element) {
 			var data = this._containers.get(element);
 			
-			if (data.dislikeButton !== null) data.dislikeButton.classList.remove('active');
-			data.likeButton.classList.remove('active');
+			var dislikeTarget = (this._options.markListItemAsActive) ? data.dislikeButton.parentNode : data.dislikeButton;
+			var likeTarget = (this._options.markListItemAsActive) ? data.likeButton.parentNode : data.likeButton;
+			
+			if (data.dislikeButton !== null) dislikeTarget.classList.remove('active');
+			likeTarget.classList.remove('active');
 			
 			if (data.liked === 1) {
-				data.likeButton.classList.add('active');
+				likeTarget.classList.add('active');
 			}
 			else if (data.liked === -1 && data.dislikeButton !== null) {
-				data.dislikeButton.classList.add('active');
+				dislikeTarget.classList.add('active');
 			}
 		},
 		
