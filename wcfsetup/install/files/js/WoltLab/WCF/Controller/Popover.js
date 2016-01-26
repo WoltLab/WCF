@@ -10,7 +10,6 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 	"use strict";
 	
 	var _activeId = null;
-	var _baseHeight = 0;
 	var _cache = new Dictionary();
 	var _elements = new Dictionary();
 	var _handlers = new Dictionary();
@@ -21,7 +20,6 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 	
 	var _popover = null;
 	var _popoverContent = null;
-	var _popoverLoading = null;
 	
 	var _callbackClick = null;
 	var _callbackHide = null;
@@ -32,13 +30,13 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 	/** @const */ var STATE_LOADING = 1;
 	/** @const */ var STATE_READY = 2;
 	
-	/** @const */ var DELAY_SHOW = 800;
 	/** @const */ var DELAY_HIDE = 500;
+	/** @const */ var DELAY_SHOW = 300;
 	
 	/**
 	 * @exports	WoltLab/WCF/Controller/Popover
 	 */
-	var ControllerPopover = {
+	return {
 		/**
 		 * Builds popover DOM elements and binds event listeners.
 		 */
@@ -59,10 +57,6 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			pointer.appendChild(elCreate('span'));
 			_popover.appendChild(pointer);
 			
-			_popoverLoading = elCreate('span');
-			_popoverLoading.className = 'icon icon32 fa-spinner';
-			_popover.appendChild(_popoverLoading);
-			
 			document.body.appendChild(_popover);
 			
 			// static binding for callbacks (they don't change anyway and binding each time is expensive)
@@ -74,13 +68,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			_popover.addEventListener('mouseenter', this._popoverMouseEnter.bind(this));
 			_popover.addEventListener('mouseleave', _callbackMouseLeave);
 			
-			_popoverContent.addEventListener('transitionend', function(event) {
-				if (event.propertyName === 'height') {
-					_popoverContent.classList.remove('loading');
-				}
-			});
-			
-			_popover.addEventListener('transitionend', this._clearContent.bind(this));
+			_popover.addEventListener('animationend', this._clearContent.bind(this));
 			
 			window.addEventListener('beforeunload', (function() {
 				_suspended = true;
@@ -201,7 +189,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		 * Sets the content for given identifier and object id.
 		 * 
 		 * @param	{string}	identifier	handler identifier
-		 * @param	{integer}	objectId	object id
+		 * @param	{int}           objectId	object id
 		 * @param	{string}	content		HTML string
 		 */
 		setContent: function(identifier, objectId, content) {
@@ -299,9 +287,25 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				_timeoutLeave = null;
 			}
 			
-			var disableAnimation = (_activeId !== null && _activeId !== _hoverId);
+			var forceHide = false;
 			if (_popover.classList.contains('active')) {
-				this._hide(disableAnimation);
+				this._hide();
+				
+				forceHide = true;
+			}
+			else if (_popoverContent.childElementCount) {
+				forceHide = true;
+			}
+			
+			if (forceHide) {
+				_popover.classList.add('forceHide');
+				
+				// force layout
+				_popover.offsetTop;
+				
+				this._clearContent();
+				
+				_popover.classList.remove('forceHide');
 			}
 			
 			_activeId = _hoverId;
@@ -311,14 +315,10 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			
 			if (data.state === STATE_READY) {
 				_popoverContent.appendChild(data.content);
+				
+				this._rebuild(_activeId);
 			}
 			else if (data.state === STATE_NONE) {
-				_popoverContent.classList.add('loading');
-			}
-			
-			this._rebuild(_activeId);
-			
-			if (data.state === STATE_NONE) {
 				data.state = STATE_LOADING;
 				
 				_handlers.get(elData.identifier).loadCallback(elData.objectId, this);
@@ -327,25 +327,14 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		
 		/**
 		 * Hides the popover element.
-		 * 
-		 * @param	{(object|boolean)}	event	event object or boolean if popover should be forced hidden
 		 */
-		_hide: function(event) {
+		_hide: function() {
 			if (_timeoutLeave !== null) {
 				window.clearTimeout(_timeoutLeave);
 				_timeoutLeave = null;
 			}
 			
 			_popover.classList.remove('active');
-			
-			if (typeof event === 'boolean' && event === true) {
-				_popover.classList.add('disableAnimation');
-				
-				// force reflow
-				_popover.offsetHeight;
-				
-				this._clearContent();
-			}
 		},
 		
 		/**
@@ -357,8 +346,6 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				while (_popoverContent.childNodes.length) {
 					activeElData.content.appendChild(_popoverContent.childNodes[0]);
 				}
-				
-				_popoverContent.style.removeProperty('height');
 			}
 		},
 		
@@ -371,27 +358,6 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			}
 			
 			_popover.classList.add('active');
-			_popover.classList.remove('disableAnimation');
-			if (_popoverContent.classList.contains('loading')) {
-				if (_popoverContent.childElementCount === 0) {
-					if (_baseHeight === 0) {
-						_baseHeight = _popoverContent.offsetHeight;
-					}
-					
-					_popoverContent.style.setProperty('height', _baseHeight + 'px');
-				}
-				else {
-					_popoverContent.style.removeProperty('height');
-					
-					var height = _popoverContent.offsetHeight;
-					_popoverContent.style.setProperty('height', _baseHeight + 'px');
-					
-					// force reflow
-					_popoverContent.offsetHeight;
-					
-					_popoverContent.style.setProperty('height', height + 'px');
-				}
-			}
 			
 			UiAlignment.set(_popover, _elements.get(_activeId).element, {
 				pointer: true,
@@ -420,6 +386,4 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			Ajax.api(this, data, success, failure);
 		}
 	};
-	
-	return ControllerPopover;
 });
