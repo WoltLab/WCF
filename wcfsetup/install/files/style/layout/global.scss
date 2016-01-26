@@ -175,11 +175,13 @@ ol.nativeList {
 }
 
 .separatorLeft::before {
+	color: $wcfContentText;
 	content: "\00b7";
 	margin-right: 5px;
 }
 
 .separatorRight::after {
+	color: $wcfContentText;
 	content: "\00b7";
 	margin-left: 5px;
 }
