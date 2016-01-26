@@ -106,7 +106,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		 */
 		_preserveSourceElement: function(element, sourceElements) {
 			var placeholder = elCreate('var');
-			elAttr(placeholder, 'data-source', 'wcf');
+			elData(placeholder, 'source', 'wcf');
 			element.parentNode.insertBefore(placeholder, element);
 			
 			var fragment = document.createDocumentFragment();
@@ -245,7 +245,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		 * @param	{Element}	element		target element
 		 */
 		_convertBlockquote: function(element) {
-			var author = elAttr(element, 'data-author');
+			var author = elData(element, 'author');
 			var link = elAttr(element, 'cite');
 			
 			var open = '[quote]';
@@ -287,7 +287,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 			width = (typeof width === 'string') ? ~~width.replace(/px$/, '') : 0;
 			
 			if (element.classList.contains('redactorEmbeddedAttachment')) {
-				var attachmentId = elAttr(element, 'data-attachment-id');
+				var attachmentId = elData(element, 'attachment-id');
 				
 				if (width > 0) {
 					element.outerHTML = "[attach=" + attachmentId + "," + float + "," + width + "][/attach]";
@@ -525,8 +525,8 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 		 * @param	{Element}	element		target element
 		 */
 		_convertSourceCodeBox: function(element) {
-			var filename = elAttr(element, 'data-filename').trim() || '';
-			var highlighter = elAttr(element, 'data-highlighter');
+			var filename = elData(element, 'filename').trim() || '';
+			var highlighter = elData(element, 'highlighter');
 			window.dtdesign = element;
 			var list = DomTraverse.childByTag(element.children[0], 'OL');
 			var lineNumber = ~~list.getAttribute('start') || 1;

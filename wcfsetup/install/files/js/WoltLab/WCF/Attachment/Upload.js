@@ -54,7 +54,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 		_createFileElement: function(file) {
 			var listItem = elCreate('li');
 			listItem.className = 'box64';
-			elAttr(listItem, 'data-filename', filename);
+			elData(listItem, 'filename', filename);
 			this._target.appendChild(listItem);
 			this._target.style.removeProperty('display');
 			
@@ -131,8 +131,8 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 				var progress = elByTag(listItem, 'PROGRESS');
 				progress.parentNode.removeChild(progress);
 				
-				var filename = elAttr(listItem, 'data-filename');
-				var internalFileId = elAttr(listItem, 'data-internal-file-id');
+				var filename = elData(listItem, 'filename');
+				var internalFileId = elData(listItem, 'internal-file-id');
 				
 				var icon = DomTraverse.childByClass(listItem, 'fa-spinner');
 				
@@ -145,8 +145,8 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 						elAttr(img, 'alt', '');
 						icon.parentNode.replaceChild(icon, img);
 						
-						elAttr(listItem, 'data-height', attachment.height);
-						elAttr(listItem, 'data-width', attachment.width);
+						elData(listItem, 'height', attachment.height);
+						elData(listItem, 'width', attachment.width);
 					}
 					else {
 						// TODO: Use FileUtil.getIconClassByMimeType()?
@@ -179,14 +179,14 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 					var span = elCreate('span');
 					span.className = 'button small jsDeleteButton';
 					span.textContent = Language.get('wcf.global.button.delete');
-					elAttr(span, 'data-object-id', attachment.attachmentID);
-					elAttr(span, 'data-confirm-message', Language.get('wcf.attachment.delete.sure'));
+					elData(span, 'object-id', attachment.attachmentID);
+					elData(span, 'confirm-message', Language.get('wcf.attachment.delete.sure'));
 					if (this._wysiwygContainerId) {
-						elAttr(span, 'data-event-name', 'attachment_' + this._wysiwygContainerId);
+						elData(span, 'event-name', 'attachment_' + this._wysiwygContainerId);
 					}
 					deleteButton.appendChild(span);
 					
-					elAttr(span, 'data-object-id', attachment.attachmentID);
+					elData(span, 'object-id', attachment.attachmentID);
 					
 					if (this._wysiwygContainerId) {
 						if (attachment.tinyURL) {
@@ -196,7 +196,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 							span = elCreate('span');
 							span.className = 'button small jsButtonAttachmentInsertThumbnail';
 							span.textContent = Language.get('wcf.global.button.insertThumbnail');
-							elAttr(span, 'data-object-id', attachment.attachmentID);
+							elData(span, 'object-id', attachment.attachmentID);
 							span.addEventListener('click', this._insert.bind(this));
 							insertThumbnailButton.appendChild(span);
 							
@@ -206,18 +206,18 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 							span = elCreate('span');
 							span.className = 'button small jsButtonAttachmentInsertFull';
 							span.textContent = Language.get('wcf.global.button.insertFull');
-							elAttr(span, 'data-object-id', attachment.attachmentID);
+							elData(span, 'object-id', attachment.attachmentID);
 							span.addEventListener('click', this._insert.bind(this));
 							insertOriginalButton.appendChild(span);
 						}
 						else {
-							var insertPlainButton elCreate('li');
+							var insertPlainButton = elCreate('li');
 							ul.appendChild(insertPlainButton);
 							
 							span = elCreate('span');
 							span.className = 'button small jsButtonAttachmentInsertPlain';
 							span.textContent = Language.get('wcf.global.button.insert');
-							elAttr(span, 'data-object-id', attachment.attachmentID);
+							elData(span, 'object-id', attachment.attachmentID);
 							span.addEventListener('click', this._insert.bind(this));
 							insertPlainButton.appendChild(span);
 						}

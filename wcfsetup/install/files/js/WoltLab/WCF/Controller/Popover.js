@@ -180,7 +180,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				}
 				
 				var cacheId = identifier + "-" + objectId;
-				elAttr(element, 'data-cache-id', cacheId);
+				elData(element, 'cache-id', cacheId);
 				
 				_elements.set(id, {
 					element: element,
@@ -217,7 +217,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			if (_activeId) {
 				var activeElement = _elements.get(_activeId).element;
 				
-				if (elAttr(activeElement, 'data-cache-id') === cacheId) {
+				if (elData(activeElement, 'cache-id') === cacheId) {
 					this._show();
 				}
 			}

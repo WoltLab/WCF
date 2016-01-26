@@ -55,7 +55,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 			var mailValue = DomTraverse.childByTag(mailSetting, 'INPUT');
 			
 			var button = DomTraverse.childByTag(mailSetting, 'A');
-			elAttr(button, 'data-object-id', groupId);
+			elData(button, 'object-id', groupId);
 			button.addEventListener('click', _callbackClick);
 			
 			_data.set(groupId, {
@@ -103,7 +103,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 		_createDropdown: function(objectId, initialValue) {
 			var dropdownMenu = elCreate('ul');
 			dropdownMenu.className = 'dropdownMenu';
-			elAttr(dropdownMenu, 'data-object-id', objectId);
+			elData(dropdownMenu, 'object-id', objectId);
 			
 			var link, listItem, value, items = ['instant', 'daily', 'divider', 'none'];
 			for (var i = 0; i < 4; i++) {
@@ -117,7 +117,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 					link = elCreate('a');
 					link.textContent = Language.get('wcf.user.notification.mailNotificationType.' + value);
 					listItem.appendChild(link);
-					elAttr(listItem, 'data-value', value);
+					elData(listItem, 'value', value);
 					listItem.addEventListener('click', _callbackSelectType);
 					
 					if (initialValue === value) {

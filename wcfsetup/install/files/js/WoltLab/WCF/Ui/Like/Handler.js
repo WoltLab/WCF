@@ -82,11 +82,11 @@ define(
 					likeButton: null,
 					summary: null,
 					
-					dislikes: ~~elAttr(element, 'data-like-dislikes'),
-					liked: ~~elAttr(element, 'data-like-liked'),
-					likes: ~~elAttr(element, 'data-like-likes'),
-					objectId: ~~elAttr(element, 'data-object-id'),
-					users: JSON.parse(elAttr(element, 'data-like-users'))
+					dislikes: ~~elData(element, 'like-dislikes'),
+					liked: ~~elData(element, 'like-liked'),
+					likes: ~~elData(element, 'like-likes'),
+					objectId: ~~elData(element, 'object-id'),
+					users: JSON.parse(elData(element, 'like-users'))
 				};
 				
 				this._containers.set(element, elementData);

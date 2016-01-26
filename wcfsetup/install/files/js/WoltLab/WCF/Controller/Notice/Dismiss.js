@@ -37,7 +37,7 @@ define(['Ajax'], function(Ajax) {
 				data: {
 					actionName: 'dismiss',
 					className: 'wcf\\data\\notice\\NoticeAction',
-					objectIDs: [ elAttr(button, 'data-object-id') ]
+					objectIDs: [ elData(button, 'object-id') ]
 				},
 				success: function() {
 					var parent = button.parentNode;

@@ -56,13 +56,13 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			var container, containers = DomTraverse.childrenByTag(this._container, 'DIV'), name;
 			for (var i = 0, length = containers.length; i < length; i++) {
 				container = containers[i];
-				name = elAttr(container, 'data-name');
+				name = elData(container, 'name');
 				
 				if (!name) {
 					name = DomUtil.identify(container);
 				}
 				
-				elAttr(container, 'data-name', name);
+				elData(container, 'name', name);
 				this._containers.set(name, container);
 			}
 			
@@ -124,7 +124,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			
 			// bind listeners
 			this._tabs.forEach((function(tab) {
-				if (!oldTabs || oldTabs.get(elAttr(tab, 'data-name')) !== tab) {
+				if (!oldTabs || oldTabs.get(elData(tab, 'name')) !== tab) {
 					tab.children[0].addEventListener('click', this._onClick.bind(this));
 				}
 			}).bind(this));
@@ -199,19 +199,19 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				}
 			}
 			
-			name = name || elAttr(tab, 'data-name');
+			name = name || elData(tab, 'name');
 			
 			// unmark active tab
 			var oldTab = elBySel('#' + this._container.id + ' > nav > ul > li.active');
 			var oldContent = null;
 			if (oldTab) {
-				if (elAttr(oldTab, 'data-name') === name) {
+				if (elData(oldTab, 'name') === name) {
 					// same tab
 					return;
 				}
 				
 				oldTab.classList.remove('active');
-				oldContent = this._containers.get(elAttr(oldTab, 'data-name'));
+				oldContent = this._containers.get(elData(oldTab, 'name'));
 				oldContent.classList.remove('active');
 				oldContent.classList.add('hidden');
 				
@@ -257,7 +257,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 					active: tab,
 					activeName: name,
 					previous: oldTab,
-					previousName: oldTab ? elAttr(oldTab, 'data-name') : null
+					previousName: oldTab ? elData(oldTab, 'name') : null
 				});
 				
 				var jQuery = (this._isLegacy && typeof window.jQuery === 'function') ? window.jQuery : null;
@@ -312,7 +312,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		 * @return	{string}	tab name
 		 */
 		_getTabName: function(tab) {
-			var name = elAttr(tab, 'data-name');
+			var name = elData(tab, 'name');
 			
 			// handle legacy tab menus
 			if (!name) {
@@ -325,7 +325,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 						}
 						else {
 							this._isLegacy = true;
-							elAttr(tab, 'data-name', name);
+							elData(tab, 'name', name);
 						}
 					}
 				}

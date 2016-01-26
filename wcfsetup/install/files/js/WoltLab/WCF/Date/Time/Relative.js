@@ -35,14 +35,14 @@ define(['Dom/ChangeListener', 'Language', 'WoltLab/WCF/Date/Util', 'WoltLab/WCF/
 			for (var i = 0, length = _elements.length; i < length; i++) {
 				var element = _elements[i];
 				
-				if (!element.classList.contains('datetime') || elAttr(element, 'data-is-future-date')) continue;
+				if (!element.classList.contains('datetime') || elData(element, 'is-future-date')) continue;
 				
 				if (!element.getAttribute('title')) elAttr(element, 'title', element.textContent.trim());
 				
 				var elTimestamp = ~~element.getAttribute('data-timestamp') + _offset;
-				var elDate = elAttr(element, 'data-date');
-				var elTime = elAttr(element, 'data-time');
-				var elOffset = elAttr(element, 'data-offset');
+				var elDate = elData(element, 'date');
+				var elTime = elData(element, 'time');
+				var elOffset = elData(element, 'offset');
 				
 				// timestamp is less than 60 seconds ago
 				if (elTimestamp >= timestamp || timestamp < (elTimestamp + 60)) {

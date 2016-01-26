@@ -79,7 +79,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			if (!container.classList.contains('inputAddon')) {
 				container = elCreate('div');
 				container.className = 'inputAddon' + (element.nodeName === 'TEXTAREA' ? ' inputAddonTextarea' : '');
-				elAttr(container, 'data-input-id', elementId);
+				elData(container, 'input-id', elementId);
 				
 				element.parentNode.insertBefore(container, element);
 				container.appendChild(element);
@@ -114,7 +114,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			for (var languageId in availableLanguages) {
 				if (availableLanguages.hasOwnProperty(languageId)) {
 					var listItem = elCreate('li');
-					elAttr(listItem, 'data-language-id', languageId);
+					elData(listItem, 'language-id', languageId);
 					
 					span = elCreate('span');
 					span.textContent = availableLanguages[languageId];
@@ -131,7 +131,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				dropdownMenu.appendChild(listItem);
 				
 				listItem = elCreate('li');
-				elAttr(listItem, 'data-language-id', 0);
+				elData(listItem, 'language-id', 0);
 				span = elCreate('span');
 				span.textContent = Language.get('wcf.global.button.disabledI18n');
 				listItem.appendChild(span);
@@ -194,7 +194,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
 				item = dropdownMenu.children[i];
 				
-				var itemLanguageId = elAttr(item, 'data-language-id');
+				var itemLanguageId = elData(item, 'language-id');
 				if (itemLanguageId.length && languageId === ~~itemLanguageId) {
 					label = item.children[0].textContent;
 				}

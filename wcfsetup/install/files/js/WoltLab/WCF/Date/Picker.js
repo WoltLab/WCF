@@ -49,13 +49,13 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				var isDateTime = (elAttr(element, 'type') === 'datetime');
 				
-				elAttr(element, 'data-is-date-time', isDateTime);
+				elData(element, 'is-date-time', isDateTime);
 				
 				// convert value
 				var date = null, value = elAttr(element, 'value');
 				if (elAttr(element, 'value')) {
 					date = new Date(value);
-					elAttr(element, 'data-value', date.getTime());
+					elData(element, 'value', date.getTime());
 					value = DateUtil['formatDate' + (isDateTime ? 'Time' : '')](date);
 				}
 				
@@ -63,24 +63,24 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				// handle birthday input
 				if (element.classList.contains('birthday')) {
-					elAttr(element, 'data-min-date', '100');
-					elAttr(element, 'data-max-date', 'now');
+					elData(element, 'min-date', '100');
+					elData(element, 'max-date', 'now');
 				}
 				
 				this._initDateRange(element, now, true);
 				this._initDateRange(element, now, false);
 				
-				if (elAttr(element, 'data-min-date') === elAttr(element, 'data-max-date')) {
+				if (elData(element, 'min-date') === elData(element, 'max-date')) {
 					throw new Error("Minimum and maximum date cannot be the same (element id '" + element.id + "').");
 				}
 				
 				// change type to prevent browser's datepicker to trigger
 				element.type = 'text';
 				element.value = value;
-				elAttr(element, 'data-empty', isEmpty);
+				elData(element, 'empty', isEmpty);
 				
-				if (elAttr(element, 'data-placeholder')) {
-					elAttr(element, 'placeholder', elAttr(element, 'data-placeholder'));
+				if (elData(element, 'placeholder')) {
+					elAttr(element, 'placeholder', elData(element, 'placeholder'));
 				}
 				
 				// add a hidden element to hold the actual date
@@ -653,7 +653,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			element = this._getElement(element);
 			var data = _data.get(element);
 			
-			elAttr(element, 'data-value', date.getTime());
+			elData(element, 'value', date.getTime());
 			element.value = DateUtil['formatDate' + (data.isDateTime ? 'Time' : '')](date);
 			
 			data.shadow.value = DateUtil.format(date, (data.isDateTime ? 'c' : 'Y-m-d'));

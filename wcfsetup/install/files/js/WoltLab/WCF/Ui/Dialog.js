@@ -75,12 +75,12 @@ define(
 				button = _staticDialogs[0];
 				button.classList.remove('jsStaticDialog');
 				
-				id = elAttr(button, 'data-dialog-id');
+				id = elData(button, 'dialog-id');
 				if (id && (container = elById(id))) {
 					((function(button, container) {
 						container.classList.remove('jsStaticDialogContent');
 						container.style.setProperty('display', 'none');
-						button.addEventListener('click', this.openStatic.bind(this, container.id, null, { title: elAttr(container, 'data-title') }));
+						button.addEventListener('click', this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
 					}).bind(this))(button, container);
 				}
 			}
@@ -258,10 +258,10 @@ define(
 			dialog.classList.add('dialogContainer');
 			elAttr(dialog, 'aria-hidden', 'true');
 			elAttr(dialog, 'role', 'dialog');
-			elAttr(dialog, 'data-id', id);
+			elData(dialog, 'id', id);
 			
 			if (options.disposeOnClose) {
-				elAttr(dialog, 'data-dispose-on-close', true);
+				elData(dialog, 'dispose-on-close', true);
 			}
 			
 			var header = elCreate('header');
@@ -517,7 +517,7 @@ define(
 			for (var i = 0; i < _container.childElementCount; i++) {
 				var child = _container.children[i];
 				if (elAttr(child, 'aria-hidden') === 'false') {
-					_activeDialog = elAttr(child, 'data-id');
+					_activeDialog = elData(child, 'id');
 					break;
 				}
 			}

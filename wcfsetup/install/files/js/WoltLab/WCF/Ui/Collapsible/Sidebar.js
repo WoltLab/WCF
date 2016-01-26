@@ -26,9 +26,9 @@ define(['Ajax', 'Language', 'Dom/Util'], function(Ajax, Language, DomUtil) {
 				return;
 			}
 			
-			_isOpen = (elAttr(sidebar, 'data-is-open') === 'true');
+			_isOpen = (elData(sidebar, 'is-open') === 'true');
 			_main = elById('main');
-			_name = elAttr(sidebar, 'data-sidebar-name');
+			_name = elData(sidebar, 'sidebar-name');
 			
 			this._createUI(sidebar);
 			
