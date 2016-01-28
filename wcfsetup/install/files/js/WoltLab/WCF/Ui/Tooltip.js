@@ -44,6 +44,7 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 			this.init();
 			
 			DomChangeListener.add('WoltLab/WCF/Ui/Tooltip', this.init.bind(this));
+			window.addEventListener('scroll', this._mouseLeave.bind(this));
 		},
 		
 		/**

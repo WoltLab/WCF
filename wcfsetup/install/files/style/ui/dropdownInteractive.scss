@@ -1,6 +1,5 @@
-.dropdownMenuContainer > .interactiveDropdown {
-	/* hide dropdown during calculation */
-	left: -200%;
+.dropdownMenuContainer > .interactiveDropdown.open {
+	visibility: visible;
 }
 
 /* styling for interactive dropdowns (currently only used in the user panel) */
@@ -9,12 +8,10 @@
 	box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
 	color: $wcfContentText;
 	display: block;
+	pointer-events: all;
 	position: absolute;
+	visibility: hidden;
 	z-index: 450;
-	
-	&:not(.open) {
-		display: none !important;
-	}
 	
 	> .elementPointer {
 		border: 10px solid transparent;

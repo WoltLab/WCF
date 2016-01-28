@@ -1,16 +1,10 @@
-/* container for both regular and interactive dropdowns */
 .dropdownMenuContainer {
-	/* force positioning in the upper left corner to prevent elements from
-	   jumping during calculation */
+	bottom: 0;
 	left: 0;
+	pointer-events: none;
 	position: absolute;
 	right: 0;
 	top: 0;
-	
-	> .dropdown {
-		/* hide dropdown during calculation */
-		left: -200%;
-	}
 }
 
 .dropdown {
@@ -33,6 +27,7 @@
 	}
 	
 	&.preInput {
+		// TODO: use flex-box instead
 		display: table;
 		width: 100%;
 		
@@ -69,7 +64,7 @@
 				word-wrap: normal;
 				
 				&.active::after {
-					content: "\f0d7"; // @TODO: use a variable instead
+					content: "\f0d7"; // TODO: use a variable instead
 					font-family: FontAwesome;
 					font-size: 14px;
 					margin-left: 7px;
@@ -128,8 +123,10 @@
 	float: left;
 	min-width: 160px;
 	padding: 3px 0;
+	pointer-events: all;
 	position: absolute;
 	text-align: left;
+	visibility: hidden;
 	z-index: 450;
 	
 	@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
@@ -190,6 +187,7 @@
 	
 	&.dropdownOpen {
 		display: block;
+		visibility: visible;
 	}
 	
 	li {

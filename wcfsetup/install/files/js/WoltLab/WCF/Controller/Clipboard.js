@@ -10,18 +10,21 @@ define(
 	[
 		'Ajax',         'Core',     'Dictionary',      'EventHandler',
 		'Language',     'List',     'ObjectMap',       'Dom/ChangeListener',
-		'Dom/Traverse', 'Dom/Util', 'Ui/Confirmation', 'Ui/SimpleDropdown'
+		'Dom/Traverse', 'Dom/Util', 'Ui/Confirmation', 'Ui/SimpleDropdown',
+		'WoltLab/WCF/Ui/Page/Action'
 	],
 	function(
 		Ajax,            Core,       Dictionary,        EventHandler,
 		Language,        List,       ObjectMap,         DomChangeListener,
-		DomTraverse,     DomUtil,    UiConfirmation,    UiSimpleDropdown
+		DomTraverse,     DomUtil,    UiConfirmation,    UiSimpleDropdown,
+	        UiPageAction
 	)
 {
 	"use strict";
 	
 	var _containers = new Dictionary();
 	var _editors = new Dictionary();
+	var _editorDropdowns = new Dictionary();
 	var _elements = elByClass('jsClipboardContainer');
 	var _itemData = new ObjectMap();
 	var _knownCheckboxes = new List();
@@ -36,7 +39,7 @@ define(
 	 * 
 	 * @exports	WoltLab/WCF/Controller/Clipboard
 	 */
-	var ControllerClipboard = {
+	return {
 		/**
 		 * Initializes the clipboard API handler.
 		 * 
@@ -57,14 +60,12 @@ define(
 			}
 			
 			this._initContainers();
-			this._initEditors();
 			
 			if (_options.hasMarkedItems && _elements.length) {
 				this._loadMarkedItems();
 			}
 			
 			DomChangeListener.add('WoltLab/WCF/Controller/Clipboard', this._initContainers.bind(this));
-			DomChangeListener.add('WoltLab/WCF/Controller/Clipboard', this._initEditors.bind(this));
 		},
 		
 		/**
@@ -110,35 +111,6 @@ define(
 						
 						_knownCheckboxes.add(checkbox);
 					}
-				}
-			}
-		},
-		
-		/**
-		 * Initializes the clipboard editor dropdowns.
-		 */
-		_initEditors: function() {
-			var getTypes = function(editor) {
-				try {
-					var types = elData(editor, 'types');
-					if (typeof types === 'string') {
-						return JSON.parse('{ "types": ' + types.replace(/'/g, '"') + '}').types;
-					}
-				}
-				catch (e) {
-					throw new Error("Expected a valid 'data-type' attribute for element '" + DomUtil.identify(editor) + "'.");
-				}
-				
-				return [];
-			};
-			
-			var editors = elByClass('jsClipboardEditor');
-			for (var i = 0, length = editors.length; i < length; i++) {
-				var editor = editors[i];
-				var types = getTypes(editor);
-				
-				for (var j = 0, innerLength = types.length; j < innerLength; j++) {
-					_editors.set(types[j], editor);
 				}
 			}
 		},
@@ -237,8 +209,8 @@ define(
 		 * Saves the state for given item object ids.
 		 * 
 		 * @param	{string}		type		object type
-		 * @param	{array<integer>}	objectIds	item object ids
-		 * @param	{boolean]		isMarked	true if marked
+		 * @param	{array<int>}	        objectIds	item object ids
+		 * @param	{boolean}		isMarked	true if marked
 		 */
 		_saveState: function(type, objectIds, isMarked) {
 			Ajax.api(this, {
@@ -274,10 +246,6 @@ define(
 					listItem: listItem,
 					responseData: null
 				});
-				
-				if (typeof window.jQuery === 'function') {
-					window.jQuery(_editors.get(type)).trigger('clipboardAction', [ type, data.actionName, data.parameters ]);
-				}
 			};
 			
 			var confirmMessage = (typeof data.internalData.confirmMessage === 'string') ? data.internalData.confirmMessage : '';
@@ -376,10 +344,6 @@ define(
 						listItem: listItem,
 						responseData: responseData
 					});
-					
-					if (typeof window.jQuery === 'function') {
-						window.jQuery(_editors.get(type)).trigger('clipboardActionResponse', [ responseData, type, data.actionName, data.parameters ]);
-					}
 				}
 				
 				this._loadMarkedItems();
@@ -434,17 +398,13 @@ define(
 							containerData.checkboxes[i].checked = false;
 						}
 						
-						_editors.get(data.returnValues.objectType).innerHTML = '';
+						UiPageAction.remove('wcfClipboard-' + data.returnValues.objectType);
 					}
 				}).bind(this));
 				
 				return;
 			}
 			
-			// clear editors
-			_editors.forEach(function(editor) {
-				editor.innerHTML = '';
-			});
 			_itemData = new ObjectMap();
 			
 			// rebuild markings
@@ -455,52 +415,71 @@ define(
 				this._rebuildMarkings(containerData, objectIds);
 			}).bind(this));
 			
-			// no marked items
+			var keepEditors = [], typeName;
+			if (data.returnValues && data.returnValues.items) {
+				for (typeName in data.returnValues.items) {
+					if (data.returnValues.items.hasOwnProperty(typeName)) {
+						keepEditors.push(typeName);
+					}
+				}
+			}
+			
+			// clear editors
+			_editors.forEach(function(editor, typeName) {
+				if (keepEditors.indexOf(typeName) === -1) {
+					UiPageAction.remove('wcfClipboard-' + typeName);
+					
+					_editorDropdowns.get(typeName).innerHTML = '';
+				}
+			});
+			
+			// no items
 			if (!data.returnValues || !data.returnValues.items) {
 				return;
 			}
 			
 			// rebuild editors
-			var fragment = document.createDocumentFragment();
-			for (var typeName in data.returnValues.items) {
-				if (!data.returnValues.items.hasOwnProperty(typeName) || !_editors.has(typeName)) {
+			var created, dropdown, editor, typeData;
+			var divider, item, itemData, itemIndex, label, unmarkAll;
+			for (typeName in data.returnValues.items) {
+				if (!data.returnValues.items.hasOwnProperty(typeName)) {
 					continue;
 				}
 				
-				var typeData = data.returnValues.items[typeName];
+				typeData = data.returnValues.items[typeName];
+				created = false;
 				
-				var editor = _editors.get(typeName);
-				var lists = DomTraverse.childrenByTag(editor, 'UL');
-				var list = lists[0] || null;
-				if (list === null) {
-					list = elCreate('ul');
+				editor = _editors.get(typeName);
+				dropdown = _editorDropdowns.get(typeName);
+				if (editor === undefined) {
+					created = true;
+					
+					editor = elCreate('a');
+					editor.className = 'dropdownToggle';
+					editor.textContent = typeData.label;
+					
+					_editors.set(typeName, editor);
+					
+					dropdown = elCreate('ol');
+					dropdown.className = 'dropdownMenu';
+					
+					_editorDropdowns.set(typeName, dropdown);
+				}
+				else {
+					editor.textContent = typeData.label;
 				}
 				
-				fragment.appendChild(list);
-				
-				var listItem = elCreate('li');
-				listItem.classList.add('dropdown');
-				list.appendChild(listItem);
-				
-				var toggleButton = elCreate('span');
-				toggleButton.className = 'dropdownToggle button';
-				toggleButton.textContent = typeData.label;
-				listItem.appendChild(toggleButton);
-				
-				var itemList = elCreate('ol');
-				itemList.classList.add('dropdownMenu');
-				
 				// create editor items
-				for (var itemIndex in typeData.items) {
+				for (itemIndex in typeData.items) {
 					if (!typeData.items.hasOwnProperty(itemIndex)) continue;
 					
-					var itemData = typeData.items[itemIndex];
+					itemData = typeData.items[itemIndex];
 					
-					var item = elCreate('li');
-					var label = elCreate('span');
+					item = elCreate('li');
+					label = elCreate('span');
 					label.textContent = itemData.label;
 					item.appendChild(label);
-					itemList.appendChild(item);
+					dropdown.appendChild(item);
 					
 					elData(item, 'type', typeName);
 					item.addEventListener('click', _callbackItem);
@@ -508,23 +487,28 @@ define(
 					_itemData.set(item, itemData);
 				}
 				
-				var divider = elCreate('li');
+				divider = elCreate('li');
 				divider.classList.add('dropdownDivider');
-				itemList.appendChild(divider);
+				dropdown.appendChild(divider);
 				
 				// add 'unmark all'
-				var unmarkAll = elCreate('li');
+				unmarkAll = elCreate('li');
 				elData(unmarkAll, 'type', typeName);
-				var label = elCreate('span');
+				label = elCreate('span');
 				label.textContent = Language.get('wcf.clipboard.item.unmarkAll');
 				unmarkAll.appendChild(label);
-				itemList.appendChild(unmarkAll);
-				listItem.appendChild(itemList);
-				
 				unmarkAll.addEventListener('click', _callbackUnmarkAll);
-				editor.appendChild(fragment);
+				dropdown.appendChild(unmarkAll);
 				
-				UiSimpleDropdown.init(toggleButton, false);
+				if (keepEditors.indexOf(typeName) !== -1) {
+					UiPageAction.add('wcfClipboard-' + typeName, editor);
+				}
+				
+				if (created) {
+					editor.parentNode.classList.add('dropdown');
+					editor.parentNode.appendChild(dropdown);
+					UiSimpleDropdown.init(editor);
+				}
 			}
 		},
 		
@@ -532,7 +516,7 @@ define(
 		 * Rebuilds the mark state for each item.
 		 * 
 		 * @param	{object<string, *>}	data		container data
-		 * @param	{array<integer>}	objectIds	item object ids
+		 * @param	{array<int>}	        objectIds	item object ids
 		 */
 		_rebuildMarkings: function(data, objectIds) {
 			var markAll = true;
@@ -553,6 +537,4 @@ define(
 			}
 		}
 	};
-	
-	return ControllerClipboard;
 });

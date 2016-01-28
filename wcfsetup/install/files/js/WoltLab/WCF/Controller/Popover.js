@@ -46,14 +46,14 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			}
 			
 			_popover = elCreate('div');
-			_popover.classList.add('popover');
+			_popover.className = 'popover forceHide';
 			
 			_popoverContent = elCreate('div');
-			_popoverContent.classList.add('popoverContent');
+			_popoverContent.className = 'popoverContent';
 			_popover.appendChild(_popoverContent);
 			
 			var pointer = elCreate('span');
-			pointer.classList.add('elementPointer');
+			pointer.className = 'elementPointer';
 			pointer.appendChild(elCreate('span'));
 			_popover.appendChild(pointer);
 			
@@ -357,6 +357,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				return;
 			}
 			
+			_popover.classList.remove('forceHide');
 			_popover.classList.add('active');
 			
 			UiAlignment.set(_popover, _elements.get(_activeId).element, {

@@ -311,8 +311,13 @@ define(
 		 */
 		_onScroll: function() {
 			_dropdowns.forEach((function(dropdown, containerId) {
-				if (elData(dropdown, 'is-overlay-dropdown-button') === true && dropdown.classList.contains('dropdownOpen')) {
-					this.setAlignment(dropdown, _menus.get(containerId));
+				if (dropdown.classList.contains('dropdownOpen')) {
+					if (elDataBool(dropdown, 'is-overlay-dropdown-button')) {
+						this.setAlignment(dropdown, _menus.get(containerId));
+					}
+					else {
+						this.close(containerId);
+					}
 				}
 			}).bind(this));
 		},
