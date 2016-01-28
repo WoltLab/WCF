@@ -50,6 +50,8 @@ define(['Environment', 'Language', './Action'], function(Environment, Language, 
 		 */
 		_jump: function(event) {
 			event.preventDefault();
+			
+			elById('top').scrollIntoView({ behavior: 'smooth' });
 		},
 		
 		/**

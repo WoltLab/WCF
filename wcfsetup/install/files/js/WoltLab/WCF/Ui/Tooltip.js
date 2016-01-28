@@ -17,7 +17,7 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 	/**
 	 * @exports	WoltLab/WCF/Ui/Tooltip
 	 */
-	var UiTooltip = {
+	return {
 		/**
 		 * Initializes the tooltip element and binds event listener.
 		 */
@@ -51,13 +51,12 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 		 * Initializes tooltip elements.
 		 */
 		init: function() {
+			var element, title;
 			while (_elements.length) {
-				var element = _elements[0];
+				element = _elements[0];
 				element.classList.remove('jsTooltip');
 				
-				var title = elAttr(element, 'title');
-				title = (typeof title === 'string') ? title.trim() : '';
-				
+				title = elAttr(element, 'title').trim();
 				if (title.length) {
 					elData(element, 'tooltip', title);
 					element.removeAttribute('title');
@@ -72,7 +71,7 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 		/**
 		 * Displays the tooltip on mouse enter.
 		 * 
-		 * @param	{object}	event	event object
+		 * @param	{Event}         event	event object
 		 */
 		_mouseEnter: function(event) {
 			var element = event.currentTarget;
@@ -111,13 +110,9 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 		
 		/**
 		 * Hides the tooltip once the mouse leaves the element.
-		 * 
-		 * @param	{object}	event	event object
 		 */
-		_mouseLeave: function(event) {
+		_mouseLeave: function() {
 			_tooltip.classList.remove('active');
 		}
 	};
-	
-	return UiTooltip;
 });

@@ -125,8 +125,8 @@ define([], function() {
 		/**
 		 * Returns the outer dimensions of an element including margins.
 		 * 
-		 * @param	{Element}		el		element
-		 * @return	{{height: integer, width: integer}}	dimensions in px
+		 * @param	{Element}       el	        element
+		 * @return	{{height: int, width: int}}     dimensions in px
 		 */
 		outerDimensions: function(el) {
 			var styles = window.getComputedStyle(el);
@@ -140,8 +140,8 @@ define([], function() {
 		/**
 		 * Returns the element's offset relative to the document's top left corner.
 		 * 
-		 * @param	{Element}	el	element
-		 * @return	{{left: integer, top: integer}}		offset relative to top left corner
+		 * @param	{Element}	el	        element
+		 * @return	{{left: int, top: int}}         offset relative to top left corner
 		 */
 		offset: function(el) {
 			var rect = el.getBoundingClientRect();
