@@ -187,20 +187,12 @@
 			display: flex;
 			flex: 0 auto;
 			
-			/* item margins (list item can contain <a> and <div>) */
-			> a,
-			> div {
-				margin-left: 10px;
-				
-				&:not(:last-child) {
-					margin-right: 10px;
-				}
-			}
+			/* margin between items, do not use the inner elements (such as a contained <a>) for
+			   this as it causes the last item to be of uneven size compared to all other items */
+			margin-left: 10px;
+			
 			&:not(:last-child) {
-				> a,
-				> div {
-					margin-right: 10px;
-				}
+				margin-right: 10px;
 			}
 			
 			> a {

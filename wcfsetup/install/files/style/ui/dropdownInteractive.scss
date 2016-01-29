@@ -5,6 +5,7 @@
 /* styling for interactive dropdowns (currently only used in the user panel) */
 .interactiveDropdown {
 	background-color: $wcfContentBackground;
+	border: 1px solid $wcfDropdownBorder;
 	box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
 	color: $wcfContentText;
 	display: block;
@@ -14,38 +15,38 @@
 	z-index: 450;
 	
 	> .elementPointer {
-		border: 10px solid transparent;
-		//border-bottom-color: $wcfDropdownBorder;
-		border-top-width: 0;
+		border-color: $wcfDropdownBorder transparent;
+		border-style: solid;
+		border-width: 0 10px 10px;
 		content: "";
 		display: block;
 		position: absolute;
 		z-index: 100;
 		
 		> span {
-			border: 8px solid transparent;
-			border-bottom-color: $wcfSidebarBackground;
-			border-top-width: 0;
+			border-color: $wcfSidebarBackground transparent;
+			border-style: solid;
+			border-width: 0 10px 10px;
 			content: "";
 			display: block;
 			position: absolute;
-			top: 2px;
+			top: 1px;
 			z-index: 101;
 		}
 		
 		&.left {
-			left: 16px;
+			left: 5px;
 			
 			> span {
-				left: -8px;
+				left: -10px;
 			}
 		}
 		
 		&.right {
-			right: 16px;
+			right: 5px;
 			
 			> span {
-				right: -7px;
+				right: -10px;
 			}
 		}
 	}
