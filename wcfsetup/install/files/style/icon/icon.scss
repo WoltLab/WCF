@@ -16,7 +16,6 @@
 	font-family: FontAwesome;
 	font-weight: normal !important;
 	font-style: normal !important;
-	line-height: 1em;
 	text-align: center;
 	
 	-webkit-user-select: none;
@@ -86,18 +85,21 @@ a > span.fa:not(.pointer) {
 .icon16 {
 	font-size: 14px;
 	height: 16px;
+	line-height: 16px;
 	width: 16px;
 }
 
 .icon24 {
 	font-size: 18px;
 	height: 24px;
+	line-height: 24px;
 	width: 24px;
 }
 
 .icon32 {
 	font-size: 28px;
 	height: 32px;
+	line-height: 32px;
 	width: 32px;
 	vertical-align: -5px;
 }
@@ -105,18 +107,21 @@ a > span.fa:not(.pointer) {
 .icon48 {
 	font-size: 42px;
 	height: 48px;
+	line-height: 48px;
 	width: 48px;
 }
 
 .icon96 {
 	font-size: 84px;
 	height: 96px;
+	line-height: 96px;
 	width: 96px;
 }
 
 .icon144 {
 	font-size: 130px; // TODO
 	height: 144px;
+	line-height: 144px;
 	width: 144px;
 }
 
