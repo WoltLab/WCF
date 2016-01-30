@@ -1,19 +1,37 @@
 /* style for content area */
-.content {
-	/* content header */
-	.contentHeader,
-	.boxHeadline { // deprecated
-		color: $wcfContentHeadlineText; // todo: rename variable
-		margin-bottom: 30px;
+/* content header */
+.contentHeader,
+.boxHeadline { // deprecated
+	color: $wcfContentHeadlineText; // todo: rename variable
+	margin-bottom: 30px;
+	
+	.contentTitle,
+	> h1 { // deprecated
+		@extend .wcfFontTitle;
 		
-		.contentTitle,
-		> h1 { // deprecated
-			@extend .wcfFontTitle;
-			
-			.badge {
-				top: -2px;
-			}
+		.badge {
+			top: -2px;
 		}
+	}
+	
+	a {
+		color: $wcfContentHeadlineLink; // todo: rename variable
+		
+		&:hover {
+			color: $wcfContentHeadlineLinkActive; // todo: rename variable
+		}
+	}
+}
+
+/* legacy styling for sub headlines (deprecated; use .section > .sectionTitle instead) */
+.boxHeadline.boxSubHeadline {
+	margin-top: 30px;
+	margin-bottom: 20px;
+	
+	> h2 {
+		color: $wcfContentHeadlineText; // todo: rename variable
+		
+		@extend .wcfFontHeadline;
 		
 		a {
 			color: $wcfContentHeadlineLink; // todo: rename variable
@@ -22,133 +40,129 @@
 				color: $wcfContentHeadlineLinkActive; // todo: rename variable
 			}
 		}
-	}
-	
-	/* legacy styling for sub headlines (deprecated; use .section > .sectionTitle instead) */
-	.boxHeadline.boxSubHeadline {
-		margin-top: 30px;
-		margin-bottom: 20px;
 		
-		> h2 {
-			color: $wcfContentHeadlineText; // todo: rename variable
-			
-			@extend .wcfFontHeadline;
-			
-			a {
-				color: $wcfContentHeadlineLink; // todo: rename variable
-				
-				&:hover {
-					color: $wcfContentHeadlineLinkActive; // todo: rename variable
-				}
-			}
-			
-			.badge {
-				top: -2px;
-			}
-		}
-	}
-	
-	/* todo
-	.boxHeadline {
-		&.labeledHeadline {
-			font-size: 0;
-			
-			> h1,
-			> h2 {
-				display: inline-block;
-				margin-right: 10px;
-			}
-			
-			> ul {
-				display: inline-block;
-				font-size: 1rem;
-				
-				&:not(:empty) {
-					margin-right: 10px;
-				}
-			}
-		}
-	}*/
-	
-	/* content sections */
-	.section {
-		margin-top: 30px;
-		
-		.sectionTitle {
-			color: $wcfContentHeadlineText; // todo: rename variable
-			
-			@extend .wcfFontHeadline;
-			
-			a {
-				color: $wcfContentHeadlineLink; // todo: rename variable
-				
-				&:hover {
-					color: $wcfContentHeadlineLinkActive; // todo: rename variable
-				}
-			}
-			
-			.badge {
-				top: -2px;
-			}
-		}
-		
-		.sectionDescription {
-			color: $wcfContentDimmedText;
-		}
-		
-		> .sectionHeader,
-		> .sectionTitle {
-			margin-bottom: 20px;
-		}
-		
-		&:not(.sectionContainerList) {
-			> .sectionHeader,
-			> .sectionTitle {
-				border-bottom: 1px solid $wcfContentBorderInner;
-				padding-bottom: 10px;
-			}
-		}
-	}
-	
-	/* fieldset styling (old sections / deprecated) */
-	fieldset {
-		margin-top: 30px;
-		
-		> legend {
-			border-bottom: 1px solid $wcfContentBorderInner;
-			color: $wcfContentHeadlineText; // todo: rename variable
-			float: left;
-			margin-bottom: 20px;
-			padding-bottom: 10px;
-			width: 100%;
-			
-			@extend .wcfFontHeadline;
-			
-			a {
-				color: $wcfContentHeadlineLink; // todo: rename variable
-				
-				&:hover {
-					color: $wcfContentHeadlineLinkActive; // todo: rename variable
-				}
-			}
-			
-			.badge {
-				top: -2px;
-			}
-			
-			&+ * {
-				clear: left;
-			}
-			
-			+ small {
-				color: $wcfContentDimmedText;
-				position: relative;
-				top: -12px;
-			}
+		.badge {
+			top: -2px;
 		}
 	}
 }
 
+/* todo
+.boxHeadline {
+	&.labeledHeadline {
+		font-size: 0;
+		
+		> h1,
+		> h2 {
+			display: inline-block;
+			margin-right: 10px;
+		}
+		
+		> ul {
+			display: inline-block;
+			font-size: 1rem;
+			
+			&:not(:empty) {
+				margin-right: 10px;
+			}
+		}
+	}
+}*/
+
+/* content sections */
+.section {
+	margin-top: 30px;	
+	
+	.sectionTitle {
+		color: $wcfContentHeadlineText; // todo: rename variable
+		
+		@extend .wcfFontHeadline;
+		
+		a {
+			color: $wcfContentHeadlineLink; // todo: rename variable
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+			}
+		}
+		
+		.badge {
+			top: -2px;
+		}
+	}
+	
+	.sectionDescription {
+		color: $wcfContentDimmedText;
+	}
+	
+	> .sectionHeader,
+	> .sectionTitle {
+		margin-bottom: 20px;
+	}
+	
+	&:not(.sectionContainerList) {
+		> .sectionHeader,
+		> .sectionTitle {
+			border-bottom: 1px solid $wcfContentBorderInner;
+			padding-bottom: 10px;
+		}
+	}
+}
+
+/* fieldset styling (old sections / deprecated) */
+fieldset {
+	margin-top: 30px;
+	
+	> legend {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		color: $wcfContentHeadlineText; // todo: rename variable
+		float: left;
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		width: 100%;
+		
+		@extend .wcfFontHeadline;
+		
+		a {
+			color: $wcfContentHeadlineLink; // todo: rename variable
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+			}
+		}
+		
+		.badge {
+			top: -2px;
+		}
+		
+		&+ * {
+			clear: left;
+		}
+		
+		+ small {
+			color: $wcfContentDimmedText;
+			position: relative;
+			top: -12px;
+		}
+	}
+}
+
+/* styling for container headlines */
+.containerHeadline {
+	> h3 {
+		@extend .wcfFontHeadline;
+		
+		> .badge {
+			top: -2px;
+		}
+	}
+	
+	~ .containerContent {
+		margin-top: 10px;
+	}
+}
+
+/* styling for content navigation area (containing pagination / page buttons) */
 .contentNavigation {
 	align-items: center;
 	display: flex;

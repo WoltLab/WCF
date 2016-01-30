@@ -153,6 +153,13 @@
 			position: absolute;
 			right: 0;
 		}
+		
+		> div {
+			> .section:first-child,
+			> fieldset:first-child {
+				margin-top: 0;
+			}
+		}
 	}
 }
 

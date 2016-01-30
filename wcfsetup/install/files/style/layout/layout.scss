@@ -88,16 +88,3 @@ a {
 .content + .sidebar {
 	margin-left: 30px;
 }
-
-/* CONTENT AREA */
-
-
-.containerHeadline {
-	> h3 {
-		@extend .wcfFontHeadline;
-		
-		> .badge {
-			top: -2px;
-		}
-	}
-}

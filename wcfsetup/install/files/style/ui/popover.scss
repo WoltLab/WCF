@@ -8,7 +8,7 @@
 	100% { visibility: hidden;  transform: translateY(-20px); opacity: 0; }
 }
 
-/* outer element containg both the pointer and content element */
+/* outer element containing both the pointer and content element */
 .popover {
 	animation: wcfPopoverOut .3s;
 	animation-fill-mode: forwards;
@@ -19,7 +19,7 @@
 	top: 0;
 	vertical-align: middle;
 	visibility: hidden;
-	width: 400px !important;
+	width: 500px !important;
 	z-index: 500;
 	
 	&.active {
@@ -69,7 +69,7 @@
 	max-height: 320px;
 	min-height: 36px;
 	overflow: hidden;
-	padding: 10px;
+	padding: 15px;
 	
 	a {
 		color: $wcfContentLink;
