@@ -98,7 +98,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			// add language dropdown items
 			var a, div, h3, img, listItem;
 			for (var availableLanguageId in languages) {
-				if (languages.hasOwnProperty(availableLanguageId)) {
+				if (objOwns(languages, availableLanguageId)) {
 					var language = languages[availableLanguageId];
 					
 					listItem = elCreate('li');

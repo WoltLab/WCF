@@ -159,12 +159,12 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 				top: top + (top !== 'auto' ? 'px' : '')
 			});
 			
-			el.style.removeProperty('display');
+			elShow(el);
 			el.style.removeProperty('visibility');
 		},
 		
 		/**
-		 * Calculates left/right position and verifys if the element would be still within the page's boundaries.
+		 * Calculates left/right position and verifies if the element would be still within the page's boundaries.
 		 * 
 		 * @param	{string}		align		align to this side of the reference element
 		 * @param	{Object<string, int>}	elDimensions	element dimensions

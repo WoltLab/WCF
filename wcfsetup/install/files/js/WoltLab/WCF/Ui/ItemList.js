@@ -222,7 +222,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 					element.parentNode.insertBefore(inputElement, element);
 					inputElement.id = element.id;
 					
-					element.parentNode.removeChild(element);
+					elRemove(element);
 					element = inputElement;
 				}
 			}

@@ -206,7 +206,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 			
 			
 			// apply CSS rules
-			var style = document.createElement('style');
+			var style = elCreate('style');
 			style.appendChild(document.createTextNode(''));
 			elData(style, 'created-by', 'WoltLab/Acp/Ui/Style/Editor');
 			document.head.appendChild(style);

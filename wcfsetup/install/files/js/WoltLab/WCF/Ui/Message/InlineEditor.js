@@ -244,7 +244,7 @@ define(
 						}
 					}
 					else {
-						if (visibility.hasOwnProperty(item) && visibility[item] === false) {
+						if (objOwns(visibility, item) && visibility[item] === false) {
 							elHide(listItem);
 						}
 						else {
@@ -328,7 +328,7 @@ define(
 			
 			this._activeElement.classList.add('jsInvalidQuoteTarget');
 			var icon = DomTraverse.childByClass(elementData.messageBodyEditor, 'icon');
-			icon.parentNode.removeChild(icon);
+			elRemove(icon);
 			
 			var messageBody = elementData.messageBodyEditor;
 			var editor = elCreate('div');

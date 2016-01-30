@@ -208,7 +208,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			_input = input;
-			var data = _data.get(_input), date, value = elAttr(_input, 'data-value');
+			var data = _data.get(_input), date, value = elData(_input, 'value');
 			if (value) {
 				date = new Date(+value);
 				
@@ -221,12 +221,12 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			// set min/max date
-			_minDate = elAttr(_input, 'data-min-date');
-			if (_minDate.match(/^datePicker-(.+)$/)) _minDate = elById(RegExp.$1).getAttribute('data-value');
+			_minDate = elData(_input, 'min-date');
+			if (_minDate.match(/^datePicker-(.+)$/)) _minDate = elData(elById(RegExp.$1), 'value');
 			_minDate = new Date(+_minDate);
 			
-			_maxDate = elAttr(_input, 'data-max-date');
-			if (_maxDate.match(/^datePicker-(.+)$/)) _maxDate = elById(RegExp.$1).getAttribute('data-value');
+			_maxDate = elData(_input, 'max-date');
+			if (_maxDate.match(/^datePicker-(.+)$/)) _maxDate = elData(elById(RegExp.$1), 'value');
 			_maxDate = new Date(+_maxDate);
 			
 			if (data.isDateTime) {
@@ -290,7 +290,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		_renderGrid: function(day, month, year) {
 			var cell, hasDay = (day !== undefined), hasMonth = (month !== undefined);
 			
-			day = ~~day || ~~_dateGrid.getAttribute('data-day');
+			day = ~~day || ~~elData(_dateGrid, 'day');
 			month = ~~month;
 			year = ~~year;
 			
@@ -302,8 +302,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				var fragment = document.createDocumentFragment();
 				fragment.appendChild(_dateGrid);
 				
-				if (!hasMonth) month = ~~_dateGrid.getAttribute('data-month');
-				year = year || ~~_dateGrid.getAttribute('data-year');
+				if (!hasMonth) month = ~~elData(_dateGrid, 'month');
+				year = year || ~~elData(_dateGrid, 'year');
 				
 				// check if current selection exceeds min/max date
 				var date = new Date(year + '-' + ('0' + (month + 1).toString()).slice(-2) + '-' + ('0' + day.toString()).slice(-2));
@@ -350,8 +350,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					date.setDate(date.getDate() + 1); 
 				}
 				
-				elAttr(_dateGrid, 'data-month', month);
-				elAttr(_dateGrid, 'data-year', year);
+				elData(_dateGrid, 'month', month);
+				elData(_dateGrid, 'year', year);
 				
 				_datePicker.insertBefore(fragment, _dateTime);
 				
@@ -394,7 +394,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					cell.classList[(!cell.classList.contains('otherMonth') && ~~cell.textContent === day) ? 'add' : 'remove']('active');
 				}
 				
-				elAttr(_dateGrid, 'data-day', day);
+				elData(_dateGrid, 'day', day);
 			}
 			
 			this._formatValue();
@@ -406,15 +406,15 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		_formatValue: function() {
 			var data = _data.get(_input), date, value, shadowValue;
 			
-			if (elAttr(_input, 'data-empty') === 'true') {
+			if (elData(_input, 'empty') === 'true') {
 				return;
 			}
 			
 			if (data.isDateTime) {
 				date = new Date(
-					elAttr(_dateGrid, 'data-year'),
-					elAttr(_dateGrid, 'data-month'),
-					elAttr(_dateGrid, 'data-day'),
+					elData(_dateGrid, 'year'),
+					elData(_dateGrid, 'month'),
+					elData(_dateGrid, 'day'),
 					_dateHour.value,
 					_dateMinute.value
 				);
@@ -424,9 +424,9 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			else {
 				date = new Date(
-					elAttr(_dateGrid, 'data-year'),
-					elAttr(_dateGrid, 'data-month'),
-					elAttr(_dateGrid, 'data-day')
+					elData(_dateGrid, 'year'),
+					elData(_dateGrid, 'month'),
+					elData(_dateGrid, 'day')
 				);
 				
 				value = DateUtil.formatDate(date);
@@ -434,7 +434,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			_input.value = value;
-			elAttr(_input, 'data-value', date.getTime());
+			elData(_input, 'value', date.getTime());
 			data.shadow.value = shadowValue;
 		},
 		
@@ -620,7 +620,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				return;
 			}
 			
-			elAttr(_input, 'data-empty', false);
+			elData(_input, 'empty', false);
 			
 			this._renderGrid(event.currentTarget.textContent);
 			
@@ -637,7 +637,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			element = this._getElement(element);
 			
 			if (element.hasAttribute('data-value')) {
-				return new Date(+element.getAttribute('data-value'));
+				return new Date(+elData(element, 'value'));
 			}
 			
 			return null;
@@ -686,14 +686,14 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			var container = element.parentNode;
 			container.parentNode.insertBefore(element, container);
-			container.parentNode.removeChild(container);
+			elRemove(container);
 			
 			elAttr(element, 'type', 'date' + (data.isDateTime ? 'time' : ''));
 			element.value = data.shadow.value;
 			
 			element.removeAttribute('data-value');
 			element.removeEventListener('click', _callbackOpen);
-			data.shadow.parentNode.removeChild(data.shadow);
+			elRemove(data);
 			
 			element.classList.remove('inputDatePicker');
 			element.readOnly = false;

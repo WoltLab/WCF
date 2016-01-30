@@ -174,7 +174,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 			}
 			
 			if (hasHiddenPages) {
-				list.setAttribute('data-pages', this._options.maxPage);
+				elData(list, 'pages', this._options.maxPage);
 				
 				UiPageJumpTo.init(list, this.switchPage.bind(this));
 			}

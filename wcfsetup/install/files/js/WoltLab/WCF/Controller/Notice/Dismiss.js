@@ -43,7 +43,7 @@ define(['Ajax'], function(Ajax) {
 					var parent = button.parentNode;
 					
 					parent.addEventListener('transitionend', function() {
-						parent.parentNode.removeChild(parent);
+						elRemove(parent);
 					});
 					
 					parent.classList.remove('active');

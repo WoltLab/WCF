@@ -245,7 +245,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 			}
 			else if (length > 0) {
 				attachmentId = ~~attributes[0];
-				if (!_options.attachments.images.hasOwnProperty(attachmentId)) {
+				if (!objOwns(_options.attachments.images, attachmentId)) {
 					length = 0;
 				}
 			}
@@ -265,7 +265,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 				}
 			}
 			
-			var baseUrl = _options.attachments.thumbnailUrl;
+			var width, baseUrl = _options.attachments.thumbnailUrl;
 			if (length > 2) {
 				width = ~~attributes[2] || 0;
 				if (width) {
@@ -569,7 +569,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 				
 				if (typeof item === 'string') {
 					for (var smileyCode in __REDACTOR_SMILIES) {
-						if (__REDACTOR_SMILIES.hasOwnProperty(smileyCode)) {
+						if (objOwns(__REDACTOR_SMILIES, smileyCode)) {
 							altValue = smileyCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 							regexp = new RegExp('(\\s|^)' + StringUtil.escapeRegExp(smileyCode) + '(?=\\s|$)', 'gi');
 							item = item.replace(regexp, '$1<img src="' + __REDACTOR_SMILIES[smileyCode] + '" class="smiley" alt="' + altValue + '">');

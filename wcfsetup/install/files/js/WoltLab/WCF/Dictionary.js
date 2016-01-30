@@ -60,7 +60,7 @@ define(['Core'], function(Core) {
 			
 			if (_hasMap) return this._dictionary.has(key);
 			else {
-				return (this._dictionary.hasOwnProperty(key) && typeof this._dictionary[key] !== "undefined");
+				return (objOwns(this._dictionary, key) && typeof this._dictionary[key] !== "undefined");
 			}
 		},
 		
@@ -150,7 +150,7 @@ define(['Core'], function(Core) {
 		var result = new Dictionary();
 		
 		for (var key in object) {
-			if (object.hasOwnProperty(key)) {
+			if (objOwns(object, key)) {
 				result.set(key, object[key]);
 			}
 		}

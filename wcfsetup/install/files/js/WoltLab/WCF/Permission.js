@@ -36,7 +36,7 @@ define(['Dictionary'], function(Dictionary) {
 		 */
 		addObject: function(object) {
 			for (var key in object) {
-				if (object.hasOwnProperty(key)) {
+				if (objOwns(object, key)) {
 					this.addPermission(key, object[key]);
 				}
 			}

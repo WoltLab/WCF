@@ -140,11 +140,11 @@ define(
 			
 			var containerId = elData(checkbox, 'container-id');
 			var data = _containers.get(containerId);
-			var type = elAttr(data.element, 'data-type');
+			var type = elData(data.element, 'type');
 			
 			for (var i = 0, length = data.checkboxes.length; i < length; i++) {
 				var item = data.checkboxes[i];
-				var objectId = ~~item.getAttribute('data-object-id');
+				var objectId = ~~elData(item, 'object-id');
 				
 				if (isMarked) {
 					if (!item.checked) {
@@ -179,11 +179,11 @@ define(
 		 */
 		_mark: function(event) {
 			var checkbox = event.currentTarget;
-			var objectId = ~~checkbox.getAttribute('data-object-id');
+			var objectId = ~~elData(checkbox, 'object-id');
 			var isMarked = checkbox.checked;
 			var containerId = elData(checkbox, 'container-id');
 			var data = _containers.get(containerId);
-			var type = elAttr(data.element, 'data-type');
+			var type = elData(data.element, 'type');
 			
 			var clipboardObject = DomTraverse.parentByClass(checkbox, 'jsClipboardObject');
 			data.markedObjectIds[(isMarked ? 'add' : 'delete')](objectId);
@@ -261,7 +261,7 @@ define(
 								var formData = {};
 								
 								if (template.length) {
-									var items = UiConfirmation.getContentElement().querySelectorAll('input, select, textarea');
+									var items = elBySel('input, select, textarea', UiConfirmation.getContentElement());
 									for (var i = 0, length = items.length; i < length; i++) {
 										var item = items[i];
 										var name = elAttr(item, 'name');
@@ -324,7 +324,7 @@ define(
 			
 			if (typeof data.internalData.parameters === 'object') {
 				for (var key in data.internalData.parameters) {
-					if (data.internalData.parameters.hasOwnProperty(key)) {
+					if (objOwns(data.internalData.parameters, key)) {
 						parameters[key] = data.internalData.parameters[key];
 					}
 				}
@@ -356,7 +356,7 @@ define(
 		 * @param	{object}	event		event object
 		 */
 		_unmarkAll: function(event) {
-			var type = elAttr(event.currentTarget, 'data-type');
+			var type = elData(event.currentTarget, 'type');
 			
 			Ajax.api(this, {
 				actionName: 'unmarkAll',
@@ -387,7 +387,7 @@ define(
 		_ajaxSuccess: function(data) {
 			if (data.actionName === 'unmarkAll') {
 				_containers.forEach((function(containerData) {
-					if (elAttr(containerData.element, 'data-type') === data.returnValues.objectType) {
+					if (elData(containerData.element, 'type') === data.returnValues.objectType) {
 						var clipboardObjects = elByClass('jsMarked', containerData.element);
 						while (clipboardObjects.length) {
 							clipboardObjects[0].classList.remove('jsMarked');
@@ -409,7 +409,7 @@ define(
 			
 			// rebuild markings
 			_containers.forEach((function(containerData) {
-				var typeName = elAttr(containerData.element, 'data-type');
+				var typeName = elData(containerData.element, 'type');
 				
 				var objectIds = (data.returnValues.markedItems && objOwns(data.returnValues.markedItems, typeName)) ? data.returnValues.markedItems[typeName] : [];
 				this._rebuildMarkings(containerData, objectIds);
@@ -418,7 +418,7 @@ define(
 			var keepEditors = [], typeName;
 			if (data.returnValues && data.returnValues.items) {
 				for (typeName in data.returnValues.items) {
-					if (data.returnValues.items.hasOwnProperty(typeName)) {
+					if (objOwns(data.returnValues.items, typeName)) {
 						keepEditors.push(typeName);
 					}
 				}
@@ -442,7 +442,7 @@ define(
 			var created, dropdown, editor, typeData;
 			var divider, item, itemData, itemIndex, label, unmarkAll;
 			for (typeName in data.returnValues.items) {
-				if (!data.returnValues.items.hasOwnProperty(typeName)) {
+				if (!objOwns(data.returnValues.items, typeName)) {
 					continue;
 				}
 				
@@ -471,7 +471,7 @@ define(
 				
 				// create editor items
 				for (itemIndex in typeData.items) {
-					if (!typeData.items.hasOwnProperty(itemIndex)) continue;
+					if (!objOwns(typeData.items, itemIndex)) continue;
 					
 					itemData = typeData.items[itemIndex];
 					
@@ -525,7 +525,7 @@ define(
 				var checkbox = data.checkboxes[i];
 				var clipboardObject = DomTraverse.parentByClass(checkbox, 'jsClipboardObject');
 				
-				var isMarked = (objectIds.indexOf(~~checkbox.getAttribute('data-object-id')) !== -1);
+				var isMarked = (objectIds.indexOf(~~elData(checkbox, 'object-id')) !== -1);
 				if (!isMarked) markAll = false;
 				
 				checkbox.checked = isMarked;

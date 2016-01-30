@@ -37,12 +37,12 @@ define(['Dom/ChangeListener', 'Language', 'WoltLab/WCF/Date/Util', 'WoltLab/WCF/
 				
 				if (!element.classList.contains('datetime') || elData(element, 'is-future-date')) continue;
 				
-				var elTimestamp = ~~element.getAttribute('data-timestamp') + _offset;
+				var elTimestamp = ~~elData(element, 'timestamp') + _offset;
 				var elDate = elData(element, 'date');
 				var elTime = elData(element, 'time');
 				var elOffset = elData(element, 'offset');
 				
-				if (!element.getAttribute('title')) {
+				if (!elAttr(element, 'title')) {
 					elAttr(element, 'title', Language.get('wcf.date.dateTimeFormat').replace(/%date%/, elDate).replace(/%time%/, elTime));
 				}
 				

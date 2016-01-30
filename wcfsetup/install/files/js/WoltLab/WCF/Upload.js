@@ -190,7 +190,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		 * Removes the button to upload files.
 		 */
 		_removeButton: function() {
-			this._button.parentNode.removeChild(this._button);
+			elRemove(this._button);
 			
 			DomChangeListener.trigger();
 		},
@@ -291,7 +291,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			var formData = new FormData();
 			for (var i = 0, length = files.length; i < length; i++) {
 				if (this._fileElements[uploadId][i]) {
-					var internalFileId = elAttr(this._fileElements[uploadId][i], 'data-internal-file-id');
+					var internalFileId = elData(this._fileElements[uploadId][i], 'internal-file-id');
 					
 					if (blob) {
 						formData.append('__files[' + internalFileId + ']', blob, files[i].name);

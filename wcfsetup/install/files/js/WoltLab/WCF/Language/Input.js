@@ -44,7 +44,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			// unescape values
 			var unescapedValues = new Dictionary();
 			for (var key in values) {
-				if (values.hasOwnProperty(key)) {
+				if (objOwns(values, key)) {
 					unescapedValues.set(~~key, StringUtil.unescapeHTML(values[key]));
 				}
 			}
@@ -100,7 +100,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			DomUtil.insertAfter(dropdownMenu, button);
 			
 			var callbackClick = (function(event, isInit) {
-				var languageId = ~~event.currentTarget.getAttribute('data-language-id');
+				var languageId = ~~elData(event.currentTarget, 'language-id');
 				
 				var activeItem = DomTraverse.childByClass(dropdownMenu, 'active');
 				if (activeItem !== null) activeItem.classList.remove('active');
@@ -112,7 +112,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			
 			// build language dropdown
 			for (var languageId in availableLanguages) {
-				if (availableLanguages.hasOwnProperty(languageId)) {
+				if (objOwns(availableLanguages, languageId)) {
 					var listItem = elCreate('li');
 					elData(listItem, 'language-id', languageId);
 					
@@ -142,7 +142,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			var activeItem = null;
 			if (forceSelection === true || values.size) {
 				for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
-					if (~~dropdownMenu.children[i].getAttribute('data-language-id') === LANGUAGE_ID) {
+					if (~~dropdownMenu.elData(children[i], 'language-id') === LANGUAGE_ID) {
 						activeItem = dropdownMenu.children[i];
 						break;
 					}
@@ -238,13 +238,13 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			}
 			
 			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(containerId);
-			var elementId = elById(containerId).getAttribute('data-input-id');
+			var elementId = elData(elById(containerId), 'input-id');
 			var values = _values.get(elementId);
 			
 			var item, languageId;
 			for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
 				item = dropdownMenu.children[i];
-				languageId = ~~item.getAttribute('data-language-id');
+				languageId = ~~elData(item, 'language-id');
 				
 				if (languageId) {
 					item.classList[(values.has(languageId) || !values.size ? 'remove' : 'add')]('missingValue');
@@ -354,7 +354,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			element.isEnabled = false;
 			
 			// hide language dropdown
-			element.buttonLabel.parentNode.style.setProperty('display', 'none');
+			elHide(element.buttonLabel.parentNode);
 			var dropdownContainer = element.buttonLabel.parentNode.parentNode;
 			dropdownContainer.classList.remove('inputAddon');
 			dropdownContainer.classList.remove('dropdown');
@@ -376,7 +376,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			element.isEnabled = true;
 			
 			// show language dropdown
-			element.buttonLabel.parentNode.style.removeProperty('display');
+			elShow(element.buttonLabel.parentNode);
 			var dropdownContainer = element.buttonLabel.parentNode.parentNode;
 			dropdownContainer.classList.add('inputAddon');
 			dropdownContainer.classList.add('dropdown');
@@ -426,7 +426,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			var hasEmptyValue = false, hasNonEmptyValue = false;
 			for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
 				item = dropdownMenu.children[i];
-				languageId = ~~item.getAttribute('data-language-id');
+				languageId = ~~elData(item, 'language-id');
 				
 				if (languageId) {
 					if (!values.has(languageId) || values.get(languageId).length === 0) {
