@@ -693,7 +693,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			element.removeAttribute('data-value');
 			element.removeEventListener('click', _callbackOpen);
-			elRemove(data);
+			elRemove(data.shadow);
 			
 			element.classList.remove('inputDatePicker');
 			element.readOnly = false;
