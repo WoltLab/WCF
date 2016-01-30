@@ -9,6 +9,10 @@
 		.contentTitle,
 		> h1 { // deprecated
 			@extend .wcfFontTitle;
+			
+			.badge {
+				top: -2px;
+			}
 		}
 		
 		a {
@@ -16,6 +20,30 @@
 			
 			&:hover {
 				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+			}
+		}
+	}
+	
+	/* legacy styling for sub headlines (deprecated; use .section > .sectionTitle instead) */
+	.boxHeadline.boxSubHeadline {
+		margin-top: 30px;
+		margin-bottom: 20px;
+		
+		> h2 {
+			color: $wcfContentHeadlineText; // todo: rename variable
+			
+			@extend .wcfFontHeadline;
+			
+			a {
+				color: $wcfContentHeadlineLink; // todo: rename variable
+				
+				&:hover {
+					color: $wcfContentHeadlineLinkActive; // todo: rename variable
+				}
+			}
+			
+			.badge {
+				top: -2px;
 			}
 		}
 	}
@@ -58,6 +86,10 @@
 					color: $wcfContentHeadlineLinkActive; // todo: rename variable
 				}
 			}
+			
+			.badge {
+				top: -2px;
+			}
 		}
 		
 		.sectionDescription {
@@ -98,6 +130,10 @@
 				&:hover {
 					color: $wcfContentHeadlineLinkActive; // todo: rename variable
 				}
+			}
+			
+			.badge {
+				top: -2px;
 			}
 			
 			&+ * {

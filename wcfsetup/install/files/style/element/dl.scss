@@ -47,6 +47,11 @@ dl {
 			
 			> label {
 				display: block;
+				
+				/* indentation for checkbox descriptions */
+				+ small:not(.innerError) {
+					margin-left: 24px;
+				} 
 			}
 			
 			> label:not(:first-child) {
