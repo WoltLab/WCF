@@ -91,6 +91,10 @@
 		> h2,
 		> h3 {
 			@extend .wcfFontHeadline;
+			
+			+ small {
+				display: block;
+			}
 		}
 		
 		a,
