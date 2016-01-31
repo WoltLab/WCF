@@ -1010,12 +1010,11 @@ WCF.User.Profile.TabMenu = Class.extend({
 		var $containerID = data.returnValues.containerID;
 		this._hasContent[$containerID] = true;
 		
-		// insert content
-		var $content = this._profileContent.find('#' + $containerID);
-		$('<div>' + data.returnValues.template + '</div>').hide().appendTo($content);
-		
-		// slide in content
-		$content.children('div').wcfBlindIn();
+		// insert content, uses non jQuery because DomUtil.insertHtml() moves <script> elements
+		// to the bottom of the element by default which is exactly what is required here
+		require(['Dom/Util'], function(DomUtil) {
+			DomUtil.insertHtml(data.returnValues.template, elById($containerID), 'append');
+		});
 	}
 });
 
