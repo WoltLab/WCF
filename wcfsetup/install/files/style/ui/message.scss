@@ -124,6 +124,26 @@
 	flex: 1 auto;
 	flex-direction: column;
 	margin-left: 30px;
+	
+	&.loading {
+		position: relative;
+		
+		> .messageContentLoadingOverlay {
+			align-items: center;
+			background-color: $wcfContentBackground;
+			bottom: 0;
+			display: flex;
+			justify-content: center;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			
+			> .icon {
+				flex: 0 0 auto;
+			}
+		}
+	}
 }
 
 /* content - header */

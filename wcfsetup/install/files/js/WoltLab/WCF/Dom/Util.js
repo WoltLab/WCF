@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Dom/Util
  */
-define([], function() {
+define(['StringUtil'], function(StringUtil) {
 	"use strict";
 	
 	var _matchesSelectorFunction = '';
@@ -186,7 +186,7 @@ define([], function() {
 		 * Applies a list of CSS properties to an element.
 		 * 
 		 * @param	{Element}		el	element
-		 * @param	{Object<string, mixed>}	styles	list of CSS styles
+		 * @param	{Object<string, *>}	styles	list of CSS styles
 		 */
 		setStyles: function(el, styles) {
 			var important = false;
@@ -214,7 +214,7 @@ define([], function() {
 		 * 
 		 * @param	{CSSStyleDeclaration}	styles		result of window.getComputedStyle()
 		 * @param	{string}		propertyName	property name
-		 * @return	{integer}	property value as integer
+		 * @return	{int}	                property value as integer
 		 */
 		styleAsInt: function(styles, propertyName) {
 			var value = styles.getPropertyValue(propertyName);
@@ -252,6 +252,41 @@ define([], function() {
 		},
 		
 		/**
+		 * 
+		 * @param html
+		 * @param {Element} referenceElement
+		 * @param insertMethod
+		 */
+		insertHtml: function(html, referenceElement, insertMethod) {
+			var element = elCreate('div');
+			this.setInnerHtml(element, html);
+			
+			if (insertMethod === 'append' || insertMethod === 'after') {
+				while (element.childNodes.length) {
+					if (insertMethod === 'append') {
+						referenceElement.appendChild(element.childNodes[0]);
+					}
+					else {
+						this.insertAfter(element.childNodes[0], referenceElement);
+					}
+				}
+			}
+			else if (insertMethod === 'prepend' || insertMethod === 'before') {
+				for (var i = element.childNodes.length - 1; i >= 0; i--) {
+					if (insertMethod === 'prepend') {
+						this.prepend(element.childNodes[i], referenceElement);
+					}
+					else {
+						referenceElement.parentNode.insertBefore(element.childNodes[i], referenceElement);
+					}
+				}
+			}
+			else {
+				throw new Error("Unknown insert method '" + insertMethod + "'.");
+			}
+		},
+		
+		/**
 		 * Returns true if `element` contains the `child` element.
 		 * 
 		 * @param	{Element}	element		container element
@@ -268,6 +303,53 @@ define([], function() {
 			}
 			
 			return false;
+		},
+		
+		/**
+		 * Retrieves all data attributes from target element, optionally allowing for
+		 * a custom prefix that serves two purposes: First it will restrict the results
+		 * for items starting with it and second it will remove that prefix.
+		 * 
+		 * @param       {Element}       element         target element
+		 * @param       {string=}       prefix          attribute prefix
+		 * @param       {boolean=}      camcelCaseName  transform attribute names into camel case using dashes as separators
+		 * @param       {boolean=}      idToUpperCase   transform '-id' into 'ID'
+		 * @returns     {object<string, string>}        list of data attributes
+		 */
+		getDataAttributes: function(element, prefix, camcelCaseName, idToUpperCase) {
+			prefix = prefix || '';
+			if (!/^data-/.test(prefix)) prefix = 'data-' + prefix;
+			camcelCaseName = (camcelCaseName === true);
+			idToUpperCase = (idToUpperCase === true);
+			
+			var attribute, attributes = {}, name, tmp;
+			for (var i = 0, length = element.attributes.length; i < length; i++) {
+				attribute = element.attributes[i];
+				
+				if (attribute.name.indexOf(prefix) === 0) {
+					name = attribute.name.replace(new RegExp('^' + prefix), '');
+					if (camcelCaseName) {
+						tmp = name.split('-');
+						name = '';
+						for (var j = 0, innerLength = tmp.length; j < innerLength; j++) {
+							if (name.length) {
+								if (idToUpperCase && tmp[j] === 'id') {
+									tmp[j] = 'ID';
+								}
+								else {
+									tmp[j] = StringUtil.ucfirst(tmp[j]);
+								}
+							}
+							
+							name += tmp[j];
+						}
+					}
+					
+					attributes[name] = attribute.value;
+				}
+			}
+			
+			return attributes;
 		}
 	};
 	

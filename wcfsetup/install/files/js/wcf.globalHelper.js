@@ -181,4 +181,13 @@
 	window.objOwns = function(obj, property) {
 		return obj.hasOwnProperty(property);
 	};
+	
+	/* assigns a global constant defining the proper 'click' event depending on the browser,
+	   enforcing 'touchstart' on mobile devices for a better UX. We're using defineProperty()
+	   here because at the time of writing Safari does not support 'const'. Thanks Safari.
+	 */
+	var clickEvent = ('touchstart' in document.documentElement) ? 'touchstart' : 'click';
+	Object.defineProperty(window, 'WCF_CLICK_EVENT', {
+		value: clickEvent
+	});
 })(window, document);
