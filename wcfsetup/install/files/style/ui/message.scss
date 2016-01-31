@@ -121,7 +121,7 @@
 /* content */
 .messageContent {
 	display: flex;
-	flex: 1 auto;
+	flex: auto;
 	flex-direction: column;
 	margin-left: 30px;
 	
@@ -179,7 +179,7 @@
 
 /* content - body */
 .messageBody {
-	flex: 1 1 auto;
+	flex: auto;
 	
 	&.editor {
 		align-items: center;
@@ -191,7 +191,7 @@
 		}
 		
 		> .editorContainer {
-			flex: 1 auto;
+			flex: auto;
 		}
 	}
 }
@@ -202,17 +202,13 @@
 	margin-top: 20px;
 }
 
-.messageFooterNote,
-.messageFooterNotes > .likesSummary {
+.messageFooterNote {
 	border-left: 5px solid $wcfContentBorderInner;
 	color: $wcfContentDimmedText;
+	margin-top: 10px;
 	padding: 5px 10px;
 	
 	@extend .wcfFontSmall;
-	
-	&:not(:first-child) {
-		margin-top: 10px;
-	}
 	
 	a {
 		color: $wcfContentDimmedLink;
@@ -221,6 +217,30 @@
 			color: $wcfContentDimmedLinkActive;
 			text-decoration: underline;
 		}
+	}
+}
+
+.messageFooterGroup {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 10px;
+	
+	> .likesSummary {
+		color: $wcfContentDimmedText;
+		cursor: pointer;
+		flex: 0 0 auto;
+		
+		@extend .wcfFontSmall;
+		
+		> .icon {
+			color: $wcfContentDimmedText;
+			margin-right: 5px;
+		}
+	}
+	
+	> .messageFooterButtons {
+		flex: auto;
 	}
 }
 

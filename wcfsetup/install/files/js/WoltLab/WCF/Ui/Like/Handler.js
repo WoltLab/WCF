@@ -47,6 +47,8 @@ define(
 				isSingleItem: false,
 				markListItemAsActive: false,
 				renderAsButton: true,
+				summaryPrepend: true,
+				summaryUseIcon: true,
 				
 				// permissions
 				canDislike: false,
@@ -59,7 +61,7 @@ define(
 				buttonAppendToSelector: '',
 				buttonBeforeSelector: '.messageFooterButtons > .toTopLink',
 				containerSelector: '',
-				summarySelector: '.messageFooterNotes'
+				summarySelector: '.messageFooterGroup'
 			}, options);
 			
 			this.initContainers(options, objectType);
@@ -109,16 +111,29 @@ define(
 		_buildWidget: function(element, elementData) {
 			// build summary
 			if (this._options.canViewSummary) {
-				var summary, summaryContainer = elBySel(this._options.summarySelector, element), summaryContent;
+				var summary, summaryContainer = elBySel(this._options.summarySelector, element), summaryContent, summaryIcon;
 				if (summaryContainer !== null) {
-					summary = elCreate('p');
+					summary = elCreate('div');
 					summary.className = 'likesSummary';
 					
+					if (this._options.summaryUseIcon) {
+						summaryIcon = elCreate('span');
+						summaryIcon.className = 'icon icon16 fa-thumbs-o-up';
+						summary.appendChild(summaryIcon);
+					}
+					
 					summaryContent = elCreate('span');
+					summaryContent.className = 'likesSummaryContent';
 					summaryContent.addEventListener('click', this._showSummary.bind(this, element));
 					summary.appendChild(summaryContent);
 					
-					summaryContainer.appendChild(summary);
+					if (this._options.summaryPrepend) {
+						DomUtil.prepend(summary, summaryContainer);
+					}
+					else {
+						summaryContainer.appendChild(summary);
+					}
+					
 					elementData.summary = summaryContent;
 					
 					this._updateSummary(element);
