@@ -14,6 +14,9 @@
 	visibility: hidden;
 	z-index: 450;
 	
+	/* prevent dropdown from flickering during calculation */
+	left: -200%;
+	
 	> .elementPointer {
 		border-color: $wcfDropdownBorder transparent;
 		border-style: solid;
