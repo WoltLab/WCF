@@ -187,7 +187,6 @@ define(
 					closeButtonLabel: Language.get('wcf.global.button.close'),
 					closeConfirmMessage: '',
 					disableContentPadding: false,
-					disposeOnClose: false,
 					title: '',
 					
 					// callbacks
@@ -259,10 +258,6 @@ define(
 			elAttr(dialog, 'aria-hidden', 'true');
 			elAttr(dialog, 'role', 'dialog');
 			elData(dialog, 'id', id);
-			
-			if (options.disposeOnClose) {
-				elData(dialog, 'dispose-on-close', true);
-			}
 			
 			var header = elCreate('header');
 			dialog.appendChild(header);
@@ -500,17 +495,7 @@ define(
 				data.onClose(id);
 			}
 			
-			if (elAttr(data.dialog, 'data-dispose-on-close')) {
-				setTimeout(function() {
-					if (elAttr(data.dialog, 'aria-hidden') === 'true') {
-						_container.removeChild(data.dialog);
-						_dialogs['delete'](id);
-					}
-				}, 5000);
-			}
-			else {
-				elAttr(data.dialog, 'aria-hidden', 'true');
-			}
+			elAttr(data.dialog, 'aria-hidden', 'true');
 			
 			// get next active dialog
 			_activeDialog = null;

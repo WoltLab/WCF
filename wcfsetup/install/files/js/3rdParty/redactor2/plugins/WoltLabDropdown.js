@@ -17,8 +17,8 @@ $.Redactor.prototype.WoltLabDropdown = function() {
 		
 		_hideAll: function() {
 			var hideAll = this.dropdown.hideAll;
-			this.dropdown.hideAll = (function() {
-				hideAll.call(this);
+			this.dropdown.hideAll = (function(e, key) {
+				hideAll.call(this, e, key);
 				
 				$('.redactor-dropdown-' + this.uuid).stop(true, true).hide();
 			}).bind(this);
