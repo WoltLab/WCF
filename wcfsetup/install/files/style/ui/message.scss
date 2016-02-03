@@ -366,7 +366,7 @@
 		&::before {
 			display: block;
 			font-family: FontAwesome;
-			font-size: 48px;
+			font-size: 42px;
 			position: absolute;
 		}
 		
@@ -378,15 +378,15 @@
 	.messageDeleted .columnAvatar::before {
 		color: rgb(180, 0, 0);
 		content: $fa-var-trash-o;
-		left: 15px;
-		top: -7px;
+		left: 17px;
+		top: -2px;
 	}
 	
 	.messageDisabled .columnAvatar::before {
 		color: rgb(0, 140, 0);
 		content: $fa-var-eye-slash;
-		left: 10px;
-		top: -6px;
+		left: 13px;
+		top: -2px;
 	}
 	
 	.columnAvatar {
@@ -397,6 +397,7 @@
 			
 			> p > img {
 				opacity: .6;
+				transition: opacity .2s;
 			}
 		}
 		
@@ -404,8 +405,13 @@
 			position: absolute;
 			width: 24px;
 			height: 24px;
-			bottom: -8px;
-			right: -8px;
+			bottom: -2px;
+			right: -6px;
+			
+			> img {
+				border: 1px solid $wcfContentBackground;
+				box-sizing: content-box;
+			}
 		}
 	}
 	
@@ -434,6 +440,7 @@
 			display: flex;
 			float: right;
 			opacity: .6;
+			transition: opacity .2s;
 			
 			> .statusIcons {
 				align-items: center;
@@ -533,6 +540,7 @@
 	.pagination {
 		flex: 0 0 auto;
 		opacity: 0;
+		transition: opacity .2s;
 		
 		@extend .wcfFontSmall;
 		

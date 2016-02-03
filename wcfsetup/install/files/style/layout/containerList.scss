@@ -1,6 +1,7 @@
 .containerList > li {
 	padding: 20px;
 	position: relative;
+	transition: background-color .2s;
 	
 	&:not(:last-child) {
 		border-bottom: 1px solid $wcfContentBorderInner;
@@ -42,6 +43,7 @@
 		position: absolute;
 		right: 20px;
 		top: 18px;
+		transition: opacity .2s;
 		
 		> ul {
 			background-color: $wcfContentBackground;

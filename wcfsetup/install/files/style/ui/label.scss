@@ -2,30 +2,24 @@
 /* label list */
 .labelList {
 	@extend .inlineList;
-}
-
-.boxHeadline.labeledHeadline {
-	align-items: center;
 	
-	@extend .inlineList;
-	
-	> .statusIcons,
-	> .labelList {
-		flex: 0 0 auto;
+	> li {
+		&:not(:first-child) {
+			.label {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+		
+		&:not(:last-child) {
+			margin-right: 1px;
+			
+			.label {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
 	}
-	
-	> .statusIcons:not(:last-child) {
-		margin-right: 10px;
-	}
-}
-
-.boxHeadline.labeledHeadline > h1,
-.boxSubHeadline.labeledHeadline > h2 {
-	flex: 0 0 auto;
-	margin-right: 10px;
-	
-	/* force a long running title to break instead of overflowing the container */
-	max-width: 100%;
 }
 
 /* ACP label list */

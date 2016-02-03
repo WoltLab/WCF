@@ -11,6 +11,7 @@
 .tabularListRow {
 	flex: 0 0 auto;
 	padding: 5px 0;
+	transition: background-color .2s;
 	
 	&.divider + li:not(.divider) {
 		border-top-color: $wcfContentBorder;

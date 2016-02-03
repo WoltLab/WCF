@@ -21,6 +21,32 @@
 			color: $wcfContentHeadlineLinkActive; // todo: rename variable
 		}
 	}
+	
+	.contentHeaderMetaData {
+		color: $wcfContentDimmedText;
+		
+		&.inlineList {
+			> li:not(:last-child) {
+				margin-right: 10px;
+			}
+			
+			.labelList {
+				display: inline-flex;
+				
+				.label {
+					top: -1px;
+				}
+			}
+		}
+		
+		> li {
+			a,
+			a:hover,
+			.icon {
+				color: $wcfContentDimmedText;
+			}
+		}
+	}
 }
 
 /* legacy styling for sub headlines (deprecated; use .section > .sectionTitle instead) */
@@ -46,28 +72,6 @@
 		}
 	}
 }
-
-/* todo
-.boxHeadline {
-	&.labeledHeadline {
-		font-size: 0;
-		
-		> h1,
-		> h2 {
-			display: inline-block;
-			margin-right: 10px;
-		}
-		
-		> ul {
-			display: inline-block;
-			font-size: 1rem;
-			
-			&:not(:empty) {
-				margin-right: 10px;
-			}
-		}
-	}
-}*/
 
 /* content sections */
 .section {
