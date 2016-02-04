@@ -27,7 +27,7 @@
 		var config = {
 			buttons: buttons,
 			minHeight: 200,
-			plugins: ['WoltLabButton', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote'],
+			plugins: ['WoltLabButton', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote'],
 			woltlab: {
 				autosave: autosave
 			}
@@ -51,6 +51,7 @@
 		
 		{* WoltLab *}
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
+		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabColor.js?v={@LAST_UPDATE_TIME}',
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}', 
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabLink.js?v={@LAST_UPDATE_TIME}',

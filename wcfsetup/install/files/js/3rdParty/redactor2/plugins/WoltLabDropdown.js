@@ -34,11 +34,8 @@ $.Redactor.prototype.WoltLabDropdown = function() {
 					var list = elCreate('ul');
 					list.className = 'dropdownMenu';
 					
-					var listItem;
 					while ($dropdown[0].childElementCount) {
-						listItem = elCreate('li');
-						listItem.appendChild($dropdown[0].children[0]);
-						list.appendChild(listItem);
+						list.appendChild($dropdown[0].children[0]);
 					}
 					
 					$dropdown[0].appendChild(list);

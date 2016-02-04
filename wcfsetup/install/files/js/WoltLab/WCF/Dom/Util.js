@@ -1,6 +1,6 @@
 /**
  * Provides helper functions to work with DOM nodes.
- * 
+ *
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -16,6 +16,33 @@ define(['StringUtil'], function(StringUtil) {
 			_matchesSelectorFunction = _possibleFunctions[i];
 			break;
 		}
+	}
+	
+	function _isBoundaryNode(element, ancestor, position) {
+		if (!ancestor.contains(element)) {
+			throw new Error("Ancestor element does not contain target element.");
+		}
+		
+		var node, whichSibling = position + 'Sibling';
+		while (element !== null && element !== ancestor) {
+			if (element[position + 'ElementSibling'] !== null) {
+				return false;
+			}
+			else if (element[whichSibling]) {
+				node = element[whichSibling];
+				while (node) {
+					if (node.textContent.trim() !== '') {
+						return false;
+					}
+					
+					node = node[whichSibling];
+				}
+			}
+			
+			element = element.parentNode;
+		}
+		
+		return true;
 	}
 	
 	var _idCounter = 0;
@@ -350,6 +377,63 @@ define(['StringUtil'], function(StringUtil) {
 			}
 			
 			return attributes;
+		},
+		
+		/**
+		 * Unwraps contained nodes by moving them out of `element` while
+		 * preserving their previous order. Target element will be removed
+		 * at the end of the operation.
+		 * 
+		 * @param       {Element}       element         target element
+		 */
+		unwrapChildNodes: function(element) {
+			var parent = element.parentNode;
+			while (element.childNodes.length) {
+				parent.insertBefore(element.childNodes[0], element);
+			}
+			
+			elRemove(element);
+		},
+		
+		/**
+		 * Replaces an element by moving all child nodes into the new element
+		 * while preserving their previous order. The old element will be removed
+		 * at the end of the operation.
+		 * 
+		 * @param       {Element}       oldElement      old element
+		 * @param       {Element}       newElement      old element
+		 */
+		replaceElement: function(oldElement, newElement) {
+			while (oldElement.childNodes.length) {
+				newElement.appendChild(oldElement.childNodes[0]);
+			}
+			
+			oldElement.parentNode.insertBefore(newElement, oldElement);
+			elRemove(oldElement);
+		},
+		
+		/**
+		 * Returns true if given element is the most left node of the ancestor, that is
+		 * a node without any content nor elements before it or its parent nodes.
+		 * 
+		 * @param       {Element}       element         target element
+		 * @param       {Element}       ancestor        ancestor element, must contain the target element
+		 * @returns     {boolean}       true if target element is the most left node
+		 */
+		isAtNodeStart: function(element, ancestor) {
+			return _isBoundaryNode(element, ancestor, 'previous');
+		},
+		
+		/**
+		 * Returns true if given element is the most right node of the ancestor, that is
+		 * a node without any content nor elements after it or its parent nodes.
+		 * 
+		 * @param       {Element}       element         target element
+		 * @param       {Element}       ancestor        ancestor element, must contain the target element
+		 * @returns     {boolean}       true if target element is the most right node
+		 */
+		isAtNodeEnd: function(element, ancestor) {
+			return _isBoundaryNode(element, ancestor, 'next');
 		}
 	};
 	
