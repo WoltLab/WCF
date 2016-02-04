@@ -2843,6 +2843,8 @@ WCF.Message.Quote.Manager = Class.extend({
 			var $message = $listItem.parents('article.message');
 			$username = $message.attr('data-username');
 			$link = $message.data('link');
+			
+			data = { forceInsert: true };
 		}
 		else {
 			$quote = data.quote.text;
