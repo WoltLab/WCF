@@ -36,7 +36,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 * @throws	SystemException
 	 */
 	protected function init() {
@@ -140,9 +140,15 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	/**
 	 * Returns the modifiable content object type.
 	 * 
+	 * @param	string		$objectType	name of the modifiable content object type, deprecated parameter
 	 * @return	ObjectType
 	 */
-	public function getObjectType() {
+	public function getObjectType($objectType = null) {
+		// allow parameter for better backwards compatibility with ModificationLogHandler
+		if ($objectType !== null) {
+			return ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.modifiableContent', $objectType);
+		}
+		
 		return $this->objectType;
 	}
 	
