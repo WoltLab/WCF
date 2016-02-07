@@ -81,7 +81,7 @@ class PackageInstallationDispatcher {
 	 * default name of the config file
 	 * @var	string
 	 */
-	const CONFIG_FILE = 'config.inc.php';
+	const CONFIG_FILE = 'app.config.inc.php';
 	
 	/**
 	 * data of previous package in queue
@@ -237,12 +237,10 @@ class PackageInstallationDispatcher {
 						wcf".WCF_N."_package package
 				WHERE		queue.processNo = ?
 						AND package.packageID = queue.packageID
-						AND package.packageID <> ?
 						AND package.isApplication = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				$this->queue->processNo,
-				1,
 				1
 			]);
 			while ($row = $statement->fetchArray()) {

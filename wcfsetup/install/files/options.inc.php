@@ -6,7 +6,6 @@
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define('PACKAGE_ID', 0);
 define('LAST_UPDATE_TIME', TIME_NOW);
 
 define('COOKIE_PREFIX', 'wcf_');
@@ -37,3 +36,5 @@ define('EXTERNAL_LINK_TARGET_BLANK', 0);
 define('URL_LEGACY_MODE', 0);
 define('URL_TO_LOWERCASE', 1);
 define('SEARCH_ENGINE', 'mysql');
+
+define('WCF_OPTION_INC_PHP_SUCCESS', true);

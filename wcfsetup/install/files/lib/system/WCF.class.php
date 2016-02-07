@@ -305,6 +305,24 @@ class WCF {
 			OptionEditor::rebuild();
 		}
 		require_once($filename);
+		
+		// check if option file is complete and writable
+		if (PACKAGE_ID) {
+			if (!is_writable($filename)) {
+				FileUtil::makeWritable($filename);
+				
+				if (!is_writable($filename)) {
+					throw new SystemException("The option file '" . $filename . "' is not writable.");
+				}
+			}
+			
+			// check if a previous write operation was incomplete and force rebuilding
+			if (!defined('WCF_OPTION_INC_PHP_SUCCESS')) {
+				OptionEditor::rebuild();
+				
+				require_once($filename);
+			}
+		}
 	}
 	
 	/**
@@ -500,6 +518,12 @@ class WCF {
 		if (class_exists($className) && is_subclass_of($className, 'wcf\system\application\IApplication')) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
+			
+			// TODO: this should be done during update instead, remove this before any public release
+			if (!file_exists($configPath)) {
+				Package::writeConfigFile($package->packageID);
+			}
+			
 			if (file_exists($configPath)) {
 				require_once($configPath);
 			}

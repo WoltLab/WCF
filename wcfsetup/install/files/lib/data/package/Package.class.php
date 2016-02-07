@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\DatabaseObject;
-use wcf\system\io\File;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -10,7 +9,7 @@ use wcf\util\FileUtil;
  * Represents a package.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package
@@ -346,23 +345,28 @@ class Package extends DatabaseObject {
 	public static function writeConfigFile($packageID) {
 		$package = new Package($packageID);
 		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir));
-		$file = new File($packageDir.PackageInstallationDispatcher::CONFIG_FILE);
-		$file->write("<?php\n");
+		
 		$prefix = strtoupper(self::getAbbreviation($package->package));
 		
-		$file->write("// ".$package->package." (packageID ".$package->packageID.")\n");
-		$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', dirname(__FILE__).'/');\n");
-		$file->write("if (!defined('RELATIVE_".$prefix."_DIR')) define('RELATIVE_".$prefix."_DIR', '');\n");
-		$file->write("\n");
+		$content = "<?php\n";
+		$content .= "// {$package->package} (packageID {$packageID})\n";
+		$content .= "if (!defined('{$prefix}_DIR')) define('{$prefix}_DIR', __DIR__.'/');\n";
+		$content .= "if (!defined('PACKAGE_ID')) define('PACKAGE_ID', {$packageID});\n";
+		$content .= "if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '" . addcslashes($package->getName(), "'") . "');\n";
+		$content .= "if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '{$package->packageVersion}');\n";
 		
-		// write general information
-		$file->write("// general info\n");
-		$file->write("if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_".$prefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
-		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$packageID.");\n");
-		$file->write("if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '".str_replace("'", "\'", $package->getName())."');\n");
-		$file->write("if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '".$package->packageVersion."');\n");
+		if ($packageID != 1) {
+			$content .= "\n";
+			$content .= "// helper constants for applications\n";
+			$content .= "if (!defined('RELATIVE_{$prefix}_DIR')) define('RELATIVE_{$prefix}_DIR', '');\n";
+			$content .= "if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_{$prefix}_DIR.'" . FileUtil::getRelativePath($packageDir, WCF_DIR) . "');\n";
+		}
 		
-		// write end
-		$file->close();
+		file_put_contents($packageDir . PackageInstallationDispatcher::CONFIG_FILE, $content);
+		
+		// add legacy config.inc.php file for backward compatibility
+		if ($packageID != 1 && !file_exists($packageDir.'config.inc.php')) {
+			file_put_contents($packageDir.'config.inc.php', "<?php" . "\n" . "require_once('".PackageInstallationDispatcher::CONFIG_FILE."');\n");
+		}
 	}
 }
