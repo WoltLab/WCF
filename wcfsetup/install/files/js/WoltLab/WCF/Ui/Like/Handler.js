@@ -371,8 +371,8 @@ define(
 				elementData.users.push(StringUtil.escapeHTML(users[keys[i]].username));
 			}
 			
-			if (data.isLiked == 1) elementData.liked = 1;
-			else if (data.isDisliked) elementData.liked = -1;
+			if (data.returnValues.isLiked == 1) elementData.liked = 1;
+			else if (data.returnValues.isDisliked == 1) elementData.liked = -1;
 			else elementData.liked = 0;
 			
 			// update label
