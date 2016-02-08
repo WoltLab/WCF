@@ -141,14 +141,22 @@ define(
 			}
 			
 			// cumulative likes
-			var badge, badgeContainer = elBySel(this._options.badgeContainerSelector, element);
+			var badge, badgeContainer = elBySel(this._options.badgeContainerSelector, element), listItem;
 			if (badgeContainer !== null) {
 				badge = elCreate('a');
 				badge.href = '#';
 				badge.className = 'wcfLikeCounter jsTooltip' + (this._options.badgeClassNames ? ' ' + this._options.badgeClassNames : '');
 				badge.addEventListener('click', this._showSummary.bind(this, element));
 				
-				badgeContainer.appendChild(badge);
+				if (badgeContainer.nodeName === 'OL' || badgeContainer.nodeName === 'UL') {
+					listItem = elCreate('li');
+					listItem.appendChild(badge);
+					badgeContainer.appendChild(listItem);
+				}
+				else {
+					badgeContainer.appendChild(badge);
+				}
+				
 				elementData.badge = badge;
 				
 				this._updateBadge(element);
