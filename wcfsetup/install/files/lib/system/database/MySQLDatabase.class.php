@@ -39,7 +39,12 @@ class MySQLDatabase extends Database {
 			// throw PDOException instead of dumb false return values
 			$driverOptions[\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 			
-			$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password, $driverOptions);
+			//check if host is a socket
+			if(strpos($this->host,'.sock')) {
+				$this->pdo = new \PDO('mysql:unix_socket='.$this->host.';dbname='.$this->database, $this->user, $this->password, $driverOptions);
+			} else {
+				$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password, $driverOptions);
+			}	
 			$this->setAttributes();
 		}
 		catch (\PDOException $e) {
