@@ -94,6 +94,13 @@
 		}
 	}
 	
+	.username {
+		display: block;
+		margin: 5px 0;
+		
+		@extend .wcfFontHeadline;
+	}
+	
 	.badgeOnline {
 		left: 0;
 		pointer-events: none;
