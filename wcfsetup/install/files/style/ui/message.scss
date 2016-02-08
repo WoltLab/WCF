@@ -165,7 +165,8 @@
 	
 	@extend .inlineList;
 	
-	.messagePublicationTime {
+	.messagePublicationTime,
+	.wcfLikeCounter {
 		color: $wcfContentDimmedText;
 		
 		@extend .wcfFontSmall;
