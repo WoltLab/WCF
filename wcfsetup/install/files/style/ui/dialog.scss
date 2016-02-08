@@ -120,7 +120,7 @@
 			border-bottom-right-radius: 3px;
 		}
 		
-		a {
+		a:not(.button) {
 			color: $wcfContentLink;
 			
 			&:hover {
