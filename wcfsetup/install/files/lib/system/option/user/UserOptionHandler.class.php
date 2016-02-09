@@ -125,6 +125,10 @@ class UserOptionHandler extends OptionHandler {
 	/**
 	 * Enables the condition mode.
 	 * 
+	 * If condition mode is enabled, only options whose type implements ISearchableConditionUserOption
+	 * are considered. Furthermore, the visibility setting of the option is disregarded to ensure that
+	 * during automatic cronjob execution (always done as a guest), the conditions are properly set. 
+	 * 
 	 * @param	boolean		$enable
 	 */
 	public function enableConditionMode($enable = true) {
@@ -245,9 +249,11 @@ class UserOptionHandler extends OptionHandler {
 		if ($this->editMode) {
 			return $option->isEditable($this->inRegistration);
 		}
-		else {
+		else if (!$this->conditionMode) {
 			return $option->isVisible();
 		}
+		
+		return true;
 	}
 	
 	/**

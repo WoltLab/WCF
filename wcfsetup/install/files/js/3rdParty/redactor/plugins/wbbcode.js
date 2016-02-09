@@ -582,25 +582,6 @@ RedactorPlugins.wbbcode = function() {
 								}								
 							}
 						}
-						else {
-							var $range = (this.selection.implicitRange === null) ? this.range : this.selection.implicitRange;
-							var $scope = $range.startContainer;
-							if ($scope.nodeType === Node.TEXT_NODE) {
-								if ($range.startOffset === 0 || ($range.startOffset === 1 && $scope.textContent === '\u200b')) {
-									if (!$scope.previousSibling) {
-										$scope = $scope.parentElement;
-									}
-								}
-							}
-							
-							if ($scope.nodeType === Node.ELEMENT_NODE) {
-								var $previous = $scope.previousSibling;
-								if ($previous && $previous.nodeType === Node.ELEMENT_NODE && $previous.tagName === 'BLOCKQUOTE') {
-									$quote = $previous;
-									$preventAndSelectQuote = true;
-								}
-							}
-						}
 						
 						if ($preventAndSelectQuote) {
 							// expand selection and prevent delete

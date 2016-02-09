@@ -226,10 +226,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Behavior for colliding user accounts]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.4"><![CDATA[Merge users with same email address]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.5"><![CDATA[Merge users with same username or same email address]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[User]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[User profile fields]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Followers]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Ranks]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatars]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Wall comments]]></item>
@@ -638,7 +638,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Add Notice]]></item>
 		<item name="wcf.acp.menu.link.notice.list"><![CDATA[List Notices]]></item>
-		<item name="wcf.acp.menu.link.ad"><![CDATA[Ad]]></item>
+		<item name="wcf.acp.menu.link.ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.menu.link.ad.add"><![CDATA[Add Ad]]></item>
 		<item name="wcf.acp.menu.link.ad.list"><![CDATA[List Ads]]></item>
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
@@ -670,7 +670,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active User]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the notice.]]></item>
 		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete the notice “{$notice->noticeName}”?]]></item>
-		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notices]]></item>
+		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notice]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable Notice]]></item>
 		<item name="wcf.acp.notice.isDismissible"><![CDATA[User can dismiss notice]]></item>
@@ -1929,15 +1929,15 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} user{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email addresses]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email Addresses]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Merge]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Revert Changes To Contents]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
 		
-		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{#$count} Tag{if $count != 1}s{/if} marked]]></item>
-		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{#$count} User{if $count != 1}s{/if} marked]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}One Tag{else}{#$count} Tags{/if} marked]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}One User{else}{#$count} Users{/if} marked]]></item>
 	</category>
 	
 	<category name="wcf.comment">
@@ -2812,7 +2812,6 @@ Request a new password: {link controller='NewPassword' isEmail=true}u={@$userID}
 
 If you have not lost your password, you can safely ignore this email.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
-		<item name="wcf.user.newPassword"><![CDATA[Request New Password]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Security Key]]></item>
 		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Security Key is invalid.]]></item>
 		<item name="wcf.user.userID.error.notValid"><![CDATA[User ID is invalid.]]></item>

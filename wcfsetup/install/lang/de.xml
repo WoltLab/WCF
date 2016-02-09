@@ -2815,7 +2815,6 @@ Klicken Sie hier, um ein neues Kennwort anzufordern: {link controller='NewPasswo
 
 Falls Sie Ihr Kennwort nicht vergessen haben, können Sie diese E-Mail ignorieren.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[Sie erhalten in Kürze eine E-Mail mit weiteren Informationen.]]></item>
-		<item name="wcf.user.newPassword"><![CDATA[Neues Kennwort anfordern]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Sicherheitsschlüssel]]></item>
 		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Sie haben einen ungültigen Sicherheitsschlüssel angegeben.]]></item>
 		<item name="wcf.user.userID.error.notValid"><![CDATA[Sie haben eine ungültige Benutzer-ID angegeben.]]></item>
