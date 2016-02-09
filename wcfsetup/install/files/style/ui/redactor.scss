@@ -66,24 +66,21 @@
 		}
 	}
 	
-	ul,
-	ol {
-		@extend .nativeList;
-	}
+	// enforce styles used in messages
+	@extend .htmlContent;
 	
-	ul {
-		list-style-type: disc;
-	}
-	
-	ol {
-		list-style-type: decimal;
+	// remove margin top for the first paragraph in the editor to avoid a weird looking offset a the top
+	> p:first-child {
+		margin-top: 0;
 	}
 	
 	img {
+		// TODO: the border was required for 'Old Redactor', check if it is still a thing
 		border: 1px solid transparent;
 		max-width: 100%;
 	}
 	
+	// TODO: this is somewhat out of sync
 	table {
 		border-collapse: collapse;
 		//font-size: 14px; TODO

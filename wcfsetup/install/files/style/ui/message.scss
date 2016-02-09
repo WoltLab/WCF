@@ -202,6 +202,10 @@
 			flex: auto;
 		}
 	}
+	
+	> .messageText {
+		@extend .htmlContent;
+	}
 }
 
 /* content - footer */
