@@ -1,75 +1,81 @@
-/* todo
-.userProfile .sidebar {
-	> .userDetails {
-		position: relative;
-		text-align: center;
-		
-		> .buttonGroupNavigation > .buttonGroup,
-		> .dataList {
-			justify-content: center;
-		}
-		
-		> .buttonGroupNavigation,
-		> .dataList,
-		> .userActivity {
-			margin-top: 10px;
-		}
-		
-		> .dataList {
-			margin-top: 25px;
-			
-			&:before {
-				// TODO: border-top: 2px solid $wcfContentBorderAccent;
-				content: "";
-				left: 0;
-				margin-top: -10px;
-				position: absolute;
-				right: 0;
-			}
-		}
-		
-		> .userActivity > span {
-			display: block;
-			
-			@extend .wcfFontSmall;
-		}
-	}
-}
-
-.userProfile #profileContent {
-	> .tabMenu {
-		//margin-bottom: 30px;
-		
-		> ul > li {
-			&:not(:last-child) {
-				margin-right: 30px;
-			}
-			
-			> a {
-				padding: 0;
-				text-transform: uppercase;
-				
-				@extend .wcfFontHeadline;
-			}
-		}
-	}
-}
-
-#profileButtonContainer > li {
-	border-width: 0;
+.box.userProfileHeader {
+	background-image: url('../images/user-profile-header.jpg'); // todo
+	background-size: cover;
+	color: rgba(255, 255, 255, 1);
+	margin: 0;
+	padding: 40px 0;
+	text-shadow: 1px 1px 1px #000;
 	
-	> a {
-		background-color: transparent;
-		border-width: 0;
-		// TODO: color: $wcfContentTextAccent !important;
-		padding: 5px;
+	.boxContent {
+		background-color: rgba(0, 0, 0, .4);
+		padding: 20px 0;
+	}
+	
+	.contentHeader {
+		color: rgba(255, 255, 255, 1);
+		margin: 5px 0 10px 0;
+	}
+	
+	.userDetails {
+		position: relative;
+	}
+	
+	.userAvatar {
+		> a {
+			display: block;
+		}
 		
-		> .icon {
-			// TODO: color: $wcfContentTextAccent;
+		img {
+			box-sizing: content-box;
+			border: 2px solid $wcfContentBackground;
+		}
+	}
+	
+	a {
+		color: rgba(255, 255, 255, 1);
+		
+		&:hover {
+			color: rgba(255, 255, 255, 1);
+			text-decoration: underline;
+		}
+	}
+	
+	dt {
+		color: rgba(255, 255, 255, 1);
+	}
+	
+	/* todo */
+	.buttonGroupNavigation {
+		position: absolute;
+		right: 0;
+		top: 12px;
+		
+		.buttonGroup {
+			> li {
+				&:not(:last-child) {
+					margin-right: 1px;
+				}
+				
+				.button {
+					background-color: rgba(255, 255, 255, .4);
+					color: rgb(0, 0, 0);
+					text-shadow: 1px 1px 1px rgb(255, 255, 255);
+					
+					.icon {
+						color: rgb(0, 0, 0);
+						text-shadow: 1px 1px 1px rgb(255, 255, 255);
+					}
+					
+					&:hover,
+					&.active {
+						background-color: rgba(255, 255, 255, .8);
+						text-decoration: none;
+					}
+				}
+			}
 		}
 	}
 }
-*/
 
 .userAvatarList {
 	display: flex;

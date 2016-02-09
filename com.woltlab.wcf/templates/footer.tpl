@@ -48,14 +48,16 @@
 				
 	{hascontent}
 		<div class="boxesBottom">
-			<div class="layoutBoundary">
-				<div class="boxContainer">
-					{content}
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
-							{@$box->render()}
-						{/foreach}
-					{/content}
-				</div>	
+			<div class="boxContainer">
+				{content}
+					{if !$boxesBottom|empty}
+						{@$boxesBottom}
+					{/if}
+				
+					{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
+						{@$box->render()}
+					{/foreach}
+				{/content}
 			</div>	
 		</div>
 	{/hascontent}

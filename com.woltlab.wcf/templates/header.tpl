@@ -25,15 +25,17 @@
 	
 	{hascontent}
 		<div class="boxesTop">
-			<div class="layoutBoundary">
-				<div class="boxContainer">
-					{content}
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('top') item=box}
-							{@$box->render()}
-						{/foreach}
-					{/content}
-				</div>	
-			</div>
+			<div class="boxContainer">
+				{content}
+					{if !$boxesTop|empty}
+						{@$boxesTop}
+					{/if}
+				
+					{foreach from=$__wcf->getBoxHandler()->getBoxes('top') item=box}
+						{@$box->render()}
+					{/foreach}
+				{/content}
+			</div>	
 		</div>
 	{/hascontent}
 	

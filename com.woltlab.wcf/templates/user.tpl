@@ -134,6 +134,8 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="userProfile">
 
+{include file='userHeader' assign='boxesTop'}
+
 {include file='userSidebar' assign='sidebarRight'}
 
 {include file='header'}
@@ -153,7 +155,7 @@
 		{/hascontent}
 	</div>
 	
-	<section id="profileContent" class="marginTop tabMenuContainer" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
+	<section id="profileContent" class="tabMenuContainer" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}

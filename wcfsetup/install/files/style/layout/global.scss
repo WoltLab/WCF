@@ -43,9 +43,9 @@
 .box32 { @include box(32px, 8px); }
 .box48 { @include box(48px, 10px); }
 .box64 { @include box(64px, 10px); }
-.box96 { @include box(96px, 12px); }
-.box128 { @include box(128px, 12px); }
-.box256 { @include box(256px, 21px); }
+.box96 { @include box(96px, 15px); }
+.box128 { @include box(128px, 20px); }
+.box256 { @include box(256px, 20px); }
 
 .wcfFontDefault {
 	font-size: $wcfFontSizeDefault;

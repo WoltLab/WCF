@@ -108,16 +108,9 @@
 /* styling for boxes in <top>/<bottom> position */
 .boxesTop,
 .boxesBottom {
-	border-bottom: 1px solid $wcfContentBorderInner;
-	
-	.layoutBoundary {
-		padding: 40px 0;
-	}
-	
 	.box {
-		&:not(:first-child) {
-			margin-top: 40px;
-		}
+		margin-bottom: 40px;
+		margin-top: 40px;
 	}
 	
 	.boxWithImage {
