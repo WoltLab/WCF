@@ -202,7 +202,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			name = name || elData(tab, 'name');
 			
 			// unmark active tab
-			var oldTab = elBySel('#' + this._container.id + ' > nav > ul > li.active');
+			var oldTab = this.getActiveTab();
 			var oldContent = null;
 			if (oldTab) {
 				if (elData(oldTab, 'name') === name) {
@@ -332,6 +332,15 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			}
 			
 			return name;
+		},
+		
+		/**
+		 * Returns the currently active tab.
+		 *
+		 * @return	{Element}	active tab
+		 */
+		getActiveTab: function() {
+			return elBySel('#' + this._container.id + ' > nav > ul > li.active');
 		},
 		
 		/**

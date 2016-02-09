@@ -22,11 +22,13 @@
 	* Ported the PHP-BBCode parser, massively improves accuracy and ensures validity
 * Show error message if poll options are given but not question instead of discarding poll options.
 * `parentObjectID` column added to `modification_log` and `wcf\system\log\modification\AbstractModificationLogHandler` introduced as a replacement for `wcf\system\log\modification\ModificationLogHandler`.
+* Add sort support for `useroptions` option type.
+* Make user options shown in sidebar sortable.
 
 #### New Traits
 
 * `wcf\data\TDatabaseObjectOptions` for database object-bound options validation.
-* `wcf\data\TDatabaseObjectOptions` for database object-bound permissions validation.
+* `wcf\data\TDatabaseObjectPermissions` for database object-bound permissions validation.
 * `wcf\data\TMultiCategoryObject` provides category-related methods for objects with multiple categories.
 * `wcf\data\TUserContent` provides default implementations of the (non-inherited) methods of the IUserContent interface.
 
@@ -39,6 +41,7 @@
 * `permissions` and `options` support for event listener PIP.
 * `name` attribute for event listener PIP (`listenerName` for event listener objects).
 * `permissions` and `options` support for template listener PIP.
+* file `{WCF_DIR}/acp/uninstall/{packageName}.php` is automatically executed if package is uninstalled right before the first file PIP is executed
 
 #### Removed Code
 

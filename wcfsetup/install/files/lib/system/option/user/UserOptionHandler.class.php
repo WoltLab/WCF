@@ -2,6 +2,7 @@
 namespace wcf\system\option\user;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\User;
 use wcf\system\exception\UserInputException;
@@ -13,8 +14,8 @@ use wcf\util\MessageUtil;
 /**
  * Handles user options.
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @author	Alexander Ebert, Joshua Ruesweg
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user
@@ -124,6 +125,10 @@ class UserOptionHandler extends OptionHandler {
 	/**
 	 * Enables the condition mode.
 	 * 
+	 * If condition mode is enabled, only options whose type implements ISearchableConditionUserOption
+	 * are considered. Furthermore, the visibility setting of the option is disregarded to ensure that
+	 * during automatic cronjob execution (always done as a guest), the conditions are properly set. 
+	 * 
 	 * @param	boolean		$enable
 	 */
 	public function enableConditionMode($enable = true) {
@@ -224,7 +229,7 @@ class UserOptionHandler extends OptionHandler {
 		}
 		
 		// in registration
-		if ($this->inRegistration && !$option->askDuringRegistration && !$option->required && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
+		if ($this->inRegistration && !$option->askDuringRegistration && !$option->required && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
 			return false;
 		}
 		
@@ -242,11 +247,13 @@ class UserOptionHandler extends OptionHandler {
 		}
 		
 		if ($this->editMode) {
-			return $option->isEditable();
+			return $option->isEditable($this->inRegistration);
 		}
-		else {
+		else if (!$this->conditionMode) {
 			return $option->isVisible();
 		}
+		
+		return true;
 	}
 	
 	/**
@@ -258,7 +265,7 @@ class UserOptionHandler extends OptionHandler {
 		// remove options which are not asked during registration
 		if ($this->inRegistration && !empty($options)) {
 			foreach ($this->options as $option) {
-				if (!$option->askDuringRegistration && array_key_exists($option->optionID, $options)) {
+				if (!$option->askDuringRegistration && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) && array_key_exists($option->optionID, $options)) {
 					unset($options[$option->optionID]);
 				}
 			}

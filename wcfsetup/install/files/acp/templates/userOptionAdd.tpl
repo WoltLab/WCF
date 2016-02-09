@@ -174,6 +174,7 @@
 							<option value="1"{if $editable == 1} selected="selected"{/if}>{lang}wcf.acp.user.option.editable.1{/lang}</option>
 							<option value="2"{if $editable == 2} selected="selected"{/if}>{lang}wcf.acp.user.option.editable.2{/lang}</option>
 							<option value="3"{if $editable == 3} selected="selected"{/if}>{lang}wcf.acp.user.option.editable.3{/lang}</option>
+							<option value="6"{if $editable == 6} selected="selected"{/if}>{lang}wcf.acp.user.option.editable.6{/lang}</option>
 						</select>
 					</dd>
 				</dl>

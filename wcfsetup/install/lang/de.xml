@@ -1652,6 +1652,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.option.editable.1"><![CDATA[Eigentümer]]></item>
 		<item name="wcf.acp.user.option.editable.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.3"><![CDATA[Eigentümer und Administrator]]></item>
+		<item name="wcf.acp.user.option.editable.6"><![CDATA[Eigentümer bei Erstanmeldung und Administrator]]></item>
 		<item name="wcf.acp.user.option.optionType"><![CDATA[Feldtyp]]></item>
 		<item name="wcf.acp.user.option.optionType.description"><![CDATA[Die Namen entsprechen in der Regel den HTML-Elementen, die benötigt werden, um so ein Feld beim Benutzer abzufragen.]]></item>
 		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Das Feld wird im Registrierungs-Formular angezeigt.]]></item>
@@ -2705,7 +2706,6 @@ Klicken Sie hier, um ein neues Kennwort anzufordern: {link controller='NewPasswo
 
 Falls Sie Ihr Kennwort nicht vergessen haben, können Sie diese E-Mail ignorieren.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[Sie erhalten in Kürze eine E-Mail mit weiteren Informationen.]]></item>
-		<item name="wcf.user.newPassword"><![CDATA[Neues Kennwort anfordern]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Sicherheitsschlüssel]]></item>
 		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Sie haben einen ungültigen Sicherheitsschlüssel angegeben.]]></item>
 		<item name="wcf.user.userID.error.notValid"><![CDATA[Sie haben eine ungültige Benutzer-ID angegeben.]]></item>

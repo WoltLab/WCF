@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Option type implementation for user option selection.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -17,16 +17,16 @@ use wcf\system\WCF;
 class UseroptionsOptionType extends AbstractOptionType {
 	/**
 	 * list of available user options
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $userOptions = null;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) {
-			$newValue = array();
+			$newValue = [];
 		}
 		
 		foreach ($newValue as $optionName) {
@@ -37,7 +37,7 @@ class UseroptionsOptionType extends AbstractOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) return '';
@@ -45,38 +45,47 @@ class UseroptionsOptionType extends AbstractOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		$userOptions = self::getUserOptions();
+		if ($option->issortable && $value) {
+			$sortedOptions = explode(',', $value);
+			
+			// remove old options
+			$sortedOptions = array_intersect($sortedOptions, $userOptions);
+			
+			// append the non-checked options after the checked and sorted options
+			$userOptions = array_merge($sortedOptions, array_diff($userOptions, $sortedOptions));
+		}
+		
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'value' => explode(',', $value),
-			'availableOptions' => self::getUserOptions()
-		));
+			'availableOptions' => $userOptions
+		]);
 		return WCF::getTPL()->fetch('useroptionsOptionType');
 	}
 	
 	/**
 	 * Returns the list of available user options.
 	 * 
-	 * @return	string
+	 * @return	string[]
 	 */
 	protected static function getUserOptions() {
 		if (self::$userOptions === null) {
-			self::$userOptions = array();
+			self::$userOptions = [];
 			$sql = "SELECT	optionName
 				FROM	wcf".WCF_N."_user_option
 				WHERE	categoryName IN (
 						SELECT	categoryName
 						FROM	wcf".WCF_N."_user_option_category
-						WHERE	parentCategoryName = 'profile'	
+						WHERE	parentCategoryName = 'profile'
 					)
 					AND optionType <> 'boolean'";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
-			while ($row = $statement->fetchArray()) {
-				self::$userOptions[] = $row['optionName'];
-			}
+			self::$userOptions = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		}
 		
 		return self::$userOptions;

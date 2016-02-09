@@ -1434,6 +1434,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>useroptions</optiontype>
 				<defaultvalue></defaultvalue>
+				<issortable>1</issortable>
 			</option>
 			
 			<!-- message.general -->
