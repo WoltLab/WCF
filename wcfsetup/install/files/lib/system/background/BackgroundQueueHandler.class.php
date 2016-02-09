@@ -4,6 +4,7 @@ use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\exception\LoggedException;
 use wcf\system\exception\SystemException;
+use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
