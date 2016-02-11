@@ -65,6 +65,8 @@ define(
 			}, options);
 			
 			this.initContainers(options, objectType);
+			
+			DomChangeListener.add('WoltLab/WCF/Ui/Like/Handler-' + objectType, this.initContainers.bind(this))
 		},
 		
 		/**
