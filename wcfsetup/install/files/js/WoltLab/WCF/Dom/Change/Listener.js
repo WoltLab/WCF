@@ -16,7 +16,7 @@ define(['CallbackList'], function(CallbackList) {
 	/**
 	 * @exports	WoltLab/WCF/Dom/Change/Listener
 	 */
-	var Listener = {
+	return {
 		/**
 		 * @see	WoltLab/WCF/CallbackList#add
 		 */
@@ -47,6 +47,4 @@ define(['CallbackList'], function(CallbackList) {
 			}
 		}
 	};
-	
-	return Listener;
 });
