@@ -176,7 +176,7 @@
 
 /* user panel */
 .userPanel {
-	flex: 0 0 auto;
+	flex: 0 0 50%;
 	
 	> ul {
 		display: flex;
@@ -247,8 +247,8 @@
 
 /* SEARCH AREA */
 .pageHeaderSearch {
-	// use a fixed width of 50% together with the logo to force a wrap
-	flex: 0 50%;
+	// use a fixed width of 50% to force a wrap
+	flex: 0 0 50%;
 	text-align: right;
 }
 

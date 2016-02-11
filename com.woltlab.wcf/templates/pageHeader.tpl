@@ -4,11 +4,11 @@
 			<div class="layoutBoundary">
 				{include file='pageHeaderLogo'}
 				
-				{include file='pageHeaderSearch'}
+				{include file='pageHeaderUser'}
 				
 				{include file='pageHeaderMenu'}
 				
-				{include file='pageHeaderUser'}
+				{include file='pageHeaderSearch'}
 			</div>
 		</div>
 		
