@@ -3,6 +3,8 @@
 .labelList {
 	@extend .inlineList;
 	
+	display: inline-flex;
+	
 	> li {
 		&:not(:first-child) {
 			.label {
@@ -18,6 +20,10 @@
 				border-top-right-radius: 0;
 				border-bottom-right-radius: 0;
 			}
+		}
+		
+		.label {
+			top: -1px;
 		}
 	}
 }

@@ -9,11 +9,11 @@
 						<a href="{link controller='User' object=$like->getUserProfile()}{/link}" class="userLink" data-user-id="{@$like->getUserProfile()->userID}">{$like->getUserProfile()->username}</a>
 						<small class="separatorLeft">{@$like->time|time}</small>
 					</h3> 
-					<p>{@$like->getTitle()}</p>
+					<div>{@$like->getTitle()}</div>
 					<small class="containerContentType">{lang}wcf.like.objectType.{@$like->getObjectTypeName()}{/lang}</small>
 				</div>
 				
-				<div>{@$like->getDescription()}</div>
+				<div class="containerContent">{@$like->getDescription()}</div>
 			</div>
 		</div>
 	</li>
