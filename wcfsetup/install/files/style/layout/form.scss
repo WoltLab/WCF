@@ -51,6 +51,19 @@ input[type="url"] {
 	&:-ms-input-placeholder { /* Internet Explorer 10+ */
 		color: $wcfInputPlaceholder;
 	}
+	
+	&:focus,
+	&:hover {
+		&::-webkit-input-placeholder { /* WebKit browsers */
+			color: $wcfInputPlaceholderActive;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $wcfInputPlaceholderActive;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $wcfInputPlaceholderActive;
+		}
+	}
 }
 
 textarea[readonly] {

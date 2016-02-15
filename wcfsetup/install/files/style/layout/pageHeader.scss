@@ -301,6 +301,20 @@
 		}
 	}
 	
+	&:hover .pageHeaderSearchInput,
+	.pageHeaderSearchInput:focus {
+		/* set placeholder color */
+		&::-webkit-input-placeholder { /* WebKit browsers */
+			color: $wcfHeaderSearchBoxPlaceholderActive;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $wcfHeaderSearchBoxPlaceholderActive;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $wcfHeaderSearchBoxPlaceholderActive;
+		}
+	}
+	
 	.pageHeaderSearchInputButton {
 		background: none;
 		border: 0 none;
