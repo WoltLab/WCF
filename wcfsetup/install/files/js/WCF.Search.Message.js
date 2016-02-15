@@ -132,6 +132,8 @@ WCF.Search.Message.SearchArea = Class.extend({
 		if (this._searchArea.hasClass('dropdown')) {
 			var $containerID = this._searchArea.wcfIdentify();
 			var $form = this._searchArea.find('form');
+			if ($form.length === 0) $form = this._searchArea.parent();
+			
 			$form.submit(function() {
 				// copy checkboxes and hidden fields into form
 				var $dropdownMenu = WCF.Dropdown.getDropdownMenu($containerID);
