@@ -350,15 +350,24 @@ define(
 				targetId = elData(event.currentTarget, 'target');
 			}
 			
-			// check if 'isOverlayDropdownButton' is set which indicates if
-			// the dropdown toggle is in an overlay
-			var dropdown = _dropdowns.get(targetId);
-			if (dropdown !== undefined && elData(dropdown, 'is-overlay-dropdown-button') === null) {
-				var dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
-				elData(dropdown, 'is-overlay-dropdown-button', (dialogContent !== null));
+			var dropdown = _dropdowns.get(targetId), preventToggle = false;
+			if (dropdown !== undefined) {
+				// Repeated clicks on the dropdown buttom will not cause it to close, the only way
+				// to close it is by clicking somewhere else in the document or on another dropdown
+				// toggle. This is used with the search bar to prevent the dropdown from closing by
+				// setting the caret position in the search input field.
+				if (elDataBool(dropdown, 'dropdown-prevent-toggle') && dropdown.classList.contains('dropdownOpen')) {
+					preventToggle = true;
+				}
 				
-				if (dialogContent !== null) {
-					dialogContent.addEventListener('scroll', this._onDialogScroll.bind(this));
+				// check if 'isOverlayDropdownButton' is set which indicates if the dropdown toggle is in an overlay
+				if (elData(dropdown, 'is-overlay-dropdown-button') === null) {
+					var dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
+					elData(dropdown, 'is-overlay-dropdown-button', (dialogContent !== null));
+					
+					if (dialogContent !== null) {
+						dialogContent.addEventListener('scroll', this._onDialogScroll.bind(this));
+					}
 				}
 			}
 			
@@ -367,10 +376,12 @@ define(
 				var menu = _menus.get(containerId);
 				
 				if (dropdown.classList.contains('dropdownOpen')) {
-					dropdown.classList.remove('dropdownOpen');
-					menu.classList.remove('dropdownOpen');
-					
-					this._notifyCallbacks(containerId, 'close');
+					if (preventToggle === false) {
+						dropdown.classList.remove('dropdownOpen');
+						menu.classList.remove('dropdownOpen');
+						
+						this._notifyCallbacks(containerId, 'close');
+					}
 				}
 				else if (containerId === targetId && menu.childElementCount > 0) {
 					dropdown.classList.add('dropdownOpen');
