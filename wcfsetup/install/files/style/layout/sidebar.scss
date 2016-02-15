@@ -1,11 +1,15 @@
 /* legacy styling for sidebars (deprecated) */
 .sidebar {
-	fieldset > legend {
-		float: left;
-		width: 100%;
+	fieldset {
+		margin-top: 0;
 		
-		& + * {
-			clear: left;
+		> legend {
+			float: left;
+			width: 100%;
+			
+			& + * {
+				clear: left;
+			}
 		}
 	}
 	
@@ -71,7 +75,7 @@
 	}
 }
 
-/*.sidebar {
+/*.sidebar {// @todo
 	dl.dataList {
 		overflow: hidden;
 		
