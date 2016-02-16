@@ -45,7 +45,7 @@ trait TMultiCategoryObject {
 	/**
 	 * Returns the categories of the object.
 	 *
-	 * @return	CalendarCategory[]
+	 * @return	AbstractDecoratedCategory[]
 	 */
 	public function getCategories() {
 		if ($this->categories === null) {
