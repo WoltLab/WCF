@@ -134,17 +134,17 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		$exceptionRegex = new Regex('(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})
-Message: (?P<message>.*?)
-File: (?P<file>.*?) \((?P<line>\d+)\)
-PHP version: (?P<phpVersion>.*?)
-WCF version: (?P<wcfVersion>.*?)
-Request URI: (?P<requestURI>.*?)
-Referrer: (?P<referrer>.*?)
-User-Agent: (?P<userAgent>.*?)
-Information: (?P<information>.*?)
-Stacktrace: 
-(?P<stacktrace>.*)', Regex::DOT_ALL);
+		$exceptionRegex = new Regex("(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\n".
+"Message: (?P<message>.*?)\n".
+"File: (?P<file>.*?) \((?P<line>\d+)\)\n".
+"PHP version: (?P<phpVersion>.*?)\n".
+"WCF version: (?P<wcfVersion>.*?)\n".
+"Request URI: (?P<requestURI>.*?)\n".
+"Referrer: (?P<referrer>.*?)\n".
+"User-Agent: (?P<userAgent>.*?)\n".
+"Information: (?P<information>.*?)\n".
+"Stacktrace: \n".
+"(?P<stacktrace>.*)", Regex::DOT_ALL);
 		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
