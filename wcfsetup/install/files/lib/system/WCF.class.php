@@ -237,6 +237,12 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
+		if (ob_get_level()) {
+			// discard any output generated before the exception occured, prevents exception
+			// being hidden inside HTML elements and therefore not visible in browser output
+			ob_clean();
+		}
+		
 		// backwards compatibility
 		if ($e instanceof IPrintableException) {
 			$e->show();
