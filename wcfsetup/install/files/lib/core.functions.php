@@ -97,7 +97,7 @@ namespace wcf\functions\exception {
 
 	function printThrowable($e) {
 		$logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
-		$exceptionID = logThrowable($logFile, $e); // TODO
+		$exceptionID = logThrowable($logFile, $e);
 		
 		$exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
 		$logFile = sanitizePath($logFile);
@@ -116,7 +116,7 @@ namespace wcf\functions\exception {
 		if (!$exceptionTitle || !$exceptionSubtitle || !$exceptionExplanation) {
 			// one or more failed, fallback to english
 			$exceptionTitle = 'An error has occured';
-			$exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>';
+			$exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">'.$exceptionID.'</span></span>';
 			$exceptionExplanation = <<<EXPLANATION
 <p class="exceptionSubtitle">What happened?</p>
 <p class="exceptionText">An error has occured while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
