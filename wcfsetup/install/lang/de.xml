@@ -2219,14 +2219,21 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.confirmation.title"><![CDATA[Bestätigung erforderlich]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.description"><![CDATA[Beschreibung]]></item>
-		<item name="wcf.global.error.exception"><![CDATA[<h2>Was ist passiert?</h2>
-		<p>Ein nicht zu korrigierender Fehler ist bei der Verarbeitung Ihrer Anfrage aufgetreten. Der interne Fehlercode lautet: <code>{$exceptionID}</code></p>
-		<p>Leiten Sie diesen Code an den Administrator weiter, um ihm bei der Behebung zu helfen.</p>
-		<p>Wenn Sie der Administrator sind, dann können Sie die vollständige Fehlermeldung in der Administrationsoberfläche unter „Protokoll » Fehler“ einsehen. Der Fehlercode selbst ist für den Support wertlos!</p>]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt. Sie besitzen nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Keine Antwort vom Server erhalten, Anfrage wurde abgebrochen.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
+		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">Was ist passiert?</p>
+<p class="exceptionText">Leider ist bei der Verarbeitung zu einem Fehler gekommen und die Ausführung wurde abgebrochen. Falls möglich leiten Sie bitte den oben stehenden Fehlercode an den Administrator weiter.</p>
+<p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
+<p class="exceptionText">
+	Administratoren können die vollständige Fehlermeldung mit Hilfe dieses Codes in der Administrationsoberfläche unter „Protokoll » Fehler“ einsehen.
+	Zusätzlich wurden die Informationen in die Protokolldatei <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$logFile}</span></span> geschrieben und können beispielsweise mit Hilfe eines FTP-Programms abgerufen werden.
+</p>
+<p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
+<p class="exceptionText">Hinweis: Der Fehlercode wird zufällig generiert und erlaubt keinen Rückschluss auf die Ursache und ist daher für Dritte nutzlos.</p>]]></item>
+		<item name="wcf.global.exception.title"><![CDATA[Ein Fehler ist aufgetreten]]></item>
+		<item name="wcf.global.exception.subtitle"><![CDATA[Interner Fehlercode: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
 		<item name="wcf.global.success"><![CDATA[Die Aktion wurde erfolgreich ausgeführt.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[Der Eintrag wurde gespeichert.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Ihre Änderungen wurden gespeichert.]]></item>
