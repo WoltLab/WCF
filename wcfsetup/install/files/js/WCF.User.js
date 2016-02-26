@@ -570,26 +570,32 @@ WCF.User.QuickLogin = {
 	 * Initializes the quick login box
 	 */
 	init: function() {
-		require(['Ui/Dialog'], function(UiDialog) {
+		require(['EventHandler', 'Ui/Dialog'], function(EventHandler, UiDialog) {
 			var loginForm = document.getElementById('loginForm');
+			var callbackOpen = function(event) {
+				if (event instanceof Event) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+				
+				loginForm.style.removeProperty('display');
+				
+				UiDialog.openStatic('loginForm', null, {
+					title: WCF.Language.get('wcf.user.login')
+				});
+			};
 			
 			var links = document.getElementsByClassName('loginLink');
 			for (var i = 0, length = links.length; i < length; i++) {
-				links[i].addEventListener('click', function(event) {
-					event.preventDefault();
-					
-					loginForm.style.removeProperty('display');
-					
-					UiDialog.openStatic('loginForm', null, {
-						title: WCF.Language.get('wcf.user.login')
-					});
-				});
+				links[i].addEventListener(WCF_CLICK_EVENT, callbackOpen);
 			}
 			
 			var input = loginForm.querySelector('#loginForm input[name=url]');
 			if (input !== null) {
 				input.setAttribute('value', window.location.protocol + '//' + window.location.host + input.getAttribute('value'));
 			}
+			
+			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'showLogin', callbackOpen);
 		});
 	}
 };

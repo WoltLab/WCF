@@ -18,6 +18,18 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 		 * Initializes the touch-friendly fullscreen user menu.
 		 */
 		init: function() {
+			// check if user menu is present, as it is absent when not logged-in
+			if (elById('pageUserMenuMobile') === null) {
+				elBySel('#pageHeader .userPanel').addEventListener(WCF_CLICK_EVENT, function(event) {
+					event.preventDefault();
+					event.stopPropagation();
+					
+					EventHandler.fire('com.woltlab.wcf.UserMenuMobile', 'showLogin');
+				});
+				
+				return;
+			}
+			
 			UiPageMenuUser._super.prototype.init.call(
 				this,
 				'com.woltlab.wcf.UserMenuMobile',

@@ -74,62 +74,63 @@
 </div>
 
 {* user menu *}
-{* TODO: guests should see the login overlay when clicking the button *}
-<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
-	<ol class="menuOverlayItemList" data-title="TODO: user menu">
-		<li class="menuOverlayTitle">{lang}wcf.user.controlPanel{/lang}</li>
-		<li class="menuOverlayItem">
-			<a href="{link controller='User' object=$__wcf->user}{/link}" class="menuOverlayItemLink box24">
-				{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}
-				<span class="menuOverlayItemTitle">{$__wcf->user->username}</span>
-			</a>
-		</li>
-		<li class="menuOverlayItem">
-			<a href="{link controller='Settings'}{/link}" class="menuOverlayItemLink box24">
-				<span class="icon icon24 fa-cog"></span>
-				<span class="menuOverlayItemTitle">Einstellungen</span>
-			</a>
-			<ol class="menuOverlayItemList">
-				{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
-					<li class="menuOverlayTitle">{lang}{$menuCategory->menuItem}{/lang}</li>
-					{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
-						<li class="menuOverlayItem">
-							<a href="{$menuItem->getProcessor()->getLink()}" class="menuOverlayItemLink">{@$menuItem}</a>
-						</li>
-					{/foreach}
-				{/foreach}
-			</ol>
-		</li>
-		{if $__wcf->session->getPermission('admin.general.canUseAcp')}
+{if $__wcf->user->userID}
+	<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
+		<ol class="menuOverlayItemList" data-title="TODO: user menu">
+			<li class="menuOverlayTitle">{lang}wcf.user.controlPanel{/lang}</li>
 			<li class="menuOverlayItem">
-				<a href="{link isACP=true}{/link}" class="menuOverlayItemLink box24">
-					<span class="icon icon24 fa-wrench"></span>
-					<span class="menuOverlayItemTitle">{lang}wcf.global.acp.short{/lang}</span>
+				<a href="{link controller='User' object=$__wcf->user}{/link}" class="menuOverlayItemLink box24">
+					{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}
+					<span class="menuOverlayItemTitle">{$__wcf->user->username}</span>
 				</a>
 			</li>
-		{/if}
-		<li class="menuOverlayItemSpacer"></li>
-		<li class="menuOverlayItem" data-more="com.woltlab.wcf.notifications">
-			<a href="{link controller='NotificationList'}{/link}" class="menuOverlayItemLink box24">
-				<span class="icon icon24 fa-bell-o"></span>
-				<span class="menuOverlayItemTitle">{lang}wcf.user.notification.notifications{/lang}</span>
-			</a>
-		</li>
-		<li class="menuOverlayItem">
-			<a href="#" class="menuOverlayItemLink box24">
-				<span class="icon icon24 fa-exclamation-triangle"></span>
-				<span class="menuOverlayItemTitle">{lang}wcf.moderation.moderation{/lang}</span>
-			</a>
-		</li>
-		
-		{event name='userMenuItems'}
-		
-		<li class="menuOverlayItemSpacer"></li>
-		<li class="menuOverlayItem">
-			<a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" class="menuOverlayItemLink box24">
-				<span class="icon icon24 fa-sign-out"></span>
-				<span class="menuOverlayItemTitle">{lang}wcf.user.logout{/lang}</span>
-			</a>
-		</li>
-	</ol>
-</div>
+			<li class="menuOverlayItem">
+				<a href="{link controller='Settings'}{/link}" class="menuOverlayItemLink box24">
+					<span class="icon icon24 fa-cog"></span>
+					<span class="menuOverlayItemTitle">Einstellungen</span>
+				</a>
+				<ol class="menuOverlayItemList">
+					{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
+						<li class="menuOverlayTitle">{lang}{$menuCategory->menuItem}{/lang}</li>
+						{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
+							<li class="menuOverlayItem">
+								<a href="{$menuItem->getProcessor()->getLink()}" class="menuOverlayItemLink">{@$menuItem}</a>
+							</li>
+						{/foreach}
+					{/foreach}
+				</ol>
+			</li>
+			{if $__wcf->session->getPermission('admin.general.canUseAcp')}
+				<li class="menuOverlayItem">
+					<a href="{link isACP=true}{/link}" class="menuOverlayItemLink box24">
+						<span class="icon icon24 fa-wrench"></span>
+						<span class="menuOverlayItemTitle">{lang}wcf.global.acp.short{/lang}</span>
+					</a>
+				</li>
+			{/if}
+			<li class="menuOverlayItemSpacer"></li>
+			<li class="menuOverlayItem" data-more="com.woltlab.wcf.notifications">
+				<a href="{link controller='NotificationList'}{/link}" class="menuOverlayItemLink box24">
+					<span class="icon icon24 fa-bell-o"></span>
+					<span class="menuOverlayItemTitle">{lang}wcf.user.notification.notifications{/lang}</span>
+				</a>
+			</li>
+			<li class="menuOverlayItem">
+				<a href="#" class="menuOverlayItemLink box24">
+					<span class="icon icon24 fa-exclamation-triangle"></span>
+					<span class="menuOverlayItemTitle">{lang}wcf.moderation.moderation{/lang}</span>
+				</a>
+			</li>
+			
+			{event name='userMenuItems'}
+			
+			<li class="menuOverlayItemSpacer"></li>
+			<li class="menuOverlayItem">
+				<a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" class="menuOverlayItemLink box24">
+					<span class="icon icon24 fa-sign-out"></span>
+					<span class="menuOverlayItemTitle">{lang}wcf.user.logout{/lang}</span>
+				</a>
+			</li>
+		</ol>
+	</div>
+{/if}
