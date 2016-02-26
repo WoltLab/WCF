@@ -98,6 +98,36 @@
 				</li>
 			{/if}
 		{else}
+			{if $__wcf->getLanguage()->getLanguages()|count > 1}
+				<li id="pageLanguageContainer">
+					<script data-relocate="true">
+						require(['EventHandler', 'WoltLab/WCF/Language/Chooser'], function(EventHandler, LanguageChooser) {
+							var languages = {
+								{implode from=$__wcf->getLanguage()->getLanguages() item=__language}
+									'{@$__language->languageID}': {
+										iconPath: '{@$__language->getIconPath()|encodeJS}',
+										languageName: '{$__language}'
+									}
+								{/implode}
+							};
+							
+							var callback = function(listItem) {
+								var location = window.location.toString().replace(/#.*/, '').replace(/(\?|&)l=[0-9]+/g, '');
+								var delimiter = (location.indexOf('?') == -1) ? '?' : '&';
+								
+								window.location = location + delimiter + 'l=' + elData(listItem, 'language-id') + window.location.hash;
+							};
+							
+							LanguageChooser.init('pageLanguageContainer', 'languageID', {@$__wcf->getLanguage()->languageID}, languages, callback);
+							EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', function(data) {
+								if (data.identifier === 'com.woltlab.wcf.language') {
+									callback(data.parent);
+								}
+							});
+						});
+					</script>
+				</li>
+			{/if}
 			{if !$__disableLoginLink|isset}
 				<!-- login box -->
 				<li id="userLogin">
@@ -198,36 +228,6 @@
 							new WCF.User.Login(true);
 						});
 						//]]>
-					</script>
-				</li>
-			{/if}
-			{if $__wcf->getLanguage()->getLanguages()|count > 1}
-				<li id="pageLanguageContainer">
-					<script data-relocate="true">
-						require(['EventHandler', 'WoltLab/WCF/Language/Chooser'], function(EventHandler, LanguageChooser) {
-							var languages = {
-								{implode from=$__wcf->getLanguage()->getLanguages() item=__language}
-									'{@$__language->languageID}': {
-										iconPath: '{@$__language->getIconPath()|encodeJS}',
-										languageName: '{$__language}'
-									}
-								{/implode}
-							};
-							
-							var callback = function(listItem) {
-								var location = window.location.toString().replace(/#.*/, '').replace(/(\?|&)l=[0-9]+/g, '');
-								var delimiter = (location.indexOf('?') == -1) ? '?' : '&';
-								
-								window.location = location + delimiter + 'l=' + elData(listItem, 'language-id') + window.location.hash;
-							};
-							
-							LanguageChooser.init('pageLanguageContainer', 'languageID', {@$__wcf->getLanguage()->languageID}, languages, callback);
-							EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', function(data) {
-								if (data.identifier === 'com.woltlab.wcf.language') {
-									callback(data.parent);
-								}
-							});
-						});
 					</script>
 				</li>
 			{/if}
