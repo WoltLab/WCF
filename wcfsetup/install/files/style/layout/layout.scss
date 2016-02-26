@@ -43,10 +43,6 @@ a {
 	padding: 40px 0;
 	z-index: 50;
 	
-	> div {
-		display: flex;
-	}
-	
 	a {
 		color: $wcfContentLink;
 		
@@ -56,35 +52,43 @@ a {
 	}
 }
 
-.content {
-	flex: 1 1 auto;
-	
-	// sidebar follows
-	&:not(:last-child) {
-		flex-basis: calc(100% - 340px);
-		max-width: calc(100% - 340px); // IE fix
-	}
-}
-
-.sidebar {
-	flex: 0 0 310px;
-	
-	&:first-child {
-		margin-right: 30px;
+/* use flex-box to enforce a proper side-by-side layout on desktop */
+@include large-screen-only {
+	.main > div {
+		display: flex;
 	}
 	
-	& + .content {
-		flex-basis: calc(100% - 340px);
-		max-width: calc(100% - 340px); // IE fix
+	.content {
+		flex: 1 1 auto;
 		
 		// sidebar follows
 		&:not(:last-child) {
-			flex-basis: calc(100% - 680px);
-			max-width: calc(100% - 680px); // IE fix
+			flex-basis: calc(100% - 340px);
+			max-width: calc(100% - 340px); // IE fix
+		}
+		
+		& + .sidebar {
+			margin-left: 30px;
+		}
+	}
+	
+	.sidebar {
+		flex: 0 0 310px;
+		
+		&:first-child {
+			margin-right: 30px;
+		}
+		
+		& + .content {
+			flex-basis: calc(100% - 340px);
+			max-width: calc(100% - 340px); // IE fix
+			
+			// sidebar follows
+			&:not(:last-child) {
+				flex-basis: calc(100% - 680px);
+				max-width: calc(100% - 680px); // IE fix
+			}
 		}
 	}
 }
 
-.content + .sidebar {
-	margin-left: 30px;
-}

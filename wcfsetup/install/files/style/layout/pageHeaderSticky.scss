@@ -25,37 +25,6 @@
 		}
 	}
 	
-	#logo {
-		flex: 0 auto;
-		margin-bottom: 0;
-		order: 1;
-		
-		> a > .large {
-			display: none;
-		}
-		
-		> a > .small {
-			display: block;
-		}
-	}
-	
-	.mainMenu {
-		flex: 1 auto;
-		order: 2;
-		margin: 0 20px;
-	}
-	
-	.userPanel {
-		flex: 0 auto;
-		order: 3;
-		margin-right: 20px;
-	}
-	
-	.pageHeaderSearch {
-		flex: 0 auto;
-		order: 4;
-	}
-	
 	.pageHeaderSearchInputContainer:not(.open) {
 		> .pageHeaderSearchInput {
 			padding-right: 20px;
@@ -64,6 +33,39 @@
 		
 		> .pageHeaderSearchInputButton {
 			pointer-events: none;
+		}
+	}
+	
+	@include large-screen-only {
+		#logo {
+			flex: 0 auto;
+			margin-bottom: 0;
+			order: 1;
+			
+			> a > .large {
+				display: none;
+			}
+			
+			> a > .small {
+				display: block;
+			}
+		}
+		
+		.mainMenu {
+			flex: 1 auto;
+			order: 2;
+			margin: 0 20px;
+		}
+		
+		.userPanel {
+			flex: 0 auto;
+			order: 3;
+			margin-right: 20px;
+		}
+		
+		.pageHeaderSearch {
+			flex: 0 auto;
+			order: 4;
 		}
 	}
 }

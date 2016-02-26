@@ -201,11 +201,13 @@ WCF.User.Panel.Abstract = Class.extend({
 	/**
 	 * Toggles the interactive dropdown.
 	 * 
-	 * @param	object		event
-	 * @return	boolean
+	 * @param	{Event=}		event
+	 * @return	{boolean}
 	 */
 	toggle: function(event) {
-		event.preventDefault();
+		if (event instanceof Event) {
+			event.preventDefault();
+		}
 		
 		if (this._dropdown === null) {
 			this._dropdown = this._initDropdown();
@@ -445,6 +447,18 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 		}
 		
 		WCF.System.PushNotification.addCallback('userNotificationCount', $.proxy(this.updateUserNotificationCount, this));
+		
+		require(['EventHandler'], (function(EventHandler) {
+			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function(data) {
+				console.debug("called");
+				console.debug(data);
+				if (data.identifier === 'com.woltlab.wcf.notifications') {
+					this.toggle();
+					
+					//data.handler.close(true);
+				}
+			}).bind(this));
+		}).bind(this));
 	},
 	
 	/**

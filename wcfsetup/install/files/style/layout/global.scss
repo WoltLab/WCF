@@ -1,13 +1,20 @@
 .layoutBoundary {
 	margin: 0 auto;
-	padding: 0 20px;
 	
-	@if $useFluidLayout {
-		min-width: $wcfLayoutMinWidth;
-		max-width: $wcfLayoutMaxWidth;
+	@include small-screen-only {
+		padding: 0 10px;
+		width: 100%;
 	}
-	@else {
-		width: $wcfLayoutFixedWidth;
+	
+	@include large-screen-only {
+		padding: 0 20px;
+		
+		@if $useFluidLayout {
+			min-width: $wcfLayoutMinWidth;
+			max-width: $wcfLayoutMaxWidth;
+		} @else {
+			width: $wcfLayoutFixedWidth;
+		}
 	}
 }
 

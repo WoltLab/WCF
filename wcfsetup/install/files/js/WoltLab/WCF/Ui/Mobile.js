@@ -2,25 +2,27 @@
  * Modifies the interface to provide a better usability for mobile devices.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Mobile
  */
 define(
-	[       'enquire', 'Environment', 'Language', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/CloseOverlay'],
-	function(enquire,   Environment,   Language,   DomChangeListener,    DomTraverse,    UiCloseOverlay)
+	[       'Environment', 'Language', 'Dom/ChangeListener', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
+	function(Environment,   Language,   DomChangeListener,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
 {
 	"use strict";
 	
 	var _buttonGroupNavigations = null;
 	var _enabled = false;
 	var _main = null;
+	var _pageMenuMain = null;
+	var _pageMenuUser = null;
 	var _sidebar = null;
 	
 	/**
 	 * @exports	WoltLab/WCF/Ui/Mobile
 	 */
-	var UiMobile = {
+	return {
 		/**
 		 * Initializes the mobile UI using enquire.js.
 		 */
@@ -37,16 +39,11 @@ define(
 				document.documentElement.classList.add('mobile');
 			}
 			
-			enquire.register('screen and (max-width: 800px)', {
-				match: this.enable.bind(this),
-				unmatch: this.disable.bind(this),
-				setup: this._init.bind(this),
-				deferSetup: true
+			UiScreen.on({
+				small: this.enable.bind(this),
+				large: this.disable.bind(this),
+				setup: this._init.bind(this)
 			});
-			
-			if (Environment.browser() === 'microsoft' && _sidebar !== null && _sidebar.clientWidth > 305) {
-				this._fixSidebarIE();
-			}
 		},
 		
 		/**
@@ -55,7 +52,8 @@ define(
 		enable: function() {
 			_enabled = true;
 			
-			if (Environment.browser() === 'microsoft') this._fixSidebarIE();
+			_pageMenuMain.enable();
+			_pageMenuUser.enable();
 		},
 		
 		/**
@@ -64,21 +62,15 @@ define(
 		disable: function() {
 			_enabled = false;
 			
-			if (Environment.browser() === 'microsoft') this._fixSidebarIE();
-		},
-		
-		_fixSidebarIE: function() {
-			if (_sidebar === null) return;
-			
-			// sidebar is rarely broken on IE9/IE10
-			_sidebar.style.setProperty('display', 'none');
-			_sidebar.style.removeProperty('display');
+			_pageMenuMain.disable();
+			_pageMenuUser.disable();
 		},
 		
 		_init: function() {
-			this._initSidebarToggleButtons();
-			this._initSearchBar();
+			//this._initSidebarToggleButtons();
+			//this._initSearchBar();
 			this._initButtonGroupNavigation();
+			this._initMobileMenu();
 			
 			UiCloseOverlay.add('WoltLab/WCF/Ui/Mobile', this._closeAllMenus.bind(this));
 			DomChangeListener.add('WoltLab/WCF/Ui/Mobile', this._initButtonGroupNavigation.bind(this));
@@ -154,20 +146,27 @@ define(
 				span.className = 'icon icon24 fa-list';
 				button.appendChild(span);
 				
-				button.addEventListener('click', function(ev) {
-					var next = DomTraverse.next(button);
-					if (next !== null) {
-						next.classList.toggle('open');
+				(function(button) {
+					button.addEventListener('click', function(ev) {
+						var next = button.nextElementSibling;
+						if (next !== null) {
+							next.classList.toggle('open');
+							
+							ev.stopPropagation();
+							return false;
+						}
 						
-						ev.stopPropagation();
-						return false;
-					}
-					
-					return true;
-				});
+						return true;
+					});
+				})(button);
 				
 				navigation.insertBefore(button, navigation.firstChild);
 			}
+		},
+		
+		_initMobileMenu: function() {
+			_pageMenuMain = new UiPageMenuMain();
+			_pageMenuUser = new UiPageMenuUser();
 		},
 		
 		_closeAllMenus: function() {
@@ -177,6 +176,4 @@ define(
 			}
 		}
 	};
-	
-	return UiMobile;
 });

@@ -34,6 +34,7 @@ requirejs.config({
 			'Ui/Dialog': 'WoltLab/WCF/Ui/Dialog',
 			'Ui/Notification': 'WoltLab/WCF/Ui/Notification',
 			'Ui/ReusableDropdown': 'WoltLab/WCF/Ui/Dropdown/Reusable',
+			'Ui/Screen': 'WoltLab/WCF/Ui/Screen',
 			'Ui/SimpleDropdown': 'WoltLab/WCF/Ui/Dropdown/Simple',
 			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu',
 			'Upload': 'WoltLab/WCF/Upload'

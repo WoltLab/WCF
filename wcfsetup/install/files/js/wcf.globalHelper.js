@@ -72,10 +72,16 @@
 	 * 
 	 * @param	{string}	selector	CSS selector
 	 * @param	{Element=}	context		target element, assuming `document` if omitted
+	 * @param       {function=}     callback        callback function pased to forEach()
 	 * @return	{NodeList}	matching elements
 	 */
-	window.elBySelAll = function(selector, context) {
-		return (context || document).querySelectorAll(selector);
+	window.elBySelAll = function(selector, context, callback) {
+		var nodeList = (context || document).querySelectorAll(selector);
+		if (typeof callback === 'function') {
+			Array.prototype.forEach.call(nodeList, callback);
+		}
+		
+		return nodeList;
 	};
 	
 	/**

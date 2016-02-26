@@ -123,7 +123,7 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 		// fix maps in mobile sidebars by refreshing the map when displaying
 		// the map
 		if (this._mapContainer.parents('.sidebar').length) {
-			enquire.register('screen and (max-width: 800px)', {
+			enquire.register('(max-width: 767px)', {
 				setup: $.proxy(this._addSidebarMapListener, this),
 				deferSetup: true
 			});

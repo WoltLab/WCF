@@ -58,7 +58,7 @@ define(
 				return true;
 			}).bind(this);
 			
-			enquire.register('screen and (max-width: 800px)', {
+			enquire.register('(max-width: 767px)', {
 				match: function() { _dialogFullHeight = true; },
 				unmatch: function() { _dialogFullHeight = false; },
 				setup: function() { _dialogFullHeight = true; },

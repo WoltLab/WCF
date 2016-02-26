@@ -58,6 +58,12 @@
 		overflow: visible;
 		max-height: none;
 	}
+	
+	@include small-screen-only {
+		> .elementPointer {
+			display: none;
+		}
+	}
 }
 
 /* drop down header */
@@ -88,13 +94,16 @@
 		flex: 0 0 auto;
 		margin-left: 5px;
 	}
+	
+	@include small-screen-only {
+		padding: 10px;
+	}
 }
 
 /* container for dropdown items */
 .interactiveDropdownItemsContainer {
 	border: 1px solid $wcfContentBorderInner;
 	border-width: 1px 0;
-	max-height: 300px;
 	
 	&.ps-container {
 		> .interactiveDropdownItems {
@@ -133,6 +142,10 @@
 		.box48 {
 			align-items: center;
 			overflow: hidden;
+		}
+		
+		@include small-screen-only {
+			padding: 10px;
 		}
 	}
 	
@@ -207,12 +220,13 @@
 	}
 }
 
-@media only screen and (min-width: 801px) {
+@include large-screen-only {
 	.interactiveDropdown {
 		min-width: 350px;
 	}
 	
 	.interactiveDropdownItemsContainer {
+		max-height: 400px;
 		overflow: hidden;
 		position: relative;
 	}
@@ -222,41 +236,48 @@
 	}
 }
 
-/* todo: mobile version
-@media only screen and (max-width: 800px) {
-	.DEBUG_ONLY_interactiveDropdown {
-		border-width: 1px 0;
-		box-sizing: border-box;
-		left: 0 !important;
-		right: 0 !important;
-		width: 100%;
+@include small-screen-only {
+	.interactiveDropdown {
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		left: 0;
+		position: fixed;
+		right: 0;
+	}
+	
+	.interactiveDropdownHeader {
+		flex: 0 0 auto;
+	}
+	
+	.interactiveDropdownItemsContainer {
+		flex: 1 1 auto;
+		overflow: auto;
 		
-		> .interactiveDropdownItemsContainer {
-			overflow-x: auto;
+		/* increase the clickable area of the mark as read icon */
+		.interactiveDropdownItemMarkAsRead {
+			bottom: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 36px; /* 16px icon + 2x 10px padding */
 			
-			> .interactiveDropdownItems > li.interactiveDropdownItemOutstandingIcon > div.interactiveDropdownItemMarkAsRead {
-				bottom: 0;
-				position: absolute;
-				right: 0;
-				top: 0;
-				//width: (@wcfGapSmall + @wcfGapTiny) + 16px + (@wcfGapSmall + @wcfGapTiny);
+			> a {
+				display: block;
+				height: 100%;
+				text-align: center;
 				
-				> a {
-					display: block;
-					height: 100%;
-					text-align: center;
+				> .icon {
+					position: relative;
+					top: 50%;
 					
-					> .icon {
-						position: relative;
-						top: 50%;
-						
-						transform: translateY(-50%);
-						-ms-transform: translateY(-50%);
-						-webkit-transform: translateY(-50%);
-					}
+					transform: translateY(-50%);
 				}
 			}
 		}
 	}
+	
+	.interactiveDropdownShowAll {
+		flex: 0 0 auto;
+	}
 }
-*/

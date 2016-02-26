@@ -1225,13 +1225,20 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * Renders the dropdown.
 	 */
 	render: function() {
-		var $pageDirection = WCF.Language.get('wcf.global.pageDirection');
-		
-		if ($('html').css('caption-side') === 'bottom') {
-			this._renderMobile($pageDirection);
+		if (window.matchMedia('(max-width: 767px)').matches) {
+			this._container.css({
+				bottom: '',
+				left: '',
+				right: '',
+				top: elById('pageHeader').clientHeight + 'px'
+			});
 		}
 		else {
-			this._renderDesktop($pageDirection);
+			require(['Ui/Alignment'], (function(UiAlignment) {
+				UiAlignment.set(this._container[0], this._triggerElement[0], {
+					pointer: true
+				});
+			}).bind(this));
 		}
 	},
 	
@@ -1248,39 +1255,6 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 				suppressScrollX: true
 			});
 		}
-	},
-	
-	/**
-	 * Renders the dropdown on mobile devices.
-	 * 
-	 * @param	string		pageDirection
-	 */
-	_renderMobile: function(pageDirection) {
-		var $elementDimensions = this._triggerElement.getDimensions('outer');
-		var $elementHalfWidth = Math.floor($elementDimensions.width / 2);
-		var $elementOffsets = this._triggerElement.getOffsets('offset');
-		var $pointerHalfWidth = Math.floor(this._pointer.outerWidth() / 2);
-		
-		this._container.css({
-			top: $elementOffsets.top + $elementDimensions.height + 'px'
-		});
-		
-		this._pointer.css({
-			left: ($elementOffsets.left + $elementHalfWidth) - $pointerHalfWidth + 'px'
-		});
-	},
-	
-	/**
-	 * Renders the dropdown on desktops.
-	 * 
-	 * @param	string		pageDirection
-	 */
-	_renderDesktop: function(pageDirection) {
-		require(['Ui/Alignment'], (function(UiAlignment) {
-			UiAlignment.set(this._container[0], this._triggerElement[0], {
-				pointer: true
-			});
-		}).bind(this));
 	}
 });
 

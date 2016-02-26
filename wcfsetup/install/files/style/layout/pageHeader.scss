@@ -24,14 +24,14 @@
 }
 
 /* LOGO */
-#logo {
+.pageHeaderLogo {
 	// use a fixed width of 50% together with the search bar to force a wrap
 	flex: 0 0 50%;
 	
 	// gap between the two rows formed by the wrapping flex box
 	margin-bottom: 15px;
 	
-	> a > img.small {
+	.pageHeaderLogoSmall {
 		display: none;
 	}
 }
@@ -329,5 +329,74 @@
 		> .icon {
 			color: $wcfHeaderSearchBoxText;
 		}
+	}
+}
+
+@include small-screen-only {
+	.pageHeader > div > div {
+		padding-bottom: 10px;
+		padding-top: 10px;
+	}
+	
+	.pageHeaderLogo {
+		flex: 1 1 auto;
+		margin: 0 10px;
+		order: 2;
+		text-align: center;
+		
+		.pageHeaderLogoLarge {
+			display: none;
+		}
+		
+		.pageHeaderLogoSmall {
+			display: inline;
+		}
+	}
+	
+	.userPanel {
+		flex: 0 0 auto;
+		order: 3;
+		
+		&::before {
+			content: $fa-var-user;
+		}
+		
+		> .userPanelItems {
+			display: none;
+		}
+	}
+	
+	.mainMenu {
+		flex: 0 0 auto;
+		order: 1;
+		
+		&::before {
+			content: $fa-var-bars;
+		}
+		
+		> .boxContent {
+			display: none;
+		}
+	}
+	
+	.mainMenu,
+	.userPanel {
+		&::before {
+			background-color: $wcfHeaderMenuBackground;
+			color: $wcfHeaderMenuLink;
+			font-family: FontAwesome;
+			font-size: 28px;
+			line-height: 32px;
+			padding: 5px 10px;
+		}
+		
+		&:hover::before {
+			background-color: $wcfHeaderMenuBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
+	}
+	
+	.pageHeaderSearch {
+		display: none;
 	}
 }

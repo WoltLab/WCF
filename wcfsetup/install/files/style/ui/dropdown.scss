@@ -300,7 +300,7 @@
 	min-height: 20px;
 }
 
-@media only screen and (max-width: 800px) {
+@include small-screen-only {
 	.dropdownMenu {
 		left: 0 !important;
 		right: 0 !important;

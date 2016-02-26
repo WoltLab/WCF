@@ -101,7 +101,7 @@
 	}
 }
 
-@media only screen and (max-width: 800px) {
+@include small-screen-only {
 	.messageTabMenu {
 		> nav > ul > li:not(.active) > a {
 			> span.icon {

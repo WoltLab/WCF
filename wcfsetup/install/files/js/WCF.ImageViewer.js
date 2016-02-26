@@ -874,7 +874,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		WCF.DOMNodeInsertedHandler.execute();
 		
-		enquire.register('screen and (max-width: 800px)', {
+		enquire.register('(max-width: 767px)', {
 			match: $.proxy(this._enableMobileView, this),
 			unmatch: $.proxy(this._disableMobileView, this)
 		});

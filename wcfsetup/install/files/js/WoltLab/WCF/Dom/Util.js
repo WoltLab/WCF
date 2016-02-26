@@ -9,15 +9,6 @@
 define(['StringUtil'], function(StringUtil) {
 	"use strict";
 	
-	var _matchesSelectorFunction = '';
-	var _possibleFunctions = ['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector'];
-	for (var i = 0; i < 4; i++) {
-		if (Element.prototype.hasOwnProperty(_possibleFunctions[i])) {
-			_matchesSelectorFunction = _possibleFunctions[i];
-			break;
-		}
-	}
-	
 	function _isBoundaryNode(element, ancestor, position) {
 		if (!ancestor.contains(element)) {
 			throw new Error("Ancestor element does not contain target element.");
@@ -93,8 +84,8 @@ define(['StringUtil'], function(StringUtil) {
 		 * @return	{string}	element id
 		 */
 		identify: function(el) {
-			if (!el || !(el instanceof Element)) {
-				return null;
+			if (!(el instanceof Element)) {
+				throw new TypeError("Expected a valid DOM element as argument.");
 			}
 			
 			var id = elAttr(el, 'id');
@@ -104,17 +95,6 @@ define(['StringUtil'], function(StringUtil) {
 			}
 			
 			return id;
-		},
-		
-		/**
-		 * Returns true if element matches given CSS selector.
-		 * 
-		 * @param	{Element}	el		element
-		 * @param	{string}	selector	CSS selector
-		 * @return	{boolean}	true if element matches selector
-		 */
-		matches: function(el, selector) {
-			return el[_matchesSelectorFunction](selector);
 		},
 		
 		/**
