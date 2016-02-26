@@ -3,7 +3,6 @@
 	bottom: 0;
 	left: 0;
 	opacity: 0;
-	padding: 100px 0;
 	position: fixed;
 	right: 0;
 	top: 0;
@@ -11,6 +10,10 @@
 	visibility: hidden;
 	will-change: opacity;
 	z-index: 399;
+	
+	@include large-screen-only {
+		padding: 100px 0;
+	}
 	
 	&[aria-hidden=false] {
 		opacity: 1;
@@ -42,24 +45,34 @@
 }
 
 .dialogContainer {
-	animation: wcfDialogOut .3s;
-	animation-fill-mode: forwards;
-	box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
-	left: 50%;
-	max-height: 80%;
-	max-width: 80%;
-	min-width: 400px;
-	position: absolute;
-	transform: translateX(-50%);
 	z-index: 200;
 	
-	&[aria-hidden=false] {
-		animation: wcfDialog .3s;
+	@include small-screen-only {
+		left: 0 !important;
+		position: fixed;
+		right: 0 !important;
+		top: 0 !important;
+	}
+	
+	@include large-screen-only {
+		animation: wcfDialogOut .3s;
 		animation-fill-mode: forwards;
+		box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
+		left: 50%;
+		max-height: 80%;
+		max-width: 80%;
+		min-width: 400px;
+		position: absolute;
+		transform: translateX(-50%);
 		
-		& ~ .dialogContainer[aria-hidden=false] {
-			z-index: 50;
+		&[aria-hidden=false] {
+			animation: wcfDialog .3s;
+			animation-fill-mode: forwards;
 		}
+	}
+	
+	&[aria-hidden=false]  ~ .dialogContainer[aria-hidden=false] {
+		z-index: 50;
 	}
 	
 	> header {
@@ -102,7 +115,13 @@
 		overflow: auto;
 		
 		&:not(.dialogContentNoPadding) {
-			padding: 30px 20px 0 20px;
+			@include small-screen-only {
+				padding: 10px;
+			}
+			
+			@include large-screen-only {
+				padding: 30px 20px 0 20px;
+			}
 			
 			&::after {
 				content: "";
