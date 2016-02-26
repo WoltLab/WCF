@@ -595,7 +595,13 @@ WCF.User.QuickLogin = {
 				input.setAttribute('value', window.location.protocol + '//' + window.location.host + input.getAttribute('value'));
 			}
 			
-			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'showLogin', callbackOpen);
+			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', function(data) {
+				if (data.identifier === 'com.woltlab.wcf.login') {
+					data.handler.close(true);
+					
+					callbackOpen();
+				}
+			});
 		});
 	}
 };

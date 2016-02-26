@@ -74,9 +74,10 @@
 </div>
 
 {* user menu *}
-{if $__wcf->user->userID}
-	<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
-		<ol class="menuOverlayItemList" data-title="TODO: user menu">
+<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
+	<ol class="menuOverlayItemList" data-title="TODO: user menu">
+		{if $__wcf->user->userID}
+			{* logged-in *}
 			<li class="menuOverlayTitle">{lang}wcf.user.controlPanel{/lang}</li>
 			<li class="menuOverlayItem">
 				<a href="{link controller='User' object=$__wcf->user}{/link}" class="menuOverlayItemLink box24">
@@ -115,7 +116,7 @@
 					<span class="menuOverlayItemTitle">{lang}wcf.user.notification.notifications{/lang}</span>
 				</a>
 			</li>
-			<li class="menuOverlayItem">
+			<li class="menuOverlayItem" data-more="com.woltlab.wcf.moderation">
 				<a href="#" class="menuOverlayItemLink box24">
 					<span class="icon icon24 fa-exclamation-triangle"></span>
 					<span class="menuOverlayItemTitle">{lang}wcf.moderation.moderation{/lang}</span>
@@ -131,6 +132,44 @@
 					<span class="menuOverlayItemTitle">{lang}wcf.user.logout{/lang}</span>
 				</a>
 			</li>
-		</ol>
-	</div>
-{/if}
+		{else}
+			{* guest *}
+			<li class="menuOverlayTitle">TODO: user menu</li>
+			<li class="menuOverlayItem" data-more="com.woltlab.wcf.login">
+				<a href="#" class="menuOverlayItemLink box24">
+					<span class="icon icon24 fa-sign-in"></span>
+					<span class="menuOverlayItemTitle">{lang}wcf.user.login{/lang}</span>
+				</a>
+			</li>
+			<li class="menuOverlayItem">
+				<a href="{link controller='Register'}{/link}" class="menuOverlayItemLink box24">
+					<span class="icon icon24 fa-asterisk"></span>
+					<span class="menuOverlayItemTitle">{lang}wcf.user.register{/lang}</span>
+				</a>
+			</li>
+			
+			{event name='guestUserMenuItems'}
+		
+			{if $__wcf->getLanguage()->getLanguages()|count > 1}
+				<li class="menuOverlayItemSpacer"></li>
+				<li class="menuOverlayTitle">{lang}wcf.user.language{/lang}</li>
+				<li class="menuOverlayItem">
+					<a href="#" class="menuOverlayItemLink box24">
+						<img src="{$__wcf->getLanguage()->getIconPath()}">
+						<span class="menuOverlayItemTitle">{$__wcf->getLanguage()}</span>
+					</a>
+					<ol class="menuOverlayItemList" data-title="{lang}wcf.user.language{/lang}">
+						{foreach from=$__wcf->getLanguage()->getLanguages() item=__language}
+							<li class="menuOverlayItem" data-more="com.woltlab.wcf.language" data-language-id="{@$__language->languageID}">
+								<a href="#" class="menuOverlayItemLink box24">
+									<img src="{$__language->getIconPath()}">
+									<span class="menuOverlayItemTitle">{$__language}</span>
+								</a>
+							</li>
+						{/foreach}
+					</ol>
+				</li>
+			{/if}
+		{/if}
+	</ol>
+</div>

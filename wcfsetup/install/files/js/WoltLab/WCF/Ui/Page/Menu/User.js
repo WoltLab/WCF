@@ -18,18 +18,6 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 		 * Initializes the touch-friendly fullscreen user menu.
 		 */
 		init: function() {
-			// check if user menu is present, as it is absent when not logged-in
-			if (elById('pageUserMenuMobile') === null) {
-				elBySel('#pageHeader .userPanel').addEventListener(WCF_CLICK_EVENT, function(event) {
-					event.preventDefault();
-					event.stopPropagation();
-					
-					EventHandler.fire('com.woltlab.wcf.UserMenuMobile', 'showLogin');
-				});
-				
-				return;
-			}
-			
 			UiPageMenuUser._super.prototype.init.call(
 				this,
 				'com.woltlab.wcf.UserMenuMobile',
@@ -47,7 +35,8 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 		 */
 		_initItem: function(item) {
 			// check if it should contain a 'more' link w/ an external callback
-			var more = elData(item.parentNode, 'more');
+			var parent = item.parentNode;
+			var more = elData(parent, 'more');
 			if (more) {
 				item.addEventListener(WCF_CLICK_EVENT, (function(event) {
 					event.preventDefault();
@@ -55,7 +44,9 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 					
 					EventHandler.fire(this._eventIdentifier, 'more', {
 						handler: this,
-						identifier: more
+						identifier: more,
+						item: item,
+						parent: parent
 					});
 				}).bind(this));
 				

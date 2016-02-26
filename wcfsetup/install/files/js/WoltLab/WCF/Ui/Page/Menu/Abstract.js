@@ -135,14 +135,17 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 			var isLink = (elAttr(item, 'href') !== '#');
 			var parent = item.parentNode;
 			var parentItemList = parent.parentNode;
-			var itemTitle = DomTraverse.childByClass(item, 'menuOverlayItemTitle').textContent;
+			var itemTitle = elData(itemList, 'title');
 			
 			this._items.set(item, {
 				itemList: itemList,
 				parentItemList: parentItemList
 			});
 			
-			elData(itemList, 'title', itemTitle);
+			if (itemTitle === '') {
+				itemTitle = DomTraverse.childByClass(item, 'menuOverlayItemTitle').textContent
+				elData(itemList, 'title', itemTitle);
+			}
 			
 			var callbackLink = this._showItemList.bind(this, item), wrapper;
 			if (isLink) {
