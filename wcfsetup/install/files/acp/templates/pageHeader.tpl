@@ -6,11 +6,11 @@
 				
 				{* hide everything except the logo during login / in rescue mode *}
 				{if $__isLogin|empty}
-					{include file='pageHeaderSearch'}
+					{include file='pageHeaderUser'}
 					
 					{include file='pageHeaderMenu'}
 					
-					{include file='pageHeaderUser'}
+					{include file='pageHeaderSearch'}
 				{/if}
 			</div>
 		</div>
