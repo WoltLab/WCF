@@ -358,7 +358,7 @@ class ModerationQueueManager extends SingletonFactory {
 				$queues[$objectTypeID] = array();
 			}
 			
-			$queues[$objectTypeID][$row['queueID']] = $row['objectID'];
+			$queues[$objectTypeID][$row['objectID']] = $row['queueID'];
 		}
 		
 		if (!empty($queues)) {
