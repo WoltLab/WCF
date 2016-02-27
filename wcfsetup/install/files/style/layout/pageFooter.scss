@@ -14,13 +14,19 @@
 		}
 	}
 	
-	// copyright link styling
+	// copyright and benchmark link styling
+	// benchmark link styling
+	.benchmark,
 	.copyright {
-		text-align: center;
+		margin-top: 20px;
 		
 		a {
 			// use text color instead
 			color: $wcfFooterText;
 		}
+	}
+	
+	.footerContent:first-child > div:first-child {
+		margin-top: 0;
 	}
 }

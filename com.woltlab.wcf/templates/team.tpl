@@ -26,14 +26,14 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{capture assign='sidebar'}
+{capture assign='sidebarRight'}
 	{@$__boxSidebar}
 {/capture}
 
-{include file='header' sidebarOrientation='right'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.team{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.user.team{/lang}</h1>
 </header>
 
 {include file='userNotice'}

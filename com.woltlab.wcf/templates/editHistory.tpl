@@ -10,14 +10,14 @@
 
 {include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.edit.versions{/lang}: {$object->getTitle()}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.edit.versions{/lang}: {$object->getTitle()}</h1>
 </header>
 
 {include file='userNotice'}
 
 {if $diff}
-<div class="container containerPadding marginTop editHistoryDiff">
+<div class="section editHistoryDiff">
 	<div class="sideBySide">
 		<div class="containerHeadline">
 			<h3>{lang}wcf.edit.headline.old{/lang}</h3>
@@ -64,11 +64,11 @@
 {/if}
 
 <form action="{link controller='EditHistory'}{/link}" method="post">
-	<div class="tabularBox tabularBoxTitle marginTop editHistoryVersionList">
-		<header>
-			{assign var='versionCount' value=$objects|count}
-			<h2>{lang}wcf.edit.versions{/lang} <span class="badge badgeInverse">{#$versionCount+1}</span></h2>
-		</header>
+	<section class="section tabularBox editHistoryVersionList">
+		{assign var='versionCount' value=$objects|count}
+		<h2 class="sectionTitle">
+			{lang}wcf.edit.versions{/lang} <span class="badge badgeInverse">{#$versionCount+1}</span>
+		</h2>
 		
 		<table class="table">
 			<thead>
@@ -120,7 +120,7 @@
 				//]]>
 			</script>
 		</table>
-	</div>
+	</section>
 	
 	<div class="formSubmit">
 		{@SID_INPUT_TAG}

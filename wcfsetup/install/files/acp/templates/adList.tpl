@@ -10,8 +10,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.ad.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.ad.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -27,7 +27,7 @@
 </div>
 
 {if $objects|count}
-	<div class="container containerPadding sortableListContainer marginTop" id="adList">
+	<div class="section sortableListContainer" id="adList">
 		<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 			{foreach from=$objects item='ad'}
 				<li class="sortableNode sortableNoNesting jsAd" data-object-id="{@$ad->adID}">

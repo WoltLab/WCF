@@ -14,9 +14,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{$package->getName()}</h1>
-	<p>{$package->packageDescription|language}</p>
+<header class="contentHeader">
+	<h1 class="contentTitle">{$package->getName()}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -31,7 +30,7 @@
 	{/hascontent}
 </div>
 
-<div class="tabMenuContainer">
+<div class="section tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
 			<li><a href="{@$__wcf->getAnchor('information')}">{lang}wcf.acp.package.information.title{/lang}</a></li>
@@ -43,9 +42,14 @@
 		</ul>
 	</nav>
 	
-	<div id="information" class="container containerPadding hidden tabMenuContent">
-		<fieldset>
-			<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
+	<div id="information" class="hidden tabMenuContent">
+		<div class="section">
+			{if $package->packageDescription|language}
+				<dl>
+					<dt>{lang}wcf.acp.package.description{/lang}</dt>
+					<dd>{$package->packageDescription|language}</dd>
+				</dl>
+			{/if}
 			
 			<dl>
 				<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
@@ -79,21 +83,13 @@
 			</dl>
 			
 			{event name='propertyFields'}
-		</fieldset>
-		
-		{if $package->packageDescription|language}
-			<fieldset>
-				<legend>{lang}wcf.acp.package.description{/lang}</legend>
-				
-				<p>{$package->packageDescription|language}</p>
-			</fieldset>
-		{/if}
+		</div>
 		
 		{event name='informationFieldsets'}
 	</div>
 	
 	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
-		<div id="dependencies" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="dependencies" class="tabMenuContainer tabMenuContent">
 			<nav class="menu">
 				<ul>
 					{if $package->getRequiredPackages()|count}

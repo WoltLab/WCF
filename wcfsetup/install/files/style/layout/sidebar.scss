@@ -21,14 +21,16 @@
 			padding: 20px;
 			
 			&:not(:first-child) {
-				margin-top: 20px;
+				margin-top: 30px;
 			}
 		}
 		
 		section:not(.box) > h1,
 		fieldset > legend {
 			color: $wcfSidebarHeadlineText;
+			border-bottom-width: 0;
 			margin-bottom: 15px;
+			padding: 0;
 			
 			@extend .wcfFontHeadline;
 			
@@ -70,7 +72,7 @@
 	.boxTitle {
 		.badge {
 			float: right;
-			margin-top: 3px;
+			top: 2px;
 		}
 	}
 }

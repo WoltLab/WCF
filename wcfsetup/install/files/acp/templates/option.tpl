@@ -24,9 +24,9 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
-	{hascontent}<p>{content}{lang __optional=true}wcf.acp.option.category.{$category->categoryName}.description{/lang}{/content}</p>{/hascontent}
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
+	{hascontent}<p class="contentHeaderDescription">{content}{lang __optional=true}wcf.acp.option.category.{$category->categoryName}.description{/lang}{/content}</p>{/hascontent}
 </header>
 
 {if $success|isset}
@@ -55,7 +55,7 @@
 	<input style="display:none" type="text" name="fakeusernameremembered "/>
 	<input style="display:none" type="password" name="fakepasswordremembered" />
 	
-	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
+	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
@@ -65,22 +65,25 @@
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding hidden tabMenuContent">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="hidden tabMenuContent">
 				{if $categoryLevel1[options]|count}
-					<fieldset>
-						<legend>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}</legend>
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}</h2>
+						
 						{include file='optionFieldList' options=$categoryLevel1[options] langPrefix='wcf.acp.option.'}
-					</fieldset>
+					</section>
 				{/if}
 				
 				{if $categoryLevel1[categories]|count}
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-						<fieldset>
-							<legend>{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
-							{hascontent}<small>{content}{lang __optional=true}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
+						<section class="section">
+							<header class="sectionHeader">
+								<h2 class="sectionTitle">{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
+								{hascontent}<small class="sectionDescription">{content}{lang __optional=true}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
+							</header>
 							
 							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.option.'}
-						</fieldset>
+						</section>
 					{/foreach}
 				{/if}
 			</div>

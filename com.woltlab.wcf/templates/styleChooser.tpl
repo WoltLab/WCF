@@ -2,7 +2,7 @@
 	{foreach from=$styleList item=style}
 		<li data-style-id="{@$style->styleID}">
 			<div class="box64">
-				<span class="framed">
+				<span>
 					<img src="{@$style->getPreviewImage()}" alt="" />
 				</span>
 				<div class="details">

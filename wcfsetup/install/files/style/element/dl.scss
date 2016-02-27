@@ -2,15 +2,13 @@ dl {
 	&:not(.plain) {
 		display: block;
 		
-		&:not(:first-child) {
-			margin-top: 10px;
-		}
-		
 		&:not(:last-child) {
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 		}
 		
 		> dt {
+			color: $wcfInputLabel;
+			
 			display: block;
 			
 			&:not(:empty) {
@@ -62,10 +60,6 @@ dl {
 		&.wide > dt {
 			display: none;
 		}
-		
-		& + dl:not(.plain) {
-			padding-top: 10px;
-		}
 	}
 	
 	&.dataList {
@@ -73,7 +67,7 @@ dl {
 		
 		> dt {
 			clear: right;
-			color: rgba(128, 128, 128, 1);
+			color: $wcfContentDimmedText;
 			float: left;
 			margin-right: 4px;
 			text-align: left;
@@ -140,8 +134,4 @@ dl {
 			white-space: nowrap;
 		}
 	}
-}
-
-dt {
-	color: $wcfInputLabel;
 }

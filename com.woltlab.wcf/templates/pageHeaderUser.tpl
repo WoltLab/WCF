@@ -20,7 +20,7 @@
 						<ul class="interactiveDropdownItems interactiveDropdownItemsUserMenu">
 							<li>
 								<div class="box48">
-									<a href="{link controller='User' object=$__wcf->user}{/link}" class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}</a>
+									<a href="{link controller='User' object=$__wcf->user}{/link}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}</a>
 									
 									<div class="containerHeadline">
 										<h3>
@@ -162,8 +162,8 @@
 						{/capture}
 						
 						<form method="post" action="{link controller='Login'}{/link}">
-							<fieldset>
-								{if $__3rdPartyButtons|trim}<legend>{lang}wcf.user.login{/lang}</legend>{/if}
+							<section class="section">
+								{if $__3rdPartyButtons|trim}<h2 class="sectionTitle">{lang}wcf.user.login{/lang}</h2>{/if}
 								
 								<dl>
 									<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
@@ -204,15 +204,15 @@
 									<input type="hidden" name="url" value="{$__wcf->session->requestURI}" />
 									{@SECURITY_TOKEN_INPUT_TAG}
 								</div>
-							</fieldset>
+							</section>
 							
 							{if $__3rdPartyButtons|trim}
-								<fieldset>
-									<legend>{lang}wcf.user.login.3rdParty{/lang}</legend>
+								<section class="section">
+									<h2 class="sectionTitle">{lang}wcf.user.login.3rdParty{/lang}</h2>
 									<ul class="buttonList smallButtons thirdPartyLogin">
 										{@$__3rdPartyButtons}	
 									</ul>
-								</fieldset>
+								</section>
 							{/if}
 						</form>
 					</div>

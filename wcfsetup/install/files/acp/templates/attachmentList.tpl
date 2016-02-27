@@ -11,43 +11,41 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.attachment.list{/lang}</h1>
-	<p>{lang}wcf.acp.attachment.stats{/lang}</p>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.attachment.list{/lang}</h1>
+	<p class="contentHeaderDescription">{lang}wcf.acp.attachment.stats{/lang}</p>
 </header>
 
 {include file='formError'}
 
 <form method="post" action="{link controller='AttachmentList'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
-			
-			<dl>
-				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="long" />
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="filename">{lang}wcf.attachment.filename{/lang}</label></dt>
-				<dd>
-					<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="fileType">{lang}wcf.attachment.fileType{/lang}</label></dt>
-				<dd>
-					<select name="fileType" id="fileType">
-						<option value="">{lang}wcf.global.noSelection{/lang}</option>
-						{htmlOptions options=$availableFileTypes selected=$fileType}
-					</select>
-				</dd>
-			</dl>
-		</fieldset>
-	</div>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<dl>
+			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+			<dd>
+				<input type="text" id="username" name="username" value="{$username}" class="long" />
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label for="filename">{lang}wcf.attachment.filename{/lang}</label></dt>
+			<dd>
+				<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label for="fileType">{lang}wcf.attachment.fileType{/lang}</label></dt>
+			<dd>
+				<select name="fileType" id="fileType">
+					<option value="">{lang}wcf.global.noSelection{/lang}</option>
+					{htmlOptions options=$availableFileTypes selected=$fileType}
+				</select>
+			</dd>
+		</dl>
+	</section>
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
@@ -75,11 +73,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.attachment.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

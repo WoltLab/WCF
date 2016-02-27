@@ -15,8 +15,8 @@
 	</script>
 {/if}
 
-<header class="boxHeadline">
-	<h1 id="mediaActionTitle">{lang}wcf.acp.media.{$action}{/lang}</h1>
+<header class="contentHeader">
+	<h1 id="mediaActionTitle" class="contentTitle">{lang}wcf.acp.media.{$action}{/lang}</h1>
 </header>
 
 {if $action == 'edit'}
@@ -38,8 +38,8 @@
 </div>
 
 {if $action == 'add'}
-	<section class="marginTop">
-		<h1>{lang}wcf.media.file{/lang}</h1>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.media.file{/lang}</h2>
 		
 		<dl>
 			<dt></dt>
@@ -51,8 +51,8 @@
 	</section>
 {else}
 	<form method="post" action="{link controller='MediaEdit' object=$media}{/link}">
-		<section class="marginTop">
-			<h1>{lang}wcf.global.form.data{/lang}</h1>
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.global.form.data{/lang}</h2>
 			
 			<dl>
 				<dt>{lang}wcf.media.file{/lang}</dt>

@@ -9,44 +9,42 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.paidSubscription.transactionLog.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog.list{/lang}</h1>
 </header>
 
 <form method="post" action="{link controller='PaidSubscriptionTransactionLogList'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
-			
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<dl>
+			<dt><label for="transactionID">{lang}wcf.acp.paidSubscription.transactionLog.transactionID{/lang}</label></dt>
+			<dd>
+				<input type="text" id="transactionID" name="transactionID" value="{$transactionID}" class="long" />
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+			<dd>
+				<input type="text" id="username" name="username" value="{$username}" class="long" />
+			</dd>
+		</dl>
+		
+		{if $availableSubscriptions|count}
 			<dl>
-				<dt><label for="transactionID">{lang}wcf.acp.paidSubscription.transactionLog.transactionID{/lang}</label></dt>
+				<dt><label for="subscriptionID">{lang}wcf.acp.paidSubscription.subscription{/lang}</label></dt>
 				<dd>
-					<input type="text" id="transactionID" name="transactionID" value="{$transactionID}" class="long" />
+					<select name="subscriptionID" id="subscriptionID">
+						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+						{foreach from=$availableSubscriptions item=availableSubscription}
+							<option value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID == $subscriptionID} selected="selected"{/if}>{$availableSubscription->title|language}</option>
+						{/foreach}
+					</select>
 				</dd>
 			</dl>
-			
-			<dl>
-				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="long" />
-				</dd>
-			</dl>
-			
-			{if $availableSubscriptions|count}
-				<dl>
-					<dt><label for="subscriptionID">{lang}wcf.acp.paidSubscription.subscription{/lang}</label></dt>
-					<dd>
-						<select name="subscriptionID" id="subscriptionID">
-							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-							{foreach from=$availableSubscriptions item=availableSubscription}
-								<option value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID == $subscriptionID} selected="selected"{/if}>{$availableSubscription->title|language}</option>
-							{/foreach}
-						</select>
-					</dd>
-				</dl>
-			{/if}
-		</fieldset>
-	</div>
+		{/if}
+	</section>
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
@@ -74,11 +72,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.paidSubscription.transactionLog.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

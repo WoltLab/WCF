@@ -208,10 +208,6 @@ define(
 			
 			if (!listItems.length) {
 				this._search.hideSearch();
-				
-				if (true) {
-					elById('mediaManagerMediaUploadButton').classList.remove('marginTop');
-				}
 			}
 		},
 		
@@ -277,10 +273,6 @@ define(
 			
 			if (this._media.size === 1) {
 				this._search.showSearch();
-				
-				if (true) {
-					elById('mediaManagerMediaUploadButton').classList.add('marginTop');
-				}
 			}
 		},
 		

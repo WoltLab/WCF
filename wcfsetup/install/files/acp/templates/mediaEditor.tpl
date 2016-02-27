@@ -1,4 +1,4 @@
-<div id="mediaThumbnail" class="framed"></div>
+<div id="mediaThumbnail"></div>
 
 <div class="box48">
 	<span id="mediaFileIcon" class="icon icon48 fa-file-o"></span>
@@ -18,8 +18,8 @@
 	</dl>
 </div>
 
-<fieldset class="marginTop">
-	<legend>{lang}wcf.global.form.data{/lang}</legend>
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.global.form.data{/lang}</h2>
 	
 	<dl>
 		<dt></dt>
@@ -34,7 +34,7 @@
 	{include file='languageChooser' label='wcf.media.languageID'}
 	
 	<dl>
-		<dt>{lang}wcf.global.title{/lang}</dt>
+		<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 		<dd>
 			<input type="text" id="title" name="title" class="long" />
 		</dd>
@@ -42,7 +42,7 @@
 	{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=true}
 	
 	<dl>
-		<dt>{lang}wcf.media.caption{/lang}</dt>
+		<dt><label for="caption">{lang}wcf.media.caption{/lang}</label></dt>
 		<dd>
 			<textarea id="caption" name="caption" cols="40" rows="3"></textarea>
 		</dd>
@@ -50,7 +50,7 @@
 	{include file='multipleLanguageInputJavascript' elementIdentifier='caption' forceSelection=true}
 	
 	<dl>
-		<dt>{lang}wcf.media.altText{/lang}</dt>
+		<dt><label for="altText">{lang}wcf.media.altText{/lang}</label></dt>
 		<dd>
 			<input type="text" id="altText" name="altText" class="long" />
 		</dd>
@@ -58,7 +58,7 @@
 	{include file='multipleLanguageInputJavascript' elementIdentifier='altText' forceSelection=true}
 	
 	{event name='dataFields'}
-</fieldset>
+</section>
 
 <div class="formSubmit">
 	<button data-type="submit" class="buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>

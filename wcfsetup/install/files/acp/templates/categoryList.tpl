@@ -66,8 +66,8 @@
 	</script>
 {/if}
 
-<header class="boxHeadline">
-	<h1>{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -87,7 +87,7 @@
 </div>
 
 {hascontent}
-	<section id="categoryList" class="container containerPadding marginTop{if $objectType->getProcessor()->canEditCategory()} sortableListContainer{/if}">
+	<div id="categoryList" class="section{if $objectType->getProcessor()->canEditCategory()} sortableListContainer{/if}">
 		<ol class="categoryList sortableList" data-object-id="0">
 			{content}
 				{assign var=oldDepth value=0}
@@ -130,7 +130,7 @@
 				{section name=i loop=$oldDepth}</ol></li>{/section}
 			{/content}
 		</ol>
-	</section>
+	</div>
 	
 	<div class="formSubmit">
 		<button class="button" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>

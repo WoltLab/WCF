@@ -29,8 +29,8 @@
 
 {include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.moderation.activation{/lang}: {$queue->getTitle()}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.moderation.activation{/lang}: {$queue->getTitle()}</h1>
 	
 	{if $queue->lastChangeTime}
 		<dl class="plain inlineDataList">
@@ -62,15 +62,15 @@
 
 {include file='formError'}
 
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.moderation.activation.content{/lang}</h2>
-	<p>{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
-</header>
+<section class="section sectionContainerList">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.moderation.activation.content{/lang}</h2>
+		<small class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</small>
+	</header>
 
-<div class="marginTop">
 	{@$disabledContent}
-</div>
-
+</section>
+	
 <div class="contentNavigation">
 	<nav>
 		<ul>
@@ -85,18 +85,18 @@
 	</nav>
 </div>
 
-<header id="comments" class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
-	<p>{lang}wcf.moderation.comments.description{/lang}</p>
-</header>
-
 {include file='__commentJavaScript' commentContainerID='moderationQueueCommentList'}
 
-<div class="container marginTop moderationComments">
+<section id="comments" class="section sectionContainerList moderationComments">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
+		<small class="sectionDescription">{lang}wcf.moderation.comments.description{/lang}</small>
+	</header>
+	
 	<ul id="moderationQueueCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$queueID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{@$commentList->countObjects()}" data-last-comment-time="{@$lastCommentTime}">
 		{include file='commentList'}
 	</ul>
-</div>
+</section>
 
 {include file='footer'}
 

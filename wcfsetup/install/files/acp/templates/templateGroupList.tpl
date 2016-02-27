@@ -1,27 +1,27 @@
 {include file='header' pageTitle='wcf.acp.template.group.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.template.group.list{/lang}</h1>
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.Action.Delete('wcf\\data\\template\\group\\TemplateGroupAction', '.jsTemplateGroupRow');
-			
-			var options = { };
-			{if $pages > 1}
-				options.refreshPage = true;
-				{if $pages == $pageNo}
-					options.updatePageNumber = -1;
-				{/if}
-			{else}
-				options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
-			{/if}
-			
-			new WCF.Table.EmptyTableHandler($('#templateGroupTableContainer'), 'jsTemplateGroupRow', options);
-		});
-		//]]>
-	</script>
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Action.Delete('wcf\\data\\template\\group\\TemplateGroupAction', '.jsTemplateGroupRow');
+		
+		var options = { };
+		{if $pages > 1}
+		options.refreshPage = true;
+		{if $pages == $pageNo}
+		options.updatePageNumber = -1;
+		{/if}
+		{else}
+		options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
+		{/if}
+		
+		new WCF.Table.EmptyTableHandler($('#templateGroupTableContainer'), 'jsTemplateGroupRow', options);
+	});
+	//]]>
+</script>
+
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.template.group.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -37,11 +37,7 @@
 </div>
 
 {if $objects|count}
-	<div id="templateGroupTableContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.template.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div id="templateGroupTableContainer" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

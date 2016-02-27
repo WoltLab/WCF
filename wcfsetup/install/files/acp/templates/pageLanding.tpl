@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.page.landing'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.page.landing{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.page.landing{/lang}</h1>
 </header>
 
 {include file='formError'}
@@ -21,7 +21,7 @@
 </div>
 
 <form method="post" action="{link controller='PageLanding'}{/link}">
-	<div class="tabularBox marginTop">
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

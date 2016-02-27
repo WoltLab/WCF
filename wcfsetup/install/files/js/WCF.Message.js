@@ -477,7 +477,7 @@ WCF.Message.DefaultPreview = WCF.Message.Preview.extend({
 	_handleResponse: function(data) {
 		var $preview = $('#previewContainer');
 		if (!$preview.length) {
-			$preview = $('<div class="container containerPadding marginTop" id="previewContainer"><fieldset><legend>' + WCF.Language.get('wcf.global.preview') + '</legend><div class="messageTextPreview"></div></fieldset>').prependTo($('#messageContainer')).wcfFadeIn();
+			$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="messageTextPreview"></div></section>').prependTo($('#messageContainer')).wcfFadeIn();
 		}
 		
 		$preview.find('div:eq(0)').html(data.returnValues.message);
@@ -2175,15 +2175,15 @@ WCF.Message.Share.Content = Class.extend({
 			}
 			
 			// permalink (plain text)
-			var $fieldset = $('<fieldset><legend><label for="__sharePermalink">' + WCF.Language.get('wcf.message.share.permalink') + '</label></legend></fieldset>').appendTo(this._dialog);
+			var $fieldset = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalink">' + WCF.Language.get('wcf.message.share.permalink') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalink" class="long" readonly="readonly" />').attr('value', $link).appendTo($fieldset);
 			
 			// permalink (BBCode)
-			var $fieldset = $('<fieldset><legend><label for="__sharePermalinkBBCode">' + WCF.Language.get('wcf.message.share.permalink.bbcode') + '</label></legend></fieldset>').appendTo(this._dialog);
+			var $fieldset = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalinkBBCode">' + WCF.Language.get('wcf.message.share.permalink.bbcode') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalinkBBCode" class="long" readonly="readonly" />').attr('value', '[url=\'' + $link + '\']' + $title + '[/url]').appendTo($fieldset);
 			
 			// permalink (HTML)
-			var $fieldset = $('<fieldset><legend><label for="__sharePermalinkHTML">' + WCF.Language.get('wcf.message.share.permalink.html') + '</label></legend></fieldset>').appendTo(this._dialog);
+			var $fieldset = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalinkHTML">' + WCF.Language.get('wcf.message.share.permalink.html') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalinkHTML" class="long" readonly="readonly" />').attr('value', '<a href="' + $link + '">' + WCF.String.escapeHTML($title) + '</a>').appendTo($fieldset);
 			
 			this._cache[$key] = this._dialog.html();
@@ -2653,7 +2653,7 @@ WCF.Message.UserMention = Class.extend({
 		var $listItem = $('<li />').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._dropdownMenu);
 		
 		var $box16 = $('<div />').addClass('box16').appendTo($listItem);
-		$box16.append($(listItemData.icon).addClass('framed'));
+		$box16.append($(listItemData.icon));
 		$box16.append($('<div />').append($('<span />').text(listItemData.label)));
 	},
 	

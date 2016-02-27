@@ -21,10 +21,10 @@
 </div>
 
 {if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
-	<div id="mediaManagerMediaUploadButton" class="marginTop"></div>
+	<div id="mediaManagerMediaUploadButton"></div>
 {/if}
 
-<div class="jsClipboardContainer marginTop" data-type="com.woltlab.wcf.media">
+<div class="jsClipboardContainer" data-type="com.woltlab.wcf.media">
 	<input type="checkbox" class="jsClipboardMarkAll" style="display: none;" />
 	<ul id="mediaManagerMediaList">
 		{include file='mediaListItems'}

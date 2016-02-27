@@ -10,8 +10,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.style.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.style.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -27,12 +27,12 @@
 	</nav>
 </div>
 
-<div class="container marginTop">
+<div class="section sectionContainerList">
 	<ol class="containerList styleList">
 		{foreach from=$objects item=style}
 			<li>
 				<div class="box64">
-					<span class="framed"><img src="{@$style->getPreviewImage()}" alt="" /></span>
+					<span><img src="{@$style->getPreviewImage()}" alt="" /></span>
 					<div class="details">
 						<div class="containerHeadline">
 							<h3><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h3>

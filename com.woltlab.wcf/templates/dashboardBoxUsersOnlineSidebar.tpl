@@ -4,4 +4,4 @@
 	{/foreach}
 </ul>
 
-<p class="marginTopTiny"><small>{lang}wcf.user.usersOnline.detail{/lang}{if USERS_ONLINE_RECORD} - {lang}wcf.user.usersOnline.record{/lang}{/if}</small></p>
+<p><small>{lang}wcf.user.usersOnline.detail{/lang}{if USERS_ONLINE_RECORD} - {lang}wcf.user.usersOnline.record{/lang}{/if}</small></p>

@@ -1,13 +1,13 @@
 {if !$supportPaste|isset}{assign var=supportPaste value=false}{/if}
 {foreach from=$messages item=message}
-	<article class="message messageReduced marginTop jsInvalidQuoteTarget" data-link="{@$message->getLink()}" data-username="{$message->getUsername()}">
+	<article class="message messageReduced jsInvalidQuoteTarget" data-link="{@$message->getLink()}" data-username="{$message->getUsername()}">
 		<div>
 			<section class="messageContent">
 				<div>
 					<header class="messageHeader">
 						<div class="box32">
 							{if $userProfiles[$message->getUserID()]|isset}
-								<a href="{link controller='User' object=$userProfiles[$message->getUserID()]}{/link}" class="framed">{@$userProfiles[$message->getUserID()]->getAvatar()->getImageTag(32)}</a>
+								<a href="{link controller='User' object=$userProfiles[$message->getUserID()]}{/link}">{@$userProfiles[$message->getUserID()]->getAvatar()->getImageTag(32)}</a>
 							{/if}
 							
 							<div class="messageHeadline">

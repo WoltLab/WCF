@@ -199,6 +199,10 @@
 		&.active {
 			background-color: $wcfDropdownBackgroundActive;
 			color: $wcfDropdownLinkActive;
+			
+			> a {
+				color: $wcfDropdownLinkActive;
+			}
 		}
 		
 		&.dropdownDivider {
@@ -253,10 +257,6 @@
 		
 		> a {
 			color: $wcfDropdownLink;
-			
-			&:hover {
-				color: $wcfDropdownLinkActive;
-			}
 		}
 		
 		> a > small {

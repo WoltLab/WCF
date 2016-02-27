@@ -5,9 +5,9 @@
 			<div class="box128">
 				<div class="userAvatar">
 					{if $user->userID == $__wcf->user->userID}
-						<a href="{link controller='AvatarEdit'}{/link}" class="framed jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{@$user->getAvatar()->getImageTag(128)}</a>
+						<a href="{link controller='AvatarEdit'}{/link}" class="jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{@$user->getAvatar()->getImageTag(128)}</a>
 					{else}
-						<span class="framed">{@$user->getAvatar()->getImageTag(128)}</span>
+						<span>{@$user->getAvatar()->getImageTag(128)}</span>
 					{/if}
 				</div>
 			

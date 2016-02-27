@@ -1,7 +1,7 @@
 <section class="dashboardBox dashboardBoxSignedInAs">
 	<h1 class="invisible">{lang}wcf.dashboard.box.{$box->boxName}{/lang}</h1>
 	
-	<div class="box96 framed">
+	<div class="box96">
 		{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 		
 		<div>

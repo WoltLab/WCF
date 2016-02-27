@@ -20,8 +20,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}{@$pageTitle}{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}</h1>
 </header>
 
 {if $errorField && $installingImportedStyle}
@@ -40,7 +40,7 @@
 	</nav>
 </div>
 
-<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
+<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
 			<li><a href="{@$__wcf->getAnchor('packageSearch')}">{lang}wcf.acp.package.search{/lang}</a></li>
@@ -48,10 +48,8 @@
 		</ul>
 	</nav>
 	
-	<div id="packageSearch" class="container containerPadding tabMenuContent">
-		<section>
-			<h1>{lang}wcf.acp.package.search.conditions{/lang}</h1>
-			
+	<div id="packageSearch" class="tabMenuContent">
+		<div class="section">
 			<dl>
 				<dt><label for="packageName">{lang}wcf.acp.package.search.packageName{/lang}</label></dt>
 				<dd><input type="text" id="packageName" value="" class="long" data-search-name="packageName" /></dd>
@@ -67,26 +65,22 @@
 					<small>{lang}wcf.acp.package.search.package.description{/lang}</small>
 				</dd>
 			</dl>
-		</section>
+		</div>
 		
 		<div class="formSubmit">
 			<button class="jsButtonPackageSearch">{lang}wcf.global.button.submit{/lang}</button>
 		</div>
 		
-		<div id="packageSearchResultContainer" style="display: none;">
-			<header class="boxHeadline boxSubHeadline">
-				<h2>{lang}wcf.acp.package.search.resultList{/lang} <span class="badge">0</span></h2>
-			</header>
+		<section class="section" id="packageSearchResultContainer" style="display: none;">
+			<h2 class="sectionTitle">{lang}wcf.acp.package.search.resultList{/lang} <span class="badge">0</span></h2>
 			
 			<div id="packageSearchResultList"></div>
-		</div>
+		</section>
 	</div>
 	
-	<div id="upload" class="container containerPadding tabMenuContent">
+	<div id="upload" class="tabMenuContent">
 		<form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
-			<section>
-				<h1>{lang}wcf.acp.package.source{/lang}</h1>
-				
+			<div class="section">
 				<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
 					<dt><label for="uploadPackage">{lang}wcf.acp.package.source.upload{/lang}</label></dt>
 					<dd>
@@ -106,7 +100,7 @@
 						<small>{lang}wcf.acp.package.source.upload.description{/lang}</small>
 					</dd>
 				</dl>
-			</section>
+			</div>
 			
 			<div class="formSubmit">
 				<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />

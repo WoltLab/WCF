@@ -1,10 +1,10 @@
 {if $users|count}
-	<div class="container marginTop">
+	<div class="section sectionContainerList">
 		<ol class="containerList jsGroupedUserList">
 			{foreach from=$users item=user}
 				<li data-object-id="{@$user->userID}">
 					<div class="box48">
-						<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" class="framed">{@$user->getAvatar()->getImageTag(48)}</a>
+						<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(48)}</a>
 						
 						<div class="details userInformation">
 							<div class="containerHeadline">
@@ -33,5 +33,5 @@
 		</ol>
 	</div>
 {else}
-	<p class="marginTop">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

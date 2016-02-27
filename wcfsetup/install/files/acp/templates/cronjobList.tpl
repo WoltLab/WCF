@@ -1,10 +1,5 @@
 {include file='header' pageTitle='wcf.acp.cronjob.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
-	<p>{lang}wcf.acp.cronjob.subtitle{/lang}</p>
-</header>
-
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
@@ -15,6 +10,11 @@
 	});
 	//]]>
 </script>
+
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.cronjob.list{/lang}</h1>
+	<p class="contentHeaderDescription">{lang}wcf.acp.cronjob.subtitle{/lang}</p>
+</header>
 
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="CronjobList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
@@ -29,11 +29,7 @@
 </div>
 
 {hascontent}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.cronjob.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

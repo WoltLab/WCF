@@ -37,15 +37,16 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 		}
 		
 		return <<<HTML
-<fieldset class="marginTop">
-	<legend>{$this->getLabel()}</legend>
-	
-	<small>{$this->getDescription()}</small>
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{$this->getLabel()}</h2>
+		<small class="sectionDescription">{$this->getDescription()}</small>
+	</header>
 	
 	<dl class="wide">
 		{$content}
 	</dl>
-</fieldset>
+</section>
 HTML;
 	}
 }

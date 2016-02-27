@@ -32,9 +32,9 @@
 			<div id="content" class="content">
 
 {* content above was taken from 'header.tpl' *}
-
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.rescueMode{/lang}</h1>
+				
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.rescueMode{/lang}</h1>
 </header>
 
 <p class="info">{lang}wcf.acp.rescueMode.description{/lang}</p>

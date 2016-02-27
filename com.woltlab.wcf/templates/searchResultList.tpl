@@ -1,16 +1,16 @@
-<div class="container marginTop">
+<div class="section sectionContainerList">
 	<ul class="containerList messageSearchResultList">
 		{foreach from=$objects item=message}
 			<li>
 				<div class="box48">
 					{if $message->getUserProfile()}
 						{if $message->getUserProfile()->userID}
-							<a href="{link controller='User' object=$message->getUserProfile()}{/link}" title="{$message->getUserProfile()->username}" class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</a>
+							<a href="{link controller='User' object=$message->getUserProfile()}{/link}" title="{$message->getUserProfile()->username}">{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</a>
 						{else}
-							<p class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</p>
+							<p>{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</p>
 						{/if}
 					{else}
-						<p class="framed"><span class="icon icon48 fa-file-o"></span></p>
+						<p><span class="icon icon48 fa-file-o"></span></p>
 					{/if}
 					
 					<div>
@@ -39,7 +39,7 @@
 							<small class="containerContentType">{lang}wcf.search.object.{@$message->getObjectTypeName()}{/lang}</small>
 						</div>
 						
-						<p>{@$message->getFormattedMessage()}</p>
+						<div class="containerContent">{@$message->getFormattedMessage()}</div>
 					</div>
 				</div>
 			</li>

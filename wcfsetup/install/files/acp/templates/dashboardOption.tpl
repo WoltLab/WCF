@@ -8,9 +8,9 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.dashboard.option{/lang}</h1>
-	<p>{lang}wcf.dashboard.objectType.{$objectType->objectType}{/lang}</p>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.dashboard.option{/lang}</h1>
+	<p class="contentHeaderDescription">{lang}wcf.dashboard.objectType.{$objectType->objectType}{/lang}</p>
 </header>
 
 <p class="info">{lang}wcf.acp.dashboard.box.sort{/lang}</p>
@@ -25,7 +25,7 @@
 	</nav>
 </div>
 
-<div class="tabMenuContainer">
+<div class="section tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
 			{if $objectType->allowcontent}
@@ -40,11 +40,11 @@
 	</nav>
 	
 	{if $objectType->allowcontent}
-		<div id="dashboard-content" class="container containerPadding tabMenuContent hidden">
-			<fieldset>
-				<legend>{lang}wcf.dashboard.box.enabledBoxes{/lang}</legend>
+		<div id="dashboard-content" class="tabMenuContent hidden">
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.dashboard.box.enabledBoxes{/lang}</h2>
 				
-				<div class="container containerPadding sortableListContainer">
+				<div class="sortableListContainer">
 					<ol class="sortableList simpleSortableList" data-object-id="0">
 						{foreach from=$enabledBoxes item=boxID}
 							{if $boxes[$boxID]->boxType == 'content'}
@@ -55,12 +55,12 @@
 						{/foreach}
 					</ol>
 				</div>
-			</fieldset>
+			</section>
 			
-			<fieldset>
-				<legend>{lang}wcf.dashboard.box.availableBoxes{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.dashboard.box.availableBoxes{/lang}</h2>
 				
-				<div class="container containerPadding sortableListContainer">
+				<div class="sortableListContainer">
 					<ol class="sortableList simpleSortableList">
 						{foreach from=$boxes item=box}
 							{if $box->boxType == 'content' && !$box->boxID|in_array:$enabledBoxes}
@@ -71,7 +71,7 @@
 						{/foreach}
 					</ol>
 				</div>
-			</fieldset>
+			</section>
 			
 			<div class="formSubmit">
 				<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
@@ -88,11 +88,11 @@
 	{/if}
 	
 	{if $objectType->allowsidebar}
-		<div id="dashboard-sidebar" class="container containerPadding tabMenuContent hidden">
-			<fieldset>
-				<legend>{lang}wcf.dashboard.box.enabledBoxes{/lang}</legend>
+		<div id="dashboard-sidebar" class="tabMenuContent hidden">
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.dashboard.box.enabledBoxes{/lang}</h2>
 				
-				<div class="container containerPadding sortableListContainer">
+				<div class="sortableListContainer">
 					<ol class="sortableList simpleSortableList" data-object-id="0">
 						{foreach from=$enabledBoxes item=boxID}
 							{if $boxes[$boxID]->boxType == 'sidebar'}
@@ -103,12 +103,12 @@
 						{/foreach}
 					</ol>
 				</div>
-			</fieldset>
+			</section>
 			
-			<fieldset>
-				<legend>{lang}wcf.dashboard.box.availableBoxes{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.dashboard.box.availableBoxes{/lang}</h2>
 				
-				<div id="dashboard-sidebar-enabled" class="container containerPadding sortableListContainer">
+				<div id="dashboard-sidebar-enabled" class="sortableListContainer">
 					<ol class="sortableList simpleSortableList">
 						{foreach from=$boxes item=box}
 							{if $box->boxType == 'sidebar' && !$box->boxID|in_array:$enabledBoxes}
@@ -119,7 +119,7 @@
 						{/foreach}
 					</ol>
 				</div>
-			</fieldset>
+			</section>
 			
 			<div class="formSubmit">
 				<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>

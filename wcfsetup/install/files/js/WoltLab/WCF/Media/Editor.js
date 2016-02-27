@@ -221,7 +221,6 @@ define(
 		 */
 		_setData: function() {
 			this._elements.thumbnail.innerHTML = '';
-			this._elements.fileIcon.parentNode.classList.remove('marginTop');
 			
 			this._elements.filename.textContent = this._media.filename;
 			this._elements.filesize.textContent = this._media.formattedFilesize;
@@ -247,8 +246,6 @@ define(
 					elAttr(img, 'alt', '');
 					
 					this._elements.thumbnail.appendChild(img);
-					
-					this._elements.fileIcon.parentNode.classList.add('marginTop');
 				}
 				
 				this._elements.imageDimensions.textContent = Language.get('wcf.media.imageDimensions.value', {

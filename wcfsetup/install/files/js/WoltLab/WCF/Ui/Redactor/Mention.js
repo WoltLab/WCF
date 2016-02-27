@@ -244,7 +244,7 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 				link = elCreate('a');
 				link.addEventListener('click', callbackClick);
 				link.className = 'box16';
-				link.innerHTML = '<span class="framed">' + user.icon + '</span> <span>' + user.label + '</span>';
+				link.innerHTML = '<span>' + user.icon + '</span> <span>' + user.label + '</span>';
 				elData(link, 'user-id', user.objectID);
 				elData(link, 'username', user.label);
 				

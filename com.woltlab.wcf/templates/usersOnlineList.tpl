@@ -30,12 +30,12 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{capture assign='sidebar'}
-	<div>
+{capture assign='sidebarRight'}
+	<section class="box">
 		<form method="post" action="{link controller='UsersOnlineList'}{/link}">
-			<fieldset>
-				<legend><label for="sortField">{lang}wcf.user.members.sort{/lang}</label></legend>
+			<h2 class="boxTitle">{lang}wcf.user.members.sort{/lang}</h2>
 				
+			<div class="boxContent">
 				<dl>
 					<dt></dt>
 					<dd>
@@ -55,39 +55,50 @@
 						</select>
 					</dd>
 				</dl>
-			</fieldset>
 			
-			<div class="formSubmit">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				{@SID_INPUT_TAG}
+				<div class="formSubmit">
+					<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+					{@SID_INPUT_TAG}
+				</div>
 			</div>
 		</form>
-	</div>
+	</section>
 	
-	<fieldset>
-		<legend>{lang}wcf.user.usersOnline{/lang}</legend>
+	<section class="box">
+		<h2 class="boxTitle">{lang}wcf.user.usersOnline{/lang}</h2>
 		
-		<p><small>{lang usersOnlineList=$objects}wcf.user.usersOnline.detail{/lang}</small></p>
-		{if USERS_ONLINE_RECORD}<p><small>{lang}wcf.user.usersOnline.record{/lang}</small></p>{/if}
+		<div class="boxContent">
+			<p>{lang usersOnlineList=$objects}wcf.user.usersOnline.detail{/lang}</p>
+			{if USERS_ONLINE_RECORD}<p>{lang}wcf.user.usersOnline.record{/lang}</p>{/if}
+		</div>
 		
 		{if USERS_ONLINE_ENABLE_LEGEND && $objects->getUsersOnlineMarkings()|count}
-			<div class="marginTopSmall">
-				<p><small>{lang}wcf.user.usersOnline.marking.legend{/lang}:</small></p>
-				<ul class="dataList">
-					{foreach from=$objects->getUsersOnlineMarkings() item=usersOnlineMarking}
-						<li><small>{@$usersOnlineMarking}</small></li>
-					{/foreach}
-				</ul>
+			<div class="boxContent">
+				<dl class="plain inlineDataList usersOnlineLegend">
+					<dt>{lang}wcf.user.usersOnline.marking.legend{/lang}</dt>
+					<dd>
+						<ul class="inlineList commaSeparated">
+							{foreach from=$objects->getUsersOnlineMarkings() item=usersOnlineMarking}
+								<li>{@$usersOnlineMarking}</li>
+							{/foreach}
+						</ul>
+					</dd>
+				
+				</dl>
 			</div>
 		{/if}
-	</fieldset>
+	</section>
 	
 	{@$__boxSidebar}
 {/capture}
 
-{include file='header' sidebarOrientation='right'}
+{include file='header'}
 
 {include file='userNotice'}
+
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.user.usersOnline{/lang}</h1>
+</header>
 
 {assign var=usersOnlineList value=''}
 {assign var=usersOnline value=0}
@@ -121,7 +132,7 @@
 		{capture append=usersOnlineList}
 			<li>
 				<div class="box48">
-					<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" class="framed">{@$user->getAvatar()->getImageTag(48)}</a>
+					<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(48)}</a>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
@@ -152,7 +163,7 @@
 		{capture append=robotsOnlineList}
 			<li>
 				<div class="box48">
-					<div class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="icon48" /></div>
+					<div><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="userAvatarImage icon48" /></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
@@ -172,7 +183,7 @@
 		{capture append=guestsOnlineList}
 			<li>
 				<div class="box48">
-					<div class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon48" /></div>
+					<div><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon48" /></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
@@ -203,39 +214,33 @@
 </div>
 
 {if $usersOnline}
-	<header class="boxHeadline">
-		<h1>{lang}wcf.user.usersOnline{/lang} <span class="badge">{#$usersOnline}</span></h1>
-	</header>
-	
-	<div class="container marginTop">
+	<section class="section sectionContainerList">
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.users{/lang} <span class="badge">{#$usersOnline}</span></h2>
+		
 		<ol class="containerList userList">
 			{@$usersOnlineList}
 		</ol>
-	</div>
+	</section>
 {/if}
 
 {if $guestsOnline && USERS_ONLINE_SHOW_GUESTS}
-	<header class="boxHeadline">
-		<h1>{lang}wcf.user.usersOnline.guests{/lang} <span class="badge">{#$guestsOnline}</span></h1>
-	</header>
-	
-	<div class="container marginTop">
+	<section class="section sectionContainerList">
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.guests{/lang} <span class="badge">{#$guestsOnline}</span></h2>
+		
 		<ol class="containerList">
 			{@$guestsOnlineList}
 		</ol>
-	</div>
+	</section>
 {/if}
 
 {if $robotsOnline && USERS_ONLINE_SHOW_ROBOTS}
-	<header class="boxHeadline">
-		<h1>{lang}wcf.user.usersOnline.robots{/lang} <span class="badge">{#$robotsOnline}</span></h1>
-	</header>
-	
-	<div class="container marginTop">
+	<section class="section sectionContainerList">
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.robots{/lang} <span class="badge">{#$robotsOnline}</span></h2>
+		
 		<ol class="containerList">
 			{@$robotsOnlineList}
 		</ol>
-	</div>
+	</section>
 {/if}
 
 <div class="contentNavigation">

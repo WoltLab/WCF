@@ -48,8 +48,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}{@$pageTitle}{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}</h1>
 </header>
 
 {assign var=encodedURL value=$url|rawurlencode}
@@ -69,11 +69,7 @@
 </div>
 
 {if $users|count}
-	<div id="userTableContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.user.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div id="userTableContainer" class="section tabularBox">
 		<table data-type="com.woltlab.wcf.user" class="table jsClipboardContainer">
 			<thead>
 				<tr>
@@ -118,7 +114,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnUserID">{@$user->userID}</td>
-						<td class="columnIcon"><p class="framed">{@$user->getAvatar()->getImageTag(24)}</p></td>
+						<td class="columnIcon">{@$user->getAvatar()->getImageTag(24)}</td>
 						<td class="columnTitle columnUsername">{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}{if MODULE_USER_RANK}{if $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}{if $user->getRank() && $user->getRank()->rankImage} <span class="userRankImage">{@$user->getRank()->getImage()}</span>{/if}{/if}</td>
 						
 						{foreach from=$columnHeads key=column item=columnLanguageVariable}

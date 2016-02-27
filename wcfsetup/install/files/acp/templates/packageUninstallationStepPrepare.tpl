@@ -1,9 +1,9 @@
 <div id="packageInstallationDialogContainer">
-	<header class="box48 boxHeadline">
+	<header class="box48 contentHeader">
 		<span class="icon icon48 fa-spinner"></span>
 		
 		<div>
-			<h1>{lang}wcf.acp.package.uninstallation.title{/lang}</h1>
+			<h1 class="contentTitle">{lang}wcf.acp.package.uninstallation.title{/lang}</h1>
 			<p id="packageInstallationAction">{lang}wcf.acp.package.uninstallation.step.prepare{/lang}</span></p>
 			<p><progress id="packageInstallationProgress" value="0" max="100">0%</progress></p>
 		</div>

@@ -1,7 +1,5 @@
-<fieldset>
-	<legend class="invisible">{lang}wcf.user.author{/lang}</legend>
-	
-	<div class="box96 framed">
+<div class="box">
+	<div class="boxContent box96">
 		{@$userProfile->getAvatar()->getImageTag(96)}
 		
 		<div>
@@ -24,4 +22,4 @@
 			{/if}
 		</div>
 	</div>
-</fieldset>
+</div>

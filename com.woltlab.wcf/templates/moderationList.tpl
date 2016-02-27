@@ -17,12 +17,12 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{capture assign='sidebar'}
+{capture assign='sidebarLeft'}
 	{* moderation type *}
-	<fieldset>
-		<legend>{lang}wcf.moderation.filterByType{/lang}</legend>
+	<section class="box">
+		<h2 class="boxTitle">{lang}wcf.moderation.filterByType{/lang}</h2>
 		
-		<nav>
+		<nav class="boxContent">
 			<ul>
 				<li{if $definitionID == 0} class="active"{/if}><a href="{link controller='ModerationList'}definitionID=0&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.type.all{/lang}</a></li>
 				{foreach from=$availableDefinitions key=__definitionID item=definitionName}
@@ -32,13 +32,13 @@
 				{event name='sidebarModerationType'}
 			</ul>
 		</nav>
-	</fieldset>
+	</section>
 	
 	{* assigned user *}
-	<fieldset>
-		<legend>{lang}wcf.moderation.filterByUser{/lang}</legend>
+	<section class="box">
+		<h2 class="boxTitle">{lang}wcf.moderation.filterByUser{/lang}</h2>
 		
-		<nav>
+		<nav class="boxContent">
 			<ul>
 				<li{if $assignedUserID == -1} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID=-1&status={@$status}&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.filterByUser.allEntries{/lang}</a></li>
 				<li{if $assignedUserID == 0} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID=0&status={@$status}&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.filterByUser.nobody{/lang}</a></li>
@@ -47,13 +47,13 @@
 				{event name='sidebarAssignedUser'}
 			</ul>
 		</nav>
-	</fieldset>
+	</section>
 	
 	{* status *}
-	<fieldset>
-		<legend>{lang}wcf.moderation.status{/lang}</legend>
+	<section class="box">
+		<h2 class="boxTitle">{lang}wcf.moderation.status{/lang}</h2>
 		
-		<nav>
+		<nav class="boxContent">
 			<ul>
 				<li{if $status == -1} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status=-1&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.status.outstanding{/lang}</a></li>
 				<li{if $status == 2} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status=2&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.status.done{/lang}</a></li>
@@ -61,7 +61,7 @@
 				{event name='sidebarStatus'}
 			</ul>
 		</nav>
-	</fieldset>
+	</section>
 	
 	{event name='sidebarBoxes'}
 {/capture}
@@ -70,10 +70,10 @@
 	<li class="jsOnly"><a href="#" title="{lang}wcf.moderation.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.moderation.markAllAsRead{/lang}</span></a></li>
 {/capture}
 
-{include file='header' sidebarOrientation='left'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.moderation.moderation{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge badgeInverse">{#$items}</span></h1>
 </header>
 
 {include file='userNotice'}
@@ -93,11 +93,7 @@
 </div>
 
 {if $objects|count}
-	<div class="marginTop tabularBox tabularBoxTitle messageGroupList moderationList">
-		<header>
-			<h2>{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox messageGroupList moderationList">
 		<table class="table">
 			<thead>
 				<tr>
@@ -115,7 +111,7 @@
 					<tr class="moderationQueueEntry{if $entry->isNew()} new{/if}" data-queue-id="{@$entry->queueID}">
 						<td class="columnIcon columnAvatar">
 							<div>
-								<p class="framed"{if $entry->isNew()} title="{lang}wcf.moderation.markAsRead.doubleClick{/lang}"{/if}>{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p>
+								<p{if $entry->isNew()} title="{lang}wcf.moderation.markAsRead.doubleClick{/lang}"{/if}>{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p>
 							</div>
 						</td>
 						<td class="columnText columnSubject">

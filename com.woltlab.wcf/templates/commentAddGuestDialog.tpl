@@ -1,5 +1,5 @@
 <div>
-	<fieldset>
+	<div class="section">
 		<dl{if $errorType[username]|isset} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd>
@@ -15,7 +15,7 @@
 				{/if}
 			</dd>
 		</dl>
-	</fieldset>
+	</div>
 	
 	{include file='captcha'}
 </div>

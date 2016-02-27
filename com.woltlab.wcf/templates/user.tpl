@@ -143,19 +143,7 @@
 {include file='userNotice'}
 
 {if !$user->isProtected()}
-	<div class="contentNavigation">
-		{hascontent}
-			<nav>
-				<ul>
-					{content}
-						{event name='contentNavigationButtons'}
-					{/content}
-				</ul>
-			</nav>
-		{/hascontent}
-	</div>
-	
-	<section id="profileContent" class="tabMenuContainer" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
+	<div id="profileContent" class="section tabMenuContainer userProfile" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
@@ -168,14 +156,14 @@
 		
 		{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
 			{if $menuItem->getContentManager()->isVisible($userID)}
-				<div id="{$menuItem->getIdentifier()}" class="container tabMenuContent" data-menu-item="{$menuItem->menuItem}">
+				<div id="{$menuItem->getIdentifier()}" class="tabMenuContent" data-menu-item="{$menuItem->menuItem}">
 					{if $menuItem === $__wcf->getUserProfileMenu()->getActiveMenuItem()}
 						{@$profileContent}
 					{/if}
 				</div>
 			{/if}
 		{/foreach}
-	</section>
+	</div>
 {else}
 	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
 {/if}

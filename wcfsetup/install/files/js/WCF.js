@@ -5764,7 +5764,7 @@ WCF.System.Worker = Class.extend({
 		else {
 			// exchange icon
 			this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check green');
-			this._dialog.find('.boxHeadline h1').text(WCF.Language.get('wcf.global.worker.completed'));
+			this._dialog.find('.contentHeader h1').text(WCF.Language.get('wcf.global.worker.completed'));
 			
 			// display continue button
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
@@ -7280,7 +7280,7 @@ WCF.Language.Chooser = Class.extend({
 		
 		for (var $languageID in languages) {
 			var $language = languages[$languageID];
-			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <div><h3>' + $language.languageName + '</h3></div></a></li>').appendTo($dropdownMenu);
+			var $item = $('<li class="boxFlag"><a class="box24"><div><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <div><h3>' + $language.languageName + '</h3></div></a></li>').appendTo($dropdownMenu);
 			$item.data('languageID', $languageID).click($.proxy(this._click, this));
 			
 			// update dropdown label

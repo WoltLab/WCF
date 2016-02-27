@@ -1,6 +1,6 @@
 <div class="sitemap">
 	{hascontent}
-		<div class="tabMenuContainer" data-active="sitemap_{@$defaultSitemapName}">
+		<div class="section tabMenuContainer" data-active="sitemap_{@$defaultSitemapName}">
 			<nav class="tabMenu">
 				<ul>
 					{content}
@@ -12,7 +12,7 @@
 			</nav>
 			
 			{foreach from=$tree item=sitemapName}
-				<div id="sitemap_{$sitemapName}" class="container containerPadding tabMenuContent hidden">
+				<div id="sitemap_{$sitemapName}" class="tabMenuContent hidden">
 					{if $sitemapName == $defaultSitemapName}{@$sitemap}{/if}
 				</div>
 			{/foreach}

@@ -4,7 +4,7 @@
 			<div>
 				<header class="messageHeader">
 					<div class="box32">
-						<a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}" class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(32)}</a>
+						<a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}">{@$message->getUserProfile()->getAvatar()->getImageTag(32)}</a>
 						
 						<div class="messageHeadline">
 							<h1><a href="{@$message->getLink()}">{$message->getTitle()}</a></h1>

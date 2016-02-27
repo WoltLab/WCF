@@ -1810,7 +1810,7 @@ WCF.User.SignaturePreview = WCF.Message.Preview.extend({
 		// get preview container
 		var $preview = $('#previewContainer');
 		if (!$preview.length) {
-			$preview = $('<fieldset id="previewContainer"><legend>' + WCF.Language.get('wcf.global.preview') + '</legend><div></div></fieldset>').insertBefore($('#signatureContainer')).wcfFadeIn();
+			$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div></div></section>').insertBefore($('#signatureContainer')).wcfFadeIn();
 		}
 		
 		$preview.children('div').first().html(data.returnValues.message);
@@ -3327,7 +3327,7 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 		
 		// create dialog
 		this._dialog = $('<div />').hide().appendTo(document.body);
-		this._dialog.append($('<fieldset><dl><dt><label for="' + optionName + 'Reason">' + WCF.Language.get('wcf.global.reason') + '</label></dt><dd><textarea id="' + optionName + 'Reason" cols="40" rows="3" />' + (WCF.Language.get('wcf.user.' + optionName + '.reason.description') != 'wcf.user.' + optionName + '.reason.description' ? '<small>' + WCF.Language.get('wcf.user.' + optionName + '.reason.description') + '</small>' : '') + '</dd></dl><dl><dt></dt><dd><label for="' + optionName + 'NeverExpires"><input type="checkbox" name="' + optionName + 'NeverExpires" id="' + optionName + 'NeverExpires" checked="checked" /> ' + WCF.Language.get('wcf.user.' + optionName + '.neverExpires') + '</label></dd></dl><dl id="' + optionName + 'ExpiresSettings" style="display: none;"><dt><label for="' + optionName + 'Expires">' + WCF.Language.get('wcf.user.' + optionName + '.expires') + '</label></dt><dd><input type="date" name="' + optionName + 'Expires" id="' + optionName + 'Expires" class="medium" min="' + new Date(TIME_NOW * 1000).toISOString() + '" data-ignore-timezone="true" /><small>' + WCF.Language.get('wcf.user.' + optionName + '.expires.description') + '</small></dd></dl></fieldset>'));
+		this._dialog.append($('<div class="section"><dl><dt><label for="' + optionName + 'Reason">' + WCF.Language.get('wcf.global.reason') + '</label></dt><dd><textarea id="' + optionName + 'Reason" cols="40" rows="3" />' + (WCF.Language.get('wcf.user.' + optionName + '.reason.description') != 'wcf.user.' + optionName + '.reason.description' ? '<small>' + WCF.Language.get('wcf.user.' + optionName + '.reason.description') + '</small>' : '') + '</dd></dl><dl><dt></dt><dd><label for="' + optionName + 'NeverExpires"><input type="checkbox" name="' + optionName + 'NeverExpires" id="' + optionName + 'NeverExpires" checked="checked" /> ' + WCF.Language.get('wcf.user.' + optionName + '.neverExpires') + '</label></dd></dl><dl id="' + optionName + 'ExpiresSettings" style="display: none;"><dt><label for="' + optionName + 'Expires">' + WCF.Language.get('wcf.user.' + optionName + '.expires') + '</label></dt><dd><input type="date" name="' + optionName + 'Expires" id="' + optionName + 'Expires" class="medium" min="' + new Date(TIME_NOW * 1000).toISOString() + '" data-ignore-timezone="true" /><small>' + WCF.Language.get('wcf.user.' + optionName + '.expires.description') + '</small></dd></dl></div>'));
 		this._dialog.append($('<div class="formSubmit"><button class="buttonPrimary" accesskey="s">' + WCF.Language.get('wcf.global.button.submit') + '</button></div>'));
 		
 		this._dialog.data('optionName', optionName).data('userID', userID);

@@ -20,47 +20,45 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.template.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.template.list{/lang}</h1>
 </header>
 
 {include file='formError'}
 
 <form method="post" action="{link controller='TemplateList'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
-			
-			<dl>
-				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
-				<dd>
-					<select name="templateGroupID" id="templateGroupID">
-						<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-						{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
-					</select>
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
-				<dd>
-					<select name="application" id="application">
-						<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
-						{foreach from=$availableApplications key=abbreviation item=availableApplication}
-							<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
-						{/foreach}
-					</select>
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="searchTemplateName">{lang}wcf.global.name{/lang}</label></dt>
-				<dd>
-					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" class="long" />
-				</dd>
-			</dl>
-		</fieldset>
-	</div>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<dl>
+			<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
+			<dd>
+				<select name="templateGroupID" id="templateGroupID">
+					<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
+					{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
+				</select>
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
+			<dd>
+				<select name="application" id="application">
+					<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
+					{foreach from=$availableApplications key=abbreviation item=availableApplication}
+						<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
+					{/foreach}
+				</select>
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label for="searchTemplateName">{lang}wcf.global.name{/lang}</label></dt>
+			<dd>
+				<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" class="long" />
+			</dd>
+		</dl>
+	</section>
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
@@ -86,11 +84,7 @@
 </div>
 
 {if $objects|count}
-	<div id="templateTableContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.template.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div id="templateTableContainer" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

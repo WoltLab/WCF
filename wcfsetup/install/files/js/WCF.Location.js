@@ -646,7 +646,7 @@ WCF.Location.GoogleMaps.SuggestionMap = WCF.Location.GoogleMaps.LargeMap.extend(
 	addMarker: function(latitude, longitude, title, icon, information) {
 		var $infoWindow = $(information);
 		var $useLocation = $('<a class="googleMapsUseLocationSuggestionLink" />').text(WCF.Language.get('wcf.map.useLocationSuggestion')).click(this._suggestionSelectionCallback);
-		$infoWindow.append($('<p class="marginTopTiny" />').append($useLocation));
+		$infoWindow.append($('<p />').append($useLocation));
 		
 		var $marker = this._super(latitude, longitude, title, '//mt.google.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png', $infoWindow.get(0));
 		

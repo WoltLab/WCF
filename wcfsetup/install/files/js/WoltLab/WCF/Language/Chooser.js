@@ -112,7 +112,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 					listItem.appendChild(a);
 					
 					div = elCreate('div');
-					div.className = 'framed';
+					//div.className = 'framed';
 					a.appendChild(div);
 					
 					img = elCreate('img');

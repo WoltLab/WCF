@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.application.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.application.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.application.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -16,11 +16,7 @@
 	{/hascontent}
 </div>
 
-<div class="tabularBox tabularBoxTitle marginTop">
-	<header>
-		<h2>{lang}wcf.acp.application.list{/lang} <span class="badge badgeInverse">{#$applicationList|count}</span></h2>
-	</header>
-	
+<div class="section tabularBox">
 	<table class="table">
 		<thead>
 			<tr>

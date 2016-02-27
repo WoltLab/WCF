@@ -13,7 +13,11 @@
 	@extend .wcfFontHeadline;
 	
 	& + .boxContent {
-		margin-top: 15px;
+		margin-top: 20px;
+	}
+	
+	.badge {
+		top: -2px;
 	}
 }
 
@@ -33,10 +37,6 @@
 	
 	.boxTitle {
 		@extend .wcfFontTitle;
-		
-		& + .boxContent {
-			margin-top: 20px;
-		}
 	}
 	
 	.boxWithImage {
@@ -70,9 +70,10 @@
 	
 	.box {
 		flex: 0 0 25%;
+		overflow: hidden;
 		padding-left: 10px;
 		padding-right: 10px;
-				
+		
 		&:nth-child(4n+1):not(:first-child) {
 			margin-top: 20px;
 		}
@@ -183,7 +184,7 @@
 		padding: 20px;
 		
 		&:not(:first-child) {
-			margin-top: 20px;
+			margin-top: 30px;
 		}
 		
 		&.boxAlternative {
@@ -264,11 +265,11 @@
 }
 
 .boxesContentTop {
-	margin-bottom: 40px;
+	margin-bottom: 30px;
 }
 
 .boxesContentBottom {
-	margin-top: 40px;
+	margin-top: 30px;
 }
 
 /* styling for boxes in <footerBoxes> position */
@@ -302,6 +303,7 @@
 	.boxContainer {
 		display: flex;
 		flex-wrap: wrap;
+		margin-bottom: -40px;
 		margin-left: -10px;
 		margin-right: -10px;
 		padding: 40px 0;
@@ -309,11 +311,13 @@
 	
 	.box {
 		flex: 0 0 50%;
+		overflow: hidden;
 		padding-left: 10px;
 		padding-right: 10px;
+		margin-bottom: 40px;
 		
-		&:nth-child(n+3) {
-			margin-top: 40px;
+		&.boxFullWith {
+			flex-basis: 100%;
 		}
 	}
 	
@@ -337,11 +341,9 @@
 
 /* styling for boxes in <footer> position */
 .boxesFooter {
-	margin-bottom: 40px;
-	
 	.box {
 		&:not(:first-child) {
-			margin-top: 40px;
+			margin-top: 20px;
 		}
 	}
 	

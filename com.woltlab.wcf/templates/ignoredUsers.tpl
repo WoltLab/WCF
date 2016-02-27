@@ -17,10 +17,10 @@
 
 {include file='userMenuSidebar'}
 
-{include file='header' sidebarOrientation='left'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.ignoredUsers{/lang} <span class="badge">{#$items}</span></h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.user.ignoredUsers{/lang} <span class="badge">{#$items}</span></h1>
 </header>
 
 {include file='userNotice'}
@@ -40,12 +40,12 @@
 </div>
 
 {if $objects|count}
-	<div class="container marginTop">
+	<div class="section sectionContainerList">
 		<ol class="containerList userList">
 			{foreach from=$objects item=user}
 				<li class="jsIgnoredUser">
 					<div class="box48">
-						<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" class="framed">{@$user->getAvatar()->getImageTag(48)}</a>
+						<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(48)}</a>
 							
 						<div class="details userInformation">
 							{include file='userInformationHeadline'}

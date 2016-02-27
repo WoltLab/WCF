@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.menu.'|concat:$action}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.menu.{$action}{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.menu.{$action}{/lang}</h1>
 </header>
 
 {include file='formError'}
@@ -21,9 +21,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='MenuAdd'}{/link}{else}{link controller='MenuEdit' id=$menuID}{/link}{/if}">
-	<section class="marginTop">
-		<h1>{lang}wcf.global.form.data{/lang}</h1>
-			
+	<div class="section">
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 			<dd>
@@ -103,7 +101,7 @@
 		{/if}
 		
 		{event name='dataFields'}
-	</section>
+	</div>
 	
 	{event name='sections'}
 	

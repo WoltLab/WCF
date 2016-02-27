@@ -1,4 +1,4 @@
-{capture assign='sidebar'}
+{capture assign='sidebarLeft'}
 	{assign var=__userMenuActiveItems value=$__wcf->getUserMenu()->getActiveMenuItems()}
 	
 	<script data-relocate="true">

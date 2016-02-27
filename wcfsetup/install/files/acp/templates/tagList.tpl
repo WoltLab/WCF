@@ -16,26 +16,24 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.tag.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.tag.list{/lang}</h1>
 </header>
 
 {include file='formError'}
 
 {if $items}
 	<form action="{link controller='TagList'}{/link}" method="post">
-		<div class="container containerPadding marginTop">
-			<fieldset>
-				<legend>{lang}wcf.acp.tag.list.search{/lang}</legend>
-				
-				<dl>
-					<dt><label for="tagSearch">{lang}wcf.acp.tag.list.search.query{/lang}</label></dt>
-					<dd>
-						<input type="text" id="tagSearch" name="search" value="{$search}" autofocus="autofocus" class="medium" />
-					</dd>
-				</dl>
-			</fieldset>
-		</div>
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.acp.tag.list.search{/lang}</h2>
+			
+			<dl>
+				<dt><label for="tagSearch">{lang}wcf.acp.tag.list.search.query{/lang}</label></dt>
+				<dd>
+					<input type="text" id="tagSearch" name="search" value="{$search}" autofocus="autofocus" class="medium" />
+				</dd>
+			</dl>
+		</section>
 		
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
@@ -58,11 +56,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.tag.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table data-type="com.woltlab.wcf.tag" class="table jsClipboardContainer">
 			<thead>
 				<tr>

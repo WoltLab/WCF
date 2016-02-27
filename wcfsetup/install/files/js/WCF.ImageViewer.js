@@ -821,7 +821,7 @@ $.widget('ui.wcfImageViewer', {
 		this._ui = {
 			buttonNext: $imageList.children('span.wcfImageViewerButtonNext'),
 			buttonPrevious: $imageList.children('span.wcfImageViewerButtonPrevious'),
-			header: $('<header><div' + (this.options.staticViewer ? '>' : ' class="box64"><a class="framed jsTooltip"><img /></a>' ) + '<h1 /><h2 /><h3 /></div></header>').appendTo(this._container),
+			header: $('<header><div' + (this.options.staticViewer ? '>' : ' class="box64"><a class="jsTooltip"><img /></a>' ) + '<h1 /><h2 /><h3 /></div></header>').appendTo(this._container),
 			imageContainer: $imageContainer,
 			images: [
 				$imageContainer.children('img:eq(0)').on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', function() { $(this).removeClass('animateTransformation'); }),

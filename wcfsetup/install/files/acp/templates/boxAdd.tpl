@@ -215,7 +215,7 @@
 			</dl>
 		</section>
 	{else}
-		<div class="tabMenuContainer">
+		<div class="section tabMenuContainer">
 			<nav class="tabMenu">
 				<ul>
 					{foreach from=$availableLanguages item=availableLanguage}

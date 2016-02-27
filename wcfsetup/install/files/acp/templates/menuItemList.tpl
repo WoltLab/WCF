@@ -10,8 +10,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.menu.item.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.menu.item.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -25,7 +25,7 @@
 </div>
 
 {hascontent}
-	<div id="menuItemList" class="container containerPadding sortableListContainer marginTop">
+	<div id="menuItemList" class="section sortableListContainer">
 		<ol class="sortableList" data-object-id="0">
 			{content}
 				{foreach from=$menuItemNodeList item=menuItemNode}

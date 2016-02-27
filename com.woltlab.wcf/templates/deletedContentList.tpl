@@ -8,24 +8,26 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{capture assign='sidebar'}
-	<fieldset>
-		<legend>{lang}wcf.moderation.deletedContent.objectTypes{/lang}</legend>
+{capture assign='sidebarLeft'}
+	<section class="box">
+		<h2 class="boxTitle">{lang}wcf.moderation.deletedContent.objectTypes{/lang}</h2>
 		
-		<nav>
-			<ul>
-				{foreach from=$availableObjectTypes item=availableObjectType}
-					<li{if $objectType == $availableObjectType->objectType} class="active"{/if}><a href="{link controller='DeletedContentList'}objectType={@$availableObjectType->objectType}{/link}">{lang}wcf.moderation.deletedContent.objectType.{@$availableObjectType->objectType}{/lang}</a></li>
-				{/foreach}
-			</ul>
-		</nav>
-	</fieldset>
+		<div class="boxContent">
+			<nav>
+				<ul>
+					{foreach from=$availableObjectTypes item=availableObjectType}
+						<li{if $objectType == $availableObjectType->objectType} class="active"{/if}><a href="{link controller='DeletedContentList'}objectType={@$availableObjectType->objectType}{/link}">{lang}wcf.moderation.deletedContent.objectType.{@$availableObjectType->objectType}{/lang}</a></li>
+					{/foreach}
+				</ul>
+			</nav>
+		</div>
+	</section>
 {/capture}
 
-{include file='header' sidebarOrientation='left'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}</h1>
 </header>
 
 {include file='userNotice'}

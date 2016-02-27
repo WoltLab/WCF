@@ -43,9 +43,9 @@
 	});
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.media.list{/lang}</h1>
-	<p>{lang}wcf.acp.media.stats{/lang}</p>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.media.list{/lang}</h1>
+	<p class="contentHeaderDescription">{lang}wcf.acp.media.stats{/lang}</p>
 </header>
 
 {include file='formError'}
@@ -112,11 +112,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.media.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table jsClipboardContainer" data-type="com.woltlab.wcf.media">
 			<thead>
 				<tr>

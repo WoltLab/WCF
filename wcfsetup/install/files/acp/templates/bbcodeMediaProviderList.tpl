@@ -1,15 +1,15 @@
 {include file='header' pageTitle='wcf.acp.bbcode.mediaProvider.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.bbcode.mediaProvider.list{/lang}</h1>
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.Action.Delete('wcf\\data\\bbcode\\media\\provider\\BBCodeMediaProviderAction', '.jsMediaProviderRow');
-		});
-		//]]>
-	</script>
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Action.Delete('wcf\\data\\bbcode\\media\\provider\\BBCodeMediaProviderAction', '.jsMediaProviderRow');
+	});
+	//]]>
+</script>
+
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.bbcode.mediaProvider.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -25,11 +25,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.bbcode.mediaProvider.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -71,11 +67,7 @@
 		</nav>
 	</div>
 {else}
-	<div class="container containerPadding">
-		<div>
-			<p class="info">{lang}wcf.global.noItems{/lang}</p>
-		</div>
-	</div>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}

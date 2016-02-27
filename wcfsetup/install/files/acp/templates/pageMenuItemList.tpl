@@ -16,8 +16,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.pageMenu.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.pageMenu.list{/lang}</h1>
 </header>
 
 <p class="info">{lang}wcf.acp.pageMenu.landingPage.description{/lang}</p>
@@ -33,103 +33,99 @@
 </div>
 
 {hascontent}
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.acp.pageMenu.header{/lang}</legend>
-			
-			<div id="pageMenuItemHeaderList" class="sortableListContainer">
-				<ol class="sortableList" data-object-id="0">
-					{content}
-						{foreach from=$headerItems item=menuItem}
-							<li class="sortableNode" data-object-id="{@$menuItem->menuItemID}">
-								<span class="sortableNodeLabel">
-									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}">{lang}{$menuItem->menuItem}{/lang}</a>
-									<span class="statusDisplay sortableButtonContainer">
-										{if $menuItem->canDisable()}
-											<span class="icon icon16 fa-{if !$menuItem->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItem->menuItemID}"></span>
-										{else}
-											<span class="icon icon16 fa-{if !$menuItem->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}"></span>
-										{/if}
-										<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
-										{if $menuItem->canDelete()}
-											<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
-										{else}
-											<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
-										{/if}
-										
-										{event name='headerItemButtons'}
-									</span>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.pageMenu.header{/lang}</h2>
+		
+		<div id="pageMenuItemHeaderList" class="sortableListContainer">
+			<ol class="sortableList" data-object-id="0">
+				{content}
+					{foreach from=$headerItems item=menuItem}
+						<li class="sortableNode" data-object-id="{@$menuItem->menuItemID}">
+							<span class="sortableNodeLabel">
+								<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}">{lang}{$menuItem->menuItem}{/lang}</a>
+								<span class="statusDisplay sortableButtonContainer">
+									{if $menuItem->canDisable()}
+										<span class="icon icon16 fa-{if !$menuItem->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItem->menuItemID}"></span>
+									{else}
+										<span class="icon icon16 fa-{if !$menuItem->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}"></span>
+									{/if}
+									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
+									{if $menuItem->canDelete()}
+										<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
+									{else}
+										<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+									{/if}
+									
+									{event name='headerItemButtons'}
 								</span>
-								{if $menuItem|count}
-									<ol class="sortableList" data-object-id="{@$menuItem->menuItemID}">
-										{foreach from=$menuItem item=childMenuItem}
-											<li class="sortableNode sortableNoNesting" data-object-id="{@$childMenuItem->menuItemID}">
-												<span class="sortableNodeLabel">
-													<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}">{lang}{$childMenuItem->menuItem}{/lang}</a>
-													<span class="statusDisplay sortableButtonContainer">
-														<span class="icon icon16 fa-{if !$childMenuItem->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $childMenuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$childMenuItem->menuItemID}"></span>
-														<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
-														{if $childMenuItem->canDelete()}
-															<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang __menuItem=$childMenuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
-														{else}
-															<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
-														{/if}
-														
-														{event name='subHeaderItemButtons'}
-													</span>
+							</span>
+							{if $menuItem|count}
+								<ol class="sortableList" data-object-id="{@$menuItem->menuItemID}">
+									{foreach from=$menuItem item=childMenuItem}
+										<li class="sortableNode sortableNoNesting" data-object-id="{@$childMenuItem->menuItemID}">
+											<span class="sortableNodeLabel">
+												<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}">{lang}{$childMenuItem->menuItem}{/lang}</a>
+												<span class="statusDisplay sortableButtonContainer">
+													<span class="icon icon16 fa-{if !$childMenuItem->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $childMenuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$childMenuItem->menuItemID}"></span>
+													<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
+													{if $childMenuItem->canDelete()}
+														<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang __menuItem=$childMenuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
+													{else}
+														<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+													{/if}
+													
+													{event name='subHeaderItemButtons'}
 												</span>
-											</li>
-										{/foreach}
-									</ol>
-								{/if}
-							</li>
-						{/foreach}
-					{/content}
-				</ol>
-				
-				<div class="formSubmit">
-					<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
-				</div>
+											</span>
+										</li>
+									{/foreach}
+								</ol>
+							{/if}
+						</li>
+					{/foreach}
+				{/content}
+			</ol>
+			
+			<div class="formSubmit">
+				<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 			</div>
-		</fieldset>
-	</div>
+		</div>
+	</section>
 {/hascontent}
 
 {hascontent}
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.acp.pageMenu.footer{/lang}</legend>
-			
-			<div id="pageMenuItemFooterList" class="sortableListContainer">
-				<ol class="sortableList simpleSortableList" data-object-id="0">
-					{content}
-						{foreach from=$footerItems item=menuItem}
-							<li class="sortableNode" data-object-id="{@$menuItem->menuItemID}">
-								<span class="sortableNodeLabel">
-									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}">{lang}{$menuItem->menuItem}{/lang}</a>
-									<span class="statusDisplay sortableButtonContainer">
-										<span class="icon icon16 fa-{if !$menuItem->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItem->menuItemID}"></span>
-										<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
-										{if $menuItem->canDelete()}
-											<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
-										{else}
-											<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
-										{/if}
-										
-										{event name='footerItemButtons'}
-									</span>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.pageMenu.footer{/lang}</h2>
+		
+		<div id="pageMenuItemFooterList" class="sortableListContainer">
+			<ol class="sortableList simpleSortableList" data-object-id="0">
+				{content}
+					{foreach from=$footerItems item=menuItem}
+						<li class="sortableNode" data-object-id="{@$menuItem->menuItemID}">
+							<span class="sortableNodeLabel">
+								<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}">{lang}{$menuItem->menuItem}{/lang}</a>
+								<span class="statusDisplay sortableButtonContainer">
+									<span class="icon icon16 fa-{if !$menuItem->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItem->menuItemID}"></span>
+									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
+									{if $menuItem->canDelete()}
+										<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
+									{else}
+										<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+									{/if}
+									
+									{event name='footerItemButtons'}
 								</span>
-							</li>
-						{/foreach}
-					{/content}
-				</ol>
-				
-				<div class="formSubmit">
-					<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
-				</div>
+							</span>
+						</li>
+					{/foreach}
+				{/content}
+			</ol>
+			
+			<div class="formSubmit">
+				<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 			</div>
-		</fieldset>
-	</div>
+		</div>
+	</section>
 {/hascontent}
 
 <div class="contentNavigation">

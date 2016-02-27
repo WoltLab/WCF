@@ -24,8 +24,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.menu.item.{$action}{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.menu.item.{$action}{/lang}</h1>
 </header>
 
 {include file='formError'}
@@ -45,9 +45,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='MenuItemAdd'}{/link}{else}{link controller='MenuItemEdit' id=$itemID}{/link}{/if}">
-	<section class="marginTop">
-		<h1>{lang}wcf.global.form.data{/lang}</h1>
-			
+	<div class="class">
 		<dl{if $errorField == 'parentItemID'} class="formError"{/if}>
 			<dt><label for="parentItemID">{lang}wcf.acp.menu.item.parentItem{/lang}</label></dt>
 			<dd>
@@ -89,7 +87,7 @@
 		</dl>
 		
 		{event name='dataFields'}
-	</section>
+	</div>
 	
 	<section>
 		<h1>{lang}wcf.acp.menu.item.link{/lang}</h1>

@@ -7,7 +7,7 @@
 			</div>
 			
 			{if !PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}
-				<ul class="buttonList marginTopTiny">
+				<ul class="buttonList">
 					{foreach from=$subscription->getPurchaseButtons() item=button}
 						<li>{@$button}</li>
 					{/foreach}

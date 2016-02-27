@@ -1,5 +1,5 @@
 {hascontent}
-	<div class="tabularBox marginTop">
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

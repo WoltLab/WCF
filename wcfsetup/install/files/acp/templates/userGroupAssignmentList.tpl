@@ -21,8 +21,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.group.assignment.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.group.assignment.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -38,11 +38,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop" id="userGroupAssignmentTableContainer">
-		<header>
-			<h2>{lang}wcf.acp.group.assignment.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox" id="userGroupAssignmentTableContainer">
 		<table class="table">
 			<thead>
 				<tr>

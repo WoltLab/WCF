@@ -18,10 +18,6 @@
 	}
 }
 
-.marginTop {
-	margin-top: 30px;
-}
-
 .invisible {
 	display: none;
 }
@@ -70,12 +66,12 @@
 
 .wcfFontHeadline {
 	font-size: $wcfFontSizeHeadline;
-	font-weight: 400;
+	font-weight: 300;
 }
 
 .wcfFontSection {
 	font-size: $wcfFontSizeSection;
-	font-weight: 400;
+	font-weight: 300;
 }
 
 .wcfFontTitle {
@@ -161,11 +157,15 @@ ol.nativeList {
 	}
 	
 	h2 {
+		@extend .wcfFontSection;
+	}
+	
+	h3 {
 		@extend .wcfFontHeadline;
 	}
 	
 	h1, h2, h3, h4, h5, h6 {
-		margin: 1em 0;
+		margin: 1.5em 0 1em 0;
 	}
 	
 	ul, ol {

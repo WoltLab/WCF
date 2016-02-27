@@ -11,8 +11,8 @@
 	</script>
 {/if}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.smiley.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.smiley.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -27,8 +27,8 @@
 	</nav>
 </div>
 {if $smileyCount}
-	<div class="tabMenuContainer container containerPadding marginTop">
-		<nav class="menu">
+	<div class="section tabMenuContainer">
+		<nav class="menu">{*todo*}
 			<ul>
 				{foreach from=$categories item=categoryLoop}
 					<li{if (!$category && !$categoryLoop->categoryID) || ($category && $category->categoryID == $categoryLoop->categoryID)} class="ui-state-active"{/if}><a href="{if $categoryLoop->categoryID}{link controller='SmileyList' object=$categoryLoop}{/link}{else}{link controller='SmileyList'}{/link}{/if}">{$categoryLoop->title|language}</a></li>

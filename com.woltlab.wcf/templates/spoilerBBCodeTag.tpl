@@ -1,5 +1,5 @@
 <!-- begin:parser_nonessential -->
-<div class="container containerPadding spoilerBox jsSpoilerBox">
+<div class="spoilerBox jsSpoilerBox">
 	<header class="jsOnly">
 		<a class="button jsSpoilerToggle"{if $buttonTitle} data-has-custom-label="true"{/if}>{if $buttonTitle}{@$buttonTitle}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
 	</header>

@@ -1,9 +1,11 @@
 <input type="hidden" name="captchaQuestion" value="{$captchaQuestion}" />
 
 {if !$captchaQuestionAnswered}
-	<fieldset>
-		<legend>{lang}wcf.captcha.question.captcha{/lang}</legend>
-		<small>{lang}wcf.captcha.question.captcha.description{/lang}</small>
+	<section class="section">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.captcha.question.captcha{/lang}</h2>
+			<small class="sectionDescription">{lang}wcf.captcha.question.captcha.description{/lang}</small>
+		</header>
 		
 		<dl class="condensed{if (($errorType|isset && $errorType|is_array && $errorType[captchaAnswer]|isset) || ($errorField|isset && $errorField == 'captchaAnswer'))} formError{/if}">
 			<dt><label for="captchaAnswer">{lang}{$captchaQuestionObject->question}{/lang}</label></dt>
@@ -24,7 +26,7 @@
 				{/if}
 			</dd>
 		</dl>
-	</fieldset>
+	</section>
 	
 	{if !$ajaxCaptcha|empty}
 		<script data-relocate="true">

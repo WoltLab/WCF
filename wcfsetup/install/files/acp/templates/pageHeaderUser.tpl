@@ -3,11 +3,11 @@
 		{if $__wcf->user->userID}
 			<!-- user menu -->
 			<li id="userMenu" class="dropdown">
-				<a class="dropdownToggle framed" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} {/if}{lang}wcf.user.userNote{/lang}</a>
+				<a class="dropdownToggle" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} {/if}{lang}wcf.user.userNote{/lang}</a>
 				<ul class="dropdownMenu">
 					{if PACKAGE_ID > 1}
 						<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}{/link}" class="box32">
-								<div class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
+								<div>{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
 								
 								<div class="containerHeadline">
 									<h3>{$__wcf->user->username}</h3>

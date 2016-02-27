@@ -1,16 +1,16 @@
 {include file='header' pageTitle='wcf.acp.bbcode.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.bbcode.list{/lang}</h1>
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.Action.Delete('wcf\\data\\bbcode\\BBCodeAction', '.jsBBCodeRow');
-			new WCF.Action.Toggle('wcf\\data\\bbcode\\BBCodeAction', $('.jsBBCodeRow'));
-		});
-		//]]>
-	</script>
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Action.Delete('wcf\\data\\bbcode\\BBCodeAction', '.jsBBCodeRow');
+		new WCF.Action.Toggle('wcf\\data\\bbcode\\BBCodeAction', $('.jsBBCodeRow'));
+	});
+	//]]>
+</script>
+
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.bbcode.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -26,11 +26,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.bbcode.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

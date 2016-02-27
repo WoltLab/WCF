@@ -10,9 +10,9 @@
 
 {include file='header'}
 
-<header class="boxHeadline">
-	<h1>{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
-	<p>{lang}wcf.search.results.description{/lang}</p>
+<header class="contentHeader">
+	<h1 class="contentTitle">{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
+	<p class="contentHeaderDescription">{lang}wcf.search.results.description{/lang}</p>
 </header>
 
 {include file='userNotice'}

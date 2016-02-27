@@ -88,10 +88,22 @@
 	&.tripleColumned {
 		display: flex;
 		flex-wrap: wrap;
-		margin-bottom: -10px;
+		margin-bottom: -15px;
 		
 		> li {
-			margin-bottom: 10px;
+			overflow: hidden;
+			padding-right: 15px;
+			margin-bottom: 15px;
+			
+			.containerBoxContent {
+				overflow: hidden;
+				
+				h3 {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+			}
 		}
 	}
 	
@@ -100,20 +112,8 @@
 	}
 	
 	&.tripleColumned > li {
-		flex: 0 0 auto;
+		flex: 0 0 calc(100% / 3);
 		/* work-around for IE10 */
 		width: calc(unquote("100% / 3"));
 	}
 }
-
-
-
-/*
-.userList .userInformation {
-	position: relative;
-	
-	
-	
-	> 
-}
-*/

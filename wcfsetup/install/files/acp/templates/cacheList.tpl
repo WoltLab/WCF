@@ -8,40 +8,38 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.cache.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.cache.list{/lang}</h1>
 </header>
 
-<div class="container containerPadding marginTop">
-	<fieldset>
-		<legend>{lang}wcf.acp.cache.data{/lang}</legend>
-		
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.acp.cache.data{/lang}</h2>
+	
+	<dl>
+		<dt>{lang}wcf.acp.cache.data.source{/lang}</dt>
+		<dd>
+			{assign var='__source' value="\\"|explode:$cacheData.source}
+			{lang}wcf.acp.cache.source.type.{$__source|array_pop}{/lang}
+			<small>{$cacheData.source}</small>
+		</dd>
+	</dl>
+	{if $cacheData.version}
 		<dl>
-			<dt>{lang}wcf.acp.cache.data.source{/lang}</dt>
-			<dd>
-				{assign var='__source' value="\\"|explode:$cacheData.source}
-				{lang}wcf.acp.cache.source.type.{$__source|array_pop}{/lang}
-				<small>{$cacheData.source}</small>
-			</dd>
+			<dt>{lang}wcf.acp.cache.data.version{/lang}</dt>
+			<dd>{$cacheData.version}</dd>
 		</dl>
-		{if $cacheData.version}
-			<dl>
-				<dt>{lang}wcf.acp.cache.data.version{/lang}</dt>
-				<dd>{$cacheData.version}</dd>
-			</dl>
-		{/if}
-		{if $cacheData.size}<dl>
-			<dt>{lang}wcf.acp.cache.data.size{/lang}</dt>
-			<dd>{@$cacheData.size|filesize}</dd>
-		</dl>{/if}
-		{if $cacheData.files}<dl>
-			<dt>{lang}wcf.acp.cache.data.files{/lang}</dt>
-			<dd>{#$cacheData.files}</dd>
-		</dl>{/if}
-		
-		{event name='dataFields'}
-	</fieldset>
-</div>
+	{/if}
+	{if $cacheData.size}<dl>
+		<dt>{lang}wcf.acp.cache.data.size{/lang}</dt>
+		<dd>{@$cacheData.size|filesize}</dd>
+	</dl>{/if}
+	{if $cacheData.files}<dl>
+		<dt>{lang}wcf.acp.cache.data.files{/lang}</dt>
+		<dd>{#$cacheData.files}</dd>
+	</dl>{/if}
+	
+	{event name='dataFields'}
+</section>
 
 <div class="contentNavigation">
 	<nav>
@@ -60,9 +58,13 @@
 		{counter name=cacheIndex assign=cacheIndex print=false start=0}
 		
 		{if $files|count}
-			<section class="tabularBox tabularBoxTitle marginTop">
-				<header class="boxHeadline">
-					<h2><a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 fa-chevron-right"></span></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse">{#$files|count}</span></h2>
+			<section class="section tabularBox tabularBoxTitle">
+				<header>
+					<h2>
+						<a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 fa-chevron-right"></span></a>
+						{lang}wcf.acp.cache.type.{$cacheType}{/lang}
+						<span class="badge">{#$files|count}</span>
+					</h2>
 					<small>{$cache}</small>
 				</header>
 				

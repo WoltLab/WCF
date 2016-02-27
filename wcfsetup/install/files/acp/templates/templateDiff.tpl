@@ -1,31 +1,29 @@
 {include file='header' pageTitle="wcf.acp.template.diff"}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.template.diff{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.template.diff{/lang}</h1>
 </header>
 
 {include file='formError'}
 
 <form method="post" action="{link controller='TemplateDiff'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.acp.template.group{/lang}</legend>
-			
-			<dl>
-				<dt><label for="parentID">{lang}wcf.acp.template.diff.compareWith{/lang}</label></dt>
-				<dd>
-					<select name="parentID" id="{lang}wcf.acp.template.group.default{/lang}ID">
-						<option value="0"></option>
-						{assign var=depth value=0}
-						{foreach from=$templateGroupHierarchy item='templateGroup' key='templateGroupID'}
-							<option{if $templateGroup[hasTemplate] !== false && $templateGroup[hasTemplate] != $templateID} value="{$templateGroup[hasTemplate]}"{if $parent->templateID == $templateGroup[hasTemplate]} selected="selected"{/if}{else} disabled="disabled"{/if}>{@'&nbsp;'|str_repeat:$depth * 4}{if $templateGroupID}{$templateGroup[group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}</option>
-							{assign var=depth value=$depth + 1}
-						{/foreach}
-					</select>
-				</dd>
-			</dl>
-		</fieldset>
-	</div>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.template.group{/lang}</h2>
+		
+		<dl>
+			<dt><label for="parentID">{lang}wcf.acp.template.diff.compareWith{/lang}</label></dt>
+			<dd>
+				<select name="parentID" id="{lang}wcf.acp.template.group.default{/lang}ID">
+					<option value="0"></option>
+					{assign var=depth value=0}
+					{foreach from=$templateGroupHierarchy item='templateGroup' key='templateGroupID'}
+						<option{if $templateGroup[hasTemplate] !== false && $templateGroup[hasTemplate] != $templateID} value="{$templateGroup[hasTemplate]}"{if $parent->templateID == $templateGroup[hasTemplate]} selected="selected"{/if}{else} disabled="disabled"{/if}>{@'&nbsp;'|str_repeat:$depth * 4}{if $templateGroupID}{$templateGroup[group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}</option>
+						{assign var=depth value=$depth + 1}
+					{/foreach}
+				</select>
+			</dd>
+		</dl>
+	</section>
 	
 	<div class="formSubmit">
 		{@SID_INPUT_TAG}
@@ -44,18 +42,18 @@
 			</nav>
 		</div>
 		
-		<div class="container marginTop sideBySide">
-			<div class="containerPadding">
-				<header class="boxHeadline boxSubHeadline">
-					<h1>
+		<div class="sideBySide">
+			<div class="section">
+				<header class="sectionHeader">
+					<h2 class="sectionTitle">
 						{if $parent->templateGroupID}{$templateGroupHierarchy[$parent->templateGroupID][group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
-					</h1>
-					<p>{lang}wcf.acp.template.lastModificationTime{/lang}: {@$parent->lastModificationTime|time}</p>
+					</h2>
+					<p class="sectionDescription">{lang}wcf.acp.template.lastModificationTime{/lang}: {@$parent->lastModificationTime|time}</p>
 				</header>
 				
 				{assign var=removeOffset value=0}
 				{assign var=lineNo value=0}
-				<pre id="left" class="marginTop monospace" style="overflow: auto; height: 700px;">{*
+				<pre id="left" class="monospace" style="overflow: auto; height: 700px;">{*
 					*}<ol class="nativeList">{*
 						*}{foreach from=$diff->getRawDiff() item='line'}{*
 							*}{if $line[0] == ' '}{*
@@ -82,16 +80,16 @@
 					</div>
 				{/if}
 			</div>
-			<div class="containerPadding">
-				<header class="boxHeadline boxSubHeadline">
-					<h1>
+			<div class="section">
+				<header class="sectionHeader">
+					<h2 class="sectionTitle">
 						{if $template->templateGroupID}{$templateGroupHierarchy[$template->templateGroupID][group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
-					</h1>
-					<p>{lang}wcf.acp.template.lastModificationTime{/lang}: {@$template->lastModificationTime|time}</p>
+					</h2>
+					<p class="sectionDescription">{lang}wcf.acp.template.lastModificationTime{/lang}: {@$template->lastModificationTime|time}</p>
 				</header>
 				{assign var=removeOffset value=0}
 				{assign var=lineNo value=0}
-				<pre id="right" class="marginTop monospace" style="overflow: auto; height: 700px;">{*
+				<pre id="right" class="monospace" style="overflow: auto; height: 700px;">{*
 					*}<ol class="nativeList">{*
 						*}{foreach from=$diff->getRawDiff() item='line'}{*
 							*}{if $line[0] == ' '}{*

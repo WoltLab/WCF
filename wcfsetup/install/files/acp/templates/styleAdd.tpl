@@ -41,10 +41,13 @@
 		}).trigger('change');
 	});
 </script>
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.style.{$action}{/lang}</h1>
-	{if $action == 'edit'}<p>{$styleName}</p>{/if}
+
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.style.{$action}{/lang}</h1>
+	{if $action == 'edit'}<p class="contentHeaderDescription">{$styleName}</p>{/if}
 </header>
+
+<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
 
 {include file='formError'}
 
@@ -68,7 +71,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
-	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="styleTabMenuContainer">
+	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="styleTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.acp.style.general{/lang}</a></li>
@@ -81,12 +84,8 @@
 		</nav>
 		
 		{* general *}
-		<div id="general" class="container containerPadding tabMenuContent">
-			<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
-			
-			<fieldset class="marginTop">
-				<legend>{lang}wcf.acp.style.general.data{/lang}</legend>
-				
+		<div id="general" class="tabMenuContent">
+			<div class="section">
 				<dl{if $errorField == 'styleName'} class="formError"{/if}>
 					<dt><label for="styleName">{lang}wcf.acp.style.styleName{/lang}</label></dt>
 					<dd>
@@ -220,14 +219,14 @@
 				</dl>
 				
 				{event name='dataFields'}
-			</fieldset>
+			</div>
 			
-			<fieldset>
-				<legend>{lang}wcf.acp.style.general.files{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.general.files{/lang}</h2>
 				
 				<dl{if $errorField == 'image'} class="formError"{/if}>
 					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
-					<dd class="framed">
+					<dd>
 						<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage" />
 						<div id="uploadImage"></div>
 						{if $errorField == 'image'}
@@ -282,16 +281,16 @@
 				</dl>
 				
 				{event name='fileFields'}
-			</fieldset>
+			</section>
 			
 			{event name='generalFieldsets'}
 		</div>
 		
 		{* globals *}
-		<div id="globals" class="container containerPadding tabMenuContent">
+		<div id="globals" class="tabMenuContent">
 			{* layout *}
-			<fieldset>
-				<legend>{lang}wcf.acp.style.globals.layout{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.globals.layout{/lang}</h2>
 				
 				<dl>
 					<dt></dt>
@@ -343,15 +342,15 @@
 				</dl>
 				
 				{event name='layoutFields'}
-			</fieldset>
+			</section>
 			
 			{* logo *}
-			<fieldset>
-				<legend>{lang}wcf.acp.style.globals.pageLogo{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.globals.pageLogo{/lang}</h2>
 				
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
-					<dd class="framed">
+					<dd>
 						<img src="" alt="" id="styleLogo" style="max-width: 100%" />
 						<div id="uploadLogo"></div>
 						{if $errorField == 'image'}
@@ -371,11 +370,11 @@
 				</dl>
 				
 				{event name='logoFields'}
-			</fieldset>
+			</section>
 			
 			{* font *}
-			<fieldset>
-				<legend>{lang}wcf.acp.style.globals.font{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.globals.font{/lang}</h2>
 				
 				<dl>
 					<dt><label for="wcfFontSizeDefault">{lang}wcf.acp.style.globals.fontSizeDefault{/lang}</label></dt>
@@ -443,7 +442,7 @@
 					</dd>
 				</dl>
 				
-				<dl class="marginTop">
+				<dl>
 					<dt></dt>
 					<dd><label>
 						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if $variables[useGoogleFont]} checked="checked"{/if} />
@@ -470,241 +469,243 @@
 				</dl>
 				
 				{event name='fontFields'}
-			</fieldset>
+			</section>
 			
 			{event name='globalFieldsets'}
 		</div>
 		
 		{* colors *}
-		<div id="colors" class="container containerPadding tabMenuContainer tabMenuContent">
-			<div id="spWrapper">
-				<div id="spWindow">
-					<div id="spHeader" data-region="wcfHeader">
-						<div class="spBoundary">
-							<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/wcfLogo.png"></div>
-							<div id="spSearch"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" data-region="wcfHeaderSearchBox"></div>
-							<div id="spMenu">
-								<ol class="inlineList" data-region="wcfHeaderMenu">
+		<div id="colors" class="tabMenuContent">
+			<div class="section">
+				<div id="spWrapper">
+					<div id="spWindow">
+						<div id="spHeader" data-region="wcfHeader">
+							<div class="spBoundary">
+								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/wcfLogo.png"></div>
+								<div id="spSearch"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" data-region="wcfHeaderSearchBox"></div>
+								<div id="spMenu">
+									<ol class="inlineList" data-region="wcfHeaderMenu">
+										<li><a>Lorem</a></li>
+										<li><a>Ipsum Dolor</a></li>
+										<li class="active">
+											<a>Sit Amet</a>
+											<ol id="spSubMenu" data-region="wcfHeaderMenuDropdown">
+												<li><a>Lorem</a></li>
+												<li><a>Ipsum</a></li>
+												<li class="active"><a>Dolor Sit</a></li>
+											</ol>
+										</li>
+									</ol>
+								</div>
+								<div id="spUser"></div>
+							</div>
+						</div>
+						
+						<div id="spNavigation" data-region="wcfNavigation">
+							<div class="spBoundary">
+								<ol class="inlineList">
 									<li><a>Lorem</a></li>
-									<li><a>Ipsum Dolor</a></li>
-									<li class="active">
-										<a>Sit Amet</a>
-										<ol id="spSubMenu" data-region="wcfHeaderMenuDropdown">
-											<li><a>Lorem</a></li>
-											<li><a>Ipsum</a></li>
-											<li class="active"><a>Dolor Sit</a></li>
-										</ol>
-									</li>
+									<li><a>Ipsum</a></li>
 								</ol>
 							</div>
-							<div id="spUser"></div>
 						</div>
-					</div>
-					
-					<div id="spNavigation" data-region="wcfNavigation">
-						<div class="spBoundary">
-							<ol class="inlineList">
-								<li><a>Lorem</a></li>
-								<li><a>Ipsum</a></li>
-							</ol>
-						</div>
-					</div>
-					
-					<div id="spContent">
-						<div class="spBoundary">
-							<div id="spContentWrapper">
-								<div class="spHeadline" data-region="wcfContentHeadline">Lorem Ipsum</div>
-								
-								<p data-region="wcfContent">
-									Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <a>At vero eos</a> et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-								
-									<div id="spContentBorderInner"></div>
+						
+						<div id="spContent">
+							<div class="spBoundary">
+								<div id="spContentWrapper">
+									<div class="spHeadline" data-region="wcfContentHeadline">Lorem Ipsum</div>
 									
-									Stet clita kasd gubergren, no sea <a>takimata</a> sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor <a>invidunt</a> ut labore et dolore magna aliquyam erat, sed diam voluptua.
+									<p data-region="wcfContent">
+										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <a>At vero eos</a> et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 									
-									<div id="spContentBorder"></div>
+										<div id="spContentBorderInner"></div>
+										
+										Stet clita kasd gubergren, no sea <a>takimata</a> sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor <a>invidunt</a> ut labore et dolore magna aliquyam erat, sed diam voluptua.
+										
+										<div id="spContentBorder"></div>
+										
+										<div id="spContentDimmed" data-region="wcfContentDimmed">
+											Stet clita kasd gubergren, <a>no sea takimata</a> sanctus est Lorem ipsum dolor sit amet.
+										</div>
+									</p>
 									
-									<div id="spContentDimmed" data-region="wcfContentDimmed">
-										Stet clita kasd gubergren, <a>no sea takimata</a> sanctus est Lorem ipsum dolor sit amet.
+									<div class="spHeadline">Tabular Box</div>
+									
+									<table id="spTable" data-region="wcfTabularBox">
+										<thead>
+											<tr>
+												<th><a>Lorem</a></th>
+												<th><a>Ipsum</a></th>
+												<th><a>Dolor Sit Amet</a></th>
+											</tr>
+										</thead>
+										
+										<tbody>
+											<tr>
+												<td>Lorem ipsum dolor</td><td>sit amet, consetetur sadipscing elitr</td><td>sed diam nonumy</td>
+											</tr>
+											<tr>
+												<td>eirmod tempor</td><td>invidunt ut labore et dolore</td><td>magna aliquyam erat</td>
+											</tr>
+											<tr>
+												<td>sed diam voluptua</td><td>At vero eos</td><td>et accusam et justo</td>
+											</tr>
+										</tbody>
+									</table>
+									
+									<div class="spHeadline">Input</div>
+									
+									<dl data-region="wcfInput">
+										<dt><label for="spInput">Lorem Ipsum</label></dt>
+										<dd><input type="text" id="spInput" class="long" value="Consetetur sadipscing elitr"></dd>
+									</dl>
+									<dl data-region="wcfInputDisabled">
+										<dt><label for="spInputDisabled">Dolor Sit Amet</label></dt>
+										<dd><input type="text" id="spInputDisabled" class="long" placeholder="Disabled" disabled></dd>
+									</dl>
+									
+									<div class="spHeadline">Button</div>
+									
+									<ol id="spButton" class="inlineList" data-region="wcfButton">
+										<li><a class="button">Button</a></li>
+										<li><a class="button active">Button (Active)</a></li>
+										<li><a class="button disabled" data-region="wcfButtonDisabled">Button (Disabled)</a></li>
+									</ol>
+									
+									<ol id="spButtonPrimary" class="inlineList" data-region="wcfButtonPrimary">
+										<li><a class="button buttonPrimary">Primary Button</a></li>
+										<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
+										<li><a class="button disabled">Primary Button (Disabled)</a></li>
+									</ol>
+									
+									<div class="spHeadline">Dropdown</div>
+									
+									<div style="position: relative">
+										<ul class="dropdownMenu" id="spDropdown" data-region="wcfDropdown">
+											<li><a>Lorem Ipsum</a></li>
+											<li class="active"><a>Dolor Sit Amet</a></li>
+											<li><a>Consetetur Sadipscing</a></li>
+											<li class="dropdownDivider"></li>
+											<li><a>Sed diam nonumy</a></li>
+										</ul>
 									</div>
-								</p>
-								
-								<div class="spHeadline">Tabular Box</div>
-								
-								<table id="spTable" data-region="wcfTabularBox">
-									<thead>
-										<tr>
-											<th><a>Lorem</a></th>
-											<th><a>Ipsum</a></th>
-											<th><a>Dolor Sit Amet</a></th>
-										</tr>
-									</thead>
 									
-									<tbody>
-										<tr>
-											<td>Lorem ipsum dolor</td><td>sit amet, consetetur sadipscing elitr</td><td>sed diam nonumy</td>
-										</tr>
-										<tr>
-											<td>eirmod tempor</td><td>invidunt ut labore et dolore</td><td>magna aliquyam erat</td>
-										</tr>
-										<tr>
-											<td>sed diam voluptua</td><td>At vero eos</td><td>et accusam et justo</td>
-										</tr>
-									</tbody>
-								</table>
+									<div class="spHeadline">Status</div>
+									
+									<ol id="spStatus">
+										<li>
+											<div id="spStatusInfo" data-region="wcfStatusInfo">Lorem ipsum dolor <a>sit amet</a>.</div>
+										</li>
+										<li>
+											<div id="spStatusSuccess" data-region="wcfStatusSuccess"><a>Sed diam nonumy</a> eirmod tempor.</div>
+										</li>
+										<li>
+											<div id="spStatusWarning" data-region="wcfStatusWarning">At vero eos <a>et accusam et justo duo</a>.</div>
+										</li>
+										<li>
+											<div id="spStatusError" data-region="wcfStatusError">Stet clita <a>kasd gubergren</a>, no sea.</div>
+										</li>
+									</ol>
+								</div>
 								
-								<div class="spHeadline">Input</div>
+								<div id="spContentSidebar">
+									<div class="spContentSidebarBox" data-region="wcfSidebar">
+										<div class="spContentSidebarHeadline" data-region="wcfSidebarHeadline">Sidebar</div>
+										
+										<p>
+											Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <a>sed diam nonumy eirmod tempor</a> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam <a>et justo</a> duo dolores et ea rebum.
+										</p>
+									</div>
+									
+									<div class="spContentSidebarBox">
+										<div class="spContentSidebarHeadline"><a>Dolor Sit Amet</a></div>
+										
+										<p>
+											<a>Stet clita kasd gubergren</a>, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut <a>labore et dolore magna</a> aliquyam erat, sed diam voluptua.
+										</p>
+										
+										<div id="spContentSidebarBoxDimmed" style="margin-top: 10px;" data-region="wcfSidebarDimmed">
+											Stet clita kasd gubergren, <a>no sea takimata</a> sanctus est Lorem ipsum dolor sit amet.
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="spFooterBox" data-region="wcfFooterBox">
+							<div class="spBoundary">
+								<div class="spFooterBoxItem">
+									<div class="spFooterBoxHeadline" data-region="wcfFooterBoxHeadline">Lorem Ipsum</div>
+									
+									<p>
+										Lorem ipsum dolor sit amet, consetetur <a>sadipscing elitr</a>, sed diam nonumy eirmod tempor <a>invidunt ut labore</a> et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+									</p>
+								</div>
 								
-								<dl data-region="wcfInput">
-									<dt><label for="spInput">Lorem Ipsum</label></dt>
-									<dd><input type="text" id="spInput" class="long" value="Consetetur sadipscing elitr"></dd>
-								</dl>
-								<dl data-region="wcfInputDisabled">
-									<dt><label for="spInputDisabled">Dolor Sit Amet</label></dt>
-									<dd><input type="text" id="spInputDisabled" class="long" placeholder="Disabled" disabled></dd>
-								</dl>
-								
-								<div class="spHeadline">Button</div>
-								
-								<ol id="spButton" class="inlineList" data-region="wcfButton">
-									<li><a class="button">Button</a></li>
-									<li><a class="button active">Button (Active)</a></li>
-									<li><a class="button disabled" data-region="wcfButtonDisabled">Button (Disabled)</a></li>
-								</ol>
-								
-								<ol id="spButtonPrimary" class="inlineList marginTop" data-region="wcfButtonPrimary">
-									<li><a class="button buttonPrimary">Primary Button</a></li>
-									<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
-									<li><a class="button disabled">Primary Button (Disabled)</a></li>
-								</ol>
-								
-								<div class="spHeadline">Dropdown</div>
-								
-								<div style="position: relative">
-									<ul class="dropdownMenu" id="spDropdown" data-region="wcfDropdown">
-										<li><a>Lorem Ipsum</a></li>
-										<li class="active"><a>Dolor Sit Amet</a></li>
-										<li><a>Consetetur Sadipscing</a></li>
-										<li class="dropdownDivider"></li>
-										<li><a>Sed diam nonumy</a></li>
+								<div class="spFooterBoxItem">
+									<div class="spFooterBoxHeadline"><a>Dolor Sit Amet</a></div>
+									
+									<p>
+										Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, <a>sed diam voluptua</a>.
+									</p>
+								</div>
+							</div>
+						</div>
+						
+						<div id="spFooter" data-region="wcfFooter">
+							<div class="spBoundary">
+								Copyright &copy; 1970-2038 <a>Example Company</a>
+							</div>
+						</div>
+					</div>
+					<div id="spSidebar">
+						<div id="spVariablesWrapper">
+							<div class="spSidebarBox">
+								<label class="selectDropdown">
+									<select id="spCategories">
+										<option value="none" selected>{lang}wcf.global.noSelection{/lang}</option>
+										{foreach from=$colorCategories key=spName item=spCategory}
+											<optgroup label="{$spName}">
+												{if $spCategory|is_array}
+													{foreach from=$spCategory item=spChildCategory}
+														<option value="{$spChildCategory}">{$spChildCategory}</option>
+													{/foreach}
+												{else}
+													<option value="{$spCategory}">{$spCategory}</option>
+												{/if}
+											</optgroup>
+										{/foreach}
+									</select>
+								</label>
+							</div>
+							
+							<div class="spSidebarBox" data-category="none">
+								foo
+							</div>
+							
+							{foreach from=$colors key=spCategory item=spColors}
+								<div class="spSidebarBox" data-category="{$spCategory}" style="display: none;">
+									<ul>
+										{foreach from=$spColors item=spType}
+											{capture assign=spColor}{$spCategory}{$spType|ucfirst}{/capture}
+											<li class="box24 spColor">
+												<div class="spColorBox">
+													<span class="styleVariableColor jsColorPicker" style="background-color: {$variables[$spColor]};" data-color="{$variables[$spColor]}" data-store="{$spColor}_value"></span>
+													<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}" />
+												</div>
+												<div>
+													<span class="spVariable">${$spColor}</span>
+													<span class="spDescription">{$spType}</span>
+												</div>
+											</li>
+										{/foreach}
 									</ul>
 								</div>
-								
-								<div class="spHeadline">Status</div>
-								
-								<ol id="spStatus">
-									<li>
-										<div id="spStatusInfo" data-region="wcfStatusInfo">Lorem ipsum dolor <a>sit amet</a>.</div>
-									</li>
-									<li>
-										<div id="spStatusSuccess" data-region="wcfStatusSuccess"><a>Sed diam nonumy</a> eirmod tempor.</div>
-									</li>
-									<li>
-										<div id="spStatusWarning" data-region="wcfStatusWarning">At vero eos <a>et accusam et justo duo</a>.</div>
-									</li>
-									<li>
-										<div id="spStatusError" data-region="wcfStatusError">Stet clita <a>kasd gubergren</a>, no sea.</div>
-									</li>
-								</ol>
-							</div>
-							
-							<div id="spContentSidebar">
-								<div class="spContentSidebarBox" data-region="wcfSidebar">
-									<div class="spContentSidebarHeadline" data-region="wcfSidebarHeadline">Sidebar</div>
-									
-									<p>
-										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <a>sed diam nonumy eirmod tempor</a> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam <a>et justo</a> duo dolores et ea rebum.
-									</p>
-								</div>
-								
-								<div class="spContentSidebarBox">
-									<div class="spContentSidebarHeadline"><a>Dolor Sit Amet</a></div>
-									
-									<p>
-										<a>Stet clita kasd gubergren</a>, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut <a>labore et dolore magna</a> aliquyam erat, sed diam voluptua.
-									</p>
-									
-									<div id="spContentSidebarBoxDimmed" style="margin-top: 10px;" data-region="wcfSidebarDimmed">
-										Stet clita kasd gubergren, <a>no sea takimata</a> sanctus est Lorem ipsum dolor sit amet.
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div id="spFooterBox" data-region="wcfFooterBox">
-						<div class="spBoundary">
-							<div class="spFooterBoxItem">
-								<div class="spFooterBoxHeadline" data-region="wcfFooterBoxHeadline">Lorem Ipsum</div>
-								
-								<p>
-									Lorem ipsum dolor sit amet, consetetur <a>sadipscing elitr</a>, sed diam nonumy eirmod tempor <a>invidunt ut labore</a> et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-								</p>
-							</div>
-							
-							<div class="spFooterBoxItem">
-								<div class="spFooterBoxHeadline"><a>Dolor Sit Amet</a></div>
-								
-								<p>
-									Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, <a>sed diam voluptua</a>.
-								</p>
-							</div>
-						</div>
-					</div>
-					
-					<div id="spFooter" data-region="wcfFooter">
-						<div class="spBoundary">
-							Copyright &copy; 1970-2038 <a>Example Company</a>
+							{/foreach}
 						</div>
 					</div>
 				</div>
-				<div id="spSidebar">
-					<div id="spVariablesWrapper">
-						<div class="spSidebarBox">
-							<label class="selectDropdown">
-								<select id="spCategories">
-									<option value="none" selected>{lang}wcf.global.noSelection{/lang}</option>
-									{foreach from=$colorCategories key=spName item=spCategory}
-										<optgroup label="{$spName}">
-											{if $spCategory|is_array}
-												{foreach from=$spCategory item=spChildCategory}
-													<option value="{$spChildCategory}">{$spChildCategory}</option>
-												{/foreach}
-											{else}
-												<option value="{$spCategory}">{$spCategory}</option>
-											{/if}
-										</optgroup>
-									{/foreach}
-								</select>
-							</label>
-						</div>
-						
-						<div class="spSidebarBox" data-category="none">
-							foo
-						</div>
-						
-						{foreach from=$colors key=spCategory item=spColors}
-							<div class="spSidebarBox" data-category="{$spCategory}" style="display: none;">
-								<ul>
-									{foreach from=$spColors item=spType}
-										{capture assign=spColor}{$spCategory}{$spType|ucfirst}{/capture}
-										<li class="box24 spColor">
-											<div class="spColorBox">
-												<span class="styleVariableColor jsColorPicker" style="background-color: {$variables[$spColor]};" data-color="{$variables[$spColor]}" data-store="{$spColor}_value"></span>
-												<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}" />
-											</div>
-											<div>
-												<span class="spVariable">${$spColor}</span>
-												<span class="spDescription">{$spType}</span>
-											</div>
-										</li>
-									{/foreach}
-								</ul>
-							</div>
-						{/foreach}
-					</div>
-				</div>
-			</div>
+			</div>	
 		</div>
 		
 		<script>
@@ -827,7 +828,7 @@
 		</script>
 		
 		{* advanced *}
-		<div id="advanced" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="advanced" class="tabMenuContainer tabMenuContent">
 			{if !$isTainted}
 				<nav class="menu">
 					<ul>
@@ -836,25 +837,25 @@
 					</ul>
 				</nav>
 				
-				<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
-				
 				{* custom declarations *}
 				<div id="advanced-custom" class="tabMenuContent">
-					<fieldset class="marginTop">
-						<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}</legend>
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualLess{/lang}</h2>
 						
 						<dl class="wide">
+							<dt></dt>
 							<dd>
 								<textarea id="individualLessCustom" rows="20" cols="40" name="individualLessCustom">{$variables[individualLessCustom]}</textarea>
 								<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
 							</dd>
 						</dl>
-					</fieldset>
+					</section>
 					
-					<fieldset{if $errorField == 'overrideLessCustom'} class="formError"{/if}>
-						<legend>{lang}wcf.acp.style.advanced.overrideLess{/lang}</legend>
+					<section class="section{if $errorField == 'overrideLessCustom'} formError{/if}">
+						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideLess{/lang}</h2>
 						
 						<dl class="wide">
+							<dt></dt>
 							<dd>
 								<textarea id="overrideLessCustom" rows="20" cols="40" name="overrideLessCustom">{$variables[overrideLessCustom]}</textarea>
 								{if $errorField == 'overrideLessCustom'}
@@ -866,7 +867,7 @@
 								<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
 							</dd>
 						</dl>
-					</fieldset>
+					</section>
 					{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualLessCustom, #overrideLessCustom'}
 					
 					{event name='syntaxFieldsetsCustom'}
@@ -876,21 +877,23 @@
 				<div id="advanced-original">
 			{/if}
 			
-			<fieldset class="marginTop">
-				<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualLess{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 				
 				<dl class="wide">
+					<dt></dt>
 					<dd>
 						<textarea id="individualLess" rows="20" cols="40" name="individualLess">{$variables[individualLess]}</textarea>
 						<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
 					</dd>
 				</dl>
-			</fieldset>
+			</section>
 			
-			<fieldset{if $errorField == 'overrideLess'} class="formError"{/if}>
-				<legend>{lang}wcf.acp.style.advanced.overrideLess{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</legend>
+			<section class="section{if $errorField == 'overrideLess'} formError{/if}">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideLess{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 				
 				<dl class="wide">
+					<dt></dt>
 					<dd>
 						<textarea id="overrideLess" rows="20" cols="40" name="overrideLess">{$variables[overrideLess]}</textarea>
 						{if $errorField == 'overrideLess'}
@@ -902,7 +905,7 @@
 						<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
 					</dd>
 				</dl>
-			</fieldset>
+			</section>
 			{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualLess, #overrideLess' editable=$isTainted}
 			
 			{event name='syntaxFieldsetsOriginal'}
@@ -925,7 +928,7 @@
 <div id="styleDisableProtection" class="jsStaticDialogContent" data-title="{lang}wcf.acp.style.protected.title{/lang}">
 	<p>{lang}wcf.acp.style.protected.description{/lang}</p>
 	
-	<dl class="marginTop">
+	<dl>
 		<dt></dt>
 		<dd><label for="styleDisableProtectionConfirm"><input type="checkbox" id="styleDisableProtectionConfirm"> {lang}wcf.acp.style.protected.confirm{/lang}</label></dd>
 	</dl>

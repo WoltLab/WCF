@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.captcha.question.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.captcha.question.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.captcha.question.list{/lang}</h1>
 </header>
 
 <script data-relocate="true">
@@ -38,11 +38,7 @@
 </div>
 
 {hascontent}
-	<div id="captchaQuestionTabelContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.captcha.question.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div id="captchaQuestionTabelContainer" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

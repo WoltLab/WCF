@@ -1,7 +1,7 @@
 {foreach from=$queues item=queue}
 	<li class="moderationQueueEntry{if $queue->isNew()} interactiveDropdownItemOutstanding{/if}" data-link="{$queue->getLink()}" data-object-id="{@$queue->queueID}" data-is-read="{if $queue->isNew()}false{else}true{/if}">
 		<div class="box32">
-			<div class="framed">
+			<div>
 				{@$queue->getUserProfile()->getAvatar()->getImageTag(32)}
 			</div>
 			<div>

@@ -8,8 +8,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.box.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.box.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -26,11 +26,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.box.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -70,8 +66,7 @@
 	
 	<div class="contentNavigation">
 		{@$pagesLinks}
-		
-		
+				
 		<nav>
 			<ul>
 				<li><a href="{link controller='BoxAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.box.add{/lang}</span></a></li>

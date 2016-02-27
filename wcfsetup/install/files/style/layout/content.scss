@@ -3,7 +3,7 @@
 .contentHeader,
 .boxHeadline { // deprecated
 	color: $wcfContentHeadlineText; // todo: rename variable
-	margin-bottom: 30px;
+	margin-bottom: 40px;
 	
 	.contentTitle,
 	> h1 { // deprecated
@@ -20,6 +20,10 @@
 		&:hover {
 			color: $wcfContentHeadlineLinkActive; // todo: rename variable
 		}
+	}
+	
+	.contentHeaderDescription {
+		color: $wcfContentDimmedText;
 	}
 	
 	.contentHeaderMetaData {
@@ -43,13 +47,13 @@
 
 /* legacy styling for sub headlines (deprecated; use .section > .sectionTitle instead) */
 .boxHeadline.boxSubHeadline {
-	margin-top: 30px;
+	margin-top: 40px;
 	margin-bottom: 20px;
 	
 	> h2 {
 		color: $wcfContentHeadlineText; // todo: rename variable
 		
-		@extend .wcfFontHeadline;
+		@extend .wcfFontSection;
 		
 		a {
 			color: $wcfContentHeadlineLink; // todo: rename variable
@@ -67,12 +71,22 @@
 
 /* content sections */
 .section {
-	margin-top: 30px;	
+	margin-top: 40px;	
+	
+	.sectionHeader {
+		position: relative;
+		
+		.buttonGroupNavigation {
+			position: absolute;
+			right: 0;
+			top: 4px;
+		}
+	}
 	
 	.sectionTitle {
 		color: $wcfContentHeadlineText; // todo: rename variable
 		
-		@extend .wcfFontHeadline;
+		@extend .wcfFontSection;
 		
 		a {
 			color: $wcfContentHeadlineLink; // todo: rename variable
@@ -103,11 +117,32 @@
 			padding-bottom: 10px;
 		}
 	}
+	
+	&.tabularBox {
+		> .sectionHeader,
+		> .sectionTitle {
+			border-color: $wcfTabularBoxHeadline;
+			margin-bottom: 0;
+		}
+	}
+	
+	.section {
+		margin-top: 20px;
+		
+		.sectionTitle {
+			@extend .wcfFontHeadline;
+		}
+		
+		> .sectionHeader,
+		> .sectionTitle {
+			margin-bottom: 15px;
+		}
+	}
 }
 
 /* fieldset styling (old sections / deprecated) */
 fieldset {
-	margin-top: 30px;
+	margin-top: 40px;
 	
 	> legend {
 		border-bottom: 1px solid $wcfContentBorderInner;
@@ -117,7 +152,7 @@ fieldset {
 		padding-bottom: 10px;
 		width: 100%;
 		
-		@extend .wcfFontHeadline;
+		@extend .wcfFontSection;
 		
 		a {
 			color: $wcfContentHeadlineLink; // todo: rename variable
@@ -141,6 +176,17 @@ fieldset {
 			top: -12px;
 		}
 	}
+}
+.section {
+	fieldset {
+		margin-top: 20px;
+		
+		> legend {
+			margin-bottom: 15px;
+			
+			@extend .wcfFontHeadline;
+		}
+	}	
 }
 
 /* styling for container headlines */
@@ -167,11 +213,11 @@ fieldset {
 	justify-content: flex-end;
 	
 	&:not(:first-child) {
-		margin-top: 30px;
+		margin-top: 40px;
 	}
 	
 	&:not(:last-child) {
-		margin-bottom: 30px;
+		margin-bottom: 40px;
 	}
 	
 	> nav {
