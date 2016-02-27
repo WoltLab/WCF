@@ -12,6 +12,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.event.listener
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractUserActionRenameListener implements IParameterizedEventListener {
 	/**
