@@ -1234,6 +1234,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[Do you really want to terminate the subscription “{$subscriptionUser->title|language}” for the user “{$subscriptionUser->username}”?]]></item>
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Manually Add Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the option “Supported Payment Methods”.]]></item>
+		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Do you really want to delete the paid subscription “{$subscription->title|language}”?]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
