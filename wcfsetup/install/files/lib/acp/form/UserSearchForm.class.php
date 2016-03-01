@@ -163,7 +163,7 @@ class UserSearchForm extends UserOptionListForm {
 	 * number of results
 	 * @var	integer
 	 */
-	public $maxResults = 0;
+	public $maxResults = 2000;
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
