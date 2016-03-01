@@ -141,7 +141,7 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function canUninstall() {
-		if (!WCF::getSession()->getPermission('admin.system.package.canUninstallPackage')) {
+		if (!WCF::getSession()->getPermission('admin.configuration.package.canUninstallPackage')) {
 			return false;
 		}
 		

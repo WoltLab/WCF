@@ -279,15 +279,15 @@
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Mitglieder dieser Benutzergruppe können die Administrationsoberfläche betreten und dort abhängig von den weiteren Zugriffsrechten verschiedene Aktionen durchführen. Diese Option muss aktiviert sein, wenn diesen Benutzern andere administrative Funktionen erlaubt werden sollen.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Kann versteckte Profilinformationen sehen]]></item>
 		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Kann Sprachen verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Kann allgemeine Einstellungen vornehmen]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canEditOption"><![CDATA[Kann allgemeine Einstellungen vornehmen]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Kann deaktivierte Stile benutzen]]></item>
-		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
-		<item name="wcf.acp.group.option.admin.system.canManageApplication"><![CDATA[Kann Anwendungen verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.system.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canUninstallPackage"><![CDATA[Kann Pakete deinstallieren]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canUpdatePackage"><![CDATA[Kann Pakete aktualisieren]]></item>
+		<item name="wcf.acp.group.option.admin.management.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Kann Anwendungen verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Kann Pakete deinstallieren]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Kann Pakete aktualisieren]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Zugängliche Benutzergruppen]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Mitglieder dieser Benutzergruppe haben auf diese Gruppen Zugriff. Zusätzlich muss angegeben werden, ob z.B. die Benutzergruppe bearbeitet werden darf.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Kann neue Benutzergruppen erstellen]]></item>
@@ -301,13 +301,13 @@
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Kann E-Mails an Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Kann Benutzer suchen]]></item>
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
-		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Darstellung]]></item>
-		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Seitenmenü]]></item>
+		<item name="wcf.acp.group.option.category.admin.customization"><![CDATA[Anpassung]]></item>
+		<item name="wcf.acp.group.option.category.admin.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Stile]]></item>
-		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Pakete]]></item>
+		<item name="wcf.acp.group.option.category.admin.configuration"><![CDATA[Konfiguration]]></item>
+		<item name="wcf.acp.group.option.category.admin.configuration.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Benutzer]]></item>
@@ -325,9 +325,9 @@
 		<item name="wcf.acp.group.option.category.admin.template"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.group.option.admin.template.canManageTemplate"><![CDATA[Kann Templates verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Kann Stile verwalten]]></item>
-		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Inhalte]]></item>
+		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.group.option.admin.content.canBulkRevertContentChanges"><![CDATA[Kann Änderungen der letzten Tage zurücksetzen]]></item>
-		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.group.option.category.admin.application"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Kann Benutzerprofilfelder verwalten]]></item>
@@ -404,8 +404,8 @@
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Kann Tags verwalten]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximale Signaturlänge]]></item>
-		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Kann Daten importieren]]></item>
-		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.group.option.admin.management.canImportData"><![CDATA[Kann Daten importieren]]></item>
+		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Beschreibung der Benutzergruppe]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Benutzergruppe wählen]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
@@ -548,10 +548,11 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Wartung]]></item>
 		<item name="wcf.acp.menu.link.maintenance.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.application.management"><![CDATA[Anwendungen verwalten]]></item>
-		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.menu.link.application"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
@@ -570,7 +571,7 @@
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-Mail an Gruppenmitglieder]]></item>
 		<item name="wcf.acp.menu.link.group.list"><![CDATA[Benutzergruppen]]></item>
-		<item name="wcf.acp.menu.link.display"><![CDATA[Darstellung]]></item>
+		<item name="wcf.acp.menu.link.customization"><![CDATA[Anpassung]]></item>
 		<item name="wcf.acp.menu.link.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
@@ -583,7 +584,7 @@
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Stil hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Stil importieren]]></item>
 		<item name="wcf.acp.menu.link.style.list"><![CDATA[Stile]]></item>
-		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.menu.link.configuration"><![CDATA[Konfiguration]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Benutzer hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[Benutzer]]></item>
@@ -591,12 +592,12 @@
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
-		<item name="wcf.acp.menu.link.user.option"><![CDATA[Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Benutzerprofilfeld hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Benutzerprofilfeld-Kategorien]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.user.option.setDefaults"><![CDATA[Benutzerprofil-Einstellungen verwalten]]></item>
+		<item name="wcf.acp.menu.link.user.option"><![CDATA[Profilfelder]]></item>
+		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Profilfelder]]></item>
+		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Profilfeld hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Profilfeld-Kategorien]]></item>
+		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Profilfeld-Kategorie hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[Benutzerprofil-Einstellungen]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Template hinzufügen]]></item>
@@ -630,7 +631,8 @@
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Datenimport]]></item>
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
-		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistiken]]></item>
+		<item name="wcf.acp.menu.link.stat"><![CDATA[Statistiken]]></item>
+		<item name="wcf.acp.menu.link.stat.list"><![CDATA[Statistiken]]></item>
 		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatische Zuordnungen]]></item>
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
@@ -640,13 +642,13 @@
 		<item name="wcf.acp.menu.link.ad.list"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Frage hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Fragen]]></item>
+		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
 		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Fehlgeschlagene Anmeldungen]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription"><![CDATA[Bezahlte Mitgliedschaften]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[Mitgliedschaften auflisten]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[Aktive Mitgliedschaften auflisten]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[Transaktionen auflisten]]></item>
-		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
+		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Benachrichtigungen]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">

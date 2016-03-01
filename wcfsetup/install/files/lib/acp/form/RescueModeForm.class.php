@@ -181,7 +181,7 @@ class RescueModeForm extends AbstractCaptchaForm {
 		WCF::getSession()->disableUpdate();
 		WCF::getSession()->changeUser($this->user, true);
 		
-		if (!WCF::getSession()->getPermission('admin.system.canManageApplication')) {
+		if (!WCF::getSession()->getPermission('admin.configuration.canManageApplication')) {
 			throw new UserInputException('username', 'notAuthorized');
 		}
 	}

@@ -1,11 +1,11 @@
 <nav id="topMenu" class="userPanel">
 	<ul class="userPanelItems">
 		{if $__wcf->user->userID}
-			<!-- user menu -->
-			<li id="userMenu" class="dropdown">
-				<a class="dropdownToggle" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} {/if}{lang}wcf.user.userNote{/lang}</a>
-				<ul class="dropdownMenu">
-					{if PACKAGE_ID > 1}
+			{if PACKAGE_ID}
+				<li id="userMenu" class="dropdown">
+					<a class="dropdownToggle" data-toggle="userMenu">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</a>
+					<ul class="dropdownMenu">
+						{* TODO: this was copied straight from the frontend *}
 						<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}{/link}" class="box32">
 								<div>{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
 								
@@ -20,12 +20,10 @@
 						{event name='userMenuItems'}
 						
 						<li class="dropdownDivider"></li>
-					{/if}
-					<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
-				</ul>
-			</li>
+						<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
+					</ul>
+				</li>
 			
-			{if PACKAGE_ID}
 				<li id="jumpToPage" class="dropdown">
 					<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon32 fa-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
 					<ul class="dropdownMenu">
@@ -35,7 +33,7 @@
 					</ul>
 				</li>
 				
-				{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
+				{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
 					<li>
 						<a href="{link controller='PackageUpdate'}{/link}"><span class="icon icon32 fa-refresh"></span> <span>{lang}wcf.acp.package.updates{/lang}</span> <span class="badge badgeInverse">{#$__wcf->getAvailableUpdates()}</span></a>
 					</li>

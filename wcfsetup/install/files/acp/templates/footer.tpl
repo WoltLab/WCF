@@ -1,6 +1,7 @@
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</div>
 			
 	{include file='pageFooter'}		
 </div>

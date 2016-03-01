@@ -26,7 +26,7 @@ class ACPSessionLogListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = array('admin.management.canViewLog');
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField

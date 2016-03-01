@@ -120,20 +120,13 @@
 	</script>
 	<script>
 		$(function() {
-			{* work-around for unknown core-object during WCFSetup *}
-			{if PACKAGE_ID}
-				{assign var=activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()|array_reverse}
-				var $activeMenuItems = [{implode from=$activeMenuItems item=_menuItem}'{$_menuItem}'{/implode}];
-				//new WCF.ACP.Menu($activeMenuItems);
-			{/if}
-			
 			if (jQuery.browser.touch) $('html').addClass('touch');
 			
 			new WCF.Effect.SmoothScroll();
 			WCF.System.PageNavigation.init('.pagination');
 			
 			{if $__wcf->user->userID}
-				//new WCF.ACP.Search();
+				new WCF.ACP.Search();
 			{/if}
 			
 			{event name='javascriptInit'}
@@ -154,112 +147,10 @@
 		
 		{event name='afterPageHeader'}
 		
-		{*include file='pageNavbarTop'*}
-		
-		<section id="main" class="main" role="main">
-	
-	{*
-	<header id="pageHeader" class="layoutBoundary">
-		<div>
-			{if $__wcf->user->userID}
-				<nav id="topMenu" class="userPanel">
-					<div class="layoutBoundary">
-						<ul class="userPanelItems">
-							<li id="userMenu" class="dropdown">
-								<a class="dropdownToggle framed" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} {/if}{lang}wcf.user.userNote{/lang}</a>
-								<ul class="dropdownMenu">
-									{if PACKAGE_ID > 1}
-										<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}{/link}" class="box32">
-											<div class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
-											
-											<div class="containerHeadline">
-												<h3>{$__wcf->user->username}</h3>
-												<small>{lang}wcf.user.myProfile{/lang}</small>
-											</div>
-										</a></li>
-										{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}editOnInit=true#about{/link}">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
-										<li><a href="{link controller='Settings' forceFrontend=true}{/link}">{lang}wcf.user.menu.settings{/lang}</a></li>
-										
-										{event name='userMenuItems'}
-										
-										<li class="dropdownDivider"></li>
-									{/if}
-									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
-								</ul>
-							</li>
-							
-							{if PACKAGE_ID > 1}
-								<li id="jumpToPage" class="dropdown">
-									<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon16 icon-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
-									<ul class="dropdownMenu">
-										{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
-											<li><a href="{$_menuItem->getProcessor()->getLink()}">{lang}{$_menuItem->menuItem}{/lang}</a></li>
-										{/foreach}
-									</ul>
-								</li>
-								
-								{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
-									<li>
-										<a href="{link controller='PackageUpdate'}{/link}"><span class="icon icon16 icon-refresh"></span> <span>{lang}wcf.acp.package.updates{/lang}</span> <span class="badge badgeInverse">{#$__wcf->getAvailableUpdates()}</span></a>
-									</li>
-								{/if}
-							{/if}
-														
-							<li id="woltlab" class="dropdown">
-								<a class="dropdownToggle" data-toggle="woltlab"><span class="icon icon16 icon-info-sign"></span> <span>WoltLab&reg;</span></a>
-								
-								<ul class="dropdownMenu">
-									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://www.woltlab.com"|rawurlencode}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
-									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://community.woltlab.com"|rawurlencode}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
-									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://www.woltlab.com/ticket-add/"|rawurlencode}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>
-									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://pluginstore.woltlab.com"|rawurlencode}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
-								</ul>
-							</li>
-							
-							{event name='topMenu'}
-						</ul>
-						
-						{if $__wcf->getSession()->getPermission('admin.general.canUseAcp')}
-							<aside id="search" class="searchBar">
-								<form>
-									<input type="search" name="q" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" value="" />
-								</form>
-							</aside>
-						{/if}
-					</div>
-				</nav>
-			{/if}
+		<div id="acpPageContentContainer" class="acpPageContentContainer">
+			{include file='pageMenu'}
 			
-			<div id="logo" class="logo">
-				<a href="{link}{/link}">
-					<h1>{lang}wcf.global.acp{/lang}</h1>
-					{if PACKAGE_ID > 1}
-						{event name='headerLogo'}
-					{else}
-						<img src="{@$__wcf->getPath()}acp/images/wcfLogo.png" alt="" style="height: 80px; width: 502px;" />
-					{/if}
-				</a>
-			</div>
-			
-			*}{* work-around for unknown core-object during WCFSetup *}{*
-			{if PACKAGE_ID && $__wcf->user->userID}
-				{hascontent}
-					<nav id="mainMenu" class="mainMenu">
-						<ul>{content}{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_menuItem}<li data-menu-item="{$_menuItem->menuItem}"><a>{lang}{@$_menuItem->menuItem}{/lang}</a></li>{/foreach}{/content}</ul>
-					</nav>
-				{/hascontent}
-			{/if}
-			
-			<nav class="navigation navigationHeader">
-				<ul class="navigationIcons">
-					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
-					{event name='navigationIcons'}
-				</ul>
-			</nav>
-		</div>
-	</header>
-	*}
-	
-	<div class="layoutBoundary">
-		<div id="content" class="content">
-				
+			<section id="main" class="main" role="main">
+				<div class="layoutBoundary">
+					<div id="content" class="content">
+					

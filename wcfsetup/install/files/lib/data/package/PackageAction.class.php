@@ -28,17 +28,17 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.system.package.canInstallPackage');
+	protected $permissionsCreate = array('admin.configuration.package.canInstallPackage');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.system.package.canUninstallPackage');
+	protected $permissionsDelete = array('admin.configuration.package.canUninstallPackage');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
+	protected $permissionsUpdate = array('admin.configuration.package.canUpdatePackage');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
@@ -49,7 +49,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to search for purchased items in the WoltLab Plugin-Store.
 	 */
 	public function validateSearchForPurchasedItems() {
-		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage', 'admin.system.package.canUpdatePackage'));
+		WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage'));
 		
 		$this->readString('password', true);
 		$this->readString('username', true);

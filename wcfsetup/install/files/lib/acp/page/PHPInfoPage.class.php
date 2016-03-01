@@ -22,7 +22,7 @@ class PHPInfoPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.package.canInstallPackage', 'admin.system.package.canUpdatePackage');
+	public $neededPermissions = array('admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage');
 	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()

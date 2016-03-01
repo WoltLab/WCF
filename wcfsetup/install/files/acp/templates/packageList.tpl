@@ -13,7 +13,7 @@
 			'wcf.acp.pluginStore.purchasedItems.noResults': '{lang}wcf.acp.pluginStore.purchasedItems.noResults{/lang}'
 		});
 		
-		{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage')}
+		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
 			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'), {if PACKAGE_ID > 1}'{link controller='PackageList' forceWCF=true encode=false}packageID={literal}{packageID}{/literal}{/link}'{else}null{/if});
 			{if $packageID}
 				new WCF.PeriodicalExecuter(function(pe) {
@@ -23,11 +23,11 @@
 			{/if}
 		{/if}
 		
-		{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
+		{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 			new WCF.ACP.Package.Update.Search();
 		{/if}
 		
-		{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') && $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
+		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 			new WCF.ACP.PluginStore.PurchasedItems.Search();
 		{/if}
 	});
@@ -45,7 +45,7 @@
 		<nav>
 			<ul>
 				{content}
-					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
+					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
@@ -114,7 +114,7 @@
 			<nav>
 				<ul>
 					{content}
-						{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
+						{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						

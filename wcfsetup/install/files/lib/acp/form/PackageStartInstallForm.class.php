@@ -200,7 +200,7 @@ class PackageStartInstallForm extends AbstractForm {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		if (!WCF::getSession()->getPermission('admin.system.package.canInstallPackage') && !WCF::getSession()->getPermission('admin.system.package.canUpdatePackage')) {
+		if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && !WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')) {
 			throw new PermissionDeniedException();
 		}
 		

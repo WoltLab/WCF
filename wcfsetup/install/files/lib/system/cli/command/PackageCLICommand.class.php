@@ -130,7 +130,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		
 		// check update or install support
 		if ($package !== null) {
-			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+			CLIWCF::getSession()->checkPermissions(array('admin.configuration.package.canUpdatePackage'));
 			
 			$archive->setPackage($package);
 			if (!$archive->isValidUpdate()) {
@@ -138,7 +138,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			}
 		}
 		else {
-			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+			CLIWCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage'));
 			
 			if (!$archive->isValidInstall()) {
 				$this->error('noValidInstall');
@@ -471,6 +471,6 @@ class PackageCLICommand implements IArgumentedCLICommand {
 	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
 	 */
 	public function canAccess() {
-		return CLIWCF::getSession()->getPermission('admin.system.package.canInstallPackage') || CLIWCF::getSession()->getPermission('admin.system.package.canUpdatePackage');
+		return CLIWCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') || CLIWCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage');
 	}
 }

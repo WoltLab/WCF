@@ -278,15 +278,15 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Users of this group may access the Administration Control Panel based upon their granted permissions. This option must be enabled if you wish to grant access to any administrative option.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Can view private user options]]></item>
 		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Can manage languages]]></item>
-		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Can edit system options]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canEditOption"><![CDATA[Can edit system options]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
-		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Can view log files]]></item>
-		<item name="wcf.acp.group.option.admin.system.canManageApplication"><![CDATA[Can manage applications]]></item>
-		<item name="wcf.acp.group.option.admin.system.canManageCronjob"><![CDATA[Can manage cronjobs]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Can edit update servers]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Can install packages]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canUninstallPackage"><![CDATA[Can uninstall packages]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canUpdatePackage"><![CDATA[Can update packages]]></item>
+		<item name="wcf.acp.group.option.admin.management.canViewLog"><![CDATA[Can view log files]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Can manage applications]]></item>
+		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Can manage cronjobs]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Can edit update servers]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Can install packages]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Can uninstall packages]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Can update packages]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Accessible User Groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Users of this group have access to these groups, furthermore you need to specify if these users are allowed to edit these groups.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Can add user groups]]></item>
@@ -300,13 +300,14 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Can send emails to users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Can search users]]></item>
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Permissions]]></item>
-		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Appearance]]></item>
+		<item name="wcf.acp.group.option.category.admin.configuration"><![CDATA[Configuration]]></item>
+		<item name="wcf.acp.group.option.category.admin.customization"><![CDATA[Customization]]></item>
+		<item name="wcf.acp.group.option.category.admin.management"><![CDATA[Management]]></item>
 		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Page Menu]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[General Permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Styles]]></item>
-		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Packages]]></item>
+		<item name="wcf.acp.group.option.category.admin.configuration.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[User Groups]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Users]]></item>
@@ -326,7 +327,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Can manage styles]]></item>
 		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.group.option.admin.content.canBulkRevertContentChanges"><![CDATA[Can bulk revert content changes]]></item>
-		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.group.option.category.admin.application"><![CDATA[Applications]]></item>
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Can manage user profile fields]]></item>
@@ -403,8 +404,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
-		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Can import data]]></item>
-		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Can rebuild data]]></item>
+		<item name="wcf.acp.group.option.admin.management.canImportData"><![CDATA[Can import data]]></item>
+		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Can rebuild data]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Choose User Group]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
@@ -547,10 +548,11 @@ Examples for medium ID detection:
 	</category>
 	
 	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Maintenance]]></item>
 		<item name="wcf.acp.menu.link.maintenance.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.application.management"><![CDATA[Manage Applications]]></item>
-		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.menu.link.application"><![CDATA[Applications]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add Cronjob]]></item>
@@ -568,9 +570,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[Email Users]]></item>
 		<item name="wcf.acp.menu.link.group.list"><![CDATA[User Groups]]></item>
-		<item name="wcf.acp.menu.link.display"><![CDATA[Appearance]]></item>
+		<item name="wcf.acp.menu.link.customization"><![CDATA[Customization]]></item>
 		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
-		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Import &amp; Export]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install Package]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Package Servers]]></item>
@@ -582,7 +583,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Add Style]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Import Style]]></item>
 		<item name="wcf.acp.menu.link.style.list"><![CDATA[Styles]]></item>
-		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.menu.link.configuration"><![CDATA[Configuration]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add User]]></item>
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[Users]]></item>
@@ -595,7 +596,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Field Categories]]></item>
 		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Add Field Category]]></item>
-		<item name="wcf.acp.menu.link.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
+		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[User Field Settings]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Add Template]]></item>
@@ -629,7 +630,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Data Import]]></item>
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Rebuild Data]]></item>
-		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistics]]></item>
+		<item name="wcf.acp.menu.link.stat"><![CDATA[Statistics]]></item>
+		<item name="wcf.acp.menu.link.stat.list"><![CDATA[Statistics]]></item>
 		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Add Notice]]></item>
@@ -639,13 +641,13 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.ad.list"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Add Question]]></item>
-		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Questions]]></item>
+		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Captcha Questions]]></item>
 		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Failed Login Attempts]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription"><![CDATA[Paid Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[List Paid Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[List Active Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[List Transactions]]></item>
-		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
+		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Notifications]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">

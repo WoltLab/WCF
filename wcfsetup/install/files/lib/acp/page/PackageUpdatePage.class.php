@@ -30,7 +30,7 @@ class PackageUpdatePage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.package.canUpdatePackage');
+	public $neededPermissions = array('admin.configuration.package.canUpdatePackage');
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()

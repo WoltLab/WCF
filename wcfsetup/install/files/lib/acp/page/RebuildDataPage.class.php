@@ -23,7 +23,7 @@ class RebuildDataPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canRebuildData');
+	public $neededPermissions = array('admin.management.canRebuildData');
 	
 	/**
 	 * object types

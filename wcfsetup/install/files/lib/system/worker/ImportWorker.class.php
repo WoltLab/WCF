@@ -33,7 +33,7 @@ class ImportWorker extends AbstractWorker {
 	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermissions(array('admin.system.canImportData'));
+		WCF::getSession()->checkPermissions(array('admin.management.canImportData'));
 		
 		if (!isset($this->parameters['objectType'])) {
 			throw new SystemException("parameter 'objectType' missing");

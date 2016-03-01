@@ -7,20 +7,8 @@
 
 <div id="pageHeaderSearch" class="pageHeaderSearch" data-disable-auto-focus="true">
 	<form method="post" action="{@$__searchFormLink}">
-		<div class="pageHeaderSearchInputContainer dropdown">
-			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput dropdownToggle" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="{if $query|isset}{$query}{/if}" data-toggle="search" />
-			
-			<ul class="dropdownMenu">
-				{hascontent}
-					<li class="dropdownText">
-						{content}
-							{@$__searchDropdownOptions}
-						{/content}
-					</li>
-					<li class="dropdownDivider"></li>
-				{/hascontent}
-				<li><a href="{@$__searchFormLink}">{lang}wcf.search.extended{/lang}</a></li>
-			</ul>
+		<div class="pageHeaderSearchInputContainer">
+			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="{if $query|isset}{$query}{/if}" data-toggle="search" />
 			
 			<button class="pageHeaderSearchInputButton" type="submit">
 				<span class="icon icon16 pointer fa-search" title="{lang}wcf.global.search{/lang}"></span>

@@ -178,7 +178,7 @@ class StyleCompiler extends SingletonFactory {
 			closedir($handle);
 		}
 		
-		$additional = ['mainMenu'];
+		$additional = ['layout'];
 		for ($i = 0, $length = count($additional); $i < $length; $i++) {
 			$files[] = WCF_DIR . 'acp/style/' . $additional[$i] . '.scss';
 		}

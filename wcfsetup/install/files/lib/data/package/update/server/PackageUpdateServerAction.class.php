@@ -22,17 +22,17 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.system.package.canEditServer');
+	protected $permissionsCreate = array('admin.configuration.package.canEditServer');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.system.package.canEditServer');
+	protected $permissionsDelete = array('admin.configuration.package.canEditServer');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.system.package.canEditServer');
+	protected $permissionsUpdate = array('admin.configuration.package.canEditServer');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP

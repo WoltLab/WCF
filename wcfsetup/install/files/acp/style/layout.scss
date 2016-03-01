@@ -1,0 +1,186 @@
+.layoutBoundary {
+	margin: 0;
+	max-width: none;
+	min-width: 0;
+}
+
+.pageContainer {
+	/* required for sticky page header */
+	padding-top: 50px;
+}
+
+/* page header */
+.pageHeaderContainer {
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	
+	.pageHeader > div > div {
+		height: 50px;
+		padding: 10px 10px 10px 0;
+	}
+	
+	.pageHeaderLogo {
+		flex: 0 0 120px;
+		margin: 0;
+		order: 1;
+		text-align: center;
+		
+		.pageHeaderLogoLarge {
+			display: none;
+		}
+		
+		.pageHeaderLogoSmall {
+			display: inline;
+		}
+	}
+	
+	.mainMenu {
+		flex: 0 0 auto;
+		order: 2;
+	}
+	
+	.pageHeaderSearch {
+		flex: 0 0 auto;
+		order: 3;
+		
+		.pageHeaderSearchInput {
+			border-width: 0 !important;
+			height: 50px;
+			width: 300px;
+		}
+	}
+	
+	.userPanel {
+		flex: 1 1 auto;
+		order: 4;
+	}
+}
+
+.acpSearchDropdown {
+	border-width: 0;
+	top: 50px !important;
+	width: 300px;
+	
+	&::before,
+	&::after {
+		display: none;
+	}
+}
+
+
+.acpPageContentContainer {
+	display: flex;
+	flex: 1 0 auto;
+}
+
+.acpPageMenu .icon, .acpPageSubMenu .icon {
+	color: inherit;
+}
+
+.acpPageMenu {
+	background-color: rgb(52, 73, 94);
+	flex: 0 0 120px;
+	text-align: center;
+	overflow: hidden;
+	
+	.acpPageMenuLink {
+		color: rgb(192, 192, 192);
+		display: block;
+		padding: 20px 10px;
+		
+		&.active {
+			background-color: rgb(65, 86, 107);
+			color: rgb(255, 255, 255);
+			
+			> .icon {
+				transform: scale(1);
+			}
+		}
+		
+		> .icon {
+			transform: scale(.8);
+			transition: transform .12s linear;
+		}
+	}
+	
+	.acpPageMenuItemLabel {
+		display: block;
+		margin-top: 5px;
+	}
+}
+
+
+.acpPageSubMenu {
+	background-color: rgb(65, 86, 107);
+	flex: 0 0 auto;
+}
+
+.acpPageSubMenuCategoryList{
+	flex: 0 0 300px;
+	overflow: hidden;
+	width: 300px;
+	
+	&:not(.active) {
+		display: none;
+	}
+	
+	> .acpPageSubMenuCategory {
+		margin-top: 20px;
+		padding-left: 20px;
+		
+		> span {
+			color: rgb(169, 169, 169);
+			display: block;
+			padding: 5px 20px;
+			text-transform: uppercase;
+		}
+	}
+	
+	.acpPageSubMenuLink,
+	.acpPageSubMenuIcon {
+		color: rgb(255, 255, 255);
+		display: block;
+		overflow: hidden;
+		padding: 5px 20px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.acpPageSubMenuLink:hover,
+	.acpPageSubMenuLink:hover ~ .acpPageSubMenuIcon:not(.active),
+	.acpPageSubMenuIcon:hover {
+		background-color: rgb(52, 73, 94);
+	}
+	
+	.acpPageSubMenuLinkWrapper {
+		display: flex;
+		
+		> .acpPageSubMenuLink {
+			flex: 1 1 auto;
+		}
+		
+		> .acpPageSubMenuIcon {
+			flex: 0 0 auto;
+		}
+	}
+	
+	.acpPageSubMenuItemList > .active > a,
+	.acpPageSubMenuLink.active,
+	.acpPageSubMenuLink.active ~ .acpPageSubMenuIcon,
+	.acpPageSubMenuIcon.active {
+		background-color: rgb(255, 255, 255) !important;
+		color: rgb(44, 62, 80) !important;
+	}
+}
+
+.main {
+	flex: 1 1 auto;
+	padding: 40px 0 40px 20px;
+}
+
+.pageFooter {
+	padding: 20px 0;
+	text-align: center;
+}

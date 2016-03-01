@@ -1941,7 +1941,7 @@ INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (5, 'wcf.acp.
 
 -- default user group options
 INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1, 1);
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (2, 'admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1, 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (2, 'admin.configuration.package.canInstallPackage', 'admin.configuration.package', 'boolean', '0', 1, 1);
 INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (3, 'admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1, 1);
 
 -- default user group option values

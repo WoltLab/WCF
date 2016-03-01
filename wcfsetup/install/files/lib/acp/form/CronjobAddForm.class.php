@@ -29,7 +29,7 @@ class CronjobAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canManageCronjob');
+	public $neededPermissions = array('admin.management.canManageCronjob');
 	
 	/**
 	 * cronjob class name

@@ -18,7 +18,9 @@
 	// benchmark link styling
 	.benchmark,
 	.copyright {
-		margin-top: 20px;
+		&:not(:first-child) {
+			margin-top: 20px;
+		}
 		
 		a {
 			// use text color instead

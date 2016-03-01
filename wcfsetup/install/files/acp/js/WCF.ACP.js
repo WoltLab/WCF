@@ -1880,10 +1880,10 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	 */
 	init: function() {
 		this._className = 'wcf\\data\\acp\\search\\provider\\ACPSearchProviderAction';
-		this._super('#search input[name=q]');
+		this._super('#pageHeaderSearch input[name=q]');
 		
 		// disable form submitting
-		$('#search > form').on('submit', function(event) {
+		$('#pageHeaderSearch > form').on('submit', function(event) {
 			event.preventDefault();
 		});
 	},
@@ -1936,6 +1936,12 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		}
 		
 		window.location = this._list.find('li.dropdownNavigationItem > a').attr('href');
+	},
+	
+	_success: function(data) {
+		this._super(data);
+		
+		this._list.addClass('acpSearchDropdown');
 	}
 });
 

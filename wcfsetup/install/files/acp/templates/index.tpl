@@ -94,7 +94,7 @@
 			<dl>
 				<dt>{lang}wcf.acp.index.system.php{/lang}</dt>
 				<dd>
-					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') && $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
+					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 						<a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a>
 					{else}
 						{PHP_VERSION}

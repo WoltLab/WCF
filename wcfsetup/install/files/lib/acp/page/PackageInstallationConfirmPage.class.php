@@ -68,10 +68,10 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		}
 		
 		if ($this->queue->action == 'install') {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+			WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage'));
 		}
 		else {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+			WCF::getSession()->checkPermissions(array('admin.configuration.package.canUpdatePackage'));
 		}
 		
 		$this->installingImportedStyle = WCF::getSession()->getVar('stylePackageImportLocation') !== null;
