@@ -450,12 +450,8 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 		
 		require(['EventHandler'], (function(EventHandler) {
 			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function(data) {
-				console.debug("called");
-				console.debug(data);
 				if (data.identifier === 'com.woltlab.wcf.notifications') {
 					this.toggle();
-					
-					//data.handler.close(true);
 				}
 			}).bind(this));
 		}).bind(this));
