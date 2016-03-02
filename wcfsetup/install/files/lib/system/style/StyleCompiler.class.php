@@ -89,7 +89,11 @@ class StyleCompiler extends SingletonFactory {
 			}
 			
 			closedir($handle);
+			
+			// directory order is not deterministic in some cases
+			sort($files);
 		}
+		
 		// TESTING ONLY
 		
 		while ($row = $statement->fetchArray()) {
@@ -176,6 +180,9 @@ class StyleCompiler extends SingletonFactory {
 			}
 			
 			closedir($handle);
+			
+			// directory order is not deterministic in some cases
+			sort($files);
 		}
 		
 		$additional = ['layout'];
