@@ -17,14 +17,10 @@
 
 .pageHeader .layoutBoundary {
 	display: flex;
-	padding-top: 20px;
-	padding-bottom: 20px;
 	
 	.pageHeaderContainerLeft,
 	.pageHeaderContainerRight {
 		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
 	}
 	
 	.pageHeaderContainerLeft {
@@ -34,14 +30,32 @@
 	.pageHeaderContainerRight {
 		flex: 0 0 auto;
 	}
+	
+	@include large-screen-only {
+		padding-top: 20px;
+		padding-bottom: 20px;
+		
+		.pageHeaderContainerLeft,
+		.pageHeaderContainerRight {
+			flex-direction: column;
+			justify-content: space-between;
+		}
+	}
+	
+	@include small-screen-only {
+		height: 50px;
+		padding: 10px;
+	}
 }
 
 /* LOGO */
 .pageHeaderLogo {
-	margin-bottom: 15px;
-	
 	.pageHeaderLogoSmall {
 		display: none;
+	}
+	
+	@include large-screen-only {
+		margin-bottom: 15px;
 	}
 }
 

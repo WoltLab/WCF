@@ -22,9 +22,11 @@
 		> div {
 			height: 50px;
 			
-			// remove padding, the vertical alignment is done using `align-items`
-			padding-bottom: 0;
-			padding-top: 0;
+			@include large-screen-only {
+				// remove padding, the vertical alignment is done using `align-items`
+				padding-bottom: 0;
+				padding-top: 0;
+			}
 		}
 	}
 	
