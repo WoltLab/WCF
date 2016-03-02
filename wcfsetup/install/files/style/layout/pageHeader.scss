@@ -15,20 +15,29 @@
 	}
 }
 
-.pageHeader > div > div {
-	align-items: center;
+.pageHeader .layoutBoundary {
 	display: flex;
-	flex-wrap: wrap;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	
+	.pageHeaderContainerLeft,
+	.pageHeaderContainerRight {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	
+	.pageHeaderContainerLeft {
+		flex: 1 1 auto;
+	}
+	
+	.pageHeaderContainerRight {
+		flex: 0 0 auto;
+	}
 }
 
 /* LOGO */
 .pageHeaderLogo {
-	// use a fixed width of 50% together with the search bar to force a wrap
-	flex: 0 0 50%;
-	
-	// gap between the two rows formed by the wrapping flex box
 	margin-bottom: 15px;
 	
 	.pageHeaderLogoSmall {
@@ -37,130 +46,68 @@
 }
 
 /* MAIN MENU */
-.mainMenu {
-	flex: 1 1 auto;
+.mainMenu .boxMenu {
+	display: flex;
 	
-	.boxMenu {
-		display: flex;
+	> li {
+		flex: 0 0 auto;
+		
+		@extend .wcfFontHeadline;
+		
+		> a {
+			background-color: $wcfHeaderMenuBackground;
+			color: $wcfHeaderMenuLink;
+			display: block;
+			font-size: 16px;
+			font-weight: 400;
+			padding: 6px 12px;
+		}
+		
+		> span {
+			cursor: default;
+		}
+		
+		&.active > a,
+		&:hover > a {
+			background-color: $wcfHeaderMenuBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
+	}
+	
+	> .boxMenuHasChildren {
+		position: relative;
+		
+		&:hover .boxMenuDepth1 {
+			visibility: visible;
+		}
+	}
+	
+	.boxMenuDepth1 {
+		background-color: $wcfHeaderMenuDropdownBackground;
+		border-bottom: 1px solid $wcfHeaderMenuDropdownBorder;
+		box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
+		padding: 3px 0;
+		position: absolute;
+		visibility: hidden;
+		
+		// offset the menu to prevent the staircase effect when two elements with dark and light
+		// colors are right below each other; uses a transparent border rather than a margin to
+		// prevent losing the hover on the <li> causing the menu to collapse when the cursor is
+		// right between the menu item and the menu itself
+		background-clip: padding-box;
+		border-top: 3px solid transparent;
+		
+		@extend .wcfFontDefault;
 		
 		> li {
-			@extend .wcfFontHeadline;
-			
-			flex: 0 0 auto;
-			
-			&:not(:last-child) {
-				margin-right: 12px;
+			> a {
+				color: $wcfHeaderMenuDropdownLink;
 			}
 			
 			> a,
 			> span {
-				background-color: $wcfHeaderMenuBackground;
-				color: $wcfHeaderMenuLink;
 				display: block;
-				font-size: 16px;
-				font-weight: 400;
-				padding: 4px 12px;
-			}
-			
-			> span {
-				cursor: default;
-			}
-			
-			&.active > a,
-			&:hover > a,
-			&.active > span,
-			&:hover > span {
-				background-color: $wcfHeaderMenuBackgroundActive;
-				color: $wcfHeaderMenuLinkActive;
-			}
-		}
-		
-		> .boxMenuHasChildren {
-			position: relative;
-			
-			&:hover {
-				> a::after {
-					transform: rotateX(180deg);
-				}
-				
-				.boxMenuDepth1 {
-					visibility: visible;
-				}
-			}
-			
-			> a {
-				padding-right: 30px;
-				
-				&::before {
-					border-left: 1px solid $wcfHeaderBackground;
-					bottom: 0;
-					content: "";
-					display: block;
-					position: absolute;
-					right: 22px;
-					top: 0;
-				}
-			}
-			
-			> span {
-				padding-right: 21px;
-			}
-			
-			> a::after,
-			> span::after {
-				content: $fa-var-caret-down;
-				display: block;
-				font-family: FontAwesome;
-				position: absolute;
-				right: 6px;
-				top: 3px;
-				transition: transform .12s ease-out;
-			}
-		}
-		
-		.boxMenuDepth1 {
-			background-color: $wcfHeaderMenuDropdownBackground;
-			border-bottom: 1px solid $wcfHeaderMenuDropdownBorder;
-			box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
-			padding: 3px 0;
-			position: absolute;
-			visibility: hidden;
-			
-			// offset the menu to prevent the staircase effect when two elements with dark and light
-			// colors are right below each other; uses a transparent border rather than a margin to
-			// prevent losing the hover on the <li> causing the menu to collapse when the cursor is
-			// right between the menu item and the menu itself
-			background-clip: padding-box;
-			border-top: 3px solid transparent;
-			
-			@extend .wcfFontDefault;
-			
-			> li {
-				> a {
-					color: $wcfHeaderMenuDropdownLink;
-				}
-				
-				> a,
-				> span {
-					display: block;
-					padding: 5px 20px;
-					white-space: nowrap;
-				}
-				
-				&.active > a,
-				> a:hover {
-					background-color: $wcfHeaderMenuDropdownBackgroundActive;
-					color: $wcfHeaderMenuDropdownLinkActive;
-					text-decoration: none;
-				}
-			}
-		}
-		
-		.boxMenuDepth2 > li {
-			> a {
-				color: $wcfHeaderMenuDropdownLink;
-				display: block;
-				padding: 5px 20px 5px 40px;
+				padding: 5px 20px;
 				white-space: nowrap;
 			}
 			
@@ -172,72 +119,84 @@
 			}
 		}
 	}
+	
+	.boxMenuDepth2 > li {
+		> a {
+			color: $wcfHeaderMenuDropdownLink;
+			display: block;
+			padding: 5px 20px 5px 40px;
+			white-space: nowrap;
+		}
+		
+		&.active > a,
+		> a:hover {
+			background-color: $wcfHeaderMenuDropdownBackgroundActive;
+			color: $wcfHeaderMenuDropdownLinkActive;
+			text-decoration: none;
+		}
+	}
 }
 
 /* user panel */
-.userPanel {
-	flex: 0 0 50%;
+.userPanel  > ul {
+	display: flex;
+	justify-content: flex-end;
 	
-	> ul {
+	> li {
+		align-items: center;
 		display: flex;
-		justify-content: flex-end;
+		flex: 0 auto;
 		
-		> li {
-			align-items: center;
-			display: flex;
+		/* margin between items, do not use the inner elements (such as a contained <a>) for
+		   this as it causes the last item to be of uneven size compared to all other items */
+		margin-left: 10px;
+		
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+		
+		> a {
 			flex: 0 auto;
+			position: relative;
 			
-			/* margin between items, do not use the inner elements (such as a contained <a>) for
-			   this as it causes the last item to be of uneven size compared to all other items */
-			margin-left: 10px;
-			
-			&:not(:last-child) {
-				margin-right: 10px;
+			/* set icon color */
+			> .icon {
+				color: $wcfHeaderLink;
 			}
-			
-			> a {
-				flex: 0 auto;
-				position: relative;
-				
-				/* set icon color */
+			&:hover {
 				> .icon {
-					color: $wcfHeaderLink;
+					color: $wcfHeaderLinkActive;
 				}
+			}
+			
+			/* hide icon label */
+			> span:not(.icon):not(.badge) {
+				display: none;
+			}
+			
+			/* special styling for update badge */
+			> span.badgeUpdate {
+				box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
+				left: 16px;
+				position: absolute;
+				top: -5px;
+			}
+		}
+		
+		/* ringing animation for notification icon */
+		&#userNotifications:not([data-count="0"]) { 
+			> a > .icon {
+				animation: fa-bell-ring 5s ease 10s 6;
+				transform-origin: 50% 0;
+			}
+		}
+		
+		/* hover effect for user menu button */
+		&#userMenu {
+			> a {
 				&:hover {
-					> .icon {
-						color: $wcfHeaderLinkActive;
-					}
-				}
-				
-				/* hide icon label */
-				> span:not(.icon):not(.badge) {
-					display: none;
-				}
-				
-				/* special styling for update badge */
-				> span.badgeUpdate {
-					box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
-					left: 16px;
-					position: absolute;
-					top: -5px;
-				}
-			}
-			
-			/* ringing animation for notification icon */
-			&#userNotifications:not([data-count="0"]) { 
-				> a > .icon {
-					animation: fa-bell-ring 5s ease 10s 6;
-					transform-origin: 50% 0;
-				}
-			}
-			
-			/* hover effect for user menu button */
-			&#userMenu {
-				> a {
-					&:hover {
-						> img {
-							box-shadow: 0 0 0 2px $wcfHeaderLink;
-						}
+					> img {
+						box-shadow: 0 0 0 2px $wcfHeaderLink;
 					}
 				}
 			}
@@ -247,19 +206,20 @@
 
 /* SEARCH AREA */
 .pageHeaderSearch {
-	// use a fixed width of 50% to force a wrap
-	flex: 0 0 50%;
+	margin-bottom: 15px;
 	text-align: right;
+	
+	.pageHeaderSearchLabel {
+		display: none;
+	}
 }
 
 .pageHeaderSearchInputContainer {
-	display: inline-block;
 	position: relative;
 	
 	&:hover {
 		.pageHeaderSearchInput {
 			background-color: $wcfHeaderSearchBoxBackgroundActive;
-			border-color: $wcfHeaderSearchBoxBorderActive;
 			color: $wcfHeaderSearchBoxTextActive;
 		}
 		
@@ -270,13 +230,12 @@
 	
 	.pageHeaderSearchInput {
 		background-color: $wcfHeaderSearchBoxBackground;
-		border-color: $wcfHeaderSearchBoxBorder;
+		border-width: 0;
 		color: $wcfHeaderSearchBoxText;
-		padding-right: 30px;
+		padding: 6px 30px 6px 8px;
 		
 		&:focus {
 			background-color: $wcfHeaderSearchBoxBackgroundActive;
-			border-color: $wcfHeaderSearchBoxBorderActive;
 			color: $wcfHeaderSearchBoxTextActive;
 			
 			~ .pageHeaderSearchInputButton > .icon {

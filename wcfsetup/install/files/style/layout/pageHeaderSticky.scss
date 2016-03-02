@@ -20,52 +20,113 @@
 		z-index: 301;
 		
 		> div {
-			padding-bottom: 10px;
-			padding-top: 10px;
-		}
-	}
-	
-	.pageHeaderSearchInputContainer:not(.open) {
-		> .pageHeaderSearchInput {
-			padding-right: 20px;
-			width: 20px;
-		}
-		
-		> .pageHeaderSearchInputButton {
-			pointer-events: none;
+			height: 50px;
+			
+			// remove padding, the vertical alignment is done using `align-items`
+			padding-bottom: 0;
+			padding-top: 0;
 		}
 	}
 	
 	@include large-screen-only {
-		#logo {
-			flex: 0 auto;
+		.pageHeaderContainerLeft,
+		.pageHeaderContainerRight {
+			align-items: center;
+			flex-direction: row;
+			justify-content: flex-start;
+		}
+		
+		.pageHeaderContainerRight {
+			min-width: 200px;
+			position: relative;
+		}
+		
+		.pageHeaderLogo {
 			margin-bottom: 0;
 			order: 1;
 			
-			> a > .large {
+			> a > .pageHeaderLogoLarge {
 				display: none;
 			}
 			
-			> a > .small {
+			> a > .pageHeaderLogoSmall {
 				display: block;
 			}
 		}
 		
 		.mainMenu {
-			flex: 1 auto;
 			order: 2;
 			margin: 0 20px;
+			
+			.boxMenu > li > a {
+				align-items: center;
+				display: flex;
+				height: 50px;
+			}
+			
+			.boxMenuDepth1 {
+				border-top-width: 0;
+			}
 		}
 		
 		.userPanel {
-			flex: 0 auto;
-			order: 3;
-			margin-right: 20px;
+			margin-left: 10px;
+			order: 4;
 		}
 		
 		.pageHeaderSearch {
-			flex: 0 auto;
-			order: 4;
+			margin-bottom: 0;
+			order: 3;
+			
+			.pageHeaderSearchInput {
+				height: 50px;
+				width: 100%;
+			}
+			
+			.pageHeaderSearchLabel {
+				background-color: $wcfHeaderSearchBoxBackground;
+				cursor: pointer;
+				display: block;
+				height: 50px;
+				width: 50px;
+				
+				&:hover {
+					background-color: $wcfHeaderSearchBoxBackgroundActive;
+				}
+				
+				&::before {
+					content: $fa-var-search;
+					display: block;
+					font-family: FontAwesome;
+					font-size: 28px;
+					line-height: 32px;
+					position: relative;
+					right: 11px;
+					top: 9px;
+				}
+			}
+		}
+		
+		.pageHeaderSearchInputContainer {
+			&.open {
+				bottom: 0;
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+				z-index: 100;
+				
+				~ .pageHeaderSearchLabel {
+					visibility: hidden;
+				}
+			}
+			
+			&:not(.open) {
+				> .pageHeaderSearchInput,
+				> .pageHeaderSearchInputButton {
+					display: none;
+				}
+			}
 		}
 	}
 }

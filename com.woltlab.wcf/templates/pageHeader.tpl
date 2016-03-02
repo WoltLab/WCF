@@ -2,16 +2,20 @@
 	<header id="pageHeader" class="pageHeader">
 		<div>
 			<div class="layoutBoundary">
-				{include file='pageHeaderLogo'}
-				
-				{include file='pageHeaderUser'}
-				
-				{include file='pageHeaderMenu'}
-				
-				{include file='pageHeaderSearch'}
+				<div class="pageHeaderContainerLeft">
+					{include file='pageHeaderLogo'}
+					
+					{include file='pageHeaderMenu'}
+				</div>
+				<div class="pageHeaderContainerRight">
+					{include file='pageHeaderSearch'}
+					
+					{include file='pageHeaderUser'}
+				</div>
 			</div>
 		</div>
 		
+		{* TODO: this should be moved somewhere else and turned into an option *}
 		<script data-relocate="true">
 			require(['WoltLab/WCF/Ui/Page/Header/Fixed'], function(UiPageHeaderFixed) {
 				UiPageHeaderFixed.init();

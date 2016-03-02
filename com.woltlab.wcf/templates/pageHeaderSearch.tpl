@@ -27,6 +27,8 @@
 			</button>
 		</div>
 		
+		<label for="pageHeaderSearchInput" class="pageHeaderSearchLabel"></label>
+		
 		{@$__searchHiddenInputFields}
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</form>
