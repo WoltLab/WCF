@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Acp/Bootstrap
  */
-define(['WoltLab/WCF/Bootstrap', './Ui/Page/Menu'], function(Bootstrap, UiPageMenu) {
+define(['Core', 'WoltLab/WCF/Bootstrap', './Ui/Page/Menu'], function(Core, Bootstrap, UiPageMenu) {
 	"use strict";
 	
 	/**
@@ -16,10 +16,16 @@ define(['WoltLab/WCF/Bootstrap', './Ui/Page/Menu'], function(Bootstrap, UiPageMe
 		/**
 		 * Bootstraps general modules and frontend exclusive ones.
 		 * 
-		 * @param	{Object}	options		bootstrap options
+		 * @param	{Object=}	options		bootstrap options
 		 */
 		setup: function(options) {
-			Bootstrap.setup();
+			options = Core.extend({
+				bootstrap: {
+					enableMobileMenu: true
+				}
+			}, options);
+			
+			Bootstrap.setup(options.bootstrap);
 			UiPageMenu.init();
 		}
 	};

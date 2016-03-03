@@ -4,7 +4,7 @@
  * and runs modules that are needed on page load.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Bootstrap
  */
@@ -13,13 +13,13 @@ define(
 		'favico',                  'enquire',                'perfect-scrollbar',      'WoltLab/WCF/Date/Time/Relative',
 		'Ui/SimpleDropdown',       'WoltLab/WCF/Ui/Mobile',  'WoltLab/WCF/Ui/TabMenu', 'WoltLab/WCF/Ui/FlexibleMenu',
 		'Ui/Dialog',               'WoltLab/WCF/Ui/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment',
-		'WoltLab/WCF/Date/Picker', 'EventHandler'
+		'WoltLab/WCF/Date/Picker', 'EventHandler',           'Core'
 	], 
 	function(
 		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
 		 UiSimpleDropdown,         UiMobile,                 UiTabMenu,                UiFlexibleMenu,
 		 UiDialog,                 UiTooltip,                Language,                 Environment,
-		 DatePicker,               EventHandler
+		 DatePicker,               EventHandler,             Core
 	)
 {
 	"use strict";
@@ -40,18 +40,26 @@ define(
 	/**
 	 * @exports	WoltLab/WCF/Bootstrap
 	 */
-	var Bootstrap = {
+	return {
 		/**
 		 * Initializes the core UI modifications and unblocks jQuery's ready event.
+		 * 
+		 * @param       {Object=}       options         initialization options
 		 */
-		setup: function() {
+		setup: function(options) {
+			options = Core.extend({
+				enableMobileMenu: true
+			}, options);
+			
 			Environment.setup();
 			
 			DateTimeRelative.setup();
 			DatePicker.init();
 			
 			UiSimpleDropdown.setup();
-			UiMobile.setup();
+			UiMobile.setup({
+				enableMobileMenu: options.enableMobileMenu
+			});
 			UiTabMenu.setup();
 			//UiFlexibleMenu.setup();
 			UiDialog.setup();
@@ -80,6 +88,4 @@ define(
 			}, 20);
 		}
 	};
-	
-	return Bootstrap;
 });

@@ -7,14 +7,15 @@
  * @module	WoltLab/WCF/Ui/Mobile
  */
 define(
-	[       'Environment', 'Language', 'Dom/ChangeListener', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
-	function(Environment,   Language,   DomChangeListener,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
+	[        'Core', 'Environment', 'Language', 'Dom/ChangeListener', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
+	function(Core,    Environment,   Language,   DomChangeListener,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
 {
 	"use strict";
 	
 	var _buttonGroupNavigations = null;
 	var _enabled = false;
 	var _main = null;
+	var _options = {};
 	var _pageMenuMain = null;
 	var _pageMenuUser = null;
 	var _sidebar = null;
@@ -24,9 +25,15 @@ define(
 	 */
 	return {
 		/**
-		 * Initializes the mobile UI using enquire.js.
+		 * Initializes the mobile UI.
+		 * 
+		 * @param       {Object=}       options         initialization options
 		 */
-		setup: function() {
+		setup: function(options) {
+			_options = Core.extend({
+				enableMobileMenu: true
+			}, options);
+			
 			_buttonGroupNavigations = elByClass('buttonGroupNavigation');
 			_main = elById('main');
 			_sidebar = elBySel('#main > div > div > .sidebar', _main);
@@ -52,8 +59,10 @@ define(
 		enable: function() {
 			_enabled = true;
 			
-			_pageMenuMain.enable();
-			_pageMenuUser.enable();
+			if (_options.enableMobileMenu) {
+				_pageMenuMain.enable();
+				_pageMenuUser.enable();
+			}
 		},
 		
 		/**
@@ -62,8 +71,10 @@ define(
 		disable: function() {
 			_enabled = false;
 			
-			_pageMenuMain.disable();
-			_pageMenuUser.disable();
+			if (_options.enableMobileMenu) {
+				_pageMenuMain.disable();
+				_pageMenuUser.disable();
+			}
 		},
 		
 		_init: function() {
@@ -165,8 +176,10 @@ define(
 		},
 		
 		_initMobileMenu: function() {
-			_pageMenuMain = new UiPageMenuMain();
-			_pageMenuUser = new UiPageMenuUser();
+			if (_options.enableMobileMenu) {
+				_pageMenuMain = new UiPageMenuMain();
+				_pageMenuUser = new UiPageMenuUser();
+			}
 		},
 		
 		_closeAllMenus: function() {

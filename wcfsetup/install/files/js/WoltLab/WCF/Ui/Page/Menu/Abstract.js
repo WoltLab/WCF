@@ -127,13 +127,27 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 		 * @protected
 		 */
 		_initItem: function(item) {
-			var itemList = item.nextElementSibling;
+			var itemList = item.nextElementSibling, parent = item.parentNode, wrapper;
 			if (itemList === null) {
 				return;
 			}
 			
+			// handle static items with an icon-type button next to it (acp menu)
+			if (itemList.nodeName !== 'OL' && itemList.classList.contains('menuOverlayItemLinkIcon')) {
+				// add wrapper
+				wrapper = elCreate('span');
+				wrapper.className = 'menuOverlayItemWrapper';
+				parent.insertBefore(wrapper, item);
+				wrapper.appendChild(item);
+				
+				while (wrapper.nextElementSibling) {
+					wrapper.appendChild(wrapper.nextElementSibling);
+				}
+				
+				return;
+			}
+			
 			var isLink = (elAttr(item, 'href') !== '#');
-			var parent = item.parentNode;
 			var parentItemList = parent.parentNode;
 			var itemTitle = elData(itemList, 'title');
 			
@@ -147,7 +161,7 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 				elData(itemList, 'title', itemTitle);
 			}
 			
-			var callbackLink = this._showItemList.bind(this, item), wrapper;
+			var callbackLink = this._showItemList.bind(this, item);
 			if (isLink) {
 				wrapper = elCreate('span');
 				wrapper.className = 'menuOverlayItemWrapper';

@@ -5,6 +5,8 @@
 			
 	{include file='pageFooter'}		
 </div>
+
+{include file='pageMenuMobile'}
 			
 {event name='footer'}
 	

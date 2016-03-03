@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
-	<base href="{$baseHref}" />
-	<meta charset="utf-8" />
-	<meta name="robots" content="noindex" />
+	<base href="{$baseHref}">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex">
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	
 	<!-- Stylesheets -->
@@ -12,8 +13,8 @@
 	{event name='stylesheets'}
 	
 	<!-- Icons -->
-	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
-	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
+	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico">
+	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png">
 	
 	<script>
 		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
@@ -96,7 +97,11 @@
 				{event name='javascriptLanguageImport'}
 			});
 			
-			AcpBootstrap.setup();
+			AcpBootstrap.setup({
+				bootstrap: {
+					enableMobileMenu: {if $__isLogin|empty}true{else}false{/if}
+				}
+			});
 		});
 		});
 	</script>
