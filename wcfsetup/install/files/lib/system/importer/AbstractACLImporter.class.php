@@ -60,9 +60,9 @@ class AbstractACLImporter extends AbstractImporter {
 			$data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.group', $data['groupID']);
 			if (!$data['groupID']) return 0;
 			
-			$sql = "INSERT INTO	wcf".WCF_N."_acl_option_to_group
-						(optionID, objectID, groupID, optionValue)
-				VALUES		(?, ?, ?, ?)";
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_acl_option_to_group
+							(optionID, objectID, groupID, optionValue)
+				VALUES		        (?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($data['optionID'], $data['objectID'], $data['groupID'], $data['optionValue']));
 			
@@ -72,9 +72,9 @@ class AbstractACLImporter extends AbstractImporter {
 			$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 			if (!$data['userID']) return 0;
 				
-			$sql = "INSERT INTO	wcf".WCF_N."_acl_option_to_user
-						(optionID, objectID, userID, optionValue)
-				VALUES		(?, ?, ?, ?)";
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_acl_option_to_user
+							(optionID, objectID, userID, optionValue)
+				VALUES		        (?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($data['optionID'], $data['objectID'], $data['userID'], $data['optionValue']));
 				
