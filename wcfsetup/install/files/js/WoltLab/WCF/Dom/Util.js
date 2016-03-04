@@ -198,7 +198,7 @@ define(['StringUtil'], function(StringUtil) {
 		setStyles: function(el, styles) {
 			var important = false;
 			for (var property in styles) {
-				if (styles.hasOwnProperty(property)) {
+				if (objOwns(styles, property)) {
 					if (/ !important$/.test(styles[property])) {
 						important = true;
 						
@@ -254,7 +254,7 @@ define(['StringUtil'], function(StringUtil) {
 				}
 				
 				element.appendChild(newScript);
-				script.parentNode.removeChild(script);
+				elRemove(script);
 			}
 		},
 		

@@ -176,7 +176,7 @@ define(
 			// store media data locally
 			var media = data.returnValues.media || { };
 			for (var mediaId in media) {
-				if (media.hasOwnProperty(mediaId)) {
+				if (objOwns(media, mediaId)) {
 					this._mediaData.set(~~mediaId, media[mediaId]);
 				}
 			}
@@ -345,7 +345,7 @@ define(
 			
 			var hasMedia = false;
 			for (var mediaId in media) {
-				if (media.hasOwnProperty(mediaId)) {
+				if (objOwns(media, mediaId)) {
 					hasMedia = true;
 				}
 			}

@@ -97,7 +97,7 @@ define(
 				return;
 			}
 			
-			// use icons if language item is empty/non-existant
+			// use icons if language item is empty/non-existent
 			var languageShowSidebar = 'wcf.global.sidebar.show' + sidebarPosition + 'Sidebar';
 			if (languageShowSidebar === Language.get(languageShowSidebar) || Language.get(languageShowSidebar) === '') {
 				languageShowSidebar = elCreate('span');

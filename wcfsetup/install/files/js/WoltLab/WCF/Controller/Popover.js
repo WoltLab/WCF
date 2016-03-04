@@ -311,7 +311,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			_activeId = _hoverId;
 			
 			var elData = _elements.get(_activeId);
-			var data = _cache.get(elAttr(elData.element, 'data-cache-id'));
+			var data = _cache.get(elData(elData.element, 'cache-id'));
 			
 			if (data.state === STATE_READY) {
 				_popoverContent.appendChild(data.content);
@@ -342,7 +342,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		 */
 		_clearContent: function() {
 			if (_activeId && _popoverContent.childElementCount && !_popover.classList.contains('active')) {
-				var activeElData = _cache.get(_elements.get(_activeId).element.getAttribute('data-cache-id'));
+				var activeElData = elData(_cache.get(_elements.get(_activeId).element, 'cache-id'));
 				while (_popoverContent.childNodes.length) {
 					activeElData.content.appendChild(_popoverContent.childNodes[0]);
 				}

@@ -116,7 +116,7 @@ define(['Ajax', 'Core', 'Dictionary'], function(Ajax, Core, Dictionary) {
 				}
 				
 				for (var key in data) {
-					if (data.hasOwnProperty(key)) {
+					if (objOwns(data, key)) {
 						this._update(element, key, data[key]);
 					}
 				}

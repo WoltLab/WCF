@@ -79,7 +79,7 @@ define(
 				if (id && (container = elById(id))) {
 					((function(button, container) {
 						container.classList.remove('jsStaticDialogContent');
-						container.style.setProperty('display', 'none');
+						elHide(container);
 						button.addEventListener('click', this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
 					}).bind(this))(button, container);
 				}
@@ -314,7 +314,7 @@ define(
 			contentContainer.appendChild(content);
 			
 			if (content.style.getPropertyValue('display') === 'none') {
-				content.style.removeProperty('display');
+				elShow(content);
 			}
 			
 			_dialogs.set(id, {
@@ -363,7 +363,7 @@ define(
 					newScript.innerHTML = script.innerHTML;
 					content.appendChild(newScript);
 					
-					script.parentNode.removeChild(script);
+					elRemove(script);
 				}
 				
 				data.content.appendChild(content);
@@ -376,7 +376,7 @@ define(
 				
 				elAttr(data.dialog, 'aria-hidden', 'false');
 				elAttr(_container, 'aria-hidden', 'false');
-				elAttr(_container, 'data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 				_activeDialog = id;
 				
 				this.rebuild(id);
@@ -465,7 +465,7 @@ define(
 				return true;
 			}
 			
-			if (elAttr(_container, 'data-close-on-click') === 'true') {
+			if (elData(_container, 'close-on-click') === 'true') {
 				this._close(event);
 			}
 			else {
@@ -509,13 +509,13 @@ define(
 			
 			if (_activeDialog === null) {
 				elAttr(_container, 'aria-hidden', 'true');
-				elAttr(_container, 'data-close-on-click', 'false');
+				elData(_container, 'close-on-click', 'false');
 				
 				window.removeEventListener('keyup', _keyupListener);
 			}
 			else {
 				data = _dialogs.get(_activeDialog);
-				elAttr(_container, 'data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 			}
 		},
 		

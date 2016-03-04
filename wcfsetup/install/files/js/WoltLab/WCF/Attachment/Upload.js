@@ -34,7 +34,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 		this._insertAllButton.className = 'button jsButtonAttachmentInsertAll';
 		this._insertAllButton.textContent = Language.get('wcf.attachment.insertAll');
 		if (DomTraverse.childBySel(this._target, 'li:not(.uploadFailed)')) {
-			this._insertAllButton.style.setProperty('display', 'none');
+			elHide(this._insertAllButton);
 		}
 		this._insertAllButton.addEventListener('click', this._insertAll.bind(this));
 		this._button.appendChild(this._insertAllButton);
@@ -56,7 +56,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 			listItem.className = 'box64';
 			elData(listItem, 'filename', filename);
 			this._target.appendChild(listItem);
-			this._target.style.removeProperty('display');
+			elShow(this._target);
 			
 			var span = elCreate('span');
 			if (this._options.maxSize >= file.size) {
@@ -129,7 +129,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 				var listItem = this._fileElements[uploadId][i];
 				
 				var progress = elByTag(listItem, 'PROGRESS');
-				progress.parentNode.removeChild(progress);
+				elRemove(progress);
 				
 				var filename = elData(listItem, 'filename');
 				var internalFileId = elData(listItem, 'internal-file-id');
@@ -259,10 +259,10 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 			// TODO: this._makeSortable();
 			
 			if (DomTraverse.childrenBySel(this._target, 'li:not(.uploadFailed)').length) {
-				this._insertAllButton.style.removeProperty('display');
+				elShow(this._insertAllButton);
 			}
 			else {
-				this._insertAllButton.style.setProperty('display', 'none');
+				elHide(this._insertAllButton);
 			}
 			
 			DomChangeListener.trigger();
@@ -301,7 +301,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 			}
 			
 			if (innerError) {
-				innerError.parentNode.removeChild(innerError);
+				elRemove(innerError);
 			}
 			
 			return true;

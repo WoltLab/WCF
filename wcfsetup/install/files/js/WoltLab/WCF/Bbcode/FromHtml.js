@@ -141,7 +141,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 					
 					_sourceConverter[i].callback(placeholder.previousElementSibling);
 					
-					placeholder.parentNode.removeChild(placeholder);
+					elRemove(placeholder);
 				}
 			}
 		},
@@ -529,7 +529,7 @@ define(['EventHandler', 'StringUtil', 'Dom/Traverse'], function(EventHandler, St
 			var highlighter = elData(element, 'highlighter');
 			window.dtdesign = element;
 			var list = DomTraverse.childByTag(element.children[0], 'OL');
-			var lineNumber = ~~list.getAttribute('start') || 1;
+			var lineNumber = ~~elAttr(list, 'start') || 1;
 			
 			var content = '';
 			for (var i = 0, length = list.childElementCount; i < length; i++) {

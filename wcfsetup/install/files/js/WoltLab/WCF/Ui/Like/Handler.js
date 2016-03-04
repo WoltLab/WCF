@@ -205,7 +205,7 @@ define(
 			button.title = title;
 			button.innerHTML = '<span class="icon icon16 fa-thumbs-o-' + (isLike ? 'up' : 'down') + '" /> <span class="invisible">' + title + '</span>';
 			button.addEventListener('click', this._like.bind(this, element));
-			button.setAttribute('data-type', (isLike ? 'like' : 'dislike'));
+			elData(button, 'type', (isLike ? 'like' : 'dislike'));
 			
 			listItem.appendChild(button);
 			
@@ -345,7 +345,7 @@ define(
 			_isBusy = true;
 			
 			Ajax.api(this, {
-				actionName: elAttr(event.currentTarget, 'data-type'),
+				actionName: elData(event.currentTarget, 'type'),
 				parameters: {
 					data: {
 						containerID: DomUtil.identify(element),

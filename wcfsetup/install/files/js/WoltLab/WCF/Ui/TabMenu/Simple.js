@@ -100,7 +100,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			}
 			
 			if (this._isLegacy) {
-				elAttr(this._container, 'data-is-legacy', true);
+				elData(this._container, 'is-legacy', true);
 				
 				this._tabs.forEach(function(tab, name) {
 					elAttr(tab, 'aria-controls', name);
@@ -142,7 +142,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				}
 				
 				if (!selectTab) {
-					var preselect = elAttr(this._container, 'data-preselect');
+					var preselect = elData(this._container, 'preselect');
 					if (preselect === "true" || !preselect) preselect = true;
 					
 					if (preselect === true) {

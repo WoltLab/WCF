@@ -47,7 +47,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Notification', 'Upload'], functi
 				elAttr(this._target, 'src', data.returnValues.url + '?timestamp=' + Date.now());
 				
 				if (error) {
-					error.parentNode.removeChild(error);
+					elRemove(error);
 				}
 				
 				UiNotification.show();
