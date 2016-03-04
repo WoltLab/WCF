@@ -18,6 +18,8 @@ define(
 {
 	"use strict";
 	
+	var queueInvocations = 0;
+	
 	/**
 	 * @exports	WoltLab/WCF/BootstrapFrontend
 	 */
@@ -71,12 +73,20 @@ define(
 		 * @param	{boolean}	force	whether execution should be forced
 		 */
 		_invokeBackgroundQueue: function(url, force) {
+			var again = this._invokeBackgroundQueue.bind(this, url, true);
+			
 			if (Math.random() < 0.1 || force) {
 				// 'fire and forget' background queue perform task
 				Ajax.apiOnce({
 					url: url,
 					ignoreError: true,
-					silent: true
+					silent: true,
+					success: (function(data) {
+						queueInvocations++;
+						
+						// process up to 5 queue items per page load
+						if (data > 0 && queueInvocations < 5) setTimeout(again, 1000);
+					}).bind(this)
 				});
 			}
 		}

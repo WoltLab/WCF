@@ -4,6 +4,7 @@ use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\exception\LoggedException;
 use wcf\system\exception\SystemException;
+use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -195,5 +196,24 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([ $row['jobID'] ]);
 		}
+	}
+	
+	/**
+	 * Returns how many items are due.
+	 * Note: Do not rely on the return value being correct, some other process may
+	 * have modified the queue contents, before this method returns. Think of it as an
+	 * approximation to know whether you should spend some time to clear the queue.
+	 * 
+	 * @return	int
+	 */
+	public function getRunnableCount() {
+		$sql = "SELECT	COUNT(*)
+			FROM	wcf".WCF_N."_background_job
+			WHERE		status = ?
+				AND	time <= ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([ 'ready', TIME_NOW ]);
+		
+		return $statement->fetchSingleColumn();
 	}
 }

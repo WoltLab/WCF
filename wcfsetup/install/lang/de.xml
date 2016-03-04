@@ -1249,6 +1249,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[Wollen Sie die Mitgliedschaft „{$subscriptionUser->title|language}“ für den Benutzer „{$subscriptionUser->username}“ wirklich entfernen?]]></item>
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Mitgliedschaft manuell zuweisen]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Es muss mindestens ein Zahlungsanbieter in den Optionen unter „Zahlungsoptionen“ ausgewählt sein, um bezahlte Mitgliedschaften erstellen zu können.]]></item>
+		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Wollen Sie die bezahlte Mitgliedschaft „{$subscription->title|language}“ wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">

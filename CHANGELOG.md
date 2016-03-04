@@ -24,6 +24,8 @@
 * `parentObjectID` column added to `modification_log` and `wcf\system\log\modification\AbstractModificationLogHandler` introduced as a replacement for `wcf\system\log\modification\ModificationLogHandler`.
 * Add sort support for `useroptions` option type.
 * Make user options shown in sidebar sortable.
+* `wcf\system\event\listener\AbstractUserActionRenameListener` added.
+* `wcf\system\event\listener\AbstractUserMergeListener` added.
 
 #### New Traits
 

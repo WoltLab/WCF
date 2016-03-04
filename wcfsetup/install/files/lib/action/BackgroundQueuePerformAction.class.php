@@ -20,8 +20,9 @@ class BackgroundQueuePerformAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		@header('HTTP/1.1 204 No Content');
+		header('Content-type: application/json');
 		BackgroundQueueHandler::getInstance()->performNextJob();
+		echo BackgroundQueueHandler::getInstance()->getRunnableCount();
 		exit;
 	}
 }
