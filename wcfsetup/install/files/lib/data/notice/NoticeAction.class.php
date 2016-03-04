@@ -72,9 +72,9 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	 */
 	public function dismiss() {
 		if (WCF::getUser()->userID) {
-			$sql = "INSERT INTO	wcf".WCF_N."_notice_dismissed
-						(noticeID, userID)
-				VALUES		(?, ?)";
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_notice_dismissed
+							(noticeID, userID)
+				VALUES			(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
 				reset($this->objectIDs),

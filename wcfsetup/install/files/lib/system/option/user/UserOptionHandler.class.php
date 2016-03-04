@@ -265,7 +265,7 @@ class UserOptionHandler extends OptionHandler {
 		// remove options which are not asked during registration
 		if ($this->inRegistration && !empty($options)) {
 			foreach ($this->options as $option) {
-				if (!$option->askDuringRegistration && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) && array_key_exists($option->optionID, $options)) {
+				if (array_key_exists($option->optionID, $options) && !$option->askDuringRegistration && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) && !$option->required && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
 					unset($options[$option->optionID]);
 				}
 			}

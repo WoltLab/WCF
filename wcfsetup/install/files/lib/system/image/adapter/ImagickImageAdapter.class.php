@@ -394,7 +394,7 @@ class ImagickImageAdapter implements IImageAdapter {
 		}
 		else {
 			$this->imagick->compositeImage($overlayImage, \Imagick::COMPOSITE_OVER, $x, $y);
-			$this->imagick = $this->imagick->flattenImages();
+			$this->imagick = $this->imagick->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
 		}
 	}
 	

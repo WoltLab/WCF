@@ -629,10 +629,12 @@ WCF.Message.SmileyCategories = Class.extend({
 	/**
 	 * Handles tab menu clicks.
 	 * 
-	 * @param	object		event
-	 * @param	object		data
+	 * @param	{Event} 	event
+	 * @param	{Object}	data
 	 */
 	_click: function(event, data) {
+		event.preventDefault();
+		
 		var $categoryID = parseInt(data.activeTab.tab.data('smileyCategoryID'));
 		
 		// ignore global category, will always be pre-loaded
@@ -696,7 +698,7 @@ WCF.Message.Smilies = Class.extend({
 	/**
 	 * Initializes the smiley handler.
 	 * 
-	 * @param	string		wysiwygSelector
+	 * @param	{string}	wysiwygSelector
 	 */
 	init: function(wysiwygSelector) {
 		this._wysiwygSelector = wysiwygSelector;
@@ -711,9 +713,11 @@ WCF.Message.Smilies = Class.extend({
 	/**
 	 * Handles tab smiley clicks.
 	 * 
-	 * @param	object		event
+	 * @param	{Event}		event
 	 */
 	_smileyClick: function(event) {
+		event.preventDefault();
+		
 		var $target = $(event.currentTarget);
 		var $smileyCode = $target.data('smileyCode');
 		var $smileyPath = $target.data('smileyPath');

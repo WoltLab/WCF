@@ -559,7 +559,7 @@ $.widget('ui.wcfImageViewer', {
 				}
 			}, this));
 		}
-		else if (targetImageElementID !== null) {
+		else if (targetImageElementID) {
 			var $i = 0;
 			$(this.options.imageSelector).each(function(index, element) {
 				if ($(element).wcfIdentify() == targetImageElementID) {
