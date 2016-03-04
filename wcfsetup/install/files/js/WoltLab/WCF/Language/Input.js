@@ -142,7 +142,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			var activeItem = null;
 			if (forceSelection === true || values.size) {
 				for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
-					if (~~dropdownMenu.elData(children[i], 'language-id') === LANGUAGE_ID) {
+					if (~~elData(dropdownMenu.children[i], 'language-id') === LANGUAGE_ID) {
 						activeItem = dropdownMenu.children[i];
 						break;
 					}

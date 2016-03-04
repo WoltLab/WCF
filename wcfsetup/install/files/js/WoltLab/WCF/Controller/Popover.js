@@ -342,7 +342,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		 */
 		_clearContent: function() {
 			if (_activeId && _popoverContent.childElementCount && !_popover.classList.contains('active')) {
-				var activeElData = _cache.get(_elements.get(_activeId).elData(element, 'cache-id'));
+				var activeElData = elData(_cache.get(_elements.get(_activeId).element, 'cache-id'));
 				while (_popoverContent.childNodes.length) {
 					activeElData.content.appendChild(_popoverContent.childNodes[0]);
 				}

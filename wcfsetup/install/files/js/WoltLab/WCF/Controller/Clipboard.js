@@ -261,7 +261,7 @@ define(
 								var formData = {};
 								
 								if (template.length) {
-									var items = elBySel('input, select, textarea', UiConfirmation.getContentElement());
+									var items = elBySelAll('input, select, textarea', UiConfirmation.getContentElement());
 									for (var i = 0, length = items.length; i < length; i++) {
 										var item = items[i];
 										var name = elAttr(item, 'name');
