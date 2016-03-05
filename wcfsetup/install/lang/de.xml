@@ -718,6 +718,7 @@
 		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Hier können Sie optional Proxy-Server für Verbindungen zu externen Servern konfigurieren.]]></item>
 		<item name="wcf.acp.option.category.general.system.search"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.option.category.general.system.search.description"><![CDATA[Die Änderung des Backends erfordert die Aktualisierung des Such-Index über die Seite „Anzeigen aktualisieren“.]]></item>
+		<item name="wcf.acp.option.category.general.system.update"><![CDATA[Updates]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[E-Mails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Versand]]></item>
@@ -1033,6 +1034,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Die Datenschutzerklärung informiert Nutzer über die Erfassung personenbezogener Daten.]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
+		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Updatehinweis im Frontend anzeigen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Link-Umschreibungen aktivieren]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „http://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „http://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in Ihrem Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung Ihres Webservers finden Sie in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fblog.woltlab.com%2Fentry%2F68-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
 		<item name="wcf.acp.option.url_legacy_mode"><![CDATA[Kompatibilitätsmodus für Links aktivieren]]></item>

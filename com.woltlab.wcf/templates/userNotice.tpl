@@ -10,7 +10,7 @@
 		<p class="info">{lang}wcf.page.cookiePolicy.info{/lang}</p>
 	{/if}
 	
-	{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
+	{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates() && SHOW_UPDATE_NOTICE_FRONTEND}
 		<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
 	{/if}
 	

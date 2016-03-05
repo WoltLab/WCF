@@ -717,6 +717,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections.]]></item>
 		<item name="wcf.acp.option.category.general.system.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.category.general.system.search.description"><![CDATA[Changing the backend requires a rebuild of the search indices available on the page “Rebuild Data”.]]></item>
+		<item name="wcf.acp.option.category.general.system.update"><![CDATA[Updates]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
@@ -1032,6 +1033,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Inform users regarding the use of their personal data.]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on “Cookie Usage”]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
+		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Show update notice in frontend]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable URL-Rewrite]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Rewrites URLs into a better readable representation, turning links like “http://example.com/index.php?thread/1-hello-i-am-john-doe/” into “http://example.com/thread/1-hello-i-am-john-doe/” and similar. Heads up! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you!<br>Please read the following article for instructions: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fblog.woltlab.com%2Fentry%2F67-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a>]]></item>
 		<item name="wcf.acp.option.url_legacy_mode"><![CDATA[Enable link compatibility mode]]></item>

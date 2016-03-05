@@ -72,6 +72,9 @@
 					<category name="general.system.googleMaps">
 						<parent>general.system</parent>
 					</category>
+					<category name="general.system.update">
+						<parent>general.system</parent>
+					</category>
 				<category name="general.mail">
 					<parent>general</parent>
 					<showorder>4</showorder>
@@ -792,6 +795,14 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.system.googleMaps -->
+			
+			<!-- general.system.update -->
+			<option name="show_update_notice_frontend">
+				<categoryname>general.system.update</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /general.system.update -->
 			
 			<!-- general.mail.general -->
 			<option name="mail_from_name">
