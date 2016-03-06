@@ -6,7 +6,7 @@
 	{include file='pageFooter'}		
 </div>
 
-{include file='pageMenuMobile'}
+{if PACKAGE_ID}{include file='pageMenuMobile'}{/if}
 			
 {event name='footer'}
 	
