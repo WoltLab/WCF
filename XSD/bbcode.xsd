@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is used for xml-files which install, update or delete page menu items. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data element -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="import" type="import" minOccurs="0" />
+				<xs:element name="delete" type="delete" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- import element -->
+	<xs:complexType name="import">
+		<xs:sequence>
+			<xs:element name="bbcode" type="bbcode_import" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- delete element -->
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="bbcode" type="bbcode_delete" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- deleted page menu item element -->
+	<xs:complexType name="bbcode_delete">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+	
+	<!-- imported/updated page menu item element -->
+	<xs:complexType name="bbcode_import">
+		<xs:complexContent>
+			<xs:extension base="bbcode_delete">
+				<xs:all>
+					<xs:element name="htmlopen" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="htmlclose" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="allowedchildren" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="attributes" type="attributes_element" minOccurs="0" />
+					<xs:element name="sourcecode" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="wysiwygicon" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="wysiwyg" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="buttonlabel" type="woltlab_varchar_nullable" minOccurs="0" />
+				</xs:all>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="attributes_element">
+		<xs:sequence>
+			<xs:element name="attribute" type="attribute_element" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="attribute_element">
+		<xs:complexContent>
+			<xs:extension base="attribute_element_basic">
+				<xs:all>
+					<xs:element name="required" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="usetext" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="validationpattern" type="xs:string" minOccurs="0" />
+				</xs:all>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="attribute_element_basic">
+		<xs:attribute name="name" type="xs:unsignedInt" use="required" />
+	</xs:complexType>
+</xs:schema>
