@@ -74,6 +74,7 @@ a {
 	
 	.sidebar {
 		flex: 0 0 310px;
+		overflow: hidden;
 		
 		&:first-child {
 			margin-right: 30px;

@@ -38,17 +38,18 @@
 	
 	> :last-child {
 		flex: 1;
+		overflow: hidden;
 	}
 }
 
 .box16 { @include box(16px, 5px); }
-.box24 { @include box(24px, 5px); }
-.box32 { @include box(32px, 8px); }
-.box48 { @include box(48px, 10px); }
-.box64 { @include box(64px, 10px); }
+.box24 { @include box(24px, 8px); }
+.box32 { @include box(32px, 10px); }
+.box48 { @include box(48px, 12px); }
+.box64 { @include box(64px, 15px); }
 .box96 { @include box(96px, 15px); }
 .box128 { @include box(128px, 20px); }
-.box256 { @include box(256px, 20px); }
+.box256 { @include box(256px, 30px); }
 
 .wcfFontDefault {
 	font-size: $wcfFontSizeDefault;
