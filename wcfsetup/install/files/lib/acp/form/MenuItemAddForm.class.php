@@ -239,7 +239,7 @@ class MenuItemAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		I18nHandler::getInstance()->assignVariables(!empty($_POST));
+		I18nHandler::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign([
 			'action' => 'add',

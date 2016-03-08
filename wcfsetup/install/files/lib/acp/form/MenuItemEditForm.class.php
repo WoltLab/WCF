@@ -120,6 +120,8 @@ class MenuItemEditForm extends MenuItemAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		I18nHandler::getInstance()->assignVariables(!empty($_POST));
+		
 		WCF::getTPL()->assign(array(
 			'action' => 'edit',
 			'itemID' => $this->itemID,
