@@ -36,7 +36,7 @@ class PageMenuItemListPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.display.canManagePageMenu');
+	public $neededPermissions = array('admin.content.cms.canManageMenu');
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()
