@@ -431,9 +431,9 @@ class SessionHandler extends SingletonFactory {
 	 * @param	boolean		$forceReload
 	 */
 	protected function loadVirtualSession($forceReload = false) {
-		if ($this->virtualSession === false || $forceReload) {
+		if ($this->virtualSession === null || $forceReload) {
 			$this->virtualSession = null;
-			if ($this->user->userID && $this->supportsVirtualSessions) {
+			if ($this->supportsVirtualSessions) {
 				$virtualSessionAction = new SessionVirtualAction(array(), 'create', array('data' => array('sessionID' => $this->session->sessionID)));
 				
 				try {
