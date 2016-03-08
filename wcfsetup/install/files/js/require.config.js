@@ -23,6 +23,7 @@ requirejs.config({
 			'Dom/Util': 'WoltLab/WCF/Dom/Util',
 			'Environment': 'WoltLab/WCF/Environment',
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
+			'EventKey': 'WoltLab/WCF/Event/Key',
 			'Language': 'WoltLab/WCF/Language',
 			'List': 'WoltLab/WCF/List',
 			'ObjectMap': 'WoltLab/WCF/ObjectMap',
