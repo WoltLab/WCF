@@ -4,6 +4,8 @@
 
 <aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $userProfile->userID} itemscope itemtype="http://data-vocabulary.org/Person"{/if}>
 	<div class="messageAuthor">
+		{event name='messageAuthor'}
+		
 		{if $userProfile->userID}
 			{assign var='username' value=$userProfile->username}
 			
@@ -18,19 +20,19 @@
 				{/if}
 			{/if}
 			
-			<p class="messageAuthorContainer">
+			<div class="messageAuthorContainer">
 				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}" rel="author">
 					<span itemprop="name">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
 				</a>
 				{if $userProfile->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}"></span>{/if}
 				
-				{event name='header'}
-			</p>
+				{event name='messageAuthorContainer'}
+			</div>
 			
 			{if MODULE_USER_RANK && MESSAGE_SIDEBAR_ENABLE_RANK}
 				{if $userProfile->getUserTitle()}
 					<div class="userTitle">
-						<p class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}" itemprop="title">{$userProfile->getUserTitle()}</p>
+						<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}" itemprop="title">{$userProfile->getUserTitle()}</span>
 					</div>
 				{/if}
 				{if $userProfile->getRank() && $userProfile->getRank()->rankImage}
@@ -38,15 +40,15 @@
 				{/if}
 			{/if}
 		{else}
-			<p class="messageAuthor">
+			<div class="messageAuthorContainer">
 				<span class="username">{$userProfile->username}</span>
 				
-				<div class="userTitle">
-					<p class="badge">{lang}wcf.user.guest{/lang}</p>
-				</div>
-				
-				{event name='header'}
-			</p>
+				{event name='messageAuthorContainer'}
+			</div>
+			
+			<div class="userTitle">
+				<span class="badge">{lang}wcf.user.guest{/lang}</span>
+			</div>
 		{/if}
 	</div>
 	
@@ -66,7 +68,9 @@
 							<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang user=$userProfile}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$userProfile->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
 							<dd>{#$userProfile->activityPoints}</dd>
 						{/if}
+						
 						{event name='userCredits'}
+						
 						{if MESSAGE_SIDEBAR_USER_OPTIONS && $userProfile->isAccessible('canViewProfile')}
 							{assign var='__sidebarUserOptions' value=','|explode:MESSAGE_SIDEBAR_USER_OPTIONS}
 							{foreach from=$__sidebarUserOptions item='__sidebarUserOption'}
