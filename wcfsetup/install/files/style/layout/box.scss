@@ -180,8 +180,15 @@
 	}
 	
 	.box {
-		background-color: $wcfSidebarBackground;
-		padding: 20px;
+		&:not(.boxBorderless) {
+			background-color: $wcfSidebarBackground;
+			padding: 20px;
+			
+			.boxMenu {
+				margin-left: -20px;
+				margin-right: -20px;
+			}
+		}
 		
 		&:not(:first-child) {
 			margin-top: 30px;
@@ -210,6 +217,29 @@
 		&.boxWarning {
 			background-color: $wcfStatusWarningBackground;
 			color: $wcfStatusWarningText;
+		}
+		
+		.boxMenu {
+			.boxMenuLink {
+				display: block;
+				padding: 5px 20px;
+				
+				.badge {
+					float: right;
+				}
+			}
+			
+			li.active > .boxMenuLink {
+				background-color: $wcfContentBackground;
+			}
+			
+			.boxMenuDepth1 .boxMenuLink {
+				padding-left: 40px;
+			}
+			
+			.boxMenuDepth2 .boxMenuLink {
+				padding-left: 60px;
+			}
 		}
 	}
 	
