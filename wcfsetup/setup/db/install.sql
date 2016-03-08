@@ -1959,7 +1959,9 @@ INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMess
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/typhoon/', 'online', 0, NULL, 0, '', '');
 
 -- style default values
+
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('messageSidebarOrientation', 'left');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
