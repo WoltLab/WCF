@@ -4932,6 +4932,7 @@ WCF.Search.Base = Class.extend({
  * Provides quick search for users and user groups.
  * 
  * @see	WCF.Search.Base
+ * @deprecated  2.2 - please use `WoltLab/WCF/Ui/User/Search/Input` instead
  */
 WCF.Search.User = WCF.Search.Base.extend({
 	/**

@@ -1,12 +1,9 @@
 {include file='header' pageTitle='wcf.acp.user.search'}
 
 <script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		WCF.TabMenu.init();
-		new WCF.Search.User('input[name=username]');
+	require(['WoltLab/WCF/Ui/User/Search/Input'], function(UiUserSearchInput) {
+		new UiUserSearchInput(elBySel('input[name="username"]'));
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">
