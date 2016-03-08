@@ -4402,6 +4402,8 @@ WCF.Search = {};
 
 /**
  * Performs a quick search.
+ * 
+ * @deprecated  2.2 - please use `WoltLab/WCF/Ui/Search/Input` instead
  */
 WCF.Search.Base = Class.extend({
 	/**
