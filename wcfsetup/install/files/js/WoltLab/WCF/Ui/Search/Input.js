@@ -216,7 +216,12 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 		 * @protected
 		 */
 		_selectItem: function(item) {
-			this._element.value = elData(item, 'label');
+			if (this._options.callbackSelect && this._options.callbackSelect(item) === false) {
+				this._element.value = '';
+			}
+			else {
+				this._element.value = elData(item, 'label');
+			}
 			
 			this._activeItem = null;
 			UiSimpleDropdown.close(this._dropdownContainerId);
