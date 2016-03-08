@@ -280,7 +280,7 @@ define(
 				header.appendChild(closeButton);
 				
 				var span = elCreate('span');
-				span.textContent = options.closeButtonLabel;
+				span.className = 'icon icon24 fa-times';
 				closeButton.appendChild(span);
 			}
 			

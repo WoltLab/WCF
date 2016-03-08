@@ -87,24 +87,16 @@
 			@extend .wcfFontHeadline;
 		}
 		
-		> a {
-			color: $wcfHeaderLink;
-			flex: 0 0 20px;
-			font-family: FontAwesome;
-			font-size: 18px;
-			text-align: right;
-			text-decoration: none;
-			
-			&::before {
-				content: $fa-var-times;
-			}
-			
-			&:hover {
+		> .dialogCloseButton {
+			align-self: center;
+			flex: 0 0 auto;
+						
+			&:hover > .icon {
 				color: $wcfHeaderLinkActive;
 			}
 			
-			> span {
-				display: none;
+			> .icon {
+				color: $wcfHeaderLink;
 			}
 		}
 	}
@@ -173,10 +165,25 @@
 			right: 0;
 		}
 		
+		.section {
+			margin-top: 30px;
+			
+			.sectionTitle {
+				@extend .wcfFontHeadline;
+			}
+		}
+		
 		> div {
 			> .section:first-child,
 			> fieldset:first-child {
 				margin-top: 0;
+			}
+			
+			> div {
+				> .section:first-child,
+				> fieldset:first-child {
+					margin-top: 0;
+				}
 			}
 		}
 	}
