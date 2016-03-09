@@ -67,11 +67,9 @@
 		{foreach from=$optionTree item=categoryLevel1}
 			<div id="{@$categoryLevel1[object]->categoryName}" class="hidden tabMenuContent">
 				{if $categoryLevel1[options]|count}
-					<section class="section">
-						<h2 class="sectionTitle">{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}</h2>
-						
+					<div class="section">
 						{include file='optionFieldList' options=$categoryLevel1[options] langPrefix='wcf.acp.option.'}
-					</section>
+					</div>
 				{/if}
 				
 				{if $categoryLevel1[categories]|count}

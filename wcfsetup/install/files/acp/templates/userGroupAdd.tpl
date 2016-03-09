@@ -168,14 +168,9 @@
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 					<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="tabMenuContent hidden">
 						{if $categoryLevel2[options]|count}
-							<section class="section">
-								<header class="sectionHeader">
-									<h2 class="sectionTitle">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
-									{hascontent}<small class="sectionDescription">{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
-								</header>
-								
+							<div class="section">
 								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
-							</section>
+							</div>
 						{/if}
 						
 						{if $categoryLevel2[categories]|count}
