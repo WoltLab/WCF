@@ -19,22 +19,8 @@ dl {
 		> dd {
 			display: block;
 			
-			&.floated {
-				display: flex;
-				flex-wrap: wrap;
-				
-				> label {
-					flex: 0 0 auto;
-					margin: 0 10px 5px 0;
-					
-					&:last-child {
-						margin-right: 0;
-					}
-				}
-			}
-			
 			&:not(:last-child) {
-				margin-bottom: 10px;
+				margin-bottom: 20px;
 			}
 			
 			> small:not(.innerError) {
@@ -54,6 +40,20 @@ dl {
 			
 			> label:not(:first-child) {
 				margin-top: 3px;
+			}
+			
+			&.floated {
+				display: flex;
+				flex-wrap: wrap;
+				
+				> label {
+					flex: 0 0 auto;
+					margin: 0 10px 5px 0;
+					
+					&:last-child {
+						margin-right: 0;
+					}
+				}
 			}
 		}
 		

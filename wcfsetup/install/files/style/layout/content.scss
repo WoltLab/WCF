@@ -108,6 +108,10 @@
 	> .sectionHeader,
 	> .sectionTitle {
 		margin-bottom: 20px;
+		
+		+ .section {
+			margin-top: 20px;
+		}	
 	}
 	
 	&:not(.sectionContainerList) {
