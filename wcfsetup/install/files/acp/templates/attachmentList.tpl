@@ -22,29 +22,33 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<dl>
-			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-			<dd>
-				<input type="text" id="username" name="username" value="{$username}" class="long" />
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt><label for="filename">{lang}wcf.attachment.filename{/lang}</label></dt>
-			<dd>
-				<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt><label for="fileType">{lang}wcf.attachment.fileType{/lang}</label></dt>
-			<dd>
-				<select name="fileType" id="fileType">
-					<option value="">{lang}wcf.global.noSelection{/lang}</option>
-					{htmlOptions options=$availableFileTypes selected=$fileType}
-				</select>
-			</dd>
-		</dl>
+		<div class="row rowColGap">
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dd>
+					<input type="text" id="username" name="username" value="{$username}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="filename">{lang}wcf.attachment.filename{/lang}</label></dt>
+				<dd>
+					<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="fileType">{lang}wcf.attachment.fileType{/lang}</label></dt>
+				<dd>
+					<select name="fileType" id="fileType">
+						<option value="">{lang}wcf.global.noSelection{/lang}</option>
+						{htmlOptions options=$availableFileTypes selected=$fileType}
+					</select>
+				</dd>
+			</dl>
+			
+			{event name='filterFields'}
+		</div>	
 	</section>
 	
 	<div class="formSubmit">

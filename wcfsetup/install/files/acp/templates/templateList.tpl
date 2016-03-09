@@ -30,34 +30,38 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<dl>
-			<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
-			<dd>
-				<select name="templateGroupID" id="templateGroupID">
-					<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-					{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
-				</select>
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
-			<dd>
-				<select name="application" id="application">
-					<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
-					{foreach from=$availableApplications key=abbreviation item=availableApplication}
-						<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
-					{/foreach}
-				</select>
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt><label for="searchTemplateName">{lang}wcf.global.name{/lang}</label></dt>
-			<dd>
-				<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" class="long" />
-			</dd>
-		</dl>
+		<div class="row rowColGap">
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
+				<dd>
+					<select name="templateGroupID" id="templateGroupID">
+						<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
+						{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
+					</select>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
+				<dd>
+					<select name="application" id="application">
+						<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
+						{foreach from=$availableApplications key=abbreviation item=availableApplication}
+							<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
+						{/foreach}
+					</select>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="searchTemplateName">{lang}wcf.global.name{/lang}</label></dt>
+				<dd>
+					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" class="long" />
+				</dd>
+			</dl>
+			
+			{event name='filterFields'}
+		</div>
 	</section>
 	
 	<div class="formSubmit">

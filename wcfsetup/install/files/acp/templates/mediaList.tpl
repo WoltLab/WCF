@@ -51,38 +51,40 @@
 {include file='formError'}
 
 <form method="post" action="{link controller='MediaList'}{/link}">
-	<section>
-		<h1 class="subHeadline">{lang}wcf.global.filter{/lang}</h1>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<dl>
-			<dt><label for="filename">{lang}wcf.media.filename{/lang}</label></dt>
-			<dd>
-				<div class="inputAddon dropdown" id="mediaSearch">
-					<span class="button dropdownToggle inputPrefix">
-						<span class="active">{lang}wcf.media.search.filetype{/lang}</span>
-					</span>
-					<ul class="dropdownMenu">
-						<li data-file-type="image"><span>{lang}wcf.media.search.filetype.image{/lang}</span></li>
-						<li data-file-type="text"><span>{lang}wcf.media.search.filetype.text{/lang}</span></li>
-						<li data-file-type="pdf"><span>{lang}wcf.media.search.filetype.pdf{/lang}</span></li>
-						<li data-file-type="other"><span>{lang}wcf.media.search.filetype.other{/lang}</span></li>
-						{event name='filetype'}
-						<li class="dropdownDivider"></li>
-						<li data-file-type="all"><span>{lang}wcf.media.search.filetype.all{/lang}</span></li>
-					</ul>
-					<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
-				</div>
-			</dd>
-		</dl>
+		<div class="row rowColGap">
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="filename">{lang}wcf.media.filename{/lang}</label></dt>
+				<dd>
+					<div class="inputAddon dropdown" id="mediaSearch">
+						<span class="button dropdownToggle inputPrefix">
+							<span class="active">{lang}wcf.media.search.filetype{/lang}</span>
+						</span>
+						<ul class="dropdownMenu">
+							<li data-file-type="image"><span>{lang}wcf.media.search.filetype.image{/lang}</span></li>
+							<li data-file-type="text"><span>{lang}wcf.media.search.filetype.text{/lang}</span></li>
+							<li data-file-type="pdf"><span>{lang}wcf.media.search.filetype.pdf{/lang}</span></li>
+							<li data-file-type="other"><span>{lang}wcf.media.search.filetype.other{/lang}</span></li>
+							{event name='filetype'}
+							<li class="dropdownDivider"></li>
+							<li data-file-type="all"><span>{lang}wcf.media.search.filetype.all{/lang}</span></li>
+						</ul>
+						<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
+					</div>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dd>
+					<input type="text" id="username" name="username" value="{$username}" class="long" />
+				</dd>
+			</dl>
 		
-		<dl>
-			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-			<dd>
-				<input type="text" id="username" name="username" value="{$username}" class="long" />
-			</dd>
-		</dl>
-		
-		{event name='filterFields'}
+			{event name='filterFields'}
+		</div>	
 	</section>
 	
 	{event name='sections'}

@@ -17,33 +17,37 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<dl>
-			<dt><label for="transactionID">{lang}wcf.acp.paidSubscription.transactionLog.transactionID{/lang}</label></dt>
-			<dd>
-				<input type="text" id="transactionID" name="transactionID" value="{$transactionID}" class="long" />
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-			<dd>
-				<input type="text" id="username" name="username" value="{$username}" class="long" />
-			</dd>
-		</dl>
-		
-		{if $availableSubscriptions|count}
-			<dl>
-				<dt><label for="subscriptionID">{lang}wcf.acp.paidSubscription.subscription{/lang}</label></dt>
+		<div class="row rowColGap">
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="transactionID">{lang}wcf.acp.paidSubscription.transactionLog.transactionID{/lang}</label></dt>
 				<dd>
-					<select name="subscriptionID" id="subscriptionID">
-						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-						{foreach from=$availableSubscriptions item=availableSubscription}
-							<option value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID == $subscriptionID} selected="selected"{/if}>{$availableSubscription->title|language}</option>
-						{/foreach}
-					</select>
+					<input type="text" id="transactionID" name="transactionID" value="{$transactionID}" class="long" />
 				</dd>
 			</dl>
-		{/if}
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dd>
+					<input type="text" id="username" name="username" value="{$username}" class="long" />
+				</dd>
+			</dl>
+			
+			{if $availableSubscriptions|count}
+				<dl class="col-xs-12 col-md-4">
+					<dt><label for="subscriptionID">{lang}wcf.acp.paidSubscription.subscription{/lang}</label></dt>
+					<dd>
+						<select name="subscriptionID" id="subscriptionID">
+							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+							{foreach from=$availableSubscriptions item=availableSubscription}
+								<option value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID == $subscriptionID} selected="selected"{/if}>{$availableSubscription->title|language}</option>
+							{/foreach}
+						</select>
+					</dd>
+				</dl>
+			{/if}
+			
+			{event name='filterFields'}
+		</div>
 	</section>
 	
 	<div class="formSubmit">
