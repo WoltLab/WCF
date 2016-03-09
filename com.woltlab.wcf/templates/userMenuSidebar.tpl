@@ -13,16 +13,20 @@
 	</script> 
 	
 	{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
-		<section>
-			<h1>{lang}{$menuCategory->menuItem}{/lang}</h1>
+		<section class="box">
+			<h2 class="boxTitle">{lang}{$menuCategory->menuItem}{/lang}</h2>
 			
-			<nav>
-				<ul class="sidebarNavigation">
-					{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
-						<li{if $menuItem->menuItem|in_array:$__userMenuActiveItems} class="active"{/if}><a href="{$menuItem->getProcessor()->getLink()}">{@$menuItem}</a></li>
-					{/foreach}
-				</ul>
-			</nav>
+			<div class="boxContent">
+				<nav>
+					<ol class="boxMenu">
+						{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
+							<li{if $menuItem->menuItem|in_array:$__userMenuActiveItems} class="active"{/if}>
+								<a href="{$menuItem->getProcessor()->getLink()}" class="boxMenuLink"><span class="boxMenuLinkTitle">{@$menuItem}</span></a>
+							</li>
+						{/foreach}
+					</ol>
+				</nav>
+			</div>	
 		</section>
 	{/foreach}
 {/capture}
