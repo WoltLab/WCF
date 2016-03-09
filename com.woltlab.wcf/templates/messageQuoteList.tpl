@@ -7,7 +7,7 @@
 					{if $userProfiles[$message->getUserID()]|isset}
 						<a href="{link controller='User' object=$userProfiles[$message->getUserID()]}{/link}">{@$userProfiles[$message->getUserID()]->getAvatar()->getImageTag(32)}</a>
 					{else}
-						<span>{*todo: insert default avatar*}</span>
+						<span><img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 32px; height: 32px" /></span>
 					{/if}
 					
 					<div class="messageHeaderBox">

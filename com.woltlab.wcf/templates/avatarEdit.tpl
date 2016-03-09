@@ -62,7 +62,7 @@
 							{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 						{/if}
 					{else}
-						<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon96" />
+						<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 96px; height: 96px" />
 					{/if}
 				</dt>
 				<dd>
