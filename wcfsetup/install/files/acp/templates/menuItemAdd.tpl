@@ -45,7 +45,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='MenuItemAdd'}{/link}{else}{link controller='MenuItemEdit' id=$itemID}{/link}{/if}">
-	<div class="class">
+	<div class="section">
 		<dl{if $errorField == 'parentItemID'} class="formError"{/if}>
 			<dt><label for="parentItemID">{lang}wcf.acp.menu.item.parentItem{/lang}</label></dt>
 			<dd>
@@ -89,8 +89,8 @@
 		{event name='dataFields'}
 	</div>
 	
-	<section>
-		<h1>{lang}wcf.acp.menu.item.link{/lang}</h1>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.menu.item.link{/lang}</h2>
 	
 		<dl>
 			<dt></dt>
@@ -143,8 +143,8 @@
 		{event name='linkFields'}
 	</section>
 	
-	<section>
-		<h1>{lang}wcf.acp.menu.item.advanced{/lang}</h1>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.menu.item.advanced{/lang}</h2>
 		
 		<dl>
 			<dt><label for="showOrder">{lang}wcf.acp.menu.item.showOrder{/lang}</label></dt>
