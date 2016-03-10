@@ -57,9 +57,9 @@ define(
 				canViewSummary: false,
 				
 				// selectors
-				badgeContainerSelector: '.messageHeader .messageHeadline > p',
-				buttonAppendToSelector: '',
-				buttonBeforeSelector: '.messageFooterButtons > .toTopLink',
+				badgeContainerSelector: '.messageHeader .messageStatus',
+				buttonAppendToSelector: '.messageFooter .messageFooterButtons',
+				buttonBeforeSelector: '',
 				containerSelector: '',
 				summarySelector: '.messageFooterGroup'
 			}, options);
