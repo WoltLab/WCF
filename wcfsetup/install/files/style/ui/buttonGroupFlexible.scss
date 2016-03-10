@@ -14,7 +14,9 @@
 		}
 		
 		> input[type="radio"] {
-			display: none;
+			left: -3000px;
+			opacity: 0;
+			position: absolute;
 			
 			&:checked + label {
 				cursor: default;
@@ -23,26 +25,32 @@
 					cursor: default !important;
 				}
 			}
+			
+			&:focus + label {
+				border-color: rgba(0, 0, 0, .3);
+			}
 		}
 		
 		> a,
 		> label {
 			background-color: rgb(242, 242, 242);
+			border: 1px solid transparent;
 			cursor: pointer;
 			padding: 5px 10px;
 			
-			&.green,
-			&.green > .icon {
+			> .icon {
+				color: inherit;
+			}
+			
+			&.green {
 				color: rgb(54, 125, 54);
 			}
 			
-			&.red,
-			&.red > .icon {
+			&.red {
 				color: rgb(201, 48, 44);
 			}
 			
-			&.yellow,
-			&.yellow > .icon {
+			&.yellow {
 				color: rgb(236, 151, 31);
 			}
 			
@@ -70,6 +78,17 @@
 			
 			> .icon {
 				color: #fff;
+			}
+		}
+		
+		> input[type="radio"]:disabled + label {
+			background-color: rgb(242, 242, 242) !important;
+			color: rgb(125, 130, 100) !important;
+			cursor: default;
+			
+			> .icon {
+				color: rgb(125, 130, 100) !important;
+				cursor: default !important;
 			}
 		}
 	}
