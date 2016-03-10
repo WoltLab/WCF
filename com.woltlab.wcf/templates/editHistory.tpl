@@ -67,7 +67,7 @@
 	<section class="section tabularBox editHistoryVersionList">
 		{assign var='versionCount' value=$objects|count}
 		<h2 class="sectionTitle">
-			{lang}wcf.edit.versions{/lang} <span class="badge badgeInverse">{#$versionCount+1}</span>
+			{lang}wcf.edit.versions{/lang} <span class="badge">{#$versionCount+1}</span>
 		</h2>
 		
 		<table class="table">

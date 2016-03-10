@@ -14,7 +14,7 @@
 					<a href="{$menuItemNode->getMenuItem()->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}">
 						<span class="menuOverlayItemTitle">{lang}{$menuItemNode->getMenuItem()->title}{/lang}</span>
 						{if $__outstandingItems}
-							<span class="badge badgeInverse">{#$__outstandingItems}</span>
+							<span class="badge badgeUpdate">{#$__outstandingItems}</span>
 						{/if}
 					</a>
 					

@@ -5,7 +5,7 @@
 				<a href="{$menuItemNode->getMenuItem()->getURL()}" class="boxMenuLink">
 					<span class="boxMenuLinkTitle">{lang}{$menuItemNode->getMenuItem()->title}{/lang}</span>
 					{if $menuItemNode->getMenuItem()->getOutstandingItems() > 0}
-						<span class="boxMenuLinkOutstandingItems badge badgeInverse">{#$menuItemNode->getMenuItem()->getOutstandingItems()}</span>
+						<span class="boxMenuLinkOutstandingItems badge badgeUpdate">{#$menuItemNode->getMenuItem()->getOutstandingItems()}</span>
 					{/if}
 				</a>
 				

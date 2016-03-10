@@ -7502,7 +7502,7 @@ WCF.UserPanel = Class.extend({
 		if (count) {
 			var $badge = this._container.find('.badge');
 			if (!$badge.length) {
-				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
+				$badge = $('<span class="badge badgeUpdate" />').appendTo(this._container.children('.dropdownToggle'));
 				$badge.before(' ');
 			}
 			$badge.html(count);

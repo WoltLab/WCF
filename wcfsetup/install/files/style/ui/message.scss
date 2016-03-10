@@ -177,7 +177,10 @@
 	display: flex;
 	flex: 0 0 auto;
 	justify-content: flex-end;
-	margin-bottom: 20px;
+		
+	+ .messageBody {
+		margin-top: 20px;
+	}
 	
 	> .messageQuickOptions {
 		flex: 0 0 auto;
@@ -225,6 +228,10 @@
 	
 	.messagePublicationTime {
 		color: $wcfContentDimmedText;
+	}
+	
+	+ .messageStatus {
+		margin-left: 5px;
 	}
 }
 

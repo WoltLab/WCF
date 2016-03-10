@@ -19,12 +19,7 @@ a.badge {
 		color: rgba(255, 255, 255, 1);
 		font-weight: 600;
 	}
-	
-	&.badgeInverse {
-		background-color: $wcfContentBackground;
-		color: $wcfContentText;
-	}
-	
+		
 	/* default label colors */
 	&.green {
 		background-color: rgba(0, 153, 0, 1);

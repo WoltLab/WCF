@@ -6,7 +6,7 @@
 			</div>
 			<div>
 				<h3><a href="{@$queue->getLink()}">{$queue->getAffectedObject()->getTitle()}</a></h3>
-				<small>{if $queue->getUserProfile()->userID}<a href="{link controller='User' object=$queue->getUserProfile()->getDecoratedObject()}{/link}">{$queue->getAffectedObject()->getUsername()}</a>{else}{$queue->getAffectedObject()->getUsername()}{/if} - {@$queue->lastChangeTime|time}</small>
+				<small>{if $queue->getUserProfile()->userID}<a href="{link controller='User' object=$queue->getUserProfile()->getDecoratedObject()}{/link}">{$queue->getAffectedObject()->getUsername()}</a>{else}{$queue->getAffectedObject()->getUsername()}{/if} <span class="separatorLeft">{@$queue->lastChangeTime|time}</span></small>
 			</div>
 		</div>
 	</li>

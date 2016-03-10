@@ -97,9 +97,9 @@
 		{/if}
 		
 		<dl{if $errorField == 'isDisabled'} class="formError"{/if}>
-			<dt class="reversed"><label for="isDisabled">{@$objectType->getProcessor()->getLanguageVariable('isDisabled')}</label></dt>
+			<dt></dt>
 			<dd>
-				<input type="checkbox" id="isDisabled" name="isDisabled"{if $isDisabled} checked="checked"{/if} />
+				<label><input type="checkbox" id="isDisabled" name="isDisabled"{if $isDisabled} checked="checked"{/if} /> {@$objectType->getProcessor()->getLanguageVariable('isDisabled')}</label>
 				{hascontent}<small>{content}{@$objectType->getProcessor()->getLanguageVariable('isDisabled.description', true)}{/content}</small>{/hascontent}
 			</dd>
 		</dl>
