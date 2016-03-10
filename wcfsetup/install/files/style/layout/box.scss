@@ -390,4 +390,38 @@
 		float: left;
 		width: 20%;
 	}
+	
+	.boxMenu {
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: -20px;
+		margin-left: -10px;
+		margin-right: -10px;
+		
+		.boxMenuLink {
+			display: inline-block;
+		}
+		
+		> li {
+			flex: 0 0 25%;
+			margin-bottom: 20px;
+			padding-left: 10px;
+			padding-right: 10px;
+			
+			&.boxMenuHasChildren {
+				> .boxMenuLink {
+					@extend .wcfFontHeadline;
+					
+					margin-bottom: 10px;
+				}
+				
+				> ol {
+					a {
+						// use text color instead
+						color: $wcfFooterText;
+					}
+				}
+			}
+		}
+	}
 }
