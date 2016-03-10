@@ -26,7 +26,8 @@ textarea {
 		color: $wcfInputTextActive;
 	}
 	
-	&[disabled] {
+	&[disabled],
+	&[readonly] {
 		background-color: $wcfInputDisabledBackground !important;
 		border-color: $wcfInputDisabledBorder !important;
 		color: $wcfInputDisabledText !important;
@@ -66,17 +67,18 @@ input[type="url"] {
 	}
 }
 
-textarea[readonly] {
-	background-color: $wcfInputDisabledBackground !important;
-	border-color: $wcfInputDisabledBorder !important;
-	color: $wcfInputDisabledText !important;
-}
-
 textarea {
 	border-width: 1px;
 	width: 100%;
 	
 	@extend .wcfFontDefault;
+	
+	&[disabled],
+	&[readonly] {
+		background-color: $wcfInputDisabledBackground !important;
+		border-color: $wcfInputDisabledBorder !important;
+		color: $wcfInputDisabledText !important;
+	}
 }
 
 .selectDropdown {
@@ -178,8 +180,6 @@ textarea {
 
 .inputAddon input,
 input {
-	box-sizing: border-box;
-	
 	&.tiny {
 		flex-grow: 0;
 		width: 80px;
