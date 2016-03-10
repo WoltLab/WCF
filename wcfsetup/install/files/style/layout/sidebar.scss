@@ -75,59 +75,10 @@
 	}
 	
 	.sidebarBoxList {
-		
 		> li {
 			&:not(:last-child) {
 				margin-bottom: 10px;
 			}
 		}
-		
-		/*.sidebarBoxHeadline > h3 {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}*/
 	}
 }
-
-/*.sidebar {// @todo
-	dl.dataList {
-		overflow: hidden;
-		
-		@extend .wcfFontSmall;
-	}
-	
-	dl:not(.dataList) {
-		&:not(:first-child) {
-			margin-top: 10px;
-		}
-	}
-	
-	dl:not(.plain) {
-		display: block;
-		
-		> dt,
-		> dd {
-			display: block;
-			margin: 0;
-			text-align: left;
-			width: 100%;
-		}
-	}
-	
-	
-}
-
-.sidebarNavigation > li {
-	&.active {
-		background-color: rgb(255, 255, 255); // @todo
-		margin: 0 -20px;
-		padding: 0 20px;
-	}
-	
-	> a {
-		display: block;
-		padding: 5px 0;
-	}
-}
-*/
