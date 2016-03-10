@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\menu\item;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\MenuCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
@@ -15,7 +17,7 @@ use wcf\system\WCF;
  * @category	Community Framework
  * @since	2.2
  */
-class MenuItemEditor extends DatabaseObjectEditor {
+class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @inheritDoc
 	 */
@@ -72,5 +74,12 @@ class MenuItemEditor extends DatabaseObjectEditor {
 		}
 		
 		return $menuItem;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function resetCache() {
+		MenuCacheBuilder::getInstance()->reset();
 	}
 }

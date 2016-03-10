@@ -185,7 +185,8 @@ class MenuItemAddForm extends AbstractForm {
 			'menuID' => $this->menuID,
 			'parentItemID' => $this->parentItemID,
 			'showOrder' => $this->showOrder,
-			'identifier' => StringUtil::getRandomID()
+			'identifier' => StringUtil::getRandomID(),
+			'packageID' => 1
 		])]);
 		$this->objectAction->executeAction();
 		
