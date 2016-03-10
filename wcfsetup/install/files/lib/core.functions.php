@@ -234,6 +234,7 @@ EXPLANATION;
 				
 				.exceptionFieldValue {
 					font-size: 18px;
+					min-height: 1.5em;
 				}
 				
 				.exceptionSystemInformation,
