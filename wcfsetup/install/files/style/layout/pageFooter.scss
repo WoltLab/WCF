@@ -14,21 +14,21 @@
 		}
 	}
 	
-	// copyright and benchmark link styling
-	// benchmark link styling
-	.benchmark,
-	.copyright {
-		&:not(:first-child) {
-			margin-top: 20px;
+	.footerContent {
+		> div {
+			&:not(:first-child) {
+				margin-top: 20px;
+			}
+			
+			// copyright and benchmark link styling
+			a {
+				// use text color instead
+				color: $wcfFooterText;
+			}
 		}
 		
-		a {
-			// use text color instead
-			color: $wcfFooterText;
+		&:not(:first-child) > div:first-child {
+			margin-top: 40px;
 		}
-	}
-	
-	.footerContent:first-child > div:first-child {
-		margin-top: 0;
 	}
 }
