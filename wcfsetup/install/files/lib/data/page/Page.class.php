@@ -28,6 +28,11 @@ class Page extends DatabaseObject {
 	protected static $databaseTableIndexName = 'pageID';
 	
 	/**
+	 * @var \wcf\system\page\handler\IMenuPageHandler
+	 */
+	protected $pageHandler;
+	
+	/**
 	 * Returns true if the active user can delete this page.
 	 * 
 	 * @return boolean
@@ -122,6 +127,19 @@ class Page extends DatabaseObject {
 		else {
 			return LinkHandler::getInstance()->getCmsLink($this->pageID);
 		}	
+	}
+	
+	/**
+	 * Returns the associated page handler or null.
+	 * 
+	 * @return      \wcf\system\page\handler\IMenuPageHandler|null
+	 */
+	public function getHandler() {
+		if ($this->handler) {
+			$this->pageHandler = new $this->handler();
+		}
+		
+		return $this->pageHandler;
 	}
 	
 	/**

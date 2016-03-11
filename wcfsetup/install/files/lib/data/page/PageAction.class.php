@@ -1,8 +1,11 @@
 <?php
 namespace wcf\data\page;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISearchAction;
 use wcf\data\IToggleAction;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
+use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\WCF;
 
 /**
@@ -16,31 +19,36 @@ use wcf\system\WCF;
  * @category	Community Framework
  * @since	2.2
  */
-class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
+class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, IToggleAction {
 	/**
 	 * @inheritDoc
 	 */
 	protected $className = PageEditor::class;
 	
 	/**
-	 * @inheritDoc
+	 * @var PageEditor
 	 */
-	protected $permissionsCreate = array('admin.content.cms.canManagePage');
+	protected $pageEditor;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.cms.canManagePage');
+	protected $permissionsCreate = ['admin.content.cms.canManagePage'];
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.cms.canManagePage');
+	protected $permissionsDelete = ['admin.content.cms.canManagePage'];
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $permissionsUpdate = ['admin.content.cms.canManagePage'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
 	 * @inheritDoc
@@ -56,7 +64,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($this->parameters['content'] as $languageID => $content) {
-				$statement->execute(array(
+				$statement->execute([
 					$page->pageID,
 					($languageID ?: null),
 					$content['title'],
@@ -64,7 +72,7 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 					$content['metaDescription'],
 					$content['metaKeywords'],
 					$content['customURL']
-				));
+				]);
 			}
 		}
 		
@@ -89,10 +97,10 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($this->objects as $page) {
-				$deleteStatement->execute(array($page->pageID));
+				$deleteStatement->execute([$page->pageID]);
 				
 				foreach ($this->parameters['content'] as $languageID => $content) {
-					$insertStatement->execute(array(
+					$insertStatement->execute([
 						$page->pageID,
 						($languageID ?: null),
 						$content['title'],
@@ -100,12 +108,10 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 						$content['metaDescription'],
 						$content['metaKeywords'],
 						$content['customURL']
-					));
+					]);
 				}
 			}
 		}
-		
-		return $page;
 	}
 	
 	/**
@@ -139,7 +145,26 @@ class PageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	 */
 	public function toggle() {
 		foreach ($this->objects as $object) {
-			$object->update(array('isDisabled' => ($object->isDisabled) ? 0 : 1));
+			$object->update(['isDisabled' => ($object->isDisabled) ? 0 : 1]);
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateGetSearchResultList() {
+		$this->pageEditor = $this->getSingleObject();
+		if ($this->pageEditor->getHandler() === null || !($this->pageEditor->getHandler() instanceof ILookupPageHandler)) {
+			throw new UserInputException('objectIDs');
+		}
+		
+		$this->readString('searchString', false, 'data');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getSearchResultList() {
+		return $this->pageEditor->getHandler()->lookup($this->parameters['data']['searchString']);
 	}
 }

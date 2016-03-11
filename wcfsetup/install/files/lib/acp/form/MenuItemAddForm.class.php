@@ -11,6 +11,7 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -61,10 +62,22 @@ class MenuItemAddForm extends AbstractForm {
 	public $isInternalLink = true;
 	
 	/**
+	 * list of page handlers by page id
+	 * @var \wcf\system\page\handler\IMenuPageHandler[]
+	 */
+	public $pageHandlers = [];
+	
+	/**
 	 * page id
 	 * @var	integer
 	 */
 	public $pageID = null;
+	
+	/**
+	 * page object id
+	 * @var integer
+	 */
+	public $pageObjectID = null;
 	
 	/**
 	 * menu item title
@@ -97,6 +110,12 @@ class MenuItemAddForm extends AbstractForm {
 	public $menuItems = null;
 	
 	/**
+	 * nested list of page nodes
+	 * @var \RecursiveIteratorIterator
+	 */
+	public $pageNodeList;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -110,6 +129,18 @@ class MenuItemAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->register('title');
 		I18nHandler::getInstance()->register('externalURL');
+		
+		$this->pageNodeList = (new PageNodeTree())->getNodeList();
+		
+		// fetch page handlers
+		foreach ($this->pageNodeList as $pageNode) {
+			$handler = $pageNode->getPage()->getHandler();
+			if ($handler !== null) {
+				if ($handler instanceof ILookupPageHandler) {
+					$this->pageHandlers[$pageNode->getPage()->pageID] = $pageNode->getPage()->requireObjectID;
+				}
+			}
+		}
 	}
 	
 	/**
@@ -126,6 +157,7 @@ class MenuItemAddForm extends AbstractForm {
 		$this->isInternalLink = false;
 		if (isset($_POST['isInternalLink'])) $this->isInternalLink = (bool) $_POST['isInternalLink'];
 		if (!empty($_POST['pageID'])) $this->pageID = intval($_POST['pageID']);
+		if (!empty($_POST['pageObjectID'])) $this->pageObjectID = intval($_POST['pageObjectID']);
 		if (!empty($_POST['parentItemID'])) $this->parentItemID = intval($_POST['parentItemID']);
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 	}
@@ -147,9 +179,22 @@ class MenuItemAddForm extends AbstractForm {
 			if (!$page->pageID) {
 				throw new UserInputException('pageID', 'invalid');
 			}
+			
+			// validate page object id
+			if (isset($this->pageHandlers[$page->pageID])) {
+				if ($this->pageHandlers[$page->pageID] && !$this->pageObjectID) {
+					throw new UserInputException('pageObjectID');
+				}
+				
+				/** @var ILookupPageHandler $handler */
+				$handler = $page->getHandler();
+				if ($this->pageObjectID && !$handler->isValid($this->pageObjectID)) {
+					throw new UserInputException('pageObjectID', 'invalid');
+				}
+			}
 		}
 		else {
-			$this->pageID = null;
+			$this->pageID = $this->pageObjectID = null;
 			
 			// validate external url
 			if (!I18nHandler::getInstance()->validateValue('externalURL')) {
@@ -181,6 +226,7 @@ class MenuItemAddForm extends AbstractForm {
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'title' => $this->title,
 			'pageID' => $this->pageID,
+			'pageObjectID' => ($this->pageObjectID ?: 0),
 			'externalURL' => $this->externalURL,
 			'menuID' => $this->menuID,
 			'parentItemID' => $this->parentItemID,
@@ -218,7 +264,7 @@ class MenuItemAddForm extends AbstractForm {
 		
 		// reset variables
 		$this->isDisabled = $this->isInternalLink = false;
-		$this->pageID = $this->parentItemID = null;
+		$this->pageID = $this->pageObjectID = $this->parentItemID = null;
 		$this->externalURL = $this->title = '';
 		$this->showOrder = 0;
 		
@@ -249,12 +295,14 @@ class MenuItemAddForm extends AbstractForm {
 			'isDisabled' => $this->isDisabled,
 			'isInternalLink' => $this->isInternalLink,
 			'pageID' => $this->pageID,
+			'pageObjectID' => $this->pageObjectID,
 			'title' => $this->title,
 			'externalURL' => $this->externalURL,
 			'parentItemID' => $this->parentItemID,
 			'showOrder' => $this->showOrder,
 			'menuItemNodeList' => $this->menuItems->getNodeList(),
-			'pageNodeList' => (new PageNodeTree())->getNodeList()
+			'pageNodeList' => $this->pageNodeList,
+			'pageHandlers' => $this->pageHandlers
 		]);
 	}
 }

@@ -145,13 +145,24 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 				this._request.abortPrevious();
 			}
 			
-			this._request = Ajax.api(this, {
+			this._request = Ajax.api(this, this._getParameters(value));
+		},
+		
+		/**
+		 * Returns additional AJAX parameters.
+		 * 
+		 * @param       {string}        value   search string
+		 * @return      {Object}        additional AJAX parameters
+		 * @protected
+		 */
+		_getParameters: function(value) {
+			return {
 				parameters: {
 					data: {
 						searchString: value
 					}
 				}
-			});
+			};
 		},
 		
 		/**

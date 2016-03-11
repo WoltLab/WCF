@@ -23,6 +23,14 @@ interface ILookupPageHandler extends IMenuPageHandler {
 	public function getLink($objectID);
 	
 	/**
+	 * Returns true if provided object id exists and is valid.
+	 * 
+	 * @param       integer         $objectID       page object id
+	 * @return      boolean         true if object id is valid
+	 */
+	public function isValid($objectID);
+	
+	/**
 	 * Performs a search for pages using a query string, returning an array containing
 	 * an `objectID => title` relation.
 	 * 

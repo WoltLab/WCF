@@ -1,27 +1,14 @@
 {include file='header' pageTitle='wcf.acp.menu.item.'|concat:$action}
 
 <script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		var $isInternalLink = $('input[name=isInternalLink]').filter('[value=1]');
-		var $pageIDContainer = $('#pageIDContainer');
-		var $externalURLContainer = $('#externalURLContainer');
+	require(['Dictionary', 'WoltLab/WCF/Acp/Ui/Menu/Item/Handler'], function(Dictionary, AcpUiMenuItemHandler) {
+		var handlers = new Dictionary();
+		{foreach from=$pageHandlers key=handlerPageID item=requireObjectID}
+			handlers.set({@$handlerPageID}, {if $requireObjectID}true{else}false{/if});
+		{/foreach}
 		
-		function handleIsInternalLink() {
-			if ($isInternalLink.is(':checked')) {
-				$pageIDContainer.show();
-				$externalURLContainer.hide();
-			}
-			else {
-				$pageIDContainer.hide();
-				$externalURLContainer.show();
-			}
-		}
-		
-		$('input[name=isInternalLink]').change(handleIsInternalLink);
-		handleIsInternalLink();
+		AcpUiMenuItemHandler.init(handlers);
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">
@@ -100,7 +87,7 @@
 			</dd>
 		</dl>
 		
-		<dl id="pageIDContainer"{if $errorField == 'pageID'} class="formError"{/if}>
+		<dl id="pageIDContainer"{if $errorField == 'pageID'} class="formError"{/if}{if !$isInternalLink} style="display: none;"{/if}>
 			<dt><label for="pageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
 			<dd>
 				<select name="pageID" id="pageID">
@@ -122,7 +109,26 @@
 			</dd>
 		</dl>
 		
-		<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}>
+		<dl id="pageObjectIDContainer"{if $errorField == 'pageObjectID'} class="formError"{/if}{if !$pageID || !$pageHandler[$pageID]|isset} style="display: none;"{/if}>
+			<dt><label for="pageObjectID">{lang}wcf.acp.page.pageObjectID{/lang}</label></dt>
+			<dd>
+				<div class="inputAddon">
+					<input type="text" id="pageObjectID" name="pageObjectID" value="{$pageObjectID}" class="short">
+					<a href="#" id="searchPageObjectID" class="inputSuffix button jsTooltip" title="TODO: Search"><span class="icon icon16 fa-search"></span></a>
+				</div>
+				{if $errorField == 'pageObjectID'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.menu.item.pageObjectID.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
+		<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $isInternalLink} style="display: none;"{/if}>
 			<dt><label for="externalURL">{lang}wcf.acp.menu.item.externalURL{/lang}</label></dt>
 			<dd>
 				<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" />
