@@ -114,6 +114,20 @@
 		margin-top: 40px;
 	}
 	
+	.boxTitle {
+		color: $wcfContentHeadlineText;
+		
+		@extend .wcfFontSection;
+		
+		a {
+			color: $wcfContentHeadlineLink;
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive;
+			}
+		}
+	}
+	
 	.boxWithImage {
 		@extend .clearfix;
 		
@@ -263,7 +277,7 @@
 .boxesContentBottom {
 	.box {
 		&:not(:first-child) {
-			margin-top: 30px;
+			margin-top: 40px;
 		}
 	}
 	
@@ -279,6 +293,8 @@
 	.boxTitle {
 		color: $wcfContentHeadlineText;
 		
+		@extend .wcfFontSection;
+				
 		a {
 			color: $wcfContentHeadlineLink;
 			
@@ -295,11 +311,11 @@
 }
 
 .boxesContentTop {
-	margin-bottom: 30px;
+	margin-bottom: 40px;
 }
 
 .boxesContentBottom {
-	margin-top: 30px;
+	margin-top: 40px;
 }
 
 /* styling for boxes in <footerBoxes> position */
