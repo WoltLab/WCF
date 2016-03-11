@@ -125,7 +125,7 @@
 	&.tabularBox {
 		> .sectionHeader,
 		> .sectionTitle {
-			border-color: $wcfTabularBoxHeadline;
+			border-color: $wcfContentBorder;
 			margin-bottom: 0;
 		}
 	}
