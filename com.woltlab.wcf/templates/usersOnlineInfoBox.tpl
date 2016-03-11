@@ -18,8 +18,8 @@
 			{/if}
 		</div>
 		
-		<div class="boxContent">
-			{if USERS_ONLINE_ENABLE_LEGEND && $usersOnlineList->getUsersOnlineMarkings()|count}
+		{if USERS_ONLINE_ENABLE_LEGEND && $usersOnlineList->getUsersOnlineMarkings()|count}
+			<div class="boxContent">
 				<dl class="plain inlineDataList usersOnlineLegend">
 					<dt>{lang}wcf.user.usersOnline.marking.legend{/lang}</dt>
 					<dd>
@@ -31,7 +31,7 @@
 					</dd>
 				
 				</dl>
-			{/if}
-		</div>
+			</div>
+		{/if}
 	</section>
 {/if}
