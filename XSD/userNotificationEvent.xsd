@@ -17,21 +17,21 @@
 	<!-- import element type -->
 	<xs:complexType name="import">
 		<xs:sequence>
-			<xs:element name="eventlistener" type="eventlistener" maxOccurs="unbounded" />
+			<xs:element name="event" type="event" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 	
 	<!-- delete element type -->
 	<xs:complexType name="delete">
 		<xs:sequence>
-			<xs:element name="eventlistener" type="eventlistener" maxOccurs="unbounded" />
+			<xs:element name="event" type="event" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 	
 	<!-- event listener element type -->
-	<xs:complexType name="eventlistener">
+	<xs:complexType name="event">
 		<xs:all>
-			<xs:element name="eventclassname" minOccurs="0">
+			<xs:element name="classname" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:minLength value="0" />
@@ -39,7 +39,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="eventname" minOccurs="0">
+			<xs:element name="name" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:minLength value="0" />
@@ -47,16 +47,10 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="listenerclassname" minOccurs="0">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:minLength value="0" />
-						<xs:maxLength value="200" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="inherit" type="woltlab_boolean" minOccurs="0" />
-			<xs:element name="environment" type="woltlab_environment" minOccurs="0" />
+			<xs:element name="objecttype" type="xs:string" minOccurs="0" />
+			<xs:element name="options" type="xs:string" minOccurs="0" />
+			<xs:element name="permissions" type="xs:string" minOccurs="0" />
+			<xs:element name="preset" type="woltlab_boolean" minOccurs="0" />
 		</xs:all>
 	</xs:complexType>
 </xs:schema>
