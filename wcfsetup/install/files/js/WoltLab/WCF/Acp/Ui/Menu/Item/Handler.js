@@ -110,7 +110,7 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 		_openSearch: function(event) {
 			event.preventDefault();
 			
-			UiPageSearchHandler.open(_activePageId, 'foo', function(objectId) {
+			UiPageSearchHandler.open(_activePageId, _pageId.options[_pageId.selectedIndex].textContent, function(objectId) {
 				_pageObjectId.value = objectId;
 				_cache.set(_activePageId, objectId);
 			});

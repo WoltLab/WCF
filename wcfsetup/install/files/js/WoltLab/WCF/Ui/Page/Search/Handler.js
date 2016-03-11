@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Page/Search/Handler
  */
-define(['StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(StringUtil, DomUtil, UiDialog, UiPageSearchInput) {
+define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(Language, StringUtil, DomUtil, UiDialog, UiPageSearchInput) {
 	"use strict";
 	
 	var _callback = null;
@@ -49,7 +49,7 @@ define(['StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(StringUtil, 
 			if (!Array.isArray(data.returnValues) || data.returnValues.length === 0) {
 				var innerError = elCreate('small');
 				innerError.className = 'innerError';
-				innerError.textContent = 'TODO: no matches';
+				innerError.textContent = Language.get('wcf.page.pageObjectID.search.noResults');
 				DomUtil.insertAfter(innerError, _searchInput);
 				
 				return;
@@ -156,17 +156,17 @@ define(['StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(StringUtil, 
 				},
 				source: '<div class="section">'
 						+ '<dl>'
-							+ '<dt><label for="wcfUiPageSearchInput">TODO: Search terms</label></dt>'
+							+ '<dt><label for="wcfUiPageSearchInput">' + Language.get('wcf.page.pageObjectID.search.terms') + '</label></dt>'
 							+ '<dd>'
 								+ '<input type="text" id="wcfUiPageSearchInput" class="long">'
-								+ '<small>TODO: Enter at least 3 characters to search</small>'
+								+ '<small>' + Language.get('wcf.page.pageObjectID.search.terms.description') + '</small>'
 							+ '</dd>'
 						+ '</dl>'
 					+ '</div>'
 					+ '<section id="wcfUiPageSearchResultListContainer" class="section sectionContainerList">'
 						+ '<header class="sectionHeader">'
-							+ '<h2 class="sectionTitle">TODO: results</h2>'
-							+ '<small class="sectionDescription">TODO: click on a result to select it</small>'
+							+ '<h2 class="sectionTitle">' + Language.get('wcf.page.pageObjectID.search.results') + '</h2>'
+							+ '<small class="sectionDescription">' + Language.get('wcf.page.pageObjectID.search.results.description') + '</small>'
 						+ '</header>'
 						+ '<ul id="wcfUiPageSearchResultList" class="containerList wcfUiPageSearchResultList"></ul>'
 					+ '</section>'

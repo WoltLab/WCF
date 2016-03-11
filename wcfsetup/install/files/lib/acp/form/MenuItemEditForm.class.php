@@ -3,9 +3,11 @@ namespace wcf\acp\form;
 use wcf\data\menu\item\MenuItem;
 use wcf\data\menu\item\MenuItemAction;
 use wcf\data\menu\Menu;
+use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
+use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\WCF;
 
 /**
@@ -49,6 +51,18 @@ class MenuItemEditForm extends MenuItemAddForm {
 		
 		I18nHandler::getInstance()->register('title');
 		I18nHandler::getInstance()->register('externalURL');
+		
+		$this->pageNodeList = (new PageNodeTree())->getNodeList();
+		
+		// fetch page handlers
+		foreach ($this->pageNodeList as $pageNode) {
+			$handler = $pageNode->getPage()->getHandler();
+			if ($handler !== null) {
+				if ($handler instanceof ILookupPageHandler) {
+					$this->pageHandlers[$pageNode->getPage()->pageID] = $pageNode->getPage()->requireObjectID;
+				}
+			}
+		}
 	}
 	
 	/**
@@ -79,6 +93,7 @@ class MenuItemEditForm extends MenuItemAddForm {
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'title' => $this->title,
 			'pageID' => $this->pageID,
+			'pageObjectID' => ($this->pageObjectID ?: 0),
 			'externalURL' => $this->externalURL,
 			'parentItemID' => $this->parentItemID,
 			'showOrder' => $this->showOrder
@@ -105,6 +120,7 @@ class MenuItemEditForm extends MenuItemAddForm {
 			$this->parentItemID = $this->menuItem->parentItemID;
 			$this->title = $this->menuItem->title;
 			$this->pageID = $this->menuItem->pageID;
+			$this->pageObjectID = $this->menuItem->pageObjectID;
 			$this->externalURL = $this->menuItem->externalURL;
 			$this->showOrder = $this->menuItem->showOrder;
 			$this->isDisabled = $this->menuItem->isDisabled;
