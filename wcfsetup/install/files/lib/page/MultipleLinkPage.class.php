@@ -120,7 +120,8 @@ abstract class MultipleLinkPage extends AbstractPage {
 			$this->sqlOffset = ($this->pageNo - 1) * $this->itemsPerPage;
 			if ($this->sortField && $this->sortOrder) {
 				if ($this->objectList !== null) {
-					$this->sqlOrderBy = $this->sortField." ".$this->sortOrder.", ".$this->objectList->getDatabaseTableAlias().".".$this->objectList->getDatabaseTableIndexName()." ".$this->sortOrder;
+					$alias = $this->objectList->getDatabaseTableAlias();
+					$this->sqlOrderBy = $this->sortField." ".$this->sortOrder.", ".($alias ? $alias."." : "").$this->objectList->getDatabaseTableIndexName()." ".$this->sortOrder;
 				}
 				else {
 					$this->sqlOrderBy = $this->sortField." ".$this->sortOrder;
