@@ -15,7 +15,7 @@ namespace wcf\system\page\handler;
  * @category	Community Framework
  * @since	2.2
  */
-abstract class AbstractMenuPageHandler implements IMenuPageHandler{
+abstract class AbstractMenuPageHandler implements IMenuPageHandler {
 	/**
 	 * @inheritDoc
 	 */
