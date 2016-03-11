@@ -42,6 +42,10 @@
 		<instruction type="aclOption">aclOption.xml</instruction>
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
+
+	<instructions type="update" fromversion="2.1.10">
+		<instruction type="sql" run="standalone">update_user6_authData.sql</instruction>
+	</instructions>
 	
 	<instructions type="update" fromversion="2.0.13">
 		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
