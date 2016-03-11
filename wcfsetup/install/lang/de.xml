@@ -649,6 +649,10 @@
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[Aktive Mitgliedschaften auflisten]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[Transaktionen auflisten]]></item>
 		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Benachrichtigungen]]></item>
+		<item name="wcf.acp.menu.link.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.menu.link.cms.page.list"><![CDATA[Seiten]]></item>
+		<item name="wcf.acp.menu.link.cms.menu.list"><![CDATA[Menüs]]></item>
+		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxen]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">

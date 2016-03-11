@@ -648,6 +648,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[List Active Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[List Transactions]]></item>
 		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Notifications]]></item>
+		<item name="wcf.acp.menu.link.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.menu.link.cms.page.list"><![CDATA[Pages]]></item>
+		<item name="wcf.acp.menu.link.cms.menu.list"><![CDATA[Menus]]></item>
+		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxes]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
