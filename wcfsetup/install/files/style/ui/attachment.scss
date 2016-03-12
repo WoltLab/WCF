@@ -1,0 +1,41 @@
+.attachmentThumbnailList,
+.attachmentFileList {
+	> ul > li:not(:last-child) {
+		margin-right: 10px;
+	}
+}
+
+.attachmentThumbnail {
+	border-radius: 3px;
+	min-height: #{$wcf_option_attachment_thumbnail_height}px;
+	min-width: #{$wcf_option_attachment_thumbnail_width}px;
+	overflow: hidden;
+	position: relative;
+	
+	&:hover > div > small {
+		height: 1.5em;
+	}
+	
+	> a {
+		display: block;
+		min-height: #{$wcf_option_attachment_thumbnail_height}px;
+		min-width: #{$wcf_option_attachment_thumbnail_width}px;
+	}
+	
+	> div {
+		background-color: rgba(0, 0, 0, .6);
+		bottom: 0;
+		color: rgb(255, 255, 255);
+		left: 0;
+		padding: 10px;
+		position: absolute;
+		right: 0;
+		
+		> small {
+			display: block;
+			height: 0;
+			overflow: hidden;
+			transition: height .12s linear;
+		}
+	}
+}

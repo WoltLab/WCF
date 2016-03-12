@@ -3,7 +3,7 @@
 		<section class="section attachmentThumbnailList">
 			<h2 class="sectionTitle">{lang}wcf.attachment.images{/lang}</h2>
 			
-			<ul>
+			<ul class="inlineList">
 				{content}
 					{foreach from=$attachmentList->getGroupedObjects($objectID) item=attachment}
 						{if $attachment->showAsImage() && !$attachment->isEmbedded()}
@@ -30,7 +30,7 @@
 		<section class="section attachmentFileList">
 			<h2 class="sectionTitle">{lang}wcf.attachment.files{/lang}</h2>
 				
-			<ul>
+			<ul class="inlineList">
 				{content}
 					{foreach from=$attachmentList->getGroupedObjects($objectID) item=attachment}
 						{if $attachment->showAsFile() && !$attachment->isEmbedded()}
