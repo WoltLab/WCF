@@ -310,8 +310,8 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			
 			_activeId = _hoverId;
 			
-			var elData = _elements.get(_activeId);
-			var data = _cache.get(elData(elData.element, 'cache-id'));
+			var elementData = _elements.get(_activeId);
+			var data = _cache.get(elData(elementData.element, 'cache-id'));
 			
 			if (data.state === STATE_READY) {
 				_popoverContent.appendChild(data.content);
@@ -321,7 +321,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			else if (data.state === STATE_NONE) {
 				data.state = STATE_LOADING;
 				
-				_handlers.get(elData.identifier).loadCallback(elData.objectId, this);
+				_handlers.get(elementData.identifier).loadCallback(elementData.objectId, this);
 			}
 		},
 		
@@ -342,7 +342,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		 */
 		_clearContent: function() {
 			if (_activeId && _popoverContent.childElementCount && !_popover.classList.contains('active')) {
-				var activeElData = elData(_cache.get(_elements.get(_activeId).element, 'cache-id'));
+				var activeElData = _cache.get(elData(_elements.get(_activeId).element, 'cache-id'));
 				while (_popoverContent.childNodes.length) {
 					activeElData.content.appendChild(_popoverContent.childNodes[0]);
 				}
