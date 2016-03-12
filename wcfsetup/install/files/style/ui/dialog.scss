@@ -103,7 +103,6 @@
 	
 	> .dialogContent {
 		background-color: $wcfContentBackground;
-		color: $wcfContentText;
 		overflow: auto;
 		
 		&:not(.dialogContentNoPadding) {
@@ -129,14 +128,6 @@
 		&:not(.dialogForm) {
 			border-bottom-left-radius: 3px;
 			border-bottom-right-radius: 3px;
-		}
-		
-		a:not(.button) {
-			color: $wcfContentLink;
-			
-			&:hover {
-				color: $wcfContentLinkActive;
-			}
 		}
 		
 		dl:not(.plain) {

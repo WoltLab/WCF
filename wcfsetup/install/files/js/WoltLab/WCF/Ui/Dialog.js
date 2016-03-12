@@ -44,7 +44,7 @@ define(
 			elAttr(_container, 'aria-hidden', 'true');
 			_container.addEventListener('click', this._closeOnBackdrop.bind(this));
 			
-			document.body.appendChild(_container);
+			elById('content').appendChild(_container);
 			
 			_keyupListener = (function(event) {
 				if (event.keyCode === 27) {
