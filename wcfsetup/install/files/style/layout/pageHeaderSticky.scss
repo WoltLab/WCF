@@ -66,6 +66,14 @@
 				align-items: center;
 				display: flex;
 				height: 50px;
+				
+				> span {
+					flex: 0 0 auto;
+				}
+				
+				> .boxMenuLinkOutstandingItems {
+					margin-left: 5px;
+				}
 			}
 			
 			.boxMenuDepth1 {
