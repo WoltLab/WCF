@@ -2,8 +2,8 @@ dl {
 	&:not(.plain) {
 		display: block;
 		
-		&:not(:last-child) {
-			margin-bottom: 20px;
+		&:not(:first-child) {
+			margin-top: 20px;
 		}
 		
 		> dt {
