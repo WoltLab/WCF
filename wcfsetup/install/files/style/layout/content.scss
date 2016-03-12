@@ -3,7 +3,6 @@
 .contentHeader,
 .boxHeadline { // deprecated
 	color: $wcfContentHeadlineText; // todo: rename variable
-	margin-bottom: 40px;
 	
 	.contentTitle,
 	> h1 { // deprecated
@@ -220,16 +219,9 @@ fieldset {
 	// align <nav> to the right side
 	justify-content: flex-end;
 	
-	&:not(:first-child) {
-		margin-top: 40px;
-	}
-	
-	&:not(:last-child) {
-		margin-bottom: 40px;
-	}
-	
 	> nav {
 		flex: 0 0 auto;
+		margin-top: 30px;
 		order: 3;
 		
 		&.pagination {
@@ -264,5 +256,9 @@ fieldset {
 				margin-right: 5px;
 			}
 		}
+	}
+	
+	& + .section {
+		margin-top: 30px;
 	}
 }

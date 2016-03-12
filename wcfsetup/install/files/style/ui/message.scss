@@ -280,7 +280,7 @@
 .messageFooterNote {
 	border-left: 5px solid $wcfContentBorderInner;
 	color: $wcfContentDimmedText;
-	margin-top: 10px;
+	margin-top: 20px;
 	padding: 5px 10px;
 	
 	@extend .wcfFontSmall;
@@ -300,8 +300,11 @@
 	display: flex;
 	flex-wrap: wrap;
 	
-	&:not(:first-child) {	
-		margin-top: 20px;
+	&:not(:first-child) {
+		> .likesSummary,
+		> .messageFooterButtons {
+			margin-top: 20px;
+		}
 	}
 	
 	> .likesSummary {
