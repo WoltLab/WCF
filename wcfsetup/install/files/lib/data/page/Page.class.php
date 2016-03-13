@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\page;
+use wcf\data\application\Application;
 use wcf\data\DatabaseObject;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -113,7 +115,7 @@ class Page extends DatabaseObject {
 	 * 
 	 * @return      string
 	 */
-	public function getURL() {
+	public function getLink() {
 		if ($this->controller) {
 			// todo
 			$controllerParts = explode('\\', $this->controller);
@@ -121,12 +123,31 @@ class Page extends DatabaseObject {
 			$controllerName = preg_replace('/(page|action|form)$/i', '', $controllerName);
 			
 			return LinkHandler::getInstance()->getLink($controllerName, [
-				'application' => $controllerParts[0]
+				'application' => $controllerParts[0],
+				'forceFrontend' => true
 			]);
 		}
 		else {
 			return LinkHandler::getInstance()->getCmsLink($this->pageID);
 		}	
+	}
+	
+	/**
+	 * Returns shortened link for acp page list.
+	 *
+	 * @return      string
+	 */
+	public function getDisplayLink() {
+		return str_replace($this->getApplication()->getPageURL(), '', $this->getLink());
+	}
+	
+	/**
+	 * Returns the application of this page.
+	 *
+	 * @return      \wcf\data\application\Application
+	 */
+	public function getApplication() {
+		return ApplicationHandler::getInstance()->getApplicationByID($this->packageID);
 	}
 	
 	/**
@@ -144,8 +165,8 @@ class Page extends DatabaseObject {
 	
 	/**
 	 * Returns the page's internal name.
-	 * 
-	 * @return string
+	 *
+	 * @return      string
 	 */
 	public function __toString() {
 		return $this->name;

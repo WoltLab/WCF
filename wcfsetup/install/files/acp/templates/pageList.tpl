@@ -13,8 +13,48 @@
 	<h1 class="contentTitle">{lang}wcf.acp.page.list{/lang}</h1>
 </header>
 
+<form method="post" action="{link controller='PageList'}{/link}">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap">
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
+				<dd>
+					<input type="text" id="name" name="name" value="{$name}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="pageTitle">{lang}wcf.acp.page.title{/lang}</label></dt>
+				<dd>
+					<input type="text" id="pageTitle" name="title" value="{$title}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt><label for="pageContent">{lang}wcf.acp.page.content{/lang}</label></dt>
+				<dd>
+					<input type="text" id="pageContent" name="content" value="{$content}" class="long" />
+				</dd>
+			</dl>
+			
+			{event name='filterFields'}
+		</div>
+	</section>
+	
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
+	</div>
+</form>
+
 <div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	{assign var='linkParameters' value=''}
+	{if $name}{capture append=linkParameters}&name={@$name|rawurlencode}{/capture}{/if}
+	{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
+	{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
+	{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 	
 	<nav>
 		<ul>
@@ -32,10 +72,10 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnPageID{if $sortField == 'pageID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=pageID&sortOrder={if $sortField == 'pageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
+					<th class="columnPageID{if $sortField == 'pageID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=pageID&sortOrder={if $sortField == 'pageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.name{/lang}</a></th>
 					<th class="columnText columnURL">{lang}wcf.acp.page.url{/lang}</th>
-					<th class="columnDate columnLastUpdateTime{if $sortField == 'lastUpdateTime'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=lastUpdateTime&sortOrder={if $sortField == 'lastUpdateTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.page.lastUpdateTime{/lang}</a></th>
+					<th class="columnDate columnLastUpdateTime{if $sortField == 'lastUpdateTime'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=lastUpdateTime&sortOrder={if $sortField == 'lastUpdateTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.page.lastUpdateTime{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -56,12 +96,20 @@
 							{else}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
+							{if !$page->requireObjectID}
+								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip"><span class="icon icon16 fa-search"></span></a>
+							{else}
+								<span class="icon icon16 fa-search disabled" title="{lang}wcf.acp.page.button.viewPage{/lang}"></span>
+							{/if}
 							
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnPageID">{@$page->pageID}</td>
-						<td class="columnTitle columnName"><a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
-						<td class="columnText columnURL">{$page->getURL()}</td>
+						<td class="columnTitle columnName">{if $page->isLandingPage}<span class="icon icon16 fa-home jsTooltip" title="{lang}wcf.acp.page.isLandingPage{/lang}"></span> {/if}<a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
+						<td class="columnText columnURL">
+							<span class="badge label">{$page->getApplication()->getAbbreviation()}</span>
+							{$page->getDisplayLink()}
+						</td>
 						<td class="columnDate columnLastUpdateTime">{@$page->lastUpdateTime|time}</td>
 						
 						{event name='columns'}

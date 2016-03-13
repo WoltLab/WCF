@@ -80,7 +80,7 @@ class MenuItem extends DatabaseObject {
 		}
 		
 		if ($this->pageID) {
-			return $this->getPage()->getURL();
+			return $this->getPage()->getLink();
 		}
 		else {
 			return $this->externalURL;
