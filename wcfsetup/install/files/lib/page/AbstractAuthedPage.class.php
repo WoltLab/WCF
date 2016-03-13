@@ -34,7 +34,7 @@ abstract class AbstractAuthedPage extends AbstractPage {
 	 */
 	protected function checkAccessToken() {
 		if (isset($_REQUEST['at'])) {
-			list($userID, $token) = explode('-', StringUtil::trim($_REQUEST['at']));
+			list($userID, $token) = array_pad(explode('-', StringUtil::trim($_REQUEST['at']), 2), 2, null);
 			
 			if (WCF::getUser()->userID) {
 				if ($userID == WCF::getUser()->userID && PasswordUtil::secureCompare(WCF::getUser()->accessToken, $token)) {
