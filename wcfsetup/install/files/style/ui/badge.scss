@@ -11,7 +11,7 @@ a.badge {
 	white-space: nowrap;
 	word-wrap: normal;
 	
-	@extend .wcfFontSmall;
+	@include wcfFontSmall;
 	
 	/* colors */
 	&.badgeUpdate {

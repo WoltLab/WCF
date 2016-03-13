@@ -6,7 +6,7 @@
 	
 	.contentTitle,
 	> h1 { // deprecated
-		@extend .wcfFontTitle;
+		@include wcfFontTitle;
 		
 		.badge {
 			top: -2px;
@@ -52,7 +52,7 @@
 	> h2 {
 		color: $wcfContentHeadlineText; // todo: rename variable
 		
-		@extend .wcfFontSection;
+		@include wcfFontSection;
 		
 		a {
 			color: $wcfContentHeadlineLink; // todo: rename variable
@@ -85,7 +85,7 @@
 	.sectionTitle {
 		color: $wcfContentHeadlineText; // todo: rename variable
 		
-		@extend .wcfFontSection;
+		@include wcfFontSection;
 		
 		a {
 			color: $wcfContentHeadlineLink; // todo: rename variable
@@ -137,7 +137,7 @@
 		}
 		
 		.sectionTitle {
-			@extend .wcfFontHeadline;
+			@include wcfFontHeadline;
 		}
 		
 		> .sectionHeader,
@@ -159,7 +159,7 @@ fieldset {
 		padding-bottom: 10px;
 		width: 100%;
 		
-		@extend .wcfFontSection;
+		@include wcfFontSection;
 		
 		a {
 			color: $wcfContentHeadlineLink; // todo: rename variable
@@ -191,7 +191,7 @@ fieldset {
 		> legend {
 			margin-bottom: 15px;
 			
-			@extend .wcfFontHeadline;
+			@include wcfFontHeadline;
 		}
 	}	
 }
@@ -199,7 +199,7 @@ fieldset {
 /* styling for container headlines */
 .containerHeadline {
 	> h3 {
-		@extend .wcfFontHeadline;
+		@include wcfFontHeadline;
 		
 		> .badge {
 			top: -2px;

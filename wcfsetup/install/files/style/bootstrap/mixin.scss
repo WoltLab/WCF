@@ -1,6 +1,6 @@
 /* shortcuts */
 // clearing floats like a boss h5bp.com/q
-.clearfix {
+@mixin clearfix {
 	&::before,
 	&::after {
 		display: table;
@@ -12,7 +12,11 @@
 	}
 }
 
-.userSelectNone {
+.clearfix {
+	@include clearfix;
+}
+
+@mixin userSelectNone {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;

@@ -44,7 +44,7 @@
 .tabularListRowHead > .tabularListColumns > li {
 	color: $wcfTabularBoxHeadline;
 	
-	@extend .wcfFontHeadline;
+	@include wcfFontHeadline;
 	
 	> a {
 		color: $wcfTabularBoxHeadline;
@@ -89,7 +89,7 @@
 		> h1,
 		> h2,
 		> h3 {
-			@extend .wcfFontHeadline;
+			@include wcfFontHeadline;
 			
 			+ small {
 				display: block;
@@ -142,7 +142,7 @@
 		text-align: left;
 		white-space: nowrap;
 		
-		@extend .wcfFontHeadline;
+		@include wcfFontHeadline;
 		
 		> a {
 			color: $wcfTabularBoxHeadline;
@@ -225,13 +225,13 @@
 			white-space: nowrap;
 			word-wrap: normal;
 			
-			@extend .wcfFontSmall;
+			@include wcfFontSmall;
 		}
 		
 		&.columnURL, &.columnSmallText {
 			text-align: left;
 			
-			@extend .wcfFontSmall;
+			@include wcfFontSmall;
 			
 		}
 	}

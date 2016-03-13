@@ -125,7 +125,7 @@
 			white-space: nowrap;
 			
 			> .messageGroupLink {
-				@extend .wcfFontHeadline;
+				@include wcfFontHeadline;
 			}
 			
 			> .badge.label {
@@ -179,8 +179,8 @@
 	}
 	/*todo
 	.messageGroupInfo {
-		@extend .inlineList;
-		@extend .wcfFontSmall;
+		@include inlineList;
+		@include wcfFontSmall;
 		
 		> li:not(:last-child) {
 			margin-right: 5px;
@@ -243,7 +243,7 @@
 		opacity: 0;
 		transition: opacity .2s;
 		
-		@extend .wcfFontSmall;
+		@include wcfFontSmall;
 		
 		&:not(:last-child) {
 			margin-right: 5px;

@@ -1,40 +1,6 @@
 /* makes an inline-list */
 .inlineList {
-	display: flex;
-	flex-wrap: wrap;
-	
-	> li {
-		flex: 0 auto;
-		
-		&:not(:last-child) {
-			margin-right: 5px;
-		}
-		
-		> a {
-			// @todo: still necessary?
-			/*display: inline-flex;*/
-		}
-	}
-	
-	/* adds a comma after each list item */
-	&.commaSeparated {
-		> li {
-			&:not(:last-child):after {
-				content: ",";
-				padding-left: 1px;
-			}
-		}
-	}
-	
-	/* adds a dot after each list item */
-	&.dotSeparated {
-		> li {
-			&:not(:last-child):after {
-				content: "\00b7";
-				margin-left: 5px;
-			}
-		}
-	}
+	@include inlineList;
 }
 
 /* restores the native styling for lists */
@@ -54,7 +20,7 @@ ol.nativeList {
 
 /* tag cloud list */
 .tagList {
-	@extend .inlineList;
+	@include inlineList;
 	
 	align-items: baseline;
 }
@@ -67,8 +33,8 @@ ol.nativeList {
 /* legacy styling (deprecated) */
 ol.dataList,
 ul.dataList {
-	@extend .inlineList;
-	@extend .wcfFontSmall;
+	@include inlineList;
+	@include wcfFontSmall;
 	
 	> li {
 		&:not(:last-child):after {

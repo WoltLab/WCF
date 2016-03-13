@@ -1,7 +1,7 @@
 /* #### Labels #### */
 /* label list */
 .labelList {
-	@extend .inlineList;
+	@include inlineList;
 	
 	display: inline-flex;
 	

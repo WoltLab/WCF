@@ -65,7 +65,7 @@
 	> li {
 		flex: 0 0 auto;
 		
-		@extend .wcfFontHeadline;
+		@include wcfFontHeadline;
 		
 		> a {
 			background-color: $wcfHeaderMenuBackground;
@@ -115,7 +115,7 @@
 		background-clip: padding-box;
 		border-top: 3px solid transparent;
 		
-		@extend .wcfFontDefault;
+		@include wcfFontDefault;
 		
 		> li {
 			> a {

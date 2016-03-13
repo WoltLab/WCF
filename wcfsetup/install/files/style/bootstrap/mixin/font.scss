@@ -1,0 +1,32 @@
+@mixin wcfFontDefault {
+	font-size: $wcfFontSizeDefault;
+	font-weight: 400;
+}
+
+@mixin wcfFontSmall {
+	font-size: $wcfFontSizeSmall;
+	font-weight: 400;
+}
+
+@mixin wcfFontBold {
+	font-weight: 600;
+}
+
+@mixin wcfFontHeadline {
+	font-size: $wcfFontSizeHeadline;
+	font-weight: 400;
+}
+
+@mixin wcfFontSection {
+	font-size: $wcfFontSizeSection;
+	font-weight: 300;
+}
+
+@mixin wcfFontTitle {
+	font-size: $wcfFontSizeTitle;
+	font-weight: 300;
+}
+
+@mixin wcfLineHeight {
+	line-height: $wcfFontLineHeight;
+}

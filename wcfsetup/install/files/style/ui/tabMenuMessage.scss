@@ -23,7 +23,7 @@
 		padding: 5px 20px;
 		
 		> ul {
-			@extend .inlineList;
+			@include inlineList;
 			
 			> li {
 				outline: 0;
@@ -40,8 +40,8 @@
 					display: block;
 					outline: 0;
 					
-					@extend .userSelectNone;
-					@extend .wcfFontSmall;
+					@include userSelectNone;
+					@include wcfFontSmall;
 				}
 			}
 		}
@@ -59,7 +59,7 @@
 		border: 1px solid $wcfContentBorderInner;
 		border-top-width: 0;
 		
-		@extend .inlineList;
+		@include inlineList;
 		
 		> li {
 			border-right: 1px solid $wcfContentBorderInner;
@@ -87,7 +87,7 @@
 				display: block;
 				padding: 10px 20px;
 				
-				@extend .userSelectNone;
+				@include userSelectNone;
 				
 				> span.icon {
 					display: none;

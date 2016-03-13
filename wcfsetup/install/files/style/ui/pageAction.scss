@@ -20,7 +20,7 @@
 	right: 20px;
 	z-index: 400;
 	
-	@extend .inlineList;
+	@include inlineList;
 	
 	> li {
 		animation: wcfPageActionOut .3s;

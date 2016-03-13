@@ -87,7 +87,7 @@
 	.interactiveDropdownTitle {
 		flex: 1 1 auto;
 		
-		@extend .wcfFontHeadline;
+		@include wcfFontHeadline;
 	}
 	
 	.interactiveDropdownLinks {
@@ -154,7 +154,7 @@
 		padding: 20px 10px;
 		text-align: center;
 		
-		@extend .wcfFontHeadline;
+		@include wcfFontHeadline;
 	}
 }
 

@@ -1,0 +1,13 @@
+@mixin box($imageSize, $margin: 0) {
+	display: flex;
+	
+	> :first-child:not(:last-child) {
+		flex: 0 0 auto;
+		margin-right: $margin;
+	}
+	
+	> :last-child {
+		flex: 1;
+		overflow: hidden;
+	}
+}

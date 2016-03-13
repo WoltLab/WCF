@@ -135,7 +135,7 @@
 	}
 	
 	.dataList {
-		@extend .wcfFontSmall;
+		@include wcfFontSmall;
 	}
 	
 	.userAvatar {
@@ -151,7 +151,7 @@
 	.username {
 		display: inline-block;
 		
-		@extend .wcfFontHeadline;
+		@include wcfFontHeadline;
 	}
 	
 	.badgeOnline {
@@ -265,7 +265,7 @@
 }
 
 .messageTitle {
-	@extend .wcfFontHeadline;
+	@include wcfFontHeadline;
 	
 	color: $wcfContentHeadlineText;
 		
@@ -279,9 +279,9 @@
 }
 
 .messageHeaderMetaData {
-	@extend .inlineList;
-	@extend .dotSeparated;
-	@extend .wcfFontSmall;
+	@include inlineList;
+	@include dotSeparated;
+	@include wcfFontSmall;
 	
 	.messagePublicationTime {
 		color: $wcfContentDimmedText;
@@ -293,8 +293,8 @@
 }
 
 .messageStatus {
-	@extend .inlineList;
-	@extend .wcfFontSmall;
+	@include inlineList;
+	@include wcfFontSmall;
 	
 	.wcfLikeCounter {
 		color: $wcfContentDimmedText;
@@ -302,7 +302,7 @@
 }
 
 .messageQuickOptions {
-	@extend .inlineList;
+	@include inlineList;
 }
 
 /* content - body */
@@ -340,7 +340,7 @@
 	margin-top: 20px;
 	padding: 5px 10px;
 	
-	@extend .wcfFontSmall;
+	@include wcfFontSmall;
 	
 	a {
 		color: $wcfContentDimmedLink;
@@ -369,7 +369,7 @@
 		cursor: pointer;
 		flex: 0 0 auto;
 		
-		@extend .wcfFontSmall;
+		@include wcfFontSmall;
 		
 		> .icon {
 			color: $wcfContentDimmedText;

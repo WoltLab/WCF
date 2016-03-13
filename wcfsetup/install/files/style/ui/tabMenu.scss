@@ -6,7 +6,7 @@
 	> ul {
 		border-bottom: 1px solid $wcfContentBorderInner;
 		
-		@extend .inlineList;
+		@include inlineList;
 		
 		> li {
 			&:not(:last-child) {
@@ -21,7 +21,7 @@
 				display: block;
 				padding: 5px 0;
 				
-				@extend .wcfFontSection;
+				@include wcfFontSection;
 			}
 		}
 	}
@@ -51,7 +51,7 @@
 	position: relative;
 	
 	> ul {
-		@extend .inlineList;
+		@include inlineList;
 		
 		> li {
 			&:not(:last-child) {

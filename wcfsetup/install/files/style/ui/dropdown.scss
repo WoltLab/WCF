@@ -213,7 +213,7 @@
 		&.dropdownText {
 			padding: $wcfGapTiny $wcfGapMedium;
 			
-			@extend .wcfFontSmall;
+			@include wcfFontSmall;
 		}
 		
 		&.boxFlag {
@@ -285,7 +285,7 @@
 			margin-bottom: 0;
 			
 			> p {
-				@extend .wcfFontSmall;
+				@include wcfFontSmall;
 			}
 		}
 	}

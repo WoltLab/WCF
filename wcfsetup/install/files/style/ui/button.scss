@@ -14,8 +14,8 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	
 	// input elements do not inherit font family, size and line-height from body
 	font-family: $wcfFontFamily;
-	@extend .wcfFontDefault;
-	@extend .wcfLineHeight;
+	@include wcfFontDefault;
+	@include wcfLineHeight;
 	
 	.icon {
 		color: $wcfButtonText;
@@ -35,7 +35,7 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	&.small {
 		padding: 4px 7px;
 		
-		@extend .wcfFontSmall;
+		@include wcfFontSmall;
 	}
 }
 
@@ -97,12 +97,12 @@ a.button.buttonPrimary { // a.button is required to override link formatting, su
 }
 
 .buttonList {
-	@extend .inlineList;
+	@include inlineList;
 	
 	&.smallButtons .button {
 		padding: 4px 7px;
 		
-		@extend .wcfFontSmall;
+		@include wcfFontSmall;
 	}
 	
 	/* members list */
@@ -122,11 +122,11 @@ a.button.buttonPrimary { // a.button is required to override link formatting, su
 }
 
 .buttonGroupNavigation > ul {
-	@extend .inlineList;
+	@include inlineList;
 }
 
 .buttonGroup {
-	@extend .inlineList;
+	@include inlineList;
 	
 	> li {
 		&:not(:last-child) {

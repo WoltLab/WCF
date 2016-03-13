@@ -28,20 +28,6 @@
 }
 
 /* boxes with an image */
-@mixin box($imageSize, $margin: 0) {
-	display: flex;
-	
-	> :first-child:not(:last-child) {
-		flex: 0 0 auto;
-		margin-right: $margin;
-	}
-	
-	> :last-child {
-		flex: 1;
-		overflow: hidden;
-	}
-}
-
 .box16 { @include box(16px, 5px); }
 .box24 { @include box(24px, 8px); }
 .box32 { @include box(32px, 10px); }
@@ -51,45 +37,12 @@
 .box128 { @include box(128px, 20px); }
 .box256 { @include box(256px, 30px); }
 
-.wcfFontDefault {
-	font-size: $wcfFontSizeDefault;
-	font-weight: 400;
-}
-
-.wcfFontSmall {
-	font-size: $wcfFontSizeSmall;
-	font-weight: 400;
-}
-
-.wcfFontBold {
-	font-weight: 600;
-}
-
-.wcfFontHeadline {
-	font-size: $wcfFontSizeHeadline;
-	font-weight: 400;
-}
-
-.wcfFontSection {
-	font-size: $wcfFontSizeSection;
-	font-weight: 300;
-}
-
-.wcfFontTitle {
-	font-size: $wcfFontSizeTitle;
-	font-weight: 300;
-}
-
-.wcfLineHeight {
-	line-height: $wcfFontLineHeight;
-}
-
 small, .small {
-	@extend .wcfFontSmall;
+	@include wcfFontSmall;
 }
 
 strong {
-	@extend .wcfFontBold;
+	@include wcfFontBold;
 }
 
 img {
@@ -127,17 +80,7 @@ img {
 }
 
 .nativeList {
-	margin: 1em 0 1em 40px;
-	
-	ul,
-	ol {
-		margin-bottom: 0;
-		margin-top: 0;
-	}
-	
-	li {
-		margin: 5px 0;
-	}
+	@include nativeList;
 }
 
 ul.nativeList {
@@ -162,15 +105,15 @@ ol.nativeList {
 	}
 	
 	h1 {
-		@extend .wcfFontTitle;
+		@include wcfFontTitle;
 	}
 	
 	h2 {
-		@extend .wcfFontSection;
+		@include wcfFontSection;
 	}
 	
 	h3 {
-		@extend .wcfFontHeadline;
+		@include wcfFontHeadline;
 	}
 	
 	h1, h2, h3, h4, h5, h6 {
@@ -178,7 +121,7 @@ ol.nativeList {
 	}
 	
 	ul, ol {
-		@extend .nativeList;
+		@include nativeList;
 	}
 	
 	ul {

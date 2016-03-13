@@ -63,7 +63,7 @@ dl {
 	}
 	
 	&.dataList {
-		@extend .clearfix;
+		@include clearfix;
 		
 		> dt {
 			clear: right;
@@ -121,7 +121,7 @@ dl {
 			text-align: left;
 			white-space: nowrap;
 			
-			@extend .wcfFontSmall;
+			@include wcfFontSmall;
 		}
 		
 		> dd {

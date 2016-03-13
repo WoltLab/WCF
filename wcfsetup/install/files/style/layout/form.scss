@@ -16,8 +16,8 @@ textarea {
 	
 	// input elements do not inherit font family, size and line-height from body
 	font-family: $wcfFontFamily;
-	@extend .wcfFontDefault;
-	@extend .wcfLineHeight;
+	@include wcfFontDefault;
+	@include wcfLineHeight;
 	
 	&:focus,
 	&:hover {
@@ -71,7 +71,7 @@ textarea {
 	border-width: 1px;
 	width: 100%;
 	
-	@extend .wcfFontDefault;
+	@include wcfFontDefault;
 	
 	&[disabled],
 	&[readonly] {

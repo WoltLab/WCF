@@ -42,5 +42,5 @@
 .quoteBoxTitle {
 	flex: 1 auto;
 	
-	@extend .wcfFontHeadline;
+	@include wcfFontHeadline;
 }

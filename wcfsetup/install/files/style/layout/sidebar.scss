@@ -32,7 +32,7 @@
 			margin-bottom: 15px;
 			padding: 0;
 			
-			@extend .wcfFontHeadline;
+			@include wcfFontHeadline;
 			
 			> a {
 				color: $wcfSidebarHeadlineLink;

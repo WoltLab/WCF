@@ -10,7 +10,7 @@
 	visibility: hidden;
 	z-index: 800;
 	
-	@extend .wcfFontSmall;
+	@include wcfFontSmall;
 	
 	> .elementPointer {
 		border-color: $wcfTooltipBackground transparent;

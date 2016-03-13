@@ -84,7 +84,7 @@
 		> span {
 			flex: 1 auto;
 			
-			@extend .wcfFontHeadline;
+			@include wcfFontHeadline;
 		}
 		
 		> .dialogCloseButton {
@@ -160,7 +160,7 @@
 			margin-top: 30px;
 			
 			.sectionTitle {
-				@extend .wcfFontHeadline;
+				@include wcfFontHeadline;
 			}
 		}
 		

@@ -12,7 +12,7 @@
 #mediaManagerMediaList {
 	font-size: 0;
 	
-	@extend .clearfix;
+	@include clearfix;
 	
 	> li {
 		float: left;
@@ -90,7 +90,7 @@
 			padding: $wcfGapSmall;
 			box-sizing: border-box;
 			
-			@extend .wcfFontSmall;
+			@include wcfFontSmall;
 		}
 		
 		> .buttonGroupNavigation {

@@ -10,7 +10,7 @@
 }
 
 .boxTitle {
-	@extend .wcfFontHeadline;
+	@include wcfFontHeadline;
 	
 	& + .boxContent {
 		margin-top: 20px;
@@ -36,7 +36,7 @@
 	}
 	
 	.boxTitle {
-		@extend .wcfFontTitle;
+		@include wcfFontTitle;
 	}
 	
 	.boxWithImage {
@@ -117,7 +117,7 @@
 	.boxTitle {
 		color: $wcfContentHeadlineText;
 		
-		@extend .wcfFontSection;
+		@include wcfFontSection;
 		
 		a {
 			color: $wcfContentHeadlineLink;
@@ -129,7 +129,7 @@
 	}
 	
 	.boxWithImage {
-		@extend .clearfix;
+		@include clearfix;
 		
 		.boxTitle,
 		.boxContent {
@@ -258,7 +258,7 @@
 	}
 	
 	.boxWithImage {
-		@extend .clearfix;
+		@include clearfix;
 		
 		.boxTitle,
 		.boxContent {
@@ -282,7 +282,7 @@
 	}
 	
 	.boxWithImage {
-		@extend .clearfix;
+		@include clearfix;
 		
 		.boxTitle,
 		.boxContent {
@@ -293,7 +293,7 @@
 	.boxTitle {
 		color: $wcfContentHeadlineText;
 		
-		@extend .wcfFontSection;
+		@include wcfFontSection;
 				
 		a {
 			color: $wcfContentHeadlineLink;
@@ -394,7 +394,7 @@
 	}
 	
 	.boxWithImage {
-		@extend .clearfix;
+		@include clearfix;
 		
 		.boxTitle,
 		.boxContent {
@@ -426,7 +426,7 @@
 			
 			&.boxMenuHasChildren {
 				> .boxMenuLink {
-					@extend .wcfFontHeadline;
+					@include wcfFontHeadline;
 					
 					margin-bottom: 10px;
 				}

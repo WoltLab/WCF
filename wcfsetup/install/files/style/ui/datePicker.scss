@@ -116,7 +116,7 @@
 		
 		> span {
 			text-transform: uppercase;
-			@extend .wcfFontSmall;
+			@include wcfFontSmall;
 		}
 	}
 	

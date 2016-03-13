@@ -103,7 +103,7 @@
 			margin-bottom: 10px;
 			padding-right: 20px;
 			
-			@extend .wcfFontHeadline;
+			@include wcfFontHeadline;
 		}
 		
 		&::after {
@@ -218,7 +218,7 @@
 			text-align: center;
 			text-decoration: none;
 			
-			@extend .wcfFontSmall;
+			@include wcfFontSmall;
 			
 			&.redactor-button-disabled,
 			&.redactor-button-disabled:before,

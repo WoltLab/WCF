@@ -5,8 +5,8 @@
 html, body {
 	height: 100%;
 	
-	@extend .wcfLineHeight;
-	@extend .wcfFontDefault;
+	@include wcfLineHeight;
+	@include wcfFontDefault;
 }
 
 body {
