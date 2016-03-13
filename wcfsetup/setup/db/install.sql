@@ -1124,6 +1124,7 @@ CREATE TABLE wcf1_user (
 	socialNetworkPrivacySettings TEXT,
 	
 	KEY username (username),
+	KEY email (email),
 	KEY registrationDate (registrationDate),
 	KEY styleID (styleID),
 	KEY activationCode (activationCode),
