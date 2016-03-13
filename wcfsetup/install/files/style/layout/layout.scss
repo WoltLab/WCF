@@ -39,7 +39,14 @@ a {
 	background-color: $wcfContentBackground;
 	color: $wcfContentText;
 	flex: 1 0 auto;
-	padding: 60px 0;
+	
+	@include large-screen-only {
+		padding: 60px 0;
+	}
+	
+	@include small-screen-only {
+		padding: 30px 0;
+	}
 	
 	a {
 		color: $wcfContentLink;

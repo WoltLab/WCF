@@ -1,18 +1,16 @@
 .messageGroupList {
 	.tabularList {
-		.tabularListColumns {
-			> .columnSubject {
-				flex: 1 1 auto;
-			}
-			
-			> .columnStats {
-				flex: 0 0 140px;
-				text-align: center;
-			}
-			
-			> .columnLastPost {
-				flex: 0 0 200px;
-			}
+		.columnSubject {
+			flex: 1 1 auto;
+		}
+		
+		.columnStats {
+			flex: 0 0 140px;
+			text-align: center;
+		}
+		
+		.columnLastPost {
+			flex: 0 0 200px;
 		}
 		
 		.tabularListRow:not(.tabularListRowHead) {

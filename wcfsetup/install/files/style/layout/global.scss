@@ -149,6 +149,14 @@ ol.nativeList {
 
 /* simulate native HTML styles for certain elements */
 .htmlContent {
+	> :first-child {
+		margin-top: 0 !important;
+	}
+	
+	> :last-child {
+		margin-bottom: 0 !important;
+	}
+	
 	p {
 		margin: 1em 0;
 	}
