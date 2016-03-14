@@ -41,9 +41,7 @@
 </div>
 
 <form method="post" action="{link controller='AvatarEdit'}{/link}" id="avatarForm">
-	<section class="section avatarEdit">
-		<h2 class="sectionTitle">{lang}wcf.user.avatar{/lang}</h2>
-			
+	<div class="section avatarEdit">
 		<dl class="avatarType">
 			<dt></dt>
 			<dd>
@@ -97,7 +95,7 @@
 		{/if}
 		
 		{event name='avatarFields'}
-	</section>
+	</div>
 		
 	{event name='sections'}
 	
