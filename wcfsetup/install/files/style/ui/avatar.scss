@@ -1,0 +1,55 @@
+.avatarEdit .avatarType {
+	display: flex;
+	
+	> dt {
+		flex: 0 0 auto;
+		order: 2;
+	}
+	
+	> dd {
+		order: 1;
+	}
+	
+	.avatarUploadButtonContainer {
+		margin-top: 10px;
+	}
+	
+	@include large-screen-only {
+		/* use fixed height to ensure a constant gap between <dl> with and without an image */
+		height: 100px;
+		
+		> dt:not(:empty) {
+			margin: 0 0 0 30px;
+		}
+		
+		> dd {
+			flex: 1 1 auto;
+		}
+		
+		& + .avatarType {
+			margin-top: 30px;
+		}
+		
+		.avatarUploadButtonContainer {
+			margin-left: 24px;
+		}
+	}
+	
+	@include small-screen-only {
+		flex-wrap: wrap;
+		
+		> dt:not(:empty) {
+			flex: 0 0 100%;
+			margin-top: 20px;
+			text-align: center;
+		}
+		
+		> dd {
+			flex: 0 0 100%;
+		}
+		
+		.avatarUploadButtonContainer {
+			text-align: center;
+		}
+	}
+}

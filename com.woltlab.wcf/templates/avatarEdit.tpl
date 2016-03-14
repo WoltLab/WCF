@@ -41,10 +41,10 @@
 </div>
 
 <form method="post" action="{link controller='AvatarEdit'}{/link}" id="avatarForm">
-	<section class="section">
+	<section class="section avatarEdit">
 		<h2 class="sectionTitle">{lang}wcf.user.avatar{/lang}</h2>
 			
-		<dl>
+		<dl class="avatarType">
 			<dt></dt>
 			<dd>
 				<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.none{/lang}</label>
@@ -53,7 +53,7 @@
 		</dl>
 		
 		{if $__wcf->getSession()->getPermission('user.profile.avatar.canUploadAvatar')}
-			<dl class="jsOnly{if $errorField == 'custom'} formError{/if}" id="avatarUpload">
+			<dl class="avatarType jsOnly{if $errorField == 'custom'} formError{/if}" id="avatarUpload">
 				<dt>
 					{if $avatarType == 'custom'}
 						{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
@@ -70,7 +70,7 @@
 					<small>{lang}wcf.user.avatar.type.custom.description{/lang}</small>
 					
 					{* placeholder for upload button: *}
-					<div></div>
+					<div class="avatarUploadButtonContainer"></div>
 					
 					{if $errorField == 'custom'}
 						<small class="innerError">
@@ -82,7 +82,7 @@
 		{/if}
 		
 		{if MODULE_GRAVATAR}
-			<dl{if $errorField == 'gravatar'} class="formError"{/if}>
+			<dl class="avatarType{if $errorField == 'gravatar'} formError{/if}">
 				<dt><img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96" /></dt>
 				<dd>
 					<label><input type="radio" name="avatarType" value="gravatar" {if $avatarType == 'gravatar'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
