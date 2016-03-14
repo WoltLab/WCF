@@ -27,24 +27,32 @@
 	}
 	
 	> .elementPointer {
-		border-color: $wcfDropdownBorder transparent;
-		border-style: solid;
-		border-width: 0 8px 8px;
+		border: 10px solid transparent;
+		border-bottom-color: $wcfDropdownBorder;
+		border-top-width: 0;
 		
 		> span {
-			border-color: $wcfDropdownBackground transparent;
-			border-style: solid;
-			border-width: 0 6px 6px;
-			left: -6px;
+			border: 9px solid transparent;
+			border-bottom-color: $wcfDropdownBackground;
+			border-top-width: 0;
+			left: -9px;
 			position: absolute;
-			top: 2px;
+			top: 1px;
 		}
 		
 		&.flipVertical {
-			border-width: 8px 8px 0;
+			border: 10px transparent solid;
+			border-top-color: $wcfDropdownBorder;
+			border-bottom-width: 0;
+			bottom: 0;
+			top: auto;
 			
 			> span {
-				border-width: 6px 6px 0;
+				border: 9px transparent solid;
+				border-top-color: $wcfDropdownBackground;
+				border-bottom-width: 0;
+				bottom: 1px;
+				top: auto;
 			}
 		}
 	}
@@ -80,8 +88,13 @@
 	}
 	
 	> ul > li {
-		border-top: 1px solid $wcfDropdownBorder;
+		border-top: 1px solid $wcfDropdownBorderInner;
 		display: flex;
+		
+		&.weekdays,
+		&.weekdays + li {
+			border-top-color: $wcfDropdownBorder;
+		}
 		
 		> a,
 		> span {
@@ -91,7 +104,7 @@
 			text-align: center;
 			
 			&:not(:last-child) {
-				border-right: 1px solid $wcfDropdownBorder;
+				border-right: 1px solid $wcfDropdownBorderInner;
 			}
 		}
 		
@@ -115,7 +128,9 @@
 		}
 		
 		> span {
+			color: $wcfContentDimmedText;
 			text-transform: uppercase;
+			
 			@include wcfFontSmall;
 		}
 	}
