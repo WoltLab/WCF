@@ -80,6 +80,7 @@
 							{/if}
 						</small>
 					{/if}
+					<small>{lang}wcf.acp.notice.notice.description{/lang}</small>
 				</dd>
 			</dl>
 			{include file='multipleLanguageInputJavascript' elementIdentifier='notice' forceSelection=false}
