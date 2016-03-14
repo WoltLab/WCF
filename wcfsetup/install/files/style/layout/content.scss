@@ -23,10 +23,12 @@
 	
 	.contentHeaderDescription {
 		color: $wcfContentDimmedText;
+		margin-top: 5px;
 	}
 	
 	.contentHeaderMetaData {
 		color: $wcfContentDimmedText;
+		margin-top: 5px;
 		
 		&.inlineList {
 			> li:not(:last-child) {
@@ -40,6 +42,12 @@
 			.icon {
 				color: $wcfContentDimmedText;
 			}
+		}
+	}
+	
+	@include small-screen-only {
+		.contentHeaderIcon {
+			display: none;
 		}
 	}
 }
@@ -213,52 +221,77 @@ fieldset {
 
 /* styling for content navigation area (containing pagination / page buttons) */
 .contentNavigation {
-	align-items: center;
-	display: flex;
-	
-	// align <nav> to the right side
-	justify-content: flex-end;
-	
-	> nav {
-		flex: 0 0 auto;
+	& + .section {
 		margin-top: 30px;
-		order: 3;
-		
-		&.pagination {
-			order: 1;
-			
-			// use up maximum space, causing it to stick to the left while all other
-			// <nav> elements will still be aligned to the right side
-			flex: 1 1 auto;
-		}
-		
-		&.jsClipboardEditor {
-			margin-right: 5px;
-			order: 2;
-		}
-		
-		& + nav {
-			flex: 0 0 auto;
-		}
-		
-		&:not(.pagination) {
-			text-align: right;
-		}
 	}
 	
-	ul {
-		display: inline-flex;
+	@include large-screen-only {
+		align-items: center;
+		display: flex;
 		
-		> li {
+		// align <nav> to the right side
+		justify-content: flex-end;
+		
+		> nav {
 			flex: 0 0 auto;
+			margin-top: 30px;
+			order: 3;
 			
-			&:not(:last-child) {
+			&.pagination {
+				order: 1;
+				
+				// use up maximum space, causing it to stick to the left while all other
+				// <nav> elements will still be aligned to the right side
+				flex: 1 1 auto;
+			}
+			
+			&.jsClipboardEditor {
 				margin-right: 5px;
+				order: 2;
+			}
+			
+			& + nav {
+				flex: 0 0 auto;
+			}
+			
+			&:not(.pagination) {
+				text-align: right;
+			}
+		}
+		
+		ul {
+			display: inline-flex;
+			
+			> li {
+				flex: 0 0 auto;
+				
+				&:not(:last-child) {
+					margin-right: 5px;
+				}
 			}
 		}
 	}
 	
-	& + .section {
-		margin-top: 30px;
+	@include small-screen-only {
+		> nav + nav > ul {
+			// gap between pagination and navigation buttons
+			margin-top: 10px;
+		}
+		
+		ul {
+			margin-top: 30px;
+			
+			> li {
+				& + li {
+					margin-top: 10px;
+				}
+				
+				> .button {
+					display: block;
+					padding: 7px 10px;
+					text-align: center;
+				}
+			}
+		}
 	}
 }

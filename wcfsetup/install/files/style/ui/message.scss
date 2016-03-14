@@ -91,6 +91,7 @@
 	
 	@include small-screen-only {
 		flex: 0 0 auto;
+		margin: 0 -10px;
 		padding: 10px;
 		
 		.messageAuthor {
@@ -302,7 +303,28 @@
 }
 
 .messageQuickOptions {
-	@include inlineList;
+	@include large-screen-only {
+		@include inlineList;
+	}
+	
+	@include small-screen-only {
+		flex: 0 0 24px;
+		height: 1.5em;
+		position: relative;
+		
+		&::before {
+			content: $fa-var-bars;
+			font-family: FontAwesome;
+			font-size: 18px;
+			position: absolute;
+			right: 0;
+			top: -2px;
+		}
+		
+		> li {
+			display: none;
+		}
+	}
 }
 
 /* content - body */
@@ -378,7 +400,13 @@
 	}
 	
 	> .messageFooterButtons {
-		flex: auto;
+		@include large-screen-only {
+			flex: auto;
+		}
+		
+		@include small-screen-only {
+			display: none;
+		}
 	}
 }
 

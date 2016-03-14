@@ -98,3 +98,25 @@ a {
 	}
 }
 
+/* mobile arranges the sidebar and content vertically:
+   
+   <leftSidebar> <content> <rightSidebar>
+   
+   becomes:
+   
+   <leftSidebar>
+   <content>
+   <rightSidebar>
+*/
+@include small-screen-only {
+	.sidebar {
+		margin: 0 -10px;
+	}
+	
+	.sidebar + .content,
+	.content + .sidebar {
+		// gap between sidebars and content
+		margin-top: 30px;
+	}
+}
+

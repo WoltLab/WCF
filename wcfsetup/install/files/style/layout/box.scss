@@ -196,11 +196,23 @@
 	.box {
 		&:not(.boxBorderless) {
 			background-color: $wcfSidebarBackground;
-			padding: 20px;
 			
-			.boxMenu {
-				margin-left: -20px;
-				margin-right: -20px;
+			@include large-screen-only {
+				padding: 20px;
+				
+				.boxMenu {
+					margin-left: -20px;
+					margin-right: -20px;
+				}
+			}
+			
+			@include small-screen-only {
+				padding: 20px 10px;
+				
+				.boxMenu {
+					margin-left: -10px;
+					margin-right: -10px;
+				}
 			}
 		}
 		
@@ -347,23 +359,35 @@
 	}
 	
 	.boxContainer {
-		display: flex;
-		flex-wrap: wrap;
-		margin-bottom: -40px;
 		margin-left: -10px;
 		margin-right: -10px;
 		padding: 40px 0;
+		
+		@include large-screen-only {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: -40px;
+		}
 	}
 	
 	.box {
-		flex: 0 0 50%;
 		overflow: hidden;
 		padding-left: 10px;
 		padding-right: 10px;
-		margin-bottom: 40px;
 		
-		&.boxFullWidth {
-			flex-basis: 100%;
+		@include large-screen-only {
+			flex: 0 0 50%;
+			margin-bottom: 40px;
+			
+			&.boxFullWidth {
+				flex-basis: 100%;
+			}
+		}
+		
+		@include small-screen-only {
+			& + .box {
+				margin-top: 40px;
+			}
 		}
 	}
 	

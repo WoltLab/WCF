@@ -1,7 +1,14 @@
 .containerList > li {
-	padding: 20px;
 	position: relative;
 	transition: background-color .2s;
+	
+	@include large-screen-only {
+		padding: 20px;
+	}
+	
+	@include small-screen-only {
+		padding: 10px 0;
+	}
 	
 	&:not(:last-child) {
 		border-bottom: 1px solid $wcfContentBorderInner;
@@ -84,36 +91,47 @@
 }
 
 .containerBoxList {
-	&.doubleColumned,
-	&.tripleColumned {
-		display: flex;
-		flex-wrap: wrap;
-		margin-bottom: -15px;
-		
-		> li {
-			overflow: hidden;
-			padding-right: 15px;
-			margin-bottom: 15px;
+	@include large-screen-only {
+		&.doubleColumned,
+		&.tripleColumned {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: -15px;
 			
-			.containerBoxContent {
+			> li {
 				overflow: hidden;
+				padding-right: 15px;
+				margin-bottom: 15px;
 				
-				h3 {
+				.containerBoxContent {
 					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
+					
+					h3 {
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
 				}
 			}
 		}
+		
+		&.doubleColumned > li {
+			flex: 0 0 50%;
+		}
+		
+		&.tripleColumned > li {
+			flex: 0 0 calc(100% / 3);
+			/* work-around for IE10 */
+			width: calc(100% / 3);
+		}
 	}
 	
-	&.doubleColumned > li {
-		flex: 0 0 50%;
-	}
-	
-	&.tripleColumned > li {
-		flex: 0 0 calc(100% / 3);
-		/* work-around for IE10 */
-		width: calc(unquote("100% / 3"));
+	@include small-screen-only {
+		&.doubleColumned,
+		&.tripleColumned {
+			> li + li {
+				margin-top: 10px;
+			}
+		}
 	}
 }

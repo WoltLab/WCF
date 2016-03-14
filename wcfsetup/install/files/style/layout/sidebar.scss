@@ -18,7 +18,14 @@
 		> fieldset,
 		> section:not(.box) {
 			background-color: $wcfSidebarBackground;
-			padding: 20px;
+			
+			@include large-screen-only {
+				padding: 20px;
+			}
+			
+			@include small-screen-only {
+				padding: 20px 10px;
+			}
 			
 			&:not(:first-child) {
 				margin-top: 30px;
