@@ -41,8 +41,12 @@ class Notice extends DatabaseObject implements IRouteController {
 	 * @since	2.2
 	 */
 	public function __toString() {
-		// replace `{$username}` with the active user's name and the `{$email}` with the active users' email address
-		$text = str_replace(['{$username}', '{$email}'], [WCF::getUser()->username, WCF::getUser()->email], WCF::getLanguage()->get($this->notice));
+		// replace `{$username}` with the active user's name and `{$email}`
+		// with the active user's email address
+		$text = strtr(WCF::getLanguage()->get($this->notice), [
+			'{$username}' => WCF::getUser()->username,
+			'{$email}' => WCF::getUser()->email
+		]);
 		
 		if (!$this->noticeUseHtml) {
 			$text = nl2br(htmlspecialchars($text));
