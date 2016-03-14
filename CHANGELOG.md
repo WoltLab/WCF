@@ -26,6 +26,7 @@
 * Make user options shown in sidebar sortable.
 * `wcf\system\event\listener\AbstractUserActionRenameListener` added.
 * `wcf\system\event\listener\AbstractUserMergeListener` added.
+* Notice texts support `{$username}` and `{$email}` placeholders.
 
 #### New Traits
 
