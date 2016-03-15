@@ -80,6 +80,12 @@
 	}
 }
 
+.tabularBox {
+	@include small-screen-only {
+		overflow: auto;
+	}
+}
+
 .tabularBoxTitle {
 	> header {
 		border-bottom: 1px solid currentColor;
