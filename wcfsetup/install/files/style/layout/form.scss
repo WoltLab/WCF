@@ -81,6 +81,15 @@ textarea {
 	}
 }
 
+select {
+	// The width is determined by the browser based upon the longest <option> contained,
+	// but this can cause the <select> to overflow the parent container. This is acceptable
+	// to some extent, but on mobile it can cause the entire site to have a horizontal
+	// scrollbar instead. Setting a `max-width` will cause the browser to respect the page
+	// boundaries and nicely wrap the displayed value instead.
+	max-width: 100%;
+}
+
 .selectDropdown {
 	position: relative;
 	
