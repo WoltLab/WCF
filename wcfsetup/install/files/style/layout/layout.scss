@@ -46,6 +46,7 @@ a {
 	
 	@include small-screen-only {
 		padding: 30px 0;
+		width: 100%;
 	}
 	
 	a {
