@@ -1,80 +1,68 @@
-.box.userProfileHeader {
+.userProfileHeader.box {
+	margin: 0;
+}
+.userProfileCoverPhoto {
 	background-image: url('../images/user-profile-header.jpg'); // todo
 	background-size: cover;
-	color: rgba(255, 255, 255, 1);
-	margin: 0;
-	padding: 40px 0;
-	text-shadow: 1px 1px 1px #000;
+	height: 200px;
+}
+
+.userProfileUser {
+	background-color: $wcfHeaderBackground;
 	
-	.boxContent {
-		background-color: rgba(0, 0, 0, .4);
-		padding: 20px 0;
-	}
-	
-	.contentHeader {
-		color: rgba(255, 255, 255, 1);
-		margin: 5px 0 10px 0;
-	}
-	
-	.userDetails {
+	> .layoutBoundary {
+		align-items: center;
+		display: flex;
+		padding: 5px 0 10px 160px;
 		position: relative;
 	}
 	
 	.userAvatar {
-		> a {
-			display: block;
-		}
-		
-		img {
-			box-sizing: content-box;
-			border: 2px solid $wcfContentBackground;
-		}
-	}
-	
-	a {
-		color: rgba(255, 255, 255, 1);
-		
-		&:hover {
-			color: rgba(255, 255, 255, 1);
-			text-decoration: underline;
-		}
-	}
-	
-	dt {
-		color: rgba(255, 255, 255, 1);
-	}
-	
-	/* todo */
-	.buttonGroupNavigation {
+		background-color: $wcfHeaderBackground;
+		border-radius: 50%;
+		left: 0;
+		padding: 10px;
 		position: absolute;
-		right: 0;
-		top: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	
+	.contentHeader {
+		color: $wcfHeaderText;
+		flex: 1 1 auto;
+	}
+	
+	.buttonGroupNavigation {
+		flex: 0 0 auto;
+		margin-left: 10px;
 		
-		.buttonGroup {
-			> li {
-				&:not(:last-child) {
-					margin-right: 1px;
-				}
-				
-				.button {
-					background-color: rgba(255, 255, 255, .4);
-					color: rgb(0, 0, 0);
-					text-shadow: 1px 1px 1px rgb(255, 255, 255);
-					
-					.icon {
-						color: rgb(0, 0, 0);
-						text-shadow: 1px 1px 1px rgb(255, 255, 255);
-					}
-					
-					&:hover,
-					&.active {
-						background-color: rgba(255, 255, 255, .8);
-						text-decoration: none;
-					}
-				}
+		.button {
+			background-color: $wcfHeaderMenuBackground;
+			color: $wcfHeaderMenuLink;
+			
+			&.active,
+			&:hover {
+				background-color: $wcfHeaderMenuBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
 			}
 		}
 	}
+}
+
+.userProfileDetails {
+	background-color: $wcfSidebarBackground;
+	
+	> .layoutBoundary {
+		padding: 10px 0 10px 160px;
+	}
+}
+
+.userProfile .main {
+	padding-top: 0;
+}
+
+.section.userProfileContent {
+	margin-top: 20px;
 }
 
 .userAvatarList {
@@ -115,8 +103,4 @@
 			}
 		}
 	}
-}
-
-.section.userProfile {
-	margin-top: 0;
 }

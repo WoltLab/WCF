@@ -143,7 +143,7 @@
 {include file='userNotice'}
 
 {if !$user->isProtected()}
-	<div id="profileContent" class="section tabMenuContainer userProfile" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
+	<div id="profileContent" class="section tabMenuContainer userProfileContent" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
