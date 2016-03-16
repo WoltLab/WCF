@@ -18,7 +18,7 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	@include wcfLineHeight;
 	
 	.icon {
-		color: $wcfButtonText;
+		color: inherit;
 	}
 	
 	&.active,
@@ -26,10 +26,6 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 		background-color: $wcfButtonBackgroundActive;
 		border-color: $wcfButtonBorderActive;
 		color: $wcfButtonTextActive;
-		
-		.icon {
-			color: $wcfButtonTextActive;
-		}
 	}
 	
 	&.small {
@@ -48,19 +44,11 @@ a.button.buttonPrimary { // a.button is required to override link formatting, su
 	border-color: $wcfButtonPrimaryBorder;
 	color: $wcfButtonPrimaryText;
 	
-	.icon {
-		color: $wcfButtonPrimaryText;
-	}
-	
 	&.active,
 	&:hover {
 		background-color: $wcfButtonPrimaryBackgroundActive;
 		border-color: $wcfButtonPrimaryBorderActive;
 		color: $wcfButtonPrimaryTextActive;
-		
-		.icon {
-			color: $wcfButtonPrimaryTextActive;
-		}
 	}
 }
 
