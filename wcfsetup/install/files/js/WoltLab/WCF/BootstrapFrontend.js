@@ -8,12 +8,12 @@
  */
 define(
 	[
-	 	'Ajax',                           'WoltLab/WCF/Bootstrap',   'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer',
-	 	'WoltLab/WCF/Controller/Popover'
+	 	'Ajax',                           'WoltLab/WCF/Bootstrap',         'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer',
+	 	'WoltLab/WCF/Controller/Popover', 'WoltLab/WCF/Ui/Page/JumpToTop'
 	],
 	function(
-		Ajax,                              Bootstrap,                 ControllerSitemap,                ControllerStyleChanger,
-		ControllerPopover
+		Ajax,                              Bootstrap,                       ControllerSitemap,                ControllerStyleChanger,
+		ControllerPopover,                 UiPageJumpToTop
 	)
 {
 	"use strict";
@@ -32,14 +32,16 @@ define(
 		setup: function(options) {
 			Bootstrap.setup();
 			
-			ControllerSitemap.setup();
+			//ControllerSitemap.setup();
 			
 			if (options.styleChanger) {
-				ControllerStyleChanger.setup();
+				//ControllerStyleChanger.setup();
 			}
 			
 			this._initUserPopover();
 			this._invokeBackgroundQueue(options.backgroundQueue.url, options.backgroundQueue.force);
+			
+			new UiPageJumpToTop();
 		},
 		
 		/**

@@ -1,7 +1,7 @@
 {include file='header'}
 
-<header class="boxHeadline">
-	<h1>PHP Version {PHP_VERSION}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">PHP Version {PHP_VERSION}</h1>
 </header>
 
 {@$phpInfo}

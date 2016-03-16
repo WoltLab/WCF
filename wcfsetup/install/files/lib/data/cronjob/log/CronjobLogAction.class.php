@@ -28,7 +28,7 @@ class CronjobLogAction extends AbstractDatabaseObjectAction {
 	 * Validates the clear all action.
 	 */
 	public function validateClearAll() {
-		WCF::getSession()->checkPermissions(array('admin.system.canManageCronjob'));
+		WCF::getSession()->checkPermissions(array('admin.management.canManageCronjob'));
 	}
 	
 	/**

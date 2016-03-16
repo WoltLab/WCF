@@ -609,7 +609,7 @@ WCF.Moderation.Report.Management = WCF.Moderation.Management.extend({
 		
 		this._super(queueID, redirectURL, 'wcf.moderation.report.{actionName}.confirmMessage');
 		
-		this._confirmationTemplate.removeContent = $('<fieldset><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></fieldset>');
+		this._confirmationTemplate.removeContent = $('<div class="section"><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></div>');
 	}
 });
 

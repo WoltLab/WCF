@@ -49,13 +49,13 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				var isDateTime = (elAttr(element, 'type') === 'datetime');
 				
-				elAttr(element, 'data-is-date-time', isDateTime);
+				elData(element, 'is-date-time', isDateTime);
 				
 				// convert value
 				var date = null, value = elAttr(element, 'value');
 				if (elAttr(element, 'value')) {
 					date = new Date(value);
-					elAttr(element, 'data-value', date.getTime());
+					elData(element, 'value', date.getTime());
 					value = DateUtil['formatDate' + (isDateTime ? 'Time' : '')](date);
 				}
 				
@@ -63,24 +63,24 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				// handle birthday input
 				if (element.classList.contains('birthday')) {
-					elAttr(element, 'data-min-date', '100');
-					elAttr(element, 'data-max-date', 'now');
+					elData(element, 'min-date', '100');
+					elData(element, 'max-date', 'now');
 				}
 				
 				this._initDateRange(element, now, true);
 				this._initDateRange(element, now, false);
 				
-				if (elAttr(element, 'data-min-date') === elAttr(element, 'data-max-date')) {
+				if (elData(element, 'min-date') === elData(element, 'max-date')) {
 					throw new Error("Minimum and maximum date cannot be the same (element id '" + element.id + "').");
 				}
 				
 				// change type to prevent browser's datepicker to trigger
 				element.type = 'text';
 				element.value = value;
-				elAttr(element, 'data-empty', isEmpty);
+				elData(element, 'empty', isEmpty);
 				
-				if (elAttr(element, 'data-placeholder')) {
-					elAttr(element, 'placeholder', elAttr(element, 'data-placeholder'));
+				if (elData(element, 'placeholder')) {
+					elAttr(element, 'placeholder', elData(element, 'placeholder'));
 				}
 				
 				// add a hidden element to hold the actual date
@@ -103,7 +103,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				container.className = 'inputAddon';
 				
 				var button = elCreate('a');
-				button.className = 'inputSuffix';
+				button.className = 'inputSuffix button';
 				button.addEventListener('click', _callbackOpen);
 				container.appendChild(button);
 				
@@ -113,6 +113,18 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				element.parentNode.insertBefore(container, element);
 				container.insertBefore(element, button);
+				
+				// check if the date input has one of the following classes set otherwise default to 'short'
+				var hasClass = false, knownClasses = ['tiny', 'short', 'medium', 'long'];
+				for (var i = 0; i < 4; i++) {
+					if (element.classList.contains(knownClasses[i])) {
+						hasClass = true;
+					}
+				}
+				
+				if (!hasClass) {
+					element.classList.add('short')
+				}
 				
 				_data.set(element, {
 					shadow: shadowElement,
@@ -196,7 +208,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			_input = input;
-			var data = _data.get(_input), date, value = elAttr(_input, 'data-value');
+			var data = _data.get(_input), date, value = elData(_input, 'value');
 			if (value) {
 				date = new Date(+value);
 				
@@ -209,12 +221,12 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			// set min/max date
-			_minDate = elAttr(_input, 'data-min-date');
-			if (_minDate.match(/^datePicker-(.+)$/)) _minDate = elById(RegExp.$1).getAttribute('data-value');
+			_minDate = elData(_input, 'min-date');
+			if (_minDate.match(/^datePicker-(.+)$/)) _minDate = elData(elById(RegExp.$1), 'value');
 			_minDate = new Date(+_minDate);
 			
-			_maxDate = elAttr(_input, 'data-max-date');
-			if (_maxDate.match(/^datePicker-(.+)$/)) _maxDate = elById(RegExp.$1).getAttribute('data-value');
+			_maxDate = elData(_input, 'max-date');
+			if (_maxDate.match(/^datePicker-(.+)$/)) _maxDate = elData(elById(RegExp.$1), 'value');
 			_maxDate = new Date(+_maxDate);
 			
 			if (data.isDateTime) {
@@ -278,7 +290,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		_renderGrid: function(day, month, year) {
 			var cell, hasDay = (day !== undefined), hasMonth = (month !== undefined);
 			
-			day = ~~day || ~~_dateGrid.getAttribute('data-day');
+			day = ~~day || ~~elData(_dateGrid, 'day');
 			month = ~~month;
 			year = ~~year;
 			
@@ -290,8 +302,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				var fragment = document.createDocumentFragment();
 				fragment.appendChild(_dateGrid);
 				
-				if (!hasMonth) month = ~~_dateGrid.getAttribute('data-month');
-				year = year || ~~_dateGrid.getAttribute('data-year');
+				if (!hasMonth) month = ~~elData(_dateGrid, 'month');
+				year = year || ~~elData(_dateGrid, 'year');
 				
 				// check if current selection exceeds min/max date
 				var date = new Date(year + '-' + ('0' + (month + 1).toString()).slice(-2) + '-' + ('0' + day.toString()).slice(-2));
@@ -338,8 +350,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					date.setDate(date.getDate() + 1); 
 				}
 				
-				elAttr(_dateGrid, 'data-month', month);
-				elAttr(_dateGrid, 'data-year', year);
+				elData(_dateGrid, 'month', month);
+				elData(_dateGrid, 'year', year);
 				
 				_datePicker.insertBefore(fragment, _dateTime);
 				
@@ -382,7 +394,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					cell.classList[(!cell.classList.contains('otherMonth') && ~~cell.textContent === day) ? 'add' : 'remove']('active');
 				}
 				
-				elAttr(_dateGrid, 'data-day', day);
+				elData(_dateGrid, 'day', day);
 			}
 			
 			this._formatValue();
@@ -394,15 +406,15 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		_formatValue: function() {
 			var data = _data.get(_input), date, value, shadowValue;
 			
-			if (elAttr(_input, 'data-empty') === 'true') {
+			if (elData(_input, 'empty') === 'true') {
 				return;
 			}
 			
 			if (data.isDateTime) {
 				date = new Date(
-					elAttr(_dateGrid, 'data-year'),
-					elAttr(_dateGrid, 'data-month'),
-					elAttr(_dateGrid, 'data-day'),
+					elData(_dateGrid, 'year'),
+					elData(_dateGrid, 'month'),
+					elData(_dateGrid, 'day'),
 					_dateHour.value,
 					_dateMinute.value
 				);
@@ -412,9 +424,9 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			else {
 				date = new Date(
-					elAttr(_dateGrid, 'data-year'),
-					elAttr(_dateGrid, 'data-month'),
-					elAttr(_dateGrid, 'data-day')
+					elData(_dateGrid, 'year'),
+					elData(_dateGrid, 'month'),
+					elData(_dateGrid, 'day')
 				);
 				
 				value = DateUtil.formatDate(date);
@@ -422,7 +434,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			}
 			
 			_input.value = value;
-			elAttr(_input, 'data-value', date.getTime());
+			elData(_input, 'value', date.getTime());
 			data.shadow.value = shadowValue;
 		},
 		
@@ -457,7 +469,11 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_dateMonth = elCreate('select');
 			_dateMonth.className = 'month';
 			_dateMonth.addEventListener('change', this._changeMonth.bind(this));
-			monthYearContainer.appendChild(_dateMonth);
+			
+			var selectWrapper = elCreate('label');
+			selectWrapper.className = 'selectDropdown';
+			selectWrapper.appendChild(_dateMonth);
+			monthYearContainer.appendChild(selectWrapper);
 			
 			var months = '', monthNames = Language.get('__monthsShort');
 			for (var i = 0; i < 12; i++) {
@@ -468,7 +484,11 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_dateYear = elCreate('select');
 			_dateYear.className = 'year';
 			_dateYear.addEventListener('change', this._changeYear.bind(this));
-			monthYearContainer.appendChild(_dateYear);
+			
+			selectWrapper = elCreate('label');
+			selectWrapper.className = 'selectDropdown';
+			selectWrapper.appendChild(_dateYear);
+			monthYearContainer.appendChild(selectWrapper);
 			
 			_dateMonthNext = elCreate('a');
 			_dateMonthNext.className = 'icon icon16 fa-arrow-right next';
@@ -600,7 +620,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				return;
 			}
 			
-			elAttr(_input, 'data-empty', false);
+			elData(_input, 'empty', false);
 			
 			this._renderGrid(event.currentTarget.textContent);
 			
@@ -617,7 +637,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			element = this._getElement(element);
 			
 			if (element.hasAttribute('data-value')) {
-				return new Date(+element.getAttribute('data-value'));
+				return new Date(+elData(element, 'value'));
 			}
 			
 			return null;
@@ -633,7 +653,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			element = this._getElement(element);
 			var data = _data.get(element);
 			
-			elAttr(element, 'data-value', date.getTime());
+			elData(element, 'value', date.getTime());
 			element.value = DateUtil['formatDate' + (data.isDateTime ? 'Time' : '')](date);
 			
 			data.shadow.value = DateUtil.format(date, (data.isDateTime ? 'c' : 'Y-m-d'));
@@ -666,14 +686,14 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			var container = element.parentNode;
 			container.parentNode.insertBefore(element, container);
-			container.parentNode.removeChild(container);
+			elRemove(container);
 			
 			elAttr(element, 'type', 'date' + (data.isDateTime ? 'time' : ''));
 			element.value = data.shadow.value;
 			
 			element.removeAttribute('data-value');
 			element.removeEventListener('click', _callbackOpen);
-			data.shadow.parentNode.removeChild(data.shadow);
+			elRemove(data.shadow);
 			
 			element.classList.remove('inputDatePicker');
 			element.readOnly = false;

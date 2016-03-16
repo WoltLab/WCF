@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\application;
 use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\package\PackageList;
 use wcf\data\DatabaseObject;
 use wcf\system\application\ApplicationHandler;
@@ -19,6 +20,12 @@ use wcf\util\FileUtil;
  * @category	Community Framework
  */
 class Application extends DatabaseObject {
+	/**
+	 * related package object
+	 * @var Package
+	 */
+	protected $package;
+	
 	/**
 	 * absolute page URL
 	 * @var	string
@@ -53,6 +60,19 @@ class Application extends DatabaseObject {
 	 */
 	public function getAbbreviation() {
 		return ApplicationHandler::getInstance()->getAbbreviation($this->packageID);
+	}
+	
+	/**
+	 * Returns related package object.
+	 * 
+	 * @return      Package         related package object
+	 */
+	public function getPackage() {
+		if ($this->package === null) {
+			$this->package = PackageCache::getInstance()->getPackage($this->packageID);
+		}
+		
+		return $this->package;
 	}
 	
 	/**

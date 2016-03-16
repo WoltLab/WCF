@@ -321,7 +321,7 @@ final class FileUtil {
 	public static function getRealPath($path) {
 		$path = self::unifyDirSeparator($path);
 		
-		$result = array();
+		$result = [];
 		$pathA = explode('/', $path);
 		if ($pathA[0] === '') {
 			$result[] = '';
@@ -425,7 +425,7 @@ final class FileUtil {
 	 * @deprecated	This method currently only is a wrapper around \wcf\util\HTTPRequest. Please use
 	 * 		HTTPRequest from now on, as this method may be removed in the future.
 	 */
-	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), &$headers = array()) {
+	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = [], array $postParameters = [], &$headers = []) {
 		$request = new HTTPRequest($httpUrl, $options, $postParameters);
 		$request->execute();
 		$reply = $request->getReply();
@@ -636,6 +636,62 @@ final class FileUtil {
 	 */
 	public static function checkMemoryLimit($neededMemory) {
 		return self::getMemoryLimit() == -1 || self::getMemoryLimit() > (memory_get_usage() + $neededMemory);
+	}
+	
+	/**
+	 * Returns the FontAwesome icon CSS class name for a file with the given
+	 * mime type.
+	 * 
+	 * @param	string		$mimeType
+	 * @return	string
+	 */
+	public static function getIconClassByMimeType($mimeType) {
+		if (StringUtil::startsWith($mimeType, 'image/')) {
+			return 'fa-file-image-o';
+		}
+		else if (StringUtil::startsWith($mimeType, 'video/')) {
+			return 'fa-file-video-o';
+		}
+		else if (StringUtil::startsWith($mimeType, 'audio/')) {
+			return 'fa-file-sound-o';
+		}
+		else if (StringUtil::startsWith($mimeType, 'text/')) {
+			return 'fa-file-text-o';
+		}
+		else {
+			switch ($mimeType) {
+				case 'application/msword':
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+					return 'fa-file-word-o';
+				break;
+				
+				case 'application/pdf':
+					return 'fa-file-pdf-o';
+				break;
+				
+				case 'application/vnd.ms-powerpoint':
+				case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+					return 'fa-file-powerpoint-o';
+				break;
+				
+				case 'application/vnd.ms-excel':
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+					return 'fa-file-excel-o';
+				break;
+				
+				case 'application/zip':
+				case 'application/x-tar':
+				case 'application/x-gzip':
+					return 'fa-file-archive-o';
+				break;
+				
+				case 'application/xml':
+					return 'fa-file-text-o';
+				break;
+			}
+		}
+		
+		return 'fa-file-o';
 	}
 	
 	private function __construct() { }

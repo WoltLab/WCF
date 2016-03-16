@@ -26,7 +26,7 @@ class StatDailyAction extends AbstractDatabaseObjectAction {
 	 * Validates the getData action.
 	 */
 	public function validateGetData() {
-		WCF::getSession()->checkPermissions(array('admin.system.canViewLog'));
+		WCF::getSession()->checkPermissions(array('admin.management.canViewLog'));
 		
 		// validate start date
 		if (empty($this->parameters['startDate']) || !preg_match('/^\d{4}\-\d{2}\-\d{2}$/', $this->parameters['startDate'])) {

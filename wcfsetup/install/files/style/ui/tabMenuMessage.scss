@@ -1,0 +1,141 @@
+.messageTabMenu {
+	> .messageTabMenuContent {
+		display: none;
+		
+		&.active {
+			background-color: $wcfContentBackground;
+			display: block;
+			margin-top: 0;
+		}
+	}
+	
+	// prevent double formatting with nested tab menus
+	&:not(.messageTabMenuContent) > .messageTabMenuContent.active {
+		border: 1px solid $wcfContentBorderInner;
+		border-top-width: 0;
+		padding: 20px;
+	}
+	
+	// sub tab menu
+	&.messageTabMenuContent > nav {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		margin: -20px -20px 20px -20px;
+		padding: 5px 20px;
+		
+		> ul {
+			@include inlineList;
+			
+			> li {
+				outline: 0;
+				
+				&:not(:last-child) {
+					margin-right: 20px;
+				}
+				
+				&.active > a {
+					color: $wcfContentLinkActive;
+				}
+				
+				> a {
+					display: block;
+					outline: 0;
+					
+					@include userSelectNone;
+					@include wcfFontSmall;
+				}
+			}
+		}
+	}
+}
+
+.messageTabMenu + .innerError {
+	margin-top: -1px; // TODO
+	width: 100%;
+}
+
+.messageTabMenuNavigation {
+	> ul {
+		background-color: $wcfContentBackground;
+		border: 1px solid $wcfContentBorderInner;
+		border-top-width: 0;
+		
+		@include inlineList;
+		
+		> li {
+			border-right: 1px solid $wcfContentBorderInner;
+			
+			&:not(:last-child) {
+				margin-right: 0;
+			}
+			
+			&.active > a {
+				color: $wcfContentLinkActive;
+				position: relative;
+				
+				&::after {
+					border-bottom: 1px solid $wcfContentBackground;
+					bottom: -1px;
+					content: "";
+					display: block;
+					left: 0;
+					position: absolute;
+					right: 0;
+				}
+			}
+			
+			> a {
+				display: block;
+				padding: 10px 20px;
+				
+				@include userSelectNone;
+				
+				> span.icon {
+					display: none;
+				}
+			}
+		}
+	}
+	
+	> span {
+		display: none;
+	}
+}
+
+@include small-screen-only {
+	.messageTabMenu {
+		> nav > ul > li:not(.active) > a {
+			> span.icon {
+				display: block;
+			}
+			
+			> span:not(.icon) {
+				display: none;
+			}
+		}
+		
+		> div > nav {
+			// TODO: margin: ($wcfGapTiny - $wcfGapSmall) -$wcfGapSmall $wcfGapSmall -$wcfGapSmall;
+		}
+	}
+}
+
+/* fix for Firefox - fieldsets are set to display: table-column which cause an odd gap between the fieldset
+   and the next element, similar to gaps with display: inline-block and font-size > 0 */
+@-moz-document url-prefix() {
+	fieldset + .messageTabMenu {
+		margin-top: -3px;
+	}
+}
+
+.uploadButton {
+	overflow: hidden;
+	position: relative;
+	
+	> input {
+		left: -4px;
+		opacity: 0;
+		padding: 4px;
+		position: absolute;
+		top: -2px;
+	}
+}

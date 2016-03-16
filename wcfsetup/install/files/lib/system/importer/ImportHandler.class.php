@@ -139,7 +139,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * Validates accessibility of resetMapping().
 	 */
 	public function validateResetMapping() {
-		WCF::getSession()->checkPermissions(array('admin.system.canImportData'));
+		WCF::getSession()->checkPermissions(array('admin.management.canImportData'));
 		
 		// reset caches
 		CacheHandler::getInstance()->flushAll();

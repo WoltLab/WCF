@@ -59,9 +59,6 @@
 		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
-		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primary Application]]></item>
-		<item name="wcf.acp.application.setAsPrimary"><![CDATA[Set As Primary Application]]></item>
-		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Do you really want to set “{$application->getPackage()->getName()}” as the primary application?]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -276,20 +273,20 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.group5"><![CDATA[Moderators]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[User Groups]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Members]]></item>
-		<item name="wcf.acp.group.option.admin.display.canManagePageMenu"><![CDATA[Can manage page menu]]></item>
+		<item name="wcf.acp.group.option.admin.content.cms.canManageMenu"><![CDATA[Can manage page menu]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Users of this group may access the Administration Control Panel based upon their granted permissions. This option must be enabled if you wish to grant access to any administrative option.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Can view private user options]]></item>
 		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Can manage languages]]></item>
-		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Can edit system options]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canEditOption"><![CDATA[Can edit system options]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
-		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Can view log files]]></item>
-		<item name="wcf.acp.group.option.admin.system.canManageApplication"><![CDATA[Can manage applications]]></item>
-		<item name="wcf.acp.group.option.admin.system.canManageCronjob"><![CDATA[Can manage cronjobs]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Can edit update servers]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Can install packages]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canUninstallPackage"><![CDATA[Can uninstall packages]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canUpdatePackage"><![CDATA[Can update packages]]></item>
+		<item name="wcf.acp.group.option.admin.management.canViewLog"><![CDATA[Can view log files]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Can manage applications]]></item>
+		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Can manage cronjobs]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Can edit update servers]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Can install packages]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Can uninstall packages]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Can update packages]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Accessible User Groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Users of this group have access to these groups, furthermore you need to specify if these users are allowed to edit these groups.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Can add user groups]]></item>
@@ -303,13 +300,14 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Can send emails to users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Can search users]]></item>
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Permissions]]></item>
-		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Appearance]]></item>
+		<item name="wcf.acp.group.option.category.admin.configuration"><![CDATA[Configuration]]></item>
+		<item name="wcf.acp.group.option.category.admin.customization"><![CDATA[Customization]]></item>
+		<item name="wcf.acp.group.option.category.admin.management"><![CDATA[Management]]></item>
 		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Page Menu]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[General Permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Styles]]></item>
-		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Packages]]></item>
+		<item name="wcf.acp.group.option.category.admin.configuration.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[User Groups]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Users]]></item>
@@ -329,7 +327,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Can manage styles]]></item>
 		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.group.option.admin.content.canBulkRevertContentChanges"><![CDATA[Can bulk revert content changes]]></item>
-		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.group.option.category.admin.application"><![CDATA[Applications]]></item>
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Can manage user profile fields]]></item>
@@ -406,8 +404,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
-		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Can import data]]></item>
-		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Can rebuild data]]></item>
+		<item name="wcf.acp.group.option.admin.management.canImportData"><![CDATA[Can import data]]></item>
+		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Can rebuild data]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Choose User Group]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
@@ -550,20 +548,20 @@ Examples for medium ID detection:
 	</category>
 	
 	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Maintenance]]></item>
 		<item name="wcf.acp.menu.link.maintenance.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.application.management"><![CDATA[Manage Applications]]></item>
-		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.menu.link.application"><![CDATA[Applications]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add Cronjob]]></item>
-		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[List Cronjobs]]></item>
+		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.menu.link.language.import"><![CDATA[Import Language]]></item>
 		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Manage Phrases]]></item>
-		<item name="wcf.acp.menu.link.language.list"><![CDATA[List Languages]]></item>
+		<item name="wcf.acp.menu.link.language.list"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Multilingualism]]></item>
-		<item name="wcf.acp.menu.link.language.server.list"><![CDATA[List Language Server]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Logs]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sessions]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
@@ -571,85 +569,89 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.group"><![CDATA[User Groups]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[Email Users]]></item>
-		<item name="wcf.acp.menu.link.group.list"><![CDATA[List User Groups]]></item>
-		<item name="wcf.acp.menu.link.display"><![CDATA[Appearance]]></item>
+		<item name="wcf.acp.menu.link.group.list"><![CDATA[User Groups]]></item>
+		<item name="wcf.acp.menu.link.customization"><![CDATA[Customization]]></item>
 		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
-		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Import &amp; Export]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install Package]]></item>
-		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[List Update Servers]]></item>
-		<item name="wcf.acp.menu.link.package.list"><![CDATA[List Packages]]></item>
+		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Package Servers]]></item>
+		<item name="wcf.acp.menu.link.package.list"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Page Menu]]></item>
 		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Add Menu Item]]></item>
-		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[List Menu Items]]></item>
+		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menu Items]]></item>
 		<item name="wcf.acp.menu.link.style"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Add Style]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Import Style]]></item>
-		<item name="wcf.acp.menu.link.style.list"><![CDATA[List Styles]]></item>
-		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.menu.link.style.list"><![CDATA[Styles]]></item>
+		<item name="wcf.acp.menu.link.configuration"><![CDATA[Configuration]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add User]]></item>
-		<item name="wcf.acp.menu.link.user.list"><![CDATA[List Users]]></item>
+		<item name="wcf.acp.menu.link.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[Email Users]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Bulk Processing]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Custom User Fields]]></item>
-		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[List Custom User Fields]]></item>
+		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Add Custom User Field]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[List Field Categories]]></item>
+		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Field Categories]]></item>
 		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Add Field Category]]></item>
-		<item name="wcf.acp.menu.link.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
+		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[User Field Settings]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
-		<item name="wcf.acp.menu.link.template.list"><![CDATA[List Templates]]></item>
+		<item name="wcf.acp.menu.link.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Add Template]]></item>
-		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[List Template Groups]]></item>
+		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[Template Groups]]></item>
 		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Add Template Group]]></item>
 		<item name="wcf.acp.menu.link.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.menu.link.attachment.list"><![CDATA[Browse Attachments]]></item>
 		<item name="wcf.acp.menu.link.bbcode"><![CDATA[BBCodes]]></item>
 		<item name="wcf.acp.menu.link.bbcode.add"><![CDATA[Add BBCode]]></item>
-		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[List BBCodes]]></item>
+		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[BBCodes]]></item>
 		<item name="wcf.acp.menu.link.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
-		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[List Media Provider]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[Media Provider]]></item>
 		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Add Smiley]]></item>
-		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[List Smilies]]></item>
+		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
-		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[List Smiley Categories]]></item>
+		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley Categories]]></item>
 		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Configure Dashboard Pages]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
-		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[List User Ranks]]></item>
+		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.add"><![CDATA[Add User Rank]]></item>
 		<item name="wcf.acp.menu.link.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.menu.link.label.add"><![CDATA[Add Label]]></item>
-		<item name="wcf.acp.menu.link.label.list"><![CDATA[List Labels]]></item>
+		<item name="wcf.acp.menu.link.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.menu.link.label.group.add"><![CDATA[Add Label Group]]></item>
-		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[List Label Groups]]></item>
+		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[Label Groups]]></item>
 		<item name="wcf.acp.menu.link.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Add Tag]]></item>
-		<item name="wcf.acp.menu.link.tag.list"><![CDATA[List Tags]]></item>
+		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Data Import]]></item>
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Rebuild Data]]></item>
-		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistics]]></item>
+		<item name="wcf.acp.menu.link.stat"><![CDATA[Statistics]]></item>
+		<item name="wcf.acp.menu.link.stat.list"><![CDATA[Statistics]]></item>
 		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Add Notice]]></item>
-		<item name="wcf.acp.menu.link.notice.list"><![CDATA[List Notices]]></item>
+		<item name="wcf.acp.menu.link.notice.list"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.menu.link.ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.menu.link.ad.add"><![CDATA[Add Ad]]></item>
-		<item name="wcf.acp.menu.link.ad.list"><![CDATA[List Ads]]></item>
+		<item name="wcf.acp.menu.link.ad.list"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Add Question]]></item>
-		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[List Questions]]></item>
+		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Captcha Questions]]></item>
 		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Failed Login Attempts]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription"><![CDATA[Paid Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[List Paid Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[List Active Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[List Transactions]]></item>
-		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
+		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Notifications]]></item>
+		<item name="wcf.acp.menu.link.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.menu.link.cms.page.list"><![CDATA[Pages]]></item>
+		<item name="wcf.acp.menu.link.cms.menu.list"><![CDATA[Menus]]></item>
+		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxes]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -759,9 +761,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[The controller “{$urlControllerReplacementError}” is unknown.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Below the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
-		<item name="wcf.acp.option.export"><![CDATA[Download Options]]></item>
-		<item name="wcf.acp.option.export.download"><![CDATA[Download Options]]></item>
-		<item name="wcf.acp.option.export.download.description"><![CDATA[Downloads a backup of the configuration settings to your local machine. This is not a replacement for a backup!]]></item>
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable gzip-compression]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transferred to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent browser-caching]]></item>
@@ -772,12 +771,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
-		<item name="wcf.acp.option.import"><![CDATA[Restore Options]]></item>
-		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Unable to restore options.]]></item>
-		<item name="wcf.acp.option.import.success"><![CDATA[Options have been restored.]]></item>
-		<item name="wcf.acp.option.import.upload"><![CDATA[Upload Options]]></item>
-		<item name="wcf.acp.option.import.upload.description"><![CDATA[Upload previously downloaded options file.]]></item>
-		<item name="wcf.acp.option.importAndExport"><![CDATA[Save &amp; Restore Options]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-generated content, e.g. sessions, profiles or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator]]></item>
@@ -1329,6 +1322,16 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Rebuilds attachment preview images]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily"><![CDATA[Rebuild Statistics]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[Rebuilds the daily statistics]]></item>
+	</category>
+	
+	<category name="wcf.acp.rescueMode">
+		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>
+		<item name="wcf.acp.rescueMode.application"><![CDATA[Installed Applications]]></item>
+		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Please adjust both domain and path for each application listed below to match the changed settings. The domain must be provided without an explicit protocol such as “http://” or “https://”.]]></item>
+		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Credentials]]></item>
+		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Changes to the configuration require valid credentials of an administrator with the permissions to manage installed applications.]]></item>
+		<item name="wcf.acp.rescueMode.description"><![CDATA[The configured domains and/or paths do not match the address used to access this page. This can happen when moving to a new domain or changing the directory structure. Please use the form below to provide the new values.]]></item>
+		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[This user is not authorized to manage installed applications.]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -1922,6 +1925,9 @@ Errors are:
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
 		
+		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Delete ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Insert ({#$count})]]></item>
+		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} tag{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Set as Synonyms ({#$count})]]></item>
@@ -1938,6 +1944,7 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
 		
+		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}One File{else}{#$count} Files{/if} marked]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}One Tag{else}{#$count} Tags{/if} marked]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}One User{else}{#$count} Users{/if} marked]]></item>
 	</category>
@@ -2022,11 +2029,11 @@ Errors are:
 		<item name="wcf.date.period.today"><![CDATA[Today]]></item>
 		<item name="wcf.date.period.yesterday"><![CDATA[Yesterday]]></item>
 		
-		<!-- variables for dynamic javascript datetime -->
+		<!-- variables for relative datetime -->
 		<item name="wcf.date.relative.now"><![CDATA[A moment ago]]></item>
-		<item name="wcf.date.relative.minutes"><![CDATA[{literal}{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago{/literal}]]></item>
-		<item name="wcf.date.relative.hours"><![CDATA[{literal}{if $hours > 1}{#$hours} hours{else}An hour{/if} ago{/literal}]]></item>
-		<item name="wcf.date.relative.pastDays"><![CDATA[{literal}{if $days > 1}{$day}{else}Yesterday{/if}, {$time}{/literal}]]></item>
+		<item name="wcf.date.relative.minutes"><![CDATA[{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago]]></item>
+		<item name="wcf.date.relative.hours"><![CDATA[{if $hours > 1}{#$hours} hours{else}An hour{/if} ago]]></item>
+		<item name="wcf.date.relative.pastDays"><![CDATA[{if $days > 1}{$day}{else}Yesterday{/if}, {$time}]]></item>
 		
 		<!-- variables for localized date formats -->
 		<item name="wcf.date.hour"><![CDATA[Hour]]></item>
@@ -2207,6 +2214,7 @@ Errors are:
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.fullscreen"><![CDATA[Full Screen Mode]]></item>
 		<item name="wcf.global.button.hide"><![CDATA[Hide]]></item>
+		<item name="wcf.global.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Refresh]]></item>
@@ -2223,14 +2231,20 @@ Errors are:
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation Required]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
-		<item name="wcf.global.error.exception"><![CDATA[<h2>What happened?</h2>
-		<p>An unrecoverable error occured while trying to handle your request. The internal error code is as follows: <code>{$exceptionID}</code></p>
-		<p>Please send this code to the administrator to help him fix the issue.</p>
-		<p>If you are the administrator you can access the full error message inside your Administration Control Panel at “Logs » Errors”. The error code itself is worthless for the support!</p>]]></item>
-		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
+		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">What happened?</p>
+<p class="exceptionText">An error has occured while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
+<p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
+<p class="exceptionText">
+	The error code can be used by an administrator to lookup the full error message in the Administration Control Panel via “Logs » Errors”.
+	In addition the error has been writen to the log file located at <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$logFile}</span></span> and can be accessed with a FTP program or similar.
+</p>
+<p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
+<p class="exceptionText">Notice: The error code was randomly generated and has no use beyond looking up the full message.</p>]]></item>
+		<item name="wcf.global.exception.title"><![CDATA[An error has occured]]></item>
+		<item name="wcf.global.exception.subtitle"><![CDATA[Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
 		<item name="wcf.global.success"><![CDATA[The action has been successfully completed.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>
@@ -2239,7 +2253,7 @@ Errors are:
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Next Page]]></item>
-		<item name="wcf.global.page.pageNavigation"><![CDATA[Navigation]]></item>
+		<item name="wcf.global.page.pagination"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous Page]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.redirect.title"><![CDATA[Redirection]]></item>
@@ -2348,6 +2362,34 @@ Errors are:
 		<item name="wcf.map.useLocationSuggestion"><![CDATA[Use Location]]></item>
 	</category>
 	
+	<category name="wcf.media">
+		<item name="wcf.media.altText"><![CDATA[Alternate Text]]></item>
+		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
+		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
+		<item name="wcf.media.edit"><![CDATA[Edit Media File]]></item>
+		<item name="wcf.media.filename"><![CDATA[Filename]]></item>
+		<item name="wcf.media.filesize"><![CDATA[Filesize]]></item>
+		<item name="wcf.media.imageDimensions"><![CDATA[Dimensions]]></item>
+		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$width}×{#$height}]]></item>
+		<item name="wcf.media.insert"><![CDATA[Insert File]]></item>
+		<item name="wcf.media.insert.imageSize"><![CDATA[Image Size]]></item>
+		<item name="wcf.media.insert.imageSize.large"><![CDATA[Large Thumbnail ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.insert.imageSize.medium"><![CDATA[Medium Thumbnail ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.insert.imageSize.original"><![CDATA[Original Image ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.insert.imageSize.small"><![CDATA[Small Thumbnail ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.isMultilingual"><![CDATA[Enable Multilingualism]]></item>
+		<item name="wcf.media.languageID"><![CDATA[Language]]></item>
+		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>
+		<item name="wcf.media.search.cancel"><![CDATA[Cancel Search]]></item>
+		<item name="wcf.media.search.filetype"><![CDATA[File Types]]></item>
+		<item name="wcf.media.search.filetype.all"><![CDATA[All File Types]]></item>
+		<item name="wcf.media.search.filetype.image"><![CDATA[Images]]></item>
+		<item name="wcf.media.search.filetype.other"><![CDATA[Other]]></item>
+		<item name="wcf.media.search.filetype.text"><![CDATA[Texts]]></item>
+		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
+		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
+	</category>
+	
 	<category name="wcf.message">
 		<item name="wcf.message.autosave.prompt"><![CDATA[Restore saved draft?]]></item>
 		<item name="wcf.message.autosave.prompt.confirm"><![CDATA[Restore draft]]></item>
@@ -2398,6 +2440,12 @@ Errors are:
 		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Editor is already in use, please finish editing before continuing.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[Message is too long, must be below {#$maxTextLength} characters.]]></item>
+		<item name="wcf.message.status.deleted"><![CDATA[Deleted]]></item>
+		<item name="wcf.message.status.disabled"><![CDATA[Disabled]]></item>
+	</category>
+	
+	<category name="wcf.menu">
+		<!-- category for menus and menu items -->
 	</category>
 	
 	<category name="wcf.moderation">
@@ -2483,117 +2531,7 @@ Errors are:
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Requested Page]]></item>
-		<item name="wcf.page.privacyPolicy"><![CDATA[Privacy Policy]]></item>
-		<item name="wcf.page.privacyPolicy.text"><![CDATA[<p>We, the Operators of this Website, provide it as a public service to our users.</p>
-
-<p>Your privacy is important to the us. Our goal is to provide you with a personalized online experience that provides you with the information, resources, and services that are most relevant and helpful to you. This Privacy Policy has been written to describe the conditions under which this web site is being made available to you. The Privacy Policy discusses, among other things, how data obtained during your visit to this web site may be collected and used. We strongly recommend that you read the Privacy Policy carefully. By using this web site, you agree to be bound by the terms of this Privacy Policy. If you do not accept the terms of the Privacy Policy, you are directed to discontinue accessing or otherwise using the web site or any materials obtained from it. If you are dissatisfied with the web site, by all means contact us; otherwise, your only recourse is to disconnect from this site and refrain from visiting the site in the future.</p>
-
-<p>The process of maintaining a web site is an evolving one, and the Operators may decide at some point in the future, without advance notice, to modify the terms of this Privacy Policy. Your use of the web site, or materials obtained from the web site, indicates your assent to the Privacy Policy at the time of such use. The effective Privacy Policy will be posted on the web site, and you should check upon every visit for any changes.</p>
-
-<h2>Sites Covered by this Privacy Policy</h2>
-
-<p>This Privacy Policy applies to all the Operators-maintained web sites, domains, information portals, and registries.</p>
-
-<h2>Children’s Privacy</h2>
-
-<p>The Operators are committed to protecting the privacy needs of children, and we encourage parents and guardians to take an active role in their children’s online activities and interests. The Operators do not intentionally collect information from minors, and the Operators do not target its web site to children.</p>
-
-<h2>Links to Non-Operators Web Sites</h2>
-
-<p>The Operators’s web sites may provide links to third-party web sites for the convenience of our users. If you access those links, you will leave the Operators’s web site. the Operators do not control these third-party websites and cannot represent that their policies and practices will be consistent with this Privacy Policy. For example, other web sites may collect or use personal information about you in a manner different from that described in this document. Therefore, you should use other web sites with caution, and you do so at your own risk. We encourage you to review the privacy policy of any web site before submitting personal information.</p>
-
-<h2>Types of Information We Collect</h2>
-
-<h3>Non-Personal Information</h3>
-
-<p>Non-personal information is data about usage and service operation that is not directly associated with a specific personal identity. The Operators may collect and analyze non-personal information to evaluate how visitors use the Operators’s web sites.</p>
-
-<h3>Aggregate Information</h3>
-
-<p>The Operators may gather aggregate information, which refers to information your computer automatically provides to us and that cannot be tied back to you as a specific individual. Examples include referral data (the web sites you visited just before and just after our site), the pages viewed, time spent at our Web site, and Internet Protocol (IP) addresses. An IP address is a number that is automatically assigned to your computer whenever you access the Internet. For example, when you request a page from one of our sites, our servers log your IP address to create aggregate reports on user demographics and traffic patterns and for purposes of system administration.</p>
-
-<h3>Log Files</h3>
-
-<p>Every time you request or download a file from the web site, the Operators may store data about these events and your IP address in a log file. The Operators may use this information to analyze trends, administer the web site, track users’ movements, and gather broad demographic information for aggregate use or for other business purposes.</p>
-
-<h3>Cookies</h3>
-
-<p>Our site may use a feature of your browser to set a “cookie” on your computer. Cookies are small packets of information that a web site’s computer stores on your computer. The Operators’s web sites can then read the cookies whenever you visit our site. We may use cookies in a number of ways, such as to save your password so you don’t have to re-enter it each time you visit our site, to deliver content specific to your interests and to track the pages you’ve visited. These cookies allow us to use the information we collect to customize your experience so that your visit to our site is as relevant and as valuable to you as possible.</p>
-
-<p>Most browser software can be set up to deal with cookies. You may modify your browser preference to provide you with choices relating to cookies. You have the choice to accept all cookies, to be notified when a cookie is set or to reject all cookies. If you choose to reject cookies, certain of the functions and conveniences of our web site may not work properly, and you may be unable to use those of the Operators’s services that require registration in order to participate, or you will have to re-register each time you visit our site. Most browsers offer instructions on how to reset the browser to reject cookies in the “Help” section of the toolbar. We do not link non-personal information from cookies to personally identifiable information without your permission.</p>
-
-<h3>Personal Information</h3>
-
-<p>Personal information is information that is associated with your name or personal identity. The Operators use personal information to better understand your needs and interests and to provide you with better service. On some of the Operators web pages, you may be able to request information, subscribe to mailing lists, participate in online discussions, collaborate on documents, provide feedback, submit information into registries, register for events, apply for membership, or join technical committees or working groups. The types of personal information you provide to us on these pages may include name, address, phone number, e-mail address, user IDs, passwords, billing information, or credit card information.</p>
-
-<h3>Members-Only Web Sites</h3>
-
-<p>Information you provide on Operators’s membership applications is used to create a member profile, and some information may be shared with other of the Operators’s individual member representatives and organizations. Member contact information may be provided to other members on a secure web site to encourage and facilitate collaboration, research, and the free exchange of information among the Operators’s members, but we expressly prohibit members from using member contact information to send unsolicited commercial correspondence. The Operators’s members may be automatically added to the Operators’s mailing lists. From time to time, member information may be shared with event organizers and/or other organizations that provide additional benefits to the Operators’s members. By providing us with your personal information on the membership application, you expressly consent to our storing, processing, and distributing your information for these purposes.</p>
-
-<h2>How We Use Your Information</h2>
-
-<p>The Operators may use non-personal data that is aggregated for reporting about the Operators’s web site usability, performance, and effectiveness. It may be used to improve the experience, usability, and content of the site.</p>
-
-<p>The Operators may use personal information to provide services that support the activities of the Operators’s members and their collaboration on the Operators’s standards and projects. When accessing the Operators’s members-only web pages, your personal user information may be tracked by the Operators in order to support collaboration, ensure authorized access, and enable communication between members.</p>
-
-<p>Credit card information may be collected to facilitate membership applications; or if you purchase a product or service from our website, such information will not be kept longer than necessary for providing the services requested. Credit card numbers are used only for processing payment and are not used for other purposes. Payment processing services may be provided by a third-party payment service, and a management company external to the Operators may provide support for the financial activities of the Operators. the Operators may share your personal information with its partners to facilitate these transactions.</p>
-
-<h2>Information Sharing</h2>
-
-<p>The Operators does not sell, rent, or lease any individual’s personal information or lists of email addresses to anyone for marketing purposes, and we take commercially reasonable steps to maintain the security of this information. However, the Operators reserve the right to supply any such information to any organization into which the Operators may merge in the future or to which it may make any transfer in order to enable a third party to continue part or all of its mission. We also reserve the right to release personal information to protect our systems or business, when we reasonably believe you to be in violation of our Terms of Use or if we reasonably believe you to have initiated or participated in any illegal activity. In addition, please be aware that in certain circumstances, the Operators may be obligated to release your personal information pursuant to judicial or other government subpoenas, warrants, or other orders.</p>
-
-<p>In keeping with our open process, the Operators may maintain publicly accessible archives for the majority of our activities. For example, posting an email to any of the Operators’s-hosted public mail lists or discussion forums, subscribing to one of our newsletters or registering for one of our public meetings may result in your email address becoming part of the publicly accessible archives.</p>
-
-<p>On some sites, anonymous users are allowed to post content and/or participate in forum discussions. In such a case, since no user name can be associated with such a user, the IP address number of a user is used as an identifier. When posting content or messages to a Operators site anonymously, your IP address may be revealed to the public.</p>
-
-<p>If you are a registered member of an Operators's website or email list, you should be aware that some items of your personal information may be visible to other members and to the public. The Operators’s member databases may retain information about your name, e-mail address, company affiliation (if an organizational member), and such other personal address and identifying data as you choose to supply. That data may be visible to other of the Operators’s members and to the public. Your name, e-mail address, and other information you may supply also may be associated in the Operators’s publicly accessible records with the Operators’s various committees, working groups, and similar activities that you join, in various places, including: (i) the permanently-posted attendance and membership records of those activities; (ii) documents generated by the activity, which may be permanently archived; and, (iii) along with message content, in the permanent archives of the Operators’s e-mail lists, which also may be public.</p>
-
-<p>Please remember that any information (including personal information) that you disclose in public areas of our web site, such as forums, message boards, and news groups, becomes public information that others may collect, circulate, and use. Because we cannot and do not control the acts of others, you should exercise caution when deciding to disclose information about yourself or others in public forums such as these.</p>
-
-<p>Given the international scope of the Operators websites, personal information may be visible to persons outside your country of residence, including to persons in countries that your own country’s privacy laws and regulations deem deficient in ensuring an adequate level of protection for such information. If you are unsure whether this Privacy Policy is in conflict with applicable local rules, you should not submit your information. If you are located within the European Union, you should note that your information will be transferred to the United States, which is deemed by the European Union to have inadequate data protection. Nevertheless, in accordance with local laws implementing European Union Directive 95/46/EC of 24 October 1995 (“EU Privacy Directive”) on the protection of individuals with regard to the processing of personal data and on the free movement of such data, individuals located in countries outside of the United States of America who submit personal information do thereby consent to the general use of such information as provided in this Privacy Policy and to its transfer to and/or storage in the United States of America.</p>
-
-<p>If you do not want your personal information collected and used by the Operators, please do not visit the Operators’s web site or apply for membership of any of the Operators' websites or email lists.</p>
-
-<h2>Access to and Accuracy of Member Information</h2>
-
-<p>The Operators are committed to keeping the personal information of our members accurate. All the information you have submitted to us can be verified and changed. In order to do this, please email us a request. We may provide members with online access to their own personal profiles, enabling them to update or delete information at any time. To protect our members’ privacy and security, we also may take reasonable steps to verify identity, such as a user ID and password, before granting access to modify personal profile data. Certain areas of the Operators’s web sites may limit access to specific individuals through the use of passwords or other personal identifiers; a password prompt is your indication that a members-only resource is being accessed.</p>
-
-<h2>Security</h2>
-
-<p>The Operators make every effort to protect personal information by users of the web site, including using firewalls and other security measures on its servers. No server, however, is 100% secure, and you should take this into account when submitting personal or confidential information about yourself on any web site, including this one. Much of the personal information is used in conjunction with member services such as collaboration and discussion, so some types of personal information such as your name, company affiliation, and email address will be visible to other the Operators’s members and to the public. The Operators assume no liability for the interception, alteration, or misuse of the information you provide. You alone are responsible for maintaining the secrecy of your personal information. Please use care when use access this web site and provide personal information.</p>
-
-<h2>Opting Out</h2>
-
-<p>From time to time the Operators may email you electronic newsletters, announcements, surveys or other information. If you prefer not to receive any or all of these communications, you may opt out by following the directions provided within the electronic newsletters and announcements.</p>
-
-<p>If you have questions regarding this privacy policy, please contact us.</p>
-
-<p><small><em>Source: <a rel="nofollow" href="http://forum-template.wikidot.com/legal:privacy-policy" target="_blank">forum-template.wikidot.com</a></em></small></p>
-]]></item>
-		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our use of cookies. <a href="{link controller='CookiePolicy'}{/link}">More details</a>]]></item>
-		<item name="wcf.page.cookiePolicy"><![CDATA[Cookie Policy]]></item>
-		<item name="wcf.page.cookiePolicy.text"><![CDATA[<p>This website uses cookies required to operate and use this site. Below you will find an explanation on our cookie usage.</p>
-		
-<h2>What are cookies</h2>
-<p>Cookies are small text files which a website may put on your computer or mobile device when you first visit a site or page. The cookie will help the website, or another website, to recognise your device the next time you visit. There are many functions cookies serve, for example they can help us to remember your username and preferences.</p>
-
-<h2>What do we use cookies for</h2>
-<p>We’re using cookies for the following purposes:</p>
-<ul>
-<li>Login: Once you login to our website, a cookie is set containing your encrypted credentials, required to recognize you between page visits. You can disable this cookie by unchecking “Remember me” in the login form.</li>
-<li>Session: Upon first visit of our website, the system will create a new unique session for you which will be saved using a cookie on your computer. Sessions are required to recognize users between page accesses. It is a temporary cookie which will be deleted once you close your internet browser.</li>
-<li>Third-Party Services: Displayed ads or sharing content through social networks or comparable actions might cause a cookie created by them.</li>
-</ul>
-
-<h2>How to disable or delete cookies</h2>
-<p>Your internet browser offers specialized options to manage and remove cookies. They offer settings to reject many or all cookies. Please refer to the instructions for your internet browser from the list below.</p>
-<ul>
-<li><a href="https://support.google.com/chrome/answer/95647?hl=en" class="externalURL" rel="nofollow">Google Chrome</a></li>
-<li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" class="externalURL" rel="nofollow">Mozilla Firefox</a></li>
-<li><a href="http://help.opera.com/Windows/12.00/en/cookies.html" class="externalURL" rel="nofollow">Opera</a></li>
-<li><a href="https://support.apple.com/kb/ph17191?locale=en_US" class="externalURL" rel="nofollow">Safari</a></li>
-<li><a href="http://windows.microsoft.com/en-US/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
-</ul>]]></item>
+		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our use of cookies. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">More details</a>]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.other"><![CDATA[Other Pages]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.user"><![CDATA[Users]]></item>
@@ -2624,7 +2562,6 @@ Errors are:
 		<item name="wcf.page.com.woltlab.wcf.ModerationListPage"><![CDATA[Moderation]]></item>
 		<item name="wcf.page.com.woltlab.wcf.NotificationListPage"><![CDATA[Notifications]]></item>
 		<item name="wcf.page.com.woltlab.wcf.PaidSubscriptionListPage"><![CDATA[Paid Subscriptions]]></item>
-		<item name="wcf.page.com.woltlab.wcf.PrivacyPolicyPage"><![CDATA[Privacy Policy]]></item>
 		<item name="wcf.page.com.woltlab.wcf.RecentActivityListPage"><![CDATA[Recent Activities]]></item>
 		<item name="wcf.page.com.woltlab.wcf.SearchResultPage"><![CDATA[Search Results]]></item>
 		<item name="wcf.page.com.woltlab.wcf.TaggedPage"><![CDATA[Content With Particular Tag]]></item>
@@ -3076,7 +3013,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login.error.access_denied"><![CDATA[Access to your GitHub account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.github.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-github"></span>&nbsp;GitHub.]]></item>
+		<item name="wcf.user.3rdparty.github.register"><![CDATA[You’re creating an account through <span class="icon icon16 fa-github"></span>&nbsp;GitHub.]]></item>
 		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Connect with your GitHub account{if $__wcf->session->getVar('__githubUsername')} “<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__githubUsername')}</a>”{/if}]]></item>
 		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[Your user account has been connected with GitHub.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[Your GitHub account is already connected to a different user.]]></item>
@@ -3085,7 +3022,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login.error.denied"><![CDATA[Access to your Twitter account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-twitter"></span>&nbsp;Twitter.]]></item>
+		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You’re creating an account through <span class="icon icon16 fa-twitter"></span>&nbsp;Twitter.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Connect with your Twitter account{if $__wcf->session->getVar('__twitterUsername')} “<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>”{/if}]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[Your user account has been connected with Twitter.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[Your Twitter account is already connected to a different user.]]></item>
@@ -3094,7 +3031,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login.error.access_denied"><![CDATA[Access to your Facebook account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-facebook"></span>&nbsp;Facebook.]]></item>
+		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[You’re creating an account through <span class="icon icon16 fa-facebook"></span>&nbsp;Facebook.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Connect with your Facebook account{if $__wcf->session->getVar('__facebookUsername')} “{$__wcf->session->getVar('__facebookUsername')}”{/if}]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.success"><![CDATA[Your user account has been connected with Facebook.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[Your Facebook account is already connected to a different user.]]></item>
@@ -3103,7 +3040,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login.error.access_denied"><![CDATA[Access to your Google account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.google.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-google-plus"></span>&nbsp;Google.]]></item>
+		<item name="wcf.user.3rdparty.google.register"><![CDATA[You’re creating an account through <span class="icon icon16 fa-google-plus"></span>&nbsp;Google.]]></item>
 		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Connect with your Google account{if $__wcf->session->getVar('__googleUsername')} “{$__wcf->session->getVar('__googleUsername')}”{/if}]]></item>
 		<item name="wcf.user.3rdparty.google.connect.success"><![CDATA[Your user account has been connected with Google.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Your Google account is already connected to a different user.]]></item>

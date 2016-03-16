@@ -59,9 +59,6 @@
 		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Anwendungen]]></item>
-		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
-		<item name="wcf.acp.application.setAsPrimary"><![CDATA[Als primäre Anwendung festlegen]]></item>
-		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Wollen Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -277,20 +274,20 @@
 		<item name="wcf.acp.group.group5"><![CDATA[Moderatoren]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Mitglieder]]></item>
-		<item name="wcf.acp.group.option.admin.display.canManagePageMenu"><![CDATA[Kann Seitenmenü verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.content.cms.canManageMenu"><![CDATA[Kann Seitenmenü verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Kann Administrationsoberfläche betreten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Mitglieder dieser Benutzergruppe können die Administrationsoberfläche betreten und dort abhängig von den weiteren Zugriffsrechten verschiedene Aktionen durchführen. Diese Option muss aktiviert sein, wenn diesen Benutzern andere administrative Funktionen erlaubt werden sollen.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Kann versteckte Profilinformationen sehen]]></item>
 		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Kann Sprachen verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Kann allgemeine Einstellungen vornehmen]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canEditOption"><![CDATA[Kann allgemeine Einstellungen vornehmen]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Kann deaktivierte Stile benutzen]]></item>
-		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
-		<item name="wcf.acp.group.option.admin.system.canManageApplication"><![CDATA[Kann Anwendungen verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.system.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canUninstallPackage"><![CDATA[Kann Pakete deinstallieren]]></item>
-		<item name="wcf.acp.group.option.admin.system.package.canUpdatePackage"><![CDATA[Kann Pakete aktualisieren]]></item>
+		<item name="wcf.acp.group.option.admin.management.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Kann Anwendungen verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Kann Pakete deinstallieren]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Kann Pakete aktualisieren]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Zugängliche Benutzergruppen]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Mitglieder dieser Benutzergruppe haben auf diese Gruppen Zugriff. Zusätzlich muss angegeben werden, ob z.B. die Benutzergruppe bearbeitet werden darf.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Kann neue Benutzergruppen erstellen]]></item>
@@ -304,13 +301,13 @@
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Kann E-Mails an Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Kann Benutzer suchen]]></item>
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
-		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Darstellung]]></item>
-		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Seitenmenü]]></item>
+		<item name="wcf.acp.group.option.category.admin.customization"><![CDATA[Anpassung]]></item>
+		<item name="wcf.acp.group.option.category.admin.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Stile]]></item>
-		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Pakete]]></item>
+		<item name="wcf.acp.group.option.category.admin.configuration"><![CDATA[Konfiguration]]></item>
+		<item name="wcf.acp.group.option.category.admin.configuration.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Benutzer]]></item>
@@ -328,9 +325,9 @@
 		<item name="wcf.acp.group.option.category.admin.template"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.group.option.admin.template.canManageTemplate"><![CDATA[Kann Templates verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Kann Stile verwalten]]></item>
-		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Inhalte]]></item>
+		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.group.option.admin.content.canBulkRevertContentChanges"><![CDATA[Kann Änderungen der letzten Tage zurücksetzen]]></item>
-		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.group.option.category.admin.application"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Kann Benutzerprofilfelder verwalten]]></item>
@@ -407,8 +404,8 @@
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Kann Tags verwalten]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximale Signaturlänge]]></item>
-		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Kann Daten importieren]]></item>
-		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.group.option.admin.management.canImportData"><![CDATA[Kann Daten importieren]]></item>
+		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Beschreibung der Benutzergruppe]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Benutzergruppe wählen]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
@@ -551,18 +548,19 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Wartung]]></item>
 		<item name="wcf.acp.menu.link.maintenance.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.application.management"><![CDATA[Anwendungen verwalten]]></item>
-		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.menu.link.application"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
-		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Aufgabe hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Aufgaben auflisten]]></item>
+		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.language"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.menu.link.language.import"><![CDATA[Sprache importieren]]></item>
 		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Texte verwalten]]></item>
-		<item name="wcf.acp.menu.link.language.list"><![CDATA[Sprachen auflisten]]></item>
+		<item name="wcf.acp.menu.link.language.list"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
 		<item name="wcf.acp.menu.link.language.server.list"><![CDATA[Sprach-Update-Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
@@ -572,85 +570,89 @@
 		<item name="wcf.acp.menu.link.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-Mail an Gruppenmitglieder]]></item>
-		<item name="wcf.acp.menu.link.group.list"><![CDATA[Benutzergruppen auflisten]]></item>
-		<item name="wcf.acp.menu.link.display"><![CDATA[Darstellung]]></item>
+		<item name="wcf.acp.menu.link.group.list"><![CDATA[Benutzergruppen]]></item>
+		<item name="wcf.acp.menu.link.customization"><![CDATA[Anpassung]]></item>
 		<item name="wcf.acp.menu.link.option"><![CDATA[Optionen]]></item>
-		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Sichern &amp; Wiederherstellen]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
-		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server auflisten]]></item>
-		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete auflisten]]></item>
+		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Paket-Server]]></item>
+		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Seitenmenü]]></item>
 		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
+		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menüpunkte]]></item>
 		<item name="wcf.acp.menu.link.style"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Stil hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Stil importieren]]></item>
-		<item name="wcf.acp.menu.link.style.list"><![CDATA[Stile auflisten]]></item>
-		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.menu.link.style.list"><![CDATA[Stile]]></item>
+		<item name="wcf.acp.menu.link.configuration"><![CDATA[Konfiguration]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Benutzer hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.user.list"><![CDATA[Benutzer auflisten]]></item>
+		<item name="wcf.acp.menu.link.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[E-Mail an alle Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
-		<item name="wcf.acp.menu.link.user.option"><![CDATA[Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Benutzerprofilfelder auflisten]]></item>
-		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Benutzerprofilfeld hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Benutzerprofilfeld-Kategorien auflisten]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.user.option.setDefaults"><![CDATA[Benutzerprofil-Einstellungen verwalten]]></item>
+		<item name="wcf.acp.menu.link.user.option"><![CDATA[Profilfelder]]></item>
+		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Profilfelder]]></item>
+		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Profilfeld hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Profilfeld-Kategorien]]></item>
+		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Profilfeld-Kategorie hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[Benutzerprofil-Einstellungen]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
-		<item name="wcf.acp.menu.link.template.list"><![CDATA[Templates auflisten]]></item>
+		<item name="wcf.acp.menu.link.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Template hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[Templategruppen auflisten]]></item>
+		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[Templategruppen]]></item>
 		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Templategruppe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.menu.link.attachment.list"><![CDATA[Dateianhänge verwalten]]></item>
 		<item name="wcf.acp.menu.link.bbcode"><![CDATA[BBCodes]]></item>
 		<item name="wcf.acp.menu.link.bbcode.add"><![CDATA[BBCode hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[BBCodes auflisten]]></item>
+		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[BBCodes]]></item>
 		<item name="wcf.acp.menu.link.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[Medienanbieter auflisten]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smileys auflisten]]></item>
+		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley-Kategorien auflisten]]></item>
+		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Seiten konfigurieren]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Aktivitätspunkte]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[Benutzerränge]]></item>
-		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[Benutzerränge auflisten]]></item>
+		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.menu.link.user.rank.add"><![CDATA[Benutzerrang hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.menu.link.label.add"><![CDATA[Label hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.label.list"><![CDATA[Labels auflisten]]></item>
+		<item name="wcf.acp.menu.link.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.menu.link.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[Labelgruppen auflisten]]></item>
+		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[Labelgruppen]]></item>
 		<item name="wcf.acp.menu.link.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Tag hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags auflisten]]></item>
+		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Datenimport]]></item>
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
-		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistiken]]></item>
+		<item name="wcf.acp.menu.link.stat"><![CDATA[Statistiken]]></item>
+		<item name="wcf.acp.menu.link.stat.list"><![CDATA[Statistiken]]></item>
 		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatische Zuordnungen]]></item>
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.notice.list"><![CDATA[Hinweise auflisten]]></item>
+		<item name="wcf.acp.menu.link.notice.list"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.menu.link.ad"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.menu.link.ad.add"><![CDATA[Werbung hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.ad.list"><![CDATA[Werbung auflisten]]></item>
+		<item name="wcf.acp.menu.link.ad.list"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Frage hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Fragen auflisten]]></item>
+		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
 		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Fehlgeschlagene Anmeldungen]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription"><![CDATA[Bezahlte Mitgliedschaften]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[Mitgliedschaften auflisten]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[Aktive Mitgliedschaften auflisten]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[Transaktionen auflisten]]></item>
-		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
+		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Benachrichtigungen]]></item>
+		<item name="wcf.acp.menu.link.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.menu.link.cms.page.list"><![CDATA[Seiten]]></item>
+		<item name="wcf.acp.menu.link.cms.menu.list"><![CDATA[Menüs]]></item>
+		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxen]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -760,9 +762,6 @@
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[Der Controller „{$urlControllerReplacementError}“ ist unbekannt.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
-		<item name="wcf.acp.option.export"><![CDATA[Optionen sichern]]></item>
-		<item name="wcf.acp.option.export.download"><![CDATA[Sicherung der Optionen herunterladen]]></item>
-		<item name="wcf.acp.option.export.download.description"><![CDATA[Laden Sie eine Sicherung der Optionen auf Ihren lokalen Rechner herunter.]]></item>
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Gzip-Komprimierung aktivieren]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Seitencaching im Client-Browser verhindern]]></item>
@@ -773,12 +772,6 @@
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken, wird z.B. für die Skalierung von hochgeladenen Bildern verwendet. „ImageMagick“ ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
-		<item name="wcf.acp.option.import"><![CDATA[Optionen importieren]]></item>
-		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Die Optionen konnten nicht erfolgreich importiert werden.]]></item>
-		<item name="wcf.acp.option.import.success"><![CDATA[Die Optionen wurden erfolgreich importiert.]]></item>
-		<item name="wcf.acp.option.import.upload"><![CDATA[Sicherung der Optionen vom lokalen Computer hochladen]]></item>
-		<item name="wcf.acp.option.import.upload.description"><![CDATA[Wählen Sie eine Sicherung der Optionen von Ihrem lokalen Rechner aus.]]></item>
-		<item name="wcf.acp.option.importAndExport"><![CDATA[Optionen sichern &amp; wiederherstellen]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Speicherung von IP-Adressen]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die Speicherung von IP-Adressen der Benutzer in z.B. Sitzungen, Benutzerprofilen, Forenbeiträgen.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
@@ -1330,6 +1323,16 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily"><![CDATA[Statistiken aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[Erzeugt die täglichen Statistiken neu]]></item>
+	</category>
+	
+	<category name="wcf.acp.rescueMode">
+		<item name="wcf.acp.rescueMode"><![CDATA[Systemwiederherstellung]]></item>
+		<item name="wcf.acp.rescueMode.application"><![CDATA[Installierte Anwendungen]]></item>
+		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Bitte passen Sie sowohl die Domain als auch den Pfad jeder aufgeführten Anwendung an die geänderten Einstellung an, die Angabe der Domain erfolgt ohne Protokoll („http://“ bzw. „https://“).]]></item>
+		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Zugangsdaten]]></item>
+		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Die Änderung der Konfiguration erfordert gültige Zugangsdaten für ein Administrator-Konto mit der Berechtigung die installierten Anwendungen zu verwalten.]]></item>
+		<item name="wcf.acp.rescueMode.description"><![CDATA[Die eingestellte Domains und/oder Pfade stimmen nicht mit der für den Aufruf verwendeten Adresse überein; Dies kann in Folge eines Umzugs auf eine andere Domain oder Veränderung der Verzeichnisstruktur auftreten. Mit Hilfe des unten stehenden Formulars können Sie die Angaben schnell und einfach anpassen.]]></item>
+		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[Diese Benutzer ist nicht berechtigt die Konfiguration zu verändern.]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -2023,11 +2026,11 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.period.today"><![CDATA[Heute]]></item>
 		<item name="wcf.date.period.yesterday"><![CDATA[Gestern]]></item>
 		
-		<!-- variables for dynamic javascript datetime -->
+		<!-- variables for relative datetime -->
 		<item name="wcf.date.relative.now"><![CDATA[Vor einem Moment]]></item>
-		<item name="wcf.date.relative.minutes"><![CDATA[{literal}Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/literal}]]></item>
-		<item name="wcf.date.relative.hours"><![CDATA[{literal}Vor {if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/literal}]]></item>
-		<item name="wcf.date.relative.pastDays"><![CDATA[{literal}{if $days > 1}{$day}{else}Gestern{/if}, {$time}{/literal}]]></item>
+		<item name="wcf.date.relative.minutes"><![CDATA[Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}]]></item>
+		<item name="wcf.date.relative.hours"><![CDATA[Vor {if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}]]></item>
+		<item name="wcf.date.relative.pastDays"><![CDATA[{if $days > 1}{$day}{else}Gestern{/if}, {$time}]]></item>
 		
 		<!-- variables for localized date formats -->
 		<item name="wcf.date.hour"><![CDATA[Stunde]]></item>
@@ -2224,14 +2227,21 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.confirmation.title"><![CDATA[Bestätigung erforderlich]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.description"><![CDATA[Beschreibung]]></item>
-		<item name="wcf.global.error.exception"><![CDATA[<h2>Was ist passiert?</h2>
-		<p>Ein nicht zu korrigierender Fehler ist bei der Verarbeitung Ihrer Anfrage aufgetreten. Der interne Fehlercode lautet: <code>{$exceptionID}</code></p>
-		<p>Leiten Sie diesen Code an den Administrator weiter, um ihm bei der Behebung zu helfen.</p>
-		<p>Wenn Sie der Administrator sind, dann können Sie die vollständige Fehlermeldung in der Administrationsoberfläche unter „Protokoll » Fehler“ einsehen. Der Fehlercode selbst ist für den Support wertlos!</p>]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt. Sie besitzen nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Keine Antwort vom Server erhalten, Anfrage wurde abgebrochen.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
+		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">Was ist passiert?</p>
+<p class="exceptionText">Leider ist bei der Verarbeitung zu einem Fehler gekommen und die Ausführung wurde abgebrochen. Falls möglich leiten Sie bitte den oben stehenden Fehlercode an den Administrator weiter.</p>
+<p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
+<p class="exceptionText">
+	Administratoren können die vollständige Fehlermeldung mit Hilfe dieses Codes in der Administrationsoberfläche unter „Protokoll » Fehler“ einsehen.
+	Zusätzlich wurden die Informationen in die Protokolldatei <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$logFile}</span></span> geschrieben und können beispielsweise mit Hilfe eines FTP-Programms abgerufen werden.
+</p>
+<p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
+<p class="exceptionText">Hinweis: Der Fehlercode wird zufällig generiert und erlaubt keinen Rückschluss auf die Ursache und ist daher für Dritte nutzlos.</p>]]></item>
+		<item name="wcf.global.exception.title"><![CDATA[Ein Fehler ist aufgetreten]]></item>
+		<item name="wcf.global.exception.subtitle"><![CDATA[Interner Fehlercode: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
 		<item name="wcf.global.success"><![CDATA[Die Aktion wurde erfolgreich ausgeführt.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[Der Eintrag wurde gespeichert.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Ihre Änderungen wurden gespeichert.]]></item>
@@ -2240,7 +2250,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
-		<item name="wcf.global.page.pageNavigation"><![CDATA[Navigation]]></item>
+		<item name="wcf.global.page.pagination"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Vorherige Seite]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.redirect.title"><![CDATA[Weiterleitung]]></item>
@@ -2400,6 +2410,12 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Ihre Nachricht enthält die folgenden BBCodes, die Sie nicht verwenden dürfen: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Der Editor ist bereits aktiv, beenden Sie die Bearbeitung bevor Sie fortfahren.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[Ihre Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
+		<item name="wcf.message.status.deleted"><![CDATA[Gelöscht]]></item>
+		<item name="wcf.message.status.disabled"><![CDATA[Deaktiviert]]></item>
+	</category>
+	
+	<category name="wcf.menu">
+		<!-- category for menus and menu items -->
 	</category>
 	
 	<category name="wcf.moderation">
@@ -2485,118 +2501,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[Benutzerkonto]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Website nutzen zu können, muss JavaScript aktiviert sein.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Aufgerufene Seite]]></item>
-		<item name="wcf.page.privacyPolicy"><![CDATA[Datenschutzerklärung]]></item>
-		<item name="wcf.page.privacyPolicy.text"><![CDATA[<h2>Datenschutz</h2>
-    <p>Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, 
-      Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.   
-    </p>
-    <p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. 
-      bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. 
-      Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht 
-      möglich. </p>
-    <p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten 
-      durch Dritte zur Übersendung von nicht ausdrücklich angeforderter 
-      Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. 
-      Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte 
-      im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, 
-      vor.</p>
-<h2>Datenschutzerklärung für die Nutzung von Facebook-Plugins
-		 (Like-Button)</h2>
-		 <p>Auf unseren Seiten sind Plugins des sozialen Netzwerks Facebook
-		 (Facebook Inc., 1601 Willow Road, Menlo Park, California, 94025, USA) integriert.
-		 Die Facebook-Plugins erkennen Sie an dem Facebook-Logo oder
-		 dem "Like-Button" ("Gefällt mir") auf unserer Seite. Eine Übersicht
-		 über die Facebook-Plugins finden Sie hier:
-		 <a href="http://developers.facebook.com/docs/plugins/" 
-		 target="_blank">http://developers.facebook.com/docs/plugins/</a>.<br />
-		 Wenn Sie unsere Seiten
-		 besuchen, wird über das Plugin eine direkte Verbindung zwischen Ihrem
-		 Browser und dem Facebook-Server hergestellt. Facebook erhält dadurch
-		 die Information, dass Sie mit Ihrer IP-Adresse unsere Seite
-		 besucht haben. Wenn Sie den Facebook "Like-Button" anklicken während
-		 Sie in Ihrem Facebook-Account eingeloggt sind, können Sie die Inhalte
-		 unserer Seiten auf Ihrem Facebook-Profil verlinken. Dadurch kann
-		 Facebook den Besuch unserer Seiten Ihrem Benutzerkonto zuordnen. Wir
-		 weisen darauf hin, dass wir als Anbieter der Seiten keine Kenntnis vom
-		 Inhalt der übermittelten Daten sowie deren Nutzung durch Facebook
-		 erhalten. Weitere Informationen hierzu finden Sie in der
-		 Datenschutzerklärung von facebook unter
-		 <a href="http://de-de.facebook.com/policy.php" target="_blank">
-		 http://de-de.facebook.com/policy.php</a></p>
-     <p>Wenn Sie nicht wünschen, dass Facebook den Besuch unserer Seiten Ihrem 
-     Facebook-Nutzerkonto zuordnen kann, loggen Sie sich bitte aus Ihrem
-     Facebook-Benutzerkonto aus.</p>
-<h2>Datenschutzerklärung für die Nutzung von Google +1</h2>
-		 <p><i>Erfassung und Weitergabe von Informationen:</i><br />
-     Mithilfe der Google +1-Schaltfläche können Sie Informationen weltweit
-     veröffentlichen. Über die Google +1-Schaltfläche erhalten Sie und andere
-     Nutzer personalisierte Inhalte von Google und unseren Partnern. Google
-     speichert sowohl die Information, dass Sie für einen Inhalt +1 gegeben
-     haben, als auch Informationen über die Seite, die Sie beim Klicken auf
-     +1 angesehen haben. Ihre +1 können als Hinweise zusammen mit Ihrem
-     Profilnamen und Ihrem Foto in Google-Diensten, wie etwa in
-     Suchergebnissen oder in Ihrem Google-Profil, oder an anderen Stellen auf
-     Websites und Anzeigen im Internet eingeblendet werden.<br />
-     Google zeichnet Informationen über Ihre +1-Aktivitäten auf, um die 
-     Google-Dienste für Sie und andere zu verbessern. Um die Google +1-Schaltfläche 
-     verwenden zu können, benötigen Sie ein weltweit 
-     sichtbares, öffentliches Google-Profil, das zumindest den für das 
-     Profil gewählten Namen enthalten muss. Dieser Name wird in allen 
-     Google-Diensten verwendet. In manchen Fällen kann dieser Name auch 
-     einen anderen Namen ersetzen, den Sie beim Teilen von Inhalten über 
-     Ihr Google-Konto verwendet haben. Die Identität Ihres Google-Profils 
-     kann Nutzern angezeigt werden, die Ihre E-Mail-Adresse kennen oder 
-     über andere identifizierende Informationen von Ihnen verfügen.<br />
-     <br />
-     <i>Verwendung der erfassten Informationen:</i><br />
-     Neben den oben erläuterten Verwendungszwecken werden die von Ihnen 
-     bereitgestellten Informationen gemäß den geltenden 
-     Google-Datenschutzbestimmungen genutzt. Google veröffentlicht 
-     möglicherweise zusammengefasste Statistiken über die +1-Aktivitäten 
-     der Nutzer bzw. gibt diese an Nutzer und Partner weiter, wie etwa
-     Publisher, Inserenten oder verbundene Websites. </p>
-<h2>Datenschutzerklärung für die Nutzung von Twitter</h2>
-		 <p>Auf unseren Seiten sind Funktionen des Dienstes Twitter eingebunden.
-		 Diese Funktionen werden angeboten durch die Twitter Inc., Twitter, Inc. 
-		 1355 Market St, Suite 900, San Francisco, CA 94103, USA. Durch das Benutzen
-		 von Twitter und der Funktion "Re-Tweet" werden die von Ihnen
-		 besuchten Websites mit Ihrem Twitter-Account verknüpft und anderen
-		 Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter übertragen.</p>
-     <p>Wir weisen darauf hin, dass wir als Anbieter der Seiten keine
-     Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch
-     Twitter erhalten. Weitere Informationen hierzu finden Sie in der
-     Datenschutzerklärung von Twitter unter
-     <a href="http://twitter.com/privacy" target="_blank">http://twitter.com/privacy</a>.</p>
-     <p>Ihre Datenschutzeinstellungen bei Twitter können Sie in den
-     Konto-Einstellungen unter
-     <a href="http://twitter.com/account/settings" target="_blank">http://twitter.com/account/settings</a> ändern.</p>
-
-<p><small><em>Quellenangaben: <a rel="nofollow" href="http://www.e-recht24.de/muster-datenschutzerklaerung.html" target="_blank">eRecht24</a>, <a rel="nofollow" href="http://www.e-recht24.de/artikel/datenschutz/6590-facebook-like-button-datenschutz-disclaimer.html" target="_blank">Facebook-Disclaimer von eRecht24</a>, <a rel="nofollow" href="http://www.google.com/intl/de/+/policy/+1button.html" target="_blank">Google +1 Bedingungen</a>, <a rel="nofollow" href="http://twitter.com/privacy" target="_blank">Datenschutzerklärung Twitter</a></em></small></p>]]></item>
-		
-		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{link controller='CookiePolicy'}{/link}">Weitere Informationen</a>]]></item>
-		<item name="wcf.page.cookiePolicy"><![CDATA[Einsatz von Cookies]]></item>
-		<item name="wcf.page.cookiePolicy.text"><![CDATA[<p>Wie viele Internetseiten nutzt auch diese Seite Cookies. An dieser Stelle wird erklärt was Cookies sind und wie sie genutzt werden.</p>
-		
-<h2>Was sind Cookies</h2>
-<p>Cookies sind kleine Dateien, die beim Aufruf von Internetseiten durch den Internet Browser auf Ihrem lokalen Rechner gespeichert werden. In den Dateien speichern Internetseiten verschiedene Informationen, um die Nutzung von besuchten Internetseiten für Sie komfortabler zu gestalten. Oftmals wird in Cookies z.B. Ihr Login gespeichert, um Sie bei einem späteren Besuch der Internetseite automatisch anzumelden, ohne dass Sie Ihre Zugangsdaten noch einmal manuell eingeben müssen.</p>
-
-<h2>Wie wir Cookies nutzen</h2>
-<p>Wir setzen Cookies für folgende Zwecke ein:</p>
-<ul>
-<li>Anmeldung: Bei der Anmeldung werden Ihre Zugangsdaten in verschlüsselter Form als Cookies gespeichert, um Sie bei einem späteren Seitenaufruf automatisiert anzumelden. Im Anmeldefenster können Sie mit der Option „Dauerhaft angemeldet bleiben“ festlegen, ob diese Cookies angelegt werden sollen.</li>
-<li>Sitzung: Beim ersten Aufruf unserer Seite wird eine neue Sitzung gestartet, diese wird durch ein eindeutiges Cookies Ihrem Computer zugeordnet. Sitzungen erlauben es, Sie zwischen zwei Seitenaufrufen wieder zu erkennen und Ihnen alle Funktionalitäten bereitstellen zu können. Es handelt sich um ein temporäres Cookies, dass beim Beenden des Internet Browsers automatisch gelöscht wird.</li>
-<li>Drittanbieter-Dienste: Die Einblendung von Werbeanzeigen oder das Teilen von Inhalten auf sozialen Netzwerken oder vergleichbaren Internetseiten kann die Erzeugung eines Cookies zur Folge haben. Diese Cookies werden nicht direkt von unserer Seite erzeugt, sondern durch den Drittanbieter selbst.</li>
-</ul>
-
-<h2>Wie Sie Cookies deaktivieren und entfernen</h2>
-<p>Cookies können in den Einstellungen Ihres Internet Browsers verwaltet und entfernt werden. Darüber hinaus lässt sich in den Einstellungen das Speichern von Cookies zudem vollständig deaktivieren. Bitte entnehmen Sie der folgenden Auflistung die passende Anleitung für den Umgang mit Cookies zu dem von Ihnen genutzten Internet Browser.</p>
-<ul>
-<li><a href="https://support.google.com/chrome/answer/95647?hl=de" class="externalURL" rel="nofollow">Google Chrome</a></li>
-<li><a href="https://support.mozilla.org/de/kb/cookies-informationen-websites-auf-ihrem-computer" class="externalURL" rel="nofollow">Mozilla Firefox</a></li>
-<li><a href="http://help.opera.com/Windows/12.00/de/cookies.html" class="externalURL" rel="nofollow">Opera</a></li>
-<li><a href="https://support.apple.com/kb/ph17191?locale=de_DE" class="externalURL" rel="nofollow">Safari</a></li>
-<li><a href="http://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
-</ul>]]></item>
+		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">Weitere Informationen</a>]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.other"><![CDATA[Weitere Seiten]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
@@ -2627,7 +2532,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.com.woltlab.wcf.ModerationListPage"><![CDATA[Moderation]]></item>
 		<item name="wcf.page.com.woltlab.wcf.NotificationListPage"><![CDATA[Benachrichtigungen]]></item>
 		<item name="wcf.page.com.woltlab.wcf.PaidSubscriptionListPage"><![CDATA[Bezahlte Mitgliedschaften]]></item>
-		<item name="wcf.page.com.woltlab.wcf.PrivacyPolicyPage"><![CDATA[Datenschutzerklärung]]></item>
 		<item name="wcf.page.com.woltlab.wcf.RecentActivityListPage"><![CDATA[Letzte Aktivitäten]]></item>
 		<item name="wcf.page.com.woltlab.wcf.SearchResultPage"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.page.com.woltlab.wcf.TaggedPage"><![CDATA[Inhalte mit bestimmtem Tag]]></item>
@@ -3083,7 +2987,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login.error.access_denied"><![CDATA[Da Sie die Berechtigungen verweigert haben, ist die Anmeldung mit GitHub nicht möglich.]]></item>
-		<item name="wcf.user.3rdparty.github.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 icon-github"></span>&nbsp;GitHub. Der Benutzername und Ihre E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
+		<item name="wcf.user.3rdparty.github.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 fa-github"></span>&nbsp;GitHub. Der Benutzername und Ihre E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Mit GitHub-Konto {if $__wcf->session->getVar('__githubUsername')}(„<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__githubUsername')}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[Ihr Benutzerkonto wurde erfolgreich mit Ihrem GitHub-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[Ihr GitHub-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
@@ -3092,7 +2996,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login.error.denied"><![CDATA[Da Sie die Berechtigungen verweigert haben, ist die Anmeldung mit Twitter nicht möglich.]]></item>
-		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 icon-twitter"></span>&nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. Geben Sie nun noch Ihre E-Mail-Adresse an und Sie können sofort loslegen!]]></item>
+		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 fa-twitter"></span>&nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. Geben Sie nun noch Ihre E-Mail-Adresse an und Sie können sofort loslegen!]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit Twitter-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[Ihr Benutzerkonto wurde erfolgreich mit Ihrem Twitter-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[Ihr Twitter-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
@@ -3101,7 +3005,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login.error.access_denied"><![CDATA[Da Sie die Berechtigungen verweigert haben, ist die Anmeldung mit Facebook nicht möglich.]]></item>
-		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 icon-facebook"></span>&nbsp;Facebook. Der Benutzername und Ihre E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
+		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 fa-facebook"></span>&nbsp;Facebook. Der Benutzername und Ihre E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Mit Facebook-Konto {if $__wcf->session->getVar('__facebookUsername')}(„{$__wcf->session->getVar('__facebookUsername')}“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.success"><![CDATA[Ihr Benutzerkonto wurde erfolgreich mit Ihrem Facebook-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[Ihr Facebook-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
@@ -3110,7 +3014,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login.error.access_denied"><![CDATA[Da Sie die Berechtigungen verweigert haben, ist die Anmeldung mit Google nicht möglich.]]></item>
-		<item name="wcf.user.3rdparty.google.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 icon-google-plus"></span>&nbsp;Google. Der Benutzername und Ihre E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
+		<item name="wcf.user.3rdparty.google.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 fa-google-plus"></span>&nbsp;Google. Der Benutzername und Ihre E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Mit Google-Konto {if $__wcf->session->getVar('__googleUsername')}(„{$__wcf->session->getVar('__googleUsername')}“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.google.connect.success"><![CDATA[Ihr Benutzerkonto wurde erfolgreich mit Ihrem Google-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Ihr Google-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>

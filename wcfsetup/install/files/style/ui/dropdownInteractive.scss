@@ -1,0 +1,283 @@
+.dropdownMenuContainer > .interactiveDropdown.open {
+	visibility: visible;
+}
+
+/* styling for interactive dropdowns (currently only used in the user panel) */
+.interactiveDropdown {
+	background-color: $wcfContentBackground;
+	border: 1px solid $wcfDropdownBorder;
+	box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
+	color: $wcfContentText;
+	display: block;
+	pointer-events: all;
+	position: absolute;
+	visibility: hidden;
+	z-index: 450;
+	
+	/* prevent dropdown from flickering during calculation */
+	left: -200%;
+	
+	> .elementPointer {
+		border-color: $wcfDropdownBorder transparent;
+		border-style: solid;
+		border-width: 0 10px 10px;
+		content: "";
+		display: block;
+		position: absolute;
+		z-index: 100;
+		
+		> span {
+			border-color: $wcfSidebarBackground transparent;
+			border-style: solid;
+			border-width: 0 10px 10px;
+			content: "";
+			display: block;
+			position: absolute;
+			top: 1px;
+			z-index: 101;
+		}
+		
+		&.left {
+			left: 5px;
+			
+			> span {
+				left: -10px;
+			}
+		}
+		
+		&.right {
+			right: 5px;
+			
+			> span {
+				right: -10px;
+			}
+		}
+	}
+	
+	&.interactiveDropdownUserMenu > .interactiveDropdownItemsContainer {
+		overflow: visible;
+		max-height: none;
+	}
+	
+	@include small-screen-only {
+		> .elementPointer {
+			display: none;
+		}
+	}
+}
+
+/* drop down header */
+.interactiveDropdownHeader {
+	align-items: center;
+	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarHeadlineText;
+	display: flex;
+	padding: 10px 20px;
+	
+	a {
+		color: $wcfSidebarHeadlineLink;
+		
+		&:hover {
+			color: $wcfSidebarHeadlineLinkActive;
+			
+			text-decoration: underline;
+		}
+	}
+	
+	.interactiveDropdownTitle {
+		flex: 1 1 auto;
+		
+		@include wcfFontHeadline;
+	}
+	
+	.interactiveDropdownLinks {
+		flex: 0 0 auto;
+		margin-left: 5px;
+	}
+	
+	@include small-screen-only {
+		padding: 10px;
+	}
+}
+
+/* container for dropdown items */
+.interactiveDropdownItemsContainer {
+	border: 1px solid $wcfContentBorderInner;
+	border-width: 1px 0;
+	
+	&.ps-container {
+		> .interactiveDropdownItems {
+			position: relative;
+			z-index: 100;
+		}
+		
+		> .ps-scrollbar-y-rail {
+			z-index: 200;
+		}
+	}
+}
+
+/* dropdown item list */
+.interactiveDropdownItems {
+	> li {
+		padding: 15px 20px;
+		position: relative;
+		
+		&:not(:last-child) {
+			border-bottom: 1px solid $wcfContentBorderInner;
+		}
+		
+		&:hover {
+			background-color: $wcfTabularBoxBackgroundActive;
+		}
+		
+		a {
+			color: $wcfContentLink;
+			
+			&:hover {
+				color: $wcfContentLinkActive;
+			}
+		}
+		
+		.box48 {
+			align-items: center;
+			overflow: hidden;
+		}
+		
+		@include small-screen-only {
+			padding: 10px;
+		}
+	}
+	
+	.loading,
+	.noItems {
+		padding: 20px 10px;
+		text-align: center;
+		
+		@include wcfFontHeadline;
+	}
+}
+
+/* outstanding / unread item */
+.interactiveDropdownItemOutstanding {
+	display: flex;
+	
+	> .box48 {
+		flex: 1 1 auto;
+	}
+	
+	h3 {
+		font-weight: bold;
+	}
+}
+
+/* mark as read button for an item */
+.interactiveDropdownItemMarkAsRead {
+	align-self: center;
+	flex: 0 0 auto;
+	margin-left: 5px;
+}
+
+/* Adds a link spanning the entire item while being placed behind all other links appearing
+   within the regular text using a lower z-index. Allows for regular links to be accessible,
+   but causes the item to act as a link. */
+.interactiveDropdownItemShadow {
+	> .box48 {
+		position: relative;
+	}
+	
+	> .box48,
+	> .interactiveDropdownItemMarkAsRead {
+		pointer-events: none;
+		z-index: 20;
+		
+		a {
+			pointer-events: all;
+		}
+	}
+	
+	> .interactiveDropdownItemShadowLink {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 10;
+	}
+}
+
+/* show all button shown in dropdown menu bottom */
+.interactiveDropdownShowAll {
+	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarHeadlineText;
+	display: block;
+	padding: 10px 20px;
+	text-align: center;
+	
+	&:hover {
+		color: $wcfSidebarHeadlineText;
+		text-decoration: underline;
+	}
+}
+
+@include large-screen-only {
+	.interactiveDropdown {
+		min-width: 350px;
+	}
+	
+	.interactiveDropdownItemsContainer {
+		max-height: 400px;
+		overflow: hidden;
+		position: relative;
+	}
+	
+	.interactiveDropdownItems:not(.interactiveDropdownItemsUserMenu) > li {
+		max-width: 400px;
+	}
+}
+
+@include small-screen-only {
+	.interactiveDropdown {
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		left: 0;
+		position: fixed;
+		right: 0;
+	}
+	
+	.interactiveDropdownHeader {
+		flex: 0 0 auto;
+	}
+	
+	.interactiveDropdownItemsContainer {
+		flex: 1 1 auto;
+		overflow: auto;
+		
+		/* increase the clickable area of the mark as read icon */
+		.interactiveDropdownItemMarkAsRead {
+			bottom: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 36px; /* 16px icon + 2x 10px padding */
+			
+			> a {
+				display: block;
+				height: 100%;
+				text-align: center;
+				
+				> .icon {
+					position: relative;
+					top: 50%;
+					
+					transform: translateY(-50%);
+				}
+			}
+		}
+	}
+	
+	.interactiveDropdownShowAll {
+		flex: 0 0 auto;
+	}
+}

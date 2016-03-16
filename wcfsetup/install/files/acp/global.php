@@ -10,8 +10,8 @@
 // This constant is already set in each package which got an own config.inc.php
 if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', '../');
 
-// define the wcf-root-dir
-define('WCF_DIR', dirname(dirname(__FILE__)).'/');
+// include config
+require_once(RELATIVE_WCF_DIR.'app.config.inc.php');
 
 // starting wcf acp
 require_once(WCF_DIR.'lib/system/WCF.class.php');

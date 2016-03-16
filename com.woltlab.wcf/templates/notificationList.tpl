@@ -22,10 +22,10 @@
 
 {include file='userMenuSidebar'}
 
-{include file='header' sidebarOrientation='left'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.notification.notifications{/lang} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.user.notification.notifications{/lang} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
 </header>
 
 {include file='userNotice'}
@@ -53,21 +53,19 @@
 		{if $notification[event]->getPeriod() != $lastPeriod}
 			{if $lastPeriod}
 					</ul>
-				</div>
+				</section>
 			{/if}
 			{assign var=lastPeriod value=$notification[event]->getPeriod()}
 			
-			<header class="boxHeadline boxSubHeadline">
-				<h2>{$lastPeriod}</h2>
-			</header>
+			<section class="section sectionContainerList">
+				<h2 class="sectionTitle">{$lastPeriod}</h2>
 			
-			<div class="container marginTop">
 				<ul class="containerList userNotificationItemList">
 		{/if}
 				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}" data-link="{if $notification[event]->isConfirmed()}{$notification[event]->getLink()}{else}{link controller='NotificationConfirm' id=$notification[notificationID]}{/link}{/if}" data-link-replace-all="{if $notification[event]->isConfirmed()}false{else}true{/if}" data-object-id="{@$notification[notificationID]}" data-is-read="{if $notification[event]->isConfirmed()}true{else}false{/if}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
 					<div class="box32">
 						{if $notification[authors] < 2}
-							<div class="framed jsTooltip" title="{$notification[event]->getAuthor()->username}">
+							<div class="jsTooltip" title="{$notification[event]->getAuthor()->username}">
 								{@$notification[event]->getAuthor()->getAvatar()->getImageTag(32)}
 							</div>
 							
@@ -79,7 +77,7 @@
 								<p><small>{@$notification[time]|time}</small></p>
 							</div>
 						{else}
-							<div class="framed">
+							<div>
 								<span class="icon icon32 fa-users"></span>
 							</div>
 							
@@ -90,10 +88,10 @@
 								</p>
 								<p><small>{@$notification[time]|time}</small></p>
 								
-								<ul class="marginTopTiny">
+								<ul>
 									{foreach from=$notification[event]->getAuthors() item=author}
 										{if $author->userID}
-											<li style="display: inline-block" class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}" class="framed">{@$author->getAvatar()->getImageTag(24)}</a></li>
+											<li style="display: inline-block" class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}">{@$author->getAvatar()->getImageTag(24)}</a></li>
 										{/if}
 									{/foreach}
 								</ul>
@@ -103,7 +101,7 @@
 				</li>
 	{/foreach}
 		</ul>
-	</div>
+	</section>
 	
 	<div class="contentNavigation">
 		{@$pagesLinks}

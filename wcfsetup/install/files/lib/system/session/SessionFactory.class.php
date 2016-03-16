@@ -54,6 +54,7 @@ class SessionFactory extends ACPSessionFactory {
 		}
 		
 		// enable cookie support
+		
 		SessionHandler::getInstance()->enableCookies();
 		
 		parent::init();

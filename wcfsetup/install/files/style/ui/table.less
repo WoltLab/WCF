@@ -1,0 +1,216 @@
+.table {
+	border-spacing: 0;
+	width: 100%;
+	
+	/* cells */
+	th,
+	td {
+		padding: @wcfGapSmall;
+		text-align: left;
+		vertical-align: middle;
+		// non standard only webkit
+		word-break: break-word;
+		
+		> label {
+			cursor: pointer;
+			display: block;
+			margin: -@wcfGapSmall;
+			padding: @wcfGapSmall;
+			
+			> input[type="checkbox"] {
+				margin: -1px 3px 0;
+			}
+		}
+	}
+	
+	/* headline */
+	th {
+		border-right: 1px solid rgba(0, 0, 0, .2);
+		color: @wcfTabularBoxColor;
+		font-size: @wcfSmallFontSize;
+		font-weight: bold;
+		white-space: nowrap;
+		word-wrap: normal;
+		
+		.textShadow(@wcfTabularBoxBackgroundColor);
+		.linearGradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0), rgba(0, 0, 0, .3));
+		
+		> a {
+			color: @wcfTabularBoxColor;
+			display: block;
+			margin: -@wcfGapSmall;
+			position: relative;
+			
+			&:hover {
+				text-decoration: none;
+			}
+			
+			> img {
+				margin: -5px 0;
+			}
+		}
+		
+		&.active > a {
+			background-color: rgba(0, 0, 0, .1);
+			color: @wcfTabularBoxHoverColor;
+			
+			.boxShadowInset(0, 10px, rgba(0, 0, 0, .1), 10px, -10px);
+		}
+		
+		&.ASC > a,
+		&.DESC > a {
+			padding-right: 20px;
+		}
+		
+		&.ASC > a::after,
+		&.DESC > a::after {
+			display: inline-block;
+			font-family: FontAwesome;
+			font-size: 14px;
+			position: absolute;
+			margin-left: @wcfGapTiny;
+			
+			.textShadow(@wcfTabularBoxBackgroundColor);
+		}
+		
+		&.ASC > a::after {
+			content: "\f0de";
+			top: 8px;
+		}
+		
+		&.DESC > a::after {
+			content: "\f0dd";
+			top: 3px;
+		}
+		
+		&:hover > a {
+			background-color: rgba(0, 0, 0, .2);
+			color: @wcfTabularBoxHoverColor;
+		}
+		
+		> * {
+			padding: @wcfGapSmall;
+		}
+	}
+	
+	/* content */
+	td {
+		background-color: @wcfContainerBackgroundColor;
+		
+		.transition(background, .1s);
+		
+		&.columnMark,
+		&.columnStatus {
+			text-align: center;
+			width: 1px;
+			white-space: nowrap;
+			word-wrap: normal;
+		}
+		
+		&.columnDigits,
+		&.columnID {
+			text-align: right;
+			width: 1px;
+			white-space: nowrap;
+			word-wrap: normal;
+		}
+		
+		&.columnIcon {
+			text-align: left;
+			width: 1px;
+			white-space: nowrap;
+			word-wrap: normal;
+		}
+		
+		&.columnTitle {
+			font-weight: bold;
+			text-align: left;
+		}
+		
+		&.columnText {
+			font-weight: normal;
+			text-align: left;
+			max-width: 20%;
+		}
+		
+		&.columnDate {
+			font-size: @wcfSmallFontSize;
+			text-align: right;
+			width: 1px;
+			white-space: nowrap;
+			word-wrap: normal;
+		}
+		
+		&.columnURL, &.columnSmallText {
+			font-size: @wcfSmallFontSize;
+			text-align: left;
+		}
+	}
+	
+	/* striped */
+	> tbody {
+		> tr:nth-child(even) > td {
+			background-color: @wcfContainerAccentBackgroundColor;
+		}
+	}
+	
+	/* hover */
+	> tbody {
+		> tr {
+			&:not(:last-child) {
+				> td {
+					border-bottom: 1px solid rgba(255, 255, 255, .3);
+				}
+			}
+			
+			&:hover {
+				> td {
+					background-color: @wcfContainerHoverBackgroundColor;
+				}
+			}
+			
+			> td:not(:last-child) {
+				border-right: 1px solid rgba(255, 255, 255, .3);
+			}
+			
+			> td.focus {
+				background-color: @wcfContainerHoverBackgroundColor;
+			}
+			
+			> td.left {
+				text-align: left;
+			}
+			
+			> td.right {
+				text-align: right;
+			}
+		}
+	}
+	
+	.statusDisplay {
+		float: right;
+		
+		.statusIcons {
+			float: right;
+			margin-left: @wcfGapSmall;
+			
+			li {
+				display: inline-block;
+			}
+		}
+	}
+	
+	tr {
+		&.jsMarked {
+			color: @wcfSelectedColor;
+			
+			> td {
+				background-color: @wcfSelectedBackgroundColor !important;
+			}
+			
+			a:not(.badge) {
+				color: @wcfSelectedColor;
+			}
+		}
+	}
+}

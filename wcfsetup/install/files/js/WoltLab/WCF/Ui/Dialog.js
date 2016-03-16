@@ -8,14 +8,14 @@
  */
 define(
 	[
-		'enquire',     'Ajax',       'Core',      'Dictionary',
-		'Environment', 'Language',   'ObjectMap', 'Dom/ChangeListener',
-		'Dom/Util',    'Ui/Confirmation'
+		'enquire',      'Ajax',       'Core',      'Dictionary',
+		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
+		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation'
 	],
 	function(
 		enquire,        Ajax,         Core,        Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
-		DomUtil,        UiConfirmation
+		DomTraverse,    DomUtil,      UiConfirmation
 	)
 {
 	"use strict";
@@ -44,7 +44,7 @@ define(
 			elAttr(_container, 'aria-hidden', 'true');
 			_container.addEventListener('click', this._closeOnBackdrop.bind(this));
 			
-			document.body.appendChild(_container);
+			elById('content').appendChild(_container);
 			
 			_keyupListener = (function(event) {
 				if (event.keyCode === 27) {
@@ -58,7 +58,7 @@ define(
 				return true;
 			}).bind(this);
 			
-			enquire.register('screen and (max-width: 800px)', {
+			enquire.register('(max-width: 767px)', {
 				match: function() { _dialogFullHeight = true; },
 				unmatch: function() { _dialogFullHeight = false; },
 				setup: function() { _dialogFullHeight = true; },
@@ -75,12 +75,12 @@ define(
 				button = _staticDialogs[0];
 				button.classList.remove('jsStaticDialog');
 				
-				id = elAttr(button, 'data-dialog-id');
+				id = elData(button, 'dialog-id');
 				if (id && (container = elById(id))) {
 					((function(button, container) {
 						container.classList.remove('jsStaticDialogContent');
-						container.style.setProperty('display', 'none');
-						button.addEventListener('click', this.openStatic.bind(this, container.id, null, { title: elAttr(container, 'data-title') }));
+						elHide(container);
+						button.addEventListener('click', this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
 					}).bind(this))(button, container);
 				}
 			}
@@ -187,7 +187,6 @@ define(
 					closeButtonLabel: Language.get('wcf.global.button.close'),
 					closeConfirmMessage: '',
 					disableContentPadding: false,
-					disposeOnClose: false,
 					title: '',
 					
 					// callbacks
@@ -215,17 +214,26 @@ define(
 		/**
 		 * Sets the dialog title.
 		 * 
-		 * @param	{string}	id		element id
-		 * @param	{string}	title		dialog title
+		 * @param	{(string|object)}	id		element id
+		 * @param	{string}	        title		dialog title
 		 */
 		setTitle: function(id, title) {
+			if (typeof id === 'object') {
+				var dialogData = _dialogObjects.get(id);
+				if (dialogData !== undefined) {
+					id = dialogData.id;
+				}
+			}
+			
 			var data = _dialogs.get(id);
 			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			
-			var header = DomTraverse.childrenByTag(data.dialog, 'HEADER');
-			DomTraverse.childrenByTag(header[0], 'SPAN').textContent = title;
+			var dialogTitle = elByClass('dialogTitle', data.dialog);
+			if (dialogTitle.length) {
+				dialogTitle[0].textContent = title;
+			}
 		},
 		
 		/**
@@ -249,25 +257,19 @@ define(
 			dialog.classList.add('dialogContainer');
 			elAttr(dialog, 'aria-hidden', 'true');
 			elAttr(dialog, 'role', 'dialog');
-			elAttr(dialog, 'data-id', id);
-			
-			if (options.disposeOnClose) {
-				elAttr(dialog, 'data-dispose-on-close', true);
-			}
+			elData(dialog, 'id', id);
 			
 			var header = elCreate('header');
 			dialog.appendChild(header);
 			
-			if (options.title) {
-				var titleId = DomUtil.getUniqueId();
-				elAttr(dialog, 'aria-labelledby', titleId);
-				
-				var title = elCreate('span');
-				title.classList.add('dialogTitle');
-				title.textContent = options.title;
-				elAttr(title, 'id', titleId);
-				header.appendChild(title);
-			}
+			var titleId = DomUtil.getUniqueId();
+			elAttr(dialog, 'aria-labelledby', titleId);
+			
+			var title = elCreate('span');
+			title.classList.add('dialogTitle');
+			title.textContent = options.title;
+			elAttr(title, 'id', titleId);
+			header.appendChild(title);
 			
 			if (options.closable) {
 				var closeButton = elCreate('a');
@@ -278,7 +280,7 @@ define(
 				header.appendChild(closeButton);
 				
 				var span = elCreate('span');
-				span.textContent = options.closeButtonLabel;
+				span.className = 'icon icon24 fa-times';
 				closeButton.appendChild(span);
 			}
 			
@@ -312,7 +314,7 @@ define(
 			contentContainer.appendChild(content);
 			
 			if (content.style.getPropertyValue('display') === 'none') {
-				content.style.removeProperty('display');
+				elShow(content);
 			}
 			
 			_dialogs.set(id, {
@@ -326,6 +328,10 @@ define(
 			});
 			
 			DomUtil.prepend(dialog, _container);
+			
+			if (typeof options.onSetup === 'function') {
+				options.onSetup(content);
+			}
 			
 			if (createOnly !== true) {
 				this._updateDialog(id, null);
@@ -350,6 +356,16 @@ define(
 				var content = elCreate('div');
 				content.innerHTML = html;
 				
+				var scripts = elBySelAll('script', content);
+				for (var i = 0, length = scripts.length; i < length; i++) {
+					var script = scripts[i];
+					var newScript = elCreate('script');
+					newScript.innerHTML = script.innerHTML;
+					content.appendChild(newScript);
+					
+					elRemove(script);
+				}
+				
 				data.content.appendChild(content);
 			}
 			
@@ -360,7 +376,7 @@ define(
 				
 				elAttr(data.dialog, 'aria-hidden', 'false');
 				elAttr(_container, 'aria-hidden', 'false');
-				elAttr(_container, 'data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 				_activeDialog = id;
 				
 				this.rebuild(id);
@@ -449,7 +465,7 @@ define(
 				return true;
 			}
 			
-			if (elAttr(_container, 'data-close-on-click') === 'true') {
+			if (elData(_container, 'close-on-click') === 'true') {
 				this._close(event);
 			}
 			else {
@@ -479,37 +495,27 @@ define(
 				data.onClose(id);
 			}
 			
-			if (elAttr(data.dialog, 'data-dispose-on-close')) {
-				setTimeout(function() {
-					if (elAttr(data.dialog, 'aria-hidden') === 'true') {
-						_container.removeChild(data.dialog);
-						_dialogs['delete'](id);
-					}
-				}, 5000);
-			}
-			else {
-				elAttr(data.dialog, 'aria-hidden', 'true');
-			}
+			elAttr(data.dialog, 'aria-hidden', 'true');
 			
 			// get next active dialog
 			_activeDialog = null;
 			for (var i = 0; i < _container.childElementCount; i++) {
 				var child = _container.children[i];
 				if (elAttr(child, 'aria-hidden') === 'false') {
-					_activeDialog = elAttr(child, 'data-id');
+					_activeDialog = elData(child, 'id');
 					break;
 				}
 			}
 			
 			if (_activeDialog === null) {
 				elAttr(_container, 'aria-hidden', 'true');
-				elAttr(_container, 'data-close-on-click', 'false');
+				elData(_container, 'close-on-click', 'false');
 				
 				window.removeEventListener('keyup', _keyupListener);
 			}
 			else {
 				data = _dialogs.get(_activeDialog);
-				elAttr(_container, 'data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 			}
 		},
 		

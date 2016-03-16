@@ -28,7 +28,7 @@ define([], function() {
 		
 		var newObj = {};
 		for (var key in obj) {
-			if (obj.hasOwnProperty(key) && typeof obj[key] !== 'undefined') {
+			if (objOwns(obj, key) && typeof obj[key] !== 'undefined') {
 				newObj[key] = _clone(obj[key]);
 			}
 		}
@@ -93,7 +93,7 @@ define([], function() {
 				if (!obj) continue;
 				
 				for (var key in obj) {
-					if (obj.hasOwnProperty(key)) {
+					if (objOwns(obj, key)) {
 						if (!Array.isArray(obj[key]) && typeof obj[key] === 'object') {
 							if (this.isPlainObject(obj[key])) {
 								// object literals have the prototype of Object which in return has no parent prototype
@@ -192,7 +192,7 @@ define([], function() {
 			var parameters = [];
 			
 			for (var key in obj) {
-				if (obj.hasOwnProperty(key)) {
+				if (objOwns(obj, key)) {
 					var parameterKey = (prefix) ? prefix + '[' + key + ']' : key;
 					var value = obj[key];
 					

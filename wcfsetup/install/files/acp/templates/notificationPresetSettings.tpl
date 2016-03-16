@@ -3,7 +3,7 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		$('#notificationSettings > fieldset > dl > dd > label > input').each(function(index, value) {
+		$('#notificationSettings > section > dl > dd > label > input').each(function(index, value) {
 			var $input = $(value);
 			$input.on('click', function(event) {
 				var $input = $(event.currentTarget);
@@ -17,9 +17,9 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.user.notificationPresetSettings{/lang}</h1>
-	<p>{lang}wcf.acp.user.notificationPresetSettings.description{/lang}</p>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.user.notificationPresetSettings{/lang}</h1>
+	<p class="contentHeaderDescription">{lang}wcf.acp.user.notificationPresetSettings.description{/lang}</p>
 </header>
 
 {include file='formError'}
@@ -41,8 +41,8 @@
 </div>
 
 <form method="post" action="{link controller='NotificationPresetSettings'}{/link}">
-	<div class="container containerPadding marginTop" id="notificationSettings">
-		<fieldset>
+	<div id="notificationSettings">
+		<div class="section">
 			<dl>
 				<dt></dt>
 				<dd>
@@ -50,11 +50,11 @@
 					<small>{lang}wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description{/lang}</small>	
 				</dd>
 			</dl>
-		</fieldset>
+		</div>
 		
 		{foreach from=$events key='eventCategory' item='eventList'}
-			<fieldset>
-				<legend>{lang}wcf.user.notification.{$eventCategory}{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.user.notification.{$eventCategory}{/lang}</h2>
 				
 				<dl>
 					{foreach from=$eventList item=event}
@@ -75,10 +75,10 @@
 						</dd>
 					{/foreach}
 				</dl>
-			</fieldset>
+			</section>
 		{/foreach}
 		
-		{event name='fieldsets'}
+		{event name='sections'}
 	</div>
 	
 	<div class="formSubmit">

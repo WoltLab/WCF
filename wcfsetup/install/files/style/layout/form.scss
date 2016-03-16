@@ -1,0 +1,213 @@
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+input[type="url"],
+select,
+textarea {
+	background-color: $wcfInputBackground;
+	border: 1px solid $wcfInputBorder;
+	color: $wcfInputText;
+	outline: none;
+	padding: 4px 8px;
+	
+	// input elements do not inherit font family, size and line-height from body
+	font-family: $wcfFontFamily;
+	@include wcfFontDefault;
+	@include wcfLineHeight;
+	
+	&:focus,
+	&:hover {
+		background-color: $wcfInputBackgroundActive;
+		border-color: $wcfInputBorderActive;
+		color: $wcfInputTextActive;
+	}
+	
+	&[disabled],
+	&[readonly] {
+		background-color: $wcfInputDisabledBackground !important;
+		border-color: $wcfInputDisabledBorder !important;
+		color: $wcfInputDisabledText !important;
+	}
+}
+
+/* set placeholder color */
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+input[type="url"] {
+	&::-webkit-input-placeholder { /* WebKit browsers */
+		color: $wcfInputPlaceholder;
+	}
+	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: $wcfInputPlaceholder;
+	}
+	&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: $wcfInputPlaceholder;
+	}
+	
+	&:focus,
+	&:hover {
+		&::-webkit-input-placeholder { /* WebKit browsers */
+			color: $wcfInputPlaceholderActive;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $wcfInputPlaceholderActive;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $wcfInputPlaceholderActive;
+		}
+	}
+}
+
+textarea {
+	border-width: 1px;
+	width: 100%;
+	
+	@include wcfFontDefault;
+	
+	&[disabled],
+	&[readonly] {
+		background-color: $wcfInputDisabledBackground !important;
+		border-color: $wcfInputDisabledBorder !important;
+		color: $wcfInputDisabledText !important;
+	}
+}
+
+select {
+	// The width is determined by the browser based upon the longest <option> contained,
+	// but this can cause the <select> to overflow the parent container. This is acceptable
+	// to some extent, but on mobile it can cause the entire site to have a horizontal
+	// scrollbar instead. Setting a `max-width` will cause the browser to respect the page
+	// boundaries and nicely wrap the displayed value instead.
+	max-width: 100%;
+}
+
+.selectDropdown {
+	position: relative;
+	
+	// force inline-block to mimic the <select> display and make both its dimensions
+	// and flow behavior more predictable; !important is required to prevent styles
+	// applied to generic <label> in certain cases such as within <dd>
+	display: inline-block !important;
+	
+	&::after {
+		content: $fa-var-caret-down;
+		display: block;
+		font-family: FontAwesome;
+		font-size: 14px;
+		pointer-events: none;
+		position: absolute;
+		right: 7px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	
+	> select {
+		padding-right: 18px;
+		
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+}
+
+
+
+.formSubmit {
+	text-align: center;
+	
+	&:not(:first-child) {
+		margin-top: 30px;
+	}
+	
+	> :not(:first-child) {
+		margin-left: 10px;
+	}
+}
+
+.inputAddon {
+	display: flex;
+	
+	&:not(:last-child) {
+		margin-bottom: 5px;
+	}
+	
+	> .inputPrefix,
+	> .inputSuffix {
+		flex: 0 0 auto;
+		
+		&.button {
+			border-radius: 0;
+		}
+		
+		&:not(.button) {
+			background-color: $wcfButtonBackground;
+			border: 1px solid $wcfButtonBorder;
+			color: $wcfButtonText;
+			cursor: default;
+			padding: 3px 5px;
+		}
+	}
+	
+	> .inputPrefix {
+		margin-right: 5px;
+	}
+	
+	> .inputSuffix {
+		margin-left: 5px;
+	}
+	
+	input {
+		flex: 1 auto;
+		
+		& + .inputPrefix {
+			margin-left: 5px;
+		}
+	}
+}
+
+.inputAddonTextarea {
+	flex-wrap: wrap;
+	
+	> .inputPrefix.button {
+		border-bottom-width: 0;
+		border-radius: 0;
+	}
+	
+	> textarea {
+		flex: 0 0 100%;
+	}
+}
+
+.inputAddon input,
+input {
+	&.tiny {
+		flex-grow: 0;
+		width: 80px;
+	}
+	
+	&.short {
+		flex-grow: 0;
+		min-width: 80px;
+		width: 10%;
+	}
+	
+	&.medium {
+		flex-grow: 0;
+		min-width: 150px;
+		width: 30%;
+	}
+	
+	&.long {
+		min-width: 150px;
+		width: 100%;
+	}
+}

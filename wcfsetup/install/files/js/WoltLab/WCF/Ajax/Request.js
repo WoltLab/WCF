@@ -181,7 +181,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 		 * @return	{(*|null)}	option value or null
 		 */
 		getOption: function(key) {
-			if (this._options.hasOwnProperty(key)) {
+			if (objOwns(this._options, key)) {
 				return this._options[key];
 			}
 			

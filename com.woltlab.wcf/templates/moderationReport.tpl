@@ -30,8 +30,8 @@
 
 {include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.moderation.report{/lang}: {$queue->getTitle()}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.moderation.report{/lang}: {$queue->getTitle()}</h1>
 	
 	{if $queue->lastChangeTime}
 		<dl class="plain inlineDataList">
@@ -63,21 +63,21 @@
 
 {include file='formError'}
 
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.moderation.report.reportedContent{/lang}</h2>
-	<p>{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
-</header>
-
-<div class="marginTop">
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedContent{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
+	</header>
+	
 	{@$reportedContent}
-</div>
+</section>
 
 <div class="contentNavigation">
 	<nav>
 		<ul>
 			{if !$queue->isDone()}
-				{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
-				<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
+				{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
+				<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
 			{/if}
 			{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
 			
@@ -86,18 +86,16 @@
 	</nav>
 </div>
 
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.moderation.report.reportedBy{/lang}</h2>
-</header>
-
-<div class="container containerPadding marginTop">
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>
+	
 	<div class="box32">
 		{if $reportUser->userID}
-			<a href="{link controller='User' object=$reportUser}{/link}" title="{$reportUser->username}" class="framed">
+			<a href="{link controller='User' object=$reportUser}{/link}" title="{$reportUser->username}">
 				{@$reportUser->getAvatar()->getImageTag(32)}
 			</a>
 		{else}
-			<span class="framed">{@$reportUser->getAvatar()->getImageTag(32)}</span>
+			<span>{@$reportUser->getAvatar()->getImageTag(32)}</span>
 		{/if}
 		
 		<div>
@@ -109,27 +107,27 @@
 						{lang}wcf.user.guest{/lang}
 					{/if}
 					
-					<small> - {@$queue->time|time}</small>
+					<small class="separatorLeft">{@$queue->time|time}</small>
 				</h3>
 			</div>
 			
-			<div>{@$queue->getFormattedMessage()}</div>
+			<div class="containerContent">{@$queue->getFormattedMessage()}</div>
 		</div>
 	</div>
-</div>
-
-<header id="comments" class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
-	<p>{lang}wcf.moderation.comments.description{/lang}</p>
-</header>
+</section>
 
 {include file='__commentJavaScript' commentContainerID='moderationQueueCommentList'}
 
-<div class="container marginTop moderationComments">
+<section id="comments" class="section sectionContainerList moderationComments">
+	<header class="sectionHeader">
+		<h2>{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
+		<p>{lang}wcf.moderation.comments.description{/lang}</p>
+	</header>
+	
 	<ul id="moderationQueueCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$queueID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{if $queue->comments}{@$commentList->countObjects()}{else}0{/if}" data-last-comment-time="{@$lastCommentTime}">
 		{include file='commentList'}
 	</ul>
-</div>
+</section>
 
 {include file='footer'}
 

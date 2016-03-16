@@ -12,6 +12,11 @@
 			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
 			<listclassname><![CDATA[wcf\data\tag\TagList]]></listclassname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+			<listclassname><![CDATA[wcf\data\media\ViewableMediaList]]></listclassname>
+		</type>
 		<!-- /clipboard items -->
 		
 		<type>
@@ -626,13 +631,6 @@
 			<definitionname>com.woltlab.wcf.page</definitionname>
 			<classname><![CDATA[wcf\page\NotificationListPage]]></classname>
 			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.PrivacyPolicyPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\PrivacyPolicyPage]]></classname>
-			<options>module_privacy_policy_page</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.PaidSubscriptionListPage</name>

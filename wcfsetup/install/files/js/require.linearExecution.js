@@ -19,6 +19,7 @@
 			executeCallbacks();
 		});
 	};
+	window.require.config = orgRequire.config;
 	
 	function executeCallbacks() {
 		while (queue.length) {

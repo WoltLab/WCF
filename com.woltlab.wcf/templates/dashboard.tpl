@@ -11,21 +11,21 @@
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
 {if $__boxSidebar|isset && $__boxSidebar}
-	{capture assign='sidebar'}
+	{capture assign='sidebarRight'}
 		{@$__boxSidebar}
 	{/capture}
 {/if}
 
-{include file='header' sidebarOrientation='right'}
+{include file='header'}
 
 {if $__wcf->getPageMenu()->getLandingPage()->menuItem == 'wcf.user.dashboard'}
-	<header class="boxHeadline">
-		<h1>{PAGE_TITLE|language}</h1>
-		{hascontent}<p>{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
+	<header class="contentHeader">
+		<h1 class="contentTitle">{PAGE_TITLE|language}</h1>
+		{hascontent}<p class="contentHeaderDescription">{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
 	</header>
 {else}
-	<header class="boxHeadline">
-		<h1>{lang}wcf.user.dashboard{/lang}</h1>
+	<header class="contentHeader">
+		<h1 class="contentTitle">{lang}wcf.user.dashboard{/lang}</h1>
 	</header>
 {/if}
 

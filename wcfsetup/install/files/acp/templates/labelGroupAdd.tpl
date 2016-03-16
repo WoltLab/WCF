@@ -20,8 +20,8 @@
 
 {assign var=labelForceSelection value=$forceSelection}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.label.group.{$action}{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.label.group.{$action}{/lang}</h1>
 </header>
 
 {include file='formError'}
@@ -33,7 +33,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='LabelGroupList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.label.group.list{/lang}</span></a></li>
+			<li><a href="{link controller='LabelGroupList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.label.group.list{/lang}</span></a></li>
 				
 			{event name='contentNavigationButtons'}
 		</ul>
@@ -41,7 +41,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='LabelGroupAdd'}{/link}{else}{link controller='LabelGroupEdit' object=$labelGroup}{/link}{/if}">
-	<div class="tabMenuContainer">
+	<div class="section tabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
@@ -49,10 +49,8 @@
 			</ul>
 		</nav>
 		
-		<div id="general" class="container containerPadding tabMenuContent">
-			<fieldset>
-				<legend>{lang}wcf.global.form.data{/lang}</legend>
-				
+		<div id="general" class="tabMenuContent">
+			<div class="section">
 				<dl{if $errorField == 'groupName'} class="formError"{/if}>
 					<dt><label for="groupName">{lang}wcf.global.title{/lang}</label></dt>
 					<dd>
@@ -97,15 +95,13 @@
 				</dl>
 				
 				{event name='dataFields'}
-			</fieldset>
+			</div>
 			
-			{event name='generalFieldsets'}
+			{event name='generalSections'}
 		</div>
 		
-		<div id="connect" class="container containerPadding tabMenuContent">
-			<fieldset>
-				<legend>{lang}wcf.acp.label.group.category.connect{/lang}</legend>
-				
+		<div id="connect" class="tabMenuContent">
+			<div class="section">
 				{foreach from=$labelObjectTypeContainers item=container}
 					{if $container->isBooleanOption()}
 						<!-- TODO: Implement boolean option mode -->
@@ -113,7 +109,7 @@
 						<dl>
 							<dt>{lang}wcf.acp.label.container.{$container->getObjectTypeName()}{/lang}</dt>
 							<dd>
-								<ul class="container structuredList">
+								<ul class="structuredList">
 									{foreach from=$container item=objectType}
 										<li class="{if $objectType->isCategory()} category{/if}"{if $objectType->getDepth()} style="padding-left: {21 * $objectType->getDepth()}px"{/if} data-depth="{@$objectType->getDepth()}">
 											<span>{$objectType->getLabel()}</span>
@@ -125,9 +121,9 @@
 						</dl>
 					{/if}
 				{/foreach}
-			</fieldset>
+			</div>
 			
-			{event name='connectFieldsets'}
+			{event name='connectSections'}
 		</div>
 	</div>
 	

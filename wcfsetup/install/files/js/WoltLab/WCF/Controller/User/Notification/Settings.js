@@ -45,7 +45,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 		 * @param	{Element}	mailSetting	mail settings element
 		 */
 		_initGroup: function(group, mailSetting) {
-			var groupId = ~~group.getAttribute('data-object-id');
+			var groupId = ~~elData(group, 'object-id');
 			
 			var disabledNotification = elById('settings_' + groupId + '_disabled');
 			disabledNotification.addEventListener('click', function() { mailSetting.classList.remove('active'); });
@@ -55,7 +55,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 			var mailValue = DomTraverse.childByTag(mailSetting, 'INPUT');
 			
 			var button = DomTraverse.childByTag(mailSetting, 'A');
-			elAttr(button, 'data-object-id', groupId);
+			elData(button, 'object-id', groupId);
 			button.addEventListener('click', _callbackClick);
 			
 			_data.set(groupId, {
@@ -75,7 +75,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 			event.preventDefault();
 			
 			var button = event.currentTarget;
-			var objectId = ~~button.getAttribute('data-object-id');
+			var objectId = ~~elData(button, 'object-id');
 			var data = _data.get(objectId);
 			if (data.dropdownMenu === null) {
 				data.dropdownMenu = this._createDropdown(objectId, data.mailValue.value);
@@ -88,7 +88,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 			else {
 				var items = DomTraverse.childrenByTag(data.dropdownMenu, 'LI'), value = data.mailValue.value;
 				for (var i = 0; i < 4; i++) {
-					items[i].classList[(items[i].getAttribute('data-value') === value) ? 'add' : 'remove']('active');
+					items[i].classList[(elData(items[i], 'value') === value) ? 'add' : 'remove']('active');
 				}
 			}
 		},
@@ -103,7 +103,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 		_createDropdown: function(objectId, initialValue) {
 			var dropdownMenu = elCreate('ul');
 			dropdownMenu.className = 'dropdownMenu';
-			elAttr(dropdownMenu, 'data-object-id', objectId);
+			elData(dropdownMenu, 'object-id', objectId);
 			
 			var link, listItem, value, items = ['instant', 'daily', 'divider', 'none'];
 			for (var i = 0; i < 4; i++) {
@@ -117,7 +117,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 					link = elCreate('a');
 					link.textContent = Language.get('wcf.user.notification.mailNotificationType.' + value);
 					listItem.appendChild(link);
-					elAttr(listItem, 'data-value', value);
+					elData(listItem, 'value', value);
 					listItem.addEventListener('click', _callbackSelectType);
 					
 					if (initialValue === value) {
@@ -137,8 +137,8 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 		 * @param	{Object}	event		event object
 		 */
 		_selectType: function(event) {
-			var value = elAttr(event.currentTarget, 'data-value');
-			var groupId = ~~event.currentTarget.parentNode.getAttribute('data-object-id');
+			var value = elData(event.currentTarget, 'value');
+			var groupId = ~~elData(event.currentTarget.parentNode, 'object-id');
 			
 			var data = _data.get(groupId);
 			data.mailValue.value = value;

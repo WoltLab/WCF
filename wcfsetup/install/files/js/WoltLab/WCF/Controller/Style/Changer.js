@@ -82,7 +82,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 				data: {
 					actionName: 'changeStyle',
 					className: 'wcf\\data\\style\\StyleAction',
-					objectIDs: [ elAttr(event.currentTarget, 'data-style-id') ]
+					objectIDs: [ elData(event.currentTarget, 'style-id') ]
 				},
 				success: function() { window.location.reload(); }
 			});

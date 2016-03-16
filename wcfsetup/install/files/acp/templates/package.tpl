@@ -14,9 +14,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{$package->getName()}</h1>
-	<p>{$package->packageDescription|language}</p>
+<header class="contentHeader">
+	<h1 class="contentTitle">{$package->getName()}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -31,7 +30,7 @@
 	{/hascontent}
 </div>
 
-<div class="tabMenuContainer">
+<div class="section tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
 			<li><a href="{@$__wcf->getAnchor('information')}">{lang}wcf.acp.package.information.title{/lang}</a></li>
@@ -43,9 +42,14 @@
 		</ul>
 	</nav>
 	
-	<div id="information" class="container containerPadding hidden tabMenuContent">
-		<fieldset>
-			<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
+	<div id="information" class="hidden tabMenuContent">
+		<div class="section">
+			{if $package->packageDescription|language}
+				<dl>
+					<dt>{lang}wcf.acp.package.description{/lang}</dt>
+					<dd>{$package->packageDescription|language}</dd>
+				</dl>
+			{/if}
 			
 			<dl>
 				<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
@@ -79,21 +83,13 @@
 			</dl>
 			
 			{event name='propertyFields'}
-		</fieldset>
-		
-		{if $package->packageDescription|language}
-			<fieldset>
-				<legend>{lang}wcf.acp.package.description{/lang}</legend>
-				
-				<p>{$package->packageDescription|language}</p>
-			</fieldset>
-		{/if}
+		</div>
 		
 		{event name='informationFieldsets'}
 	</div>
 	
 	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
-		<div id="dependencies" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="dependencies" class="tabMenuContainer tabMenuContent">
 			<nav class="menu">
 				<ul>
 					{if $package->getRequiredPackages()|count}
@@ -108,7 +104,7 @@
 			</nav>
 			
 			{hascontent}
-				<div id="dependencies-required" class="tabularBox tabularBoxTitle hidden">
+				<div id="dependencies-required" class="tabMenuContent tabularBox tabularBoxTitle hidden">
 					<header>
 						<h2>{lang}wcf.acp.package.dependencies.required{/lang}</h2>
 						<small>{lang}wcf.acp.package.dependencies.required.description{/lang}</small>
@@ -133,9 +129,9 @@
 									<tr class="jsPackageRow">
 										<td class="columnIcon">
 											{if $requiredPackage->canUninstall()}
-												<span class="icon icon16 icon-remove pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $requiredPackage->isRequired()}true{else}false{/if}" data-is-application="{if $requiredPackage->isApplication}true{else}false{/if}"></span>
+												<span class="icon icon16 fa-times pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $requiredPackage->isRequired()}true{else}false{/if}" data-is-application="{if $requiredPackage->isApplication}true{else}false{/if}"></span>
 											{else}
-												<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
+												<span class="icon icon16 fa-times disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 											{/if}
 										</td>
 										<td class="columnID">{@$requiredPackage->packageID}</td>
@@ -154,7 +150,7 @@
 			{/hascontent}
 			
 			{hascontent}
-				<div id="dependencies-dependent" class="tabularBox tabularBoxTitle hidden">
+				<div id="dependencies-dependent" class="tabMenuContent tabularBox tabularBoxTitle hidden">
 					<header>
 						<h2>{lang}wcf.acp.package.dependencies.dependent{/lang}</h2>
 						<small>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</small>
@@ -179,9 +175,9 @@
 									<tr class="jsPackageRow">
 										<td class="columnIcon">
 											{if $dependentPackage->canUninstall()}
-												<span class="icon icon16 icon-remove pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $dependentPackage->isRequired()}true{else}false{/if}" data-is-application="{if $dependentPackage->isApplication}true{else}false{/if}"></span>
+												<span class="icon icon16 fa-times pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $dependentPackage->isRequired()}true{else}false{/if}" data-is-application="{if $dependentPackage->isApplication}true{else}false{/if}"></span>
 											{else}
-												<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
+												<span class="icon icon16 fa-times disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 											{/if}
 										</td>
 										<td class="columnID">{@$dependentPackage->packageID}</td>
@@ -211,7 +207,7 @@
 		<ul>
 			{event name='contentNavigationButtonsBottom'}
 			
-			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>

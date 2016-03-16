@@ -19,7 +19,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.option.setDefaults';
+	public $activeMenuItem = 'wcf.acp.menu.link.userOptionDefaults';
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions

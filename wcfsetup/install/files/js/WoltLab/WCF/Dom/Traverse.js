@@ -2,11 +2,11 @@
  * Provides helper functions to traverse the DOM.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Dom/Traverse
  */
-define(['Dom/Util'], function(DomUtil) {
+define([], function() {
 	"use strict";
 	
 	/** @const */ var NONE = 0;
@@ -16,7 +16,7 @@ define(['Dom/Util'], function(DomUtil) {
 	
 	var _probe = [
 		function(el, none) { return true; },
-		function(el, selector) { return DomUtil.matches(el, selector); },
+		function(el, selector) { return el.matches(selector); },
 		function(el, className) { return el.classList.contains(className); },
 		function(el, tagName) { return el.nodeName === tagName; }
 	];
@@ -76,7 +76,7 @@ define(['Dom/Util'], function(DomUtil) {
 	/**
 	 * @exports	WoltLab/WCF/Dom/Traverse
 	 */
-	var DomTraverse = {
+	return {
 		/**
 		 * Examines child elements and returns the first child matching the given selector.
 		 * 
@@ -215,11 +215,11 @@ define(['Dom/Util'], function(DomUtil) {
 		 * Returns the next element sibling with given CSS class.
 		 * 
 		 * @param	{Element}	el		element
-		 * @param	{string}	className	CSS class name
+		 * @param	{string}	tagName         element tag name
 		 * @return	{(Element|null)}	null if there is no next sibling element or it does not have the class set
 		 */
 		nextByTag: function(el, tagName) {
-			return _sibling(el, 'nextElementSibling', CLASS_NAME, className);
+			return _sibling(el, 'nextElementSibling', TAG_NAME, tagName);
 		},
 		
 		/**
@@ -258,13 +258,11 @@ define(['Dom/Util'], function(DomUtil) {
 		 * Returns the previous element sibling with given CSS class.
 		 * 
 		 * @param	{Element}	el		element
-		 * @param	{string}	className	CSS class name
+		 * @param	{string}	tagName         element tag name
 		 * @return	{(Element|null)}	null if there is no previous sibling element or it does not have the class set
 		 */
 		prevByTag: function(el, tagName) {
-			return _sibling(el, 'previousElementSibling', CLASS_NAME, className);
+			return _sibling(el, 'previousElementSibling', TAG_NAME, tagName);
 		}
 	};
-	
-	return DomTraverse;
 });

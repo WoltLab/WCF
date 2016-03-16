@@ -2,4 +2,6 @@
 
 {include file='userInformationButtons'}
 
-{include file='userInformationStatistics'}
+<dl class="plain inlineDataList small">
+	{include file='userInformationStatistics'}
+</dl>

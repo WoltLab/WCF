@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Upload
  */
-define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], function(AjaxRequest, Core, DomChangeListener, Language, DomUtil) {
+define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Traverse'], function(AjaxRequest, Core, DomChangeListener, Language, DomUtil, DomTraverse) {
 	"use strict";
 	
 	/**
@@ -124,8 +124,8 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 					var fileElement = this._createFileElement(file);
 					
 					if (!fileElement.classList.contains('uploadFailed')) {
-						elAttr(fileElement, 'data-filename', file.name);
-						elAttr(fileElement, 'data-internal-file-id', this._internalFileId++);
+						elData(fileElement, 'filename', file.name);
+						elData(fileElement, 'internal-file-id', this._internalFileId++);
 						this._fileElements[uploadId][i] = fileElement;
 					}
 				}
@@ -190,7 +190,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 		 * Removes the button to upload files.
 		 */
 		_removeButton: function() {
-			this._button.parentNode.removeChild(this._button);
+			elRemove(this._button);
 			
 			DomChangeListener.trigger();
 		},
@@ -217,6 +217,12 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 		 * @return	{(integer|Array.<integer>|null)}	identifier(s) for the uploaded files
 		 */
 		_upload: function(event, file, blob) {
+			// remove failed upload elements first
+			var failedUploads = DomTraverse.childrenByClass(this._target, 'uploadFailed');
+			for (var i = 0, length = failedUploads.length; i < length; i++) {
+				elRemove(failedUploads[i]);
+			}
+			
 			var uploadId = null;
 			
 			var files = [];
@@ -285,7 +291,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 			var formData = new FormData();
 			for (var i = 0, length = files.length; i < length; i++) {
 				if (this._fileElements[uploadId][i]) {
-					var internalFileId = elAttr(this._fileElements[uploadId][i], 'data-internal-file-id');
+					var internalFileId = elData(this._fileElements[uploadId][i], 'internal-file-id');
 					
 					if (blob) {
 						formData.append('__files[' + internalFileId + ']', blob, files[i].name);
@@ -298,15 +304,29 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util'], fu
 			
 			formData.append('actionName', this._options.action);
 			formData.append('className', this._options.className);
-			var additionalParameters = this._getParameters();
-			for (var name in additionalParameters) {
-				formData.append('parameters[' + name + ']', additionalParameters[name]);
-			}
+			formData.append('interfaceName', 'wcf\\data\\IUploadAction');
+			
+			// recursively append additional parameters to form data
+			var appendFormData = function(parameters, prefix) {
+				prefix = prefix || '';
+				
+				for (var name in parameters) {
+					if (typeof parameters[name] === 'object') {
+						appendFormData(parameters[name], prefix + '[' + name + ']');
+					}
+					else {
+						formData.append('parameters' + prefix + '[' + name + ']', parameters[name]);
+					}
+				}
+			};
+			
+			appendFormData(this._getParameters());
 			
 			var request = new AjaxRequest({
 				data: formData,
 				contentType: false,
 				failure: this._failure.bind(this, uploadId),
+				silent: true,
 				success: this._success.bind(this, uploadId),
 				uploadProgress: this._progress.bind(this, uploadId),
 				url: this._options.url

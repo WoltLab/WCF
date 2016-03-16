@@ -244,6 +244,16 @@
 					<category name="dashboard.sidebar.recentActivities">
 						<parent>dashboard.sidebar</parent>
 					</category>
+			
+			<!-- cms -->
+			<category name="cms"></category>
+			<category name="cms.media">
+				<parent>cms</parent>
+			</category>
+			<category name="cms.media.thumbnail">
+				<parent>cms.media</parent>
+			</category>
+			<!-- /cms -->
 		</categories>
 		
 		<options>
@@ -441,19 +451,14 @@
 			</option>
 			
 			<option name="url_legacy_mode">
-				<categoryname>general.page.seo</categoryname>
+				<categoryname>hidden</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>!url_controller_replacement</enableoptions>
 			</option>
 			<option name="url_omit_index_php">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="url_controller_replacement">
-				<categoryname>general.page.seo</categoryname>
-				<optiontype>urlControllerReplacement</optiontype>
 			</option>
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>
@@ -1477,6 +1482,70 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<maxvalue>100</maxvalue>
 			</option>
 			<!-- /message.general.poll -->
+			
+			<!-- cms.media.thumnail -->
+			<option name="media_small_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>280</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>145</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>400</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_small_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>210</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>145</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>300</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_small_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="media_medium_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>560</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>400</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>900</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_medium_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>420</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>300</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>700</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_medium_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="media_large_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1200</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>900</minvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_large_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>900</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>700</minvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_large_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- cms.media.thumnail -->
 		</options>
 	</import>
 	

@@ -29,7 +29,7 @@ class ApplicationManagementPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canManageApplication');
+	public $neededPermissions = array('admin.configuration.canManageApplication');
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()

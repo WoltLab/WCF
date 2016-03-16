@@ -166,7 +166,7 @@ abstract class TreeMenu extends SingletonFactory {
 			$newActiveMenuItems[] = $menuItem;
 			$menuItem = $this->menuItemList[$menuItem]->parentMenuItem;
 			
-			if ($menuItem && !isset($this->menuItemList[$menuItem])) return false;
+			if ($menuItem && !isset($this->menuItemList[$menuItem])) return;
 		}
 		
 		if (!empty($newActiveMenuItems)) $this->activeMenuItems = $newActiveMenuItems;

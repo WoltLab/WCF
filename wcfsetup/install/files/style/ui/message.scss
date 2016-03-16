@@ -1,0 +1,456 @@
+.messageList {
+	border: 1px solid $wcfContentBorder;
+	border-width: 1px 0;
+	margin: 30px 0;
+	
+	> li {
+		@include large-screen-only {
+			padding: 30px 0;
+		}
+		
+		@include small-screen-only {
+			padding: 20px 0;
+		}
+		
+		&:not(:first-child) {
+			border-top: 1px solid $wcfContentBorder;
+		}
+	}
+}
+
+.messageCheckboxLabel {
+	cursor: pointer;
+	display: block;
+	position: relative;
+	
+	&::before {
+		content: $fa-var-square-o;
+		display: block;
+		font-family: FontAwesome;
+		position: absolute;
+	}
+	
+	&::after {
+		color: rgb(0, 150, 0);
+		content: $fa-var-check;
+		display: none;
+		font-family: FontAwesome;
+		position: absolute;
+	}
+	
+	> input[type="checkbox"] {
+		display: none;
+	}
+}
+
+.message {
+	display: flex;
+	
+	@include small-screen-only {
+		flex-direction: column;
+	}
+	
+	.messageClipboardCheckbox {
+		height: 24px;
+		width: 24px;
+		
+		@extend .messageCheckboxLabel;
+		
+		&::before {
+			font-size: 25px;
+			left: 2px;
+			top: -6px;
+		}
+	}
+	
+	&.jsMarked .messageClipboardCheckbox::after {
+		display: block;
+		font-size: 14px;
+		left: 5px;
+		top: 1px;
+	}
+}
+
+/* sidebar */
+.messageSidebar {
+	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarText;
+	position: relative;
+	
+	@include large-screen-only {
+		align-self: flex-start;
+		border-radius: 3px;
+		flex: 0 0 240px;
+		padding: 20px;
+		text-align: center;
+		
+		& + .messageContent {
+			margin-left: 30px;
+		}
+	}
+	
+	@include small-screen-only {
+		flex: 0 0 auto;
+		margin: 0 -10px;
+		padding: 10px;
+		
+		.messageAuthor {
+			flex: 0 0 auto;
+			position: relative;
+			
+			.userAvatar {
+				display: block;
+				margin: 0;
+				position: static;
+				
+				> a {
+					left: 0;
+					position: absolute;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+				
+				.userAvatarImage {
+					max-height: 48px;
+					max-width: 48px;
+				}
+			}
+			
+			.messageAuthorContainer,
+			.userTitle {
+				margin-left: 58px;
+			}
+		}
+		
+		.userCredits {
+			display: none;
+		}
+	}
+	
+	a {
+		color: $wcfSidebarLink;
+		
+		&:hover {
+			color: $wcfSidebarLinkActive;
+		}
+	}
+	
+	.dataList {
+		@include wcfFontSmall;
+	}
+	
+	.userAvatar {
+		display: inline-block;
+		position: relative;
+		margin-bottom: 10px;
+		
+		> a {
+			display: inline-block;
+		}
+	}
+	
+	.username {
+		display: inline-block;
+		
+		@include wcfFontHeadline;
+	}
+	
+	.badgeOnline {
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		bottom: 0;
+	}
+}
+
+.messageAuthor + * {
+	margin-top: 20px;
+	
+	&:before {
+		content: "";
+		left: 0;
+		margin-top: -10px;
+		position: absolute;
+		right: 0;
+	}
+}
+
+.messageAuthorContainer:not(:last-child) {
+	margin-bottom: 5px;
+}
+
+// sidebar right
+.messageSidebarOrientationRight {
+	.messageContent {
+		order: 1;
+	}
+	
+	.messageSidebar {
+		order: 2;
+	}
+	
+	.messageSidebar + .messageContent {
+		margin-left: 20px;
+		margin-right: 30px;
+	}
+}
+
+/* content */
+.messageContent {
+	display: flex;
+	flex: auto;
+	flex-direction: column;
+	
+	@include large-screen-only {
+		margin: 0 20px;
+	}
+	
+	@include small-screen-only {
+		margin-top: 20px;
+	}
+	
+	&.loading {
+		position: relative;
+		
+		> .messageContentLoadingOverlay {
+			align-items: center;
+			background-color: $wcfContentBackground;
+			bottom: 0;
+			display: flex;
+			justify-content: center;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			
+			> .icon {
+				flex: 0 0 auto;
+			}
+		}
+	}
+}
+
+/* content - header */
+.messageHeader {
+	display: flex;
+	flex: 0 0 auto;
+	justify-content: flex-end;
+		
+	+ .messageBody {
+		margin-top: 20px;
+	}
+	
+	> .messageQuickOptions {
+		flex: 0 0 auto;
+	}
+	
+	> .messageHeaderWrapper {
+		align-items: center;
+		flex: 1 1 auto;
+	}
+}
+
+.messageHeaderBox {
+	display: flex;
+	flex: 1 1 auto;
+	flex-wrap: wrap;
+	
+	> .messageTitle {
+		flex: 0 0 100%;
+	}
+	
+	> .messageHeaderMetaData,
+	> .messageStatus {
+		flex: 0 0 auto;
+	}
+}
+
+.messageTitle {
+	@include wcfFontHeadline;
+	
+	color: $wcfContentHeadlineText;
+		
+	a {
+		color: $wcfContentHeadlineLink;
+			
+		&:hover {
+			color: $wcfContentHeadlineLinkActive;
+		}
+	}
+}
+
+.messageHeaderMetaData {
+	@include inlineList;
+	@include dotSeparated;
+	@include wcfFontSmall;
+	
+	.messagePublicationTime {
+		color: $wcfContentDimmedText;
+	}
+	
+	+ .messageStatus {
+		margin-left: 5px;
+	}
+}
+
+.messageStatus {
+	@include inlineList;
+	@include wcfFontSmall;
+	
+	.wcfLikeCounter {
+		color: $wcfContentDimmedText;
+	}
+}
+
+.messageQuickOptions {
+	@include large-screen-only {
+		@include inlineList;
+	}
+	
+	@include small-screen-only {
+		flex: 0 0 24px;
+		height: 1.5em;
+		position: relative;
+		
+		&::before {
+			content: $fa-var-bars;
+			font-family: FontAwesome;
+			font-size: 18px;
+			position: absolute;
+			right: 0;
+			top: -2px;
+		}
+		
+		> li {
+			display: none;
+		}
+	}
+}
+
+/* content - body */
+.messageBody {
+	flex: auto;
+	
+	&.editor {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		
+		> .icon {
+			flex: 0 0 auto;
+		}
+		
+		> .editorContainer {
+			flex: auto;
+		}
+	}
+	
+	> .messageText {
+		@extend .htmlContent;
+	}
+}
+
+/* content - footer */
+.messageFooter {
+	flex: 0 0 auto;
+	margin-top: 20px;
+}
+
+.messageFooterNote {
+	border-left: 5px solid $wcfContentBorderInner;
+	color: $wcfContentDimmedText;
+	margin-top: 20px;
+	padding: 5px 10px;
+	
+	@include wcfFontSmall;
+	
+	a {
+		color: $wcfContentDimmedLink;
+		
+		&:hover {
+			color: $wcfContentDimmedLinkActive;
+			text-decoration: underline;
+		}
+	}
+}
+
+.messageFooterGroup {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	
+	&:not(:first-child) {
+		> .likesSummary,
+		> .messageFooterButtons {
+			margin-top: 20px;
+		}
+	}
+	
+	> .likesSummary {
+		color: $wcfContentDimmedText;
+		cursor: pointer;
+		flex: 0 0 auto;
+		
+		@include wcfFontSmall;
+		
+		> .icon {
+			color: $wcfContentDimmedText;
+			margin-right: 5px;
+		}
+	}
+	
+	> .messageFooterButtons {
+		@include large-screen-only {
+			flex: auto;
+		}
+		
+		@include small-screen-only {
+			display: none;
+		}
+	}
+}
+
+.messageSignature {
+	border-top: 1px solid rgb(238, 238, 238);
+	opacity: .6;
+	padding-top: 10px;
+	transition: opacity .2s linear;
+}
+
+.message:hover .messageSignature {
+	opacity: 1;
+}
+
+.messageFooterButtons {
+	@extend .buttonGroup;
+	
+	justify-content: flex-end;
+	//opacity: .3;
+	transition: opacity .2s linear;
+	
+	&.forceVisible {
+		//opacity: 1 !important;
+	}
+	
+	> li {
+		display: flex;
+		
+		> a {
+			align-items: center;
+		}
+	}
+	
+	.icon + span:not(.invisible)  {
+		margin-left: 5px;
+	}
+}
+
+.message:hover {
+	.messageFooterButtons {
+		//opacity: .6;
+		
+		&:hover {
+			//opacity: 1;
+		}
+	}
+}

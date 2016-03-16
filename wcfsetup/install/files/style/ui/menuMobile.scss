@@ -1,0 +1,233 @@
+/* animations for overlay appearing from the left */
+@keyframes wcfMenuOverlayLeft {
+	0%   { visibility: hidden;  transform: translateX(-100%); }
+	100% { visibility: visible; transform: translateX(0);     }
+}
+
+@keyframes wcfMenuOverlayLeftOut {
+	0%   { visibility: visible; transform: translateX(0);     }
+	99%  { visibility: visible; transform: translateX(-100%); }
+	100% { visibility: hidden;  transform: translateX(-100%); }
+}
+
+/* animations for overlay appearing from the right */
+@keyframes wcfMenuOverlayRight {
+	0%   { visibility: hidden;  transform: translateX(100%); }
+	100% { visibility: visible; transform: translateX(0);    }
+}
+
+@keyframes wcfMenuOverlayRightOut {
+	0%   { visibility: visible; transform: translateX(0);    }
+	99%  { visibility: visible; transform: translateX(100%); }
+	100% { visibility: hidden;  transform: translateX(100%); }
+}
+
+/* menu container */
+.menuOverlayMobile {
+	bottom: 0;
+	left: 0;
+	max-width: 100vw;
+	overflow: hidden;
+	position: fixed;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+	z-index: 320;
+	
+	&.enableAnimation {
+		animation: wcfMenuOverlayLeftOut .3s;
+		animation-fill-mode: forwards;
+		
+		/* different animation for user menu */
+		&.pageUserMenuMobile {
+			animation-name: wcfMenuOverlayRightOut;
+		}
+	}
+	
+	&.open {
+		animation: wcfMenuOverlayLeft .3s;
+		animation-fill-mode: forwards;
+		
+		/* different animation for user menu */
+		&.pageUserMenuMobile {
+			animation-name: wcfMenuOverlayRight;
+		}
+	}
+	
+	/* work-around to avoid setting explicit visibility */
+	> .menuOverlayItemList:not(.hidden) {
+		visibility: inherit;
+	}
+}
+
+.menuOverlayItemWrapper {
+	display: flex;
+	justify-content: flex-end;
+	
+	> .menuOverlayItemLink {
+		flex: 1 1 auto;
+	}
+}
+
+.menuOverlayItemList {
+	background-color: rgb(44, 62, 80);
+	box-shadow: -5px 0 10px 0 rgba(0, 0, 0, .2);
+	list-style-type: none;
+	margin: 0;
+	padding: 10px 0;
+	position: fixed;
+	top: 0;
+	left: -1px;
+	right: 0;
+	bottom: 0;
+	width: calc(100% + 1px);
+	z-index: 450;
+	transition: margin-left .3s cubic-bezier(.25, .46, .45, .94);
+	transition-timing-function: linear;
+	will-change: margin-left;
+	
+	/* chaining `.hidden` and `.active` below is required because each active
+	   item list receives `.active` but it could still be `.hidden` due to
+	   a child list being active */
+	&.hidden,
+	&.hidden.active {
+		margin-left: -25%;
+	}
+}
+
+.menuOverlayItemSpacer {
+	margin-top: 20px;
+	
+	/* avoid successive spacers piling up */
+	& + .menuOverlayItemSpacer {
+		display: none;
+	}
+}
+
+.menuOverlayItem {
+	&:not(:last-child) {
+		margin-bottom: 1px
+	}
+	
+	/* nested item list */
+	> .menuOverlayItemList {
+		margin-left: 110%;
+		z-index: 500;
+		
+		&.active {
+			margin-left: 0;
+			overflow: scroll;
+		}
+	}
+}
+
+.menuOverlayItemLink,
+.menuOverlayTitle,
+.menuOverlayBackLink {
+	color: rgb(255, 255, 255);
+	display: block;
+	font-size: 14px;
+	padding: 10px 30px;
+	position: relative;
+}
+
+.menuOverlayItemLink {
+	background-color: rgb(52, 73, 94);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	
+	.icon::before {
+		color: #fff;
+	}
+	
+	/* wrapper class for links containing an additional badge */
+	&.menuOverlayItemBadge {
+		align-items: center;
+		display: flex;
+		padding-right: 10px;
+		
+		/* different padding if there is no additional icon after the link,
+		   ensures proper alignment for links with badges containing a child
+		   item list */
+		&:last-child {
+			/* 55px = 10px padding + 1px margin + icon */
+			/* icon = 2x 10px padding + 16px width */
+			padding-right: 55px;
+		}
+		
+		> .menuOverlayItemTitle {
+			flex: 1 1 auto;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		
+		> .badge {
+			flex: 0 0 auto;
+		}
+	}
+	
+	&.menuOverlayItemLinkMore::after {
+		color: rgb(204, 204, 204);
+		content: $fa-var-angle-right;
+		display: block;
+		font-family: FontAwesome;
+		font-size: 24px;
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+.menuOverlayTitle {
+	color: rgb(204, 204, 204);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	
+	&:not(:first-child) {
+		margin-top: 10px;
+	}
+}
+
+/* icon link sharing the space with a link or (header only) the logo */
+.menuOverlayItemLinkIcon {
+	background-color: rgb(52, 73, 94);
+	flex: 0 0 auto;
+	margin-left: 1px;
+	padding: 10px;
+	
+	/* force explicit dimensions because no each .icon24 is of equal height/width */
+	height: 44px;
+	width: 44px;
+	
+	> .icon::before {
+		color: #fff;
+	}
+}
+
+.menuOverlayBackLink::before {
+	color: rgb(204, 204, 204);
+	content: $fa-var-angle-left;
+	display: block;
+	font-family: FontAwesome;
+	font-size: 18px;
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.menuOverlayLogoWrapper {
+	flex: 1 1 auto;
+	padding: 5px;
+	display: flex;
+	
+	.menuOverlayLogo {
+		flex: 1 1 auto;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}

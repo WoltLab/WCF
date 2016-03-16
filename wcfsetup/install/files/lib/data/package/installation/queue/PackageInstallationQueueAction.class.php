@@ -84,7 +84,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateCancelInstallation() {
 		// check permissions
-		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage'));
 		
 		// validate queue
 		$this->queue = $this->getSingleObject();

@@ -6,6 +6,8 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\application\IApplication;
+use wcf\system\box\BoxHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
@@ -45,6 +47,7 @@ define('TIME_NOW', time());
 // wcf imports
 if (!defined('NO_IMPORTS')) {
 	require_once(WCF_DIR.'lib/core.functions.php');
+	require_once(WCF_DIR.'lib/system/api/autoload.php');
 }
 
 /**
@@ -61,7 +64,7 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of currently loaded applications
-	 * @var	array<\wcf\data\application\Application>
+	 * @var Application[]
 	 */
 	protected static $applications = array();
 	
@@ -234,6 +237,12 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
+		if (ob_get_level()) {
+			// discard any output generated before the exception occured, prevents exception
+			// being hidden inside HTML elements and therefore not visible in browser output
+			ob_clean();
+		}
+		
 		// backwards compatibility
 		if ($e instanceof IPrintableException) {
 			$e->show();
@@ -302,6 +311,24 @@ class WCF {
 			OptionEditor::rebuild();
 		}
 		require_once($filename);
+		
+		// check if option file is complete and writable
+		if (PACKAGE_ID) {
+			if (!is_writable($filename)) {
+				FileUtil::makeWritable($filename);
+				
+				if (!is_writable($filename)) {
+					throw new SystemException("The option file '" . $filename . "' is not writable.");
+				}
+			}
+			
+			// check if a previous write operation was incomplete and force rebuilding
+			if (!defined('WCF_OPTION_INC_PHP_SUCCESS')) {
+				OptionEditor::rebuild();
+				
+				require_once($filename);
+			}
+		}
 	}
 	
 	/**
@@ -351,7 +378,8 @@ class WCF {
 			self::getSession()->setStyleID(intval($_REQUEST['styleID']));
 		}
 		
-		StyleHandler::getInstance()->changeStyle(self::getSession()->getStyleID());
+		$styleHandler = StyleHandler::getInstance();
+		$styleHandler->changeStyle(self::getSession()->getStyleID());
 	}
 	
 	/**
@@ -418,28 +446,43 @@ class WCF {
 		$loadedApplications = array();
 		
 		// register WCF as application
-		self::$applications['wcf'] = ApplicationHandler::getInstance()->getWCF();
+		self::$applications['wcf'] = ApplicationHandler::getInstance()->getApplicationByID(1);
 		
+		// TODO: what exactly should the base href represent and how should it be calculated, also because
+		// defining it here eventually breaks the ACP due to tpl initialization occurs first
+		if (!class_exists(WCFACP::class, false)) {
+			$this->getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
+		}
+		
+		// TODO: this is required for the uninstallation of applications, find a different solution!
 		if (PACKAGE_ID == 1) {
-			return;
+			//return;
 		}
 		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$loadedApplications[] = $this->loadApplication($application);
-		
-		// register primary application
-		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-		self::$applications[$abbreviation] = $application;
+		if ($application->packageID != 1) {
+			$loadedApplications[] = $this->loadApplication($application);
+			
+			// register primary application
+			$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+			self::$applications[$abbreviation] = $application;
+		}
 		
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
 		foreach ($applications as $application) {
+			if ($application->packageID == 1) {
+				// ignore WCF
+				continue;
+			}
+			
 			$loadedApplications[] = $this->loadApplication($application, true);
 		}
 		
 		// step 2) run each application
 		if (!class_exists('wcf\system\WCFACP', false)) {
+			/** @var IApplication $application */
 			foreach ($loadedApplications as $application) {
 				$application->__run();
 			}
@@ -481,6 +524,12 @@ class WCF {
 		if (class_exists($className) && is_subclass_of($className, 'wcf\system\application\IApplication')) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
+			
+			// TODO: this should be done during update instead, remove this before any public release
+			if (!file_exists($configPath)) {
+				Package::writeConfigFile($package->packageID);
+			}
+			
 			if (file_exists($configPath)) {
 				require_once($configPath);
 			}
@@ -584,6 +633,15 @@ class WCF {
 		}
 		
 		throw new SystemException("method '".$method."' does not exist in class WCF");
+	}
+	
+	/**
+	 * Returns true if current application (WCF) is treated as active and was invoked directly.
+	 *
+	 * @return	boolean
+	 */
+	public function isActiveApplication() {
+		return (ApplicationHandler::getInstance()->getActiveApplication()->packageID == 1);
 	}
 	
 	/**
@@ -803,6 +861,16 @@ class WCF {
 	}
 	
 	/**
+	 * Returns box handler.
+	 *
+	 * @return	BoxHandler
+	 * @since	2.2
+	 */
+	public function getBoxHandler() {
+		return BoxHandler::getInstance();
+	}
+	
+	/**
 	 * Returns number of available updates.
 	 * 
 	 * @return	integer
@@ -828,9 +896,9 @@ class WCF {
 	 */
 	public function getFavicon() {
 		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
-		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+		$wcf = ApplicationHandler::getInstance()->getWCF();
 		
-		if ($activeApplication->domainName != $primaryApplication->domainName) {
+		if ($activeApplication->domainName !== $wcf->domainName) {
 			if (file_exists(WCF_DIR.'images/favicon.ico')) {
 				$favicon = file_get_contents(WCF_DIR.'images/favicon.ico');
 				

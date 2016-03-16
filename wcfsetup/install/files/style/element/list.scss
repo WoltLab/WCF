@@ -1,0 +1,45 @@
+/* makes an inline-list */
+.inlineList {
+	@include inlineList;
+}
+
+/* restores the native styling for lists */
+.nativeList {
+	margin: 1em 0 1em 40px;
+	
+	li {
+		margin: 7px 0;
+	}
+}
+ul.nativeList {
+	list-style-type: disc;
+}
+ol.nativeList {
+	list-style-type: decimal;
+}
+
+/* tag cloud list */
+.tagList {
+	@include inlineList;
+	
+	align-items: baseline;
+}
+
+/* list of smileys */
+.smileyList {
+	align-items: center;
+}
+
+/* legacy styling (deprecated) */
+ol.dataList,
+ul.dataList {
+	@include inlineList;
+	@include wcfFontSmall;
+	
+	> li {
+		&:not(:last-child):after {
+			content: ",";
+			padding-left: 1px;
+		}
+	}
+}

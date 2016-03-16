@@ -22,11 +22,11 @@
 
 {include file='userMenuSidebar'}
 
-{include file='header' sidebarOrientation='left'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang}</h1>
-	<p>{lang}wcf.user.notification.notifications.description{/lang}
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang}</h1>
+	<p class="contentHeaderDescription">{lang}wcf.user.notification.notifications.description{/lang}</p>
 </header>
 
 {include file='userNotice'}
@@ -50,10 +50,10 @@
 </div>
 
 <form method="post" action="{link controller='NotificationSettings'}{/link}">
-	<div class="container containerPadding marginTop" id="notificationSettings">
+	<div id="notificationSettings">
 		{foreach from=$events key='eventCategory' item='eventList'}
-			<fieldset>
-				<legend>{lang}wcf.user.notification.{$eventCategory}{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.user.notification.{$eventCategory}{/lang}</h2>
 				
 				<dl>
 					{foreach from=$eventList item=event}
@@ -88,10 +88,10 @@
 						</dd>
 					{/foreach}
 				</dl>
-			</fieldset>
+			</section>
 		{/foreach}
 		
-		{event name='fieldsets'}
+		{event name='sections'}
 	</div>
 	
 	<div class="formSubmit">

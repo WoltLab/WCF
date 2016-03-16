@@ -83,5 +83,28 @@
 			</pages>
 		</action>
 		<!-- com.woltlab.wcf.tag -->
+		
+		<!-- com.woltlab.wcf.media -->
+		<action name="insert">
+			<actionclassname><![CDATA[wcf\system\clipboard\action\MediaClipboardAction]]></actionclassname>
+			<showorder>1</showorder>
+			<pages>
+				<!--
+				the clipboard API requires a page but since the media clipboard can be used
+				in dialogs, we use pseudo-pages
+				-->
+				<page><![CDATA[menuManagerDialog-editor]]></page>
+			</pages>
+		</action>
+		<action name="delete">
+			<actionclassname><![CDATA[wcf\system\clipboard\action\MediaClipboardAction]]></actionclassname>
+			<showorder>2</showorder>
+			<pages>
+				<page><![CDATA[wcf\acp\page\MediaListPage]]></page>
+				<page><![CDATA[menuManagerDialog-editor]]></page>
+				<page><![CDATA[menuManagerDialog-select]]></page>
+			</pages>
+		</action>
+		<!-- /com.woltlab.wcf.media -->
 	</import>
 </data>

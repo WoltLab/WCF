@@ -1,4 +1,4 @@
-<fieldset>
+<div class="section">
 	<dl>
 		<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
 		<dd>
@@ -30,7 +30,7 @@
 	<div class="formSubmit">
 		<button data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
 	</div>
-</fieldset>
+</div>
 <script>
 	$(function() {
 		new WCF.Search.User('#assignedUsername');

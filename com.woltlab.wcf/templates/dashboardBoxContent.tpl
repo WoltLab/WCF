@@ -1,3 +1,3 @@
-<div class="dashboardBox" data-box-name="{$box->boxName}">
+<section class="dashboardBox" data-box-name="{$box->boxName}">
 	{@$template}
-</div>
+</section>

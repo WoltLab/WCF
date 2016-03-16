@@ -13,6 +13,7 @@
 		<pip name="objectType">wcf\system\package\plugin\ObjectTypePackageInstallationPlugin</pip>
 		<pip name="objectTypeDefinition">wcf\system\package\plugin\ObjectTypeDefinitionPackageInstallationPlugin</pip>
 		<pip name="option">wcf\system\package\plugin\OptionPackageInstallationPlugin</pip>
+		<pip name="page">wcf\system\package\plugin\PagePackageInstallationPlugin</pip>
 		<pip name="pageMenu">wcf\system\package\plugin\PageMenuPackageInstallationPlugin</pip>
 		<pip name="script">wcf\system\package\plugin\ScriptPackageInstallationPlugin</pip>
 		<pip name="sql">wcf\system\package\plugin\SQLPackageInstallationPlugin</pip>
@@ -29,5 +30,8 @@
 		<pip name="userMenu">wcf\system\package\plugin\UserMenuPackageInstallationPlugin</pip>
 		<pip name="userNotificationEvent">wcf\system\package\plugin\UserNotificationEventPackageInstallationPlugin</pip>
 		<pip name="dashboardBox">wcf\system\package\plugin\DashboardBoxPackageInstallationPlugin</pip>
+		<pip name="box">wcf\system\package\plugin\BoxPackageInstallationPlugin</pip>
+		<pip name="menu">wcf\system\package\plugin\MenuPackageInstallationPlugin</pip>
+		<pip name="menuItem">wcf\system\package\plugin\MenuItemPackageInstallationPlugin</pip>
 	</import>
 </data>

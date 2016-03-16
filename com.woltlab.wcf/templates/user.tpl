@@ -132,105 +132,18 @@
 	</noscript>
 </head>
 
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="userProfile">
 
-{include file='userSidebar' assign='sidebar'}
+{include file='userHeader' assign='boxesTop'}
 
-{include file='header' sidebarOrientation='left'}
+{include file='userSidebar' assign='sidebarRight'}
 
-<header class="boxHeadline userHeadline"
-	{if $isAccessible}
-		data-object-id="{@$user->userID}"
-		{if $__wcf->session->getPermission('admin.user.canBanUser')}
-			data-banned="{@$user->banned}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
-			data-disable-avatar="{@$user->disableAvatar}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
-			data-disable-signature="{@$user->disableSignature}"
-		{/if}
-	{/if}
->
-	<span class="framed invisible">{@$user->getAvatar()->getImageTag(48)}</span>
-	
-	<h1>{$user->username}{if $user->banned} <span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}{if MODULE_USER_RANK}
-		{if $user->getUserTitle()}
-			<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
-		{/if}
-		{if $user->getRank() && $user->getRank()->rankImage}
-			<span class="userRankImage">{@$user->getRank()->getImage()}</span>
-		{/if}
-	{/if}</h1>
-	
-	<ul class="dataList">
-		{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
-		{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
-		{if $user->isVisibleOption('location') && $user->location}<li>{lang}wcf.user.membersList.location{/lang}</li>{/if}
-		{if $user->getOldUsername()}<li>{lang}wcf.user.profile.oldUsername{/lang}</li>{/if}
-		<li>{lang}wcf.user.membersList.registrationDate{/lang}</li>
-		{event name='userDataRow1'}
-	</ul>
-	{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
-		<dl class="plain inlineDataList">
-			<dt>{lang}wcf.user.usersOnline.lastActivity{/lang}</dt>
-			<dd>{@$user->getLastActivityTime()|time}{if $user->getCurrentLocation()}, {@$user->getCurrentLocation()}{/if}</dd>
-			{event name='userDataRow2'}
-		</dl>
-	{/if}
-	<nav class="jsMobileNavigation buttonGroupNavigation">
-		<ul id="profileButtonContainer" class="buttonGroup">
-			{hascontent}
-				<li class="dropdown">
-					<a href="#" class="button dropdownToggle jsTooltip" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon16 icon-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
-					<ul class="dropdownMenu">
-						{content}
-							{event name='quickSearchItems'}
-						{/content}
-					</ul>
-				</li>
-			{/hascontent}
-			
-			{if $__wcf->session->getPermission('user.profile.canReportContent')}
-				<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a href="#" title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
-			{/if}
-			
-			{if $user->userID != $__wcf->user->userID}
-				{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-					<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
-				{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
-					<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
-				{/if}
-			{/if}
-			
-			{event name='buttons'}
-			
-			{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
-				<li class="dropdown">
-					<a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="button jsTooltip jsUserInlineEditor" title="{lang}wcf.user.moderate{/lang}"><span class="icon icon16 fa-wrench"></span> <span class="invisible">{lang}wcf.user.moderate{/lang}</span></a>
-					<ul class="dropdownMenu"></ul>
-				</li>
-			{/if}
-		</ul>
-	</nav>
-</header>
+{include file='header'}
 
 {include file='userNotice'}
 
 {if !$user->isProtected()}
-	<div class="contentNavigation">
-		{hascontent}
-			<nav>
-				<ul>
-					{content}
-						{event name='contentNavigationButtons'}
-					{/content}
-				</ul>
-			</nav>
-		{/hascontent}
-	</div>
-	
-	<section id="profileContent" class="marginTop tabMenuContainer" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
+	<div id="profileContent" class="section tabMenuContainer userProfileContent" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
@@ -243,14 +156,14 @@
 		
 		{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
 			{if $menuItem->getContentManager()->isVisible($userID)}
-				<div id="{$menuItem->getIdentifier()}" class="container tabMenuContent" data-menu-item="{$menuItem->menuItem}">
+				<div id="{$menuItem->getIdentifier()}" class="tabMenuContent" data-menu-item="{$menuItem->menuItem}">
 					{if $menuItem === $__wcf->getUserProfileMenu()->getActiveMenuItem()}
 						{@$profileContent}
 					{/if}
 				</div>
 			{/if}
 		{/foreach}
-	</section>
+	</div>
 {else}
 	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
 {/if}

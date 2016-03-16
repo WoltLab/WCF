@@ -10,8 +10,8 @@
 
 {include file='header' __disableAds=true}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.register.disclaimer{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.user.register.disclaimer{/lang}</h1>
 </header>
 
 {include file='userNotice'}
@@ -31,18 +31,18 @@
 </div>
 
 <form method="post" action="{link controller='Disclaimer'}{/link}">
-	<div class="container containerPadding marginTop htmlContent">
+	<div class="section htmlContent">
 		{lang}wcf.user.register.disclaimer.text{/lang}
 		
-		{event name='fieldsets'}
+		{event name='sections'}
 	</div>
 	
 	{if !$__wcf->user->userID}
-	<div class="formSubmit">
-		<input type="submit" name="accept" value="{lang}wcf.user.register.disclaimer.accept{/lang}" accesskey="s" />
-		<a class="button" href="{link}{/link}">{lang}wcf.user.register.disclaimer.decline{/lang}</a>
-		{@SECURITY_TOKEN_INPUT_TAG}
-	</div>
+		<div class="formSubmit">
+			<input type="submit" name="accept" value="{lang}wcf.user.register.disclaimer.accept{/lang}" accesskey="s" />
+			<a class="button" href="{link}{/link}">{lang}wcf.user.register.disclaimer.decline{/lang}</a>
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
 	{/if}
 </form>
 

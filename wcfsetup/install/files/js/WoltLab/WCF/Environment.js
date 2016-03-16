@@ -2,7 +2,7 @@
  * Provides basic details on the JavaScript environment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Environment
  */
@@ -17,7 +17,7 @@ define([], function() {
 	/**
 	 * @exports	WoltLab/WCF/Enviroment
 	 */
-	var Environment = {
+	return {
 		/**
 		 * Determines environment variables.
 		 */
@@ -121,6 +121,4 @@ define([], function() {
 			return _touch;
 		}
 	};
-	
-	return Environment;
 });

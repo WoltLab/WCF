@@ -1,16 +1,13 @@
 {include file='header' pageTitle='wcf.acp.user.search'}
 
 <script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		WCF.TabMenu.init();
-		new WCF.Search.User('input[name=username]');
+	require(['WoltLab/WCF/Ui/User/Search/Input'], function(UiUserSearchInput) {
+		new UiUserSearchInput(elBySel('input[name="username"]'));
 	});
-	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.user.search{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.user.search{/lang}</h1>
 </header>
 
 {if $errorField == 'search'}
@@ -23,7 +20,7 @@
 	<nav>
 		<ul>
 			<li class="dropdown">
-				<a class="button dropdownToggle"><span class="icon icon16 icon-search"></span> <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
+				<a class="button dropdownToggle"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
 				<ul class="dropdownMenu">
 					<li><a href="{link controller='UserQuickSearch'}mode=banned{/link}">{lang}wcf.acp.user.quickSearch.banned{/lang}</a></li>
 					<li><a href="{link controller='UserQuickSearch'}mode=newest{/link}">{lang}wcf.acp.user.quickSearch.newest{/lang}</a></li>
@@ -41,19 +38,19 @@
 </div>
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
-	<header class="boxHeadline boxSubHeadline">
-		<h2>{lang}wcf.acp.user.search.conditions{/lang}</h2>
-	</header>
+	<section class="section">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.acp.user.search.conditions{/lang}</h2>
+		</header>
+		
+		{include file='userConditions'}
+	</section>
 	
-	{include file='userConditions'}
-	
-	<header class="boxHeadline boxSubHeadline">
-		<h2>{lang}wcf.acp.user.search.display{/lang}</h2>
-	</header>
-	
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.user.search.display{/lang}</h2>
+		
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.acp.user.search.display.general{/lang}</h2>
 			
 			<dl>
 				<dt><label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label></dt>
@@ -82,10 +79,10 @@
 			</dl>
 			
 			{event name='searchDisplayFields'}
-		</fieldset>
+		</section>
 		
-		<fieldset>
-			<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.acp.user.search.display.columns{/lang}</h2>
 			
 			{if $columnOptions|count}
 				<dl>
@@ -119,10 +116,10 @@
 			</dl>
 			
 			{event name='searchDisplayColumnFields'}
-		</fieldset>
+		</section>
 		
-		{event name='resultOptionFieldsets'}
-	</div>
+		{event name='resultOptionSections'}
+	</section>	
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />

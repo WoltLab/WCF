@@ -106,14 +106,14 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		
 		$cronjob = parent::import($row, $data);
 		
-		// update event listener name
+		// update cronjob name
 		if (!$cronjob->cronjobName) {
 			$cronjobEditor = new CronjobEditor($cronjob);
 			$cronjobEditor->update(array(
 				'cronjobName' => Cronjob::AUTOMATIC_NAME_PREFIX.$cronjob->cronjobID
 			));
 			
-			$cronjob = new Cronjob($cronjob->listenerID);
+			$cronjob = new Cronjob($cronjob->cronjobID);
 		}
 		
 		return $cronjob;

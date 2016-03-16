@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/menu.xsd">
+	<import>
+		<menu identifier="com.woltlab.wcf.MainMenu">
+			<title language="de">Hauptmenü</title>
+			<title language="en">Main Menu</title>
+			
+			<box>
+				<position>mainMenu</position>
+				<cssClassName>mainMenu</cssClassName>
+				<showHeader>0</showHeader>
+				<visibleEveryhwere>1</visibleEveryhwere>
+			</box>
+		</menu>
+		
+		<menu identifier="com.woltlab.wcf.FooterMenu">
+			<title language="de">Footer-Menü</title>
+			<title language="en">Footer Menu</title>
+			
+			<box>
+				<position>footer</position>
+				<showHeader>0</showHeader>
+				<visibleEveryhwere>1</visibleEveryhwere>
+			</box>
+		</menu>
+	</import>
+</data>

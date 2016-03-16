@@ -19,12 +19,12 @@ class StatPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.log.stat';
+	public $activeMenuItem = 'wcf.acp.menu.link.stat.list';
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = array('admin.management.canViewLog');
 	
 	/**
 	 * start date (yyyy-mm-dd)

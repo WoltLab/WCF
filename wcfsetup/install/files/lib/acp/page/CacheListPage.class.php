@@ -27,7 +27,7 @@ class CacheListPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canManageApplication');
+	public $neededPermissions = array('admin.configuration.canManageApplication');
 	
 	/**
 	 * indicates if cache was cleared

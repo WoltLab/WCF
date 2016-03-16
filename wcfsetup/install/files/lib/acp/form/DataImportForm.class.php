@@ -35,7 +35,7 @@ class DataImportForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canImportData');
+	public $neededPermissions = array('admin.management.canImportData');
 	
 	/**
 	 * list of available exporters

@@ -558,7 +558,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 						if (!is_array($target[$variableName])) {
 							throw new UserInputException($variableName);
 						}
-					
+						
 						for ($i = 0, $length = count($target[$variableName]); $i < $length; $i++) {
 							if (empty($target[$variableName][$i])) {
 								throw new UserInputException($variableName);

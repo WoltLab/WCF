@@ -23,16 +23,22 @@ requirejs.config({
 			'Dom/Util': 'WoltLab/WCF/Dom/Util',
 			'Environment': 'WoltLab/WCF/Environment',
 			'EventHandler': 'WoltLab/WCF/Event/Handler',
+			'EventKey': 'WoltLab/WCF/Event/Key',
 			'Language': 'WoltLab/WCF/Language',
 			'List': 'WoltLab/WCF/List',
 			'ObjectMap': 'WoltLab/WCF/ObjectMap',
+			'Permission': 'WoltLab/WCF/Permission',
 			'StringUtil': 'WoltLab/WCF/StringUtil',
 			'Ui/Alignment': 'WoltLab/WCF/Ui/Alignment',
 			'Ui/CloseOverlay': 'WoltLab/WCF/Ui/CloseOverlay',
 			'Ui/Confirmation': 'WoltLab/WCF/Ui/Confirmation',
 			'Ui/Dialog': 'WoltLab/WCF/Ui/Dialog',
+			'Ui/Notification': 'WoltLab/WCF/Ui/Notification',
+			'Ui/ReusableDropdown': 'WoltLab/WCF/Ui/Dropdown/Reusable',
+			'Ui/Screen': 'WoltLab/WCF/Ui/Screen',
 			'Ui/SimpleDropdown': 'WoltLab/WCF/Ui/Dropdown/Simple',
-			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu'
+			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu',
+			'Upload': 'WoltLab/WCF/Upload'
 		}
 	}
 });

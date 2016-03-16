@@ -18,7 +18,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		this._containers = new Dictionary();
 		this._isLegacy = null;
 		this._tabs = new Dictionary();
-	};
+	}
 	
 	TabMenuSimple.prototype = {
 		/**
@@ -49,20 +49,20 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			
 			// get children
 			var tabs = elByTag('li', nav);
-			if (tabs.length === null) {
+			if (tabs.length === 0) {
 				return false;
 			}
 			
 			var container, containers = DomTraverse.childrenByTag(this._container, 'DIV'), name;
 			for (var i = 0, length = containers.length; i < length; i++) {
 				container = containers[i];
-				name = elAttr(container, 'data-name');
+				name = elData(container, 'name');
 				
 				if (!name) {
 					name = DomUtil.identify(container);
 				}
 				
-				elAttr(container, 'data-name', name);
+				elData(container, 'name', name);
 				this._containers.set(name, container);
 			}
 			
@@ -100,12 +100,15 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			}
 			
 			if (this._isLegacy) {
-				elAttr(this._container, 'data-is-legacy', true);
+				elData(this._container, 'is-legacy', true);
 				
 				this._tabs.forEach(function(tab, name) {
 					elAttr(tab, 'aria-controls', name);
 				});
 			}
+			
+			// create pointer element
+			nav.appendChild(elCreate('span'));
 			
 			return true;
 		},
@@ -121,7 +124,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			
 			// bind listeners
 			this._tabs.forEach((function(tab) {
-				if (!oldTabs || oldTabs.get(elAttr(tab, 'data-name')) !== tab) {
+				if (!oldTabs || oldTabs.get(elData(tab, 'name')) !== tab) {
 					tab.children[0].addEventListener('click', this._onClick.bind(this));
 				}
 			}).bind(this));
@@ -139,7 +142,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				}
 				
 				if (!selectTab) {
-					var preselect = elAttr(this._container, 'data-preselect');
+					var preselect = elData(this._container, 'preselect');
 					if (preselect === "true" || !preselect) preselect = true;
 					
 					if (preselect === true) {
@@ -196,14 +199,19 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				}
 			}
 			
-			name = name || elAttr(tab, 'data-name');
+			name = name || elData(tab, 'name');
 			
 			// unmark active tab
 			var oldTab = this.getActiveTab();
 			var oldContent = null;
 			if (oldTab) {
+				if (elData(oldTab, 'name') === name) {
+					// same tab
+					return;
+				}
+				
 				oldTab.classList.remove('active');
-				oldContent = this._containers.get(elAttr(oldTab, 'data-name'));
+				oldContent = this._containers.get(elData(oldTab, 'name'));
 				oldContent.classList.remove('active');
 				oldContent.classList.add('hidden');
 				
@@ -223,12 +231,33 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				newContent.classList.remove('hidden');
 			}
 			
+			var menu = tab.parentNode.parentNode;
+			
+			// set pointer position
+			var span = DomTraverse.childByTag(menu, 'SPAN');
+			
+			// make sure that the tab is (temporarily) visible so that offsetLeft has the proper value
+			var toggleHidden = false;
+			if (menu.classList.contains('menu') && menu.parentNode.classList.contains('hidden')) {
+				toggleHidden = true;
+				menu.parentNode.classList.remove('hidden');
+			}
+			
+			if (span !== null) {
+				span.style.setProperty('transform', 'translateX(' + tab.offsetLeft + 'px)');
+				span.style.setProperty('width', tab.clientWidth + 'px');
+			}
+			
+			if (toggleHidden) {
+				menu.parentNode.classList.add('hidden');
+			}
+			
 			if (!disableEvent) {
 				EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this._container.id, 'select', {
 					active: tab,
 					activeName: name,
 					previous: oldTab,
-					previousName: oldTab ? elAttr(oldTab, 'data-name') : null
+					previousName: oldTab ? elData(oldTab, 'name') : null
 				});
 				
 				var jQuery = (this._isLegacy && typeof window.jQuery === 'function') ? window.jQuery : null;
@@ -283,7 +312,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		 * @return	{string}	tab name
 		 */
 		_getTabName: function(tab) {
-			var name = elAttr(tab, 'data-name');
+			var name = elData(tab, 'name');
 			
 			// handle legacy tab menus
 			if (!name) {
@@ -296,7 +325,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 						}
 						else {
 							this._isLegacy = true;
-							elAttr(tab, 'data-name', name);
+							elData(tab, 'name', name);
 						}
 					}
 				}

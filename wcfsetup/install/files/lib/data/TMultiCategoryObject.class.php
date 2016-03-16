@@ -6,6 +6,14 @@ use wcf\system\WCF;
 
 /**
  * Provides category-related methods for an object with multiple categories.
+ * 
+ * Requires the following static methods:
+ * 	- public static function getCategoryMappingDatabaseTableName()
+ * 		returns the name of the database table containing the mapping of the objects to their categories
+ * 	- public static function getCategoryClassName()
+ * 		returns the name of the used AbstractDecoratedCategory class
+ * 	- public static function getDatabaseTableIndexName()
+ * 		see IStorableObject::getDatabaseTableIndexName()
  *
  * @author	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2015 WoltLab GmbH
@@ -122,23 +130,4 @@ trait TMultiCategoryObject {
 	public function setCategoryIDs(array $categoryIDs) {
 		$this->categoryIDs= $categoryIDs;
 	}
-	
-	/**
-	 * Returns the name of the database table containing the mapping of the objects to their categories.
-	 *
-	 * @return	string
-	 */
-	abstract public static function getCategoryMappingDatabaseTableName();
-	
-	/**
-	 * Returns the name of the used AbstractDecoratedCategory class.
-	 * 
-	 * @return	string
-	 */
-	abstract public static function getCategoryClassName();
-	
-	/**
-	 * @see	IStorableObject::getDatabaseTableIndexName()
-	 */
-	abstract public static function getDatabaseTableIndexName();
 }

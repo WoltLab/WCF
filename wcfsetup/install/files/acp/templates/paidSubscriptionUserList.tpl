@@ -8,8 +8,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.paidSubscription.user.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.user.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -27,11 +27,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.paidSubscription.user.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -48,7 +44,7 @@
 				{foreach from=$objects item=subscriptionUser}
 					<tr class="jsPaidSubscriptionUserRow">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$subscriptionUser->subscriptionUserID}" data-confirm-message="{lang}wcf.acp.paidSubscription.user.delete.confirmMessage{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$subscriptionUser->subscriptionUserID}" data-confirm-message="{lang}wcf.acp.paidSubscription.user.delete.confirmMessage{/lang}"></span>
 							
 							{event name='itemButtons'}
 						</td>

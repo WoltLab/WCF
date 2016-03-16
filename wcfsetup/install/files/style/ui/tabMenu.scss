@@ -1,0 +1,73 @@
+/* main tabs */
+.tabMenu {
+	//margin-bottom: 20px;
+	position: relative;
+	
+	> ul {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		
+		@include inlineList;
+		
+		> li {
+			&:not(:last-child) {
+				margin-right: 20px;
+			}
+			
+			&.active > a {
+				cursor: default;
+			}
+			
+			> a {
+				display: block;
+				padding: 5px 0;
+				
+				@include wcfFontSection;
+			}
+		}
+	}
+	
+	> span {
+		border-top: 1px solid $wcfContentLink;
+		bottom: 0;
+		position: absolute;
+		transition: transform .2s linear, width .2s linear;
+	}
+}
+
+.tabMenuContent.hidden {
+	display: none;
+}
+
+.tabMenuContent {
+	// remove upper border if containerList is the first child
+	> .containerList:first-child > li:first-child {
+		border-top-width: 0;
+	}
+}
+
+/* sub tabs */
+.menu {
+	margin-top: 10px;
+	position: relative;
+	
+	> ul {
+		@include inlineList;
+		
+		> li {
+			&:not(:last-child) {
+				margin-right: 20px;
+			}
+			
+			&.active > a {
+				cursor: default;
+			}
+		}
+	}
+	
+	> span {
+		border-top: 1px solid $wcfContentLink;
+		bottom: -5px;
+		position: absolute;
+		transition: transform .2s linear, width .2s linear;
+	}
+}

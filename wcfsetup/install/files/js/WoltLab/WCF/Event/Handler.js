@@ -14,7 +14,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 	/**
 	 * @exports	WoltLab/WCF/Event/Handler
 	 */
-	var EventHandler = {
+	return {
 		/**
 		 * Adds an event listener.
 		 * 
@@ -111,6 +111,4 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 			}
 		}
 	};
-	
-	return EventHandler;
 });

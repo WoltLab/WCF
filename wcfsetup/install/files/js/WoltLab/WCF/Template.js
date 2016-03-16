@@ -27,8 +27,9 @@ define(['./Template.grammar', './StringUtil', 'Language'], function(parser, Stri
 	 * @constructor
 	 */
 	function Template(template) {
-		// Fetch Language, as it cannot be provided because of a circular dependency
+		// Fetch Language/StringUtil, as it cannot be provided because of a circular dependency
 		if (Language === undefined) Language = require('Language');
+		if (StringUtil === undefined) StringUtil = require('StringUtil');
 		
 		try {
 			template = parser.parse(template);

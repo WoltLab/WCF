@@ -1,0 +1,65 @@
+.sortableList {
+	list-style: decimal outside;
+	margin-left: 20px;
+}
+
+.sortableNode {
+	&:not(:last-child) {
+		border-bottom: 1px solid $wcfContentBorderInner;
+	}
+	
+	> .sortableList {
+		//padding-left: 20px;
+		
+		&:not(:empty) {
+			border-top: 1px solid $wcfContentBorderInner;
+		}
+	}
+}
+
+.sortableNodeLabel {
+	align-items: center;
+	cursor: move;
+	padding: 10px;
+	
+	/* `display:flex` acts weird inside lists with a visible list-style */
+	display: inline-flex;
+	width: 100%;
+	
+	&:hover {
+		background-color: $wcfTabularBoxBackgroundActive
+	}
+	
+	> .icon,
+	> a {
+		flex: 0 0 auto;
+		margin-right: 5px;
+	}
+	
+	> .statusDisplay {
+		align-items: center;
+		display: flex;
+		flex: 1 1 auto;
+		justify-content: flex-end;
+		
+		> a,
+		> span {
+			cursor: pointer;
+			flex: 0 0 auto;
+			margin-left: 5px;
+		}
+	} 
+}
+
+.sortablePlaceholder {
+	background-color: $wcfStatusWarningBackground;
+	border: 1px solid $wcfStatusWarningBorder;
+	color: $wcfStatusWarningText;
+	padding: 10px;
+	
+	&.sortableInvalidTarget {
+		background-color: $wcfStatusErrorBackground;
+		border-color: $wcfStatusErrorBorder;
+		color: $wcfStatusErrorText;
+	}
+}

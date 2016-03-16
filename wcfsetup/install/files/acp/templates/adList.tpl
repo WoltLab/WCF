@@ -10,8 +10,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.ad.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.ad.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -19,7 +19,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='AdAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
+			<li><a href="{link controller='AdAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -27,15 +27,15 @@
 </div>
 
 {if $objects|count}
-	<div class="container containerPadding sortableListContainer marginTop" id="adList">
+	<div class="section sortableListContainer" id="adList">
 		<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 			{foreach from=$objects item='ad'}
 				<li class="sortableNode sortableNoNesting jsAd" data-object-id="{@$ad->adID}">
 					<span class="sortableNodeLabel">
 						<span class="statusDisplay sortableButtonContainer">
-							<span class="icon icon16 icon-check{if $ad->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$ad->adID}"></span>
-							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$ad->adID}" data-confirm-message="{lang}wcf.acp.ad.delete.confirmMessage{/lang}"></span>
+							<span class="icon icon16 fa-{if !$ad->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$ad->adID}"></span>
+							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$ad->adID}" data-confirm-message="{lang}wcf.acp.ad.delete.confirmMessage{/lang}"></span>
 							
 							{event name='itemButtons'}
 						</span>
@@ -56,7 +56,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='AdAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
+				<li><a href="{link controller='AdAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

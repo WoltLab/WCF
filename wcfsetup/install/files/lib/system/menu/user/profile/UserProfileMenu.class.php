@@ -18,16 +18,16 @@ use wcf\system\WCF;
  */
 class UserProfileMenu extends SingletonFactory {
 	/**
-	 * list of all menu items
-	 * @var	array<\wcf\data\user\profile\menu\item\UserProfileMenuItem>
-	 */
-	public $menuItems = null;
-	
-	/**
 	 * active menu item
-	 * @var	\wcf\data\user\profile\menu\item\UserProfileMenuItem
+	 * @var	UserProfileMenuItem
 	 */
 	public $activeMenuItem = null;
+	
+	/**
+	 * list of all menu items
+	 * @var	UserProfileMenuItem[]
+	 */
+	public $menuItems = null;
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -68,7 +68,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Checks the options and permissions of given menu item.
 	 * 
-	 * @param	\wcf\data\user\profile\menu\item\UserProfileMenuItem	$item
+	 * @param	UserProfileMenuItem     $item
 	 * @return	boolean
 	 */
 	protected function checkMenuItem(UserProfileMenuItem $item) {
@@ -78,7 +78,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Returns the list of menu items.
 	 * 
-	 * @return	array<\wcf\data\user\profile\menu\item\UserProfileMenuItem>
+	 * @return	UserProfileMenuItem[]
 	 */
 	public function getMenuItems() {
 		return $this->menuItems;
@@ -104,7 +104,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Returns the first menu item.
 	 * 
-	 * @return	\wcf\data\user\profile\menu\item\UserProfileMenuItem
+	 * @return	UserProfileMenuItem
 	 */
 	public function getActiveMenuItem() {
 		if (empty($this->menuItems)) {
@@ -122,7 +122,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Returns a specific menu item.
 	 * 
-	 * @return	\wcf\data\user\profile\menu\item\UserProfileMenuItem
+	 * @return	UserProfileMenuItem
 	 */
 	public function getMenuItem($menuItem) {
 		foreach ($this->menuItems as $item) {

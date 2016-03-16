@@ -54,7 +54,7 @@ class UserAvatarImporter extends AbstractImporter {
 		// and create subdirectory if necessary
 		$dir = dirname($avatar->getLocation());
 		if (!@file_exists($dir)) {
-			FileUtil::makePath($dir, 0777);
+			FileUtil::makePath($dir);
 		}
 		
 		// copy file

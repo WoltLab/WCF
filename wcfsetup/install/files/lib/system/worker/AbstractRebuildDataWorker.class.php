@@ -49,7 +49,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermissions(array('admin.system.canRebuildData'));
+		WCF::getSession()->checkPermissions(array('admin.management.canRebuildData'));
 	}
 	
 	/**

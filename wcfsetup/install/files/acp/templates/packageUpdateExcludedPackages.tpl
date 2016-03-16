@@ -1,7 +1,9 @@
 {hascontent}
-	<fieldset>
-		<legend>{lang}wcf.acp.package.update.excludedPackages.excluding{/lang}</legend>
-		<small>{lang}wcf.acp.package.update.excludedPackages.excluding.description{/lang}</small>
+	<section class="section">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.acp.package.update.excludedPackages.excluding{/lang}</h2>
+			<small class="sectionDescription">{lang}wcf.acp.package.update.excludedPackages.excluding.description{/lang}</small>
+		</header>
 		
 		<ul class="nativeList">
 			{content}
@@ -12,13 +14,15 @@
 				{/foreach}
 			{/content}
 		</ul>
-	</fieldset>
+	</section>
 {/hascontent}
 
 {hascontent}
-	<fieldset>
-		<legend>{lang}wcf.acp.package.update.excludedPackages.excluded{/lang}</legend>
-		<small>{lang}wcf.acp.package.update.excludedPackages.excluded.description{/lang}</small>
+	<section class="section">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.acp.package.update.excludedPackages.excluded{/lang}</h2>
+			<small class="sectionDescription">{lang}wcf.acp.package.update.excludedPackages.excluded.description{/lang}</small>
+		</header>
 		
 		<ul class="nativeList">
 			{content}
@@ -29,5 +33,5 @@
 				{/foreach}
 			{/content}
 		</ul>
-	</fieldset>
+	</section>
 {/hascontent}

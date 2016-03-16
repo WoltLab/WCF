@@ -21,7 +21,7 @@ class PackageUpdateServerListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.package.canEditServer');
+	public $neededPermissions = array('admin.configuration.package.canEditServer');
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
