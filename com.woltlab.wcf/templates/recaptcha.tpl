@@ -105,13 +105,13 @@
 			<dd>
 				<div id="recaptchaBucket{$recaptchaBucketID}"></div>
 				<noscript>
-					<div style="width: 302px; height: 352px;">
-						<div style="width: 302px; height: 352px; position: relative;">
-							<div style="width: 302px; height: 352px; position: absolute;">
-								<iframe src="https://www.google.com/recaptcha/api/fallback?k={RECAPTCHA_PUBLICKEY|encodeJS}" frameborder="0" scrolling="no" style="width: 302px; height:352px; border-style: none;"></iframe>
+					<div style="width: 302px; height: 473px;">
+						<div style="width: 302px; height: 422px; position: relative;">
+							<div style="width: 302px; height: 422px; position: relative;">
+								<iframe src="https://www.google.com/recaptcha/api/fallback?k={RECAPTCHA_PUBLICKEY|encodeJS}" frameborder="0" scrolling="no" style="width: 302px; height:422px; border-style: none;"></iframe>
 							</div>
-							<div style="width: 250px; height: 80px; position: absolute; border-style: none; bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
-								<textarea name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 80px; border: 1px solid #c1c1c1; margin: 0px; padding: 0px; resize: none;"></textarea>
+							<div style="width: 300px; height: 60px; position: relative; border-style: none; bottom: 12px; left: 0; margin: 0px; padding: 0px; right: 25px; background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
+								<textarea name="g-recaptcha-response" class="g-recaptcha-response" style="width: 290px; height: 50px; border: 1px solid #c1c1c1; margin: 5px; padding: 0px; resize: none;"></textarea>
 							</div>
 						</div>
 					</div>
