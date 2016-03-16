@@ -84,7 +84,7 @@ class GoogleAuthAction extends AbstractAction {
 			$userData = JSON::decode($content);
 			
 			// check whether a user is connected to this google account
-			$user = $this->getUser($userData['id']);
+			$user = User::getUserByAuthData('google:'.$userData['id']);
 			
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
@@ -153,27 +153,5 @@ class GoogleAuthAction extends AbstractAction {
 		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=profile+email&response_type=code");
 		$this->executed();
 		exit;
-	}
-	
-	/**
-	 * Fetches the User with the given userID.
-	 * 
-	 * @param	integer			$userID
-	 * @return	\wcf\data\user\User
-	 */
-	public function getUser($userID) {
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user
-			WHERE	authData = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('google:'.$userID));
-		$row = $statement->fetchArray();
-		
-		if ($row === false) {
-			$row = array('userID' => 0);
-		}
-		
-		$user = new User($row['userID']);
-		return $user;
 	}
 }

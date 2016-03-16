@@ -680,6 +680,7 @@
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[Ein einmal von einem Benutzer ausgeblendeter Hinweis wird bei erneutem Seitenaufruf nicht mehr angezeigt.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Hinweis]]></item>
+		<item name="wcf.acp.notice.notice.description"><![CDATA[<code>{literal}{$username}{/literal}</code> wird durch den Namen und <code>{literal}{$email}</code> durch die Email-Adresse des aktuellen Benutzers ersetzt.]]></item>
 		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[HTML im Hinweis verwenden]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Ausgeblendete Hinweise erneut anzeigen]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[Der Hinweis wird jenen Benutzern wieder angezeigt, die die ursprüngliche Version bereits ausgeblendet haben. Gästen, die den Hinweis bereits ausgeblendet haben, wird dieser nur in einer neuen Session erneut angezeigt.]]></item>

@@ -1287,7 +1287,8 @@ CREATE TABLE wcf1_user (
 	KEY activationCode (activationCode),
 	KEY registrationData (registrationIpAddress, registrationDate),
 	KEY activityPoints (activityPoints),
-	KEY likesReceived (likesReceived)
+	KEY likesReceived (likesReceived),
+	KEY authData (authData)
 );
 
 DROP TABLE IF EXISTS wcf1_user_activity_event;

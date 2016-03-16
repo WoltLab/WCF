@@ -5,7 +5,7 @@ use wcf\data\user\User;
 use wcf\system\WCF;
 
 /**
- * Condition implementation for compairing a user-bound timestamp with a fixed time
+ * Condition implementation for comparing a user-bound timestamp with a fixed time
  * interval.
  * 
  * @author	Matthias Schmidt
