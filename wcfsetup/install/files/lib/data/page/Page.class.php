@@ -2,6 +2,8 @@
 namespace wcf\data\page;
 use wcf\data\application\Application;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -19,6 +21,9 @@ use wcf\system\WCF;
  * @since	2.2
  */
 class Page extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -170,33 +175,8 @@ class Page extends DatabaseObject {
 	 * @return      boolean         false if the page should be hidden from menus
 	 */
 	public function isVisible() {
-		// check the options of this page
-		$hasEnabledOption = true;
-		if ($this->options) {
-			$hasEnabledOption = false;
-			$options = explode(',', strtoupper($this->options));
-			foreach ($options as $option) {
-				if (defined($option) && constant($option)) {
-					$hasEnabledOption = true;
-					break;
-				}
-			}
-		}
-		if (!$hasEnabledOption) return false;
-		
-		// check the permission of this page for the active user
-		$hasPermission = true;
-		if ($this->permissions) {
-			$hasPermission = false;
-			$permissions = explode(',', $this->permissions);
-			foreach ($permissions as $permission) {
-				if (WCF::getSession()->getPermission($permission)) {
-					$hasPermission = true;
-					break;
-				}
-			}
-		}
-		if (!$hasPermission) return false;
+		if (!$this->validateOptions()) return false;
+		if (!$this->validatePermissions()) return false;
 		
 		return true;
 	}
