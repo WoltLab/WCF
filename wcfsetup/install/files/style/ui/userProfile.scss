@@ -3,8 +3,16 @@
 }
 .userProfileCoverPhoto {
 	background-image: url('../images/user-profile-header.jpg'); // todo
+	background-position: center;
 	background-size: cover;
-	height: 200px;
+	
+	@include large-screen-only {
+		height: 200px;
+	}
+	
+	@include small-screen-only {
+		height: 100px;
+	}
 }
 
 .userProfileUser {
@@ -13,8 +21,12 @@
 	> .layoutBoundary {
 		align-items: center;
 		display: flex;
-		padding: 5px 0 10px 160px;
+		padding: 5px 10px 10px 160px;
 		position: relative;
+		
+		@include small-screen-only {
+			padding-left: 90px;
+		}
 	}
 	
 	.userAvatar {
@@ -25,6 +37,13 @@
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
+		
+		@include small-screen-only {
+			.userAvatarImage {
+				height: 64px !important;
+				width: 64px !important;
+			}
+		}
 	}
 	
 	.contentHeader {
@@ -33,18 +52,24 @@
 	}
 	
 	.buttonGroupNavigation {
-		flex: 0 0 auto;
-		margin-left: 10px;
-		
-		.button {
-			background-color: $wcfHeaderMenuBackground;
-			color: $wcfHeaderMenuLink;
+		@include large-screen-only {
+			flex: 0 0 auto;
+			margin-left: 10px;
 			
-			&.active,
-			&:hover {
-				background-color: $wcfHeaderMenuBackgroundActive;
-				color: $wcfHeaderMenuLinkActive;
+			.button {
+				background-color: $wcfHeaderMenuBackground;
+				color: $wcfHeaderMenuLink;
+				
+				&.active,
+				&:hover {
+					background-color: $wcfHeaderMenuBackgroundActive;
+					color: $wcfHeaderMenuLinkActive;
+				}
 			}
+		}
+		
+		@include small-screen-only {
+			display: none;
 		}
 	}
 }
@@ -53,7 +78,11 @@
 	background-color: $wcfSidebarBackground;
 	
 	> .layoutBoundary {
-		padding: 10px 0 10px 160px;
+		padding: 10px 10px 10px 160px;
+		
+		@include small-screen-only {
+			padding: 20px 10px 10px;
+		}
 	}
 }
 
