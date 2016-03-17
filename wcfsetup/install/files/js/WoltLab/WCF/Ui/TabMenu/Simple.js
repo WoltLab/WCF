@@ -2,11 +2,11 @@
  * Simple tab menu implementation with a straight-forward logic.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/TabMenu/Simple
  */
-define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dictionary, DomTraverse, DomUtil, EventHandler) {
+define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dictionary, EventHandler, DomTraverse, DomUtil) {
 	"use strict";
 	
 	/**
@@ -172,7 +172,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		/**
 		 * Selects a tab.
 		 * 
-		 * @param	{?(string|integer)}	name		tab name or sequence no
+		 * @param	{?(string|int)}         name		tab name or sequence no
 		 * @param	{Element=}		tab		tab element
 		 * @param	{boolean=}		disableEvent	suppress event handling
 		 */
@@ -244,8 +244,8 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			}
 			
 			if (span !== null) {
-				span.style.setProperty('transform', 'translateX(' + tab.offsetLeft + 'px)');
-				span.style.setProperty('width', tab.clientWidth + 'px');
+				span.style.setProperty('transform', 'translateX(' + tab.offsetLeft + 'px)', '');
+				span.style.setProperty('width', tab.clientWidth + 'px', '');
 			}
 			
 			if (toggleHidden) {

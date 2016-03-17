@@ -1,36 +1,63 @@
 /* main tabs */
 .tabMenu {
-	//margin-bottom: 20px;
 	position: relative;
 	
-	> ul {
-		border-bottom: 1px solid $wcfContentBorderInner;
+	> ul > li > a {
+		display: block;
+		padding: 5px 0;
 		
-		@include inlineList;
-		
-		> li {
-			&:not(:last-child) {
-				margin-right: 20px;
-			}
+		@include wcfFontSection;
+	}
+	
+	@include large-screen-only {
+		> ul {
+			border-bottom: 1px solid $wcfContentBorderInner;
 			
-			&.active > a {
-				cursor: default;
-			}
+			@include inlineList;
 			
-			> a {
-				display: block;
-				padding: 5px 0;
+			> li {
+				&:not(:last-child) {
+					margin-right: 20px;
+				}
 				
-				@include wcfFontSection;
+				&.active > a {
+					cursor: default;
+				}
 			}
+		}
+		
+		> span {
+			border-top: 1px solid $wcfContentLink;
+			bottom: 0;
+			position: absolute;
+			transition: transform .2s linear, width .2s linear;
 		}
 	}
 	
-	> span {
-		border-top: 1px solid $wcfContentLink;
-		bottom: 0;
-		position: absolute;
-		transition: transform .2s linear, width .2s linear;
+	@include small-screen-only {
+		> ul {
+			border-bottom: 1px solid $wcfContentLink;
+			display: block;
+			
+			&:not(.active) > li:not(.active) {
+				display: none;
+			}
+			
+			> li {
+				&.active {
+					pointer-events: none;
+					> a::after {
+						content: $fa-var-caret-down;
+						font-family: FontAwesome;
+						margin-left: 7px;
+					}
+				}
+			}
+		}
+		
+		> span {
+			display: none;
+		}
 	}
 }
 
