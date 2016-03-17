@@ -28,6 +28,7 @@
 			buttons: buttons,
 			minHeight: 200,
 			plugins: ['WoltLabButton', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote'],
+			toolbarFixed: false,
 			woltlab: {
 				autosave: autosave
 			}
