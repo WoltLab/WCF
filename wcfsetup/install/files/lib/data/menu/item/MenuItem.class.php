@@ -90,13 +90,11 @@ class MenuItem extends DatabaseObject {
 	/**
 	 * Returns the page that is linked by this menu item.
 	 * 
-	 * @return      Page
+	 * @return      Page|null
 	 */
 	public function getPage() {
-		if ($this->page === null) {
-			if ($this->pageID) {
-				$this->page = new Page($this->pageID);
-			}
+		if ($this->page === null && $this->pageID) {
+			$this->page = new Page($this->pageID);
 		}
 		
 		return $this->page;
@@ -108,6 +106,10 @@ class MenuItem extends DatabaseObject {
 	 * @return      boolean
 	 */
 	public function isVisible() {
+		if ($this->getPage() !== null && !$this->getPage()->isVisible()) {
+			return false;
+		}
+		
 		if ($this->getMenuPageHandler() !== null) {
 			return $this->getMenuPageHandler()->isVisible($this->pageObjectID ?: null);
 		}
@@ -129,7 +131,7 @@ class MenuItem extends DatabaseObject {
 	}
 	
 	/**
-	 * @return      IMenuPageHandler
+	 * @return      IMenuPageHandler|null
 	 */
 	protected function getMenuPageHandler() {
 		$page = $this->getPage();

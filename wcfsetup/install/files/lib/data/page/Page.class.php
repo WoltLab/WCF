@@ -164,6 +164,44 @@ class Page extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns false if this page should be hidden from menus, but does not control the accessibility
+	 * of the page itself.
+	 *
+	 * @return      boolean         false if the page should be hidden from menus
+	 */
+	public function isVisible() {
+		// check the options of this page
+		$hasEnabledOption = true;
+		if ($this->options) {
+			$hasEnabledOption = false;
+			$options = explode(',', strtoupper($this->options));
+			foreach ($options as $option) {
+				if (defined($option) && constant($option)) {
+					$hasEnabledOption = true;
+					break;
+				}
+			}
+		}
+		if (!$hasEnabledOption) return false;
+		
+		// check the permission of this page for the active user
+		$hasPermission = true;
+		if ($this->permissions) {
+			$hasPermission = false;
+			$permissions = explode(',', $this->permissions);
+			foreach ($permissions as $permission) {
+				if (WCF::getSession()->getPermission($permission)) {
+					$hasPermission = true;
+					break;
+				}
+			}
+		}
+		if (!$hasPermission) return false;
+		
+		return true;
+	}
+	
+	/**
 	 * Returns the page's internal name.
 	 *
 	 * @return      string

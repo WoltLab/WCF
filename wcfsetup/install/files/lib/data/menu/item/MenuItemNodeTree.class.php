@@ -38,6 +38,12 @@ class MenuItemNodeTree {
 	public $node;
 	
 	/**
+	 * number of visible items
+	 * @var integer
+	 */
+	protected $visibleItemCount = 0;
+	
+	/**
 	 * Creates a new MenuItemNodeTree object.
 	 * 
 	 * @param	integer		$menuID         menu id
@@ -54,6 +60,7 @@ class MenuItemNodeTree {
 			$menuItemList->readObjects();
 		}
 		
+		// build menu structure
 		foreach ($menuItemList as $menuItem) {
 			$this->menuItems[$menuItem->itemID] = $menuItem;
 				
@@ -63,25 +70,13 @@ class MenuItemNodeTree {
 			$this->menuItemStructure[$menuItem->parentItemID][] = $menuItem->itemID;
 		}
 		
-		// filter items by visibility
-		foreach ($this->menuItems as $menuItemID => $menuItem) {
-			if (!$menuItem->isVisible()) {
-				unset($this->menuItems[$menuItemID]);
-				unset($this->menuItemStructure[$menuItemID]);
-				
-				// remove item from parent item structure
-				$key = array_search($menuItemID, $this->menuItemStructure[$menuItem->parentItemID]);
-				array_splice($this->menuItemStructure[$menuItem->parentItemID], $key, 1);
-			}
-		}
-		
 		// generate node tree
 		$this->node = new MenuItemNode();
 		$this->node->setChildren($this->generateNodeTree(null, $this->node));
 	}
 	
 	/**
-	 * Generates the node tree recursively
+	 * Generates the node tree recursively.
 	 * 
 	 * @param	integer			$parentID       parent menu item id
 	 * @param	MenuItemNode		$parentNode     parent menu item object
@@ -93,11 +88,15 @@ class MenuItemNodeTree {
 		$itemIDs = (isset($this->menuItemStructure[$parentID]) ? $this->menuItemStructure[$parentID] : []);
 		foreach ($itemIDs as $itemID) {
 			$menuItem = $this->menuItems[$itemID];
+			if (!$menuItem->isVisible()) continue;
 			$node = new MenuItemNode($parentNode, $menuItem, ($parentNode !== null ? ($parentNode->getDepth() + 1) : 0));
 			$nodes[] = $node;
 				
 			// get children
 			$node->setChildren($this->generateNodeTree($itemID, $node));
+			
+			// increase item counter
+			$this->visibleItemCount++;
 		}
 		
 		return $nodes;
@@ -113,11 +112,20 @@ class MenuItemNodeTree {
 	}
 	
 	/**
-	 * Returns the iteratable node list
+	 * Returns the iteratable node list.
 	 *
 	 * @return	\RecursiveIteratorIterator
 	 */
 	public function getNodeList() {
 		return new \RecursiveIteratorIterator($this->node, \RecursiveIteratorIterator::SELF_FIRST);
+	}
+	
+	/**
+	 * Returns the number of visible items.
+	 * 
+	 * @return      integer
+	 */
+	public function getVisibleItemCount() {
+		return $this->visibleItemCount;
 	}
 }

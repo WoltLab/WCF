@@ -67,8 +67,7 @@ class Menu extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function hasContent() {
-		return true; // @todo
-		//return count(MenuCache::getInstance()->getMenuItemsByMenuID($this->menuID)->getNodeList());
+		return $this->getMenuItemNodeTree()->getVisibleItemCount() > 0;
 	}
 	
 	/**
@@ -104,7 +103,7 @@ class Menu extends DatabaseObject {
 	}
 	
 	/**
-	 * @return MenuItemNodeTree
+	 * @return      MenuItemNodeTree
 	 */
 	protected function getMenuItemNodeTree() {
 		if ($this->menuItemNodeTree === null) {

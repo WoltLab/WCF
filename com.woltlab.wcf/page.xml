@@ -6,12 +6,15 @@
 			<controller>wcf\page\DashboardPage</controller>
 			<name language="de"><![CDATA[Dashboard]]></name>
 			<name language="en"><![CDATA[Dashboard]]></name>
+			<options>module_dashboard_page</options>
 		</page>
 		
 		<page identifier="com.woltlab.wcf.MembersList">
 			<controller>wcf\page\MembersListPage</controller>
 			<name language="de"><![CDATA[Mitglieder]]></name>
 			<name language="en"><![CDATA[Members]]></name>
+			<permissions>user.profile.canViewMembersList</permissions>
+			<options>module_members_list</options>
 		</page>
 		<page identifier="com.woltlab.wcf.RecentActivityList">
 			<controller>wcf\page\RecentActivityListPage</controller>
@@ -24,18 +27,24 @@
 			<name language="de"><![CDATA[Benutzer Online]]></name>
 			<name language="en"><![CDATA[Users Online]]></name>
 			<parent>com.woltlab.wcf.MembersList</parent>
+			<permissions>user.profile.canViewUsersOnlineList</permissions>
+			<options>module_users_online</options>
 		</page>
 		<page identifier="com.woltlab.wcf.Team">
 			<controller>wcf\page\TeamPage</controller>
 			<name language="de"><![CDATA[Team]]></name>
 			<name language="en"><![CDATA[Team]]></name>
 			<parent>com.woltlab.wcf.MembersList</parent>
+			<permissions>user.profile.canViewMembersList</permissions>
+			<options>module_team_page</options>
 		</page>
 		<page identifier="com.woltlab.wcf.UserSearch">
 			<controller>wcf\page\UserSearchForm</controller>
 			<name language="de"><![CDATA[Benutzer suchen]]></name>
 			<name language="en"><![CDATA[Search Users]]></name>
 			<parent>com.woltlab.wcf.MembersList</parent>
+			<permissions>user.profile.canViewMembersList</permissions>
+			<options>module_members_list</options>
 		</page>
 		
 		<!-- static -->
@@ -101,6 +110,7 @@
 		<page identifier="com.woltlab.wcf.PrivacyPolicy">
 			<name language="en">Privacy Policy</name>
 			<name language="de">Datenschutzerklärung</name>
+			<options>module_privacy_policy_page</options>
 			
 			<content language="en">
 				<title>Privacy Policy</title>
