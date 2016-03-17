@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Dom/Util
  */
-define(['StringUtil'], function(StringUtil) {
+define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 	"use strict";
 	
 	function _isBoundaryNode(element, ancestor, position) {
@@ -206,6 +206,13 @@ define(['StringUtil'], function(StringUtil) {
 					}
 					else {
 						important = false;
+					}
+					
+					// for a set style property with priority = important, Safari is not able to
+					// overwrite it with a property != important; removing the property first
+					// solves the issue
+					if (Environment.browser() === 'safari' && el.style.getPropertyPriority(property) === 'important' && !important) {
+						el.style.removeProperty(property);
 					}
 					
 					el.style.setProperty(property, styles[property], (important ? 'important' : ''));
