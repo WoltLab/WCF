@@ -363,12 +363,16 @@
 	.boxContainer {
 		margin-left: -10px;
 		margin-right: -10px;
-		padding: 40px 0;
 		
 		@include large-screen-only {
 			display: flex;
 			flex-wrap: wrap;
 			margin-bottom: -40px;
+			padding: 40px 0;
+		}
+		
+		@include small-screen-only {
+			padding: 20px 0;
 		}
 	}
 	

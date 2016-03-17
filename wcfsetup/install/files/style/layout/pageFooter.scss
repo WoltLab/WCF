@@ -2,7 +2,14 @@
 	background-color: $wcfFooterBackground;
 	color: $wcfFooterText;
 	flex: 0 0 auto;
-	padding: 40px 0;
+	
+	@include large-screen-only {
+		padding: 40px 0;
+	}
+	
+	@include small-screen-only {
+		padding: 20px 0;
+	}
 	
 	a {
 		color: $wcfFooterLink;

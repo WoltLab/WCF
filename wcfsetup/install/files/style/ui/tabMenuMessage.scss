@@ -89,8 +89,20 @@
 				
 				@include userSelectNone;
 				
-				> span.icon {
-					display: none;
+				@include large-screen-only {
+					> .icon {
+						display: none;
+					}
+				}
+				
+				@include small-screen-only {
+					> .icon {
+						display: block;
+					}
+					
+					> span:not(.icon) {
+						display: none;
+					}
 				}
 			}
 		}
@@ -98,24 +110,6 @@
 	
 	> span {
 		display: none;
-	}
-}
-
-@include small-screen-only {
-	.messageTabMenu {
-		> nav > ul > li:not(.active) > a {
-			> span.icon {
-				display: block;
-			}
-			
-			> span:not(.icon) {
-				display: none;
-			}
-		}
-		
-		> div > nav {
-			// TODO: margin: ($wcfGapTiny - $wcfGapSmall) -$wcfGapSmall $wcfGapSmall -$wcfGapSmall;
-		}
 	}
 }
 

@@ -3,8 +3,15 @@
 .success,
 .warning {
 	border-left: 5px solid transparent;
-	padding: 10px 20px;
 	margin-top: 20px;
+	
+	@include large-screen-only {
+		padding: 10px 20px;
+	}
+	
+	@include small-screen-only {
+		padding: 10px;
+	}
 }
 
 .error {
