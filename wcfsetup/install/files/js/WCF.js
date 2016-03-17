@@ -7548,6 +7548,8 @@ jQuery.fn.extend({
 				UiDialog.openStatic(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
 			}
 		}).bind(this));
+		
+		return this;
 	}
 });
 
