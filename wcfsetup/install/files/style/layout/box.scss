@@ -109,6 +109,8 @@
 /* styling for boxes in <top>/<bottom> position */
 .boxesTop,
 .boxesBottom {
+	flex: 0 0 auto;
+	
 	.box {
 		margin-bottom: 40px;
 		margin-top: 40px;

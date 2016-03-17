@@ -26,7 +26,6 @@ define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', './Ta
 			DomChangeListener.add('WoltLab/WCF/Ui/TabMenu', this._init.bind(this));
 			UiCloseOverlay.add('WoltLab/WCF/Ui/TabMenu', function() {
 				if (_activeList) {
-					console.debug("b0rk!");
 					_activeList.classList.remove('active');
 					
 					_activeList = null;
@@ -61,6 +60,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', './Ta
 					list = elBySel('#' + containerId + ' > nav > ul');
 					(function(list) {
 						list.addEventListener(WCF_CLICK_EVENT, function(event) {
+							event.preventDefault();
 							event.stopPropagation();
 							
 							if (event.target === list) {
