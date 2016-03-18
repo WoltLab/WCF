@@ -67,13 +67,17 @@
 		
 		@include wcfFontHeadline;
 		
+		&:not(:last-child) {
+			margin-right: 15px;
+		}
+		
 		> a {
-			background-color: $wcfHeaderMenuBackground;
+			border-bottom: 3px solid $wcfHeaderMenuBackground;
 			color: $wcfHeaderMenuLink;
 			display: block;
 			font-size: 16px;
 			font-weight: 400;
-			padding: 6px 12px;
+			padding: 5px 0 2px;
 			
 			> .boxMenuLinkOutstandingItems {
 				background-color: rgb(255, 255, 255);
@@ -87,7 +91,7 @@
 		
 		&.active > a,
 		&:hover > a {
-			background-color: $wcfHeaderMenuBackgroundActive;
+			border-color: $wcfHeaderMenuBackgroundActive;
 			color: $wcfHeaderMenuLinkActive;
 		}
 	}
@@ -102,22 +106,61 @@
 	
 	.boxMenuDepth1 {
 		background-color: $wcfHeaderMenuDropdownBackground;
-		border-bottom: 1px solid $wcfHeaderMenuDropdownBorder;
-		box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
-		padding: 3px 0;
 		position: absolute;
 		visibility: hidden;
+		
+		// align menu to the center of the menu item
+		left: 50%;
+		transform: translateX(-50%);
 		
 		// offset the menu to prevent the staircase effect when two elements with dark and light
 		// colors are right below each other; uses a transparent border rather than a margin to
 		// prevent losing the hover on the <li> causing the menu to collapse when the cursor is
 		// right between the menu item and the menu itself
 		background-clip: padding-box;
-		border-top: 3px solid transparent;
+		border-top: 15px solid transparent;
 		
 		@include wcfFontDefault;
 		
+		&::before {
+			content: "";
+			border: 10px solid transparent;
+			border-bottom-color: $wcfHeaderMenuDropdownBorder;
+			border-top-width: 0;
+			left: calc(50% - 10px);
+			position: absolute;
+			top: -10px;
+		}
+		
+		&::after {
+			content: "";
+			border: 10px solid transparent;
+			border-bottom-color: $wcfHeaderMenuDropdownBackground;
+			border-top-width: 0;
+			left: calc(50% - 10px);
+			position: absolute;
+			top: -9px;
+		}
+		
 		> li {
+			// the code below mimics the border surrounding the list element
+			// as seen for similar elements such as dropdowns; we cannot use
+			// the list border because the top border is abused to visually
+			// push down the list w/o triggering a "hover-out" on the menu item
+			background-color: $wcfHeaderMenuDropdownBackground;
+			border: 1px solid $wcfHeaderMenuDropdownBorder;
+			border-width: 0 1px;
+			
+			&:first-child {
+				border-top-width: 1px;
+				padding-top: 3px;
+			}
+			
+			&:last-child {
+				border-bottom-width: 1px;
+				padding-bottom: 3px;
+			}
+			
 			> a {
 				color: $wcfHeaderMenuDropdownLink;
 			}
@@ -125,7 +168,7 @@
 			> a,
 			> span {
 				display: block;
-				padding: 5px 20px;
+				padding: 7px 20px;
 				white-space: nowrap;
 			}
 			
