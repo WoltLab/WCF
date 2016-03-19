@@ -467,6 +467,7 @@ define(
 				}
 				else {
 					editor.textContent = typeData.label;
+					dropdown.innerHTML = '';
 				}
 				
 				// create editor items
