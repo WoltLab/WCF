@@ -268,13 +268,10 @@
 		}
 		
 		> .box16 {
+			align-items: center;
 			cursor: pointer;
 			min-height: 0;
-			padding: $wcfGapTiny $wcfGapTiny $wcfGapTiny $wcfGapSmall;
-			
-			> div {
-				margin-left: 21px;
-			}
+			padding: 5px 10px;
 		}
 		
 		> label {
@@ -287,6 +284,10 @@
 			> p {
 				@include wcfFontSmall;
 			}
+		}
+		
+		.icon {
+			color: inherit;
 		}
 	}
 	
