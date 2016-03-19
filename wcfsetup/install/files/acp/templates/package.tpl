@@ -3,8 +3,6 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		WCF.TabMenu.init()
-		
 		WCF.Language.addObject({
 			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}'
 		});
@@ -104,12 +102,7 @@
 			</nav>
 			
 			{hascontent}
-				<div id="dependencies-required" class="tabMenuContent tabularBox tabularBoxTitle hidden">
-					<header>
-						<h2>{lang}wcf.acp.package.dependencies.required{/lang}</h2>
-						<small>{lang}wcf.acp.package.dependencies.required.description{/lang}</small>
-					</header>
-					
+				<div id="dependencies-required" class="tabMenuContent tabularBox hidden">
 					<table class="table">
 						<thead>
 							<tr>
@@ -150,12 +143,7 @@
 			{/hascontent}
 			
 			{hascontent}
-				<div id="dependencies-dependent" class="tabMenuContent tabularBox tabularBoxTitle hidden">
-					<header>
-						<h2>{lang}wcf.acp.package.dependencies.dependent{/lang}</h2>
-						<small>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</small>
-					</header>
-					
+				<div id="dependencies-dependent" class="tabMenuContent tabularBox hidden">
 					<table class="table">
 						<thead>
 							<tr>

@@ -97,4 +97,8 @@
 		position: absolute;
 		transition: transform .2s linear, width .2s linear;
 	}
+	
+	& + .tabMenuContent {
+		margin-top: 20px;
+	}
 }
