@@ -5,7 +5,6 @@
 	$(function() {
 		var $languageIDs = $('#languageIDs');
 		$('#enable').click(function() { $languageIDs.toggle(); });
-		{if !$enable}$languageIDs.hide();{/if}
 	});
 	//]]>
 </script>
@@ -39,7 +38,7 @@
 			<small class="sectionDescription">{lang}wcf.acp.language.multilingualism.enable.description{/lang}</small>
 		</header>
 		
-		<dl id="languageIDs"{if $errorField == 'languageIDs'} class="formError"{/if}>
+		<dl id="languageIDs"{if $errorField == 'languageIDs'} class="formError"{/if}{if !$enable} style="display: none;"{/if}>
 			<dt><label for="languageIDs">{lang}wcf.acp.language.multilingualism.languages{/lang}</label></dt>
 			<dd class="floated">
 				{foreach from=$languages item='language'}
