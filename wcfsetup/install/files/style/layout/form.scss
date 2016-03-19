@@ -8,30 +8,7 @@ input[type="text"],
 input[type="url"],
 select,
 textarea {
-	background-color: $wcfInputBackground;
-	border: 1px solid $wcfInputBorder;
-	color: $wcfInputText;
-	outline: none;
-	padding: 4px 8px;
-	
-	// input elements do not inherit font family, size and line-height from body
-	font-family: $wcfFontFamily;
-	@include wcfFontDefault;
-	@include wcfLineHeight;
-	
-	&:focus,
-	&:hover {
-		background-color: $wcfInputBackgroundActive;
-		border-color: $wcfInputBorderActive;
-		color: $wcfInputTextActive;
-	}
-	
-	&[disabled],
-	&[readonly] {
-		background-color: $wcfInputDisabledBackground !important;
-		border-color: $wcfInputDisabledBorder !important;
-		color: $wcfInputDisabledText !important;
-	}
+	@include input;
 }
 
 /* set placeholder color */
