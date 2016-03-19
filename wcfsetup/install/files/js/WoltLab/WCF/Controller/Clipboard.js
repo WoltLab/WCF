@@ -393,7 +393,9 @@ define(
 							clipboardObjects[0].classList.remove('jsMarked');
 						}
 						
-						containerData.markAll.checked = false;
+						if (containerData.markAll !== null) {
+							containerData.markAll.checked = false;
+						}
 						for (var i = 0, length = containerData.checkboxes.length; i < length; i++) {
 							containerData.checkboxes[i].checked = false;
 						}
