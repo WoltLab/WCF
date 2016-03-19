@@ -52,6 +52,22 @@ a.button.buttonPrimary { // a.button is required to override link formatting, su
 	}
 }
 
+/* disabled state */
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+a.button {
+	&:disabled,
+	&.disabled {
+		background-color: $wcfButtonDisabledBackground !important;
+		border-color: $wcfButtonDisabledBorder !important;
+		color: $wcfButtonDisabledText !important;
+		cursor: not-allowed !important;
+	}
+}
+
 /* force active state for buttons toggling a dropdown */
 .dropdownOpen {
 	> button,
@@ -63,10 +79,6 @@ a.button.buttonPrimary { // a.button is required to override link formatting, su
 		background-color: $wcfButtonBackgroundActive;
 		border-color: $wcfButtonBorderActive;
 		color: $wcfButtonTextActive;
-		
-		.icon {
-			color: $wcfButtonTextActive;
-		}
 	}
 	
 	> button.buttonPrimary,
@@ -77,10 +89,6 @@ a.button.buttonPrimary { // a.button is required to override link formatting, su
 		background-color: $wcfButtonPrimaryBackgroundActive;
 		border-color: $wcfButtonPrimaryBorderActive;
 		color: $wcfButtonPrimaryTextActive;
-		
-		.icon {
-			color: $wcfButtonPrimaryTextActive;
-		}
 	}
 }
 
