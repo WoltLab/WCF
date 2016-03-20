@@ -28,6 +28,7 @@
 * `wcf\system\event\listener\AbstractUserMergeListener` added.
 * Notice texts support `{$username}` and `{$email}` placeholders.
 * Notifications for comments in moderation.
+* Continuous numeration of edit history version in template.  
 
 #### New Traits
 

@@ -2188,6 +2188,7 @@ Errors are:
 	</category>
 	
 	<category name="wcf.edit">
+		<item name="wcf.edit.version"><![CDATA[Version]]></item>
 		<item name="wcf.edit.versions"><![CDATA[Versions]]></item>
 		<item name="wcf.edit.time"><![CDATA[Edit Time]]></item>
 		<item name="wcf.edit.reason"><![CDATA[Edit Reason]]></item>

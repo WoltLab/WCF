@@ -2185,6 +2185,7 @@ Fehler sind beispielsweise:
 	</category>
 	
 	<category name="wcf.edit">
+		<item name="wcf.edit.version"><![CDATA[Version]]></item>
 		<item name="wcf.edit.versions"><![CDATA[Versionen]]></item>
 		<item name="wcf.edit.time"><![CDATA[Änderungszeitpunkt]]></item>
 		<item name="wcf.edit.reason"><![CDATA[Änderungsgrund]]></item>

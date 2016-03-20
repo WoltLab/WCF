@@ -73,7 +73,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnEditID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
+					<th class="columnID columnEditID" colspan="2">{lang}wcf.edit.version{/lang}</th>
 					<th class="columnText columnUser">{lang}wcf.user.username{/lang}</th>
 					<th class="columnText columnEditReason">{lang}wcf.edit.reason{/lang}</th>
 					<th class="columnDate columnTime">{lang}wcf.edit.time{/lang}</th>
@@ -96,14 +96,14 @@
 					
 					{event name='columns'}
 				</tr>
-				{foreach from=$objects item=edit}
+				{foreach from=$objects item=edit name=edit}
 					<tr class="jsEditRow">
 						<td class="columnIcon">
 							<span class="icon icon16 fa-undo pointer jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang}wcf.edit.revert.sure{/lang}"></span>
 							<input type="radio" name="oldID" value="{@$edit->entryID}"{if $oldID == $edit->entryID} checked="checked"{/if} /> <input type="radio" name="newID" value="{@$edit->entryID}"{if $newID == $edit->entryID} checked="checked"{/if} />
 							{event name='rowButtons'}
 						</td>
-						<td class="columnID">{@$edit->entryID}</td>
+						<td class="columnID">{#($tpl[foreach][edit][total] - $tpl[foreach][edit][iteration] + 1)}</td>
 						<td class="columnText columnUser"><a href="{link controller='User' id=$edit->userID title=$edit->username}{/link}">{$edit->username}</a></td>
 						<td class="columnText columnEditReason">{$edit->editReason}</td>
 						<td class="columnDate columnTime">{@$edit->time|time}</td>
