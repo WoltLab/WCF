@@ -133,3 +133,11 @@
 		}
 	}
 }
+
+/* using `dl` + `.inlineDataList` to prevent styles applied to the
+   data list provided by the `userInformation` template */
+.userProfilePreview dl.inlineDataList {
+	margin-top: 10px;
+	
+	@include wcfFontSmall;
+}
