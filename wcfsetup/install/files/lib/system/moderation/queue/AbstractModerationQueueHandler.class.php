@@ -127,7 +127,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 			return 'wcf.moderation.activation.notification';
 		}
 		else if ($this instanceof IModerationQueueReportHandler) {
-			return 'wcf.moderation.activation.notification';
+			return 'wcf.moderation.report.notification';
 		}
 		
 		return 'wcf.moderation.notification';
