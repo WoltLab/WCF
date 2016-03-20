@@ -1,11 +1,11 @@
 <?php
 namespace wcf\data\moderation\queue;
-use wcf\data\ILinkableObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\ILinkableObject;
 use wcf\data\ITitledObject;
 use wcf\data\IUserContent;
 use wcf\system\bbcode\SimpleMessageParser;
