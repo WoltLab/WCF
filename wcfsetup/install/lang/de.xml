@@ -2434,6 +2434,30 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.markAllAsRead.confirmMessage"><![CDATA[Wollen Sie wirklich alle Einträge als gelesen markieren?]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
+		<item name="wcf.moderation.notification.comment.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat einen Kommentar zum Moderationseintrag "{$moderationQueue->getTitle()}" verfasst:
+{if $notificationType == 'instant'}
+---------------------------------
+{@$comment->message} 
+---------------------------------
+{/if}{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} und {#$others} weitere Benutzer{/if} haben Kommentare zum Moderationseintrag "{$moderationQueue->getTitle()}" verfasst:
+{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar zum Moderationseintrag <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Kommentare zum Moderationseintrag <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.notification.comment.title"><![CDATA[Neuer Kommentar (Moderation)]]></item>
+		<item name="wcf.moderation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Moderation)]]></item>
+		<item name="wcf.moderation.notification.commentResponse.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat eine Antwort zum Kommentar von "{@$commentAuthor->username}" zum Moderationseintrag "{$moderationQueue->getTitle()}" verfasst:
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.notification.commentResponse.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} und {#$others} weitere Benutzer{/if} haben Antworten zu Kommentare zum Moderationseintrag "{$moderationQueue->getTitle()}" verfasst:
+{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} zum Moderationseintrag <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Kommentare zum Moderationseintrag <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.notification.commentResponse.title"><![CDATA[Neue Antwort (Moderation)]]></item>
+		<item name="wcf.moderation.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Moderation)]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
 		<item name="wcf.moderation.status.outstanding"><![CDATA[Ausstehend]]></item>
 		<item name="wcf.moderation.status.processing"><![CDATA[In Bearbeitung]]></item>
@@ -2467,6 +2491,30 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.activation.content"><![CDATA[Freizuschaltender Inhalt]]></item>
 		<item name="wcf.moderation.activation.enableContent"><![CDATA[Inhalt freischalten]]></item>
 		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Wollen Sie diesen Inhalt wirklich freischalten?]]></item>
+		<item name="wcf.moderation.activation.notification.comment.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat einen Kommentar zum freizuschaltenden Inhalt "{$moderationQueue->getTitle()}" verfasst:
+{if $notificationType == 'instant'}
+---------------------------------
+{@$comment->message} 
+---------------------------------
+{/if}{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.activation.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3}und {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} {#$others} weitere Benutzer {/if} haben Kommentare zum freizuschaltenden Inhalt "{$moderationQueue->getTitle()}" verfasst:
+{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar zum freizuschaltenden Inhalt <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.activation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Kommentare zum freizuschaltenden Inhalt <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.activation.notification.comment.title"><![CDATA[Neuer Kommentar (Freischaltung)]]></item>
+		<item name="wcf.moderation.activation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Freischaltung)]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat eine Antwort zum Kommentar von "{@$commentAuthor->username}" zum freizuschaltenden Inhalt "{$moderationQueue->getTitle()}" verfasst:
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} und {#$others} weitere Benutzer{/if} haben Antworten zu Kommentare zum freizuschaltenden Inhalt "{$moderationQueue->getTitle()}" verfasst:
+{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} zum freizuschaltenden Inhalt <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Antworten zu Kommentare zum freizuschaltenden Inhalt <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.title"><![CDATA[Neue Antwort (Freischaltung)]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Freischaltung)]]></item>
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Inhalt löschen]]></item>
 		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[Wollen Sie diesen Inhalt wirklich löschen?]]></item>
 	</category>
@@ -2475,6 +2523,30 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.report"><![CDATA[Meldung]]></item>
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[Dieser Inhalt wurde bereits gemeldet.]]></item>
 		<item name="wcf.moderation.report.details"><![CDATA[Informationen]]></item>
+		<item name="wcf.moderation.report.notification.comment.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat einen Kommentar zur Meldung "{$moderationQueue->getTitle()}" verfasst:
+{if $notificationType == 'instant'}
+---------------------------------
+{@$comment->message} 
+---------------------------------
+{/if}{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.report.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} und {#$others} weitere Benutzer{/if} haben Kommentare zur Meldung "{$moderationQueue->getTitle()}" verfasst:
+{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.report.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar zur Meldung <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.report.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Kommentare zur Meldung <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.report.notification.comment.title"><![CDATA[Neuer Kommentar (Meldung)]]></item>
+		<item name="wcf.moderation.report.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Meldung)]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat eine Antwort zum Kommentar von "{@$commentAuthor->username}" zur Meldung "{$moderationQueue->getTitle()}" verfasst:
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} und {#$others} weitere Benutzer{/if} haben Antworten zu Kommentare zur Meldung "{$moderationQueue->getTitle()}" verfasst:
+{$moderationQueue->getLink()}#comments]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} zur Meldung <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Antworten zu Kommentare zur Meldung <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.title"><![CDATA[Neue Antwort (Meldung)]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Meldung)]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Grund der Meldung]]></item>
 		<item name="wcf.moderation.report.reason.description"><![CDATA[Diese Funktion ist ausschließlich zu verwenden bei: Spam, Werbung und anderen problematischen (rassistischen, gewaltverherrlichenden, aggressiven, beleidigenden oder sexistischen) Inhalten.]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Gemeldeten Inhalt löschen]]></item>
@@ -3167,6 +3239,10 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemandem gefällt Ihr Kommentar]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemandem gefällt Ihre Antwort auf einen Kommentar]]></item>
+		
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Neuer Kommentar in der Moderation]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar in der Moderation]]></item>
 	</category>
 	
 	<category name="wcf.user.profile">

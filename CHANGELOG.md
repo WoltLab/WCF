@@ -27,6 +27,7 @@
 * `wcf\system\event\listener\AbstractUserActionRenameListener` added.
 * `wcf\system\event\listener\AbstractUserMergeListener` added.
 * Notice texts support `{$username}` and `{$email}` placeholders.
+* Notifications for comments in moderation.
 
 #### New Traits
 
