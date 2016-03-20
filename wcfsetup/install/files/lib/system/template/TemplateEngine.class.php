@@ -285,9 +285,9 @@ class TemplateEngine extends SingletonFactory {
 	 * 
 	 * @param	boolean		$assignSystemVariables	Assign System Variables after clear
 	 */
-	public function clearAllAssign() {
+	public function clearAllAssign($assignSystemVariables = false) {
 		$this->v = array();
-		if ($assignSystem) {
+		if ($assignSystemVariables) {
 			$this->assignSystemVariables();
 		}
 	}
