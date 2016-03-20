@@ -7,7 +7,7 @@
 .tabularListRow {
 	flex: 0 0 auto;
 	padding: 5px 0;
-	transition: background-color .2s;
+	transition: background-color .12s;
 	
 	&.divider + li:not(.divider) {
 		border-top-color: $wcfContentBorder;
@@ -117,7 +117,7 @@
 		
 		.collapsibleButton {
 			cursor: pointer;
-			transition: transform .2s linear;
+			transition: transform .12s linear;
 		}
 	}
 }

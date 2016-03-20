@@ -202,7 +202,7 @@
 	text-align: center;
 	top: 200px;
 	transform: translateX(-50%);
-	transition: visibility 0s linear .1s, opacity .1s linear;
+	transition: visibility 0s linear .12s, opacity .12s linear;
 	visibility: hidden;
 	z-index: 401;
 	
@@ -227,7 +227,7 @@
 	position: fixed;
 	top: 0;
 	transform: translateY(-100%);
-	transition: visibility .2s linear .2s, transform .2s linear, opacity .2s linear;
+	transition: visibility .12s linear .12s, transform .12s linear, opacity .12s linear;
 	visibility: hidden;
 	width: 100%;
 	z-index: 460;

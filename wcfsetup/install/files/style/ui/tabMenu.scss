@@ -30,7 +30,7 @@
 			border-top: 1px solid $wcfContentLink;
 			bottom: 0;
 			position: absolute;
-			transition: transform .2s linear, width .2s linear;
+			transition: transform .12s linear, width .12s linear;
 		}
 	}
 	
@@ -95,7 +95,7 @@
 		border-top: 1px solid $wcfContentLink;
 		bottom: -5px;
 		position: absolute;
-		transition: transform .2s linear, width .2s linear;
+		transition: transform .12s linear, width .12s linear;
 	}
 	
 	& + .tabMenuContent {

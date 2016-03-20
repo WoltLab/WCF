@@ -98,7 +98,7 @@
 			
 			> p > img {
 				opacity: .6;
-				transition: opacity .2s;
+				transition: opacity .12s;
 			}
 		}
 		
@@ -141,7 +141,7 @@
 			display: flex;
 			float: right;
 			opacity: .6;
-			transition: opacity .2s;
+			transition: opacity .12s;
 			
 			> .statusIcons {
 				align-items: center;
@@ -241,7 +241,7 @@
 	.pagination {
 		flex: 0 0 auto;
 		opacity: 0;
-		transition: opacity .2s;
+		transition: opacity .12s;
 		
 		@include wcfFontSmall;
 		

@@ -414,7 +414,7 @@
 	border-top: 1px solid rgb(238, 238, 238);
 	opacity: .6;
 	padding-top: 10px;
-	transition: opacity .2s linear;
+	transition: opacity .12s linear;
 }
 
 .message:hover .messageSignature {
@@ -426,7 +426,7 @@
 	
 	justify-content: flex-end;
 	//opacity: .3;
-	transition: opacity .2s linear;
+	transition: opacity .12s linear;
 	
 	&.forceVisible {
 		//opacity: 1 !important;
