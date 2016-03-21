@@ -24,36 +24,6 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 				'pageUserMenuMobile',
 				'#pageHeader .userPanel'
 			);
-		},
-		
-		/**
-		 * Overrides the `_initItem()` method to check for special items that do not
-		 * act as a link but instead trigger an event for external processing.
-		 * 
-		 * @param       {Element}       item    menu item
-		 * @protected
-		 */
-		_initItem: function(item) {
-			// check if it should contain a 'more' link w/ an external callback
-			var parent = item.parentNode;
-			var more = elData(parent, 'more');
-			if (more) {
-				item.addEventListener(WCF_CLICK_EVENT, (function(event) {
-					event.preventDefault();
-					event.stopPropagation();
-					
-					EventHandler.fire(this._eventIdentifier, 'more', {
-						handler: this,
-						identifier: more,
-						item: item,
-						parent: parent
-					});
-				}).bind(this));
-				
-				return;
-			}
-			
-			UiPageMenuUser._super.prototype._initItem.call(this, item);
 		}
 	});
 	

@@ -61,6 +61,7 @@
 /* MAIN MENU */
 .mainMenu .boxMenu {
 	display: flex;
+	flex-wrap: wrap;
 	
 	> li {
 		flex: 0 0 auto;
@@ -267,15 +268,18 @@
 
 /* SEARCH AREA */
 .pageHeaderSearch {
-	margin-bottom: 15px;
-	text-align: right;
-	
-	.pageHeaderSearchLabel {
-		display: none;
+	@include large-screen-only {
+		margin-bottom: 15px;
+		text-align: right;
+		
+		.pageHeaderSearchLabel {
+			display: none;
+		}
 	}
 }
 
 .pageHeaderSearchInputContainer {
+	display: inline-block;
 	position: relative;
 	
 	&:hover {
@@ -416,7 +420,33 @@
 		}
 	}
 	
-	.pageHeaderSearch {
-		display: none;
+	.pageHeader {
+		&.searchBarOpen {
+			.pageHeaderContainerLeft {
+				display: none;
+			}
+			
+			.pageHeaderContainerRight {
+				flex: 0 0 100%;
+				
+				.pageHeaderSearch {
+					flex: 0 0 100%;
+					
+					.pageHeaderSearchInput {
+						width: 100%;
+					}
+				}
+				
+				.userPanel {
+					display: none;
+				}
+			}
+		}
+		
+		&:not(.searchBarOpen) {
+			.pageHeaderSearch {
+				display: none;
+			}
+		}
 	}
 }

@@ -24,51 +24,57 @@
 							{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
 						{/if}
 						{/foreach}
-					</ol>
-				</li>
-				{hascontent}
-					<li class="menuOverlayItem">
-						<a href="#" class="menuOverlayItemLink box24">
-							<span class="icon icon24 fa-gears"></span>
-							<span class="menuOverlayItemTitle">TODO: page options</span>
-						</a>
-						<ol class="menuOverlayItemList">
-							{content}
-								{if !$__pageOptions|empty}
-									{@$__pageOptions}
-								{/if}
-								
-								{event name='pageOptions'}
-							{/content}
-						</ol>
-					</li>
-				{/hascontent}
-				{hascontent}
-					<li class="menuOverlayTitle">TODO: current location</li>
-					<li class="menuOverlayItem">
-						<a href="#" class="menuOverlayItemLink box24">
-							<span class="icon icon24 fa-cogs"></span>
-							<span class="menuOverlayItemTitle">TODO: current location</span>
-						</a>
-						<ol class="menuOverlayItemList">
-							{content}
-							{assign var=__breadcrumbsDepth value=0}
-							{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
-								<li class="menuOverlayItem">
-									<a href="{$breadcrumb->getURL()}" class="menuOverlayItemLink">
-										<span class="menuOverlayItemTitle"{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 10}px" {/if}>
-											<span class="icon icon24 fa-{if $__breadcrumbsDepth}caret-right{else}home{/if}"></span>
-											{$breadcrumb->getLabel()}
-										</span>
-									</a>
-								</li>
-								{assign var=__breadcrumbsDepth value=$__breadcrumbsDepth + 1}
-							{/foreach}
-							{/content}
-						</ol>
-					</li>
-				{/hascontent}
 			</ol>
+		</li>
+		{hascontent}
+			<li class="menuOverlayItem">
+				<a href="#" class="menuOverlayItemLink box24">
+					<span class="icon icon24 fa-gears"></span>
+					<span class="menuOverlayItemTitle">TODO: page options</span>
+				</a>
+				<ol class="menuOverlayItemList">
+					{content}
+						{if !$__pageOptions|empty}
+							{@$__pageOptions}
+						{/if}
+						
+						{event name='pageOptions'}
+					{/content}
+				</ol>
+			</li>
+		{/hascontent}
+		{hascontent}
+			<li class="menuOverlayTitle">TODO: current location</li>
+			<li class="menuOverlayItem">
+				<a href="#" class="menuOverlayItemLink box24">
+					<span class="icon icon24 fa-cogs"></span>
+					<span class="menuOverlayItemTitle">TODO: current location</span>
+				</a>
+				<ol class="menuOverlayItemList">
+					{content}
+					{assign var=__breadcrumbsDepth value=0}
+					{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
+						<li class="menuOverlayItem">
+							<a href="{$breadcrumb->getURL()}" class="menuOverlayItemLink">
+								<span class="menuOverlayItemTitle"{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 10}px" {/if}>
+									<span class="icon icon24 fa-{if $__breadcrumbsDepth}caret-right{else}home{/if}"></span>
+									{$breadcrumb->getLabel()}
+								</span>
+							</a>
+						</li>
+						{assign var=__breadcrumbsDepth value=$__breadcrumbsDepth + 1}
+					{/foreach}
+					{/content}
+				</ol>
+			</li>
+		{/hascontent}
+		
+		<li class="menuOverlayItemSpacer"></li>
+		<li class="menuOverlayItem" data-more="com.woltlab.wcf.search">
+			<a href="#" class="menuOverlayItemLink box24">
+				<span class="icon icon24 fa-search"></span>
+				<span class="menuOverlayItemTitle">{lang}wcf.global.search{/lang}</span>
+			</a>
 		</li>
 	</ol>
 </div>
@@ -149,20 +155,20 @@
 			</li>
 			
 			{event name='guestUserMenuItems'}
-		
+			
 			{if $__wcf->getLanguage()->getLanguages()|count > 1}
 				<li class="menuOverlayItemSpacer"></li>
 				<li class="menuOverlayTitle">{lang}wcf.user.language{/lang}</li>
 				<li class="menuOverlayItem">
 					<a href="#" class="menuOverlayItemLink box24">
-						<img src="{$__wcf->getLanguage()->getIconPath()}">
+						<img src="{$__wcf->getLanguage()->getIconPath()}" alt="">
 						<span class="menuOverlayItemTitle">{$__wcf->getLanguage()}</span>
 					</a>
 					<ol class="menuOverlayItemList" data-title="{lang}wcf.user.language{/lang}">
 						{foreach from=$__wcf->getLanguage()->getLanguages() item=__language}
 							<li class="menuOverlayItem" data-more="com.woltlab.wcf.language" data-language-id="{@$__language->languageID}">
 								<a href="#" class="menuOverlayItemLink box24">
-									<img src="{$__language->getIconPath()}">
+									<img src="{$__language->getIconPath()}" alt="">
 									<span class="menuOverlayItemTitle">{$__language}</span>
 								</a>
 							</li>

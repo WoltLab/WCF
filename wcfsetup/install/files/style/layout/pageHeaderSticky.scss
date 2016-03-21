@@ -23,7 +23,7 @@
 		
 		
 		.layoutBoundary {
-			height: 50px;
+			min-height: 50px;
 			
 			// remove padding, the vertical alignment is done using `align-items`
 			padding-bottom: 0;
@@ -59,16 +59,21 @@
 			order: 2;
 			margin: 0 20px;
 			
-			.boxMenu > li > a {
-				align-items: center;
-				display: flex;
+			.boxMenu {
+				background-color: $wcfHeaderBackground;
+				padding-bottom: 5px;
 				
-				> span {
-					flex: 0 0 auto;
-				}
-				
-				> .boxMenuLinkOutstandingItems {
-					margin-left: 5px;
+				> li > a {
+					align-items: center;
+					display: flex;
+					
+					> span {
+						flex: 0 0 auto;
+					}
+					
+					> .boxMenuLinkOutstandingItems {
+						margin-left: 5px;
+					}
 				}
 			}
 		}
@@ -83,15 +88,17 @@
 			order: 3;
 			
 			.pageHeaderSearchInput {
-				height: 50px;
+				height: 100%;
 				width: 100%;
 			}
 			
 			.pageHeaderSearchLabel {
 				background-color: $wcfHeaderSearchBoxBackground;
+				bottom: 0;
 				cursor: pointer;
 				display: block;
-				height: 50px;
+				position: absolute;
+				top: 0;
 				width: 50px;
 				
 				&:hover {
@@ -104,32 +111,40 @@
 					font-family: FontAwesome;
 					font-size: 28px;
 					line-height: 32px;
-					position: relative;
+					position: absolute;
 					right: 11px;
-					top: 9px;
+					top: 50%;
+					transform: translateY(-50%);
 				}
 			}
 		}
 		
-		.pageHeaderSearchInputContainer {
-			&.open {
+		&:not(.searchBarOpen) {
+			.pageHeaderSearch {
+				font-size: 0;
+				width: 50px;
+			}
+			
+			.pageHeaderSearchInput,
+			.pageHeaderSearchInputButton {
+				display: none;
+			}
+		}
+		
+		&.searchBarOpen {
+			.pageHeaderSearchInputContainer {
 				bottom: 0;
 				left: 0;
 				position: absolute;
 				right: 0;
 				top: 0;
-				z-index: 100;
-				
-				~ .pageHeaderSearchLabel {
-					visibility: hidden;
-				}
+				z-index: 100; 
 			}
 			
-			&:not(.open) {
-				> .pageHeaderSearchInput,
-				> .pageHeaderSearchInputButton {
-					display: none;
-				}
+			.pageHeaderSearchLabel {
+				position: static;
+				visibility: hidden;
+				width: 50px;
 			}
 		}
 	}

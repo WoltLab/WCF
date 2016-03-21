@@ -6,10 +6,10 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Page/Header/Fixed
  */
-define(['Ui/CloseOverlay', 'Ui/SimpleDropdown'], function(UiCloseOverlay, UiSimpleDropdown) {
+define(['Core', 'EventHandler', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/SimpleDropdown'], function(Core, EventHandler, UiCloseOverlay, UiScreen, UiSimpleDropdown) {
 	"use strict";
 	
-	var _pageHeader, _pageHeaderContainer, _pageHeaderSearchInputContainer, _isFixed = false;
+	var _pageHeader, _pageHeaderContainer, _isFixed = false, _isMobile = false;
 	
 	/**
 	 * @exports     WoltLab/WCF/Ui/Page/Header/Fixed
@@ -21,10 +21,15 @@ define(['Ui/CloseOverlay', 'Ui/SimpleDropdown'], function(UiCloseOverlay, UiSimp
 		init: function() {
 			_pageHeader = elById('pageHeader');
 			_pageHeaderContainer = elById('pageHeaderContainer');
-			_pageHeaderSearchInputContainer = elById('pageHeaderSearchInputContainer');
 			
 			this._initStickyPageHeader();
 			this._initSearchBar();
+			
+			UiScreen.on({
+				match: function() { _isMobile = true; },
+				unmatch: function() { _isMobile = false; },
+				setup: function() { _isMobile = true; }
+			});
 		},
 		
 		/**
@@ -49,15 +54,23 @@ define(['Ui/CloseOverlay', 'Ui/SimpleDropdown'], function(UiCloseOverlay, UiSimp
 			var searchInput = elById('pageHeaderSearchInput');
 			
 			UiSimpleDropdown.registerCallback('pageHeaderSearchInputContainer', function() {
-				if (_isFixed && !_pageHeaderSearchInputContainer.classList.contains('open')) {
-					_pageHeaderSearchInputContainer.classList.add('open');
+				if ((_isFixed || _isMobile) && !_pageHeader.classList.contains('searchBarOpen')) {
+					_pageHeader.classList.add('searchBarOpen');
 					searchInput.focus();
 				}
 			});
 			
 			UiCloseOverlay.add('WoltLab/WCF/Ui/Page/Header/Fixed', function() {
-				_pageHeaderSearchInputContainer.classList.remove('open');
+				_pageHeader.classList.remove('searchBarOpen');
 			});
+			
+			EventHandler.add('com.woltlab.wcf.MainMenuMobile', 'more', (function(data) {
+				if (data.identifier === 'com.woltlab.wcf.search') {
+					data.handler.close(true);
+					
+					Core.triggerEvent(elById('pageHeaderSearchInput'), WCF_CLICK_EVENT);
+				}
+			}).bind(this));
 		},
 		
 		/**
@@ -71,7 +84,7 @@ define(['Ui/CloseOverlay', 'Ui/SimpleDropdown'], function(UiCloseOverlay, UiSimp
 			_pageHeader.classList[_isFixed ? 'add' : 'remove']('sticky');
 			_pageHeaderContainer.classList[_isFixed ? 'add' : 'remove']('stickyPageHeader');
 			
-			_pageHeaderSearchInputContainer.classList.remove('open');
+			_pageHeader.classList.remove('searchBarOpen');
 		}
 	};
 });

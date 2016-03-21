@@ -162,13 +162,13 @@
 						{/capture}
 						
 						<form method="post" action="{link controller='Login'}{/link}">
-							<section class="section">
+							<{if $__3rdPartyButtons|trim}section{else}div{/if} class="section">
 								{if $__3rdPartyButtons|trim}<h2 class="sectionTitle">{lang}wcf.user.login{/lang}</h2>{/if}
 								
 								<dl>
 									<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
 									<dd>
-										<input type="text" id="username" name="username" value="" required="required" class="long" />
+										<input type="text" id="username" name="username" value="" required="required" class="long">
 									</dd>
 								</dl>
 								
@@ -185,26 +185,26 @@
 								<dl>
 									<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 									<dd>
-										<input type="password" id="password" name="password" value="" class="long" />
+										<input type="password" id="password" name="password" value="" class="long">
 									</dd>
 								</dl>
 								
 								{if $__wcf->getUserAuthenticationFactory()->getUserAuthentication()->supportsPersistentLogins()}
 									<dl>
 										<dt></dt>
-										<dd><label><input type="checkbox" id="useCookies" name="useCookies" value="1" checked="checked" /> {lang}wcf.user.useCookies{/lang}</label></dd>
+										<dd><label><input type="checkbox" id="useCookies" name="useCookies" value="1" checked="checked"> {lang}wcf.user.useCookies{/lang}</label></dd>
 									</dl>
 								{/if}
 								
 								{event name='loginFields'}
 								
 								<div class="formSubmit">
-									<input type="submit" id="loginSubmitButton" name="submitButton" value="{lang}wcf.user.button.login{/lang}" accesskey="s" />
+									<input type="submit" id="loginSubmitButton" name="submitButton" value="{lang}wcf.user.button.login{/lang}" accesskey="s">
 									<a class="button" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a>
-									<input type="hidden" name="url" value="{$__wcf->session->requestURI}" />
+									<input type="hidden" name="url" value="{$__wcf->session->requestURI}">
 									{@SECURITY_TOKEN_INPUT_TAG}
 								</div>
-							</section>
+							</{if $__3rdPartyButtons|trim}section{else}div{/if}>
 							
 							{if $__3rdPartyButtons|trim}
 								<section class="section">

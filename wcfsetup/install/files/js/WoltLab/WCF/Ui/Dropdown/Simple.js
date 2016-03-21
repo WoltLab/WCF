@@ -85,7 +85,7 @@ define(
 			var containerId = DomUtil.identify(dropdown);
 			if (!_dropdowns.has(containerId)) {
 				button.classList.add('jsDropdownEnabled');
-				button.addEventListener('click', this._toggle.bind(this));
+				button.addEventListener(WCF_CLICK_EVENT, this._toggle.bind(this));
 				
 				_dropdowns.set(containerId, dropdown);
 				_menus.set(containerId, menu);
@@ -98,7 +98,7 @@ define(
 			elData(button, 'target', containerId);
 			
 			if (isLazyInitialization) {
-				setTimeout(function() { Core.triggerEvent(button, 'click'); }, 10);
+				setTimeout(function() { Core.triggerEvent(button, WCF_CLICK_EVENT); }, 10);
 			}
 		},
 		

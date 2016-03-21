@@ -127,7 +127,26 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 		 * @protected
 		 */
 		_initItem: function(item) {
-			var itemList = item.nextElementSibling, parent = item.parentNode, wrapper;
+			// check if it should contain a 'more' link w/ an external callback
+			var parent = item.parentNode;
+			var more = elData(parent, 'more');
+			if (more) {
+				item.addEventListener(WCF_CLICK_EVENT, (function(event) {
+					event.preventDefault();
+					event.stopPropagation();
+					
+					EventHandler.fire(this._eventIdentifier, 'more', {
+						handler: this,
+						identifier: more,
+						item: item,
+						parent: parent
+					});
+				}).bind(this));
+				
+				return;
+			}
+			
+			var itemList = item.nextElementSibling, wrapper;
 			if (itemList === null) {
 				return;
 			}
