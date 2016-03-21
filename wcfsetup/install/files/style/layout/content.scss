@@ -273,25 +273,35 @@ fieldset {
 	}
 	
 	@include small-screen-only {
-		> nav + nav > ul {
-			// gap between pagination and navigation buttons
-			margin-top: 10px;
-		}
-		
 		ul {
 			margin-top: 30px;
 			
 			> li {
-				& + li {
-					margin-top: 10px;
-				}
-				
 				> .button {
 					display: block;
 					padding: 7px 10px;
 					text-align: center;
 				}
 			}
+		}
+		
+		> nav:not(.pagination) > ul > li + li {
+			margin-top: 10px;
+		}
+	}
+}
+
+@include small-screen-only {
+	.contentNavigation > .pagination {
+		display: none;
+	}
+	
+	.section ~ .contentNavigation > .pagination {
+		display: block;
+		
+		& + nav {
+			// gap between pagination and navigation buttons
+			margin-top: 10px;
 		}
 	}
 }
