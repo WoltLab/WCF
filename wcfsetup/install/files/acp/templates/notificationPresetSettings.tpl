@@ -1,20 +1,15 @@
 {include file='header' pageTitle='wcf.acp.user.notificationPresetSettings'}
 
 <script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		$('#notificationSettings > section > dl > dd > label > input').each(function(index, value) {
-			var $input = $(value);
-			$input.on('click', function(event) {
-				var $input = $(event.currentTarget);
-				$input.parents('dd').find('.jsMailNotificationType').toggle();
-			});
-			if (!$input.is(':checked')) {
-				$input.parents('dd').find('.jsMailNotificationType').hide();
-			}
+	require(['Language', 'WoltLab/WCF/Controller/User/Notification/Settings'], function(Language, ControllerUserNotificationSettings) {
+		Language.addObject({
+			'wcf.user.notification.mailNotificationType.daily': '{lang}wcf.user.notification.mailNotificationType.daily{/lang}',
+			'wcf.user.notification.mailNotificationType.instant': '{lang}wcf.user.notification.mailNotificationType.instant{/lang}',
+			'wcf.user.notification.mailNotificationType.none': '{lang}wcf.user.notification.mailNotificationType.none{/lang}'
 		});
+		
+		ControllerUserNotificationSettings.setup();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">
@@ -58,20 +53,34 @@
 				
 				<dl>
 					{foreach from=$eventList item=event}
+						<dt>{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}</dt>
 						<dd>
-							<label><input type="checkbox" name="settings[{@$event->eventID}][enabled]" value="1"{if !$settings[$event->eventID][enabled]|empty} checked="checked"{/if} /> {lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}</label>
-							{hascontent}<small>{content}{lang __optional=true}wcf.user.notification.{$event->objectType}.{$event->eventName}.description{/lang}{/content}</small>{/hascontent}
-							{if $event->supportsEmailNotification()}
-								<small class="jsMailNotificationType">
-									<select name="settings[{@$event->eventID}][mailNotificationType]">
-										<option value="none">{lang}wcf.user.notification.mailNotificationType.none{/lang}</option>
-										<option value="instant"{if $settings[$event->eventID][mailNotificationType] == 'instant'} selected="selected"{/if}>{lang}wcf.user.notification.mailNotificationType.instant{/lang}</option>
-										<option value="daily"{if $settings[$event->eventID][mailNotificationType] == 'daily'} selected="selected"{/if}>{lang}wcf.user.notification.mailNotificationType.daily{/lang}</option>
-									</select>
-								</small>
-							{else}
-								<small class="jsMailNotificationType">{lang}wcf.user.notification.mailNotificationType.notSupported{/lang}</small>
-							{/if}
+							<ol class="flexibleButtonGroup" data-object-id="{@$event->eventID}">
+								<li>
+									<input type="radio" id="settings_{@$event->eventID}_disabled" name="settings[{@$event->eventID}][enabled]" value="0"{if $settings[$event->eventID][enabled]|empty} checked="checked"{/if}>
+									<label for="settings_{@$event->eventID}_disabled" class="red">
+										<span class="icon icon16 fa-times"></span>
+										{lang}wcf.user.notification.notifications.disabled{/lang}
+									</label>
+								</li>
+								<li class="spaceAfter">
+									<input type="radio" id="settings_{@$event->eventID}_enabled" name="settings[{@$event->eventID}][enabled]" value="1"{if !$settings[$event->eventID][enabled]|empty} checked="checked"{/if}>
+									<label for="settings_{@$event->eventID}_enabled" class="green">
+										<span class="icon icon16 fa-bell"></span>
+										{lang}wcf.user.notification.notifications.enabled{/lang}
+									</label>
+								</li>
+								{if $event->supportsEmailNotification()}
+									<li class="notificationSettingsEmail{if !$settings[$event->eventID][enabled]|empty} active{/if}">
+										<input type="hidden" id="settings_{$event->eventID}_mailNotificationType" name="settings[{@$event->eventID}][mailNotificationType]" value="{$settings[$event->eventID][mailNotificationType]}">
+										<a{if $settings[$event->eventID][mailNotificationType] !== 'none'} class="active yellow"{/if}>
+											<span class="icon icon16 fa-envelope-o"></span>
+											<span class="title">{lang}wcf.user.notification.mailNotificationType.{$settings[$event->eventID][mailNotificationType]}{/lang}</span>
+											<span class="icon icon16 fa-caret-down"></span>
+										</a>
+									</li>
+								{/if}
+							</ol>
 						</dd>
 					{/foreach}
 				</dl>
