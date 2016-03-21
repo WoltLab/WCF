@@ -102,9 +102,11 @@ namespace wcf\functions\exception {
 		$exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
 		$logFile = sanitizePath($logFile);
 		try {
-			$exceptionTitle = WCF::getLanguage()->get('wcf.global.exception.title', true);
-			$exceptionSubtitle = str_replace('{$exceptionID}', $exceptionID, WCF::getLanguage()->get('wcf.global.exception.subtitle', true));
-			$exceptionExplanation= str_replace('{$logFile}', $logFile, WCF::getLanguage()->get('wcf.global.exception.explanation', true));
+			if (WCF::getLanguage() !== null) {
+				$exceptionTitle = WCF::getLanguage()->get('wcf.global.exception.title', true);
+				$exceptionSubtitle = str_replace('{$exceptionID}', $exceptionID, WCF::getLanguage()->get('wcf.global.exception.subtitle', true));
+				$exceptionExplanation = str_replace('{$logFile}', $logFile, WCF::getLanguage()->get('wcf.global.exception.explanation', true));
+			}
 		}
 		catch (\Exception $e) {
 			// ignore
