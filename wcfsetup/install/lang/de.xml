@@ -3041,6 +3041,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.usersOnline.location.unknown"><![CDATA[Unbekannter Ort]]></item>
 		<item name="wcf.user.usersOnline.robots"><![CDATA[Suchmaschinen-Roboter]]></item>
 		<item name="wcf.user.usersOnline.record"><![CDATA[Rekord: {#USERS_ONLINE_RECORD} Benutzer ({@USERS_ONLINE_RECORD_TIME|time})]]></item>
+		<item name="wcf.user.usersOnline.users"><![CDATA[Benutzer]]></item>
 	</category>
 	
 	<category name="wcf.user.recentActivity">
