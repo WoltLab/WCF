@@ -68,8 +68,10 @@
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />
-		<input type="hidden" name="wcfDir" value="{$wcfDir}" />
 		<input type="hidden" name="dev" value="{@$developerMode}" />
+		{foreach from=$directories key=application item=directory}
+			<input type="hidden" name="directories[{$application}]" value="{$directory}">
+		{/foreach}
 		{foreach from=$selectedLanguages item=language}
 			<input type="hidden" name="selectedLanguages[]" value="{$language}" />
 		{/foreach}

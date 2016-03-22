@@ -37,6 +37,15 @@ interface IPackageInstallationPlugin {
 	public function uninstall();
 	
 	/**
+	 * Returns the default file name containing the instructions. If no default
+	 * file name is supported, null is returned.
+	 * 
+	 * @return	string
+	 * @since	2.2
+	 */
+	public static function getDefaultFilename();
+	
+	/**
 	 * Validates if the passed instruction is valid for this package installation plugin. If anything is
 	 * wrong with it, this method should return false.
 	 * 

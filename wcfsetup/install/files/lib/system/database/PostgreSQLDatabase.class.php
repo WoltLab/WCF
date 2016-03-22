@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database;
+use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 use wcf\util\StringStack;
 
 /**
@@ -29,7 +30,7 @@ class PostgreSQLDatabase extends Database {
 			$this->setAttributes();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Connecting to PostgreSQL server '".$this->host."' failed:\n".$e->getMessage(), $this);
+			throw new GenericDatabaseException("Connecting to PostgreSQL server '".$this->host."' failed", $e);
 		}
 		
 		// set connection character set
@@ -72,7 +73,7 @@ class PostgreSQLDatabase extends Database {
 			return $this->pdo->lastInsertId('"' . $table . '_' . $field . '_seq"');
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Can not fetch last insert id", $this);
+			throw new GenericDatabaseException("Can not fetch last insert id", $this);
 		}
 	}
 	

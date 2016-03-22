@@ -3,7 +3,6 @@ namespace wcf\system\cache\builder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -21,69 +20,60 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	 * list of used group option type objects
 	 * @var	array<\wcf\system\option\group\IGroupOptionType>
 	 */
-	protected $typeObjects = array();
+	protected $typeObjects = [];
 	
 	/**
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$data = array();
+		$data = [];
 		
-		// get all options
-		$sql = "SELECT	optionName, optionID
-			FROM	wcf".WCF_N."_user_group_option";
+		// get option values
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("option_value.groupID IN (?)", [ $parameters ]);
+		
+		$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue
+			FROM		wcf".WCF_N."_user_group_option_value option_value
+			LEFT JOIN	wcf".WCF_N."_user_group_option option_table
+			ON		(option_table.optionID = option_value.optionID)
+			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		
-		$options = array();
+		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$options[$row['optionName']] = $row['optionID'];
-		}
-		
-		if (!empty($options)) {
-			// get needed options
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("option_value.groupID IN (?)", array($parameters));
-			$conditions->add("option_value.optionID IN (?)", array($options));
-			
-			$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue
-				FROM		wcf".WCF_N."_user_group_option_value option_value
-				LEFT JOIN	wcf".WCF_N."_user_group_option option_table
-				ON		(option_table.optionID = option_value.optionID)
-				".$conditions;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			while ($row = $statement->fetchArray()) {
-				if (!isset($data[$row['optionName']])) {
-					$data[$row['optionName']] = array('type' => $row['optionType'], 'values' => array());
-				}
-				
-				$data[$row['optionName']]['values'][] = $row['optionValue'];
+			if (!isset($data[$row['optionName']])) {
+				$data[$row['optionName']] = [ 'type' => $row['optionType'], 'values' => [] ];
 			}
 			
-			// merge values
-			foreach ($data as $optionName => $option) {
-				if (count($option['values']) == 1) {
-					$result = $option['values'][0];
-				}
-				else {
-					$typeObj = $this->getTypeObject($option['type']);
-					$result = array_shift($option['values']);
-					foreach ($option['values'] as $value) {
-						$newValue = $typeObj->merge($result, $value);
-						if ($newValue !== null) {
-							$result = $newValue;
-						}
+			$data[$row['optionName']]['values'][] = $row['optionValue'];
+		}
+		
+		// merge values
+		foreach ($data as $optionName => $option) {
+			if (count($option['values']) == 1) {
+				$result = $option['values'][0];
+			}
+			else {
+				$typeObj = $this->getTypeObject($option['type']);
+				$result = array_shift($option['values']);
+				foreach ($option['values'] as $value) {
+					$newValue = $typeObj->merge($result, $value);
+					if ($newValue !== null) {
+						$result = $newValue;
 					}
 				}
-				
-				// unset false values
-				if ($result === false) {
-					unset($data[$optionName]);
-				}
-				else {
-					$data[$optionName] = $result;
-				}
+			}
+			
+			// handle special value 'Never' for boolean options
+			if ($option['type'] === 'boolean' && $result == -1) {
+				$result = 0;
+			}
+			
+			// unset false values
+			if ($result === false) {
+				unset($data[$optionName]);
+			}
+			else {
+				$data[$optionName] = $result;
 			}
 		}
 		
@@ -105,7 +95,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 			if (!class_exists($className)) {
 				throw new SystemException("unable to find class '".$className."'");
 			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
+			if (!is_subclass_of($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
 				throw new SystemException("'".$className."' does not implement 'wcf\system\option\user\group\IUserGroupOptionType'");
 			}
 			

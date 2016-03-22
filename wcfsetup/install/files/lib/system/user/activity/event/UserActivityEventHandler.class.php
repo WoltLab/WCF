@@ -73,10 +73,10 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * @param	integer		$languageID
 	 * @param	integer		$userID
 	 * @param	integer		$time
-	 * @param	array		$additonalData
+	 * @param	array		$additionalData
 	 * @return	\wcf\data\user\activity\event\UserActivityEvent
 	 */
-	public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additonalData = array()) {
+	public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additionalData = array()) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		if ($objectTypeID === null) {
 			throw new SystemException("Unknown recent activity event '".$objectType."'");
@@ -91,7 +91,7 @@ class UserActivityEventHandler extends SingletonFactory {
 				'languageID' => $languageID,
 				'userID' => $userID,
 				'time' => $time,
-				'additionalData' => serialize($additonalData)
+				'additionalData' => serialize($additionalData)
 			)
 		));
 		$returnValues = $eventAction->executeAction();

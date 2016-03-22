@@ -2,6 +2,7 @@
 namespace wcf\data\comment;
 use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
+use wcf\data\TUserContent;
 use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\comment\CommentHandler;
 use wcf\util\StringUtil;
@@ -17,6 +18,8 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class Comment extends DatabaseObject implements IMessage {
+	use TUserContent;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -64,27 +67,6 @@ class Comment extends DatabaseObject implements IMessage {
 	 */
 	public function getMessage() {
 		return $this->message;
-	}
-	
-	/**
-	 * @see	\wcf\data\IUserContent::getTime()
-	 */
-	public function getTime() {
-		return $this->time;
-	}
-	
-	/**
-	 * @see	\wcf\data\IUserContent::getUserID()
-	 */
-	public function getUserID() {
-		return $this->userID;
-	}
-	
-	/**
-	 * @see	\wcf\data\IUserContent::getUsername()
-	 */
-	public function getUsername() {
-		return $this->username;
 	}
 	
 	/**

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/page.xsd">
+	<import>
+		<!-- dynamic -->
+		<page identifier="com.woltlab.wcf.Dashboard">
+			<controller>wcf\page\DashboardPage</controller>
+			<name language="de"><![CDATA[Dashboard]]></name>
+			<name language="en"><![CDATA[Dashboard]]></name>
+			<options>module_dashboard_page</options>
+		</page>
+		
+		<page identifier="com.woltlab.wcf.MembersList">
+			<controller>wcf\page\MembersListPage</controller>
+			<name language="de"><![CDATA[Mitglieder]]></name>
+			<name language="en"><![CDATA[Members]]></name>
+			<permissions>user.profile.canViewMembersList</permissions>
+			<options>module_members_list</options>
+		</page>
+		<page identifier="com.woltlab.wcf.RecentActivityList">
+			<controller>wcf\page\RecentActivityListPage</controller>
+			<name language="de"><![CDATA[Letzte Aktivitäten]]></name>
+			<name language="en"><![CDATA[Recent Activities]]></name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+		</page>
+		<page identifier="com.woltlab.wcf.UsersOnlineList">
+			<controller>wcf\page\UsersOnlineListPage</controller>
+			<name language="de"><![CDATA[Benutzer Online]]></name>
+			<name language="en"><![CDATA[Users Online]]></name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+			<permissions>user.profile.canViewUsersOnlineList</permissions>
+			<options>module_users_online</options>
+		</page>
+		<page identifier="com.woltlab.wcf.Team">
+			<controller>wcf\page\TeamPage</controller>
+			<name language="de"><![CDATA[Team]]></name>
+			<name language="en"><![CDATA[Team]]></name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+			<permissions>user.profile.canViewMembersList</permissions>
+			<options>module_team_page</options>
+		</page>
+		<page identifier="com.woltlab.wcf.UserSearch">
+			<controller>wcf\page\UserSearchForm</controller>
+			<name language="de"><![CDATA[Benutzer suchen]]></name>
+			<name language="en"><![CDATA[Search Users]]></name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+			<permissions>user.profile.canViewMembersList</permissions>
+			<options>module_members_list</options>
+		</page>
+		
+		<!-- static -->
+		<page identifier="com.woltlab.wcf.CookiePolicy">
+			<name language="en">Cookie Policy</name>
+			<name language="de">Cookie-Richtlinie</name>
+			
+			<content language="en">
+				<title>Cookie Policy</title>
+				<content><![CDATA[<p>This website uses cookies required to operate and use this site. Below you will find an explanation on our cookie usage.</p>
+		
+<h2>What are cookies</h2>
+<p>Cookies are small text files which a website may put on your computer or mobile device when you first visit a site or page. The cookie will help the website, or another website, to recognise your device the next time you visit. There are many functions cookies serve, for example they can help us to remember your username and preferences.</p>
+
+<h2>What do we use cookies for</h2>
+<p>We’re using cookies for the following purposes:</p>
+<ul>
+<li>Login: Once you login to our website, a cookie is set containing your encrypted credentials, required to recognize you between page visits. You can disable this cookie by unchecking “Remember me” in the login form.</li>
+<li>Session: Upon first visit of our website, the system will create a new unique session for you which will be saved using a cookie on your computer. Sessions are required to recognize users between page accesses. It is a temporary cookie which will be deleted once you close your internet browser.</li>
+<li>Third-Party Services: Displayed ads or sharing content through social networks or comparable actions might cause a cookie created by them.</li>
+</ul>
+
+<h2>How to disable or delete cookies</h2>
+<p>Your internet browser offers specialized options to manage and remove cookies. They offer settings to reject many or all cookies. Please refer to the instructions for your internet browser from the list below.</p>
+<ul>
+<li><a href="https://support.google.com/chrome/answer/95647?hl=en" class="externalURL" rel="nofollow">Google Chrome</a></li>
+<li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" class="externalURL" rel="nofollow">Mozilla Firefox</a></li>
+<li><a href="http://help.opera.com/Windows/12.00/en/cookies.html" class="externalURL" rel="nofollow">Opera</a></li>
+<li><a href="https://support.apple.com/kb/ph17191?locale=en_US" class="externalURL" rel="nofollow">Safari</a></li>
+<li><a href="http://windows.microsoft.com/en-US/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
+</ul>]]></content>
+				<customURL>cookie-policy</customURL>
+			</content>
+			
+			<content language="de">
+				<title>Einsatz von Cookies</title>
+				<content><![CDATA[<p>Wie viele Internetseiten nutzt auch diese Seite Cookies. An dieser Stelle wird erklärt was Cookies sind und wie sie genutzt werden.</p>
+		
+<h2>Was sind Cookies</h2>
+<p>Cookies sind kleine Dateien, die beim Aufruf von Internetseiten durch den Internet Browser auf Ihrem lokalen Rechner gespeichert werden. In den Dateien speichern Internetseiten verschiedene Informationen, um die Nutzung von besuchten Internetseiten für Sie komfortabler zu gestalten. Oftmals wird in Cookies z.B. Ihr Login gespeichert, um Sie bei einem späteren Besuch der Internetseite automatisch anzumelden, ohne dass Sie Ihre Zugangsdaten noch einmal manuell eingeben müssen.</p>
+
+<h2>Wie wir Cookies nutzen</h2>
+<p>Wir setzen Cookies für folgende Zwecke ein:</p>
+<ul>
+<li>Anmeldung: Bei der Anmeldung werden Ihre Zugangsdaten in verschlüsselter Form als Cookies gespeichert, um Sie bei einem späteren Seitenaufruf automatisiert anzumelden. Im Anmeldefenster können Sie mit der Option „Dauerhaft angemeldet bleiben“ festlegen, ob diese Cookies angelegt werden sollen.</li>
+<li>Sitzung: Beim ersten Aufruf unserer Seite wird eine neue Sitzung gestartet, diese wird durch ein eindeutiges Cookies Ihrem Computer zugeordnet. Sitzungen erlauben es, Sie zwischen zwei Seitenaufrufen wieder zu erkennen und Ihnen alle Funktionalitäten bereitstellen zu können. Es handelt sich um ein temporäres Cookies, dass beim Beenden des Internet Browsers automatisch gelöscht wird.</li>
+<li>Drittanbieter-Dienste: Die Einblendung von Werbeanzeigen oder das Teilen von Inhalten auf sozialen Netzwerken oder vergleichbaren Internetseiten kann die Erzeugung eines Cookies zur Folge haben. Diese Cookies werden nicht direkt von unserer Seite erzeugt, sondern durch den Drittanbieter selbst.</li>
+</ul>
+
+<h2>Wie Sie Cookies deaktivieren und entfernen</h2>
+<p>Cookies können in den Einstellungen Ihres Internet Browsers verwaltet und entfernt werden. Darüber hinaus lässt sich in den Einstellungen das Speichern von Cookies zudem vollständig deaktivieren. Bitte entnehmen Sie der folgenden Auflistung die passende Anleitung für den Umgang mit Cookies zu dem von Ihnen genutzten Internet Browser.</p>
+<ul>
+<li><a href="https://support.google.com/chrome/answer/95647?hl=de" class="externalURL" rel="nofollow">Google Chrome</a></li>
+<li><a href="https://support.mozilla.org/de/kb/cookies-informationen-websites-auf-ihrem-computer" class="externalURL" rel="nofollow">Mozilla Firefox</a></li>
+<li><a href="http://help.opera.com/Windows/12.00/de/cookies.html" class="externalURL" rel="nofollow">Opera</a></li>
+<li><a href="https://support.apple.com/kb/ph17191?locale=de_DE" class="externalURL" rel="nofollow">Safari</a></li>
+<li><a href="http://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
+</ul>]]></content>
+				<customURL>cookie-richtlinie</customURL>
+			</content>
+		</page>
+		
+		<page identifier="com.woltlab.wcf.PrivacyPolicy">
+			<name language="en">Privacy Policy</name>
+			<name language="de">Datenschutzerklärung</name>
+			<options>module_privacy_policy_page</options>
+			
+			<content language="en">
+				<title>Privacy Policy</title>
+				<content><![CDATA[<p>We, the Operators of this Website, provide it as a public service to our users.</p>
+
+<p>Your privacy is important to the us. Our goal is to provide you with a personalized online experience that provides you with the information, resources, and services that are most relevant and helpful to you. This Privacy Policy has been written to describe the conditions under which this web site is being made available to you. The Privacy Policy discusses, among other things, how data obtained during your visit to this web site may be collected and used. We strongly recommend that you read the Privacy Policy carefully. By using this web site, you agree to be bound by the terms of this Privacy Policy. If you do not accept the terms of the Privacy Policy, you are directed to discontinue accessing or otherwise using the web site or any materials obtained from it. If you are dissatisfied with the web site, by all means contact us; otherwise, your only recourse is to disconnect from this site and refrain from visiting the site in the future.</p>
+
+<p>The process of maintaining a web site is an evolving one, and the Operators may decide at some point in the future, without advance notice, to modify the terms of this Privacy Policy. Your use of the web site, or materials obtained from the web site, indicates your assent to the Privacy Policy at the time of such use. The effective Privacy Policy will be posted on the web site, and you should check upon every visit for any changes.</p>
+
+<h2>Sites Covered by this Privacy Policy</h2>
+
+<p>This Privacy Policy applies to all the Operators-maintained web sites, domains, information portals, and registries.</p>
+
+<h2>Children’s Privacy</h2>
+
+<p>The Operators are committed to protecting the privacy needs of children, and we encourage parents and guardians to take an active role in their children’s online activities and interests. The Operators do not intentionally collect information from minors, and the Operators do not target its web site to children.</p>
+
+<h2>Links to Non-Operators Web Sites</h2>
+
+<p>The Operators’s web sites may provide links to third-party web sites for the convenience of our users. If you access those links, you will leave the Operators’s web site. the Operators do not control these third-party websites and cannot represent that their policies and practices will be consistent with this Privacy Policy. For example, other web sites may collect or use personal information about you in a manner different from that described in this document. Therefore, you should use other web sites with caution, and you do so at your own risk. We encourage you to review the privacy policy of any web site before submitting personal information.</p>
+
+<h2>Types of Information We Collect</h2>
+
+<h3>Non-Personal Information</h3>
+
+<p>Non-personal information is data about usage and service operation that is not directly associated with a specific personal identity. The Operators may collect and analyze non-personal information to evaluate how visitors use the Operators’s web sites.</p>
+
+<h3>Aggregate Information</h3>
+
+<p>The Operators may gather aggregate information, which refers to information your computer automatically provides to us and that cannot be tied back to you as a specific individual. Examples include referral data (the web sites you visited just before and just after our site), the pages viewed, time spent at our Web site, and Internet Protocol (IP) addresses. An IP address is a number that is automatically assigned to your computer whenever you access the Internet. For example, when you request a page from one of our sites, our servers log your IP address to create aggregate reports on user demographics and traffic patterns and for purposes of system administration.</p>
+
+<h3>Log Files</h3>
+
+<p>Every time you request or download a file from the web site, the Operators may store data about these events and your IP address in a log file. The Operators may use this information to analyze trends, administer the web site, track users’ movements, and gather broad demographic information for aggregate use or for other business purposes.</p>
+
+<h3>Cookies</h3>
+
+<p>Our site may use a feature of your browser to set a “cookie” on your computer. Cookies are small packets of information that a web site’s computer stores on your computer. The Operators’s web sites can then read the cookies whenever you visit our site. We may use cookies in a number of ways, such as to save your password so you don’t have to re-enter it each time you visit our site, to deliver content specific to your interests and to track the pages you’ve visited. These cookies allow us to use the information we collect to customize your experience so that your visit to our site is as relevant and as valuable to you as possible.</p>
+
+<p>Most browser software can be set up to deal with cookies. You may modify your browser preference to provide you with choices relating to cookies. You have the choice to accept all cookies, to be notified when a cookie is set or to reject all cookies. If you choose to reject cookies, certain of the functions and conveniences of our web site may not work properly, and you may be unable to use those of the Operators’s services that require registration in order to participate, or you will have to re-register each time you visit our site. Most browsers offer instructions on how to reset the browser to reject cookies in the “Help” section of the toolbar. We do not link non-personal information from cookies to personally identifiable information without your permission.</p>
+
+<h3>Personal Information</h3>
+
+<p>Personal information is information that is associated with your name or personal identity. The Operators use personal information to better understand your needs and interests and to provide you with better service. On some of the Operators web pages, you may be able to request information, subscribe to mailing lists, participate in online discussions, collaborate on documents, provide feedback, submit information into registries, register for events, apply for membership, or join technical committees or working groups. The types of personal information you provide to us on these pages may include name, address, phone number, e-mail address, user IDs, passwords, billing information, or credit card information.</p>
+
+<h3>Members-Only Web Sites</h3>
+
+<p>Information you provide on Operators’s membership applications is used to create a member profile, and some information may be shared with other of the Operators’s individual member representatives and organizations. Member contact information may be provided to other members on a secure web site to encourage and facilitate collaboration, research, and the free exchange of information among the Operators’s members, but we expressly prohibit members from using member contact information to send unsolicited commercial correspondence. The Operators’s members may be automatically added to the Operators’s mailing lists. From time to time, member information may be shared with event organizers and/or other organizations that provide additional benefits to the Operators’s members. By providing us with your personal information on the membership application, you expressly consent to our storing, processing, and distributing your information for these purposes.</p>
+
+<h2>How We Use Your Information</h2>
+
+<p>The Operators may use non-personal data that is aggregated for reporting about the Operators’s web site usability, performance, and effectiveness. It may be used to improve the experience, usability, and content of the site.</p>
+
+<p>The Operators may use personal information to provide services that support the activities of the Operators’s members and their collaboration on the Operators’s standards and projects. When accessing the Operators’s members-only web pages, your personal user information may be tracked by the Operators in order to support collaboration, ensure authorized access, and enable communication between members.</p>
+
+<p>Credit card information may be collected to facilitate membership applications; or if you purchase a product or service from our website, such information will not be kept longer than necessary for providing the services requested. Credit card numbers are used only for processing payment and are not used for other purposes. Payment processing services may be provided by a third-party payment service, and a management company external to the Operators may provide support for the financial activities of the Operators. the Operators may share your personal information with its partners to facilitate these transactions.</p>
+
+<h2>Information Sharing</h2>
+
+<p>The Operators does not sell, rent, or lease any individual’s personal information or lists of email addresses to anyone for marketing purposes, and we take commercially reasonable steps to maintain the security of this information. However, the Operators reserve the right to supply any such information to any organization into which the Operators may merge in the future or to which it may make any transfer in order to enable a third party to continue part or all of its mission. We also reserve the right to release personal information to protect our systems or business, when we reasonably believe you to be in violation of our Terms of Use or if we reasonably believe you to have initiated or participated in any illegal activity. In addition, please be aware that in certain circumstances, the Operators may be obligated to release your personal information pursuant to judicial or other government subpoenas, warrants, or other orders.</p>
+
+<p>In keeping with our open process, the Operators may maintain publicly accessible archives for the majority of our activities. For example, posting an email to any of the Operators’s-hosted public mail lists or discussion forums, subscribing to one of our newsletters or registering for one of our public meetings may result in your email address becoming part of the publicly accessible archives.</p>
+
+<p>On some sites, anonymous users are allowed to post content and/or participate in forum discussions. In such a case, since no user name can be associated with such a user, the IP address number of a user is used as an identifier. When posting content or messages to a Operators site anonymously, your IP address may be revealed to the public.</p>
+
+<p>If you are a registered member of an Operators's website or email list, you should be aware that some items of your personal information may be visible to other members and to the public. The Operators’s member databases may retain information about your name, e-mail address, company affiliation (if an organizational member), and such other personal address and identifying data as you choose to supply. That data may be visible to other of the Operators’s members and to the public. Your name, e-mail address, and other information you may supply also may be associated in the Operators’s publicly accessible records with the Operators’s various committees, working groups, and similar activities that you join, in various places, including: (i) the permanently-posted attendance and membership records of those activities; (ii) documents generated by the activity, which may be permanently archived; and, (iii) along with message content, in the permanent archives of the Operators’s e-mail lists, which also may be public.</p>
+
+<p>Please remember that any information (including personal information) that you disclose in public areas of our web site, such as forums, message boards, and news groups, becomes public information that others may collect, circulate, and use. Because we cannot and do not control the acts of others, you should exercise caution when deciding to disclose information about yourself or others in public forums such as these.</p>
+
+<p>Given the international scope of the Operators websites, personal information may be visible to persons outside your country of residence, including to persons in countries that your own country’s privacy laws and regulations deem deficient in ensuring an adequate level of protection for such information. If you are unsure whether this Privacy Policy is in conflict with applicable local rules, you should not submit your information. If you are located within the European Union, you should note that your information will be transferred to the United States, which is deemed by the European Union to have inadequate data protection. Nevertheless, in accordance with local laws implementing European Union Directive 95/46/EC of 24 October 1995 (“EU Privacy Directive”) on the protection of individuals with regard to the processing of personal data and on the free movement of such data, individuals located in countries outside of the United States of America who submit personal information do thereby consent to the general use of such information as provided in this Privacy Policy and to its transfer to and/or storage in the United States of America.</p>
+
+<p>If you do not want your personal information collected and used by the Operators, please do not visit the Operators’s web site or apply for membership of any of the Operators' websites or email lists.</p>
+
+<h2>Access to and Accuracy of Member Information</h2>
+
+<p>The Operators are committed to keeping the personal information of our members accurate. All the information you have submitted to us can be verified and changed. In order to do this, please email us a request. We may provide members with online access to their own personal profiles, enabling them to update or delete information at any time. To protect our members’ privacy and security, we also may take reasonable steps to verify identity, such as a user ID and password, before granting access to modify personal profile data. Certain areas of the Operators’s web sites may limit access to specific individuals through the use of passwords or other personal identifiers; a password prompt is your indication that a members-only resource is being accessed.</p>
+
+<h2>Security</h2>
+
+<p>The Operators make every effort to protect personal information by users of the web site, including using firewalls and other security measures on its servers. No server, however, is 100% secure, and you should take this into account when submitting personal or confidential information about yourself on any web site, including this one. Much of the personal information is used in conjunction with member services such as collaboration and discussion, so some types of personal information such as your name, company affiliation, and email address will be visible to other the Operators’s members and to the public. The Operators assume no liability for the interception, alteration, or misuse of the information you provide. You alone are responsible for maintaining the secrecy of your personal information. Please use care when use access this web site and provide personal information.</p>
+
+<h2>Opting Out</h2>
+
+<p>From time to time the Operators may email you electronic newsletters, announcements, surveys or other information. If you prefer not to receive any or all of these communications, you may opt out by following the directions provided within the electronic newsletters and announcements.</p>
+
+<p>If you have questions regarding this privacy policy, please contact us.</p>
+
+<p><small><em>Source: <a rel="nofollow" href="http://forum-template.wikidot.com/legal:privacy-policy" target="_blank">forum-template.wikidot.com</a></em></small></p>]]></content>
+				<customURL>privacy-policy</customURL>
+			</content>
+			
+			<content language="de">
+				<title>Datenschutzerklärung</title>
+				<content><![CDATA[<h2>Datenschutz</h2>
+    <p>Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, 
+      Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.   
+    </p>
+    <p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. 
+      bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. 
+      Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht 
+      möglich. </p>
+    <p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten 
+      durch Dritte zur Übersendung von nicht ausdrücklich angeforderter 
+      Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. 
+      Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte 
+      im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, 
+      vor.</p>
+<h2>Datenschutzerklärung für die Nutzung von Facebook-Plugins
+		 (Like-Button)</h2>
+		 <p>Auf unseren Seiten sind Plugins des sozialen Netzwerks Facebook
+		 (Facebook Inc., 1601 Willow Road, Menlo Park, California, 94025, USA) integriert.
+		 Die Facebook-Plugins erkennen Sie an dem Facebook-Logo oder
+		 dem "Like-Button" ("Gefällt mir") auf unserer Seite. Eine Übersicht
+		 über die Facebook-Plugins finden Sie hier:
+		 <a href="http://developers.facebook.com/docs/plugins/" 
+		 target="_blank">http://developers.facebook.com/docs/plugins/</a>.<br />
+		 Wenn Sie unsere Seiten
+		 besuchen, wird über das Plugin eine direkte Verbindung zwischen Ihrem
+		 Browser und dem Facebook-Server hergestellt. Facebook erhält dadurch
+		 die Information, dass Sie mit Ihrer IP-Adresse unsere Seite
+		 besucht haben. Wenn Sie den Facebook "Like-Button" anklicken während
+		 Sie in Ihrem Facebook-Account eingeloggt sind, können Sie die Inhalte
+		 unserer Seiten auf Ihrem Facebook-Profil verlinken. Dadurch kann
+		 Facebook den Besuch unserer Seiten Ihrem Benutzerkonto zuordnen. Wir
+		 weisen darauf hin, dass wir als Anbieter der Seiten keine Kenntnis vom
+		 Inhalt der übermittelten Daten sowie deren Nutzung durch Facebook
+		 erhalten. Weitere Informationen hierzu finden Sie in der
+		 Datenschutzerklärung von facebook unter
+		 <a href="http://de-de.facebook.com/policy.php" target="_blank">
+		 http://de-de.facebook.com/policy.php</a></p>
+     <p>Wenn Sie nicht wünschen, dass Facebook den Besuch unserer Seiten Ihrem 
+     Facebook-Nutzerkonto zuordnen kann, loggen Sie sich bitte aus Ihrem
+     Facebook-Benutzerkonto aus.</p>
+<h2>Datenschutzerklärung für die Nutzung von Google +1</h2>
+		 <p><i>Erfassung und Weitergabe von Informationen:</i><br />
+     Mithilfe der Google +1-Schaltfläche können Sie Informationen weltweit
+     veröffentlichen. Über die Google +1-Schaltfläche erhalten Sie und andere
+     Nutzer personalisierte Inhalte von Google und unseren Partnern. Google
+     speichert sowohl die Information, dass Sie für einen Inhalt +1 gegeben
+     haben, als auch Informationen über die Seite, die Sie beim Klicken auf
+     +1 angesehen haben. Ihre +1 können als Hinweise zusammen mit Ihrem
+     Profilnamen und Ihrem Foto in Google-Diensten, wie etwa in
+     Suchergebnissen oder in Ihrem Google-Profil, oder an anderen Stellen auf
+     Websites und Anzeigen im Internet eingeblendet werden.<br />
+     Google zeichnet Informationen über Ihre +1-Aktivitäten auf, um die 
+     Google-Dienste für Sie und andere zu verbessern. Um die Google +1-Schaltfläche 
+     verwenden zu können, benötigen Sie ein weltweit 
+     sichtbares, öffentliches Google-Profil, das zumindest den für das 
+     Profil gewählten Namen enthalten muss. Dieser Name wird in allen 
+     Google-Diensten verwendet. In manchen Fällen kann dieser Name auch 
+     einen anderen Namen ersetzen, den Sie beim Teilen von Inhalten über 
+     Ihr Google-Konto verwendet haben. Die Identität Ihres Google-Profils 
+     kann Nutzern angezeigt werden, die Ihre E-Mail-Adresse kennen oder 
+     über andere identifizierende Informationen von Ihnen verfügen.<br />
+     <br />
+     <i>Verwendung der erfassten Informationen:</i><br />
+     Neben den oben erläuterten Verwendungszwecken werden die von Ihnen 
+     bereitgestellten Informationen gemäß den geltenden 
+     Google-Datenschutzbestimmungen genutzt. Google veröffentlicht 
+     möglicherweise zusammengefasste Statistiken über die +1-Aktivitäten 
+     der Nutzer bzw. gibt diese an Nutzer und Partner weiter, wie etwa
+     Publisher, Inserenten oder verbundene Websites. </p>
+<h2>Datenschutzerklärung für die Nutzung von Twitter</h2>
+		 <p>Auf unseren Seiten sind Funktionen des Dienstes Twitter eingebunden.
+		 Diese Funktionen werden angeboten durch die Twitter Inc., Twitter, Inc. 
+		 1355 Market St, Suite 900, San Francisco, CA 94103, USA. Durch das Benutzen
+		 von Twitter und der Funktion "Re-Tweet" werden die von Ihnen
+		 besuchten Websites mit Ihrem Twitter-Account verknüpft und anderen
+		 Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter übertragen.</p>
+     <p>Wir weisen darauf hin, dass wir als Anbieter der Seiten keine
+     Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch
+     Twitter erhalten. Weitere Informationen hierzu finden Sie in der
+     Datenschutzerklärung von Twitter unter
+     <a href="http://twitter.com/privacy" target="_blank">http://twitter.com/privacy</a>.</p>
+     <p>Ihre Datenschutzeinstellungen bei Twitter können Sie in den
+     Konto-Einstellungen unter
+     <a href="http://twitter.com/account/settings" target="_blank">http://twitter.com/account/settings</a> ändern.</p>
+
+<p><small><em>Quellenangaben: <a rel="nofollow" href="http://www.e-recht24.de/muster-datenschutzerklaerung.html" target="_blank">eRecht24</a>, <a rel="nofollow" href="http://www.e-recht24.de/artikel/datenschutz/6590-facebook-like-button-datenschutz-disclaimer.html" target="_blank">Facebook-Disclaimer von eRecht24</a>, <a rel="nofollow" href="http://www.google.com/intl/de/+/policy/+1button.html" target="_blank">Google +1 Bedingungen</a>, <a rel="nofollow" href="http://twitter.com/privacy" target="_blank">Datenschutzerklärung Twitter</a></em></small></p>]]></content>
+				<customURL>datenschutzerklaerung</customURL>
+			</content>
+		</page>
+	</import>
+</data>

@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
+use wcf\util\ArrayUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -98,6 +98,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	const TYPE_STRING = 2;
 	const TYPE_BOOLEAN = 3;
 	const TYPE_JSON = 4;
+	
+	const STRUCT_FLAT = 1;
+	const STRUCT_ARRAY = 2;
 	
 	/**
 	 * Initialize a new DatabaseObject-related action.
@@ -210,7 +213,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Resets cache of database object.
 	 */
 	protected function resetCache() {
-		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\IEditableCachedObject')) {
+		if (is_subclass_of($this->className, 'wcf\data\IEditableCachedObject')) {
 			call_user_func(array($this->className, 'resetCache'));
 		}
 	}
@@ -419,7 +422,19 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$arrayIndex
 	 */
 	protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '') {
-		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER);
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER, self::STRUCT_FLAT);
+	}
+	
+	/**
+	 * Reads an integer array and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 * @since	2.2
+	 */
+	protected function readIntegerArray($variableName, $allowEmpty = false, $arrayIndex = '') {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER, self::STRUCT_ARRAY);
 	}
 	
 	/**
@@ -430,7 +445,19 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$arrayIndex
 	 */
 	protected function readString($variableName, $allowEmpty = false, $arrayIndex = '') {
-		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING);
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING, self::STRUCT_FLAT);
+	}
+	
+	/**
+	 * Reads a string array and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 * @since	2.2
+	 */
+	protected function readStringArray($variableName, $allowEmpty = false, $arrayIndex = '') {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING, self::STRUCT_ARRAY);
 	}
 	
 	/**
@@ -441,7 +468,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$arrayIndex
 	 */
 	protected function readBoolean($variableName, $allowEmpty = false, $arrayIndex = '') {
-		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOLEAN);
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOLEAN, self::STRUCT_FLAT);
 	}
 	
 	/**
@@ -452,7 +479,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$arrayIndex
 	 */
 	protected function readJSON($variableName, $allowEmpty = false, $arrayIndex = '') {
-		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_JSON);
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_JSON, self::STRUCT_FLAT);
 	}
 	
 	/**
@@ -464,8 +491,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
 	 * @param	integer		$type
+	 * @param	integer		$structure
 	 */
-	protected function readValue($variableName, $allowEmpty, $arrayIndex, $type) {
+	protected function readValue($variableName, $allowEmpty, $arrayIndex, $type, $structure) {
 		if ($arrayIndex) {
 			if (!isset($this->parameters[$arrayIndex])) {
 				throw new SystemException("Corrupt parameters, index '".$arrayIndex."' is missing");
@@ -481,16 +509,30 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			case self::TYPE_INTEGER:
 				if (!isset($target[$variableName])) {
 					if ($allowEmpty) {
-						$target[$variableName] = 0;
+						$target[$variableName] = ($structure === self::STRUCT_FLAT) ? 0 : array();
 					}
 					else {
 						throw new UserInputException($variableName);
 					}
 				}
 				else {
-					$target[$variableName] = intval($target[$variableName]);
-					if (!$allowEmpty && !$target[$variableName]) {
-						throw new UserInputException($variableName);
+					if ($structure === self::STRUCT_FLAT) {
+						$target[$variableName] = intval($target[$variableName]);
+						if (!$allowEmpty && !$target[$variableName]) {
+							throw new UserInputException($variableName);
+						}
+					}
+					else {
+						$target[$variableName] = ArrayUtil::toIntegerArray($target[$variableName]);
+						if (!is_array($target[$variableName])) {
+							throw new UserInputException($variableName);
+						}
+						
+						for ($i = 0, $length = count($target[$variableName]); $i < $length; $i++) {
+							if ($target[$variableName][$i] === 0) {
+								throw new UserInputException($variableName);
+							}
+						}
 					}
 				}
 			break;
@@ -498,16 +540,30 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			case self::TYPE_STRING:
 				if (!isset($target[$variableName])) {
 					if ($allowEmpty) {
-						$target[$variableName] = '';
+						$target[$variableName] = ($structure === self::STRUCT_FLAT) ? '' : array();
 					}
 					else {
 						throw new UserInputException($variableName);
 					}
 				}
 				else {
-					$target[$variableName] = StringUtil::trim($target[$variableName]);
-					if (!$allowEmpty && empty($target[$variableName])) {
-						throw new UserInputException($variableName);
+					if ($structure === self::STRUCT_FLAT) {
+						$target[$variableName] = StringUtil::trim($target[$variableName]);
+						if (!$allowEmpty && empty($target[$variableName])) {
+							throw new UserInputException($variableName);
+						}
+					}
+					else {
+						$target[$variableName] = ArrayUtil::trim($target[$variableName]);
+						if (!is_array($target[$variableName])) {
+							throw new UserInputException($variableName);
+						}
+						
+						for ($i = 0, $length = count($target[$variableName]); $i < $length; $i++) {
+							if (empty($target[$variableName][$i])) {
+								throw new UserInputException($variableName);
+							}
+						}
 					}
 				}
 			break;

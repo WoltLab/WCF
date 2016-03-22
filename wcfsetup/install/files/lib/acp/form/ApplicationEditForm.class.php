@@ -56,7 +56,7 @@ class ApplicationEditForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canManageApplication');
+	public $neededPermissions = array('admin.configuration.canManageApplication');
 	
 	/**
 	 * application package id

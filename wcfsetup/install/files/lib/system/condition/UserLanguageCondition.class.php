@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -18,7 +19,9 @@ use wcf\util\ArrayUtil;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserLanguageCondition extends AbstractSingleFieldCondition implements IContentCondition, IUserCondition {
+class UserLanguageCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
 	 */
@@ -31,10 +34,12 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	protected $languageIDs = array();
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		$userList->getConditionBuilder()->add('user_table.languageID IN (?)', array($condition->conditionData['languageIDs']));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		$objectList->getConditionBuilder()->add('user_table.languageID IN (?)', array($conditionData['languageIDs']));
 	}
 	
 	/**

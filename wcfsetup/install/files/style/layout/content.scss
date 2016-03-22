@@ -1,0 +1,307 @@
+/* style for content area */
+/* content header */
+.contentHeader,
+.boxHeadline { // deprecated
+	color: $wcfContentHeadlineText; // todo: rename variable
+	
+	.contentTitle,
+	> h1 { // deprecated
+		@include wcfFontTitle;
+		
+		.badge {
+			top: -2px;
+		}
+	}
+	
+	a {
+		color: $wcfContentHeadlineLink; // todo: rename variable
+		
+		&:hover {
+			color: $wcfContentHeadlineLinkActive; // todo: rename variable
+		}
+	}
+	
+	.contentHeaderDescription {
+		color: $wcfContentDimmedText;
+		margin-top: 5px;
+	}
+	
+	.contentHeaderMetaData {
+		color: $wcfContentDimmedText;
+		margin-top: 5px;
+		
+		&.inlineList {
+			> li:not(:last-child) {
+				margin-right: 10px;
+			}
+		}
+		
+		> li {
+			a,
+			a:hover,
+			.icon {
+				color: $wcfContentDimmedText;
+			}
+		}
+	}
+	
+	@include small-screen-only {
+		.contentHeaderIcon {
+			display: none;
+		}
+	}
+}
+
+/* legacy styling for sub headlines (deprecated; use .section > .sectionTitle instead) */
+.boxHeadline.boxSubHeadline {
+	margin-top: 40px;
+	margin-bottom: 20px;
+	
+	> h2 {
+		color: $wcfContentHeadlineText; // todo: rename variable
+		
+		@include wcfFontSection;
+		
+		a {
+			color: $wcfContentHeadlineLink; // todo: rename variable
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+			}
+		}
+		
+		.badge {
+			top: -2px;
+		}
+	}
+}
+
+/* content sections */
+.section {
+	margin-top: 40px;	
+	
+	.sectionHeader {
+		position: relative;
+		
+		.buttonGroupNavigation {
+			position: absolute;
+			right: 0;
+			top: 4px;
+		}
+	}
+	
+	.sectionTitle {
+		color: $wcfContentHeadlineText; // todo: rename variable
+		
+		@include wcfFontSection;
+		
+		a {
+			color: $wcfContentHeadlineLink; // todo: rename variable
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+			}
+		}
+		
+		.badge {
+			top: -2px;
+		}
+	}
+	
+	.sectionDescription {
+		color: $wcfContentDimmedText;
+	}
+	
+	> .sectionHeader,
+	> .sectionTitle {
+		margin-bottom: 20px;
+		
+		+ .section {
+			margin-top: 20px;
+		}	
+	}
+	
+	&:not(.sectionContainerList) {
+		> .sectionHeader,
+		> .sectionTitle {
+			border-bottom: 1px solid $wcfContentBorderInner;
+			padding-bottom: 10px;
+		}
+	}
+	
+	&.tabularBox {
+		> .sectionHeader,
+		> .sectionTitle {
+			border-color: $wcfContentBorder;
+			margin-bottom: 0;
+		}
+	}
+	
+	.section {
+		margin-top: 30px;
+		
+		&:first-child {
+			margin-top: 20px;
+		}
+		
+		.sectionTitle {
+			@include wcfFontHeadline;
+		}
+		
+		> .sectionHeader,
+		> .sectionTitle {
+			margin-bottom: 15px;
+		}
+	}
+}
+
+/* fieldset styling (old sections / deprecated) */
+fieldset {
+	margin-top: 40px;
+	
+	> legend {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		color: $wcfContentHeadlineText; // todo: rename variable
+		float: left;
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		width: 100%;
+		
+		@include wcfFontSection;
+		
+		a {
+			color: $wcfContentHeadlineLink; // todo: rename variable
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+			}
+		}
+		
+		.badge {
+			top: -2px;
+		}
+		
+		&+ * {
+			clear: left;
+		}
+		
+		+ small {
+			color: $wcfContentDimmedText;
+			position: relative;
+			top: -12px;
+		}
+	}
+}
+.section {
+	fieldset {
+		margin-top: 20px;
+		
+		> legend {
+			margin-bottom: 15px;
+			
+			@include wcfFontHeadline;
+		}
+	}	
+}
+
+/* styling for container headlines */
+.containerHeadline {
+	> h3 {
+		@include wcfFontHeadline;
+		
+		> .badge {
+			top: -2px;
+		}
+	}
+	
+	~ .containerContent {
+		margin-top: 10px;
+	}
+}
+
+/* styling for content navigation area (containing pagination / page buttons) */
+.contentNavigation {
+	& + .section {
+		margin-top: 30px;
+	}
+	
+	@include large-screen-only {
+		align-items: center;
+		display: flex;
+		
+		// align <nav> to the right side
+		justify-content: flex-end;
+		
+		> nav {
+			flex: 0 0 auto;
+			margin-top: 30px;
+			order: 3;
+			
+			&.pagination {
+				order: 1;
+				
+				// use up maximum space, causing it to stick to the left while all other
+				// <nav> elements will still be aligned to the right side
+				flex: 1 1 auto;
+			}
+			
+			&.jsClipboardEditor {
+				margin-right: 5px;
+				order: 2;
+			}
+			
+			& + nav {
+				flex: 0 0 auto;
+			}
+			
+			&:not(.pagination) {
+				text-align: right;
+			}
+		}
+		
+		ul {
+			display: inline-flex;
+			
+			> li {
+				flex: 0 0 auto;
+				
+				&:not(:last-child) {
+					margin-right: 5px;
+				}
+			}
+		}
+	}
+	
+	@include small-screen-only {
+		ul {
+			margin-top: 30px;
+			
+			> li {
+				> .button {
+					display: block;
+					padding: 7px 10px;
+					text-align: center;
+				}
+			}
+		}
+		
+		> nav:not(.pagination) > ul > li + li {
+			margin-top: 10px;
+		}
+	}
+}
+
+@include small-screen-only {
+	.contentNavigation > .pagination {
+		display: none;
+	}
+	
+	.section ~ .contentNavigation > .pagination {
+		display: block;
+		
+		& + nav {
+			// gap between pagination and navigation buttons
+			margin-top: 10px;
+		}
+	}
+}

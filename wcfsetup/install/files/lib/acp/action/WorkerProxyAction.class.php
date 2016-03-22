@@ -4,7 +4,6 @@ use wcf\action\AbstractSecureAction;
 use wcf\action\AJAXInvokeAction;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 use wcf\util\JSON;
 
 /**
@@ -64,7 +63,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 			throw new SystemException("class name cannot be empty.");
 		}
 		
-		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\worker\IWorker')) {
+		if (!is_subclass_of($this->className, 'wcf\system\worker\IWorker')) {
 			throw new SystemException("'".$this->className."' does not implement 'wcf\system\worker\IWorker'");
 		}
 	}

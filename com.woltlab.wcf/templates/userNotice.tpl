@@ -10,7 +10,7 @@
 		<p class="info">{lang}wcf.page.cookiePolicy.info{/lang}</p>
 	{/if}
 	
-	{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
+	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
 		<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
 	{/if}
 	
@@ -22,15 +22,25 @@
 		<p class="warning">{lang}wcf.user.register.needActivation{/lang}</p>
 	{/if}
 	
-	{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
-		<p class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible{/if}">
-			{if $notice->isDismissible}
-				<span class="icon icon16 fa-times pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}"></span>
-			{/if}
-			
-			{if $notice->noticeUseHtml}{@$notice->notice|language}{else}{@$notice->notice|language|htmlspecialchars|nl2br}{/if}
-		</p>
-	{/foreach}
+	{hascontent}
+		{content}
+			{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
+				<p class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible active{/if}">
+					{if $notice->isDismissible}
+						<span class="icon icon16 fa-times pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}"></span>
+					{/if}
+					
+					{@$notice}
+				</p>
+			{/foreach}
+		{/content}
+		
+		<script data-relocate="true">
+			require(['WoltLab/WCF/Controller/Notice/Dismiss'], function(ControllerNoticeDismiss) {
+				ControllerNoticeDismiss.setup();
+			});
+		</script>
+	{/hascontent}
 	
 	{event name='userNotice'}
 </div>

@@ -1,0 +1,267 @@
+.tabularList {
+	border-bottom: 1px solid $wcfContentBorder;
+	display: flex;
+	flex-direction: column;
+}
+
+.tabularListRow {
+	flex: 0 0 auto;
+	padding: 5px 0;
+	transition: background-color .12s;
+	
+	&.divider + li:not(.divider) {
+		border-top-color: $wcfContentBorder;
+	}
+	
+	&:not(.tabularListRowHead):hover {
+		background-color: $wcfTabularBoxBackgroundActive;
+	}
+}
+
+.tabularListRowHead {
+	border-bottom: 2px solid currentColor;
+	color: $wcfTabularBoxHeadline;
+	
+	& + li {
+		border-top-width: 0;
+	}
+}
+
+.tabularListRow:not(.tabularListRowHead) {
+	border-top: 1px solid $wcfContentBorderInner;
+}
+
+.tabularListColumns {
+	align-items: center;
+	display: flex;
+	
+	> li {
+		flex: 0 0 auto;
+		padding: 5px 10px;
+	}
+}
+
+.tabularListRowHead > .tabularListColumns > li {
+	color: $wcfTabularBoxHeadline;
+	
+	@include wcfFontHeadline;
+	
+	> a {
+		color: $wcfTabularBoxHeadline;
+		display: block;
+	}
+	
+	&.ASC > a,
+	&.DESC > a {
+		padding-right: 18px;
+		position: relative;
+		
+		&:after {
+			display: inline-block;
+			font-family: FontAwesome;
+			margin-left: 7px;
+			position: absolute;
+		}
+	}
+	
+	&.ASC > a:after {
+		content: $fa-var-caret-up;
+		top: 1px;
+	}
+	
+	&.DESC > a:after {
+		content: $fa-var-caret-down;
+		top: 2px;
+	}
+	
+	&.active > a,
+	> a:hover {
+		color: $wcfTabularBoxHeadlineActive;
+	}
+}
+
+.tabularBox {
+	@include small-screen-only {
+		overflow: auto;
+	}
+}
+
+.tabularBoxTitle {
+	> header {
+		border-bottom: 1px solid currentColor;
+		color: $wcfTabularBoxHeadline;
+		padding: 10px 0;
+		
+		> h1,
+		> h2,
+		> h3 {
+			@include wcfFontHeadline;
+			
+			+ small {
+				display: block;
+			}
+			
+			.badge {
+				top: -2px;
+			}
+		}
+		
+		a,
+		.icon {
+			color: $wcfTabularBoxHeadline;
+			
+			&:hover {
+				color: $wcfTabularBoxHeadlineActive;
+			}
+		}
+		
+		.collapsibleButton {
+			cursor: pointer;
+			transition: transform .12s linear;
+		}
+	}
+}
+
+/* table */
+.table {
+	border-bottom: 1px solid $wcfContentBorder;
+	border-spacing: 0;
+	width: 100%;
+	
+	td,
+	th {
+		padding: 10px;
+		text-align: left;
+		vertical-align: middle;
+		// non-standard webkit value
+		word-break: break-word;
+		
+		> label {
+			cursor: pointer;
+			display: block;
+		}
+	}
+	
+	th {
+		border-bottom: 2px solid currentColor;
+		color: $wcfTabularBoxHeadline;
+		text-align: left;
+		white-space: nowrap;
+		
+		@include wcfFontHeadline;
+		
+		> a {
+			color: $wcfTabularBoxHeadline;
+			display: block;
+		}
+		
+		&.active > a,
+		> a:hover {
+			color: $wcfTabularBoxHeadlineActive;
+		}
+		
+		&.ASC,
+		&.DESC {
+			> a::after {
+				display: inline-block;
+				font-family: FontAwesome;
+				margin-left: 5px;
+			}
+		}
+		
+		&.ASC > a::after {
+			content: $fa-var-caret-up;
+		}
+		
+		&.DESC > a::after {
+			content: $fa-var-caret-down;
+		}
+		
+		/* alignment only */
+		&.columnMark,
+		&.columnStatus {
+			text-align: center;
+		}
+		
+		&.columnDate,
+		&.columnDigits,
+		&.columnID {
+			text-align: right;
+		}
+	}
+	
+	td {
+		&.columnMark,
+		&.columnStatus {
+			text-align: center;
+			width: 1px;
+			white-space: nowrap;
+			word-wrap: normal;
+		}
+		
+		&.columnDigits,
+		&.columnID {
+			text-align: right;
+			width: 1px;
+			white-space: nowrap;
+			word-wrap: normal;
+		}
+		
+		&.columnIcon {
+			text-align: left;
+			width: 1px;
+			white-space: nowrap;
+			word-wrap: normal;
+		}
+		
+		&.columnTitle {
+			font-weight: bold;
+			text-align: left;
+		}
+		
+		&.columnText {
+			font-weight: normal;
+			text-align: left;
+			max-width: 20%;
+		}
+		
+		&.columnDate {
+			text-align: right;
+			width: 1px;
+			white-space: nowrap;
+			word-wrap: normal;
+			
+			@include wcfFontSmall;
+		}
+		
+		&.columnURL, &.columnSmallText {
+			text-align: left;
+			
+			@include wcfFontSmall;
+			
+		}
+	}
+	
+	tr {
+		&:hover > td {
+			background-color: rgb(242, 242, 242);
+		}
+		
+		&:not(:last-child) > td {
+			border-bottom: 1px solid $wcfContentBorderInner;
+		}
+	}
+	
+	.statusDisplay {
+		float: right;
+		
+		.statusIcons {
+			float: right;
+			margin-left: 5px;
+			
+			li {
+				display: inline-block;
+			}
+		}
+	}
+}

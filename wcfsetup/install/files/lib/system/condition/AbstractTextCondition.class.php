@@ -31,9 +31,9 @@ abstract class AbstractTextCondition extends AbstractSingleFieldCondition {
 	 */
 	public function getData() {
 		if (mb_strlen($this->fieldValue)) {
-			return array(
+			return [
 				$this->fieldName => $this->fieldValue
-			);
+			];
 		}
 		
 		return null;

@@ -8,9 +8,9 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
-	{if $action == 'edit'}<p>{$user->username}</p>{/if}
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.user.{@$action}{/lang}</h1>
+	{if $action == 'edit'}<p class="contentHeaderDescription">{$user->username}</p>{/if}
 </header>
 
 {include file='formError'}
@@ -26,7 +26,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='UserList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>
@@ -34,7 +34,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit' id=$userID}{/link}{/if}">
-	<div class="tabMenuContainer">
+	<div class="section tabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
 				<li><a href="{@$__wcf->getAnchor('__essentials')}">{lang}wcf.global.form.data{/lang}</a></li>
@@ -55,10 +55,8 @@
 			</ul>
 		</nav>
 		
-		<div id="__essentials" class="container containerPadding tabMenuContent hidden">
-			<fieldset>
-				<legend>{lang}wcf.acp.user.general{/lang}</legend>
-				
+		<div id="__essentials" class="tabMenuContent hidden">
+			<div class="section">
 				<dl{if $errorType.username|isset} class="formError"{/if}>
 					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 					<dd>
@@ -87,11 +85,11 @@
 				{/if}
 				
 				{event name='generalFields'}
-			</fieldset>
+			</div>
 			
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-				<fieldset>
-					<legend>{lang}wcf.user.email{/lang}</legend>
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.email{/lang}</h2>
 					
 					<dl{if $errorType.email|isset} class="formError"{/if}>
 						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
@@ -122,12 +120,12 @@
 					</dl>
 					
 					{event name='emailFields'}
-				</fieldset>
+				</section>
 			{/if}
 			
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
-				<fieldset>
-					<legend>{lang}wcf.user.password{/lang}</legend>
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
 					
 					<dl{if $errorType.password|isset} class="formError"{/if}>
 						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
@@ -158,12 +156,12 @@
 					</dl>
 					
 					{event name='passwordFields'}
-				</fieldset>
+				</section>
 			{/if}
 			
 			{if $action == 'edit' && $__wcf->session->getPermission('admin.user.canBanUser') && $__wcf->user->userID != $userID}
-				<fieldset>
-					<legend>{lang}wcf.acp.user.banUser{/lang}</legend>
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.acp.user.banUser{/lang}</h2>
 					
 					<dl>
 						<dt></dt>
@@ -195,7 +193,7 @@
 					</dl>
 					
 					{event name='banFields'}
-				</fieldset>
+				</section>
 				
 				<script data-relocate="true">
 					//<![CDATA[
@@ -228,14 +226,14 @@
 				</script>
 			{/if}
 			
-			{event name='fieldsets'}
+			{event name='sections'}
 		</div>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding tabMenuContent hidden">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContent hidden">
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-					<fieldset>
-						<legend>{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
 						
 						{if $categoryLevel2[object]->categoryName == 'settings.general' && $availableLanguages|count > 1}
 							<dl>
@@ -283,15 +281,15 @@
 								{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.user.option.'}
 							{/foreach}
 						{/if}
-					</fieldset>
+					</section>
 				{/foreach}
 			</div>
 		{/foreach}
 		
 		{if MODULE_USER_SIGNATURE}
-			<div id="signatureManagement" class="container containerPadding tabMenuContent hidden">
-				<fieldset>
-					<legend>{lang}wcf.user.signature{/lang}</legend>
+			<div id="signatureManagement" class="tabMenuContent hidden">
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.signature{/lang}</h2>
 					
 					<dl>
 						<dt><label for="signature">{lang}wcf.user.signature{/lang}</label></dt>
@@ -310,11 +308,11 @@
 					</dl>
 					
 					{event name='signatureFields'}
-				</fieldset>
+				</section>
 				
 				{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
-					<fieldset>
-						<legend>{lang}wcf.acp.user.disableSignature{/lang}</legend>
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.user.disableSignature{/lang}</h2>
 						
 						<dl>
 							<dt></dt>
@@ -344,7 +342,7 @@
 						</dl>
 
 						{event name='disableSignatureFields'}
-					</fieldset>
+					</section>
 					
 					<script data-relocate="true">
 						//<![CDATA[
@@ -382,9 +380,9 @@
 		{/if}
 		
 		{if $action == 'edit'}
-			<div id="avatarForm" class="container containerPadding tabMenuContent hidden">
-				<fieldset>
-					<legend>{lang}wcf.user.avatar{/lang}</legend>
+			<div id="avatarForm" class="tabMenuContent hidden">
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.avatar{/lang}</h2>
 					
 					<dl>
 						<dt></dt>
@@ -394,7 +392,7 @@
 					</dl>
 					
 					<dl class="jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
-						<dt class="framed">
+						<dt>
 							{if $avatarType == 'custom'}
 								{assign var='__customAvatar' value=$userAvatar->getImageTag(96)}
 								{if $userAvatar->canCrop()}
@@ -405,7 +403,7 @@
 								
 								{@$__customAvatar}
 							{else}
-								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon96" />
+								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon96" />
 							{/if}
 						</dt>
 						<dd>
@@ -424,7 +422,7 @@
 					
 					{if MODULE_GRAVATAR}
 						<dl{if $errorType[gravatar]|isset} class="formError"{/if}>
-							<dt class="framed"><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="icon96" /></dt>
+							<dt><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96" /></dt>
 							<dd>
 								<label><input type="radio" name="avatarType" value="gravatar" {if $avatarType == 'gravatar'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
 								
@@ -438,11 +436,11 @@
 					{/if}
 
 					{event name='avatarFields'}
-				</fieldset>
+				</section>
 				
 				{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
-					<fieldset>
-						<legend>{lang}wcf.acp.user.disableAvatar{/lang}</legend>
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.user.disableAvatar{/lang}</h2>
 						
 						<dl>
 							<dt></dt>
@@ -472,7 +470,7 @@
 						</dl>
 
 						{event name='disableAvatarFields'}
-					</fieldset>
+					</section>
 					
 					<script data-relocate="true">
 						//<![CDATA[

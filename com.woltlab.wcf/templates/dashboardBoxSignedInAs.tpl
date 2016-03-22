@@ -1,7 +1,7 @@
-<fieldset class="dashboardBox dashboardBoxSignedInAs">
-	<legend class="invisible">{lang}wcf.dashboard.box.{$box->boxName}{/lang}</legend>
+<section class="dashboardBox dashboardBoxSignedInAs">
+	<h1 class="invisible">{lang}wcf.dashboard.box.{$box->boxName}{/lang}</h1>
 	
-	<div class="box96 framed">
+	<div class="box96">
 		{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 		
 		<div>
@@ -17,7 +17,9 @@
 				{/if}
 			</div>
 			
-			{include file='userInformationStatistics' user=$__wcf->user}
+			<dl class="plain dataList">
+				{include file='userInformationStatistics' user=$__wcf->user}
+			</dl>	
 		</div>
 	</div>
-</fieldset>
+</section>

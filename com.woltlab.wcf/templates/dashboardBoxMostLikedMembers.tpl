@@ -1,7 +1,7 @@
 <ul class="sidebarBoxList">
 	{foreach from=$mostLikedMembers item=likedMember}
 		<li class="box24">
-			<a href="{link controller='User' object=$likedMember}{/link}" class="framed">{@$likedMember->getAvatar()->getImageTag(24)}</a>
+			<a href="{link controller='User' object=$likedMember}{/link}">{@$likedMember->getAvatar()->getImageTag(24)}</a>
 			
 			<div class="sidebarBoxHeadline">
 				<h3><a href="{link controller='User' object=$likedMember}{/link}" class="userLink" data-user-id="{@$likedMember->userID}">{$likedMember->username}</a></h3>

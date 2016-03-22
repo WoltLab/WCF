@@ -23,10 +23,6 @@
 		</definition>
 		
 		<definition>
-			<name>com.woltlab.wcf.versionableObject</name>
-		</definition>
-		
-		<definition>
 			<name>com.woltlab.wcf.attachment.objectType</name>
 			<interfacename><![CDATA[wcf\system\attachment\IAttachmentObjectType]]></interfacename>
 		</definition>
@@ -169,6 +165,11 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.condition.userSearch</name>
+			<interfacename><![CDATA[wcf\system\condition\IObjectListCondition]]></interfacename>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.adLocation</name>
 		</definition>
 		
@@ -200,5 +201,24 @@
 			<name>com.woltlab.wcf.payment.type</name>
 			<interfacename><![CDATA[wcf\system\payment\type\IPaymentType]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessableObject</name>
+			<interfacename><![CDATA[wcf\system\bulk\processing\IBulkProcessableObjectType]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessing.user.condition</name>
+			<interfacename><![CDATA[wcf\system\condition\IObjectListCondition]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessing.user.action</name>
+			<interfacename><![CDATA[wcf\system\bulk\processing\IBulkProcessingAction]]></interfacename>
+		</definition>
 	</import>
+	
+	<delete>
+		<definition name="com.woltlab.wcf.versionableObject" />
+	</delete>
 </data>

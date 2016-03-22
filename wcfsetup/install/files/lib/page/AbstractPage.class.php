@@ -51,6 +51,12 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	public $enableTracking = false;
 	
 	/**
+	 * is true if canonical URL will be enforced even if POST data is represent
+	 * @var	boolean
+	 */
+	public $forceCanonicalURL = false;
+	
+	/**
 	 * indicates if you need to be logged in to access this page
 	 * @var	boolean
 	 */
@@ -181,7 +187,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		}
 		
 		// check if current request URL matches the canonical URL
-		if ($this->canonicalURL && empty($_POST)) {
+		if ($this->canonicalURL && (empty($_POST) || $this->forceCanonicalURL)) {
 			$canoncialURL = parse_url(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
 			
 			// use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
@@ -223,6 +229,8 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			
 			if ($redirect) {
 				$redirectURL = $this->canonicalURL;
+				// TODO
+				/*
 				if (!empty($requestURL['query'])) {
 					$queryString = $requestURL['query'];
 					parse_str($requestURL['query'], $rQueryString);
@@ -251,6 +259,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 						$redirectURL .= (mb_strpos($redirectURL, '?') === false ? '?' : '&') . http_build_query($rQueryString, '', '&');
 					}
 				}
+				*/
 				
 				// force a permanent redirect as recommended by Google
 				// https://support.google.com/webmasters/answer/6033086?hl=en#a_note_about_redirects

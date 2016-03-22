@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\menu\user;
+use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\cache\builder\UserMenuCacheBuilder;
+use wcf\system\menu\page\IPageMenuItemProvider;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
 
@@ -16,7 +18,7 @@ use wcf\system\menu\TreeMenu;
  */
 class UserMenu extends TreeMenu {
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::loadCache()
+	 * @see	TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
 		parent::loadCache();
@@ -25,11 +27,15 @@ class UserMenu extends TreeMenu {
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::checkMenuItem()
+	 * @see	TreeMenu::checkMenuItem()
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {
 		if (!parent::checkMenuItem($item)) return false;
 		
-		return $item->getProcessor()->isVisible();
+		if ($item instanceof ProcessibleDatabaseObject && $item->getProcessor() instanceof IPageMenuItemProvider) {
+			return $item->getProcessor()->isVisible();
+		}
+		
+		return true;
 	}
 }

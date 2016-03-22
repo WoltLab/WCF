@@ -7,7 +7,7 @@
 	{/foreach}
 {/capture}
 
-<div class="container containerPadding{if $__tabCount} messageTabMenu{/if}" data-preselect="true" data-collapsible="false" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
+<div class="messageTabMenuContent{if $__tabCount} messageTabMenu{/if}" data-preselect="true" data-collapsible="false" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	{capture assign=__defaultSmilies}
 		{assign var='__firstSmileyCategory' value=$smileyCategories|reset}
 		{if $__firstSmileyCategory->categoryID}
@@ -25,7 +25,7 @@
 		</nav>
 		
 		{foreach from=$smileyCategories item=smileyCategory}
-			<div id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{@$smileyCategory->categoryID}">
+			<div class="messageTabMenuContent" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{@$smileyCategory->categoryID}">
 				{if !$smileyCategory->categoryID}{@$__defaultSmilies}{/if}
 			</div>
 		{/foreach}

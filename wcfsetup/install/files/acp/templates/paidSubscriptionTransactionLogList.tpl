@@ -9,23 +9,23 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.paidSubscription.transactionLog.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog.list{/lang}</h1>
 </header>
 
 <form method="post" action="{link controller='PaidSubscriptionTransactionLogList'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
-			
-			<dl>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap">
+			<dl class="col-xs-12 col-md-4">
 				<dt><label for="transactionID">{lang}wcf.acp.paidSubscription.transactionLog.transactionID{/lang}</label></dt>
 				<dd>
 					<input type="text" id="transactionID" name="transactionID" value="{$transactionID}" class="long" />
 				</dd>
 			</dl>
 			
-			<dl>
+			<dl class="col-xs-12 col-md-4">
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
 					<input type="text" id="username" name="username" value="{$username}" class="long" />
@@ -33,7 +33,7 @@
 			</dl>
 			
 			{if $availableSubscriptions|count}
-				<dl>
+				<dl class="col-xs-12 col-md-4">
 					<dt><label for="subscriptionID">{lang}wcf.acp.paidSubscription.subscription{/lang}</label></dt>
 					<dd>
 						<select name="subscriptionID" id="subscriptionID">
@@ -45,8 +45,10 @@
 					</dd>
 				</dl>
 			{/if}
-		</fieldset>
-	</div>
+			
+			{event name='filterFields'}
+		</div>
+	</section>
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
@@ -74,11 +76,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.paidSubscription.transactionLog.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>

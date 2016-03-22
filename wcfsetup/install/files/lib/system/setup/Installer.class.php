@@ -61,7 +61,7 @@ class Installer {
 	 */
 	protected function createTargetDir() {
 		if (!@is_dir($this->targetDir)) {
-			if (!FileUtil::makePath($this->targetDir, (FileUtil::isApacheModule() ? 0777 : 0755))) {
+			if (!FileUtil::makePath($this->targetDir)) {
 				throw new SystemException("Could not create dir '".$this->targetDir."'");
 			}
 		}

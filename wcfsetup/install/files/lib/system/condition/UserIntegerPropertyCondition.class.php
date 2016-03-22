@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
 /**
@@ -15,16 +16,20 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserIntegerPropertyCondition extends AbstractIntegerCondition implements IContentCondition, IUserCondition {
+class UserIntegerPropertyCondition extends AbstractIntegerCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		if ($condition->greaterThan !== null) {
-			$userList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' > ?', array($condition->greaterThan));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		if (isset($conditionData['greaterThan'])) {
+			$objectList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' > ?', array($conditionData['greaterThan']));
 		}
-		if ($condition->lessThan !== null) {
-			$userList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' < ?', array($condition->lessThan));
+		if (isset($conditionData['lessThan'])) {
+			$objectList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' < ?', array($conditionData['lessThan']));
 		}
 	}
 	

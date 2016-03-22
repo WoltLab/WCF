@@ -59,7 +59,7 @@ class UserLocation implements IUserOnlineLocation {
 		$this->userIDs = array_unique($this->userIDs);
 		
 		$userList = new UserList();
-		$userList->getConditionBuilder()->add('user_table.userID IN (?)', array($this->userIDs));
+		$userList->setObjectIDs($this->userIDs);
 		$userList->readObjects();
 		$this->users = $userList->getObjects();
 	}

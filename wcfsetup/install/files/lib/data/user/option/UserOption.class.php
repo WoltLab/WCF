@@ -7,8 +7,8 @@ use wcf\system\WCF;
 /**
  * Represents a user option.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @author	Joshua Ruesweg, Marcel Werk
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option
@@ -74,14 +74,26 @@ class UserOption extends Option {
 	 * @var	integer
 	 */
 	const EDITABILITY_ALL = 3;
+
+	/**
+	 * editable for owner during registration
+	 * @var	integer
+	 */
+	const EDITABILITY_OWNER_DURING_REGISTRATION = 4;
+
+	/**
+	 * editable for owner during registration and admins (no valid bit)
+	 * @var	integer
+	 */
+	const EDITABILITY_OWNER_DURING_REGISTRATION_AND_ADMINISTRATOR = 6;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_option';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
@@ -107,7 +119,7 @@ class UserOption extends Option {
 	}
 	
 	/**
-	 * @see	\wcf\data\option\Option::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible() {
 		// proceed if option is visible for all
@@ -138,11 +150,12 @@ class UserOption extends Option {
 	}
 	
 	/**
-	 * Returns true if this option is editable.
-	 * 
+	 * Returns true iff this option is editable.
+	 *
+	 * @param	boolean		$inRegistration		True iff the user currently is in registration.
 	 * @return	boolean
 	 */
-	public function isEditable() {
+	public function isEditable($inRegistration = false) {
 		// check admin permissions
 		if ($this->editable & self::EDITABILITY_ADMINISTRATOR) {
 			if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
@@ -157,11 +170,15 @@ class UserOption extends Option {
 			}
 		}
 		
+		if ($inRegistration && $this->editable & self::EDITABILITY_OWNER_DURING_REGISTRATION) {
+			return true;
+		}
+		
 		return false;
 	}
 	
 	/**
-	 * Returns true if this user option can be deleted.
+	 * Returns true iff this user option can be deleted.
 	 * 
 	 * @return	boolean
 	 */

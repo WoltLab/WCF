@@ -181,5 +181,14 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 				}
 			}
 		}));
+		
+		// clean up proxy images
+		if (MODULE_IMAGE_PROXY) {
+			DirectoryUtil::getInstance(WCF_DIR.'images/proxy/')->executeCallback(new Callback(function($filename, $object) {
+				if ($object->isFile() && $object->getMTime() < TIME_NOW - 86400 * IMAGE_PROXY_EXPIRATION) {
+					@unlink($filename);
+				}
+			}));
+		}
 	}
 }

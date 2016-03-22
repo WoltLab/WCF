@@ -5,16 +5,18 @@ use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\comment\response\CommentResponseEditor;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\captcha\CaptchaHandler;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -36,46 +38,46 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('addComment', 'addResponse', 'loadComments', 'getGuestDialog');
+	protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComments', 'getGuestDialog'];
 	
 	/**
 	 * captcha object type used for comments
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $captchaObjectType = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\comment\CommentEditor';
+	protected $className = CommentEditor::class;
 	
 	/**
 	 * comment object
-	 * @var	\wcf\data\comment\Comment
+	 * @var	Comment
 	 */
 	protected $comment = null;
 	
 	/**
 	 * comment processor
-	 * @var	\wcf\system\comment\manager\ICommentManager
+	 * @var	ICommentManager
 	 */
 	protected $commentProcessor = null;
 	
 	/**
 	 * response object
-	 * @var	\wcf\data\comment\response\CommentResponse
+	 * @var	CommentResponse
 	 */
 	protected $response = null;
 	
 	/**
 	 * comment object created by addComment()
-	 * @var	\wcf\data\comment\Comment
+	 * @var	Comment
 	 */
 	public $createdComment = null;
 	
 	/**
 	 * response object created by addResponse()
-	 * @var	\wcf\data\comment\response\CommentResponse
+	 * @var	CommentResponse
 	 */
 	public $createdResponse = null;
 	
@@ -83,10 +85,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * errors occuring durch the validation of addComment or addResponse
 	 * @var	array
 	 */
-	public $validationErrors = array();
+	public $validationErrors = [];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		if (empty($this->objects)) {
@@ -94,14 +96,14 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// update counters
-		$processors = array();
-		$groupCommentIDs = $commentIDs = array();
+		$processors = [];
+		$groupCommentIDs = $commentIDs = [];
 		foreach ($this->objects as $comment) {
 			if (!isset($processors[$comment->objectTypeID])) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
 				$processors[$comment->objectTypeID] = $objectType->getProcessor();
 				
-				$groupCommentIDs[$comment->objectTypeID] = array();
+				$groupCommentIDs[$comment->objectTypeID] = [];
 			}
 			
 			$processors[$comment->objectTypeID]->updateCounter($comment->objectID, -1 * ($comment->responses + 1));
@@ -110,8 +112,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 		
 		if (!empty($groupCommentIDs)) {
-			$likeObjectIDs = array();
-			$notificationObjectTypes = array();
+			$likeObjectIDs = [];
+			$notificationObjectTypes = [];
 			foreach ($groupCommentIDs as $objectTypeID => $objectIDs) {
 				// remove activity events
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
@@ -139,12 +141,12 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		// delete responses
 		if (!empty($commentIDs)) {
 			$commentResponseList = new CommentResponseList();
-			$commentResponseList->getConditionBuilder()->add('comment_response.commentID IN (?)', array($commentIDs));
+			$commentResponseList->getConditionBuilder()->add('comment_response.commentID IN (?)', [$commentIDs]);
 			$commentResponseList->readObjectIDs();
 			if (count($commentResponseList->getObjectIDs())) {
-				$action = new CommentResponseAction($commentResponseList->getObjectIDs(), 'delete', array(
+				$action = new CommentResponseAction($commentResponseList->getObjectIDs(), 'delete', [
 					'ignoreCounters' => true
-				));
+				]);
 				$action->executeAction();
 			}
 		}
@@ -173,18 +175,18 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 */
 	public function loadComments() {
 		$commentList = CommentHandler::getInstance()->getCommentList($this->commentProcessor, $this->parameters['data']['objectTypeID'], $this->parameters['data']['objectID'], false);
-		$commentList->getConditionBuilder()->add("comment.time < ?", array($this->parameters['data']['lastCommentTime']));
+		$commentList->getConditionBuilder()->add("comment.time < ?", [$this->parameters['data']['lastCommentTime']]);
 		$commentList->readObjects();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'commentList' => $commentList,
-			'likeData' => (MODULE_LIKE ? $commentList->getLikeData() : array())
-		));
+			'likeData' => (MODULE_LIKE ? $commentList->getLikeData() : [])
+		]);
 		
-		return array(
+		return [
 			'lastCommentTime' => $commentList->getMinCommentTime(),
 			'template' => WCF::getTPL()->fetch('commentList')
-		);
+		];
 	}
 	
 	/**
@@ -211,7 +213,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Adds a comment.
 	 * 
-	 * @return	array
+	 * @return	string[]
 	 */
 	public function addComment() {
 		if (!empty($this->validationErrors)) {
@@ -221,14 +223,14 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			WCF::getTPL()->assign('errorType', $this->validationErrors);
 			
 			$guestDialog = $this->getGuestDialog();
-			return array(
+			return [
 				'useCaptcha' => $guestDialog['useCaptcha'],
 				'guestDialog' => $guestDialog['template']
-			);
+			];
 		}
 		
 		// create comment
-		$this->createdComment = CommentEditor::create(array(
+		$this->createdComment = CommentEditor::create([
 			'objectTypeID' => $this->parameters['data']['objectTypeID'],
 			'objectID' => $this->parameters['data']['objectID'],
 			'time' => TIME_NOW,
@@ -236,8 +238,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
 			'message' => $this->parameters['data']['message'],
 			'responses' => 0,
-			'responseIDs' => serialize(array())
-		));
+			'responseIDs' => serialize([])
+		]);
 		
 		// update counter
 		$this->commentProcessor->updateCounter($this->parameters['data']['objectID'], 1);
@@ -250,14 +252,26 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		// fire notification event
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
+			$notificationObject = new CommentUserNotificationObject($this->createdComment);
 			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
-			$userID = $notificationObjectType->getOwnerID($this->createdComment->commentID);
-			if ($userID != WCF::getUser()->userID) {
-				$notificationObject = new CommentUserNotificationObject($this->createdComment);
+			
+			if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
+				$recipientIDs = $notificationObjectType->getRecipientIDs($this->createdComment);
 				
-				UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType.'.notification', $notificationObject, array($userID), array(
-					'objectUserID' => $userID
-				));
+				// make sure that the active user gets no notification
+				$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
+				
+				if (!empty($recipientIDs)) {
+					UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType . '.notification', $notificationObject, $recipientIDs);
+				}
+			}
+			else {
+				$userID = $notificationObjectType->getOwnerID($this->createdComment->commentID);
+				if ($userID != WCF::getUser()->userID) {
+					UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType . '.notification', $notificationObject, [$userID], [
+						'objectUserID' => $userID
+					]);
+				}
 			}
 		}
 		
@@ -274,9 +288,9 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
-		return array(
+		return [
 			'template' => $this->renderComment($this->createdComment)
-		);
+		];
 	}
 	
 	/**
@@ -316,20 +330,20 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			WCF::getTPL()->assign('errorType', $this->validationErrors);
 			
 			$guestDialog = $this->getGuestDialog();
-			return array(
+			return [
 				'useCaptcha' => $guestDialog['useCaptcha'],
 				'guestDialog' => $guestDialog['template']
-			);
+			];
 		}
 		
 		// create response
-		$this->createdResponse = CommentResponseEditor::create(array(
+		$this->createdResponse = CommentResponseEditor::create([
 			'commentID' => $this->comment->commentID,
 			'time' => TIME_NOW,
 			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
 			'message' => $this->parameters['data']['message']
-		));
+		]);
 		
 		// update response data
 		$responseIDs = $this->comment->getResponseIDs();
@@ -340,10 +354,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		// update comment
 		$commentEditor = new CommentEditor($this->comment);
-		$commentEditor->update(array(
+		$commentEditor->update([
 			'responseIDs' => serialize($responseIDs),
 			'responses' => $responses
-		));
+		]);
 		
 		// update counter
 		$this->commentProcessor->updateCounter($this->parameters['data']['objectID'], 1);
@@ -357,27 +371,44 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		// fire notification event
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification')) {
 			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
-			$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
-			
 			$notificationObject = new CommentResponseUserNotificationObject($this->createdResponse);
-			if ($this->comment->userID != WCF::getUser()->userID) {
-				UserNotificationHandler::getInstance()->fireEvent('commentResponse', $objectType->objectType.'.response.notification', $notificationObject, array($this->comment->userID), array(
-					'commentID' => $this->comment->commentID,
-					'objectID' => $this->comment->objectID,
-					'objectUserID' => $userID,
-					'userID' => $this->comment->userID
-				));
-			}
 			
-			// notify the container owner
-			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
-				if ($userID != $this->comment->userID && $userID != WCF::getUser()->userID) {
-					UserNotificationHandler::getInstance()->fireEvent('commentResponseOwner', $objectType->objectType.'.response.notification', $notificationObject, array($userID), array(
+			if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
+				$recipientIDs = $notificationObjectType->getRecipientIDs($this->comment);
+				
+				// make sure that the active user gets no notification
+				$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
+				
+				if (!empty($recipientIDs)) {
+					UserNotificationHandler::getInstance()->fireEvent('commentResponse', $objectType->objectType.'.response.notification', $notificationObject, $recipientIDs, [
+						'commentID' => $this->comment->commentID,
+						'objectID' => $this->comment->objectID,
+						'userID' => $this->comment->userID
+					]);
+				}
+			}
+			else {
+				$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
+				
+				if ($this->comment->userID != WCF::getUser()->userID) {
+					UserNotificationHandler::getInstance()->fireEvent('commentResponse', $objectType->objectType.'.response.notification', $notificationObject, [$this->comment->userID], [
 						'commentID' => $this->comment->commentID,
 						'objectID' => $this->comment->objectID,
 						'objectUserID' => $userID,
 						'userID' => $this->comment->userID
-					));
+					]);
+				}
+				
+				// notify the container owner
+				if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
+					if ($userID != $this->comment->userID && $userID != WCF::getUser()->userID) {
+						UserNotificationHandler::getInstance()->fireEvent('commentResponseOwner', $objectType->objectType . '.response.notification', $notificationObject, [$userID], [
+							'commentID' => $this->comment->commentID,
+							'objectID' => $this->comment->objectID,
+							'objectUserID' => $userID,
+							'userID' => $this->comment->userID
+						]);
+					}
 				}
 			}
 		}
@@ -395,11 +426,11 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
-		return array(
+		return [
 			'commentID' => $this->comment->commentID,
 			'template' => $this->renderResponse($this->createdResponse),
 			'responses' => $responses
-		);
+		];
 	}
 	
 	/**
@@ -450,10 +481,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			$message = $this->response->message;
 		}
 		
-		$returnValues = array(
+		$returnValues = [
 			'action' => 'prepare',
 			'message' => $message
-		);
+		];
 		if ($this->comment !== null) {
 			$returnValues['commentID'] = $this->comment->commentID;
 		}
@@ -465,7 +496,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\comment\CommentAction::validatePrepareEdit()
+	 * @inheritDoc
 	 */
 	public function validateEdit() {
 		$this->validatePrepareEdit();
@@ -479,24 +510,22 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function edit() {
-		$returnValues = array(
-			'action' => 'saved',
-		);
+		$returnValues = ['action' => 'saved'];
 		
 		if ($this->response === null) {
 			$editor = new CommentEditor($this->comment);
-			$editor->update(array(
+			$editor->update([
 				'message' => $this->parameters['data']['message']
-			));
+			]);
 			$comment = new Comment($this->comment->commentID);
 			$returnValues['commentID'] = $this->comment->commentID;
 			$returnValues['message'] = $comment->getFormattedMessage();
 		}
 		else {
 			$editor = new CommentResponseEditor($this->response);
-			$editor->update(array(
+			$editor->update([
 				'message' => $this->parameters['data']['message']
-			));
+			]);
 			$response = new CommentResponse($this->response->responseID);
 			$returnValues['responseID'] = $this->response->responseID;
 			$returnValues['message'] = $response->getFormattedMessage();
@@ -542,24 +571,20 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Removes a comment or response.
 	 * 
-	 * @return	array
+	 * @return	integer[]
 	 */
 	public function remove() {
 		if ($this->comment !== null) {
-			$objectAction = new CommentAction(array($this->comment), 'delete');
+			$objectAction = new CommentAction([$this->comment], 'delete');
 			$objectAction->executeAction();
 			
-			return array(
-				'commentID' => $this->comment->commentID
-			);
+			return ['commentID' => $this->comment->commentID];
 		}
 		else {
-			$objectAction = new CommentResponseAction(array($this->response), 'delete');
+			$objectAction = new CommentResponseAction([$this->response], 'delete');
 			$objectAction->executeAction();
 			
-			return array(
-				'responseID' => $this->response->responseID
-			);
+			return ['responseID' => $this->response->responseID];
 		}
 	}
 	
@@ -608,21 +633,21 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
-		return array(
+		return [
 			'useCaptcha' => $captchaObjectType !== null,
-			'template' => WCF::getTPL()->fetch('commentAddGuestDialog', 'wcf', array(
+			'template' => WCF::getTPL()->fetch('commentAddGuestDialog', 'wcf', [
 				'ajaxCaptcha' => true,
 				'captchaID' => 'commentAdd',
 				'captchaObjectType' => $captchaObjectType,
 				'username' => WCF::getSession()->getVar('username')
-			))
-		);
+			])
+		];
 	}
 	
 	/**
 	 * Renders a comment.
 	 * 
-	 * @param	\wcf\data\comment\Comment	$comment
+	 * @param	Comment		$comment
 	 * @return	string
 	 */
 	protected function renderComment(Comment $comment) {
@@ -630,23 +655,17 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$comment->setIsDeletable($this->commentProcessor->canDeleteComment($comment->getDecoratedObject()));
 		$comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
 		
-		// set user profile
-		if ($comment->userID) {
-			$userProfile = UserProfile::getUserProfile($comment->userID);
-			$comment->setUserProfile($userProfile);
-		}
-		
-		WCF::getTPL()->assign(array(
-			'commentList' => array($comment),
+		WCF::getTPL()->assign([
+			'commentList' => [$comment],
 			'commentManager' => $this->commentProcessor
-		));
+		]);
 		return WCF::getTPL()->fetch('commentList');
 	}
 	
 	/**
 	 * Renders a response.
 	 * 
-	 * @param	\wcf\data\comment\response\CommentResponse	$response
+	 * @param	CommentResponse	$response
 	 * @return	string
 	 */
 	protected function renderResponse(CommentResponse $response) {
@@ -654,17 +673,11 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$response->setIsDeletable($this->commentProcessor->canDeleteResponse($response->getDecoratedObject()));
 		$response->setIsEditable($this->commentProcessor->canEditResponse($response->getDecoratedObject()));
 		
-		// set user profile
-		if ($response->userID) {
-			$userProfile = UserProfile::getUserProfile($response->userID);
-			$response->setUserProfile($userProfile);
-		}
-		
 		// render response
-		WCF::getTPL()->assign(array(
-			'responseList' => array($response),
+		WCF::getTPL()->assign([
+			'responseList' => [$response],
 			'commentManager' => $this->commentProcessor
-		));
+		]);
 		return WCF::getTPL()->fetch('commentResponseList');
 	}
 	
@@ -685,7 +698,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates object type id parameter.
 	 * 
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
 	 */
 	protected function validateObjectType() {
 		$this->readInteger('objectTypeID', false, 'data');
@@ -767,18 +780,14 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			$this->captchaObjectType->getProcessor()->validate();
 		}
 		catch (UserInputException $e) {
-			$this->validationErrors = array_merge($this->validationErrors,
-				array(
-					$e->getField() => $e->getType()
-				)
-			);
+			$this->validationErrors = array_merge($this->validationErrors, [$e->getField() => $e->getType()]);
 		}
 	}
 	
 	/**
 	 * Returns the comment object.
 	 * 
-	 * @return	\wcf\data\comment\Comment
+	 * @return	Comment
 	 */
 	public function getComment() {
 		return $this->comment;
@@ -787,7 +796,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the comment response object.
 	 * 
-	 * @return	\wcf\data\comment\response\CommentResponse
+	 * @return	CommentResponse
 	 */
 	public function getResponse() {
 		return $this->response;
@@ -796,7 +805,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the comment manager.
 	 * 
-	 * @return	\wcf\system\comment\manager\ICommentManager
+	 * @return	ICommentManager
 	 */
 	public function getCommentManager() {
 		return $this->commentProcessor;

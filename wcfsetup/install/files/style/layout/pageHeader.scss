@@ -1,0 +1,452 @@
+/* @TODO */
+.interactiveDropdown { display: none; }
+/* @TODO END */
+
+.pageHeaderContainer {
+	background-color: $wcfHeaderBackground;
+	color: $wcfHeaderText;
+	
+	a {
+		color: $wcfHeaderLink;
+		
+		&:hover {
+			color: $wcfHeaderLinkActive;
+		}
+	}
+}
+
+.pageHeader .layoutBoundary {
+	display: flex;
+	
+	.pageHeaderContainerLeft,
+	.pageHeaderContainerRight {
+		display: flex;
+	}
+	
+	.pageHeaderContainerLeft {
+		flex: 1 1 auto;
+	}
+	
+	.pageHeaderContainerRight {
+		flex: 0 0 auto;
+	}
+	
+	@include large-screen-only {
+		padding-top: 20px;
+		padding-bottom: 20px;
+		
+		.pageHeaderContainerLeft,
+		.pageHeaderContainerRight {
+			flex-direction: column;
+			justify-content: space-between;
+		}
+	}
+	
+	@include small-screen-only {
+		padding: 10px;
+	}
+}
+
+/* LOGO */
+.pageHeaderLogo {
+	.pageHeaderLogoSmall {
+		display: none;
+	}
+	
+	@include large-screen-only {
+		margin-bottom: 15px;
+	}
+}
+
+/* MAIN MENU */
+.mainMenu .boxMenu {
+	display: flex;
+	flex-wrap: wrap;
+	
+	> li {
+		flex: 0 0 auto;
+		
+		@include wcfFontHeadline;
+		
+		&:not(:last-child) {
+			margin-right: 15px;
+		}
+		
+		> a {
+			border-bottom: 3px solid $wcfHeaderMenuBackground;
+			color: $wcfHeaderMenuLink;
+			display: block;
+			font-size: 16px;
+			font-weight: 400;
+			padding: 5px 0 2px;
+			
+			> .boxMenuLinkOutstandingItems {
+				background-color: rgb(255, 255, 255);
+				color: rgb(192, 57, 43);
+			}
+		}
+		
+		> span {
+			cursor: default;
+		}
+		
+		&.active > a,
+		&:hover > a {
+			border-color: $wcfHeaderMenuBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
+	}
+	
+	> .boxMenuHasChildren {
+		position: relative;
+		
+		&:hover .boxMenuDepth1 {
+			visibility: visible;
+		}
+	}
+	
+	.boxMenuDepth1 {
+		background-color: $wcfHeaderMenuDropdownBackground;
+		position: absolute;
+		visibility: hidden;
+		
+		// align menu to the center of the menu item
+		left: 50%;
+		transform: translateX(-50%);
+		
+		// offset the menu to prevent the staircase effect when two elements with dark and light
+		// colors are right below each other; uses a transparent border rather than a margin to
+		// prevent losing the hover on the <li> causing the menu to collapse when the cursor is
+		// right between the menu item and the menu itself
+		background-clip: padding-box;
+		border-top: 15px solid transparent;
+		
+		@include wcfFontDefault;
+		
+		&::before {
+			content: "";
+			border: 10px solid transparent;
+			border-bottom-color: $wcfHeaderMenuDropdownBorder;
+			border-top-width: 0;
+			left: calc(50% - 10px);
+			position: absolute;
+			top: -10px;
+		}
+		
+		&::after {
+			content: "";
+			border: 10px solid transparent;
+			border-bottom-color: $wcfHeaderMenuDropdownBackground;
+			border-top-width: 0;
+			left: calc(50% - 10px);
+			position: absolute;
+			top: -9px;
+		}
+		
+		> li {
+			// the code below mimics the border surrounding the list element
+			// as seen for similar elements such as dropdowns; we cannot use
+			// the list border because the top border is abused to visually
+			// push down the list w/o triggering a "hover-out" on the menu item
+			background-color: $wcfHeaderMenuDropdownBackground;
+			border: 1px solid $wcfHeaderMenuDropdownBorder;
+			border-width: 0 1px;
+			
+			&:first-child {
+				border-top-width: 1px;
+				padding-top: 3px;
+			}
+			
+			&:last-child {
+				border-bottom-width: 1px;
+				padding-bottom: 3px;
+			}
+			
+			> a {
+				color: $wcfHeaderMenuDropdownLink;
+			}
+			
+			> a,
+			> span {
+				display: block;
+				padding: 7px 20px;
+				white-space: nowrap;
+			}
+			
+			&.active > a,
+			> a:hover {
+				background-color: $wcfHeaderMenuDropdownBackgroundActive;
+				color: $wcfHeaderMenuDropdownLinkActive;
+				text-decoration: none;
+			}
+		}
+	}
+	
+	.boxMenuDepth2 > li {
+		> a {
+			color: $wcfHeaderMenuDropdownLink;
+			display: block;
+			padding: 5px 20px 5px 40px;
+			white-space: nowrap;
+		}
+		
+		&.active > a,
+		> a:hover {
+			background-color: $wcfHeaderMenuDropdownBackgroundActive;
+			color: $wcfHeaderMenuDropdownLinkActive;
+			text-decoration: none;
+		}
+	}
+}
+
+/* user panel */
+.userPanel  > ul {
+	display: flex;
+	justify-content: flex-end;
+	
+	> li {
+		align-items: center;
+		display: flex;
+		flex: 0 auto;
+		
+		/* margin between items, do not use the inner elements (such as a contained <a>) for
+		   this as it causes the last item to be of uneven size compared to all other items */
+		margin-left: 10px;
+		
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+		
+		> a {
+			flex: 0 auto;
+			position: relative;
+			
+			/* set icon color */
+			> .icon {
+				color: $wcfHeaderLink;
+			}
+			&:hover {
+				> .icon {
+					color: $wcfHeaderLinkActive;
+				}
+			}
+			
+			/* hide icon label */
+			> span:not(.icon):not(.badge) {
+				display: none;
+			}
+			
+			/* special styling for update badge */
+			> span.badgeUpdate {
+				box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
+				left: 16px;
+				position: absolute;
+				top: -5px;
+			}
+		}
+		
+		/* ringing animation for notification icon */
+		&#userNotifications:not([data-count="0"]) { 
+			> a > .icon {
+				animation: fa-bell-ring 5s ease 10s 6;
+				transform-origin: 50% 0;
+			}
+		}
+		
+		/* hover effect for user menu button */
+		&#userMenu {
+			> a {
+				&:hover {
+					> img {
+						box-shadow: 0 0 0 2px $wcfHeaderLink;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* SEARCH AREA */
+.pageHeaderSearch {
+	@include large-screen-only {
+		margin-bottom: 15px;
+		text-align: right;
+		
+		.pageHeaderSearchLabel {
+			display: none;
+		}
+	}
+}
+
+.pageHeaderSearchInputContainer {
+	display: inline-block;
+	position: relative;
+	
+	&:hover {
+		.pageHeaderSearchInput {
+			background-color: $wcfHeaderSearchBoxBackgroundActive;
+			color: $wcfHeaderSearchBoxTextActive;
+		}
+		
+		.pageHeaderSearchInputButton > .icon {
+			color: $wcfHeaderSearchBoxTextActive;
+		}
+	}
+	
+	.pageHeaderSearchInput {
+		background-color: $wcfHeaderSearchBoxBackground;
+		border-width: 0;
+		color: $wcfHeaderSearchBoxText;
+		padding: 6px 30px 6px 8px;
+		
+		&:focus {
+			background-color: $wcfHeaderSearchBoxBackgroundActive;
+			color: $wcfHeaderSearchBoxTextActive;
+			
+			~ .pageHeaderSearchInputButton > .icon {
+				color: $wcfHeaderSearchBoxTextActive;
+			}
+		}
+		
+		/* set placeholder color */
+		&::-webkit-input-placeholder { /* WebKit browsers */
+			color: $wcfHeaderSearchBoxPlaceholder;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $wcfHeaderSearchBoxPlaceholder;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $wcfHeaderSearchBoxPlaceholder;
+		}
+				
+		/* remove broken cancel-button (webkit) */
+		&::-webkit-search-cancel-button {
+			display:none;
+		}
+	}
+	
+	&:hover .pageHeaderSearchInput,
+	.pageHeaderSearchInput:focus {
+		/* set placeholder color */
+		&::-webkit-input-placeholder { /* WebKit browsers */
+			color: $wcfHeaderSearchBoxPlaceholderActive;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $wcfHeaderSearchBoxPlaceholderActive;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $wcfHeaderSearchBoxPlaceholderActive;
+		}
+	}
+	
+	.pageHeaderSearchInputButton {
+		background: none;
+		border: 0 none;
+		height: 20px;
+		margin: -10px 5px 0 0;
+		padding: 0;
+		position: absolute;
+		right: 0;
+		top: 50%;
+		width: 20px;
+		
+		> .icon {
+			color: $wcfHeaderSearchBoxText;
+		}
+	}
+}
+
+@include small-screen-only {
+	.pageHeader > div > div {
+		padding-bottom: 10px;
+		padding-top: 10px;
+	}
+	
+	.pageHeaderLogo {
+		flex: 1 1 auto;
+		margin: 0 10px;
+		order: 2;
+		text-align: center;
+		
+		.pageHeaderLogoLarge {
+			display: none;
+		}
+		
+		.pageHeaderLogoSmall {
+			display: inline;
+		}
+	}
+	
+	.userPanel {
+		flex: 0 0 auto;
+		order: 3;
+		
+		&::before {
+			content: $fa-var-user;
+		}
+		
+		> .userPanelItems {
+			display: none;
+		}
+	}
+	
+	.mainMenu {
+		flex: 0 0 auto;
+		order: 1;
+		
+		&::before {
+			content: $fa-var-bars;
+		}
+		
+		> .boxContent {
+			display: none;
+		}
+	}
+	
+	.mainMenu,
+	.userPanel {
+		&::before {
+			background-color: $wcfHeaderMenuBackground;
+			color: $wcfHeaderMenuLink;
+			font-family: FontAwesome;
+			font-size: 28px;
+			line-height: 32px;
+			padding: 5px 10px;
+		}
+		
+		&:hover::before {
+			background-color: $wcfHeaderMenuBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
+	}
+	
+	.pageHeader {
+		&.searchBarOpen {
+			.pageHeaderContainerLeft {
+				display: none;
+			}
+			
+			.pageHeaderContainerRight {
+				flex: 0 0 100%;
+				
+				.pageHeaderSearch {
+					flex: 0 0 100%;
+					
+					.pageHeaderSearchInput {
+						width: 100%;
+					}
+				}
+				
+				.userPanel {
+					display: none;
+				}
+			}
+		}
+		
+		&:not(.searchBarOpen) {
+			.pageHeaderSearch {
+				display: none;
+			}
+		}
+	}
+}

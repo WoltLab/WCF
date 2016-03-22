@@ -1,0 +1,8 @@
+{
+    "config": {
+        "vendor-dir": "./"
+    },
+    "require": {
+        "ezyang/htmlpurifier": "4.7.*"
+    }
+}

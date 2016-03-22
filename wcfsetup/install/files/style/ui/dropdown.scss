@@ -1,0 +1,319 @@
+.dropdownMenuContainer {
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.dropdown {
+	.dropdownToggle:active,
+	&.dropdownOpen .dropdownToggle {
+		outline: 0;
+	}
+	
+	&.inputAddon {
+		> .dropdownToggle {
+			padding: $wcfGapTiny;
+			
+			> span.active:after {
+				content: "\f0d7"; // @TODO: use a variable instead
+				font-family: FontAwesome;
+				font-size: 14px;
+				margin-left: 7px;
+			}
+		}
+	}
+	
+	&.preInput {
+		// TODO: use flex-box instead
+		display: table;
+		width: 100%;
+		
+		input {
+			border-radius: 0 3px 3px 0;
+			display: table-cell;
+			margin: 0;
+			width: 99%;
+		}
+		
+		textarea {
+			border-radius: 0 3px 3px;
+			display: block;
+			margin-top: 0;
+		}
+		
+		.dropdownCaption {
+			cursor: pointer;
+			display: table-cell;
+			letter-spacing: -1px;
+			padding: 0 $wcfGapSmall 0 $wcfGapTiny;
+			vertical-align: middle;
+			width: 1%;
+			
+			&.button {
+				border-right-width: 0;
+				border-radius: 3px 0 0 3px;
+			}
+			
+			span {
+				margin-right: -1px;
+				padding-left: $wcfGapTiny;
+				white-space: nowrap;
+				word-wrap: normal;
+				
+				&.active::after {
+					content: "\f0d7"; // TODO: use a variable instead
+					font-family: FontAwesome;
+					font-size: 14px;
+					margin-left: 7px;
+				}
+			}
+		}
+		
+		.dropdownCaptionTextarea {
+			cursor: pointer;
+			margin: 0 0 -1px 0;
+			padding-left: $wcfGapSmall;
+			padding-right: $wcfGapSmall;
+			
+			&.button {
+				border-radius: 3px 3px 0 0;
+			}
+			
+			&~ .dropdownMenu {
+				top: 10%;
+			}
+			
+			span {
+				white-space: nowrap;
+				word-wrap: normal;
+				
+				&.active::after {
+					content: "\f0d7"; // @TODO: use a variable instead
+					font-family: FontAwesome;
+					font-size: 14px;
+					margin-left: 7px;
+				}
+			}
+		}
+	}
+	
+	&.dropdownOpen {
+		.dropdownToggle {
+			//color: @wcfPageLinkHoverColor;
+		}
+		
+		.dropdownMenu {
+			display: block;
+		}
+	}
+	
+	.dropdownToggle {
+		cursor: pointer;
+	}
+}
+
+.dropdownMenu {
+	background-color: $wcfDropdownBackground;
+	border: 1px solid $wcfDropdownBorder;
+	color: $wcfDropdownText;
+	display: none;
+	float: left;
+	min-width: 160px;
+	padding: 3px 0;
+	pointer-events: all;
+	position: absolute;
+	text-align: left;
+	visibility: hidden;
+	z-index: 450;
+	
+	@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
+	
+	&::after {
+		border: 10px solid transparent;
+		border-bottom-color: $wcfDropdownBorder;
+		border-top-width: 0;
+		content: "";
+		display: inline-block;
+		left: 9px;
+		position: absolute;
+		top: -10px;
+		z-index: 100;
+	}
+	
+	&::before {
+		border: 9px solid transparent;
+		border-bottom-color: $wcfDropdownBackground;
+		border-top-width: 0;
+		content: "";
+		display: inline-block;
+		left: 10px;
+		position: absolute;
+		top: -9px;
+		z-index: 101;
+	}
+	
+	&.dropdownArrowRight {
+		&::after {
+			left: auto;
+			right: 9px;
+		}
+		
+		&::before {
+			left: auto;
+			right: 10px;
+		}
+	}
+	
+	&.dropdownArrowBottom {
+		&::after {
+			border: 10px transparent solid;
+			border-top-color: $wcfDropdownBorder;
+			border-bottom-width: 0;
+			bottom: -10px;
+			top: auto;
+		}
+		
+		&::before {
+			border: 9px transparent solid;
+			border-top-color: $wcfDropdownBackground;
+			border-bottom-width: 0;
+			bottom: -9px;
+			top: auto;
+		}
+	}
+	
+	&.dropdownOpen {
+		display: block;
+		visibility: visible;
+	}
+	
+	li {
+		display: block;
+		
+		&:hover:not(.dropdownDivider):not(.dropdownList):not(.dropdownText),
+		&.dropdownList > li:hover:not(.dropdownDivider),
+		&.dropdownNavigationItem,
+		&.active {
+			background-color: $wcfDropdownBackgroundActive;
+			color: $wcfDropdownLinkActive;
+			
+			> a {
+				color: $wcfDropdownLinkActive;
+			}
+		}
+		
+		&.dropdownDivider {
+			border-top: 1px solid $wcfDropdownBorderInner;
+			margin: 3px 0;
+		}
+		
+		&.dropdownText {
+			padding: $wcfGapTiny $wcfGapMedium;
+			
+			@include wcfFontSmall;
+		}
+		
+		&.boxFlag {
+			padding-top: 2px;
+		}
+		
+		/*
+		// @TODO
+		&.missingValue > span {
+			position: relative;
+			
+			&:after {
+				color: @wcfWarningBackgroundColor;
+				content: @fa-var-exclamation-triangle;
+				font-family: FontAwesome;
+				position: absolute;
+				right: @wcfGapMedium;
+				top: @wcfGapTiny;
+			}
+		}
+		*/
+		
+		> a,
+		> span {
+			clear: both;
+			cursor: pointer;
+			display: block;
+			max-width: 350px;
+			overflow: hidden;
+			padding: 5px 20px;
+			text-decoration: none;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			word-wrap: normal;
+			
+			> div > h3 {
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+		
+		> a {
+			color: $wcfDropdownLink;
+		}
+		
+		> a > small {
+			display: block;
+		}
+		
+		> a + span.badge {
+			display: none;
+		}
+		
+		> .box16 {
+			align-items: center;
+			cursor: pointer;
+			min-height: 0;
+			padding: 5px 10px;
+		}
+		
+		> label {
+			display: block;
+		}
+		
+		.containerHeadline {
+			margin-bottom: 0;
+			
+			> p {
+				@include wcfFontSmall;
+			}
+		}
+		
+		.icon {
+			color: inherit;
+		}
+	}
+	
+	.scrollableDropdownMenu {
+		max-height: 300px;
+		overflow: auto;
+	}
+}
+
+.boxFlag > .box24, .boxFlag.box24 {
+	min-height: 20px;
+}
+
+@include small-screen-only {
+	.dropdownMenu {
+		left: 0 !important;
+		right: 0 !important;
+		
+		li {
+			overflow: hidden;
+			
+			> a,
+			> span {
+				max-width: none;
+				white-space: normal;
+			}
+		}
+	}
+}

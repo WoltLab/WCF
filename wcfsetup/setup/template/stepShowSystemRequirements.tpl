@@ -8,7 +8,7 @@
 	<fieldset>
 		<legend>{lang}wcf.global.systemRequirements.php{/lang}</legend>
 		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 5.3.2</dt>
+			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 5.5.4</dt>
 			<dd>
 				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.phpVersion.result}red{else}green{/if}">{$system.phpVersion.value}</span>
 				{if !$system.phpVersion.result}<small>{lang}wcf.global.systemRequirements.php.description{/lang}</small>{/if}

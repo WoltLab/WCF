@@ -4,6 +4,7 @@ use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\WCF;
 
@@ -17,7 +18,9 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IUserCondition {
+class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * user option handler object
 	 * @var	\wcf\system\option\user\UserOptionHandler
@@ -36,16 +39,18 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IC
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		$optionValues = $condition->optionValues;
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		$optionValues = $conditionData['optionValues'];
 		
 		foreach ($this->optionHandler->getCategoryOptions('profile') as $option) {
 			$option = $option['object'];
 			
 			if (isset($optionValues[$option->optionName])) {
-				$this->optionHandler->getTypeObject($option->optionType)->addCondition($userList, $option, $optionValues[$option->optionName]);
+				$this->optionHandler->getTypeObject($option->optionType)->addCondition($objectList, $option, $optionValues[$option->optionName]);
 			}
 		}
 	}

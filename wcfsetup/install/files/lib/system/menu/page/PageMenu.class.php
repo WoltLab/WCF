@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\menu\page;
+use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\cache\builder\PageMenuCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -18,13 +19,8 @@ use wcf\system\menu\TreeMenu;
  */
 class PageMenu extends TreeMenu {
 	/**
-	 * landing page menu item
-	 * @var	\wcf\data\page\menu\item\PageMenuItem
-	 */
-	protected $landingPage = null;
-	
-	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
+	 * @throws      SystemException
 	 */
 	protected function init() {
 		// get menu items from cache
@@ -40,34 +36,10 @@ class PageMenu extends TreeMenu {
 		
 		// call init event
 		EventHandler::getInstance()->fireAction($this, 'init');
-		
-		foreach ($this->menuItems as $menuItems) {
-			foreach ($menuItems as $menuItem) {
-				if ($menuItem->isLandingPage) {
-					$this->landingPage = $menuItem;
-					break 2;
-				}
-			}
-		}
-		
-		if ($this->landingPage === null) {
-			throw new SystemException("Missing landing page");
-		}
-		
-		$this->setActiveMenuItem($this->landingPage->menuItem);
 	}
 	
 	/**
-	 * Returns landing page menu item.
-	 * 
-	 * @return	\wcf\data\page\menu\item\PageMenuItem
-	 */
-	public function getLandingPage() {
-		return $this->landingPage;
-	}
-	
-	/**
-	 * @see	\wcf\system\menu\TreeMenu::loadCache()
+	 * @inheritDoc
 	 */
 	protected function loadCache() {
 		parent::loadCache();
@@ -77,21 +49,20 @@ class PageMenu extends TreeMenu {
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::checkMenuItem()
+	 * @inheritDoc
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {
-		// landing page must always be accessible
-		if ($item->isLandingPage) {
-			return true;
-		}
-		
 		if (!parent::checkMenuItem($item)) return false;
 		
-		return $item->getProcessor()->isVisible();
+		if ($item instanceof ProcessibleDatabaseObject && $item->getProcessor() instanceof IPageMenuItemProvider) {
+			return $item->getProcessor()->isVisible();
+		}
+		
+		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::setActiveMenuItem()
+	 * @inheritDoc
 	 */
 	public function setActiveMenuItem($menuItem) {
 		if (isset($this->menuItemList[$menuItem]) && $this->menuItemList[$menuItem]->menuPosition == 'footer') {

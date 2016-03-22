@@ -299,7 +299,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// get style data
 		$data = self::readStyleData($tar);
 		
-		$styleData = array(
+		$styleData = [
 			'styleName' => $data['name'],
 			'variables' => $data['variables'],
 			'styleVersion' => $data['version'],
@@ -308,54 +308,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'license' => $data['license'],
 			'authorName' => $data['authorName'],
 			'authorURL' => $data['authorURL']
-		);
-		
-		// create template group
-		if (!empty($data['templates'])) {
-			$templateGroupName = $originalTemplateGroupName = $data['name'];
-			$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
-			if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.mb_substr(StringUtil::getRandomID(), 0, 8);
-			$originalTemplateGroupFolderName = $templateGroupFolderName;
-			
-			// get unique template group name
-			$i = 1;
-			while (true) {
-				$sql = "SELECT	COUNT(*) AS count
-					FROM	wcf".WCF_N."_template_group
-					WHERE	templateGroupName = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($templateGroupName));
-				$row = $statement->fetchArray();
-				if (!$row['count']) break;
-				$templateGroupName = $originalTemplateGroupName . '_' . $i;
-				$i++;
-			}
-			
-			// get unique folder name
-			$i = 1;
-			while (true) {
-				$sql = "SELECT	COUNT(*) AS count
-					FROM	wcf".WCF_N."_template_group
-					WHERE	templateGroupFolderName = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
-					FileUtil::addTrailingSlash($templateGroupFolderName)
-				));
-				$row = $statement->fetchArray();
-				if (!$row['count']) break;
-				$templateGroupFolderName = $originalTemplateGroupFolderName . '_' . $i;
-				$i++;
-			}
-			
-			$templateGroupAction = new TemplateGroupAction(array(), 'create', array(
-				'data' => array(
-					'templateGroupName' => $templateGroupName,
-					'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
-				)
-			));
-			$returnValues = $templateGroupAction->executeAction();
-			$styleData['templateGroupID'] = $returnValues['returnValues']->templateGroupID;
-		}
+		];
 		
 		// import images
 		if (!empty($data['images']) && $data['imagesPath'] != 'images/') {
@@ -385,8 +338,61 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			}
 		}
 		
-		// import templates
+		// handle templates
 		if (!empty($data['templates'])) {
+			$templateGroupFolderName = '';
+			if ($style !== null && $style->templateGroupID) {
+				$templateGroupFolderName = (new TemplateGroup($style->templateGroupID))->templateGroupFolderName;
+			}
+			
+			if (empty($templateGroupFolderName)) {
+				// create template group
+				$templateGroupName = $originalTemplateGroupName = $data['name'];
+				$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
+				if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.mb_substr(StringUtil::getRandomID(), 0, 8);
+				$originalTemplateGroupFolderName = $templateGroupFolderName;
+					
+				// get unique template group name
+				$i = 1;
+				while (true) {
+					$sql = "SELECT	COUNT(*) AS count
+						FROM	wcf".WCF_N."_template_group
+						WHERE	templateGroupName = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([$templateGroupName]);
+					$row = $statement->fetchArray();
+					if (!$row['count']) break;
+					$templateGroupName = $originalTemplateGroupName . '_' . $i;
+					$i++;
+				}
+					
+				// get unique folder name
+				$i = 1;
+				while (true) {
+					$sql = "SELECT	COUNT(*) AS count
+						FROM	wcf".WCF_N."_template_group
+						WHERE	templateGroupFolderName = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([
+						FileUtil::addTrailingSlash($templateGroupFolderName)
+					]);
+					$row = $statement->fetchArray();
+					if (!$row['count']) break;
+					$templateGroupFolderName = $originalTemplateGroupFolderName . '_' . $i;
+					$i++;
+				}
+					
+				$templateGroupAction = new TemplateGroupAction([], 'create', [
+					'data' => [
+						'templateGroupName' => $templateGroupName,
+						'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
+					]
+				]);
+				$returnValues = $templateGroupAction->executeAction();
+				$styleData['templateGroupID'] = $returnValues['returnValues']->templateGroupID;
+			}
+			
+			// import templates
 			$index = $tar->getIndexByFilename($data['templates']);
 			if ($index !== false) {
 				// extract templates tar
@@ -396,15 +402,27 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				// open templates tar and group templates by package
 				$templatesTar = new Tar($destination);
 				$contentList = $templatesTar->getContentList();
-				$packageToTemplates = array();
+				$packageToTemplates = [];
 				foreach ($contentList as $val) {
 					if ($val['type'] == 'file') {
 						$folders = explode('/', $val['filename']);
 						$packageName = array_shift($folders);
 						if (!isset($packageToTemplates[$packageName])) {
-							$packageToTemplates[$packageName] = array();
+							$packageToTemplates[$packageName] = [];
 						}
-						$packageToTemplates[$packageName][] = array('index' => $val['index'], 'filename' => implode('/', $folders));
+						$packageToTemplates[$packageName][] = ['index' => $val['index'], 'filename' => implode('/', $folders)];
+					}
+				}
+				
+				$knownTemplates = [];
+				if ($style !== null && $style->templateGroupID) {
+					$sql = "SELECT	templateName
+						FROM	wcf".WCF_N."_template
+						WHERE	templateGroupID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([$style->templateGroupID]);
+					while ($row = $statement->fetchArray()) {
+						$knownTemplates[] = $row['templateName'];
 					}
 				}
 				
@@ -416,10 +434,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						WHERE	package = ?
 							AND isApplication = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(
+					$statement->execute([
 						$package,
 						1
-					));
+					]);
 					while ($row = $statement->fetchArray()) {
 						// get template path
 						$templatesDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'templates/'.$templateGroupFolderName);
@@ -434,12 +452,15 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						foreach ($templates as $template) {
 							$templatesTar->extract($template['index'], $templatesDir.$template['filename']);
 							
-							TemplateEditor::create(array(
-								'application' => Package::getAbbreviation($package),
-								'packageID' => $row['packageID'],
-								'templateName' => str_replace('.tpl', '', $template['filename']),
-								'templateGroupID' => $styleData['templateGroupID']
-							));
+							$templateName = str_replace('.tpl', '', $template['filename']);
+							if (!in_array($templateName, $knownTemplates)) {
+								TemplateEditor::create([
+									'application' => Package::getAbbreviation($package),
+									'packageID' => $row['packageID'],
+									'templateName' => $templateName,
+									'templateGroupID' => $styleData['templateGroupID']
+								]);
+							}
 						}
 					}
 				}
@@ -451,40 +472,52 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// save style
-		if ($style !== null) {
-			$style->update($styleData);
-		}
-		else {
+		if ($style === null) {
 			$styleData['packageID'] = $packageID;
 			$style = new StyleEditor(self::create($styleData));
-		}
-		
-		// import preview image
-		if (!empty($data['image'])) {
-			$fileExtension = mb_substr($data['image'], mb_strrpos($data['image'], '.'));
-			$index = $tar->getIndexByFilename($data['image']);
-			if ($index !== false) {
-				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;
-				$tar->extract($index, $filename);
-				FileUtil::makeWritable($filename);
-				
-				if (file_exists($filename)) {
-					$style->update(array('image' => 'stylePreview-'.$style->styleID.$fileExtension));
+			
+			// import preview image
+			if (!empty($data['image'])) {
+				$fileExtension = mb_substr($data['image'], mb_strrpos($data['image'], '.'));
+				$index = $tar->getIndexByFilename($data['image']);
+				if ($index !== false) {
+					$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;
+					$tar->extract($index, $filename);
+					FileUtil::makeWritable($filename);
+			
+					if (file_exists($filename)) {
+						$style->update(['image' => 'stylePreview-'.$style->styleID.$fileExtension]);
+					}
 				}
 			}
+			
+			// handle descriptions
+			if (!empty($data['description'])) {
+				self::saveLocalizedDescriptions($style, $data['description']);
+				LanguageFactory::getInstance()->deleteLanguageCache();
+			}
+			
+			if ($data['default']) {
+				$style->setAsDefault();
+			}
+		}
+		else {
+			unset($styleData['styleName']);
+			
+			$variables = $style->getVariables();
+			
+			$individualLess = Style::splitLessVariables($variables['individualLess']);
+			$variables['individualLess'] = Style::joinLessVariables($styleData['variables']['individualLess'], $individualLess['custom']);
+			
+			$overrideLess = Style::splitLessVariables($variables['overrideLess']);
+			$variables['overrideLess'] = Style::joinLessVariables($styleData['variables']['overrideLess'], $overrideLess['custom']);
+			
+			$styleData['variables'] = $variables;
+			
+			$style->update($styleData);
 		}
 		
 		$tar->close();
-		
-		// handle descriptions
-		if (!empty($data['description'])) {
-			self::saveLocalizedDescriptions($style, $data['description']);
-			LanguageFactory::getInstance()->deleteLanguageCache();
-		}
-		
-		if ($data['default']) {
-			$style->setAsDefault();
-		}
 		
 		return $style;
 	}

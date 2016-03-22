@@ -1,8 +1,9 @@
 <?php
 namespace wcf\system\database;
+use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 
 /**
- * This is the database implementation for MySQL4.1 or higher using PDO.
+ * This is the database implementation for MySQL 5.1 or higher using PDO.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2015 WoltLab GmbH
@@ -43,7 +44,7 @@ class MySQLDatabase extends Database {
 			$this->setAttributes();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Connecting to MySQL server '".$this->host."' failed:\n".$e->getMessage(), $this);
+			throw new GenericDatabaseException("Connecting to MySQL server '".$this->host."' failed", $e);
 		}
 	}
 	
@@ -52,18 +53,6 @@ class MySQLDatabase extends Database {
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO') && extension_loaded('pdo_mysql'));
-	}
-	
-	/**
-	 * @see	\wcf\system\database\Database::handleLimitParameter()
-	 */
-	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
-		if ($limit != 0) {
-			if ($offset > 0) $query .= " LIMIT " . $offset . ", " . $limit;
-			else $query .= " LIMIT " . $limit;
-		}
-		
-		return $query;
 	}
 	
 	/**

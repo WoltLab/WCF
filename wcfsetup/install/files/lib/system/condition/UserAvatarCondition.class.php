@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
 /**
@@ -15,7 +16,9 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserAvatarCondition extends AbstractSelectCondition implements IContentCondition, IUserCondition {
+class UserAvatarCondition extends AbstractSelectCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * @see	wcf\system\condition\AbstractSelectCondition::$fieldName
 	 */
@@ -45,21 +48,23 @@ class UserAvatarCondition extends AbstractSelectCondition implements IContentCon
 	const GRAVATAR = 2;
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		switch ($condition->userAvatar) {
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		switch ($conditionData['userAvatar']) {
 			case self::NO_AVATAR:
-				$userList->getConditionBuilder()->add('user_table.avatarID IS NULL');
-				$userList->getConditionBuilder()->add('user_table.enableGravatar = ?', array(0));
+				$objectList->getConditionBuilder()->add('user_table.avatarID IS NULL');
+				$objectList->getConditionBuilder()->add('user_table.enableGravatar = ?', array(0));
 			break;
 			
 			case self::AVATAR:
-				$userList->getConditionBuilder()->add('user_table.avatarID IS NOT NULL');
+				$objectList->getConditionBuilder()->add('user_table.avatarID IS NOT NULL');
 			break;
 			
 			case self::GRAVATAR:
-				$userList->getConditionBuilder()->add('user_table.enableGravatar = ?', array(1));
+				$objectList->getConditionBuilder()->add('user_table.enableGravatar = ?', array(1));
 			break;
 		}
 	}

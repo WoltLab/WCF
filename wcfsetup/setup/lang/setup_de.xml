@@ -25,7 +25,7 @@
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Empfohlen:]]></item>
 		<item name="wcf.global.systemRequirements.php"><![CDATA[Installierte Version der Skriptsprache „PHP“]]></item>
 		<item name="wcf.global.systemRequirements.php.description"><![CDATA[Die installierte Version der Skriptsprache „PHP“ ist für einen stabilen Betrieb dieser Software zu alt. Bitte veranlassen Sie eine Aktualisierung der installierten Version bevor Sie mit der Installation fortfahren.]]></item>
-		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Ihre PHP Version ist stark veraltet. Für einen einwandfreien Betrieb empfehlen wir PHP Version 5.3.2 oder höher.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[TODO: Ihre PHP Version ist stark veraltet. Für einen einwandfreien Betrieb empfehlen wir PHP Version 5.3.2 oder höher.]]></item>
 		<item name="wcf.global.systemRequirements.sql"><![CDATA[Datenbank-Unterstützung]]></item>
 		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[nicht gefunden]]></item>
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[Ohne die Unterstützung einer kompatiblen Datenbank kann diese Software nicht installiert werden.]]></item>
@@ -37,15 +37,6 @@
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[Zur Verfügung stehender Arbeitsspeicher]]></item>
 		<item name="wcf.global.systemRequirements.memoryLimit.description"><![CDATA[Der PHP-Skripten zur Verfügung stehende Arbeitsspeicher ist für einen einwandfreien Betrieb der Software zu gering.]]></item>
-		<item name="wcf.global.wcfDir"><![CDATA[Installationsverzeichnis wählen]]></item>
-		<item name="wcf.global.wcfDir.description"><![CDATA[In das Installationsverzeichnis werden alle Dateien von <b>WoltLab Community Framework</b> entpackt.]]></item>
-		<item name="wcf.global.wcfDir.dir"><![CDATA[Installationsverzeichnis]]></item>
-		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Wenn Sie unsicher sind, belassen sie den vom System vorgegebenen Namen und führen die Standard-Installation durch.]]></item>
-		<item name="wcf.global.wcfDir.dir.info"><![CDATA[Dies ist <u>nicht</u> das Installationsverzeichnis von {$setupPackageName}! Es wird empfohlen den vorgeschlagenen Pfad beizubehalten.]]></item>
-		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[Das eingegebene Verzeichnis ist ungültig.]]></item>
-		<item name="wcf.global.wcfDir.error.invalidDirectory"><![CDATA[Die Installation vermutet eine bereits vorhandene Installation von <b>WoltLab Community Framework</b> im Verzeichnis „{$wcfDir}“.<br />Bitte definieren Sie ein anderes Installationsverzeichnis um die Installation fortzusetzen.]]></item>
-		<item name="wcf.global.wcfDir.url"><![CDATA[Installationsadresse (URL)]]></item>
-		<item name="wcf.global.wcfDir.url.description"><![CDATA[Nach der Installation in das angegebene Installationsverzeichnis ist <b>WoltLab Community Framework</b> über diese Adresse (URL) erreichbar.]]></item>
 		<item name="wcf.global.next"><![CDATA[Lade nächsten Schritt …]]></item>
 		<item name="wcf.global.next.description"><![CDATA[Die Installation lädt im Moment den nächsten Schritt. Bitte haben Sie einen Augenblick Geduld.]]></item>
 		<item name="wcf.global.languages"><![CDATA[Sprachen wählen]]></item>
@@ -87,5 +78,17 @@
 		Bitte kontrollieren Sie, ob das Zielverzeichnis existiert und beschreibbar ist.]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
+		<item name="wcf.global.applicationDirectory"><![CDATA[Installationsverzeichnisse]]></item>
+		<item name="wcf.global.applicationDirectory.description"><![CDATA[Geben Sie die Verzeichnisse an die für die Installation der aufgeführten Anwendungen verwendet werden sollen.]]></item>
+		<item name="wcf.global.applicationDirectory.error"><![CDATA[Die Eingaben für die Installationsverzeichnisse sind ungültig. Bitte überprüfen Sie die markierten Felder.]]></item>
+		<item name="wcf.global.applicationDirectory.error.duplicate"><![CDATA[Dieses Verzeichnis wurde bereits für eine andere Anwendung angegeben.]]></item>
+		<item name="wcf.global.applicationDirectory.error.makePath"><![CDATA[Das angegebene Verzeichnis kann auf Grund unzureichender Berechtigungen nicht erstellt werden.]]></item>
+		<item name="wcf.global.applicationDirectory.error.makeWritable"><![CDATA[Das angegebene Verzeichnis ist für PHP nicht beschreibbar, bitte überprüfen Sie die Berechtigungen.]]></item>
+		<item name="wcf.global.applicationDirectory.error.notEmpty"><![CDATA[In diesem Verzeichnis befindet sich bereits eine Anwendung.]]></item>
+		<item name="wcf.global.applicationDirectory.error.outsideDocumentRoot"><![CDATA[Das Verzeichnis befindet sich außerhalb des Hauptverzeichnis der Website.]]></item>
+		<item name="wcf.global.applicationDirectory.path"><![CDATA[Installationsverzeichnisse]]></item>
+		<item name="wcf.global.applicationDirectory.path.description"><![CDATA[Die Eingabe der Verzeichnisse erfolgt relativ zum Hauptverzeichnis der Website („{$documentRoot}“).]]></item>
+		<item name="wcf.global.applicationDirectory.url"><![CDATA[Endgültige URL für Anwendungen]]></item>
+		<item name="wcf.global.applicationDirectory.url.description"><![CDATA[Nach der Installation werden die Anwendungen unter den folgenden URLs erreichbar sein.]]></item>
 	</category>
 </language>

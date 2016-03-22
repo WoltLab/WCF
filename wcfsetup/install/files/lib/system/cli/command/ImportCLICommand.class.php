@@ -107,7 +107,7 @@ class ImportCLICommand implements ICLICommand {
 	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
 	 */
 	public function canAccess() {
-		return WCF::getSession()->getPermission('admin.system.canImportData');
+		return WCF::getSession()->getPermission('admin.management.canImportData');
 	}
 	
 	/**

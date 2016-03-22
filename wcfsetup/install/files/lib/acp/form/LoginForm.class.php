@@ -64,11 +64,6 @@ class LoginForm extends AbstractCaptchaForm {
 		if (WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
 		}
-		else if (PACKAGE_ID == 1 && PACKAGE_ID != ApplicationHandler::getInstance()->getPrimaryApplication()->packageID) {
-			$application = ApplicationHandler::getInstance()->getPrimaryApplication();
-			HeaderUtil::redirect(RouteHandler::getProtocol() . $application->domainName . $application->domainPath . 'acp/?Login/');
-			exit;
-		}
 		
 		parent::__run();
 	}

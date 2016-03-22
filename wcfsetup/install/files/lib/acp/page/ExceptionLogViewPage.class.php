@@ -29,7 +29,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = array('admin.management.canViewLog');
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
@@ -134,17 +134,24 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		$exceptionRegex = new Regex("(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\n".
-"Message: (?P<message>.*?)\n".
-"File: (?P<file>.*?) \((?P<line>\d+)\)\n".
-"PHP version: (?P<phpVersion>.*?)\n".
-"WCF version: (?P<wcfVersion>.*?)\n".
-"Request URI: (?P<requestURI>.*?)\n".
-"Referrer: (?P<referrer>.*?)\n".
-"User-Agent: (?P<userAgent>.*?)\n".
-"Information: (?P<information>.*?)\n".
-"Stacktrace: \n".
-"(?P<stacktrace>.*)", Regex::DOT_ALL);
+		// TODO: This needs to be adapted for WCF 2.2
+		$exceptionRegex = new Regex('(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\s*
+Message: (?P<message>.*?)\s*
+PHP version: (?P<phpVersion>.*?)\s*
+WCF version: (?P<wcfVersion>.*?)\s*
+Request URI: (?P<requestURI>.*?)\s*
+Referrer: (?P<referrer>.*?)\s*
+User Agent: (?P<userAgent>.*?)\s*
+Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>\d+)\s*
+(?<chain>======
+.*)', Regex::DOT_ALL);
+		$chainRegex = new Regex('======
+Error Class: (?P<class>.*?)\s*
+Error Message: (?P<message>.*?)\s*
+Error Code: (?P<code>\d+)\s*
+File: (?P<file>.*?) \((?P<line>\d+)\)\s*
+Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*
+Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})', Regex::DOT_ALL);
 		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
@@ -157,10 +164,20 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 				unset($this->exceptions[$key]);
 				continue;
 			}
+			$matches = $exceptionRegex->getMatches();
+			$chainRegex->match($matches['chain'], true, Regex::ORDER_MATCH_BY_SET);
 			
-			$this->exceptions[$key] = $exceptionRegex->getMatches();
-			$this->exceptions[$key]['stacktrace'] = explode("\n", $stackTraceFormatter->replace(StringUtil::encodeHTML($this->exceptions[$key]['stacktrace']), '<strong>\\1</strong>'));
-			$this->exceptions[$key]['information'] = JSON::decode($this->exceptions[$key]['information']);
+			$chainMatches = array_map(function ($item) {
+				if ($item['information'] === '-') $item['information'] = null;
+				else $item['information'] = @unserialize(base64_decode($item['information']));
+				
+				$item['stack'] = @unserialize(base64_decode($item['stack']));
+				
+				return $item;
+			}, $chainRegex->getMatches());
+			
+			$matches['chain'] = $chainMatches;
+			$this->exceptions[$key] = $matches;
 		}
 	}
 	

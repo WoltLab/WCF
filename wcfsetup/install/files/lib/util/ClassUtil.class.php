@@ -34,6 +34,8 @@ final class ClassUtil {
 	 * @param	string		$className
 	 * @param	string		$targetClass
 	 * @return	boolean
+	 * 
+	 * @deprecated	use is_subclass_of() instead
 	 */
 	public static function isInstanceOf($className, $targetClass) {
 		// validate parameters
@@ -47,14 +49,7 @@ final class ClassUtil {
 			throw new SystemException("Cannot determine class inheritance, reference class '".$targetClass."' does not exist");
 		}
 		
-		// check for simple inheritance
-		if (class_exists($targetClass)) {
-			return is_subclass_of($className, $targetClass);
-		}
-		
-		// check for interface
-		$reflectionClass = new \ReflectionClass($className);
-		return $reflectionClass->implementsInterface($targetClass);
+		return is_subclass_of($className, $targetClass);
 	}
 	
 	private function __construct() { }

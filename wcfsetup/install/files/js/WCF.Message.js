@@ -43,7 +43,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		$('.codeBox:not(.jsCodeViewer)').each($.proxy(function(index, codeBox) {
 			var $codeBox = $(codeBox).addClass('jsCodeViewer');
 			
-			$('<span class="icon icon16 icon-copy pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('div > h3')).click($.proxy(this._click, this));
+			$('<span class="icon icon16 fa-files-o pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('div > h3')).click($.proxy(this._click, this));
 		}, this));
 	},
 	
@@ -310,8 +310,8 @@ WCF.Message.Preview = Class.extend({
 		
 		// validate message field
 		this._messageFieldID = $.wcfEscapeID(messageFieldID);
-		this._messageField = $('#' + this._messageFieldID);
-		if (!this._messageField.length) {
+		this._textarea = $('#' + this._messageFieldID);
+		if (!this._textarea.length) {
 			console.debug("[WCF.Message.Preview] Unable to find message field identified by '" + this._messageFieldID + "'");
 			return;
 		}
@@ -389,10 +389,10 @@ WCF.Message.Preview = Class.extend({
 	 */
 	_getMessage: function() {
 		if (!$.browser.redactor) {
-			return $.trim(this._messageField.val());
+			return $.trim(this._textarea.val());
 		}
-		else if (this._messageField.data('redactor')) {
-			return this._messageField.redactor('wutil.getText');
+		else if (this._textarea.data('redactor')) {
+			return this._textarea.redactor('wutil.getText');
 		}
 		
 		return null;
@@ -410,7 +410,7 @@ WCF.Message.Preview = Class.extend({
 		this._previewButton.html(this._previewButtonLabel).enable();
 		
 		// remove error message
-		this._messageField.parent().children('small.innerError').remove();
+		this._textarea.parent().children('small.innerError').remove();
 		
 		// evaluate message
 		this._handleResponse(data);
@@ -439,9 +439,9 @@ WCF.Message.Preview = Class.extend({
 		// restore preview button
 		this._previewButton.html(this._previewButtonLabel).enable();
 		
-		var $innerError = this._messageField.next('small.innerError').empty();
+		var $innerError = this._textarea.next('small.innerError').empty();
 		if (!$innerError.length) {
-			$innerError = $('<small class="innerError" />').appendTo(this._messageField.parent());
+			$innerError = $('<small class="innerError" />').appendTo(this._textarea.parent());
 		}
 		
 		$innerError.html(data.returnValues.errorType);
@@ -477,7 +477,7 @@ WCF.Message.DefaultPreview = WCF.Message.Preview.extend({
 	_handleResponse: function(data) {
 		var $preview = $('#previewContainer');
 		if (!$preview.length) {
-			$preview = $('<div class="container containerPadding marginTop" id="previewContainer"><fieldset><legend>' + WCF.Language.get('wcf.global.preview') + '</legend><div class="messageTextPreview"></div></fieldset>').prependTo($('#messageContainer')).wcfFadeIn();
+			$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="messageTextPreview"></div></section>').prependTo($('#messageContainer')).wcfFadeIn();
 		}
 		
 		$preview.find('div:eq(0)').html(data.returnValues.message);
@@ -728,503 +728,13 @@ WCF.Message.Smilies = Class.extend({
 });
 
 /**
- * Provides an AJAX-based quick reply for messages.
- */
-WCF.Message.QuickReply = Class.extend({
-	/**
-	 * quick reply container
-	 * @var	jQuery
-	 */
-	_container: null,
-	
-	/**
-	 * message field
-	 * @var	jQuery
-	 */
-	_messageField: null,
-	
-	/**
-	 * notification object
-	 * @var	WCF.System.Notification
-	 */
-	_notification: null,
-	
-	/**
-	 * true, if a request to save the message is pending
-	 * @var	boolean
-	 */
-	_pendingSave: false,
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * collection of quick reply buttons
-	 * @var	jQuery
-	 */
-	_quickReplyButtons: null,
-	
-	/**
-	 * quote manager object
-	 * @var	WCF.Message.Quote.Manager
-	 */
-	_quoteManager: null,
-	
-	/**
-	 * scroll handler
-	 * @var	WCF.Effect.Scroll
-	 */
-	_scrollHandler: null,
-	
-	/**
-	 * success message for created but invisible messages
-	 * @var	string
-	 */
-	_successMessageNonVisible: '',
-	
-	/**
-	 * Initializes a new WCF.Message.QuickReply object.
-	 * 
-	 * @param	boolean				supportExtendedForm
-	 * @param	WCF.Message.Quote.Manager	quoteManager
-	 */
-	init: function(supportExtendedForm, quoteManager) {
-		this._container = $('#messageQuickReply');
-		this._container.children('.message').addClass('jsInvalidQuoteTarget');
-		this._messageField = $('#text');
-		this._pendingSave = false;
-		if (!this._container || !this._messageField) {
-			return;
-		}
-		
-		// button actions
-		var $formSubmit = this._container.find('.formSubmit');
-		var $saveButton = $formSubmit.find('button[data-type=save]').removeAttr('accesskey').click($.proxy(this._save, this));
-		if (supportExtendedForm) $formSubmit.find('button[data-type=extended]').click($.proxy(this._prepareExtended, this));
-		$formSubmit.find('button[data-type=cancel]').click($.proxy(this._cancel, this));
-		
-		if (quoteManager) this._quoteManager = quoteManager;
-		
-		this._quickReplyButtons = $('.jsQuickReply').data('__api', this).click($.proxy(this.click, this));
-		
-		this._proxy = new WCF.Action.Proxy({
-			failure: $.proxy(this._failure, this),
-			showLoadingOverlay: false,
-			success: $.proxy(this._success, this)
-		});
-		this._scroll = new WCF.Effect.Scroll();
-		this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.add'));
-		this._successMessageNonVisible = '';
-		
-		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'submitEditor_text', function(data) {
-			data.cancel = true;
-			
-			$saveButton.trigger('click');
-		});
-	},
-	
-	/**
-	 * Handles clicks on reply button.
-	 * 
-	 * @param	object		event
-	 */
-	click: function(event) {
-		this._container.toggle();
-		
-		if (this._container.is(':visible')) {
-			this._quickReplyButtons.each(function() {
-				var $button = $(this);
-				if ($button.parent()[0].tagName === 'LI') {
-					$button.parent().hide();
-				}
-				else {
-					$button.hide();
-				}
-			});
-			
-			setTimeout((function() {
-				$(document).trigger('resize');
-				if (!$.browser.mobile || !$.browser.chrome) {
-					// Chrome on Android scrolls to the caret position, manually scrolling breaks the position
-					this._scroll.scrollTo(this._container, true);
-				}
-			}).bind(this), 100);
-			
-			WCF.Message.Submit.registerButton('text', this._container.find('.formSubmit button[data-type=save]'));
-			
-			if (this._quoteManager) {
-				// check if message field is empty
-				var $empty = true;
-				if ($.browser.redactor) {
-					if (this._messageField.data('redactor')) {
-						this._editorCallback(this._messageField.redactor('wutil.isEmptyEditor'));
-					}
-				}
-				else {
-					$empty = (!this._messageField.val().length);
-					this._editorCallback($empty);
-				}
-			}
-		}
-		
-		// discard event
-		if (event !== null) {
-			event.stopPropagation();
-			return false;
-		}
-	},
-	
-	/**
-	 * Inserts quotes and focuses the editor.
-	 */
-	_editorCallback: function(isEmpty) {
-		if (isEmpty) {
-			this._quoteManager.insertQuotes(this._getClassName(), this._getObjectID(), $.proxy(this._insertQuotes, this));
-		}
-		
-		if ($.browser.redactor) {
-			this._messageField.redactor('wutil.selectionEndOfEditor');
-		}
-		else {
-			this._messageField.focus();
-		}
-	},
-	
-	/**
-	 * Returns container element.
-	 * 
-	 * @return	jQuery
-	 */
-	getContainer: function() {
-		return this._container;
-	},
-	
-	/**
-	 * Insertes quotes into the quick reply editor.
-	 * 
-	 * @param	object		data
-	 */
-	_insertQuotes: function(data) {
-		if (!data.returnValues.template) {
-			return;
-		}
-		
-		if ($.browser.redactor) {
-			var $html = WCF.String.unescapeHTML(data.returnValues.template);
-			$html = this._messageField.redactor('wbbcode.convertToHtml', $html);
-			$html = $html.replace(/<p><blockquote/, '<blockquote');
-			$html = $html.replace(/blockquote><\/p>/, 'blockquote>');
-			
-			this._messageField.redactor('focus.setEnd');
-			this._messageField.redactor('wutil.insertDynamic', $html, data.returnValues.template);
-			this._messageField.redactor('wutil.selectionEndOfEditor');
-			this._messageField.redactor('wbbcode.observeQuotes');
-		}
-		else {
-			this._messageField.val(data.returnValues.template);
-		}
-	},
-	
-	/**
-	 * Saves message.
-	 */
-	_save: function() {
-		if (this._pendingSave) {
-			return;
-		}
-		
-		var $message = '';
-		if ($.browser.redactor) {
-			$message = this._messageField.redactor('wutil.getText');
-		}
-		else {
-			$message = $.trim(this._messageField.val());
-		}
-		
-		// check if message is empty
-		var $innerError = this._messageField.parent().find('small.innerError');
-		if ($message === '' || $message === '0') {
-			if (!$innerError.length) {
-				$innerError = $('<small class="innerError" />').appendTo(this._messageField.parent());
-			}
-			
-			$innerError.html(WCF.Language.get('wcf.global.form.error.empty'));
-			return;
-		}
-		else {
-			$innerError.remove();
-		}
-		
-		this._pendingSave = true;
-		
-		this._proxy.setOption('data', {
-			actionName: 'quickReply',
-			className: this._getClassName(),
-			interfaceName: 'wcf\\data\\IMessageQuickReplyAction',
-			parameters: this._getParameters($message)
-		});
-		this._proxy.sendRequest();
-		
-		// show spinner and hide Redactor
-		var $messageBody = this._container.find('.messageQuickReplyContent .messageBody');
-		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
-		var $redactorBox = $messageBody.children('.redactor-box').hide();
-		
-		// hide message tabs
-		$redactorBox.next().hide();
-		
-		// hide form submit
-		$messageBody.next().hide();
-	},
-	
-	/**
-	 * Returns the parameters for the save request.
-	 * 
-	 * @param	string		message
-	 * @return	object
-	 */
-	_getParameters: function(message) {
-		var $parameters = {
-			objectID: this._getObjectID(),
-			data: {
-				message: message
-			},
-			lastPostTime: this._container.data('lastPostTime'),
-			pageNo: this._container.data('pageNo'),
-			removeQuoteIDs: (this._quoteManager === null ? [ ] : this._quoteManager.getQuotesMarkedForRemoval())
-		};
-		if (this._container.data('anchor')) {
-			$parameters.anchor = this._container.data('anchor');
-		}
-		
-		WCF.System.Event.fireEvent('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._messageField.wcfIdentify(), $parameters.data);
-		
-		return $parameters;
-	},
-	
-	/**
-	 * Cancels quick reply.
-	 */
-	_cancel: function() {
-		this._revertQuickReply(true);
-		
-		if ($.browser.redactor) {
-			this._messageField.redactor('wutil.reset');
-		}
-		else {
-			this._messageField.val('');
-		}
-	},
-	
-	/**
-	 * Reverts quick reply to original state and optionally hiding it.
-	 * 
-	 * @param	boolean		hide
-	 */
-	_revertQuickReply: function(hide) {
-		var $messageBody = this._container.find('.messageQuickReplyContent .messageBody');
-		
-		if (hide) {
-			this._container.hide();
-			
-			// remove previous error messages
-			$messageBody.children('small.innerError').remove();
-		}
-		
-		// display Redactor
-		$messageBody.children('.icon-spinner').remove();
-		$messageBody.children('.redactor-box').show().next().show();
-		
-		// display form submit
-		$messageBody.next().show();
-		
-		this._quickReplyButtons.each(function() {
-			var $button = $(this);
-			if ($button.parent()[0].tagName === 'LI') {
-				$button.parent().show();
-			}
-			else {
-				$button.show();
-			}
-		});
-	},
-	
-	/**
-	 * Prepares jump to extended message add form.
-	 */
-	_prepareExtended: function() {
-		this._pendingSave = true;
-		
-		// mark quotes for removal
-		if (this._quoteManager !== null) {
-			this._quoteManager.markQuotesForRemoval();
-		}
-		
-		var $message = '';
-		if ($.browser.redactor) {
-			$message = this._messageField.redactor('wutil.getText');
-			
-			if ($message.length) {
-				this._messageField.redactor('wutil.saveTextToStorage', true);
-			}
-			else {
-				this._messageField.redactor('wutil.autosavePurge');
-			}
-		}
-		else {
-			$message = $.trim(this._messageField.val());
-		}
-		
-		var $parameters = {
-			containerID: this._getObjectID(),
-			message: $message
-		};
-		
-		WCF.System.Event.fireEvent('com.woltlab.wcf.messageOptionsInline', 'prepareExtended_' + this._messageField.wcfIdentify(), $parameters);
-		
-		new WCF.Action.Proxy({
-			autoSend: true,
-			data: {
-				actionName: 'jumpToExtended',
-				className: this._getClassName(),
-				interfaceName: 'wcf\\data\\IExtendedMessageQuickReplyAction',
-				parameters: $parameters
-			},
-			success: (function(data) {
-				this._messageField.redactor('wutil.saveTextToStorage');
-				window.location = data.returnValues.url;
-			}).bind(this)
-		});
-	},
-	
-	/**
-	 * Handles successful AJAX calls.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		if ($.browser.redactor) {
-			this._messageField.redactor('wutil.autosavePause');
-			this._messageField.redactor('wutil.autosavePurge');
-		}
-		
-		// redirect to new page
-		if (data.returnValues.url) {
-			window.location = data.returnValues.url;
-		}
-		else {
-			if (data.returnValues.template) {
-				// insert HTML
-				var $message = $('' + data.returnValues.template);
-				if (this._container.data('sortOrder') == 'DESC') {
-					$message.insertAfter(this._container);
-				}
-				else {
-					$message.insertBefore(this._container);
-				}
-				
-				// update last post time
-				this._container.data('lastPostTime', data.returnValues.lastPostTime);
-				
-				// show notification
-				this._notification.show(undefined, undefined, WCF.Language.get('wcf.global.success.add'));
-				
-				this._updateHistory($message.wcfIdentify());
-			}
-			else {
-				// show notification
-				var $message = (this._successMessageNonVisible) ? this._successMessageNonVisible : 'wcf.global.success.add';
-				this._notification.show(undefined, 5000, WCF.Language.get($message));
-			}
-			
-			if ($.browser.redactor) {
-				this._messageField.redactor('wutil.reset');
-				this._messageField.redactor('wutil.autosaveResume');
-			}
-			else {
-				this._messageField.val('');
-			}
-			
-			// hide quick reply and revert it
-			this._revertQuickReply(true);
-			
-			// count stored quotes
-			if (this._quoteManager !== null) {
-				this._quoteManager.countQuotes();
-			}
-			
-			this._pendingSave = false;
-		}
-	},
-	
-	/**
-	 * Reverts quick reply on failure to preserve entered message.
-	 */
-	_failure: function(data) {
-		this._pendingSave = false;
-		this._revertQuickReply(false);
-		
-		if (data === null || data.returnValues === undefined || data.returnValues.errorType === undefined) {
-			return true;
-		}
-		
-		var $messageBody = this._container.find('.messageQuickReplyContent .messageBody');
-		var $innerError = $messageBody.children('small.innerError').empty();
-		if (!$innerError.length) {
-			$innerError = $('<small class="innerError" />').appendTo($messageBody);
-		}
-		
-		$innerError.html(data.returnValues.errorType);
-		
-		return false;
-	},
-	
-	/**
-	 * Returns action class name.
-	 * 
-	 * @return	string
-	 */
-	_getClassName: function() {
-		return '';
-	},
-	
-	/**
-	 * Returns object id.
-	 * 
-	 * @return	integer
-	 */
-	_getObjectID: function() {
-		return 0;
-	},
-	
-	/**
-	 * Updates the history to avoid old content when going back in the browser
-	 * history.
-	 * 
-	 * @param	hash
-	 */
-	_updateHistory: function(hash) {
-		window.location.hash = hash;
-	}
-});
-
-/**
  * Provides an inline message editor.
+ * 
+ * @deprecated	2.2 - please use `WoltLab/WCF/Ui/Message/InlineEditor` instead
  * 
  * @param	integer		containerID
  */
 WCF.Message.InlineEditor = Class.extend({
-	/**
-	 * currently active message
-	 * @var	string
-	 */
-	_activeElementID: '',
-	
 	/**
 	 * list of messages
 	 * @var	object
@@ -1233,7 +743,7 @@ WCF.Message.InlineEditor = Class.extend({
 	
 	/**
 	 * container id
-	 * @var	integer
+	 * @var	int
 	 */
 	_containerID: 0,
 	
@@ -1256,30 +766,6 @@ WCF.Message.InlineEditor = Class.extend({
 	_messageEditorIDPrefix: 'messageEditor',
 	
 	/**
-	 * notification object
-	 * @var	WCF.System.Notification
-	 */
-	_notification: null,
-	
-	/**
-	 * proxy object
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * quote manager object
-	 * @var	WCF.Message.Quote.Manager
-	 */
-	_quoteManager: null,
-	
-	/**
-	 * support for extended editing form
-	 * @var	boolean
-	 */
-	_supportExtendedForm: false,
-	
-	/**
 	 * Initializes a new WCF.Message.InlineEditor object.
 	 * 
 	 * @param	integer				containerID
@@ -1287,44 +773,19 @@ WCF.Message.InlineEditor = Class.extend({
 	 * @param	WCF.Message.Quote.Manager	quoteManager
 	 */
 	init: function(containerID, supportExtendedForm, quoteManager) {
-		this._activeElementID = '';
-		this._container = { };
-		this._containerID = parseInt(containerID);
-		this._dropdowns = { };
-		this._quoteManager = quoteManager || null;
-		this._supportExtendedForm = (supportExtendedForm) ? true : false;
-		this._proxy = new WCF.Action.Proxy({
-			failure: $.proxy(this._failure, this),
-			showLoadingOverlay: false,
-			success: $.proxy(this._success, this)
-		});
-		this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.edit'));
-		
-		this.initContainers();
-		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Message.InlineEditor', $.proxy(this.initContainers, this));
-	},
-	
-	/**
-	 * Initializes editing capability for all messages.
-	 */
-	initContainers: function() {
-		$(this._messageContainerSelector).each($.proxy(function(index, container) {
-			var $container = $(container);
-			var $containerID = $container.wcfIdentify();
-			
-			if (!this._container[$containerID]) {
-				this._container[$containerID] = $container;
+		require(['WoltLab/WCF/Ui/Message/InlineEditor'], (function(UiMessageInlineEditor) {
+			UiMessageInlineEditor.init({
+				extendedForm: (supportExtendedForm === true),
 				
-				if ($container.data('canEditInline')) {
-					var $button = $container.find('.jsMessageEditButton:eq(0)').data('containerID', $containerID).click($.proxy(this._clickInline, this));
-					if ($container.data('canEdit')) $button.dblclick($.proxy(this._click, this));
-				}
-				else if ($container.data('canEdit')) {
-					$container.find('.jsMessageEditButton:eq(0)').data('containerID', $containerID).click($.proxy(this._click, this));
-				}
-			}
-		}, this));
+				className: this._getClassName(),
+				containerId: containerID,
+				editorPrefix: this._messageEditorIDPrefix,
+				
+				messageSelector: this._messageContainerSelector,
+				
+				callbackDropdownInit: this._callbackDropdownInit.bind(this)
+			});
+		}).bind(this));
 	},
 	
 	/**
@@ -1335,102 +796,15 @@ WCF.Message.InlineEditor = Class.extend({
 	 * @return	boolean
 	 */
 	_click: function(event, containerID) {
-		var $containerID = (event === null) ? containerID : $(event.currentTarget).data('containerID');
-		if (this._activeElementID === '') {
-			this._activeElementID = $containerID;
-			this._prepare();
-			
-			this._proxy.setOption('data', {
-				actionName: 'beginEdit',
-				className: this._getClassName(),
-				interfaceName: 'wcf\\data\\IMessageInlineEditorAction',
-				parameters: {
-					containerID: this._containerID,
-					objectID: this._container[$containerID].data('objectID')
-				}
-			});
-			this._proxy.setOption('failure', $.proxy(function() { this._cancel(); }, this));
-			this._proxy.sendRequest();
+		containerID = (event === null) ? ~~containerID : ~~elData(event.currentTarget, 'container-id');
+		
+		require(['WoltLab/WCF/Ui/Message/InlineEditor'], (function(UiMessageInlineEditor) {
+			UiMessageInlineEditor.legacyEdit(containerID);
+		}).bind(this));
+		
+		if (event) {
+			event.preventDefault();
 		}
-		else {
-			var $notification = new WCF.System.Notification(WCF.Language.get('wcf.message.error.editorAlreadyInUse'), 'warning');
-			$notification.show();
-		}
-		
-		// force closing dropdown to avoid displaying the dropdown after
-		// triple clicks
-		if (this._dropdowns[this._container[$containerID].data('objectID')]) {
-			this._dropdowns[this._container[$containerID].data('objectID')].removeClass('dropdownOpen');
-		}
-		
-		if (event !== null) {
-			event.stopPropagation();
-			return false;
-		}
-	},
-	
-	/**
-	 * Provides an inline dropdown menu instead of directly loading the WYSIWYG editor.
-	 * 
-	 * @param	object		event
-	 * @return	boolean
-	 */
-	_clickInline: function(event) {
-		var $button = $(event.currentTarget);
-		
-		if (!$button.hasClass('dropdownToggle')) {
-			var $containerID = $button.data('containerID');
-			
-			$button.addClass('dropdownToggle').parent().addClass('dropdown');
-			
-			var $dropdownMenu = $('<ul class="dropdownMenu" />').insertAfter($button);
-			this._initDropdownMenu($containerID, $dropdownMenu);
-			
-			WCF.DOMNodeInsertedHandler.execute();
-			
-			this._dropdowns[this._container[$containerID].data('objectID')] = $dropdownMenu;
-			
-			WCF.Dropdown.registerCallback($button.parent().wcfIdentify(), $.proxy(this._toggleDropdown, this));
-			
-			// trigger click event
-			$button.trigger('click');
-		}
-		
-		event.stopPropagation();
-		return false;
-	},
-	
-	/**
-	 * Handles errorneus editing requests.
-	 * 
-	 * @param	object		data
-	 */
-	_failure: function(data) {
-		this._revertEditor();
-		
-		if (data === null || data.returnValues === undefined || data.returnValues.errorType === undefined) {
-			return true;
-		}
-		
-		var $messageBody = this._container[this._activeElementID].find('.messageBody .messageInlineEditor');
-		var $innerError = $messageBody.children('small.innerError').empty();
-		if (!$innerError.length) {
-			$innerError = $('<small class="innerError" />').insertBefore($messageBody.children('.formSubmit'));
-		}
-		
-		$innerError.html(data.returnValues.errorType);
-		
-		return false;
-	},
-	
-	/**
-	 * Forces message options to stay visible if toggling dropdown menu.
-	 * 
-	 * @param	string		containerID
-	 * @param	string		action
-	 */
-	_toggleDropdown: function(containerID, action) {
-		WCF.Dropdown.getDropdown(containerID).parents('.messageOptions').toggleClass('forceOpen');
 	},
 	
 	/**
@@ -1441,289 +815,10 @@ WCF.Message.InlineEditor = Class.extend({
 	 */
 	_initDropdownMenu: function(containerID, dropdownMenu) { },
 	
-	/**
-	 * Prepares message for WYSIWYG display.
-	 */
-	_prepare: function() {
-		var $messageBody = this._container[this._activeElementID].find('.messageBody');
-		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
+	_callbackDropdownInit: function(element, dropdownMenu) {
+		this._initDropdownMenu($(element).wcfIdentify(), $(dropdownMenu));
 		
-		var $content = $messageBody.find('.messageText').hide();
-		
-		// hide unrelated content
-		$content.parent().children('.jsInlineEditorHideContent').hide();
-		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').hide();
-	},
-	
-	/**
-	 * Cancels editing and reverts to original message.
-	 */
-	_cancel: function() {
-		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
-		
-		// remove editor
-		this._destroyEditor();
-		
-		// restore message
-		var $messageBody = $container.find('.messageBody');
-		$messageBody.children('.icon-spinner').remove();
-		$messageBody.find('.messageText').show();
-		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
-		
-		// show unrelated content
-		$messageBody.find('.jsInlineEditorHideContent').show();
-		
-		// revert message options
-		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');
-		
-		this._activeElementID = '';
-		
-		if (this._quoteManager) {
-			this._quoteManager.clearAlternativeEditor();
-		}
-	},
-	
-	/**
-	 * Handles successful AJAX calls.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		switch (data.returnValues.actionName) {
-			case 'beginEdit':
-				this._showEditor(data);
-			break;
-			
-			case 'save':
-				this._showMessage(data);
-			break;
-		}
-	},
-	
-	/**
-	 * Shows WYSIWYG editor for active message.
-	 * 
-	 * @param	object		data
-	 */
-	_showEditor: function(data) {
-		// revert failure function
-		this._proxy.setOption('failure', $.proxy(this._failure, this));
-		var $containerID = this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID');
-		
-		var $messageBody = this._container[this._activeElementID].addClass('jsInvalidQuoteTarget').find('.messageBody');
-		$messageBody.children('.icon-spinner').remove();
-		var $content = $messageBody.children('div:eq(0)');
-		
-		// insert wysiwyg
-		$('' + data.returnValues.template).appendTo($content);
-		
-		// bind buttons
-		var $formSubmit = $content.find('.formSubmit');
-		var $saveButton = $formSubmit.find('button[data-type=save]').click($.proxy(this._save, this));
-		if (this._supportExtendedForm) $formSubmit.find('button[data-type=extended]').click($.proxy(this._prepareExtended, this));
-		$formSubmit.find('button[data-type=cancel]').click($.proxy(this._cancel, this));
-		
-		// TODO: is this still used?
-		WCF.Message.Submit.registerButton(
-			this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'),
-			$saveButton
-		);
-		
-		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'submitEditor_' + $containerID, function(data) {
-			data.cancel = true;
-			
-			$saveButton.trigger('click');
-		});
-		
-		// hide message options
-		this._container[this._activeElementID].find('.messageOptions').addClass('forceHidden');
-		
-		var $element = $('#' + $containerID);
-		if ($.browser.redactor) {
-			new WCF.PeriodicalExecuter($.proxy(function(pe) {
-				pe.stop();
-				
-				if (this._quoteManager) {
-					this._quoteManager.setAlternativeEditor($element);
-				}
-				
-				new WCF.Effect.Scroll().scrollTo(this._container[this._activeElementID], true);
-			}, this), 250);
-		}
-		else {
-			$element.focus();
-		}
-	},
-	
-	/**
-	 * Reverts editor.
-	 */
-	_revertEditor: function() {
-		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
-		$messageBody.children('span.icon-spinner').remove();
-		$messageBody.children('div:eq(0)').children(':not(.messageText)').show();
-		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
-		
-		// show unrelated content
-		$messageBody.find('.jsInlineEditorHideContent').show();
-		
-		if (this._quoteManager) {
-			this._quoteManager.clearAlternativeEditor();
-		}
-	},
-	
-	/**
-	 * Saves editor contents.
-	 */
-	_save: function() {
-		var $container = this._container[this._activeElementID];
-		var $objectID = $container.data('objectID');
-		var $message = '';
-		
-		if ($.browser.redactor) {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).redactor('wutil.getText');
-		}
-		else {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
-		}
-		
-		var $parameters = {
-			containerID: this._containerID,
-			data: {
-				message: $message
-			},
-			objectID: $objectID,
-			removeQuoteIDs: (this._quoteManager === null ? [ ] : this._quoteManager.getQuotesMarkedForRemoval())
-		};
-		
-		WCF.System.Event.fireEvent('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._messageEditorIDPrefix + $objectID, $parameters);
-		
-		this._proxy.setOption('data', {
-			actionName: 'save',
-			className: this._getClassName(),
-			interfaceName: 'wcf\\data\\IMessageInlineEditorAction',
-			parameters: $parameters
-		});
-		this._proxy.sendRequest();
-		
-		this._hideEditor();
-	},
-	
-	/**
-	 * Prepares jumping to extended editing mode.
-	 */
-	_prepareExtended: function() {
-		var $container = this._container[this._activeElementID];
-		var $objectID = $container.data('objectID');
-		var $message = '';
-		
-		if ($.browser.redactor) {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).redactor('wutil.getText');
-		}
-		else {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
-		}
-		
-		new WCF.Action.Proxy({
-			autoSend: true,
-			data: {
-				actionName: 'jumpToExtended',
-				className: this._getClassName(),
-				parameters: {
-					containerID: this._containerID,
-					message: $message,
-					messageID: $objectID
-				}
-			},
-			success: function(data, textStatus, jqXHR) {
-				window.location = data.returnValues.url;
-			}
-		});
-	},
-	
-	/**
-	 * Hides WYSIWYG editor.
-	 */
-	_hideEditor: function() {
-		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
-		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
-		$messageBody.children('div:eq(0)').children().hide();
-		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
-		
-		// show unrelated content
-		$messageBody.find('.jsInlineEditorHideContent').show();
-		
-		if (this._quoteManager) {
-			this._quoteManager.clearAlternativeEditor();
-		}
-	},
-	
-	/**
-	 * Shows rendered message.
-	 * 
-	 * @param	object		data
-	 */
-	_showMessage: function(data) {
-		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
-		var $messageBody = $container.find('.messageBody');
-		$messageBody.children('.icon-spinner').remove();
-		var $content = $messageBody.children('div:eq(0)');
-		
-		// show unrelated content
-		$content.parent().children('.jsInlineEditorHideContent').show();
-		
-		// revert message options
-		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');
-		
-		// remove editor
-		this._destroyEditor();
-		
-		$content.children('.messageText').html(data.returnValues.message).show();
-		
-		if (data.returnValues.attachmentList == undefined) {
-			$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
-		}
-		else {
-			$messageBody.children('.attachmentThumbnailList, .attachmentFileList').remove();
-			
-			if (data.returnValues.attachmentList) {
-				$(data.returnValues.attachmentList).insertAfter($messageBody.children('div:eq(0)'));
-			}
-		}
-		
-		this._activeElementID = '';
-		
-		this._updateHistory(this._getHash($container.data('objectID')));
-		
-		this._notification.show();
-		
-		if (this._quoteManager) {
-			this._quoteManager.clearAlternativeEditor();
-			this._quoteManager.countQuotes();
-		}
-	},
-	
-	/**
-	 * Destroys editor instance and removes its DOM elements.
-	 */
-	_destroyEditor: function() {
-		var $container = this._container[this._activeElementID];
-		
-		// destroy editor
-		if ($.browser.redactor) {
-			var $target = $('#' + this._messageEditorIDPrefix + $container.data('objectID'));
-			$target.redactor('wutil.autosavePause');
-			$target.redactor('wutil.autosavePurge');
-			$target.redactor('core.destroy');
-		}
-		
-		// purge DOM elements
-		$container.find('.messageBody > div > .messageInlineEditor').remove();
-		
-		// remove event listeners
-		WCF.System.Event.removeAllListeners('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._messageEditorIDPrefix + $container.data('objectID'));
+		return null;
 	},
 	
 	/**
@@ -1733,25 +828,6 @@ WCF.Message.InlineEditor = Class.extend({
 	 */
 	_getClassName: function() {
 		return '';
-	},
-	
-	/**
-	 * Returns the hash added to the url after successfully editing a message.
-	 * 
-	 * @return	string
-	 */
-	_getHash: function(objectID) {
-		return '#message' + objectID;
-	},
-	
-	/**
-	 * Updates the history to avoid old content when going back in the browser
-	 * history.
-	 * 
-	 * @param	hash
-	 */
-	_updateHistory: function(hash) {
-		window.location.hash = hash;
 	}
 });
 
@@ -3103,15 +2179,15 @@ WCF.Message.Share.Content = Class.extend({
 			}
 			
 			// permalink (plain text)
-			var $fieldset = $('<fieldset><legend><label for="__sharePermalink">' + WCF.Language.get('wcf.message.share.permalink') + '</label></legend></fieldset>').appendTo(this._dialog);
+			var $fieldset = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalink">' + WCF.Language.get('wcf.message.share.permalink') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalink" class="long" readonly="readonly" />').attr('value', $link).appendTo($fieldset);
 			
 			// permalink (BBCode)
-			var $fieldset = $('<fieldset><legend><label for="__sharePermalinkBBCode">' + WCF.Language.get('wcf.message.share.permalink.bbcode') + '</label></legend></fieldset>').appendTo(this._dialog);
+			var $fieldset = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalinkBBCode">' + WCF.Language.get('wcf.message.share.permalink.bbcode') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalinkBBCode" class="long" readonly="readonly" />').attr('value', '[url=\'' + $link + '\']' + $title + '[/url]').appendTo($fieldset);
 			
 			// permalink (HTML)
-			var $fieldset = $('<fieldset><legend><label for="__sharePermalinkHTML">' + WCF.Language.get('wcf.message.share.permalink.html') + '</label></legend></fieldset>').appendTo(this._dialog);
+			var $fieldset = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalinkHTML">' + WCF.Language.get('wcf.message.share.permalink.html') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalinkHTML" class="long" readonly="readonly" />').attr('value', '<a href="' + $link + '">' + WCF.String.escapeHTML($title) + '</a>').appendTo($fieldset);
 			
 			this._cache[$key] = this._dialog.html();
@@ -3581,7 +2657,7 @@ WCF.Message.UserMention = Class.extend({
 		var $listItem = $('<li />').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._dropdownMenu);
 		
 		var $box16 = $('<div />').addClass('box16').appendTo($listItem);
-		$box16.append($(listItemData.icon).addClass('framed'));
+		$box16.append($(listItemData.icon));
 		$box16.append($('<div />').append($('<span />').text(listItemData.label)));
 	},
 	
@@ -3929,6 +3005,12 @@ WCF.Message.UserMention = Class.extend({
  */
 $.widget('wcf.messageTabMenu', {
 	/**
+	 * pointer span
+	 * @var jQuery
+	 */
+	_span: null,
+	
+	/**
 	 * list of existing tabs and their containers
 	 * @var	array<object>
 	 */
@@ -3952,13 +3034,17 @@ $.widget('wcf.messageTabMenu', {
 	 * Creates the message tab menu.
 	 */
 	_create: function() {
-		var $tabs = this.element.find('> nav > ul > li:not(.jsFlexibleMenuDropdown)');
+		var $nav = this.element.find('> nav');
+		var $tabs = $nav.find('> ul > li:not(.jsFlexibleMenuDropdown)');
 		var $tabContainers = this.element.find('> div, > fieldset');
 		
 		if ($tabs.length != $tabContainers.length) {
 			console.debug("[wcf.messageTabMenu] Amount of tabs does not equal amount of tab containers, aborting.");
 			return;
 		}
+		
+		// pointer span
+		this._span = $('<span />').appendTo($nav);
 		
 		var $preselect = this.element.data('preselect');
 		this._tabs = [ ];
@@ -4057,6 +3143,11 @@ $.widget('wcf.messageTabMenu', {
 				activeTab: $target
 			});
 		}
+		
+		this._span.css({
+			transform: 'translateX(' + $target.tab[0].offsetLeft + 'px)', 
+			width: $target.tab[0].clientWidth + 'px'
+		});
 		
 		$(window).trigger('resize');
 	},

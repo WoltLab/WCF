@@ -10,14 +10,14 @@
 
 {include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.edit.versions{/lang}: {$object->getTitle()}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.edit.versions{/lang}: {$object->getTitle()}</h1>
 </header>
 
 {include file='userNotice'}
 
 {if $diff}
-<div class="container containerPadding marginTop editHistoryDiff">
+<div class="section editHistoryDiff">
 	<div class="sideBySide">
 		<div class="containerHeadline">
 			<h3>{lang}wcf.edit.headline.old{/lang}</h3>
@@ -64,16 +64,16 @@
 {/if}
 
 <form action="{link controller='EditHistory'}{/link}" method="post">
-	<div class="tabularBox tabularBoxTitle marginTop editHistoryVersionList">
-		<header>
-			{assign var='versionCount' value=$objects|count}
-			<h2>{lang}wcf.edit.versions{/lang} <span class="badge badgeInverse">{#$versionCount+1}</span></h2>
-		</header>
+	<section class="section tabularBox editHistoryVersionList">
+		{assign var='versionCount' value=$objects|count}
+		<h2 class="sectionTitle">
+			{lang}wcf.edit.versions{/lang} <span class="badge">{#$versionCount+1}</span>
+		</h2>
 		
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnEditID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
+					<th class="columnID columnEditID" colspan="2">{lang}wcf.edit.version{/lang}</th>
 					<th class="columnText columnUser">{lang}wcf.user.username{/lang}</th>
 					<th class="columnText columnEditReason">{lang}wcf.edit.reason{/lang}</th>
 					<th class="columnDate columnTime">{lang}wcf.edit.time{/lang}</th>
@@ -85,7 +85,7 @@
 			<tbody>
 				<tr>
 					<td class="columnIcon">
-						<span class="icon icon16 icon-undo disabled"></span>
+						<span class="icon icon16 fa-undo disabled"></span>
 						<input type="radio" name="oldID" value="current"{if $oldID === 'current'} checked="checked"{/if} /> <input type="radio" name="newID" value="current"{if $newID === 'current'} checked="checked"{/if} />
 						{event name='rowButtons'}
 					</td>
@@ -96,14 +96,14 @@
 					
 					{event name='columns'}
 				</tr>
-				{foreach from=$objects item=edit}
+				{foreach from=$objects item=edit name=edit}
 					<tr class="jsEditRow">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-undo pointer jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang}wcf.edit.revert.sure{/lang}"></span>
+							<span class="icon icon16 fa-undo pointer jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang}wcf.edit.revert.sure{/lang}"></span>
 							<input type="radio" name="oldID" value="{@$edit->entryID}"{if $oldID == $edit->entryID} checked="checked"{/if} /> <input type="radio" name="newID" value="{@$edit->entryID}"{if $newID == $edit->entryID} checked="checked"{/if} />
 							{event name='rowButtons'}
 						</td>
-						<td class="columnID">{@$edit->entryID}</td>
+						<td class="columnID">{#($tpl[foreach][edit][total] - $tpl[foreach][edit][iteration] + 1)}</td>
 						<td class="columnText columnUser"><a href="{link controller='User' id=$edit->userID title=$edit->username}{/link}">{$edit->username}</a></td>
 						<td class="columnText columnEditReason">{$edit->editReason}</td>
 						<td class="columnDate columnTime">{@$edit->time|time}</td>
@@ -120,7 +120,7 @@
 				//]]>
 			</script>
 		</table>
-	</div>
+	</section>
 	
 	<div class="formSubmit">
 		{@SID_INPUT_TAG}

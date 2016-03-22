@@ -3,6 +3,8 @@ namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\request\route\DynamicRequestRoute;
+use wcf\system\request\route\LookupRequestRoute;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -65,7 +67,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of available routes
-	 * @var	array<\wcf\system\request\IRoute>
+	 * @var IRoute[]
 	 */
 	protected $routes = array();
 	
@@ -76,39 +78,27 @@ class RouteHandler extends SingletonFactory {
 	protected $routeData = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * Sets default routes.
 	 */
 	protected function init() {
-		$this->addDefaultRoutes();
+		$route = new DynamicRequestRoute();
+		$route->setIsACP(true);
+		$this->addRoute($route);
+		
+		$route = new DynamicRequestRoute();
+		$this->addRoute($route);
+		
+		$route = new LookupRequestRoute();
+		$this->addRoute($route);
 		
 		// fire event
 		EventHandler::getInstance()->fireAction($this, 'didInit');
 	}
 	
 	/**
-	 * Adds default routes.
-	 */
-	protected function addDefaultRoutes() {
-		$acpRoute = new FlexibleRoute(true);
-		$this->addRoute($acpRoute);
-		
-		if (URL_LEGACY_MODE) {
-			$defaultRoute = new Route('default');
-			$defaultRoute->setSchema('/{controller}/{id}');
-			$defaultRoute->setParameterOption('controller', null, null, true);
-			$defaultRoute->setParameterOption('id', null, '\d+', true);
-			$this->addRoute($defaultRoute);
-		}
-		else {
-			$defaultRoute = new FlexibleRoute(false);
-			$this->addRoute($defaultRoute);
-		}
-	}
-	
-	/**
 	 * Adds a new route to the beginning of all routes.
 	 * 
-	 * @param	\wcf\system\request\IRoute	$route
+	 * @param	IRoute  $route
 	 */
 	public function addRoute(IRoute $route) {
 		array_unshift($this->routes, $route);
@@ -117,7 +107,7 @@ class RouteHandler extends SingletonFactory {
 	/**
 	 * Returns all registered routes. 
 	 * 
-	 * @return	array<\wcf\system\request\IRoute>
+	 * @return	IRoute[]
 	 **/
 	public function getRoutes() {
 		return $this->routes; 
@@ -125,7 +115,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * Returns true if a route matches. Please bear in mind, that the
-	 * first route which is able to consume all path components is used,
+	 * first route that is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
 	 * 
 	 * @return	boolean
@@ -182,12 +172,15 @@ class RouteHandler extends SingletonFactory {
 	 * Builds a route based upon route components, this is nothing
 	 * but a reverse lookup.
 	 * 
+	 * @param       string          $application    application identifier
 	 * @param	array		$components
 	 * @param	boolean		$isACP
 	 * @return	string
+	 * @throws      SystemException
 	 */
-	public function buildRoute(array $components, $isACP = null) {
+	public function buildRoute($application, array $components, $isACP = null) {
 		if ($isACP === null) $isACP = RequestHandler::getInstance()->isACPRequest();
+		$components['application'] = $application;
 		
 		foreach ($this->routes as $route) {
 			if ($isACP != $route->isACP()) {
@@ -200,6 +193,25 @@ class RouteHandler extends SingletonFactory {
 		}
 		
 		throw new SystemException("Unable to build route, no available route is satisfied.");
+	}
+	
+	/**
+	 * Returns true if `$customUrl` contains only the letters a-z/A-Z, numbers, dashes,
+	 * underscores and forward slashes.
+	 * 
+	 * All other characters including those from the unicode range are potentially unsafe,
+	 * especially when dealing with url rewriting and resulting encoding issues with some
+	 * webservers.
+	 * 
+	 * This heavily limits the abilities for end-users to define appealing urls, but at
+	 * the same time this ensures a sufficient level of stability.
+	 * 
+	 * @param	string	$customUrl	url to perform sanitiy checks on
+	 * @return	bool	true if `$customUrl` passes the sanity check
+	 * @since	2.2
+	 */
+	public static function isValidCustomUrl($customUrl) {
+		return preg_match('~^[a-zA-Z0-9\-_/]+$~', $customUrl) === 1;
 	}
 	
 	/**

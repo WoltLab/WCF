@@ -1,0 +1,143 @@
+.userProfileHeader.box {
+	margin: 0;
+}
+.userProfileCoverPhoto {
+	background-image: url('../images/user-profile-header.jpg'); // todo
+	background-position: center;
+	background-size: cover;
+	
+	@include large-screen-only {
+		height: 200px;
+	}
+	
+	@include small-screen-only {
+		height: 100px;
+	}
+}
+
+.userProfileUser {
+	background-color: $wcfHeaderBackground;
+	
+	> .layoutBoundary {
+		align-items: center;
+		display: flex;
+		padding: 5px 10px 10px 160px;
+		position: relative;
+		
+		@include small-screen-only {
+			padding-left: 90px;
+		}
+	}
+	
+	.userAvatar {
+		background-color: $wcfHeaderBackground;
+		border-radius: 50%;
+		left: 0;
+		padding: 10px;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		
+		@include small-screen-only {
+			.userAvatarImage {
+				height: 64px !important;
+				width: 64px !important;
+			}
+		}
+	}
+	
+	.contentHeader {
+		color: $wcfHeaderText;
+		flex: 1 1 auto;
+	}
+	
+	.buttonGroupNavigation {
+		@include large-screen-only {
+			flex: 0 0 auto;
+			margin-left: 10px;
+			
+			.button {
+				background-color: $wcfHeaderMenuBackground;
+				color: $wcfHeaderMenuLink;
+				
+				&.active,
+				&:hover {
+					background-color: $wcfHeaderMenuBackgroundActive;
+					color: $wcfHeaderMenuLinkActive;
+				}
+			}
+		}
+		
+		@include small-screen-only {
+			display: none;
+		}
+	}
+}
+
+.userProfileDetails {
+	background-color: $wcfSidebarBackground;
+	
+	> .layoutBoundary {
+		padding: 10px 10px 10px 160px;
+		
+		@include small-screen-only {
+			padding: 20px 10px 10px;
+		}
+	}
+}
+
+.userProfile .main {
+	padding-top: 0;
+}
+
+.section.userProfileContent {
+	margin-top: 20px;
+}
+
+.userAvatarList {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: -15px;
+	
+	> li {
+		flex: 0 0 25%;
+		margin-bottom: 15px;
+		text-align: center;
+		
+		> a {
+			display: block;
+		}
+	}
+}
+
+.userList {
+	.box48 {
+		align-items: center;
+	}
+}
+
+.likeList {
+	> .likeTypeSelection {
+		text-align: right;
+		
+		&:hover {
+			background-color: transparent;
+		}
+		
+		> .buttonGroup {
+			display: inline-flex;
+			
+			&:not(:first-child) {
+				margin-left: 5px;
+			}
+		}
+	}
+}
+
+/* using `dl` + `.inlineDataList` to prevent styles applied to the
+   data list provided by the `userInformation` template */
+.userProfilePreview dl.inlineDataList {
+	margin-top: 10px;
+	
+	@include wcfFontSmall;
+}

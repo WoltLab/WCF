@@ -66,6 +66,15 @@ class BBCodeHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns all bbcodes.
+	 * 
+	 * @return	array<\wcf\data\bbcode\BBCode>
+	 */
+	public function getBBCodes() {
+		return BBCodeCache::getInstance()->getBBCodes();
+	}
+	
+	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
 	 * @return	array<\wcf\data\bbcode\BBCode>

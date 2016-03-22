@@ -199,4 +199,12 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 		
 		return $this->optionTypeIDs[$optionType];
 	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	2.2
+	 */
+	public static function getDefaultFilename() {
+		return 'aclOption.xml';
+	}
 }

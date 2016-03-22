@@ -10,7 +10,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -197,11 +196,6 @@ class PollManager extends SingletonFactory {
 	 * Validates poll parameters.
 	 */
 	public function validate() {
-		// if no question is given, ignore poll completely
-		if (empty($this->pollData['question'])) {
-			return;
-		}
-		
 		if ($this->pollData['endTime'] && $this->pollData['endTime'] <= TIME_NOW) {
 			if ($this->poll === null || $this->poll->endTime >= TIME_NOW) {
 				// end time is in the past
@@ -209,9 +203,19 @@ class PollManager extends SingletonFactory {
 			}
 		}
 		
-		// no options given
 		$count = count($this->pollOptions);
-		if (!$count) {
+		if (empty($this->pollData['question'])) {
+			if ($count) {
+				// options given, but no question
+				throw new UserInputException('pollQuestion');
+			}
+			else {
+				// if no question and no options are given, ignore poll completely
+				return;
+			}
+		}
+		else if (!$count) {
+			// no options given
 			throw new UserInputException('pollOptions');
 		}
 		
@@ -327,7 +331,7 @@ class PollManager extends SingletonFactory {
 	 */
 	public function getPolls(array $pollIDs) {
 		$pollList = new PollList();
-		$pollList->getConditionBuilder()->add("poll.pollID IN (?)", array($pollIDs));
+		$pollList->setObjectIDs($pollIDs);
 		$pollList->readObjects();
 		$polls = $pollList->getObjects();
 		
@@ -413,10 +417,10 @@ class PollManager extends SingletonFactory {
 		
 		// validates against object type's class
 		$className = $this->cache[$objectType]->className;
-		if (!ClassUtil::isInstanceOf($className, 'wcf\system\poll\IPollHandler')) {
+		if (!is_subclass_of($className, 'wcf\system\poll\IPollHandler')) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\poll\IPollHandler'");
 		}
-		else if (!ClassUtil::isInstanceOf($className, 'wcf\system\SingletonFactory')) {
+		else if (!is_subclass_of($className, 'wcf\system\SingletonFactory')) {
 			throw new SystemException("'".$className."' does not extend 'wcf\system\SingletonFactory'");
 		}
 		

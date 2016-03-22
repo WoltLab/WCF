@@ -1,0 +1,78 @@
+/* shortcuts */
+// clearing floats like a boss h5bp.com/q
+@mixin clearfix {
+	&::before,
+	&::after {
+		display: table;
+		content: "";
+	}
+	
+	&::after {
+		clear: both;
+	}
+}
+
+.clearfix {
+	@include clearfix;
+}
+
+@mixin userSelectNone {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@mixin square($size) {
+	height: $size;
+	width: $size;
+}
+
+// sets default text shadows depending on background color
+@mixin textShadow($backgroundColor) {
+	@if (lightness($backgroundColor) >= 40) {
+		text-shadow: 0 1px 0 $wcfTextShadowDark;
+	}
+	@else {
+		text-shadow: 0 -1px 0 $wcfTextShadowLight;
+	}
+}
+
+/** @deprecated 2.2 - please use the native properties directly */
+@mixin linearGradient($backgroundColor, $gradientColor1, $gradientColor2) {
+	background-image: linear-gradient($gradientColor1, $gradientColor2);
+}
+@mixin linearGradient($backgroundColor, $gradientColor1, $gradientColor2, $gradientColor3) {
+	background-image: linear-gradient($direction, $gradientColor1, $gradientColor2, $gradientColor3);
+}
+@mixin linearGradientNative($parameters) {
+	background-image: linear-gradient($parameters);
+}
+@mixin transition($property, $duration, $type:linear) {
+	transition: $property $duration $type;
+}
+@mixin boxShadow($leftOffset, $topOffset, $color, $blurriness: 5px, $shadowHeight: 0) {
+	box-shadow: $leftOffset $topOffset $blurriness $shadowHeight $color;
+}
+@mixin boxShadowInset($leftOffset, $topOffset, $color, $blurriness: 5px, $shadowHeight: 0) {
+	box-shadow: inset $leftOffset $topOffset $blurriness $shadowHeight $color;
+}
+@mixin boxShadowNative($parameters) {
+	box-shadow: $parameters;
+}
+/** /deprecated */
+
+@mixin small-screen-only() {
+	/* 768px - 1px */
+	@media (max-width: 767px) {
+		@content;
+	}
+}
+
+@mixin large-screen-only() {
+	@media (min-width: 768px) {
+		@content;
+	}
+}

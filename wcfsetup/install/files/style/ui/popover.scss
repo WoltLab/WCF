@@ -1,0 +1,81 @@
+@keyframes wcfPopover {
+	0%   { visibility: visible; transform: translateY(-20px); opacity: 0; }
+	100% { visibility: visible; transform: translateY(0);     opacity: 1; }
+}
+
+@keyframes wcfPopoverOut {
+	0%   { visibility: visible; transform: translateY(0);     opacity: 1; }
+	100% { visibility: hidden;  transform: translateY(-20px); opacity: 0; }
+}
+
+/* outer element containing both the pointer and content element */
+.popover {
+	animation: wcfPopoverOut .3s;
+	animation-fill-mode: forwards;
+	background-color: $wcfContentBackground;
+	border: 1px solid $wcfDropdownBorder;
+	box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
+	position: absolute;
+	top: 0;
+	vertical-align: middle;
+	visibility: hidden;
+	width: 500px !important;
+	z-index: 500;
+	
+	&.active {
+		animation: wcfPopover .3s;
+		animation-fill-mode: forwards;
+	}
+	
+	&.forceHide {
+		animation: 0;
+		visibility: hidden;
+	}
+	
+	> .elementPointer {
+		border-width: 0 10px 10px;
+		border-style: solid;
+		border-color: $wcfDropdownBorder transparent;
+		top: 0;
+		
+		&.flipVertical {
+			border-width: 10px 10px 0;
+			bottom: 0;
+			top: auto;
+			
+			> span {
+				border-width: 10px 10px 0;
+				bottom: 1px;
+				top: auto;
+			}
+		}
+		
+		> span {
+			border-color: $wcfContentBackground transparent;
+			border-style: solid;
+			border-width: 0 10px 10px;
+			left: -10px;
+			position: absolute;
+			top: 1px;
+		} 
+	}
+}
+
+/* actual popover content */
+.popoverContent {
+	background-color: $wcfContentBackground;
+	border-radius: 3px;
+	color: $wcfContentText;
+	max-height: 320px;
+	min-height: 36px;
+	overflow: hidden;
+	padding: 15px;
+	
+	a {
+		color: $wcfContentLink;
+		
+		&:hover {
+			color: $wcfContentLinkActive;
+		}
+	}
+}

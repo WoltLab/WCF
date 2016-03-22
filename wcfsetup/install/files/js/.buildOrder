@@ -1,6 +1,6 @@
-3rdParty/jquery.ui.touch-punch
-3rdParty/jquery-ui.nestedSortable
-3rdParty/jquery-ui.timepicker
+3rdParty/jquery-ui
+3rdParty/jquery-ui/touchPunch
+3rdParty/jquery-ui/nestedSortable
 WCF.Assets
 WCF
 WCF.Like
@@ -14,6 +14,5 @@ WCF.Location
 WCF.Message
 WCF.Poll
 WCF.Search.Message
-WCF.Tagging
 WCF.User
 WCF.Moderation

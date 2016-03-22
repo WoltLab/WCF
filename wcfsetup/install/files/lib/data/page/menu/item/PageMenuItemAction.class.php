@@ -38,12 +38,12 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.display.canManagePageMenu');
+	protected $permissionsDelete = array('admin.content.cms.canManageMenu');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.display.canManagePageMenu');
+	protected $permissionsUpdate = array('admin.content.cms.canManageMenu');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
@@ -94,7 +94,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
-		WCF::getSession()->checkPermissions(array('admin.display.canManagePageMenu'));
+		WCF::getSession()->checkPermissions(array('admin.content.cms.canManageMenu'));
 		
 		if (!isset($this->parameters['data']) || !isset($this->parameters['data']['structure']) || !is_array($this->parameters['data']['structure'])) {
 			throw new UserInputException('structure');

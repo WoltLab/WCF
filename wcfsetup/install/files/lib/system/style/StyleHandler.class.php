@@ -2,6 +2,7 @@
 namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
 use wcf\data\style\Style;
+use wcf\data\style\StyleEditor;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -179,5 +180,25 @@ class StyleHandler extends SingletonFactory {
 				@unlink($stylesheet);
 			}
 		}
+	}
+	
+	/**
+	 * Returns a style by package name, optionally filtering tainted styles.
+	 * 
+	 * @param	string		$packageName	style package name
+	 * @param	boolean		$skipTainted	ignore tainted styles
+	 * @return	\wcf\data\style\StyleEditor
+	 * @since	2.2
+	 */
+	public function getStyleByName($packageName, $skipTainted = false) {
+		foreach ($this->cache['styles'] as $style) {
+			if ($style->packageName === $packageName) {
+				if (!$skipTainted || !$style->isTainted) {
+					return new StyleEditor($style);
+				}
+			}
+		}
+		
+		return null;
 	}
 }

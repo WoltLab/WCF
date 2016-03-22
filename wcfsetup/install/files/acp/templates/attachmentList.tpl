@@ -11,33 +11,33 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.attachment.list{/lang}</h1>
-	<p>{lang}wcf.acp.attachment.stats{/lang}</p>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.attachment.list{/lang}</h1>
+	<p class="contentHeaderDescription">{lang}wcf.acp.attachment.stats{/lang}</p>
 </header>
 
 {include file='formError'}
 
 <form method="post" action="{link controller='AttachmentList'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
-			
-			<dl>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap">
+			<dl class="col-xs-12 col-md-4">
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
 					<input type="text" id="username" name="username" value="{$username}" class="long" />
 				</dd>
 			</dl>
 			
-			<dl>
+			<dl class="col-xs-12 col-md-4">
 				<dt><label for="filename">{lang}wcf.attachment.filename{/lang}</label></dt>
 				<dd>
 					<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
 				</dd>
 			</dl>
 			
-			<dl>
+			<dl class="col-xs-12 col-md-4">
 				<dt><label for="fileType">{lang}wcf.attachment.fileType{/lang}</label></dt>
 				<dd>
 					<select name="fileType" id="fileType">
@@ -46,8 +46,10 @@
 					</select>
 				</dd>
 			</dl>
-		</fieldset>
-	</div>
+			
+			{event name='filterFields'}
+		</div>	
+	</section>
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
@@ -75,11 +77,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.attachment.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -98,7 +96,7 @@
 				{foreach from=$objects item=attachment}
 					<tr class="jsAttachmentRow">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
@@ -109,7 +107,7 @@
 									{if $attachment->tinyThumbnailType}
 										<img src="{link controller='Attachment' id=$attachment->attachmentID}tiny=1{/link}" class="attachmentTinyThumbnail" alt="" />
 									{else}
-										<span class="icon icon48 icon-paper-clip"></span>
+										<span class="icon icon48 fa-paperclip"></span>
 									{/if}
 								</a>
 								

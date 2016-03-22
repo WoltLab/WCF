@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\event\listener;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 
 /**
  * Represents an event listener.
@@ -13,6 +15,9 @@ use wcf\data\DatabaseObject;
  * @category	Community Framework
  */
 class EventListener extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -22,4 +27,21 @@ class EventListener extends DatabaseObject {
 	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'listenerID';
+	
+	/**
+	 * prefix of automatically created event listener names
+	 * @var	string
+	 * @deprecated	will be removed once listener names are mandatory
+	 */
+	const AUTOMATIC_NAME_PREFIX = 'com.woltlab.wcf.eventListener';
+	
+	/**
+	 * Returns the names of all events listened to.
+	 * 
+	 * @return	array<string>
+	 * @since	2.2
+	 */
+	public function getEventNames() {
+		return explode(',', $this->eventName);
+	}
 }

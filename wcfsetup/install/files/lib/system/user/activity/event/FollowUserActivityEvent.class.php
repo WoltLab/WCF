@@ -26,7 +26,7 @@ class FollowUserActivityEvent extends SingletonFactory implements IUserActivityE
 		
 		// fetch user id and username
 		$userList = new UserList();
-		$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($objectIDs));
+		$userList->setObjectIDs($objectIDs);
 		$userList->readObjects();
 		$users = $userList->getObjects();
 		

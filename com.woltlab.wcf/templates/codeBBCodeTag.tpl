@@ -1,4 +1,4 @@
-<div class="container codeBox {$highlighter|get_class|substr:30|lcfirst}{if $lines > 10} minimized{/if}">
+<div class="codeBox collapsibleBbcode jsCollapsibleBbcode {$highlighter|get_class|substr:30|lcfirst}{if $lines > 10} collapsed{/if}">
 	<div>
 		<div>
 			<h3>{@$highlighter->getTitle()}{if $filename}: {$filename}{/if}</h3>
@@ -19,33 +19,13 @@
 	</div>
 	
 	{if $lines > 10}
-		<span class="codeBoxExpand jsButtonCodeBoxExpand">{lang}wcf.bbcode.button.showAll{/lang}</span>
+		<span class="toggleButton" data-title-collapse="{lang}wcf.bbcode.button.collapse{/lang}" data-title-expand="{lang}wcf.bbcode.button.showAll{/lang}">{lang}wcf.bbcode.button.showAll{/lang}</span>
 		
 		{if !$__overlongCodeBoxSeen|isset}
 			{assign var='__overlongCodeBoxSeen' value=true}
 			<script data-relocate="true">
-				$(function() {
-					$('.jsButtonCodeBoxExpand').removeClass('jsButtonCodeBoxExpand').click(function() {
-						$(this).parent().removeClass('minimized').end().remove();
-					});
-					
-					// searching in a page causes Google Chrome to scroll
-					// the code box if something inside it matches
-					// 
-					// expand the box in this case, to:
-					// a) Improve UX
-					// b) Hide an ugly misplaced "show all" button
-					$('.codeBox').on('scroll', function() {
-						$(this).find('.codeBoxExpand').click();
-					});
-					
-					// expand code boxes that are initially scrolled
-					// this may happen due to someone linking to a specific line
-					$('.codeBox').each(function() {
-						if ($(this).scrollTop() != 0) {
-							$(this).find('.codeBoxExpand').click();
-						}
-					});
+				require(['WoltLab/WCF/Bbcode/Collapsible'], function(BbcodeCollapsible) {
+					BbcodeCollapsible.observe();
 				});
 			</script>
 		{/if}

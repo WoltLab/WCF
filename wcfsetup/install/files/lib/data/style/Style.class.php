@@ -115,4 +115,29 @@ class Style extends DatabaseObject {
 		
 		return WCF::getPath().'images/stylePreview.png';
 	}
+	
+	/**
+	 * TODO: add documentation
+	 * @since	2.2
+	 */
+	public static function splitLessVariables($variables) {
+		$tmp = explode("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", $variables, 2);
+		
+		return [
+			'preset' => $tmp[0],
+			'custom' => (isset($tmp[1])) ? $tmp[1] : ''
+		];
+	}
+	
+	/**
+	 * TODO: add documentation
+	 * @since	2.2
+	 */
+	public static function joinLessVariables($preset, $custom) {
+		if (empty($custom)) {
+			return $preset;
+		}
+		
+		return $preset . "/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n" . $custom;
+	}
 }

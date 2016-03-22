@@ -1,0 +1,176 @@
+.pageHeader > div {
+	/* huge performance increase when scrolling */
+	will-change: transform;
+}
+
+@include large-screen-only {
+	.pageHeaderContainer.stickyPageHeader {
+		z-index: 300;
+	}
+	
+	.pageHeader.sticky {
+		flex-wrap: nowrap;
+		
+		> div {
+			background-color: $wcfHeaderBackground;
+			box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+			left: 0;
+			position: fixed;
+			top: 0;
+			right: 0;
+			z-index: 301;
+		}
+		
+		
+		.layoutBoundary {
+			min-height: 50px;
+			
+			// remove padding, the vertical alignment is done using `align-items`
+			padding-bottom: 0;
+			padding-top: 0;
+		}
+		
+		.pageHeaderContainerLeft,
+		.pageHeaderContainerRight {
+			align-items: center;
+			flex-direction: row;
+			justify-content: flex-start;
+		}
+		
+		.pageHeaderContainerRight {
+			min-width: 200px;
+			position: relative;
+		}
+		
+		.pageHeaderLogo {
+			margin-bottom: 0;
+			order: 1;
+			
+			> a > .pageHeaderLogoLarge {
+				display: none;
+			}
+			
+			> a > .pageHeaderLogoSmall {
+				display: block;
+			}
+		}
+		
+		.mainMenu {
+			order: 2;
+			margin: 0 20px;
+			
+			.boxMenu {
+				background-color: $wcfHeaderBackground;
+				padding-bottom: 5px;
+				
+				> li > a {
+					align-items: center;
+					display: flex;
+					
+					> span {
+						flex: 0 0 auto;
+					}
+					
+					> .boxMenuLinkOutstandingItems {
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+		
+		.userPanel {
+			margin-left: 10px;
+			order: 4;
+		}
+		
+		.pageHeaderSearch {
+			margin-bottom: 0;
+			order: 3;
+			
+			.pageHeaderSearchInput {
+				height: 100%;
+				width: 100%;
+			}
+			
+			.pageHeaderSearchLabel {
+				background-color: $wcfHeaderSearchBoxBackground;
+				bottom: 0;
+				cursor: pointer;
+				display: block;
+				position: absolute;
+				top: 0;
+				width: 50px;
+				
+				&:hover {
+					background-color: $wcfHeaderSearchBoxBackgroundActive;
+				}
+				
+				&::before {
+					content: $fa-var-search;
+					display: block;
+					font-family: FontAwesome;
+					font-size: 28px;
+					line-height: 32px;
+					position: absolute;
+					right: 11px;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
+		}
+		
+		&:not(.searchBarOpen) {
+			.pageHeaderSearch {
+				font-size: 0;
+				width: 50px;
+			}
+			
+			.pageHeaderSearchInput,
+			.pageHeaderSearchInputButton {
+				display: none;
+			}
+		}
+		
+		&.searchBarOpen {
+			.pageHeaderSearchInputContainer {
+				bottom: 0;
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+				z-index: 100; 
+			}
+			
+			.pageHeaderSearchLabel {
+				position: static;
+				visibility: hidden;
+				width: 50px;
+			}
+		}
+	}
+}
+
+// force sticky header on handheld devices, there is no difference when scrolled
+// all the way up and it might flicker when scrolling due to the inconsistent
+// scroll event being fired
+@include small-screen-only {
+	.pageHeaderContainer {
+		height: 50px;
+		z-index: 300;
+	}
+	
+	.pageHeader {
+		flex-wrap: nowrap;
+		
+		> div {
+			background-color: $wcfHeaderBackground;
+			box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+			left: 0;
+			max-width: 100vw;
+			position: fixed;
+			top: 0;
+			right: 0;
+			z-index: 301;
+		}
+	}
+}

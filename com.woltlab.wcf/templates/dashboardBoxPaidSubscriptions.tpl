@@ -1,8 +1,6 @@
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.dashboard.box.com.woltlab.wcf.paidSubscriptions{/lang}</h2>
-</header>
-
-<div class="container marginTop containerPadding">
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.dashboard.box.com.woltlab.wcf.paidSubscriptions{/lang}</h2>
+	
 	<ul class="containerBoxList tripleColumned">
 		{foreach from=$subscriptions item=subscription}
 			<li>
@@ -12,11 +10,13 @@
 				</div>
 				
 				{if !PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}
-					<ul class="buttonList marginTopTiny">
-						{foreach from=$subscription->getPurchaseButtons() item=button}
-							<li>{@$button}</li>
-						{/foreach}
-					</ul>
+					<div class="containerContent">
+						<ul class="buttonList">
+							{foreach from=$subscription->getPurchaseButtons() item=button}
+								<li>{@$button}</li>
+							{/foreach}
+						</ul>
+					</div>
 				{/if}
 			</li>
 		{/foreach}
@@ -27,4 +27,4 @@
 			<li><a class="button small" href="{link controller='PaidSubscriptionList'}{/link}">{lang}wcf.paidSubscription.button.moreInformation{/lang}</a></li>
 		</ul>
 	{/if}
-</div>
+</section>

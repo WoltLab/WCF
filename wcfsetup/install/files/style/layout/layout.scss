@@ -1,0 +1,123 @@
+/* @TODO */
+.userAvatarImage { border-radius: 50%; }
+/* @TODO END */
+
+html, body {
+	height: 100%;
+	
+	@include wcfLineHeight;
+	@include wcfFontDefault;
+}
+
+body {
+	font-family: $wcfFontFamily;
+	position: relative;
+	word-wrap: break-word;
+}
+
+a {
+	cursor: pointer;
+	text-decoration: none;
+	
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+#pageContainer {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+}
+
+/* COLUMN LAYOUT */
+.pageHeaderContainer {
+	flex: 0 0 auto;
+}
+
+.main {
+	background-color: $wcfContentBackground;
+	color: $wcfContentText;
+	flex: 1 0 auto;
+	
+	@include large-screen-only {
+		padding: 60px 0;
+	}
+	
+	@include small-screen-only {
+		padding: 30px 0;
+		width: 100%;
+	}
+	
+	a {
+		color: $wcfContentLink;
+		
+		&:hover {
+			color: $wcfContentLinkActive;
+		}
+	}
+}
+
+/* use flex-box to enforce a proper side-by-side layout on desktop */
+@include large-screen-only {
+	.main > div {
+		display: flex;
+	}
+	
+	.content {
+		flex: 1 1 auto;
+		
+		// sidebar follows
+		&:not(:last-child) {
+			flex-basis: calc(100% - 340px);
+			max-width: calc(100% - 340px); // IE fix
+		}
+		
+		& + .sidebar {
+			margin-left: 30px;
+		}
+	}
+	
+	.sidebar {
+		flex: 0 0 310px;
+		overflow: hidden;
+		
+		&:first-child {
+			margin-right: 30px;
+		}
+		
+		& + .content {
+			flex-basis: calc(100% - 340px);
+			max-width: calc(100% - 340px); // IE fix
+			
+			// sidebar follows
+			&:not(:last-child) {
+				flex-basis: calc(100% - 680px);
+				max-width: calc(100% - 680px); // IE fix
+			}
+		}
+	}
+}
+
+/* mobile arranges the sidebar and content vertically:
+   
+   <leftSidebar> <content> <rightSidebar>
+   
+   becomes:
+   
+   <leftSidebar>
+   <content>
+   <rightSidebar>
+*/
+@include small-screen-only {
+	.sidebar {
+		margin: 0 -10px;
+	}
+	
+	.sidebar + .content,
+	.content + .sidebar {
+		// gap between sidebars and content
+		margin-top: 30px;
+	}
+}
+

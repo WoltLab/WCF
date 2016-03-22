@@ -8,7 +8,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Handles dashboard boxes.
@@ -60,22 +59,30 @@ class DashboardHandler extends SingletonFactory {
 			}
 		}
 		
-		$contentTemplate = $sidebarTemplate = '';
+		// 1. initialize all boxes first
+		$boxObjects = array(
+			'content' => array(),
+			'sidebar' => array()
+		);
 		foreach ($boxIDs as $boxID) {
 			$className = $this->boxCache[$boxID]->className;
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\dashboard\box\IDashboardBox')) {
+			if (!is_subclass_of($className, 'wcf\system\dashboard\box\IDashboardBox')) {
 				throw new SystemException("'".$className."' does not implement 'wcf\system\dashboard\box\IDashboardBox'");
 			}
 			
 			$boxObject = new $className();
 			$boxObject->init($this->boxCache[$boxID], $page);
 			
-			if ($this->boxCache[$boxID]->boxType == 'content') {
-				$contentTemplate .= $boxObject->getTemplate();
-			}
-			else {
-				$sidebarTemplate .= $boxObject->getTemplate();
-			}
+			$boxObjects[$this->boxCache[$boxID]->boxType][] = $boxObject;
+		}
+		
+		// 2. fetch all templates
+		$contentTemplate = $sidebarTemplate = '';
+		foreach ($boxObjects['content'] as $box) {
+			$contentTemplate .= $box->getTemplate();
+		}
+		foreach ($boxObjects['sidebar'] as $box) {
+			$sidebarTemplate .= $box->getTemplate();
 		}
 		
 		WCF::getTPL()->assign(array(

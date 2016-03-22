@@ -149,7 +149,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		$userIDs = $responses = array();
 		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
-			$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array($responseIDs));
+			$responseList->setObjectIDs($responseIDs);
 			$responseList->readObjects();
 			$responses = $responseList->getObjects();
 			
@@ -163,7 +163,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		
 		// fetch comments
 		$commentList = new CommentList();
-		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+		$commentList->setObjectIDs($commentIDs);
 		$commentList->readObjects();
 		$comments = $commentList->getObjects();
 		

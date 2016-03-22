@@ -20,6 +20,7 @@ class WCF_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff {
 		return array(
 			T_CLASS,
 			T_INTERFACE,
+			T_TRAIT,
 		);
 	}
 	

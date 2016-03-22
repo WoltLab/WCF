@@ -1,8 +1,9 @@
 <?php
 namespace wcf\data\object\type;
 use wcf\data\ProcessibleDatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
-use wcf\util\ClassUtil;
 
 /**
  * Represents an object type.
@@ -15,6 +16,9 @@ use wcf\util\ClassUtil;
  * @category	Community Framework
  */
 class ObjectType extends ProcessibleDatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -73,11 +77,11 @@ class ObjectType extends ProcessibleDatabaseObject {
 				if (!class_exists($this->className)) {
 					throw new SystemException("Unable to find class '".$this->className."'");
 				}
-				if (($definitionInterface = ObjectTypeCache::getInstance()->getDefinition($this->definitionID)->interfaceName) && !ClassUtil::isInstanceOf($this->className, $definitionInterface)) {
+				if (($definitionInterface = ObjectTypeCache::getInstance()->getDefinition($this->definitionID)->interfaceName) && !is_subclass_of($this->className, $definitionInterface)) {
 					throw new SystemException("'".$this->className."' does not implement '".$definitionInterface."'");
 				}
 				
-				if (ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
+				if (is_subclass_of($this->className, 'wcf\system\SingletonFactory')) {
 					$this->processor = call_user_func(array($this->className, 'getInstance'));
 				}
 				else {

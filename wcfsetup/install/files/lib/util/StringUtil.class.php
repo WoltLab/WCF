@@ -92,9 +92,6 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeHTML($string) {
-		if (is_object($string)) 
-			$string = $string->__toString();
-		
 		return @htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 	}
 	
@@ -105,8 +102,6 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeJS($string) {
-		if (is_object($string)) $string = $string->__toString();
-		
 		// unify newlines
 		$string = self::unifyNewlines($string);
 		
@@ -431,7 +426,7 @@ final class StringUtil {
 	/**
 	 * Alias to php str_pad function with multibyte support.
 	 */
-	public static function pad($input, $padLength, $padString=' ', $padType=STR_PAD_RIGHT) {
+	public static function pad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT) {
 		$additionalPadding = strlen($input) - mb_strlen($input);
 		return str_pad($input, $padLength + $additionalPadding, $padString, $padType);
 	}

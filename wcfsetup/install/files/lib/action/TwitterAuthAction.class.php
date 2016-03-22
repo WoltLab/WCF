@@ -76,7 +76,7 @@ class TwitterAuthAction extends AbstractAction {
 			parse_str($content, $data);
 			
 			// check whether a user is connected to this twitter account
-			$user = $this->getUser($data['user_id']);
+			$user = User::getUserByAuthData('twitter:'.$data['user_id']);
 			
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
@@ -230,27 +230,5 @@ class TwitterAuthAction extends AbstractAction {
 		$key = rawurlencode(StringUtil::trim(TWITTER_PRIVATE_KEY)).'&'.rawurlencode($tokenSecret);
 		
 		return base64_encode(hash_hmac('sha1', $base, $key, true));
-	}
-	
-	/**
-	 * Fetches the User with the given userID
-	 * 
-	 * @param	integer			$userID
-	 * @return	\wcf\data\user\User
-	 */
-	public function getUser($userID) {
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user
-			WHERE	authData = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('twitter:'.$userID));
-		$row = $statement->fetchArray();
-		
-		if ($row === false) {
-			$row = array('userID' => 0);
-		}
-		
-		$user = new User($row['userID']);
-		return $user;
 	}
 }

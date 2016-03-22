@@ -71,7 +71,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.display.canManagePageMenu');
+	public $neededPermissions = array('admin.content.cms.canManageMenu');
 	
 	/**
 	 * page menu item name

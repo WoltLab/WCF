@@ -47,7 +47,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to search for installable packages.
 	 */
 	public function validateSearch() {
-		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage'));
 		
 		$this->readString('package', true);
 		$this->readString('packageDescription', true);
@@ -295,7 +295,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to return a result list for a previous search.
 	 */
 	public function validateGetResultList() {
-		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage'));
 		
 		$this->readInteger('pageNo');
 		$this->readInteger('searchID');
@@ -374,7 +374,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * Validates permissions to search for updates.
 	 */
 	public function validateSearchForUpdates() {
-		WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+		WCF::getSession()->checkPermissions(array('admin.configuration.package.canUpdatePackage'));
 		
 		$this->readBoolean('ignoreCache', true);
 	}
@@ -402,7 +402,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to perform a system update.
 	 */
 	public function validatePrepareUpdate() {
-		WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+		WCF::getSession()->checkPermissions(array('admin.configuration.package.canUpdatePackage'));
 		
 		if (!isset($this->parameters['packages']) || !is_array($this->parameters['packages'])) {
 			throw new UserInputException('packages');
@@ -453,7 +453,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to prepare a package installation.
 	 */
 	public function validatePrepareInstallation() {
-		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage'));
 		
 		if (!isset($this->parameters['packages']) || !is_array($this->parameters['packages']) || count($this->parameters['packages']) != 1) {
 			throw new UserInputException('packages');

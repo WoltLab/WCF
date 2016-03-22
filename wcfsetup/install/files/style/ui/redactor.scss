@@ -1,0 +1,377 @@
+.redactor-box {
+	position: relative;
+	
+	& + .messageTabMenu {
+		padding: 0;
+	}
+	
+	& + .innerError,
+	> .innerError {
+		border-radius: 0;
+		box-shadow: none;
+		display: block;
+		margin-top: -1px;
+	}
+	
+	> .innerError {
+		margin: -1px;
+	}
+	
+	> .redactorAutosaveNotice {
+		background-color: $wcfContentBackground;
+		border: 1px solid $wcfContentBorderInner;
+		border-width: 1px 0 0 1px;
+		bottom: 0;
+		opacity: 0;
+		padding: $wcfGapSmall;
+		position: absolute;
+		right: 0;
+		transition: visibility 0s linear .3s, opacity .3s linear;
+		visibility: hidden;
+		
+		&.open {
+			opacity: 1;
+			visibility: visible;
+			transition-delay: 0s;
+		}
+		
+		&.redactorAutosaveNoticeIcons > span.fa-check {
+			margin-right: $wcfGapSmall;
+		}
+		
+		> span.redactorAutosaveMessage {
+			padding: 0 $wcfGapSmall;
+		}
+	}
+}
+
+.redactor-editor {
+	border: 1px solid $wcfContentBorderInner;
+	border-top-width: 0;
+	max-height: 500px;
+	padding: 10px;
+	position: relative;
+	outline: none;
+	overflow: auto;
+	
+	& + textarea {
+		border-width: 0;
+		box-shadow: none;
+		outline: none;
+		padding: 10px;
+		resize: vertical;
+		
+		&:focus {
+			box-shadow: none;
+		}
+	}
+	
+	// enforce styles used in messages
+	@extend .htmlContent;
+	
+	// remove margin top for the first paragraph in the editor to avoid a weird looking offset a the top
+	> p:first-child {
+		margin-top: 0;
+	}
+	
+	img {
+		// TODO: the border was required for 'Old Redactor', check if it is still a thing
+		border: 1px solid transparent;
+		max-width: 100%;
+	}
+	
+	// TODO: this is somewhat out of sync
+	table {
+		border-collapse: collapse;
+		//font-size: 14px; TODO
+		line-height: 1.6em;
+		
+		td {
+			border: 1px solid #ddd;
+			padding: 5px;
+			vertical-align: top;
+		}
+	}
+	
+	.quoteBox {
+		position: relative;
+		
+		&::before {
+			content: attr(data-quote-header);
+			cursor: pointer;
+			display: block;
+			margin-bottom: 10px;
+			padding-right: 20px;
+			
+			@include wcfFontHeadline;
+		}
+		
+		&::after {
+			content: $fa-var-pencil;
+			font-family: FontAwesome;
+			font-size: $wcfFontSizeHeadline; // TODO
+			position: absolute;
+			right: 10px;
+			top: 10px;
+		}
+	}
+	
+	.TODO_codeBox {
+		overflow: hidden;
+		position: relative;
+		
+		.redactorEditCodeBox {
+			background-color: rgba(255, 255, 255, .8);
+			bottom: 0;
+			left: 0;
+			opacity: 0;
+			position: absolute;
+			right: 0;
+			text-align: center;
+			top: 0;
+			transition: opacity .12s linear;
+			z-index: 200;
+			
+			> div {
+				cursor: pointer;
+				left: 50%;
+				padding: 1em 3em;
+				position: absolute;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+		
+		&:hover .redactorEditCodeBox {
+			opacity: 1;
+		}
+		
+		ol {
+			margin-bottom: 0;
+			margin-top: 0;
+		}
+	}
+	
+	&.TODO_msie .quoteBox {
+		/* resets 'hasLayout' causing IE to display resize handle and wonky editing behavior */
+		min-height: 0;
+	}
+}
+
+.redactor-dropdown {
+	> .dropdownMenu {
+		display: block;
+		visibility: visible;
+		
+		/* we cannot influence the actual dropdown position as set by Redactor,
+		   forces a gap while keeping the inline top-attribute unaffected */
+		transform: translateY(3px);
+		
+		> li:hover {
+			background-color: transparent !important;
+		}
+		
+		a:hover {
+			background-color: $wcfDropdownBackgroundActive;
+		}
+	}
+	
+	.redactor-dropdown-link-inactive {
+		cursor: default;
+		opacity: .6;
+		
+		&:hover {
+			background-color: transparent !important;
+			color: $wcfDropdownText !important;
+		}
+	}
+}
+
+/* disable auto zoom in mobile safari */
+@include small-screen-only {
+	.redactor-editor + textarea {
+		font-size: 16px;
+		max-height: 500px;
+	}
+}
+
+.redactor-toolbar {
+	background-color: $wcfHeaderBackground;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 7px 10px;
+	
+	> li {
+		flex: 0 0 auto;
+		margin-bottom: 1px;
+		
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+		
+		> a {
+			background-color: $wcfHeaderMenuBackground;
+			color: $wcfHeaderMenuLink;
+			display: block;
+			outline: none;
+			padding: 5px 8px;
+			text-align: center;
+			text-decoration: none;
+			
+			@include wcfFontSmall;
+			
+			&.redactor-button-disabled,
+			&.redactor-button-disabled:before,
+			&.redactor-button-disabled > i:before {
+				color: $wcfButtonDisabledText;
+			}
+			
+			&:hover,
+			&.redactor-act,
+			&.dropact {
+				background-color: $wcfHeaderMenuBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
+			}
+		}
+	}
+}
+
+.redactor-toolbar-tooltip {
+	@extend .balloonTooltip;
+	
+	opacity: 1;
+	visibility: visible;
+	
+	&:before {
+		// TODO: border-color: $wcfTooltipBackgroundColor transparent;
+		border-style: solid;
+		border-width: 0 5px 5px;
+		content: "";
+		display: block;
+		left: 50%;
+		position: absolute;
+		top: -5px;
+		transform: translateX(-50%);
+	}
+}
+
+.re-bold {
+	font-weight: 600;
+}
+
+.re-italic {
+	font-style: italic;
+}
+
+.re-underline {
+	text-decoration: underline !important;
+}
+
+.re-deleted {
+	text-decoration: line-through !important;
+}
+
+#redactor-image-box {
+	border: 1px dashed rgba(0, 0, 0, .5);
+	display: inline-block;
+	line-height: 0;
+	max-width: 100%;
+	position: relative;
+	
+	> img {
+		border-width: 0;
+		opacity: .5;
+	}
+}
+
+#redactor-image-editter {
+	@extend .balloonTooltip;
+	
+	cursor: pointer;
+	left: 50%;
+	// TODO: line-height: $wcfSmallFontSize;
+	margin-top: -13px;
+	opacity: 1;
+	top: 50%;
+	visibility: visible;
+	z-index: 5;
+}
+
+#redactor-image-resizer {
+	background-color: rgba(0, 0, 0, 1);
+	border: 1px solid rgba(255, 255, 255, 1);
+	bottom: -4px;
+	cursor: nw-resize;
+	height: 8px;
+	line-height: 1;
+	position: absolute;
+	right: -5px;
+	width: 8px;
+	z-index: 10;
+}
+
+.redactorAttachmentContainer {
+	background-color: rgba(255, 255, 255, 1);
+	border: 1px solid rgba(238, 238, 238, 1);
+	border-top-width: 0;
+	padding: 7px 14px 7px;
+}
+
+.redactor-dropdown-box-fontcolor {
+	width: 200px;
+	
+	> li.redactorColorPallet {
+		padding: 0 4px;
+		
+		&:hover {
+			background-color: $wcfDropdownBackground !important;
+		}
+		
+		> a {
+			border: 2px solid rgba(255, 255, 255, 1);
+			border-bottom-width: 0;
+			display: inline-block;
+			font-size: 0; // TODO
+			height: 20px;
+			padding: 0;
+			margin: 0;
+			width: 20px;
+		}
+	}
+}
+
+.redactorDropArea {
+	background-color: rgba(255, 255, 204, 1);
+	border: 5px dashed rgba(255, 204, 0);
+	box-sizing: border-box;
+	font-size: 1.4rem; // TODO
+	position: absolute;
+	text-align: center;
+	vertical-align: middle;
+	z-index: 360;
+	
+	&.active {
+		background-color: #CEF6CE;
+		border-color: #04B404;
+	}
+}
+
+.redactor-link-tooltip {
+	// TODO: background-color: $wcfTooltipBackgroundColor;
+	border-radius: 6px;
+	// TODO: color: $wcfTooltipColor;
+	// TODO: font-size: $wcfSmallFontSize;
+	padding: 5px 10px 7px;
+	position: absolute;
+	z-index: 800;
+	
+	@include boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	
+	> a {
+		// TODO: color: $wcfTooltipColor;
+	}
+}
+
+.redactor-voice-label {
+	display: none;
+}

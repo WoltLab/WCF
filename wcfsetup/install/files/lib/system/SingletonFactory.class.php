@@ -4,7 +4,7 @@ use wcf\system\exception\SystemException;
 
 /**
  * Basis class for singleton classes.
- * 
+ *
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -15,7 +15,7 @@ use wcf\system\exception\SystemException;
 abstract class SingletonFactory {
 	/**
 	 * list of singletons
-	 * @var	array<SingletonFactory>
+	 * @var SingletonFactory[]
 	 */
 	protected static $__singletonObjects = array();
 	
@@ -46,7 +46,7 @@ abstract class SingletonFactory {
 	
 	/**
 	 * Returns an unique instance of current child class.
-	 * 
+	 *
 	 * @return	static
 	 */
 	public static final function getInstance() {
@@ -64,7 +64,7 @@ abstract class SingletonFactory {
 	
 	/**
 	 * Returns whether this singleton is already initialized.
-	 * 
+	 *
 	 * @return	boolean
 	 */
 	public static final function isInitialized() {

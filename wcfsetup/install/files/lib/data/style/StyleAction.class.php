@@ -2,6 +2,7 @@
 namespace wcf\data\style;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
+use wcf\data\IUploadAction;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -14,6 +15,7 @@ use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Executes style-related actions.
@@ -25,46 +27,46 @@ use wcf\util\FileUtil;
  * @subpackage	data.style
  * @category	Community Framework
  */
-class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction {
+class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritdoc
 	 */
-	protected $allowGuestAccess = array('changeStyle', 'getStyleChooser');
+	protected $allowGuestAccess = ['changeStyle', 'getStyleChooser'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritdoc
 	 */
 	protected $className = 'wcf\data\style\StyleEditor';
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritdoc
 	 */
-	protected $permissionsDelete = array('admin.style.canManageStyle');
+	protected $permissionsDelete = ['admin.style.canManageStyle'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritdoc
 	 */
-	protected $permissionsUpdate = array('admin.style.canManageStyle');
+	protected $permissionsUpdate = ['admin.style.canManageStyle'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritdoc
 	 */
-	protected $requireACP = array('copy', 'delete', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadLogo');
+	protected $requireACP = ['copy', 'delete', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadLogo'];
 	
 	/**
 	 * style object
-	 * @var	\wcf\data\style\Style
+	 * @var	Style
 	 */
 	public $style = null;
 	
 	/**
 	 * style editor object
-	 * @var	\wcf\data\style\StyleEditor
+	 * @var	StyleEditor
 	 */
 	public $styleEditor = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritdoc
 	 */
 	public function create() {
 		$style = parent::create();
@@ -79,7 +81,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritdoc
 	 */
 	public function update() {
 		parent::update();
@@ -97,7 +99,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritdoc
 	 */
 	public function delete() {
 		$count = parent::delete();
@@ -146,8 +148,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * Updates style variables for given style.
 	 * 
-	 * @param	\wcf\data\style\Style	$style
-	 * @param	boolean			$removePreviousVariables
+	 * @param	Style		$style
+	 * @param	boolean		$removePreviousVariables
 	 */
 	protected function updateVariables(Style $style, $removePreviousVariables = false) {
 		if (!isset($this->parameters['variables']) || !is_array($this->parameters['variables'])) {
@@ -158,7 +160,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			FROM	wcf".WCF_N."_style_variable";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$variables = array();
+		$variables = [];
 		while ($row = $statement->fetchArray()) {
 			$variableName = $row['variableName'];
 			
@@ -178,7 +180,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
 				WHERE		styleID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($style->styleID));
+			$statement->execute([$style->styleID]);
 		}
 		
 		// insert variables that differ from default values
@@ -190,11 +192,11 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			
 			WCF::getDB()->beginTransaction();
 			foreach ($variables as $variableID => $variableValue) {
-				$statement->execute(array(
+				$statement->execute([
 					$style->styleID,
 					$variableID,
 					$variableValue
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -203,7 +205,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * Updates style preview image.
 	 * 
-	 * @param	\wcf\data\style\Style	$style
+	 * @param	Style		$style
 	 */
 	protected function updateStylePreviewImage(Style $style) {
 		if (!isset($this->parameters['tmpHash'])) {
@@ -225,10 +227,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 							SET	image = ?
 							WHERE	styleID = ?";
 						$statement = WCF::getDB()->prepareStatement($sql);
-						$statement->execute(array(
+						$statement->execute([
 							$filename,
 							$style->styleID
-						));
+						]);
 					}
 				}
 				else {
@@ -240,7 +242,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	}
 	
 	/**
-	 * Validates the upload action.
+	 * @inheritdoc
 	 */
 	public function validateUpload() {
 		// check upload permissions
@@ -265,13 +267,11 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		}
 		
 		// check max filesize, allowed file extensions etc.
-		$this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, array('jpg', 'jpeg', 'png', 'gif')));
+		$this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, ['jpg', 'jpeg', 'png', 'gif']));
 	}
 	
 	/**
-	 * Handles uploaded preview images.
-	 * 
-	 * @return	array<string>
+	 * @inheritdoc
 	 */
 	public function upload() {
 		// save files
@@ -307,15 +307,15 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					if ($this->parameters['styleID']) {
 						$this->updateStylePreviewImage($this->style);
 						
-						return array(
+						return [
 							'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['styleID'].'.'.$file->getFileExtension()
-						);
+						];
 					}
 					
 					// return result
-					return array(
+					return [
 						'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension()
-					);
+					];
 				}
 				else {
 					throw new UserInputException('image', 'uploadFailed');
@@ -326,7 +326,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			$file->setValidationErrorType($e->getType());
 		}
 		
-		return array('errorType' => $file->getValidationErrorType());
+		return ['errorType' => $file->getValidationErrorType()];
 	}
 	
 	/**
@@ -339,7 +339,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * Handles logo upload.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function uploadLogo() {
 		// save files
@@ -359,9 +359,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					WCF::getSession()->register('styleLogo-'.$this->parameters['tmpHash'], $file->getFileExtension());
 					
 					// return result
-					return array(
+					return [
 						'url' => WCF::getPath().'images/styleLogo-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension()
-					);
+					];
 				}
 				else {
 					throw new UserInputException('image', 'uploadFailed');
@@ -372,7 +372,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			$file->setValidationErrorType($e->getType());
 		}
 		
-		return array('errorType' => $file->getValidationErrorType());
+		return ['errorType' => $file->getValidationErrorType()];
 	}
 	
 	/**
@@ -417,7 +417,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * Copies a style.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function copy() {
 		// get unique style name
@@ -426,11 +426,11 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			WHERE	styleName LIKE ?
 				AND styleID <> ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->styleEditor->styleName.'%',
 			$this->styleEditor->styleID
-		));
-		$numbers = array();
+		]);
+		$numbers = [];
 		$regEx = new Regex('\((\d+)\)$');
 		while ($row = $statement->fetchArray()) {
 			$styleName = $row['styleName'];
@@ -449,7 +449,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		$styleName = $this->styleEditor->styleName . ' ('.$number.')';
 		
 		// create the new style
-		$newStyle = StyleEditor::create(array(
+		$newStyle = StyleEditor::create([
 			'styleName' => $styleName,
 			'templateGroupID' => $this->styleEditor->templateGroupID,
 			'isDisabled' => 1, // newly created styles are disabled by default
@@ -461,7 +461,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			'authorName' => $this->styleEditor->authorName,
 			'authorURL' => $this->styleEditor->authorURL,
 			'imagePath' => $this->styleEditor->imagePath
-		));
+		]);
 		
 		// check if style description uses i18n
 		if (preg_match('~^wcf.style.styleDescription\d+$~', $newStyle->styleDescription)) {
@@ -474,13 +474,13 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				FROM		wcf".WCF_N."_language_item
 				WHERE		languageItem = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($newStyle->styleDescription));
+			$statement->execute([$newStyle->styleDescription]);
 			
 			// update style description
 			$styleEditor = new StyleEditor($newStyle);
-			$styleEditor->update(array(
+			$styleEditor->update([
 				'styleDescription' => $styleDescription
-			));
+			]);
 		}
 		
 		// copy style variables
@@ -490,7 +490,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			FROM		wcf".WCF_N."_style_variable_value value
 			WHERE		value.styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->styleEditor->styleID));
+		$statement->execute([$this->styleEditor->styleID]);
 		
 		// copy preview image
 		if ($this->styleEditor->image) {
@@ -504,10 +504,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					SET	image = ?
 					WHERE	styleID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					'stylePreview-'.$newStyle->styleID.$fileExtension,
 					$newStyle->styleID
-				));
+				]);
 			}
 		}
 		
@@ -546,21 +546,21 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				SET	imagePath = ?
 				WHERE	styleID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$newPath,
 				$newStyle->styleID
-			));
+			]);
 		}
 		
 		StyleCacheBuilder::getInstance()->reset();
 		
-		return array(
-			'redirectURL' => LinkHandler::getInstance()->getLink('StyleEdit', array('id' => $newStyle->styleID))
-		);
+		return [
+			'redirectURL' => LinkHandler::getInstance()->getLink('StyleEdit', ['id' => $newStyle->styleID])
+		];
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritdoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -573,12 +573,12 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritdoc
 	 */
 	public function toggle() {
 		foreach ($this->objects as $style) {
 			$isDisabled = ($style->isDisabled) ? 0 : 1;
-			$style->update(array('isDisabled' => $isDisabled));
+			$style->update(['isDisabled' => $isDisabled]);
 		}
 	}
 	
@@ -614,23 +614,51 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * Returns the style chooser dialog.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getStyleChooser() {
 		$styleList = new StyleList();
 		if (!WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
-			$styleList->getConditionBuilder()->add("style.isDisabled = ?", array(0));
+			$styleList->getConditionBuilder()->add("style.isDisabled = ?", [0]);
 		}
 		$styleList->sqlOrderBy = "style.styleName ASC";
 		$styleList->readObjects();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'styleList' => $styleList
-		));
+		]);
 		
-		return array(
+		return [
 			'actionName' => 'getStyleChooser',
 			'template' => WCF::getTPL()->fetch('styleChooser')
-		);
+		];
+	}
+	
+	/**
+	 * TODO: add documentation
+	 * @since	2.2
+	 */
+	public function validateMarkAsTainted() {
+		if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->styleEditor = $this->getSingleObject();
+	}
+	
+	/**
+	 * TODO: add documentation
+	 * @since	2.2
+	 */
+	public function markAsTainted() {
+		// merge definitions
+		$variables = $this->styleEditor->getVariables();
+		$variables['individualLess'] = str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['individualLess']);
+		$variables['overrideLess'] = str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['overrideLess']);
+		$this->styleEditor->setVariables($variables);
+		
+		$this->styleEditor->update([
+			'isTainted' => 1
+		]);
 	}
 }

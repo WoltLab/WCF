@@ -227,35 +227,15 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Compares two password hashes. This function is protected against timing attacks.
-	 * 
-	 * @see		http://codahale.com/a-lesson-in-timing-attacks/
-	 * 
-	 * @param	string		$hash1
-	 * @param	string		$hash2
-	 * @return	boolean
+	 * @see	\wcf\util\CryptoUtil::secureCompare()
+	 * @deprecated	Use \wcf\util\CryptoUtil::secureCompare()
 	 */
 	public static function secureCompare($hash1, $hash2) {
-		$hash1 = (string)$hash1;
-		$hash2 = (string)$hash2;
-		
-		if (strlen($hash1) !== strlen($hash2)) {
-			return false;
-		}
-		
-		$result = 0;
-		for ($i = 0, $length = strlen($hash1); $i < $length; $i++) {
-			$result |= ord($hash1[$i]) ^ ord($hash2[$i]);
-		}
-		
-		return ($result === 0);
+		return CryptoUtil::secureCompare($hash1, $hash2);
 	}
 	
 	/**
 	 * Generates secure random numbers using OpenSSL.
-	 * 
-	 * This method forces mt_rand() if PHP versions below 5.4.0 are used due to a bug
-	 * causing up to 15 seconds delay until the bytes are returned.
 	 * 
 	 * @see		http://de1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
 	 * @param	integer		$min
@@ -270,7 +250,7 @@ final class PasswordUtil {
 		}
 		
 		// fallback to mt_rand() if OpenSSL is not available
-		if (version_compare(PHP_VERSION, '5.4.0-dev', '<') || !function_exists('openssl_random_pseudo_bytes')) {
+		if (!function_exists('openssl_random_pseudo_bytes')) {
 			return mt_rand($min, $max);
 		}
 		
@@ -617,11 +597,8 @@ final class PasswordUtil {
 		if (self::secureCompare($dbHash, sha1(sha1($password) . $salt))) {
 			return true;
 		}
-		else if (extension_loaded('hash')) {
-			return self::secureCompare($dbHash, hash('sha256', hash('sha256', $password) . $salt));
-		}
 		
-		return false;
+		return self::secureCompare($dbHash, hash('sha256', hash('sha256', $password) . $salt));
 	}
 	
 	/**

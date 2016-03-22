@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
 /**
@@ -15,7 +16,9 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserEmailCondition extends AbstractTextCondition implements IContentCondition, IUserCondition {
+class UserEmailCondition extends AbstractTextCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * @see	\wcf\system\condition\AbstractTextCondition::$fieldName
 	 */
@@ -27,10 +30,12 @@ class UserEmailCondition extends AbstractTextCondition implements IContentCondit
 	protected $label = 'wcf.user.email';
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		$userList->getConditionBuilder()->add('user_table.email LIKE ?', array('%'.addcslashes($condition->email, '_%').'%'));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		$objectList->getConditionBuilder()->add('user_table.email LIKE ?', array('%'.addcslashes($conditionData['email'], '_%').'%'));
 	}
 	
 	/**

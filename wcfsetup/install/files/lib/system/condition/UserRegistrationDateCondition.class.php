@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -16,7 +17,9 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserRegistrationDateCondition extends AbstractSingleFieldCondition implements IContentCondition, IUserCondition {
+class UserRegistrationDateCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
 	 */
@@ -35,14 +38,16 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 	protected $registrationDateStart = '';
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		if ($condition->registrationDateEnd !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate < ?', array(strtotime($condition->registrationDateEnd) + 86400));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		if (isset($conditionData['registrationDateEnd'])) {
+			$objectList->getConditionBuilder()->add('user_table.registrationDate < ?', array(strtotime($conditionData['registrationDateEnd']) + 86400));
 		}
-		if ($condition->registrationDateStart !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate >= ?', array(strtotime($condition->registrationDateStart)));
+		if (isset($conditionData['registrationDateStart'])) {
+			$objectList->getConditionBuilder()->add('user_table.registrationDate >= ?', array(strtotime($conditionData['registrationDateStart'])));
 		}
 	}
 	
@@ -129,7 +134,7 @@ HTML;
 		if (strlen($this->registrationDateStart)) {
 			$registrationDateStart = @strtotime($this->registrationDateStart);
 			if ($registrationDateStart === false) {
-				$this->errorMessage = 'wcf.user.condition.registrationDate.error.startNotValid';
+				$this->errorMessage = 'wcf.condition.timestamp.error.startNotValid';
 				
 				throw new UserInputException('registrationDate', 'startNotValid');
 			}
@@ -137,14 +142,14 @@ HTML;
 		if (strlen($this->registrationDateEnd)) {
 			$registrationDateEnd = @strtotime($this->registrationDateEnd);
 			if ($registrationDateEnd === false) {
-				$this->errorMessage = 'wcf.user.condition.registrationDate.error.endNotValid';
+				$this->errorMessage = 'wcf.condition.timestamp.error.endNotValid';
 				
 				throw new UserInputException('registrationDate', 'endNotValid');
 			}
 		}
 		
 		if ($registrationDateEnd !== null && $registrationDateStart !== null && $registrationDateEnd < $registrationDateStart) {
-			$this->errorMessage = 'wcf.user.condition.registrationDate.error.endBeforeStart';
+			$this->errorMessage = 'wcf.condition.timestamp.error.endBeforeStart';
 			
 			throw new UserInputException('registrationDate', 'endBeforeStart');
 		}

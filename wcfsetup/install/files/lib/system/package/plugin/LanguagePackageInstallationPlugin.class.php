@@ -254,6 +254,13 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	protected function findExistingItem(array $data) { }
 	
 	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	2.2
+	 */
+	public static function getDefaultFilename() {
+		return 'language/*.xml';
+	}
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {

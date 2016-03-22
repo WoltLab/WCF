@@ -22,13 +22,14 @@ class GroupFormElementContainer extends AbstractFormElementContainer {
 		}
 		
 		return <<<HTML
-<fieldset>
-	<legend>{$this->getLabel()}</legend>
-	
-	<small>{$this->getDescription()}</small>
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{$this->getLabel()}</h2>
+		<small class="sectionDescription">{$this->getDescription()}</small>
+	</header>
 	
 	{$content}
-</fieldset>
+</section>
 HTML;
 	}
 }

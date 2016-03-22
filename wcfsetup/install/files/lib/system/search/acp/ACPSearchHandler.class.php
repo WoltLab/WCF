@@ -4,7 +4,6 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\util\ClassUtil;
 
 /**
  * Handles ACP Search.
@@ -50,7 +49,7 @@ class ACPSearchHandler extends SingletonFactory {
 		
 		foreach ($this->cache as $acpSearchProvider) {
 			$className = $acpSearchProvider->className;
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\search\acp\IACPSearchResultProvider')) {
+			if (!is_subclass_of($className, 'wcf\system\search\acp\IACPSearchResultProvider')) {
 				throw new SystemException("'".$className."' does not implement 'wcf\system\search\acp\IACPSearchResultProvider'");
 			}
 			

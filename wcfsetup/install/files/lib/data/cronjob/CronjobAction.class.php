@@ -28,17 +28,17 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.system.canManageCronjob');
+	protected $permissionsCreate = array('admin.management.canManageCronjob');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.system.canManageCronjob');
+	protected $permissionsDelete = array('admin.management.canManageCronjob');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.system.canManageCronjob');
+	protected $permissionsUpdate = array('admin.management.canManageCronjob');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
@@ -126,10 +126,17 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			
 			// execute cronjob
 			$exception = null;
-			try {
-				$executable->execute(new Cronjob($cronjob->cronjobID));
+			
+			// check if all required options are set for cronjob to be executed
+			// note: a general log is created to avoid confusion why a cronjob
+			// apperently is not executed while that is indeed the correct internal
+			// behavior
+			if ($cronjob->validateOptions()) {
+				try {
+					$executable->execute(new Cronjob($cronjob->cronjobID));
+				}
+				catch (\Exception $exception) { }
 			}
-			catch (\Exception $exception) { }
 			
 			CronjobLogEditor::create(array(
 				'cronjobID' => $cronjob->cronjobID,

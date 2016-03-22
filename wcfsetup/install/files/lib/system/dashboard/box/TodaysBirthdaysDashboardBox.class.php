@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
-use wcf\data\user\UserProfileList;
+use wcf\data\user\UserProfileCache;
 use wcf\page\IPage;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\user\UserBirthdayCache;
@@ -43,15 +43,14 @@ class TodaysBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 			if (isset($userOptions['birthday'])) {
 				$birthdayUserOption = $userOptions['birthday'];
 				
-				$userProfileList = new UserProfileList();
-				$userProfileList->setObjectIDs($userIDs);
-				$userProfileList->readObjects();
+				$userProfiles = UserProfileCache::getInstance()->getUserProfiles($userIDs);
+				
 				$i = 0;
-				foreach ($userProfileList as $userProfile) {
+				foreach ($userProfiles as $userProfile) {
 					if ($i == 10) break;
 					
 					$birthdayUserOption->setUser($userProfile->getDecoratedObject());
-						
+					
 					if (!$userProfile->isProtected() && $birthdayUserOption->isVisible() && substr($userProfile->birthday, 5) == $currentDay) {
 						$this->userProfiles[] = $userProfile;
 						$i++;

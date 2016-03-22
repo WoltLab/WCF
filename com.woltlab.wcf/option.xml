@@ -42,6 +42,9 @@
 					<parent>general</parent>
 					<showorder>3</showorder>
 				</category>
+					<category name="general.system.error">
+						<parent>general.system</parent>
+					</category>
 					<category name="general.system.cookie">
 						<parent>general.system</parent>
 					</category>
@@ -87,6 +90,9 @@
 						<parent>general.cache</parent>
 					</category>
 					<category name="general.cache.memcached">
+						<parent>general.cache</parent>
+					</category>
+					<category name="general.cache.redis">
 						<parent>general.cache</parent>
 					</category>
 				<category name="general.payment">
@@ -159,6 +165,10 @@
 					<category name="security.general.authentication">
 						<parent>security.general</parent>
 					</category>
+					<category name="security.general.secrets">
+						<parent>security.general</parent>
+						<showorder>15</showorder>
+					</category>
 				<category name="security.blacklist">
 					<parent>security</parent>
 				</category>
@@ -201,6 +211,9 @@
 					<category name="message.general.edit">
 						<parent>message.general</parent>
 					</category>
+					<category name="message.general.image">
+						<parent>message.general</parent>
+					</category>
 				
 				<category name="message.attachment">
 					<parent>message</parent>
@@ -231,6 +244,16 @@
 					<category name="dashboard.sidebar.recentActivities">
 						<parent>dashboard.sidebar</parent>
 					</category>
+			
+			<!-- cms -->
+			<category name="cms"></category>
+			<category name="cms.media">
+				<parent>cms</parent>
+			</category>
+			<category name="cms.media.thumbnail">
+				<parent>cms.media</parent>
+			</category>
+			<!-- /cms -->
 		</categories>
 		
 		<options>
@@ -428,19 +451,14 @@
 			</option>
 			
 			<option name="url_legacy_mode">
-				<categoryname>general.page.seo</categoryname>
+				<categoryname>hidden</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>!url_controller_replacement</enableoptions>
 			</option>
 			<option name="url_omit_index_php">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="url_controller_replacement">
-				<categoryname>general.page.seo</categoryname>
-				<optiontype>urlControllerReplacement</optiontype>
 			</option>
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>
@@ -485,6 +503,17 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<selectoptions><![CDATA[mysql:wcf.acp.option.search_engine.mysql]]></selectoptions>
 			</option>
 			<!-- /general.system.search -->
+			
+			<!-- general.system.error -->
+			<option name="exception_privacy">
+				<categoryname>general.system.error</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue><![CDATA[mysql]]></defaultvalue>
+				<selectoptions><![CDATA[public:wcf.acp.option.exception_privacy.public
+reduced:wcf.acp.option.exception_privacy.reduced
+private:wcf.acp.option.exception_privacy.private]]></selectoptions>
+			</option>
+			<!-- /general.system.error-->
 			
 			<!-- general.system.cookie -->
 			<option name="cookie_prefix">
@@ -535,12 +564,14 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>1800</defaultvalue>
 				<minvalue>600</minvalue>
 				<maxvalue>86400</maxvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="user_online_timeout">
 				<categoryname>security.general.session</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>900</defaultvalue>
 				<minvalue>1</minvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="session_validate_ip_address">
 				<categoryname>security.general.session</categoryname>
@@ -572,6 +603,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>7200</defaultvalue>
 				<minvalue>300</minvalue>
 				<maxvalue>86400</maxvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="user_authentication_failure_ip_captcha">
 				<categoryname>security.general.authentication</categoryname>
@@ -597,8 +629,19 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>30</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>365</maxvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /security.general.authentication -->
+			
+			<!-- security.general.secrets -->
+			<option name="signature_secret">
+				<categoryname>security.general.secrets</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+				<allowempty>0</allowempty>
+				<validationpattern>^.{15,}$</validationpattern>
+			</option>
+			<!-- /security.general.secrets -->
 			
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
@@ -787,13 +830,9 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
 debug:wcf.acp.option.mail_send_method.debug]]></selectoptions>
-				<enableoptions><![CDATA[php:mail_use_f_param,!mail_debug_logfile_path,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password
-smtp:!mail_debug_logfile_path,!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_user,mail_smtp_password
-debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
-			</option>
-			<option name="mail_debug_logfile_path">
-				<categoryname>general.mail.send</categoryname>
-				<optiontype>text</optiontype>
+				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
+smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
@@ -806,6 +845,14 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<minvalue>0</minvalue>
 				<maxvalue>65535</maxvalue>
 			</option>
+			<option name="mail_smtp_starttls">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>may</defaultvalue>
+				<selectoptions><![CDATA[none:wcf.acp.option.mail_smtp_starttls.none
+may:wcf.acp.option.mail_smtp_starttls.may
+encrypt:wcf.acp.option.mail_smtp_starttls.encrypt]]></selectoptions>
+			</option>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>text</optiontype>
@@ -817,10 +864,7 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 			<option name="mail_use_f_param">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>boolean</optiontype>
-			</option>
-			<option name="mail_use_formatted_address">
-				<categoryname>general.mail.send</categoryname>
-				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.mail.send -->
 			
@@ -830,14 +874,20 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<optiontype>radioButton</optiontype>
 				<defaultvalue><![CDATA[disk]]></defaultvalue>
 				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
-memcached:wcf.acp.option.cache_source_type.memcached]]></selectoptions>
-				<enableoptions><![CDATA[disk:!cache_source_memcached_host
-memcached:cache_source_memcached_host]]></enableoptions>
+memcached:wcf.acp.option.cache_source_type.memcached
+redis:wcf.acp.option.cache_source_type.redis]]></selectoptions>
+				<enableoptions><![CDATA[disk:!cache_source_memcached_host,!cache_source_redis_host
+memcached:cache_source_memcached_host,!cache_source_redis_host
+redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 			</option>
 			
 			<option name="cache_source_memcached_host">
 				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>textarea</optiontype>
+			</option>
+			<option name="cache_source_redis_host">
+				<categoryname>general.cache.redis</categoryname>
+				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.cache -->
 			
@@ -889,12 +939,14 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue><![CDATA[210]]></defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<option name="attachment_thumbnail_width">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue><![CDATA[280]]></defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			
 			<!-- message.general -->
@@ -937,6 +989,7 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>90</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /message.general.edit -->
 			
@@ -953,6 +1006,22 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /message.general.share -->
+			
+			<!-- message.general.image -->
+			<option name="module_image_proxy">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions><![CDATA[image_proxy_secret]]></enableoptions>
+			</option>
+			<option name="image_proxy_expiration">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>14</defaultvalue>
+				<maxvalue>30</maxvalue>
+				<minvalue>7</minvalue>
+			</option>
+			<!-- /message.general.image -->
 			
 			<!-- message.censorship -->
 			<option name="enable_censorship">
@@ -1061,6 +1130,7 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>years</suffix>
 			</option>
 			<!-- /user.register -->
 			
@@ -1124,12 +1194,14 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>192</defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<option name="max_avatar_height">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>192</defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<!-- /user.avatar -->
 			
@@ -1139,6 +1211,7 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>150</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<!-- /user.signature -->
 			
@@ -1163,6 +1236,7 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>182</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="profile_enable_visitors">
 				<categoryname>user.profile</categoryname>
@@ -1229,6 +1303,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="users_online_record_no_guests">
 				<categoryname>user.list.online</categoryname>
@@ -1260,18 +1335,21 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>14</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="user_cleanup_activity_event_lifetime">
 				<categoryname>user.cleanup</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>60</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="user_cleanup_profile_visitor_lifetime">
 				<categoryname>user.cleanup</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>60</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /user.cleanup -->
 			
@@ -1356,6 +1434,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>useroptions</optiontype>
 				<defaultvalue></defaultvalue>
+				<issortable>1</issortable>
 			</option>
 			
 			<!-- message.general -->
@@ -1403,6 +1482,70 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<maxvalue>100</maxvalue>
 			</option>
 			<!-- /message.general.poll -->
+			
+			<!-- cms.media.thumnail -->
+			<option name="media_small_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>280</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>145</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>400</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_small_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>210</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>145</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>300</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_small_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="media_medium_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>560</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>400</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>900</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_medium_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>420</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>300</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>700</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_medium_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="media_large_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1200</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>900</minvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_large_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>900</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>700</minvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_large_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- cms.media.thumnail -->
 		</options>
 	</import>
 	
@@ -1410,5 +1553,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 		<option name="cache_source_memcached_use_pconnect" />
 		<option name="http_gzip_level" />
 		<option name="enable_pluginstore_widget" />
+		<option name="mail_use_formatted_address" />
+		<option name="mail_debug_logfile_path" />
 	</delete>
 </data>

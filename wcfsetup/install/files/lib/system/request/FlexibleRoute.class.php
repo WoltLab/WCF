@@ -15,6 +15,7 @@ use wcf\system\menu\page\PageMenu;
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
+ * @deprecated  2.2:2.3 Consider using \wcf\system\request\route\DynamicRequestRoute
  */
 class FlexibleRoute implements IRoute {
 	/**
@@ -22,12 +23,6 @@ class FlexibleRoute implements IRoute {
 	 * @var	array<array>
 	 */
 	protected $buildSchema = array();
-	
-	/**
-	 * cached list of transformed controller names
-	 * @var	array<string>
-	 */
-	protected $controllerNames = array();
 	
 	/**
 	 * route is restricted to ACP
@@ -40,12 +35,6 @@ class FlexibleRoute implements IRoute {
 	 * @var	string
 	 */
 	protected $pattern = '';
-	
-	/**
-	 * primary application's abbreviation (e.g. "wbb")
-	 * @var	string
-	 */
-	protected $primaryApplication = '';
 	
 	/**
 	 * list of required components
@@ -146,15 +135,14 @@ class FlexibleRoute implements IRoute {
 			
 			if (!RequestHandler::getInstance()->isACPRequest()) {
 				$landingPage = PageMenu::getInstance()->getLandingPage();
-				if ($this->primaryApplication === '') {
-					$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
-					$this->primaryApplication = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
-				}
 				
 				// check if this is the default controller
 				if (strcasecmp(RouteHandler::getInstance()->getDefaultController($application), $components['controller']) === 0) {
 					// check if this matches the primary application
-					if ($this->primaryApplication === $application) {
+					/*
+					 * TODO: what exactly is this doing?
+					 */
+					/*if ($this->primaryApplication === $application) {
 						if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
 							// skip controller if it matches the default controller
 							$ignoreController = true;
@@ -164,6 +152,7 @@ class FlexibleRoute implements IRoute {
 						// skip default controller
 						$ignoreController = true;
 					}
+					*/
 				}
 				else if (strcasecmp($landingPage->getController(), $components['controller']) === 0) {
 					// landing page
@@ -311,13 +300,6 @@ class FlexibleRoute implements IRoute {
 	 * @return	string
 	 */
 	protected function getControllerName($application, $controller) {
-		if (!isset($this->controllerNames[$controller])) {
-			$controllerName = RequestHandler::getTokenizedController($controller);
-			$alias = (!$this->isACP) ? RequestHandler::getInstance()->getAliasByController($controllerName) : null;
-			
-			$this->controllerNames[$controller] = ($alias) ?: $controllerName;
-		}
-		
-		return $this->controllerNames[$controller];
+		return RequestHandler::getInstance()->getControllerMap()->lookup($controller);
 	}
 }

@@ -325,7 +325,7 @@ class CLIWCF extends WCF {
 	 * @return	string
 	 */
 	public function checkForUpdates() {
-		if (WCF::getSession()->getPermission('admin.system.package.canUpdatePackage') && VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
+		if (WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage') && VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
 			$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 			if (!empty($updates)) {
 				$return = self::getReader()->println(count($updates) . ' update' . (count($updates) > 1 ? 's are' : ' is') . ' available');

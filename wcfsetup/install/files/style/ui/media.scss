@@ -1,0 +1,121 @@
+#mediaManagerMediaUploadButton > .button {
+	margin: 0;
+	text-align: center;
+	width: 100%;
+	
+	> input {
+		width: 100%;
+	}
+}
+
+#mediaManagerMediaList {
+	font-size: 0;
+	
+	@include clearfix;
+	
+	> li {
+		float: left;
+		height: 160px;
+		width: 160px;
+		position: relative;
+		border: 1px solid #aaa;
+		overflow: hidden;
+		font-size: 1rem;
+		margin: 0 $wcfGapSmall $wcfGapSmall 0;
+		
+		&:hover {
+			> .buttonGroupNavigation {
+				height: auto;
+				padding: $wcfGapSmall;
+			}
+		}
+		
+		&.jsMarked {
+			> .mediaInformation,
+			> .buttonGroupNavigation {
+				// TODO background-color: fade($wcfSelectedBackgroundColor, 90%);
+				// TODO color: $wcfSelectedColor;
+				
+				a {
+					//TODO: color: $wcfSelectedColor;
+				}
+				
+				.icon {
+					//TODO: color: $wcfSelectedColor;
+					text-shadow: none;
+				}
+			}
+		}
+		
+		&.jsSelected {
+			// @todo colors
+			> .mediaInformation,
+			> .buttonGroupNavigation {
+				background-color: fade-out(green, 10%);
+				color: white;
+				
+				a {
+					color: white;
+				}
+				
+				.icon {
+					color: white;
+					text-shadow: none;
+				}
+			}
+		}
+		
+		&.uploadFailed {
+			cursor: pointer;
+			
+			> .mediaInformation {
+				background-color: rgba(242, 222, 222, 0.6); // todo
+				color: rgb(169, 68, 66); // todo
+			}
+		}
+		
+		> .mediaThumbnail {
+			height: 144px;
+			width: 144px;
+			padding: 8px;
+		}
+		
+		> .mediaInformation {
+			position: absolute;
+			bottom: 0;
+			background: rgba(0,0,0,0.6); // TOOD
+			color: #fff;
+			width: 100%;
+			padding: $wcfGapSmall;
+			box-sizing: border-box;
+			
+			@include wcfFontSmall;
+		}
+		
+		> .buttonGroupNavigation {
+			position: absolute;
+			top: 0;
+			right: 0;
+			background: rgba(0,0,0,0.6); // TOOD
+			height: 0;
+			overflow: hidden;
+			
+			/* TODO: transition */
+			
+			.icon {
+				color: #fff;
+				@include textShadow(#000);
+			}
+		}
+	}
+}
+
+#mediaEditor {
+	#mediaThumbnail {
+		text-align: center;
+		
+		+ .box48 > dl {
+			font-size: $wcfFontSizeSmall;
+		}
+	}
+}

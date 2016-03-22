@@ -66,8 +66,8 @@
 	</script>
 {/if}
 
-<header class="boxHeadline">
-	<h1>{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -76,7 +76,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canAddCategory()}
-						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
+						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtons'}
@@ -87,7 +87,7 @@
 </div>
 
 {hascontent}
-	<section id="categoryList" class="container containerPadding marginTop{if $objectType->getProcessor()->canEditCategory()} sortableListContainer{/if}">
+	<div id="categoryList" class="section{if $objectType->getProcessor()->canEditCategory()} sortableListContainer{/if}">
 		<ol class="categoryList sortableList" data-object-id="0">
 			{content}
 				{assign var=oldDepth value=0}
@@ -106,15 +106,15 @@
 							
 							<span class="statusDisplay buttons">
 								{if $objectType->getProcessor()->canEditCategory()}
-									<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
+									<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 								{/if}
 								
 								{if $objectType->getProcessor()->canDeleteCategory()}
-									<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$category->categoryID}" data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}"></span>
+									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$category->categoryID}" data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}"></span>
 								{/if}
 								
 								{if $objectType->getProcessor()->canEditCategory()}
-									<span class="icon icon16 icon-check{if $category->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$category->categoryID}"></span>
+									<span class="icon icon16 fa-{if !$category->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$category->categoryID}"></span>
 								{/if}
 								
 								{event name='itemButtons'}
@@ -130,7 +130,7 @@
 				{section name=i loop=$oldDepth}</ol></li>{/section}
 			{/content}
 		</ol>
-	</section>
+	</div>
 	
 	<div class="formSubmit">
 		<button class="button" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>

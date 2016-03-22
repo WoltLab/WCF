@@ -3,8 +3,12 @@ namespace wcf\data\moderation\queue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\ILinkableObject;
+use wcf\data\ITitledObject;
 use wcf\data\IUserContent;
+use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\visitTracker\VisitTracker;
 
@@ -18,15 +22,15 @@ use wcf\system\visitTracker\VisitTracker;
  * @subpackage	data.moderation.queue
  * @category	Community Framework
  */
-class ViewableModerationQueue extends DatabaseObjectDecorator {
+class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkableObject, ITitledObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\moderation\queue\ModerationQueue';
+	protected static $baseClass = ModerationQueue::class;
 	
 	/**
 	 * affected object
-	 * @var	\wcf\data\IUserContent
+	 * @var	IUserContent
 	 */
 	protected $affectedObject = null;
 	
@@ -38,32 +42,28 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	
 	/**
 	 * user profile object
-	 * @var	\wcf\data\user\UserProfile
+	 * @var	UserProfile
 	 */
 	protected $userProfile = null;
 	
 	/**
 	 * Sets link for viewing/editing.
 	 * 
-	 * @param	\wcf\data\IUserContent		$object
+	 * @param	IUserContent		$object
 	 */
 	public function setAffectedObject(IUserContent $object) {
 		$this->affectedObject = $object;
 	}
 	
 	/**
-	 * Returns the link for viewing/editing this object.
-	 * 
-	 * @return	string
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		return ModerationQueueManager::getInstance()->getLink($this->objectTypeID, $this->queueID);
 	}
 	
 	/**
-	 * Returns the title for this entry.
-	 * 
-	 * @return	string
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return ($this->affectedObject === null ? '' : $this->affectedObject->getTitle());
@@ -72,7 +72,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	/**
 	 * Returns affected object.
 	 * 
-	 * @return	\wcf\data\IUserContent
+	 * @return	IUserContent
 	 */
 	public function getAffectedObject() {
 		return $this->affectedObject;
@@ -81,7 +81,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	/**
 	 * Sets associated user profile object.
 	 * 
-	 * @param	\wcf\data\user\UserProfile	$userProfile
+	 * @param	UserProfile	$userProfile
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		if ($this->affectedObject !== null && ($userProfile->userID == $this->affectedObject->getUserID())) {
@@ -92,15 +92,15 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	/**
 	 * Returns associated user profile object.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getUserProfile() {
 		if ($this->affectedObject !== null && $this->userProfile === null) {
 			if ($this->affectedObject->getUserID()) {
-				$this->userProfile = UserProfile::getUserProfile($this->affectedObject->getUserID());
+				$this->userProfile = UserProfileCache::getInstance()->getUserProfile($this->affectedObject->getUserID());
 			}
 			else {
-				$this->userProfile = new UserProfile(new User(null, array()));
+				$this->userProfile = new UserProfile(new User(null, []));
 			}
 		}
 		
@@ -134,11 +134,11 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	 * Returns a viewable moderation queue entry.
 	 * 
 	 * @param	integer		$queueID
-	 * @return	\wcf\data\moderation\queue\ViewableModerationQueue
+	 * @return	ViewableModerationQueue
 	 */
 	public static function getViewableModerationQueue($queueID) {
 		$queueList = new ViewableModerationQueueList();
-		$queueList->getConditionBuilder()->add("moderation_queue.queueID = ?", array($queueID));
+		$queueList->getConditionBuilder()->add("moderation_queue.queueID = ?", [$queueID]);
 		$queueList->sqlLimit = 1;
 		$queueList->readObjects();
 		$queues = $queueList->getObjects();
@@ -152,7 +152,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getFormattedMessage() {
-		return nl2br(htmlspecialchars($this->message));
+		return SimpleMessageParser::getInstance()->parse($this->message, true, false);
 	}
 	
 	/**

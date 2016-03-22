@@ -1,8 +1,9 @@
 <?php
 namespace wcf\data\user\profile\menu\item;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
-use wcf\util\ClassUtil;
 
 /**
  * Represents an user profile menu item.
@@ -15,6 +16,9 @@ use wcf\util\ClassUtil;
  * @category	Community Framework
  */
 class UserProfileMenuItem extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * content manager
 	 * @var	\wcf\system\menu\user\profile\content\IUserProfileContent
@@ -51,11 +55,11 @@ class UserProfileMenuItem extends DatabaseObject {
 				throw new SystemException("Unable to find class '".$this->className."'");
 			}
 			
-			if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
+			if (!is_subclass_of($this->className, 'wcf\system\SingletonFactory')) {
 				throw new SystemException("'".$this->className."' does not extend 'wcf\system\SingletonFactory'");
 			}
 			
-			if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\menu\user\profile\content\IUserProfileMenuContent')) {
+			if (!is_subclass_of($this->className, 'wcf\system\menu\user\profile\content\IUserProfileMenuContent')) {
 				throw new SystemException("'".$this->className."' does not implement 'wcf\system\menu\user\profile\content\IUserProfileMenuContent'");
 			}
 			

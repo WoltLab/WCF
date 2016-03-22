@@ -38,13 +38,13 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{capture assign='sidebar'}
+{capture assign='sidebarRight'}
 	{assign var=encodedLetter value=$letter|rawurlencode}
-	<div class="jsOnly">
+	<section class="jsOnly box">
 		<form method="post" action="{link controller='UserSearch'}{/link}">
-			<fieldset>
-				<legend><label for="searchUsername">{lang}wcf.user.search{/lang}</label></legend>
-				
+			<h2 class="boxTitle">{lang}wcf.user.search{/lang}</h2>
+			
+			<div class="boxContent">
 				<dl>
 					<dt></dt>
 					<dd>
@@ -52,26 +52,28 @@
 						{@SECURITY_TOKEN_INPUT_TAG}
 					</dd>
 				</dl>
-			</fieldset>
+			</div>
 		</form>
-	</div>
+	</section>
 	
-	<fieldset>
-		<legend>{lang}wcf.user.members.sort.letters{/lang}</legend>
-				
-		<ul class="buttonList smallButtons letters">
-			{foreach from=$letters item=__letter}
-				<li><a href="{if $searchID}{link controller='MembersList' id=$searchID}sortField={$sortField}&sortOrder={$sortOrder}&letter={$__letter|rawurlencode}{/link}{else}{link controller='MembersList'}sortField={$sortField}&sortOrder={$sortOrder}&letter={$__letter|rawurlencode}{/link}{/if}" class="button small{if $letter == $__letter} active{/if}">{$__letter}</a></li>
-			{/foreach}
-			{if !$letter|empty}<li><a href="{if $searchID}{link controller='MembersList' id=$searchID}sortField={$sortField}&sortOrder={$sortOrder}{/link}{else}{link controller='MembersList'}sortField={$sortField}&sortOrder={$sortOrder}{/link}{/if}" class="button small">{lang}wcf.user.members.sort.letters.all{/lang}</a></li>{/if}
-		</ul>
-	</fieldset>
+	<section class="box">
+		<h2 class="boxTitle">{lang}wcf.user.members.sort.letters{/lang}</h2>
 		
-	<div>
+		<div class="boxContent">
+			<ul class="buttonList smallButtons letters">
+				{foreach from=$letters item=__letter}
+					<li><a href="{if $searchID}{link controller='MembersList' id=$searchID}sortField={$sortField}&sortOrder={$sortOrder}&letter={$__letter|rawurlencode}{/link}{else}{link controller='MembersList'}sortField={$sortField}&sortOrder={$sortOrder}&letter={$__letter|rawurlencode}{/link}{/if}" class="button small{if $letter == $__letter} active{/if}">{$__letter}</a></li>
+				{/foreach}
+				{if !$letter|empty}<li><a href="{if $searchID}{link controller='MembersList' id=$searchID}sortField={$sortField}&sortOrder={$sortOrder}{/link}{else}{link controller='MembersList'}sortField={$sortField}&sortOrder={$sortOrder}{/link}{/if}" class="button small">{lang}wcf.user.members.sort.letters.all{/lang}</a></li>{/if}
+			</ul>
+		</div>	
+	</section>
+
+	<section class="box">
 		<form method="post" action="{if $searchID}{link controller='MembersList' id=$searchID}{/link}{else}{link controller='MembersList'}{/link}{/if}">
-			<fieldset>
-				<legend><label for="sortField">{lang}wcf.user.members.sort{/lang}</label></legend>
-				
+			<h2 class="boxTitle">{lang}wcf.user.members.sort{/lang}</h2>
+			
+			<div class="boxContent">
 				<dl>
 					<dt></dt>
 					<dd>
@@ -89,23 +91,23 @@
 						</select>
 					</dd>
 				</dl>
-			</fieldset>
-			
-			<div class="formSubmit">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				<input type="hidden" name="letter" value="{$letter}" />
-				{@SID_INPUT_TAG}
+				
+				<div class="formSubmit">
+					<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+					<input type="hidden" name="letter" value="{$letter}" />
+					{@SID_INPUT_TAG}
+				</div>
 			</div>
 		</form>
-	</div>
+	</section>
 	
 	{@$__boxSidebar}
 {/capture}
 
-{include file='header' sidebarOrientation='right'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{if $searchID}{lang}wcf.user.search.results{/lang}{else}{lang}wcf.user.members{/lang}{/if} <span class="badge">{#$items}</span></h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{if $searchID}{lang}wcf.user.search.results{/lang}{else}{lang}wcf.user.members{/lang}{/if} <span class="badge">{#$items}</span></h1>
 </header>
 
 {include file='userNotice'}
@@ -129,7 +131,7 @@
 </div>
 
 {if $items}
-	<div class="container marginTop">
+	<div class="section sectionContainerList">
 		<ol class="containerList userList">
 			{foreach from=$objects item=user}
 				{include file='userListItem'}

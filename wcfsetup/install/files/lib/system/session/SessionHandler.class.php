@@ -52,6 +52,12 @@ class SessionHandler extends SingletonFactory {
 	protected $groupData = null;
 	
 	/**
+	 * true if client provided a valid session cookie
+	 * @var	boolean
+	 */
+	protected $hasValidCookie = false;
+	
+	/**
 	 * language id for active user
 	 * @var	integer
 	 */
@@ -157,6 +163,26 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Sets a boolean value to determine if the client provided a valid session cookie.
+	 * 
+	 * @param	boolean		$hasValidCookie
+	 * @since	2.2
+	 */
+	public function setHasValidCookie($hasValidCookie) {
+		$this->hasValidCookie = $hasValidCookie;
+	}
+	
+	/**
+	 * Returns true if client provided a valid session cookie.
+	 * 
+	 * @return	boolean
+	 * @since	2.2
+	 */
+	public function hasValidCookie() {
+		return $this->hasValidCookie;
+	}
+	
+	/**
 	 * Loads an existing session or creates a new one.
 	 * 
 	 * @param	string		$sessionEditorClassName
@@ -213,6 +239,7 @@ class SessionHandler extends SingletonFactory {
 		$oldSessionID = $this->session->sessionID;
 		$newSessionID = StringUtil::getRandomID();
 		
+		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->update(array(
 			'sessionID' => $newSessionID
@@ -341,6 +368,7 @@ class SessionHandler extends SingletonFactory {
 	 * Returns the value of a session variable.
 	 * 
 	 * @param	string		$key
+	 * @return      mixed
 	 */
 	public function getVar($key) {
 		if (isset($this->variables[$key])) {
@@ -570,6 +598,9 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Checks if the active user has the given permissions and throws a
 	 * PermissionDeniedException if that isn't the case.
+	 * 
+	 * @param       array<string>   $permissions    list of permissions where each one must pass
+	 * @throws      PermissionDeniedException
 	 */
 	public function checkPermissions(array $permissions) {
 		foreach ($permissions as $permission) {
@@ -651,7 +682,7 @@ class SessionHandler extends SingletonFactory {
 	 * Stores a new user object in this session, e.g. a user was guest because not
 	 * logged in, after the login his old session is used to store his full data.
 	 * 
-	 * @param	\wcf\data\userUser		$user
+	 * @param	\wcf\data\user\User		$user
 	 * @param	boolean				$hideSession	if true, database won't be updated
 	 */
 	public function changeUser(User $user, $hideSession = false) {
@@ -672,6 +703,7 @@ class SessionHandler extends SingletonFactory {
 			
 			if (!$hideSession) {
 				// update session
+				/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 				$sessionEditor = new $this->sessionEditorClassName($this->session);
 				
 				$this->register('__changeSessionID', true);
@@ -713,6 +745,9 @@ class SessionHandler extends SingletonFactory {
 		$this->languageID = $this->user->languageID;
 		$this->styleID = $this->user->styleID;
 		
+		// change language
+		WCF::setLanguage($this->languageID ?: 0);
+		
 		// in some cases the language id can be stuck in the session variables
 		$this->unregister('languageID');
 		
@@ -728,7 +763,7 @@ class SessionHandler extends SingletonFactory {
 	 * @param	\wcf\data\user\User	$user
 	 */
 	protected function changeUserVirtual(User $user) {
-		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
+		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 		
 		switch ($user->userID) {
 			//
@@ -853,6 +888,7 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		// update session
+		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->update($data);
 		
@@ -869,6 +905,7 @@ class SessionHandler extends SingletonFactory {
 		$this->disableUpdate();
 		
 		// update last activity time
+		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->update(array(
 			'lastActivityTime' => TIME_NOW
@@ -900,6 +937,7 @@ class SessionHandler extends SingletonFactory {
 		$this->changeUser(new User(null));
 		
 		// 2nd: Actually remove session
+		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->delete();
 		
@@ -952,12 +990,12 @@ class SessionHandler extends SingletonFactory {
 	 */
 	public static function resetSessions(array $userIDs = array()) {
 		if (!empty($userIDs)) {
-			UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
-			UserStorageHandler::getInstance()->reset($userIDs, 'languageIDs', 1);
+			UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs');
+			UserStorageHandler::getInstance()->reset($userIDs, 'languageIDs');
 		}
 		else {
-			UserStorageHandler::getInstance()->resetAll('groupIDs', 1);
-			UserStorageHandler::getInstance()->resetAll('languageIDs', 1);
+			UserStorageHandler::getInstance()->resetAll('groupIDs');
+			UserStorageHandler::getInstance()->resetAll('languageIDs');
 		}
 	}
 	

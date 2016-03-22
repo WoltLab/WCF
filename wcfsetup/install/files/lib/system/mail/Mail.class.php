@@ -14,6 +14,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.mail
  * @category	Community Framework
+ * @deprecated	The Community Framework < 2.2 mail API is deprecated in favor of \wcf\system\email\*.
  */
 class Mail {
 	/**
@@ -159,11 +160,7 @@ class Mail {
 			$this->header .= 'Content-Type: '.$this->getContentType().'; charset=UTF-8'.self::$lineEnding;
 		}
 		
-		// until PHP 5.3.4 mb_send_mail() appends an extra MIME-Version header
-		// @see: https://bugs.php.net/bug.php?id=52681
-		if (MAIL_SEND_METHOD != 'php' || version_compare(PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION, '5.3.4', '>=')) {
-			$this->header .= 'MIME-Version: 1.0'.self::$lineEnding;
-		}
+		$this->header .= 'MIME-Version: 1.0'.self::$lineEnding;
 		
 		return $this->header;
 	}
@@ -245,11 +242,6 @@ class Mail {
 	 * @return	string
 	 */
 	public static function buildAddress($name, $email, $encodeName = true) {
-		if (!empty($name) && MAIL_USE_FORMATTED_ADDRESS) {
-			if ($encodeName) $name = self::encodeMIMEHeader($name);
-			if (!preg_match('/^[a-z0-9 ]*$/i', $name)) return '"'.str_replace('"', '\"', $name).'" <'.$email.'>';
-			else return $name . ' <'.$email.'>';
-		}
 		return $email;
 	}
 	

@@ -65,13 +65,8 @@ class Tag extends DatabaseObject implements IRouteController {
 	 * @return	string
 	 */
 	public static function buildString(array $tags, $separator = ', ') {
-		$string = '';
-		foreach ($tags as $tag) {
-			if (!empty($string)) $string .= $separator;
-			$string .= (is_object($tag) ? $tag->__toString() : $tag);
-		}
-		
-		return $string;
+		// TODO: This method seems to be unused and unnecessary, as it is a simply wrapper around implode now
+		return implode($separator, $tags);
 	}
 	
 	/**

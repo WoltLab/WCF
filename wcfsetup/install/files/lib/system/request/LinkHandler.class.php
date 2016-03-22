@@ -2,10 +2,11 @@
 namespace wcf\system\request;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\menu\page\PageMenu;
-use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -21,21 +22,22 @@ use wcf\util\StringUtil;
 class LinkHandler extends SingletonFactory {
 	/**
 	 * regex object to filter title
-	 * @var	\wcf\system\RegEx
+	 * @var	RegEx
 	 */
-	protected $titleRegex = null;
+	protected $titleRegex;
 	
 	/**
 	 * title search strings
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $titleSearch = array();
+	protected $titleSearch = [];
 	
 	/**
 	 * title replacement strings
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $titleReplace = array();
+	protected $titleReplace = [];
+	
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -62,11 +64,11 @@ class LinkHandler extends SingletonFactory {
 	 * @param	string		$url
 	 * @return	string
 	 */
-	public function getLink($controller = null, array $parameters = array(), $url = '') {
+	public function getLink($controller = null, array $parameters = [], $url = '') {
 		$abbreviation = 'wcf';
 		$anchor = '';
 		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
-		$forceWCF = $isRaw = false;
+		$isRaw = false;
 		$appendSession = $encodeTitle = true;
 		
 		// enforce a certain level of sanitation and protection for links embedded in emails
@@ -104,9 +106,7 @@ class LinkHandler extends SingletonFactory {
 			unset($parameters['forceFrontend']);
 		}
 		if (isset($parameters['forceWCF'])) {
-			if ($parameters['forceWCF'] && $isACP) {
-				$forceWCF = true;
-			}
+			/** @deprecated 2.2 */
 			unset($parameters['forceWCF']);
 		}
 		
@@ -127,7 +127,7 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
-				return PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
+				return '';// PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
 			}
 		}
 		
@@ -155,24 +155,21 @@ class LinkHandler extends SingletonFactory {
 			
 			// trim to 80 characters
 			$parameters['title'] = rtrim(mb_substr($parameters['title'], 0, 80), '-');
-			
-			if (!URL_LEGACY_MODE) {
-				$parameters['title'] = mb_strtolower($parameters['title']);
-			}
+			$parameters['title'] = mb_strtolower($parameters['title']);
 			
 			// encode title
 			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
 		}
 		
 		$parameters['controller'] = $controller;
-		$routeURL = RouteHandler::getInstance()->buildRoute($parameters, $isACP);
+		$routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
 		}
 		
 		// encode certain characters
 		if (!empty($url)) {
-			$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
+			$url = str_replace(['[', ']'], ['%5B', '%5D'], $url);
 		}
 		
 		$url = $routeURL . $url;
@@ -184,28 +181,14 @@ class LinkHandler extends SingletonFactory {
 		
 		// handle applications
 		if (!PACKAGE_ID) {
-			$url = RouteHandler::getHost() . RouteHandler::getPath(array('acp')) . ($isACP ? 'acp/' : '') . $url;
+			$url = RouteHandler::getHost() . RouteHandler::getPath(['acp']) . ($isACP ? 'acp/' : '') . $url;
 		}
 		else {
 			if (RequestHandler::getInstance()->inRescueMode()) {
-				$pageURL = RouteHandler::getHost() . str_replace('//', '/', RouteHandler::getPath(array('acp')));
+				$pageURL = RouteHandler::getHost() . str_replace('//', '/', RouteHandler::getPath(['acp']));
 			}
 			else {
-				// try to resolve abbreviation
-				$application = null;
-				if ($abbreviation != 'wcf') {
-					$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
-				}
-				
-				// fallback to primary application if abbreviation is 'wcf' or unknown
-				if ($forceWCF) {
-					$application = ApplicationHandler::getInstance()->getWCF();
-				}
-				else if ($application === null) {
-					$application = ApplicationHandler::getInstance()->getPrimaryApplication();
-				}
-				
-				$pageURL = $application->getPageURL();
+				$pageURL = ApplicationHandler::getInstance()->getApplication($abbreviation)->getPageURL();
 			}
 			
 			$url = $pageURL . ($isACP ? 'acp/' : '') . $url;
@@ -215,5 +198,57 @@ class LinkHandler extends SingletonFactory {
 		$url .= $anchor;
 		
 		return $url;
+	}
+	
+	/**
+	 * Returns the full URL to a CMS page. The `$languageID` parameter is optional and if not
+	 * present (or the integer value `-1` is given) will cause the handler to pick the correct
+	 * language version based upon the user's language.
+	 *
+	 * Passing in an illegal page id will cause this method to fail silently, returning an
+	 * empty string.
+	 * 
+	 * @param	integer		$pageID		page id
+	 * @param	integer		$languageID	language id, optional
+	 * @return	string		full URL of empty string if `$pageID` is invalid
+	 * @throws	\wcf\system\exception\SystemException
+	 * @since	2.2
+	 */
+	public function getCmsLink($pageID, $languageID = -1) {
+		// use current language
+		if ($languageID === -1) {
+			$data = ControllerMap::getInstance()->lookupCmsPage($pageID, WCF::getLanguage()->languageID);
+			
+			// no result
+			if ($data === null) {
+				// attempt to use the default language instead
+				if (LanguageFactory::getInstance()->getDefaultLanguageID() != WCF::getLanguage()->languageID) {
+					$data = ControllerMap::getInstance()->lookupCmsPage($pageID, LanguageFactory::getInstance()->getDefaultLanguageID());
+				}
+				
+				// no result, possibly this is a non-multilingual page
+				if ($data === null) {
+					$data = ControllerMap::getInstance()->lookupCmsPage($pageID, null);
+				}
+				
+				// still no result, page does not exist at all
+				if ($data === null) {
+					return '';
+				}
+			}
+		}
+		else {
+			$data = ControllerMap::getInstance()->lookupCmsPage($pageID, $languageID);
+			
+			// no result, page does not exist or at least not in the given language
+			if ($data === null) {
+				return '';
+			}
+		}
+		
+		return $this->getLink($data['controller'], [
+			'application' => $data['application'],
+			'forceFrontend' => true
+		]);
 	}
 }

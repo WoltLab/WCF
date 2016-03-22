@@ -7,7 +7,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Handles clipboard-related actions.
@@ -289,10 +288,9 @@ class ClipboardHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$page
 	 * @param	integer		$pageObjectID
-	 * @param	array		$containerData
 	 * @return	array<array>
 	 */
-	public function getEditorItems($page, $pageObjectID, $containerData) {
+	public function getEditorItems($page, $pageObjectID) {
 		$this->pageObjectID = 0;
 		
 		// ignore unknown pages
@@ -321,7 +319,7 @@ class ClipboardHandler extends SingletonFactory {
 			$actionClassName = $actionObject->actionClassName;
 			if (!isset($actions[$actionClassName])) {
 				// validate class
-				if (!ClassUtil::isInstanceOf($actionClassName, 'wcf\system\clipboard\action\IClipboardAction')) {
+				if (!is_subclass_of($actionClassName, 'wcf\system\clipboard\action\IClipboardAction')) {
 					throw new SystemException("'".$actionClassName."' does not implement 'wcf\system\clipboard\action\IClipboardAction'");
 				}
 				
@@ -341,24 +339,15 @@ class ClipboardHandler extends SingletonFactory {
 			$typeName = $actionData['object']->getTypeName();
 			if (!isset($this->markedItems[$typeName]) || empty($this->markedItems[$typeName])) continue;
 			
-			$typeData = array();
-			if (isset($containerData[$typeName])) {
-				$typeData = $containerData[$typeName];
-			}
-			
-			// filter objects by type data
-			$objects = $actionData['object']->filterObjects($this->markedItems[$typeName], $typeData);
-			if (empty($objects)) continue;
-			
 			if (!isset($editorData[$typeName])) {
 				$editorData[$typeName] = array(
-					'label' => $actionData['object']->getEditorLabel($objects),
+					'label' => $actionData['object']->getEditorLabel($this->markedItems[$typeName]),
 					'items' => array()
 				);
 			}
 			
 			foreach ($actionData['actions'] as $actionObject) {
-				$data = $actionData['object']->execute($objects, $actionObject);
+				$data = $actionData['object']->execute($this->markedItems[$typeName], $actionObject);
 				if ($data === null) {
 					continue;
 				}

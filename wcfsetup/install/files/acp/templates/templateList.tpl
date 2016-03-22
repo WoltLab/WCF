@@ -20,18 +20,18 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.template.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.template.list{/lang}</h1>
 </header>
 
 {include file='formError'}
 
 <form method="post" action="{link controller='TemplateList'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
-			
-			<dl>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap">
+			<dl class="col-xs-12 col-md-4">
 				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
 				<dd>
 					<select name="templateGroupID" id="templateGroupID">
@@ -41,7 +41,7 @@
 				</dd>
 			</dl>
 			
-			<dl>
+			<dl class="col-xs-12 col-md-4">
 				<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
 				<dd>
 					<select name="application" id="application">
@@ -53,14 +53,16 @@
 				</dd>
 			</dl>
 			
-			<dl>
+			<dl class="col-xs-12 col-md-4">
 				<dt><label for="searchTemplateName">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
 					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" class="long" />
 				</dd>
 			</dl>
-		</fieldset>
-	</div>
+			
+			{event name='filterFields'}
+		</div>
+	</section>
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
@@ -78,7 +80,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -86,11 +88,7 @@
 </div>
 
 {if $objects|count}
-	<div id="templateTableContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.template.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div id="templateTableContainer" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -106,16 +104,16 @@
 				{foreach from=$objects item=template}
 					<tr class="jsTemplateRow">
 						<td class="columnIcon">
-							<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip"><span class="icon icon16 icon-copy"></span></a>
+							<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip"><span class="icon icon16 fa-files-o"></span></a>
 							
 							{if $template->templateGroupID}
-								<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip"><span class="icon icon16 icon-exchange"></span></a>
-								<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$template->templateID}" data-confirm-message="{lang}wcf.acp.template.delete.sure{/lang}"></span>
+								<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip"><span class="icon icon16 fa-exchange"></span></a>
+								<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$template->templateID}" data-confirm-message="{lang}wcf.acp.template.delete.sure{/lang}"></span>
 							{else}
-								<span class="icon icon16 icon-exchange disabled" title="{lang}wcf.acp.template.diff{/lang}"></span>
-								<span class="icon icon16 icon-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
-								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="icon icon16 fa-exchange disabled" title="{lang}wcf.acp.template.diff{/lang}"></span>
+								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -136,7 +134,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+				<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

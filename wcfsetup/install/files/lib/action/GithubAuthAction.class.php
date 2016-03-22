@@ -78,7 +78,7 @@ class GithubAuthAction extends AbstractAction {
 			}
 			
 			// check whether a user is connected to this github account
-			$user = $this->getUser($userData['id']);
+			$user = User::getUserByAuthData('github:'.$userData['id']);
 			if (!$user->userID) {
 				$user = $this->getUser($data['access_token']);
 				$userEditor = new UserEditor($user);
@@ -165,27 +165,5 @@ class GithubAuthAction extends AbstractAction {
 		HeaderUtil::redirect("https://github.com/login/oauth/authorize?client_id=".rawurlencode(StringUtil::trim(GITHUB_PUBLIC_KEY))."&scope=".rawurlencode('user:email')."&state=".$token);
 		$this->executed();
 		exit;
-	}
-	
-	/**
-	 * Fetches the User with the given identifier.
-	 * 
-	 * @param	string			$identifier
-	 * @return	\wcf\data\user\User
-	 */
-	public function getUser($identifier) {
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user
-			WHERE	authData = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('github:'.$identifier));
-		$row = $statement->fetchArray();
-		
-		if ($row === false) {
-			$row = array('userID' => 0);
-		}
-		
-		$user = new User($row['userID']);
-		return $user;
 	}
 }

@@ -1,0 +1,70 @@
+@mixin wcfFontDefault {
+	font-weight: 400;
+	
+	@include large-screen-only {
+		font-size: $wcfFontSizeDefault;
+	}
+	
+	@include small-screen-only {
+		font-size: 14px;
+	}
+}
+
+@mixin wcfFontSmall {
+	font-weight: 400;
+	
+	@include large-screen-only {
+		font-size: $wcfFontSizeSmall;
+	}
+	
+	@include small-screen-only {
+		font-size: 12px;
+	}
+}
+
+@mixin wcfFontBold {
+	font-weight: 600;
+}
+
+@mixin wcfFontHeadline {
+	font-weight: 400;
+	line-height: 1.28;
+	
+	@include large-screen-only {
+		font-size: $wcfFontSizeHeadline;
+	}
+	
+	@include small-screen-only {
+		font-size: 18px;
+	}
+}
+
+@mixin wcfFontSection {
+	font-weight: 300;
+	line-height: 1.28;
+	
+	@include large-screen-only {
+		font-size: $wcfFontSizeSection;
+	}
+	
+	@include small-screen-only {
+		font-size: 20px;
+	}
+}
+
+@mixin wcfFontTitle {
+	font-weight: 300;
+	line-height: 1.28;
+	
+	@include large-screen-only {
+		font-size: $wcfFontSizeTitle;
+	}
+	
+	@include small-screen-only {
+		font-size: 23px;
+	}
+}
+
+@mixin wcfLineHeight {
+	line-height: $wcfFontLineHeight;
+}

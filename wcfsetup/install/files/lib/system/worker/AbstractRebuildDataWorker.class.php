@@ -5,7 +5,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Abstract implementation of rebuild data worker.
@@ -50,7 +49,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermissions(array('admin.system.canRebuildData'));
+		WCF::getSession()->checkPermissions(array('admin.management.canRebuildData'));
 	}
 	
 	/**
@@ -92,7 +91,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 			throw new SystemException('DatabaseObjectList class name not specified.');
 		}
 		
-		if (!ClassUtil::isInstanceOf($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
+		if (!is_subclass_of($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
 			throw new SystemException("'".$this->objectListClassName."' does not extend 'wcf\data\DatabaseObjectList'");
 		}
 		

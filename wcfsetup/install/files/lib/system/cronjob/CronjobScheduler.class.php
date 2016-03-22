@@ -7,7 +7,6 @@ use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Provides functions to execute cronjobs.
@@ -67,11 +66,20 @@ class CronjobScheduler extends SingletonFactory {
 			));
 			$logEditor = new CronjobLogEditor($log);
 			
-			try {
-				$this->executeCronjob($cronjobEditor, $logEditor);
+			// check if all required options are set for cronjob to be executed
+			// note: a general log is created to avoid confusion why a cronjob
+			// apperently is not executed while that is indeed the correct internal
+			// behavior
+			if ($cronjobEditor->validateOptions()) {
+				try {
+					$this->executeCronjob($cronjobEditor, $logEditor);
+				}
+				catch (SystemException $e) {
+					$this->logResult($logEditor, $e);
+				}
 			}
-			catch (SystemException $e) {
-				$this->logResult($logEditor, $e);
+			else {
+				$this->logResult($logEditor);
 			}
 			
 			// get time of next execution
@@ -164,7 +172,7 @@ class CronjobScheduler extends SingletonFactory {
 		}
 		
 		// verify class signature
-		if (!(ClassUtil::isInstanceOf($className, 'wcf\system\cronjob\ICronjob'))) {
+		if (!(is_subclass_of($className, 'wcf\system\cronjob\ICronjob'))) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\cronjob\ICronjob'");
 		}
 		

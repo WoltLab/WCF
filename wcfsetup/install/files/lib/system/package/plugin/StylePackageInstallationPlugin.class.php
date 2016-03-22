@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\style\StyleEditor;
 use wcf\data\style\StyleList;
 use wcf\system\event\EventHandler;
+use wcf\system\style\StyleHandler;
 
 /**
  * Installs, updates and deletes styles.
@@ -20,7 +21,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 */
 	public $className = 'wcf\data\style\StyleEditor';
 	
-	/** 
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
@@ -29,8 +30,11 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// extract style tar
 		$filename = $this->installation->getArchive()->extractTar($this->instruction['value'], 'style_');
 		
+		// searches for non-tainted style for updating
+		$styleEditor = StyleHandler::getInstance()->getStyleByName($this->installation->getPackageName(), false);
+		
 		// import style
-		$style = StyleEditor::import($filename, $this->installation->getPackageID());
+		$style = StyleEditor::import($filename, $this->installation->getPackageID(), $styleEditor);
 		
 		// set style as default
 		if (isset($this->instruction['attributes']['default'])) {
@@ -41,7 +45,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		@unlink($filename);
 	}
 	
-	/** 
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {

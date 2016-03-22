@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -58,6 +59,7 @@ class TagListPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.tag')),
 			'search' => $this->search
 		));
 	}

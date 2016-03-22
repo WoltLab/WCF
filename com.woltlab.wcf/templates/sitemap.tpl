@@ -1,6 +1,6 @@
 <div class="sitemap">
 	{hascontent}
-		<div class="tabMenuContainer" data-active="sitemap_{@$defaultSitemapName}">
+		<div class="section tabMenuContainer" data-active="sitemap_{@$defaultSitemapName}">
 			<nav class="tabMenu">
 				<ul>
 					{content}
@@ -12,26 +12,11 @@
 			</nav>
 			
 			{foreach from=$tree item=sitemapName}
-				<div id="sitemap_{$sitemapName}" class="container containerPadding tabMenuContent hidden">
+				<div id="sitemap_{$sitemapName}" class="tabMenuContent hidden">
 					{if $sitemapName == $defaultSitemapName}{@$sitemap}{/if}
 				</div>
 			{/foreach}
 		</div>
-		
-		<script data-relocate="true">
-			//<![CDATA[
-			$(function() {
-				// fix anchor
-				var $location = location.toString().replace(location.hash, '');
-				$('.sitemap .tabMenu a').each(function(index, link) {
-					var $link = $(link);
-					$link.attr('href', $location + $link.attr('href'));
-				});
-				
-				WCF.TabMenu.init();
-			});
-			//]]>
-		</script>
 	{hascontentelse}
 		{@$sitemap}
 	{/hascontent}

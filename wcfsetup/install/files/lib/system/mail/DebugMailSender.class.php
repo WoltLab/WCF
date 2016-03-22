@@ -13,6 +13,7 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.mail
  * @category	Community Framework
+ * @deprecated	The Community Framework < 2.2 mail API is deprecated in favor of \wcf\system\email\*.
  */
 class DebugMailSender extends MailSender {
 	/**
@@ -28,14 +29,7 @@ class DebugMailSender extends MailSender {
 	 */
 	public function sendMail(Mail $mail) {
 		if ($this->log === null) {
-			$logFilePath = '';
-			if (MAIL_DEBUG_LOGFILE_PATH) {
-				$logFilePath = FileUtil::addTrailingSlash(MAIL_DEBUG_LOGFILE_PATH);
-			}
-			else {
-				$logFilePath = WCF_DIR . 'log/';
-			}
-			
+			$logFilePath = WCF_DIR . 'log/';
 			$this->log = new File($logFilePath . 'mail.log', 'ab');
 		}
 		

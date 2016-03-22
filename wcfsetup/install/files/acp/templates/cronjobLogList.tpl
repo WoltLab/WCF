@@ -13,8 +13,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.cronjob.log{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -25,7 +25,7 @@
 			<ul>
 				{content}
 					{if $objects|count}
-						<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+						<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsTop'}
@@ -36,11 +36,7 @@
 </div>
 
 {hascontent}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.cronjob.log{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -85,7 +81,7 @@
 		
 		<nav>
 			<ul>
-				<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+				<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

@@ -20,8 +20,8 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.label.list{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.label.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -29,7 +29,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
+			<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -37,11 +37,7 @@
 </div>
 
 {if $objects|count}
-	<div id="labelTableContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.label.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div id="labelTableContainer" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -57,8 +53,8 @@
 				{foreach from=$objects item=label}
 					<tr class="jsLabelRow">
 						<td class="columnIcon">
-							<a href="{link controller='LabelEdit' object=$label}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$label->labelID}" data-confirm-message="{lang}wcf.acp.label.delete.sure{/lang}"></span>
+							<a href="{link controller='LabelEdit' object=$label}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$label->labelID}" data-confirm-message="{lang}wcf.acp.label.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
@@ -78,7 +74,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
+				<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

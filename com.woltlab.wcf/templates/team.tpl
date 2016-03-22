@@ -26,14 +26,14 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{capture assign='sidebar'}
+{capture assign='sidebarRight'}
 	{@$__boxSidebar}
 {/capture}
 
-{include file='header' sidebarOrientation='right'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.team{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.user.team{/lang}</h1>
 </header>
 
 {include file='userNotice'}
@@ -51,18 +51,18 @@
 </div>
 
 {foreach from=$objects->getTeams() item=team}
-	<header class="boxHeadline boxSubHeadline">
-		<h2 id="group{@$team->groupID}">{$team->groupName|language} <span class="badge">{#$team->getMembers()|count}</span></h2>
-		<p>{$team->groupDescription|language}</p>
-	</header>
-		
-	<div class="container marginTop">
+	<section class="section sectionContainerList">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle" id="group{@$team->groupID}">{$team->groupName|language} <span class="badge">{#$team->getMembers()|count}</span></h2>
+			<small class="sectionDescription">{$team->groupDescription|language}</small>
+		</header>
+			
 		<ol class="containerList userList">
 			{foreach from=$team->getMembers() item=user}
 				{include file='userListItem'}
 			{/foreach}
 		</ol>
-	</div>
+	</section>
 {/foreach}
 
 <div class="contentNavigation">

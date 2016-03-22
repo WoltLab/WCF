@@ -6,11 +6,14 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\application\IApplication;
+use wcf\system\box\BoxHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -23,8 +26,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\util\ArrayUtil;
-use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -38,7 +39,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.1.10 (Typhoon)');
+define('WCF_VERSION', '2.2.0 Alpha 1 (Vortex)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -46,6 +47,7 @@ define('TIME_NOW', time());
 // wcf imports
 if (!defined('NO_IMPORTS')) {
 	require_once(WCF_DIR.'lib/core.functions.php');
+	require_once(WCF_DIR.'lib/system/api/autoload.php');
 }
 
 /**
@@ -53,7 +55,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -62,7 +64,7 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of currently loaded applications
-	 * @var	array<\wcf\data\application\Application>
+	 * @var Application[]
 	 */
 	protected static $applications = array();
 	
@@ -137,7 +139,6 @@ class WCF {
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
-		$this->initMagicQuotes();
 		$this->initDB();
 		$this->loadOptions();
 		$this->initSession();
@@ -152,22 +153,24 @@ class WCF {
 	}
 	
 	/**
-	 * Replacement of the "__destruct()" method.
-	 * Seems that under specific conditions (windows) the destructor is not called automatically.
-	 * So we use the php register_shutdown_function to register an own destructor method.
-	 * Flushs the output, closes caches and updates the session.
+	 * Flushes the output, closes the session, performs background tasks and more.
+	 * 
+	 * You *must* not create output in here under normal circumstances, as it might get eaten
+	 * when gzip is enabled.
 	 */
 	public static function destruct() {
 		try {
 			// database has to be initialized
 			if (!is_object(self::$dbObj)) return;
 			
-			// flush output
-			if (ob_get_level() && ini_get('output_handler')) {
-				ob_flush();
-			}
-			else {
+			$debug = self::debugModeIsEnabled(true);
+			if (!$debug) {
+				// flush output
+				if (ob_get_level()) ob_end_flush();
 				flush();
+				
+				// close connection if using FPM
+				if (function_exists('fastcgi_finish_request')) fastcgi_finish_request();
 			}
 			
 			// update session
@@ -180,41 +183,6 @@ class WCF {
 		}
 		catch (\Exception $exception) {
 			die("<pre>WCF::destruct() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
-		}
-	}
-	
-	/**
-	 * Removes slashes in superglobal gpc data arrays if 'magic quotes gpc' is enabled.
-	 */
-	protected function initMagicQuotes() {
-		if (function_exists('get_magic_quotes_gpc')) {
-			if (@get_magic_quotes_gpc()) {
-				if (!empty($_REQUEST)) {
-					$_REQUEST = ArrayUtil::stripslashes($_REQUEST);
-				}
-				if (!empty($_POST)) {
-					$_POST = ArrayUtil::stripslashes($_POST);
-				}
-				if (!empty($_GET)) {
-					$_GET = ArrayUtil::stripslashes($_GET);
-				}
-				if (!empty($_COOKIE)) {
-					$_COOKIE = ArrayUtil::stripslashes($_COOKIE);
-				}
-				if (!empty($_FILES)) {
-					foreach ($_FILES as $name => $attributes) {
-						foreach ($attributes as $key => $value) {
-							if ($key != 'tmp_name') {
-								$_FILES[$name][$key] = ArrayUtil::stripslashes($value);
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		if (function_exists('set_magic_quotes_runtime')) {
-			@set_magic_quotes_runtime(0);
 		}
 	}
 	
@@ -269,45 +237,53 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
+		if (ob_get_level()) {
+			// discard any output generated before the exception occured, prevents exception
+			// being hidden inside HTML elements and therefore not visible in browser output
+			ob_clean();
+		}
+		
+		// backwards compatibility
+		if ($e instanceof IPrintableException) {
+			$e->show();
+			exit;
+		}
+		
+		@header('HTTP/1.1 503 Service Unavailable');
 		try {
-			if (!($e instanceof \Exception)) throw $e;
-			
-			if ($e instanceof IPrintableException) {
-				$e->show();
-				exit;
-			}
-			
-			// repack Exception
-			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
+			\wcf\functions\exception\printThrowable($e);
 		}
-		catch (\Throwable $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		catch (\Throwable $e2) {
+			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+			echo $e2;
+			echo "\n\nwas thrown while:\n\n";
+			echo $e;
+			echo "\n\nwas handled.</pre>";
+			exit;
 		}
-		catch (\Exception $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		catch (\Exception $e2) {
+			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+			echo $e2;
+			echo "\n\nwas thrown while:\n\n";
+			echo $e;
+			echo "\n\nwas handled.</pre>";
+			exit;
 		}
 	}
 	
 	/**
-	 * Catches php errors and throws instead a system exception.
+	 * Turns PHP errors into an ErrorException.
 	 * 
 	 * @param	integer		$errorNo
 	 * @param	string		$message
 	 * @param	string		$filename
 	 * @param	integer		$lineNo
 	 */
-	public static final function handleError($errorNo, $message, $filename, $lineNo) {
-		if (error_reporting() != 0) {
-			$type = 'error';
-			switch ($errorNo) {
-				case 2: $type = 'warning';
-					break;
-				case 8: $type = 'notice';
-					break;
-			}
-			
-			throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
-		}
+	public static final function handleError($severity, $message, $file, $line) {
+		// this is neccessary for the shut-up operator
+		if (error_reporting() == 0) return;
+		
+		throw new ErrorException($message, 0, $severity, $file, $line);
 	}
 	
 	/**
@@ -335,6 +311,24 @@ class WCF {
 			OptionEditor::rebuild();
 		}
 		require_once($filename);
+		
+		// check if option file is complete and writable
+		if (PACKAGE_ID) {
+			if (!is_writable($filename)) {
+				FileUtil::makeWritable($filename);
+				
+				if (!is_writable($filename)) {
+					throw new SystemException("The option file '" . $filename . "' is not writable.");
+				}
+			}
+			
+			// check if a previous write operation was incomplete and force rebuilding
+			if (!defined('WCF_OPTION_INC_PHP_SUCCESS')) {
+				OptionEditor::rebuild();
+				
+				require_once($filename);
+			}
+		}
 	}
 	
 	/**
@@ -345,6 +339,7 @@ class WCF {
 		$factory->load();
 		
 		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**
@@ -383,7 +378,8 @@ class WCF {
 			self::getSession()->setStyleID(intval($_REQUEST['styleID']));
 		}
 		
-		StyleHandler::getInstance()->changeStyle(self::getSession()->getStyleID());
+		$styleHandler = StyleHandler::getInstance();
+		$styleHandler->changeStyle(self::getSession()->getStyleID());
 	}
 	
 	/**
@@ -450,28 +446,43 @@ class WCF {
 		$loadedApplications = array();
 		
 		// register WCF as application
-		self::$applications['wcf'] = ApplicationHandler::getInstance()->getWCF();
+		self::$applications['wcf'] = ApplicationHandler::getInstance()->getApplicationByID(1);
 		
+		// TODO: what exactly should the base href represent and how should it be calculated, also because
+		// defining it here eventually breaks the ACP due to tpl initialization occurs first
+		if (!class_exists(WCFACP::class, false)) {
+			$this->getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
+		}
+		
+		// TODO: this is required for the uninstallation of applications, find a different solution!
 		if (PACKAGE_ID == 1) {
-			return;
+			//return;
 		}
 		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$loadedApplications[] = $this->loadApplication($application);
-		
-		// register primary application
-		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-		self::$applications[$abbreviation] = $application;
+		if ($application->packageID != 1) {
+			$loadedApplications[] = $this->loadApplication($application);
+			
+			// register primary application
+			$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+			self::$applications[$abbreviation] = $application;
+		}
 		
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
 		foreach ($applications as $application) {
+			if ($application->packageID == 1) {
+				// ignore WCF
+				continue;
+			}
+			
 			$loadedApplications[] = $this->loadApplication($application, true);
 		}
 		
 		// step 2) run each application
 		if (!class_exists('wcf\system\WCFACP', false)) {
+			/** @var IApplication $application */
 			foreach ($loadedApplications as $application) {
 				$application->__run();
 			}
@@ -510,9 +521,15 @@ class WCF {
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
 		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
-		if (class_exists($className) && ClassUtil::isInstanceOf($className, 'wcf\system\application\IApplication')) {
+		if (class_exists($className) && is_subclass_of($className, 'wcf\system\application\IApplication')) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
+			
+			// TODO: this should be done during update instead, remove this before any public release
+			if (!file_exists($configPath)) {
+				Package::writeConfigFile($package->packageID);
+			}
+			
 			if (file_exists($configPath)) {
 				require_once($configPath);
 			}
@@ -619,11 +636,22 @@ class WCF {
 	}
 	
 	/**
+	 * Returns true if current application (WCF) is treated as active and was invoked directly.
+	 *
+	 * @return	boolean
+	 */
+	public function isActiveApplication() {
+		return (ApplicationHandler::getInstance()->getActiveApplication()->packageID == 1);
+	}
+	
+	/**
 	 * Changes the active language.
 	 * 
 	 * @param	integer		$languageID
 	 */
 	public static final function setLanguage($languageID) {
+		if (!$languageID) $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+		
 		self::$languageObj = LanguageFactory::getInstance()->getLanguage($languageID);
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
 	}
@@ -681,7 +709,7 @@ class WCF {
 		}
 		
 		if (class_exists($objectName)) {
-			if (!(ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
+			if (!(is_subclass_of($objectName, 'wcf\system\SingletonFactory'))) {
 				throw new SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
 			}
 			
@@ -833,6 +861,16 @@ class WCF {
 	}
 	
 	/**
+	 * Returns box handler.
+	 *
+	 * @return	BoxHandler
+	 * @since	2.2
+	 */
+	public function getBoxHandler() {
+		return BoxHandler::getInstance();
+	}
+	
+	/**
 	 * Returns number of available updates.
 	 * 
 	 * @return	integer
@@ -858,9 +896,9 @@ class WCF {
 	 */
 	public function getFavicon() {
 		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
-		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+		$wcf = ApplicationHandler::getInstance()->getWCF();
 		
-		if ($activeApplication->domainName != $primaryApplication->domainName) {
+		if ($activeApplication->domainName !== $wcf->domainName) {
 			if (file_exists(WCF_DIR.'images/favicon.ico')) {
 				$favicon = file_get_contents(WCF_DIR.'images/favicon.ico');
 				

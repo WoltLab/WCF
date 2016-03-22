@@ -1,0 +1,81 @@
+.error,
+.info,
+.success,
+.warning {
+	border-left: 5px solid transparent;
+	margin-top: 20px;
+	
+	@include large-screen-only {
+		padding: 10px 20px;
+	}
+	
+	@include small-screen-only {
+		padding: 10px;
+	}
+}
+
+.error {
+	background-color: $wcfStatusErrorBackground;
+	border-color: $wcfStatusErrorBorder;
+	color: $wcfStatusErrorText;
+}
+
+.info {
+	background-color: $wcfStatusInfoBackground;
+	border-color: $wcfStatusInfoBorder;
+	color: $wcfStatusInfoText;
+}
+
+.success {
+	background-color: $wcfStatusSuccessBackground;
+	border-color: $wcfStatusSuccessBorder;
+	color: $wcfStatusSuccessText;
+}
+
+.warning {
+	background-color: $wcfStatusWarningBackground;
+	border-color: $wcfStatusWarningBorder;
+	color: $wcfStatusWarningText;
+}
+
+.innerError,
+.innerInfo {
+	display: table;
+	line-height: 1.5;
+	margin-top: 8px;
+	padding: 5px 10px;
+	position: relative;
+
+	/* pointer */
+	&::before {
+		border: 6px solid transparent;
+		border-top-width: 0;
+		content: "";
+		display: inline-block;
+		left: 10px;
+		position: absolute;
+		top: -6px;
+		z-index: 101;
+	}
+}
+
+/* inline errors */
+.innerError {
+	background-color: rgb(242, 222, 222);
+	color: rgb(169, 68, 66);
+
+	&::before {
+		border-bottom-color: rgb(242, 222, 222);
+	}
+}
+
+/* inline infos */
+/* TODO: use other colors */
+.innerInfo {
+	background-color: $wcfStatusInfoBackground;
+	color: $wcfStatusInfoText;
+
+	&::before {
+		border-bottom-color: $wcfStatusInfoBorder;
+	}
+}

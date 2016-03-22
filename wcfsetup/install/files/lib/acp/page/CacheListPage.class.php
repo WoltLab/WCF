@@ -27,7 +27,7 @@ class CacheListPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canManageApplication');
+	public $neededPermissions = array('admin.configuration.canManageApplication');
 	
 	/**
 	 * indicates if cache was cleared
@@ -81,6 +81,11 @@ class CacheListPage extends AbstractPage {
 			case 'wcf\system\cache\source\MemcachedCacheSource':
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
+			break;
+			
+			case 'wcf\system\cache\source\RedisCacheSource':
+				// set version
+				$this->cacheData['version'] = 'Redis '.CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
 			break;
 		}
 		

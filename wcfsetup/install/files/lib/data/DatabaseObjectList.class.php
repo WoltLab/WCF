@@ -4,7 +4,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Abstract class for a list of database objects.
@@ -122,13 +121,13 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		
 		if (!empty($this->decoratorClassName)) {
 			// validate decorator class name
-			if (!ClassUtil::isInstanceOf($this->decoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
+			if (!is_subclass_of($this->decoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
 				throw new SystemException("'".$this->decoratorClassName."' should extend 'wcf\data\DatabaseObjectDecorator'");
 			}
 			
 			$objectClassName = $this->objectClassName ?: $this->className;
 			$baseClassName = call_user_func(array($this->decoratorClassName, 'getBaseClass'));
-			if ($objectClassName != $baseClassName && !ClassUtil::isInstanceOf($baseClassName, $objectClassName)) {
+			if ($objectClassName != $baseClassName && !is_subclass_of($baseClassName, $objectClassName)) {
 				throw new SystemException("'".$this->decoratorClassName."' can't decorate objects of class '".$objectClassName."'");
 			}
 		}
@@ -301,7 +300,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * CAUTION: This methods does not return the current iterator index,
-	 * rather than the object key which maps to that index.
+	 * but the object key which maps to that index.
 	 * 
 	 * @see	\Iterator::key()
 	 */

@@ -314,6 +314,26 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		
 		return new User(null, $row);
 	}
+
+	/**
+	 * Returns the user with the given authData.
+	 *
+	 * @param	string		$authData
+	 * @return	\wcf\data\user\User
+	 */
+	public static function getUserByAuthData($authData) {
+		$sql = "SELECT		user_option_value.*, user_table.*
+			FROM		wcf".WCF_N."_user user_table
+			LEFT JOIN	wcf".WCF_N."_user_option_value user_option_value
+			ON		(user_option_value.userID = user_table.userID)
+			WHERE		user_table.authData = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($authData));
+		$row = $statement->fetchArray();
+		if (!$row) $row = array();
+
+		return new User(null, $row);
+	}
 	
 	/**
 	 * Returns true if this user is marked.
@@ -355,7 +375,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 */
 	public static function getUsers(array $userIDs) {
 		$userList = new UserList();
-		$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
+		$userList->setObjectIDs($userIDs);
 		$userList->readObjects();
 		
 		return $userList->getObjects();

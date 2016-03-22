@@ -81,9 +81,21 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	}
 	
 	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	2.2
+	 */
+	public static function getDefaultFilename() {
+		return 'acptemplates.tar';
+	}
+	
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
+		if (!$instruction) {
+			$instruction = static::getDefaultFilename();
+		}
+		
 		if (preg_match('~\.(tar(\.gz)?|tgz)$~', $instruction)) {
 			// check if file actually exists
 			try {

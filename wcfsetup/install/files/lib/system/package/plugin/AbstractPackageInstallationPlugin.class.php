@@ -44,7 +44,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * Creates a new AbstractPackageInstallationPlugin object.
 	 * 
 	 * @param	\wcf\system\package\PackageInstallationDispatcher	$installation
-	 * @param	array		$instruction
+	 * @param	array							$instruction
 	 */
 	public function __construct(PackageInstallationDispatcher $installation, $instruction = array()) {
 		$this->installation = $installation;
@@ -99,6 +99,14 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
+	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	2.2
+	 */
+	public static function getDefaultFilename() {
+		return null;
 	}
 	
 	/**

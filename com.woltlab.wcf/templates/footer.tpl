@@ -1,51 +1,88 @@
 				{event name='contents'}
 				
-				{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
+				{hascontent}
+					<div class="boxesContentBottom">
+						<div class="boxContainer">
+							{content}
+								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
+									{@$box->render()}
+								{/foreach}
+							{/content}
+						</div>	
+					</div>
+				{/hascontent}
 				
 				{if MODULE_WCF_AD && $__disableAds|empty}
 					{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
 				{/if}
-			</section>
-			
-			{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
-				{@$__sidebar}
-			{/if}
+			</div>
+				
+			{hascontent}
+				<aside class="sidebar boxesSidebarRight">
+					<div class="boxContainer">
+						{content}
+							{event name='boxesSidebarRightTop'}
+													
+							{* WCF2.1 Fallback *}
+							{if !$sidebar|empty}
+								{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
+									{@$sidebar}
+								{/if}
+							{/if}
+							
+							{if !$sidebarRight|empty}
+								{@$sidebarRight}
+							{/if}
+							
+							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
+								{@$box->render()}
+							{/foreach}
+						
+							{event name='boxesSidebarRightBottom'}
+						{/content}
+					</div>	
+				</aside>
+			{/hascontent}
 		</div>
-	</div>
+	</section>
+				
+	{hascontent}
+		<div class="boxesBottom">
+			<div class="boxContainer">
+				{content}
+					{if !$boxesBottom|empty}
+						{@$boxesBottom}
+					{/if}
+				
+					{foreach from=$__wcf->getBoxHandler()->getBoxes('bottom') item=box}
+						{@$box->render()}
+					{/foreach}
+				{/content}
+			</div>	
+		</div>
+	{/hascontent}
+		
+	{hascontent}
+		<div class="boxesFooterBoxes">			
+			<div class="layoutBoundary">
+				<div class="boxContainer">
+					{content}
+						{if !$footerBoxes|empty}{@$footerBoxes}{/if}
+					
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
+							{@$box->render()}
+						{/foreach}
+					{/content}
+				</div>	
+			</div>
+		</div>
+	{/hascontent}
+	
+	{include file='pageFooter'}
 </div>
-
-<footer id="pageFooter" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if} footer{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
-	<div>
-		<nav id="footerNavigation" class="navigation navigationFooter">
-			{include file='footerMenu'}
-			
-			<ul class="navigationIcons">
-				<li id="toTopLink" class="toTopLink"><a href="{$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-up"></span> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
-				{event name='navigationIcons'}
-			</ul>
-			
-			<ul class="navigationItems">
-				{if SHOW_CLOCK}
-					<li title="{lang}wcf.date.timezone.{@'/'|str_replace:'.':$__wcf->getUser()->getTimeZone()->getName()|strtolower}{/lang}"><p><span class="icon icon16 icon-time"></span> <span>{@TIME_NOW|plainTime}</span></p></li>
-				{/if}
-				{event name='navigationItems'}
-			</ul>
-		</nav>
-		
-		<div class="footerContent">
-			{event name='footerContents'}
-			
-			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
-			
-			{event name='copyright'}
-		</div>
-		
-		{if MODULE_WCF_AD && $__disableAds|empty}
-			{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}
-		{/if}
-	</div>
-</footer>
-
+				
+{include file='pageMenuMobile'}
+				
 {event name='footer'}
 
 <!-- JAVASCRIPT_RELOCATE_POSITION -->

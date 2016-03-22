@@ -28,13 +28,13 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	
 	/**
 	 * category node tree
-	 * @var	\wcf\data\category\CategoryNodeTree
+	 * @var	CategoryNodeTree
 	 */
 	public $categoryNodeTree = null;
 	
 	/**
 	 * ids of collapsed categories
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $collapsedCategoryIDs = null;
 	
@@ -54,11 +54,11 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	 * language item with the page title
 	 * @var	string
 	 */
-	public $pageTitle = '';
+	public $pageTitle = 'wcf.category.list';
 	
 	/**
 	 * category object type object
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $objectType = null;
 	
@@ -69,12 +69,12 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	public $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'categoryList';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		$classNameParts = explode('\\', get_called_class());
@@ -92,7 +92,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -128,7 +128,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);

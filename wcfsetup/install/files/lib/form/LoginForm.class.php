@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
@@ -25,7 +26,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	public $enableTracking = true;
 	
 	/**
-	 * true enables the usage of cookies
+	 * true enables the usage of cookies to save login credentials
 	 * @var	boolean
 	 */
 	public $useCookies = 1;
@@ -54,6 +55,17 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	}
 	
 	/**
+	 * @see	\wcf\form\IForm::validate()
+	 */
+	public function validate() {
+		if (!WCF::getSession()->hasValidCookie()) {
+			throw new UserInputException('cookie');
+		}
+		
+		parent::validate();
+	}
+	
+	/**
 	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
@@ -64,28 +76,12 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 			UserAuthenticationFactory::getInstance()->getUserAuthentication()->storeAccessData($this->user, $this->username, $this->password);
 		}
 		
-		$oldSessionID = WCF::getSession()->sessionID;
-		
 		// change user
 		WCF::getSession()->changeUser($this->user);
 		
 		// get redirect url
 		$this->checkURL();
 		$this->saved();
-		
-		if (isset($_REQUEST['s']) && $_REQUEST['s'] == $oldSessionID && $oldSessionID != WCF::getSession()->sessionID) {
-			// force instant redirect to avoid issues with non-cookie login and the already defined SID_ARG_* constants
-			if (preg_match('~[?&]s=[a-f0-9]{40}~i', $this->url)) {
-				$this->url = preg_replace('~([?&])s=[a-f0-9]{40}~i', '$1s=' . WCF::getSession()->sessionID, $this->url);
-			}
-			else {
-				$this->url .= (mb_strpos($this->url, '?') === false) ? '?' : '&';
-				$this->url .= 's=' . WCF::getSession()->sessionID;
-			}
-			
-			HeaderUtil::redirect($this->url);
-			exit;
-		}
 		
 		// redirect to url
 		WCF::getTPL()->assign('__hideUserMenu', true);

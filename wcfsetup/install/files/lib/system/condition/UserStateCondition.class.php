@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -16,7 +17,9 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserStateCondition extends AbstractSingleFieldCondition implements IContentCondition, IUserCondition {
+class UserStateCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
 	 */
@@ -47,19 +50,21 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	protected $userIsNotBanned = 0;
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		if ($condition->userIsBanned !== null) {
-			$userList->getConditionBuilder()->add('user_table.banned = ?', array($condition->userIsBanned));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) return;
+		
+		if (isset($conditionData['userIsBanned'])) {
+			$objectList->getConditionBuilder()->add('user_table.banned = ?', array($conditionData['userIsBanned']));
 		}
 		
-		if ($condition->userIsEnabled !== null) {
-			if ($condition->userIsEnabled) {
-				$userList->getConditionBuilder()->add('user_table.activationCode = ?', array(0));
+		if ($conditionData['userIsEnabled']) {
+			if ($conditionData['userIsEnabled']) {
+				$objectList->getConditionBuilder()->add('user_table.activationCode = ?', array(0));
 			}
 			else {
-				$userList->getConditionBuilder()->add('user_table.activationCode <> ?', array(0));
+				$objectList->getConditionBuilder()->add('user_table.activationCode <> ?', array(0));
 			}
 		}
 	}

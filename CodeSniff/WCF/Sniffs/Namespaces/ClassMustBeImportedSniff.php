@@ -60,6 +60,19 @@ class WCF_Sniffs_Namespaces_ClassMustBeImportedSniff implements PHP_CodeSniffer_
 						$newClass = $phpcsFile->findNext(T_STRING, $tClass);
 						if ($tokens[$newClass]['content'] == $tokens[$end - 1]['content']) return;
 					}
+					$tNew = $phpcsFile->findPrevious(array(T_NEW), $stackPtr - 1, null, false, null, true);
+					
+					// are we trying to create a new object?
+					if ($tNew === false) {
+						// no
+						$parenthesis = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $end);
+						$nonParenthesis = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $end, null, true);
+						// are we accessing something that's static?
+						if ($parenthesis !== false && $parenthesis < $nonParenthesis) {
+							// no -> this looks like a function call of a namespaced function
+							return;
+						}
+					}
 					
 					$error = 'Namespaced classes (%s) must be imported with use.';
 					$data = array(
