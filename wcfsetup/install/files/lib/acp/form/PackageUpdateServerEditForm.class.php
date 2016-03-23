@@ -51,8 +51,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 		// save server
 		$serverData = array('data' => array_merge($this->additionalFields, array(
 			'serverURL' => $this->serverURL,
-			'loginUsername' => $this->loginUsername,
-			'loginPassword' => $this->loginPassword
+			'loginUsername' => $this->loginUsername
 		)));
 		// renew password if not empty
 		if (!empty($this->loginUsername) && !empty($this->loginPassword))
