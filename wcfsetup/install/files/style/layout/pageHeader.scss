@@ -5,6 +5,7 @@
 .pageHeaderContainer {
 	background-color: $wcfHeaderBackground;
 	color: $wcfHeaderText;
+	z-index: 100;
 	
 	a {
 		color: $wcfHeaderLink;
