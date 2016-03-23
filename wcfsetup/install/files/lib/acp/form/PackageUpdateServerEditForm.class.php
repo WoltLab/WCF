@@ -49,11 +49,19 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 		AbstractForm::save();
 		
 		// save server
-		$this->objectAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$serverData = array('data' => array_merge($this->additionalFields, array(
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
-		))));
+		)));
+		// renew password if not empty
+		if (!empty($this->loginUsername) && !empty($this->loginPassword))
+			$serverData['data']['loginPassword'] = $this->loginPassword;
+		// remove password if username is empty
+		if (empty($this->loginUsername) && empty($this->loginPassword))
+			$serverData['data']['loginPassword'] = '';
+		
+		$this->objectAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', $serverData);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -70,7 +78,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 		if (empty($_POST)) {
 			$this->serverURL = $this->updateServer->serverURL;
 			$this->loginUsername = $this->updateServer->loginUsername;
-			$this->loginPassword = $this->updateServer->loginPassword;
+			$this->loginPassword = '';
 		}
 	}
 	
