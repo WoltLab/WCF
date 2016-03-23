@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\menu\item;
+use wcf\system\page\PageLocationManager;
 
 /**
  * Represents a menu item node tree.
@@ -60,6 +61,22 @@ class MenuItemNodeTree {
 			$menuItemList->readObjects();
 		}
 		
+		// find possible active menu items
+		$activeMenuItems = [];
+		$possibleLocations = PageLocationManager::getInstance()->getLocations();
+		$length = count($possibleLocations);
+		foreach ($menuItemList as $menuItem) {
+			for ($i = 0; $i < $length; $i++) {
+				if ($menuItem->pageID == $possibleLocations[$i]['pageID'] && $menuItem->pageObjectID == $possibleLocations[$i]['pageObjectID']) {
+					if (!isset($activeMenuItems[$i])) {
+						$activeMenuItems[$i] = [];
+					}
+					
+					$activeMenuItems[$i][] = $menuItem->itemID;
+				}
+			}
+		}
+		
 		// build menu structure
 		foreach ($menuItemList as $menuItem) {
 			$this->menuItems[$menuItem->itemID] = $menuItem;
@@ -73,6 +90,25 @@ class MenuItemNodeTree {
 		// generate node tree
 		$this->node = new MenuItemNode();
 		$this->node->setChildren($this->generateNodeTree(null, $this->node));
+		
+		// mark nodes as active
+		if (!empty($activeMenuItems)) {
+			$nodeList = $this->getNodeList();
+			foreach ($activeMenuItems as $itemIDs) {
+				for ($i = 0, $length = count($itemIDs); $i < $length; $i++) {
+					/** @var MenuItemNode $node */
+					foreach ($nodeList as $node) {
+						if ($node->getMenuItem()->itemID == $itemIDs[$i]) {
+							$node->setIsActive();
+							
+							// only one effective item can be marked as active, use the first
+							// occurence with the highest priority and ignore everything else
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	/**

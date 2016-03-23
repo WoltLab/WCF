@@ -3,10 +3,10 @@ namespace wcf\system;
 use wcf\system\exception\SystemException;
 
 /**
- * Basis class for singleton classes.
+ * Base class for singleton factories.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system

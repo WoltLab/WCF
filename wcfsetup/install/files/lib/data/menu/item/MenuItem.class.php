@@ -2,6 +2,7 @@
 namespace wcf\data\menu\item;
 use wcf\data\page\Page;
 use wcf\data\DatabaseObject;
+use wcf\data\page\PageCache;
 use wcf\system\exception\SystemException;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
@@ -94,7 +95,7 @@ class MenuItem extends DatabaseObject {
 	 */
 	public function getPage() {
 		if ($this->page === null && $this->pageID) {
-			$this->page = new Page($this->pageID);
+			$this->page = PageCache::getInstance()->getPage($this->pageID);
 		}
 		
 		return $this->page;
