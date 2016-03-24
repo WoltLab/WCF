@@ -54,11 +54,9 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 			'loginUsername' => $this->loginUsername
 		)));
 		// renew password if not empty
-		if (!empty($this->loginUsername) && !empty($this->loginPassword))
-			$serverData['data']['loginPassword'] = $this->loginPassword;
+		if (!empty($this->loginUsername) && !empty($this->loginPassword)) $serverData['data']['loginPassword'] = $this->loginPassword;
 		// remove password if username is empty
-		if (empty($this->loginUsername) && empty($this->loginPassword))
-			$serverData['data']['loginPassword'] = '';
+		if (empty($this->loginUsername) && empty($this->loginPassword)) $serverData['data']['loginPassword'] = '';
 		
 		$this->objectAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', $serverData);
 		$this->objectAction->executeAction();
