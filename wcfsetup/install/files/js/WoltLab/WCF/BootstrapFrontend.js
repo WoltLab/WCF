@@ -2,7 +2,7 @@
  * Bootstraps WCF's JavaScript with additions for the frontend usage.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/BootstrapFrontend
  */
@@ -23,7 +23,7 @@ define(
 	/**
 	 * @exports	WoltLab/WCF/BootstrapFrontend
 	 */
-	var BootstrapFrontend = {
+	return {
 		/**
 		 * Bootstraps general modules and frontend exclusive ones.
 		 * 
@@ -32,7 +32,7 @@ define(
 		setup: function(options) {
 			Bootstrap.setup();
 			
-			//ControllerSitemap.setup();
+			ControllerSitemap.setup();
 			
 			if (options.styleChanger) {
 				//ControllerStyleChanger.setup();
@@ -91,6 +91,4 @@ define(
 			}
 		}
 	};
-	
-	return BootstrapFrontend;
 });

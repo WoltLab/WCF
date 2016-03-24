@@ -131,15 +131,23 @@ define(
 				setupData.source();
 			}
 			else if (Core.isPlainObject(setupData.source)) {
-				Ajax.api(this, setupData.source.data, (function(data) {
-					if (data.returnValues && typeof data.returnValues.template === 'string') {
-						this.open(callbackObject, data.returnValues.template);
-						
-						if (typeof setupData.source.after === 'function') {
-							setupData.source.after(_dialogs.get(setupData.id).content, data);
+				if (typeof html === 'string' && html.trim() !== '') {
+					setupData.source = html;
+				}
+				else {
+					Ajax.api(this, setupData.source.data, (function (data) {
+						if (data.returnValues && typeof data.returnValues.template === 'string') {
+							this.open(callbackObject, data.returnValues.template);
+							
+							if (typeof setupData.source.after === 'function') {
+								setupData.source.after(_dialogs.get(setupData.id).content, data);
+							}
 						}
-					}
-				}).bind(this));
+					}).bind(this));
+					
+					// deferred initialization
+					return {};
+				}
 			}
 			else {
 				if (typeof setupData.source === 'string') {
@@ -291,21 +299,21 @@ define(
 			
 			var content;
 			if (element === null) {
-				content = elCreate('div');
-				
 				if (typeof html === 'string') {
+					content = elCreate('div');
+					content.id = id;
 					content.innerHTML = html;
 				}
 				else if (html instanceof DocumentFragment) {
 					if (html.children[0].nodeName !== 'div' || html.childElementCount > 1) {
+						content = elCreate('div');
+						content.id = id;
 						content.appendChild(html);
 					}
 					else {
-						content = html.children[0];
+						content = html;
 					}
 				}
-				
-				content.id = id;
 			}
 			else {
 				content = element;
