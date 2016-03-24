@@ -11,7 +11,7 @@
 				{foreach from=$__wcf->getBoxHandler()->getBoxes('mainMenu')[0]->getMenu()->getMenuItemNodeList() item=menuItemNode}
 				<li class="menuOverlayItem">
 					{assign var=__outstandingItems value=$menuItemNode->getMenuItem()->getOutstandingItems()}
-					<a href="{$menuItemNode->getMenuItem()->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}">
+					<a href="{$menuItemNode->getMenuItem()->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}">
 						<span class="menuOverlayItemTitle">{lang}{$menuItemNode->getMenuItem()->title}{/lang}</span>
 						{if $__outstandingItems}
 							<span class="badge badgeUpdate">{#$__outstandingItems}</span>

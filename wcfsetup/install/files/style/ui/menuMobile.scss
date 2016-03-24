@@ -180,6 +180,11 @@
 	}
 }
 
+.menuOverlayItemLink.active,
+.menuOverlayItemLinkIcon.active {
+	background-color: rgb(41, 128, 185);
+}
+
 .menuOverlayTitle {
 	color: rgb(204, 204, 204);
 	overflow: hidden;
