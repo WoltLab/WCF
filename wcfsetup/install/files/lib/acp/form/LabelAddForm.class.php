@@ -193,7 +193,6 @@ class LabelAddForm extends AbstractForm {
 	 */
 	public function readData() {
 		$this->labelGroupList = new LabelGroupList();
-		$this->labelGroupList->sqlOrderBy = 'label_group.groupName';
 		$this->labelGroupList->readObjects();
 		
 		parent::readData();
