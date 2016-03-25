@@ -4,7 +4,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
-use wcf\system\WCF;
 
 /**
  * Represents a sitemap entry.

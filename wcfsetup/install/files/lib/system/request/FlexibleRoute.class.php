@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\request;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\PageMenu;
 
 /**

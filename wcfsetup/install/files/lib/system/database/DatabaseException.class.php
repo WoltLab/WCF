@@ -2,7 +2,6 @@
 namespace wcf\system\database;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\exception\SystemException;
-use wcf\util\StringUtil;
 
 /**
  * DatabaseException is a specific SystemException for database errors.

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\menu\item\MenuItemList;
-use wcf\data\menu\item\MenuItemNodeTree;
 use wcf\data\menu\MenuList;
 
 /**

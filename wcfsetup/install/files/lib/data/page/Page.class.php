@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\page;
-use wcf\data\application\Application;
 use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;

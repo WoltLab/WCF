@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\user\User;
-use wcf\system\cache\builder\AbstractCacheBuilder;
 use wcf\system\WCF;
 
 /**

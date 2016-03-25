@@ -7,7 +7,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**

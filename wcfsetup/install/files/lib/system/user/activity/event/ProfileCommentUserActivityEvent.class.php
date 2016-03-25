@@ -2,7 +2,6 @@
 namespace wcf\system\user\activity\event;
 use wcf\data\comment\CommentList;
 use wcf\data\user\UserProfileCache;
-use wcf\system\user\activity\event\IUserActivityEvent;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 

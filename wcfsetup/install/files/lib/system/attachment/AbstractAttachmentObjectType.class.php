@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\attachment;
-use wcf\system\attachment\IAttachmentObjectType;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 

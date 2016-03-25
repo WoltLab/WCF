@@ -3,7 +3,6 @@ namespace wcf\system\upload;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IFile;
 use wcf\data\IThumbnailFile;
-use wcf\system\event\EventHandler;
 use wcf\system\image\ImageHandler;
 use wcf\system\WCF;
 use wcf\util\ExifUtil;

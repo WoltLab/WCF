@@ -6,7 +6,6 @@ use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
-use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;

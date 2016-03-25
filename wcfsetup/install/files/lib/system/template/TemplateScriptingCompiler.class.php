@@ -3,7 +3,6 @@ namespace wcf\system\template;
 use wcf\system\exception\SystemException;
 use wcf\system\template\plugin\ICompilerTemplatePlugin;
 use wcf\system\template\plugin\IPrefilterTemplatePlugin;
-use wcf\system\WCF;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
 

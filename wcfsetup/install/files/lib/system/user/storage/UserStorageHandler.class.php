@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\user\storage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 

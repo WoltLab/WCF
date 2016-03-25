@@ -4,7 +4,6 @@ use wcf\data\user\profile\menu\item\UserProfileMenuItem;
 use wcf\system\cache\builder\UserProfileMenuCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 
 /**
  * Builds the user profile menu.

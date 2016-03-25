@@ -2,7 +2,6 @@
 namespace wcf\system\category;
 use wcf\data\category\CategoryEditor;
 use wcf\system\cache\builder\SmileyCacheBuilder;
-use wcf\system\category\AbstractCategoryType;
 use wcf\system\WCF;
 
 /**

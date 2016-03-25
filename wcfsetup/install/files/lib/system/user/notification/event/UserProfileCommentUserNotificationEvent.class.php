@@ -2,8 +2,6 @@
 namespace wcf\system\user\notification\event;
 use wcf\data\user\User;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\notification\event\AbstractUserNotificationEvent;
-use wcf\system\WCF;
 
 /**
  * User notification event for profile commments.

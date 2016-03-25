@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\request;
 use wcf\page\CmsPage;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;

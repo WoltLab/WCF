@@ -1,9 +1,6 @@
 <?php
 namespace wcf\system\exception;
 // @codingStandardsIgnoreFile
-use wcf\system\WCF;
-use wcf\util\JSON;
-use wcf\util\StringUtil;
 
 /**
  * A logged exceptions prevents information disclosures and provides an easy

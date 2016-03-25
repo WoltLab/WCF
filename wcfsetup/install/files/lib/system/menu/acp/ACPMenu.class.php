@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\menu\acp;
 use wcf\system\cache\builder\ACPMenuCacheBuilder;
-use wcf\system\event\EventHandler;
 use wcf\system\menu\TreeMenu;
 
 /**

@@ -127,7 +127,7 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
-				return '';// PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
+				return '';// TODO: PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
 			}
 		}
 		

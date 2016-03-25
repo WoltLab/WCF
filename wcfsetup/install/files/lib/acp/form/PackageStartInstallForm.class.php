@@ -4,16 +4,13 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\package\validation\PackageValidationManager;
-use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Shows the package install and update form.

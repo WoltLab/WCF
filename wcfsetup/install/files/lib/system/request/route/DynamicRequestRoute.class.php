@@ -1,10 +1,7 @@
 <?php
 namespace wcf\system\request\route;
-use wcf\system\application\ApplicationHandler;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\request\ControllerMap;
 use wcf\system\request\RequestHandler;
-use wcf\system\request\RouteHandler;
 
 /**
  * Dynamic route implementation to resolve HTTP requests, handling controllers using a distinct pattern.
