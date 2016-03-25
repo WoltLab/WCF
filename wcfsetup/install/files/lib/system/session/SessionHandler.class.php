@@ -386,7 +386,7 @@ class SessionHandler extends SingletonFactory {
 	 * Initializes session variables.
 	 */
 	protected function loadVariables() {
-		@$this->variables = unserialize($this->session->sessionVariables);
+		@$this->variables = unserialize($this->virtualSession->sessionVariables);
 		if (!is_array($this->variables)) {
 			$this->variables = array();
 		}
@@ -839,7 +839,7 @@ class SessionHandler extends SingletonFactory {
 					$this->session = $session;
 					
 					// inherit security token
-					$variables = @unserialize($this->session->sessionVariables);
+					$variables = @unserialize($this->virtualSession->sessionVariables);
 					if (is_array($variables) && !empty($variables['__SECURITY_TOKEN'])) {
 						$this->register('__SECURITY_TOKEN', $variables['__SECURITY_TOKEN']);
 					}
@@ -873,9 +873,6 @@ class SessionHandler extends SingletonFactory {
 			$data['objectType'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getObjectType();
 			$data['objectID'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getObjectID();
 		}
-		if ($this->variablesChanged) {
-			$data['sessionVariables'] = serialize($this->variables);
-		}
 		
 		// update session
 		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
@@ -890,6 +887,12 @@ class SessionHandler extends SingletonFactory {
 				$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
 			}
 			$virtualSessionEditor->updateLastActivityTime();
+			
+			$data = [];
+			if ($this->variablesChanged) {
+				$data['sessionVariables'] = serialize($this->variables);
+			}
+			$virtualSessionEditor->update($data);
 		}
 	}
 	

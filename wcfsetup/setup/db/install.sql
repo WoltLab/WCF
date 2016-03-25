@@ -74,8 +74,7 @@ CREATE TABLE wcf1_acp_session (
 	parentObjectType VARCHAR(255) NOT NULL DEFAULT '',
 	parentObjectID INT(10) NOT NULL DEFAULT 0,
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
-	objectID INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT
+	objectID INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
@@ -110,6 +109,7 @@ CREATE TABLE wcf1_acp_session_virtual (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	sessionVariables MEDIUMTEXT,
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
 );
 
@@ -1074,7 +1074,6 @@ CREATE TABLE wcf1_session (
 	parentObjectID INT(10) NOT NULL DEFAULT 0,
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
 	objectID INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT,
 	spiderID INT(10),
 	KEY packageID (lastActivityTime, spiderID),
 	UNIQUE KEY uniqueUserID (userID)
@@ -1087,6 +1086,7 @@ CREATE TABLE wcf1_session_virtual (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	sessionVariables MEDIUMTEXT,
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
 );
 
