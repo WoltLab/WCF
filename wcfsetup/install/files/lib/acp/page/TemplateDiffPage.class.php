@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Compares two templates.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class TemplateDiffPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template';
 	
@@ -33,7 +33,7 @@ class TemplateDiffPage extends AbstractPage {
 	
 	/**
 	 * template object
-	 * @var	\wcf\data\template\Template
+	 * @var	Template
 	 */
 	public $template = null;
 	
@@ -45,18 +45,24 @@ class TemplateDiffPage extends AbstractPage {
 	
 	/**
 	 * template to compare with
-	 * @var	\wcf\data\template\Template
+	 * @var	Template
 	 */
 	public $parent = null;
 	
 	/**
 	 * differences between both templates
-	 * @var	\wcf\util\Diff
+	 * @var	Diff
 	 */
 	public $diff = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * template group hierarchy
+	 * @var	array
+	 */
+	public $templateGroupHierarchy = [];
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -76,7 +82,7 @@ class TemplateDiffPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -86,19 +92,19 @@ class TemplateDiffPage extends AbstractPage {
 		$templateGroupList->readObjects();
 		
 		// build template group hierarchy (template groups that are parents of the template group of the selected template)
-		$this->templateGroupHierarchy = array();
+		$this->templateGroupHierarchy = [];
 		$templateGroup = $templateGroupList->search($this->template->templateGroupID);
 		while ($templateGroup !== null) {
-			$this->templateGroupHierarchy[$templateGroup->templateGroupID] = array('group' => $templateGroup, 'hasTemplate' => false);
+			$this->templateGroupHierarchy[$templateGroup->templateGroupID] = ['group' => $templateGroup, 'hasTemplate' => false];
 			$templateGroup = $templateGroupList->search($templateGroup->parentTemplateGroupID);
 		}
-		$this->templateGroupHierarchy[0] = array('group' => array(), 'hasTemplate' => false);
+		$this->templateGroupHierarchy[0] = ['group' => [], 'hasTemplate' => false];
 		
 		// find matching templates in the hierarchy
 		$templateList = new TemplateList();
-		$templateList->getConditionBuilder()->add('templateName = ?', array($this->template->templateName));
-		$templateList->getConditionBuilder()->add('application = ?', array($this->template->application));
-		$templateList->getConditionBuilder()->add('(template.templateGroupID IN(?) OR template.templateGroupID IS NULL)', array(array_keys($this->templateGroupHierarchy)));
+		$templateList->getConditionBuilder()->add('templateName = ?', [$this->template->templateName]);
+		$templateList->getConditionBuilder()->add('application = ?', [$this->template->application]);
+		$templateList->getConditionBuilder()->add('(template.templateGroupID IN(?) OR template.templateGroupID IS NULL)', [array_keys($this->templateGroupHierarchy)]);
 		$templateList->readObjects();
 		foreach ($templateList as $template) {
 			$this->templateGroupHierarchy[($template->templateGroupID ?: 0)]['hasTemplate'] = $template->templateID;
@@ -113,18 +119,18 @@ class TemplateDiffPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'templateID' => $this->templateID,
 			'template' => $this->template,
 			'parentID' => $this->parentID,
 			'parent' => $this->parent,
 			'diff' => $this->diff,
 			'templateGroupHierarchy' => array_reverse($this->templateGroupHierarchy, true)
-		));
+		]);
 	}
 }

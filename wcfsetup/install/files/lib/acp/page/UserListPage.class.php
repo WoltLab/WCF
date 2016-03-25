@@ -10,6 +10,7 @@ use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\option\IOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -28,58 +29,58 @@ use wcf\util\StringUtil;
 class UserListPage extends SortablePage {
 	/**
 	 * list of displayed column names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $columnHeads = array();
+	public $columnHeads = [];
 	
 	/**
 	 * list of selected columns
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $columns = array('registrationDate', 'lastActivityTime');
+	public $columns = ['registrationDate', 'lastActivityTime'];
 	
 	/**
 	 * applies special CSS classes for selected columns
 	 * @var	array
 	 */
-	public $columnStyling = array(
+	public $columnStyling = [
 		'registrationDate' => 'columnDate',
 		'lastActivityTime' => 'columnDate',
 		'profileHits' => 'columnDigits',
 		'activityPoints' => 'columnDigits',
 		'likesReceived' => 'columnDigits'
-	);
+	];
 	
 	/**
 	 * list of column values
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $columnValues = array();
+	public $columnValues = [];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'username';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = 50;
 	
 	/**
 	 * list of marked user ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $markedUsers = array();
+	public $markedUsers = [];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canSearchUser');
+	public $neededPermissions = ['admin.user.canSearchUser'];
 	
 	/**
 	 * IOptionHandler object
-	 * @var	\wcf\system\option\IOptionHandler
+	 * @var	IOptionHandler
 	 */
 	protected $optionHandler = null;
 	
@@ -87,7 +88,7 @@ class UserListPage extends SortablePage {
 	 * list of available user option names
 	 * @var	array
 	 */
-	public $options = array();
+	public $options = [];
 	
 	/**
 	 * id of a user search
@@ -97,15 +98,15 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * list of user ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $userIDs = array();
+	public $userIDs = [];
 	
 	/**
 	 * list of users
-	 * @var	array<\wcf\data\user\User>
+	 * @var	User[]
 	 */
-	public $users = array();
+	public $users = [];
 	
 	/**
 	 * page url
@@ -114,12 +115,18 @@ class UserListPage extends SortablePage {
 	public $url = '';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * condition builder for user filtering
+	 * @var	PreparedStatementConditionBuilder
 	 */
-	public $validSortFields = array('userID', 'registrationDate', 'username', 'lastActivityTime', 'profileHits', 'activityPoints', 'likesReceived');
+	public $conditions = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
+	 */
+	public $validSortFields = ['userID', 'registrationDate', 'username', 'lastActivityTime', 'profileHits', 'activityPoints', 'likesReceived'];
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -132,7 +139,7 @@ class UserListPage extends SortablePage {
 			if (empty($this->userIDs)) {
 				throw new IllegalLinkException();
 			}
-			$this->conditions->add("user_table.userID IN (?)", array($this->userIDs));
+			$this->conditions->add("user_table.userID IN (?)", [$this->userIDs]);
 		}
 		
 		// get user options
@@ -140,7 +147,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\SortablePage::validateSortField()
+	 * @inheritDoc
 	 */
 	public function validateSortField() {
 		// add options to valid sort fields
@@ -155,7 +162,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -167,7 +174,7 @@ class UserListPage extends SortablePage {
 		
 		// get marked users
 		$this->markedUsers = WCF::getSession()->getVar('markedUsers');
-		if ($this->markedUsers == null || !is_array($this->markedUsers)) $this->markedUsers = array();
+		if ($this->markedUsers == null || !is_array($this->markedUsers)) $this->markedUsers = [];
 		
 		// get columns heads
 		$this->readColumnsHeads();
@@ -176,16 +183,16 @@ class UserListPage extends SortablePage {
 		$this->readUsers();
 		
 		// build page url
-		$this->url = LinkHandler::getInstance()->getLink('UserList', array(), 'searchID='.$this->searchID.'&action='.rawurlencode($this->action).'&pageNo='.$this->pageNo.'&sortField='.$this->sortField.'&sortOrder='.$this->sortOrder);
+		$this->url = LinkHandler::getInstance()->getLink('UserList', [], 'searchID='.$this->searchID.'&action='.rawurlencode($this->action).'&pageNo='.$this->pageNo.'&sortField='.$this->sortField.'&sortOrder='.$this->sortOrder);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'users' => $this->users,
 			'searchID' => $this->searchID,
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')),
@@ -193,11 +200,11 @@ class UserListPage extends SortablePage {
 			'columnHeads' => $this->columnHeads,
 			'columnValues' => $this->columnValues,
 			'columnStyling' => $this->columnStyling
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		$this->activeMenuItem = 'wcf.acp.menu.link.user.'.($this->searchID ? 'search' : 'list');
@@ -206,7 +213,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::countItems()
+	 * @inheritDoc
 	 */
 	public function countItems() {
 		// call countItems event
@@ -226,7 +233,7 @@ class UserListPage extends SortablePage {
 	 */
 	protected function readUsers() {
 		// get user ids
-		$userIDs = array();
+		$userIDs = [];
 		$sql = "SELECT		user_table.userID
 			FROM		wcf".WCF_N."_user user_table
 			".(isset($this->options[$this->sortField]) ? "LEFT JOIN wcf".WCF_N."_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)" : '')."
@@ -240,11 +247,11 @@ class UserListPage extends SortablePage {
 		
 		// get user data
 		if (!empty($userIDs)) {
-			$userToGroups = array();
+			$userToGroups = [];
 			
 			// get group ids
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("user_table.userID IN (?)", array($userIDs));
+			$conditions->add("user_table.userID IN (?)", [$userIDs]);
 			
 			$sql = "SELECT	userID, groupID
 				FROM	wcf".WCF_N."_user_to_group user_table
@@ -266,7 +273,7 @@ class UserListPage extends SortablePage {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				$groupIDs = (isset($userToGroups[$row['userID']]) ? $userToGroups[$row['userID']] : array());
+				$groupIDs = (isset($userToGroups[$row['userID']]) ? $userToGroups[$row['userID']] : []);
 				
 				$row['groupIDs'] = implode(',', $groupIDs);
 				$accessible = (!empty($groupIDs) ? UserGroup::isAccessibleGroup($groupIDs) : true);
@@ -333,11 +340,11 @@ class UserListPage extends SortablePage {
 				AND userID = ?
 				AND searchType = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->searchID,
 			WCF::getUser()->userID,
 			'users'
-		));
+		]);
 		$search = $statement->fetchArray();
 		if (!isset($search['searchData'])) {
 			throw new IllegalLinkException();
@@ -354,7 +361,7 @@ class UserListPage extends SortablePage {
 	 * Gets the user options from cache.
 	 */
 	protected function readUserOptions() {
-		$this->options = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+		$this->options = UserOptionCacheBuilder::getInstance()->getData([], 'options');
 		
 		foreach ($this->options as &$option) {
 			$option = new ViewableUserOption($option);
@@ -386,12 +393,16 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
-	protected function initObjectList() { }
+	protected function initObjectList() {
+		// does nothing
+	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readObjects()
+	 * @inheritDoc
 	 */
-	protected function readObjects() { }
+	protected function readObjects() {
+		// does nothing
+	}
 }
