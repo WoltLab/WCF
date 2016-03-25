@@ -52,7 +52,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	
 	/**
 	 * date time zone object
-	 * @var	DateTimeZone
+	 * @var	\DateTimeZone
 	 */
 	protected $timezoneObj = null;
 	
@@ -351,7 +351,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	/**
 	 * Returns the time zone of this user.
 	 * 
-	 * @return	DateTimeZone
+	 * @return	\DateTimeZone
 	 */
 	public function getTimeZone() {
 		if ($this->timezoneObj === null) {

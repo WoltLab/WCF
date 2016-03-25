@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\message\quote;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\IMessage;
 use wcf\system\application\ApplicationHandler;
@@ -262,7 +263,7 @@ class MessageQuoteManager extends SingletonFactory {
 	/**
 	 * Returns a list of quotes.
 	 * 
-	 * @param	boolean		supportPaste
+	 * @param	boolean		$supportPaste
 	 */
 	public function getQuotes($supportPaste = false) {
 		$template = '';

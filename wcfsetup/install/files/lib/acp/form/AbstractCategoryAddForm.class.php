@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\category\CategoryAction;
 use wcf\data\category\CategoryEditor;
 use wcf\data\category\UncachedCategoryNodeTree;
+use wcf\data\object\type\ObjectType;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;

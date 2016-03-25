@@ -656,9 +656,9 @@ class PackageInstallationDispatcher {
 	/**
 	 * Extracts files from .tar(.gz) archive and installs them
 	 * 
-	 * @param	string			$targetDir
-	 * @param	string			$sourceArchive
-	 * @param	FileHandler		$fileHandler
+	 * @param	string					$targetDir
+	 * @param	string					$sourceArchive
+	 * @param	\wcf\system\setup\IFileHandler		$fileHandler
 	 * @return	\wcf\system\setup\Installer
 	 */
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {

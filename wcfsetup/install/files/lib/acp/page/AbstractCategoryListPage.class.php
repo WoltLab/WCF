@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\object\type\ObjectType;
 use wcf\page\AbstractPage;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;

@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
 class TemplateScriptingCompiler {
 	/**
 	 * template engine object
-	 * @var	\wcf\system\template\TemplateEngine
+	 * @var	TemplateEngine
 	 */
 	protected $template;
 	
@@ -175,7 +175,7 @@ class TemplateScriptingCompiler {
 	/**
 	 * Creates a new TemplateScriptingCompiler object.
 	 * 
-	 * @param	\wcf\system\templateTemplateEngine	$template
+	 * @param	TemplateEngine		$template
 	 */
 	public function __construct(TemplateEngine $template) {
 		$this->template = $template;
@@ -1413,7 +1413,7 @@ class TemplateScriptingCompiler {
 	/**
 	 * Returns the instance of the template engine class.
 	 * 
-	 * @return	\wcf\system\templateTemplateEngine
+	 * @return	TemplateEngine
 	 */
 	public function getTemplate() {
 		return $this->template;

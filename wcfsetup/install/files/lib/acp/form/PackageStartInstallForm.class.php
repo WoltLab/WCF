@@ -30,7 +30,7 @@ class PackageStartInstallForm extends AbstractForm {
 	
 	/**
 	 * updated package object
-	 * @var	\wcf\system\package\Package
+	 * @var	\wcf\data\package\Package
 	 */
 	public $package = null;
 	

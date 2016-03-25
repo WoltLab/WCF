@@ -46,8 +46,8 @@ class UserSearchForm extends UserOptionListForm {
 	public $matches = array();
 	
 	/**
-	 * condtion builder object
-	 * @var	\wcf\system\database\condition\PreparedStatementConditionBuilder
+	 * condition builder object
+	 * @var	PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
 	

@@ -27,7 +27,7 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * image media object
-	 * @var	Media
+	 * @var	ViewableMedia
 	 */
 	protected $image = null;
 	
