@@ -170,7 +170,8 @@
 				margin-top: 0;
 			}
 			
-			> div {
+			> div,
+			> form {
 				> .section:first-child,
 				> fieldset:first-child {
 					margin-top: 0;
