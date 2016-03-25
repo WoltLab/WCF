@@ -6,7 +6,7 @@ use wcf\system\WCF;
 
 class ViewableMenu extends DatabaseObjectDecorator {
 	/**
-	 * @var MenuItemNodeTree
+	 * @var	MenuItemNodeTree
 	 */
 	protected $menuItems;
 	

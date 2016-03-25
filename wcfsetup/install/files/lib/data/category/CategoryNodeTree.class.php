@@ -17,7 +17,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	/**
 	 * maximum depth considered when building the node tree.
 	 * 
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $maxDepth = -1;
 	

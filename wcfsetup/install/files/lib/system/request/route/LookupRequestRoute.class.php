@@ -20,7 +20,7 @@ use wcf\util\FileUtil;
 class LookupRequestRoute implements IRequestRoute {
 	/**
 	 * list of parsed route information
-	 * @var array
+	 * @var	array
 	 */
 	protected $routeData = [];
 	
@@ -105,7 +105,7 @@ class LookupRequestRoute implements IRequestRoute {
 	
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	public function buildLink(array $components) {
 		throw new SystemException('LookupRequestRoute cannot build links, please verify capabilities by calling canHandle() first.');

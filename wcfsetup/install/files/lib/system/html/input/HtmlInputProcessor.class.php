@@ -10,12 +10,12 @@ use wcf\system\html\input\node\HtmlInputNodeProcessor;
  */
 class HtmlInputProcessor {
 	/**
-	 * @var IHtmlInputFilter
+	 * @var	IHtmlInputFilter
 	 */
 	protected $htmlInputFilter;
 	
 	/**
-	 * @var HtmlInputNodeProcessor
+	 * @var	HtmlInputNodeProcessor
 	 */
 	protected $htmlInputNodeProcessor;
 	
@@ -35,7 +35,7 @@ class HtmlInputProcessor {
 	}
 	
 	/**
-	 * @return IHtmlInputFilter|MessageHtmlInputFilter
+	 * @return	IHtmlInputFilter|MessageHtmlInputFilter
 	 */
 	public function getHtmlInputFilter() {
 		if ($this->htmlInputFilter === null) {
@@ -50,7 +50,7 @@ class HtmlInputProcessor {
 	}
 	
 	/**
-	 * @return HtmlInputNodeProcessor
+	 * @return	HtmlInputNodeProcessor
 	 */
 	public function getHtmlInputNodeProcessor() {
 		if ($this->htmlInputNodeProcessor === null) {

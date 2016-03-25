@@ -368,7 +368,7 @@ class SessionHandler extends SingletonFactory {
 	 * Returns the value of a session variable.
 	 * 
 	 * @param	string		$key
-	 * @return      mixed
+	 * @return	mixed
 	 */
 	public function getVar($key) {
 		if (isset($this->variables[$key])) {
@@ -599,8 +599,8 @@ class SessionHandler extends SingletonFactory {
 	 * Checks if the active user has the given permissions and throws a
 	 * PermissionDeniedException if that isn't the case.
 	 * 
-	 * @param       array<string>   $permissions    list of permissions where each one must pass
-	 * @throws      PermissionDeniedException
+	 * @param	string[]	$permissions	ist of permissions where each one must pass
+	 * @throws	PermissionDeniedException
 	 */
 	public function checkPermissions(array $permissions) {
 		foreach ($permissions as $permission) {

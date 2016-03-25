@@ -68,7 +68,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Checks the options and permissions of given menu item.
 	 * 
-	 * @param	UserProfileMenuItem     $item
+	 * @param	UserProfileMenuItem	$item
 	 * @return	boolean
 	 */
 	protected function checkMenuItem(UserProfileMenuItem $item) {

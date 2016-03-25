@@ -13,7 +13,7 @@ use wcf\data\menu\MenuList;
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
- * @since       2.2
+ * @since	2.2
  */
 class MenuCacheBuilder extends AbstractCacheBuilder {
 	/**

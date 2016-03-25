@@ -15,7 +15,7 @@ use wcf\system\SingletonFactory;
 class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * list of breadcrumbs
-	 * @var Breadcrumb[]
+	 * @var	Breadcrumb[]
 	 */
 	protected $items = [];
 	

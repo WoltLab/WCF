@@ -61,7 +61,7 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * menu object
-	 * @var Menu
+	 * @var	Menu
 	 */
 	protected $menu;
 	

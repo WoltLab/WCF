@@ -18,7 +18,7 @@ use wcf\system\SingletonFactory;
 class PageLocationManager extends SingletonFactory {
 	/**
 	 * list of locations with descending priority
-	 * @var array
+	 * @var	array
 	 */
 	protected $stack = [];
 	
@@ -54,9 +54,9 @@ class PageLocationManager extends SingletonFactory {
 	 * Appends a parent location to the stack, the later it is added the lower
 	 * is its assumed priority when matching suitable menu items.
 	 * 
-	 * @param       string          $identifier     internal page identifier
-	 * @param       integer         $pageObjectID   page object id
-	 * @throws      SystemException
+	 * @param	string		$identifier	internal page identifier
+	 * @param	integer		$pageObjectID	page object id
+	 * @throws	SystemException
 	 */
 	public function addParentLocation($identifier, $pageObjectID = 0) {
 		$page = PageCache::getInstance()->getPageByIdentifier($identifier);
@@ -73,7 +73,7 @@ class PageLocationManager extends SingletonFactory {
 	/**
 	 * Returns the list of locations with descending priority.
 	 * 
-	 * @return      array
+	 * @return	array
 	 */
 	public function getLocations() {
 		return $this->stack;

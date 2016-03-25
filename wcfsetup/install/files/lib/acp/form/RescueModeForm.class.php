@@ -34,12 +34,12 @@ use wcf\util\UserUtil;
  */
 class RescueModeForm extends AbstractCaptchaForm {
 	/**
-	 * @var Application[]
+	 * @var	Application[]
 	 */
 	public $applications;
 	
 	/**
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $applicationValues = [];
 	
@@ -50,7 +50,7 @@ class RescueModeForm extends AbstractCaptchaForm {
 	public $password = '';
 	
 	/**
-	 * @var User
+	 * @var	User
 	 */
 	public $user;
 	

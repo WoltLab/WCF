@@ -40,15 +40,15 @@ class MenuItemNodeTree {
 	
 	/**
 	 * number of visible items
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $visibleItemCount = 0;
 	
 	/**
 	 * Creates a new MenuItemNodeTree object.
 	 * 
-	 * @param	integer		$menuID         menu id
-	 * @param       MenuItemList    $menuItemList   optional object to be provided when building the tree from cache
+	 * @param	integer		$menuID		menu id
+	 * @param	MenuItemList	$menuItemList	optional object to be provided when building the tree from cache
 	 */
 	public function __construct($menuID, MenuItemList $menuItemList = null) {
 		$this->menuID = $menuID;
@@ -114,9 +114,9 @@ class MenuItemNodeTree {
 	/**
 	 * Generates the node tree recursively.
 	 * 
-	 * @param	integer			$parentID       parent menu item id
-	 * @param	MenuItemNode		$parentNode     parent menu item object
-	 * @return	MenuItemNode[]          nested menu item tree
+	 * @param	integer			$parentID	parent menu item id
+	 * @param	MenuItemNode		$parentNode	parent menu item object
+	 * @return	MenuItemNode[]		nested menu item tree
 	 */
 	protected function generateNodeTree($parentID = null, MenuItemNode $parentNode = null) {
 		$nodes = array();
@@ -159,7 +159,7 @@ class MenuItemNodeTree {
 	/**
 	 * Returns the number of visible items.
 	 * 
-	 * @return      integer
+	 * @return	integer
 	 */
 	public function getVisibleItemCount() {
 		return $this->visibleItemCount;

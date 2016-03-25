@@ -27,7 +27,7 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	
 	/**
 	 * true if item or one of its children is active
-	 * @var boolean
+	 * @var	boolean
 	 */
 	protected $isActive = false;
 	
@@ -144,7 +144,7 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	/**
 	 * Returns true if this item (or one of its children) is marked as active.
 	 * 
-	 * @return      boolean
+	 * @return	boolean
 	 */
 	public function isActiveNode() {
 		return $this->isActive;

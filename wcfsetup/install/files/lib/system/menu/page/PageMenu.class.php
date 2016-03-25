@@ -20,7 +20,7 @@ use wcf\system\menu\TreeMenu;
 class PageMenu extends TreeMenu {
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function init() {
 		// get menu items from cache

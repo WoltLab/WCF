@@ -31,8 +31,8 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM     wcf".WCF_N."_menu_item
-			WHERE           identifier = ?
+		$sql = "DELETE FROM	wcf".WCF_N."_menu_item
+			WHERE		identifier = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
@@ -48,7 +48,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
@@ -70,14 +70,14 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function prepareImport(array $data) {
 		$menuID = null;
 		if (!empty($data['elements']['menu'])) {
-			$sql = "SELECT  menuID
-				FROM    wcf".WCF_N."_menu
-				WHERE   identifier = ?";
+			$sql = "SELECT	menuID
+				FROM	wcf".WCF_N."_menu
+				WHERE	identifier = ?";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$data['elements']['menu']]);
 			$row = $statement->fetchSingleRow();
@@ -94,9 +94,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				throw new SystemException("The menu item '" . $data['attributes']['identifier'] . "' can either have an associated menu or a parent menu item, but not both.");
 			}
 			
-			$sql = "SELECT  *
-				FROM    wcf".WCF_N."_menu_item
-				WHERE   identifier = ?";
+			$sql = "SELECT	*
+				FROM	wcf".WCF_N."_menu_item
+				WHERE	identifier = ?";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$data['elements']['parent']]);
 			$parent = $statement->fetchObject(MenuItem::class);
@@ -114,9 +114,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		
 		$pageID = null;
 		if (!empty($data['elements']['page'])) {
-			$sql = "SELECT  pageID
-				FROM    wcf".WCF_N."_page
-				WHERE   identifier = ?";
+			$sql = "SELECT	pageID
+				FROM	wcf".WCF_N."_page
+				WHERE	identifier = ?";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$data['elements']['page']]);
 			$row = $statement->fetchSingleRow();
@@ -184,15 +184,15 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * Returns the show order for a new item that will append it to the current
 	 * menu or parent item.
 	 * 
-	 * @param       int     $menuID
-	 * @param       int     $parentItemID
-	 * @return      int
-	 * @throws      \wcf\system\database\DatabaseException
+	 * @param	integer		$menuID
+	 * @param	integer		$parentItemID
+	 * @return	integer
+	 * @throws	\wcf\system\database\DatabaseException
 	 */
 	protected function getItemOrder($menuID, $parentItemID = null) {
-		$sql = "SELECT  MAX(showOrder) AS showOrder
-			FROM    wcf".WCF_N."_menu_item
-			WHERE   " . ($parentItemID === null ? 'menuID' : 'parentItemID') . " = ?";
+		$sql = "SELECT	MAX(showOrder) AS showOrder
+			FROM	wcf".WCF_N."_menu_item
+			WHERE	" . ($parentItemID === null ? 'menuID' : 'parentItemID') . " = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute([
 			($parentItemID === null ? $menuID : $parentItemID)

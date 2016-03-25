@@ -41,7 +41,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns an application based upon it's abbreviation. Will return the
 	 * primary application if $abbreviation equals to 'wcf'
 	 * 
-	 * @param       string  $abbreviation   package abbreviation, e.g. `wbb` for `com.woltlab.wbb`
+	 * @param	string		$abbreviation	package abbreviation, e.g. `wbb` for `com.woltlab.wbb`
 	 * @return	Application
 	 */
 	public function getApplication($abbreviation) {
@@ -59,8 +59,8 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns an application by package id.
 	 * 
-	 * @param       integer         $packageID      package id
-	 * @return      Application     application object
+	 * @param	integer		$packageID	package id
+	 * @return	Application	application object
 	 * @since	2.2
 	 */
 	public function getApplicationByID($packageID) {
@@ -125,7 +125,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns abbreviation for a given package id or null if application is unknown.
 	 * 
-	 * @param       int     $packageID      unique package id
+	 * @param	integer		$packageID	unique package id
 	 * @return	string
 	 */
 	public function getAbbreviation($packageID) {

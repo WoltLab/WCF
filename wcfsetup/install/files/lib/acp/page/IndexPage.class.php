@@ -17,7 +17,7 @@ use wcf\system\WCF;
 class IndexPage extends AbstractPage {
 	/**
 	 * server information
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $server = [];
 	

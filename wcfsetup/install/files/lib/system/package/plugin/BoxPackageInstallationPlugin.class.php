@@ -30,8 +30,8 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM     wcf".WCF_N."_box
-			WHERE           identifier = ?
+		$sql = "DELETE FROM	wcf".WCF_N."_box
+			WHERE		identifier = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
@@ -47,7 +47,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
@@ -91,7 +91,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function prepareImport(array $data) {
 		$boxType = $data['elements']['boxtype'];
@@ -177,12 +177,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * Returns the show order for a new item that will append it to the current
 	 * menu or parent item.
 	 *
-	 * @param       string  $position       box position
-	 * @return      integer
+	 * @param	string		$position	box position
+	 * @return	integer
 	 */
 	protected function getItemOrder($position) {
 		$sql = "SELECT  MAX(showOrder) AS showOrder
-			FROM    wcf".WCF_N."_box
+			FROM	wcf".WCF_N."_box
 			WHERE   position = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute([$position]);

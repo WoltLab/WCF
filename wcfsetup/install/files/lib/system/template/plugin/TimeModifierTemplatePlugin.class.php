@@ -38,12 +38,12 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 * Returns the relative date time identical to the relative time generated
 	 * through JavaScript.
 	 * 
-	 * @param       \DateTime       $dateTimeObject         target date object
-	 * @param       integer         $timestamp              target timestamp
-	 * @param       string          $date                   localized date
-	 * @param       string          $time                   localized time
-	 * @param       boolean         $isFutureDate           true if timestamp is in the future
-	 * @return      string          relative time
+	 * @param	\DateTime	$dateTimeObject		target date object
+	 * @param	integer		$timestamp		target timestamp
+	 * @param	string		$date			localized date
+	 * @param	string		$time			localized time
+	 * @param	boolean		$isFutureDate		true if timestamp is in the future
+	 * @return	string		relative time
 	 */
 	protected function getRelativeTime(\DateTime $dateTimeObject, $timestamp, $date, $time, $isFutureDate) {
 		if ($isFutureDate) {

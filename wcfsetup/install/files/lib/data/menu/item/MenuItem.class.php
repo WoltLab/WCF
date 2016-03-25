@@ -31,46 +31,46 @@ class MenuItem extends DatabaseObject {
 	protected static $databaseTableIndexName = 'itemID';
 	
 	/**
-	 * @var IMenuPageHandler
+	 * @var	IMenuPageHandler
 	 */
 	protected $handler;
 	
 	/**
 	 * page object
-	 * @var Page
+	 * @var	Page
 	 */
 	protected $page;
 	
 	/**
 	 * Returns true if the active user can delete this menu item.
 	 *
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu') && !$this->originIsSystem) {
 			return true;
 		}
-			
+		
 		return false;
 	}
 	
 	/**
 	 * Returns true if the active user can disable this menu item.
 	 *
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function canDisable() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu')) {
 			return true;
 		}
-			
+		
 		return false;
 	}
 	
 	/**
 	 * Returns the URL of this menu item.
 	 * 
-	 * @return      string
+	 * @return	string
 	 */
 	public function getURL() {
 		if ($this->pageObjectID) {
@@ -91,7 +91,7 @@ class MenuItem extends DatabaseObject {
 	/**
 	 * Returns the page that is linked by this menu item.
 	 * 
-	 * @return      Page|null
+	 * @return	Page|null
 	 */
 	public function getPage() {
 		if ($this->page === null && $this->pageID) {
@@ -104,7 +104,7 @@ class MenuItem extends DatabaseObject {
 	/**
 	 * Returns false if this item should be hidden from menu.
 	 * 
-	 * @return      boolean
+	 * @return	boolean
 	 */
 	public function isVisible() {
 		if ($this->getPage() !== null && !$this->getPage()->isVisible()) {
@@ -121,7 +121,7 @@ class MenuItem extends DatabaseObject {
 	/**
 	 * Returns the number of outstanding items for this menu.
 	 * 
-	 * @return      integer
+	 * @return	integer
 	 */
 	public function getOutstandingItems() {
 		if ($this->getMenuPageHandler() !== null) {
@@ -132,7 +132,9 @@ class MenuItem extends DatabaseObject {
 	}
 	
 	/**
-	 * @return      IMenuPageHandler|null
+	 * TODO: Comment
+	 * 
+	 * @return	IMenuPageHandler|null
 	 */
 	protected function getMenuPageHandler() {
 		$page = $this->getPage();

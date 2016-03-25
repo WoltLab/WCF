@@ -29,13 +29,13 @@ class Menu extends DatabaseObject {
 	
 	/**
 	 * menu item node tree
-	 * @var MenuItemNodeTree
+	 * @var	MenuItemNodeTree
 	 */
 	protected $menuItemNodeTree;
 	
 	/**
 	 * box object
-	 * @var Box
+	 * @var	Box
 	 */
 	protected $box;
 	
@@ -55,7 +55,7 @@ class Menu extends DatabaseObject {
 	/**
 	 * Returns the items of this menu.
 	 * 
-	 * @return      \RecursiveIteratorIterator
+	 * @return	\RecursiveIteratorIterator
 	 */
 	public function getMenuItemNodeList() {
 		return $this->getMenuItemNodeTree()->getNodeList();
@@ -92,7 +92,7 @@ class Menu extends DatabaseObject {
 	/**
 	 * Returns the box of this menu.
 	 * 
-	 * @return      Box
+	 * @return	Box
 	 */
 	public function getBox() {
 		if ($this->box === null) {
@@ -103,7 +103,9 @@ class Menu extends DatabaseObject {
 	}
 	
 	/**
-	 * @return      MenuItemNodeTree
+	 * Returns the menu item node tree with the menu's items.
+	 * 
+	 * @return	MenuItemNodeTree
 	 */
 	protected function getMenuItemNodeTree() {
 		if ($this->menuItemNodeTree === null) {

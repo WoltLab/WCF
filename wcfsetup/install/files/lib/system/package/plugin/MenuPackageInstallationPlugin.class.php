@@ -23,7 +23,7 @@ use wcf\system\WCF;
 class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * box meta data per menu
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $boxData = [];
 	
@@ -41,8 +41,8 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM     wcf".WCF_N."_menu
-			WHERE           identifier = ?
+		$sql = "DELETE FROM	wcf".WCF_N."_menu
+			WHERE		identifier = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
@@ -58,7 +58,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
@@ -179,8 +179,8 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		$conditions->add("identifier IN (?)", [array_keys($this->boxData)]);
 		$conditions->add("packageID = ?", [$this->installation->getPackageID()]);
 		
-		$sql = "SELECT  *
-			FROM    wcf".WCF_N."_box
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_box
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());

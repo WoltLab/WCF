@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  */
 class HtmlOutputNodeWoltlabMention implements IHtmlOutputNode {
 	/**
-	 * @var UserProfile[]
+	 * @var	UserProfile[]
 	 */
 	protected $userProfiles;
 	

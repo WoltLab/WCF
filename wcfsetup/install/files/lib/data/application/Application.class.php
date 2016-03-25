@@ -22,7 +22,7 @@ use wcf\util\FileUtil;
 class Application extends DatabaseObject {
 	/**
 	 * related package object
-	 * @var Package
+	 * @var	Package
 	 */
 	protected $package;
 	
@@ -65,7 +65,7 @@ class Application extends DatabaseObject {
 	/**
 	 * Returns related package object.
 	 * 
-	 * @return      Package         related package object
+	 * @return	Package		related package object
 	 */
 	public function getPackage() {
 		if ($this->package === null) {

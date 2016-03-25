@@ -19,28 +19,28 @@ use wcf\system\WCF;
  */
 class CmsPage extends AbstractPage {
 	/**
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $content;
 	
 	/**
-	 * @var integer
+	 * @var	integer
 	 */
 	public $languageID;
 	
 	/**
-	 * @var Page
+	 * @var	Page
 	 */
 	public $page;
 	
 	/**
-	 * @var integer
+	 * @var	integer
 	 */
 	public $pageID;
 	
 	/**
 	 * @inheritDoc
-	 * @throws      IllegalLinkException
+	 * @throws	IllegalLinkException
 	 */
 	public function readParameters() {
 		parent::readParameters();

@@ -163,7 +163,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	/**
 	 * Returns the language item prefix for the notification texts.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getLanguageItemPrefix() {
 		if ($this->languageItemPrefix === null) {

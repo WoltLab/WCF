@@ -16,7 +16,7 @@ use wcf\system\SingletonFactory;
 class PageCache extends SingletonFactory {
 	/**
 	 * page cache
-	 * @var array
+	 * @var	array
 	 */
 	protected $cache;
 	
@@ -30,8 +30,8 @@ class PageCache extends SingletonFactory {
 	/**
 	 * Returns a page by page id or null.
 	 * 
-	 * @param       integer         $pageID         page id
-	 * @return      Page|null
+	 * @param	integer		$pageID		page id
+	 * @return	Page|null
 	 */
 	public function getPage($pageID) {
 		if (isset($this->cache['pages'][$pageID])) {
@@ -44,8 +44,8 @@ class PageCache extends SingletonFactory {
 	/**
 	 * Returns a page by controller or null.
 	 * 
-	 * @param       string          $controller     controller class name
-	 * @return      Page|null
+	 * @param	string		$controller	controller class name
+	 * @return	Page|null
 	 */
 	public function getPageByController($controller) {
 		if (isset($this->cache['controller'][$controller])) {
@@ -58,8 +58,8 @@ class PageCache extends SingletonFactory {
 	/**
 	 * Returns a page by its internal identifier or null.
 	 * 
-	 * @param       string          $identifier     internal identifier
-	 * @return      Page|null
+	 * @param	string		$identifier	internal identifier
+	 * @return	Page|null
 	 */
 	public function getPageByIdentifier($identifier) {
 		if (isset($this->cache['identifier'][$identifier])) {

@@ -13,16 +13,16 @@ use wcf\system\SingletonFactory;
  * @package	com.woltlab.wcf
  * @subpackage	data.menu
  * @category	Community Framework
- * @since       2.2
+ * @since	2.2
  */
 class MenuCache extends SingletonFactory {
 	/**
-	 * @var Menu[]
+	 * @var	Menu[]
 	 */
 	protected $cachedMenus;
 	
 	/**
-	 * @var MenuItemList[]
+	 * @var	MenuItemList[]
 	 */
 	protected $cachedMenuItems;
 	
@@ -37,8 +37,8 @@ class MenuCache extends SingletonFactory {
 	/**
 	 * Returns a menu by id.
 	 * 
-	 * @param       integer         $menuID         menu id
-	 * @return      Menu|null       menu object or null if menu id is unknown
+	 * @param	integer		$menuID		menu id
+	 * @return	Menu|null	menu object or null if menu id is unknown
 	 */
 	public function getMenuByID($menuID) {
 		if (isset($this->cachedMenus[$menuID])) {
@@ -51,8 +51,8 @@ class MenuCache extends SingletonFactory {
 	/**
 	 * Returns a menu item list by menu id.
 	 * 
-	 * @param       integer         $menuID         menu id
-	 * @return      MenuItemList|null       menu item list object or null if menu id is unknown
+	 * @param	integer			$menuID		menu id
+	 * @return	MenuItemList|null	menu item list object or null if menu id is unknown
 	 */
 	public function getMenuItemsByMenuID($menuID) {
 		if (isset($this->cachedMenuItems[$menuID])) {

@@ -304,8 +304,8 @@ class PackageInstallationDispatcher {
 	/**
 	 * Installs current package.
 	 * 
-	 * @param	mixed[]         $nodeData
-	 * @return      PackageInstallationStep
+	 * @param	mixed[]		$nodeData
+	 * @return	PackageInstallationStep
 	 */
 	protected function installPackage(array $nodeData) {
 		$installationStep = new PackageInstallationStep();
@@ -532,7 +532,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Executes a package installation plugin.
 	 * 
-	 * @param	mixed[]         $nodeData
+	 * @param	mixed[]	$nodeData
 	 * @return	boolean
 	 */
 	protected function executePIP(array $nodeData) {

@@ -15,7 +15,7 @@ use wcf\system\exception\SystemException;
 abstract class SingletonFactory {
 	/**
 	 * list of singletons
-	 * @var SingletonFactory[]
+	 * @var	SingletonFactory[]
 	 */
 	protected static $__singletonObjects = array();
 	

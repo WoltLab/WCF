@@ -20,29 +20,29 @@ use wcf\system\WCF;
  */
 class ControllerMap extends SingletonFactory {
 	/**
-	 * @var string[][]
+	 * @var	string[][]
 	 */
 	protected $ciControllers;
 	
 	/**
-	 * @var string[][]
+	 * @var	string[][]
 	 */
 	protected $customUrls;
 	
 	/**
-	 * @var string[]
+	 * @var	string[]
 	 */
 	protected $landingPages;
 	
 	/**
 	 * list of <ControllerName> to <controller-name> mappings
-	 * @var array<string>
+	 * @var	string[]
 	 */
 	protected $lookupCache = [];
 	
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function init() {
 		$this->ciControllers = RoutingCacheBuilder::getInstance()->getData([], 'ciControllers');
@@ -55,11 +55,11 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * URL -> Controller
 	 * 
-	 * @param       string          $application    application identifier
-	 * @param       string          $controller     url controller
-	 * @param       boolean         $isAcpRequest   true if this is an ACP request
-	 * @return      mixed           array containing className, controller and pageType or a string containing the controller name for aliased controllers
-	 * @throws      SystemException
+	 * @param	string		$application	application identifier
+	 * @param	string		$controller	url controller
+	 * @param	boolean		$isAcpRequest	true if this is an ACP request
+	 * @return	mixed	array containing className, controller and pageType or a string containing the controller name for aliased controllers
+	 * @throws	SystemException
 	 */
 	public function resolve($application, $controller, $isAcpRequest) {
 		// validate controller
@@ -103,9 +103,9 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * URL -> Controller
 	 * 
-	 * @param       string  $application    application identifier
-	 * @param       string  $controller     url controller
-	 * @return      array   empty array if there is no exact match
+	 * @param	string		$application	application identifier
+	 * @param	string		$controller	url controller
+	 * @return	array		empty array if there is no exact match
 	 */
 	public function resolveCustomController($application, $controller) {
 		if (isset($this->customUrls['lookup'][$application]) && isset($this->customUrls['lookup'][$application][$controller])) {
@@ -140,9 +140,9 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * Controller -> URL
 	 * 
-	 * @param       string          $application    application identifier
-	 * @param       string          $controller     controller class, e.g. 'MembersList'
-	 * @return      string          url representation of controller, e.g. 'members-list'
+	 * @param	string		$application	application identifier
+	 * @param	string		$controller	controller class, e.g. 'MembersList'
+	 * @return	string		url representation of controller, e.g. 'members-list'
 	 */
 	public function lookup($application, $controller) {
 		$lookupKey = $application . '-' . $controller;
@@ -167,9 +167,9 @@ class ControllerMap extends SingletonFactory {
 	 * Looks up a cms page URL, returns an array containing the application identifier
 	 * and url controller name or null if there was no match.
 	 * 
-	 * @param       integer         $pageID         page id
-	 * @param       integer         $languageID     content language id
-	 * @return      string[]|null
+	 * @param	integer		$pageID		page id
+	 * @param	integer		$languageID	content language id
+	 * @return	string[]|null
 	 */
 	public function lookupCmsPage($pageID, $languageID) {
 		$key = '__WCF_CMS__' . $pageID . '-' . ($languageID ?: 0);
@@ -188,8 +188,8 @@ class ControllerMap extends SingletonFactory {
 	/**
 	 * Lookups default controller for given application.
 	 * 
-	 * @param       string  $application    application identifier
-	 * @return      null|string[]           default controller
+	 * @param	string		$application	application identifier
+	 * @return	null|string[]	default controller
 	 */
 	public function lookupDefaultController($application) {
 		$controller = $this->landingPages[$application][1];
@@ -226,9 +226,9 @@ class ControllerMap extends SingletonFactory {
 	/**
 	 * Returns true if given controller is the application's default.
 	 * 
-	 * @param       string  $application    application identifier
-	 * @param       string  $controller     url controller name
-	 * @return      boolean true if controller is the application's default
+	 * @param	string		$application	application identifier
+	 * @param	string		$controller	url controller name
+	 * @return	boolean		true if controller is the application's default
 	 */
 	public function isDefaultController($application, $controller) {
 		// lookup custom urls first
@@ -251,11 +251,11 @@ class ControllerMap extends SingletonFactory {
 	 * Returns the class data for the active request or null if for the given
 	 * configuration no proper class exist.
 	 *
-	 * @param	string		$application    application identifier
-	 * @param	string		$controller     controller name
-	 * @param       boolean         $isAcpRequest   true if this is an ACP request
-	 * @param	string		$pageType       page type, e.g. 'form' or 'action'
-	 * @return	string[]        className, controller and pageType
+	 * @param	string		$application	application identifier
+	 * @param	string		$controller	controller name
+	 * @param	boolean		$isAcpRequest	true if this is an ACP request
+	 * @param	string		$pageType	page type, e.g. 'form' or 'action'
+	 * @return	string[]	className, controller and pageType
 	 */
 	protected function getClassData($application, $controller, $isAcpRequest, $pageType) {
 		$className = $application . '\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . ucfirst($pageType);
@@ -286,8 +286,8 @@ class ControllerMap extends SingletonFactory {
 	/**
 	 * Transforms a controller into its URL representation.
 	 *
-	 * @param       string  $controller     controller, e.g. 'BoardList'
-	 * @return      string  url representation, e.g. 'board-list'
+	 * @param	string		$controller	controller, e.g. 'BoardList'
+	 * @return	string		url representation, e.g. 'board-list'
 	 */
 	public static function transformController($controller) {
 		$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
