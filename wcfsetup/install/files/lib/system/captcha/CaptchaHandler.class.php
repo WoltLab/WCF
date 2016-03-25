@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\captcha;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -8,7 +9,7 @@ use wcf\system\WCF;
  * Handles captchas.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.captcha
@@ -16,9 +17,15 @@ use wcf\system\WCF;
  */
 class CaptchaHandler extends SingletonFactory {
 	/**
+	 * available captcha object types
+	 * @var	ObjectType[]
+	 */
+	protected $objectTypes = [];
+	
+	/**
 	 * Returns the available captcha types for selection.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getCaptchaSelection() {
 		$selection = array();
@@ -36,7 +43,7 @@ class CaptchaHandler extends SingletonFactory {
 	 * object type exists.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType|null
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypes[$objectTypeID])) {
@@ -51,14 +58,14 @@ class CaptchaHandler extends SingletonFactory {
 	 * object type exists.
 	 * 
 	 * @param	string		$objectType
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType|null
 	 */
 	public function getObjectTypeByName($objectType) {
 		return ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.captcha', $objectType);
 	}
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.captcha');
