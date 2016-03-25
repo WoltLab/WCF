@@ -28,17 +28,17 @@ use wcf\system\WCF;
  */
 class ACPSession extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'acp_session';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexIsIdentity = false;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'sessionID';
 	
@@ -66,20 +66,15 @@ class ACPSession extends DatabaseObject {
 	 * is no such session.
 	 * 
 	 * @param	integer		$userID
-	 * @return	\wcf\data\session\Session
+	 * @return	ACPSession
 	 */
 	public static function getSessionByUserID($userID) {
 		$sql = "SELECT	*
 			FROM	".static::getDatabaseTableName()."
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($userID));
-		$row = $statement->fetchArray();
+		$statement->execute([$userID]);
 		
-		if ($row === false) {
-			return null;
-		}
-		
-		return new static(null, $row);
+		return $statement->fetchObject(static::class);
 	}
 }

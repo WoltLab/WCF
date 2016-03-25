@@ -19,15 +19,22 @@ use wcf\util\UserUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.virtual
  * @category	Community Framework
+ *
+ * @property-read	integer		$virtualSessionID
+ * @property-read	string		$sessionID
+ * @property-read	string		$ipAddress
+ * @property-read	string		$userAgent
+ * @property-read	integer		$lastActivityTime
+ * @property-read	string		$sessionVariables
  */
 class ACPSessionVirtual extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'acp_session_virtual';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'virtualSessionID';
 	
@@ -35,7 +42,7 @@ class ACPSessionVirtual extends DatabaseObject {
 	 * Returns the active virtual session object or null.
 	 * 
 	 * @param	string		$sessionID
-	 * @return	\wcf\data\session\virtual\SessionVirtual
+	 * @return	ACPSessionVirtual
 	 */
 	public static function getExistingSession($sessionID) {
 		$sql = "SELECT	*
@@ -65,8 +72,7 @@ class ACPSessionVirtual extends DatabaseObject {
 			WHERE	sessionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($sessionID));
-		$row = $statement->fetchArray();
 		
-		return $row['count'];
+		return $statement->fetchColumn();
 	}
 }

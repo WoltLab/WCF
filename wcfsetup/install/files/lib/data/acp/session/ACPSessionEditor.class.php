@@ -16,12 +16,12 @@ use wcf\system\WCF;
  */
 class ACPSessionEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\acp\session\ACPSession';
+	protected static $baseClass = ACPSession::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::create()
+	 * @inheritDoc
 	 */
 	public static function create(array $parameters = array()) {
 		if (isset($parameters['userID']) && !$parameters['userID']) {
@@ -68,6 +68,6 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 		$sql = "DELETE FROM	".call_user_func(array(static::$baseClass, 'getDatabaseTableName'))."
 			WHERE		lastActivityTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($timestamp));
+		$statement->execute([$timestamp]);
 	}
 }

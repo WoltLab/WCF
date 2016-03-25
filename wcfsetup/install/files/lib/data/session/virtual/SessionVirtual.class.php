@@ -12,12 +12,6 @@ use wcf\data\acp\session\virtual\ACPSessionVirtual;
  * @package	com.woltlab.wcf
  * @subpackage	data.session.virtual
  * @category	Community Framework
- *
- * @property-read	integer		$virtualSessionID
- * @property-read	string		$sessionID
- * @property-read	string		$ipAddress
- * @property-read	string		$userAgent
- * @property-read	integer		$lastActivityTime
  */
 class SessionVirtual extends ACPSessionVirtual {
 	/**

@@ -12,7 +12,6 @@ use wcf\data\acp\session\ACPSession;
  * @subpackage	data.session
  * @category	Community Framework
  * 
- * @property-read	string		$sessionVariables
  * @property-read	string		$spiderID
  */
 class Session extends ACPSession {

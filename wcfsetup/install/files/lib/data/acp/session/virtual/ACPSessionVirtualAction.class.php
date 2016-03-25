@@ -15,7 +15,7 @@ use wcf\util\UserUtil;
  */
 class ACPSessionVirtualAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = ACPSessionVirtualEditor::class;
 	
