@@ -52,7 +52,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				
 				$updateServers[] = $updateServer;
 			}
-		} 
+		}
 		
 		// loop servers
 		$refreshedPackageLists = false;
