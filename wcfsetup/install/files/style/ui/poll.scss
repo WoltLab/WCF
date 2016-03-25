@@ -1,0 +1,81 @@
+/* poll create/edit form */
+#pollOptionContainer .pollOptionInput {
+	align-items: center;
+	margin: 5px 0;
+	
+	/* using `display: flex` inside a native list-item is pretty weird */
+	display: inline-flex;
+	width: 100%;
+	
+	> .icon {
+		flex: 0 0 auto;
+		margin: 0 5px;
+	}
+	
+	> input {
+		flex: 1 1 auto;
+		margin-left: 5px;
+	}
+}
+
+/* displayed poll */
+.pollContainer {
+	border: 1px solid $wcfContentBorder;
+	border-width: 1px 0;
+	float: left;
+	margin: 0 20px 10px 0;
+	max-width: 50%;
+	min-width: 300px;
+	padding: 10px 0;
+	
+	h2 {
+		@include wcfFontHeadline;
+	}
+	
+	.pollInnerContainer {
+		margin-top: 30px;
+		
+		dd:not(:last-child) {
+			margin-bottom: 5px;
+		}
+	}
+	
+	.formSubmit {
+		border-top: 1px solid $wcfContentBorderInner;
+		padding-top: 10px;
+	}
+	
+	.pollResultItem {
+		& + .pollResultItem {
+			margin-top: 20px;
+		}
+		
+		/* option name in result list */
+		.pollResultItemCaption {
+			align-items: flex-end;
+			display: flex;
+			
+			> .pollOptionName {
+				flex: 1 1 auto;
+			}
+			
+			> .pollOptionRelativeValue {
+				color: rgb(125, 130, 135);
+				flex: 0 0 50px;
+				text-align: right;
+			}
+		}
+		
+		/* visual representation of relative votes per option */
+		.pollMeter {
+			background-color: $wcfContentBorderInner;
+			height: 5px;
+			margin-top: 5px;
+			
+			> .pollMeterValue {
+				background-color: $wcfContentBorder;
+				height: 100%;
+			}
+		}
+	}
+}
