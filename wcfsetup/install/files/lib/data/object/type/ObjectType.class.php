@@ -14,6 +14,13 @@ use wcf\system\exception\SystemException;
  * @package	com.woltlab.wcf
  * @subpackage	data.object.type
  * @category	Community Framework
+ *
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$definitionID
+ * @property-read	integer		$packageID
+ * @property-read	string		$objectType
+ * @property-read	string		$className
+ * @property-read	array		$additionalData
  */
 class ObjectType extends ProcessibleDatabaseObject {
 	use TDatabaseObjectOptions;

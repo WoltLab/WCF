@@ -18,6 +18,19 @@ use wcf\system\WCF;
  * @subpackage	data.menu.item
  * @category	Community Framework
  * @since	2.2
+ *
+ * @property-read	integer		$itemID
+ * @property-read	integer		$menuID
+ * @property-read	integer|null	$parentItemID
+ * @property-read	string		$identifier
+ * @property-read	string		$title
+ * @property-read	integer|null	$pageID
+ * @property-read	integer		$pageObjectID
+ * @property-read	string		$externalURL
+ * @property-read	integer		$showOrder
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$originIsSystem
+ * @property-read	integer		$packageID
  */
 class MenuItem extends DatabaseObject {
 	/**

@@ -11,6 +11,13 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.search
  * @category	Community Framework
+ *
+ * @property-read	integer		$searchID
+ * @property-read	integer|null	$userID
+ * @property-read	string		$searchData
+ * @property-read	integer		$searchTime
+ * @property-read	string		$searchType
+ * @property-read	string		$searchHash
  */
 class Search extends DatabaseObject {
 	/**

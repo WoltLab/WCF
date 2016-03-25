@@ -14,6 +14,15 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.like.object
  * @category	Community Framework
+ *
+ * @property-read	integer		$likeObjectID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	integer		$objectUserID
+ * @property-read	integer		$likes
+ * @property-read	integer		$dislikes
+ * @property-read	integer		$cumulativeLikes
+ * @property-read	string		$cachedUsers
  */
 class LikeObject extends DatabaseObject {
 	/**

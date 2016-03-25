@@ -13,6 +13,20 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode
  * @category	Community Framework
+ *
+ * @property-read	integer		$bbcodeID
+ * @property-read	string		$bbCodeTag
+ * @property-read	integer		$packageID
+ * @property-read	string		$htmlOpen
+ * @property-read	string		$htmlClose
+ * @property-read	string		$allowedChildren
+ * @property-read	string		$className
+ * @property-read	string		$wysiwygIcon
+ * @property-read	string		$buttonLabel
+ * @property-read	integer		$isSourceCode
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$showButton
+ * @property-read	integer		$originIsSystem
  */
 class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	/**

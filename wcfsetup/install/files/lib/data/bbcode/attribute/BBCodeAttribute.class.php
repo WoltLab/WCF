@@ -12,6 +12,14 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.attribute
  * @category	Community Framework
+ *
+ * @property-read	integer		$attributeID
+ * @property-read	integer		$bbcodeID
+ * @property-read	integer		$attributeNo
+ * @property-read	string		$attributeHtml
+ * @property-read	string		$validationPattern
+ * @property-read	integer		$required
+ * @property-read	integer		$useText
  */
 class BBCodeAttribute extends DatabaseObject {
 	/**

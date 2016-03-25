@@ -13,6 +13,11 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.template.group
  * @category	Community Framework
+ *
+ * @property-read	integer		$templateGroupID
+ * @property-read	integer|null	$parentTemplateGroupID
+ * @property-read	string		$templateGroupName
+ * @property-read	string		$templateGroupFolderName
  */
 class TemplateGroup extends DatabaseObject {
 	/**

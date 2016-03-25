@@ -13,6 +13,13 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.language
  * @category	Community Framework
+ *
+ * @property-read	integer		$languageID
+ * @property-read	string		$languageCode
+ * @property-read	string		$languageName
+ * @property-read	string		$countryCode
+ * @property-read	integer		$isDefault
+ * @property-read	integer		$hasContent
  */
 class Language extends DatabaseObject {
 	/**

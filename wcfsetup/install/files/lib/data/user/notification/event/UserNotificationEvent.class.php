@@ -13,6 +13,16 @@ use wcf\data\TDatabaseObjectPermissions;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.notification.event
  * @category	Community Framework
+ *
+ * @property-read	integer		$eventID
+ * @property-read	integer		$packageID
+ * @property-read	string		$eventName
+ * @property-read	integer		$objectTypeID
+ * @property-read	string		$className
+ * @property-read	string		$permissions
+ * @property-read	string		$options
+ * @property-read	integer		$preset
+ * @property-read	string		$presetMailNotificationType
  */
 class UserNotificationEvent extends ProcessibleDatabaseObject {
 	use TDatabaseObjectOptions;

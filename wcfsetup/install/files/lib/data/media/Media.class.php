@@ -18,6 +18,36 @@ use wcf\system\WCF;
  * @subpackage	data.media
  * @category	Community Framework
  * @since	2.2
+ *
+ * @property-read	integer		$mediaID
+ * @property-read	string		$filename
+ * @property-read	integer		$filesize
+ * @property-read	string		$fileType
+ * @property-read	string		$fileHash
+ * @property-read	integer		$uploadTime
+ * @property-read	integer|null	$userID
+ * @property-read	string		$username
+ * @property-read	integer|null	$languageID
+ * @property-read	integer		$isMultilingual
+ * @property-read	integer		$isImage
+ * @property-read	integer		$width
+ * @property-read	integer		$height
+ * @property-read	string		$tinyThumbnailType
+ * @property-read	integer		$tinyThumbnailSize
+ * @property-read	integer		$tinyThumbnailWidth
+ * @property-read	integer		$tinyThumbnailHeight
+ * @property-read	string		$smallThumbnailType
+ * @property-read	integer		$smallThumbnailSize
+ * @property-read	integer		$smallThumbnailWidth
+ * @property-read	integer		$smallThumbnailHeight
+ * @property-read	string		$mediumThumbnailType
+ * @property-read	integer		$mediumThumbnailSize
+ * @property-read	integer		$mediumThumbnailWidth
+ * @property-read	integer		$mediumThumbnailHeight
+ * @property-read	string		$largeThumbnailType
+ * @property-read	integer		$largeThumbnailSize
+ * @property-read	integer		$largeThumbnailWidth
+ * @property-read	integer		$largeThumbnailHeight
  */
 class Media extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile {
 	/**

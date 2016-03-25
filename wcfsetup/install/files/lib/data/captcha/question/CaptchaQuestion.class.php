@@ -14,6 +14,11 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.captcha.question
  * @category	Community Framework
+ *
+ * @property-read	integer		$questionID
+ * @property-read	string		$question
+ * @property-read	string		$answers
+ * @property-read	integer		$isDisabled
  */
 class CaptchaQuestion extends DatabaseObject {
 	/**

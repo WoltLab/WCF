@@ -55,3 +55,7 @@
 * `wcf\action\AJAXProxyAction::getData()` removed.
 * Version system removed.
 * Support for query string based sessions in Frontend removed.
+
+#### Documentation
+
+* `@property-read` tags for database table columns of classes extending `wcf\data\DatabaseObject`.

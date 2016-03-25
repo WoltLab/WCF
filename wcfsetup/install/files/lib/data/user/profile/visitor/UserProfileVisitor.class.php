@@ -12,6 +12,11 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.profile.visitor
  * @category	Community Framework
+ *
+ * @property-read	integer		$visitorID
+ * @property-read	integer|null	$ownerID
+ * @property-read	integer|null	$userID
+ * @property-read	integer		$time
  */
 class UserProfileVisitor extends DatabaseObject {
 	/**

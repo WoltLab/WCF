@@ -12,6 +12,11 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.condition
  * @category	Community Framework
+ *
+ * @property-read	integer		$conditionID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	array		$conditionData
  */
 class Condition extends DatabaseObject {
 	/**

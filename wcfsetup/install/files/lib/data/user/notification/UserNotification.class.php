@@ -12,6 +12,21 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.notification
  * @category	Community Framework
+ *
+ * @property-read	integer		$notificationID
+ * @property-read	integer		$packageID		deprecated
+ * @property-read	integer		$eventID
+ * @property-read	integer		$objectID
+ * @property-read	integer		$baseObjectID
+ * @property-read	string		$eventHash
+ * @property-read	integer|null	$authorID
+ * @property-read	integer		$timesTriggered
+ * @property-read	integer		$guestTimesTriggered
+ * @property-read	integer		$userID
+ * @property-read	integer		$time
+ * @property-read	integer		$mailNotified
+ * @property-read	integer		$confirmTime
+ * @property-read	array		$additionalData
  */
 class UserNotification extends DatabaseObject {
 	/**

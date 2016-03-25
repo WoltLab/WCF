@@ -11,6 +11,11 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.plugin
  * @category	Community Framework
+ *
+ * @property-read	string		$pluginName
+ * @property-read	integer		$packageID
+ * @property-read	integer		$priority
+ * @property-read	string		$className
  */
 class PackageInstallationPlugin extends DatabaseObject {
 	/**

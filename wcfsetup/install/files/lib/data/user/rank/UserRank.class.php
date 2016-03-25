@@ -13,6 +13,15 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.rank
  * @category	Community Framework
+ *
+ * @property-read	integer		$rankID
+ * @property-read	integer		$groupID
+ * @property-read	integer		$requiredPoints
+ * @property-read	string		$rankTitle
+ * @property-read	string		$cssClassName
+ * @property-read	string		$rankImage
+ * @property-read	integer		$repeatImage
+ * @property-read	integer		$requiredGender
  */
 class UserRank extends DatabaseObject {
 	/**

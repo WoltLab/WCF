@@ -12,6 +12,12 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.poll.poll
  * @category	Community Framework
+ * 
+ * @property-read	integer		$optionID
+ * @property-read	integer		$pollID
+ * @property-read	string		$optionValue
+ * @property-read	integer		$votes
+ * @property-read	integer		$showOrder
  */
 class PollOption extends DatabaseObject {
 	/**

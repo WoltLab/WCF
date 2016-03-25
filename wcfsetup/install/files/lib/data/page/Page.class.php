@@ -18,6 +18,23 @@ use wcf\system\WCF;
  * @subpackage	data.page
  * @category	Community Framework
  * @since	2.2
+ *
+ * @property-read	integer		$pageID
+ * @property-read	integer|null	$parentPageID
+ * @property-read	string		$identifier
+ * @property-read	string		$name
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$isLandingPage
+ * @property-read	integer		$isMultilingual
+ * @property-read	integer		$originIsSystem
+ * @property-read	integer		$packageID
+ * @property-read	string		$controller
+ * @property-read	string		$handler
+ * @property-read	string		$controllerCustomURL
+ * @property-read	integer		$requireObjectID
+ * @property-read	integer		$lastUpdateTime
+ * @property-read	string		$permissions
+ * @property-read	string		$options
  */
 class Page extends DatabaseObject {
 	use TDatabaseObjectOptions;

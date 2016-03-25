@@ -18,6 +18,13 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.application
  * @category	Community Framework
+ *
+ * @property-read	integer		$packageID
+ * @property-read	string		$domainName
+ * @property-read	string		$domainPath
+ * @property-read	string		$cookieDomain
+ * @property-read	string		$cookiePath
+ * @property-read	integer|null	$landingPageID
  */
 class Application extends DatabaseObject {
 	/**

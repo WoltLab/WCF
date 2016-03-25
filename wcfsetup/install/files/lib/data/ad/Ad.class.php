@@ -15,6 +15,13 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.ad
  * @category	Community Framework
+ *
+ * @property-read	integer		$adID
+ * @property-read	integer		$objectTypeID
+ * @property-read	string		$adName
+ * @property-read	string		$ad
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$showOrder
  */
 class Ad extends DatabaseObject implements IRouteController {
 	/**

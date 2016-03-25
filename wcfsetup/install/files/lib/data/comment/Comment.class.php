@@ -16,6 +16,16 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
+ *
+ * @property-read	integer		$comment
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	integer		$time
+ * @property-read	integer|null	$userID
+ * @property-read	string		$username
+ * @property-read	string		$message
+ * @property-read	integer		$responses
+ * @property-read	string		$responseIDs
  */
 class Comment extends DatabaseObject implements IMessage {
 	use TUserContent;

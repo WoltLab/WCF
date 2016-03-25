@@ -15,6 +15,12 @@ use wcf\system\WCF;
  * @subpackage	data.menu
  * @category	Community Framework
  * @since	2.2
+ *
+ * @property-read	integer		$menuID
+ * @property-read	string		$identifier
+ * @property-read	string		$title
+ * @property-read	integer		$originIsSystem
+ * @property-read	integer		$packageID
  */
 class Menu extends DatabaseObject {
 	/**

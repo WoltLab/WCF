@@ -11,6 +11,16 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.language.item
  * @category	Community Framework
+ *
+ * @property-read	integer		$languageItemID
+ * @property-read	integer		$languageID
+ * @property-read	string		$languageItem
+ * @property-read	string		$languageItemValue
+ * @property-read	string		$languageCustomItemValue
+ * @property-read	integer		$languageUseCustomValue
+ * @property-read	integer		$languageItemOriginIsSystem
+ * @property-read	integer		$languageCategoryID
+ * @property-read	integer		$packageID
  */
 class LanguageItem extends DatabaseObject {
 	/**

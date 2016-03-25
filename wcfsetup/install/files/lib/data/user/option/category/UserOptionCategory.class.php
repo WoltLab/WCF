@@ -12,6 +12,14 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option.category
  * @category	Community Framework
+ *
+ * @property-read	integer		$categoryID
+ * @property-read	integer		$packageID
+ * @property-read	string		$categoryName
+ * @property-read	string		$parentCategoryName
+ * @property-read	integer		$showOrder
+ * @property-read	string		$permissions
+ * @property-read	string		$options
  */
 class UserOptionCategory extends DatabaseObject {
 	/**

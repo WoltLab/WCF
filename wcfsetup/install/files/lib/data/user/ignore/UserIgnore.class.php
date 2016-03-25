@@ -12,6 +12,11 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.ignore
  * @category	Community Framework
+ *
+ * @property-read	integer		$ignoreID
+ * @property-read	integer		$userID
+ * @property-read	integer		$ignoreUserID
+ * @property-read	integer		$time
  */
 class UserIgnore extends DatabaseObject {
 	/**

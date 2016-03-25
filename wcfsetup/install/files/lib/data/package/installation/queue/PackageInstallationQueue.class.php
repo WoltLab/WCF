@@ -12,6 +12,18 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.queue
  * @category	Community Framework
+ *
+ * @property-read	integer		$queueID
+ * @property-read	integer		$parentQueueID
+ * @property-read	integer		$processNo
+ * @property-read	integer		$userID
+ * @property-read	string		$package
+ * @property-read	string		$packageName
+ * @property-read	integer		$packageID
+ * @property-read	string		$archive
+ * @property-read	string		$action
+ * @property-read	integer		$done
+ * @property-read	integer		$isApplication
  */
 class PackageInstallationQueue extends DatabaseObject {
 	/**

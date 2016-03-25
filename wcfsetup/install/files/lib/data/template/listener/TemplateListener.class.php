@@ -11,6 +11,17 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.template.listener
  * @category	Community Framework
+ *
+ * @property-read	integer		$listenerID
+ * @property-read	integer		$packageID
+ * @property-read	string		$name
+ * @property-read	string		$environment
+ * @property-read	string		$templateName
+ * @property-read	string		$eventName
+ * @property-read	string		$templateCode
+ * @property-read	integer		$niceValue
+ * @property-read	string		$permissions
+ * @property-read	string		$options
  */
 class TemplateListener extends DatabaseObject {
 	/**

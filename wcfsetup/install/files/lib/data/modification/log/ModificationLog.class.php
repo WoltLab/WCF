@@ -11,6 +11,16 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.modification.log
  * @category	Community Framework
+ *
+ * @property-read	integer		$logID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	integer|null	$parentObjectID
+ * @property-read	integer|null	$userID
+ * @property-read	string		$username
+ * @property-read	integer		$time
+ * @property-read	string		$action
+ * @property-read	array		$additionalData
  */
 class ModificationLog extends DatabaseObject {
 	/**

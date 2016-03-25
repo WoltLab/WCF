@@ -17,6 +17,31 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.attachment
  * @category	Community Framework
+ *
+ * @property-read	integer		$attachmentID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer|null	$objectID
+ * @property-read	integer|null	$userID
+ * @property-read	string		$tmpHash
+ * @property-read	string		$filename
+ * @property-read	integer		$filesize
+ * @property-read	string		$fileType
+ * @property-read	string		$fileHash
+ * @property-read	integer		$isImage
+ * @property-read	integer		$width
+ * @property-read	integer		$height
+ * @property-read	string		$tinyThumbnailType
+ * @property-read	integer		$tinyThumbnailSize
+ * @property-read	integer		$tinyThumbnailWidth
+ * @property-read	integer		$tinyThumbnailHeight
+ * @property-read	string		$thumbnailType
+ * @property-read	integer		$thumbnailSize
+ * @property-read	integer		$thumbnailWidth
+ * @property-read	integer		$thumbnailHeight
+ * @property-read	integer		$downloads
+ * @property-read	integer		$lastDownloadTime
+ * @property-read	integer		$uploadTime
+ * @property-read	integer		$showOrder
  */
 class Attachment extends DatabaseObject implements IRouteController, IThumbnailFile {
 	/**

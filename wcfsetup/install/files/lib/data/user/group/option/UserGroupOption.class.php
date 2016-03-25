@@ -11,6 +11,8 @@ use wcf\data\option\Option;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.option
  * @category	Community Framework
+ * 
+ * @property-read	integer		$usersOnly
  */
 class UserGroupOption extends Option {
 	/**

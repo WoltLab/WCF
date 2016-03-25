@@ -11,6 +11,12 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.cronjob.log
  * @category	Community Framework
+ *
+ * @property-read	integer		$cronjobLogID
+ * @property-read	integer		$cronjobID
+ * @property-read	integer		$execTime
+ * @property-read	integer		$success
+ * @property-read	string		$error
  */
 class CronjobLog extends DatabaseObject {
 	/**

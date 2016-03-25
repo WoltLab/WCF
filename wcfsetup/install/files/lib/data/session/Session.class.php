@@ -12,6 +12,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.session
  * @category	Community Framework
+ * 
+ * @property-read	string		$sessionVariables
+ * @property-read	string		$spiderID
  */
 class Session extends ACPSession {
 	/**

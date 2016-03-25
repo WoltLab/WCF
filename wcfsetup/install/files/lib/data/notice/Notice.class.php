@@ -16,6 +16,15 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.notice
  * @category	Community Framework
+ *
+ * @property-read	integer		$noticeID
+ * @property-read	string		$noticeName
+ * @property-read	string		$notice
+ * @property-read	integer		$noticeUseHtml
+ * @property-read	string		$cssClassName
+ * @property-read	integer		$showOrder
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$isDismissible
  */
 class Notice extends DatabaseObject implements IRouteController {
 	/**

@@ -11,6 +11,19 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session
  * @category	Community Framework
+ *
+ * @property-read	string		$sessionID
+ * @property-read	integer|null	$userID
+ * @property-read	string		$ipAddress
+ * @property-read	string		$userAgent
+ * @property-read	integer		$lastActivityTime
+ * @property-read	string		$requestURI
+ * @property-read	string		$requestMethod
+ * @property-read	string		$controller
+ * @property-read	string		$parentObjectType
+ * @property-read	integer		$parentObjectID
+ * @property-read	string		$objectType
+ * @property-read	integer		$objectID
  */
 class ACPSession extends DatabaseObject {
 	/**

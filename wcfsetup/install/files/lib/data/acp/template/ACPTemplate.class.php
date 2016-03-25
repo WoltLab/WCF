@@ -11,6 +11,11 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.template
  * @category	Community Framework
+ *
+ * @property-read	integer		$templateID
+ * @property-read	integer|null	$packageID
+ * @property-read	string		$templateName
+ * @property-read	string		$application
  */
 class ACPTemplate extends DatabaseObject {
 	/**

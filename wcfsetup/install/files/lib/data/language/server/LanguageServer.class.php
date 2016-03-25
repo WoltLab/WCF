@@ -11,6 +11,10 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.language.server
  * @category	Community Framework
+ *
+ * @property-read	integer		$languageServerID
+ * @property-read	string		$serverURL
+ * @property-read	integer		$isDisabled
  */
 class LanguageServer extends DatabaseObject {
 	/**

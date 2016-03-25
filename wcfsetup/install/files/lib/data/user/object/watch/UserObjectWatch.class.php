@@ -12,6 +12,12 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.object.watch
  * @category	Community Framework
+ *
+ * @property-read	integer		$watchID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	integer		$userID
+ * @property-read	integer		$notification
  */
 class UserObjectWatch extends DatabaseObject {
 	/**

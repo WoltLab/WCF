@@ -13,6 +13,14 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.authentication.failure
  * @category	Community Framework
+ *
+ * @property-read	integer		$failureID
+ * @property-read	string		$environment
+ * @property-read	integer|null	$userID
+ * @property-read	string		$username
+ * @property-read	integer		$time
+ * @property-read	string		$ipAddress
+ * @property-read	string		$userAgent
  */
 class UserAuthenticationFailure extends DatabaseObject {
 	/**

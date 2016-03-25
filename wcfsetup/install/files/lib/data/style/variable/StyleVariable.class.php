@@ -11,6 +11,10 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.style.variable
  * @category	Community Framework
+ *
+ * @property-read	integer		$variableID
+ * @property-read	string		$variableName
+ * @property-read	string		$defaultValue
  */
 class StyleVariable extends DatabaseObject {
 	/**

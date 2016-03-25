@@ -16,6 +16,14 @@ use wcf\system\SingletonFactory;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.profile.menu.item
  * @category	Community Framework
+ *
+ * @property-read	integer		$menuItemID
+ * @property-read	integer		$packageID
+ * @property-read	string		$menuItem
+ * @property-read	integer		$showOrder
+ * @property-read	string		$permissions
+ * @property-read	string		$options
+ * @property-read	string		$className
  */
 class UserProfileMenuItem extends DatabaseObject {
 	use TDatabaseObjectOptions;

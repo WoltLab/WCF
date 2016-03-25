@@ -15,6 +15,17 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update.server
  * @category	Community Framework
+ *
+ * @property-read	integer		$packageUpdateServerID
+ * @property-read	string		$serverURL
+ * @property-read	string		$loginUsername
+ * @property-read	string		$loginPassword
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$lastUpdateTime
+ * @property-read	string		$status
+ * @property-read	string		$errorMessage
+ * @property-read	string		$apiVersion
+ * @property-read	array		$metaData
  */
 class PackageUpdateServer extends DatabaseObject {
 	/**

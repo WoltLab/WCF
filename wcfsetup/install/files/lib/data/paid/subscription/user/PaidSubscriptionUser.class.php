@@ -13,6 +13,13 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription.user
  * @category	Community Framework
+ *
+ * @property-read	integer		$subscriptionUserID
+ * @property-read	integer		$subscriptionID
+ * @property-read	integer		$userID
+ * @property-read	integer		$startDate
+ * @property-read	integer		$endDate
+ * @property-read	integer		$isActive
  */
 class PaidSubscriptionUser extends DatabaseObject {
 	/**

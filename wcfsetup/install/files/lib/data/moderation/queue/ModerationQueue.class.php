@@ -13,6 +13,18 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
  * @category	Community Framework
+ *
+ * @property-read	integer		$queueID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	integer		$containerID
+ * @property-read	integer|null	$userID
+ * @property-read	integer		$time
+ * @property-read	integer|null	$assignedUserID
+ * @property-read	integer		$status
+ * @property-read	integer		$comments
+ * @property-read	integer		$lastChangeTime
+ * @property-read	string		$additionalData
  */
 class ModerationQueue extends DatabaseObject {
 	/**

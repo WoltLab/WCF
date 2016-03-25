@@ -13,6 +13,15 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.smiley
  * @category	Community Framework
+ *
+ * @property-read	integer		$smileyID
+ * @property-read	integer		$packageID
+ * @property-read	integer|null	$categoryID
+ * @property-read	string		$smileyPath
+ * @property-read	string		$smileyTitle
+ * @property-read	string		$smileyCode
+ * @property-read	string		$aliases
+ * @property-read	integer		$smileyID
  */
 class Smiley extends DatabaseObject {
 	/**

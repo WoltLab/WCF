@@ -13,6 +13,14 @@ use wcf\util\UserUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.log
  * @category	Community Framework
+ *
+ * @property-read	integer		$sessionLogID
+ * @property-read	string		$sessionID
+ * @property-read	integer|null	$userID
+ * @property-read	string		ipAddress
+ * @property-read	string		$hostName
+ * @property-read	integer		$time
+ * @property-read	integer		$lastActivityTime
  */
 class ACPSessionLog extends DatabaseObject {
 	/**

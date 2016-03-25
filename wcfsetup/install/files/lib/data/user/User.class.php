@@ -20,6 +20,50 @@ use wcf\util\PasswordUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
+ *
+ * @property-read	integer		$userID
+ * @property-read	string		$username
+ * @property-read	string		$email
+ * @property-read	string		$password
+ * @property-read	string		$accessToken
+ * @property-read	integer		$languageID
+ * @property-read	integer		$registrationDate
+ * @property-read	integer		$styleID
+ * @property-read	integer		$banned
+ * @property-read	string		$banReason
+ * @property-read	integer		$banExpires
+ * @property-read	integer		$activationCode
+ * @property-read	integer		$lastLostPasswordRequestTime
+ * @property-read	string		$lostPasswordKey
+ * @property-read	integer		$lastUsernameChange
+ * @property-read	string		$newEmail
+ * @property-read	string		$oldUsername
+ * @property-read	integer		$quitStarted
+ * @property-read	integer		$reactivationCode
+ * @property-read	string		$registrationIpAddress
+ * @property-read	integer|null	$avatarID
+ * @property-read	integer		$disableAvatar
+ * @property-read	string		$disableAvatarReason
+ * @property-read	integer		$disableAvatarExpires
+ * @property-read	integer		$enableGravatar
+ * @property-read	string		$gravatarFileExtension
+ * @property-read	string		$signature
+ * @property-read	integer		$signatureEnableBBCodes
+ * @property-read	integer		$signatureEnableHtml
+ * @property-read	integer		$signatureEnableSmilies
+ * @property-read	integer		$disableSignature
+ * @property-read	string		$disableSignatureReason
+ * @property-read	integer		$disableSignatureExpires
+ * @property-read	integer		$lastActivityTime
+ * @property-read	integer		$profileHits
+ * @property-read	integer|null	$rankID
+ * @property-read	string		$userTitle
+ * @property-read	integer|null	$userOnlineGroupID
+ * @property-read	integer		$activityPoints
+ * @property-read	string		$notificationMailToken
+ * @property-read	string		$authData
+ * @property-read	integer		$likesReceived
+ * @property-read	string		$socialNetworkPrivacySettings
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**

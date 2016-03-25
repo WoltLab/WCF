@@ -12,6 +12,11 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.follow
  * @category	Community Framework
+ *
+ * @property-read	integer		$followID
+ * @property-read	integer		$userID
+ * @property-read	integer		$followUserID
+ * @property-read	integer		$time
  */
 class UserFollow extends DatabaseObject {
 	/**
