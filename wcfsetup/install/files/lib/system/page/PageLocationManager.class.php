@@ -29,6 +29,10 @@ class PageLocationManager extends SingletonFactory {
 		$pageID = $pageObjectID = 0;
 		
 		$activeRequest = RequestHandler::getInstance()->getActiveRequest();
+		if ($activeRequest === null) {
+			return;
+		}
+		
 		$metaData = $activeRequest->getMetaData();
 		if (isset($metaData['cms'])) {
 			$pageID = $metaData['cms']['pageID'];
