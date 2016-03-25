@@ -66,7 +66,7 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 			if (typeof event === 'object') {
 				// check if click occured within the ::before pseudo element
 				var rect = DomUtil.offset(element);
-				if ((event.clientY + document.body.scrollTop) > (rect.top + _quotePaddingTop + _titleHeight)) {
+				if ((event.clientY + window.scrollY) > (rect.top + _quotePaddingTop + _titleHeight)) {
 					return;
 				}
 				

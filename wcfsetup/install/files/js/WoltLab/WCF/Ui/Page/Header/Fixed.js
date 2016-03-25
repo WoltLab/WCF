@@ -79,7 +79,7 @@ define(['Core', 'EventHandler', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/SimpleDropdo
 		 * @protected
 		 */
 		_scroll: function() {
-			_isFixed = (document.body.scrollTop > 50);
+			_isFixed = (window.scrollY > 50);
 			
 			_pageHeader.classList[_isFixed ? 'add' : 'remove']('sticky');
 			_pageHeaderContainer.classList[_isFixed ? 'add' : 'remove']('stickyPageHeader');
