@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+<xs:schema xmlns:xs="https://www.w3.org/2001/XMLSchema" xmlns="https://www.woltlab.com" targetNamespace="https://www.woltlab.com" elementFormDefault="qualified">
 	<!-- string type with a minimum length of 1 and a maximum length of 255 characters -->
 	<xs:simpleType name="woltlab_varchar">
 		<xs:restriction base="xs:string">
