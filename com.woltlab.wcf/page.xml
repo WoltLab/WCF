@@ -39,7 +39,7 @@
 			<options>module_team_page</options>
 		</page>
 		<page identifier="com.woltlab.wcf.UserSearch">
-			<controller>wcf\page\UserSearchForm</controller>
+			<controller>wcf\form\UserSearchForm</controller>
 			<name language="de"><![CDATA[Benutzer suchen]]></name>
 			<name language="en"><![CDATA[Search Users]]></name>
 			<parent>com.woltlab.wcf.MembersList</parent>
