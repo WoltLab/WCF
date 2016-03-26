@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\data\user\User;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;

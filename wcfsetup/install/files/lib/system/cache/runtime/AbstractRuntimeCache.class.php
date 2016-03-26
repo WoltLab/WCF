@@ -132,7 +132,7 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
 	/**
 	 * @inheritDoc
 	 */
-	public function removeObjects(array $objectIDs){
+	public function removeObjects(array $objectIDs) {
 		foreach ($objectIDs as $objectID) {
 			if (array_key_exists($objectID, $this->objects)) {
 				unset($this->objects[$objectID]);
