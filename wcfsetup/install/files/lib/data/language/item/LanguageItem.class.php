@@ -6,7 +6,7 @@ use wcf\data\DatabaseObject;
  * Represents a language item.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language.item
@@ -20,16 +20,16 @@ use wcf\data\DatabaseObject;
  * @property-read	integer		$languageUseCustomValue
  * @property-read	integer		$languageItemOriginIsSystem
  * @property-read	integer		$languageCategoryID
- * @property-read	integer		$packageID
+ * @property-read	integer|null	$packageID
  */
 class LanguageItem extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'language_item';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'languageItemID';
 }

@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\bbcode;
+use wcf\data\bbcode\attribute\BBCodeAttribute;
 use wcf\data\ProcessibleDatabaseObject;
+use wcf\system\bbcode\IBBCode;
 use wcf\system\request\IRouteController;
 use wcf\system\WCF;
 
@@ -8,14 +10,14 @@ use wcf\system\WCF;
  * Represents a bbcode.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode
  * @category	Community Framework
  *
  * @property-read	integer		$bbcodeID
- * @property-read	string		$bbCodeTag
+ * @property-read	string		$bbcodeTag
  * @property-read	integer		$packageID
  * @property-read	string		$htmlOpen
  * @property-read	string		$htmlClose
@@ -30,24 +32,24 @@ use wcf\system\WCF;
  */
 class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'bbcode';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'bbcodeID';
 	
 	/**
-	 * @see	\wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 * @inheritDoc
 	 */
-	protected static $processorInterface = 'wcf\system\bbcode\IBBCode';
+	protected static $processorInterface = IBBCode::class;
 	
 	/**
 	 * Returns the attributes of this bbcode.
 	 * 
-	 * @return	array<\wcf\data\bbcode\attribute\BBCodeAttribute>
+	 * @return	BBCodeAttribute[]
 	 */
 	public function getAttributes() {
 		if ($this->attributes === null) {
@@ -58,7 +60,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->bbcodeTag;
@@ -68,7 +70,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	 * Returns BBCode object with the given tag.
 	 * 
 	 * @param	string		$tag
-	 * @return	\wcf\data\bbcode\BBCode
+	 * @return	BBCode
 	 */
 	public static function getBBCodeByTag($tag) {
 		$sql = "SELECT	*
@@ -88,7 +90,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	 * existent, false is returned.
 	 * 
 	 * @param	string		$bbcodeTag
-	 * @param	array<string>	$allowedBBCodeTags
+	 * @param	string[]	$allowedBBCodeTags
 	 * @return	boolean
 	 */
 	public static function isAllowedBBCode($bbcodeTag, array $allowedBBCodeTags) {

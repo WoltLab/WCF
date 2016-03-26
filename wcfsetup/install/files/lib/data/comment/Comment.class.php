@@ -11,13 +11,13 @@ use wcf\util\StringUtil;
  * Represents a comment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
  *
- * @property-read	integer		$comment
+ * @property-read	integer		$commentID
  * @property-read	integer		$objectTypeID
  * @property-read	integer		$objectID
  * @property-read	integer		$time
@@ -31,77 +31,77 @@ class Comment extends DatabaseObject implements IMessage {
 	use TUserContent;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'comment';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'commentID';
 	
 	/**
 	 * Returns a list of response ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getResponseIDs() {
 		if ($this->responseIDs === null || $this->responseIDs == '') {
-			return array();
+			return [];
 		}
 		
 		$responseIDs = @unserialize($this->responseIDs);
 		if ($responseIDs === false) {
-			return array();
+			return [];
 		}
 		
 		return $responseIDs;
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getFormattedMessage()
+	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
 		return SimpleMessageParser::getInstance()->parse($this->message);
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getExcerpt()
+	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = 255) {
 		return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getMessage()
+	 * @inheritDoc
 	 */
 	public function getMessage() {
 		return $this->message;
 	}
 	
 	/**
-	 * @see	\wcf\data\ILinkableObject::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		return CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor()->getLink($this->objectTypeID, $this->objectID);
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor()->getTitle($this->objectTypeID, $this->objectID);
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::__toString()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage();

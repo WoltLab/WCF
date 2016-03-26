@@ -15,7 +15,7 @@ use wcf\util\PasswordUtil;
  * Represents a user.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
@@ -27,7 +27,7 @@ use wcf\util\PasswordUtil;
  * @property-read	string		$password
  * @property-read	string		$accessToken
  * @property-read	integer		$languageID
- * @property-read	integer		$registrationDate
+ * @property-read	string		$registrationDate
  * @property-read	integer		$styleID
  * @property-read	integer		$banned
  * @property-read	string		$banReason
@@ -67,18 +67,18 @@ use wcf\util\PasswordUtil;
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'userID';
 	
 	/**
 	 * list of group ids
-	 * @var	array<integer>
+	 * @var integer[]
 	 */
 	protected $groupIDs = null;
 	
@@ -90,7 +90,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	
 	/**
 	 * list of language ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $languageIDs = null;
 	
@@ -102,12 +102,12 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	
 	/**
 	 * list of user options
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $userOptions = null;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
@@ -117,11 +117,11 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 				ON		(user_option_value.userID = user_table.userID)
 				WHERE		user_table.userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($id));
+			$statement->execute([$id]);
 			$row = $statement->fetchArray();
 			
 			// enforce data type 'array'
-			if ($row === false) $row = array();
+			if ($row === false) $row = [];
 		}
 		else if ($object !== null) {
 			$row = $object->data;
@@ -162,9 +162,9 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		// create new password hash, either different encryption or different blowfish cost factor
 		if ($rebuild && $isValid) {
 			$userEditor = new UserEditor($this);
-			$userEditor->update(array(
+			$userEditor->update([
 				'password' => $password
-			));
+			]);
 		}
 		
 		return $isValid;
@@ -188,13 +188,13 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Returns an array with all the groups in which the actual user is a member.
 	 * 
 	 * @param	boolean		$skipCache
-	 * @return	array		$groupIDs
+	 * @return	integer[]
 	 */
 	public function getGroupIDs($skipCache = false) {
 		if ($this->groupIDs === null || $skipCache) {
 			if (!$this->userID) {
 				// user is a guest, use default guest group
-				$this->groupIDs = UserGroup::getGroupIDsByType(array(UserGroup::GUESTS, UserGroup::EVERYONE));
+				$this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::GUESTS, UserGroup::EVERYONE]);
 			}
 			else {
 				// get group ids
@@ -202,12 +202,12 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 				
 				// cache does not exist or is outdated
 				if ($data === null || $skipCache) {
-					$this->groupIDs = array();
+					$this->groupIDs = [];
 					$sql = "SELECT	groupID
 						FROM	wcf".WCF_N."_user_to_group
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($this->userID));
+					$statement->execute([$this->userID]);
 					while ($row = $statement->fetchArray()) {
 						$this->groupIDs[] = $row['groupID'];
 					}
@@ -231,11 +231,11 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	/**
 	 * Returns a list of language ids for this user.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getLanguageIDs() {
 		if ($this->languageIDs === null) {
-			$this->languageIDs = array();
+			$this->languageIDs = [];
 			
 			if ($this->userID) {
 				// get language ids
@@ -247,7 +247,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 						FROM	wcf".WCF_N."_user_to_language
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($this->userID));
+					$statement->execute([$this->userID]);
 					while ($row = $statement->fetchArray()) {
 						$this->languageIDs[] = $row['languageID'];
 					}
@@ -287,7 +287,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Gets all user options from cache.
 	 */
 	protected static function getUserOptionCache() {
-		self::$userOptions = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+		self::$userOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');
 	}
 	
 	/**
@@ -310,7 +310,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::__get()
+	 * @inheritDoc
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -322,7 +322,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Returns the user with the given username.
 	 * 
 	 * @param	string		$username
-	 * @return	\wcf\data\user\User
+	 * @return	User
 	 */
 	public static function getUserByUsername($username) {
 		$sql = "SELECT		user_option_value.*, user_table.*
@@ -331,9 +331,9 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			ON		(user_option_value.userID = user_table.userID)
 			WHERE		user_table.username = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($username));
+		$statement->execute([$username]);
 		$row = $statement->fetchArray();
-		if (!$row) $row = array();
+		if (!$row) $row = [];
 		
 		return new User(null, $row);
 	}
@@ -342,7 +342,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Returns the user with the given email.
 	 * 
 	 * @param	string		$email
-	 * @return	\wcf\data\user\User
+	 * @return	User
 	 */
 	public static function getUserByEmail($email) {
 		$sql = "SELECT		user_option_value.*, user_table.*
@@ -351,9 +351,9 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			ON		(user_option_value.userID = user_table.userID)
 			WHERE		user_table.email = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($email));
+		$statement->execute([$email]);
 		$row = $statement->fetchArray();
-		if (!$row) $row = array();
+		if (!$row) $row = [];
 		
 		return new User(null, $row);
 	}
@@ -362,7 +362,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Returns the user with the given authData.
 	 *
 	 * @param	string		$authData
-	 * @return	\wcf\data\user\User
+	 * @return	User
 	 */
 	public static function getUserByAuthData($authData) {
 		$sql = "SELECT		user_option_value.*, user_table.*
@@ -371,9 +371,9 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			ON		(user_option_value.userID = user_table.userID)
 			WHERE		user_table.authData = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($authData));
+		$statement->execute([$authData]);
 		$row = $statement->fetchArray();
-		if (!$row) $row = array();
+		if (!$row) $row = [];
 
 		return new User(null, $row);
 	}
@@ -414,7 +414,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Returns a list of users.
 	 * 
 	 * @param	array		$userIDs
-	 * @return	array<\wcf\data\user\User>
+	 * @return	User[]
 	 */
 	public static function getUsers(array $userIDs) {
 		$userList = new UserList();
@@ -434,14 +434,14 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'user_table';
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRouteController::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->username;
@@ -450,7 +450,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	/**
 	 * Returns the language of this user.
 	 * 
-	 * @return	\wcf\data\language\Language
+	 * @return	Language
 	 */
 	public function getLanguage() {
 		$language = LanguageFactory::getInstance()->getLanguage($this->languageID);
@@ -494,37 +494,42 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getUserID()
+	 * @inheritDoc
 	 */
 	public function getUserID() {
 		return $this->userID;
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getUsername()
+	 * @inheritDoc
 	 */
 	public function getUsername() {
 		return $this->username;
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getTime()
+	 * @inheritDoc
 	 */
 	public function getTime() {
 		return $this->registrationDate;
 	}
 	
 	/**
-	 * @see	\wcf\data\ILinkableObject::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', array(
+		return LinkHandler::getInstance()->getLink('User', [
 			'application' => 'wcf',
 			'object' => $this,
 			'forceFrontend' => true
-		));
+		]);
 	}
 	
+	/**
+	 * Returns the social network privacy settings of the user.
+	 * 
+	 * @return	boolean[]
+	 */
 	public function getSocialNetworkPrivacySettings() {
 		$settings = false;
 		if ($this->userID && WCF::getUser()->socialNetworkPrivacySettings) {
@@ -532,12 +537,12 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		}
 		
 		if ($settings === false) {
-			$settings = array(
+			$settings = [
 				'facebook' => false,
 				'google' => false,
 				'reddit' => false,
 				'twitter' => false
-			);
+			];
 		}
 		
 		return $settings;

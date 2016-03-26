@@ -6,30 +6,30 @@ use wcf\data\DatabaseObject;
  * Represents a package installation plugin.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.plugin
  * @category	Community Framework
  *
  * @property-read	string		$pluginName
- * @property-read	integer		$packageID
+ * @property-read	integer|null	$packageID
  * @property-read	integer		$priority
  * @property-read	string		$className
  */
 class PackageInstallationPlugin extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'package_installation_plugin';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'pluginName';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexIsIdentity = false;
 }

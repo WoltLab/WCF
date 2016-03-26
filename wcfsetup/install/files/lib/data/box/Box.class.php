@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  * @property-read	integer		$showHeader
  * @property-read	integer		$originIsSystem
  * @property-read	integer		$packageID
- * @property-read	integer		$className
+ * @property-read	string		$className
  * @property-read	integer|null	$menuID
  */
 class Box extends DatabaseObject {
