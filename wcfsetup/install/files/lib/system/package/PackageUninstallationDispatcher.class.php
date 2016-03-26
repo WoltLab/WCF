@@ -160,7 +160,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 * @param	string		$targetDir
 	 * @param	string		$files
 	 * @param	boolean		$deleteEmptyDirectories
-	 * @param	booelan		$deleteEmptyTargetDir
+	 * @param	boolean		$deleteEmptyTargetDir
 	 */
 	public function deleteFiles($targetDir, $files, $deleteEmptyTargetDir = false, $deleteEmptyDirectories = true) {
 		new Uninstaller($targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories);

@@ -1,8 +1,10 @@
 <?php
 namespace wcf\form;
+use wcf\data\comment\StructuredCommentList;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\breadcrumb\Breadcrumb;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;

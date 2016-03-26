@@ -189,7 +189,7 @@ class Email {
 			throw new SystemException("The given message id '".$messageID."' is invalid. Note: You must not specify the part right of the at sign (@).");
 		}
 		if (strlen($messageID) > 50) {
-			throw new SystemException("The given message id '".$message."' is not allowed. The maximum allowed length is 50 bytes.");
+			throw new SystemException("The given message id '".$messageID."' is not allowed. The maximum allowed length is 50 bytes.");
 		}
 		
 		$this->messageID = $messageID;

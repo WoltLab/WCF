@@ -15,6 +15,18 @@ use wcf\system\exception\SystemException;
  */
 class CategoryNodeTree implements \IteratorAggregate {
 	/**
+	 * list of ids of categories which will not be inluded in the node tree
+	 * @var	integer[]
+	 */
+	protected $excludedCategoryIDs = [];
+	
+	/**
+	 * if true, disabled categories are also included in the node tree
+	 * @var	boolean
+	 */
+	protected $includeDisabledCategories = false;
+	
+	/**
 	 * maximum depth considered when building the node tree
 	 * @var	integer
 	 */

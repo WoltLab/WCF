@@ -388,7 +388,6 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if (!empty($this->parameters['fileType'])) {
 			$mediaList->addDefaultFileTypeFilter($this->parameters['fileType']);
 		}
-		$mediaList->getConditionBuilder()->add($searchConditionBuilder->__toString(), $searchConditionBuilder->getParameters());
 		if (!empty($this->parameters['fileTypeFilters'])) {
 			$mediaList->addFileTypeFilters($this->parameters['fileTypeFilters']);
 		}

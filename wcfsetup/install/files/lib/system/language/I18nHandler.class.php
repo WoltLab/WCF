@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\language;
+use wcf\data\language\Language;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
@@ -11,7 +12,7 @@ use wcf\util\StringUtil;
  * Provides internationalization support for input fields.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.language
@@ -20,42 +21,42 @@ use wcf\util\StringUtil;
 class I18nHandler extends SingletonFactory {
 	/**
 	 * list of available languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
-	protected $availableLanguages = array();
+	protected $availableLanguages = [];
 	
 	/**
 	 * list of element ids
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $elementIDs = array();
+	protected $elementIDs = [];
 	
 	/**
 	 * list of plain values for elements
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $plainValues = array();
+	protected $plainValues = [];
 	
 	/**
 	 * i18n values for elements
-	 * @var	array<array>
+	 * @var	string[][]
 	 */
-	protected $i18nValues = array();
+	protected $i18nValues = [];
 	
 	/**
 	 * element options
 	 * @var	array<array>
 	 */
-	protected $elementOptions = array();
+	protected $elementOptions = [];
 	
 	/**
 	 * language variable regex object
-	 * @var	\wcf\system\Regex
+	 * @var	Regex
 	 */
 	protected $regex = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
@@ -64,7 +65,7 @@ class I18nHandler extends SingletonFactory {
 	/**
 	 * Registers a new element id, returns false if element id is already set.
 	 * 
-	 * @param	string		elementID
+	 * @param	string		$elementID
 	 * @return	boolean
 	 */
 	public function register($elementID) {
@@ -89,7 +90,7 @@ class I18nHandler extends SingletonFactory {
 			
 			$i18nElementID = $elementID . '_i18n';
 			if (isset($_POST[$i18nElementID]) && is_array($_POST[$i18nElementID])) {
-				$this->i18nValues[$elementID] = array();
+				$this->i18nValues[$elementID] = [];
 				
 				foreach ($_POST[$i18nElementID] as $languageID => $value) {
 					$this->i18nValues[$elementID][$languageID] = StringUtil::unifyNewlines(StringUtil::trim($value));
@@ -105,7 +106,7 @@ class I18nHandler extends SingletonFactory {
 	/**
 	 * Returns true if given element has disabled i18n functionality.
 	 * 
-	 * @param	string		elementID
+	 * @param	string		$elementID
 	 * @return	boolean
 	 */
 	public function isPlainValue($elementID) {
@@ -118,6 +119,8 @@ class I18nHandler extends SingletonFactory {
 	
 	/**
 	 * Returns true if given element has enabled i18n functionality.
+	 * 
+	 * @return	boolean
 	 */
 	public function hasI18nValues($elementID) {
 		if (isset($this->i18nValues[$elementID])) {
@@ -130,7 +133,7 @@ class I18nHandler extends SingletonFactory {
 	/**
 	 * Returns the plain value for the given element.
 	 * 
-	 * @param	string		elementID
+	 * @param	string		$elementID
 	 * @return	string
 	 * @see		\wcf\system\language\I18nHandler::isPlainValue()
 	 */
@@ -143,8 +146,8 @@ class I18nHandler extends SingletonFactory {
 	 * the multilingual values are returned, otherweise the plain value is
 	 * returned for each language id.
 	 * 
-	 * @param	string		elementID
-	 * @return	array<string>
+	 * @param	string		$elementID
+	 * @return	string[]
 	 */
 	public function getValues($elementID) {
 		if ($this->hasI18nValues($elementID)) {
@@ -153,7 +156,7 @@ class I18nHandler extends SingletonFactory {
 		
 		$plainValue = $this->getValue($elementID);
 		
-		$values = array();
+		$values = [];
 		foreach ($this->availableLanguages as $language) {
 			$values[$language->languageID] = $plainValue;
 		}
@@ -173,7 +176,7 @@ class I18nHandler extends SingletonFactory {
 			throw new SystemException('Invalid argument for parameter $plainValue', 0, 'Expected string. '.ucfirst(gettype($plainValue)).' given.');
 		}
 		if (!$this->isPlainValue($elementID)) {
-			$i18nValues = array();
+			$i18nValues = [];
 			foreach ($this->availableLanguages as $language) {
 				$i18nValues[$language->languageID] = StringUtil::trim($plainValue);
 			}
@@ -260,7 +263,7 @@ class I18nHandler extends SingletonFactory {
 			FROM	wcf".WCF_N."_language_category
 			WHERE	languageCategory = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($languageCategory));
+		$statement->execute([$languageCategory]);
 		$row = $statement->fetchArray();
 		$languageCategoryID = $row['languageCategoryID'];
 		
@@ -272,20 +275,20 @@ class I18nHandler extends SingletonFactory {
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("languageID IN (?)", array($languageIDs));
-		$conditions->add("languageItem = ?", array($languageVariable));
+		$conditions->add("languageID IN (?)", [$languageIDs]);
+		$conditions->add("languageItem = ?", [$languageVariable]);
 		
 		$sql = "SELECT	languageItemID, languageID
 			FROM	wcf".WCF_N."_language_item
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$languageItemIDs = array();
+		$languageItemIDs = [];
 		while ($row = $statement->fetchArray()) {
 			$languageItemIDs[$row['languageID']] = $row['languageItemID'];
 		}
 		
-		$insertLanguageIDs = $updateLanguageIDs = array();
+		$insertLanguageIDs = $updateLanguageIDs = [];
 		foreach ($languageIDs as $languageID) {
 			if (isset($languageItemIDs[$languageID])) {
 				$updateLanguageIDs[] = $languageID;
@@ -303,14 +306,14 @@ class I18nHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($insertLanguageIDs as $languageID) {
-				$statement->execute(array(
+				$statement->execute([
 					$languageID,
 					$languageVariable,
 					(isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID]),
 					0,
 					$languageCategoryID,
 					$packageID
-				));
+				]);
 			}
 		}
 		
@@ -323,11 +326,11 @@ class I18nHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($updateLanguageIDs as $languageID) {
-				$statement->execute(array(
+				$statement->execute([
 					(isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID]),
 					0,
 					$languageItemIDs[$languageID]
-				));
+				]);
 			}
 		}
 		
@@ -344,7 +347,7 @@ class I18nHandler extends SingletonFactory {
 		$sql = "DELETE FROM	wcf".WCF_N."_language_item
 			WHERE		languageItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($languageVariable));
+		$statement->execute([$languageVariable]);
 		
 		// reset language cache
 		LanguageFactory::getInstance()->deleteLanguageCache();
@@ -354,15 +357,16 @@ class I18nHandler extends SingletonFactory {
 	 * Sets additional options for elements, required if updating values.
 	 * 
 	 * @param	integer		$elementID
+	 * @param	integer		$pckageID
 	 * @param	string		$value
 	 * @param	string		$pattern
 	 */
 	public function setOptions($elementID, $packageID, $value, $pattern) {
-		$this->elementOptions[$elementID] = array(
+		$this->elementOptions[$elementID] = [
 			'packageID' => $packageID,
 			'pattern' => $pattern,
 			'value' => $value
-		);
+		];
 	}
 	
 	/**
@@ -372,12 +376,12 @@ class I18nHandler extends SingletonFactory {
 	 * @param	boolean		$useRequestData
 	 */
 	public function assignVariables($useRequestData = true) {
-		$elementValues = array();
-		$elementValuesI18n = array();
+		$elementValues = [];
+		$elementValuesI18n = [];
 		
 		foreach ($this->elementIDs as $elementID) {
 			$value = '';
-			$i18nValues = array();
+			$i18nValues = [];
 			
 			// use POST values instead of querying database
 			if ($useRequestData) {
@@ -393,7 +397,7 @@ class I18nHandler extends SingletonFactory {
 						}
 					}
 					else {
-						$i18nValues = array();
+						$i18nValues = [];
 					}
 				}
 			}
@@ -410,9 +414,9 @@ class I18nHandler extends SingletonFactory {
 						FROM	wcf".WCF_N."_language_item
 						WHERE	languageItem = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(
+					$statement->execute([
 						$this->elementOptions[$elementID]['value']
-					));
+					]);
 					while ($row = $statement->fetchArray()) {
 						$languageItemValue = StringUtil::unifyNewlines($row['languageItemValue']);
 						$i18nValues[$row['languageID']] = StringUtil::encodeJS($languageItemValue);
@@ -437,18 +441,18 @@ class I18nHandler extends SingletonFactory {
 			$elementValuesI18n[$elementID] = $i18nValues;
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'availableLanguages' => $this->availableLanguages,
 			'i18nPlainValues' => $elementValues,
 			'i18nValues' => $elementValuesI18n
-		));
+		]);
 	}
 	
 	/**
 	 * Resets internally stored data after creating a new object through a form.
 	 */
 	public function reset() {
-		$this->i18nValues = $this->plainValues = array();
+		$this->i18nValues = $this->plainValues = [];
 	}
 	
 	/**
