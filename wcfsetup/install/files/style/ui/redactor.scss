@@ -109,10 +109,11 @@
 		
 		&::after {
 			content: $fa-var-pencil;
+			cursor: pointer;
 			font-family: FontAwesome;
 			position: absolute;
-			right: 4px;
-			top: 0;
+			right: 24px;
+			top: 10px;
 			
 			@include wcfFontHeadline;
 		}
