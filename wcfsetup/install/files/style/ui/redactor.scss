@@ -100,8 +100,9 @@
 			content: attr(data-quote-header);
 			cursor: pointer;
 			display: block;
-			margin-bottom: 10px;
-			padding-right: 20px;
+			font-style: normal;
+			margin-bottom: 20px;
+			padding-right: 25px;
 			
 			@include wcfFontHeadline;
 		}
@@ -109,10 +110,11 @@
 		&::after {
 			content: $fa-var-pencil;
 			font-family: FontAwesome;
-			font-size: $wcfFontSizeHeadline; // TODO
 			position: absolute;
-			right: 10px;
-			top: 10px;
+			right: 4px;
+			top: 0;
+			
+			@include wcfFontHeadline;
 		}
 	}
 	
