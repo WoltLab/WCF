@@ -80,7 +80,7 @@ class AdHandler extends SingletonFactory {
 			}
 		}
 		
-		return $objectType;
+		return $objectTypes;
 	}
 	
 	/**
