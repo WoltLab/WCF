@@ -2,8 +2,8 @@
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileCache;
 use wcf\page\IPage;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -12,7 +12,7 @@ use wcf\util\DateUtil;
  * Shows today's birthdays of users the active user is following.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.dashboard.box
@@ -40,7 +40,7 @@ class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 		$userIDs = array_intersect($userIDs, WCF::getUserProfileHandler()->getFollowingUsers());
 		
 		if (!empty($userIDs)) {
-			$userProfiles = UserProfileCache::getInstance()->getUserProfiles($userIDs);
+			$userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 			
 			$i = 0;
 			foreach ($userProfiles as $userProfile) {

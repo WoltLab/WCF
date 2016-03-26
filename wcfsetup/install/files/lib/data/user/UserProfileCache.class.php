@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\SingletonFactory;
 
 /**
@@ -12,105 +13,42 @@ use wcf\system\SingletonFactory;
  * @subpackage	data.user
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @todo	remove this class again
  */
 class UserProfileCache extends SingletonFactory {
 	/**
-	 * cached user ids whose profiles will be loaded during the next request
-	 * @var	array<integer>
-	 */
-	protected $userIDs = array();
-	
-	/**
-	 * locally cached user profiles
-	 * @var	array<\wcf\data\user\UserProfile>
-	 */
-	protected $userProfiles = array();
-	
-	/**
-	 * Caches the given user id.
-	 * 
-	 * @param	integer		$userID
+	 * @see	UserProfiltRuntimeCache::cacheObjectID()
 	 */
 	public function cacheUserID($userID) {
-		$this->userIDs[] = $userID;
+		UserProfileRuntimeCache::getInstance()->cacheObjectID($userID);
 	}
 	
 	/**
-	 * Caches the given user ids.
-	 * 
-	 * @param	array<integer>		$userIDs
+	 * @see	UserProfiltRuntimeCache::cacheUserIDs()
 	 */
 	public function cacheUserIDs(array $userIDs) {
-		$this->userIDs = array_merge($this->userIDs, $userIDs);
+		UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
 	}
 	
 	/**
-	 * Returns all currently cached user profile objects.
-	 * 
-	 * @return	array<\wcf\data\user\UserProfile>
+	 * @see	UserProfiltRuntimeCache::getCachedObjects()
 	 */
 	public function getCachedUserProfiles() {
-		return $this->userProfiles;
+		return UserProfileRuntimeCache::getInstance()->getCachedObjects();
 	}
 	
 	/**
-	 * Returns the user profile of the user with the given user id. If no such
-	 * user profile exists, null is returned.
-	 * 
-	 * @param	integer		$userID
-	 * @return	\wcf\data\user\UserProfile
+	 * @see	UserProfiltRuntimeCache::getObject()
 	 */
 	public function getUserProfile($userID) {
-		if (array_key_exists($userID, $this->userProfiles)) {
-			return $this->userProfiles[$userID];
-		}
-		
-		return $this->getUserProfiles(array($userID))[$userID];
+		return UserProfileRuntimeCache::getInstance()->getObject($userID);
 	}
 	
 	/**
-	 * Returns the user profiles of the users with the given user ids. For ids
-	 * without a user profile, null is returned.
-	 * 
-	 * @param	array<integer>		$userIDs
-	 * @return	array<\wcf\data\user\UserProfile>
+	 * @see	UserProfiltRuntimeCache::getObjects()
 	 */
 	public function getUserProfiles(array $userIDs) {
-		$userProfiles = array();
-		foreach ($userIDs as $key => $userID) {
-			if (array_key_exists($userID, $this->userProfiles)) {
-				$userProfiles[$userID] = $this->userProfiles[$userID];
-				
-				unset($userIDs[$key]);
-			}
-		}
-		
-		if (empty($userIDs)) {
-			return $userProfiles;
-		}
-		
-		$this->userIDs = array_unique(array_merge($this->userIDs, $userIDs));
-		
-		$userProfileList = new UserProfileList();
-		$userProfileList->setObjectIDs($this->userIDs);
-		$userProfileList->readObjects();
-		$readUserProfiles = $userProfileList->getObjects();
-		
-		foreach ($this->userIDs as $userID) {
-			if (!isset($readUserProfiles[$userID])) {
-				$this->userProfiles[$userID] = null;
-			}
-			else {
-				$this->userProfiles[$userID] = $readUserProfiles[$userID];
-			}
-		}
-		
-		$this->userIDs = array();
-		
-		foreach ($userIDs as $userID) {
-			$userProfiles[$userID] = $this->userProfiles[$userID];
-		}
-		
-		return $userProfiles;
+		return UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 	}
 }

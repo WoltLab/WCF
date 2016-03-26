@@ -3,12 +3,12 @@ namespace wcf\data\moderation\queue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ILinkableObject;
 use wcf\data\ITitledObject;
 use wcf\data\IUserContent;
 use wcf\system\bbcode\SimpleMessageParser;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\visitTracker\VisitTracker;
 
@@ -16,7 +16,7 @@ use wcf\system\visitTracker\VisitTracker;
  * Represents a viewable moderation queue entry.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
@@ -97,7 +97,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	public function getUserProfile() {
 		if ($this->affectedObject !== null && $this->userProfile === null) {
 			if ($this->affectedObject->getUserID()) {
-				$this->userProfile = UserProfileCache::getInstance()->getUserProfile($this->affectedObject->getUserID());
+				$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->affectedObject->getUserID());
 			}
 			else {
 				$this->userProfile = new UserProfile(new User(null, []));

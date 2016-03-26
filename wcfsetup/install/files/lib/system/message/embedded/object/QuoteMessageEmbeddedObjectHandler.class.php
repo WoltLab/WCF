@@ -1,13 +1,13 @@
 <?php
 namespace wcf\system\message\embedded\object;
 use wcf\data\user\UserList;
-use wcf\data\user\UserProfileCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * IMessageEmbeddedObjectHandler implementation for quotes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.message.embedded.object
@@ -15,13 +15,13 @@ use wcf\data\user\UserProfileCache;
  */
 class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler {
 	/**
-	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::parseMessage()
+	 * @inheritDoc
 	 */
 	public function parseMessage($message) {
 		$usernames = self::getFirstParameters($message, 'quote');
 		if (!empty($usernames)) {
 			$userList = new UserList();
-			$userList->getConditionBuilder()->add("user_table.username IN (?)", array($usernames));
+			$userList->getConditionBuilder()->add("user_table.username IN (?)", [$usernames]);
 			$userList->readObjectIDs();
 			return $userList->getObjectIDs();
 		}
@@ -30,9 +30,9 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
 	}
 	
 	/**
-	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::loadObjects()
+	 * @inheritDoc
 	 */
 	public function loadObjects(array $objectIDs) {
-		return UserProfileCache::getInstance()->getUserProfiles($objectIDs);
+		return UserProfileRuntimeCache::getInstance()->getObjects($objectIDs);
 	}
 }

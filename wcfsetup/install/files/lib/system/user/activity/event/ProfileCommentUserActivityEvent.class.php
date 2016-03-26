@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\user\activity\event;
 use wcf\data\comment\CommentList;
-use wcf\data\user\UserProfileCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * User activity event implementation for profile comments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.activity.event
@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserActivityEvent {
 	/**
-	 * @see	\wcf\system\user\activity\event\IUserActivityEvent::prepare()
+	 * @inheritDoc
 	 */
 	public function prepare(array $events) {
 		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
@@ -41,7 +41,7 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 			$userIDs[] = $comment->objectID;
 		}
 		if (!empty($userIDs)) {
-			$users = UserProfileCache::getInstance()->getUserProfiles($userIDs);
+			$users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 		}
 		
 		// set message

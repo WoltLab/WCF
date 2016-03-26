@@ -1,9 +1,10 @@
 <?php
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
-use wcf\data\user\UserProfileCache;
+use wcf\data\user\UserProfile;
 use wcf\page\IPage;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -12,7 +13,7 @@ use wcf\util\DateUtil;
  * Shows today's birthdays.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.dashboard.box
@@ -21,12 +22,12 @@ use wcf\util\DateUtil;
 class TodaysBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * user profiles
-	 * @var	array<\wcf\data\user\UserProfile>
+	 * @var	UserProfile[]
 	 */
-	public $userProfiles = array();
+	public $userProfiles = [];
 	
 	/**
-	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
+	 * @inheritDoc
 	 */
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
@@ -39,11 +40,11 @@ class TodaysBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 		$userIDs = UserBirthdayCache::getInstance()->getBirthdays($date[1], $date[2]);
 		
 		if (!empty($userIDs)) {
-			$userOptions = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+			$userOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');
 			if (isset($userOptions['birthday'])) {
 				$birthdayUserOption = $userOptions['birthday'];
 				
-				$userProfiles = UserProfileCache::getInstance()->getUserProfiles($userIDs);
+				$userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 				
 				$i = 0;
 				foreach ($userProfiles as $userProfile) {
@@ -63,16 +64,16 @@ class TodaysBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 	}
 	
 	/**
-	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
+	 * @inheritDoc
 	 */
 	protected function render() {
 		if (empty($this->userProfiles)) {
 			return '';
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'birthdayUserProfiles' => $this->userProfiles
-		));
+		]);
 		return WCF::getTPL()->fetch('dashboardBoxTodaysBirthdays');
 	}
 }

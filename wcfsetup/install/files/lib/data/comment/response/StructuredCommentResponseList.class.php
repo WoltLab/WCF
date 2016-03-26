@@ -1,7 +1,8 @@
 <?php
 namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
-use wcf\data\user\UserProfileCache;
+use wcf\data\like\object\LikeObject;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
 
@@ -9,7 +10,7 @@ use wcf\system\like\LikeHandler;
  * Provides a structured comment response list.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
@@ -18,13 +19,13 @@ use wcf\system\like\LikeHandler;
 class StructuredCommentResponseList extends CommentResponseList {
 	/**
 	 * comment object
-	 * @var	\wcf\data\comment\Comment;
+	 * @var	Comment;
 	 */
 	public $comment = null;
 	
 	/**
 	 * comment manager
-	 * @var	\wcf\system\comment\manager\ICommentManager
+	 * @var	ICommentManager
 	 */
 	public $commentManager = null;
 	
@@ -35,20 +36,20 @@ class StructuredCommentResponseList extends CommentResponseList {
 	public $minResponseTime = 0;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = StructuredCommentResponse::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
+	 * @inheritDoc
 	 */
 	public $sqlLimit = 50;
 	
 	/**
 	 * Creates a new structured comment response list.
 	 * 
-	 * @param	\wcf\system\comment\manager\ICommentManager	$commentManager
-	 * @param	\wcf\data\comment\Comment			$comment
+	 * @param	ICommentManager		$commentManager
+	 * @param	Comment			$comment
 	 */
 	public function __construct(ICommentManager $commentManager, Comment $comment) {
 		parent::__construct();
@@ -56,18 +57,18 @@ class StructuredCommentResponseList extends CommentResponseList {
 		$this->comment = $comment;
 		$this->commentManager = $commentManager;
 		
-		$this->getConditionBuilder()->add("comment_response.commentID = ?", array($this->comment->commentID));
+		$this->getConditionBuilder()->add("comment_response.commentID = ?", [$this->comment->commentID]);
 		$this->sqlLimit = $this->commentManager->getCommentsPerPage();
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
 		
 		// get user ids
-		$userIDs = array();
+		$userIDs = [];
 		foreach ($this->objects as $response) {
 			if (!$this->minResponseTime || $response->time < $this->minResponseTime) $this->minResponseTime = $response->time;
 			$userIDs[] = $response->userID;
@@ -78,21 +79,21 @@ class StructuredCommentResponseList extends CommentResponseList {
 		
 		// cache user ids
 		if (!empty($userIDs)) {
-			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
 		}
 	}
 	
 	/**
 	 * Fetches the like data.
 	 * 
-	 * @return	array
+	 * @return	LikeObject[][]
 	 */
 	public function getLikeData() {
-		if (empty($this->objectIDs)) return array();
+		if (empty($this->objectIDs)) return [];
 		
 		$objectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
 		LikeHandler::getInstance()->loadLikeObjects($objectType, $this->objectIDs);
-		$likeData = array('response' => LikeHandler::getInstance()->getLikeObjects($objectType));
+		$likeData = ['response' => LikeHandler::getInstance()->getLikeObjects($objectType)];
 		
 		return $likeData;
 	}
