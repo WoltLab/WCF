@@ -9,6 +9,7 @@
 define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHandler, Language, DomUtil, UiDialog) {
 	"use strict";
 	
+	var _callbackEdit = null;
 	var _element = null;
 	var _insertCallback = null;
 	var _quotePaddingTop = 0;
@@ -17,7 +18,7 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 	var _wysiwygQuoteTitle = null;
 	var _wysiwygQuoteUrl = null;
 	
-	var UiRedactorQuote = {
+	return {
 		/**
 		 * Registers an editor instance.
 		 * 
@@ -51,10 +52,14 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 		/**
 		 * Edits a <blockquote> element.
 		 * 
-		 * @param       {Element}       element         <blockquote> element
-		 * @param       {Event=}        event           event object
+		 * @param       {Event?}        event           event object
+		 * @param       {Element=}      element         <blockquote> element
 		 */
-		edit: function(element, event) {
+		edit: function(event, element) {
+			if (event instanceof Event) {
+				element = event.currentTarget;
+			}
+			
 			if (_titleHeight === 0) {
 				var styles = window.getComputedStyle(element, '::before');
 				_titleHeight = DomUtil.styleAsInt(styles, 'height');
@@ -63,7 +68,7 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 				_quotePaddingTop = DomUtil.styleAsInt(styles, 'padding-top');
 			}
 			
-			if (typeof event === 'object') {
+			if (event instanceof Event) {
 				// check if click occured within the ::before pseudo element
 				var rect = DomUtil.offset(element);
 				if ((event.clientY + window.scrollY) > (rect.top + _quotePaddingTop + _titleHeight)) {
@@ -102,7 +107,10 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 		 * @param       {boolean}       updateHeader    update quote header
 		 */
 		_observe: function(element, updateHeader) {
-			element.addEventListener('click', this.edit.bind(this, element));
+			if (_callbackEdit === null) _callbackEdit = this.edit.bind(this);
+			
+			element.removeEventListener(WCF_CLICK_EVENT, _callbackEdit);
+			element.addEventListener(WCF_CLICK_EVENT, _callbackEdit);
 			
 			if (updateHeader) this._updateHeader(element);
 		},
@@ -113,9 +121,13 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 		 * @param       {Element}       element         <blockquote> element
 		 */
 		_updateHeader: function(element) {
-			elData(element, 'quote-header', Language.get('wcf.wysiwyg.quote.header', {
+			var value = Language.get('wcf.wysiwyg.quote.header', {
 				title: elData(element, 'quote-title') || elData(element, 'quote-url') || ''
-			}));
+			});
+			
+			if (elData(element, 'quote-header') !== value) {
+				elData(element, 'quote-header', value);
+			}
 		},
 		
 		/**
@@ -159,7 +171,7 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 			_wysiwygQuoteUrl.addEventListener('keyup', _keyupCallback);
 			
 			_wysiwygQuoteButton = elById('wysiwygQuoteSubmit');
-			_wysiwygQuoteButton.addEventListener('click', this._dialogSubmit.bind(this));
+			_wysiwygQuoteButton.addEventListener(WCF_CLICK_EVENT, this._dialogSubmit.bind(this));
 		},
 		
 		_dialogOnClose: function() {
@@ -188,6 +200,4 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 			};
 		}
 	};
-	
-	return UiRedactorQuote;
 });
