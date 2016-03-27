@@ -65,6 +65,7 @@ class ViewableLike extends DatabaseObjectDecorator {
 	 * Sets user profile.
 	 * 
 	 * @param	UserProfile	$userProfile
+	 * @deprecated	since 2.2
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;

@@ -42,6 +42,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 	 * Sets the user's profile.
 	 * 
 	 * @param	UserProfile	$userProfile
+	 * @deprecated	since 2.2
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;

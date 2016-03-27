@@ -82,6 +82,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	 * Sets associated user profile object.
 	 * 
 	 * @param	UserProfile	$userProfile
+	 * @deprecated	since 2.2
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		if ($this->affectedObject !== null && ($userProfile->userID == $this->affectedObject->getUserID())) {
