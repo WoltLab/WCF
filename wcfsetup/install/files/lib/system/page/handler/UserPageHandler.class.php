@@ -10,10 +10,10 @@ use wcf\system\WCF;
  *
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
- * @license	WoltLab License <http://www.woltlab.com/license-agreement.html>
- * @package	com.woltlab.wbb
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
  * @subpackage	system.page.handler
- * @category	Burning Board
+ * @category	Community Framework
  * @since	2.2
  */
 class UserPageHandler extends AbstractMenuPageHandler implements IOnlineLocationPageHandler {
