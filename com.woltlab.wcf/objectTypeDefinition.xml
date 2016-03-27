@@ -62,7 +62,6 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.visitTracker.objectType</name>
-			<!-- <interfacename><![CDATA[wcf\system\visitTracker\IVisitTrackerObjectType]]></interfacename>-->
 		</definition>
 		
 		<definition>
