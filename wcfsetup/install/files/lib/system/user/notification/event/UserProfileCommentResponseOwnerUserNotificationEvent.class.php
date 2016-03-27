@@ -56,9 +56,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}
 		else {
-			$commentAuthor = new UserProfile(new User(null, [
-				'username' => $comment->username
-			]));
+			$commentAuthor = UserProfile::getGuestUserProfile($comment->username);
 		}
 		
 		$authors = $this->getAuthors();

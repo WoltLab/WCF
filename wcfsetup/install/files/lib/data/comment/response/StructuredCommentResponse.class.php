@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\comment\response;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -59,9 +58,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 				$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
 			}
 			else {
-				$this->userProfile = new UserProfile(new User(null, array(
-					'username' => $this->username
-				)));
+				$this->userProfile = UserProfile::getGuestUserProfile($this->username);
 			}
 		}
 		

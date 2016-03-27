@@ -2,7 +2,6 @@
 namespace wcf\system\user\notification\event;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -82,9 +81,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}
 		else {
-			$commentAuthor = new UserProfile(new User(null, [
-				'username' => $comment->username
-			]));
+			$commentAuthor = UserProfile::getGuestUserProfile($comment->username);
 		}
 		
 		return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.mail', [
@@ -134,9 +131,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}
 		else {
-			$commentAuthor = new UserProfile(new User(null, [
-				'username' => $comment->username
-			]));
+			$commentAuthor = UserProfile::getGuestUserProfile($comment->username);
 		}
 		
 		return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.message', [

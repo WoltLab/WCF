@@ -791,4 +791,18 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		
 		return '<a href="'.$link.'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHtml($this->username).'</a>';
 	}
+	
+	/**
+	 * Returns an "empty" user profile object for a guest with the given username.
+	 * 
+	 * Such objects can also be used in situations where the relevant user has been deleted
+	 * but their original username is still known.
+	 * 
+	 * @param	string		$username
+	 * @return	UserProfile
+	 * @since	2.2
+	 */
+	public static function getGuestUserProfile($username) {
+		return new UserProfile(new User(null, ['username' => $username]));
+	}
 }

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\comment;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\TLegacyUserPropertyAccess;
@@ -41,9 +40,7 @@ class ViewableComment extends DatabaseObjectDecorator {
 				$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
 			}
 			else {
-				$this->userProfile = new UserProfile(new User(null, [
-					'username' => $this->username
-				]));
+				$this->userProfile = UserProfile::getGuestUserProfile($this->username);
 			}
 		}
 		
