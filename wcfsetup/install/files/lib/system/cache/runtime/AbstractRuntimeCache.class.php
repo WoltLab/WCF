@@ -46,8 +46,8 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
 	 */
 	public function cacheObjectIDs(array $objectIDs) {
 		foreach ($objectIDs as $objectID) {
-			if (!array_key_exists($objectID, $this->objects) && !in_array($objectID, $this->objectIDs)) {
-				$this->objectIDs[] = $objectID;
+			if (!array_key_exists($objectID, $this->objects) && !isset($this->objectIDs[$objectID])) {
+				$this->objectIDs[$objectID] = $objectID;
 			}
 		}
 	}
@@ -134,9 +134,7 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
 	 */
 	public function removeObjects(array $objectIDs) {
 		foreach ($objectIDs as $objectID) {
-			if (array_key_exists($objectID, $this->objects)) {
-				unset($this->objects[$objectID]);
-			}
+			unset($this->objects[$objectID]);
 		}
 	}
 }
