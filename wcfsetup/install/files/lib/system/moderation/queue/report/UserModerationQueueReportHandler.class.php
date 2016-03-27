@@ -3,7 +3,6 @@ namespace wcf\system\moderation\queue\report;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\user\User;
-use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\exception\SystemException;

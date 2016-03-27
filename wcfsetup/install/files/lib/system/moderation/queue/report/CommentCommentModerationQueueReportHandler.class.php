@@ -2,7 +2,6 @@
 namespace wcf\system\moderation\queue\report;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentAction;
-use wcf\data\comment\CommentList;
 use wcf\data\comment\ViewableComment;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;

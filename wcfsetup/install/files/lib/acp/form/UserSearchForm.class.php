@@ -9,7 +9,6 @@ use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
 use wcf\system\condition\IUserCondition;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
