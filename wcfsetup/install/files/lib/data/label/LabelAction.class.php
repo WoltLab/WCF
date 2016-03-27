@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\label;
-use wcf\data\ISortableAction;
 use wcf\data\language\item\LanguageItemAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISortableAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\label\LabelHandler;
