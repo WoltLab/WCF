@@ -44,6 +44,10 @@ input[type="url"] {
 	}
 }
 
+input[type="search"] {
+	-webkit-appearance: none;
+}
+
 textarea {
 	border-width: 1px;
 	width: 100%;
