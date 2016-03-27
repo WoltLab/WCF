@@ -58,7 +58,7 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
 	protected function fetchObjects() {
 		/** @var DatabaseObjectList $objectList */
 		$objectList = new $this->listClassName;
-		$objectList->setObjectIDs($this->objectIDs);
+		$objectList->setObjectIDs(array_values($this->objectIDs));
 		$objectList->readObjects();
 		$this->objects += $objectList->getObjects();
 		
