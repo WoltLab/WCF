@@ -14,7 +14,6 @@ use wcf\system\breadcrumb\IBreadcrumbProvider;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\online\location\UserOnlineLocationHandler;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -320,11 +319,10 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 */
 	public function getCurrentLocation() {
 		if ($this->currentLocation === null) {
-			$this->currentLocation = '';
-			$this->currentLocation = UserOnlineLocationHandler::getInstance()->getLocation(new UserOnline(new User(null, [
-				'controller' => $this->controller,
-				'objectID' => $this->locationObjectID
-			])));
+			$userOnline = new UserOnline($this->getDecoratedObject());
+			$userOnline->setLocation();
+			
+			$this->currentLocation = $userOnline->getLocation();
 		}
 		
 		return $this->currentLocation;

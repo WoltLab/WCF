@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Generic controller to display cms content.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -22,6 +22,11 @@ class CmsPage extends AbstractPage {
 	 * @var	string[]
 	 */
 	public $content;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $enableTracking = true;
 	
 	/**
 	 * @var	integer
@@ -81,5 +86,12 @@ class CmsPage extends AbstractPage {
 			'page' => $this->page,
 			'pageID' => $this->pageID
 		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getObjectType() {
+		return $this->page ? $this->page->identifier : '';
 	}
 }

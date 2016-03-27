@@ -31,6 +31,10 @@
 * Continuous numeration of edit history version in template.
 * `\wcf\data\user\UserProfile::getGuestUserProfile()` added.
 
+#### CMS
+
+* User online location is handled via the `wcf\data\page\Page` objects. Static locations only need a language item `wcf.page.onlineLocation.{$page->identifier}`, more complex locations can use the online location-related methods of `wcf\system\page\handler\IMenuPageHandler`. For CMS pages, their title is used.
+
 #### New Traits
 
 * `wcf\data\TDatabaseObjectOptions` for database object-bound options validation.

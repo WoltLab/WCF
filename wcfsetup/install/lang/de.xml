@@ -2611,6 +2611,18 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.com.woltlab.wcf.TeamPage"><![CDATA[Team-Mitglieder]]></item>
 		<item name="wcf.page.com.woltlab.wcf.UserPage"><![CDATA[Benutzerprofil]]></item>
 		<item name="wcf.page.com.woltlab.wcf.UsersOnlineListPage"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.UsersOnlineList"><![CDATA[Benutzer-Online-Liste]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.MembersList"><![CDATA[Mitgliederliste]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Team"><![CDATA[Liste der Team-Mitglieder]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Dashboard"><![CDATA[Dashboard]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Register"><![CDATA[Registrierung]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.LostPassword"><![CDATA[Kennwort vergessen]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Login"><![CDATA[Anmeldung]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.AccountManagement"><![CDATA[Benutzerkonto-Verwaltung]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.AvatarEdit"><![CDATA[Avatar-Verwaltung]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.SignatureEdit"><![CDATA[Signatur-Verwaltung]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
@@ -3021,18 +3033,6 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 {/if}]]></item>
 		<item name="wcf.user.usersOnline.invisible"><![CDATA[ (unsichtbar)]]></item>
 		<item name="wcf.user.usersOnline.marking.legend"><![CDATA[Legende]]></item>
-		<item name="wcf.user.usersOnline.location.UserPage"><![CDATA[Betrachtet das Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
-		<item name="wcf.user.usersOnline.location.UsersOnlineListPage"><![CDATA[Betrachtet die Benutzer-Online-Liste]]></item>
-		<item name="wcf.user.usersOnline.location.MembersListPage"><![CDATA[Betrachtet die Mitgliederliste]]></item>
-		<item name="wcf.user.usersOnline.location.TeamPage"><![CDATA[Betrachtet die Liste der Team-Mitglieder]]></item>
-		<item name="wcf.user.usersOnline.location.DashboardPage"><![CDATA[Betrachtet das Dashboard]]></item>
-		<item name="wcf.user.usersOnline.location.RegisterForm"><![CDATA[Führt die Registrierung durch]]></item>
-		<item name="wcf.user.usersOnline.location.LostPasswordForm"><![CDATA[Fordert ein neues Kennwort an]]></item>
-		<item name="wcf.user.usersOnline.location.LoginForm"><![CDATA[Führt die Anmeldung durch]]></item>
-		<item name="wcf.user.usersOnline.location.AccountManagementForm"><![CDATA[Verwaltet das Benutzerkonto]]></item>
-		<item name="wcf.user.usersOnline.location.AvatarEditForm"><![CDATA[Verwaltet den Avatar]]></item>
-		<item name="wcf.user.usersOnline.location.SettingsForm"><![CDATA[Passt Einstellungen an]]></item>
-		<item name="wcf.user.usersOnline.location.SignatureEditForm"><![CDATA[Bearbeitet die Signatur]]></item>
 		<item name="wcf.user.usersOnline.guests"><![CDATA[Gäste]]></item>
 		<item name="wcf.user.usersOnline.location"><![CDATA[Ort]]></item>
 		<item name="wcf.user.usersOnline.ipAddress"><![CDATA[IP-Adresse]]></item>

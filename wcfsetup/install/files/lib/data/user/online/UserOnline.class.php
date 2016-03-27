@@ -1,7 +1,11 @@
 <?php
 namespace wcf\data\user\online;
+use wcf\data\page\PageCache;
+use wcf\data\spider\Spider;
 use wcf\data\user\UserProfile;
+use wcf\page\CmsPage;
 use wcf\system\cache\builder\SpiderCacheBuilder;
+use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -10,7 +14,7 @@ use wcf\util\UserUtil;
  * Represents a user who is online.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.online
@@ -25,7 +29,7 @@ class UserOnline extends UserProfile {
 	
 	/**
 	 * spider object
-	 * @var	\wcf\data\spider\Spider
+	 * @var	Spider
 	 */
 	protected $spider = null;
 	
@@ -49,12 +53,61 @@ class UserOnline extends UserProfile {
 	}
 	
 	/**
-	 * Sets the location of the user.
+	 * Sets the location of the user. If no location is given, the method tries to
+	 * automatically determine the location.
+	 * Returns true if the location has been successfully set.
 	 * 
-	 * @param	string		$location
+	 * @param	string|null	$location
+	 * @return	boolean
 	 */
-	public function setLocation($location) {
+	public function setLocation($location = null) {
+		if ($location === null) {
+			if ($this->controller) {
+				if ($this->controller === CmsPage::class) {
+					// create location based on cms page title
+					if ($this->objectType) {
+						$page = PageCache::getInstance()->getPageByIdentifier($this->objectType);
+						if ($page !== null) {
+							// TODO: check if active user may access the page
+							$pageContent = $page->getPageContentByLanguage(WCF::getLanguage()->languageID);
+							if (isset($pageContent['title'])) {
+								$this->location = $pageContent['title'];
+								
+								return false;
+							}
+						}
+					}
+				}
+				else {
+					$page = PageCache::getInstance()->getPageByController($this->controller);
+					if ($page !== null) {
+						if ($page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
+							// refer to page handler
+							$this->location = $page->getHandler()->getOnlineLocation($page, $this);
+							
+							return true;
+						}
+						else {
+							// check if static language item exists
+							$languageItem = 'wcf.page.onlineLocation.' . $page->identifier;
+							$languageItemValue = WCF::getLanguage()->get($languageItem);
+							
+							if ($languageItemValue !== $languageItem) {
+								$this->location = $languageItemValue;
+								
+								return true;
+							}
+						}
+					}
+				}
+			}
+			
+			$this->location = '';
+			return false;
+		}
+		
 		$this->location = $location;
+		return true;
 	}
 	
 	/**
@@ -251,7 +304,7 @@ class UserOnline extends UserProfile {
 	/**
 	 * Returns the spider object
 	 * 
-	 * @return	\wcf\data\spider\Spider
+	 * @return	Spider
 	 */
 	public function getSpider() {
 		if (!$this->spiderID) return null;

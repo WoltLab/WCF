@@ -1,8 +1,12 @@
 <?php
 namespace wcf\page;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\page\PageCache;
+use wcf\data\user\online\UserOnline;
+use wcf\data\user\online\UsersOnlineList;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\dashboard\DashboardHandler;
+use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
@@ -12,7 +16,7 @@ use wcf\util\HeaderUtil;
  * Shows page which lists all users who are online.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -20,48 +24,48 @@ use wcf\util\HeaderUtil;
  */
 class UsersOnlineListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.user.usersOnline';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('user.profile.canViewUsersOnlineList');
+	public $neededPermissions = ['user.profile.canViewUsersOnlineList'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
+	 * @inheritDoc
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = USERS_ONLINE_DEFAULT_SORT_FIELD;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortOrder
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = USERS_ONLINE_DEFAULT_SORT_ORDER;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('username', 'lastActivityTime', 'requestURI');
+	public $validSortFields = ['username', 'lastActivityTime', 'requestURI'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\online\UsersOnlineList';
+	public $objectListClassName = UsersOnlineList::class;
 	
 	/**
 	 * page locations
 	 * @var	array
 	 */
-	public $locations = array();
+	public $locations = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -72,13 +76,13 @@ class UsersOnlineListPage extends SortablePage {
 		}
 		
 		if (!empty($_POST)) {
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('UsersOnlineList', array(), 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder));
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('UsersOnlineList', [], 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder));
 			exit;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -99,56 +103,50 @@ class UsersOnlineListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
 		
 		// add breadcrumbs
-		if (MODULE_MEMBERS_LIST) WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.user.members'), LinkHandler::getInstance()->getLink('MembersList')));
-		
-		// load locations
-		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.user.online.location') as $objectType) {
-			$this->locations[$objectType->controller] = $objectType;
+		if (MODULE_MEMBERS_LIST) {
+			WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.user.members'), LinkHandler::getInstance()->getLink('MembersList')));
 		}
 		
-		// cache data
+		// cache all necessary data for showing locations
 		foreach ($this->objectList as $userOnline) {
-			if (isset($this->locations[$userOnline->controller]) && $this->locations[$userOnline->controller]->getProcessor()) {
-				$this->locations[$userOnline->controller]->getProcessor()->cache($userOnline);
+			if ($userOnline->controller) {
+				$page = PageCache::getInstance()->getPageByController($userOnline->controller);
+				if ($page !== null && $page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
+					$page->getHandler()->prepareOnlineLocation($page, $userOnline);
+				}
 			}
 		}
 		
 		// set locations
+		/** @var UserOnline $userOnline */
 		foreach ($this->objectList as $userOnline) {
-			if (isset($this->locations[$userOnline->controller])) {
-				if ($this->locations[$userOnline->controller]->getProcessor()) {
-					$userOnline->setLocation($this->locations[$userOnline->controller]->getProcessor()->get($userOnline, $this->locations[$userOnline->controller]->languagevariable));
-				}
-				else {
-					$userOnline->setLocation(WCF::getLanguage()->get($this->locations[$userOnline->controller]->languagevariable));
-				}
-			}
+			$userOnline->setLocation();
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		DashboardHandler::getInstance()->loadBoxes('com.woltlab.wcf.user.MembersListPage', $this);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'com.woltlab.wcf.user.MembersListPage'),
 			'sidebarName' => 'com.woltlab.wcf.user.MembersListPage',
 			'allowSpidersToIndexThisPage' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readObjects()
+	 * @inheritDoc
 	 */
 	protected function readObjects() {
 		$this->objectList->sqlLimit = 0;

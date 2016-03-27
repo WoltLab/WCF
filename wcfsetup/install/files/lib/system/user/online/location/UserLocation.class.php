@@ -13,6 +13,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.user.online.location
  * @category	Community Framework
+ * @deprecated	since 2.2
  */
 class UserLocation implements IUserOnlineLocation {
 	/**
