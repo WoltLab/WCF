@@ -30,6 +30,7 @@
 * Notifications for comments in moderation.
 * Continuous numeration of edit history version in template.
 * `\wcf\data\user\UserProfile::getGuestUserProfile()` added.
+* Make labels sortable in ACP.
 
 #### CMS
 

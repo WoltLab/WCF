@@ -18,6 +18,7 @@ use wcf\system\WCF;
  * @property-read	integer		$groupID
  * @property-read	string		$label
  * @property-read	string		$cssClassName
+ * @property-read	integer		$showOrder
  */
 class Label extends DatabaseObject implements IRouteController {
 	/**

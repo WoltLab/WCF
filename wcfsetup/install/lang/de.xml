@@ -477,6 +477,7 @@
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.delete.sure"><![CDATA[Wollen Sie das Label „{$label}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
+		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Bevor Sie ein Label hinzufügen können, müssen Sie eine <a href="{link controller='LabelGroupAdd'}{/link}">Labelgruppe hinzufügen</a>.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Labelgruppe]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
@@ -491,6 +492,10 @@
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.label.group.groupName.description"><![CDATA[Der Titel ist für alle Benutzer sichtbar, die Zugriff auf diese Labelgruppe haben.]]></item>
 		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[Die optionale Beschreibung wird nur in der Administrationsoberfläche angezeigt.]]></item>
+		<item name="wcf.acp.label.showOrder"><![CDATA[Reihenfolge]]></item>
+		<item name="wcf.acp.label.showOrder.description"><![CDATA[Reihenfolge des Labels innerhalb seiner Labelgruppe. Wenn Sie das Feld leer lassen, wird das Label an letzter Position einsortiert.]]></item>
+		<item name="wcf.acp.label.sortAfterGroupFiltering"><![CDATA[Wenn Sie die Label-Liste nur nach einer bestimmten Labelgruppe filtern, können Sie die Labels innerhalb dieser Gruppe durch Ziehen und Loslassen sortieren.]]></item>
+		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">

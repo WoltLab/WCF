@@ -1,55 +1,89 @@
 <?php
 namespace wcf\data\label;
+use wcf\data\ISortableAction;
 use wcf\data\language\item\LanguageItemAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\UserInputException;
+use wcf\system\label\LabelHandler;
 use wcf\system\WCF;
 
 /**
  * Executes label-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.label
  * @category	Community Framework
  */
-class LabelAction extends AbstractDatabaseObjectAction {
+class LabelAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\label\LabelEditor';
+	protected $className = LabelEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.content.label.canManageLabel');
+	protected $permissionsCreate = ['admin.content.label.canManageLabel'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.label.canManageLabel');
+	protected $permissionsDelete = ['admin.content.label.canManageLabel'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.label.canManageLabel');
+	protected $permissionsUpdate = ['admin.content.label.canManageLabel'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update', 'updatePosition'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
+	 */
+	public function create() {
+		$showOrder = 0;
+		if (isset($this->parameters['data']['showOrder'])) {
+			$showOrder = $this->parameters['data']['showOrder'];
+			unset($this->parameters['data']['showOrder']);
+		}
+		
+		$label = parent::create();
+		
+		(new LabelEditor($label))->setShowOrder($label->groupID, $showOrder);
+		
+		return $label;
+	}
+	
+	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 */
+	public function update() {
+		parent::update();
+		
+		// update showOrder if required
+		if (count($this->objects) === 1 && isset($this->parameters['data']['groupID']) && isset($this->parameters['data']['showOrder'])) {
+			if ($this->objects[0]->groupID != $this->parameters['data']['groupID'] || $this->objects[0]->showOrder != $this->parameters['data']['showOrder']) {
+				$this->objects[0]->setShowOrder($this->parameters['data']['groupID'], $this->parameters['data']['showOrder']);
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function delete() {
 		parent::delete();
 		
 		if (!empty($this->objects)) {
 			// identify i18n labels
-			$languageVariables = array();
+			$languageVariables = [];
 			foreach ($this->objects as $object) {
 				if (preg_match('~wcf.acp.label.label\d+~', $object->label)) {
 					$languageVariables[] = $object->label;
@@ -59,14 +93,14 @@ class LabelAction extends AbstractDatabaseObjectAction {
 			// remove language variables
 			if (!empty($languageVariables)) {
 				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("languageItem IN (?)", array($languageVariables));
+				$conditions->add("languageItem IN (?)", [$languageVariables]);
 				
 				$sql = "SELECT	languageItemID
 					FROM	wcf".WCF_N."_language_item
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
-				$languageItemIDs = array();
+				$languageItemIDs = [];
 				while ($row = $statement->fetchArray()) {
 					$languageItemIDs[] = $row['languageItemID'];
 				}
@@ -75,5 +109,57 @@ class LabelAction extends AbstractDatabaseObjectAction {
 				$objectAction->executeAction();
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateUpdatePosition() {
+		WCF::getSession()->checkPermissions(['admin.content.label.canManageLabel']);
+		
+		if (!isset($this->parameters['data']) || !isset($this->parameters['data']['structure']) || !is_array($this->parameters['data']['structure'])) {
+			throw new UserInputException('structure');
+		}
+		
+		if (count($this->parameters['data']['structure']) !== 1) {
+			throw new UserInputException('structure');
+		}
+		
+		$labelGroupID = key($this->parameters['data']['structure']);
+		$labelGroup = LabelHandler::getInstance()->getLabelGroup($labelGroupID);
+		if ($labelGroup === null) {
+			throw new UserInputException('structure');
+		}
+		
+		$labelIDs = $this->parameters['data']['structure'][$labelGroupID];
+		
+		if (!empty(array_diff($labelIDs, $labelGroup->getLabelIDs()))) {
+			throw new UserInputException('structure');
+		}
+		
+		$this->readInteger('offset', true, 'data');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function updatePosition() {
+		$sql = "UPDATE	wcf".WCF_N."_label
+			SET	showOrder = ?
+			WHERE	labelID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		$showOrder = $this->parameters['data']['offset'];
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($this->parameters['data']['structure'] as $labelIDs) {
+			foreach ($labelIDs as $labelID) {
+				$statement->execute(array(
+					$showOrder++,
+					$labelID
+				));
+			}
+		}
+		WCF::getDB()->commitTransaction();
 	}
 }
