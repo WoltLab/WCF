@@ -373,7 +373,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		//
 		
 		if ($newLikeObject->objectUserID) {
-			$sql = "SELECT	COUNT(*) AS count
+			$sql = "SELECT	COUNT(*)
 				FROM	wcf".WCF_N."_like
 				WHERE	objectTypeID = ?
 					AND objectID = ?
@@ -384,17 +384,17 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 				$this->parameters['targetObjectID'],
 				Like::LIKE
 			));
-			$row = $statement->fetchArray();
+			$count = $statement->fetchSingleColumn();
 			
-			if ($row['count']) {
+			if ($count) {
 				// update received likes
 				$userEditor = new UserEditor(new User($newLikeObject->objectUserID));
 				$userEditor->updateCounters(array(
-					'likesReceived' => $row['count']
+					'likesReceived' => $count
 				));
 				
 				// add activity points
-				UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($newLikeObject->objectUserID => $row['count']));
+				UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($newLikeObject->objectUserID => $count));
 			}
 		}
 	}

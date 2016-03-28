@@ -49,12 +49,13 @@ class UserAuthenticationFailure extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function countIPFailures($ipAddress) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_authentication_failure
 			WHERE	ipAddress = ?
 				AND time > ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($ipAddress, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT));
+		
 		return $statement->fetchColumn();
 	}
 	
@@ -65,12 +66,13 @@ class UserAuthenticationFailure extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function countUserFailures($userID) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_authentication_failure
 			WHERE	userID = ?
 				AND time > ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($userID, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT));
+		
 		return $statement->fetchColumn();
 	}
 }

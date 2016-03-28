@@ -51,13 +51,12 @@ class IndexPage extends AbstractPage {
 		
 		$usersAwaitingApproval = 0;
 		if (REGISTER_ACTIVATION_METHOD == 2) {
-			$sql = "SELECT	COUNT(*) AS count
+			$sql = "SELECT	COUNT(*)
 				FROM	wcf".WCF_N."_user
 				WHERE	activationCode <> 0";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
-			$row = $statement->fetchArray();
-			$usersAwaitingApproval = $row['count'];
+			$usersAwaitingApproval = $statement->fetchSingleColumn();
 		}
 		
 		WCF::getTPL()->assign([

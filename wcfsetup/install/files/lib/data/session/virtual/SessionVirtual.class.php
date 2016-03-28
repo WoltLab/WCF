@@ -66,13 +66,12 @@ class SessionVirtual extends DatabaseObject {
 	 * @return	integer
 	 */
 	public static function countVirtualSessions($sessionID) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	".static::getDatabaseTableName()."
 			WHERE	sessionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($sessionID));
-		$row = $statement->fetchArray();
 		
-		return $row['count'];
+		return $statement->fetchSingleColumn();
 	}
 }

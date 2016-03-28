@@ -1146,8 +1146,7 @@ class WCFSetup extends WCF {
 			WHERE	package = 'com.woltlab.wcf'";
 		$statement = self::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$row = $statement->fetchArray();
-		if (!$row['count']) {
+		if (!$statement->fetchSingleColumn()) {
 			if (empty($wcfPackageFile)) {
 				throw new SystemException('the essential package com.woltlab.wcf is missing.');
 			}

@@ -89,13 +89,13 @@ class TemplateGroupAddForm extends AbstractForm {
 			throw new UserInputException('templateGroupName');
 		}
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->templateGroupName));
-		$row = $statement->fetchArray();
-		if ($row['count']) {
+		
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('templateGroupName', 'notUnique');
 		}
 	}
@@ -112,13 +112,13 @@ class TemplateGroupAddForm extends AbstractForm {
 			throw new UserInputException('templateGroupFolderName', 'notValid');
 		}
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupFolderName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->templateGroupFolderName));
-		$row = $statement->fetchArray();
-		if ($row['count']) {
+		
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('templateGroupFolderName', 'notUnique');
 		}
 	}

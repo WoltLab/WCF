@@ -25,15 +25,15 @@ class TeamList extends UserProfileList {
 	 * @see	\wcf\data\DatabaseObjectList::countObjects()
 	 */
 	public function countObjects() {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_group user_group,
 				wcf".WCF_N."_user_to_group user_to_group
 			WHERE	user_to_group.groupID = user_group.groupID
 				AND user_group.showOnTeamPage = 1";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$row = $statement->fetchArray();
-		return $row['count'];
+		
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**

@@ -47,13 +47,12 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 	 */
 	public function getGroupedUserList() {
 		// resolve page count
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_profile_visitor
 			WHERE	ownerID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->parameters['userID']));
-		$row = $statement->fetchArray();
-		$pageCount = ceil($row['count'] / 20);
+		$pageCount = ceil($statement->fetchSingleColumn() / 20);
 		
 		// get user ids
 		$sql = "SELECT		userID

@@ -236,14 +236,13 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function isAlreadyInstalled($package) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_package
 			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($package));
-		$row = $statement->fetchArray();
 		
-		return ($row['count'] ? true : false);
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**

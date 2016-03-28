@@ -699,13 +699,12 @@ class PackageInstallationDispatcher {
 			
 			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(dirname(WCF_DIR)));
 			// check if there is already an application
-			$sql = "SELECT	COUNT(*) AS count
+			$sql = "SELECT	COUNT(*)
 				FROM	wcf".WCF_N."_package
 				WHERE	packageDir = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array('../'));
-			$row = $statement->fetchArray();
-			if ($row['count']) {
+			if ($statement->fetchSingleColumn()) {
 				// use abbreviation
 				$defaultPath .= strtolower(Package::getAbbreviation($this->getPackage()->package)) . '/';
 			}

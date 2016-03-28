@@ -390,18 +390,13 @@ class ClipboardHandler extends SingletonFactory {
 			$conditionBuilder->add("objectTypeID = ?", array($objectTypeID));
 		}
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_clipboard_item
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
-		$count = $statement->fetchArray();
 		
-		if ($count['count']) {
-			return 1;
-		}
-		
-		return 0;
+		return $statement->fetchSingleColumn() ? 1 : 0;
 	}
 	
 	/**

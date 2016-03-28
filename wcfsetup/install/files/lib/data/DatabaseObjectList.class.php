@@ -143,14 +143,14 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @return	integer
 	 */
 	public function countObjects() {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 			".$this->sqlConditionJoins."
 			".$this->getConditionBuilder();
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->getConditionBuilder()->getParameters());
-		$row = $statement->fetchArray();
-		return $row['count'];
+		
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**

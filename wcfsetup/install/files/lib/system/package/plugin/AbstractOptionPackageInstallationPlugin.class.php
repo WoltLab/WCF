@@ -127,14 +127,13 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			
 			// validate parent
 			if (!empty($data['parentCategoryName'])) {
-				$sql = "SELECT	COUNT(categoryID) AS count
+				$sql = "SELECT	COUNT(categoryID)
 					FROM	".$this->application.WCF_N."_".$this->tableName."_category
 					WHERE	categoryName = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array($data['parentCategoryName']));
-				$row = $statement->fetchArray();
 				
-				if (!$row['count']) {
+				if (!$statement->fetchSingleColumn()) {
 					throw new SystemException("Unable to find parent 'option category' with name '".$data['parentCategoryName']."' for category with name '".$data['categoryName']."'.");
 				}
 			}
@@ -175,13 +174,13 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	public function hasUninstall() {
 		$hasUninstallOptions = parent::hasUninstall();
-		$sql = "SELECT	COUNT(categoryID) AS count
+		$sql = "SELECT	COUNT(categoryID)
 			FROM	".$this->application.WCF_N."_".$this->tableName."_category
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
-		$categoryCount = $statement->fetchArray();
-		return ($hasUninstallOptions || $categoryCount['count'] > 0);
+		
+		return ($hasUninstallOptions || $statement->fetchSingleColumn() > 0);
 	}
 	
 	/**

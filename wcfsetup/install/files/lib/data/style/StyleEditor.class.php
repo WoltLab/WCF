@@ -351,37 +351,35 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
 				if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.mb_substr(StringUtil::getRandomID(), 0, 8);
 				$originalTemplateGroupFolderName = $templateGroupFolderName;
-					
+				
 				// get unique template group name
 				$i = 1;
 				while (true) {
-					$sql = "SELECT	COUNT(*) AS count
+					$sql = "SELECT	COUNT(*)
 						FROM	wcf".WCF_N."_template_group
 						WHERE	templateGroupName = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$templateGroupName]);
-					$row = $statement->fetchArray();
-					if (!$row['count']) break;
+					if (!$statement->fetchSingleColumn()) break;
 					$templateGroupName = $originalTemplateGroupName . '_' . $i;
 					$i++;
 				}
-					
+				
 				// get unique folder name
 				$i = 1;
 				while (true) {
-					$sql = "SELECT	COUNT(*) AS count
+					$sql = "SELECT	COUNT(*)
 						FROM	wcf".WCF_N."_template_group
 						WHERE	templateGroupFolderName = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([
 						FileUtil::addTrailingSlash($templateGroupFolderName)
 					]);
-					$row = $statement->fetchArray();
-					if (!$row['count']) break;
+					if (!$statement->fetchSingleColumn()) break;
 					$templateGroupFolderName = $originalTemplateGroupFolderName . '_' . $i;
 					$i++;
 				}
-					
+				
 				$templateGroupAction = new TemplateGroupAction([], 'create', [
 					'data' => [
 						'templateGroupName' => $templateGroupName,

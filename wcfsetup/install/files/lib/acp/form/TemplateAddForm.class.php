@@ -157,13 +157,13 @@ class TemplateAddForm extends AbstractForm {
 			$conditionBuilder->add('packageID = ?', array($this->packageID));
 		}
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_template
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
-		$row = $statement->fetchArray();
-		if ($row['count']) {
+		
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('tplName', 'notUnique');
 		}
 	}
