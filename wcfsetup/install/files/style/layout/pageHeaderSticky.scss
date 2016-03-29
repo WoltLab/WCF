@@ -9,10 +9,8 @@
 	}
 	
 	.pageHeader.sticky {
-		flex-wrap: nowrap;
-		
 		> div {
-			background-color: $wcfHeaderBackground;
+			background-color: $wcfHeaderMenuBackground;
 			box-shadow: 0 0 10px rgba(0, 0, 0, .6);
 			left: 0;
 			position: fixed;
@@ -23,6 +21,7 @@
 		
 		
 		.layoutBoundary {
+			flex-wrap: nowrap;
 			min-height: 50px;
 			
 			// remove padding, the vertical alignment is done using `align-items`
@@ -43,6 +42,8 @@
 		}
 		
 		.pageHeaderLogo {
+			display: none;
+			flex: 0 0 auto;
 			margin-bottom: 0;
 			order: 1;
 			
@@ -56,13 +57,11 @@
 		}
 		
 		.mainMenu {
+			flex: 1 1 auto;
+			margin-right: 20px;
 			order: 2;
-			margin: 0 20px;
 			
 			.boxMenu {
-				background-color: $wcfHeaderBackground;
-				padding-bottom: 5px;
-				
 				> li > a {
 					align-items: center;
 					display: flex;
@@ -79,11 +78,13 @@
 		}
 		
 		.userPanel {
+			flex: 0 0 auto;
 			margin-left: 10px;
 			order: 4;
 		}
 		
 		.pageHeaderSearch {
+			flex: 0 0 auto;
 			margin-bottom: 0;
 			order: 3;
 			

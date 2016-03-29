@@ -19,28 +19,11 @@
 .pageHeader .layoutBoundary {
 	display: flex;
 	
-	.pageHeaderContainerLeft,
-	.pageHeaderContainerRight {
-		display: flex;
-	}
-	
-	.pageHeaderContainerLeft {
-		flex: 1 1 auto;
-	}
-	
-	.pageHeaderContainerRight {
-		flex: 0 0 auto;
-	}
-	
 	@include large-screen-only {
-		padding-top: 20px;
-		padding-bottom: 20px;
-		
-		.pageHeaderContainerLeft,
-		.pageHeaderContainerRight {
-			flex-direction: column;
-			justify-content: space-between;
-		}
+		align-items: center;
+		flex-wrap: wrap;
+		padding-top: 30px;
+		padding-bottom: 0;
 	}
 	
 	@include small-screen-only {
@@ -55,122 +38,97 @@
 	}
 	
 	@include large-screen-only {
-		margin-bottom: 15px;
+		flex: 0 0 50%;
+		margin-bottom: 30px;
 	}
 }
 
 /* MAIN MENU */
-.mainMenu .boxMenu {
-	display: flex;
-	flex-wrap: wrap;
+.mainMenu {
+	flex: 1 1 auto;
 	
-	> li {
-		flex: 0 0 auto;
-		
-		@include wcfFontHeadline;
-		
-		&:not(:last-child) {
-			margin-right: 15px;
-		}
-		
-		> a {
-			border-bottom: 3px solid $wcfHeaderMenuBackground;
-			color: $wcfHeaderMenuLink;
-			display: block;
-			font-size: 16px;
-			font-weight: 400;
-			padding: 5px 0 2px;
-			
-			> .boxMenuLinkOutstandingItems {
-				background-color: rgb(255, 255, 255);
-				color: rgb(192, 57, 43);
-			}
-		}
-		
-		> span {
-			cursor: default;
-		}
-		
-		&.active > a,
-		&:hover > a {
-			border-color: $wcfHeaderMenuBackgroundActive;
-			color: $wcfHeaderMenuLinkActive;
-		}
-	}
-	
-	> .boxMenuHasChildren {
-		position: relative;
-		
-		&:hover .boxMenuDepth1 {
-			visibility: visible;
-		}
-	}
-	
-	.boxMenuDepth1 {
-		background-color: $wcfHeaderMenuDropdownBackground;
-		position: absolute;
-		visibility: hidden;
-		
-		// align menu to the center of the menu item
-		left: 50%;
-		transform: translateX(-50%);
-		
-		// offset the menu to prevent the staircase effect when two elements with dark and light
-		// colors are right below each other; uses a transparent border rather than a margin to
-		// prevent losing the hover on the <li> causing the menu to collapse when the cursor is
-		// right between the menu item and the menu itself
-		background-clip: padding-box;
-		border-top: 15px solid transparent;
-		
-		@include wcfFontDefault;
-		
-		&::before {
-			content: "";
-			border: 10px solid transparent;
-			border-bottom-color: $wcfHeaderMenuDropdownBorder;
-			border-top-width: 0;
-			left: calc(50% - 10px);
-			position: absolute;
-			top: -10px;
-		}
-		
-		&::after {
-			content: "";
-			border: 10px solid transparent;
-			border-bottom-color: $wcfHeaderMenuDropdownBackground;
-			border-top-width: 0;
-			left: calc(50% - 10px);
-			position: absolute;
-			top: -9px;
-		}
+	.boxMenu {
+		display: flex;
+		flex-wrap: wrap;
 		
 		> li {
-			// the code below mimics the border surrounding the list element
-			// as seen for similar elements such as dropdowns; we cannot use
-			// the list border because the top border is abused to visually
-			// push down the list w/o triggering a "hover-out" on the menu item
-			background-color: $wcfHeaderMenuDropdownBackground;
-			border: 1px solid $wcfHeaderMenuDropdownBorder;
-			border-width: 0 1px;
-			
-			&:first-child {
-				border-top-width: 1px;
-				padding-top: 3px;
-			}
-			
-			&:last-child {
-				border-bottom-width: 1px;
-				padding-bottom: 3px;
-			}
+			flex: 0 0 auto;
 			
 			> a {
-				color: $wcfHeaderMenuDropdownLink;
+				align-items: center;
+				color: $wcfHeaderMenuLink;
+				display: flex;
+				height: 50px;
+				padding: 0 10px;
+				
+				> span {
+					flex: 0 0 auto;
+				}
+				
+				> .boxMenuLinkOutstandingItems {
+					background-color: rgb(255, 255, 255);
+					color: rgb(192, 57, 43);
+				}
 			}
 			
-			> a,
 			> span {
+				cursor: default;
+			}
+			
+			&.active > a {
+				background: linear-gradient(to top, $wcfHeaderMenuBackground 0%, $wcfHeaderMenuBackgroundActive 50%);
+				color: $wcfHeaderMenuLinkActive;
+			}
+			
+			&:hover > a {
+				background: $wcfHeaderMenuBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
+			}
+		}
+		
+		> .boxMenuHasChildren {
+			position: relative;
+			
+			&:hover .boxMenuDepth1 {
+				visibility: visible;
+			}
+		}
+		
+		.boxMenuDepth1 {
+			background-color: $wcfHeaderMenuDropdownBackground;
+			padding: 5px 0;
+			position: absolute;
+			visibility: hidden;
+			
+			@include wcfFontDefault;
+			
+			> li {
+				
+				> a {
+					color: $wcfHeaderMenuDropdownLink;
+				}
+				
+				> a,
+				> span {
+					display: block;
+					padding: 7px 20px;
+					white-space: nowrap;
+				}
+				
+				&.active > a,
+				> a:hover {
+					background-color: $wcfHeaderMenuDropdownBackgroundActive;
+					color: $wcfHeaderMenuDropdownLinkActive;
+					text-decoration: none;
+				}
+			}
+		}
+		
+		.boxMenuDepth2 > li {
+			> a {
+				color: $wcfHeaderMenuDropdownLink;
 				display: block;
-				padding: 7px 20px;
+				padding: 5px 20px 5px 40px;
 				white-space: nowrap;
 			}
 			
@@ -182,85 +140,91 @@
 			}
 		}
 	}
-	
-	.boxMenuDepth2 > li {
-		> a {
-			color: $wcfHeaderMenuDropdownLink;
-			display: block;
-			padding: 5px 20px 5px 40px;
-			white-space: nowrap;
-		}
+}
+
+@include large-screen-only {
+	.pageHeader:not(.sticky) .mainMenu {
+		background-color: $wcfHeaderMenuBackground;
+		position: relative;
 		
-		&.active > a,
-		> a:hover {
-			background-color: $wcfHeaderMenuDropdownBackgroundActive;
-			color: $wcfHeaderMenuDropdownLinkActive;
-			text-decoration: none;
+		/* The `box-shadow` and the `::before` are used to create a full-width
+		   color stripe that matches the height of the main menu. This trick is
+		   used to allows us to have all elements in the header share a common
+		   ancestor in order to easily move elements with flexbox' `order` property.
+		   
+		   The `box-shadow` is a neat hack because an `::after` element would
+		   increase the page width unless we set `overflow: hidden` to the entire
+		   page header which is bad for multiple reasons. */
+		box-shadow: 900px 0 0 0 $wcfHeaderMenuBackground;
+		
+		&::before {
+			background-color: $wcfHeaderMenuBackground;
+			bottom: 0;
+			content: "";
+			left: -100%;
+			position: absolute;
+			top: 0;
+			width: 100%;
 		}
 	}
 }
 
 /* user panel */
-.userPanel  > ul {
-	display: flex;
-	justify-content: flex-end;
+.userPanel {
+	flex: 0 0 auto;
 	
-	> li {
-		align-items: center;
+	> ul {
 		display: flex;
-		flex: 0 auto;
+		justify-content: flex-end;
 		
-		/* margin between items, do not use the inner elements (such as a contained <a>) for
-		   this as it causes the last item to be of uneven size compared to all other items */
-		margin-left: 10px;
-		
-		&:not(:last-child) {
-			margin-right: 10px;
-		}
-		
-		> a {
+		> li {
+			align-items: center;
+			display: flex;
 			flex: 0 auto;
-			position: relative;
 			
-			/* set icon color */
-			> .icon {
-				color: $wcfHeaderLink;
-			}
-			&:hover {
+			> a {
+				align-items: center;
+				color: $wcfHeaderMenuLink;
+				display: flex;
+				flex: 0 0 auto;
+				height: 50px;
+				padding: 0 10px;
+				position: relative;
+				
+				/* set icon color */
 				> .icon {
-					color: $wcfHeaderLinkActive;
+					color: inherit;
+				}
+				
+				/* hide icon label */
+				> span:not(.icon):not(.badge) {
+					display: none;
+				}
+				
+				/* special styling for update badge */
+				> span.badgeUpdate {
+					box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
+					left: 16px;
+					position: absolute;
+					top: -5px;
 				}
 			}
 			
-			/* hide icon label */
-			> span:not(.icon):not(.badge) {
-				display: none;
+			&.open > a {
+				background: linear-gradient(to top, $wcfHeaderMenuBackground 0%, $wcfHeaderMenuBackgroundActive 50%);
+				color: $wcfHeaderMenuLinkActive;
 			}
 			
-			/* special styling for update badge */
-			> span.badgeUpdate {
-				box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
-				left: 16px;
-				position: absolute;
-				top: -5px;
+			&:hover > a {
+				background: $wcfHeaderMenuBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
 			}
-		}
-		
-		/* ringing animation for notification icon */
-		&#userNotifications:not([data-count="0"]) { 
-			> a > .icon {
-				animation: fa-bell-ring 5s ease 10s 6;
-				transform-origin: 50% 0;
-			}
-		}
-		
-		/* hover effect for user menu button */
-		&#userMenu {
-			> a {
-				&:hover {
-					> img {
-						box-shadow: 0 0 0 2px $wcfHeaderLink;
-					}
+			
+			/* ringing animation for notification icon */
+			&#userNotifications:not([data-count="0"]) {
+				> a > .icon {
+					animation: fa-bell-ring 5s ease 10s 6;
+					transform-origin: 50% 0;
 				}
 			}
 		}
@@ -270,7 +234,9 @@
 /* SEARCH AREA */
 .pageHeaderSearch {
 	@include large-screen-only {
-		margin-bottom: 15px;
+		align-self: flex-start;
+		flex: 0 0 50%;
+		margin-bottom: 30px;
 		text-align: right;
 		
 		.pageHeaderSearchLabel {

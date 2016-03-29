@@ -1180,6 +1180,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	open: function() {
 		WCF.Dropdown._closeAll();
 		
+		this._triggerElement.addClass('open');
 		this._container.addClass('open');
 		
 		this.render();
@@ -1189,6 +1190,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * Closes the dropdown
 	 */
 	close: function() {
+		this._triggerElement.removeClass('open');
 		this._container.removeClass('open');
 	},
 	
@@ -1236,6 +1238,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		else {
 			require(['Ui/Alignment'], (function(UiAlignment) {
 				UiAlignment.set(this._container[0], this._triggerElement[0], {
+					horizontal: 'right',
 					pointer: true
 				});
 			}).bind(this));
