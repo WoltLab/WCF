@@ -22,7 +22,7 @@
 	@include large-screen-only {
 		align-items: center;
 		flex-wrap: wrap;
-		padding-top: 30px;
+		padding-top: 20px;
 		padding-bottom: 0;
 	}
 	
@@ -39,7 +39,7 @@
 	
 	@include large-screen-only {
 		flex: 0 0 50%;
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 	}
 }
 
@@ -236,7 +236,7 @@
 	@include large-screen-only {
 		align-self: flex-start;
 		flex: 0 0 50%;
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 		text-align: right;
 		
 		.pageHeaderSearchLabel {

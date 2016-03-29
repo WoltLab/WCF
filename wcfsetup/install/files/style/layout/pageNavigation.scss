@@ -13,7 +13,7 @@
 		}
 		
 		.icon {
-			color: $wcfNavigationText;
+			color: inherit;
 		}
 		
 		a {
@@ -35,16 +35,6 @@
 			
 			&:not(:last-child) {
 				margin-left: 10px;
-			}
-			
-			> a {
-				> .icon {
-					color: $wcfHeaderLink;
-				}
-				
-				&:hover > .icon {
-					color: $wcfHeaderLinkActive;
-				}
 			}
 		}
 	}
