@@ -65,12 +65,14 @@
 	justify-content: flex-end;
 	
 	> .menuOverlayItemLink {
+		align-items: center;
+		display: flex;
 		flex: 1 1 auto;
 	}
 }
 
 .menuOverlayItemList {
-	background-color: rgb(44, 62, 80);
+	background-color: rgb(52, 73, 94);
 	box-shadow: -5px 0 10px 0 rgba(0, 0, 0, .2);
 	list-style-type: none;
 	margin: 0;
@@ -132,7 +134,7 @@
 }
 
 .menuOverlayItemLink {
-	background-color: rgb(52, 73, 94);
+	background-color: rgb(44, 62, 80);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -182,7 +184,7 @@
 
 .menuOverlayItemLink.active,
 .menuOverlayItemLinkIcon.active {
-	background-color: rgb(41, 128, 185);
+	background-color: rgb(34, 49, 63);
 }
 
 .menuOverlayTitle {
@@ -198,7 +200,7 @@
 
 /* icon link sharing the space with a link or (header only) the logo */
 .menuOverlayItemLinkIcon {
-	background-color: rgb(52, 73, 94);
+	background-color: rgb(44, 62, 80);
 	flex: 0 0 auto;
 	margin-left: 1px;
 	padding: 10px;
