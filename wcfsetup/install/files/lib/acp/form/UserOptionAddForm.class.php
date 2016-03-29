@@ -322,7 +322,6 @@ class UserOptionAddForm extends AbstractForm {
 			'optionType' => $this->optionType,
 			'defaultValue' => $this->defaultValue,
 			'validationPattern' => $this->validationPattern,
-			'optionType' => $this->optionType,
 			'selectOptions' => $this->selectOptions,
 			'required' => $this->required,
 			'askDuringRegistration' => $this->askDuringRegistration,
