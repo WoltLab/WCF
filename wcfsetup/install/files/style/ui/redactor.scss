@@ -202,24 +202,17 @@
 	background-color: $wcfHeaderBackground;
 	display: flex;
 	flex-wrap: wrap;
-	padding: 7px 10px;
 	
 	> li {
 		flex: 0 0 auto;
 		margin-bottom: 1px;
 		
-		&:not(:last-child) {
-			margin-right: 10px;
-		}
-		
 		> a {
-			background-color: $wcfHeaderMenuBackground;
 			color: $wcfHeaderMenuLink;
 			display: block;
 			outline: none;
-			padding: 5px 8px;
+			padding: 10px;
 			text-align: center;
-			text-decoration: none;
 			
 			@include wcfFontSmall;
 			
