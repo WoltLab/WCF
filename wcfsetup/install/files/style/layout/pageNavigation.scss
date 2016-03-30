@@ -23,12 +23,17 @@
 				color: $wcfNavigationLinkActive;
 			}
 		}
+		
+		.breadcrumbs {
+			margin-left: 10px;
+		}
 	}
 	
 	.pageNavigationIcons {
 		display: flex;
 		flex: 0 0 auto;
 		flex-direction: row-reverse;
+		margin-right: 10px;
 		
 		> li {
 			flex: 0 0 auto;
