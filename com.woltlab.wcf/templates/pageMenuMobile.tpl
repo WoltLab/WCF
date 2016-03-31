@@ -1,11 +1,11 @@
 {* main menu / page options / breadcrumbs *}
-<div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
-	<ol class="menuOverlayItemList" data-title="TODO: menu">
-		<li class="menuOverlayTitle">TODO: menu</li>
+<div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png"> {* TODO: use real path *}
+	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.page{/lang}">
+		<li class="menuOverlayTitle">{lang}wcf.menu.page{/lang}</li>
 		<li class="menuOverlayItem">
 			<a href="#" class="menuOverlayItemLink box24">
 				<span class="icon icon24 fa-sitemap"></span>
-				<span class="menuOverlayItemTitle">TODO: navigation</span>
+				<span class="menuOverlayItemTitle">{lang}wcf.menu.page.navigation{/lang}</span>
 			</a>
 			<ol class="menuOverlayItemList">
 				{foreach from=$__wcf->getBoxHandler()->getBoxes('mainMenu')[0]->getMenu()->getMenuItemNodeList() item=menuItemNode}
@@ -30,7 +30,7 @@
 			<li class="menuOverlayItem">
 				<a href="#" class="menuOverlayItemLink box24">
 					<span class="icon icon24 fa-gears"></span>
-					<span class="menuOverlayItemTitle">TODO: page options</span>
+					<span class="menuOverlayItemTitle">{lang}wcf.menu.page.options{/lang}</span>
 				</a>
 				<ol class="menuOverlayItemList">
 					{content}
@@ -44,29 +44,21 @@
 			</li>
 		{/hascontent}
 		{hascontent}
-			<li class="menuOverlayTitle">TODO: current location</li>
-			<li class="menuOverlayItem">
-				<a href="#" class="menuOverlayItemLink box24">
-					<span class="icon icon24 fa-cogs"></span>
-					<span class="menuOverlayItemTitle">TODO: current location</span>
-				</a>
-				<ol class="menuOverlayItemList">
-					{content}
-					{assign var=__breadcrumbsDepth value=0}
-					{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
-						<li class="menuOverlayItem">
-							<a href="{$breadcrumb->getURL()}" class="menuOverlayItemLink">
-								<span class="menuOverlayItemTitle"{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 10}px" {/if}>
-									<span class="icon icon24 fa-{if $__breadcrumbsDepth}caret-right{else}home{/if}"></span>
-									{$breadcrumb->getLabel()}
-								</span>
-							</a>
-						</li>
-						{assign var=__breadcrumbsDepth value=$__breadcrumbsDepth + 1}
-					{/foreach}
-					{/content}
-				</ol>
-			</li>
+			<li class="menuOverlayTitle">{lang}wcf.menu.page.location{/lang}</li>
+			{content}
+				{assign var=__breadcrumbsDepth value=0}
+				{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
+					<li class="menuOverlayItem">
+						<a href="{$breadcrumb->getURL()}" class="menuOverlayItemLink">
+							<span class="menuOverlayItemTitle"{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 10}px" {/if}>
+								<span class="icon icon24 fa-{if $__breadcrumbsDepth}caret-right{else}home{/if}"></span>
+								{$breadcrumb->getLabel()}
+							</span>
+						</a>
+					</li>
+					{assign var=__breadcrumbsDepth value=$__breadcrumbsDepth + 1}
+				{/foreach}
+			{/content}
 		{/hascontent}
 		
 		<li class="menuOverlayItemSpacer"></li>
@@ -81,7 +73,7 @@
 
 {* user menu *}
 <div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
-	<ol class="menuOverlayItemList" data-title="TODO: user menu">
+	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.user{/lang}">
 		{if $__wcf->user->userID}
 			{* logged-in *}
 			<li class="menuOverlayTitle">{lang}wcf.user.controlPanel{/lang}</li>

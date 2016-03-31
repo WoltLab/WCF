@@ -2295,6 +2295,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>
 		<item name="wcf.global.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> aus!]]></item>
+		<item name="wcf.global.search"><![CDATA[Suche]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
@@ -2422,6 +2423,12 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
+		
+		<item name="wcf.menu.page"><![CDATA[Menü]]></item>
+		<item name="wcf.menu.page.location"><![CDATA[Aktueller Ort]]></item>
+		<item name="wcf.menu.page.navigation"><![CDATA[Navigation]]></item>
+		<item name="wcf.menu.page.options"><![CDATA[Optionen]]></item>
+		<item name="wcf.menu.user"><![CDATA[Benutzer-Menü]]></item>
 	</category>
 	
 	<category name="wcf.moderation">

@@ -2296,6 +2296,7 @@ Errors are:
 		<item name="wcf.global.button.showAll"><![CDATA[Show All]]></item>
 		<item name="wcf.global.reason"><![CDATA[Reason]]></item>
 		<item name="wcf.global.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.global.search"><![CDATA[Search]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
@@ -2451,6 +2452,12 @@ Errors are:
 	
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
+		
+		<item name="wcf.menu.page"><![CDATA[Menu]]></item>
+		<item name="wcf.menu.page.location"><![CDATA[Current Location]]></item>
+		<item name="wcf.menu.page.navigation"><![CDATA[Navigation]]></item>
+		<item name="wcf.menu.page.options"><![CDATA[Options]]></item>
+		<item name="wcf.menu.user"><![CDATA[User Menu]]></item>
 	</category>
 	
 	<category name="wcf.moderation">
