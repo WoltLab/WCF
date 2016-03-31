@@ -93,7 +93,7 @@
 	}
 	
 	.acpPageMenu {
-		background-color: rgb(52, 73, 94);
+		background-color: rgb(44, 62, 80);
 		flex: 0 0 120px;
 		text-align: center;
 		overflow: hidden;
@@ -104,7 +104,7 @@
 			padding: 20px 10px;
 			
 			&.active {
-				background-color: rgb(65, 86, 107);
+				background-color: rgb(34, 49, 63);
 				color: rgb(255, 255, 255);
 				
 				> .icon {
@@ -125,7 +125,7 @@
 	}
 	
 	.acpPageSubMenu {
-		background-color: rgb(65, 86, 107);
+		background-color: rgb(34, 49, 63);
 		flex: 0 0 auto;
 	}
 	
