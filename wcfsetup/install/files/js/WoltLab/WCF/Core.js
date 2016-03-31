@@ -117,6 +117,20 @@ define([], function() {
 		 * Inherits the prototype methods from one constructor to another
 		 * constructor.
 		 * 
+		 * Usage:
+		 * 
+		 * function MyDerivedClass() {}
+		 * Core.inherit(MyDerivedClass, TheAwesomeBaseClass, {
+		 *      // regular prototype for `MyDerivedClass`
+		 *      
+		 *      overwrittenMethodFromBaseClass: function(foo, bar) {
+		 *              // do stuff
+		 *              
+		 *              // invoke parent
+		 *              MyDerivedClass._super.prototype.overwrittenMethodFromBaseClass.call(this, foo, bar);
+		 *      }
+		 * });
+		 * 
 		 * @see	https://github.com/nodejs/node/blob/7d14dd9b5e78faabb95d454a79faa513d0bbc2a5/lib/util.js#L697-L735
 		 * @param	{function}	constructor		inheriting constructor function
 		 * @param	{function}	superConstructor	inherited constructor function
