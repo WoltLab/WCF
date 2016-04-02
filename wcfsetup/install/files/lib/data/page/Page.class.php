@@ -25,6 +25,12 @@ class Page extends DatabaseObject {
 	use TDatabaseObjectPermissions;
 	
 	/**
+	 * available page types
+	 * @var	string[]
+	 */
+	public static $availablePageTypes = ['text', 'html', 'tpl', 'system'];
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'page';

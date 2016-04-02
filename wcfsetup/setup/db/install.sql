@@ -906,6 +906,7 @@ CREATE TABLE wcf1_page (
 	parentPageID INT(10),
 	identifier VARCHAR(255) NOT NULL,
 	name VARCHAR(255) NOT NULL,
+	pageType VARCHAR(255) NOT NULL,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	isLandingPage TINYINT(1) NOT NULL DEFAULT 0,
 	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,

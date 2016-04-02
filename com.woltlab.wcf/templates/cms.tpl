@@ -40,9 +40,15 @@
 {/hascontent}
 
 {if $content[content]}
-	<section class="section cmsContent htmlContent">
+	{if $page->pageType == 'text'}
+		<section class="section cmsContent htmlContent">
+			{@$content[content]}
+		</section>
+	{elseif $page->pageType == 'html'}
 		{@$content[content]}
-	</section>
+	{elseif $page->pageType == 'tpl'}
+		{*todo*}
+	{/if}
 {/if}
 
 {hascontent}

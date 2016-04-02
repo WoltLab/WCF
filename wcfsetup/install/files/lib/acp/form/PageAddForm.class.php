@@ -43,6 +43,12 @@ class PageAddForm extends AbstractForm {
 	public $isMultilingual = 0;
 	
 	/**
+	 * page type
+	 * @var	string
+	 */
+	public $pageType = '';
+	
+	/**
 	 * parent page id
 	 * @var integer
 	 */
@@ -83,6 +89,12 @@ class PageAddForm extends AbstractForm {
 	 * @var string[]
 	 */
 	public $customURL = [];
+	
+	/**
+	 * page controller
+	 * @var string
+	 */
+	public $controller = '';
 	
 	/**
 	 * page titles
@@ -129,10 +141,12 @@ class PageAddForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['parentPageID'])) $this->parentPageID = intval($_POST['parentPageID']);
+		if (isset($_POST['pageType'])) $this->pageType = $_POST['pageType'];
 		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
 		if (isset($_POST['packageID'])) $this->packageID = intval($_POST['packageID']);
+		if (isset($_POST['controller'])) $this->controller = StringUtil::trim($_POST['controller']);
 		
 		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = ArrayUtil::trim($_POST['customURL']);
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
@@ -149,9 +163,13 @@ class PageAddForm extends AbstractForm {
 		
 		$this->validateName();
 		
+		$this->validatePageType();
+		
 		$this->validateParentPageID();
 		
 		$this->validatePackageID();
+		
+		$this->validateController();
 		
 		$this->validateCustomUrl();
 	}
@@ -165,6 +183,15 @@ class PageAddForm extends AbstractForm {
 		}
 		if (Page::getPageByName($this->name)) {
 			throw new UserInputException('name', 'notUnique');
+		}
+	}
+	
+	/**
+	 * Validates page type.
+	 */
+	protected function validatePageType() {
+		if (!in_array($this->pageType, Page::$availablePageTypes) || ($this->isMultilingual && $this->pageType == 'system')) {
+			throw new UserInputException('pageType');
 		}
 	}
 	
@@ -186,6 +213,21 @@ class PageAddForm extends AbstractForm {
 	protected function validatePackageID() {
 		if (!isset($this->availableApplications[$this->packageID])) {
 			throw new UserInputException('packageID', 'invalid');
+		}
+	}
+	
+	/**
+	 * Validates controller.
+	 */
+	protected function validateController() {
+		if ($this->pageType == 'system') {
+			if (!$this->controller) {
+				throw new UserInputException('controller');
+			}
+			
+			if (!class_exists($this->controller)) {
+				throw new UserInputException('controller', 'notFound');
+			}
 		}
 	}
 	
@@ -230,13 +272,15 @@ class PageAddForm extends AbstractForm {
 		
 		$this->objectAction = new PageAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'parentPageID' => ($this->parentPageID ?: null),
+			'pageType' => $this->pageType,
 			'name' => $this->name,
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 			'packageID' => ($this->packageID ?: null),
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
-			'identifier' => ''
+			'identifier' => '',
+			'controller' => $this->controller
 		]), 'content' => $content]);
 		$returnValues = $this->objectAction->executeAction();
 		// set generic page identifier
@@ -254,7 +298,8 @@ class PageAddForm extends AbstractForm {
 		// reset variables
 		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
 		$this->packageID = 1;
-		$this->name = '';
+		$this->name = $this->controller = '';
+		$this->pageType = 'text';
 		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = [];
 	}
 	
@@ -264,14 +309,18 @@ class PageAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$availablePageTypes = Page::$availablePageTypes;
+		if ($this->isMultilingual) unset($availablePageTypes[array_search('system', $availablePageTypes)]);
 		WCF::getTPL()->assign([
 			'action' => 'add',
 			'parentPageID' => $this->parentPageID,
+			'pageType' => $this->pageType,
 			'name' => $this->name,
 			'isDisabled' => $this->isDisabled,
 			'isLandingPage' => $this->isLandingPage,
 			'isMultilingual' => $this->isMultilingual,
 			'packageID' => $this->packageID,
+			'controller' => $this->controller,
 			'customURL' => $this->customURL,
 			'title' => $this->title,
 			'content' => $this->content,
@@ -279,6 +328,7 @@ class PageAddForm extends AbstractForm {
 			'metaKeywords' => $this->metaKeywords,
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
+			'availablePageTypes' => $availablePageTypes,
 			'pageNodeList' => (new PageNodeTree())->getNodeList()
 		]);
 	}

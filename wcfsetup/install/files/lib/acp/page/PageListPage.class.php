@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\application\ApplicationList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -60,6 +61,24 @@ class PageListPage extends SortablePage {
 	public $content = '';
 	
 	/**
+	 * package id of the page
+	 * @var integer
+	 */
+	public $packageID = 0;
+	
+	/**
+	 * page type
+	 * @var string
+	 */
+	public $pageType = 'static';
+	
+	/**
+	 * list of available applications
+	 * @var \wcf\data\application\Application[]
+	 */
+	public $availableApplications = [];
+	
+	/**
 	 * @inheritdoc
 	 */
 	public function readParameters() {
@@ -68,6 +87,13 @@ class PageListPage extends SortablePage {
 		if (!empty($_REQUEST['name'])) $this->name = StringUtil::trim($_REQUEST['name']);
 		if (!empty($_REQUEST['title'])) $this->title = StringUtil::trim($_REQUEST['title']);
 		if (!empty($_REQUEST['content'])) $this->content = StringUtil::trim($_REQUEST['content']);
+		if (isset($_REQUEST['packageID'])) $this->packageID = intval($_REQUEST['packageID']);
+		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
+		
+		// get available applications
+		$applicationList = new ApplicationList();
+		$applicationList->readObjects();
+		$this->availableApplications = $applicationList->getObjects();
 	}
 	
 	/**
@@ -85,6 +111,15 @@ class PageListPage extends SortablePage {
 		if (!empty($this->content)) {
 			$this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf'.WCF_N.'_page_content WHERE content LIKE ?)', array('%'.$this->content.'%'));
 		}
+		if (!empty($this->packageID)) {
+			$this->objectList->getConditionBuilder()->add('page.packageID = ?', array($this->packageID));
+		}
+		if ($this->pageType == 'static') {
+			$this->objectList->getConditionBuilder()->add('page.pageType IN (?, ?, ?)', array('text', 'html', 'tpl'));
+		}
+		else if ($this->pageType == 'system') {
+			$this->objectList->getConditionBuilder()->add('page.pageType IN (?)', array('system'));
+		}
 	}
 	
 	/**
@@ -96,7 +131,10 @@ class PageListPage extends SortablePage {
 		WCF::getTPL()->assign(array(
 			'name' => $this->name,
 			'title' => $this->title,
-			'content' => $this->content
+			'content' => $this->content,
+			'packageID' => $this->packageID,
+			'pageType' => $this->pageType,
+			'availableApplications' => $this->availableApplications
 		));
 	}
 }

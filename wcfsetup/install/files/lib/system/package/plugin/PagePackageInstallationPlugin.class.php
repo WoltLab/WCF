@@ -144,13 +144,53 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			throw new SystemException("Invalid custom url for page identifier '" . $data['attributes']['identifier'] . "'");
 		}
 		
+		// validate page type
+		$pageType = $data['elements']['pagetype'];
+		$controller = '';
+		$identifier = $data['attributes']['identifier'];
+		$isMultilingual = 0;
+		switch ($pageType) {
+			case 'system':
+				if (empty($data['elements']['controller'])) {
+					throw new SystemException("Missing required element 'controller' for 'system'-type page '{$identifier}'");
+				}
+				$controller = $data['elements']['controller'];
+				break;
+			
+			case 'html':
+			case 'text':
+			case 'tpl':	
+				if (empty($data['elements']['content'])) {
+					throw new SystemException("Missing required 'content' element(s) for page '{$identifier}'");
+				}
+				
+				if (count($data['elements']['content']) === 1) {
+					if (!isset($data['elements']['content'][''])) {
+						throw new SystemException("Expected one 'content' element without a 'language' attribute for page '{$identifier}'");
+					}
+				}
+				else {
+					$isMultilingual = 1;
+					if (isset($data['elements']['content'][''])) {
+						throw new SystemException("Cannot mix 'content' elements with and without 'language' attribute for page '{$identifier}'");
+					}
+				}
+				
+				break;
+			
+			default:
+				throw new SystemException("Unknown type '{$pageType}' for page '{$identifier}");
+				break;
+		}
+		
 		return [
+			'pageType' => $pageType,
 			'content' => ($isStatic) ? $data['elements']['content'] : [],
-			'controller' => ($isStatic) ? '' : $data['elements']['controller'],
+			'controller' => $controller,
 			'handler' => (!$isStatic && !empty($data['elements']['handler'])) ? $data['elements']['handler'] : '',
 			'controllerCustomURL' => $controllerCustomURL,
-			'identifier' => $data['attributes']['identifier'],
-			'isMultilingual' => ($isStatic) ? 1 : 0,
+			'identifier' => $identifier,
+			'isMultilingual' => $isMultilingual,
 			'lastUpdateTime' => TIME_NOW,
 			'name' => $name,
 			'originIsSystem' => 1,

@@ -62,49 +62,84 @@
 			</dd>
 		</dl>
 		
-		{if $action == 'add' || !$page->controller}
-			<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
-				<dt><label for="parentPageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
-				<dd>
-					<select name="parentPageID" id="parentPageID">
-						<option value="0">{lang}wcf.acp.page.parentPageID.noParentPage{/lang}</option>
-						
-						{foreach from=$pageNodeList item=pageNode}
-							<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $parentPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
-						{/foreach}
-					</select>
-					{if $errorField == 'parentPageID'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.page.parentPageID.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			<dl{if $errorField == 'packageID'} class="formError"{/if}>
-				<dt><label for="packageID">{lang}wcf.acp.page.packageID{/lang}</label></dt>
-				<dd>
-					<select name="packageID" id="packageID">
-						{foreach from=$availableApplications item=availableApplication}
-							<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $packageID} selected="selected"{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
-						{/foreach}
-					</select>
-					{if $errorField == 'parentPageID'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.page.packageID.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-		{/if}
+		<dl{if $errorField == 'pageType'} class="formError"{/if}>
+			<dt><label for="pageType">{lang}wcf.acp.page.pageType{/lang}</label></dt>
+			<dd>
+				<select name="pageType" id="pageType"{if $action == 'edit'} disabled="disabled"{/if}>
+					{foreach from=$availablePageTypes item=availablePageType}
+						<option value="{@$availablePageType}"{if $availablePageType == $pageType} selected="selected"{/if}>{lang}wcf.acp.page.pageType.{@$availablePageType}{/lang}</option>
+					{/foreach}
+				</select>
+				
+				{if $errorField == 'pageType'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.page.pageType.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+	
+		<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
+			<dt><label for="parentPageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
+			<dd>
+				<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
+					<option value="0">{lang}wcf.acp.page.parentPageID.noParentPage{/lang}</option>
+					
+					{foreach from=$pageNodeList item=pageNode}
+						<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $parentPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
+					{/foreach}
+				</select>
+				{if $errorField == 'parentPageID'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.page.parentPageID.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
+		<dl{if $errorField == 'packageID'} class="formError"{/if}>
+			<dt><label for="packageID">{lang}wcf.acp.page.packageID{/lang}</label></dt>
+			<dd>
+				<select name="packageID" id="packageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
+					{foreach from=$availableApplications item=availableApplication}
+						<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $packageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
+					{/foreach}
+				</select>
+				{if $errorField == 'parentPageID'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.page.packageID.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
+		<dl{if $errorField == 'controller'} class="formError"{/if}>
+			<dt><label for="controller">{lang}wcf.acp.page.controller{/lang}</label></dt>
+			<dd>
+				<input type="text" id="controller" name="controller" value="{$controller}" class="long"{if $action == 'edit' && $page->originIsSystem} readonly="readonly"{/if} />
+				{if $errorField == 'controller'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.page.controller.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
 		
 		{if !$isMultilingual}
 			<dl{if $errorField == 'customURL'} class="formError"{/if}>

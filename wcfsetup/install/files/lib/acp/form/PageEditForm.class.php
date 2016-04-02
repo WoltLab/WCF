@@ -54,6 +54,20 @@ class PageEditForm extends PageAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	public function readFormParameters() {
+		parent::readFormParameters();
+		
+		$this->pageType = $this->page->pageType;
+		if ($this->page->originIsSystem) {
+			$this->parentPageID = $this->page->parentPageID;
+			$this->packageID = $this->page->packageID;
+			$this->controller = $this->page->controller;
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function validateName() {
 		if (mb_strtolower($this->name) != mb_strtolower($this->page->name)) {
 			parent::validateName();
@@ -63,43 +77,26 @@ class PageEditForm extends PageAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	protected function validateParentPageID() {
-		if (!$this->page->controller && $this->parentPageID) {
-			$page = new Page($this->parentPageID);
-			if (!$page->pageID) {
-				throw new UserInputException('parentPageID', 'invalid');
-			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected function validatePackageID() {
-		if (!$this->page->controller) {
-			parent::validatePackageID();
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function save() {
 		AbstractForm::save();
 		
-		if ($this->page->controller) {
-			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, array(
-				'name' => $this->name,
-				'isDisabled' => ($this->isDisabled) ? 1 : 0,
-				'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
-				'controllerCustomURL' => (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : ''),
-				'lastUpdateTime' => TIME_NOW
-			))));
+		$data = array(
+			'name' => $this->name,
+			'isDisabled' => ($this->isDisabled) ? 1 : 0,
+			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
+			'lastUpdateTime' => TIME_NOW,
+			'parentPageID' => ($this->parentPageID ?: null),
+			'packageID' => $this->packageID
+		);
+		
+		if ($this->pageType == 'system') {
+			$data['controllerCustomURL'] = (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : '');
+			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data)));
 			$this->objectAction->executeAction();
 		}
 		else {
 			$content = array();
-			if ($this->isMultilingual) {
+			if ($this->page->isMultilingual) {
 				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 					$content[$language->languageID] = array(
 						'customURL' => (!empty($_POST['customURL'][$language->languageID]) ? $_POST['customURL'][$language->languageID] : ''),
@@ -120,15 +117,7 @@ class PageEditForm extends PageAddForm {
 				);
 			}
 			
-			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, array(
-				'parentPageID' => ($this->parentPageID ?: null),
-				'name' => $this->name,
-				'isDisabled' => ($this->isDisabled) ? 1 : 0,
-				'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
-				'packageID' => ($this->packageID ?: null),
-				'lastUpdateTime' => TIME_NOW,
-				'isMultilingual' => $this->isMultilingual
-			)), 'content' => $content));
+			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data), 'content' => $content));
 			$this->objectAction->executeAction();
 		}
 		
@@ -148,7 +137,10 @@ class PageEditForm extends PageAddForm {
 		if (empty($_POST)) {
 			$this->name = $this->page->name;
 			$this->parentPageID = $this->page->parentPageID;
+			$this->pageType = $this->page->pageType;
 			$this->packageID = $this->page->packageID;
+			$this->controller = $this->page->controller;
+			if ($this->page->controllerCustomURL) $this->customURL[0] = $this->page->controllerCustomURL;
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;
 			if ($this->page->isDiabled) $this->isDisabled = 1;
 			
