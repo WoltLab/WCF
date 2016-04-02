@@ -24,19 +24,13 @@ WCF.Poll.Management = Class.extend({
 	
 	/**
 	 * number of options
-	 * @var	integer
+	 * @var	int
 	 */
 	_count: 0,
 	
 	/**
-	 * width for input-elements
-	 * @var	integer
-	 */
-	_inputSize: 0,
-	
-	/**
 	 * maximum allowed number of options
-	 * @var	integer
+	 * @var	int
 	 */
 	_maxOptions: 0,
 	
@@ -60,22 +54,12 @@ WCF.Poll.Management = Class.extend({
 		this._createOptionList(optionList);
 		
 		// bind event listener
-		$(window).resize($.proxy(this._resize, this));
 		this._container.parents('form').submit($.proxy(this._submit, this));
 		
 		// init sorting
-		new WCF.Sortable.List(containerID, '', undefined, undefined, true);
-		
-		// trigger resize event for field length calculation
-		this._resize();
-		
-		// update size on tab select
-		var self = this;
-		this._container.closest('.messageTabMenu').on('messagetabmenushow', function(event, data) {
-			if (data.activeTab.name == 'poll') {
-				self._resize();
-			}
-		});
+		new WCF.Sortable.List(containerID, '', undefined, {
+			toleranceElement: '> div'
+		}, true);
 	},
 	
 	/**
@@ -114,12 +98,12 @@ WCF.Poll.Management = Class.extend({
 		}
 		
 		// insert buttons
-		var $buttonContainer = $('<span class="sortableButtonContainer" />').appendTo($listItem);
-		$('<span class="icon icon16 fa-plus jsTooltip jsAddOption pointer" title="' + WCF.Language.get('wcf.poll.button.addOption') + '" />').click($.proxy(this._addOption, this)).appendTo($buttonContainer);
-		$('<span class="icon icon16 fa-times jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($buttonContainer);
+		var $container = $('<div class="pollOptionInput" />').appendTo($listItem);
+		$('<span class="icon icon16 fa-plus jsTooltip jsAddOption pointer" title="' + WCF.Language.get('wcf.poll.button.addOption') + '" />').click($.proxy(this._addOption, this)).appendTo($container);
+		$('<span class="icon icon16 fa-times jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($container);
 		
 		// insert input field
-		var $input = $('<input type="text" value="' + optionValue + '" maxlength="255" />').css({ width: this._inputSize + "px" }).keydown($.proxy(this._keyDown, this)).appendTo($listItem);
+		var $input = $('<input type="text" value="' + optionValue + '" maxlength="255" />').keydown($.proxy(this._keyDown, this)).appendTo($container);
 		$input.click(function() {
 			// work-around for some weird focus issue on iOS/Android
 			if (document.activeElement !== this) {
@@ -190,32 +174,13 @@ WCF.Poll.Management = Class.extend({
 	},
 	
 	/**
-	 * Handles the 'resize'-event to adjust input-width.
-	 */
-	_resize: function() {
-		var $containerWidth = this._container.innerWidth();
-		
-		// select first option to determine dimensions
-		var $listItem = this._container.children('li:eq(0)');
-		var $buttonWidth = $listItem.children('.sortableButtonContainer').outerWidth();
-		var $inputSize = $containerWidth - $buttonWidth;
-		
-		if ($inputSize != this._inputSize) {
-			this._inputSize = $inputSize;
-			
-			// update width of <input /> elements
-			this._container.find('li > input').css({ width: this._inputSize + 'px' });
-		}
-	},
-	
-	/**
 	 * Inserts hidden input elements storing the option values.
 	 */
 	_submit: function() {
 		var $options = [ ];
 		this._container.children('li').each(function(index, listItem) {
 			var $listItem = $(listItem);
-			var $optionValue = $.trim($listItem.children('input').val());
+			var $optionValue = $.trim($listItem.find('input').val());
 			
 			// ignore empty values
 			if ($optionValue != '') {

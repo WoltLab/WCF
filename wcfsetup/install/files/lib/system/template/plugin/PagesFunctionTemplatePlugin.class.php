@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * 	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
@@ -60,18 +60,18 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected function makeLink($link, $pageNo, $activePage, $pages) {
 		// first page
 		if ($activePage != $pageNo) {
-			return '<li><a href="'.$this->insertPageNumber($link, $pageNo).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', array('pageNo' => $pageNo)).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
+			return '<li><a href="'.$this->insertPageNumber($link, $pageNo).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', ['pageNo' => $pageNo]).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
 		}
 		else {
-			return '<li class="active"><span>'.StringUtil::formatInteger($pageNo).'</span><span class="invisible">'.WCF::getLanguage()->getDynamicVariable('wcf.page.pagePosition', array('pageNo' => $pageNo, 'pages' => $pages)).'</span></li>'."\n";
+			return '<li class="active"><span>'.StringUtil::formatInteger($pageNo).'</span><span class="invisible">'.WCF::getLanguage()->getDynamicVariable('wcf.page.pagePosition', ['pageNo' => $pageNo, 'pages' => $pages]).'</span></li>'."\n";
 		}
 	}
 	
 	/**
 	 * Generates HTML code for 'previous' link.
 	 * 
-	 * @param	type		$link
-	 * @param	type		$pageNo
+	 * @param	string		$link
+	 * @param	integer		$pageNo
 	 * @return	string
 	 */
 	protected function makePreviousLink($link, $pageNo) {
@@ -86,8 +86,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * Generates HTML code for 'next' link.
 	 * 
-	 * @param	type		$link
-	 * @param	type		$pageNo
+	 * @param	string		$link
+	 * @param	integer		$pageNo
 	 * @return	string
 	 */
 	protected function makeNextLink($link, $pageNo, $pages) {
@@ -100,7 +100,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	}
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// needed params: controller, link, page, pages
@@ -116,7 +116,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		
 		if ($tagArgs['pages'] > 1) {
 			// create and encode route link
-			$parameters = array();
+			$parameters = [];
 			if (isset($tagArgs['id'])) $parameters['id'] = $tagArgs['id'];
 			if (isset($tagArgs['title'])) $parameters['title'] = $tagArgs['title'];
 			if (isset($tagArgs['object'])) $parameters['object'] = $tagArgs['object'];

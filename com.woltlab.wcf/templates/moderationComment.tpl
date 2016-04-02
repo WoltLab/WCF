@@ -2,7 +2,11 @@
 	<section class="messageContent">
 		<header class="messageHeader">
 			<div class="box32 messageHeaderWrapper">
-				<a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}">{@$message->getUserProfile()->getAvatar()->getImageTag(32)}</a>
+				{if $message->userID}
+					<a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}" class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(32)}</a>
+				{else}
+					<span class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(32)}</span>
+				{/if}
 				
 				<div class="messageHeaderBox">
 					<h2 class="messageTitle">
@@ -10,7 +14,13 @@
 					</h2>
 					
 					<ul class="messageHeaderMetaData">
-						<li><a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}" class="username">{$message->getUsername()}</a></li>
+						<li>
+							{if $message->userID}
+								<a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}" class="username">{$message->getUsername()}</a>
+							{else}
+								{$message->getUsername()}
+							{/if}
+						</li>
 						<li><span class="messagePublicationTime">{@$message->getTime()|time}</span></li>
 						
 						{event name='messageHeaderMetaData'}

@@ -14,6 +14,20 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.package
  * @category	Community Framework
+ *
+ * @property-read	integer		$packageID
+ * @property-read	string		$package
+ * @property-read	string		$packageDir
+ * @property-read	string		$packageName
+ * @property-read	string		$packageDescription
+ * @property-read	string		$packageVersion
+ * @property-read	integer		$packageDate
+ * @property-read	integer		$installDate
+ * @property-read	integer		$updateDate
+ * @property-read	string		$packageURL
+ * @property-read	integer		$isApplication
+ * @property-read	string		$author
+ * @property-read	string		$authorURL
  */
 class Package extends DatabaseObject {
 	/**
@@ -222,14 +236,13 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function isAlreadyInstalled($package) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_package
 			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($package));
-		$row = $statement->fetchArray();
 		
-		return ($row['count'] ? true : false);
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**

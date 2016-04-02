@@ -7,20 +7,32 @@ use wcf\system\WCF;
  * Represents a package installation queue.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.queue
  * @category	Community Framework
+ *
+ * @property-read	integer		$queueID
+ * @property-read	integer		$parentQueueID
+ * @property-read	integer		$processNo
+ * @property-read	integer		$userID
+ * @property-read	string		$package
+ * @property-read	string		$packageName
+ * @property-read	integer|null	$packageID
+ * @property-read	string		$archive
+ * @property-read	string		$action
+ * @property-read	integer		$done
+ * @property-read	integer		$isApplication
  */
 class PackageInstallationQueue extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'package_installation_queue';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'queueID';
 	

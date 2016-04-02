@@ -76,6 +76,15 @@
 
 .userProfileDetails {
 	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarText;
+	
+	a {
+		color: $wcfSidebarLink;
+		
+		&:hover {
+			color: $wcfSidebarLinkActive;
+		}
+	}
 	
 	> .layoutBoundary {
 		padding: 10px 10px 10px 160px;

@@ -11,6 +11,14 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.activity.event
  * @category	Community Framework
+ *
+ * @property-read	integer		$eventID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	integer|null	$languageID
+ * @property-read	integer		$userID
+ * @property-read	integer		$time
+ * @property-read	array		$additionalData
  */
 class UserActivityEvent extends DatabaseObject {
 	/**

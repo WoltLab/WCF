@@ -71,14 +71,13 @@ class MailWorker extends AbstractWorker {
 			}
 		}
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user user
 			".$this->conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->conditions->getParameters());
-		$row = $statement->fetchArray();
 		
-		$this->count = $row['count'];
+		$this->count = $statement->fetchSingleColumn();
 	}
 	
 	/**

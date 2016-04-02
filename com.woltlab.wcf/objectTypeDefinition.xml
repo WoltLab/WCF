@@ -56,18 +56,12 @@
 		</definition>
 		
 		<definition>
-			<name>com.woltlab.wcf.user.online.location</name>
-			<interfacename><![CDATA[wcf\system\user\online\location\IUserOnlineLocation]]></interfacename>
-		</definition>
-		
-		<definition>
 			<name>com.woltlab.wcf.user.objectWatch</name>
 			<interfacename><![CDATA[wcf\system\user\object\watch\IUserObjectWatch]]></interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.visitTracker.objectType</name>
-			<!-- <interfacename><![CDATA[wcf\system\visitTracker\IVisitTrackerObjectType]]></interfacename>-->
 		</definition>
 		
 		<definition>
@@ -216,6 +210,13 @@
 			<name>com.woltlab.wcf.bulkProcessing.user.action</name>
 			<interfacename><![CDATA[wcf\system\bulk\processing\IBulkProcessingAction]]></interfacename>
 		</definition>
+		
+		<!-- deprecated -->
+		<definition>
+			<name>com.woltlab.wcf.user.online.location</name>
+			<interfacename><![CDATA[wcf\system\user\online\location\IUserOnlineLocation]]></interfacename>
+		</definition>
+		<!-- /deprecated -->
 	</import>
 	
 	<delete>

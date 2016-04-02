@@ -228,8 +228,8 @@ class BBCodeParser extends SingletonFactory {
 	/**
 	 * Validates an attributes of a tag.
 	 * 
-	 * @param	array					$tagAttributes
-	 * @param	\wcf\data\bbcode\BBCodeAttribute		$definedTagAttribute
+	 * @param	array			$tagAttributes
+	 * @param	BBCodeAttribute		$definedTagAttribute
 	 * @return	boolean
 	 */
 	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {

@@ -463,14 +463,13 @@ class PackageArchive {
 	 * @return	boolean
 	 */
 	public function isAlreadyInstalled() {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_package
 			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->packageInfo['name']));
-		$row = $statement->fetchArray();
 		
-		return ($row['count'] > 0) ? true : false;
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**
@@ -493,7 +492,7 @@ class PackageArchive {
 			'%.'.Package::getAbbreviation($this->packageInfo['name'])
 		));
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**

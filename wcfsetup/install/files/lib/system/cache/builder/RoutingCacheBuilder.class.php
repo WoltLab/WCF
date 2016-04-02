@@ -36,7 +36,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	 * and environment level to prevent any issues with controllers with the same name but
 	 * correct spelling to be incorrectly handled.
 	 * 
-	 * @return      array
+	 * @return	array
 	 */
 	protected function getCaseInsensitiveControllers() {
 		$data = [
@@ -94,7 +94,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	 * Builds up a lookup and a reverse lookup list per application in order to resolve
 	 * custom page mappings.
 	 * 
-	 * @return      array
+	 * @return	array
 	 */
 	protected function getCustomUrls() {
 		$data = [
@@ -107,9 +107,9 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// fetch pages with a controller and a custom url
-		$sql = "SELECT  controller, controllerCustomURL, packageID
-			FROM    wcf".WCF_N."_page
-			WHERE   controller <> ''
+		$sql = "SELECT	controller, controllerCustomURL, packageID
+			FROM	wcf".WCF_N."_page
+			WHERE	controller <> ''
 				AND controllerCustomURL <> ''";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
@@ -119,10 +119,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// fetch content pages using the common page controller
-		$sql = "SELECT  	page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.packageID
-			FROM    	wcf".WCF_N."_page_content page_content
-			LEFT JOIN       wcf".WCF_N."_page page
-			ON              (page.pageID = page_content.pageID)";
+		$sql = "SELECT		page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.packageID
+			FROM		wcf".WCF_N."_page_content page_content
+			LEFT JOIN	wcf".WCF_N."_page page
+			ON		(page.pageID = page_content.pageID)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
@@ -159,7 +159,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Returns the list of landing pages per application.
 	 * 
-	 * @return      string[]
+	 * @return	string[]
 	 */
 	protected function getLandingPages() {
 		$data = [];

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\html\output\node;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\html\output\HtmlOutputNodeProcessor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  */
 class HtmlOutputNodeWoltlabMention implements IHtmlOutputNode {
 	/**
-	 * @var UserProfile[]
+	 * @var	UserProfile[]
 	 */
 	protected $userProfiles;
 	
@@ -44,7 +44,7 @@ class HtmlOutputNodeWoltlabMention implements IHtmlOutputNode {
 		}
 		
 		if (!empty($userIds)) {
-			$this->userProfiles = UserProfileCache::getInstance()->getUserProfiles($userIds);
+			$this->userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIds);
 		}
 	}
 	

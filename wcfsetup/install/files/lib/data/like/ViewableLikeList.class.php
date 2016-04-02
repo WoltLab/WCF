@@ -1,14 +1,14 @@
 <?php
 namespace wcf\data\like;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserProfileCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 
 /**
  * Represents a list of viewable likes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.like
@@ -16,27 +16,27 @@ use wcf\system\like\IViewableLikeProvider;
  */
 class ViewableLikeList extends LikeList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\like\Like';
+	public $className = Like::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = ViewableLike::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
+	 * @inheritDoc
 	 */
 	public $sqlLimit = 20;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'like_table.time DESC';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
@@ -59,7 +59,7 @@ class ViewableLikeList extends LikeList {
 		
 		// set user profiles
 		if (!empty($userIDs)) {
-			UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
 		}
 		
 		// parse like

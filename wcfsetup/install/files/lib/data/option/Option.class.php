@@ -15,6 +15,23 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.option
  * @category	Community Framework
+ *
+ * @property-read	integer		$optionID
+ * @property-read	integer		$packageID
+ * @property-read	string		$optionName
+ * @property-read	string		$categoryName
+ * @property-read	string		$optionType
+ * @property-read	string		$optionValue
+ * @property-read	string		$validationPattern
+ * @property-read	string		$selectOptions
+ * @property-read	string		$enableOptions
+ * @property-read	integer		$showOrder
+ * @property-read	integer		$hidden
+ * @property-read	string		$permissions
+ * @property-read	string		$options
+ * @property-read	integer		$supportI18n
+ * @property-read	integer		$requireI18n
+ * @property-read	array		$additionalData
  */
 class Option extends DatabaseObject {
 	use TDatabaseObjectOptions;

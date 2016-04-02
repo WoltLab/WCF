@@ -3,7 +3,6 @@ namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\UserInputException;
-use wcf\system\option\AbstractOptionType;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 

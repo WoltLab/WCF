@@ -27,13 +27,13 @@ use wcf\util\HeaderUtil;
 class WCFACP extends WCF {
 	/**
 	 * rescue mode
-	 * @var boolean
+	 * @var	boolean
 	 */
 	protected static $inRescueMode;
 	
 	/**
 	 * URL to WCF within rescue mode
-	 * @var string
+	 * @var	string
 	 */
 	protected static $rescueModePageURL;
 	
@@ -71,7 +71,7 @@ class WCFACP extends WCF {
 	/**
 	 * Returns true if ACP is currently in rescue mode.
 	 * 
-	 * @return      boolean
+	 * @return	boolean
 	 */
 	public static function inRescueMode() {
 		if (self::$inRescueMode === null) {
@@ -99,7 +99,7 @@ class WCFACP extends WCF {
 	/**
 	 * Returns URL for rescue mode page.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public static function getRescueModePageURL() {
 		if (self::inRescueMode()) {

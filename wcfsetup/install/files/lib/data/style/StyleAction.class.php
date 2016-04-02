@@ -15,7 +15,6 @@ use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Executes style-related actions.

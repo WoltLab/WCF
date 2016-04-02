@@ -10,7 +10,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
-use wcf\system\package\PackageUpdateUnauthorizedException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
@@ -52,7 +51,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				
 				$updateServers[] = $updateServer;
 			}
-		} 
+		}
 		
 		// loop servers
 		$refreshedPackageLists = false;

@@ -13,7 +13,7 @@
 			
 			{foreach from=$tree item=sitemapName}
 				<div id="sitemap_{$sitemapName}" class="tabMenuContent hidden">
-					{if $sitemapName == $defaultSitemapName}{@$sitemap}{/if}
+					<div class="section">{if $sitemapName == $defaultSitemapName}{@$sitemap}{/if}</div>
 				</div>
 			{/foreach}
 		</div>

@@ -9,13 +9,11 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\image\ImageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
 
 /**

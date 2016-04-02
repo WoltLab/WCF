@@ -5,7 +5,6 @@ use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -52,9 +51,9 @@ class RequestHandler extends SingletonFactory {
 	 *
 	 * @param	string		$application
 	 * @param	boolean		$isACPRequest
-	 * @throws      AJAXException
-	 * @throws      IllegalLinkException
-	 * @throws      SystemException
+	 * @throws	AJAXException
+	 * @throws	IllegalLinkException
+	 * @throws	SystemException
 	 */
 	public function handle($application = 'wcf', $isACPRequest = false) {
 		try {
@@ -104,7 +103,7 @@ class RequestHandler extends SingletonFactory {
 	 * Builds a new request.
 	 * 
 	 * @param	string		$application
-	 * @throws      IllegalLinkException
+	 * @throws	IllegalLinkException
 	 */
 	protected function buildRequest($application) {
 		try {

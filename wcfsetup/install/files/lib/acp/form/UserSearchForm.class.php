@@ -1,12 +1,15 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\condition\Condition;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\search\SearchEditor;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
+use wcf\system\condition\IUserCondition;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
-use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -81,6 +84,13 @@ class UserSearchForm extends UserOptionListForm {
 	public $maxResults = 2000;
 	
 	/**
+	 * id of the group the users have to belong to
+	 * is used on the user group list to show all users of a user group
+	 * @var	integer
+	 */
+	public $groupID = 0;
+	
+	/**
 	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -88,13 +98,14 @@ class UserSearchForm extends UserOptionListForm {
 		
 		// search user from passed groupID by group-view
 		if (isset($_GET['groupID'])) {
-			$this->groupIDs[] = intval($_GET['groupID']);
+			$this->groupID = intval($_GET['groupID']);
 			
 			// disable check for security token for GET requests
 			$_POST['t'] = WCF::getSession()->getSecurityToken();
 			
 			// do search
 			try {
+				$this->readData();
 				$this->validate();
 				$this->save();
 			}
@@ -205,8 +216,25 @@ class UserSearchForm extends UserOptionListForm {
 		}
 		
 		foreach ($this->conditions as $conditions) {
-			foreach ($conditions as $condition) {
-				$condition->getProcessor()->validate();
+			/** @var ObjectType $objectType */
+			foreach ($conditions as $objectType) {
+				/** @var IUserCondition $processor */
+				$processor = $objectType->getProcessor();
+				
+				// manually inject user group data for listing of group members
+				if ($this->groupID && $objectType->objectType == 'com.woltlab.wcf.userGroup') {
+					$userGroups = UserGroup::getAccessibleGroups([], [UserGroup::EVERYONE, UserGroup::GUESTS]);
+					
+					uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
+						return strcmp($groupA->getName(), $groupB->getName());
+					});
+					
+					$processor->setUserGroups($userGroups);
+					$processor->setData(new Condition(null, [
+						'conditionData' => serialize(['groupIDs' => [$this->groupID]])
+					]));
+				}
+				$processor->validate();
 			}
 		}
 		

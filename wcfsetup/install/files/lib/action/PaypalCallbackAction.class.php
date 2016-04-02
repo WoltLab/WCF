@@ -1,6 +1,5 @@
 <?php
 namespace wcf\action;
-use wcf\action\AbstractAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\SystemException;
 use wcf\system\payment\type\IPaymentType;

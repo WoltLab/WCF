@@ -18,6 +18,16 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.category
  * @category	Community Framework
+ *
+ * @property-read	integer		$categoryID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$parentCategoryID
+ * @property-read	string		$title
+ * @property-read	string		$description
+ * @property-read	integer		$showOrder
+ * @property-read	integer		$time
+ * @property-read	integer		$isDisabled
+ * @property-read	array		$additionalData
  */
 class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController {
 	/**

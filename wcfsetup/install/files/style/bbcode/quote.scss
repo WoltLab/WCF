@@ -1,15 +1,14 @@
 .quoteBox {
-	border-left: 2px solid $wcfContentBorder;
-	padding: 10px;
-	margin: 10px 0;
+	border: 1px solid $wcfContentBorderInner;
+	font-style: italic;
+	margin: 20px 0;
+	padding: 10px 20px;
 	
 	&:first-child {
 		margin-top: 0;
 	}
 	
 	.quoteBox {
-		margin-left: 10px;
-		
 		> .quoteBoxHeader > .quoteBoxIcon {
 			display: none;
 		}
@@ -19,28 +18,28 @@
 .quoteBoxHeader {
 	align-items: center;
 	display: flex;
-	margin-bottom: 10px;
-}
-
-.quoteBoxIcon {
-	flex: 0 0 auto;
-	min-height: 36px;
+	font-style: normal;
+	margin-bottom: 20px;
 	
-	> a {
-		display: block;
-		font-size: 0;
-		margin-right: 5px;
+	.quoteBoxIcon {
+		flex: 0 0 auto;
+		
+		> a {
+			display: block;
+			font-size: 0;
+			margin-right: 5px;
+		}
+		
+		> .icon {
+			margin-right: 7px;
+			position: relative;
+			top: 2px;
+		}
 	}
 	
-	> .icon {
-		margin-right: 7px;
-		position: relative;
-		top: 10px;
+	.quoteBoxTitle {
+		flex: 1 auto;
+		
+		@include wcfFontHeadline;
 	}
-}
-
-.quoteBoxTitle {
-	flex: 1 auto;
-	
-	@include wcfFontHeadline;
 }

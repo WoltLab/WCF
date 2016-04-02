@@ -54,7 +54,7 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * installation directories
-	 * @var string[]
+	 * @var	string[]
 	 */
 	protected static $directories = [];
 	
@@ -72,7 +72,7 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * list of installed files
-	 * @var string[]
+	 * @var	string[]
 	 */
 	protected static $installedFiles = [];
 	
@@ -173,7 +173,7 @@ class WCFSetup extends WCF {
 				self::$directories[$application] = $directory;
 				
 				if ($application === 'wcf' && @file_exists(self::$directories['wcf'])) {
-					define('RELATIVE_WCF_DIR', FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$directories['wcf']));	
+					define('RELATIVE_WCF_DIR', FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$directories['wcf']));
 				}
 			}
 		}
@@ -776,7 +776,7 @@ class WCFSetup extends WCF {
 	 * 
 	 * @param	\wcf\system\database\Database	$db
 	 * @param	integer				$dbNumber
-	 * @return      string[]        list of already existing tables
+	 * @return	string[]	list of already existing tables
 	 */
 	protected function getConflictedTables($db, $dbNumber) {
 		// get content of the sql structure file
@@ -1146,8 +1146,7 @@ class WCFSetup extends WCF {
 			WHERE	package = 'com.woltlab.wcf'";
 		$statement = self::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$row = $statement->fetchArray();
-		if (!$row['count']) {
+		if (!$statement->fetchSingleColumn()) {
 			if (empty($wcfPackageFile)) {
 				throw new SystemException('the essential package com.woltlab.wcf is missing.');
 			}

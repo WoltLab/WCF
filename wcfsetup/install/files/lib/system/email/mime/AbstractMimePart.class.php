@@ -24,7 +24,7 @@ abstract class AbstractMimePart {
 	 * Returns the transfer encoding to use. Must either be
 	 * 'quoted-printable' or 'base64'.
 	 * 
-	 * @return	Either 'quoted-printable' or 'base64'
+	 * @return	string		either 'quoted-printable' or 'base64'
 	 */
 	abstract public function getContentTransferEncoding();
 	

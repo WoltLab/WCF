@@ -12,6 +12,12 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.dashboard.box
  * @category	Community Framework
+ *
+ * @property-read	integer		$boxID
+ * @property-read	integer		$packageID
+ * @property-read	string		$boxName
+ * @property-read	string		$boxType
+ * @property-read	string		$className
  */
 class DashboardBox extends DatabaseObject {
 	/**

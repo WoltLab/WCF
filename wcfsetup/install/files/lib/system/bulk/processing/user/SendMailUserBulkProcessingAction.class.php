@@ -19,12 +19,6 @@ use wcf\util\StringUtil;
  */
 class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**
-	 * email text
-	 * @var	string
-	 */
-	public $email = '';
-	
-	/**
 	 * is 1 if HTML for the email is enabled
 	 * @var	integer
 	 */
@@ -41,6 +35,12 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 	 * @var	string
 	 */
 	public $mailID = '';
+	
+	/**
+	 * email subject
+	 * @var	string
+	 */
+	public $subject = '';
 	
 	/**
 	 * email text

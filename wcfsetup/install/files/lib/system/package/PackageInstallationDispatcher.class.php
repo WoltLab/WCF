@@ -304,8 +304,8 @@ class PackageInstallationDispatcher {
 	/**
 	 * Installs current package.
 	 * 
-	 * @param	mixed[]         $nodeData
-	 * @return      PackageInstallationStep
+	 * @param	mixed[]		$nodeData
+	 * @return	PackageInstallationStep
 	 */
 	protected function installPackage(array $nodeData) {
 		$installationStep = new PackageInstallationStep();
@@ -532,7 +532,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Executes a package installation plugin.
 	 * 
-	 * @param	mixed[]         $nodeData
+	 * @param	mixed[]	$nodeData
 	 * @return	boolean
 	 */
 	protected function executePIP(array $nodeData) {
@@ -656,9 +656,9 @@ class PackageInstallationDispatcher {
 	/**
 	 * Extracts files from .tar(.gz) archive and installs them
 	 * 
-	 * @param	string			$targetDir
-	 * @param	string			$sourceArchive
-	 * @param	FileHandler		$fileHandler
+	 * @param	string					$targetDir
+	 * @param	string					$sourceArchive
+	 * @param	\wcf\system\setup\IFileHandler		$fileHandler
 	 * @return	\wcf\system\setup\Installer
 	 */
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {
@@ -699,13 +699,12 @@ class PackageInstallationDispatcher {
 			
 			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(dirname(WCF_DIR)));
 			// check if there is already an application
-			$sql = "SELECT	COUNT(*) AS count
+			$sql = "SELECT	COUNT(*)
 				FROM	wcf".WCF_N."_package
 				WHERE	packageDir = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array('../'));
-			$row = $statement->fetchArray();
-			if ($row['count']) {
+			if ($statement->fetchSingleColumn()) {
 				// use abbreviation
 				$defaultPath .= strtolower(Package::getAbbreviation($this->getPackage()->package)) . '/';
 			}

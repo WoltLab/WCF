@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\captcha;
+use wcf\data\captcha\question\CaptchaQuestion;
 use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -9,7 +10,7 @@ use wcf\util\StringUtil;
  * Captcha handler for captcha questions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.captcha
@@ -30,9 +31,15 @@ class CaptchaQuestionHandler implements ICaptchaHandler {
 	
 	/**
 	 * captcha question to answer
-	 * @var	\wcf\data\captcha\question\CaptchaQuestion
+	 * @var	CaptchaQuestion
 	 */
 	protected $question = null;
+	
+	/**
+	 * list of available captcha questions
+	 * @var	CaptchaQuestion[]
+	 */
+	protected $questions = [];
 	
 	/**
 	 * Creates a new instance of CaptchaQuestionHandler.
@@ -42,29 +49,29 @@ class CaptchaQuestionHandler implements ICaptchaHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::isAvailable()
+	 * @inheritDoc
 	 */
 	public function isAvailable() {
 		return count($this->questions) > 0;
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement() {
 		if ($this->question === null) {
 			$this->readCaptchaQuestion();
 		}
 		
-		return WCF::getTPL()->fetch('captchaQuestion', 'wcf', array(
+		return WCF::getTPL()->fetch('captchaQuestion', 'wcf', [
 			'captchaQuestion' => $this->captchaQuestion,
 			'captchaQuestionAnswered' => WCF::getSession()->getVar('captchaQuestionSolved_'.$this->captchaQuestion) !== null,
 			'captchaQuestionObject' => $this->question
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['captchaQuestion'])) $this->captchaQuestion = StringUtil::trim($_POST['captchaQuestion']);
@@ -72,7 +79,7 @@ class CaptchaQuestionHandler implements ICaptchaHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		WCF::getSession()->unregister('captchaQuestion_'.$this->captchaQuestion);
@@ -95,7 +102,7 @@ class CaptchaQuestionHandler implements ICaptchaHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$questionID = WCF::getSession()->getVar('captchaQuestion_'.$this->captchaQuestion);

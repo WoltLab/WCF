@@ -8,20 +8,29 @@ use wcf\util\StringUtil;
  * Represents a smiley.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.smiley
  * @category	Community Framework
+ *
+ * @property-read	integer		$smileyID
+ * @property-read	integer		$packageID
+ * @property-read	integer|null	$categoryID
+ * @property-read	string		$smileyPath
+ * @property-read	string		$smileyTitle
+ * @property-read	string		$smileyCode
+ * @property-read	string		$aliases
+ * @property-read	integer		$showOrder
  */
 class Smiley extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'smiley';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'smileyID';
 	
@@ -37,7 +46,7 @@ class Smiley extends DatabaseObject {
 	/**
 	 * Returns all aliases for this smiley.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getAliases() {
 		if (!$this->aliases) return array();

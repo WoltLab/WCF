@@ -38,8 +38,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM     wcf".WCF_N."_page
-			WHERE           identifier = ?
+		$sql = "DELETE FROM	wcf".WCF_N."_page
+			WHERE		identifier = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
@@ -84,7 +84,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function prepareImport(array $data) {
 		$isStatic = false;
@@ -126,9 +126,9 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		$parentPageID = null;
 		if (!empty($data['elements']['parent'])) {
-			$sql = "SELECT  pageID
-				FROM    wcf".WCF_N."_".$this->tableName."
-				WHERE   identifier = ?";
+			$sql = "SELECT	pageID
+				FROM	wcf".WCF_N."_".$this->tableName."
+				WHERE	identifier = ?";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$data['elements']['parent']]);
 			$row = $statement->fetchSingleRow();
@@ -252,9 +252,9 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 */
 	protected function postImport() {
 		if (!empty($this->content)) {
-			$sql = "INSERT IGNORE INTO      wcf".WCF_N."_page_content
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_page_content
 							(pageID, languageID, title, content, metaDescription, metaKeywords, customURL)
-				VALUES                  (?, ?, ?, ?, ?, ?, ?)";
+				VALUES			(?, ?, ?, ?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			WCF::getDB()->beginTransaction();

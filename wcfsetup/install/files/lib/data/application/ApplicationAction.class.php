@@ -2,8 +2,6 @@
 namespace wcf\data\application;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;

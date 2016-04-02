@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\menu\item;
 use wcf\data\page\Page;
+use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
 use wcf\system\exception\SystemException;
 use wcf\system\page\handler\ILookupPageHandler;
@@ -17,6 +18,19 @@ use wcf\system\WCF;
  * @subpackage	data.menu.item
  * @category	Community Framework
  * @since	2.2
+ *
+ * @property-read	integer		$itemID
+ * @property-read	integer		$menuID
+ * @property-read	integer|null	$parentItemID
+ * @property-read	string		$identifier
+ * @property-read	string		$title
+ * @property-read	integer|null	$pageID
+ * @property-read	integer		$pageObjectID
+ * @property-read	string		$externalURL
+ * @property-read	integer		$showOrder
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$originIsSystem
+ * @property-read	integer		$packageID
  */
 class MenuItem extends DatabaseObject {
 	/**
@@ -30,46 +44,46 @@ class MenuItem extends DatabaseObject {
 	protected static $databaseTableIndexName = 'itemID';
 	
 	/**
-	 * @var IMenuPageHandler
+	 * @var	IMenuPageHandler
 	 */
 	protected $handler;
 	
 	/**
 	 * page object
-	 * @var Page
+	 * @var	Page
 	 */
 	protected $page;
 	
 	/**
 	 * Returns true if the active user can delete this menu item.
 	 *
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu') && !$this->originIsSystem) {
 			return true;
 		}
-			
+		
 		return false;
 	}
 	
 	/**
 	 * Returns true if the active user can disable this menu item.
 	 *
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function canDisable() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu')) {
 			return true;
 		}
-			
+		
 		return false;
 	}
 	
 	/**
 	 * Returns the URL of this menu item.
 	 * 
-	 * @return      string
+	 * @return	string
 	 */
 	public function getURL() {
 		if ($this->pageObjectID) {
@@ -90,11 +104,11 @@ class MenuItem extends DatabaseObject {
 	/**
 	 * Returns the page that is linked by this menu item.
 	 * 
-	 * @return      Page|null
+	 * @return	Page|null
 	 */
 	public function getPage() {
 		if ($this->page === null && $this->pageID) {
-			$this->page = new Page($this->pageID);
+			$this->page = PageCache::getInstance()->getPage($this->pageID);
 		}
 		
 		return $this->page;
@@ -103,7 +117,7 @@ class MenuItem extends DatabaseObject {
 	/**
 	 * Returns false if this item should be hidden from menu.
 	 * 
-	 * @return      boolean
+	 * @return	boolean
 	 */
 	public function isVisible() {
 		if ($this->getPage() !== null && !$this->getPage()->isVisible()) {
@@ -120,7 +134,7 @@ class MenuItem extends DatabaseObject {
 	/**
 	 * Returns the number of outstanding items for this menu.
 	 * 
-	 * @return      integer
+	 * @return	integer
 	 */
 	public function getOutstandingItems() {
 		if ($this->getMenuPageHandler() !== null) {
@@ -131,7 +145,9 @@ class MenuItem extends DatabaseObject {
 	}
 	
 	/**
-	 * @return      IMenuPageHandler|null
+	 * TODO: Comment
+	 * 
+	 * @return	IMenuPageHandler|null
 	 */
 	protected function getMenuPageHandler() {
 		$page = $this->getPage();

@@ -67,7 +67,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of available routes
-	 * @var IRoute[]
+	 * @var	IRoute[]
 	 */
 	protected $routes = array();
 	
@@ -172,11 +172,11 @@ class RouteHandler extends SingletonFactory {
 	 * Builds a route based upon route components, this is nothing
 	 * but a reverse lookup.
 	 * 
-	 * @param       string          $application    application identifier
+	 * @param	string		$application	application identifier
 	 * @param	array		$components
 	 * @param	boolean		$isACP
 	 * @return	string
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	public function buildRoute($application, array $components, $isACP = null) {
 		if ($isACP === null) $isACP = RequestHandler::getInstance()->isACPRequest();

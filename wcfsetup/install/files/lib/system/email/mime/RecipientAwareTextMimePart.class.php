@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\email\mime;
 use wcf\system\email\Mailbox;
-use wcf\system\email\UserMailbox;
 use wcf\system\WCF;
 
 /**

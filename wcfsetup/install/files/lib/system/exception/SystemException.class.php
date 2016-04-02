@@ -1,8 +1,5 @@
 <?php
 namespace wcf\system\exception;
-use wcf\system\WCF;
-use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * A SystemException is thrown when an unexpected error occurs.

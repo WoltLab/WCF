@@ -26,7 +26,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	protected $className = PageEditor::class;
 	
 	/**
-	 * @var PageEditor
+	 * @var	PageEditor
 	 */
 	protected $pageEditor;
 	

@@ -15,6 +15,16 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription.transaction.log
  * @category	Community Framework
+ *
+ * @property-read	integer		$logID
+ * @property-read	integer|null	$subscriptionUserID
+ * @property-read	integer|null	$userID
+ * @property-read	integer		$subscriptionID
+ * @property-read	integer		$paymentMethodObjectTypeID
+ * @property-read	integer		$logTime
+ * @property-read	string		$transactionID
+ * @property-read	string		$transactionDetails
+ * @property-read	string		$logMessage
  */
 class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**

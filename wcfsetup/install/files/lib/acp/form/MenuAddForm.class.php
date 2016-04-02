@@ -33,7 +33,7 @@ class MenuAddForm extends AbstractForm {
 	
 	/**
 	 * menu title
-	 * @var string
+	 * @var	string
 	 */
 	public $title = '';
 	
@@ -117,7 +117,7 @@ class MenuAddForm extends AbstractForm {
 	/**
 	 * Validates box position.
 	 * 
-	 * @throws      UserInputException
+	 * @throws	UserInputException
 	 */
 	protected function validatePosition() {
 		if (!in_array($this->position, Box::$availablePositions)) {

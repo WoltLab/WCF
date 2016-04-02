@@ -1,4 +1,4 @@
-.sortableList {
+.sortableList:not(.tabularList) {
 	list-style: decimal outside;
 	margin-left: 20px;
 }

@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
-use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObject;
 use wcf\page\IPage;
 use wcf\system\cache\builder\MostActiveMembersCacheBuilder;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Shows a list of the most active members.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.dashboard.box
@@ -21,12 +21,12 @@ use wcf\system\WCF;
 class MostActiveMembersDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * ids of the most active members
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $mostActiveMemberIDs = array();
+	public $mostActiveMemberIDs = [];
 	
 	/**
-	 * @see	\wcf\system\dashboard\box\AbstractDashboardBoxContent::init()
+	 * @inheritDoc
 	 */
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
@@ -34,28 +34,28 @@ class MostActiveMembersDashboardBox extends AbstractSidebarDashboardBox {
 		// get ids
 		$this->mostActiveMemberIDs = MostActiveMembersCacheBuilder::getInstance()->getData();
 		if (!empty($this->mostActiveMemberIDs)) {
-			UserProfileCache::getInstance()->cacheUserIDs($this->mostActiveMemberIDs);
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs($this->mostActiveMemberIDs);
 		}
 		
 		$this->fetched();
 	}
 	
 	/**
-	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
+	 * @inheritDoc
 	 */
 	protected function render() {
 		if (empty($this->mostActiveMemberIDs)) return '';
 		
 		if (MODULE_MEMBERS_LIST) {
-			$this->titleLink = LinkHandler::getInstance()->getLink('MembersList', array(), 'sortField=activityPoints&sortOrder=DESC');
+			$this->titleLink = LinkHandler::getInstance()->getLink('MembersList', [], 'sortField=activityPoints&sortOrder=DESC');
 		}
 		
-		$mostActiveMembers = UserProfileCache::getInstance()->getUserProfiles($this->mostActiveMemberIDs);
+		$mostActiveMembers = UserProfileRuntimeCache::getInstance()->getObjects($this->mostActiveMemberIDs);
 		DatabaseObject::sort($mostActiveMembers, 'activityPoints', 'DESC');
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'mostActiveMembers' => $mostActiveMembers
-		));
+		]);
 		return WCF::getTPL()->fetch('dashboardBoxMostActiveMembers');
 	}
 }

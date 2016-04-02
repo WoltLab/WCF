@@ -1180,6 +1180,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	open: function() {
 		WCF.Dropdown._closeAll();
 		
+		this._triggerElement.addClass('open');
 		this._container.addClass('open');
 		
 		this.render();
@@ -1189,6 +1190,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * Closes the dropdown
 	 */
 	close: function() {
+		this._triggerElement.removeClass('open');
 		this._container.removeClass('open');
 	},
 	
@@ -1236,6 +1238,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		else {
 			require(['Ui/Alignment'], (function(UiAlignment) {
 				UiAlignment.set(this._container[0], this._triggerElement[0], {
+					horizontal: 'right',
 					pointer: true
 				});
 			}).bind(this));
@@ -6777,11 +6780,16 @@ WCF.Sortable.List = Class.extend({
 			toleranceElement: '> span'
 		}, options || { });
 		
+		var sortableList = $('#' + this._containerID + ' .sortableList');
+		if (sortableList.is('tbody') && this._options.helper === 'clone') {
+			this._options.helper = this._tableRowHelper.bind(this);
+		}
+		
 		if (isSimpleSorting) {
-			$('#' + this._containerID + ' .sortableList').sortable(this._options);
+			sortableList.sortable(this._options);
 		}
 		else {
-			$('#' + this._containerID + ' > .sortableList').nestedSortable(this._options);
+			sortableList.nestedSortable(this._options);
 		}
 		
 		if (this._className) {
@@ -6796,6 +6804,23 @@ WCF.Sortable.List = Class.extend({
 			
 			$formSubmit.children('button[data-type="submit"]').click($.proxy(this._submit, this));
 		}
+	},
+	
+	/**
+	 * Fixes the width of the cells of the dragged table row.
+	 * 
+	 * @param	{Event}		event
+	 * @param	{jQuery}	ui
+	 * @return	{jQuery}
+	 */
+	_tableRowHelper: function(event, ui) {
+		ui.children('td').each(function(index, element) {
+			element = $(element);
+			
+			element.width(element.width());
+		});
+		
+		return ui;
 	},
 	
 	/**

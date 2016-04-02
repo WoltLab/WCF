@@ -17,6 +17,13 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.template
  * @category	Community Framework
+ *
+ * @property-read	integer		$templateID
+ * @property-read	integer		$packageID
+ * @property-read	string		$templateName
+ * @property-read	string		$application
+ * @property-read	integer|null	$templateGroupID
+ * @property-read	integer		$lastModificationTime
  */
 class Template extends DatabaseObject {
 	/**

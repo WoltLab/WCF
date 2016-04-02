@@ -15,6 +15,11 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider
  * @category	Community Framework
+ *
+ * @property-read	integer		$providerID
+ * @property-read	string		$title
+ * @property-read	string		$regex
+ * @property-read	string		$html
  */
 class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	/**

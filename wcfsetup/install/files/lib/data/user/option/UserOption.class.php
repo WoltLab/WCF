@@ -13,6 +13,15 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option
  * @category	Community Framework
+ * 
+ * @property-read	integer		$required
+ * @property-read	integer		$askDuringRegistration
+ * @property-read	integer		$editable
+ * @property-read	integer		$visible
+ * @property-read	string		$outputClass
+ * @property-read	integer		$searchable
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$originIsSystem
  */
 class UserOption extends Option {
 	/**

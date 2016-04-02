@@ -10,25 +10,24 @@ define(['Ajax', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog', 'Ui/TabMenu
 	"use strict";
 	
 	var _cache = [];
-	var _dialog = null;
 	
 	/**
 	 * @exports	WoltLab/WCF/Controller/Sitemap
 	 */
-	var ControllerSitemap = {
+	return {
 		/**
 		 * Binds click handler.
 		 */
 		setup: function() {
-			elById('sitemap').addEventListener('click', this._click.bind(this));
+			elBySel('#sitemap > a').addEventListener(WCF_CLICK_EVENT, this.open.bind(this));
 		},
 		
 		/**
 		 * Handles clicks on the sitemap button.
 		 * 
-		 * @param	{object}	event	event object
+		 * @param	{Event}         event	event object
 		 */
-		_click: function(event) {
+		open: function(event) {
 			event.preventDefault();
 			
 			UiDialog.open(this);
@@ -46,14 +45,13 @@ define(['Ajax', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog', 'Ui/TabMenu
 		_ajaxSuccess: function(data) {
 			_cache.push(data.returnValues.sitemapName);
 			
-			elById('sitemap_' + data.returnValues.sitemapName).innerHTML = data.returnValues.template;
+			elById('sitemap_' + data.returnValues.sitemapName).children[0].innerHTML = data.returnValues.template;
 		},
 		
 		_dialogSetup: function() {
 			return {
 				id: 'sitemapDialog',
 				options: {
-					disableContentPadding: true,
 					title: Language.get('wcf.page.sitemap')
 				},
 				source: {
@@ -92,6 +90,4 @@ define(['Ajax', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog', 'Ui/TabMenu
 			}
 		} 
 	};
-	
-	return ControllerSitemap;
 });

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\page;
-use wcf\data\application\Application;
 use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
@@ -19,6 +18,23 @@ use wcf\system\WCF;
  * @subpackage	data.page
  * @category	Community Framework
  * @since	2.2
+ *
+ * @property-read	integer		$pageID
+ * @property-read	integer|null	$parentPageID
+ * @property-read	string		$identifier
+ * @property-read	string		$name
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$isLandingPage
+ * @property-read	integer		$isMultilingual
+ * @property-read	integer		$originIsSystem
+ * @property-read	integer		$packageID
+ * @property-read	string		$controller
+ * @property-read	string		$handler
+ * @property-read	string		$controllerCustomURL
+ * @property-read	integer		$requireObjectID
+ * @property-read	integer		$lastUpdateTime
+ * @property-read	string		$permissions
+ * @property-read	string		$options
  */
 class Page extends DatabaseObject {
 	use TDatabaseObjectOptions;
@@ -41,47 +57,47 @@ class Page extends DatabaseObject {
 	protected static $databaseTableIndexName = 'pageID';
 	
 	/**
-	 * @var \wcf\system\page\handler\IMenuPageHandler
+	 * @var	\wcf\system\page\handler\IMenuPageHandler
 	 */
 	protected $pageHandler;
 	
 	/**
 	 * Returns true if the active user can delete this page.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && !$this->originIsSystem && !$this->isLandingPage) {
 			return true;
 		}
-			
+		
 		return false;
 	}
 	
 	/**
 	 * Returns true if the active user can disable this page.
 	 *
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function canDisable() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && !$this->originIsSystem && !$this->isLandingPage) {
 			return true;
 		}
-			
+		
 		return false;
 	}
 	
 	/**
 	 * Returns the page content.
 	 * 
-	 * @return      array           content data
+	 * @return	array		content data
 	 */
 	public function getPageContent() {
 		$content = [];
 		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_page_content
-			WHERE   pageID = ?";
+			WHERE	pageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->pageID]);
 		while ($row = $statement->fetchArray()) {
@@ -101,9 +117,9 @@ class Page extends DatabaseObject {
 	 * Returns content for a single language, passing `null` for `$languageID` is undefined
 	 * for multilingual pages.
 	 * 
-	 * @param       integer         $languageID     language id or `null` if there are no localized versions
-	 * @return      string[]        page content data
-	 * @throws      \wcf\system\database\DatabaseException
+	 * @param	integer		$languageID	language id or `null` if there are no localized versions
+	 * @return	string[]	page content data
+	 * @throws	\wcf\system\database\DatabaseException
 	 */
 	public function getPageContentByLanguage($languageID = null) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -112,7 +128,7 @@ class Page extends DatabaseObject {
 		else $conditions->add("languageID IS NULL");
 		
 		$sql = "SELECT  *
-			FROM    wcf".WCF_N."_page_content
+			FROM	wcf".WCF_N."_page_content
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute($conditions->getParameters());
@@ -124,7 +140,7 @@ class Page extends DatabaseObject {
 	/**
 	 * Returns the page URL.
 	 * 
-	 * @return      string
+	 * @return	string
 	 */
 	public function getLink() {
 		if ($this->controller) {
@@ -140,13 +156,13 @@ class Page extends DatabaseObject {
 		}
 		else {
 			return LinkHandler::getInstance()->getCmsLink($this->pageID);
-		}	
+		}
 	}
 	
 	/**
 	 * Returns shortened link for acp page list.
 	 *
-	 * @return      string
+	 * @return	string
 	 */
 	public function getDisplayLink() {
 		return str_replace($this->getApplication()->getPageURL(), '', $this->getLink());
@@ -155,7 +171,7 @@ class Page extends DatabaseObject {
 	/**
 	 * Returns the application of this page.
 	 *
-	 * @return      \wcf\data\application\Application
+	 * @return	\wcf\data\application\Application
 	 */
 	public function getApplication() {
 		return ApplicationHandler::getInstance()->getApplicationByID($this->packageID);
@@ -164,7 +180,7 @@ class Page extends DatabaseObject {
 	/**
 	 * Returns the associated page handler or null.
 	 * 
-	 * @return      \wcf\system\page\handler\IMenuPageHandler|null
+	 * @return	\wcf\system\page\handler\IMenuPageHandler|null
 	 */
 	public function getHandler() {
 		if ($this->handler) {
@@ -178,7 +194,7 @@ class Page extends DatabaseObject {
 	 * Returns false if this page should be hidden from menus, but does not control the accessibility
 	 * of the page itself.
 	 *
-	 * @return      boolean         false if the page should be hidden from menus
+	 * @return	boolean		false if the page should be hidden from menus
 	 */
 	public function isVisible() {
 		if (!$this->validateOptions()) return false;
@@ -190,7 +206,7 @@ class Page extends DatabaseObject {
 	/**
 	 * Returns the page's internal name.
 	 *
-	 * @return      string
+	 * @return	string
 	 */
 	public function __toString() {
 		return $this->name;
@@ -199,8 +215,8 @@ class Page extends DatabaseObject {
 	/**
 	 * Returns the page with the given identifier.
 	 * 
-	 * @param       string          $identifier     unique page identifier
-	 * @return      Page
+	 * @param	string		$identifier	unique page identifier
+	 * @return	Page
 	 */
 	public static function getPageByIdentifier($identifier) {
 		$sql = "SELECT	*

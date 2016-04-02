@@ -189,7 +189,7 @@ class Email {
 			throw new SystemException("The given message id '".$messageID."' is invalid. Note: You must not specify the part right of the at sign (@).");
 		}
 		if (strlen($messageID) > 50) {
-			throw new SystemException("The given message id '".$message."' is not allowed. The maximum allowed length is 50 bytes.");
+			throw new SystemException("The given message id '".$messageID."' is not allowed. The maximum allowed length is 50 bytes.");
 		}
 		
 		$this->messageID = $messageID;
@@ -382,11 +382,11 @@ class Email {
 		foreach ($part->getAdditionalHeaders() as $header) {
 			$header[0] = mb_strtolower($header[0]);
 			if ($header[0] == 'content-type' || $header[0] == 'content-transfer-encoding') {
-				throw new SystemException("The header '".$header."' may not be set. Use the proper methods.");
+				throw new SystemException("The header '".$header[0]."' may not be set. Use the proper methods.");
 			}
 			
 			if (!StringUtil::startsWith($header[0], 'x-') && !StringUtil::startsWith($header[0], 'content-')) {
-				throw new SystemException("The header '".$header."' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
+				throw new SystemException("The header '".$header[0]."' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
 			}
 		}
 		
@@ -395,7 +395,7 @@ class Email {
 			case 'quoted-printable':
 			break;
 			default:
-				throw new SystemException("The Content-Transfer-Encoding '".$header."' may not be set. You may only use 'quoted-printable' or 'base64'.");
+				throw new SystemException("The Content-Transfer-Encoding '".$part->getContentTransferEncoding()."' may not be set. You may only use 'quoted-printable' or 'base64'.");
 		}
 		
 		if ($part instanceof TextMimePart) {

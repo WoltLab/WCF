@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Executes user notification-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.notification
@@ -19,12 +19,12 @@ use wcf\system\WCF;
 class UserNotificationAction extends AbstractDatabaseObjectAction {
 	/**
 	 * notification editor object
-	 * @var	\wcf\data\user\notification\UserNotificationEditor
+	 * @var	UserNotificationEditor
 	 */
 	public $notificationEditor = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
 	 */
 	public function create() {
 		$notification = parent::create();
@@ -33,10 +33,10 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 					(notificationID, userID)
 			VALUES		(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$notification->notificationID,
 			$notification->userID
-		));
+		]);
 		
 		return $notification;
 	}
@@ -47,15 +47,16 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 * @return	array<array>
 	 */
 	public function createDefault() {
+		$notifications = [];
 		foreach ($this->parameters['recipients'] as $recipient) {
 			$this->parameters['data']['userID'] = $recipient->userID;
 			$this->parameters['data']['mailNotified'] = (($recipient->mailNotificationType == 'none' || $recipient->mailNotificationType == 'instant') ? 1 : 0);
 			$notification = $this->create();
 			
-			$notifications[$recipient->userID] = array(
+			$notifications[$recipient->userID] = [
 				'isNew' => true,
 				'object' => $notification
-			);
+			];
 		}
 		
 		// insert author
@@ -66,11 +67,11 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($notifications as $notificationData) {
-			$statement->execute(array(
+			$statement->execute([
 				$notificationData['object']->notificationID,
 				$this->parameters['authorID'] ?: null,
 				TIME_NOW
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 		
@@ -85,17 +86,17 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	public function createStackable() {
 		// get existing notifications
 		$notificationList = new UserNotificationList();
-		$notificationList->getConditionBuilder()->add("eventID = ?", array($this->parameters['data']['eventID']));
-		$notificationList->getConditionBuilder()->add("eventHash = ?", array($this->parameters['data']['eventHash']));
-		$notificationList->getConditionBuilder()->add("userID IN (?)", array(array_keys($this->parameters['recipients'])));
-		$notificationList->getConditionBuilder()->add("confirmTime = ?", array(0));
+		$notificationList->getConditionBuilder()->add("eventID = ?", [$this->parameters['data']['eventID']]);
+		$notificationList->getConditionBuilder()->add("eventHash = ?", [$this->parameters['data']['eventHash']]);
+		$notificationList->getConditionBuilder()->add("userID IN (?)", [array_keys($this->parameters['recipients'])]);
+		$notificationList->getConditionBuilder()->add("confirmTime = ?", [0]);
 		$notificationList->readObjects();
-		$existingNotifications = array();
+		$existingNotifications = [];
 		foreach ($notificationList as $notification) {
 			$existingNotifications[$notification->userID] = $notification;
 		}
 		
-		$notifications = array();
+		$notifications = [];
 		foreach ($this->parameters['recipients'] as $recipient) {
 			$notification = (isset($existingNotifications[$recipient->userID]) ? $existingNotifications[$recipient->userID] : null);
 			$isNew = ($notification === null);
@@ -106,10 +107,10 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 				$notification = $this->create();
 			}
 			
-			$notifications[$recipient->userID] = array(
+			$notifications[$recipient->userID] = [
 				'isNew' => $isNew,
 				'object' => $notification
-			);
+			];
 		}
 		
 		uasort($notifications, function ($a, $b) {
@@ -131,11 +132,11 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($notifications as $notificationData) {
-			$statement->execute(array(
+			$statement->execute([
 				$notificationData['object']->notificationID,
 				$this->parameters['authorID'] ?: null,
 				TIME_NOW
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 		
@@ -148,11 +149,11 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($notifications as $notificationData) {
-			$statement->execute(array(
+			$statement->execute([
 				1,
 				$this->parameters['authorID'] ? 0 : 1,
 				$notificationData['object']->notificationID
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 		
@@ -173,14 +174,14 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 */
 	public function getOutstandingNotifications() {
 		$notifications = UserNotificationHandler::getInstance()->getMixedNotifications();
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'notifications' => $notifications
-		));
+		]);
 		
-		return array(
+		return [
 			'template' => WCF::getTPL()->fetch('notificationListUserPanel'),
 			'totalCount' => $notifications['notificationCount']
-		);
+		];
 	}
 	
 	/**
@@ -201,19 +202,23 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	public function markAsConfirmed() {
 		UserNotificationHandler::getInstance()->markAsConfirmedByID($this->notificationEditor->notificationID);
 		
-		return array(
+		return [
 			'markAsRead' => $this->notificationEditor->notificationID,
 			'totalCount' => UserNotificationHandler::getInstance()->getNotificationCount(true)
-		);
+		];
 	}
 	
 	/**
 	 * Validates parameters to mark all notifications of current user as confirmed.
 	 */
-	public function validateMarkAllAsConfirmed() { /* does nothing */ }
+	public function validateMarkAllAsConfirmed() {
+		// does nothing
+	}
 	
 	/**
 	 * Marks all notifications of current user as confirmed.
+	 * 
+	 * @return	boolean[]
 	 */
 	public function markAllAsConfirmed() {
 		// remove notifications for this user
@@ -221,22 +226,22 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 			SET	confirmTime = ?
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			TIME_NOW,
 			WCF::getUser()->userID
-		));
+		]);
 		
 		// delete notification_to_user assignments (mimic legacy notification system)
 		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
 			WHERE		userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(WCF::getUser()->userID));
+		$statement->execute([WCF::getUser()->userID]);
 		
 		// reset notification count
-		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
+		UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationCount');
 		
-		return array(
+		return [
 			'markAllAsRead' => true
-		);
+		];
 	}
 }

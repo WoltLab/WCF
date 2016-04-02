@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionAction;
@@ -117,7 +118,7 @@ class UserOptionAddForm extends AbstractForm {
 	
 	/**
 	 * available option categories
-	 * @var	\wcf\data\user\option\UserOptionCategory[]
+	 * @var	UserOptionCategory[]
 	 */
 	public $availableCategories = [];
 
@@ -321,7 +322,6 @@ class UserOptionAddForm extends AbstractForm {
 			'optionType' => $this->optionType,
 			'defaultValue' => $this->defaultValue,
 			'validationPattern' => $this->validationPattern,
-			'optionType' => $this->optionType,
 			'selectOptions' => $this->selectOptions,
 			'required' => $this->required,
 			'askDuringRegistration' => $this->askDuringRegistration,

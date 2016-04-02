@@ -16,6 +16,14 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
  * @category	Community Framework
+ *
+ * @property-read	integer		$groupID
+ * @property-read	string		$groupName
+ * @property-read	string		$groupDescription
+ * @property-read	integer		$groupType
+ * @property-read	integer		$priority
+ * @property-read	string		$userOnlineMarking
+ * @property-read	integer		$showOnTeamPage
  */
 class UserGroup extends DatabaseObject {
 	/**

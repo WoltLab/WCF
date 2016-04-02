@@ -63,7 +63,7 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * list of page handlers by page id
-	 * @var \wcf\system\page\handler\IMenuPageHandler[]
+	 * @var	\wcf\system\page\handler\IMenuPageHandler[]
 	 */
 	public $pageHandlers = [];
 	
@@ -75,7 +75,7 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * page object id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $pageObjectID = null;
 	
@@ -111,7 +111,7 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * nested list of page nodes
-	 * @var \RecursiveIteratorIterator
+	 * @var	\RecursiveIteratorIterator
 	 */
 	public $pageNodeList;
 	

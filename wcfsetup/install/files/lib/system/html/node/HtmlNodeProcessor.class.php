@@ -7,7 +7,7 @@ namespace wcf\system\html\node;
  */
 class HtmlNodeProcessor {
 	/**
-	 * @var \DOMDocument
+	 * @var	\DOMDocument
 	 */
 	protected $document;
 	

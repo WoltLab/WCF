@@ -2,7 +2,7 @@
 namespace wcf\system\user\notification\object\type;
 use wcf\data\comment\Comment;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\storage\UserStorageHandler;
@@ -89,7 +89,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType {
 			// make sure that all users (still) have permission to access moderation
 			if (!$recipientIDs) {
 				UserStorageHandler::getInstance()->loadStorage($recipientIDs);
-				$userProfiles = UserProfileCache::getInstance()->getUserProfiles($recipientIDs);
+				$userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($recipientIDs);
 				$recipientIDs = array_keys(array_filter($userProfiles, function(UserProfile $userProfile) {
 					return $userProfile->getPermission('mod.general.canUseModeration');
 				}));

@@ -306,7 +306,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 		$this->text = $htmlInputProcessor->process($this->text);
 		
 		// parse URLs
-		/*
+		/* TODO
 		if ($this->preParse == 1) {
 			// BBCodes are enabled
 			if ($this->enableBBCodes) {

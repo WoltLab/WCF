@@ -64,7 +64,7 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of currently loaded applications
-	 * @var Application[]
+	 * @var	Application[]
 	 */
 	protected static $applications = array();
 	

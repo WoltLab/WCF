@@ -11,6 +11,11 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.spider
  * @category	Community Framework
+ *
+ * @property-read	integer		$spiderID
+ * @property-read	string		$spiderIdentifier
+ * @property-read	string		$spiderName
+ * @property-read	string		$spiderURL
  */
 class Spider extends DatabaseObject {
 	/**

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\moderation\queue;
-use wcf\data\user\UserProfileCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
 
@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * 	    would not work (MySQL is retarded).
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
@@ -26,17 +26,17 @@ class ViewableModerationQueueList extends ModerationQueueList {
 	public $loadUserProfiles = false;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = ViewableModerationQueue::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$useQualifiedShorthand
+	 * @inheritDoc
 	 */
 	public $useQualifiedShorthand = false;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -47,21 +47,21 @@ class ViewableModerationQueueList extends ModerationQueueList {
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user assigned_user ON (assigned_user.userID = moderation_queue.assignedUserID)";
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user user_table ON (user_table.userID = moderation_queue.userID)";
 		$this->getConditionBuilder()->add("moderation_queue_to_user.queueID = moderation_queue.queueID");
-		$this->getConditionBuilder()->add("moderation_queue_to_user.userID = ?", array(WCF::getUser()->userID));
-		$this->getConditionBuilder()->add("moderation_queue_to_user.isAffected = ?", array(1));
+		$this->getConditionBuilder()->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
+		$this->getConditionBuilder()->add("moderation_queue_to_user.isAffected = ?", [1]);
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
 		
 		if (!empty($this->objects)) {
-			$objects = array();
+			$objects = [];
 			foreach ($this->objects as &$object) {
 				if (!isset($objects[$object->objectTypeID])) {
-					$objects[$object->objectTypeID] = array();
+					$objects[$object->objectTypeID] = [];
 				}
 				
 				$objects[$object->objectTypeID][] = $object;
@@ -72,7 +72,7 @@ class ViewableModerationQueueList extends ModerationQueueList {
 			}
 			
 			// check for non-existant items
-			$queueIDs = array();
+			$queueIDs = [];
 			foreach ($this->objects as $index => $object) {
 				if ($object->isOrphaned()) {
 					$queueIDs[] = $object->queueID;
@@ -88,12 +88,12 @@ class ViewableModerationQueueList extends ModerationQueueList {
 			}
 			
 			if ($this->loadUserProfiles) {
-				$userIDs = array();
+				$userIDs = [];
 				foreach ($this->objects as $object) {
 					$userIDs[] = $object->getAffectedObject()->getUserID();
 				}
 				
-				UserProfileCache::getInstance()->cacheUserIDs(array_unique($userIDs));
+				UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
 			}
 		}
 	}

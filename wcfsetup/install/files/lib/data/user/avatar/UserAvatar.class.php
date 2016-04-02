@@ -13,6 +13,16 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.avatar
  * @category	Community Framework
+ *
+ * @property-read	integer		$avatarID
+ * @property-read	string		$avatarName
+ * @property-read	string		$avatarExtension
+ * @property-read	integer		$width
+ * @property-read	integer		$height
+ * @property-read	integer|null	$userID
+ * @property-read	string		$fileHash
+ * @property-read	integer		$cropX
+ * @property-read	integer		$cropY
  */
 class UserAvatar extends DatabaseObject implements IUserAvatar {
 	/**

@@ -29,13 +29,13 @@ class PageLandingForm extends AbstractForm {
 	
 	/**
 	 * list of available applications
-	 * @var Application[]
+	 * @var	Application[]
 	 */
 	public $applications;
 	
 	/**
 	 * landing page id per application package id
-	 * @var integer[]
+	 * @var	integer[]
 	 */
 	public $landingPages = [];
 	
@@ -46,7 +46,7 @@ class PageLandingForm extends AbstractForm {
 	
 	/**
 	 * list of available pages
-	 * @var Page[]
+	 * @var	Page[]
 	 */
 	public $pages = [];
 	

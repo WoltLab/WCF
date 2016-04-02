@@ -257,7 +257,7 @@ class UserNotificationHandler extends SingletonFactory {
 				
 				// cache does not exist or is outdated
 				if ($data === null || $skipCache) {
-					$sql = "SELECT	COUNT(*) AS count
+					$sql = "SELECT	COUNT(*)
 						FROM	wcf".WCF_N."_user_notification
 						WHERE	userID = ?
 							AND confirmTime = ?";
@@ -267,8 +267,7 @@ class UserNotificationHandler extends SingletonFactory {
 						0
 					));
 					
-					$row = $statement->fetchArray();
-					$this->notificationCount = $row['count'];
+					$this->notificationCount = $statement->fetchSingleColumn();
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'userNotificationCount', serialize($this->notificationCount));
@@ -288,14 +287,13 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @return	integer
 	 */
 	public function countAllNotifications() {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_notification
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(WCF::getUser()->userID));
-		$row = $statement->fetchArray();
 		
-		return $row['count'];
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**

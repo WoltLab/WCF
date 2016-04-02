@@ -9,7 +9,7 @@
 define(['Core', 'EventHandler', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/SimpleDropdown'], function(Core, EventHandler, UiCloseOverlay, UiScreen, UiSimpleDropdown) {
 	"use strict";
 	
-	var _pageHeader, _pageHeaderContainer, _isFixed = false, _isMobile = false;
+	var _pageHeader, _pageHeaderContainer, _triggerHeight, _isFixed = false, _isMobile = false;
 	
 	/**
 	 * @exports     WoltLab/WCF/Ui/Page/Header/Fixed
@@ -40,6 +40,8 @@ define(['Core', 'EventHandler', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/SimpleDropdo
 		 */
 		_initStickyPageHeader: function() {
 			_pageHeader.style.setProperty('min-height', _pageHeader.clientHeight + 'px');
+			
+			_triggerHeight = _pageHeader.clientHeight - elBySel('.mainMenu', _pageHeader).clientHeight;
 			
 			this._scroll();
 			window.addEventListener('scroll', this._scroll.bind(this));
@@ -79,7 +81,7 @@ define(['Core', 'EventHandler', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/SimpleDropdo
 		 * @protected
 		 */
 		_scroll: function() {
-			_isFixed = (document.body.scrollTop > 50);
+			_isFixed = (window.scrollY > _triggerHeight);
 			
 			_pageHeader.classList[_isFixed ? 'add' : 'remove']('sticky');
 			_pageHeaderContainer.classList[_isFixed ? 'add' : 'remove']('stickyPageHeader');

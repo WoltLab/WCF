@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\bulk\processing\user;
-use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;

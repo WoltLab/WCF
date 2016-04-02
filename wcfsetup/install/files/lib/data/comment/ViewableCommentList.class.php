@@ -1,12 +1,12 @@
 <?php
 namespace wcf\data\comment;
-use wcf\data\user\UserProfileCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Represents a list of decorated comment objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
@@ -14,15 +14,18 @@ use wcf\data\user\UserProfileCache;
  */
 class ViewableCommentList extends CommentList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'wcf\data\comment\ViewableComment';
+	public $decoratorClassName = ViewableComment::class;
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function readObjects() {
 		parent::readObjects();
 		
 		if (!empty($this->objects)) {
-			$userIDs = array();
+			$userIDs = [];
 			foreach ($this->objects as $comment) {
 				if ($comment->userID) {
 					$userIDs[] = $comment->userID;
@@ -30,7 +33,7 @@ class ViewableCommentList extends CommentList {
 			}
 			
 			if (!empty($userIDs)) {
-				UserProfileCache::getInstance()->cacheUserIDs($userIDs);
+				UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
 			}
 		}
 	}

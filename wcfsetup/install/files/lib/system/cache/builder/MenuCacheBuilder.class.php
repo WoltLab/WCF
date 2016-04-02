@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\menu\item\MenuItemList;
-use wcf\data\menu\item\MenuItemNodeTree;
 use wcf\data\menu\MenuList;
 
 /**
@@ -13,7 +12,7 @@ use wcf\data\menu\MenuList;
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
- * @since       2.2
+ * @since	2.2
  */
 class MenuCacheBuilder extends AbstractCacheBuilder {
 	/**

@@ -117,12 +117,12 @@ class UserEmailAddressExportForm extends AbstractForm {
 		$conditions->add("userID IN (?)", array($this->userIDs));
 		
 		// count users
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$count = $statement->fetchArray();
+		$count = $statement->fetchSingleColumn();
 		
 		// get users
 		$sql = "SELECT		email
@@ -138,7 +138,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 				echo "<address><![CDATA[".StringUtil::escapeCDATA($row['email'])."]]></address>\n";
 			}
 			else {
-				echo $this->textSeparator . $row['email'] . $this->textSeparator . ($i < $count['count'] ? $this->separator : '');
+				echo $this->textSeparator . $row['email'] . $this->textSeparator . ($i < $count ? $this->separator : '');
 			}
 			$i++;
 		}

@@ -49,7 +49,7 @@ interface IExporter {
 	/**
 	 * Validates database access.
 	 * 
-	 * @throws	wcf\system\database\DatabaseException
+	 * @throws	\wcf\system\database\exception\DatabaseException
 	 */
 	public function validateDatabaseAccess();
 	

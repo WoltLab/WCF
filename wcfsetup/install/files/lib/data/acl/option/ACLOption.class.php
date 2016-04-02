@@ -11,6 +11,12 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.acl.option
  * @category	Community Framework
+ *
+ * @property-read	integer		$optionID
+ * @property-read	integer		$packageID
+ * @property-read	integer		$objectTypeID
+ * @property-read	string		$optionName
+ * @property-read	string		$categoryName
  */
 class ACLOption extends DatabaseObject {
 	/**

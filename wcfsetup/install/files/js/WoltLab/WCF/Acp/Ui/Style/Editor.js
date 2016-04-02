@@ -130,7 +130,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 				var region = _stylePreviewRegions.get(lastValue);
 				var rect = region.getBoundingClientRect();
 				
-				var top = rect.top + document.body.scrollTop;
+				var top = rect.top + window.scrollY;
 				
 				DomUtil.setStyles(_stylePreviewRegionMarker, {
 					height: (region.clientHeight + 20) + 'px',

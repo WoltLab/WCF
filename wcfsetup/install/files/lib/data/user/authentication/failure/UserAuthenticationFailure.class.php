@@ -13,6 +13,14 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.authentication.failure
  * @category	Community Framework
+ *
+ * @property-read	integer		$failureID
+ * @property-read	string		$environment
+ * @property-read	integer|null	$userID
+ * @property-read	string		$username
+ * @property-read	integer		$time
+ * @property-read	string		$ipAddress
+ * @property-read	string		$userAgent
  */
 class UserAuthenticationFailure extends DatabaseObject {
 	/**
@@ -41,12 +49,13 @@ class UserAuthenticationFailure extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function countIPFailures($ipAddress) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_authentication_failure
 			WHERE	ipAddress = ?
 				AND time > ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($ipAddress, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT));
+		
 		return $statement->fetchColumn();
 	}
 	
@@ -57,12 +66,13 @@ class UserAuthenticationFailure extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function countUserFailures($userID) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_authentication_failure
 			WHERE	userID = ?
 				AND time > ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($userID, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT));
+		
 		return $statement->fetchColumn();
 	}
 }

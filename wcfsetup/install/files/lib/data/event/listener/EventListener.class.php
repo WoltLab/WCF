@@ -13,6 +13,18 @@ use wcf\data\TDatabaseObjectPermissions;
  * @package	com.woltlab.wcf
  * @subpackage	data.event.listener
  * @category	Community Framework
+ *
+ * @property-read	integer		$listenerID
+ * @property-read	integer		$packageID
+ * @property-read	string		$environment
+ * @property-read	string		$listenerName
+ * @property-read	string		$eventClassName
+ * @property-read	string		$eventName
+ * @property-read	string		$listenerClassName
+ * @property-read	integer		$inherit
+ * @property-read	integer		$niceValue
+ * @property-read	string		$permissions
+ * @property-read	string		$options
  */
 class EventListener extends DatabaseObject {
 	use TDatabaseObjectOptions;

@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\email\mime;
-use wcf\system\email\UserMailbox;
-use wcf\system\WCF;
 
 /**
  * HtmlTextMimePart is a text/html implementation of a RecipientAwareTextMimePart.

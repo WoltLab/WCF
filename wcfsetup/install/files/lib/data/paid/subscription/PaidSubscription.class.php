@@ -15,6 +15,19 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription
  * @category	Community Framework
+ *
+ * @property-read	integer		$subscriptionID
+ * @property-read	string		$title
+ * @property-read	string		$description
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$showOrder
+ * @property-read	double		$cost
+ * @property-read	string		$currency
+ * @property-read	integer		$subscriptionLength
+ * @property-read	string		$subscriptionLengthUnit
+ * @property-read	integer		$isRecurring
+ * @property-read	string		$groupIDs
+ * @property-read	string		$excludedSubscriptionIDs
  */
 class PaidSubscription extends DatabaseObject {
 	/**

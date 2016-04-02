@@ -10,20 +10,30 @@ use wcf\util\FileUtil;
  * Represents a package update server.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update.server
  * @category	Community Framework
+ *
+ * @property-read	integer		$packageUpdateServerID
+ * @property-read	string		$serverURL
+ * @property-read	string		$loginUsername
+ * @property-read	string		$loginPassword
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$lastUpdateTime
+ * @property-read	string		$status
+ * @property-read	string		$errorMessage
+ * @property-read	string		$apiVersion
  */
 class PackageUpdateServer extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'package_update_server';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'packageUpdateServerID';
 	
@@ -31,10 +41,10 @@ class PackageUpdateServer extends DatabaseObject {
 	 * API meta data
 	 * @var	array
 	 */
-	protected $metaData = array();
+	protected $metaData = [];
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::handleData()
+	 * @inheritDoc
 	 */
 	protected function handleData($data) {
 		if (!empty($data['metaData'])) {
@@ -52,14 +62,14 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns all active update package servers sorted by hostname.
 	 * 
-	 * @param	array		$packageUpdateServerIDs
-	 * @return	array		$servers
+	 * @param	integer[]	$packageUpdateServerIDs
+	 * @return	PackageUpdateServer[]
 	 */
-	public static function getActiveUpdateServers(array $packageUpdateServerIDs = array()) {
+	public static function getActiveUpdateServers(array $packageUpdateServerIDs = []) {
 		$list = new PackageUpdateServerList();
-		$list->getConditionBuilder()->add("isDisabled = ?", array(0));
+		$list->getConditionBuilder()->add("isDisabled = ?", [0]);
 		if (!empty($packageUpdateServerIDs)) {
-			$list->getConditionBuilder()->add("packageUpdateServerID IN (?)", array($packageUpdateServerIDs));
+			$list->getConditionBuilder()->add("packageUpdateServerID IN (?)", [$packageUpdateServerIDs]);
 		}
 		$list->readObjects();
 		
@@ -67,10 +77,10 @@ class PackageUpdateServer extends DatabaseObject {
 	}
 	
 	/**
-	 * Validates a server url.
+	 * Returns true if the given server url is valid.
 	 * 
 	 * @param	string		$serverURL
-	 * @return	boolean		validates
+	 * @return	boolean
 	 */
 	public static function isValidServerURL($serverURL) {
 		if (trim($serverURL)) {
@@ -88,18 +98,18 @@ class PackageUpdateServer extends DatabaseObject {
 	}
 	
 	/**
-	 * Gets stored auth data of this update server.
+	 * Returns stored auth data of this update server.
 	 * 
-	 * @return	array		$authData
+	 * @return	string[]
 	 */
 	public function getAuthData() {
-		$authData = array();
+		$authData = [];
 		// database data
 		if ($this->loginUsername != '' && $this->loginPassword != '') {
-			$authData = array(
+			$authData = [
 				'username' => $this->loginUsername,
 				'password' => $this->loginPassword
-			);
+			];
 		}
 		
 		// session data
@@ -122,21 +132,21 @@ class PackageUpdateServer extends DatabaseObject {
 	public static function storeAuthData($packageUpdateServerID, $username, $password, $saveCredentials = false) {
 		$packageUpdateAuthData = @unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
 		if ($packageUpdateAuthData === null || !is_array($packageUpdateAuthData)) {
-			$packageUpdateAuthData = array();
+			$packageUpdateAuthData = [];
 		}
 		
-		$packageUpdateAuthData[$packageUpdateServerID] = array(
+		$packageUpdateAuthData[$packageUpdateServerID] = [
 			'username' => $username,
 			'password' => $password
-		);
+		];
 		
 		WCF::getSession()->register('packageUpdateAuthData', serialize($packageUpdateAuthData));
 		
 		if ($saveCredentials) {
-			$serverAction = new PackageUpdateServerAction(array($packageUpdateServerID), 'update', array('data' => array(
+			$serverAction = new PackageUpdateServerAction([$packageUpdateServerID], 'update', ['data' => [
 				'loginUsername' => $username,
 				'loginPassword' => $password
-			)));
+			]]);
 			$serverAction->executeAction();
 		}
 	}

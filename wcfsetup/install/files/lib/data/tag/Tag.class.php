@@ -14,6 +14,11 @@ use wcf\util\ArrayUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.tag
  * @category	Community Framework
+ * 
+ * @property-read	integer		$tagID
+ * @property-read	integer		$languageID
+ * @property-read	string		$name
+ * @property-read	integer|null	$synonymFor
  */
 class Tag extends DatabaseObject implements IRouteController {
 	/**

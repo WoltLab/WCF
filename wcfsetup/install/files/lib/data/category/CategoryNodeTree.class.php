@@ -7,7 +7,7 @@ use wcf\system\exception\SystemException;
  * Represents a tree of category nodes.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
@@ -15,9 +15,20 @@ use wcf\system\exception\SystemException;
  */
 class CategoryNodeTree implements \IteratorAggregate {
 	/**
-	 * maximum depth considered when building the node tree.
-	 * 
-	 * @var integer
+	 * list of ids of categories which will not be inluded in the node tree
+	 * @var	integer[]
+	 */
+	protected $excludedCategoryIDs = [];
+	
+	/**
+	 * if true, disabled categories are also included in the node tree
+	 * @var	boolean
+	 */
+	protected $includeDisabledCategories = false;
+	
+	/**
+	 * maximum depth considered when building the node tree
+	 * @var	integer
 	 */
 	protected $maxDepth = -1;
 	
@@ -25,7 +36,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * name of the category node class
 	 * @var	string
 	 */
-	protected $nodeClassName = 'wcf\data\category\CategoryNode';
+	protected $nodeClassName = CategoryNode::class;
 	
 	/**
 	 * id of the parent category
@@ -35,9 +46,15 @@ class CategoryNodeTree implements \IteratorAggregate {
 	
 	/**
 	 * parent category node
-	 * @var	\wcf\data\category\CategoryNode
+	 * @var	CategoryNode
 	 */
 	protected $parentNode = null;
+	
+	/**
+	 * name of the category object type
+	 * @var	string
+	 */
+	protected $objectType = '';
 	
 	/**
 	 * Creates a new instance of CategoryNodeTree.
@@ -45,9 +62,9 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * @param	string			$objectType
 	 * @param	integer			$parentCategoryID
 	 * @param	boolean			$includeDisabledCategories
-	 * @param	array<integer>		$excludedCategoryIDs
+	 * @param	integer[]		$excludedCategoryIDs
 	 */
-	public function __construct($objectType, $parentCategoryID = 0, $includeDisabledCategories = false, array $excludedCategoryIDs = array()) {
+	public function __construct($objectType, $parentCategoryID = 0, $includeDisabledCategories = false, array $excludedCategoryIDs = []) {
 		$this->objectType = $objectType;
 		$this->parentCategoryID = $parentCategoryID;
 		$this->includeDisabledCategories = $includeDisabledCategories;
@@ -80,8 +97,8 @@ class CategoryNodeTree implements \IteratorAggregate {
 	/**
 	 * Builds a certain level of the tree.
 	 * 
-	 * @param	\wcf\data\category\CategoryNode	$parentNode
-	 * @param	integer				$depth
+	 * @param	CategoryNode	$parentNode
+	 * @param	integer		$depth
 	 */
 	protected function buildTreeLevel(CategoryNode $parentNode, $depth = 0) {
 		if ($this->maxDepth != -1 && $depth < 0) {
@@ -104,7 +121,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Returns the category with the given id.
 	 * 
 	 * @param	integer		$categoryID
-	 * @return	\wcf\data\category\Category
+	 * @return	Category
 	 */
 	protected function getCategory($categoryID) {
 		return CategoryHandler::getInstance()->getCategory($categoryID);
@@ -113,15 +130,15 @@ class CategoryNodeTree implements \IteratorAggregate {
 	/**
 	 * Returns the child categories of the given category node.
 	 * 
-	 * @param	\wcf\data\category\CategoryNode		$parentNode
-	 * @return	array<\wcf\data\category\Category>
+	 * @param	CategoryNode		$parentNode
+	 * @return	Category[]
 	 */
 	protected function getChildCategories(CategoryNode $parentNode) {
 		return CategoryHandler::getInstance()->getChildCategories($parentNode->categoryID, $parentNode->objectTypeID);
 	}
 	
 	/**
-	 * @see	\IteratorAggregate::getIterator()
+	 * @inheritDoc
 	 */
 	public function getIterator() {
 		if ($this->parentNode === null) {
@@ -135,21 +152,21 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Returns the category node for the category with the given id.
 	 * 
 	 * @param	integer		$categoryID
-	 * @return	\wcf\data\category\CategoryNode
+	 * @return	CategoryNode
 	 */
 	protected function getNode($categoryID) {
 		if (!$categoryID) {
-			$category = new Category(null, array(
+			$category = new Category(null, [
 				'categoryID' => 0,
 				'objectTypeID' => CategoryHandler::getInstance()->getObjectTypeByName($this->objectType)->objectTypeID
-			));
+			]);
 		}
 		else {
 			$category = $this->getCategory($categoryID);
 		}
 		
 		// decorate category if necessary
-		$decoratorClassName = call_user_func(array($this->nodeClassName, 'getBaseClass'));
+		$decoratorClassName = call_user_func([$this->nodeClassName, 'getBaseClass']);
 		if ($decoratorClassName != 'wcf\data\category\Category') {
 			$category = new $decoratorClassName($category);
 		}
@@ -161,7 +178,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Returns true if the given category node fulfils all relevant conditions
 	 * to be included in this tree.
 	 * 
-	 * @param	\wcf\data\category\CategoryNode		$categoryNode
+	 * @param	CategoryNode		$categoryNode
 	 * @return	boolean
 	 */
 	protected function isIncluded(CategoryNode $categoryNode) {

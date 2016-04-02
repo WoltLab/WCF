@@ -33,7 +33,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	public function isAlreadyReported($objectType, $objectID) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_moderation_queue
 			WHERE	objectTypeID = ?
 				AND objectID = ?";
@@ -42,9 +42,8 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 			$objectTypeID,
 			$objectID
 		));
-		$row = $statement->fetchArray();
 		
-		return ($row['count'] == 0 ? false : true);
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**

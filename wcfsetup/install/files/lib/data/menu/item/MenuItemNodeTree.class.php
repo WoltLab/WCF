@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\menu\item;
+use wcf\system\page\PageLocationManager;
 
 /**
  * Represents a menu item node tree.
@@ -39,15 +40,15 @@ class MenuItemNodeTree {
 	
 	/**
 	 * number of visible items
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $visibleItemCount = 0;
 	
 	/**
 	 * Creates a new MenuItemNodeTree object.
 	 * 
-	 * @param	integer		$menuID         menu id
-	 * @param       MenuItemList    $menuItemList   optional object to be provided when building the tree from cache
+	 * @param	integer		$menuID		menu id
+	 * @param	MenuItemList	$menuItemList	optional object to be provided when building the tree from cache
 	 */
 	public function __construct($menuID, MenuItemList $menuItemList = null) {
 		$this->menuID = $menuID;
@@ -58,6 +59,22 @@ class MenuItemNodeTree {
 			$menuItemList->getConditionBuilder()->add('menu_item.menuID = ?', [$this->menuID]);
 			$menuItemList->sqlOrderBy = "menu_item.showOrder";
 			$menuItemList->readObjects();
+		}
+		
+		// find possible active menu items
+		$activeMenuItems = [];
+		$possibleLocations = PageLocationManager::getInstance()->getLocations();
+		$length = count($possibleLocations);
+		foreach ($menuItemList as $menuItem) {
+			for ($i = 0; $i < $length; $i++) {
+				if ($menuItem->pageID == $possibleLocations[$i]['pageID'] && $menuItem->pageObjectID == $possibleLocations[$i]['pageObjectID']) {
+					if (!isset($activeMenuItems[$i])) {
+						$activeMenuItems[$i] = [];
+					}
+					
+					$activeMenuItems[$i][] = $menuItem->itemID;
+				}
+			}
 		}
 		
 		// build menu structure
@@ -73,14 +90,33 @@ class MenuItemNodeTree {
 		// generate node tree
 		$this->node = new MenuItemNode();
 		$this->node->setChildren($this->generateNodeTree(null, $this->node));
+		
+		// mark nodes as active
+		if (!empty($activeMenuItems)) {
+			$nodeList = $this->getNodeList();
+			foreach ($activeMenuItems as $itemIDs) {
+				for ($i = 0, $length = count($itemIDs); $i < $length; $i++) {
+					/** @var MenuItemNode $node */
+					foreach ($nodeList as $node) {
+						if ($node->getMenuItem()->itemID == $itemIDs[$i]) {
+							$node->setIsActive();
+							
+							// only one effective item can be marked as active, use the first
+							// occurence with the highest priority and ignore everything else
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	/**
 	 * Generates the node tree recursively.
 	 * 
-	 * @param	integer			$parentID       parent menu item id
-	 * @param	MenuItemNode		$parentNode     parent menu item object
-	 * @return	MenuItemNode[]          nested menu item tree
+	 * @param	integer			$parentID	parent menu item id
+	 * @param	MenuItemNode		$parentNode	parent menu item object
+	 * @return	MenuItemNode[]		nested menu item tree
 	 */
 	protected function generateNodeTree($parentID = null, MenuItemNode $parentNode = null) {
 		$nodes = array();
@@ -123,7 +159,7 @@ class MenuItemNodeTree {
 	/**
 	 * Returns the number of visible items.
 	 * 
-	 * @return      integer
+	 * @return	integer
 	 */
 	public function getVisibleItemCount() {
 		return $this->visibleItemCount;

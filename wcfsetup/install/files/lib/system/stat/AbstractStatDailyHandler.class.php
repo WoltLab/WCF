@@ -22,7 +22,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	 * @return	integer
 	 */
 	protected function getCounter($date, $tableName, $dateColumnName) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	" . $tableName . "
 			WHERE	" . $dateColumnName . " BETWEEN ? AND ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -39,7 +39,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	 * @return	integer
 	 */
 	protected function getTotal($date, $tableName, $dateColumnName) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	" . $tableName . "
 			WHERE	" . $dateColumnName . " < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

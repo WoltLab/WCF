@@ -202,6 +202,15 @@ HTML;
 	}
 	
 	/**
+	 * Sets the selectable user groups.
+	 * 
+	 * @param	UserGroup[]	$userGroups
+	 */
+	public function setUserGroups(array $userGroups) {
+		$this->userGroups = $userGroups;
+	}
+	
+	/**
 	 * @see	\wcf\system\condition\ICondition::validate()
 	 */
 	public function validate() {

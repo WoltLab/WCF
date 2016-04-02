@@ -1,9 +1,6 @@
 <?php
 namespace wcf\system\cli\command;
 use wcf\system\CLIWCF;
-use wcf\util\CLIUtil;
-use wcf\util\DirectoryUtil;
-use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 

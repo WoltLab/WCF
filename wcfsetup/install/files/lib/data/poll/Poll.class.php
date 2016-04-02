@@ -15,6 +15,19 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.poll
  * @category	Community Framework
+ *
+ * @property-read	integer		$pollID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	string		$question
+ * @property-read	integer		$time
+ * @property-read	integer		$endTime
+ * @property-read	integer		$isChangeable
+ * @property-read	integer		$isPublic
+ * @property-read	integer		$sortByVotes
+ * @property-read	integer		$resultsRequireVote
+ * @property-read	integer		$maxVotes
+ * @property-read	integer		$votes
  */
 class Poll extends DatabaseObject {
 	/**

@@ -11,6 +11,12 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.stat.daily
  * @category	Community Framework
+ *
+ * @property-read	integer		$statID
+ * @property-read	integer		$objectTypeID
+ * @property-read	string		$date
+ * @property-read	integer		$counter
+ * @property-read	integer		$total
  */
 class StatDaily extends DatabaseObject {
 	/**

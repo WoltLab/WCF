@@ -54,8 +54,8 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 				".(count($conditions->getParameters()) ? "OR ".$conditions : "");
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array_merge(array(
-			$query.'%',
-			$query.'%'
+			'%'.$query.'%',
+			'%'.$query.'%'
 		), $conditions->getParameters()));
 		
 		while ($package = $statement->fetchObject('wcf\data\package\Package')) {

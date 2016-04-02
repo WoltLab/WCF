@@ -7,7 +7,7 @@ namespace wcf\system\html\input\filter;
  */
 class MessageHtmlInputFilter implements IHtmlInputFilter {
 	/**
-	 * @var \HTMLPurifier
+	 * @var	\HTMLPurifier
 	 */
 	protected static $purifier;
 	
@@ -16,7 +16,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	}
 	
 	/**
-	 * @return      \HTMLPurifier
+	 * @return	\HTMLPurifier
 	 */
 	protected function getPurifier() {
 		if (self::$purifier === null) {

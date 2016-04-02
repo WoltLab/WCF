@@ -15,6 +15,17 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.menu.item
  * @category	Community Framework
+ *
+ * @property-read	integer		$menuItemID
+ * @property-read	integer		$packageID
+ * @property-read	string		$menuItem
+ * @property-read	string		$parentMenuItem
+ * @property-read	string		$menuItemController
+ * @property-read	string		$menuItemLink
+ * @property-read	integer		$showOrder
+ * @property-read	string		$permissions
+ * @property-read	string		$options
+ * @property-read	string		$icon
  */
 class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	/**

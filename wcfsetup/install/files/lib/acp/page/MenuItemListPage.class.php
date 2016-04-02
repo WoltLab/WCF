@@ -36,10 +36,10 @@ class MenuItemListPage extends AbstractPage {
 	
 	/**
 	 * menu item node tree
-	 * @var	wcf\data\menu\item\MenuItemNodeTree
+	 * @var	MenuItemNodeTree
 	 */
 	public $menuItems = null;
-		
+	
 	/**
 	 * menu id
 	 * @var	integer
@@ -48,7 +48,7 @@ class MenuItemListPage extends AbstractPage {
 	
 	/**
 	 * menu object
-	 * @var	\wcf\data\menu\Menu
+	 * @var	Menu
 	 */
 	public $menu = null;
 	

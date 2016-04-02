@@ -12,6 +12,17 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.edit.history.entry
  * @category	Community Framework
+ *
+ * @property-read	integer		$entryID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	integer|null	$userID
+ * @property-read	string		$username
+ * @property-read	integer		$time
+ * @property-read	integer		$obsoletedAt
+ * @property-read	integer|null	$obsoletedByUserID
+ * @property-read	string		$message
+ * @property-read	string		$editReason
  */
 class EditHistoryEntry extends DatabaseObject {
 	/**

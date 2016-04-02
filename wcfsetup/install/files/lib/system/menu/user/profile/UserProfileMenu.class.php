@@ -4,7 +4,6 @@ use wcf\data\user\profile\menu\item\UserProfileMenuItem;
 use wcf\system\cache\builder\UserProfileMenuCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 
 /**
  * Builds the user profile menu.
@@ -68,7 +67,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Checks the options and permissions of given menu item.
 	 * 
-	 * @param	UserProfileMenuItem     $item
+	 * @param	UserProfileMenuItem	$item
 	 * @return	boolean
 	 */
 	protected function checkMenuItem(UserProfileMenuItem $item) {

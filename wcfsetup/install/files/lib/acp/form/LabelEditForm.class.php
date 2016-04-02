@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Shows the label edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -73,7 +73,8 @@ class LabelEditForm extends LabelAddForm {
 		$this->objectAction = new LabelAction(array($this->labelID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'label' => $this->label,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
-			'groupID' => $this->groupID
+			'groupID' => $this->groupID,
+			'showOrder' => $this->showOrder
 		))));
 		$this->objectAction->executeAction();
 		
@@ -110,6 +111,7 @@ class LabelEditForm extends LabelAddForm {
 			}
 			
 			$this->groupID = $this->labelObj->groupID;
+			$this->showOrder = $this->labelObj->showOrder;
 		}
 	}
 	

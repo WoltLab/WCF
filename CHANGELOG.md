@@ -28,7 +28,13 @@
 * `wcf\system\event\listener\AbstractUserMergeListener` added.
 * Notice texts support `{$username}` and `{$email}` placeholders.
 * Notifications for comments in moderation.
-* Continuous numeration of edit history version in template.  
+* Continuous numeration of edit history version in template.
+* `\wcf\data\user\UserProfile::getGuestUserProfile()` added.
+* Make labels sortable in ACP.
+
+#### CMS
+
+* User online location is handled via the `wcf\data\page\Page` objects. Static locations only need a language item `wcf.page.onlineLocation.{$page->identifier}`, more complex locations can use the online location-related methods of `wcf\system\page\handler\IMenuPageHandler`. For CMS pages, their title is used.
 
 #### New Traits
 
@@ -55,3 +61,7 @@
 * `wcf\action\AJAXProxyAction::getData()` removed.
 * Version system removed.
 * Support for query string based sessions in Frontend removed.
+
+#### Documentation
+
+* `@property-read` tags for database table columns of classes extending `wcf\data\DatabaseObject`.

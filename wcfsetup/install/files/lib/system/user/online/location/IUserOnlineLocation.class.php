@@ -11,6 +11,7 @@ use wcf\data\user\online\UserOnline;
  * @package	com.woltlab.wcf
  * @subpackage	system.user.online.location
  * @category	Community Framework
+ * @deprecated	since 2.2
  */
 interface IUserOnlineLocation {
 	/**

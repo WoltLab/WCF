@@ -2,7 +2,9 @@
 namespace wcf\system\user\notification\event;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\comment\CommentDataHandler;
+use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\CommentRuntimeCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\WCF;
 
@@ -74,14 +76,12 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			]);
 		}
 		
-		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
+		$comment = CommentRuntimeCache::getInstance()->getComment($this->userNotificationObject->commentID);
 		if ($comment->userID) {
-			$commentAuthor = CommentDataHandler::getInstance()->getUser($comment->userID);
+			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}
 		else {
-			$commentAuthor = new User(null, [
-				'username' => $comment->username
-			]);
+			$commentAuthor = UserProfile::getGuestUserProfile($comment->username);
 		}
 		
 		return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.mail', [
@@ -126,14 +126,12 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			]);
 		}
 		
-		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
+		$comment = CommentRuntimeCache::getInstance()->getObject($this->userNotificationObject->commentID);
 		if ($comment->userID) {
-			$commentAuthor = CommentDataHandler::getInstance()->getUser($comment->userID);
+			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}
 		else {
-			$commentAuthor = new User(null, [
-				'username' => $comment->username
-			]);
+			$commentAuthor = UserProfile::getGuestUserProfile($comment->username);
 		}
 		
 		return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.message', [
@@ -151,7 +149,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	 */
 	public function getModerationQueue() {
 		if (!$this->moderationQueueLoaded) {
-			$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
+			$comment = CommentRuntimeCache::getInstance()->getObject($this->userNotificationObject->commentID);
 			
 			$this->moderationQueue = ViewableModerationQueue::getViewableModerationQueue($comment->objectID);
 			$this->moderationQueueLoaded = true;
@@ -163,7 +161,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	/**
 	 * Returns the language item prefix for the notification texts.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getLanguageItemPrefix() {
 		if ($this->languageItemPrefix === null) {
@@ -194,7 +192,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	 * @inheritDoc
 	 */
 	protected function prepare() {
-		CommentDataHandler::getInstance()->cacheCommentID($this->userNotificationObject->commentID);
-		CommentDataHandler::getInstance()->cacheUserID($this->additionalData['userID']);
+		CommentRuntimeCache::getInstance()->cacheObjectID($this->userNotificationObject->commentID);
+		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['userID']);
 	}
 }

@@ -59,14 +59,13 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			return;
 		}
 		
-		$sql = "SELECT	COUNT(menuItemID) AS count
+		$sql = "SELECT	COUNT(menuItemID)
 			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	menuItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($data['parentMenuItem']));
-		$row = $statement->fetchArray();
 		
-		if (!$row['count']) {
+		if (!$statement->fetchSingleColumn()) {
 			throw new SystemException("Unable to find parent 'menu item' with name '".$data['parentMenuItem']."' for 'menu item' with name '".$data['menuItem']."'.");
 		}
 	}

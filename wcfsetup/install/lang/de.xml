@@ -477,6 +477,7 @@
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.delete.sure"><![CDATA[Wollen Sie das Label „{$label}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
+		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Bevor Sie ein Label hinzufügen können, müssen Sie eine <a href="{link controller='LabelGroupAdd'}{/link}">Labelgruppe hinzufügen</a>.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Labelgruppe]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
@@ -491,6 +492,10 @@
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.label.group.groupName.description"><![CDATA[Der Titel ist für alle Benutzer sichtbar, die Zugriff auf diese Labelgruppe haben.]]></item>
 		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[Die optionale Beschreibung wird nur in der Administrationsoberfläche angezeigt.]]></item>
+		<item name="wcf.acp.label.showOrder"><![CDATA[Reihenfolge]]></item>
+		<item name="wcf.acp.label.showOrder.description"><![CDATA[Reihenfolge des Labels innerhalb seiner Labelgruppe. Wenn Sie das Feld leer lassen, wird das Label an letzter Position einsortiert.]]></item>
+		<item name="wcf.acp.label.sortAfterGroupFiltering"><![CDATA[Wenn Sie die Label-Liste nur nach einer bestimmten Labelgruppe filtern, können Sie die Labels innerhalb dieser Gruppe durch Ziehen und Loslassen sortieren.]]></item>
+		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -680,7 +685,7 @@
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[Ein einmal von einem Benutzer ausgeblendeter Hinweis wird bei erneutem Seitenaufruf nicht mehr angezeigt.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Hinweis]]></item>
-		<item name="wcf.acp.notice.notice.description"><![CDATA[<code>{literal}{$username}{/literal}</code> wird durch den Namen und <code>{literal}{$email}</code> durch die Email-Adresse des aktuellen Benutzers ersetzt.]]></item>
+		<item name="wcf.acp.notice.notice.description"><![CDATA[<code>{literal}{$username}{/literal}</code> wird durch den Namen und <code>{literal}{$email}{/literal}</code> durch die Email-Adresse des aktuellen Benutzers ersetzt.]]></item>
 		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[HTML im Hinweis verwenden]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Ausgeblendete Hinweise erneut anzeigen]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[Der Hinweis wird jenen Benutzern wieder angezeigt, die die ursprüngliche Version bereits ausgeblendet haben. Gästen, die den Hinweis bereits ausgeblendet haben, wird dieser nur in einer neuen Session erneut angezeigt.]]></item>
@@ -2290,6 +2295,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>
 		<item name="wcf.global.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> aus!]]></item>
+		<item name="wcf.global.search"><![CDATA[Suche]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
@@ -2417,6 +2423,12 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
+		
+		<item name="wcf.menu.page"><![CDATA[Menü]]></item>
+		<item name="wcf.menu.page.location"><![CDATA[Aktueller Ort]]></item>
+		<item name="wcf.menu.page.navigation"><![CDATA[Navigation]]></item>
+		<item name="wcf.menu.page.options"><![CDATA[Optionen]]></item>
+		<item name="wcf.menu.user"><![CDATA[Benutzer-Menü]]></item>
 	</category>
 	
 	<category name="wcf.moderation">
@@ -2611,6 +2623,18 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.com.woltlab.wcf.TeamPage"><![CDATA[Team-Mitglieder]]></item>
 		<item name="wcf.page.com.woltlab.wcf.UserPage"><![CDATA[Benutzerprofil]]></item>
 		<item name="wcf.page.com.woltlab.wcf.UsersOnlineListPage"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.UsersOnlineList"><![CDATA[Benutzer-Online-Liste]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.MembersList"><![CDATA[Mitgliederliste]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Team"><![CDATA[Liste der Team-Mitglieder]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Dashboard"><![CDATA[Dashboard]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Register"><![CDATA[Registrierung]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.LostPassword"><![CDATA[Kennwort vergessen]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Login"><![CDATA[Anmeldung]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.AccountManagement"><![CDATA[Benutzerkonto-Verwaltung]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.AvatarEdit"><![CDATA[Avatar-Verwaltung]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.SignatureEdit"><![CDATA[Signatur-Verwaltung]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
@@ -3021,18 +3045,6 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 {/if}]]></item>
 		<item name="wcf.user.usersOnline.invisible"><![CDATA[ (unsichtbar)]]></item>
 		<item name="wcf.user.usersOnline.marking.legend"><![CDATA[Legende]]></item>
-		<item name="wcf.user.usersOnline.location.UserPage"><![CDATA[Betrachtet das Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
-		<item name="wcf.user.usersOnline.location.UsersOnlineListPage"><![CDATA[Betrachtet die Benutzer-Online-Liste]]></item>
-		<item name="wcf.user.usersOnline.location.MembersListPage"><![CDATA[Betrachtet die Mitgliederliste]]></item>
-		<item name="wcf.user.usersOnline.location.TeamPage"><![CDATA[Betrachtet die Liste der Team-Mitglieder]]></item>
-		<item name="wcf.user.usersOnline.location.DashboardPage"><![CDATA[Betrachtet das Dashboard]]></item>
-		<item name="wcf.user.usersOnline.location.RegisterForm"><![CDATA[Führt die Registrierung durch]]></item>
-		<item name="wcf.user.usersOnline.location.LostPasswordForm"><![CDATA[Fordert ein neues Kennwort an]]></item>
-		<item name="wcf.user.usersOnline.location.LoginForm"><![CDATA[Führt die Anmeldung durch]]></item>
-		<item name="wcf.user.usersOnline.location.AccountManagementForm"><![CDATA[Verwaltet das Benutzerkonto]]></item>
-		<item name="wcf.user.usersOnline.location.AvatarEditForm"><![CDATA[Verwaltet den Avatar]]></item>
-		<item name="wcf.user.usersOnline.location.SettingsForm"><![CDATA[Passt Einstellungen an]]></item>
-		<item name="wcf.user.usersOnline.location.SignatureEditForm"><![CDATA[Bearbeitet die Signatur]]></item>
 		<item name="wcf.user.usersOnline.guests"><![CDATA[Gäste]]></item>
 		<item name="wcf.user.usersOnline.location"><![CDATA[Ort]]></item>
 		<item name="wcf.user.usersOnline.ipAddress"><![CDATA[IP-Adresse]]></item>

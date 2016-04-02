@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\email\mime;
 use wcf\system\email\EmailGrammar;
+use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
 
 /**

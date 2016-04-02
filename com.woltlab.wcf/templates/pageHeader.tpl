@@ -2,16 +2,13 @@
 	<header id="pageHeader" class="pageHeader">
 		<div>
 			<div class="layoutBoundary">
-				<div class="pageHeaderContainerLeft">
-					{include file='pageHeaderLogo'}
-					
-					{include file='pageHeaderMenu'}
-				</div>
-				<div class="pageHeaderContainerRight">
-					{include file='pageHeaderSearch'}
-					
-					{include file='pageHeaderUser'}
-				</div>
+				{include file='pageHeaderLogo'}
+				
+				{include file='pageHeaderSearch'}
+				
+				{include file='pageHeaderMenu'}
+				
+				{include file='pageHeaderUser'}
 			</div>
 		</div>
 		

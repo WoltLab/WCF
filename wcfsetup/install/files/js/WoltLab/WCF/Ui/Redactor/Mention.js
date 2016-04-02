@@ -275,12 +275,12 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 			// get the offsets of the bounding box of current text selection
 			var rect = selection.getRangeAt(0).getBoundingClientRect();
 			var offsets = {
-				top: Math.round(rect.bottom) + document.body.scrollTop,
+				top: Math.round(rect.bottom) + window.scrollY,
 				left: Math.round(rect.left) + document.body.scrollLeft
 			};
 			
 			if (this._lineHeight === null) {
-				this._lineHeight = Math.round(rect.bottom - rect.top - document.body.scrollTop);
+				this._lineHeight = Math.round(rect.bottom - rect.top - window.scrollY);
 			}
 			
 			// restore caret position
@@ -301,7 +301,7 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 				
 				this._selectItem(0);
 				
-				if (offset.top + this._dropdownMenu.offsetHeight + 10 > window.innerHeight + document.body.scrollTop) {
+				if (offset.top + this._dropdownMenu.offsetHeight + 10 > window.innerHeight + window.scrollY) {
 					this._dropdownMenu.classList.add('dropdownArrowBottom');
 					
 					this._dropdownMenu.style.setProperty('top', offset.top - this._dropdownMenu.offsetHeight - 2 * this._lineHeight + 7 + 'px', '');

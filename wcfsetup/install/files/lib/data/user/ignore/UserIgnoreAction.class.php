@@ -1,7 +1,5 @@
 <?php
 namespace wcf\data\user\ignore;
-use wcf\data\user\ignore\UserIgnore;
-use wcf\data\user\ignore\UserIgnoreEditor;
 use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;

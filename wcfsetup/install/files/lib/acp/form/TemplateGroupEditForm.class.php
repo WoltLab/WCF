@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
-use wcf\data\template\group\TemplateGroupList;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;

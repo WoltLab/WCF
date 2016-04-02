@@ -15,19 +15,19 @@ use wcf\data\IMessage;
 class QuotedMessage implements \Countable, \Iterator {
 	/**
 	 * list of full quotes for insertation
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $fullQuotes = array();
 	
 	/**
 	 * quotable database object
-	 * @var	\wcf\data\IQuotableDatabaseObject
+	 * @var	IMessage
 	 */
 	public $object = null;
 	
 	/**
-	 * list of quotes (shortend)
-	 * @var	array<string>
+	 * list of quotes (shortened)
+	 * @var	string[]
 	 */
 	public $quotes = array();
 	
@@ -39,14 +39,14 @@ class QuotedMessage implements \Countable, \Iterator {
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $indexToObject = null;
 	
 	/**
 	 * Creates a new QuotedMessage object.
 	 * 
-	 * @param	\wcf\data\IMessage	$object
+	 * @param	IMessage	$object
 	 */
 	public function __construct(IMessage $object) {
 		$this->object = $object;
@@ -66,7 +66,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @see	ITitledObject::getTitle()
 	 */
 	public function __toString() {
 		return $this->object->getTitle();

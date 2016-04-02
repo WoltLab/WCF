@@ -22,7 +22,7 @@ class MenuItemList extends DatabaseObjectList {
 	/**
 	 * Sets the menu items used to improve menu cache performance.
 	 * 
-	 * @param       MenuItem[]      $menuItems      list of menu item objects
+	 * @param	MenuItem[]	$menuItems	list of menu item objects
 	 */
 	public function setMenuItems(array $menuItems) {
 		$this->objects = $menuItems;

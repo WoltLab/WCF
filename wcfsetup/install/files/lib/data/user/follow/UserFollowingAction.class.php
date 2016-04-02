@@ -39,13 +39,12 @@ class UserFollowingAction extends UserFollowAction {
 	 */
 	public function getGroupedUserList() {
 		// resolve page count
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_follow
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->parameters['userID']));
-		$row = $statement->fetchArray();
-		$pageCount = ceil($row['count'] / 20);
+		$pageCount = ceil($statement->fetchSingleColumn() / 20);
 		
 		// get user ids
 		$sql = "SELECT	followUserID

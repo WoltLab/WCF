@@ -13,7 +13,7 @@
 		}
 		
 		.icon {
-			color: $wcfNavigationText;
+			color: inherit;
 		}
 		
 		a {
@@ -23,28 +23,23 @@
 				color: $wcfNavigationLinkActive;
 			}
 		}
+		
+		.breadcrumbs {
+			margin-left: 10px;
+		}
 	}
 	
 	.pageNavigationIcons {
 		display: flex;
 		flex: 0 0 auto;
 		flex-direction: row-reverse;
+		margin-right: 10px;
 		
 		> li {
 			flex: 0 0 auto;
 			
 			&:not(:last-child) {
 				margin-left: 10px;
-			}
-			
-			> a {
-				> .icon {
-					color: $wcfHeaderLink;
-				}
-				
-				&:hover > .icon {
-					color: $wcfHeaderLinkActive;
-				}
 			}
 		}
 	}

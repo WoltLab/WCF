@@ -11,6 +11,12 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.clipboard.action
  * @category	Community Framework
+ *
+ * @property-read	integer		$actionID
+ * @property-read	integer		$packageID
+ * @property-read	string		$actionName
+ * @property-read	string		$actionClassName
+ * @property-read	integer		$showOrder
  */
 class ClipboardAction extends DatabaseObject {
 	/**

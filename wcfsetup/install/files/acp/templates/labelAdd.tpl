@@ -80,6 +80,14 @@
 			</dl>
 			{include file='multipleLanguageInputJavascript' elementIdentifier='label' forceSelection=false}
 			
+			<dl>
+				<dt><label for="showOrder">{lang}wcf.acp.label.showOrder{/lang}</label></dt>
+				<dd>
+					<input type="number" min="0" id="showOrder" name="showOrder" class="tiny" value="{if $showOrder}{@$showOrder}{/if}" />
+					<small>{lang}wcf.acp.label.showOrder.description{/lang}</small>
+				</dd>
+			</dl>
+			
 			<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 				<dt><label for="cssClassName">{lang}wcf.acp.label.cssClassName{/lang}</label></dt>
 				<dd>

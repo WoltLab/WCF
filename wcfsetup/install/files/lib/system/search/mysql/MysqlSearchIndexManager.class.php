@@ -71,13 +71,13 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 		$tableName = SearchIndexManager::getTableName($objectType);
 		
 		// check if table already exists
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_package_installation_sql_log
 			WHERE	sqlTable = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($tableName));
-		$row = $statement->fetchArray();
-		if ($row['count']) {
+		
+		if ($statement->fetchSingleColumn()) {
 			// table already exists
 			return false;
 		}

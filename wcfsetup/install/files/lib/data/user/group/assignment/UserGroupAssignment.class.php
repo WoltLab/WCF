@@ -14,6 +14,11 @@ use wcf\system\request\IRouteController;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.assignment
  * @category	Community Framework
+ *
+ * @property-read	integer		$assignmentID
+ * @property-read	integer		$groupID
+ * @property-read	string		$title
+ * @property-read	integer		$isDisabled
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController {
 	/**

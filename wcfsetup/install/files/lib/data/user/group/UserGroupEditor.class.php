@@ -4,7 +4,6 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\UserGroupCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;

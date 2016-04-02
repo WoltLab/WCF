@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
-use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObject;
 use wcf\page\IPage;
 use wcf\system\cache\builder\MostLikedMembersCacheBuilder;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Shows a list of the most liked members.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.dashboard.box
@@ -21,12 +21,12 @@ use wcf\system\WCF;
 class MostLikedMembersDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * ids of the most liked members
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $mostLikedMemberIDs = array();
+	public $mostLikedMemberIDs = [];
 	
 	/**
-	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
+	 * @inheritDoc
 	 */
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
@@ -37,26 +37,26 @@ class MostLikedMembersDashboardBox extends AbstractSidebarDashboardBox {
 		$this->fetched();
 		
 		if (!empty($this->mostLikedMemberIDs)) {
-			UserProfileCache::getInstance()->cacheUserIDs($this->mostLikedMemberIDs);
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs($this->mostLikedMemberIDs);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
+	 * @inheritDoc
 	 */
 	protected function render() {
 		if (empty($this->mostLikedMemberIDs)) return '';
 		
 		if (MODULE_MEMBERS_LIST) {
-			$this->titleLink = LinkHandler::getInstance()->getLink('MembersList', array(), 'sortField=likesReceived&sortOrder=DESC');
+			$this->titleLink = LinkHandler::getInstance()->getLink('MembersList', [], 'sortField=likesReceived&sortOrder=DESC');
 		}
 		
-		$mostLikedMembers = UserProfileCache::getInstance()->getUserProfiles($this->mostLikedMemberIDs);
+		$mostLikedMembers = UserProfileRuntimeCache::getInstance()->getObjects($this->mostLikedMemberIDs);
 		DatabaseObject::sort($mostLikedMembers, 'likesReceived', 'DESC');
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'mostLikedMembers' => $mostLikedMembers
-		));
+		]);
 		return WCF::getTPL()->fetch('dashboardBoxMostLikedMembers');
 	}
 }

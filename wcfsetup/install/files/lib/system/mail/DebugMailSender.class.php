@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\mail;
 use wcf\system\io\File;
-use wcf\util\FileUtil;
 
 /**
  * DebugMailSender is a debug implementation of mailsender which writes emails in

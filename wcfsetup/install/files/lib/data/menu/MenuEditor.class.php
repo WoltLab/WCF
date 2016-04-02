@@ -35,16 +35,16 @@ class MenuEditor extends DatabaseObjectEditor {
 		
 		if (is_array($title)) {
 			if (count($title) > 1) {
-				$sql = "SELECT  languageCategoryID
-					FROM    wcf".WCF_N."_language_category
-					WHERE   languageCategory = ?";
+				$sql = "SELECT	languageCategoryID
+					FROM	wcf".WCF_N."_language_category
+					WHERE	languageCategory = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, 1);
 				$statement->execute(['wcf.menu']);
 				$languageCategoryID = $statement->fetchSingleColumn();
 				
-				$sql = "INSERT INTO     wcf".WCF_N."_language_item
+				$sql = "INSERT INTO	wcf".WCF_N."_language_item
 							(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-					VALUES          (?, ?, ?, ?, ?, ?)";
+					VALUES		(?, ?, ?, ?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
 				WCF::getDB()->beginTransaction();

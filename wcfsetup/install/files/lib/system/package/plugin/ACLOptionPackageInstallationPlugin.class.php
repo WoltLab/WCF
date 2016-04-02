@@ -104,7 +104,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 			
 			// validate category name
 			if (isset($data['categoryname'])) {
-				$sql = "SELECT	COUNT(categoryID) AS count
+				$sql = "SELECT	COUNT(categoryID)
 					FROM	wcf".WCF_N."_".$this->tableName."_category
 					WHERE	categoryName = ?
 						AND objectTypeID = ?";
@@ -113,8 +113,8 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 					$data['categoryname'],
 					$objectTypeID
 				));
-				$row = $statement->fetchArray();
-				if (!$row) {
+				
+				if (!$statement->fetchSingleColumn()) {
 					throw new SystemException("unknown category '".$data['categoryname']."' for acl object type '".$data['objecttype']."' given");
 				}
 			}

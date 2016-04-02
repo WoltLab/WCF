@@ -11,6 +11,15 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update
  * @category	Community Framework
+ *
+ * @property-read	integer		$packageUpdateID
+ * @property-read	integer		$packageUpdateServerID
+ * @property-read	string		$package
+ * @property-read	string		$packageName
+ * @property-read	string		$packageDescription
+ * @property-read	string		$author
+ * @property-read	string		$authorURL
+ * @property-read	integer		$isApplication
  */
 class PackageUpdate extends DatabaseObject {
 	/**

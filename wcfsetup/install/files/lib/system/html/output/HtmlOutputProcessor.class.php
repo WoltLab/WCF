@@ -7,7 +7,7 @@ namespace wcf\system\html\output;
  */
 class HtmlOutputProcessor {
 	/**
-	 * @var HtmlOutputNodeProcessor
+	 * @var	HtmlOutputNodeProcessor
 	 */
 	protected $htmlOutputNodeProcessor;
 	

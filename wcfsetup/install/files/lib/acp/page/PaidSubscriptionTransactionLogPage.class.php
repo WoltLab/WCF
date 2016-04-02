@@ -33,7 +33,7 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage {
 	
 	/**
 	 * log entry id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $logID = 0;
 	

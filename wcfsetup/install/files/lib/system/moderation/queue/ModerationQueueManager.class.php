@@ -223,15 +223,14 @@ class ModerationQueueManager extends SingletonFactory {
 			$conditions->add("moderation_queue_to_user.isAffected = ?", array(1));
 			$conditions->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
 			
-			$sql = "SELECT		COUNT(*) AS count
+			$sql = "SELECT		COUNT(*)
 				FROM		wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user
 				LEFT JOIN	wcf".WCF_N."_moderation_queue moderation_queue
 				ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			$row = $statement->fetchArray();
-			$count = $row['count'];
+			$count = $statement->fetchSingleColumn();
 			
 			// update storage data
 			UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'outstandingModerationCount', $count);
@@ -263,7 +262,7 @@ class ModerationQueueManager extends SingletonFactory {
 			$conditions->add("moderation_queue.time > ?", array(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')));
 			$conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
 			
-			$sql = "SELECT		COUNT(*) AS count
+			$sql = "SELECT		COUNT(*)
 				FROM		wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user
 				LEFT JOIN	wcf".WCF_N."_moderation_queue moderation_queue
 				ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
@@ -272,9 +271,8 @@ class ModerationQueueManager extends SingletonFactory {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			$row = $statement->fetchArray();
-			$count = $row['count'];
-				
+			$count = $statement->fetchSingleColumn();
+			
 			// update storage data
 			UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadModerationCount', $count);
 		}

@@ -12,6 +12,24 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.style
  * @category	Community Framework
+ *
+ * @property-read	integer		$styleID
+ * @property-read	integer		$packageID
+ * @property-read	string		$styleName
+ * @property-read	integer		$templateGroupID
+ * @property-read	integer		$isDefault
+ * @property-read	integer		$isDisabled
+ * @property-read	string		$styleDescription
+ * @property-read	string		$styleVersion
+ * @property-read	string		$styleDate
+ * @property-read	string		$image
+ * @property-read	string		$copyright
+ * @property-read	string		$license
+ * @property-read	string		$authorName
+ * @property-read	string		$authorURL
+ * @property-read	string		$imagePath
+ * @property-read	string		$packageName
+ * @property-read	integer		$isTainted
  */
 class Style extends DatabaseObject {
 	/**

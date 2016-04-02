@@ -16,7 +16,7 @@ interface IUserObjectWatch {
 	 * Validates the given object id. Throws an exception on error.
 	 * 
 	 * @param	integer		$objectID
-	 * @throws	wcf\system\exception\UserException
+	 * @throws	\wcf\system\exception\UserException
 	 */
 	public function validateObjectID($objectID);
 	

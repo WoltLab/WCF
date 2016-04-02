@@ -13,6 +13,12 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.label.group
  * @category	Community Framework
+ *
+ * @property-read	integer		$groupID
+ * @property-read	string		$groupName
+ * @property-read	string		$groupDescription
+ * @property-read	integer		$forceSelection
+ * @property-read	integer		$showOrder
  */
 class LabelGroup extends DatabaseObject implements IRouteController {
 	/**

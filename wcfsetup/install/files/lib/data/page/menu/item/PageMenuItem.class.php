@@ -16,6 +16,21 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.page.menu.item
  * @category	Community Framework
+ *
+ * @property-read	integer		$menuItemID
+ * @property-read	integer		$packageID
+ * @property-read	string		$menuItem
+ * @property-read	string		$parentMenuItem
+ * @property-read	string		$menuItemController
+ * @property-read	string		$menuItemLink
+ * @property-read	string		$menuPosition
+ * @property-read	integer		$showOrder
+ * @property-read	string		$permissions
+ * @property-read	string		$options
+ * @property-read	integer		$isDisabled
+ * @property-read	string		$className
+ * @property-read	integer		$isLandingPage
+ * @property-read	integer		$originIsSystem
  */
 class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	/**

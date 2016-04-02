@@ -17,6 +17,21 @@ use wcf\util\StringUtil;
  * @subpackage	data.box
  * @category	Community Framework
  * @since	2.2
+ *
+ * @property-read	integer		$boxID
+ * @property-read	string		$identifier
+ * @property-read	string		$name
+ * @property-read	string		$boxType
+ * @property-read	string		$position
+ * @property-read	integer		$showOrder
+ * @property-read	integer		$visibleEverywhere
+ * @property-read	integer		$isMultilingual
+ * @property-read	string		$cssClassName
+ * @property-read	integer		$showHeader
+ * @property-read	integer		$originIsSystem
+ * @property-read	integer		$packageID
+ * @property-read	string		$className
+ * @property-read	integer|null	$menuID
  */
 class Box extends DatabaseObject {
 	/**
@@ -27,7 +42,7 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * image media object
-	 * @var	Media
+	 * @var	ViewableMedia
 	 */
 	protected $image = null;
 	
@@ -61,7 +76,7 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * menu object
-	 * @var Menu
+	 * @var	Menu
 	 */
 	protected $menu;
 	

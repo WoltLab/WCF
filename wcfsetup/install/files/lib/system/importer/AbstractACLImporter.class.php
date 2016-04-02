@@ -62,7 +62,7 @@ class AbstractACLImporter extends AbstractImporter {
 			
 			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_acl_option_to_group
 							(optionID, objectID, groupID, optionValue)
-				VALUES		        (?, ?, ?, ?)";
+				VALUES			(?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($data['optionID'], $data['objectID'], $data['groupID'], $data['optionValue']));
 			
@@ -74,7 +74,7 @@ class AbstractACLImporter extends AbstractImporter {
 				
 			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_acl_option_to_user
 							(optionID, objectID, userID, optionValue)
-				VALUES		        (?, ?, ?, ?)";
+				VALUES			(?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($data['optionID'], $data['objectID'], $data['userID'], $data['optionValue']));
 				

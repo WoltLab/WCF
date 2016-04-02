@@ -12,33 +12,40 @@ use wcf\util\StringUtil;
  * Represents a comment response.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ *
+ * @property-read	integer		$responseID
+ * @property-read	integer		$commentID
+ * @property-read	integer		$time
+ * @property-read	integer|null	$userID
+ * @property-read	string		$username
+ * @property-read	string		$message
  */
 class CommentResponse extends DatabaseObject implements IMessage {
 	use TUserContent;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'comment_response';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'responseID';
 	
 	/**
 	 * comment object
-	 * @var	\wcf\data\comment\Comment
+	 * @var	Comment
 	 */
 	protected $comment = null;
 	
 	/**
-	 * @see	\wcf\data\IMessage::getFormattedMessage()
+	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
 		return SimpleMessageParser::getInstance()->parse($this->message);
@@ -47,7 +54,7 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	/**
 	 * Returns comment object related to this response.
 	 * 
-	 * @return	\wcf\data\comment\Comment
+	 * @return	Comment
 	 */
 	public function getComment() {
 		if ($this->comment === null) {
@@ -60,7 +67,7 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	/**
 	 * Sets related comment object.
 	 * 
-	 * @param	\wcf\data\comment\Comment
+	 * @param	Comment
 	 */
 	public function setComment(Comment $comment) {
 		if ($this->commentID == $comment->commentID) {
@@ -69,42 +76,42 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getExcerpt()
+	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = 255) {
 		return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getMessage()
+	 * @inheritDoc
 	 */
 	public function getMessage() {
 		return $this->message;
 	}
 	
 	/**
-	 * @see	\wcf\data\ILinkableObject::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getLink($this->getComment()->objectTypeID, $this->getComment()->objectID);
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle($this->getComment()->objectTypeID, $this->getComment()->objectID, true);
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::__toString()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage();

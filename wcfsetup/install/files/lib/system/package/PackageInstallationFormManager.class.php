@@ -57,7 +57,7 @@ abstract class PackageInstallationFormManager {
 	 * @return	boolean
 	 */
 	public static function findForm(PackageInstallationQueue $queue, $formName) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_package_installation_form
 			WHERE	queueID = ?
 				AND formName = ?";
@@ -66,9 +66,8 @@ abstract class PackageInstallationFormManager {
 			$queue->queueID,
 			$formName
 		));
-		$row = $statement->fetchArray();
 		
-		return (bool)$row['count'];
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**
@@ -104,7 +103,7 @@ abstract class PackageInstallationFormManager {
 		$statement->execute(array(
 			base64_encode(serialize($document)),
 			$queue->queueID,
-			$document->formName
+			$document->formName // TODO: FormDocument::$formName does not exist, FormDocument::getName()?
 		));
 	}
 	

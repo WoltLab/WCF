@@ -26,6 +26,12 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	protected $depth = 0;
 	
 	/**
+	 * true if item or one of its children is active
+	 * @var	boolean
+	 */
+	protected $isActive = false;
+	
+	/**
 	 * menu item object
 	 * @var	MenuItem
 	 */
@@ -121,6 +127,27 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 		}
 	
 		return $i;
+	}
+	
+	/**
+	 * Marks this item and all its direct ancestors as active. 
+	 */
+	public function setIsActive() {
+		$this->isActive = true;
+		
+		// propagate active state to immediate parent
+		if ($this->parentNode) {
+			$this->parentNode->setIsActive();
+		}
+	}
+	
+	/**
+	 * Returns true if this item (or one of its children) is marked as active.
+	 * 
+	 * @return	boolean
+	 */
+	public function isActiveNode() {
+		return $this->isActive;
 	}
 	
 	/**

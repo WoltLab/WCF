@@ -100,10 +100,10 @@ class QuickReplyManager extends SingletonFactory {
 	/**
 	 * Validates parameters for current request.
 	 * 
-	 * @param	\wcf\system\message\IMessageQuickReplyAction	$object
-	 * @param	array<array>					$parameters
-	 * @param	string						$containerClassName
-	 * @param	string						$containerDecoratorClassName
+	 * @param	IMessageQuickReplyAction	$object
+	 * @param	array<array>			$parameters
+	 * @param	string				$containerClassName
+	 * @param	string				$containerDecoratorClassName
 	 */
 	public function validateParameters(IMessageQuickReplyAction $object, array &$parameters, $containerClassName, $containerDecoratorClassName = '') {
 		if (!isset($parameters['data']['message'])) {

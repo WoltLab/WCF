@@ -79,7 +79,7 @@ class EventHandler extends SingletonFactory {
 	 * @param	string		$className
 	 * @param	string		$name
 	 * @param	array		&$parameters
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	protected function executeInheritedActions($eventObj, $eventName, $className, $name, array &$parameters) {
 		// create objects of the actions
@@ -158,7 +158,7 @@ class EventHandler extends SingletonFactory {
 	 * @param	mixed		$eventObj
 	 * @param	string		$eventName
 	 * @param	array		&$parameters
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	public function fireAction($eventObj, $eventName, array &$parameters = array()) {
 		// get class name
@@ -236,7 +236,7 @@ class EventHandler extends SingletonFactory {
 	 * 
 	 * @param	string  $className
 	 * @param	string  $eventName
-	 * @return      string  unique action name
+	 * @return	string  unique action name
 	 */
 	public static function generateKey($className, $eventName) {
 		return $eventName.'@'.$className;

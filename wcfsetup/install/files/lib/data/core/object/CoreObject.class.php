@@ -11,6 +11,10 @@ use wcf\data\DatabaseObject;
  * @package	com.woltlab.wcf
  * @subpackage	data.core.object
  * @category	Community Framework
+ * 
+ * @property-read	integer		$objectID
+ * @property-read	integer		$packageID
+ * @property-read	string		$objectName
  */
 class CoreObject extends DatabaseObject {
 	/**

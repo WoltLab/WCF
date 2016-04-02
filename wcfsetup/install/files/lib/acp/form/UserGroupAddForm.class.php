@@ -4,6 +4,7 @@ use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\option\user\group\UserGroupOptionHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\StringUtil;
@@ -12,7 +13,7 @@ use wcf\util\StringUtil;
  * Shows the group add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -20,28 +21,28 @@ use wcf\util\StringUtil;
  */
 class UserGroupAddForm extends AbstractOptionListForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canAddGroup');
+	public $neededPermissions = ['admin.user.canAddGroup'];
 	
 	/**
 	 * option tree
 	 * @var	array
 	 */
-	public $optionTree = array();
+	public $optionTree = [];
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractOptionListForm::$optionHandlerClassName
+	 * @inheritDoc
 	 */
-	public $optionHandlerClassName = 'wcf\system\option\user\group\UserGroupOptionHandler';
+	public $optionHandlerClassName = UserGroupOptionHandler::class;
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractOptionListForm::$supportI18n
+	 * @inheritDoc
 	 */
 	public $supportI18n = false;
 	
@@ -61,7 +62,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * list of values of group 'Anyone'
 	 * @var	array
 	 */
-	public $defaultValues = array();
+	public $defaultValues = [];
 	
 	/**
 	 * group priority
@@ -82,7 +83,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	protected $showOnTeamPage = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -92,7 +93,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -108,7 +109,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		// validate dynamic options
@@ -138,24 +139,24 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		$optionValues = $this->optionHandler->save();
 		
-		$data = array(
-			'data' => array_merge($this->additionalFields, array(
+		$data = [
+			'data' => array_merge($this->additionalFields, [
 				'groupName' => $this->groupName,
 				'groupDescription' => $this->groupDescription,
 				'priority' => $this->priority,
 				'userOnlineMarking' => $this->userOnlineMarking,
 				'showOnTeamPage' => $this->showOnTeamPage
-			)),
+			]),
 			'options' => $optionValues
-		);
-		$this->objectAction = new UserGroupAction(array(), 'create', $data);
+		];
+		$this->objectAction = new UserGroupAction([], 'create', $data);
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		$groupID = $returnValues['returnValues']->groupID;
@@ -165,36 +166,35 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			
 			// update group name
 			$groupEditor = new UserGroupEditor($returnValues['returnValues']);
-			$groupEditor->update(array(
+			$groupEditor->update([
 				'groupName' => 'wcf.acp.group.group'.$groupID
-			));
+			]);
 		}
 		if (!I18nHandler::getInstance()->isPlainValue('groupDescription')) {
 			I18nHandler::getInstance()->save('groupDescription', 'wcf.acp.group.groupDescription'.$groupID, 'wcf.acp.group', 1);
 				
 			// update group name
 			$groupEditor = new UserGroupEditor($returnValues['returnValues']);
-			$groupEditor->update(array(
+			$groupEditor->update([
 				'groupDescription' => 'wcf.acp.group.groupDescription'.$groupID
-			));
+			]);
 		}
 		
 		$this->saved();
 		
 		// show success message
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 		
 		// reset values
 		$this->groupName = '';
-		$this->optionValues = array();
 		
 		I18nHandler::getInstance()->reset();
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -206,14 +206,14 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'groupName' => $this->groupName,
 			'groupDescription' => $this->groupDescription,
 			'optionTree' => $this->optionTree,
@@ -221,11 +221,11 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'priority' => $this->priority,
 			'userOnlineMarking' => $this->userOnlineMarking,
 			'showOnTeamPage' => $this->showOnTeamPage
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check master password

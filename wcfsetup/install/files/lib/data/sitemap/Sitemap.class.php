@@ -4,7 +4,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
-use wcf\system\WCF;
 
 /**
  * Represents a sitemap entry.
@@ -15,6 +14,14 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.sitemap
  * @category	Community Framework
+ *
+ * @property-read	integer		$sitemapID
+ * @property-read	integer		$packageID
+ * @property-read	string		$sitemapName
+ * @property-read	string		$className
+ * @property-read	integer		$showOrder
+ * @property-read	string		$permissions
+ * @property-read	string		$options
  */
 class Sitemap extends DatabaseObject {
 	use TDatabaseObjectOptions;

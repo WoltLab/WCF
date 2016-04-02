@@ -189,7 +189,7 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 				
 				var moreLink = elCreate('a');
 				elAttr(moreLink, 'href', '#');
-				moreLink.className = 'menuOverlayItemLinkIcon';
+				moreLink.className = 'menuOverlayItemLinkIcon' + (item.classList.contains('active') ? ' active' : '');
 				moreLink.innerHTML = '<span class="icon icon24 fa-angle-right"></span>';
 				moreLink.addEventListener(WCF_CLICK_EVENT, callbackLink);
 				wrapper.appendChild(moreLink);

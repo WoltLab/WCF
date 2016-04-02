@@ -1,8 +1,9 @@
 <?php
 namespace wcf\system\dashboard\box;
 use wcf\data\dashboard\box\DashboardBox;
-use wcf\data\user\UserProfileCache;
+use wcf\data\user\UserProfile;
 use wcf\page\IPage;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -11,7 +12,7 @@ use wcf\util\DateUtil;
  * Shows today's birthdays of users the active user is following.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.dashboard.box
@@ -20,12 +21,12 @@ use wcf\util\DateUtil;
 class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * user profiles
-	 * @var	arra<\wcf\data\user\UserProfile>
+	 * @var	UserProfile[]
 	 */
-	public $userProfiles = array();
+	public $userProfiles = [];
 	
 	/**
-	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
+	 * @inheritDoc
 	 */
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
@@ -39,7 +40,7 @@ class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 		$userIDs = array_intersect($userIDs, WCF::getUserProfileHandler()->getFollowingUsers());
 		
 		if (!empty($userIDs)) {
-			$userProfiles = UserProfileCache::getInstance()->getUserProfiles($userIDs);
+			$userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 			
 			$i = 0;
 			foreach ($userProfiles as $userProfile) {
@@ -56,16 +57,16 @@ class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 	}
 	
 	/**
-	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
+	 * @inheritDoc
 	 */
 	protected function render() {
 		if (empty($this->userProfiles)) {
 			return '';
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'birthdayUserProfiles' => $this->userProfiles
-		));
+		]);
 		return WCF::getTPL()->fetch('dashboardBoxTodaysFollowingBirthdays');
 	}
 }

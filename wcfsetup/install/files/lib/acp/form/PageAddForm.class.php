@@ -38,7 +38,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * true if created page is multi-lingual
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $isMultilingual = 0;
 	
@@ -50,43 +50,43 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * parent page id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $parentPageID = 0;
 	
 	/**
 	 * page name
-	 * @var string
+	 * @var	string
 	 */
 	public $name = '';
 	
 	/**
 	 * true if page is disabled
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $isDisabled = 0;
 	
 	/**
 	 * true if page is landing page
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $isLandingPage = 0;
 	
 	/**
 	 * package id of the page
-	 * @var integer
+	 * @var	integer
 	 */
 	public $packageID = 1;
 	
 	/**
 	 * list of available applications
-	 * @var Application[]
+	 * @var	Application[]
 	 */
 	public $availableApplications = [];
 	
 	/**
 	 * page custom URL
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $customURL = [];
 	
@@ -98,25 +98,25 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * page titles
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $title = [];
 	
 	/**
 	 * page contents
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $content = [];
 	
 	/**
 	 * page meta descriptions
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $metaDescription = [];
 	
 	/**
 	 * page meta keywords
-	 * @var string[]
+	 * @var	string[]
 	 */
 	public $metaKeywords = [];
 	
