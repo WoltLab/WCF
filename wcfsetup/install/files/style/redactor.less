@@ -559,5 +559,11 @@
 	
 	> a {
 		color: @wcfTooltipColor;
+		
+		& + a {
+			border-left: 1px solid @wcfTooltipColor;
+			margin-left: 10px;
+			padding-left: 10px;
+		}
 	}
 }

@@ -2014,12 +2014,29 @@ RedactorPlugins.wbbcode = function() {
 			var $header = $(event.currentTarget).closest('header');
 			var $tooltip = $('<span class="redactor-link-tooltip" />');
 			
+			// edit link
 			$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.edit') + '</a>').click($.proxy(function(e) {
 				e.preventDefault();
 				
 				this.wbbcode._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'), false);
 				$('.redactor-link-tooltip').remove();
 			}, this)).appendTo($tooltip);
+			
+			// delete link
+			$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.delete') + '</a>').click(function(event) {
+				event.preventDefault();
+				
+				var $quote = $header.parent();
+				var $parent = $quote.parent();
+				
+				$quote.remove();
+				$('.redactor-link-tooltip').remove();
+				
+				if ($parent[0].nodeName === 'BLOCKQUOTE' && $parent.children('div').length === 0) {
+					$('<div>\u200b</div>').appendTo($parent);
+				}
+				
+			}).appendTo($tooltip);
 			
 			var $offset = $header.offset();
 			$tooltip.css({
