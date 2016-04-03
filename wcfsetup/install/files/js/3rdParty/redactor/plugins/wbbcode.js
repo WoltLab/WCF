@@ -233,35 +233,27 @@ RedactorPlugins.wbbcode = function() {
 			if (this.opts.visual) {
 				this.wutil.restoreSelection();
 				
-				var $parentBefore = null;
-				if (window.getSelection().rangeCount && window.getSelection().getRangeAt(0).collapsed) {
-					$parentBefore = window.getSelection().getRangeAt(0).startContainer;
-					if ($parentBefore.nodeType === Node.TEXT_NODE) {
-						$parentBefore = $parentBefore.parentElement;
-					}
-					
-					if (!this.utils.isRedactorParent($parentBefore)) {
-						$parentBefore = null;
-					}
+				var $selection = window.getSelection();
+				if (!$selection.rangeCount) {
+					// ensures that we always have a valid selection
+					this.focus.setEnd();
 				}
 				
-				this.insert.html('<img src="' + smileyPath + '" class="smiley" alt="' + smileyCode + '" id="redactorSmiley">', false);
+				var $range = $selection.getRangeAt(0);
 				
-				var $smiley = document.getElementById('redactorSmiley');
-				$smiley.removeAttribute('id');
-				if ($parentBefore !== null) {
-					var $currentParent = window.getSelection().getRangeAt(0).startContainer;
-					if ($currentParent.nodeType === Node.TEXT_NODE) {
-						$currentParent = $currentParent.parentElement;
-					}
-					
-					// smiley has been inserted outside the original caret parent, move
-					if ($parentBefore !== $currentParent) {
-						$parentBefore.appendChild($smiley);
-					}
-				}
+				// discard everything that was previously within the range
+				$range.deleteContents();
 				
-				var $isSpace = function(sibling) {
+				// insert the smiley
+				var $smiley = document.createElement('img');
+				$smiley.src = smileyPath;
+				$smiley.className = 'smiley';
+				$smiley.alt = smileyCode;
+				
+				$range.insertNode($smiley);
+				
+				// add spaces around the smiley that serve as padding
+				function $isSpace(sibling) {
 					if (sibling === null) return false;
 					
 					if ((sibling.nodeType === Node.ELEMENT_NODE && sibling.nodeName === 'SPAN') || sibling.nodeType === Node.TEXT_NODE) {
@@ -271,7 +263,9 @@ RedactorPlugins.wbbcode = function() {
 					}
 					
 					return false;
-				};
+				}
+				
+				var $lastNode = $smiley;
 				
 				// add spaces as paddings
 				var $parent = $smiley.parentElement;
@@ -288,7 +282,17 @@ RedactorPlugins.wbbcode = function() {
 					else {
 						$parent.insertBefore($node, $smiley.nextSibling);
 					}
+					
+					$lastNode = $node;
 				}
+				
+				// force caret after the inserted smiley
+				var $range = document.createRange();
+				$range.selectNode($lastNode);
+				$range.collapse(false);
+				
+				$selection.removeAllRanges();
+				$selection.addRange($range);
 				
 				this.wutil.saveSelection();
 			}
