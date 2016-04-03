@@ -69,24 +69,26 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge">{#$items}</span></h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge">{#$items}</span></h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
 
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='ModerationList' link="definitionID=$definitionID&assignedUserID=$assignedUserID&status=$status&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
-	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='ModerationList' link="definitionID=$definitionID&assignedUserID=$assignedUserID&status=$status&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox messageGroupList moderationList">
@@ -135,19 +137,21 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
-					{content}
-						{event name='contentNavigationButtonsBottom'}
-					{/content}
+					{content}{event name='contentFooterNavigation'}{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

@@ -13,7 +13,17 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.user.accountManagement{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.user.accountManagement{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
@@ -31,18 +41,6 @@
 {/if}
 
 {assign var=__authProvider value=$__wcf->getUserProfileHandler()->getAuthProvider()}
-
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
 
 <form method="post" action="{link controller='AccountManagement'}{/link}">
 	{if !$__authProvider}

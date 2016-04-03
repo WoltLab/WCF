@@ -10,7 +10,17 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.user.registerActivation{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.user.registerActivation{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
@@ -18,18 +28,6 @@
 {if $__wcf->user->userID && $__wcf->user->activationCode}<p class="info">{lang}wcf.user.registerActivation.info{/lang}</p>{/if}
 
 {include file='formError'}
-
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
 
 <form method="post" action="{link controller='RegisterActivation'}{/link}">
 	<div class="section">

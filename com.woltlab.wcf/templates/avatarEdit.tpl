@@ -13,7 +13,17 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.user.avatar.edit{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.user.avatar.edit{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
@@ -27,18 +37,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
 
 <form method="post" action="{link controller='AvatarEdit'}{/link}" id="avatarForm">
 	<div class="section avatarEdit">

@@ -107,28 +107,32 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{if $searchID}{lang}wcf.user.search.results{/lang}{else}{lang}wcf.user.members{/lang}{/if} <span class="badge">{#$items}</span></h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{if $searchID}{lang}wcf.user.search.results{/lang}{else}{lang}wcf.user.members{/lang}{/if} <span class="badge">{#$items}</span></h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
 
-<div class="contentNavigation">
-	{if $searchID}
-		{pages print=true assign=pagesLinks controller='MembersList' id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
-	{else}
-		{pages print=true assign=pagesLinks controller='MembersList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
-	{/if}
-	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{if $searchID}
+				{pages print=true assign=pagesLinks controller='MembersList' id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
+			{else}
+				{pages print=true assign=pagesLinks controller='MembersList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
+			{/if}
+		{/content}
+	</div>
+{/hascontent}
 
 {if $items}
 	<div class="section sectionContainerList">
@@ -142,19 +146,21 @@
 	<p class="info">{lang}wcf.user.members.noMembers{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	{@$pagesLinks}
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
 	
 	{hascontent}
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsBottom'}
-				{/content}
+				{content}{event name='contentFooterNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</footer>
 
 {include file='footer'}
 

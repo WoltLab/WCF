@@ -31,32 +31,49 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.moderation.report{/lang}: {$queue->getTitle()}</h1>
-	
-	{if $queue->lastChangeTime}
-		<dl class="plain inlineDataList">
-			<dt>{lang}wcf.moderation.lastChangeTime{/lang}</dt>
-			<dd>{@$queue->lastChangeTime|time}</dd>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.moderation.report{/lang}: {$queue->getTitle()}</h1>
+		
+		{if $queue->lastChangeTime}
+			<dl class="plain inlineDataList">
+				<dt>{lang}wcf.moderation.lastChangeTime{/lang}</dt>
+				<dd>{@$queue->lastChangeTime|time}</dd>
+			</dl>
+		{/if}
+		
+		<dl class="plain inlineDataList" id="moderationAssignedUserContainer">
+			<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
+			<dd>
+				<span>
+					{if $queue->assignedUserID}
+						<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
+					{else}
+						{lang}wcf.moderation.assignedUser.nobody{/lang}
+					{/if}
+				</span>
+			</dd>
 		</dl>
-	{/if}
+		
+		<dl class="plain inlineDataList" id="moderationStatusContainer">
+			<dt>{lang}wcf.moderation.status{/lang}</dt>
+			<dd>{$queue->getStatus()}</dd>
+		</dl>
+	</div>
 	
-	<dl class="plain inlineDataList" id="moderationAssignedUserContainer">
-		<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
-		<dd>
-			<span>
-				{if $queue->assignedUserID}
-					<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
-				{else}
-					{lang}wcf.moderation.assignedUser.nobody{/lang}
-				{/if}
-			</span>
-		</dd>
-	</dl>
-	
-	<dl class="plain inlineDataList" id="moderationStatusContainer">
-		<dt>{lang}wcf.moderation.status{/lang}</dt>
-		<dd>{$queue->getStatus()}</dd>
-	</dl>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if !$queue->isDone()}
+						{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
+						<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
+					{/if}
+					{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
@@ -71,20 +88,6 @@
 	
 	{@$reportedContent}
 </section>
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			{if !$queue->isDone()}
-				{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
-				<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
-			{/if}
-			{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>

@@ -14,30 +14,36 @@
 
 {if $page->isLandingPage}
 	<header class="contentHeader">
-		<h1 class="contentTitle">{PAGE_TITLE|language}</h1>
-		{hascontent}<p>{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">{PAGE_TITLE|language}</h1>
+			{hascontent}<p>{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
+		</div>
+		
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul>
+					{content}{event name='contentHeaderNavigation'}{/content}
+				</ul>
+			</nav>
+		{/hascontent}
 	</header>
-{else}
-	{if $content[title]}
-		<header class="contentHeader">
+{elseif $content[title]}
+	<header class="contentHeader">
+		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$content[title]}</h1>
-		</header>
-	{/if}	
+		</div>
+		
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul>
+					{content}{event name='contentHeaderNavigation'}{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</header>
 {/if}
 
 {include file='userNotice'}
-
-{hascontent}
-	<div class="contentNavigation">
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	</div>
-{/hascontent}
 
 {if $content[content]}
 	{if $page->pageType == 'text'}
@@ -51,17 +57,15 @@
 	{/if}
 {/if}
 
-{hascontent}
-	<div class="contentNavigation">
-		<nav>
+<footer class="contentFooter">
+	{hascontent}
+		<nav class="contentFooterNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsBottom'}
-				{/content}
+				{content}{event name='contentFooterNavigation'}{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</footer>
 
 {include file='footer'}
 

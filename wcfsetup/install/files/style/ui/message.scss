@@ -1,7 +1,6 @@
 .messageList {
 	border: 1px solid $wcfContentBorder;
 	border-width: 1px 0;
-	margin: 30px 0;
 	
 	> li {
 		@include large-screen-only {

@@ -19,7 +19,7 @@
 	{/if}
 {/foreach}
 
-<div class="contentNavigation"><div class="jsPagination"></div></div>
+<div class="paginationTop jsPagination"></div>
 
 <script data-relocate="true">
 	//<![CDATA[

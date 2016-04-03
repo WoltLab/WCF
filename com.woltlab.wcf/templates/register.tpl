@@ -39,7 +39,17 @@
 {include file='header' __disableLoginLink=true __disableAds=true}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.user.register{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.user.register{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
@@ -49,18 +59,6 @@
 {/if}
 
 {include file='formError'}
-
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
 
 <form method="post" action="{link controller='Register'}{/link}">
 	<section class="section">

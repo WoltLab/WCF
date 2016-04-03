@@ -25,26 +25,29 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.user.notification.notifications{/lang} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
-</header>
-
-{include file='userNotice'}
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.user.notification.notifications{/lang} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
+	</div>
 	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
 					{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<li class="jsOnly"><a class="button jsMarkAllAsConfirmed"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.user.notification.markAllAsConfirmed{/lang}</span></a></li>{/if}
-					
-					{event name='contentNavigationButtonsTop'}
+					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{include file='userNotice'}
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}{/content}
+	</div>
+{/hascontent}
 
 {if $notifications[notifications]}
 	{assign var=lastPeriod value=''}
@@ -103,19 +106,21 @@
 		</ul>
 	</section>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
-					{content}
-						{event name='contentNavigationButtonsBottom'}
-					{/content}
+					{content}{event name='contentFooterNavigation'}{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.user.notification.noNotifications{/lang}</p>
 {/if}

@@ -27,24 +27,26 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
 
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='DeletedContentList' link="objectType=$objectType&pageNo=%d"}
-	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='DeletedContentList' link="objectType=$objectType&pageNo=%d"}{/content}
+	</div>
+{/hascontent}
 
 {if $items}
 	{include file=$resultListTemplateName application=$resultListApplication}
@@ -52,21 +54,21 @@
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	{@$pagesLinks}
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
 	
 	{hascontent}
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsBottom'}
-				{/content}
+				{content}{event name='contentFooterNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-	
-	<nav class="jsClipboardEditor" data-types="[ '{@$objectType}' ]"></nav>
-</div>
+</footer>
 
 {include file='footer'}
 

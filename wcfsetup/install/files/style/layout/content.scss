@@ -20,7 +20,9 @@
 			color: $wcfContentHeadlineLinkActive; // todo: rename variable
 		}
 	}
-	
+}
+
+.contentHeader {
 	.contentHeaderDescription {
 		color: $wcfContentDimmedText;
 		margin-top: 5px;
@@ -45,10 +47,36 @@
 		}
 	}
 	
+	@include large-screen-only {
+		display: flex;
+		
+		.contentHeaderIcon {
+			flex: 0 0 64px;
+			margin-right: 15px
+		}
+		
+		.contentHeaderTitle {
+			flex: 1 1 auto;
+		}
+		
+		.contentHeaderNavigation {
+			flex: 0 0 auto;
+			margin-left: 15px;
+			
+			> ul {
+				@include inlineList;
+				
+				flex-wrap: nowrap;
+			}
+		}
+	}
+	
 	@include small-screen-only {
 		.contentHeaderIcon {
 			display: none;
 		}
+		
+		// TODO: mobile optimization for `.contentHeaderNavigation`
 	}
 }
 
@@ -78,7 +106,11 @@
 
 /* content sections */
 .section {
-	margin-top: 40px;	
+	margin-top: 40px;
+	
+	> :first-child {
+		margin-top: 0;
+	}
 	
 	.sectionHeader {
 		position: relative;
@@ -219,7 +251,7 @@ fieldset {
 	}
 }
 
-/* styling for content navigation area (containing pagination / page buttons) */
+/* DEPRECATED: styling for content navigation area (containing pagination / page buttons) */
 .contentNavigation {
 	& + .section {
 		margin-top: 30px;
@@ -291,11 +323,63 @@ fieldset {
 	}
 }
 
+.paginationTop {
+	margin-top: 40px;
+	
+	& + .section {
+		margin-top: 20px;
+	}
+}
+
+.contentFooter {
+	display: flex;
+	
+	> .paginationBottom {
+		flex: 0 0 auto;
+		margin-top: 20px;
+	}
+	
+	> .contentFooterNavigation {
+		flex: 1 1 auto;
+		margin: 20px 0 0 20px;
+		text-align: right;
+	}
+}
+
+/* content navigation buttons */
 @include small-screen-only {
+	.contentHeader > .contentHeaderNavigation > ul {
+		margin-top: 30px;
+		
+		> li {
+			&:not(:first-child) {
+				margin-top: 10px;
+			}
+			
+			> .button {
+				display: block;
+				padding: 7px 10px;
+				text-align: center;
+			}
+		}
+	}
+}
+
+@include small-screen-only {
+	.paginationTop {
+		display: none;
+		
+		& + .section {
+			margin-top: 30px;
+		}
+	}
+	
+	/* DEPRECATED */
 	.contentNavigation > .pagination {
 		display: none;
 	}
 	
+	/* DEPRECATED */
 	.section ~ .contentNavigation > .pagination {
 		display: block;
 		

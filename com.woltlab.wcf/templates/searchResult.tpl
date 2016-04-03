@@ -11,48 +11,58 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
-	<p class="contentHeaderDescription">{lang}wcf.search.results.description{/lang}</p>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
+		<p class="contentHeaderDescription">{lang}wcf.search.results.description{/lang}</p>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $alterable}
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
 
-<div class="contentNavigation">
-	{assign var=encodedHighlight value=$highlight|urlencode}
-	{pages print=true application=$application assign=pagesLinks controller='SearchResult' id=$searchID link="pageNo=%d&highlight=$encodedHighlight"}
-	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
-					{/if}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var=encodedHighlight value=$highlight|urlencode}
+			{pages print=true application=$application assign=pagesLinks controller='SearchResult' id=$searchID link="pageNo=%d&highlight=$encodedHighlight"}
+		{/content}
+	</div>
+{/hascontent}
 
 {include file=$resultListTemplateName application=$resultListApplication}
 
-<div class="contentNavigation">
-	{@$pagesLinks}
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
 	
 	{hascontent}
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
 				{content}
 					{if $alterable}
 						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
 					{/if}
-					{event name='contentNavigationButtonsBottom'}
+					{event name='contentFooterNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</footer>
 
 {include file='footer'}
 

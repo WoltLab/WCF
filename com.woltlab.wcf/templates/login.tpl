@@ -18,7 +18,15 @@
 {include file='header' __disableLoginLink=true __disableAds=true}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.user.login{/lang}</h1>
+	<div class="contentHeaderTitle"><h1 class="contentTitle">{lang}wcf.user.login{/lang}</h1></div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='userNotice'}
@@ -28,18 +36,6 @@
 {else}
 	{include file='formError'}
 {/if}
-
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
 
 <form method="post" action="{@$loginController}" id="loginForm">
 	<div class="section">

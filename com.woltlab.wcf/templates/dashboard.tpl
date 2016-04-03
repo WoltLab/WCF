@@ -20,44 +20,50 @@
 
 {if $__wcf->getPageMenu()->getLandingPage()->menuItem == 'wcf.user.dashboard'}
 	<header class="contentHeader">
-		<h1 class="contentTitle">{PAGE_TITLE|language}</h1>
-		{hascontent}<p class="contentHeaderDescription">{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">{PAGE_TITLE|language}</h1>
+			{hascontent}<p class="contentHeaderDescription">{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
+		</div>
+		
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul>
+					{content}{event name='contentHeaderNavigation'}{/content}
+				</ul>
+			</nav>
+		{/hascontent}
 	</header>
 {else}
 	<header class="contentHeader">
-		<h1 class="contentTitle">{lang}wcf.user.dashboard{/lang}</h1>
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">{lang}wcf.user.dashboard{/lang}</h1>
+		</div>
+		
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul>
+					{content}{event name='contentHeaderNavigation'}{/content}
+				</ul>
+			</nav>
+		{/hascontent}
 	</header>
 {/if}
 
 {include file='userNotice'}
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
-
 <section id="dashboard">
 	{if $__boxContent|isset}{@$__boxContent}{/if}
 </section>
 
-<div class="contentNavigation">
+<footer class="contentFooter">
 	{hascontent}
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsBottom'}
-				{/content}
+				{content}{event name='contentFooterNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</footer>
 
 {include file='footer'}
 
