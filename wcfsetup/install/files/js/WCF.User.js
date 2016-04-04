@@ -405,7 +405,11 @@ WCF.User.Panel.Abstract = Class.extend({
 	 * Resets the dropdown's inner item list.
 	 */
 	resetItems: function() {
-		this._dropdown.resetItems();
+		// this method could be called from outside, but the dropdown was never
+		// toggled and thus never initialized
+		if (this._dropdown !== null) {
+			this._dropdown.resetItems();
+		}
 	}
 });
 
