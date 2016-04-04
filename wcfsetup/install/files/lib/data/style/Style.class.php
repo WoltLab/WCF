@@ -108,16 +108,8 @@ class Style extends DatabaseObject {
 		while ($row = $statement->fetchArray()) {
 			$variableName = $row['variableName'];
 			$variableValue = (isset($row['variableValue'])) ? $row['variableValue'] : $row['defaultValue'];
-			if (empty($variableValue)) {
-				$variableValue = '~""';
-			}
 			
 			$this->variables[$variableName] = $variableValue;
-			
-			// provide an empty value for LESS-compiler
-			if (empty($this->variables[$variableName])) {
-				$this->variables[$variableName] = "~''";
-			}
 		}
 	}
 	
