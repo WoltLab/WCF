@@ -652,8 +652,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	public function markAsTainted() {
 		// merge definitions
 		$variables = $this->styleEditor->getVariables();
-		$variables['individualLess'] = str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['individualLess']);
-		$variables['overrideLess'] = str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['overrideLess']);
+		$variables['individualScss'] = str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['individualScss']);
+		$variables['overrideScss'] = str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['overrideScss']);
 		$this->styleEditor->setVariables($variables);
 		
 		$this->styleEditor->update([

@@ -318,7 +318,7 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		
-		if (!empty($this->variables['overrideLess'])) {
+		if (!empty($this->variables['overrideScss'])) {
 			$this->parseOverrides();
 		}
 	}
@@ -340,7 +340,7 @@ class StyleAddForm extends AbstractForm {
 			$variables[] = $row['variableName'];
 		}
 		
-		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideLess']));
+		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideScss']));
 		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$');
 		$errors = [];
 		foreach ($lines as $index => &$line) {
@@ -382,10 +382,10 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		
-		$this->variables['overrideLess'] = implode("\n", $lines);
+		$this->variables['overrideScss'] = implode("\n", $lines);
 		
 		if (!empty($errors)) {
-			throw new UserInputException('overrideLess', $errors);
+			throw new UserInputException('overrideScss', $errors);
 		}
 	}
 	
@@ -480,8 +480,8 @@ class StyleAddForm extends AbstractForm {
 		
 		// set specialized variables
 		$this->specialVariables = [
-			'individualLess',
-			'overrideLess',
+			'individualScss',
+			'overrideScss',
 			'pageLogo',
 			'useFluidLayout',
 			'useGoogleFont',

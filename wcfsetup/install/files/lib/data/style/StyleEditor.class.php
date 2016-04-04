@@ -504,11 +504,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			$variables = $style->getVariables();
 			
-			$individualLess = Style::splitLessVariables($variables['individualLess']);
-			$variables['individualLess'] = Style::joinLessVariables($styleData['variables']['individualLess'], $individualLess['custom']);
+			$individualScss = Style::splitLessVariables($variables['individualScss']);
+			$variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'], $individualScss['custom']);
 			
-			$overrideLess = Style::splitLessVariables($variables['overrideLess']);
-			$variables['overrideLess'] = Style::joinLessVariables($styleData['variables']['overrideLess'], $overrideLess['custom']);
+			$overrideScss = Style::splitLessVariables($variables['overrideScss']);
+			$variables['overrideScss'] = Style::joinLessVariables($styleData['variables']['overrideScss'], $overrideScss['custom']);
 			
 			$styleData['variables'] = $variables;
 			

@@ -840,35 +840,35 @@
 				{* custom declarations *}
 				<div id="advanced-custom" class="tabMenuContent">
 					<section class="section">
-						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualLess{/lang}</h2>
+						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScss{/lang}</h2>
 						
 						<dl class="wide">
 							<dt></dt>
 							<dd>
-								<textarea id="individualLessCustom" rows="20" cols="40" name="individualLessCustom">{$variables[individualLessCustom]}</textarea>
-								<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
+								<textarea id="individualScssCustom" rows="20" cols="40" name="individualScssCustom">{$variables[individualScssCustom]}</textarea>
+								<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 							</dd>
 						</dl>
 					</section>
 					
-					<section class="section{if $errorField == 'overrideLessCustom'} formError{/if}">
-						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideLess{/lang}</h2>
+					<section class="section{if $errorField == 'overrideScssCustom'} formError{/if}">
+						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideScss{/lang}</h2>
 						
 						<dl class="wide">
 							<dt></dt>
 							<dd>
-								<textarea id="overrideLessCustom" rows="20" cols="40" name="overrideLessCustom">{$variables[overrideLessCustom]}</textarea>
-								{if $errorField == 'overrideLessCustom'}
+								<textarea id="overrideScssCustom" rows="20" cols="40" name="overrideScssCustom">{$variables[overrideScssCustom]}</textarea>
+								{if $errorField == 'overrideScssCustom'}
 									<small class="innerError">
-										{lang}wcf.acp.style.advanced.overrideLess.error{/lang}
-										{implode from=$errorType item=error}{lang}wcf.acp.style.advanced.overrideLess.error.{$error.error}{/lang}{/implode}
+										{lang}wcf.acp.style.advanced.overrideScss.error{/lang}
+										{implode from=$errorType item=error}{lang}wcf.acp.style.advanced.overrideScss.error.{$error.error}{/lang}{/implode}
 									</small>
 								{/if}
-								<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
+								<small>{lang}wcf.acp.style.advanced.overrideScss.description{/lang}</small>
 							</dd>
 						</dl>
 					</section>
-					{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualLessCustom, #overrideLessCustom'}
+					{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualScssCustom, #overrideScssCustom'}
 					
 					{event name='syntaxFieldsetsCustom'}
 				</div>
@@ -878,35 +878,35 @@
 			{/if}
 			
 			<section class="section">
-				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualLess{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
+				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScss{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 				
 				<dl class="wide">
 					<dt></dt>
 					<dd>
-						<textarea id="individualLess" rows="20" cols="40" name="individualLess">{$variables[individualLess]}</textarea>
-						<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
+						<textarea id="individualScss" rows="20" cols="40" name="individualScss">{$variables[individualScss]}</textarea>
+						<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 					</dd>
 				</dl>
 			</section>
 			
-			<section class="section{if $errorField == 'overrideLess'} formError{/if}">
-				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideLess{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
+			<section class="section{if $errorField == 'overrideScss'} formError{/if}">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideScss{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 				
 				<dl class="wide">
 					<dt></dt>
 					<dd>
-						<textarea id="overrideLess" rows="20" cols="40" name="overrideLess">{$variables[overrideLess]}</textarea>
-						{if $errorField == 'overrideLess'}
+						<textarea id="overrideScss" rows="20" cols="40" name="overrideScss">{$variables[overrideScss]}</textarea>
+						{if $errorField == 'overrideScss'}
 							<small class="innerError">
-								{lang}wcf.acp.style.advanced.overrideLess.error{/lang}
-								{implode from=$errorType item=error}{lang}wcf.acp.style.advanced.overrideLess.error.{$error.error}{/lang}{/implode}
+								{lang}wcf.acp.style.advanced.overrideScss.error{/lang}
+								{implode from=$errorType item=error}{lang}wcf.acp.style.advanced.overrideScss.error.{$error.error}{/lang}{/implode}
 							</small>
 						{/if}
-						<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
+						<small>{lang}wcf.acp.style.advanced.overrideScss.description{/lang}</small>
 					</dd>
 				</dl>
 			</section>
-			{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualLess, #overrideLess' editable=$isTainted}
+			{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualScss, #overrideScss' editable=$isTainted}
 			
 			{event name='syntaxFieldsetsOriginal'}
 			

@@ -58,24 +58,24 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 		 * @param	{boolean}	isTainted	false if style is in protected mode
 		 */
 		_handleLess: function(isTainted) {
-			var individualLess = elById('individualLess');
-			var overrideLess = elById('overrideLess');
+			var individualScss = elById('individualScss');
+			var overrideScss = elById('overrideScss');
 			
 			if (isTainted) {
 				EventHandler.add('com.woltlab.wcf.simpleTabMenu_styleTabMenuContainer', 'select', function(data) {
-					individualLess.codemirror.refresh();
-					overrideLess.codemirror.refresh();
+					individualScss.codemirror.refresh();
+					overrideScss.codemirror.refresh();
 				});
 			}
 			else {
 				EventHandler.add('com.woltlab.wcf.simpleTabMenu_advanced', 'select', function(data) {
 					if (data.activeName === 'advanced-custom') {
-						elById('individualLessCustom').codemirror.refresh();
-						elById('overrideLessCustom').codemirror.refresh();
+						elById('individualScssCustom').codemirror.refresh();
+						elById('overrideScssCustom').codemirror.refresh();
 					}
 					else if (data.activeName === 'advanced-original') {
-						individualLess.codemirror.refresh();
-						overrideLess.codemirror.refresh();
+						individualScss.codemirror.refresh();
+						overrideScss.codemirror.refresh();
 					}
 				});
 			}

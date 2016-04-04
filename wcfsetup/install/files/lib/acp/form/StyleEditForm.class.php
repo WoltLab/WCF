@@ -63,13 +63,13 @@ class StyleEditForm extends StyleAddForm {
 		unset($variableValue);
 		
 		if (!$this->style->isTainted) {
-			$tmp = Style::splitLessVariables($this->variables['individualLess']);
-			$this->variables['individualLess'] = $tmp['preset'];
-			$this->variables['individualLessCustom'] = $tmp['custom'];
+			$tmp = Style::splitLessVariables($this->variables['individualScss']);
+			$this->variables['individualScss'] = $tmp['preset'];
+			$this->variables['individualScssCustom'] = $tmp['custom'];
 			
-			$tmp = Style::splitLessVariables($this->variables['overrideLess']);
-			$this->variables['overrideLess'] = $tmp['preset'];
-			$this->variables['overrideLessCustom'] = $tmp['custom'];
+			$tmp = Style::splitLessVariables($this->variables['overrideScss']);
+			$this->variables['overrideScss'] = $tmp['preset'];
+			$this->variables['overrideScssCustom'] = $tmp['custom'];
 		}
 	}
 	
@@ -80,8 +80,8 @@ class StyleEditForm extends StyleAddForm {
 		parent::setVariables();
 		
 		if (!$this->style->isTainted) {
-			$this->specialVariables[] = 'individualLessCustom';
-			$this->specialVariables[] = 'overrideLessCustom';
+			$this->specialVariables[] = 'individualScssCustom';
+			$this->specialVariables[] = 'overrideScssCustom';
 		}
 	}
 	
@@ -117,11 +117,11 @@ class StyleEditForm extends StyleAddForm {
 		
 		// TODO: how should this actually work?
 		/*if (!$this->style->isTainted) {
-			$this->variables['individualLess'] = Style::joinLessVariables($this->variables['individualLess'], $this->variables['individualLessCustom']);
-			$this->variables['overrideLess'] = Style::joinLessVariables($this->variables['overrideLess'], $this->variables['overrideLessCustom']);
+			$this->variables['individualScss'] = Style::joinLessVariables($this->variables['individualScss'], $this->variables['individualScssCustom']);
+			$this->variables['overrideScss'] = Style::joinLessVariables($this->variables['overrideScss'], $this->variables['overrideScssCustom']);
 			
-			unset($this->variables['individualLessCustom']);
-			unset($this->variables['overrideLessCustom']);
+			unset($this->variables['individualScssCustom']);
+			unset($this->variables['overrideScssCustom']);
 		}*/
 		
 		$this->objectAction = new StyleAction(array($this->style), 'update', array(

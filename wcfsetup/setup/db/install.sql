@@ -1944,9 +1944,9 @@ INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMess
 
 -- style default values
 
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualScss', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('messageSidebarOrientation', 'left');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideScss', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useGoogleFont', '1');
