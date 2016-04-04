@@ -1315,6 +1315,19 @@ RedactorPlugins.wbbcode = function() {
 						var $tmp = '';
 						
 						if (innerContent.length) {
+							// remove lists to prevent them being handled by the code above
+							var $cachedLists = [];
+							innerContent = innerContent.replace(/(<(ol|ul)[^>]*>[\s\S]+?<\/\2>)/g, function(match) {
+								var $hash = WCF.getUUID();
+								
+								$cachedLists.push({
+									hash: $hash,
+									content: match
+								});
+								
+								return '@@' + $hash + '@@';
+							});
+							
 							var $lines = innerContent.split('\n');
 							for (var $i = 0; $i < $lines.length; $i++) {
 								var $line = $lines[$i];
@@ -1330,6 +1343,20 @@ RedactorPlugins.wbbcode = function() {
 								}
 								
 								$tmp += '<div>' + $line + '</div>';
+							}
+							
+							// reinsert lists
+							if ($cachedLists.length) {
+								for (var $i = 0, $length = $cachedLists.length; $i < $length; $i++) {
+									var $content = $cachedLists[$i].content;
+									
+									// line-breaks within list items must be a <br> instead of <p></p>
+									$content = $content.replace(/(<li>[\s\S]*?<\/li>)/g, function(match) {
+										return $.trim(match).replace(/\n/g, '<br>');
+									});
+									
+									$tmp = $tmp.replace(new RegExp('@@' + $cachedLists[$i].hash + '@@'), $content);
+								}
 							}
 						}
 						else {
@@ -1576,7 +1603,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// some fixes for paste from Microsoft Word / OpenOffice / LibreOffice
 			if (/<p class="MsoNormal/.test(html) || /margin-bottom: 0cm/.test(html)) {
-				console.debug("hit");
 				// fix weird newlines
 				html = html.replace(/([^>\s])\n([^<\s])/g, '$1 $2');
 				
