@@ -582,9 +582,6 @@
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete]]></item>
-		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Seitenmenü]]></item>
-		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menüpunkte]]></item>
 		<item name="wcf.acp.menu.link.style"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Stil hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Stil importieren]]></item>
@@ -1260,35 +1257,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Mitgliedschaft manuell zuweisen]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Es muss mindestens ein Zahlungsanbieter in den Optionen unter „Zahlungsoptionen“ ausgewählt sein, um bezahlte Mitgliedschaften erstellen zu können.]]></item>
 		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Wollen Sie die bezahlte Mitgliedschaft „{$subscription->title|language}“ wirklich löschen?]]></item>
-	</category>
-	
-	<category name="wcf.acp.pageMenu">
-		<item name="wcf.acp.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
-		<item name="wcf.acp.pageMenu.advanced"><![CDATA[Erweitert]]></item>
-		<item name="wcf.acp.pageMenu.data"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Wollen Sie den Menüpunkt „{$__menuItem}“ und alle Untermenüpunkte wirklich löschen?]]></item>
-		<item name="wcf.acp.pageMenu.edit"><![CDATA[Menüpunkt bearbeiten]]></item>
-		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
-		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
-		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
-		<item name="wcf.acp.pageMenu.landingPage.description"><![CDATA[Sie können mittels Sortierung die Startseite Ihrer Website festlegen, es wird immer der erste Eintrag aus dem Hauptmenü verwendet.]]></item>
-		<item name="wcf.acp.pageMenu.link"><![CDATA[Link]]></item>
-		<item name="wcf.acp.pageMenu.link.external"><![CDATA[Externer Link]]></item>
-		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Interner Link]]></item>
-		<item name="wcf.acp.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
-		<item name="wcf.acp.pageMenu.menuItemController"><![CDATA[Controller]]></item>
-		<item name="wcf.acp.pageMenu.menuItemController.description"><![CDATA[Sollte die gewünschte Seite in der obigen Auswahl nicht vorhanden sein, können Sie manuell den entsprechenden Controller angeben. Bitte geben Sie dabei den vollständigen Klassennamen inklusive Namespace an, zum Beispiel „wcf\page\DashboardPage“.]]></item>
-		<item name="wcf.acp.pageMenu.menuItemController.error.notValid"><![CDATA[Die angegebene Klasse konnte nicht gefunden werden]]></item>
-		<item name="wcf.acp.pageMenu.menuItemLink"><![CDATA[Link]]></item>
-		<item name="wcf.acp.pageMenu.menuPosition"><![CDATA[Position]]></item>
-		<item name="wcf.acp.pageMenu.menuPosition.footer"><![CDATA[Fußzeile]]></item>
-		<item name="wcf.acp.pageMenu.menuPosition.header"><![CDATA[Hauptmenü]]></item>
-		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
-		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
-		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
-		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[Parameter]]></item>
-		<item name="wcf.acp.pageMenu.menuItemPage"><![CDATA[Seite]]></item>
-		<item name="wcf.acp.pageMenu.menuItemPage.description"><![CDATA[Wählen Sie die interne Seite aus, die Sie verlinken möchten.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pluginStore">

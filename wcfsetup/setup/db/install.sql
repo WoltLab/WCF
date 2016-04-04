@@ -935,25 +935,6 @@ CREATE TABLE wcf1_page_content (
 	UNIQUE KEY (pageID, languageID)
 );
 
-DROP TABLE IF EXISTS wcf1_page_menu_item;
-CREATE TABLE wcf1_page_menu_item (
-	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	packageID INT(10) NOT NULL,
-	menuItem VARCHAR(255) NOT NULL DEFAULT '',
-	parentMenuItem VARCHAR(255) NOT NULL DEFAULT '',
-	menuItemController VARCHAR(255) NOT NULL DEFAULT '',
-	menuItemLink VARCHAR(255) NOT NULL DEFAULT '',
-	menuPosition ENUM('header', 'footer') NOT NULL DEFAULT 'header',
-	showOrder INT(10) NOT NULL DEFAULT 0,
-	permissions TEXT NULL,
-	options TEXT NULL,
-	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
-	className VARCHAR(255) NOT NULL DEFAULT '',
-	isLandingPage TINYINT(1) NOT NULL DEFAULT 0,
-	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
-	UNIQUE KEY (packageID, menuItem)
-);
-
 DROP TABLE IF EXISTS wcf1_paid_subscription;
 CREATE TABLE wcf1_paid_subscription (
 	subscriptionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1765,8 +1746,6 @@ ALTER TABLE wcf1_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packa
 
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 

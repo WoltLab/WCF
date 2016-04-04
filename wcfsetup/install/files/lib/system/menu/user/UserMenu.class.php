@@ -2,7 +2,6 @@
 namespace wcf\system\menu\user;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\cache\builder\UserMenuCacheBuilder;
-use wcf\system\menu\page\IPageMenuItemProvider;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
 
@@ -32,9 +31,9 @@ class UserMenu extends TreeMenu {
 	protected function checkMenuItem(ITreeMenuItem $item) {
 		if (!parent::checkMenuItem($item)) return false;
 		
-		if ($item instanceof ProcessibleDatabaseObject && $item->getProcessor() instanceof IPageMenuItemProvider) {
+		/*if ($item instanceof ProcessibleDatabaseObject && $item->getProcessor() instanceof IPageMenuItemProvider) { @todo
 			return $item->getProcessor()->isVisible();
-		}
+		}*/
 		
 		return true;
 	}

@@ -580,9 +580,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install Package]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Package Servers]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Page Menu]]></item>
-		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Add Menu Item]]></item>
-		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menu Items]]></item>
 		<item name="wcf.acp.menu.link.style"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Add Style]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Import Style]]></item>
@@ -1258,35 +1255,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Manually Add Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the option “Supported Payment Methods”.]]></item>
 		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Do you really want to delete the paid subscription “{$subscription->title|language}”?]]></item>
-	</category>
-	
-	<category name="wcf.acp.pageMenu">
-		<item name="wcf.acp.pageMenu.add"><![CDATA[Add Menu Item]]></item>
-		<item name="wcf.acp.pageMenu.advanced"><![CDATA[Advanced]]></item>
-		<item name="wcf.acp.pageMenu.data"><![CDATA[General]]></item>
-		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Do you really want to delete the menu item “{$__menuItem}” and all its descendants?]]></item>
-		<item name="wcf.acp.pageMenu.edit"><![CDATA[Edit Menu Item]]></item>
-		<item name="wcf.acp.pageMenu.footer"><![CDATA[Footer]]></item>
-		<item name="wcf.acp.pageMenu.header"><![CDATA[Header]]></item>
-		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Disable menu item]]></item>
-		<item name="wcf.acp.pageMenu.landingPage.description"><![CDATA[The first menu item is always the website’s landing page, sort items to change it.]]></item>
-		<item name="wcf.acp.pageMenu.link"><![CDATA[Link]]></item>
-		<item name="wcf.acp.pageMenu.link.external"><![CDATA[External link]]></item>
-		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Internal link]]></item>
-		<item name="wcf.acp.pageMenu.list"><![CDATA[List Menu Items]]></item>
-		<item name="wcf.acp.pageMenu.menuItemController"><![CDATA[Controller]]></item>
-		<item name="wcf.acp.pageMenu.menuItemController.description"><![CDATA[If a page is not available in the selection above, you can enter the related controller manually. Enter the PHP class name including namespace, e.g. “wcf\page\DashboardPage”.]]></item>
-		<item name="wcf.acp.pageMenu.menuItemController.error.notValid"><![CDATA[Unable to find the provided class name]]></item>
-		<item name="wcf.acp.pageMenu.menuItemLink"><![CDATA[Link]]></item>
-		<item name="wcf.acp.pageMenu.menuPosition"><![CDATA[Position]]></item>
-		<item name="wcf.acp.pageMenu.menuPosition.footer"><![CDATA[Footer]]></item>
-		<item name="wcf.acp.pageMenu.menuPosition.header"><![CDATA[Header]]></item>
-		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Title]]></item>
-		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
-		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[Parameters]]></item>
-		<item name="wcf.acp.pageMenu.menuItemPage"><![CDATA[Page]]></item>
-		<item name="wcf.acp.pageMenu.menuItemPage.description"><![CDATA[Choose the internal page you want to link.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pluginStore">

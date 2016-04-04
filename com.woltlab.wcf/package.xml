@@ -32,7 +32,6 @@
 		<instruction type="userOption" />
 		<instruction type="bbcode" />
 		<instruction type="smiley" />
-		<instruction type="pageMenu" />
 		<instruction type="sitemap" />
 		<instruction type="dashboardBox" />
 		<instruction type="userProfileMenu" />

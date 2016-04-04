@@ -21,11 +21,6 @@ use wcf\util\HeaderUtil;
  */
 class MembersListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.user.members';
-	
-	/**
 	 * available letters
 	 * @var	string
 	 */

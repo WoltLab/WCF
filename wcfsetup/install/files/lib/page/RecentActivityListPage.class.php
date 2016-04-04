@@ -20,11 +20,6 @@ use wcf\system\WCF;
  */
 class RecentActivityListPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.user.recentActivity';
-	
-	/**
 	 * viewable user activity event list
 	 * @var	\wcf\data\user\activity\event\ViewableUserActivityEventList
 	 */

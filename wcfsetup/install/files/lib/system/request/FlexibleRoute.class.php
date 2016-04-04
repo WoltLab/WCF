@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\request;
-use wcf\system\menu\page\PageMenu;
 
 /**
  * Flexible route implementation to resolve HTTP requests.
@@ -133,7 +132,9 @@ class FlexibleRoute implements IRoute {
 			$ignoreController = false;
 			
 			if (!RequestHandler::getInstance()->isACPRequest()) {
-				$landingPage = PageMenu::getInstance()->getLandingPage();
+				// TODO
+				//$landingPage = PageMenu::getInstance()->getLandingPage();
+				$landingPage = null;
 				
 				// check if this is the default controller
 				if (strcasecmp(RouteHandler::getInstance()->getDefaultController($application), $components['controller']) === 0) {

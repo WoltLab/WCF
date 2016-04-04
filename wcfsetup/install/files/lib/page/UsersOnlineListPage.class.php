@@ -26,11 +26,6 @@ class UsersOnlineListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.user.usersOnline';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public $neededPermissions = ['user.profile.canViewUsersOnlineList'];
 	
 	/**

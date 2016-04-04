@@ -1,7 +1,6 @@
 <?php
 namespace wcf\page;
 use wcf\system\dashboard\DashboardHandler;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 
@@ -17,11 +16,6 @@ use wcf\system\WCF;
  */
 class DashboardPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.user.dashboard';
-	
-	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('MODULE_DASHBOARD_PAGE');
@@ -30,18 +24,6 @@ class DashboardPage extends AbstractPage {
 	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
-	
-	/**
-	 * @see	\wcf\page\IPage::readData()
-	 */
-	public function readData() {
-		parent::readData();
-		
-		// remove default breadcrumb entry
-		if (PageMenu::getInstance()->getLandingPage()->menuItem == 'wcf.user.dashboard') {
-			WCF::getBreadcrumbs()->remove(0);
-		}
-	}
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::assignVariables()

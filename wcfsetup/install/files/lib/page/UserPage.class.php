@@ -29,11 +29,6 @@ use wcf\system\WCF;
  */
 class UserPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.user.members';
-	
-	/**
 	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;

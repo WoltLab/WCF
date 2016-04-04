@@ -3,7 +3,6 @@ namespace wcf\system\request;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\language\LanguageFactory;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;

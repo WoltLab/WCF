@@ -18,11 +18,6 @@ use wcf\system\WCF;
  */
 class TeamPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.user.team';
-	
-	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('user.profile.canViewMembersList');

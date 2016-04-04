@@ -2,7 +2,6 @@
 namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\WCF;
 
 /**
@@ -276,10 +275,11 @@ class Route implements IRoute {
 				$ignoreController = true;
 			}
 			else if (!RequestHandler::getInstance()->isACPRequest()) {
+				/* TODO:
 				$landingPage = PageMenu::getInstance()->getLandingPage();
 				if ($landingPage !== null && strcasecmp($landingPage->getController(), $components['controller']) == 0) {
 					$ignoreController = true;
-				}
+				}*/
 				
 				// check if this is the default controller of the requested application
 				/*

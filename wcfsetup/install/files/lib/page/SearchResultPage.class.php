@@ -7,7 +7,6 @@ use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchEngine;
 use wcf\system\WCF;
@@ -105,9 +104,9 @@ class SearchResultPage extends MultipleLinkPage {
 		// set active menu item
 		if (isset($this->searchData['selectedObjectTypes']) && count($this->searchData['selectedObjectTypes']) == 1) {
 			$objectType = SearchEngine::getInstance()->getObjectType(reset($this->searchData['selectedObjectTypes']));
-			if (($activeMenuItem = $objectType->getActiveMenuItem())) {
+			/*if (($activeMenuItem = $objectType->getActiveMenuItem())) { @todo
 				PageMenu::getInstance()->setActiveMenuItem($activeMenuItem);
-			}
+			}*/
 		}
 		
 		// add breadcrumbs
