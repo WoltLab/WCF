@@ -253,7 +253,7 @@ RedactorPlugins.wbbcode = function() {
 				$range.insertNode($smiley);
 				
 				// add spaces around the smiley that serve as padding
-				function $isSpace(sibling) {
+				var $isSpace = function(sibling) {
 					if (sibling === null) return false;
 					
 					if ((sibling.nodeType === Node.ELEMENT_NODE && sibling.nodeName === 'SPAN') || sibling.nodeType === Node.TEXT_NODE) {
