@@ -40,7 +40,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 <section class="section">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{$this->getLabel()}</h2>
-		<small class="sectionDescription">{$this->getDescription()}</small>
+		<p class="sectionDescription">{$this->getDescription()}</p>
 	</header>
 	
 	<dl class="wide">
