@@ -123,8 +123,8 @@
 
 <section id="comments" class="section sectionContainerList moderationComments">
 	<header class="sectionHeader">
-		<h2>{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
-		<p>{lang}wcf.moderation.comments.description{/lang}</p>
+		<h2 class="sectionTitle">{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
+		<p class="sectionDescription">{lang}wcf.moderation.comments.description{/lang}</p>
 	</header>
 	
 	<ul id="moderationQueueCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$queueID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{if $queue->comments}{@$commentList->countObjects()}{else}0{/if}" data-last-comment-time="{@$lastCommentTime}">
