@@ -128,8 +128,7 @@ CREATE TABLE wcf1_application (
 	domainName VARCHAR(255) NOT NULL,
 	domainPath VARCHAR(255) NOT NULL DEFAULT '/',
 	cookieDomain VARCHAR(255) NOT NULL,
-	cookiePath VARCHAR(255) NOT NULL DEFAULT '/',
-	landingPageID INT(10) NULL
+	cookiePath VARCHAR(255) NOT NULL DEFAULT '/'
 );
 
 DROP TABLE IF EXISTS wcf1_attachment;

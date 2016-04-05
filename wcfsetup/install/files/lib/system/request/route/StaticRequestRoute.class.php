@@ -27,7 +27,7 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	protected $staticController = '';
 	
 	/**
-	 * @see \wcf\system\request\route\IRequestRoute::setIsACP()
+	 * @inheritDoc
 	 */
 	public function setIsACP($isACP) {
 		// static routes are disallowed for ACP
@@ -48,7 +48,7 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::buildLink()
+	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
 		// static routes don't have these components
@@ -59,7 +59,7 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::canHandle()
+	 * @inheritDoc
 	 */
 	public function canHandle(array $components) {
 		if (isset($components['application']) && $components['application'] == $this->staticApplication) {
@@ -72,7 +72,7 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::matches()
+	 * @inheritDoc
 	 */
 	public function matches($requestURL) {
 		if (parent::matches($requestURL)) {

@@ -79,7 +79,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	}
 	
 	/**
-	 * @see IRequestRoute::setIsACP()
+	 * @inheritDoc
 	 */
 	public function setIsACP($isACP) {
 		$this->isACP = $isACP;

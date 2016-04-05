@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{if $__wcf->getPageMenu()->getLandingPage()->menuItem != 'wcf.user.dashboard'}{lang}wcf.user.dashboard{/lang} - {/if}{PAGE_TITLE|language}</title>
+	<title>{if !$__wcf->isLandingPage()}{lang}wcf.user.dashboard{/lang} - {/if}{PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
 	
@@ -18,7 +18,7 @@
 
 {include file='header'}
 
-{if $__wcf->getPageMenu()->getLandingPage()->menuItem == 'wcf.user.dashboard'}
+{if $__wcf->isLandingPage()}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{PAGE_TITLE|language}</h1>

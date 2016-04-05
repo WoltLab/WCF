@@ -19,6 +19,11 @@ class Request {
 	protected $className = '';
 	
 	/**
+	 * @var boolean
+	 */
+	protected $isLandingPage = false;
+	
+	/**
 	 * request meta data
 	 * @var	string[]
 	 */
@@ -58,6 +63,13 @@ class Request {
 	}
 	
 	/**
+	 * Marks this request as landing page.
+	 */
+	public function setIsLandingPage() {
+		$this->isLandingPage = true;
+	}
+	
+	/**
 	 * Executes this request.
 	 */
 	public function execute() {
@@ -74,6 +86,15 @@ class Request {
 	 */
 	public function isExecuted() {
 		return ($this->requestObject !== null);
+	}
+	
+	/**
+	 * Returns true if this request represents the landing page.
+	 * 
+	 * @return boolean
+	 */
+	public function isLandingPage() {
+		return $this->isLandingPage;
 	}
 	
 	/**

@@ -63,6 +63,11 @@ class PageEditForm extends PageAddForm {
 			$this->packageID = $this->page->packageID;
 			$this->controller = $this->page->controller;
 		}
+		
+		if ($this->page->requireObjectID) {
+			// pages that require an object id can never be set as landing page
+			$this->isLandingPage = 0;
+		}
 	}
 	
 	/**
@@ -83,7 +88,6 @@ class PageEditForm extends PageAddForm {
 		$data = array(
 			'name' => $this->name,
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
-			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 			'lastUpdateTime' => TIME_NOW,
 			'parentPageID' => ($this->parentPageID ?: null),
 			'packageID' => $this->packageID
@@ -119,6 +123,10 @@ class PageEditForm extends PageAddForm {
 			
 			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data), 'content' => $content));
 			$this->objectAction->executeAction();
+		}
+		
+		if ($this->isLandingPage != $this->page->isLandingPage) {
+			$this->page->setAsLandingPage();
 		}
 		
 		// call saved event

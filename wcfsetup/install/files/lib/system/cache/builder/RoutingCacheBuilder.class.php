@@ -2,6 +2,7 @@
 namespace wcf\system\cache\builder;
 use wcf\data\application\Application;
 use wcf\data\page\Page;
+use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\ControllerMap;
 use wcf\system\WCF;
@@ -169,25 +170,37 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-			if ($application->landingPageID) {
-				$page = new Page($application->landingPageID);
-				if ($page->controller) {
-					$controller = $page->controller;
+			$controller = null;
+			
+			if ($application->packageID == 1) {
+				// handle WCF
+				$page = PageCacheBuilder::getInstance()->getData([], 'landingPage');
+				if ($page === null) {
+					// no landing page defined
+					$controller = ['', '', ''];
 				}
 				else {
-					$controller = '__WCF_CMS__' . $page->pageID;
-					$controller = [$controller, $controller];
+					if ($page->controller) {
+						$controller = $page->controller;
+					}
+					else {
+						$controller = '__WCF_CMS__' . $page->pageID;
+						$controller = [$controller, $controller, CmsPage::class];
+					}
+					
 				}
 			}
-			else if ($application->packageID == 1) {
-				// WCF has no default controller
-				$controller = ['', ''];
-			}
 			else {
-				$controller = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', WCF::getApplicationObject($application)->getPrimaryController());
+				$controller = WCF::getApplicationObject($application)->getPrimaryController();
+			}
+			
+			if (is_string($controller)) {
+				$fqnController = $controller;
+				$controller = preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $controller);
 				$controller = [
 					$controller,
-					ControllerMap::transformController($controller)
+					ControllerMap::transformController($controller),
+					$fqnController
 				];
 			}
 			

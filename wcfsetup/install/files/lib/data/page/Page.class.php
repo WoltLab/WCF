@@ -5,6 +5,7 @@ use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -201,6 +202,37 @@ class Page extends DatabaseObject {
 		if (!$this->validatePermissions()) return false;
 		
 		return true;
+	}
+	
+	/**
+	 * Sets the current page as landing page.
+	 * 
+	 * @throws      SystemException
+	 */
+	public function setAsLandingPage() {
+		if ($this->requireObjectID) {
+			throw new SystemException('Pages requiring an object id cannot be set as landing page.');
+		}
+		
+		// unmark existing landing page
+		$sql = "UPDATE  wcf".WCF_N."_page
+			SET     isLandingPage = ?
+				AND isLandingPage = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			0,
+			1
+		]);
+		
+		// set current page as landing page
+		$sql = "UPDATE  wcf".WCF_N."_page
+			SET     isLandingPage = ?
+			WHERE   pageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			1,
+			$this->pageID
+		]);
 	}
 	
 	/**

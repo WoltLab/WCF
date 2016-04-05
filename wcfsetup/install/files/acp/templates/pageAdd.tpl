@@ -159,12 +159,14 @@
 			</dl>
 		{/if}
 		
-		<dl>
-			<dt></dt>
-			<dd>
-				<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1" {if $isLandingPage}checked="checked" {/if}{if $action == 'edit' && $page->isLandingPage}disabled="disabled" {/if}/> {lang}wcf.acp.page.isLandingPage{/lang}</label>
-			</dd>
-		</dl>
+		{if $action != 'edit' || !$page->requireObjectID}
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1" {if $isLandingPage}checked="checked" {/if}{if $action == 'edit' && $page->isLandingPage}disabled="disabled" {/if}/> {lang}wcf.acp.page.isLandingPage{/lang}</label>
+				</dd>
+			</dl>
+		{/if}
 		
 		<dl>
 			<dt></dt>

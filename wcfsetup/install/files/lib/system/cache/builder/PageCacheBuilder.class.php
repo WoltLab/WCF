@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\page\Page;
 use wcf\data\page\PageList;
 
 /**
@@ -20,7 +21,8 @@ class PageCacheBuilder extends AbstractCacheBuilder {
 		$data = [
 			'identifier' => [],
 			'controller' => [],
-			'pages' => []
+			'pages' => [],
+			'landingPage' => null
 		];
 		
 		$pageList = new PageList();
@@ -28,9 +30,14 @@ class PageCacheBuilder extends AbstractCacheBuilder {
 		$data['pages'] = $pageList->getObjects();
 		
 		// build lookup table
+		/** @var Page $page */
 		foreach ($pageList as $page) {
 			$data['identifier'][$page->identifier] = $page->pageID;
 			$data['controller'][$page->controller] = $page->pageID;
+			
+			if ($page->isLandingPage) {
+				$data['landingPage'] = $page;
+			}
 		}
 		
 		return $data;

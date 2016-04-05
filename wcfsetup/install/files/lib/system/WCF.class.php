@@ -20,6 +20,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
@@ -55,7 +56,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -907,6 +908,15 @@ class WCF {
 		}
 		
 		return self::getPath() . 'images/favicon.ico';
+	}
+	
+	/**
+	 * Returns true if currently active request represents the landing page.
+	 * 
+	 * @return      boolean
+	 */
+	public function isLandingPage() {
+		return RequestHandler::getInstance()->getActiveRequest()->isLandingPage();
 	}
 	
 	/**

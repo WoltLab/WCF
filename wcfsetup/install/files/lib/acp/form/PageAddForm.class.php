@@ -275,19 +275,26 @@ class PageAddForm extends AbstractForm {
 			'pageType' => $this->pageType,
 			'name' => $this->name,
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
-			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
+			'isLandingPage' => 0,
 			'packageID' => ($this->packageID ?: null),
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
 			'identifier' => '',
 			'controller' => $this->controller
 		]), 'content' => $content]);
-		$returnValues = $this->objectAction->executeAction();
+		
+		/** @var Page $page */
+		$page = $this->objectAction->executeAction()['returnValues'];
+		
 		// set generic page identifier
-		$pageEditor = new PageEditor($returnValues['returnValues']);
+		$pageEditor = new PageEditor($page);
 		$pageEditor->update([
 			'identifier' => 'com.woltlab.wcf.generic'.$pageEditor->pageID
 		]);
+		
+		if ($this->isLandingPage) {
+			$page->setAsLandingPage();
+		}
 		
 		// call saved event
 		$this->saved();

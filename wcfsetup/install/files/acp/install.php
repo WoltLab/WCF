@@ -2,11 +2,10 @@
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
-use wcf\util\StringUtil;
 
 /**
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework
@@ -15,7 +14,7 @@ use wcf\util\StringUtil;
 $sql = "UPDATE	wcf".WCF_N."_package_installation_plugin
 	SET	priority = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
+$statement->execute([1]);
 
 // reset sessions
 SessionHandler::resetSessions();
@@ -24,36 +23,46 @@ SessionHandler::resetSessions();
 $sql = "UPDATE	wcf".WCF_N."_acp_template
 	SET	packageID = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
+$statement->execute([1]);
 
 // update language
 $sql = "UPDATE	wcf".WCF_N."_language_item
 	SET	packageID = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
+$statement->execute([1]);
 
 // update installation logs
 $sql = "UPDATE	wcf".WCF_N."_package_installation_file_log
 	SET	packageID = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
+$statement->execute([1]);
 
 $sql = "UPDATE	wcf".WCF_N."_package_installation_sql_log
 	SET	packageID = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
+$statement->execute([1]);
 
 // update pips
 $sql = "UPDATE	wcf".WCF_N."_package_installation_plugin
 	SET	packageID = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
+$statement->execute([1]);
 
 // group options
 $sql = "UPDATE	wcf".WCF_N."_user_group_option
 	SET	packageID = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
+$statement->execute([1]);
+
+// landing page
+$sql = "UPDATE  wcf".WCF_N."_page
+	SET     isLandingPage = ?
+	WHERE   identifier = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute([
+	1,
+	'com.woltlab.wcf.Dashboard'
+]);
 
 // get server timezone
 if ($timezone = @date_default_timezone_get()) {
@@ -62,6 +71,9 @@ if ($timezone = @date_default_timezone_get()) {
 			SET	optionValue = ?
 			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($timezone, 'timezone'));
+		$statement->execute([
+			$timezone,
+			'timezone'
+		]);
 	}
 }
