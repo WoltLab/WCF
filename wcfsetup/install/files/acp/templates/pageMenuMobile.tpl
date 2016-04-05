@@ -50,9 +50,10 @@
 				<span class="menuOverlayItemTitle">{lang}wcf.global.jumpToPage{/lang}</span>
 			</a>
 			<ol class="menuOverlayItemList">
-				{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
+				{* TODO *}
+				{*foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
 					<li class="menuOverlayItem"><a href="{$_menuItem->getProcessor()->getLink()}" class="menuOverlayItemLink">{lang}{$_menuItem->menuItem}{/lang}</a></li>
-				{/foreach}
+				{/foreach*}
 			</ol>
 		</li>
 		<li class="menuOverlayItem">

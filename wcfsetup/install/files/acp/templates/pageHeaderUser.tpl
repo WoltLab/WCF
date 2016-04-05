@@ -23,13 +23,14 @@
 						<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
 					</ul>
 				</li>
-			
+				
 				<li id="jumpToPage" class="dropdown">
 					<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon32 fa-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
 					<ul class="dropdownMenu">
-						{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
+						{* TODO *}
+						{*foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
 							<li><a href="{$_menuItem->getProcessor()->getLink()}">{lang}{$_menuItem->menuItem}{/lang}</a></li>
-						{/foreach}
+						{/foreach*}
 					</ul>
 				</li>
 				
