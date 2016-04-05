@@ -27,10 +27,11 @@
 				<li id="jumpToPage" class="dropdown">
 					<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon32 fa-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
 					<ul class="dropdownMenu">
-						{* TODO *}
-						{*foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
-							<li><a href="{$_menuItem->getProcessor()->getLink()}">{lang}{$_menuItem->menuItem}{/lang}</a></li>
-						{/foreach*}
+						{foreach from=$__wcf->getFrontendMenu()->getMenuItemNodeList() item=_menuItem}
+							{if !$_menuItem->getMenuItem()->parentItemID && $_menuItem->getMenuItem()->getPage()}
+								<li><a href="{$_menuItem->getMenuItem()->getPage()->getLink()}">{$_menuItem->getMenuItem()->getPage()}</a></li>
+							{/if}
+						{/foreach}
 					</ul>
 				</li>
 				

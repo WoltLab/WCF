@@ -2,6 +2,8 @@
 namespace wcf\system;
 use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
+use wcf\data\menu\Menu;
+use wcf\data\menu\MenuCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
@@ -18,7 +20,7 @@ use wcf\util\HeaderUtil;
  * Extends WCF class with functions for the ACP.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -66,6 +68,16 @@ class WCFACP extends WCF {
 		$this->initAuth();
 		
 		EventHandler::getInstance()->fireAction($this, 'initialized');
+	}
+	
+	/**
+	 * Returns the main menu object.
+	 * 
+	 * @return      Menu|null       menu object
+	 * @since       2.2
+	 */
+	public function getFrontendMenu() {
+		return MenuCache::getInstance()->getMainMenu();
 	}
 	
 	/**

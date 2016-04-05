@@ -61,4 +61,13 @@ class MenuCache extends SingletonFactory {
 		
 		return null;
 	}
+	
+	/**
+	 * Returns the main menu or null.
+	 * 
+	 * @return      Menu|null       menu object
+	 */
+	public function getMainMenu() {
+		return $this->getMenuByID(MenuCacheBuilder::getInstance()->getData([], 'mainMenuID'));
+	}
 }

@@ -20,6 +20,7 @@ class MenuCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected function rebuild(array $parameters) {
 		$data = [
+			'mainMenuID' => null,
 			'menus' => [],
 			'menuItems' => []
 		];
@@ -47,6 +48,10 @@ class MenuCacheBuilder extends AbstractCacheBuilder {
 			
 			$data['menus'][$menu->menuID] = $menu;
 			$data['menuItems'][$menu->menuID] = $menuItemList;
+			
+			if ($menu->identifier === 'com.woltlab.wcf.MainMenu') {
+				$data['mainMenuID'] = $menu->menuID;
+			}
 		}
 		
 		return $data;

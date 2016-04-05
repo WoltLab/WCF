@@ -1,7 +1,7 @@
 {* main menu *}
 <div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
-	<ol class="menuOverlayItemList" data-title="TODO: menu">
-		<li class="menuOverlayTitle">TODO: menu</li>
+	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.page{/lang}">
+		<li class="menuOverlayTitle">{lang}wcf.menu.page{/lang}</li>
 		{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
 			<li class="menuOverlayItem">
 				<a href="#" class="menuOverlayItemLink box24{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}">
@@ -42,18 +42,19 @@
 
 {* user menu *}
 <div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
-	<ol class="menuOverlayItemList" data-title="TODO: user menu">
-		<li class="menuOverlayTitle">TODO: user menu</li>
+	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.user{/lang}">
+		<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
 		<li class="menuOverlayItem">
 			<a href="#" class="menuOverlayItemLink box24">
 				<span class="icon icon24 fa-home"></span>
 				<span class="menuOverlayItemTitle">{lang}wcf.global.jumpToPage{/lang}</span>
 			</a>
 			<ol class="menuOverlayItemList">
-				{* TODO *}
-				{*foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
-					<li class="menuOverlayItem"><a href="{$_menuItem->getProcessor()->getLink()}" class="menuOverlayItemLink">{lang}{$_menuItem->menuItem}{/lang}</a></li>
-				{/foreach*}
+				{foreach from=$__wcf->getFrontendMenu()->getMenuItemNodeList() item=_menuItem}
+					{if !$_menuItem->getMenuItem()->parentItemID && $_menuItem->getMenuItem()->getPage()}
+						<li class="menuOverlayItem"><a href="{$_menuItem->getMenuItem()->getPage()->getLink()}" class="menuOverlayItemLink">{$_menuItem->getMenuItem()->getPage()}</a></li>
+					{/if}
+				{/foreach}
 			</ol>
 		</li>
 		<li class="menuOverlayItem">
