@@ -275,10 +275,10 @@ class WCF {
 	/**
 	 * Turns PHP errors into an ErrorException.
 	 * 
-	 * @param	integer		$errorNo
+	 * @param	integer		$severity
 	 * @param	string		$message
-	 * @param	string		$filename
-	 * @param	integer		$lineNo
+	 * @param	string		$file
+	 * @param	integer		$line
 	 */
 	public static final function handleError($severity, $message, $file, $line) {
 		// this is neccessary for the shut-up operator

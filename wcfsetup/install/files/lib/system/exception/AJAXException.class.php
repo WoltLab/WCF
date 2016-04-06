@@ -54,7 +54,7 @@ class AJAXException extends LoggedException {
 	 * Throws a JSON-encoded error message
 	 * 
 	 * @param	string		$message
-	 * @param	boolean		$isDoomsday
+	 * @param	integer		$errorType
 	 * @param	string		$stacktrace
 	 * @param	array		$returnValues
 	 * @param	string		$exceptionID

@@ -88,9 +88,9 @@ final class DirectoryUtil {
 	/**
 	 * Returns an instance of DirectoryUtil (or child).
 	 * 
-	 * @param	string		$directory	path
+	 * @param	string		$tmpDirectory	path
 	 * @param	boolean		$recursive	walk through sub-directories too
-	 * @return	\wcf\util\DirectoryUtil
+	 * @return	DirectoryUtil
 	 */
 	public static function getInstance($tmpDirectory, $recursive = true) {
 		$directory = realpath(FileUtil::unifyDirSeparator($tmpDirectory));
@@ -249,8 +249,8 @@ final class DirectoryUtil {
 	/**
 	 * Executes a callback on each file and returns false if callback is invalid.
 	 * 
-	 * @param	\wcf\system\Callback		$callback
-	 * @param	\wcf\system\Regex		$pattern	callback is only applied to files matching the given pattern
+	 * @param	Callback	$callback
+	 * @param	Regex		$pattern	callback is only applied to files matching the given pattern
 	 * @return	boolean
 	 */
 	public function executeCallback(Callback $callback, Regex $pattern = null) {

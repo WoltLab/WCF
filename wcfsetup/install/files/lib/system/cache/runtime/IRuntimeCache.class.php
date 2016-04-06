@@ -69,7 +69,7 @@ interface IRuntimeCache {
 	/**
 	 * Removes the objects with the given ids from the runtime cache if they have already been loaded.
 	 *
-	 * @param	integer		$objectID
+	 * @param	integer[]	$objectIDs
 	 */
 	public function removeObjects(array $objectIDs);
 }

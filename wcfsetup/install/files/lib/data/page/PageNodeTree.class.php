@@ -77,7 +77,6 @@ class PageNodeTree {
 	 * 
 	 * @param	integer			$parentID
 	 * @param	PageNode		$parentNode
-	 * @param	int[]			$filter
 	 * @return	PageNode[]
 	 */
 	protected function generateNodeTree($parentID, PageNode $parentNode = null) {

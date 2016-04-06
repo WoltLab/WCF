@@ -59,9 +59,9 @@ class SystemException extends \Exception implements IPrintableException {
 	/**
 	 * Creates a new SystemException.
 	 *
-	 * @param	message		string		error message
-	 * @param	code		integer		error code
-	 * @param	description	string		description of the error
+	 * @param	string		$message	error message
+	 * @param	integer		$code		error code
+	 * @param	string		$description	description of the error
 	 */
 	public function __construct($message = '', $code = 0, $description = '') {
 		parent::__construct($message, $code);
@@ -174,6 +174,9 @@ spl_autoload_register(function($className) {
 
 /**
  * Escapes strings for execution in sql queries.
+ * 
+ * @param	string		$string
+ * @return	string
  */
 function escapeString($string) {
 	return \wcf\system\WCF::getDB()->escapeString($string);
@@ -449,8 +452,8 @@ class Tar {
 	 * Returns an associative array with information
 	 * about a specific file in the archive.
 	 *
-	 * @param	mixed	$fileindex	index or name of the requested file
-	 * @return	array	$fileInfo
+	 * @param	mixed	$fileIndex	index or name of the requested file
+	 * @return	array
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {

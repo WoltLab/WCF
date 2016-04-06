@@ -91,7 +91,7 @@ class LikeObject extends DatabaseObject {
 	/**
 	 * Sets the liked object.
 	 * 
-	 * @param	ILikeObject	$likeObject
+	 * @param	ILikeObject	$likedObject
 	 */
 	public function setLikedObject(ILikeObject $likedObject) {
 		$this->likedObject = $likedObject;

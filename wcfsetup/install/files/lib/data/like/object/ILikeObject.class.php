@@ -54,7 +54,7 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	/**
 	 * Sets the object type.
 	 * 
-	 * @param	ObjectType
+	 * @param	ObjectType	$objectType
 	 */
 	public function setObjectType(ObjectType $objectType);
 	

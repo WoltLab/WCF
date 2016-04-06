@@ -632,8 +632,8 @@ class PackageInstallationScheduler {
 	/**
 	 * Gets stored auth data of given update server.
 	 * 
-	 * @param	array		$updateServer
-	 * @return	array		$authData
+	 * @param	array		$data
+	 * @return	array
 	 */
 	protected function getAuthData(array $data) {
 		$updateServer = new PackageUpdateServer(null, $data);

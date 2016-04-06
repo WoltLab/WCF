@@ -351,8 +351,8 @@ class PackageInstallationNodeBuilder {
 	 * nodes to provide to be descendants of the new node. If you intend
 	 * to insert more than a single node, you should prefer shiftNodes().
 	 * 
-	 * @param	string			$beforeNode
-	 * @param	\wcf\system\Callback	$callback
+	 * @param	string		$beforeNode
+	 * @param	Callback	$callback
 	 */
 	public function insertNode($beforeNode, Callback $callback) {
 		$newNode = $this->getToken();

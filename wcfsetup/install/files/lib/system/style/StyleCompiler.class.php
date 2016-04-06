@@ -279,11 +279,11 @@ class StyleCompiler extends SingletonFactory {
 	 * Compiles SCSS stylesheets into one CSS-stylesheet and writes them
 	 * to filesystem. Please be aware not to append '.css' within $filename!
 	 * 
-	 * @param	string			$filename
-	 * @param	array<string>		$files
-	 * @param	array<string>		$variables
-	 * @param	string			$individualScss
-	 * @param	\wcf\system\Callback	$callback
+	 * @param	string		$filename
+	 * @param	string[]	$files
+	 * @param	string[]	$variables
+	 * @param	string		$individualScss
+	 * @param	Callback	$callback
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualScss, Callback $callback) {
 		foreach ($variables as &$value) {

@@ -494,9 +494,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param	string		$search		search query
 	 * @param	string		$replace
 	 * @param	integer		$languageID
-	 * @param	boolean		$useRegex
-	 * @param	boolean		$caseSensitive
-	 * @param	boolean		$searchVariableName
+	 * @param	integer		$useRegex
+	 * @param	integer		$searchVariableName
 	 * @return	array
 	 */
 	public static function search($search, $replace = null, $languageID = null, $useRegex = 0, $searchVariableName = 0) {

@@ -297,7 +297,7 @@ class Email {
 	/**
 	 * Sets the email's 'Reply-To'.
 	 * 
-	 * @param	\wcf\system\email\Mailbox	$sender
+	 * @param	Mailbox		$replyTo
 	 */
 	public function setReplyTo(Mailbox $replyTo = null) {
 		$this->replyTo = $replyTo;

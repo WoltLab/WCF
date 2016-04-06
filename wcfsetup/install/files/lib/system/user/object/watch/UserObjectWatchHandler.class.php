@@ -97,12 +97,12 @@ class UserObjectWatchHandler extends SingletonFactory {
 	/**
 	 * Updates a watched object for all subscriber.
 	 * 
-	 * @param	string								$objectType
-	 * @param	integer								$objectIDs
-	 * @param	string								$notificationEventName
-	 * @param	string								$notificationObjectType
-	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$notificationObject
-	 * @param	array								$additionalData
+	 * @param	string				$objectType
+	 * @param	integer				$objectID
+	 * @param	string				$notificationEventName
+	 * @param	string				$notificationObjectType
+	 * @param	IUserNotificationObject		$notificationObject
+	 * @param	array				$additionalData
 	 */
 	public function updateObject($objectType, $objectID, $notificationEventName, $notificationObjectType, IUserNotificationObject $notificationObject, array $additionalData = array()) {
 		// get object type id

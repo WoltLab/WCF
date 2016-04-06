@@ -23,7 +23,7 @@ interface IMultiRecipientCommentUserNotificationObjectType {
 	 * Returns the user ids of the notification recipients. If an empty array
 	 * is returned, no notifications should be sent.
 	 * 
-	 * @param	integer		$comment
+	 * @param	Comment		$comment
 	 * @return	integer[]
 	 */
 	public function getRecipientIDs(Comment $comment);

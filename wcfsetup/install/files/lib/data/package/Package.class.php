@@ -295,17 +295,17 @@ class Package extends DatabaseObject {
 	 * @param	string		$fromVersion
 	 * @return	boolean
 	 */
-	public static function checkFromversion($currentVersion, $fromversion) {
-		if (mb_strpos($fromversion, '*') !== false) {
+	public static function checkFromversion($currentVersion, $fromVersion) {
+		if (mb_strpos($fromVersion, '*') !== false) {
 			// from version with wildcard
 			// use regular expression
-			$fromversion = str_replace('\*', '.*', preg_quote($fromversion, '!'));
-			if (preg_match('!^'.$fromversion.'$!i', $currentVersion)) {
+			$fromVersion = str_replace('\*', '.*', preg_quote($fromVersion, '!'));
+			if (preg_match('!^'.$fromVersion.'$!i', $currentVersion)) {
 				return true;
 			}
 		}
 		else {
-			if (self::compareVersion($currentVersion, $fromversion, '=')) {
+			if (self::compareVersion($currentVersion, $fromVersion, '=')) {
 				return true;
 			}
 		}

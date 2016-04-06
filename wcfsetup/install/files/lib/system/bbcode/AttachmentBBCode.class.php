@@ -130,7 +130,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	/**
 	 * Sets the attachment list.
 	 * 
-	 * @param	\wcf\data\attachment\GroupedAttachmentList	$attachments
+	 * @param	\wcf\data\attachment\GroupedAttachmentList	$attachmentList
 	 * @deprecated
 	 */
 	public static function setAttachmentList(GroupedAttachmentList $attachmentList) {

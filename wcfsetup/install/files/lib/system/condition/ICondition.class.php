@@ -7,7 +7,7 @@ use wcf\data\IDatabaseObjectProcessor;
  * Every concrete condition implementation needs to implement this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -43,14 +43,12 @@ interface ICondition extends IDatabaseObjectProcessor {
 	 * Extracts all needed data from the given condition to pre-fill the output
 	 * for editing the given condition.
 	 * 
-	 * @param	\wcf\data\condition\Condition	$condition
+	 * @param	Condition	$condition
 	 */
 	public function setData(Condition $condition);
 	
 	/**
-	 * Validates the given data.
-	 * 
-	 * @param	string		$value
+	 * Validates the read condition data.
 	 */
 	public function validate();
 }

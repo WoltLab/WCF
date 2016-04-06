@@ -23,7 +23,7 @@ class FTP {
 	 * Opens a new ftp connection to given host.
 	 * 
 	 * @param	string		$host
-	 * @param	string		$port
+	 * @param	integer		$port
 	 * @param	integer		$timeout
 	 */
 	public function __construct($host = 'localhost', $port = 21, $timeout = 30) {

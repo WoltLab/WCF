@@ -228,9 +228,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * )
 	 * 
 	 * @param	array		$data
-	 * @param	string		$className
-	 * @param	string		$actionName
-	 * @return	\wcf\action\AJAXInvokeAction
+	 * @return	AJAXInvokeAction
 	 */
 	public static function debugCall(array $data) {
 		// validate $data array

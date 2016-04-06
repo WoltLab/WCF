@@ -186,8 +186,8 @@ class CronjobScheduler extends SingletonFactory {
 	/**
 	 * Logs cronjob exec success or failure.
 	 * 
-	 * @param	\wcf\data\cronjob\CronjobEditor		$logEditor
-	 * @param	\wcf\system\exception\SystemException	$exception
+	 * @param	CronjobLogEditor	$logEditor
+	 * @param	SystemException		$exception
 	 */
 	protected function logResult(CronjobLogEditor $logEditor, SystemException $exception = null) {
 		if ($exception !== null) {

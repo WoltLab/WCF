@@ -100,10 +100,10 @@ class Template extends DatabaseObject {
 	 * @param	string		$search		search query
 	 * @param	string		$replace
 	 * @param	array		$templateIDs
-	 * @param	boolean		$invertTemplates
-	 * @param	boolean		$useRegex
-	 * @param	boolean		$caseSensitive
-	 * @param	boolean		$invertSearch
+	 * @param	integer		$invertTemplates
+	 * @param	integer		$useRegex
+	 * @param	integer		$caseSensitive
+	 * @param	integer		$invertSearch
 	 * @return	array
 	 */
 	public static function search($search, $replace = null, $templateIDs = null, $invertTemplates = 0, $useRegex = 0, $caseSensitive = 0, $invertSearch = 0) {

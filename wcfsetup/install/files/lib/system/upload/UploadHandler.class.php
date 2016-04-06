@@ -74,8 +74,7 @@ class UploadHandler {
 	/**
 	 * Validates the uploaded files. Returns true on success, otherwise false.
 	 * 
-	 * @param	integer		$maxFilesize
-	 * @param	array<string>	$fileExtensions
+	 * @param	IUploadFileValidationStrategy	$validationStrategy
 	 * @return	boolean
 	 */
 	public function validateFiles(IUploadFileValidationStrategy $validationStrategy) {

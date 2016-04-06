@@ -357,7 +357,7 @@ class I18nHandler extends SingletonFactory {
 	 * Sets additional options for elements, required if updating values.
 	 * 
 	 * @param	integer		$elementID
-	 * @param	integer		$pckageID
+	 * @param	integer		$packageID
 	 * @param	string		$value
 	 * @param	string		$pattern
 	 */

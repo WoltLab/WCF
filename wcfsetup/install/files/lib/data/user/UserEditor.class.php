@@ -149,7 +149,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Adds a user to the groups he should be in.
 	 * 
-	 * @param	array		$groups
+	 * @param	array		$groupIDs
 	 * @param	boolean		$deleteOldGroups
 	 * @param	boolean		$addDefaultGroups
 	 */

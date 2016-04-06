@@ -99,7 +99,6 @@ class UninstallPackageAction extends InstallPackageAction {
 	/**
 	 * Uninstalls node components and returns next node.
 	 * 
-	 * @param	string		$node
 	 * @return	string
 	 */
 	public function stepUninstall() {

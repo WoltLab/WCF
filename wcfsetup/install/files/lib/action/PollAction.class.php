@@ -154,6 +154,8 @@ class PollAction extends AJAXProxyAction {
 	
 	/**
 	 * Renders the result template.
+	 * 
+	 * @param	array		$returnValues
 	 */
 	public function getResult(array &$returnValues) {
 		WCF::getTPL()->assign(array(
@@ -165,6 +167,8 @@ class PollAction extends AJAXProxyAction {
 	
 	/**
 	 * Renders the vote template.
+	 *
+	 * @param	array		$returnValues
 	 */
 	public function getVote(array &$returnValues) {
 		WCF::getTPL()->assign(array(
