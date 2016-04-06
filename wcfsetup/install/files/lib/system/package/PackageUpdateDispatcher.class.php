@@ -221,6 +221,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * 
 	 * @param	\DOMXPath	$xpath
 	 * @param	\DOMNode	$package
+	 * @return	array
 	 */
 	protected function parsePackageUpdateXMLBlock(\DOMXPath $xpath, \DOMNode $package) {
 		// define default values

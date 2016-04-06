@@ -300,6 +300,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tag
 	 * @param	string		$identifier
 	 * @param	array		$metaData
+	 * @return	string
 	 */
 	protected function compileTag($tag, $identifier, array &$metaData) {
 		if (preg_match('~^'.$this->outputPattern.'~s', $tag)) {

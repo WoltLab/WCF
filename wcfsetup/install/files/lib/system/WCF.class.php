@@ -696,6 +696,7 @@ class WCF {
 	 * 
 	 * @param	string		$name
 	 * @param	array		$arguments
+	 * @return	object
 	 */
 	public static final function __callStatic($name, array $arguments) {
 		$className = preg_replace('~^get~', '', $name);

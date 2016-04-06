@@ -249,7 +249,8 @@ class CodeBBCode extends AbstractBBCode {
 	/**
 	 * Fixes markup that every line has proper number of opening and closing tags
 	 * 
-	 * @param	array<string>	$lines
+	 * @param	string[]	$lines
+	 * @return	string[]
 	 */
 	public static function fixMarkup(array $lines) {
 		static $spanRegex = null;

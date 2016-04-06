@@ -329,7 +329,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * 
 	 * @param	string		$columnName
 	 * @param	array		$columnData
-	 * @param	string
+	 * @return	string
 	 */
 	protected function buildColumnDefinition($columnName, $columnData) {
 		// column name
@@ -363,7 +363,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * Builds a column type for execution in a create table or alter table statement.
 	 * 
 	 * @param	array		$columnData
-	 * @param	string
+	 * @return	string
 	 */
 	protected function buildColumnType($columnData) {
 		$definition = strtoupper($columnData['type']);
@@ -385,7 +385,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * Converts a MySQL column type to the matching PostgreSQL column type.
 	 * 
 	 * @param	string		$mySQLType
-	 * @param	string
+	 * @return	string
 	 */
 	protected function getColumnType($mySQLType) {
 		switch ($mySQLType) {

@@ -265,6 +265,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * Loads a list of marked items grouped by type name.
 	 * 
 	 * @param	integer		$objectTypeID
+	 * @return	array
 	 */
 	public function getMarkedItems($objectTypeID = null) {
 		if ($this->markedItems === null) {

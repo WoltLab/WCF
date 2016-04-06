@@ -711,6 +711,7 @@ class File {
 	 *
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {
@@ -766,6 +767,7 @@ class ZipFile extends File {
 	 *
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
 	 */
 	public function __call($function, $arguments) {
 		if (self::$gzopen64 && function_exists('gz' . $function . '64')) {
