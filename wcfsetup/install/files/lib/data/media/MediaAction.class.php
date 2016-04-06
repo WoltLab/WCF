@@ -9,7 +9,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\language\LanguageFactory;
-use wcf\system\request\Linkhandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
 use wcf\system\upload\MediaUploadFileValidationStrategy;
 use wcf\system\WCF;
