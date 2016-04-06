@@ -5,6 +5,7 @@ use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\Regex;
+use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
 
 /**
@@ -89,7 +90,17 @@ class ApplicationHandler extends SingletonFactory {
 	 */
 	public function getActiveApplication() {
 		// work-around during WCFSetup
-		if (isset($this->cache['application'][PACKAGE_ID])) {
+		if (!PACKAGE_ID) {
+			$host = str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
+			
+			return new Application(null, [
+				'domainName' => $host,
+				'domainPath' => RouteHandler::getPath(),
+				'cookieDomain' => $host,
+				'cookiePath' => RouteHandler::getPath(['acp'])
+			]);
+		}
+		else if (isset($this->cache['application'][PACKAGE_ID])) {
 			return $this->cache['application'][PACKAGE_ID];
 		}
 		
