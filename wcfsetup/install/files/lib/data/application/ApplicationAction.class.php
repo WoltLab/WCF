@@ -102,16 +102,4 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		// reset application cache
 		ApplicationCacheBuilder::getInstance()->reset();
 	}
-	
-	/**
-	 * Sets landing pages for applications.
-	 */
-	public function setLandingPage() {
-		/** @var ApplicationEditor $applicationEditor */
-		foreach ($this->objects as $applicationEditor) {
-			$applicationEditor->update([
-				'landingPageID' => $this->parameters['landingPages'][$applicationEditor->packageID]
-			]);
-		}
-	}
 }

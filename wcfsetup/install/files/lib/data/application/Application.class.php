@@ -24,7 +24,6 @@ use wcf\util\FileUtil;
  * @property-read	string		$domainPath
  * @property-read	string		$cookieDomain
  * @property-read	string		$cookiePath
- * @property-read	integer|null	$landingPageID
  */
 class Application extends DatabaseObject {
 	/**
