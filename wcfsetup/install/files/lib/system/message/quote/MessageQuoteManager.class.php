@@ -101,6 +101,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @param	integer		$objectID
 	 * @param	string		$message
 	 * @param	string		$fullQuote
+	 * @param	boolean		$returnFalseIfExists
 	 * @return	mixed
 	 */
 	public function addQuote($objectType, $parentObjectID, $objectID, $message, $fullQuote = '', $returnFalseIfExists = true) {
