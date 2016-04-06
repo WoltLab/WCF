@@ -522,6 +522,7 @@ final class PasswordUtil {
 	 * @param	string		$password
 	 * @param	string		$salt
 	 * @param	string		$dbHash
+	 * @return	boolean
 	 */
 	protected static function wcf1e($type, $password, $salt, $dbHash) {
 		preg_match('~^wcf1e([cms])([01])([ab])([01])$~', $type, $matches);

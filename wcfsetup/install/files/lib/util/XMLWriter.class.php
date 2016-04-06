@@ -130,7 +130,7 @@ class XMLWriter {
 		}
 		
 		// content
-		$this->xml->writeCData(StringUtil::escapeCDATA($cdata));
+		$this->xml->writeCdata(StringUtil::escapeCDATA($cdata));
 		
 		$this->endElement();
 	}

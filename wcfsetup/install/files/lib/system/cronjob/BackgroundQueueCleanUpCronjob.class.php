@@ -76,7 +76,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 			$commited = true;
 		}
 		finally {
-			if (!$commited) WCF::getDB()->rollbackTransaction();
+			if (!$commited) WCF::getDB()->rollBackTransaction();
 		}
 	}
 }

@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Handles the category permissions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -21,21 +21,22 @@ class CategoryPermissionHandler extends SingletonFactory {
 	 * cached category acl options
 	 * @var	array
 	 */
-	protected $categoryPermissions = array();
+	protected $categoryPermissions = [];
 	
 	/**
 	 * Returns the acl options for the given category and for the given user.
 	 * If no user is given, the active user is used.
 	 * 
-	 * @param	\wcf\data\category\Category	$category
-	 * @param	\wcf\data\user\User		$user
+	 * @param	Category	$category
+	 * @param	User		$user
+	 * @return	integer[]
 	 */
 	public function getPermissions(Category $category, User $user = null) {
 		if ($user === null) {
 			$user = WCF::getUser();
 		}
 		
-		$permissions = array();
+		$permissions = [];
 		if (isset($this->categoryPermissions[$category->categoryID])) {
 			if (isset($this->categoryPermissions[$category->categoryID]['group'])) {
 				foreach ($user->getGroupIDs() as $groupID) {
@@ -63,7 +64,7 @@ class CategoryPermissionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->categoryPermissions = CategoryACLOptionCacheBuilder::getInstance()->getData();

@@ -101,6 +101,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @param	integer		$objectID
 	 * @param	string		$message
 	 * @param	string		$fullQuote
+	 * @param	boolean		$returnFalseIfExists
 	 * @return	mixed
 	 */
 	public function addQuote($objectType, $parentObjectID, $objectID, $message, $fullQuote = '', $returnFalseIfExists = true) {
@@ -166,9 +167,10 @@ class MessageQuoteManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Removes a quote from storage.
+	 * Removes a quote from storage and returns true if the quote has successfully been removed.
 	 * 
 	 * @param	string		$quoteID
+	 * @return	boolean
 	 */
 	public function removeQuote($quoteID) {
 		if (!isset($this->quoteData[$quoteID])) {
@@ -264,6 +266,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns a list of quotes.
 	 * 
 	 * @param	boolean		$supportPaste
+	 * @return	string
 	 */
 	public function getQuotes($supportPaste = false) {
 		$template = '';

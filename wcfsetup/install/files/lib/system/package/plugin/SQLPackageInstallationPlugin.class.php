@@ -99,7 +99,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		}
 		
 		// get all tablenames from database
-		$existingTableNames = WCF::getDB()->getEditor()->getTablenames();
+		$existingTableNames = WCF::getDB()->getEditor()->getTableNames();
 		
 		// delete or alter tables
 		foreach ($entries as $entry) {

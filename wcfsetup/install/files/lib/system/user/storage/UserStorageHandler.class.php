@@ -248,7 +248,7 @@ class UserStorageHandler extends SingletonFactory {
 				break;
 			}
 			catch (\Exception $e) {
-				WCF::getDB()->rollbackTransaction();
+				WCF::getDB()->rollBackTransaction();
 				
 				// retry up to 2 times
 				if (++$i === 2) {

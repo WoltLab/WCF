@@ -245,6 +245,7 @@ final class Regex {
 	 * 
 	 * @param	mixed		$result
 	 * @param	string		$method
+	 * @return	mixed
 	 */
 	private function checkResult($result, $method = '') {
 		if ($result === false || $result === null) {

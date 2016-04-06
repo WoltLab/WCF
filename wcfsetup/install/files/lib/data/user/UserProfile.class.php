@@ -831,7 +831,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	public function getAnchorTag() {
 		$link = LinkHandler::getInstance()->getLink('User', ['object' => $this->getDecoratedObject()]);
 		
-		return '<a href="'.$link.'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHtml($this->username).'</a>';
+		return '<a href="'.$link.'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
 	}
 	
 	/**

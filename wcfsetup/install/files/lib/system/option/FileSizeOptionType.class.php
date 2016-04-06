@@ -60,7 +60,7 @@ class FileSizeOptionType extends TextOptionType {
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		$value = FileUtil::formatFileSize($value);
+		$value = FileUtil::formatFilesize($value);
 		return parent::getFormElement($option, $value);
 	}
 	

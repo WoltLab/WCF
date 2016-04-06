@@ -76,7 +76,7 @@ class RedisCacheSource implements ICacheSource {
 			}
 			else {
 				// delete the specified key from the hashset
-				$this->redis->hdel($this->getCacheName($parts[0]), $parts[1]);
+				$this->redis->hDel($this->getCacheName($parts[0]), $parts[1]);
 			}
 		}
 		else {
@@ -102,7 +102,7 @@ class RedisCacheSource implements ICacheSource {
 		$parts = explode('-', $cacheName, 2);
 		
 		if (isset($parts[1])) {
-			$value = $this->redis->hget($this->getCacheName($parts[0]), $parts[1]);
+			$value = $this->redis->hGet($this->getCacheName($parts[0]), $parts[1]);
 		}
 		else {
 			$value = $this->redis->get($this->getCacheName($cacheName));
@@ -149,7 +149,7 @@ class RedisCacheSource implements ICacheSource {
 			
 			// save parameterized cache entries as field in a hashset
 			// saving in a hashset is safe as the smallest lifetime of its fields is set as TTL for the whole hashset
-			$this->redis->hset($key, $parts[1], serialize($value));
+			$this->redis->hSet($key, $parts[1], serialize($value));
 			
 			$keyTTL = $this->redis->ttl($key);
 			$newTTL = $this->getTTL($maxLifetime);

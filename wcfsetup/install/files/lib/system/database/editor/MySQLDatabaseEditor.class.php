@@ -194,7 +194,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * 
 	 * @param	string		$columnName
 	 * @param	array		$columnData
-	 * @param	string
+	 * @return	string
 	 */
 	protected function buildColumnDefinition($columnName, $columnData) {
 		// column name
@@ -226,7 +226,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * 
 	 * @param	string		$indexName
 	 * @param	array		$indexData
-	 * @param	string
+	 * @return	string
 	 */
 	protected function buildIndexDefinition($indexName, $indexData) {
 		$definition = "";

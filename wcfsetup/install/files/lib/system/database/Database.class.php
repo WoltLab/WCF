@@ -198,7 +198,7 @@ abstract class Database {
 			$this->activeTransactions--;
 			if ($this->activeTransactions === 0) {
 				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("ROLLBACK", Benchmark::TYPE_SQL_QUERY);
-				$result = $this->pdo->rollback();
+				$result = $this->pdo->rollBack();
 			}
 			else {
 				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("ROLLBACK TO SAVEPOINT level".$this->activeTransactions, Benchmark::TYPE_SQL_QUERY);
