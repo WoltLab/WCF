@@ -6783,6 +6783,16 @@ WCF.Sortable.List = Class.extend({
 		var sortableList = $('#' + this._containerID + ' .sortableList');
 		if (sortableList.is('tbody') && this._options.helper === 'clone') {
 			this._options.helper = this._tableRowHelper.bind(this);
+			
+			// explicitly set column widths to avoid column resizing during dragging
+			var thead = sortableList.prev('thead');
+			if (thead) {
+				thead.find('th').each(function(index, element) {
+					element = $(element);
+					
+					element.width(element.width());
+				});
+			}
 		}
 		
 		if (isSimpleSorting) {
