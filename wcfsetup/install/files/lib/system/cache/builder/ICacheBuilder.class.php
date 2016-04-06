@@ -5,7 +5,7 @@ namespace wcf\system\cache\builder;
  * A cache builder provides data for the cache handler that ought to be cached.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -17,7 +17,7 @@ interface ICacheBuilder {
 	 * 
 	 * @param	array		$parameters
 	 * @param	string		$arrayIndex
-	 * @return	array
+	 * @return	mixed
 	 */
 	public function getData(array $parameters = array(), $arrayIndex = '');
 	
