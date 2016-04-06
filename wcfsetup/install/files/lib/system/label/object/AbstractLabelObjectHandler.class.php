@@ -145,7 +145,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	 * @see	\wcf\system\label\manager\ILabelObjectHandler::removeLabels()
 	 */
 	public function removeLabels($objectID, $validatePermissions = true) {
-		LabelHandler::getInstance()->removeLabels($this->objectTypeID, $objectID, $validatePermissions);
+		LabelHandler::getInstance()->removeLabels($this->objectTypeID, $objectID);
 	}
 	
 	/**

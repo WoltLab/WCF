@@ -121,7 +121,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		
 		$dir = dirname($object->getLocation());
 		if (!@file_exists($dir)) {
-			FileUtil::makePath($dir, 0777);
+			FileUtil::makePath($dir);
 		}
 		
 		// move uploaded file

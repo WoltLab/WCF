@@ -331,7 +331,7 @@ class UserNotificationHandler extends SingletonFactory {
 			$notifications = array_merge($notifications, $this->fetchNotifications($limit, 0, 1));
 		}
 		
-		$returnValues = $this->processNotifications($notifications, true);
+		$returnValues = $this->processNotifications($notifications);
 		$returnValues['notificationCount'] = $notificationCount;
 		
 		return $returnValues;
