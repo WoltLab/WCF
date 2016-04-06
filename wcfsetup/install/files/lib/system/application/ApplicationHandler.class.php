@@ -4,8 +4,8 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
-use wcf\system\Regex;
 use wcf\system\request\RouteHandler;
+use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 
 /**
