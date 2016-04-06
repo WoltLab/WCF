@@ -74,8 +74,7 @@ CREATE TABLE wcf1_acp_session (
 	parentObjectType VARCHAR(255) NOT NULL DEFAULT '',
 	parentObjectID INT(10) NOT NULL DEFAULT 0,
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
-	objectID INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT
+	objectID INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
@@ -101,6 +100,17 @@ CREATE TABLE wcf1_acp_session_log (
 	time INT(10) NOT NULL DEFAULT 0,
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	KEY sessionID (sessionID)
+);
+
+DROP TABLE IF EXISTS wcf1_acp_session_virtual;
+CREATE TABLE wcf1_acp_session_virtual (
+	virtualSessionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	sessionID CHAR(40) NOT NULL,
+	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
+	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	sessionVariables MEDIUMTEXT,
+	UNIQUE KEY (sessionID, ipAddress, userAgent)
 );
 
 DROP TABLE IF EXISTS wcf1_acp_template;
@@ -1046,7 +1056,6 @@ CREATE TABLE wcf1_session (
 	parentObjectID INT(10) NOT NULL DEFAULT 0,
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
 	objectID INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT,
 	spiderID INT(10),
 	KEY packageID (lastActivityTime, spiderID),
 	UNIQUE KEY uniqueUserID (userID)
@@ -1059,6 +1068,7 @@ CREATE TABLE wcf1_session_virtual (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	sessionVariables MEDIUMTEXT,
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
 );
 
@@ -1624,6 +1634,8 @@ ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (user
 ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (sessionLogID) REFERENCES wcf1_acp_session_log (sessionLogID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_session_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_acp_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_acp_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

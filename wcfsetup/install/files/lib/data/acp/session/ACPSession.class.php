@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\acp\session;
 use wcf\data\DatabaseObject;
+use wcf\system\WCF;
 
 /**
  * Represents an ACP session.
@@ -59,5 +60,22 @@ class ACPSession extends DatabaseObject {
 	 */
 	public static function supportsVirtualSessions() {
 		return false;
+	}
+	
+	/**
+	 * Returns the existing session object for given user id or null if there
+	 * is no such session.
+	 * 
+	 * @param	integer		$userID
+	 * @return	ACPSession
+	 */
+	public static function getSessionByUserID($userID) {
+		$sql = "SELECT	*
+			FROM	".static::getDatabaseTableName()."
+			WHERE	userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$userID]);
+		
+		return $statement->fetchObject(static::class);
 	}
 }

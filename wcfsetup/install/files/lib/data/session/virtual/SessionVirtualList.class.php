@@ -1,20 +1,21 @@
 <?php
 namespace wcf\data\session\virtual;
-use wcf\data\DatabaseObjectList;
+use wcf\data\acp\session\virtual\ACPSessionVirtualList;
 
 /**
- * Represents a list of virtual sessions.
+ * Virtual sessions for the frontend.
  * 
- * @author	Alexander Ebert
+ * @see		\wcf\data\acp\session\virtual\ACPSessionVirtualList
+ * @author	Tim Duesterhus
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.session.virtual
  * @category	Community Framework
  */
-class SessionVirtualList extends DatabaseObjectList {
+class SessionVirtualList extends ACPSessionVirtualList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\session\virtual\SessionVirtual';
+	public $className = SessionVirtual::class;
 }

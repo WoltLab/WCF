@@ -1,5 +1,8 @@
 <?php
 namespace wcf\system\session;
+use wcf\data\acp\session\virtual\ACPSessionVirtual;
+use wcf\data\acp\session\virtual\ACPSessionVirtualAction;
+use wcf\data\acp\session\virtual\ACPSessionVirtualEditor;
 use wcf\data\session\virtual\SessionVirtual;
 use wcf\data\session\virtual\SessionVirtualAction;
 use wcf\data\session\virtual\SessionVirtualEditor;
@@ -17,6 +20,7 @@ use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\util\HeaderUtil;
 use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
@@ -382,7 +386,7 @@ class SessionHandler extends SingletonFactory {
 	 * Initializes session variables.
 	 */
 	protected function loadVariables() {
-		@$this->variables = unserialize($this->session->sessionVariables);
+		@$this->variables = unserialize($this->virtualSession->sessionVariables);
 		if (!is_array($this->variables)) {
 			$this->variables = array();
 		}
@@ -410,7 +414,12 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		$this->user = new User($this->session->userID);
-		if ($this->supportsVirtualSessions) $this->virtualSession = SessionVirtual::getExistingSession($sessionID);
+		if (class_exists(WCFACP::class, false)) {
+			$this->virtualSession = ACPSessionVirtual::getExistingSession($sessionID);
+		}
+		else {
+			$this->virtualSession = SessionVirtual::getExistingSession($sessionID);
+		}
 		
 		if (!$this->validate()) {
 			$this->session = null;
@@ -420,7 +429,7 @@ class SessionHandler extends SingletonFactory {
 			return;
 		}
 		
-		if ($this->supportsVirtualSessions) $this->loadVirtualSession();
+		$this->loadVirtualSession();
 	}
 	
 	/**
@@ -431,19 +440,27 @@ class SessionHandler extends SingletonFactory {
 	 * @param	boolean		$forceReload
 	 */
 	protected function loadVirtualSession($forceReload = false) {
-		if ($this->virtualSession === false || $forceReload) {
+		if ($this->virtualSession === null || $forceReload) {
 			$this->virtualSession = null;
-			if ($this->user->userID && $this->supportsVirtualSessions) {
+			if (class_exists(WCFACP::class, false)) {
+				$virtualSessionAction = new ACPSessionVirtualAction(array(), 'create', array('data' => array('sessionID' => $this->session->sessionID)));
+			}
+			else {
 				$virtualSessionAction = new SessionVirtualAction(array(), 'create', array('data' => array('sessionID' => $this->session->sessionID)));
-				
-				try {
-					$returnValues = $virtualSessionAction->executeAction();
-					$this->virtualSession = $returnValues['returnValues'];
-				}
-				catch (DatabaseException $e) {
-					// MySQL error 23000 = unique key
-					// do not check against the message itself, some weird systems localize them
-					if ($e->getCode() == 23000) {
+			}
+			
+			try {
+				$returnValues = $virtualSessionAction->executeAction();
+				$this->virtualSession = $returnValues['returnValues'];
+			}
+			catch (DatabaseException $e) {
+				// MySQL error 23000 = unique key
+				// do not check against the message itself, some weird systems localize them
+				if ($e->getCode() == 23000) {
+					if (class_exists(WCFACP::class, false)) {
+						$this->virtualSession = ACPSessionVirtual::getExistingSession($this->session->sessionID);
+					}
+					else {
 						$this->virtualSession = SessionVirtual::getExistingSession($this->session->sessionID);
 					}
 				}
@@ -458,7 +475,7 @@ class SessionHandler extends SingletonFactory {
 	 */
 	protected function validate() {
 		if (SESSION_VALIDATE_IP_ADDRESS) {
-			if ($this->supportsVirtualSessions && ($this->virtualSession instanceof SessionVirtual)) {
+			if ($this->virtualSession instanceof ACPSessionVirtual) {
 				if ($this->virtualSession->ipAddress != UserUtil::getIpAddress()) {
 					return false;
 				}
@@ -469,7 +486,7 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		if (SESSION_VALIDATE_USER_AGENT) {
-			if ($this->supportsVirtualSessions && ($this->virtualSession instanceof SessionVirtual)) {
+			if ($this->virtualSession instanceof ACPSessionVirtual) {
 				if ($this->virtualSession->userAgent != UserUtil::getUserAgent()) {
 					return false;
 				}
@@ -518,17 +535,15 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		$createNewSession = true;
-		if ($this->supportsVirtualSessions) {
-			// find existing session
-			$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $this->user->userID);
-			
-			if ($session !== null) {
-				// inherit existing session
-				$this->session = $session;
-				$this->loadVirtualSession(true);
-					
-				$createNewSession = false;
-			}
+		// find existing session
+		$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $this->user->userID);
+		
+		if ($session !== null) {
+			// inherit existing session
+			$this->session = $session;
+			$this->loadVirtualSession(true);
+				
+			$createNewSession = false;
 		}
 		
 		if ($createNewSession) {
@@ -551,7 +566,7 @@ class SessionHandler extends SingletonFactory {
 			catch (DatabaseException $e) {
 				// MySQL error 23000 = unique key
 				// do not check against the message itself, some weird systems localize them
-				if ($e->getCode() == 23000 && $this->supportsVirtualSessions) {
+				if ($e->getCode() == 23000) {
 					// find existing session
 					$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $this->user->userID);
 					
@@ -694,50 +709,12 @@ class SessionHandler extends SingletonFactory {
 		$hideSession = $eventParameters['hideSession'];
 		
 		// skip changeUserVirtual, if session will not be persistent anyway
-		if ($this->supportsVirtualSessions && !$hideSession) {
+		if (!$hideSession) {
 			$this->changeUserVirtual($user);
 		}
-		else {
-			// update user reference
-			$this->user = $user;
-			
-			if (!$hideSession) {
-				// update session
-				/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
-				$sessionEditor = new $this->sessionEditorClassName($this->session);
-				
-				$this->register('__changeSessionID', true);
-				
-				try {
-					$sessionEditor->update(array(
-						'userID' => $user->userID
-					));
-				}
-				catch (DatabaseException $e) {
-					// MySQL error 23000 = unique key
-					// do not check against the message itself, some weird systems localize them
-					if ($e->getCode() == 23000) {
-						$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
-						
-						// user is not a guest, delete all other sessions of this user
-						$sql = "DELETE FROM	".$sessionTable."
-							WHERE		sessionID <> ?
-									AND userID = ?";
-						$statement = WCF::getDB()->prepareStatement($sql);
-						$statement->execute(array($this->sessionID, $user->userID));
-						
-						// update session
-						$sessionEditor->update(array(
-							'userID' => $user->userID
-						));
-					}
-					else {
-						// not our business
-						throw $e;
-					}
-				}
-			}
-		}
+		
+		// update user reference
+		$this->user = $user;
 		
 		// reset caches
 		$this->groupData = null;
@@ -755,10 +732,7 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Changes the user stored in the session, this method is different from changeUser() because it
-	 * attempts to re-use sessions unless there are other virtual sessions for the same user (userID != 0).
-	 * In reverse, logging out attempts to re-use the current session or spawns a new session depending
-	 * on other virtual sessions.
+	 * Changes the user stored in the session.
 	 * 
 	 * @param	\wcf\data\user\User	$user
 	 */
@@ -772,12 +746,24 @@ class SessionHandler extends SingletonFactory {
 			case 0:
 				// delete virtual session
 				if ($this->virtualSession) {
-					$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+					if (class_exists(WCFACP::class, false)) {
+						$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
+					}
+					else {
+						$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+					}
 					$virtualSessionEditor->delete();
 				}
 				
+				if (class_exists(WCFACP::class, false)) {
+					$sessionCount = ACPSessionVirtual::countVirtualSessions($this->session->sessionID);
+				}
+				else {
+					$sessionCount = SessionVirtual::countVirtualSessions($this->session->sessionID);
+				}
+				
 				// there are still other virtual sessions, create a new session
-				if (SessionVirtual::countVirtualSessions($this->session->sessionID)) {
+				if ($sessionCount) {
 					// save session
 					$sessionData = array(
 						'sessionID' => StringUtil::getRandomID(),
@@ -807,6 +793,11 @@ class SessionHandler extends SingletonFactory {
 			// guest -> user (login)
 			//
 			default:
+				if (!$this->supportsVirtualSessions) {
+					// delete all other sessions of this user
+					call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions'), array($user->userID));
+				}
+				
 				// find existing session for this user
 				$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $user->userID);
 				
@@ -848,7 +839,7 @@ class SessionHandler extends SingletonFactory {
 					$this->session = $session;
 					
 					// inherit security token
-					$variables = @unserialize($this->session->sessionVariables);
+					$variables = @unserialize($this->virtualSession->sessionVariables);
 					if (is_array($variables) && !empty($variables['__SECURITY_TOKEN'])) {
 						$this->register('__SECURITY_TOKEN', $variables['__SECURITY_TOKEN']);
 					}
@@ -858,7 +849,6 @@ class SessionHandler extends SingletonFactory {
 			break;
 		}
 		
-		$this->user = $user;
 		$this->loadVirtualSession(true);
 	}
 	
@@ -883,18 +873,26 @@ class SessionHandler extends SingletonFactory {
 			$data['objectType'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getObjectType();
 			$data['objectID'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getObjectID();
 		}
-		if ($this->variablesChanged) {
-			$data['sessionVariables'] = serialize($this->variables);
-		}
 		
 		// update session
 		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->update($data);
 		
-		if ($this->virtualSession instanceof SessionVirtual) {
-			$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+		if ($this->virtualSession instanceof ACPSessionVirtual) {
+			if (class_exists(WCFACP::class, false)) {
+				$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
+			}
+			else {
+				$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+			}
 			$virtualSessionEditor->updateLastActivityTime();
+			
+			$data = [];
+			if ($this->variablesChanged) {
+				$data['sessionVariables'] = serialize($this->variables);
+			}
+			$virtualSessionEditor->update($data);
 		}
 	}
 	
@@ -911,8 +909,13 @@ class SessionHandler extends SingletonFactory {
 			'lastActivityTime' => TIME_NOW
 		));
 		
-		if ($this->virtualSession instanceof SessionVirtual) {
-			$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+		if ($this->virtualSession instanceof ACPSessionVirtual) {
+			if (class_exists(WCFACP::class, false)) {
+				$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
+			}
+			else {
+				$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+			}
 			$virtualSessionEditor->updateLastActivityTime();
 		}
 	}
@@ -926,7 +929,7 @@ class SessionHandler extends SingletonFactory {
 			self::resetSessions(array($this->user->userID));
 			
 			// update last activity time
-			if (!class_exists('\wcf\system\WCFACP', false)) {
+			if (!class_exists(WCFACP::class, false)) {
 				$editor = new UserEditor($this->user);
 				$editor->update(array('lastActivityTime' => TIME_NOW));
 			}
