@@ -1,6 +1,5 @@
 <?php
 namespace wcf\page;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\PageCache;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\online\UsersOnlineList;

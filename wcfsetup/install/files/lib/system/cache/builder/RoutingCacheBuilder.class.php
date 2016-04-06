@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\application\Application;
-use wcf\data\page\Page;
 use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\ControllerMap;

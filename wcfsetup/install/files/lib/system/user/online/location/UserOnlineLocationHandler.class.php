@@ -1,8 +1,6 @@
 <?php
 namespace wcf\system\user\online\location;
-use wcf\data\page\PageCache;
 use wcf\data\user\online\UserOnline;
-use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\SingletonFactory;
 
 /**
