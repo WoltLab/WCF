@@ -141,6 +141,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 * 
 	 * @param	string		$filename
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function getSQL($filename) {
 		// search sql files in package archive

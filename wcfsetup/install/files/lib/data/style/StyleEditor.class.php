@@ -123,8 +123,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Reads the data of a style exchange format file.
 	 * 
-	 * @param	\wcf\system\io\Tar	$tar
+	 * @param	Tar	$tar
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public static function readStyleData(Tar $tar) {
 		// search style.xml

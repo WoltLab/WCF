@@ -274,6 +274,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 * 
 	 * @param	string		$filename
 	 * @return	string
+	 * @throws	UserInputException
 	 */
 	protected function enforceDimensions($filename) {
 		$imageData = getimagesize($filename);

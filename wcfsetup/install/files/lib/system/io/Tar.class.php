@@ -75,6 +75,7 @@ class Tar implements IArchive {
 	 * archiveName must be tarball or gzipped tarball
 	 * 
 	 * @param	string		$archiveName
+	 * @throws	SystemException
 	 */
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {

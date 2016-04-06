@@ -25,6 +25,7 @@ class FTP {
 	 * @param	string		$host
 	 * @param	integer		$port
 	 * @param	integer		$timeout
+	 * @throws	SystemException
 	 */
 	public function __construct($host = 'localhost', $port = 21, $timeout = 30) {
 		$this->resource = ftp_connect($host, $port, $timeout);
@@ -38,6 +39,7 @@ class FTP {
 	 * 
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		array_unshift($arguments, $this->resource);

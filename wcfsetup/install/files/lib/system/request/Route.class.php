@@ -82,6 +82,7 @@ class Route implements IRoute {
 	 * 
 	 * @param	string		$routeSchema
 	 * @param	string		$controller
+	 * @throws	SystemException
 	 */
 	public function setSchema($routeSchema, $controller = null) {
 		$schemaParts = $this->getParts($routeSchema);

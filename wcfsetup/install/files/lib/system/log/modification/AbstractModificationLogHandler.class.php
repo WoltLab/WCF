@@ -98,8 +98,6 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	 * 
 	 * @param	integer[]	$objectIDs
 	 * @param	string[]	$ignoredActions		names of actions whose log entries will not be deleted
-	 * @throws	DatabaseQueryException
-	 * @throws	DatabaseQueryExecutionException
 	 */
 	public function deleteLogs(array $objectIDs, array $ignoredActions = []) {
 		if (empty($objectIDs)) return;
@@ -121,8 +119,6 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	 * Deletes modification log entries by the id of the parent object.
 	 * 
 	 * @param	integer[]	$parentObjectIDs
-	 * @throws	DatabaseQueryException
-	 * @throws	DatabaseQueryExecutionException
 	 */
 	public function deleteLogsByParentIDs(array $parentObjectIDs) {
 		if (empty($parentObjectIDs)) return;

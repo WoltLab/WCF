@@ -42,6 +42,7 @@ class File {
 	 * @param	string		$filename
 	 * @param	string		$mode
 	 * @param	array		$options
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb', $options = array()) {
 		$this->filename = $filename;
@@ -63,6 +64,7 @@ class File {
 	 * 
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {

@@ -104,6 +104,8 @@ class QuickReplyManager extends SingletonFactory {
 	 * @param	array<array>			$parameters
 	 * @param	string				$containerClassName
 	 * @param	string				$containerDecoratorClassName
+	 * @throws	SystemException
+	 * @throws	UserInputException
 	 */
 	public function validateParameters(IMessageQuickReplyAction $object, array &$parameters, $containerClassName, $containerDecoratorClassName = '') {
 		if (!isset($parameters['data']['message'])) {

@@ -550,6 +550,7 @@ final class HTTPRequest {
 	 * Sets options and applies default values when an option is omitted.
 	 * 
 	 * @param	array		$options
+	 * @throws	SystemException
 	 */
 	private function setOptions(array $options) {
 		if (!isset($options['timeout'])) {

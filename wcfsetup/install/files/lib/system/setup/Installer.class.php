@@ -74,6 +74,7 @@ class Installer {
 	 * Creates a directory in the target directory.
 	 * 
 	 * @param	string		$dir
+	 * @throws	SystemException
 	 */
 	protected function createDir($dir) {
 		if (!@is_dir($this->targetDir.$dir)) {

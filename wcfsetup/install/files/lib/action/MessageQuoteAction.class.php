@@ -152,6 +152,8 @@ class MessageQuoteAction extends AJAXProxyAction {
 	 * Removes a list of quotes from storage and returns the remaining count.
 	 * 
 	 * @return	integer
+	 * @throws	SystemException
+	 * @throws	UserInputException
 	 */
 	protected function remove() {
 		if (empty($this->quoteIDs)) {
@@ -182,6 +184,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	 * Returns a list of full quotes by object ids for given object types.
 	 * 
 	 * @return	array<array>
+	 * @throws	UserInputException
 	 */
 	protected function getFullQuoteObjectIDs() {
 		if (empty($this->objectTypes)) {

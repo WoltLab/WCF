@@ -29,6 +29,7 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 	 * Returns the processor this database object.
 	 * 
 	 * @return	object
+	 * @throws	SystemException
 	 */
 	public function getProcessor() {
 		if ($this->processor === null) {

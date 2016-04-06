@@ -90,6 +90,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * Imports options.
 	 * 
 	 * @param	\DOMXPath	$xpath
+	 * @throws	SystemException
 	 */
 	protected function importOptions(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');
@@ -176,6 +177,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * 
 	 * @param	string		$optionType
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	protected function getObjectTypeID($optionType) {
 		if (!isset($this->optionTypeIDs[$optionType])) {

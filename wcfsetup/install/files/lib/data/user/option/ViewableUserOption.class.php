@@ -63,6 +63,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	 * Returns the output object for current user option.
 	 * 
 	 * @return	\wcf\system\option\user\IUserOptionOutput
+	 * @throws	SystemException
 	 */
 	public function getOutputObject() {
 		if (!isset(self::$outputObjects[$this->outputClass])) {

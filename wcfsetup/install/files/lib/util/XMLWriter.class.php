@@ -37,7 +37,8 @@ class XMLWriter {
 	 * @param	string		$rootElement
 	 * @param	string		$namespace
 	 * @param	string		$schemaLocation
-	 * @param	array<string>	$attributes
+	 * @param	string[]	$attributes
+	 * @throws	SystemException
 	 */
 	public function beginDocument($rootElement, $namespace, $schemaLocation, array $attributes = array()) {
 		if ($this->activeDocument) {

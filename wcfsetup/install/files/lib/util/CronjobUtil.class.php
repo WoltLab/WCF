@@ -494,6 +494,7 @@ final class CronjobUtil {
 	 * 
 	 * @param	string		$name
 	 * @param	string		$value
+	 * @throws	SystemException
 	 */
 	protected static function validateAttribute($name, $value) {
 		if ($value === '') {

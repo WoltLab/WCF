@@ -148,6 +148,7 @@ class MenuItem extends DatabaseObject {
 	 * TODO: Comment
 	 * 
 	 * @return	IMenuPageHandler|null
+	 * @throws	SystemException
 	 */
 	protected function getMenuPageHandler() {
 		$page = $this->getPage();

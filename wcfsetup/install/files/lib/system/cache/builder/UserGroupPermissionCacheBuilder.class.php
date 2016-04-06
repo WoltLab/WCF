@@ -84,8 +84,9 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Returns an object of the requested group option type.
 	 * 
-	 * @param	string			$type
+	 * @param	string		$type
 	 * @return	\wcf\system\option\user\group\IUserGroupOptionType
+	 * @throws	SystemException
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {

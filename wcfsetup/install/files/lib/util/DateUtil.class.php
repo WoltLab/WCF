@@ -374,6 +374,7 @@ final class DateUtil {
 	 * Validates if given date is valid ISO-8601.
 	 * 
 	 * @param	string		$date
+	 * @throws	SystemException
 	 */
 	public static function validateDate($date) {
 		if (preg_match('~^(?P<year>[0-9]{4})-(?P<month>[0-9]{2})-(?P<day>[0-9]{2})~', $date, $matches)) {

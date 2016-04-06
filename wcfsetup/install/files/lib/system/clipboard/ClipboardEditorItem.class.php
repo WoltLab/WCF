@@ -78,6 +78,7 @@ final class ClipboardEditorItem {
 	 * 
 	 * @param	string		$name
 	 * @param	mixed		$value
+	 * @throws	SystemException
 	 */
 	public function addInternalData($name, $value) {
 		if (!preg_match('~^[a-zA-Z]+$~', $name)) {
@@ -96,6 +97,7 @@ final class ClipboardEditorItem {
 	 * 
 	 * @param	string		$name
 	 * @param	mixed		$value
+	 * @throws	SystemException
 	 */
 	public function addParameter($name, $value) {
 		if (!preg_match('~^[a-zA-Z]+$~', $name)) {
@@ -113,6 +115,7 @@ final class ClipboardEditorItem {
 	 * Sets item name.
 	 * 
 	 * @param	string		$name
+	 * @throws	SystemException
 	 */
 	public function setName($name) {
 		if (!preg_match('~^[a-zA-Z0-9\.-]+$~', $name)) {

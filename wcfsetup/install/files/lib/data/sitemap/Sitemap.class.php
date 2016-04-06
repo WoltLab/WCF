@@ -48,6 +48,7 @@ class Sitemap extends DatabaseObject {
 	 * Returns parsed template for current sitemap.
 	 * 
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function getTemplate() {
 		if ($this->sitemapObj === null) {

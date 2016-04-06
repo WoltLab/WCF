@@ -2,6 +2,7 @@
 namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueList;
+use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -183,8 +184,9 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Populates object properties for viewing.
 	 * 
-	 * @param	integer								$objectTypeID
-	 * @param	array<\wcf\data\moderation\queue\ViewableModerationQueue>	$objects
+	 * @param	integer				$objectTypeID
+	 * @param	ViewableModerationQueue[]	$objects
+	 * @throws	SystemException
 	 */
 	public function populate($objectTypeID, array $objects) {
 		$moderationType = '';
@@ -439,8 +441,9 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Removes moderation queues, should only be called if related objects are permanently deleted.
 	 * 
-	 * @param	string			$objectType
-	 * @param	array<integer>		$objectIDs
+	 * @param	string		$objectType
+	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	public function removeQueues($objectType, array $objectIDs) {
 		$definitionNames = $this->getDefinitionNamesByObjectType($objectType);

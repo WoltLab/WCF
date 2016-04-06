@@ -147,6 +147,7 @@ class DiskCacheSource implements ICacheSource {
 	 * @param	string		$cacheName
 	 * @param	string		$filename
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	protected function readCache($cacheName, $filename) {
 		// get file contents

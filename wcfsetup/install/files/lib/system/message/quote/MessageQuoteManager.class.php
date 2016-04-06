@@ -103,6 +103,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @param	string		$fullQuote
 	 * @param	boolean		$returnFalseIfExists
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function addQuote($objectType, $parentObjectID, $objectID, $message, $fullQuote = '', $returnFalseIfExists = true) {
 		if (!isset($this->objectTypes[$objectType])) {
@@ -476,6 +477,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * 
 	 * @param	string[]		$objectTypes
 	 * @return	array<array>
+	 * @throws	SystemException
 	 */
 	public function getFullQuoteObjectIDs(array $objectTypes) {
 		$objectIDs = [];
@@ -506,6 +508,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	public function initObjects($objectType, array $objectIDs) {
 		if (!isset($this->objectTypes[$objectType])) {

@@ -68,6 +68,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates accessible groups.
 	 * 
 	 * @param	boolean		$ignoreOwnUser
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	protected function __validateAccessibleGroups($ignoreOwnUser = true) {
 		if ($ignoreOwnUser) {

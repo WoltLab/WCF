@@ -196,6 +196,7 @@ class TemplateScriptingCompiler {
 	 * @param	array		$metaData
 	 * @param	boolean		$isolated
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function compileString($identifier, $sourceContent, array $metaData = array(), $isolated = false) {
 		if ($isolated) {
@@ -301,6 +302,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$identifier
 	 * @param	array		$metaData
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileTag($tag, $identifier, array &$metaData) {
 		if (preg_match('~^'.$this->outputPattern.'~s', $tag)) {
@@ -455,6 +457,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tagCommand
 	 * @param	string		$tagArgs
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	protected function compileBlockPlugin($tagCommand, $tagArgs) {
 		// check wheater this is the start ({block}) or the
@@ -502,6 +505,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tagCommand
 	 * @param	string		$tagArgs
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	protected function compileCompilerPlugin($tagCommand, $tagArgs) {
 		// check wheater this is the start ({block}) or the
@@ -584,6 +588,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$sectionTag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileSectionTag($sectionTag) {
 		$args = $this->parseTagArgs($sectionTag, 'section');
@@ -658,6 +663,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$foreachTag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileForeachTag($foreachTag) {
 		$args = $this->parseTagArgs($foreachTag, 'foreach');
@@ -707,6 +713,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$identifier
 	 * @param	array		$metaData
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileIncludeTag($includeTag, $identifier, array $metaData) {
 		$args = $this->parseTagArgs($includeTag, 'include');
@@ -847,6 +854,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tagArgs
 	 * @param	string		$tag
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function parseTagArgs($tagArgs, $tag) {
 		// replace strings
@@ -930,6 +938,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tagArgs
 	 * @param	boolean		$elseif		true, if this tag is an else tag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileIfTag($tagArgs, $elseif = false) {
 		$tagArgs = $this->replaceQuotes($tagArgs);
@@ -1023,6 +1032,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$tag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileOutputTag($tag) {
 		$encodeHTML = false;
@@ -1116,6 +1126,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$tag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function compileVariableTag($tag, $replaceQuotes = true) {
 		// replace all quotes with unique hash values
@@ -1462,6 +1473,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$templateName
 	 * @param	string		$string
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function applyPrefilters($templateName, $string) {
 		foreach ($this->template->getPrefilters() as $prefilter) {

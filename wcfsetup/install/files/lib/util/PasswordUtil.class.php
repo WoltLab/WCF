@@ -117,6 +117,7 @@ final class PasswordUtil {
 	 * @param	string		$password
 	 * @param	string		$dbHash
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public static function checkPassword($username, $password, $dbHash) {
 		$type = self::detectEncryption($dbHash);
@@ -241,6 +242,7 @@ final class PasswordUtil {
 	 * @param	integer		$min
 	 * @param	integer		$max
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public static function secureRandomNumber($min, $max) {
 		$range = $max - $min;

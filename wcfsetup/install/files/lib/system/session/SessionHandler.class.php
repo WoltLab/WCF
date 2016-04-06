@@ -717,7 +717,8 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Changes the user stored in the session.
 	 * 
-	 * @param	\wcf\data\user\User	$user
+	 * @param	User	$user
+	 * @throws	DatabaseException
 	 */
 	protected function changeUserVirtual(User $user) {
 		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */

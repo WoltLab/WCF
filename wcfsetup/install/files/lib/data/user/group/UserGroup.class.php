@@ -122,7 +122,8 @@ class UserGroup extends DatabaseObject {
 	 * Returns unique group by given type. Only works for the default user groups.
 	 * 
 	 * @param	integer		$type
-	 * @return	\wcf\data\user\group\UserGroup
+	 * @return	UserGroup
+	 * @throws	SystemException
 	 */
 	public static function getGroupByType($type) {
 		if ($type != self::EVERYONE && $type != self::GUESTS && $type != self::USERS) {

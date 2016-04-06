@@ -79,6 +79,8 @@ class RecaptchaHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$challenge
 	 * @param	string		$response
+	 * @throws	SystemException
+	 * @throws	UserInputException
 	 */
 	public function validate($challenge, $response) {
 		// fail if challenge or response are empty to avoid sending api requests

@@ -37,6 +37,7 @@ final class FileUtil {
 	 * Tries to find the temp folder.
 	 * 
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function getTempFolder() {
 		try {
@@ -519,6 +520,7 @@ final class FileUtil {
 	 * permissions and goes up until 0666 for files and 0777 for directories.
 	 * 
 	 * @param	string		$filename
+	 * @throws	SystemException
 	 */
 	public static function makeWritable($filename) {
 		if (!file_exists($filename)) {

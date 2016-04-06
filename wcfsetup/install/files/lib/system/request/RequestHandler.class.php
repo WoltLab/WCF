@@ -208,6 +208,7 @@ class RequestHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$application
 	 * @param	string[]	$routeData
+	 * @throws	IllegalLinkException
 	 */
 	protected function handleDefaultController($application, array &$routeData) {
 		if (!RouteHandler::getInstance()->isDefaultController()) {

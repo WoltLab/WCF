@@ -334,6 +334,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	string		$templateName
 	 * @param	string		$application
 	 * @return	string		$path
+	 * @throws	SystemException
 	 */
 	public function getSourceFilename($templateName, $application) {
 		$sourceFilename = $this->getPath($this->templatePaths[$application], $templateName);
@@ -478,7 +479,8 @@ class TemplateEngine extends SingletonFactory {
 	 * Reads the content of a template file.
 	 * 
 	 * @param	string		$sourceFilename
-	 * @return	string		$sourceContent
+	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function getSourceContent($sourceFilename) {
 		$sourceContent = '';
@@ -652,6 +654,7 @@ class TemplateEngine extends SingletonFactory {
 	 * Sets the dir for the compiled templates.
 	 * 
 	 * @param	string		$compileDir
+	 * @throws	SystemException
 	 */
 	public function setCompileDir($compileDir) {
 		if (!is_dir($compileDir)) {

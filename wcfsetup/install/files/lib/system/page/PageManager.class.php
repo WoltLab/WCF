@@ -45,7 +45,8 @@ class PageManager extends SingletonFactory {
 	 * are returned.
 	 * 
 	 * @param	string		$application
-	 * @return	array<string>
+	 * @return	string[]
+	 * @throws	SystemException
 	 */
 	public function getSelection($application = null) {
 		$objectTypes = $this->objectTypes;

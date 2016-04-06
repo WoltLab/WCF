@@ -83,6 +83,7 @@ class StyleHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$styleID
 	 * @param	boolean		$ignorePermissions
+	 * @throws	SystemException
 	 */
 	public function changeStyle($styleID = 0, $ignorePermissions = false) {
 		// check permission

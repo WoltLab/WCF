@@ -308,6 +308,7 @@ class UserAddForm extends UserOptionListForm {
 	 * Throws a UserInputException if the username is not unique or not valid.
 	 * 
 	 * @param	string		$username
+	 * @throws	UserInputException
 	 */
 	protected function validateUsername($username) {
 		if (empty($username)) {
@@ -330,9 +331,10 @@ class UserAddForm extends UserOptionListForm {
 	 * 
 	 * @param	string		$email
 	 * @param	string		$confirmEmail
+	 * @throws	UserInputException
 	 */
 	protected function validateEmail($email, $confirmEmail) {
-		if (empty($email)) {	
+		if (empty($email)) {
 			throw new UserInputException('email');
 		}
 		
@@ -357,6 +359,7 @@ class UserAddForm extends UserOptionListForm {
 	 * 
 	 * @param	string		$password
 	 * @param	string		$confirmPassword
+	 * @throws	UserInputException
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (empty($password)) {

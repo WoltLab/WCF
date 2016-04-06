@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\log\modification;
+use wcf\data\modification\log\ModificationLog;
 use wcf\data\modification\log\ModificationLogEditor;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -58,7 +59,8 @@ class ModificationLogHandler extends SingletonFactory {
 	 * @param	integer		$time
 	 * @param	integer		$userID
 	 * @param	string		$username
-	 * @return	\wcf\data\modification\log\ModificationLog
+	 * @return	ModificationLog
+	 * @throws	SystemException
 	 */
 	protected function _add($objectType, $objectID, $action, array $additionalData = array(), $time = TIME_NOW, $userID = null, $username = null) {
 		$objectTypeObj = $this->getObjectType($objectType);
@@ -94,7 +96,8 @@ class ModificationLogHandler extends SingletonFactory {
 	 * Removes log entries.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	protected function _remove($objectType, array $objectIDs) {
 		$objectTypeObj = $this->getObjectType($objectType);

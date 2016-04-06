@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\condition;
+use wcf\data\condition\Condition;
 use wcf\data\condition\ConditionAction;
 use wcf\data\condition\ConditionList;
 use wcf\data\object\type\ObjectTypeCache;
@@ -51,8 +52,9 @@ class ConditionHandler extends SingletonFactory {
 	/**
 	 * Deletes all conditions of the objects with the given ids.
 	 * 
-	 * @param	string			$definitionName
-	 * @param	array<integer>		$objectIDs
+	 * @param	string		$definitionName
+	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	public function deleteConditions($definitionName, array $objectIDs) {
 		if (empty($objectIDs)) return;
@@ -87,7 +89,8 @@ class ConditionHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$definitionName
 	 * @param	integer		$objectID
-	 * @return	array<\wcf\data\condition\Condition>
+	 * @return	Condition[]
+	 * @throws	SystemException
 	 */
 	public function getConditions($definitionName, $objectID) {
 		// validate definition

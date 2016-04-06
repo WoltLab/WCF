@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\label;
+use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\LabelCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -107,8 +108,9 @@ class LabelHandler extends SingletonFactory {
 	 * Returns an array with boolean values for each given label id.
 	 * 
 	 * @param	string			$optionName
-	 * @param	array<integer>		$labelIDs
+	 * @param	integer[]		$labelIDs
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function getPermissions($optionName, array $labelIDs) {
 		if (empty($labelIDs)) {
@@ -270,10 +272,11 @@ class LabelHandler extends SingletonFactory {
 	/**
 	 * Returns given label groups by id.
 	 * 
-	 * @param	array<integer>		$groupID
-	 * @param	boolean			$validatePermissions
-	 * @param	string			$permission
-	 * @return	array<\wcf\data\label\group\ViewableLabelGroup>
+	 * @param	integer[]	$groupIDs
+	 * @param	boolean		$validatePermissions
+	 * @param	string		$permission
+	 * @return	ViewableLabelGroup[]
+	 * @throws	SystemException
 	 */
 	public function getLabelGroups(array $groupIDs = array(), $validatePermissions = true, $permission = 'canSetLabel') {
 		$data = array();

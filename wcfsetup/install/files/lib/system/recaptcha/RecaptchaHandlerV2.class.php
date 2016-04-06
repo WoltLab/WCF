@@ -22,6 +22,7 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 	 * Validates response.
 	 * 
 	 * @param	string		$response
+	 * @throws	UserInputException
 	 */
 	public function validate($response) {
 		// fail if response is empty to avoid sending api requests

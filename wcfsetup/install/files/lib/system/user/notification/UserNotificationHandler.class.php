@@ -72,12 +72,13 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Triggers a notification event.
 	 * 
-	 * @param	string								$eventName
-	 * @param	string								$objectType
-	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$notificationObject
-	 * @param	array<integer>							$recipientIDs
-	 * @param	array<mixed>							$additionalData
-	 * @param	integer								$baseObjectID
+	 * @param	string				$eventName
+	 * @param	string				$objectType
+	 * @param	IUserNotificationObject		$notificationObject
+	 * @param	integer[]			$recipientIDs
+	 * @param	array<mixed>			$additionalData
+	 * @param	integer				$baseObjectID
+	 * @throws	SystemException
 	 */
 	public function fireEvent($eventName, $objectType, IUserNotificationObject $notificationObject, array $recipientIDs, array $additionalData = array(), $baseObjectID = 0) {
 		// check given object type and event name
@@ -552,6 +553,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	integer		$authorID
 	 * @param	integer		$time
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getNotificationID($eventID, $objectID, $authorID = null, $time = null) {
 		if ($authorID === null && $time === null) {
@@ -686,7 +688,8 @@ class UserNotificationHandler extends SingletonFactory {
 	 * Removes notifications, this method should only be invoked for delete objects.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	public function removeNotifications($objectType, array $objectIDs) {
 		// check given object type
@@ -743,8 +746,9 @@ class UserNotificationHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$eventName
 	 * @param	string		$objectType
-	 * @param	array<integer>	$recipientIDs
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$recipientIDs
+	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	public function markAsConfirmed($eventName, $objectType, array $recipientIDs, array $objectIDs = array()) {
 		// check given object type and event name

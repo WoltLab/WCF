@@ -181,7 +181,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * was not found, an exception message is thrown.
 	 * 
 	 * @param	string		$filename
-	 * @return	\wcf\util\XML
+	 * @return	XML
+	 * @throws	SystemException
 	 */
 	protected function readLanguage($filename) {
 		// search language files in package archive

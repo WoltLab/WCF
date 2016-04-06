@@ -46,6 +46,7 @@ class AttachmentMimePart extends AbstractMimePart {
 	 * @param	string	$path		Path to read the file from.
 	 * @param	string	$filename	Filename to provide in the email or null to use the $path's basename.
 	 * @param	string	$mimeType	Mime type to provide in the email or null to guess the mime type.
+	 * @throws	SystemException
 	 */
 	public function __construct($path, $filename = null, $mimeType = null) {
 		if (!is_file($path) || !is_readable($path)) {

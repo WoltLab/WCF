@@ -56,6 +56,7 @@ class SQLParser {
 	 * 
 	 * @param	string		$statement
 	 * @param	string		$query
+	 * @throws	SystemException
 	 */
 	protected function executeStatement($statement, $query) {
 		switch ($statement) {

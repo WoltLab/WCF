@@ -741,6 +741,7 @@ class PackageArchive {
 	 * @param	string		$filename
 	 * @param	string		$tempPrefix
 	 * @return	string
+	 * @throws	PackageValidationException
 	 */
 	public function extractTar($filename, $tempPrefix = 'package_') {
 		// search the requested tar archive in our package archive.

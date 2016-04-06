@@ -34,6 +34,7 @@ final class ClassUtil {
 	 * @param	string		$className
 	 * @param	string		$targetClass
 	 * @return	boolean
+	 * @throws	SystemException
 	 * 
 	 * @deprecated	use is_subclass_of() instead
 	 */

@@ -37,6 +37,7 @@ class AtomicWriter extends File {
 	 * Opens a new file. The file is always opened in binary mode.
 	 * 
 	 * @param	string		$filename
+	 * @throws	SystemException
 	 */
 	public function __construct($filename) {
 		$this->targetFilename = $filename;

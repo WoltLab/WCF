@@ -58,6 +58,7 @@ class UserProfileMenuItem extends DatabaseObject {
 	 * Returns the content manager for this menu item.
 	 * 
 	 * @return	IUserProfileMenuContent
+	 * @throws	SystemException
 	 */
 	public function getContentManager() {
 		if ($this->contentManager === null) {

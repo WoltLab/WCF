@@ -40,7 +40,8 @@ class ACPSearchHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$query
 	 * @param	integer		$limit
-	 * @return	array<\wcf\system\search\acp\ACPSearchResultList>
+	 * @return	ACPSearchResultList[]
+	 * @throws	SystemException
 	 */
 	public function search($query, $limit = 10) {
 		$data = array();

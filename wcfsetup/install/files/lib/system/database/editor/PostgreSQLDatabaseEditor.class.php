@@ -85,6 +85,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @param	string		$tableName
 	 * @param	string		$columnName
 	 * @return	array
+	 * @throws	DatabaseException
 	 */
 	protected function getColumnData($tableName, $columnName) {
 		$sql = "SELECT	pg_catalog.FORMAT_TYPE(atttypid, atttypmod) AS type, attnotnull AS notNull, atthasdef AS default
@@ -386,6 +387,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * 
 	 * @param	string		$mySQLType
 	 * @return	string
+	 * @throws	DatabaseException
 	 */
 	protected function getColumnType($mySQLType) {
 		switch ($mySQLType) {

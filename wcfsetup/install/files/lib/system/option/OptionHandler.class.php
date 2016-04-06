@@ -286,7 +286,8 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * Validates an option.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
+	 * @param	Option		$option
+	 * @throws	UserInputException
 	 */
 	protected function validateOption(Option $option) {
 		// get type object
@@ -320,7 +321,8 @@ class OptionHandler implements IOptionHandler {
 	 * Returns an object of the requested option type.
 	 * 
 	 * @param	string			$type
-	 * @return	\wcf\system\option\IOptionType
+	 * @return	IOptionType
+	 * @throws	SystemException
 	 */
 	public function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
@@ -341,6 +343,7 @@ class OptionHandler implements IOptionHandler {
 	 * 
 	 * @param	string		$optionType
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function getClassName($optionType) {
 		$optionType = StringUtil::firstCharToUpperCase($optionType);

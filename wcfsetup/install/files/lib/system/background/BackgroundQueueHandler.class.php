@@ -48,6 +48,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * 
 	 * @param	mixed	$jobs	Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
 	 * @param	int	$time	Earliest time to consider the job for execution.
+	 * @throws	SystemException
 	 */
 	public function enqueueAt($jobs, $time) {
 		if ($time < TIME_NOW) {

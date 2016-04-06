@@ -180,6 +180,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * Loads a list of marked items grouped by type name.
 	 * 
 	 * @param	integer		$objectTypeID
+	 * @throws	SystemException
 	 */
 	protected function loadMarkedItems($objectTypeID = null) {
 		if ($this->markedItems === null) {
@@ -290,6 +291,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * @param	string		$page
 	 * @param	integer		$pageObjectID
 	 * @return	array<array>
+	 * @throws	SystemException
 	 */
 	public function getEditorItems($page, $pageObjectID) {
 		$this->pageObjectID = 0;

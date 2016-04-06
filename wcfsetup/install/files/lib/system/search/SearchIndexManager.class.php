@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
@@ -48,6 +49,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {
@@ -61,7 +63,8 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	 * Returns the the object type with the given name.
 	 * 
 	 * @param	string		$objectType
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
+	 * @throws	SystemException
 	 */
 	public function getObjectType($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {

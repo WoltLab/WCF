@@ -190,6 +190,7 @@ class TagEngine extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
 		// get object type

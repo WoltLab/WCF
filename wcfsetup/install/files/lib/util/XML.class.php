@@ -50,6 +50,7 @@ class XML {
 	 * Loads a xml file for processing.
 	 * 
 	 * @param	string		$path
+	 * @throws	SystemException
 	 */
 	public function load($path) {
 		$this->path = $path;
@@ -172,6 +173,7 @@ class XML {
 	 * 
 	 * @param	string		$message
 	 * @param	array		$errors
+	 * @throws	SystemException
 	 */
 	protected function throwException($message, array $errors = array()) {
 		if (!empty($errors)) {

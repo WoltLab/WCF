@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\category;
+use wcf\data\category\Category;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\CategoryCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -84,7 +85,8 @@ class CategoryHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$categoryID
 	 * @param	integer		$objectTypeID
-	 * @return	array<\wcf\data\category\Category>
+	 * @return	Category[]
+	 * @throws	SystemException
 	 */
 	public function getChildCategories($categoryID, $objectTypeID = null) {
 		if (!$categoryID && $objectTypeID === null) {

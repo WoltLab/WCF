@@ -34,6 +34,7 @@ class AdHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$adLocation
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function getAds($adLocation) {
 		if (!isset($this->objectTypes[$adLocation])) {

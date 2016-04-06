@@ -436,6 +436,7 @@ class PackageInstallationNodeBuilder {
 	 * Builds nodes for required packages, whereas each has it own node.
 	 * 
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function buildRequirementNodes() {
 		$queue = $this->installation->queue;

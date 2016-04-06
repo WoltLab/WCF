@@ -24,6 +24,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectTypeName
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectTypeName) {
 		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectTypeName);

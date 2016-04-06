@@ -66,7 +66,8 @@ class LanguageServerProcessor extends SingletonFactory {
 	 * Downloads and imports a language file from a language server.
 	 * 
 	 * @param	string		$location
-	 * @param	array<string>	$packageList
+	 * @param	string[]	$packageList
+	 * @throws	SystemException
 	 */
 	protected function importLanguageFile($location, array $packageList) {
 		// get proxy

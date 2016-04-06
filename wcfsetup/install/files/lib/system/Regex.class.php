@@ -133,6 +133,7 @@ final class Regex {
 	 * 
 	 * @param	string		$regex
 	 * @param	integer		$modifier
+	 * @throws	SystemException
 	 */
 	public function __construct($regex, $modifier = self::MODIFIER_NONE) {
 		// escape delimiter
@@ -246,6 +247,7 @@ final class Regex {
 	 * @param	mixed		$result
 	 * @param	string		$method
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	private function checkResult($result, $method = '') {
 		if ($result === false || $result === null) {

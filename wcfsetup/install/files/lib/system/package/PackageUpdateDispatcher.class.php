@@ -88,8 +88,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Gets the package_update.xml from an update server.
 	 * 
-	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
-	 * @param	boolean							$forceHTTP
+	 * @param	PackageUpdateServer	$updateServer
+	 * @param	boolean			$forceHTTP
+	 * @throws	PackageUpdateUnauthorizedException
+	 * @throws	SystemException
 	 */
 	protected function getPackageUpdateXML(PackageUpdateServer $updateServer, $forceHTTP = false) {
 		$settings = array();
@@ -195,7 +197,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Parses a stream containing info from a packages_update.xml.
 	 * 
 	 * @param	string		$content
-	 * @return	array		$allNewPackages
+	 * @return	array
+	 * @throws	SystemException
 	 */
 	protected function parsePackageUpdateXML($content) {
 		// load xml document
@@ -660,6 +663,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version
 	 * @return	array		package update versions
+	 * @throws	SystemException
 	 */
 	public function getPackageUpdateVersions($package, $version = '') {
 		// get newest package version

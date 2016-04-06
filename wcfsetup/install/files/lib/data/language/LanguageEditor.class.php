@@ -303,8 +303,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific language code.
 	 * 
-	 * @param	\wcf\util\XML	$xml
+	 * @param	XML	$xml
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function readLanguageCodeFromXML(XML $xml) {
 		$rootNode = $xml->xpath()->query('/ns:language')->item(0);
@@ -321,8 +322,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific language name.
 	 * 
-	 * @param	\wcf\util\XML	$xml
+	 * @param	XML	$xml
 	 * @return	string		language name
+	 * @throws	SystemException
 	 */
 	public static function readLanguageNameFromXML(XML $xml) {
 		$rootNode = $xml->xpath()->query('/ns:language')->item(0);
@@ -339,8 +341,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific country code.
 	 * 
-	 * @param	\wcf\util\XML	$xml
+	 * @param	XML	$xml
 	 * @return	string		country code
+	 * @throws	SystemException
 	 */
 	public static function readCountryCodeFromXML(XML $xml) {
 		$rootNode = $xml->xpath()->query('/ns:language')->item(0);

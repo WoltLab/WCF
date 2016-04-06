@@ -57,6 +57,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 * 
 	 * @param	string		$size		thumbnail size
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function getThumbnailTag($size = '') {
 		if (!isset(Media::getThumbnailSizes()[$size])) {

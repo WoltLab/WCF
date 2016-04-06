@@ -209,6 +209,8 @@ class PackageInstallationScheduler {
 	 * @param	array		$packageUpdateVersions	package update versions
 	 * @param	boolean		$validateInstallInstructions
 	 * @return	string		tmp filename of a downloaded package
+	 * @throws	PackageUpdateUnauthorizedException
+	 * @throws	SystemException
 	 */
 	protected function downloadPackage($package, $packageUpdateVersions, $validateInstallInstructions = false) {
 		// get download from cache
@@ -551,6 +553,7 @@ class PackageInstallationScheduler {
 	 * @param	string		$currentVersion		current package version
 	 * @param	string		$newVersion		new package version
 	 * @return	array		list of update steps (old version => new version, old version => new version, ...)
+	 * @throws	SystemException
 	 */
 	protected function findShortestUpdateThread($package, $fromversions, $currentVersion, $newVersion) {
 		if (!isset($fromversions[$newVersion])) {

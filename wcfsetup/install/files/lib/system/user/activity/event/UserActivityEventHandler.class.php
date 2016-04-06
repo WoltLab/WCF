@@ -75,6 +75,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * @param	integer		$time
 	 * @param	array		$additionalData
 	 * @return	\wcf\data\user\activity\event\UserActivityEvent
+	 * @throws	SystemException
 	 */
 	public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additionalData = array()) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -103,7 +104,8 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * Removes activity events.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	public function removeEvents($objectType, array $objectIDs) {
 		if (empty($objectIDs)) return;

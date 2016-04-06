@@ -25,6 +25,7 @@ class GZipFile extends File {
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$mode
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		if (self::$gzopen64 === null) {
@@ -43,6 +44,7 @@ class GZipFile extends File {
 	 * 
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (self::$gzopen64 && function_exists('gz' . $function . '64')) {

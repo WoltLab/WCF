@@ -99,6 +99,7 @@ class Application extends DatabaseObject {
 	 * 
 	 * @param	string		$abbreviation
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function getDirectory($abbreviation) {
 		if (static::$directories === null) {

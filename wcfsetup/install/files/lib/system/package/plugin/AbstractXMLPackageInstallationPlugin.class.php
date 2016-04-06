@@ -326,6 +326,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * 
 	 * @param	string		$filename
 	 * @return	XML		$xml
+	 * @throws	SystemException
 	 */
 	protected function getXML($filename = '') {
 		if (empty($filename)) {

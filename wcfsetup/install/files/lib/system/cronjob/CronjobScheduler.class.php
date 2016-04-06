@@ -162,8 +162,9 @@ class CronjobScheduler extends SingletonFactory {
 	/**
 	 * Executes a cronjob.
 	 * 
-	 * @param	\wcf\data\cronjob\CronjobEditor		$cronjobEditor
-	 * @param	\wcf\data\cronjob\log\CronjobLogEditor	$logEditor
+	 * @param	CronjobEditor		$cronjobEditor
+	 * @param	CronjobLogEditor	$logEditor
+	 * @throws	SystemException
 	 */
 	protected function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor) {
 		$className = $cronjobEditor->className;

@@ -203,6 +203,7 @@ function handleException(\Exception $e) {
  * @param	string		$message
  * @param	string		$filename
  * @param	integer		$lineNo
+ * @throws	SystemException
  */
 function handleError($errorNo, $message, $filename, $lineNo) {
 	if (error_reporting() != 0) {
@@ -235,6 +236,7 @@ class BasicFileUtil {
 	 * Tries to find the temp folder.
 	 *
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function getTempFolder() {
 		// use tmp folder in document root by default
@@ -302,6 +304,7 @@ class BasicFileUtil {
 	 * permissions and goes up until 0666 for files and 0777 for directories.
 	 *
 	 * @param	string		$filename
+	 * @throws	SystemException
 	 */
 	public static function makeWritable($filename) {
 		if (!file_exists($filename)) {
@@ -385,6 +388,7 @@ class Tar {
 	 * archiveName must be tarball or gzipped tarball
 	 *
 	 * @param	string		$archiveName
+	 * @throws	SystemException
 	 */
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {
@@ -454,6 +458,7 @@ class Tar {
 	 *
 	 * @param	mixed	$fileIndex	index or name of the requested file
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -525,7 +530,8 @@ class Tar {
 	 *
 	 * @param	mixed		$index		index or name of the requested file
 	 * @param	string		$destination
-	 * @return	boolean	$success
+	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
@@ -699,6 +705,7 @@ class File {
 	 *
 	 * @param	string		$filename
 	 * @param	string		$mode
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
@@ -715,6 +722,7 @@ class File {
 	 * @param	string		$function
 	 * @param	array		$arguments
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {
@@ -749,6 +757,7 @@ class ZipFile extends File {
 	 *
 	 * @param	string		$filename
 	 * @param	string		$mode
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		if (self::$gzopen64 === null) {
@@ -771,6 +780,7 @@ class ZipFile extends File {
 	 * @param	string		$function
 	 * @param	array		$arguments
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (self::$gzopen64 && function_exists('gz' . $function . '64')) {

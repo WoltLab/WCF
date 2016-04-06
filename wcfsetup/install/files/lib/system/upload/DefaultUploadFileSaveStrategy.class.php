@@ -61,6 +61,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 	 * @param	string		$actionClassName
 	 * @param	array		$options
 	 * @param	array		$data
+	 * @throws	SystemException
 	 */
 	public function __construct($actionClassName, array $options = [ ], array $data = [ ]) {
 		$this->actionClassName = $actionClassName;

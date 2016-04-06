@@ -67,6 +67,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * 
 	 * @param	string			$categoryName
 	 * @return	\wcf\data\DatabaseObject
+	 * @throws	SystemException
 	 */
 	protected function getTopCategory($categoryName) {
 		if (!$this->isValid($categoryName)) {

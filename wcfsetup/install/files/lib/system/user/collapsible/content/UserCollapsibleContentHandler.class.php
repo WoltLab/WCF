@@ -52,6 +52,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * @param	string		$objectType
 	 * @param	string		$objectID
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public function isCollapsed($objectType, $objectID) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -255,6 +256,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
+	 * @throws	SystemException
 	 */
 	public function resetAll($objectType, $objectID = null) {
 		$objectTypeID = $this->getObjectTypeID($objectType);

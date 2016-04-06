@@ -119,6 +119,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	 * @param	integer		$objectID
 	 * @param	string		$message
 	 * @param	array		$additionalData
+	 * @throws	SystemException
 	 */
 	public function addReport($objectType, $objectID, $message, array $additionalData = array()) {
 		if (!$this->isValid($objectType)) {

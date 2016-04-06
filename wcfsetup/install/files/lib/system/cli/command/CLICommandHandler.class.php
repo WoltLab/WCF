@@ -58,6 +58,7 @@ class CLICommandHandler {
 	 * 
 	 * @param	string		$line
 	 * @return	\wcf\system\cli\command\ICLICommand
+	 * @throws	IllegalLinkException
 	 */
 	public static function getCommand($line) {
 		list($command, $parameters) = explode(' ', $line.' ', 2);
@@ -72,6 +73,7 @@ class CLICommandHandler {
 	 * 
 	 * @param	string		$line
 	 * @return	string
+	 * @throws	IllegalLinkException
 	 */
 	public static function getCommandName($line) {
 		list($command, $parameters) = explode(' ', $line.' ', 2);

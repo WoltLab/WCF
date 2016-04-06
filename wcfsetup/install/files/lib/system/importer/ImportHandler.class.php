@@ -63,10 +63,11 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	}
 	
 	/**
-	 * Gets a data importer.
+	 * Returns a data importer.
 	 * 
 	 * @param	string		$type
-	 * @return	\wcf\system\importer\IImporter
+	 * @return	IImporter
+	 * @throws	SystemException
 	 */
 	public function getImporter($type) {
 		if (!isset($this->importers[$type])) {

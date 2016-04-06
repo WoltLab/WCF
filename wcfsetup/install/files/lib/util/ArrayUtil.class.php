@@ -185,8 +185,9 @@ final class ArrayUtil {
 	 * @param	string		$method
 	 * @param	array		$array1
 	 * @param	array		$array2
-	 * @param	callable	$callback
+	 * @param	Callback	$callback
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	protected static function compareHelper($method, array $array1, array $array2, Callback $callback = null) {
 		// get function name

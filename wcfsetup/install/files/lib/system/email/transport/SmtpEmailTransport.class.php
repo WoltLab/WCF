@@ -83,6 +83,7 @@ class SmtpEmailTransport implements EmailTransport {
 	 * @param	string	$username	username to use for authentication
 	 * @param	string	$password	corresponding password
 	 * @param	string	$starttls	one of 'none', 'may' and 'encrypt'
+	 * @throws	SystemException
 	 */
 	public function __construct($host = MAIL_SMTP_HOST, $port = MAIL_SMTP_PORT, $username = MAIL_SMTP_USER, $password = MAIL_SMTP_PASSWORD, $starttls = MAIL_SMTP_STARTTLS) {
 		$this->host = $host;
@@ -112,8 +113,10 @@ class SmtpEmailTransport implements EmailTransport {
 	 * Reads a server reply and validates it against the given expected status codes.
 	 * Returns a tuple [ status code, reply text ].
 	 * 
-	 * @param	array<integer>		$expectedCodes
+	 * @param	integer[]	$expectedCodes
 	 * @return	array
+	 * @throws	PermanentFailure
+	 * @throws	TransientFailure
 	 */
 	protected function read(array $expectedCodes) {
 		$code = null;
@@ -306,8 +309,11 @@ class SmtpEmailTransport implements EmailTransport {
 	/**
 	 * Delivers the given email using SMTP.
 	 * 
-	 * @param	\wcf\system\email\Email		$email
-	 * @param	\wcf\system\email\Mailbox	$envelopeTo
+	 * @param	Email		$email
+	 * @param	Mailbox		$envelopeTo
+	 * @throws	\Exception
+	 * @throws	PermanentFailure
+	 * @throws	SystemException
 	 */
 	public function deliver(Email $email, Mailbox $envelopeTo) {
 		// delivery is locked

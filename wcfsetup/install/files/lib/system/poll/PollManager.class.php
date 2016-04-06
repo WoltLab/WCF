@@ -105,6 +105,7 @@ class PollManager extends SingletonFactory {
 	 * @param	integer		$objectID
 	 * @param	integer		$pollID
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public function setObject($objectType, $objectID, $pollID = 0) {
 		if (!isset($this->cache[$objectType])) {
@@ -236,6 +237,7 @@ class PollManager extends SingletonFactory {
 	 * 
 	 * @param	integer		$objectID
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function save($objectID = null) {
 		if ($objectID !== null) {
@@ -396,6 +398,7 @@ class PollManager extends SingletonFactory {
 	 * @param	integer		$objectTypeID
 	 * @param	string		$objectType
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	protected function getHandler($objectTypeID, $objectType = '') {
 		if ($objectTypeID !== null) {

@@ -59,6 +59,7 @@ class FileReader {
 	 * 
 	 * @param	string		$location
 	 * @param	array		$options
+	 * @throws	SystemException
 	 */
 	public function __construct($location, array $options) {
 		$this->location = $location;

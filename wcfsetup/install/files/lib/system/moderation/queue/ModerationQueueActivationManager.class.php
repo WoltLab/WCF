@@ -53,6 +53,7 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
 	 * @param	array		$additionalData
+	 * @throws	SystemException
 	 */
 	public function addModeratedContent($objectType, $objectID, array $additionalData = array()) {
 		if (!$this->isValid($objectType)) {
@@ -71,7 +72,8 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	 * Marks entries from moderation queue as done.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	public function removeModeratedContent($objectType, array $objectIDs) {
 		if (!$this->isValid($objectType)) {

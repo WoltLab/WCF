@@ -29,6 +29,7 @@ final class JSON {
 	 * @param	string		$json
 	 * @param	boolean		$asArray
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public static function decode($json, $asArray = true) {
 		// decodes JSON

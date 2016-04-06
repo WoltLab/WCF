@@ -159,12 +159,13 @@ class Zip extends File implements IArchive {
 	 * Reads the central directory and returns it.
 	 * 
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	protected function readCentralDirectory() {
 		$this->jumpToCentralDirectory();
 		
 		$offset = $this->tell();
-
+		
 		// check signature
 		if ($this->read(4) !== self::CENTRAL_DIRECTORY_SIGNATURE) {
 			throw new SystemException('Not in central directory');
@@ -221,6 +222,7 @@ class Zip extends File implements IArchive {
 	 * 
 	 * @param	integer		$offset		where to start reading
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public function isFile($offset = null) {
 		if ($offset === null) $offset = $this->tell();
@@ -240,6 +242,7 @@ class Zip extends File implements IArchive {
 	 * 
 	 * @param	integer		$offset		where to start reading
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function readFile($offset = null) {
 		if ($offset === null) $offset = $this->tell();

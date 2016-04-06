@@ -109,6 +109,7 @@ class PackageStartInstallForm extends AbstractForm {
 	 * Validates the upload package input.
 	 * 
 	 * @param	string		$filename
+	 * @throws	UserInputException
 	 */
 	protected function validateUploadPackage($filename = '') {
 		$this->activeTabMenuItem = 'upload';

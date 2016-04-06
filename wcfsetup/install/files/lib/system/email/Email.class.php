@@ -177,7 +177,8 @@ class Email {
 	/**
 	 * Sets the part left of the at sign (@) in the email's 'Message-Id'.
 	 * 
-	 * @param	string	$messageID
+	 * @param	string		$messageID
+	 * @throws	SystemException
 	 */
 	public function setMessageID($messageID = null) {
 		if ($messageID === null) {
@@ -212,7 +213,8 @@ class Email {
 	/**
 	 * Adds a message id to the email's 'In-Reply-To'.
 	 * 
-	 * @param	string	$messageID
+	 * @param	string		$messageID
+	 * @throws	SystemException
 	 */
 	public function addInReplyTo($messageID) {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('msg-id').'$)', $messageID)) {
@@ -243,7 +245,8 @@ class Email {
 	/**
 	 * Adds a message id to the email's 'References'.
 	 * 
-	 * @param	string	$messageID
+	 * @param	string		$messageID
+	 * @throws	SystemException
 	 */
 	public function addReferences($messageID) {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('msg-id').'$)', $messageID)) {
@@ -320,8 +323,9 @@ class Email {
 	/**
 	 * Adds a recipient to this email.
 	 * 
-	 * @param	\wcf\system\email\Mailbox	$recipient
-	 * @param	string				$type		One of 'to', 'cc', 'bcc'
+	 * @param	Mailbox		$recipient
+	 * @param	string		$type		One of 'to', 'cc', 'bcc'
+	 * @throws	SystemException
 	 */
 	public function addRecipient(Mailbox $recipient, $type = 'to') {
 		switch ($type) {
@@ -357,8 +361,9 @@ class Email {
 	/**
 	 * Adds a custom X-* header to the email.
 	 * 
-	 * @param	string	$header
-	 * @param	string	$value
+	 * @param	string		$header
+	 * @param	string		$value
+	 * @throws	SystemException
 	 */
 	public function addHeader($header, $value) {
 		$header = mb_strtolower($header);
@@ -375,8 +380,9 @@ class Email {
 	 * The given priority determines the ordering within the Email. A higher priority
 	 * mime part will be further down the email (see RFC 2046, 5.1.4).
 	 * 
-	 * @param	\wcf\system\email\mime\AbstractMimePart	$part
-	 * @param	integer					$priority
+	 * @param	AbstractMimePart	$part
+	 * @param	integer			$priority
+	 * @throws	SystemException
 	 */
 	public function addMimePart(AbstractMimePart $part, $priority = 1000) {
 		foreach ($part->getAdditionalHeaders() as $header) {
@@ -430,6 +436,7 @@ class Email {
 	 *       headers will fail.
 	 * 
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function getHeaders() {
 		$headers = [ ];

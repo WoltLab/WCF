@@ -49,6 +49,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * @param	integer			$objectID
 	 * @param	integer			$userID
 	 * @param	array<mixed>		$additionalData
+	 * @throws	SystemException
 	 */
 	public function fireEvent($objectType, $objectID, $userID = null, array $additionalData = array()) {
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
@@ -98,9 +99,10 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * 	userID => countOfItems
 	 * )
 	 * 
-	 * @param	string			$objectType
-	 * @param	array<integer>		$itemsToUser
-	 * @param	boolean			$updateUsers
+	 * @param	string		$objectType
+	 * @param	integer[]	$itemsToUser
+	 * @param	boolean		$updateUsers
+	 * @throws	SystemException
 	 */
 	public function fireEvents($objectType, array $itemsToUser, $updateUsers = true) {
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
@@ -149,7 +151,8 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * Removes activity point events.
 	 * 
 	 * @param	string			$objectType
-	 * @param	array<integer>		$userToItems
+	 * @param	integer[]		$userToItems
+	 * @throws	SystemException
 	 */
 	public function removeEvents($objectType, array $userToItems) {
 		if (empty($userToItems)) return;
@@ -210,6 +213,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * Resets activity points and items for a given object type.
 	 * 
 	 * @param	string		$objectType
+	 * @throws	SystemException
 	 */
 	public function reset($objectType) {
 		// get and validate object type

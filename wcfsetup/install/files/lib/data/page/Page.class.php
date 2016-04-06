@@ -120,7 +120,6 @@ class Page extends DatabaseObject {
 	 * 
 	 * @param	integer		$languageID	language id or `null` if there are no localized versions
 	 * @return	string[]	page content data
-	 * @throws	\wcf\system\database\DatabaseException
 	 */
 	public function getPageContentByLanguage($languageID = null) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -207,7 +206,7 @@ class Page extends DatabaseObject {
 	/**
 	 * Sets the current page as landing page.
 	 * 
-	 * @throws      SystemException
+	 * @throws	SystemException
 	 */
 	public function setAsLandingPage() {
 		if ($this->requireObjectID) {

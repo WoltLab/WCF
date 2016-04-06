@@ -279,6 +279,7 @@ class WCF {
 	 * @param	string		$message
 	 * @param	string		$file
 	 * @param	integer		$line
+	 * @throws	ErrorException
 	 */
 	public static final function handleError($severity, $message, $file, $line) {
 		// this is neccessary for the shut-up operator
@@ -496,9 +497,10 @@ class WCF {
 	/**
 	 * Loads an application.
 	 * 
-	 * @param	\wcf\data\application\Application		$application
-	 * @param	boolean						$isDependentApplication
-	 * @return	\wcf\system\application\IApplication
+	 * @param	Application		$application
+	 * @param	boolean			$isDependentApplication
+	 * @return	IApplication
+	 * @throws	SystemException
 	 */
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
 		$applicationObject = null;
@@ -626,6 +628,7 @@ class WCF {
 	 * 
 	 * @param	string		$name
 	 * @return	mixed		value
+	 * @throws	SystemException
 	 */
 	public function __get($name) {
 		$method = 'get'.ucfirst($name);
@@ -697,6 +700,7 @@ class WCF {
 	 * @param	string		$name
 	 * @param	array		$arguments
 	 * @return	object
+	 * @throws	SystemException
 	 */
 	public static final function __callStatic($name, array $arguments) {
 		$className = preg_replace('~^get~', '', $name);

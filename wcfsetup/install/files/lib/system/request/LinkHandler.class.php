@@ -210,7 +210,6 @@ class LinkHandler extends SingletonFactory {
 	 * @param	integer		$pageID		page id
 	 * @param	integer		$languageID	language id, optional
 	 * @return	string		full URL of empty string if `$pageID` is invalid
-	 * @throws	\wcf\system\exception\SystemException
 	 * @since	2.2
 	 */
 	public function getCmsLink($pageID, $languageID = -1) {

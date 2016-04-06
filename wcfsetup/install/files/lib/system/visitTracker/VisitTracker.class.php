@@ -48,6 +48,7 @@ class VisitTracker extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {

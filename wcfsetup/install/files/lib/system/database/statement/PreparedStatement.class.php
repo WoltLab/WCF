@@ -61,6 +61,7 @@ class PreparedStatement {
 	 * @param	string		$name
 	 * @param	array		$arguments
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($name, $arguments) {
 		if (!method_exists($this->pdoStatement, $name)) {
@@ -79,6 +80,7 @@ class PreparedStatement {
 	 * Executes a prepared statement.
 	 * 
 	 * @param	array		$parameters
+	 * @throws	DatabaseQueryExecutionException
 	 */
 	public function execute(array $parameters = array()) {
 		$this->parameters = $parameters;
@@ -186,6 +188,7 @@ class PreparedStatement {
 	 * Counts number of affected rows by the last sql statement (INSERT, UPDATE or DELETE).
 	 * 
 	 * @return	integer		number of affected rows
+	 * @throws	DatabaseQueryException
 	 */
 	public function getAffectedRows() {
 		try {

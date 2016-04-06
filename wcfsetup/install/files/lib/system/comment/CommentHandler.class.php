@@ -82,6 +82,7 @@ class CommentHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @return	ICommentManager
+	 * @throws	SystemException
 	 */
 	public function getCommentManager($objectType) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -90,7 +91,6 @@ class CommentHandler extends SingletonFactory {
 		}
 		
 		return $this->getObjectType($objectTypeID)->getProcessor();
-		
 	}
 	
 	/**
@@ -234,6 +234,7 @@ class CommentHandler extends SingletonFactory {
 	 * Enforces the censorship.
 	 * 
 	 * @param	string		$text
+	 * @throws	UserInputException
 	 */
 	public static function enforceCensorship($text) {
 		// search for censored words

@@ -54,6 +54,7 @@ trait TMultiCategoryObject {
 	 * Returns the categories of the object.
 	 *
 	 * @return	AbstractDecoratedCategory[]
+	 * @throws	SystemException
 	 */
 	public function getCategories() {
 		if ($this->categories === null) {

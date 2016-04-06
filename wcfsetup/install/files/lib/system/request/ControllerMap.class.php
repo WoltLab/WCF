@@ -189,6 +189,7 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * @param	string		$application	application identifier
 	 * @return	null|string[]	default controller
+	 * @throws	SystemException
 	 */
 	public function lookupDefaultController($application) {
 		$controller = $this->landingPages[$application][1];

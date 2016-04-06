@@ -84,6 +84,7 @@ class SitemapHandler extends SingletonFactory {
 	 * Validates sitemap name.
 	 * 
 	 * @param	string		$sitemapName
+	 * @throws	SystemException
 	 */
 	public function validateSitemapName($sitemapName) {
 		if (empty($sitemapName)) {

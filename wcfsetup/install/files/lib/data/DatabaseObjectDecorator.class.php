@@ -28,7 +28,8 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	/**
 	 * Creates a new DatabaseObjectDecorator object.
 	 * 
-	 * @param	\wcf\data\DatabaseObject		$object
+	 * @param	DatabaseObject		$object
+	 * @throws	SystemException
 	 */
 	public function __construct(DatabaseObject $object) {
 		if (empty(static::$baseClass)) {
@@ -76,6 +77,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	 * @param	string		$name
 	 * @param	array		$arguments
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($name, $arguments) {
 		if (!method_exists($this->object, $name) && !($this->object instanceof DatabaseObjectDecorator)) {

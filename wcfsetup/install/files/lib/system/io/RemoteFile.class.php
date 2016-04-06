@@ -50,6 +50,7 @@ class RemoteFile extends File {
 	 * @param	integer		$port
 	 * @param	integer		$timeout
 	 * @param	array		$options
+	 * @throws	SystemException
 	 */
 	public function __construct($host, $port, $timeout = 30, $options = array()) {
 		$this->host = $host;

@@ -152,6 +152,8 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * Throws an previously catched exception while maintaing the propriate stacktrace.
 	 * 
 	 * @param	\Exception	$e
+	 * @throws	AJAXException
+	 * @throws	\Exception
 	 */
 	protected function throwException(\Exception $e) {
 		if ($this->inDebugMode) {
@@ -229,6 +231,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * 
 	 * @param	array		$data
 	 * @return	AJAXInvokeAction
+	 * @throws	SystemException
 	 */
 	public static function debugCall(array $data) {
 		// validate $data array

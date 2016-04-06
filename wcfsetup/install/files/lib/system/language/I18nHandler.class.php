@@ -170,6 +170,7 @@ class I18nHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$elementID
 	 * @param	string		$plainValue
+	 * @throws	SystemException
 	 */
 	public function setValue($elementID, $plainValue) {
 		if (!is_string($plainValue)) {
@@ -193,6 +194,7 @@ class I18nHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$elementID
 	 * @param	string[]	$i18nValues
+	 * @throws	SystemException
 	 */
 	public function setValues($elementID, array $i18nValues) {
 		if (empty($i18nValues)) {

@@ -185,6 +185,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * 
 	 * @param	string		$requiredVersion
 	 * @param	integer		$validationMode
+	 * @throws	PackageValidationException
 	 */
 	protected function validateInstructions($requiredVersion, $validationMode) {
 		$package = $this->getPackage();
@@ -230,6 +231,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * 
 	 * @param	string		$type
 	 * @param	array<array>	$instructions
+	 * @throws	PackageValidationException
 	 */
 	protected function validatePackageInstallationPlugins($type, array $instructions) {
 		for ($i = 0, $length = count($instructions); $i < $length; $i++) {
@@ -248,6 +250,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * Validates if an installed package excludes the current package and vice versa.
 	 * 
 	 * @param	string		$package
+	 * @throws	PackageValidationException
 	 */
 	protected function validateExclusion($package) {
 		$packageVersion = $this->archive->getPackageInfo('version');

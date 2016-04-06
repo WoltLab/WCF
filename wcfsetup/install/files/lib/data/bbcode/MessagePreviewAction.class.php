@@ -41,6 +41,7 @@ class MessagePreviewAction extends BBCodeAction {
 	 * Returns a rendered message preview.
 	 * 
 	 * @return	array
+	 * @throws	UserInputException
 	 */
 	public function getMessagePreview() {
 		// get options

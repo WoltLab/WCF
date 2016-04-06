@@ -77,7 +77,8 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Searches for purchased items in the WoltLab Plugin-Store.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
+	 * @throws	SystemException
 	 */
 	public function searchForPurchasedItems() {
 		if (!RemoteFile::supportsSSL()) {

@@ -306,6 +306,7 @@ class PackageInstallationDispatcher {
 	 * 
 	 * @param	mixed[]		$nodeData
 	 * @return	PackageInstallationStep
+	 * @throws	SystemException
 	 */
 	protected function installPackage(array $nodeData) {
 		$installationStep = new PackageInstallationStep();
@@ -532,8 +533,9 @@ class PackageInstallationDispatcher {
 	/**
 	 * Executes a package installation plugin.
 	 * 
-	 * @param	mixed[]	$nodeData
+	 * @param	mixed[]		$nodeData
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	protected function executePIP(array $nodeData) {
 		$step = new PackageInstallationStep();

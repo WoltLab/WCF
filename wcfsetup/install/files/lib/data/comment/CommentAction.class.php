@@ -618,6 +618,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * them enter a username and solving a captcha.
 	 * 
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function getGuestDialog() {
 		$captchaObjectType = null; 
@@ -699,6 +700,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * Validates object type id parameter.
 	 * 
 	 * @return	ObjectType
+	 * @throws	UserInputException
 	 */
 	protected function validateObjectType() {
 		$this->readInteger('objectTypeID', false, 'data');

@@ -44,7 +44,8 @@ class DashboardHandler extends SingletonFactory {
 	 * Loads the active dashboard boxes for the given object type and page.
 	 * 
 	 * @param	string		$objectType
-	 * @param	\wcf\page\IPage	$page
+	 * @param	IPage		$page
+	 * @throws	SystemException
 	 */
 	public function loadBoxes($objectType, IPage $page) {
 		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.dashboardContainer', $objectType);
@@ -97,7 +98,8 @@ class DashboardHandler extends SingletonFactory {
 	 * all boxes will be assigned as disabled for given object type.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<names>	$enableBoxNames
+	 * @param	string[]	$enableBoxNames
+	 * @throws	SystemException
 	 */
 	public static function setDefaultValues($objectType, array $enableBoxNames = array()) {
 		$objectTypeID = 0;

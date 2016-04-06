@@ -35,6 +35,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * 
 	 * @param	string		$definitionName
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	protected function getDefinitionID($definitionName) {
 		// get object type id

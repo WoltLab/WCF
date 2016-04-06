@@ -264,6 +264,7 @@ class StyleCompiler extends SingletonFactory {
 	 * 
 	 * @param	string		$filename
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function prepareFile($filename) {
 		if (!file_exists($filename) || !is_readable($filename)) {
@@ -284,6 +285,7 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	string[]	$variables
 	 * @param	string		$individualScss
 	 * @param	Callback	$callback
+	 * @throws	SystemException
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualScss, Callback $callback) {
 		foreach ($variables as &$value) {

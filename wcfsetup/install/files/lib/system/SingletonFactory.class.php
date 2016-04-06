@@ -48,6 +48,7 @@ abstract class SingletonFactory {
 	 * Returns an unique instance of current child class.
 	 *
 	 * @return	static
+	 * @throws	SystemException
 	 */
 	public static final function getInstance() {
 		$className = get_called_class();

@@ -21,8 +21,9 @@ final class CryptoUtil {
 	/**
 	 * Signs the given value with the signature secret.
 	 * 
-	 * @param	string	$value
+	 * @param	string		$value
 	 * @return	string
+	 * @throws	CryptoException
 	 */
 	public static function getSignature($value) {
 		if (mb_strlen(SIGNATURE_SECRET, '8bit') < 15) throw new CryptoException('SIGNATURE_SECRET is too short, aborting.');
@@ -110,6 +111,7 @@ final class CryptoUtil {
 	 * 
 	 * @param	int		$n
 	 * @return	string
+	 * @throws	CryptoException
 	 */
 	public static function randomBytes($n) {
 		try {

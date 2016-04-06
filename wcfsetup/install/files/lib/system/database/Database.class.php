@@ -121,6 +121,7 @@ abstract class Database {
 	 * @param	string		$table
 	 * @param	string		$field
 	 * @return	integer
+	 * @throws	DatabaseException
 	 */
 	public function getInsertID($table, $field) {
 		try {
@@ -135,6 +136,7 @@ abstract class Database {
 	 * Initiates a transaction.
 	 * 
 	 * @return	boolean		true on success
+	 * @throws	DatabaseTransactionException
 	 */
 	public function beginTransaction() {
 		try {
@@ -161,6 +163,7 @@ abstract class Database {
 	 * Commits a transaction and returns true if the transaction was successfull.
 	 * 
 	 * @return	boolean
+	 * @throws	DatabaseTransactionException
 	 */
 	public function commitTransaction() {
 		if ($this->activeTransactions === 0) return false;
@@ -190,6 +193,7 @@ abstract class Database {
 	 * Rolls back a transaction and returns true if the rollback was successfull.
 	 * 
 	 * @return	boolean
+	 * @throws	DatabaseTransactionException
 	 */
 	public function rollBackTransaction() {
 		if ($this->activeTransactions === 0) return false;
@@ -220,7 +224,8 @@ abstract class Database {
 	 * @param	string			$statement
 	 * @param	integer			$limit
 	 * @param	integer			$offset
-	 * @return	\wcf\system\database\statement\PreparedStatement
+	 * @return	PreparedStatement
+	 * @throws	DatabaseQueryException
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
 		$statement = $this->handleLimitParameter($statement, $limit, $offset);

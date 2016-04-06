@@ -108,6 +108,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	array<mixed>	$objects
 	 * @param	string		$action
 	 * @param	array		$parameters
+	 * @throws	SystemException
 	 */
 	public function __construct(array $objects, $action, array $parameters = array()) {
 		// set class name
@@ -399,7 +400,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Returns a single object and throws an UserInputException if no or more than one object is given.
 	 * 
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject
+	 * @throws	UserInputException
 	 */
 	protected function getSingleObject() {
 		if (empty($this->objects)) {
@@ -492,6 +494,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$arrayIndex
 	 * @param	integer		$type
 	 * @param	integer		$structure
+	 * @throws	SystemException
+	 * @throws	UserInputException
 	 */
 	protected function readValue($variableName, $allowEmpty, $arrayIndex, $type, $structure) {
 		if ($arrayIndex) {
