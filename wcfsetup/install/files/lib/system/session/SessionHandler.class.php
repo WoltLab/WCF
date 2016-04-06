@@ -38,6 +38,12 @@ use wcf\util\UserUtil;
  */
 class SessionHandler extends SingletonFactory {
 	/**
+	 * suffix used to tell ACP and frontend cookies apart
+	 * @var string
+	 */
+	protected $cookieSuffix = '';
+	
+	/**
 	 * prevents update on shutdown
 	 * @var	boolean
 	 */
@@ -104,12 +110,6 @@ class SessionHandler extends SingletonFactory {
 	protected $styleID = null;
 	
 	/**
-	 * enable cookie support
-	 * @var	boolean
-	 */
-	protected $useCookies = false;
-	
-	/**
 	 * user object
 	 * @var	\wcf\data\user\User
 	 */
@@ -164,6 +164,15 @@ class SessionHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData(array(), 'usersOnlyOptions');
+	}
+	
+	/**
+	 * Suffix used to tell ACP and frontend cookies apart
+	 * 
+	 * @param       string  $cookieSuffix   cookie suffix
+	 */
+	public function setCookieSuffix($cookieSuffix) {
+		$this->cookieSuffix = $cookieSuffix;
 	}
 	
 	/**
@@ -252,25 +261,7 @@ class SessionHandler extends SingletonFactory {
 		// fetch new session data from database
 		$this->session = new $this->sessionClassName($newSessionID);
 		
-		if ($this->useCookies) {
-			// we know that the user accepts cookies, simply send new session id
-			HeaderUtil::setCookie('cookieHash', $newSessionID);
-		}
-		else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-			// user maybe does not accept cookies, replace session id in url
-			// otherwise reloading the page will generate a new session
-			
-			$this->update();
-			HeaderUtil::redirect(str_replace('s='.$oldSessionID, 's='.$newSessionID, UserUtil::getRequestURI()));
-			exit;
-		}
-	}
-	
-	/**
-	 * Enables cookie support.
-	 */
-	public function enableCookies() {
-		$this->useCookies = true;
+		HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, $newSessionID);
 	}
 	
 	/**
@@ -298,20 +289,12 @@ class SessionHandler extends SingletonFactory {
 	 * Defines global wcf constants related to session.
 	 */
 	protected function defineConstants() {
-		if ($this->useCookies || $this->session->spiderID) {
-			if (!defined('SID_ARG_1ST')) define('SID_ARG_1ST', '');
-			if (!defined('SID_ARG_2ND')) define('SID_ARG_2ND', '');
-			if (!defined('SID_ARG_2ND_NOT_ENCODED')) define('SID_ARG_2ND_NOT_ENCODED', '');
-			if (!defined('SID')) define('SID', '');
-			if (!defined('SID_INPUT_TAG')) define('SID_INPUT_TAG', '');
-		}
-		else {
-			if (!defined('SID_ARG_1ST')) define('SID_ARG_1ST', '?s='.$this->session->sessionID);
-			if (!defined('SID_ARG_2ND')) define('SID_ARG_2ND', '&amp;s='.$this->session->sessionID);
-			if (!defined('SID_ARG_2ND_NOT_ENCODED')) define('SID_ARG_2ND_NOT_ENCODED', '&s='.$this->session->sessionID);
-			if (!defined('SID')) define('SID', $this->session->sessionID);
-			if (!defined('SID_INPUT_TAG')) define('SID_INPUT_TAG', '<input type="hidden" name="s" value="'.$this->session->sessionID.'" />');
-		}
+		/* the SID*-constants below are deprecated since 2.2 */
+		if (!defined('SID_ARG_1ST')) define('SID_ARG_1ST', '');
+		if (!defined('SID_ARG_2ND')) define('SID_ARG_2ND', '');
+		if (!defined('SID_ARG_2ND_NOT_ENCODED')) define('SID_ARG_2ND_NOT_ENCODED', '');
+		if (!defined('SID')) define('SID', '');
+		if (!defined('SID_INPUT_TAG')) define('SID_INPUT_TAG', '');
 		
 		// security token
 		if (!defined('SECURITY_TOKEN')) define('SECURITY_TOKEN', $this->getSecurityToken());
@@ -777,7 +760,7 @@ class SessionHandler extends SingletonFactory {
 					
 					$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
 					
-					HeaderUtil::setCookie('cookieHash', $this->session->sessionID);
+					HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, $this->session->sessionID);
 				}
 				else {
 					// this was the last virtual session, re-use current session
@@ -844,7 +827,7 @@ class SessionHandler extends SingletonFactory {
 						$this->register('__SECURITY_TOKEN', $variables['__SECURITY_TOKEN']);
 					}
 					
-					HeaderUtil::setCookie('cookieHash', $this->session->sessionID);
+					HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, $this->session->sessionID);
 				}
 			break;
 		}

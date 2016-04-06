@@ -1,12 +1,14 @@
 <?php
 namespace wcf\system\session;
+use wcf\data\acp\session\ACPSessionEditor;
 use wcf\system\event\EventHandler;
+use wcf\util\HeaderUtil;
 
 /**
  * Handles the ACP session of the active user.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.session
@@ -14,10 +16,16 @@ use wcf\system\event\EventHandler;
  */
 class ACPSessionFactory {
 	/**
+	 * suffix used to tell ACP and frontend cookies apart
+	 * @var string
+	 */
+	protected $cookieSuffix = '_acp';
+	
+	/**
 	 * session editor class name
 	 * @var	string
 	 */
-	protected $sessionEditor = 'wcf\data\acp\session\ACPSessionEditor';
+	protected $sessionEditor = ACPSessionEditor::class;
 	
 	/**
 	 * Loads the object of the active session.
@@ -47,6 +55,12 @@ class ACPSessionFactory {
 	 * @since	2.2
 	 */
 	public function hasValidCookie() {
+		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix])) {
+			if ($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix] == SessionHandler::getInstance()->sessionID) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
@@ -54,25 +68,24 @@ class ACPSessionFactory {
 	 * Initializes the session system.
 	 */
 	protected function init() {
+		if (!$this->hasValidCookie()) {
+			// cookie support will be enabled upon next request
+			HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, SessionHandler::getInstance()->sessionID);
+		}
+		
 		SessionHandler::getInstance()->initSession();
 	}
 	
 	/**
-	 * Returns the session id from request (GET/POST). Returns an empty string,
-	 * if no session id was given.
+	 * Returns the session id from cookie. Returns an empty string,
+	 * if no session cookie was provided.
 	 * 
 	 * @return	string
 	 */
 	protected function readSessionID() {
-		if (isset($_GET['s'])) {
-			if (is_string($_GET['s'])) {
-				return $_GET['s'];
-			}
-		}
-		else if (isset($_POST['s'])) {
-			if (is_string($_POST['s'])) {
-				return $_POST['s'];
-			}
+		// get sessionID from cookie
+		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix])) {
+			return $_COOKIE[COOKIE_PREFIX . 'cookieHash'.$this->cookieSuffix];
 		}
 		
 		return '';

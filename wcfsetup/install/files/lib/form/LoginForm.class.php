@@ -55,17 +55,6 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
-	 */
-	public function validate() {
-		if (!WCF::getSession()->hasValidCookie()) {
-			throw new UserInputException('cookie');
-		}
-		
-		parent::validate();
-	}
-	
-	/**
 	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {

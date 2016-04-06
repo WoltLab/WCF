@@ -2,7 +2,11 @@
 
 <div id="login" style="display: none">
 	<form method="post" action="{link controller='Login'}{/link}">
-		{include file='formError'}
+		{if !$errorField|empty && $errorField == 'cookie'}
+			<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
+		{else}
+			{include file='formError'}
+		{/if}
 		
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>

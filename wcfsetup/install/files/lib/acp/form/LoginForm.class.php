@@ -175,6 +175,10 @@ class LoginForm extends AbstractCaptchaForm {
 	public function validate() {
 		parent::validate();
 		
+		if (!WCF::getSession()->hasValidCookie()) {
+			throw new UserInputException('cookie');
+		}
+		
 		// error handling
 		if (empty($this->username)) {
 			throw new UserInputException('username');

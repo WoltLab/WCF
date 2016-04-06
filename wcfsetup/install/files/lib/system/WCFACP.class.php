@@ -182,10 +182,13 @@ class WCFACP extends WCF {
 	 * @see	\wcf\system\WCF::initSession()
 	 */
 	protected function initSession() {
+		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj->setCookieSuffix('_acp');
+		
 		$factory = new ACPSessionFactory();
 		$factory->load();
 		
-		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**
