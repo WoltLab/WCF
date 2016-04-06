@@ -166,7 +166,7 @@ HTML;
 		}
 		
 		if ($startDateTime !== null && $endDateTime !== null) {
-			if ($startDateTime->getTimestamp() >= $endDateTime->getTimeStamp()) {
+			if ($startDateTime->getTimestamp() >= $endDateTime->getTimestamp()) {
 				$this->errorMessages['time'] = 'wcf.date.endTime.error.beforeStartTime';
 				
 				throw new UserInputException('endTime', 'beforeStartTime');

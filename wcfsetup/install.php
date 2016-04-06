@@ -642,14 +642,14 @@ class Tar {
 		$data = unpack($format, $binaryData);
 		
 		// Extract the properties
-		$header['checksum'] = octDec(trim($data['checksum']));
+		$header['checksum'] = octdec(trim($data['checksum']));
 		if ($header['checksum'] == $checksum) {
 			$header['filename'] = trim($data['filename']);
-			$header['mode'] = octDec(trim($data['mode']));
-			$header['uid'] = octDec(trim($data['uid']));
-			$header['gid'] = octDec(trim($data['gid']));
-			$header['size'] = octDec(trim($data['size']));
-			$header['mtime'] = octDec(trim($data['mtime']));
+			$header['mode'] = octdec(trim($data['mode']));
+			$header['uid'] = octdec(trim($data['uid']));
+			$header['gid'] = octdec(trim($data['gid']));
+			$header['size'] = octdec(trim($data['size']));
+			$header['mtime'] = octdec(trim($data['mtime']));
 			$header['prefix'] = trim($data['prefix']);
 			if ($header['prefix']) {
 				$header['filename'] = $header['prefix'].'/'.$header['filename'];

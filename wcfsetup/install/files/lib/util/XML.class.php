@@ -110,7 +110,7 @@ class XML {
 	 */
 	protected function getSchema() {
 		// determine schema by looking for xsi:schemaLocation
-		$this->schema = $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceURI('xsi'), 'schemaLocation');
+		$this->schema = $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceUri('xsi'), 'schemaLocation');
 		
 		// no valid schema found or it's lacking a valid namespace
 		if (strpos($this->schema, ' ') === false) {

@@ -65,27 +65,27 @@ class GDImageAdapter implements IImageAdapter {
 		$this->image = $image;
 		$this->type = $type;
 		
-		$this->height = imageSY($this->image);
-		$this->width = imageSX($this->image);
+		$this->height = imagesy($this->image);
+		$this->width = imagesx($this->image);
 	}
 	
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::loadFile()
 	 */
 	public function loadFile($file) {
-		list($this->width, $this->height, $this->type) = getImageSize($file);
+		list($this->width, $this->height, $this->type) = getimagesize($file);
 		
 		switch ($this->type) {
 			case IMAGETYPE_GIF:
-				$this->image = imageCreateFromGif($file);
+				$this->image = imagecreatefromgif($file);
 			break;
 			
 			case IMAGETYPE_JPEG:
-				$this->image = imageCreateFromJpeg($file);
+				$this->image = imagecreatefromjpeg($file);
 			break;
 			
 			case IMAGETYPE_PNG:
-				$this->image = imageCreateFromPng($file);
+				$this->image = imagecreatefrompng($file);
 			break;
 			
 			default:
@@ -98,7 +98,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * @see	\wcf\system\image\adapter\IImageAdapter::createEmptyImage()
 	 */
 	public function createEmptyImage($width, $height) {
-		$this->image = imageCreate($width, $height);
+		$this->image = imagecreate($width, $height);
 		$this->type = IMAGETYPE_PNG;
 		$this->setColor(0xFF, 0xFF, 0xFF);
 		$this->color = null;
@@ -139,10 +139,10 @@ class GDImageAdapter implements IImageAdapter {
 		}
 		
 		// resize image
-		$image = imageCreateTrueColor($width, $height);
-		imageAlphaBlending($image, false);
-		imageCopyResampled($image, $this->image, 0, 0, $x, $y, $width, $height, $sourceWidth, $sourceHeight);
-		imageSaveAlpha($image, true);
+		$image = imagecreatetruecolor($width, $height);
+		imagealphablending($image, false);
+		imagecopyresampled($image, $this->image, 0, 0, $x, $y, $width, $height, $sourceWidth, $sourceHeight);
+		imagesavealpha($image, true);
 		
 		return $image;
 	}
@@ -151,11 +151,11 @@ class GDImageAdapter implements IImageAdapter {
 	 * @see	\wcf\system\image\adapter\IImageAdapter::clip()
 	 */
 	public function clip($originX, $originY, $width, $height) {
-		$image = imageCreateTrueColor($width, $height);
-		imageAlphaBlending($image, false);
+		$image = imagecreatetruecolor($width, $height);
+		imagealphablending($image, false);
 		
-		imageCopy($image, $this->image, 0, 0, $originX, $originY, $width, $height);
-		imageSaveAlpha($image, true);
+		imagecopy($image, $this->image, 0, 0, $originX, $originY, $width, $height);
+		imagesavealpha($image, true);
 		
 		// reload image to update image resource, width and height
 		$this->load($image, $this->type);
@@ -165,11 +165,11 @@ class GDImageAdapter implements IImageAdapter {
 	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth = 0, $targetHeight = 0) {
-		$image = imageCreateTrueColor($targetWidth, $targetHeight);
-		imageAlphaBlending($image, false);
+		$image = imagecreatetruecolor($targetWidth, $targetHeight);
+		imagealphablending($image, false);
 		
-		imageCopyResampled($image, $this->image, 0, 0, $originX, $originY, $targetWidth, $targetHeight, $originWidth, $originHeight);
-		imageSaveAlpha($image, true);
+		imagecopyresampled($image, $this->image, 0, 0, $originX, $originY, $targetWidth, $targetHeight, $originWidth, $originHeight);
+		imagesavealpha($image, true);
 		
 		// reload image to update image resource, width and height
 		$this->load($image, $this->type);
@@ -179,7 +179,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawRectangle()
 	 */
 	public function drawRectangle($startX, $startY, $endX, $endY) {
-		imageFilledRectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
+		imagefilledrectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
 	}
 	
 	/**
@@ -277,7 +277,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * @see	\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
 	public function setColor($red, $green, $blue) {
-		$this->color = imageColorAllocate($this->image, $red, $green, $blue);
+		$this->color = imagecolorallocate($this->image, $red, $green, $blue);
 		
 		// save data of the color
 		$this->colorData = array(
@@ -300,7 +300,7 @@ class GDImageAdapter implements IImageAdapter {
 	public function setTransparentColor($red, $green, $blue) {
 		if ($this->type == IMAGETYPE_PNG) {
 			$color = imagecolorallocate($this->image, $red, $green, $blue);
-			imageColorTransparent($this->image, $color);
+			imagecolortransparent($this->image, $color);
 		}
 	}
 	
@@ -315,13 +315,13 @@ class GDImageAdapter implements IImageAdapter {
 		ob_start();
 		
 		if ($this->type == IMAGETYPE_GIF) {
-			imageGIF($image);
+			imagegif($image);
 		}
 		else if ($this->type == IMAGETYPE_PNG) {
-			imagePNG($image);
+			imagepng($image);
 		}
 		else if (function_exists('imageJPEG')) {
-			imageJPEG($image, null, 90);
+			imagejpeg($image, null, 90);
 		}
 		
 		$stream = ob_get_contents();

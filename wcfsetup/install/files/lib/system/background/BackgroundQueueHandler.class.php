@@ -169,7 +169,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$commited = true;
 		}
 		finally {
-			if (!$commited) WCF::getDB()->rollbackTransaction();
+			if (!$commited) WCF::getDB()->rollBackTransaction();
 		}
 		
 		$job = null;

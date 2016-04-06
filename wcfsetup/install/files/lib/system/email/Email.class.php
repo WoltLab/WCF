@@ -513,7 +513,7 @@ class Email {
 		$body = "";
 		
 		if (count($this->text) > 1 || $this->attachments) {
-			$body .= StringUtil::wordWrap("This is a MIME encoded email. As you are seeing this your user agent does not support these.");
+			$body .= StringUtil::wordwrap("This is a MIME encoded email. As you are seeing this your user agent does not support these.");
 			$body .= "\r\n\r\n";
 		}
 		
