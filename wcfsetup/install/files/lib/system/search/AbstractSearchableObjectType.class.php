@@ -16,18 +16,12 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  */
 abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor implements ISearchableObjectType {
 	/**
-	 * active main menu item
-	 * @var	string
-	 */
-	protected $activeMenuItem = '';
-	
-	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::show()
+	 * @inheritDoc
 	 */
 	public function show(IForm $form = null) {}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getApplication()
+	 * @inheritDoc
 	 */
 	public function getApplication() {
 		$classParts = explode('\\', get_called_class());
@@ -35,72 +29,77 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getConditions()
+	 * @inheritDoc
 	 */
 	public function getConditions(IForm $form = null) {
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getJoins()
+	 * @inheritDoc
 	 */
 	public function getJoins() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getSubjectFieldName()
+	 * @inheritDoc
 	 */
 	public function getSubjectFieldName() {
 		return $this->getTableName().'.subject';
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getUsernameFieldName()
+	 * @inheritDoc
 	 */
 	public function getUsernameFieldName() {
 		return $this->getTableName().'.username';
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getTimeFieldName()
+	 * @inheritDoc
 	 */
 	public function getTimeFieldName() {
 		return $this->getTableName().'.time';
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getAdditionalData()
+	 * @inheritDoc
 	 */
 	public function getAdditionalData() {
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::isAccessible()
+	 * @inheritDoc
 	 */
 	public function isAccessible() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getFormTemplateName()
+	 * @inheritDoc
 	 */
 	public function getFormTemplateName() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getOuterSQLQuery()
+	 * @inheritDoc
 	 */
 	public function getOuterSQLQuery($q, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null) {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchableObjectType::getActiveMenuItem()
+	 * @inheritDoc
+	 */
+	public function setLocation() {}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function getActiveMenuItem() {
-		return $this->activeMenuItem;
+		return '';
 	}
 }

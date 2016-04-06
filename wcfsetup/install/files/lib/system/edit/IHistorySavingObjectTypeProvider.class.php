@@ -28,6 +28,7 @@ interface IHistorySavingObjectTypeProvider extends IObjectTypeProvider {
 	 * Returns the identifier of the appropriate page menu item.
 	 * 
 	 * @return	string
+	 * @deprecated
 	 */
 	public function getActivePageMenuItem();
 }

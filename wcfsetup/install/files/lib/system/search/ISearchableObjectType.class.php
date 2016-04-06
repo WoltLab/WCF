@@ -127,9 +127,15 @@ interface ISearchableObjectType {
 	public function getOuterSQLQuery($q, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null);
 	
 	/**
+	 * Sets the location in menu/breadcrumbs.
+	 */
+	public function setLocation();
+	
+	/**
 	 * Returns the name of the active main menu item.
 	 * 
 	 * @return	string
+	 * @deprecated
 	 */
 	public function getActiveMenuItem();
 }
