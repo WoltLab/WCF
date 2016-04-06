@@ -157,7 +157,7 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * Sorts a list of database objects.
 	 * 
-	 * @param	DatabaseObject[]>	$objects
+	 * @param	DatabaseObject[]	$objects
 	 * @param	mixed			$sortBy
 	 * @param	string			$sortOrder
 	 */
