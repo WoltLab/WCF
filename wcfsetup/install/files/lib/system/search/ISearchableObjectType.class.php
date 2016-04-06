@@ -128,6 +128,8 @@ interface ISearchableObjectType {
 	
 	/**
 	 * Sets the location in menu/breadcrumbs.
+	 * 
+	 * @since       2.2
 	 */
 	public function setLocation();
 	
@@ -135,7 +137,7 @@ interface ISearchableObjectType {
 	 * Returns the name of the active main menu item.
 	 * 
 	 * @return	string
-	 * @deprecated
+	 * @deprecated  since 2.2
 	 */
 	public function getActiveMenuItem();
 }
