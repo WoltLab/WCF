@@ -168,9 +168,11 @@ class RequestHandler extends SingletonFactory {
 			
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType'], $metaData);
 			
-			// determine if current request matches the landing page
-			if (ControllerMap::getInstance()->isLandingPage($classData, $metaData)) {
-				$this->activeRequest->setIsLandingPage();
+			if (!$this->isACPRequest()) {
+				// determine if current request matches the landing page
+				if (ControllerMap::getInstance()->isLandingPage($classData, $metaData)) {
+					$this->activeRequest->setIsLandingPage();
+				}
 			}
 		}
 		catch (SystemException $e) {
