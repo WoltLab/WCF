@@ -62,6 +62,12 @@ class Diff {
 	 */
 	protected $d = null;
 	
+	/**
+	 * Creates a new instance of Diff.
+	 * 
+	 * @param	string[]	$a	original lines of text
+	 * @param	string[]	$b	modified lines of text
+	 */
 	public function __construct(array $a, array $b) {
 		$this->a = $a;
 		$this->b = $b;

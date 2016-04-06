@@ -69,7 +69,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 			if (!copy($additionalData['fileLocation'], $attachment->getLocation())) {
 				throw new SystemException();
 			}
-				
+			
 			return $attachment->attachmentID;
 		}
 		catch (SystemException $e) {
@@ -81,6 +81,14 @@ class AbstractAttachmentImporter extends AbstractImporter {
 		return 0;
 	}
 	
+	/**
+	 * Replaces old attachment BBCodes with BBCodes with the new attachment id.
+	 * 
+	 * @param	string		$message
+	 * @param	integer		$oldID
+	 * @param	integer		$newID
+	 * @return	string|boolean
+	 */
 	protected function fixEmbeddedAttachments($message, $oldID, $newID) {
 		if (mb_strripos($message, '[attach]'.$oldID.'[/attach]') !== false || mb_strripos($message, '[attach='.$oldID.']') !== false || mb_strripos($message, '[attach='.$oldID.',') !== false) {
 			$message = str_ireplace('[attach]'.$oldID.'[/attach]', '[attach]'.$newID.'[/attach]', $message);

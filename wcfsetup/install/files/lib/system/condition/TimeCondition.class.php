@@ -95,6 +95,11 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 HTML;
 	}
 	
+	/**
+	 * Returns the select element with all available timezones.
+	 * 
+	 * @return	string
+	 */
 	protected function getTimezoneFieldElement() {
 		$fieldElement = '<select name="timezone" id="timezone"><option value="0"'.($this->timezone ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get('wcf.date.timezone.user').'</option>';
 		foreach (DateUtil::getAvailableTimezones() as $timezone) {

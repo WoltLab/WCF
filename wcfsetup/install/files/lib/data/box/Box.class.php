@@ -217,6 +217,11 @@ class Box extends DatabaseObject {
 		// @todo
 	}
 	
+	/**
+	 * Returns the menu shown in the box.
+	 * 
+	 * @return	Menu
+	 */
 	public function getMenu() {
 		if ($this->menu === null) {
 			$this->menu = MenuCache::getInstance()->getMenuByID($this->menuID);
