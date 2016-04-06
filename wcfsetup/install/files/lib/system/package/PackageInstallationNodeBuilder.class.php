@@ -660,8 +660,8 @@ class PackageInstallationNodeBuilder {
 			
 			// check if all requirements are met
 			$isInstallable = true;
-			foreach ($archive->getOpenRequirements() as $packageName => $package) {
-				if (!isset($package['file'])) {
+			foreach ($archive->getOpenRequirements() as $packageName => $requiredPackage) {
+				if (!isset($requiredPackage['file'])) {
 					// requirement is neither installed nor shipped, check if it is about to be installed
 					if (!isset(self::$pendingPackages[$packageName])) {
 						$isInstallable = false;

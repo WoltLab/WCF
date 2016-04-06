@@ -1203,8 +1203,8 @@ class WCFSetup extends WCF {
 				
 				// remove package files
 				@unlink(TMP_DIR.'install/packages/'.$wcfPackageFile);
-				foreach ($otherPackages as $packageFile) {
-					@unlink(TMP_DIR.'install/packages/'.$packageFile);
+				foreach ($otherPackages as $otherPackageFile) {
+					@unlink(TMP_DIR.'install/packages/'.$otherPackageFile);
 				}
 				
 				// throw exception again
