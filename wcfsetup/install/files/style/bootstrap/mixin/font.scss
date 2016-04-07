@@ -54,7 +54,7 @@
 
 @mixin wcfFontTitle {
 	font-weight: 300;
-	line-height: 1.28;
+	line-height: 1;
 	
 	@include large-screen-only {
 		font-size: $wcfFontSizeTitle;
