@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\smiley\category;
 use wcf\data\category\AbstractDecoratedCategory;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\data\ITraversableObject;
 use wcf\system\exception\SystemException;
@@ -25,13 +26,13 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $indexToObject = null;
 	
 	/**
 	 * list of assigned smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
 	public $smilies = null;
 	

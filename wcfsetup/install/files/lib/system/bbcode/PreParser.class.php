@@ -30,7 +30,7 @@ class PreParser extends SingletonFactory {
 	
 	/**
 	 * list of allowed bbcode tags
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $allowedBBCodes = null;
 	
@@ -61,7 +61,7 @@ class PreParser extends SingletonFactory {
 	 * Preparses the given text.
 	 * 
 	 * @param	string			$text
-	 * @param	array<string>		$allowedBBCodes
+	 * @param	string[]		$allowedBBCodes
 	 * @return	string
 	 */
 	public function parse($text, array $allowedBBCodes = null) {

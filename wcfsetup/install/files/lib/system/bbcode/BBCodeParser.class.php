@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
+use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
 
@@ -17,7 +18,7 @@ use wcf\system\SingletonFactory;
 class BBCodeParser extends SingletonFactory {
 	/**
 	 * list of bbcodes
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
 	protected $bbcodes = array();
 	
@@ -522,8 +523,8 @@ class BBCodeParser extends SingletonFactory {
 	 * BBCodes and returns a list of used disallowed BBCodes.
 	 * 
 	 * @param	string			$text
-	 * @param	array<string>		$allowedBBCodes
-	 * @return	array<string>
+	 * @param	string[]		$allowedBBCodes
+	 * @return	string[]
 	 */
 	public function validateBBCodes($text, array $allowedBBCodes) {
 		// if all BBCodes are allowed, return directly

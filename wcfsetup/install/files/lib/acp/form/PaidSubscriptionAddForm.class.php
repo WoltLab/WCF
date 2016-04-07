@@ -106,13 +106,13 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * list of group ids
-	 * @var	array<intewer>
+	 * @var	integer[]
 	 */
 	public $groupIDs = array();
 	
 	/**
 	 * list of excluded subscriptions
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $excludedSubscriptionIDs = array();
 	
@@ -124,7 +124,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * list of available currencies
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $availableCurrencies = array();
 	

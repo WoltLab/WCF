@@ -56,9 +56,8 @@ class AJAXException extends LoggedException {
 	 * @param	string		$message
 	 * @param	integer		$errorType
 	 * @param	string		$stacktrace
-	 * @param	array		$returnValues
+	 * @param	mixed[]		$returnValues
 	 * @param	string		$exceptionID
-	 * @param	array<mixed>	$returnValues
 	 */
 	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = array(), $exceptionID = '') {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();

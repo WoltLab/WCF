@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
@@ -54,7 +55,7 @@ class LanguageAddForm extends AbstractForm {
 	
 	/**
 	 * list of available languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
 	public $languages = array();
 	

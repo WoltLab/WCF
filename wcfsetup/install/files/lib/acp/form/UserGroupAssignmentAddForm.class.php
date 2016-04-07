@@ -56,7 +56,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	
 	/**
 	 * list of selectable user groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
 	public $userGroups = array();
 	

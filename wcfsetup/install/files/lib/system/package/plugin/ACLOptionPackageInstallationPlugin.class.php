@@ -21,7 +21,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * list of loaded acl object type ids sorted by their option type name
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $optionTypeIDs = array();
 	

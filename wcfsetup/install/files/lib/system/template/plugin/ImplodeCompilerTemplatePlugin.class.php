@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
 class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
 	 * local tag stack
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $tagStack = array();
 	

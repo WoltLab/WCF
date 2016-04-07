@@ -94,13 +94,13 @@ final class HTTPRequest {
 	
 	/**
 	 * request headers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	private $headers = array();
 	
 	/**
 	 * legacy headers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	private $legacyHeaders = array();
 	
@@ -112,7 +112,7 @@ final class HTTPRequest {
 	
 	/**
 	 * reply headers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	private $replyHeaders = array();
 	
@@ -132,7 +132,7 @@ final class HTTPRequest {
 	 * Constructs a new instance of HTTPRequest.
 	 * 
 	 * @param	string		$url		URL to connect to
-	 * @param	array<string>	$options
+	 * @param	string[]	$options
 	 * @param	mixed		$postParameters	Parameters to send via POST
 	 * @param	array		$files		Files to attach to the request
 	 */

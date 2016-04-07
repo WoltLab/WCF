@@ -26,13 +26,13 @@ class TemplateScriptingCompiler {
 	/**
 	 * PHP functions that can be used in the modifier syntax and are unknown
 	 * to PHP's function_exists function
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $unknownPHPFunctions = array('isset', 'unset', 'empty');
 	
 	/**
 	 * PHP functions that can not be used in the modifier syntax
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $disabledPHPFunctions = array(
 		'system', 'exec', 'passthru', 'shell_exec', // command line execution
@@ -120,7 +120,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * list of automatically loaded tenplate plugins
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $autoloadPlugins = array();
 	
@@ -132,7 +132,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * list of loaded compiler plugin objects
-	 * @var	array<\wcf\system\template\ICompilerTemplatePlugin>
+	 * @var	ICompilerTemplatePlugin[]
 	 */
 	protected $compilerPlugins = array();
 	
@@ -168,7 +168,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * list of static includes per template
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $staticIncludes = array();
 	

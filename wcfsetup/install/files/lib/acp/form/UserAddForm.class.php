@@ -64,7 +64,7 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * user group ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $groupIDs = [];
 	
@@ -76,7 +76,7 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * visible languages
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $visibleLanguages = [];
 	

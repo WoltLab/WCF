@@ -48,7 +48,7 @@ class Poll extends DatabaseObject {
 	
 	/**
 	 * list of poll options
-	 * @var	array<\wcf\data\poll\option\PollOption>
+	 * @var	PollOption[]
 	 */
 	protected $options = array();
 	
@@ -77,7 +77,7 @@ class Poll extends DatabaseObject {
 	 * Returns a list of poll options.
 	 * 
 	 * @param	boolean		$isResultDisplay
-	 * @return	array<\wcf\data\poll\option\PollOption>
+	 * @return	PollOption[]
 	 */
 	public function getOptions($isResultDisplay = false) {
 		$this->loadOptions();

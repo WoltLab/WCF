@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\notification;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\recipient\UserNotificationEventRecipientList;
 use wcf\data\user\notification\event\UserNotificationEventList;
@@ -14,6 +15,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\mail\Mail;
 use wcf\system\user\notification\event\IUserNotificationEvent;
+use wcf\system\user\notification\object\type\IUserNotificationObjectType;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -51,7 +53,7 @@ class UserNotificationHandler extends SingletonFactory {
 	
 	/**
 	 * list of object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = array();
 	
@@ -76,7 +78,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	string				$objectType
 	 * @param	IUserNotificationObject		$notificationObject
 	 * @param	integer[]			$recipientIDs
-	 * @param	array<mixed>			$additionalData
+	 * @param	mixed[]				$additionalData
 	 * @param	integer				$baseObjectID
 	 * @throws	SystemException
 	 */
@@ -303,7 +305,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	integer		$limit
 	 * @param	integer		$offset
 	 * @param	boolean		$showConfirmedNotifications	DEPRECATED
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function getNotifications($limit = 5, $offset = 0, $showConfirmedNotifications = false) {
 		$notifications = $this->fetchNotifications($limit, $offset);
@@ -344,7 +346,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	integer		$limit
 	 * @param	integer		$offset
 	 * @param	mixed		$filterByConfirmed
-	 * @return	array<\wcf\data\user\notification\UserNotification>
+	 * @return	UserNotification[]
 	 */
 	protected function fetchNotifications($limit, $offset, $filterByConfirmed = null) {
 		// build enormous query
@@ -384,8 +386,8 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Processes a list of notification objects.
 	 * 
-	 * @param	array<\wcf\data\user\notification\UserNotification>	$notificationObjects
-	 * @return	array
+	 * @param	UserNotification[]	$notificationObjects
+	 * @return	mixed[]
 	 */
 	public function processNotifications(array $notificationObjects) {
 		// return an empty set if no notifications exist
@@ -537,7 +539,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * Returns all events for given object type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	array<\wcf\system\user\notification\event\IUserNotificationEvent>
+	 * @return	IUserNotificationEvent[]
 	 */
 	public function getEvents($objectType) {
 		if (!isset($this->availableEvents[$objectType])) return array();
@@ -580,7 +582,7 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of available object types.
 	 * 
-	 * @return	array<\wcf\system\user\notification\object\type\IUserNotificationObjectType>
+	 * @return	IUserNotificationObjectType[]
 	 */
 	public function getAvailableObjectTypes() {
 		return $this->availableObjectTypes;
@@ -589,7 +591,7 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of available events.
 	 * 
-	 * @return	array<\wcf\system\user\notification\event\IUserNotificationEvent>
+	 * @return	IUserNotificationEvent[]
 	 */
 	public function getAvailableEvents() {
 		return $this->availableEvents;
@@ -677,8 +679,8 @@ class UserNotificationHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$eventName
 	 * @param	string		$objectType
-	 * @param	array<integer>	$recipientIDs
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$recipientIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function deleteNotifications($eventName, $objectType, array $recipientIDs, array $objectIDs = array()) {
 		$this->markAsConfirmed($eventName, $objectType, $recipientIDs, $objectIDs);
@@ -805,7 +807,7 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Marks a list of notification ids as confirmed.
 	 * 
-	 * @param	array<integer>	$notificationIDs
+	 * @param	integer[]	$notificationIDs
 	 */
 	public function markAsConfirmedByIDs(array $notificationIDs) {
 		if (empty($notificationIDs)) {

@@ -2,6 +2,7 @@
 namespace wcf\system\log\modification;
 use wcf\data\modification\log\ModificationLog;
 use wcf\data\modification\log\ModificationLogEditor;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -22,7 +23,7 @@ use wcf\system\WCF;
 class ModificationLogHandler extends SingletonFactory {
 	/**
 	 * list of object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $cache = array();
 	

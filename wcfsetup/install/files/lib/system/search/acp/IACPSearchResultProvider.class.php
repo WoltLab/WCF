@@ -16,7 +16,7 @@ interface IACPSearchResultProvider {
 	 * Returns a list of seach results for given query.
 	 * 
 	 * @param	string		$query
-	 * @return	array<\wcf\system\search\acp\ACPSearchResult>
+	 * @return	ACPSearchResult[]
 	 */
 	public function search($query);
 }

@@ -25,7 +25,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	
 	/**
 	 * list of names of tags which aren't considered as additional data
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'isdisabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
 	

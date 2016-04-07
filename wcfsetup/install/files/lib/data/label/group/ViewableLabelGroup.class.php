@@ -24,13 +24,13 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	
 	/**
 	 * list of labels
-	 * @var	array<\wcf\data\label\Label>
+	 * @var	Label[]
 	 */
 	protected $labels = array();
 	
 	/**
 	 * list of permissions by type
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
 	protected $permissions = array(
 		'group' => array(),
@@ -45,7 +45,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $indexToObject = null;
 	
@@ -120,7 +120,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Returns a list of label ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getLabelIDs() {
 		return array_keys($this->labels);
@@ -129,7 +129,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Returns a list of labels.
 	 * 
-	 * @return	array<\wcf\data\label\Label>
+	 * @return	Label[]
 	 */
 	public function getLabels() {
 		return $this->labels;

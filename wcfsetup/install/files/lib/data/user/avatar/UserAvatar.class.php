@@ -27,7 +27,7 @@ use wcf\system\WCF;
 class UserAvatar extends DatabaseObject implements IUserAvatar {
 	/**
 	 * needed avatar thumbnail sizes
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public static $avatarThumbnailSizes = array(32, 96, 128);
 	

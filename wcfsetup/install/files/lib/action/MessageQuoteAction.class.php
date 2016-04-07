@@ -28,13 +28,13 @@ class MessageQuoteAction extends AJAXProxyAction {
 	
 	/**
 	 * list of quote ids
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $quoteIDs = array();
 	
 	/**
 	 * list of object types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $objectTypes = array();
 	

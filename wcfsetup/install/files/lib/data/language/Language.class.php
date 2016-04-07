@@ -34,13 +34,13 @@ class Language extends DatabaseObject {
 	
 	/**
 	 * list of language items
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $items = array();
 	
 	/**
 	 * list of dynamic language items
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $dynamicItems = array();
 	
@@ -199,7 +199,7 @@ class Language extends DatabaseObject {
 	/**
 	 * Returns a list of available languages.
 	 * 
-	 * @return	array<\wcf\data\language\Language>
+	 * @return	Language[]
 	 */
 	public function getLanguages() {
 		return LanguageFactory::getInstance()->getLanguages();

@@ -35,7 +35,7 @@ class CodeBBCode extends AbstractBBCode {
 	
 	/**
 	 * already used ids for line numbers to prevent duplicate ids in the output
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	private static $codeIDs = array();
 	

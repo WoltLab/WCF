@@ -71,7 +71,7 @@ class GroupedAttachmentList extends AttachmentList {
 	/**
 	 * Sets the permissions for attachment access.
 	 * 
-	 * @param	array<boolean>		$permissions
+	 * @param	boolean[]	$permissions
 	 */
 	public function setPermissions(array $permissions) {
 		foreach ($this->objects as $attachment) {
@@ -82,7 +82,7 @@ class GroupedAttachmentList extends AttachmentList {
 	/**
 	 * Returns the objects of the list.
 	 * 
-	 * @return	array<\wcf\data\DatabaseObject>
+	 * @return	Attachment[]
 	 */
 	public function getGroupedObjects($objectID) {
 		if (isset($this->groupedObjects[$objectID])) {

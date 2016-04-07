@@ -22,7 +22,7 @@ class NotificationListPage extends MultipleLinkPage {
 	
 	/**
 	 * list of outstanding notifications
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	public $notifications = array();
 	

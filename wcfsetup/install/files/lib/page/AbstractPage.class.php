@@ -63,13 +63,13 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	
 	/**
 	 * needed modules to view this page
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $neededModules = array();
 	
 	/**
 	 * needed permissions to view this page
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $neededPermissions = array();
 	

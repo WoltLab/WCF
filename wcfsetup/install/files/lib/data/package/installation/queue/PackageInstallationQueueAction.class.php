@@ -59,7 +59,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Prepares a new package installation queue.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function prepareQueue() {
 		$processNo = PackageInstallationQueue::getNewProcessNo();

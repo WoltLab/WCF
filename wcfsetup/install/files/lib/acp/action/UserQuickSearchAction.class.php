@@ -32,7 +32,7 @@ class UserQuickSearchAction extends AbstractAction {
 	
 	/**
 	 * matches
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $matches = array();
 	
@@ -44,7 +44,7 @@ class UserQuickSearchAction extends AbstractAction {
 	
 	/**
 	 * shown columns
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $columns = array('registrationDate', 'lastActivityTime');
 	

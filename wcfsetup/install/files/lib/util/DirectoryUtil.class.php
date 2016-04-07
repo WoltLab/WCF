@@ -22,13 +22,13 @@ final class DirectoryUtil {
 	
 	/**
 	 * all files with full path
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $files = array();
 	
 	/**
 	 * all files with filename as key and DirectoryIterator object as value
-	 * @var	array<\DirectoryIterator>
+	 * @var	\DirectoryIterator[]
 	 */
 	protected $fileObjects = array();
 	
@@ -58,7 +58,7 @@ final class DirectoryUtil {
 	
 	/**
 	 * all recursive and non-recursive instances of DirectoryUtil
-	 * @var	array<array>
+	 * @var	DirectoryUtil[][]
 	 */
 	protected static $instances = array(
 		true => array(),	// recursive instances

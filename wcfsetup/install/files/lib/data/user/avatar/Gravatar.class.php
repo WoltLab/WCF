@@ -56,7 +56,7 @@ class Gravatar extends DefaultAvatar {
 	
 	/**
 	 * urls of this gravatar
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $url = array();
 	

@@ -15,7 +15,7 @@ use wcf\util\FileUtil;
 class UploadHandler {
 	/**
 	 * list of uploaded files
-	 * @var	array<\wcf\system\upload\UploadFile>
+	 * @var	UploadFile[]
 	 */
 	protected $files = array();
 	
@@ -28,7 +28,7 @@ class UploadHandler {
 	/**
 	 * Creates a new UploadHandler object.
 	 * 
-	 * @param	array<mixed>	$rawFileData
+	 * @param	mixed[]		$rawFileData
 	 */
 	protected function __construct(array $rawFileData) {
 		if (is_array($rawFileData['name'])) {
@@ -65,7 +65,7 @@ class UploadHandler {
 	/**
 	 * Returns the list of uploaded files.
 	 * 
-	 * @return	array<\wcf\system\upload\UploadFile>
+	 * @return	UploadFile[]
 	 */
 	public function getFiles() {
 		return $this->files;
@@ -92,7 +92,7 @@ class UploadHandler {
 	/**
 	 * Returns a list of erroneous files.
 	 * 
-	 * @return	array<\wcf\system\upload\UploadFile>
+	 * @return	UploadFile[]
 	 */
 	public function getErroneousFiles() {
 		return $this->erroneousFiles;

@@ -21,13 +21,13 @@ use wcf\system\WCF;
 class LabelHandler extends SingletonFactory {
 	/**
 	 * cached list of object types
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $cache = null;
 	
 	/**
 	 * list of label groups
-	 * @var	array<\wcf\data\label\group\ViewableLabelGroup>
+	 * @var	ViewableLabelGroup[]
 	 */
 	protected $labelGroups = null;
 	
@@ -85,7 +85,7 @@ class LabelHandler extends SingletonFactory {
 	/**
 	 * Returns an array with view permissions for the labels with the given id.
 	 * 
-	 * @param	array<integer>		$labelIDs
+	 * @param	integer[]		$labelIDs
 	 * @return	array
 	 * @see		\wcf\system\label\LabelHandler::getPermissions()
 	 */
@@ -96,7 +96,7 @@ class LabelHandler extends SingletonFactory {
 	/**
 	 * Returns an array with use permissions for the labels with the given id.
 	 * 
-	 * @param	array<integer>		$labelIDs
+	 * @param	integer[]		$labelIDs
 	 * @return	array
 	 * @see		\wcf\system\label\LabelHandler::getPermissions()
 	 */
@@ -156,7 +156,7 @@ class LabelHandler extends SingletonFactory {
 	 * Sets labels for given object id, pass an empty array to remove all previously
 	 * assigned labels.
 	 * 
-	 * @param	array<integer>		$labelIDs
+	 * @param	integer[]		$labelIDs
 	 * @param	integer			$objectTypeID
 	 * @param	integer			$objectID
 	 * @param	boolean			$validatePermissions
@@ -198,7 +198,7 @@ class LabelHandler extends SingletonFactory {
 	 * Returns all assigned labels, optionally filtered to validate permissions.
 	 * 
 	 * @param	integer			$objectTypeID
-	 * @param	array<integer>		$objectIds
+	 * @param	integer[]		$objectIds
 	 * @param	boolean			$validatePermissions
 	 * @return	array
 	 */
@@ -313,7 +313,7 @@ class LabelHandler extends SingletonFactory {
 	/**
 	 * Returns a list of accessible label ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getAccessibleLabelIDs() {
 		$labelIDs = array();
@@ -344,7 +344,7 @@ class LabelHandler extends SingletonFactory {
 	 * Removes all assigned labels for given object ids.
 	 * 
 	 * @param	integer			$objectTypeID
-	 * @param	array<integer>		$objectID
+	 * @param	integer[]		$objectID
 	 */
 	public function removeLabels($objectTypeID, array $objectIDs) {
 		$conditions = new PreparedStatementConditionBuilder();

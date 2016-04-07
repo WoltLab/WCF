@@ -56,7 +56,7 @@ class TagAddForm extends AbstractForm {
 	
 	/**
 	 * synonyms
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $synonyms = array();
 	

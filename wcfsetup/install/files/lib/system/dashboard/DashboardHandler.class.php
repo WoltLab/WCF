@@ -22,13 +22,13 @@ use wcf\system\WCF;
 class DashboardHandler extends SingletonFactory {
 	/**
 	 * list of cached dashboard boxes
-	 * @var	array<\wcf\data\dashboard\box\DashboardBox>
+	 * @var	DashboardBox[]
 	 */
 	protected $boxCache = null;
 	
 	/**
 	 * configuration options for pages
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
 	protected $pageCache = null;
 	

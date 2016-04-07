@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\clipboard;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\ClipboardActionCacheBuilder;
 use wcf\system\cache\builder\ClipboardPageCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -27,13 +28,13 @@ class ClipboardHandler extends SingletonFactory {
 	
 	/**
 	 * cached list of clipboard item types
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $cache = null;
 	
 	/**
 	 * list of marked items
-	 * @var	array<array>
+	 * @var	DatabaseObject[][]
 	 */
 	protected $markedItems = null;
 	
@@ -290,7 +291,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$page
 	 * @param	integer		$pageObjectID
-	 * @return	array<array>
+	 * @return	mixed[][]
 	 * @throws	SystemException
 	 */
 	public function getEditorItems($page, $pageObjectID) {

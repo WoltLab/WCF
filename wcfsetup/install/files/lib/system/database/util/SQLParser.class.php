@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
 class SQLParser {
 	/**
 	 * list of sql queries
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $queryArray = array();
 	

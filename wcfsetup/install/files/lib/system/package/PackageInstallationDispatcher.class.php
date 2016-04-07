@@ -951,7 +951,7 @@ class PackageInstallationDispatcher {
 	 * Validates specific php requirements.
 	 * 
 	 * @param	array		$requirements
-	 * @return	array<array>
+	 * @return	mixed[][]
 	 */
 	public static function validatePHPRequirements(array $requirements) {
 		$errors = array();

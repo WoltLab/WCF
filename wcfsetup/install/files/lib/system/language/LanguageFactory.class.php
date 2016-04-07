@@ -21,7 +21,7 @@ use wcf\system\WCF;
 class LanguageFactory extends SingletonFactory {
 	/**
 	 * language cache
-	 * @var	array<array>
+	 * @var	mixed[]
 	 */
 	protected $cache = null;
 	

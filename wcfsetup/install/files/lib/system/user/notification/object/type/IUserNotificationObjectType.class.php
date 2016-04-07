@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\object\type;
 use wcf\data\IDatabaseObjectProcessor;
+use wcf\system\user\notification\object\IUserNotificationObject;
 
 /**
  * This interface defines the basic methods every notification object type should implement.
@@ -16,8 +17,8 @@ interface IUserNotificationObjectType extends IDatabaseObjectProcessor {
 	/**
 	 * Gets notification objects by their IDs.
 	 * 
-	 * @param	array<integer>		$objectIDs
-	 * @return	array<\wcf\system\user\notification\object\IUserNotificationObject>
+	 * @param	integer[]	$objectIDs
+	 * @return	IUserNotificationObject[]
 	 */
 	public function getObjectsByIDs(array $objectIDs);
 }

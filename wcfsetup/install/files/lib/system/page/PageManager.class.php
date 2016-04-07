@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\page;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
@@ -19,7 +20,7 @@ use wcf\system\WCF;
 class PageManager extends SingletonFactory {
 	/**
 	 * list of available page object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = array();
 	
@@ -33,7 +34,7 @@ class PageManager extends SingletonFactory {
 	/**
 	 * Returns a list of the available page object types.
 	 * 
-	 * @return	array<\wcf\data\object\type\ObjectType>
+	 * @return	ObjectType[]
 	 */
 	public function getObjectTypes() {
 		return $this->objectTypes;

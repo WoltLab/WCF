@@ -27,7 +27,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	
 	/**
 	 * result list
-	 * @var	array<\wcf\system\search\acp\ACPSearchResult>
+	 * @var	ACPSearchResult[]
 	 */
 	protected $results = array();
 	

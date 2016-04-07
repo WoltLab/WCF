@@ -124,7 +124,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	
 	/**
 	 * group data and permissions
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $groupData = null;
 	

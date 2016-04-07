@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
@@ -21,7 +22,7 @@ use wcf\system\WCF;
 abstract class AbstractBulkProcessingForm extends AbstractForm {
 	/**
 	 * object action object type types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	public $actions = array();
 	
@@ -33,7 +34,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	
 	/**
 	 * object condition object type types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	public $conditions = array();
 	

@@ -25,7 +25,7 @@ use wcf\util\ArrayUtil;
 abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**
 	 * list of available user groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
 	public $availableUserGroups = [ ];
 	
@@ -37,7 +37,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	
 	/**
 	 * ids of selected user groups
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $userGroupIDs = [ ];
 	

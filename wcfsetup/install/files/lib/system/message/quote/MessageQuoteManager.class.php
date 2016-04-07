@@ -46,7 +46,7 @@ class MessageQuoteManager extends SingletonFactory {
 	
 	/**
 	 * list of stored quotes
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $quotes = [];
 	
@@ -476,7 +476,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns a list of full quotes by object id for given object types.
 	 * 
 	 * @param	string[]		$objectTypes
-	 * @return	array<array>
+	 * @return	mixed[][]
 	 * @throws	SystemException
 	 */
 	public function getFullQuoteObjectIDs(array $objectTypes) {

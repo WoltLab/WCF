@@ -26,73 +26,73 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * comment end delimiter
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $commentEnd = array("*/");
 	
 	/**
 	 * comment start delimiter
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $commentStart = array("/*");
 	
 	/**
 	 * escape sequence
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $escapeSequence = array("\\");
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $keywords1 = array();
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $keywords2 = array();
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $keywords3 = array();
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $keywords4 = array();
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $keywords5 = array();
 	
 	/**
 	 * list of arithmetic operators
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $operators = array();
 	
 	/**
 	 * list of quote marks
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $quotes = array("'", '"');
 	
 	/**
 	 * list of separator sequences
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $separators = array();
 	
 	/**
 	 * inline comment sequence
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $singleLineComment = array("//");
 	

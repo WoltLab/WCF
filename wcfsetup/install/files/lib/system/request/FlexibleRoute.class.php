@@ -18,7 +18,7 @@ namespace wcf\system\request;
 class FlexibleRoute implements IRoute {
 	/**
 	 * schema for outgoing links
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $buildSchema = array();
 	
@@ -36,13 +36,13 @@ class FlexibleRoute implements IRoute {
 	
 	/**
 	 * list of required components
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $requireComponents = array();
 	
 	/**
 	 * parsed request data
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	protected $routeData = array();
 	
@@ -111,7 +111,7 @@ class FlexibleRoute implements IRoute {
 	/**
 	 * Sets the list of required components.
 	 * 
-	 * @param	array<string>	$requiredComponents
+	 * @param	string[]	$requiredComponents
 	 */
 	public function setRequiredComponents(array $requiredComponents) {
 		$this->requireComponents = $requiredComponents;

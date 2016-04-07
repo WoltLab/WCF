@@ -37,7 +37,7 @@ use wcf\util\StringUtil;
 class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * list of already included JavaScript files
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $includedFiles = [];
 	

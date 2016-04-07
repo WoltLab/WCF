@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\sitemap;
+use wcf\data\sitemap\Sitemap;
 use wcf\system\cache\builder\SitemapCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -17,7 +18,7 @@ use wcf\system\SingletonFactory;
 class SitemapHandler extends SingletonFactory {
 	/**
 	 * sitemap cache
-	 * @var	array<\wcf\data\sitemap\Sitemap>
+	 * @var	Sitemap[]
 	 */
 	protected $cache = null;
 	
@@ -31,7 +32,7 @@ class SitemapHandler extends SingletonFactory {
 	/**
 	 * Returns array of tree items or an empty array if only one sitemap is registered.
 	 * 
-	 * @return	array<\wcf\data\sitemap\Sitemap>
+	 * @return	Sitemap[]
 	 */
 	public function getTree() {
 		$tree = array();

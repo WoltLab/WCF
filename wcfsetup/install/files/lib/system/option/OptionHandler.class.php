@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
 class OptionHandler implements IOptionHandler {
 	/**
 	 * list of application abbreviations
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $abbreviations = null;
 	
@@ -34,13 +34,13 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * list of all option categories
-	 * @var	array<\wcf\data\option\category\OptionCategory>
+	 * @var	OptionCategory[]
 	 */
 	public $cachedCategories = null;
 	
 	/**
 	 * list of all options
-	 * @var	array<\wcf\data\option\Option>
+	 * @var	Option[]
 	 */
 	public $cachedOptions = null;
 	
@@ -64,13 +64,13 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * options of the active category
-	 * @var	array<Option>
+	 * @var	Option[]
 	 */
 	public $options = array();
 	
 	/**
 	 * type object cache
-	 * @var	array<\wcf\system\option\IOptionType>
+	 * @var	IOptionType[]
 	 */
 	public $typeObjects = array();
 	
@@ -82,13 +82,13 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * option values
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	public $optionValues = array();
 	
 	/**
 	 * raw option values
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	public $rawValues = array();
 	

@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * list of excluded packages grouped by package
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $excludedPackages = array();
 	
@@ -31,7 +31,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	
 	/**
 	 * list of direct requirements delivered by this package
-	 * @var	array<\wcf\system\package\validation\PackageValidationArchive>
+	 * @var	PackageValidationArchive[]
 	 */
 	protected $children = array();
 	
@@ -230,7 +230,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * Validates install or update instructions against the corresponding PIP, unknown PIPs will be silently ignored.
 	 * 
 	 * @param	string		$type
-	 * @param	array<array>	$instructions
+	 * @param	mixed[][]	$instructions
 	 * @throws	PackageValidationException
 	 */
 	protected function validatePackageInstallationPlugins($type, array $instructions) {
@@ -392,7 +392,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * Sets the children of this package validation archive.
 	 * 
-	 * @param	array<\wcf\system\package\validation\PackageValidationArchive>		$children
+	 * @param	PackageValidationArchive[]	$children
 	 */
 	public function setChildren(array $children) {
 		$this->children = $children;

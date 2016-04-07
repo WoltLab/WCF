@@ -21,7 +21,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $indexToObject = null;
 	

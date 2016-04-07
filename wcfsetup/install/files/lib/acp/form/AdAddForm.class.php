@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\ad\AdAction;
 use wcf\form\AbstractForm;
@@ -61,13 +62,13 @@ class AdAddForm extends AbstractForm {
 	
 	/**
 	 * list of available location object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	public $locationObjectTypes = array();
 	
 	/**
 	 * list of available locations
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $locations = array();
 	

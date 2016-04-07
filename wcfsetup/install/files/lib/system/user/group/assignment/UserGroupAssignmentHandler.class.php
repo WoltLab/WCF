@@ -2,6 +2,7 @@
 namespace wcf\system\user\group\assignment;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\assignment\UserGroupAssignment;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
@@ -31,7 +32,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	 * Note: This method uses the user ids as a parameter instead of user objects
 	 * on purpose to make sure the latest data of the users are fetched.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]		$userIDs
 	 */
 	public function checkUsers(array $userIDs) {
 		if (empty($userIDs)) return;
@@ -89,7 +90,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	 * assignment.
 	 * 
 	 * @param	\wcf\data\user\group\assignment\UserGroupAssignment	$assignment
-	 * @return	array<\wcf\data\user\User>
+	 * @return	User[]
 	 */
 	public function getUsers(UserGroupAssignment $assignment) {
 		$userList = new UserList();

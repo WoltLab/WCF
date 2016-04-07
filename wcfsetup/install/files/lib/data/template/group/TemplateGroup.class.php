@@ -36,7 +36,7 @@ class TemplateGroup extends DatabaseObject {
 	/**
 	 * Creates a select list of all template groups.
 	 * 
-	 * @param	array<integer>	$ignore		Array of template group ids that should be excluded with all of their children
+	 * @param	integer[]	$ignore		Array of template group ids that should be excluded with all of their children
 	 * @param	integer		$initialDepth	Specifies the initial indentation depth of the list
 	 * @return	array
 	 */

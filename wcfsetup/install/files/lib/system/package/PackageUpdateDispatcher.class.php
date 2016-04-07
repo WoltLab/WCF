@@ -29,7 +29,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Refreshes the package database.
 	 * 
-	 * @param	array<integer>		$packageUpdateServerIDs
+	 * @param	integer[]		$packageUpdateServerIDs
 	 * @param	boolean			$ignoreCache
 	 */
 	public function refreshPackageDatabase(array $packageUpdateServerIDs = array(), $ignoreCache = false) {

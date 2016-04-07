@@ -98,7 +98,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns a list of outstanding queues.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getOutstandingQueues() {
 		$objectTypeIDs = ModerationQueueManager::getInstance()->getObjectTypeIDs(array_keys(ModerationQueueManager::getInstance()->getDefinitions()));
@@ -190,7 +190,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the user assign form.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getAssignUserForm() {
 		$assignedUser = ($this->moderationQueueEditor->assignedUserID) ? new User($this->moderationQueueEditor->assignedUserID) : null;
@@ -244,7 +244,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the data for the newly assigned user.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function assignUser() {
 		$data = array('assignedUserID' => ($this->parameters['assignedUserID'] ?: null));

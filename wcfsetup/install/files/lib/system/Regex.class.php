@@ -229,7 +229,7 @@ final class Regex {
 	 * 
 	 * @param	string		$string
 	 * @param	integer		$flags
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function split($string, $flags = self::FLAGS_DEFAULT) {
 		$splitFlags = 0;

@@ -36,7 +36,7 @@ class PackageStartInstallForm extends AbstractForm {
 	
 	/**
 	 * data of the uploaded package
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $uploadPackage = '';
 	

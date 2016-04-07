@@ -46,7 +46,7 @@ interface ISearchIndexManager {
 	 * Deletes search index entries.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function delete($objectType, array $objectIDs);
 	

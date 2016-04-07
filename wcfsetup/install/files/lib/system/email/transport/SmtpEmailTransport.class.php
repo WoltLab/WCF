@@ -64,7 +64,7 @@ class SmtpEmailTransport implements EmailTransport {
 	
 	/**
 	 * ESMTP features advertised by the server
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $features = [ ];
 	

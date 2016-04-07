@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\category;
 use wcf\data\category\Category;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\CategoryCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -19,25 +20,25 @@ use wcf\system\SingletonFactory;
 class CategoryHandler extends SingletonFactory {
 	/**
 	 * cached categories
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
 	protected $categories = array();
 	
 	/**
 	 * category ids grouped by the object type they belong to
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
 	protected $objectTypeCategoryIDs = array();
 	
 	/**
 	 * mapes the names of the category object types to the object type ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $objectTypeIDs = array();
 	
 	/**
 	 * list of category object types
-	 * @var	array<\wcf\data\object\type>
+	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = array();
 	
@@ -46,7 +47,7 @@ class CategoryHandler extends SingletonFactory {
 	 * type is given, all categories grouped by object type are returned.
 	 * 
 	 * @param	string		$objectType
-	 * @return	array<mixed>
+	 * @return	mixed[]
 	 */
 	public function getCategories($objectType = null) {
 		$categories = array();
@@ -134,7 +135,7 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Returns all category object types.
 	 * 
-	 * @return	array<\wcf\data\object\type\ObjectType>
+	 * @return	ObjectType[]
 	 */
 	public function getObjectTypes() {
 		return $this->objectTypes;

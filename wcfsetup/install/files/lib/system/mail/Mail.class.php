@@ -43,7 +43,7 @@ class Mail {
 	
 	/**
 	 * mail recipients
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $to = array();
 	
@@ -67,13 +67,13 @@ class Mail {
 	
 	/**
 	 * mail carbon copy
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $cc = array();
 	
 	/**
 	 * mail blind carbon copy
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $bcc = array();
 	

@@ -20,7 +20,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	
 	/**
 	 * allowed file extensions
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $fileExtensions = array();
 	
@@ -34,7 +34,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	 * Creates a new DefaultUploadFileValidationStrategy object.
 	 * 
 	 * @param	integer		$maxFilesize
-	 * @param	array<string>	$fileExtensions
+	 * @param	string[]	$fileExtensions
 	 */
 	public function __construct($maxFilesize, array $fileExtensions) {
 		$this->maxFilesize = $maxFilesize;

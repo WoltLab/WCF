@@ -36,13 +36,13 @@ class UserMailForm extends AbstractForm {
 	
 	/**
 	 * list of group ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $groupIDs = array();
 	
 	/**
 	 * list of groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
 	public $groups = array();
 	
@@ -65,7 +65,7 @@ class UserMailForm extends AbstractForm {
 	
 	/**
 	 * list of user ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $userIDs = array();
 	

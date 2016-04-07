@@ -51,7 +51,7 @@ interface IFormElementContainer {
 	/**
 	 * Returns a list of child elements.
 	 * 
-	 * @return	array<\wcf\system\form\IFormElement>
+	 * @return	IFormElement[]
 	 */
 	public function getChildren();
 	

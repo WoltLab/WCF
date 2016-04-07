@@ -149,7 +149,7 @@ class XML {
 	 * Reads errors from libxml since be bypassed built-in error handler.
 	 * 
 	 * @see		\wcf\util\XML::__construct()
-	 * @return	array<array>
+	 * @return	string[][]
 	 */
 	protected function pollErrors() {
 		$errors = array();

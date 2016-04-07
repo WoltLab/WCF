@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
@@ -33,13 +34,13 @@ class UserMergeForm extends AbstractForm {
 	
 	/**
 	 * ids of the relevant users
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $userIDs = array();
 	
 	/**
 	 * relevant users
-	 * @var	array<\wcf\data\user\User>
+	 * @var	User[]
 	 */
 	public $users = array();
 	
@@ -51,7 +52,7 @@ class UserMergeForm extends AbstractForm {
 	
 	/**
 	 * ids of merge users (without destination user)
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $mergedUserIDs = array();
 	

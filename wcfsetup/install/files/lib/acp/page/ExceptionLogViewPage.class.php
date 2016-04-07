@@ -49,7 +49,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	
 	/**
 	 * available logfiles
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $logFiles = array();
 	

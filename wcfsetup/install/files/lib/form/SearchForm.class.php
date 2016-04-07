@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
 class SearchForm extends AbstractCaptchaForm {
 	/**
 	 * list of additional conditions
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $additionalConditions = array();
 	
@@ -122,7 +122,7 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * selected object types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $selectedObjectTypes = array();
 	
@@ -483,7 +483,7 @@ class SearchForm extends AbstractCaptchaForm {
 	/**
 	 * Returns user ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getUserIDs() {
 		$userIDs = array();

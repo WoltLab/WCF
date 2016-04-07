@@ -17,7 +17,7 @@ use wcf\system\SingletonFactory;
 class ImageHandler extends SingletonFactory {
 	/**
 	 * list of valid image adapters.
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $imageAdapters = array(
 		'gd' => 'wcf\system\image\adapter\GDImageAdapter',

@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
 class FormDocument {
 	/**
 	 * list of FormElementContainer objects
-	 * @var	array<\wcf\system\form\IFormElementContainer>
+	 * @var	IFormElementContainer[]
 	 */
 	protected $containers = array();
 	
@@ -64,7 +64,7 @@ class FormDocument {
 	/**
 	 * Returns assigned FormElementContainer objects.
 	 * 
-	 * @return	array<\wcf\system\form\IFormElementContainer>
+	 * @return	IFormElementContainer[]
 	 */
 	public function getContainers() {
 		return $this->containers;

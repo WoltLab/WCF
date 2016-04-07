@@ -594,7 +594,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	/**
 	 * Changes user style.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function changeStyle() {
 		StyleHandler::getInstance()->changeStyle($this->style->styleID);

@@ -26,7 +26,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	
 	/**
 	 * list of application packages
-	 * @var	array<\wcf\data\package\Package>
+	 * @var	Package[]
 	 */
 	protected static $packages = array();
 	

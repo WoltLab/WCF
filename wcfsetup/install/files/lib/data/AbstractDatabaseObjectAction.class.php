@@ -35,49 +35,49 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	/**
 	 * list of object ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $objectIDs = array();
 	
 	/**
 	 * list of object editors
-	 * @var	array<\wcf\data\DatabaseObjectEditor>
+	 * @var	DatabaseObjectEditor[]
 	 */
 	protected $objects = array();
 	
 	/**
 	 * multi-dimensional array of parameters required by an action
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $parameters = array();
 	
 	/**
 	 * list of permissions required to create objects
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $permissionsCreate = array();
 	
 	/**
 	 * list of permissions required to delete objects
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $permissionsDelete = array();
 	
 	/**
 	 * list of permissions required to update objects
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $permissionsUpdate = array();
 	
 	/**
 	 * disallow requests for specified methods if the origin is not the ACP
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $requireACP = array();
 	
 	/**
 	 * Resets cache if any of the listed actions is invoked
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $resetCache = array('create', 'delete', 'toggle', 'update', 'updatePosition');
 	
@@ -90,7 +90,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * allows guest access for all specified methods, by default guest access
 	 * is completely disabled
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $allowGuestAccess = array();
 	
@@ -105,7 +105,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Initialize a new DatabaseObject-related action.
 	 * 
-	 * @param	array<mixed>	$objects
+	 * @param	mixed[]		$objects
 	 * @param	string		$action
 	 * @param	array		$parameters
 	 * @throws	SystemException
@@ -236,7 +236,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Sets the database objects.
 	 * 
-	 * @param	array<\wcf\data\DatabaseObject>		$objects
+	 * @param	DatabaseObject[]	$objects
 	 */
 	public function setObjects(array $objects) {
 		$this->objects = $objects;
@@ -628,7 +628,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Returns a list of currently loaded objects.
 	 * 
-	 * @return	array<\wcf\data\IEditableObject>
+	 * @return	DatabaseObjectEditor[]
 	 */
 	public function getObjects() {
 		return $this->objects;

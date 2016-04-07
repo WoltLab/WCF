@@ -123,7 +123,7 @@ class AttachmentHandler implements \Countable {
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$newObjectID
-	 * @param	array<integer>	$oldObjectIDs
+	 * @param	integer[]	$oldObjectIDs
 	 */
 	public static function transferAttachments($objectType, $newObjectID, array $oldObjectIDs) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -143,7 +143,7 @@ class AttachmentHandler implements \Countable {
 	 * Removes all attachments for given object ids by type.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public static function removeAttachments($objectType, array $objectIDs) {
 		$attachmentList = new AttachmentList();
@@ -174,7 +174,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns a formatted list of the allowed file extensions.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getFormattedAllowedExtensions() {
 		$extensions = $this->getAllowedExtensions();

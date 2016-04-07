@@ -27,7 +27,7 @@ use wcf\util\StringUtil;
 class QuickReplyManager extends SingletonFactory {
 	/**
 	 * list of allowed bbcodes
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $allowedBBodes = null;
 	
@@ -91,7 +91,7 @@ class QuickReplyManager extends SingletonFactory {
 	/**
 	 * Sets the allowed bbcodes.
 	 * 
-	 * @param	array<string>		$allowedBBCodes
+	 * @param	string[]		$allowedBBCodes
 	 */
 	public function setAllowedBBCodes(array $allowedBBCodes = null) {
 		$this->allowedBBodes = $allowedBBCodes;
@@ -101,7 +101,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * Validates parameters for current request.
 	 * 
 	 * @param	IMessageQuickReplyAction	$object
-	 * @param	array<array>			$parameters
+	 * @param	mixed[][]			$parameters
 	 * @param	string				$containerClassName
 	 * @param	string				$containerDecoratorClassName
 	 * @throws	SystemException
@@ -169,7 +169,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * Creates a new message and returns the parsed template.
 	 * 
 	 * @param	\wcf\data\IMessageQuickReplyAction	$object
-	 * @param	array<array>				$parameters
+	 * @param	mixed[][]				$parameters
 	 * @param	string					$containerActionClassName
 	 * @param	string					$sortOrder
 	 * @param	string					$templateName

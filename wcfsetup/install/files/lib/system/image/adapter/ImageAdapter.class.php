@@ -21,7 +21,7 @@ class ImageAdapter implements IImageAdapter {
 	
 	/**
 	 * supported relative positions
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $relativePositions = array(
 		'topLeft',

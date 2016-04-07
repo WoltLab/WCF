@@ -68,7 +68,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	/**
 	 * Dismisses a certain notice.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function dismiss() {
 		if (WCF::getUser()->userID) {

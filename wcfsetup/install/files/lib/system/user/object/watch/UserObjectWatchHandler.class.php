@@ -46,7 +46,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * Resets the object watch cache for all subscriber of the given object.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function resetObjects($objectType, array $objectIDs) {
 		// get object type id
@@ -76,8 +76,8 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * Deletes the given objects.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$objectIDs
+	 * @param	integer[]	$userIDs
 	 */
 	public function deleteObjects($objectType, array $objectIDs, array $userIDs = array()) {
 		// get object type id

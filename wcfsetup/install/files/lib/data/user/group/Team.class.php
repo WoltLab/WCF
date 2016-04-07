@@ -21,7 +21,7 @@ class Team extends DatabaseObjectDecorator {
 	
 	/**
 	 * list of user group members
-	 * @var	array<\wcf\data\user\UserProfile>
+	 * @var	UserProfile[]
 	 */
 	protected $members = array();
 	
@@ -37,7 +37,7 @@ class Team extends DatabaseObjectDecorator {
 	/**
 	 * Returns the list of user group members
 	 * 
-	 * @return	array<\wcf\data\user\UserProfile>
+	 * @return	UserProfile[]
 	 */
 	public function getMembers() {
 		return $this->members;

@@ -57,7 +57,7 @@ class DataImportForm extends AbstractForm {
 	
 	/**
 	 * list of available importers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $importers = array();
 	

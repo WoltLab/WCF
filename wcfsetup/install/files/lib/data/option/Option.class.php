@@ -76,7 +76,7 @@ class Option extends DatabaseObject {
 	/**
 	 * Returns a list of options.
 	 * 
-	 * @return	array<\wcf\data\option\Option>
+	 * @return	Option[]
 	 */
 	public static function getOptions() {
 		$sql = "SELECT	*

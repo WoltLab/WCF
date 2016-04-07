@@ -125,7 +125,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	 * Marks a list of moderation queue entries as done.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	protected function removeEntries($objectTypeID, array $objectIDs) {
 		$queueList = new ModerationQueueList();

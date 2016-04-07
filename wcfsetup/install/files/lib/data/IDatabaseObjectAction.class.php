@@ -32,14 +32,14 @@ interface IDatabaseObjectAction {
 	/**
 	 * Returns DatabaseObject-related object ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getObjectIDs();
 	
 	/**
 	 * Returns action-related parameters.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function getParameters();
 	

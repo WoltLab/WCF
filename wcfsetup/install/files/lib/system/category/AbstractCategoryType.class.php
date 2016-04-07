@@ -55,7 +55,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	/**
 	 * name of the object types associated with categories of this type (the
 	 * key is the definition name and value the object type name)
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $objectTypes = array();
 	

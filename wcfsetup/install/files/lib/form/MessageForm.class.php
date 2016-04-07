@@ -1,5 +1,8 @@
 <?php
 namespace wcf\form;
+use wcf\data\language\Language;
+use wcf\data\smiley\category\SmileyCategory;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\bbcode\BBCodeHandler;
@@ -57,13 +60,13 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * list of available content languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
 	public $availableContentLanguages = array();
 	
 	/**
 	 * list of default smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
 	public $defaultSmilies = array();
 	
@@ -141,7 +144,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * list of smiley categories
-	 * @var	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @var	SmileyCategory[]
 	 */
 	public $smileyCategories = array();
 	

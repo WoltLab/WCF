@@ -34,7 +34,7 @@ class StyleImportForm extends AbstractForm {
 	
 	/**
 	 * upload data
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $source = array();
 	

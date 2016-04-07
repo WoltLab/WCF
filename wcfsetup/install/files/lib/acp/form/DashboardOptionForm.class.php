@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\dashboard\box\DashboardBoxList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
@@ -30,13 +31,13 @@ class DashboardOptionForm extends AbstractForm {
 	
 	/**
 	 * list of available dashboard boxes
-	 * @var	array<\wcf\data\dashboard\box\DashboardBox>
+	 * @var	DashboardBox[]
 	 */
 	public $boxes = array();
 	
 	/**
 	 * list of enabled box ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $enabledBoxes = array();
 	

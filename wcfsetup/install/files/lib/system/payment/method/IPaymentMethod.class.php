@@ -22,7 +22,7 @@ interface IPaymentMethod {
 	/**
 	 * Returns a list of supported currencies.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getSupportedCurrencies();
 	

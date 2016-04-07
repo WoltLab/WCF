@@ -70,7 +70,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns a list of authors for stacked notifications sorted by time.
 	 * 
-	 * @return	array<\wcf\data\user\UserProfile>
+	 * @return	UserProfile[]
 	 */
 	public function getAuthors();
 	
@@ -84,7 +84,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets a list of authors for stacked notifications.
 	 * 
-	 * @param	array<\wcf\data\user\UserProfile>	$authors
+	 * @param	UserProfile[]	$authors
 	 */
 	public function setAuthors(array $authors);
 	
@@ -101,7 +101,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @param	\wcf\data\user\notification\UserNotification			$notification
 	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$object
 	 * @param	\wcf\data\user\UserProfile					$author
-	 * @param	array<mixed>							$additionalData
+	 * @param	mixed[]								$additionalData
 	 */
 	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array());
 	

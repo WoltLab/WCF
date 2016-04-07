@@ -67,7 +67,7 @@ class AttachmentListPage extends SortablePage {
 	
 	/**
 	 * available file types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $availableFileTypes = array();
 	

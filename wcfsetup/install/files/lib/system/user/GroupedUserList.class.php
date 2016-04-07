@@ -16,7 +16,7 @@ use wcf\system\WCF;
 class GroupedUserList implements \Countable, \Iterator {
 	/**
 	 * list of user profiles shared across all instances of GroupedUserList
-	 * @var	array<\wcf\data\user\UserProfile>
+	 * @var	UserProfile[]
 	 */
 	protected static $users = array();
 	
@@ -40,7 +40,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	
 	/**
 	 * list of user ids assigned for this group
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $userIDs = array();
 	
@@ -83,7 +83,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	/**
 	 * Adds a list of user ids to this group.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]		$userIDs
 	 */
 	public function addUserIDs(array $userIDs) {
 		foreach ($userIDs as $userID) {

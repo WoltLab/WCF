@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\tagging;
+use wcf\data\tag\TagCloudTag;
 use wcf\system\cache\builder\TagCloudCacheBuilder;
 use wcf\system\language\LanguageFactory;
 
@@ -28,7 +29,7 @@ class TagCloud {
 	
 	/**
 	 * list of tags
-	 * @var	array<\wcf\data\tag\TagCloudTag>
+	 * @var	TagCloudTag[]
 	 */
 	protected $tags = array();
 	
@@ -46,14 +47,14 @@ class TagCloud {
 	
 	/**
 	 * active language ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $languageIDs = array();
 	
 	/**
 	 * Contructs a new TagCloud object.
 	 * 
-	 * @param	array<integer>	$languageIDs
+	 * @param	integer[]	$languageIDs
 	 */
 	public function __construct(array $languageIDs = array()) {
 		$this->languageIDs = $languageIDs;
@@ -75,8 +76,8 @@ class TagCloud {
 	/**
 	 * Gets a list of weighted tags.
 	 * 
-	 * @param	integer				$slice
-	 * @return	array<\wcf\data\tag\TagCloudTag>	the tags to get
+	 * @param	integer		$slice
+	 * @return	TagCloudTag[]	the tags to get
 	 */
 	public function getTags($slice = 50) {
 		// slice list

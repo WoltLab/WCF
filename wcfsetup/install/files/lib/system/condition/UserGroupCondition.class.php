@@ -33,7 +33,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	
 	/**
 	 * ids of the selected user groups the user has to be member of
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $groupIDs = array();
 	
@@ -47,13 +47,13 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	
 	/**
 	 * ids of the selected user groups the user may not be member of
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $notGroupIDs = array();
 	
 	/**
 	 * selectable user groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
 	protected $userGroups = null;
 	
@@ -151,7 +151,7 @@ HTML;
 	/**
 	 * Returns the selectable user groups.
 	 * 
-	 * @return	array<\wcf\data\user\group\UserGroup>
+	 * @return	UserGroup[]
 	 */
 	protected function getUserGroups() {
 		if ($this->userGroups == null) {

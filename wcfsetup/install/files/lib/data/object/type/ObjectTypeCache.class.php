@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\object\type;
+use wcf\data\object\type\definition\ObjectTypeDefinition;
 use wcf\system\cache\builder\ObjectTypeCacheBuilder;
 use wcf\system\SingletonFactory;
 
@@ -16,25 +17,25 @@ use wcf\system\SingletonFactory;
 class ObjectTypeCache extends SingletonFactory {
 	/**
 	 * object type definitions
-	 * @var	array<\wcf\data\object\type\definition\ObjectTypeDefinition>
+	 * @var	ObjectTypeDefinition[]
 	 */
 	protected $definitions = array();
 	
 	/**
 	 * object type definition ids grouped by category name
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $definitionsByCategory = array();
 	
 	/**
 	 * object type definitions sorted by name
-	 * @var	array<\wcf\data\object\type\definition\ObjectTypeDefinition>
+	 * @var	ObjectTypeDefinition[]
 	 */
 	protected $definitionsByName = array();
 	
 	/**
 	 * object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = array();
 	
@@ -95,7 +96,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * category name is invalid.
 	 * 
 	 * @param	string		$categoryName
-	 * @return	array<\wcf\data\object\type\definition\ObjectTypeDefinition>
+	 * @return	ObjectTypeDefinition[]
 	 */
 	public function getDefinitionsByCategory($categoryName) {
 		if (isset($this->definitionsByCategory[$categoryName])) {
@@ -129,7 +130,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * Returns the list of object type with the given definition name.
 	 * 
 	 * @param	string		$definitionName
-	 * @return	array<\wcf\data\object\type\ObjectType>
+	 * @return	ObjectType[]
 	 */
 	public function getObjectTypes($definitionName) {
 		if (isset($this->groupedObjectTypes[$definitionName])) {

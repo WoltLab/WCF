@@ -14,7 +14,7 @@ namespace wcf\system\bbcode\highlighter;
 class CssHighlighter extends Highlighter {
 	/**
 	 * temporary string replacement map for properties that can also be tags
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public static $duplicates = array(
 		'table:' => 't@@able:',

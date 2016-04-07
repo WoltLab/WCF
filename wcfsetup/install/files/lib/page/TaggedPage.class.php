@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
 use wcf\system\exception\IllegalLinkException;
@@ -20,7 +21,7 @@ use wcf\util\StringUtil;
 class TaggedPage extends MultipleLinkPage {
 	/**
 	 * list of available taggable object types
-	 * @var	array<\wcf\data\object\type\ObjectTypeCache>
+	 * @var	ObjectType[]
 	 */
 	public $availableObjectTypes = array();
 	

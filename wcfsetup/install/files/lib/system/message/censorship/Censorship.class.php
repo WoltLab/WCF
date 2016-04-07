@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
 class Censorship extends SingletonFactory {
 	/**
 	 * censored words
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $censoredWords = array();
 	
@@ -28,7 +28,7 @@ class Censorship extends SingletonFactory {
 	
 	/**
 	 * list of words
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $words = array();
 	

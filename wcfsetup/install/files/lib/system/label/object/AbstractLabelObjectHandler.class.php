@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\label\object;
+use wcf\data\label\group\ViewableLabelGroup;
 use wcf\system\exception\SystemException;
 use wcf\system\label\LabelHandler;
 use wcf\system\SingletonFactory;
@@ -17,7 +18,7 @@ use wcf\system\SingletonFactory;
 abstract class AbstractLabelObjectHandler extends SingletonFactory implements ILabelObjectHandler {
 	/**
 	 * list of available label groups
-	 * @var	array<\wcf\data\label\group\ViewableLabelGroup>
+	 * @var	ViewableLabelGroup[]
 	 */
 	protected $labelGroups = array();
 	

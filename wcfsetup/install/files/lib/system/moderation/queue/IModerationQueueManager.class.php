@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueue;
+use wcf\data\moderation\queue\ViewableModerationQueue;
 
 /**
  * Default interface for moderation queue managers.
@@ -16,8 +17,8 @@ interface IModerationQueueManager {
 	/**
 	 * Creates queue assignments for matching object type ids.
 	 * 
-	 * @param	integer							$objectTypeID
-	 * @param	array<\wcf\data\moderation\queue\ModerationQueue>	$queues
+	 * @param	integer			$objectTypeID
+	 * @param	ModerationQueue[]	$queues
 	 */
 	public function assignQueues($objectTypeID, array $queues);
 	
@@ -58,8 +59,8 @@ interface IModerationQueueManager {
 	/**
 	 * Populates object properties for viewing.
 	 * 
-	 * @param	integer								$objectTypeID
-	 * @param	array<\wcf\data\moderation\queue\ViewableModerationQueue>	$objects
+	 * @param	integer				$objectTypeID
+	 * @param	ViewableModerationQueue[]	$objects
 	 */
 	public function populate($objectTypeID, array $objects);
 	

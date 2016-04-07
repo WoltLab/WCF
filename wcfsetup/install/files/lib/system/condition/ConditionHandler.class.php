@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\condition\ConditionAction;
 use wcf\data\condition\ConditionList;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\ConditionCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -30,8 +31,8 @@ class ConditionHandler extends SingletonFactory {
 	 * Creates condition objects for the object with the given id and based
 	 * on the given condition object types.
 	 * 
-	 * @param	integer						$objectID
-	 * @param	array<\wcf\data\object\type\ObjectType>		$conditionObjectTypes
+	 * @param	integer		$objectID
+	 * @param	ObjectType[]	$conditionObjectTypes
 	 */
 	public function createConditions($objectID, array $conditionObjectTypes) {
 		foreach ($conditionObjectTypes as $objectType) {
@@ -115,9 +116,9 @@ class ConditionHandler extends SingletonFactory {
 	/**
 	 * Updates the conditions for the object with the given object id.
 	 * 
-	 * @param	integer						$objectID
-	 * @param	array<\wcf\data\condition\Condition>		$oldConditions
-	 * @param	array<\wcf\data\object\type\ObjectType>		$conditionObjectTypes
+	 * @param	integer		$objectID
+	 * @param	Condition[]	$oldConditions
+	 * @param	ObjectType[]	$conditionObjectTypes
 	 */
 	public function updateConditions($objectID, array $oldConditions, array $conditionObjectTypes) {
 		// delete old conditions first

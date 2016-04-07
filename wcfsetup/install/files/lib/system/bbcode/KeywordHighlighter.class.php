@@ -17,13 +17,13 @@ use wcf\util\StringUtil;
 class KeywordHighlighter extends SingletonFactory {
 	/**
 	 * search keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $keywords = array();
 	
 	/**
 	 * search query parameters
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $searchQueryKeys = array(
 		'q',		// google, msn, altavista

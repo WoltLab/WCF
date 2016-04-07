@@ -42,7 +42,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all for the current user available styles.
 	 * 
-	 * @return	array<\wcf\data\style\Style>
+	 * @return	Style[]
 	 */
 	public function getAvailableStyles() {
 		$styles = array();
@@ -59,7 +59,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all styles.
 	 * 
-	 * @return	array<\wcf\data\style\Style>
+	 * @return	Style[]
 	 */
 	public function getStyles() {
 		return $this->cache['styles'];

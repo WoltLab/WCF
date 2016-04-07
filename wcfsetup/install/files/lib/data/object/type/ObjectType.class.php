@@ -55,7 +55,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 	/**
 	 * Returns the names of proporties that should be serialized.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public final function __sleep() {
 		// 'processor' isn't returned since it can be an instance of

@@ -22,7 +22,7 @@ use wcf\util\FileUtil;
 class FileOptionType extends AbstractOptionType {
 	/**
 	 * upload handler for option files
-	 * @var	array<\wcf\system\upload\UploadHandler>
+	 * @var	UploadHandler[]
 	 */
 	protected $uploadHandlers = array();
 	

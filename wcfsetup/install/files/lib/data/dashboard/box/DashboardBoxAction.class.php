@@ -22,13 +22,13 @@ use wcf\util\ArrayUtil;
 class DashboardBoxAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
 	 * list of available dashboard boxes
-	 * @var	array<\wcf\data\dashboard\box\DashboardBox>
+	 * @var	DashboardBox[]
 	 */
 	public $boxes = array();
 	
 	/**
 	 * box structure
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $boxStructure = array();
 	

@@ -25,13 +25,13 @@ class SmileyCache extends SingletonFactory {
 	
 	/**
 	 * cached smiley categories
-	 * @var	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @var	SmileyCategory[]
 	 */
 	protected $cachedCategories = array();
 	
 	/**
 	 * enabled smiley categories with at least one smiley
-	 * @var	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @var	SmileyCategory[]
 	 */
 	protected $visibleCategories = null;
 	
@@ -69,7 +69,7 @@ class SmileyCache extends SingletonFactory {
 	/**
 	 * Returns all smiley categories.
 	 * 
-	 * @return	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @return	SmileyCategory[]
 	 */
 	public function getCategories() {
 		return $this->cachedCategories;
@@ -78,7 +78,7 @@ class SmileyCache extends SingletonFactory {
 	/**
 	 * Returns all enabled smiley categories with at least one smiley.
 	 * 
-	 * @return	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @return	SmileyCategory[]
 	 */
 	public function getVisibleCategories() {
 		if ($this->visibleCategories === null) {

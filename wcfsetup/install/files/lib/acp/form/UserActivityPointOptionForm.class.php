@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\object\type\ObjectTypeEditor;
 use wcf\form\AbstractForm;
@@ -30,13 +31,13 @@ class UserActivityPointOptionForm extends AbstractForm {
 	
 	/**
 	 * points to objectType
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $points = array();
 	
 	/**
 	 * valid object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	public $objectTypes = array();
 	

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\activity\point;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -21,13 +22,13 @@ use wcf\system\WCF;
 class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * list of user activity point object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = array();
 	
 	/**
 	 * maps the user activity point object type ids to their object type names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $objectTypeNames = array();
 	
@@ -45,10 +46,10 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Adds a new user activity point event.
 	 * 
-	 * @param	string			$objectType
-	 * @param	integer			$objectID
-	 * @param	integer			$userID
-	 * @param	array<mixed>		$additionalData
+	 * @param	string		$objectType
+	 * @param	integer		$objectID
+	 * @param	integer		$userID
+	 * @param	mixed[]		$additionalData
 	 * @throws	SystemException
 	 */
 	public function fireEvent($objectType, $objectID, $userID = null, array $additionalData = array()) {
@@ -187,7 +188,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Updates total activity points and ranks for given user ids.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]		$userIDs
 	 */
 	public function updateUsers(array $userIDs) {
 		$userIDs = array_unique($userIDs);
@@ -263,7 +264,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Updates the user ranks for the given users.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]		$userIDs
 	 */
 	protected function updateUserRanks(array $userIDs) {
 		$action = new UserProfileAction($userIDs, 'updateUserRank');

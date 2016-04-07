@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\language;
+use wcf\data\language\server\LanguageServer;
 use wcf\data\language\Language;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -28,8 +29,8 @@ class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * Imports language variables for a language from given language servers.
 	 * 
-	 * @param	\wcf\data\language\Language			$language
-	 * @param	array<\wcf\data\language\server\LanguageServer>	$languageServers
+	 * @param	\wcf\data\language\Language	$language
+	 * @param	LanguageServer[]		$languageServers
 	 */
 	public function import(Language $language, array $languageServers) {
 		if (empty($languageServers)) return;
@@ -46,7 +47,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * Returns list of installed packages and their associated version.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	protected function getPackageList() {
 		$sql = "SELECT	package, packageVersion
@@ -212,7 +213,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	 * Imports language variables and categories.
 	 * 
 	 * @param	array		$variables
-	 * @param	array<integer>	$packages
+	 * @param	integer[]	$packages
 	 */
 	protected function importVariables(array $variables, array $packages) {
 		$categories = $this->importCategories($variables);

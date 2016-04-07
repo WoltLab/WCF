@@ -63,7 +63,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	/**
 	 * Returns like details.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getLikeDetails() {
 		$sql = "SELECT		userID, likeValue

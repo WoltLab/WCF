@@ -21,13 +21,13 @@ use wcf\system\WCF;
 class CronjobScheduler extends SingletonFactory {
 	/**
 	 * cached times of the next and after next cronjob execution
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $cache = array();
 	
 	/**
 	 * list of editors for outstanding cronjobs
-	 * @var	array<\wcf\data\cronjob\CronjobEditor>
+	 * @var	CronjobEditor[]
 	 */
 	protected $cronjobEditors = array();
 	

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionList;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
@@ -25,13 +26,13 @@ class UserImporter extends AbstractImporter {
 	
 	/**
 	 * ids of default notification events
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $eventIDs = array();
 	
 	/**
 	 * list of user options
-	 * @var	array<\wcf\data\user\option\UserOption>
+	 * @var	UserOption[]
 	 */
 	protected $userOptions = array();
 	

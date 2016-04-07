@@ -16,7 +16,7 @@ use wcf\system\setup\IFileHandler;
 abstract class PackageInstallationFileHandler implements IFileHandler {
 	/**
 	 * abbrevation of the application the files belong to
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $application = '';
 	

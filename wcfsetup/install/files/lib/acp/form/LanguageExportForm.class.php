@@ -44,13 +44,13 @@ class LanguageExportForm extends AbstractForm {
 	
 	/**
 	 * selected packages
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $selectedPackages = array();
 	
 	/**
 	 * available packages
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $packages = array();
 	

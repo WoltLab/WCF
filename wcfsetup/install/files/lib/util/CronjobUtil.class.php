@@ -29,7 +29,7 @@ final class CronjobUtil {
 	
 	/**
 	 * result date
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected static $result = array();
 	
@@ -42,7 +42,7 @@ final class CronjobUtil {
 	/**
 	 * valid ranges for each known field (range for 'day of month' is missing
 	 * since it varies from month to month)
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public static $ranges = array(
 		'minute' => array(0, 59),

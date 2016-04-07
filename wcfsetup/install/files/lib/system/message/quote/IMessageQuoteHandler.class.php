@@ -24,9 +24,9 @@ interface IMessageQuoteHandler {
 	/**
 	 * Renders a list of quotes for insertation.
 	 * 
-	 * @param	array<array>	$data
+	 * @param	mixed[][]	$data
 	 * @param	boolean		$render
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function renderQuotes(array $data, $render = true);
 }

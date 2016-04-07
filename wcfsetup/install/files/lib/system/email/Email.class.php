@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email;
+use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\EmailDeliveryBackgroundJob;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\email\mime\AbstractMimePart;
@@ -48,13 +49,13 @@ class Email {
 	
 	/**
 	 * References header
-	 * @var	array<\wcf\system\email\Mailbox>
+	 * @var	Mailbox[]
 	 */
 	protected $references = [ ];
 	
 	/**
 	 * In-Reply-To header
-	 * @var	array<\wcf\system\email\Mailbox>
+	 * @var	Mailbox[]
 	 */
 	protected $inReplyTo = [ ];
 	
@@ -236,7 +237,7 @@ class Email {
 	/**
 	 * Returns the email's 'In-Reply-To' message ids.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getInReplyTo() {
 		return $this->inReplyTo;
@@ -268,7 +269,7 @@ class Email {
 	/**
 	 * Returns the email's 'References' message ids.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getReferences() {
 		return $this->references;
@@ -415,7 +416,7 @@ class Email {
 	/**
 	 * Returns the text mime parts of this email.
 	 * 
-	 * @return	array<\wcf\system\email\mime\TextMimePart>
+	 * @return	array
 	 */
 	public function getText() {
 		return $this->text;
@@ -424,7 +425,7 @@ class Email {
 	/**
 	 * Returns the attachments (i.e. the mime parts that are not a TextMimePart) of this email.
 	 * 
-	 * @return	array<\wcf\system\email\mime\AbstractMimePart>
+	 * @return	array
 	 */
 	public function getAttachments() {
 		return $this->attachments;
@@ -595,7 +596,7 @@ class Email {
 	/**
 	 * Returns needed AbstractBackgroundJobs to deliver this email to every recipient.
 	 * 
-	 * @return	array<\wcf\system\background\job\AbstractBackgroundJob>
+	 * @return	AbstractBackgroundJob[]
 	 */
 	public function getJobs() {
 		$jobs = [ ];

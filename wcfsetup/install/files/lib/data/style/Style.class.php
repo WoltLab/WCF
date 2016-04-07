@@ -44,7 +44,7 @@ class Style extends DatabaseObject {
 	
 	/**
 	 * list of style variables
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $variables = array();
 	
@@ -63,7 +63,7 @@ class Style extends DatabaseObject {
 	/**
 	 * Returns the styles variables of this style.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getVariables() {
 		$this->loadVariables();

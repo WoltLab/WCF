@@ -20,13 +20,13 @@ use wcf\system\WCF;
 class UserCollapsibleContentHandler extends SingletonFactory {
 	/**
 	 * object type cache
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $cache = null;
 	
 	/**
 	 * list of collapsed object ids per object type id
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
 	protected $collapsedContent = array();
 	
@@ -82,7 +82,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * Returns a list of object ids being collapsed by current user.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getCollapsedContent($objectTypeID) {
 		if (!isset($this->collapsedContent[$objectTypeID])) {

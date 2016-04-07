@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\ad;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\AdCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -25,7 +26,7 @@ class AdHandler extends SingletonFactory {
 	
 	/**
 	 * list of ad location object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = array();
 	
@@ -67,7 +68,7 @@ class AdHandler extends SingletonFactory {
 	/**
 	 * Returns all available ad location object types.
 	 * 
-	 * @return	array<\wcf\data\object\type\ObjectType>
+	 * @return	ObjectType[]
 	 */
 	public function getLocationObjectTypes($categoryName = null) {
 		if ($categoryName === null) {
@@ -87,7 +88,7 @@ class AdHandler extends SingletonFactory {
 	/**
 	 * Returns the list of available locations used to be used for selections.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getLocationSelection() {
 		$objectTypes = $this->objectTypes;

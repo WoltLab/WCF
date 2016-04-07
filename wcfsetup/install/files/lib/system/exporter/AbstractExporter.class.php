@@ -71,7 +71,7 @@ abstract class AbstractExporter implements IExporter {
 	
 	/**
 	 * limits for items per run
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $limits = array();
 	

@@ -34,14 +34,14 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * cached providers
-	 * @var	array<\wcf\data\bbcode\media\MediaProvider>
+	 * @var	BBCodeMediaProvider[]
 	 */
 	protected static $cache = null;
 	
 	/**
 	 * Loads the provider cache.
 	 * 
-	 * @return	array<\wcf\data\bbcode\media\MediaProvider>
+	 * @return	BBCodeMediaProvider[]
 	 */
 	public static function getCache() {
 		if (self::$cache === null) {

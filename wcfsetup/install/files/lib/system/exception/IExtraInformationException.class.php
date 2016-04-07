@@ -18,7 +18,7 @@ interface IExtraInformationException {
 	 * in the human readable error log.
 	 * Avoid including sensitive information (such as private keys or passwords).
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[][]
 	 */
 	public function getExtraInformation();
 }

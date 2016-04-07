@@ -32,13 +32,13 @@ use wcf\system\WCF;
 class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController {
 	/**
 	 * list of all child categories of this category
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
 	protected $childCategories = null;
 	
 	/**
 	 * list of all parent category generations of this category
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
 	protected $parentCategories = null;
 	
@@ -51,7 +51,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * acl permissions of this category for the active user
 	 * @deprecated
-	 * @var	array<boolean>
+	 * @var	boolean[]
 	 */
 	protected $permissions = null;
 	
@@ -127,7 +127,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the child categories of this category.
 	 * 
-	 * @return	array<\wcf\data\category\Category>
+	 * @return	Category[]
 	 */
 	public function getChildCategories() {
 		if ($this->childCategories === null) {
@@ -153,7 +153,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the parent categories of this category.
 	 * 
-	 * @return	array<\wcf\data\category\Category>
+	 * @return	Category[]
 	 */
 	public function getParentCategories() {
 		if ($this->parentCategories === null) {

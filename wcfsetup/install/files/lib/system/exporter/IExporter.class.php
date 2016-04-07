@@ -78,7 +78,7 @@ interface IExporter {
 	/**
 	 * Returns the supported data types.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getSupportedData();
 	

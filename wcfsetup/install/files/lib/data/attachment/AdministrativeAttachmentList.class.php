@@ -51,7 +51,7 @@ class AdministrativeAttachmentList extends AttachmentList {
 	/**
 	 * Returns a list of available mime types.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getAvailableFileTypes() {
 		$fileTypes = array();
@@ -72,7 +72,7 @@ class AdministrativeAttachmentList extends AttachmentList {
 	/**
 	 * Returns attachment statistics.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getStats() {
 		$sql = "SELECT	COUNT(*) AS count,

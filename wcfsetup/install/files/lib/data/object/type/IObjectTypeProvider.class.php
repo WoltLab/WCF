@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\object\type;
+use wcf\data\DatabaseObject;
 
 /**
  * Any object type provider should implement this interface.
@@ -23,8 +24,8 @@ interface IObjectTypeProvider {
 	/**
 	 * Gets like objects by their IDs.
 	 * 
-	 * @param	array<integer>		$objectIDs
-	 * @return	array<\wcf\data\DatabaseObject>
+	 * @param	integer[]		$objectIDs
+	 * @return	DatabaseObject[]
 	 */
 	public function getObjectsByIDs(array $objectIDs);
 }

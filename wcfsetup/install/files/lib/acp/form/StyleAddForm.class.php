@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\package\Package;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
+use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupList;
 use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
@@ -45,7 +46,7 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * list of available font families
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $availableFontFamilies = [
 		'Arial, Helvetica, sans-serif' => 'Arial',
@@ -66,13 +67,13 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * list of available template groups
-	 * @var	array<\wcf\data\template\group\TemplateGroup>
+	 * @var	TemplateGroup[]
 	 */
 	public $availableTemplateGroups = [];
 	
 	/**
 	 * list of available units
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $availableUnits = ['px', 'em', '%', 'pt'];
 	
@@ -80,7 +81,7 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * list of color variables
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $colors = [];
 	
@@ -163,13 +164,13 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * list of variables and their value
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $variables = [];
 	
 	/**
 	 * list of specialized variables
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $specialVariables = [];
 	

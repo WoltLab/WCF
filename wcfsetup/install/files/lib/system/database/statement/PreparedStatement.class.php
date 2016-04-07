@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database\statement;
+use wcf\data\DatabaseObject;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\exception\DatabaseQueryExecutionException;
@@ -173,7 +174,7 @@ class PreparedStatement {
 	 * Fetches the all rows from a result set into database objects.
 	 * 
 	 * @param	string			$className
-	 * @return	array<\wcf\data\DatabaseObject>
+	 * @return	DatabaseObject[]
 	 */
 	public function fetchObjects($className) {
 		$objects = array();

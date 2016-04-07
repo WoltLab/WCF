@@ -40,13 +40,13 @@ use wcf\system\WCF;
 class LikeHandler extends SingletonFactory {
 	/**
 	 * loaded like objects
-	 * @var	array<array>
+	 * @var	LikeObject[][]
 	 */
 	protected $likeObjectCache = array();
 	
 	/**
 	 * cached object types
-	 * @var	array<array>
+	 * @var	ObjectType[]
 	 */
 	protected $cache = null;
 	
@@ -90,7 +90,7 @@ class LikeHandler extends SingletonFactory {
 	 * Gets the like objects of a specific object type.
 	 * 
 	 * @param	\wcf\data\object\type\ObjectType		$objectType
-	 * @return	array<\wcf\data\like\object\LikeObject>
+	 * @return	LikeObject[]
 	 */
 	public function getLikeObjects(ObjectType $objectType) {
 		if (isset($this->likeObjectCache[$objectType->objectTypeID])) {
@@ -419,8 +419,8 @@ class LikeHandler extends SingletonFactory {
 	 * Removes all likes for given objects.
 	 * 
 	 * @param	string			$objectType
-	 * @param	array<integer>		$objectIDs
-	 * @param	array<string>		$notificationObjectTypes
+	 * @param	integer[]		$objectIDs
+	 * @param	string[]		$notificationObjectTypes
 	 */
 	public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = array()) {
 		$objectTypeObj = $this->getObjectType($objectType);

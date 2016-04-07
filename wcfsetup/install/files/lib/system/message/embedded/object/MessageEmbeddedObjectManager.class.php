@@ -92,7 +92,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Removes embedded object assigments for given messages.
 	 * 
 	 * @param	string			$messageObjectType
-	 * @param	array<integer>		$messageIDs
+	 * @param	integer[]		$messageIDs
 	 */
 	public function removeObjects($messageObjectType, array $messageIDs) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
@@ -109,7 +109,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Loads the embedded objects for given messages.
 	 * 
 	 * @param	string			$messageObjectType
-	 * @param	array<integer>		$messageIDs
+	 * @param	integer[]		$messageIDs
 	 */
 	public function loadObjects($messageObjectType, array $messageIDs) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();

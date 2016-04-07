@@ -17,7 +17,7 @@ use wcf\system\SingletonFactory;
 abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBuilder {
 	/**
 	 * list of cache resources by index
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $cache = array();
 	

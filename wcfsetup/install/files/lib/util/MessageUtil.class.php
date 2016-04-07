@@ -46,7 +46,7 @@ class MessageUtil {
 	 * Returns the mentioned users in the given text.
 	 * 
 	 * @param	string		$text
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function getMentionedUsers($text) {
 		// remove quotes
@@ -84,7 +84,7 @@ class MessageUtil {
 	 * Returns the quoted users in the given text.
 	 * 
 	 * @param	string		$text
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function getQuotedUsers($text) {
 		$usernames = array();

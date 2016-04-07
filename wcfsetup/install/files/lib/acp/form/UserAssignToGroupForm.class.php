@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\form\AbstractForm;
@@ -37,25 +38,25 @@ class UserAssignToGroupForm extends AbstractForm {
 	
 	/**
 	 * ids of the relevant users
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $userIDs = array();
 	
 	/**
 	 * ids of the assigned user groups
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $groupIDs = array();
 	
 	/**
 	 * relevant users
-	 * @var	array<\wcf\data\user\User>
+	 * @var	User[]
 	 */
 	public $users = array();
 	
 	/**
 	 * assigned user groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
 	public $groups = array();
 	

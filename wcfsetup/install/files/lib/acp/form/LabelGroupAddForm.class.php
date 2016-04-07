@@ -6,6 +6,8 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\label\object\type\ILabelObjectTypeHandler;
+use wcf\system\label\object\type\LabelObjectTypeContainer;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -51,13 +53,13 @@ class LabelGroupAddForm extends AbstractForm {
 	
 	/**
 	 * list of label object type handlers
-	 * @var	array<\wcf\system\label\object\type\ILabelObjectTypeHandler>
+	 * @var	ILabelObjectTypeHandler[]
 	 */
 	public $labelObjectTypes = array();
 	
 	/**
 	 * list of label object type containers
-	 * @var	array<\wcf\system\label\object\type\LabelObjectTypeContainer>
+	 * @var	LabelObjectTypeContainer[]
 	 */
 	public $labelObjectTypeContainers = array();
 	

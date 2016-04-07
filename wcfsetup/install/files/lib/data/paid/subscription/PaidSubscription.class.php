@@ -43,7 +43,7 @@ class PaidSubscription extends DatabaseObject {
 	/**
 	 * Returns list of purchase buttons.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getPurchaseButtons() {
 		$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.payment.type', 'com.woltlab.wcf.payment.type.paidSubscription');

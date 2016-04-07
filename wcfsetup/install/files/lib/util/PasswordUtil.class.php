@@ -28,7 +28,7 @@ final class PasswordUtil {
 	
 	/**
 	 * list of supported encryption type by software identifier
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	private static $supportedEncryptionTypes = array(
 		'ipb2',		// Invision Power Board 2.x

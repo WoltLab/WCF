@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\online\location;
 use wcf\data\user\online\UserOnline;
+use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\WCF;
 
@@ -18,13 +19,13 @@ use wcf\system\WCF;
 class UserLocation implements IUserOnlineLocation {
 	/**
 	 * user ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $userIDs = array();
 	
 	/**
 	 * list of users
-	 * @var	array<\wcf\data\user\User>
+	 * @var	User[]
 	 */
 	protected $users = null;
 	

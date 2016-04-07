@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\category\Category;
+use wcf\data\smiley\category\SmileyCategory;
 use wcf\data\smiley\SmileyCache;
 use wcf\page\MultipleLinkPage;
 use wcf\system\exception\IllegalLinkException;
@@ -61,7 +62,7 @@ class SmileyListPage extends MultipleLinkPage {
 	
 	/**
 	 * available categories
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	SmileyCategory[]
 	 */
 	public $categories = array();
 	

@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectDecorator;
 class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator, \Countable {
 	/**
 	 * child category nodes
-	 * @var	array<\wcf\data\category\CategoryNode>
+	 * @var	CategoryNode[]
 	 */
 	protected $children = array();
 	

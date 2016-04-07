@@ -18,7 +18,7 @@ use wcf\system\WCF;
 class PackageValidationException extends SystemException {
 	/**
 	 * list of additional details for each subtype
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $details = array();
 	
@@ -93,7 +93,7 @@ class PackageValidationException extends SystemException {
 	 * Creates a new PackageArchiveValidationException.
 	 * 
 	 * @param	integer		$code
-	 * @param	array<string>	$details
+	 * @param	string[]	$details
 	 */
 	public function __construct($code, array $details = array()) {
 		$this->details = $details;
@@ -104,7 +104,7 @@ class PackageValidationException extends SystemException {
 	/**
 	 * Returns exception details.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getDetails() {
 		return $this->details;

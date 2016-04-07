@@ -30,13 +30,13 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	
 	/**
 	 * list of object ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $objectIDs = array();
 	
 	/**
 	 * additional parameters
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	protected $parameters = array();
 	

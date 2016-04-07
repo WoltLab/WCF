@@ -29,7 +29,7 @@ class NoticeAddForm extends AbstractForm {
 	
 	/**
 	 * list pf pre-defined CSS class names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $availableCssClassNames = array(
 		'info',

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
@@ -42,13 +43,13 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 	
 	/**
 	 * list of installed update servers (Plugin-Store only)
-	 * @var	array<\wcf\data\package\update\server\PackageUpdateServer>
+	 * @var	PackageUpdateServer[]
 	 */
 	public $updateServers = array();
 	
 	/**
 	 * list of supported WCF major releases (Plugin-Store)
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $wcfMajorReleases = array();
 	

@@ -148,7 +148,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * Unmarks tags.
 	 * 
-	 * @param	array<integer>		$tagIDs
+	 * @param	integer[]		$tagIDs
 	 * @since	2.2
 	 */
 	protected function unmarkItems(array $tagIDs = array()) {

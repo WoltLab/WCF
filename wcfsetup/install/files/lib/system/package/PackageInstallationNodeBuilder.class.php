@@ -46,7 +46,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * list of requirements to be checked before package installation
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	public $requirements = array();
 	
@@ -58,7 +58,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * list of packages about to be installed
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $pendingPackages = array();
 	

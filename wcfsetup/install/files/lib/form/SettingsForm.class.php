@@ -1,5 +1,7 @@
 <?php
 namespace wcf\form;
+use wcf\data\language\Language;
+use wcf\data\style\Style;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
@@ -52,25 +54,25 @@ class SettingsForm extends AbstractForm {
 	
 	/**
 	 * list of available content languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
 	public $availableContentLanguages = array();
 	
 	/**
 	 * list of available languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
 	public $availableLanguages = array();
 	
 	/**
 	 * list of available styles
-	 * @var	array<\wcf\data\style\Style>
+	 * @var	Style[]
 	 */
 	public $availableStyles = array();
 	
 	/**
 	 * list of content language ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $contentLanguageIDs = array();
 	

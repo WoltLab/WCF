@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\poll;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\poll\option\PollOptionList;
 use wcf\data\poll\Poll;
@@ -25,7 +26,7 @@ use wcf\util\StringUtil;
 class PollManager extends SingletonFactory {
 	/**
 	 * list of object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $cache = array();
 	
@@ -49,7 +50,7 @@ class PollManager extends SingletonFactory {
 	
 	/**
 	 * poll data
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	protected $pollData = array(
 		'endTime' => '',
@@ -69,7 +70,7 @@ class PollManager extends SingletonFactory {
 	
 	/**
 	 * list of poll options
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $pollOptions = array();
 	
@@ -86,7 +87,7 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Removes a list of polls by id.
 	 * 
-	 * @param	array<integer>		$pollIDs
+	 * @param	integer[]		$pollIDs
 	 */
 	public function removePolls(array $pollIDs) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -328,8 +329,8 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Returns a list of polls including options and vote state for current user.
 	 * 
-	 * @param	array<integer>		$pollIDs
-	 * @return	array<\wcf\data\poll\Poll>
+	 * @param	integer[]		$pollIDs
+	 * @return	Poll[]
 	 */
 	public function getPolls(array $pollIDs) {
 		$pollList = new PollList();
@@ -356,7 +357,7 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Returns a list of poll options with vote state for current user.
 	 * 
-	 * @param	array<integer>		$pollIDs
+	 * @param	integer[]		$pollIDs
 	 * @return	\wcf\data\poll\option\PollOptionList
 	 */
 	public function getPollOptions(array $pollIDs) {

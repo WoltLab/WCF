@@ -4,6 +4,7 @@ use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
 use wcf\data\comment\StructuredCommentList;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\NamedUserException;
@@ -29,7 +30,7 @@ use wcf\system\WCF;
 class CommentHandler extends SingletonFactory {
 	/**
 	 * cached object types
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $cache = null;
 	

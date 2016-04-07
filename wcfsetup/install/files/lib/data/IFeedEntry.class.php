@@ -22,7 +22,7 @@ interface IFeedEntry extends IMessage {
 	/**
 	 * Returns a list of category names.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getCategories();
 }

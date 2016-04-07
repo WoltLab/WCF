@@ -32,7 +32,7 @@ class StyleCompiler extends SingletonFactory {
 	
 	/**
 	 * names of option types which are supported as additional variables
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public static $supportedOptionType = ['boolean', 'integer'];
 	
@@ -238,7 +238,7 @@ class StyleCompiler extends SingletonFactory {
 	/**
 	 * Prepares the style compiler by adding variables to environment.
 	 * 
-	 * @param	array<string>		$variables
+	 * @param	string[]		$variables
 	 * @return	string
 	 */
 	protected function bootstrap(array $variables) {

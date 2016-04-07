@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
 abstract class AbstractFormElementContainer implements IFormElementContainer {
 	/**
 	 * list of IFormElement objects
-	 * @var	array<\wcf\system\form\IFormElement>
+	 * @var	IFormElement[]
 	 */
 	protected $children = array();
 	

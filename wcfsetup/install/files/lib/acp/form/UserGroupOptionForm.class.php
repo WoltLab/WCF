@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\group\option\category\UserGroupOptionCategory;
 use wcf\data\user\group\option\category\UserGroupOptionCategoryList;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionAction;
@@ -31,13 +32,13 @@ class UserGroupOptionForm extends AbstractForm {
 	
 	/**
 	 * list of parsed form elements per group
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $formElements = array();
 	
 	/**
 	 * list of accessible groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
 	public $groups = array();
 	
@@ -54,7 +55,7 @@ class UserGroupOptionForm extends AbstractForm {
 	
 	/**
 	 * list of parent categories
-	 * @var	array<\wcf\data\user\group\option\category\UserGroupOptionCategory>
+	 * @var	UserGroupOptionCategory[]
 	 */
 	public $parentCategories = array();
 	

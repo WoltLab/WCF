@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
 
@@ -16,19 +17,19 @@ use wcf\system\SingletonFactory;
 class BBCodeHandler extends SingletonFactory {
 	/**
 	 * list of BBCodes allowed for usage
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
 	protected $allowedBBCodes = array();
 	
 	/**
 	 * list of BBCodes displayed as buttons
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
 	protected $buttonBBCodes = array();
 	
 	/**
 	 * list of BBCodes which contain raw code (disabled BBCode parsing)
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
 	protected $sourceBBCodes = null;
 	
@@ -68,7 +69,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns all bbcodes.
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @return	BBCode[]
 	 */
 	public function getBBCodes() {
 		return BBCodeCache::getInstance()->getBBCodes();
@@ -77,7 +78,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @return	BBCode[]
 	 */
 	public function getButtonBBCodes() {
 		$buttons = array();
@@ -93,7 +94,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Sets the allowed BBCodes.
 	 * 
-	 * @param	array<string>
+	 * @param	string[]
 	 */
 	public function setAllowedBBCodes(array $bbCodes) {
 		$this->allowedBBCodes = $bbCodes;
@@ -102,7 +103,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of BBCodes which contain raw code (disabled BBCode parsing)
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @return	BBCode[]
 	 */
 	public function getSourceBBCodes() {
 		if (empty($this->allowedBBCodes)) {
@@ -129,7 +130,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of known highlighters.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getHighlighters() {
 		return BBCodeCache::getInstance()->getHighlighters();

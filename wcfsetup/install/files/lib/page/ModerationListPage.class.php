@@ -24,7 +24,7 @@ class ModerationListPage extends SortablePage {
 	
 	/**
 	 * list of available definitions
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $availableDefinitions = array();
 	

@@ -113,7 +113,7 @@ class TagEngine extends SingletonFactory {
 	 * Deletes all tags assigned to given tagged objects.
 	 * 
 	 * @param	string			$objectType
-	 * @param	array<integer>		$objectIDs
+	 * @param	integer[]		$objectIDs
 	 */
 	public function deleteObjects($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -133,8 +133,8 @@ class TagEngine extends SingletonFactory {
 	 * 
 	 * @param	string			$objectType
 	 * @param	integer			$objectID
-	 * @param	array<integer>		$languageIDs
-	 * @return	array<\wcf\data\tag\Tag>
+	 * @param	integer[]		$languageIDs
+	 * @return	Tag[]
 	 */
 	public function getObjectTags($objectType, $objectID, array $languageIDs = array()) {
 		$tags = $this->getObjectsTags($objectType, array($objectID), $languageIDs);
@@ -146,8 +146,8 @@ class TagEngine extends SingletonFactory {
 	 * Returns all tags set for given objects.
 	 * 
 	 * @param	string			$objectType
-	 * @param	array<integer>		$objectIDs
-	 * @param	array<integer>		$languageIDs
+	 * @param	integer[]		$objectIDs
+	 * @param	integer[]		$languageIDs
 	 * @return	array
 	 */
 	public function getObjectsTags($objectType, array $objectIDs, array $languageIDs = array()) {

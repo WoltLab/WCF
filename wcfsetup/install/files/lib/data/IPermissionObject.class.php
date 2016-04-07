@@ -16,7 +16,7 @@ interface IPermissionObject {
 	 * Checks if the active user has the given permissions for this object and
 	 * throws a PermissionDeniedException if they don't have one of the permissions.
 	 * 
-	 * @param	array<string>		$permissions
+	 * @param	string[]		$permissions
 	 */
 	public function checkPermissions(array $permissions);
 	

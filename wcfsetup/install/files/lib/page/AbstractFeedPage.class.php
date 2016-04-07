@@ -32,7 +32,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	
 	/**
 	 * parsed contents of $_REQUEST['id']
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $objectIDs = array();
 	

@@ -94,7 +94,7 @@ class XMLWriter {
 	 * Begins a new element.
 	 * 
 	 * @param	string		$element
-	 * @param	array<string>	$attributes
+	 * @param	string[]	$attributes
 	 */
 	public function startElement($element, array $attributes = array()) {
 		$this->xml->startElement($element);
@@ -120,7 +120,7 @@ class XMLWriter {
 	 * 
 	 * @param	string		$element
 	 * @param	string		$cdata
-	 * @param	array<string>	$attributes
+	 * @param	string[]	$attributes
 	 */
 	public function writeElement($element, $cdata, array $attributes = array()) {
 		$this->startElement($element);
@@ -149,7 +149,7 @@ class XMLWriter {
 	/**
 	 * Writes a list of attributes to last opened element.
 	 * 
-	 * @param	array<string>		$attributes
+	 * @param	string[]		$attributes
 	 */
 	public function writeAttributes(array $attributes) {
 		foreach ($attributes as $attribute => $value) {

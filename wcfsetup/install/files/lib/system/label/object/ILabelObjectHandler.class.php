@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\label\object;
+use wcf\data\label\group\ViewableLabelGroup;
 
 /**
  * Every label object handler has to implement this interface.
@@ -16,7 +17,7 @@ interface ILabelObjectHandler {
 	 * Returns a list of label group ids.
 	 * 
 	 * @param	array		$parameters
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getLabelGroupIDs(array $parameters = array());
 	
@@ -24,7 +25,7 @@ interface ILabelObjectHandler {
 	 * Returns a list of label groups.
 	 * 
 	 * @param	array		$parameters
-	 * @return	array<\wcf\data\label\group\ViewableLabelGroup>
+	 * @return	ViewableLabelGroup[]
 	 */
 	public function getLabelGroups(array $parameters = array());
 	
@@ -41,7 +42,7 @@ interface ILabelObjectHandler {
 	/**
 	 * Assigns labels to an object.
 	 * 
-	 * @param	array<integer>		$labelIDs
+	 * @param	integer[]		$labelIDs
 	 * @param	integer			$objectID
 	 * @param	boolean			$validatePermissions
 	 * @see		\wcf\system\label\LabelHandler::setLabels()
@@ -60,9 +61,9 @@ interface ILabelObjectHandler {
 	/**
 	 * Returns a list of assigned labels.
 	 * 
-	 * @param	array<integer>		$objectIDs
+	 * @param	integer[]		$objectIDs
 	 * @param	boolean			$validatePermissions
-	 * @return	array<array>
+	 * @return	Label[]
 	 */
 	public function getAssignedLabels(array $objectIDs, $validatePermissions = true);
 }

@@ -55,7 +55,7 @@ class Application extends DatabaseObject {
 	
 	/**
 	 * list of all available application directories
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $directories = null;
 	

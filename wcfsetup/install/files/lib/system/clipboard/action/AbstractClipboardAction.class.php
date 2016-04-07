@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
+use wcf\data\DatabaseObject;
 use wcf\system\clipboard\ClipboardEditorItem;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -18,19 +19,19 @@ use wcf\system\WCF;
 abstract class AbstractClipboardAction implements IClipboardAction {
 	/**
 	 * list of the clipboard actions which are executed by the action class
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $actionClassActions = array();
 	
 	/**
 	 * relevant database objects
-	 * @var	array<\wcf\data\DatabaseObject>
+	 * @var	DatabaseObject[]
 	 */
 	protected $objects = array();
 	
 	/**
 	 * list of the supported clipboard actions
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $supportedActions = array();
 	

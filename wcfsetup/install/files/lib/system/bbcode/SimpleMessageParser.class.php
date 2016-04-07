@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
@@ -24,19 +25,19 @@ class SimpleMessageParser extends SingletonFactory {
 	
 	/**
 	 * list of smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
 	protected $smilies = array();
 	
 	/**
 	 * cached URLs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $cachedURLs = array();
 	
 	/**
 	 * cached e-mails
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $cachedEmails = array();
 	

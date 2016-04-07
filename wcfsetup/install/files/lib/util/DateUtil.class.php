@@ -30,7 +30,7 @@ final class DateUtil {
 	
 	/**
 	 * list of available time zones
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $availableTimezones = array(
 		// there is not support for UTC-12:00 in php
@@ -140,13 +140,13 @@ final class DateUtil {
 	
 	/**
 	 * order of the week days
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	private static $weekDays = null;
 	
 	/**
 	 * order of the week days (short textual representation)
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	private static $shortWeekDays = null;
 	
@@ -339,7 +339,7 @@ final class DateUtil {
 	/**
 	 * Returns a list of available timezones.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function getAvailableTimezones() {
 		return self::$availableTimezones;
@@ -404,7 +404,7 @@ final class DateUtil {
 	/**
 	 * Returns the order of the week days.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function getWeekDays() {
 		if (self::$weekDays === null) {
@@ -438,7 +438,7 @@ final class DateUtil {
 	/**
 	 * Returns the order of the week days (short textual representation).
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function getShortWeekDays() {
 		if (self::$shortWeekDays === null) {

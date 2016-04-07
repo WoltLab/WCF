@@ -88,7 +88,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be deleted.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	protected function validateDelete() {
 		// check permissions
@@ -102,7 +102,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be banned.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	protected function validateBan() {
 		// check permissions
@@ -116,7 +116,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Validates accessible groups.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	protected function __validateAccessibleGroups(array $userIDs, $ignoreOwnUser = true) {
 		if ($ignoreOwnUser) {
@@ -162,7 +162,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be sent new passwords.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function validateSendNewPassword() {
 		// check permissions
@@ -176,7 +176,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be enabled.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 * @since	2.2
 	 */
 	protected function validateEnable() {
@@ -196,7 +196,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be merge.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 * @since	2.2
 	 */
 	protected function validateMerge() {

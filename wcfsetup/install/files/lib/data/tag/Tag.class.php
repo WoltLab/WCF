@@ -56,7 +56,7 @@ class Tag extends DatabaseObject implements IRouteController {
 	 * 
 	 * @param	string		$tags
 	 * @param	string		$separators
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function splitString($tags, $separators = ',;') {
 		return array_unique(ArrayUtil::trim(preg_split('/['.preg_quote($separators).']/', $tags)));
@@ -65,7 +65,7 @@ class Tag extends DatabaseObject implements IRouteController {
 	/**
 	 * Takes a list of tags and builds a comma separated string from it.
 	 * 
-	 * @param	array<mixed>	$tags
+	 * @param	mixed[]		$tags
 	 * @param	string		$separator
 	 * @return	string
 	 */

@@ -20,7 +20,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * list of pages per action id
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $pages = array();
 	

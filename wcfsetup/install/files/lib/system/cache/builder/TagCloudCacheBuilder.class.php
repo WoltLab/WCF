@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of tags
-	 * @var	array<\wcf\data\tag\TagCloudTag>
+	 * @var	TagCloudTag[]
 	 */
 	protected $tags = array();
 	
@@ -61,8 +61,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Parses a list of language ids. If one given language id evaluates to '0' all ids will be discarded.
 	 * 
-	 * @param	array<integer>		$parameters
-	 * @return	array<integer>
+	 * @param	integer[]		$parameters
+	 * @return	integer[]
 	 */
 	protected function parseLanguageIDs(array $parameters) {
 		// handle special '0' value

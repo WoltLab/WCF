@@ -74,7 +74,7 @@ class EditHistoryManager extends SingletonFactory {
 	 * Deletes edit history entries.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function delete($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -93,7 +93,7 @@ class EditHistoryManager extends SingletonFactory {
 	/**
 	 * Performs mass reverting of edits by the given users in the given timeframe.
 	 * 
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$userIDs
 	 * @param	integer		$timeframe
 	 */
 	public function bulkRevert(array $userIDs, $timeframe = 86400) {

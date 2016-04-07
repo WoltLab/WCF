@@ -44,7 +44,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	
 	/**
 	 * list of native bbcodes
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public static $nativeBBCodes = array('b', 'i', 'u', 's', 'sub', 'sup', 'list', 'align', 'color', 'size', 'font', 'url', 'img', 'email', 'table');
 	

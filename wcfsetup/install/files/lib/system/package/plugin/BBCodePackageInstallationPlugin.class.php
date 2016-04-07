@@ -35,7 +35,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	
 	/**
 	 * list of attributes per bbcode id
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $attributes = array();
 	

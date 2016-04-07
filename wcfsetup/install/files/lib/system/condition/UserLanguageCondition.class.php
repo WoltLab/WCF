@@ -29,7 +29,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	
 	/**
 	 * ids of the selected languages
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $languageIDs = array();
 	

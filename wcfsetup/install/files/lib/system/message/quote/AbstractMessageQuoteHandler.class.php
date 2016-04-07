@@ -23,7 +23,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 	
 	/**
 	 * list of quoted message
-	 * @var	array<\wcf\system\message\quote\QuotedMessage>
+	 * @var	QuotedMessage[]
 	 */
 	public $quotedMessages = array();
 	
@@ -79,8 +79,8 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 	/**
 	 * Returns a list of QuotedMessage objects.
 	 * 
-	 * @param	array<array>	$data
-	 * @return	array<\wcf\system\message\quote\QuotedMessage>
+	 * @param	mixed[][]	$data
+	 * @return	QuotedMessage[]
 	 */
 	abstract protected function getMessages(array $data);
 }

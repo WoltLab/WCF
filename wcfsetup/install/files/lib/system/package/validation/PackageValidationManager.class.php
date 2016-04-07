@@ -18,7 +18,7 @@ use wcf\system\SingletonFactory;
 class PackageValidationManager extends SingletonFactory {
 	/**
 	 * list of known package installation plugins
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $packageInstallationPlugins = array();
 	
@@ -30,7 +30,7 @@ class PackageValidationManager extends SingletonFactory {
 	
 	/**
 	 * virtual package list containing package => packageVersion
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $virtualPackageList = array();
 	

@@ -17,7 +17,7 @@ use wcf\system\WCF;
 class TeamList extends UserProfileList {
 	/**
 	 * teams included in the list
-	 * @var	array<\wcf\data\user\group\Team>
+	 * @var	Team[]
 	 */
 	protected $teams = array();
 	
@@ -85,7 +85,7 @@ class TeamList extends UserProfileList {
 	/**
 	 * Returns the teams in the list.
 	 * 
-	 * @return	array<\wcf\data\user\group\Team>
+	 * @return	Team[]
 	 */
 	public function getTeams() {
 		return $this->teams;

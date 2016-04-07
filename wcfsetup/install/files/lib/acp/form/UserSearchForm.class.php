@@ -73,7 +73,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * shown columns
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $columns = array('registrationDate', 'lastActivityTime');
 	

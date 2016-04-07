@@ -36,13 +36,13 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * result objects
-	 * @var	array<\wcf\data\DatabaseObject>
+	 * @var	DatabaseObject[]
 	 */
 	public $objects = array();
 	
 	/**
 	 * ids of result objects
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $objectIDs = null;
 	
@@ -102,7 +102,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $indexToObject = null;
 	
@@ -223,7 +223,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Returns the object ids of the list.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getObjectIDs() {
 		return $this->objectIDs;
@@ -232,7 +232,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Sets the object ids.
 	 * 
-	 * @param	array<integer>		$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function setObjectIDs(array $objectIDs) {
 		$this->objectIDs = array_merge($objectIDs);
@@ -241,7 +241,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Returns the objects of the list.
 	 * 
-	 * @return	array<\wcf\data\DatabaseObject>
+	 * @return	DatabaseObject[]
 	 */
 	public function getObjects() {
 		return $this->objects;

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\notice;
+use wcf\data\notice\Notice;
 use wcf\system\cache\builder\NoticeCacheBuilder;
 use wcf\system\SingletonFactory;
 
@@ -16,7 +17,7 @@ use wcf\system\SingletonFactory;
 class NoticeHandler extends SingletonFactory {
 	/**
 	 * list with all enabled notices
-	 * @var	array<\wcf\data\notice\Notice>
+	 * @var	Notice[]
 	 */
 	protected $notices = array();
 	
@@ -30,7 +31,7 @@ class NoticeHandler extends SingletonFactory {
 	/**
 	 * Returns the notices which are visible for the active user.
 	 * 
-	 * @return	array<\wcf\data\notice\Notice>
+	 * @return	Notice[]
 	 */
 	public function getVisibleNotices() {
 		$notices = array();

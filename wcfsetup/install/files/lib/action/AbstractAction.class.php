@@ -25,13 +25,13 @@ abstract class AbstractAction implements IAction {
 	
 	/**
 	 * needed modules to execute this action
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $neededModules = array();
 	
 	/**
 	 * needed permissions to execute this action
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $neededPermissions = array();
 	

@@ -52,7 +52,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Sets an item as marked.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function mark() {
 		ClipboardHandler::getInstance()->mark($this->parameters['objectIDs'], $this->objectTypeID);
@@ -70,7 +70,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Unsets an item as marked.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function unmark() {
 		ClipboardHandler::getInstance()->unmark($this->parameters['objectIDs'], $this->objectTypeID);
@@ -88,7 +88,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the list of marked items.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function getMarkedItems() {
 		return $this->getEditorItems();
@@ -104,7 +104,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Unmarks all items of a type.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function unmarkAll() {
 		ClipboardHandler::getInstance()->unmarkAll($this->objectTypeID);
@@ -137,7 +137,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns a list of clipboard editor items grouped by type name.
 	 *
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	protected function getEditorItems() {
 		$data = ClipboardHandler::getInstance()->getEditorItems($this->parameters['pageClassName'], $this->parameters['pageObjectID']);

@@ -17,26 +17,26 @@ use wcf\system\WCF;
 class UserStorageHandler extends SingletonFactory {
 	/**
 	 * data cache
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $cache = array();
 	
 	/**
 	 * list of outdated data records
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $resetFields = array();
 	
 	/**
 	 * list of updated or new data records
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $updateFields = array();
 	
 	/**
 	 * Loads storage for a given set of users.
 	 * 
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$userIDs
 	 */
 	public function loadStorage(array $userIDs) {
 		$tmp = array();
@@ -67,9 +67,9 @@ class UserStorageHandler extends SingletonFactory {
 	/**
 	 * Returns stored data for given users.
 	 * 
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$userIDs
 	 * @param	string		$field
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function getStorage(array $userIDs, $field) {
 		$data = array();
@@ -138,7 +138,7 @@ class UserStorageHandler extends SingletonFactory {
 	/**
 	 * Removes a data record from database.
 	 * 
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$userIDs
 	 * @param	string		$field
 	 */
 	public function reset(array $userIDs, $field) {

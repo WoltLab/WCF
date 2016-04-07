@@ -18,7 +18,7 @@ class MessageFormSettingsHandler {
 	 * Computes the settings for BBCodes, Smilies and pre parsing. Optionally accepts the corresponding DatabaseObject
 	 * whose values will be used in case the settings did not contain the individual values (legacy support).
 	 * 
-	 * @param	array<array>			$parameters
+	 * @param	mixed[][]			$parameters
 	 * @param	\wcf\data\DatabaseObject	$object
 	 * @param	string				$permissionCanUseBBCodes
 	 * @param	string				$permissionCanUseSmilies

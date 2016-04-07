@@ -4,6 +4,7 @@ use wcf\data\user\User;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\option\user\IUserOptionOutput;
 use wcf\util\StringUtil;
 
 /**
@@ -24,13 +25,13 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	
 	/**
 	 * list of output objects
-	 * @var	array<\wcf\system\option\user\IUserOptionOutput>
+	 * @var	IUserOptionOutput[]
 	 */
 	public static $outputObjects = array();
 	
 	/**
 	 * cached user options
-	 * @var	array<\wcf\data\user\option\ViewableUserOption>
+	 * @var	ViewableUserOption[]
 	 */
 	public static $userOptions = array();
 	

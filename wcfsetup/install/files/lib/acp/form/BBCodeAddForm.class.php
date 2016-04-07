@@ -35,7 +35,7 @@ class BBCodeAddForm extends AbstractForm {
 	
 	/**
 	 * list of attributes
-	 * @var	array<object>
+	 * @var	object[]
 	 */
 	public $attributes = array();
 	

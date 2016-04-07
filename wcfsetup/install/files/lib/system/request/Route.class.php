@@ -56,13 +56,13 @@ class Route implements IRoute {
 	
 	/**
 	 * cached list of transformed controller names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $controllerNames = array();
 	
 	/**
 	 * list of application abbreviation and default controller name
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $defaultControllers = null;
 	

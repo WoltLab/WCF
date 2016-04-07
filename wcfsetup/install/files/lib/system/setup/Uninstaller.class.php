@@ -20,7 +20,7 @@ class Uninstaller {
 	
 	/**
 	 * files to delete
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $files;
 	

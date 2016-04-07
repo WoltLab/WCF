@@ -17,7 +17,7 @@ use wcf\system\request\RequestHandler;
 class DynamicRequestRoute implements IRequestRoute {
 	/**
 	 * schema for outgoing links
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $buildSchema = [];
 	
@@ -35,13 +35,13 @@ class DynamicRequestRoute implements IRequestRoute {
 	
 	/**
 	 * list of required components
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $requireComponents = [];
 	
 	/**
 	 * parsed request data
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	protected $routeData = [];
 	
@@ -124,7 +124,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	/**
 	 * Sets the list of required components.
 	 *
-	 * @param	array<string>	$requiredComponents
+	 * @param	string[]	$requiredComponents
 	 */
 	public function setRequiredComponents(array $requiredComponents) {
 		$this->requireComponents = $requiredComponents;

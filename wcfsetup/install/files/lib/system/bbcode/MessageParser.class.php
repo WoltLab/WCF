@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\event\EventHandler;
 use wcf\util\StringUtil;
@@ -18,7 +19,7 @@ use wcf\util\StringUtil;
 class MessageParser extends BBCodeParser {
 	/**
 	 * list of smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
 	protected $smilies = array();
 	

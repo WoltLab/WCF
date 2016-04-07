@@ -86,7 +86,7 @@ class UserRankAddForm extends AbstractForm {
 	
 	/**
 	 * list of pre-defined css class names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $availableCssClassNames = array(
 		'yellow',

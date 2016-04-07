@@ -28,7 +28,7 @@ class PollAction extends AJAXProxyAction {
 	
 	/**
 	 * list of option ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $optionIDs = array();
 	
@@ -181,7 +181,7 @@ class PollAction extends AJAXProxyAction {
 	/**
 	 * Adds a user vote.
 	 * 
-	 * @param	array<mixed>	$returnValues
+	 * @param	mixed[]		$returnValues
 	 */
 	protected function vote(array &$returnValues) {
 		$pollAction = new \wcf\data\poll\PollAction(array($this->poll), 'vote', array('optionIDs' => $this->optionIDs));

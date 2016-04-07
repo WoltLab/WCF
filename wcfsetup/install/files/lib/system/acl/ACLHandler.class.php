@@ -39,7 +39,7 @@ class ACLHandler extends SingletonFactory {
 	
 	/**
 	 * list of acl option categories sorted by their object type id and name
-	 * @var	array<array>
+	 * @var	ACLOptionCategory[][]
 	 */
 	protected $categories = array();
 	
@@ -389,7 +389,7 @@ class ACLHandler extends SingletonFactory {
 	 * Removes ACL values from database.
 	 * 
 	 * @param	integer						$objectTypeID
-	 * @param	array<integer>					$objectIDs
+	 * @param	integer[]					$objectIDs
 	 * @param	\wcf\data\acl\option\category\ACLOptionCategory	$category
 	 */
 	public function removeValues($objectTypeID, array $objectIDs, ACLOptionCategory $category = null) {

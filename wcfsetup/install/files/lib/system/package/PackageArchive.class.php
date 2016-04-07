@@ -70,7 +70,7 @@ class PackageArchive {
 	
 	/**
 	 * list of instructions
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $instructions = array(
 		'install' => array(),
@@ -79,7 +79,7 @@ class PackageArchive {
 	
 	/**
 	 * list of php requirements
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $phpRequirements = array();
 	
@@ -785,7 +785,7 @@ class PackageArchive {
 	/**
 	 * Returns a list of packages which exclude this package.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getConflictedExcludingPackages() {
 		$conflictedPackages = array();
@@ -812,7 +812,7 @@ class PackageArchive {
 	/**
 	 * Returns a list of packages which are excluded by this package.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getConflictedExcludedPackages() {
 		$conflictedPackages = array();
@@ -862,7 +862,7 @@ class PackageArchive {
 	/**
 	 * Returns a list of php requirements for current package.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[][]
 	 */
 	public function getPhpRequirements() {
 		return $this->phpRequirements;

@@ -31,7 +31,7 @@ class PackageInstallationScheduler {
 	
 	/**
 	 * list of package update servers
-	 * @var	array<\wcf\data\package\update\server\PackageUpdateServer>
+	 * @var	PackageUpdateServer[]
 	 */
 	protected $packageUpdateServers = array();
 	
@@ -50,7 +50,7 @@ class PackageInstallationScheduler {
 	/**
 	 * Creates a new instance of PackageInstallationScheduler
 	 * 
-	 * @param	array<string>		$selectedPackages
+	 * @param	string[]		$selectedPackages
 	 */
 	public function __construct(array $selectedPackages) {
 		$this->selectedPackages = $selectedPackages;

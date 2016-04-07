@@ -71,7 +71,7 @@ class WCF {
 	
 	/**
 	 * list of currently loaded application objects
-	 * @var	array<\wcf\system\application\IApplication>
+	 * @var	IApplication[]
 	 */
 	protected static $applicationObjects = array();
 	
@@ -83,13 +83,13 @@ class WCF {
 	
 	/**
 	 * list of unique instances of each core object
-	 * @var	array<\wcf\system\SingletonFactory>
+	 * @var	SingletonFactory[]
 	 */
 	protected static $coreObject = array();
 	
 	/**
 	 * list of cached core objects
-	 * @var	array<array>
+	 * @var	string[]
 	 */
 	protected static $coreObjectCache = array();
 	

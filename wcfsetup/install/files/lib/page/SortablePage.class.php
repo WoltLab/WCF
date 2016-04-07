@@ -29,7 +29,7 @@ abstract class SortablePage extends MultipleLinkPage {
 	
 	/**
 	 * list of valid sort fields
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $validSortFields = array();
 	

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\ad;
+use wcf\data\condition\Condition;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\system\condition\ConditionHandler;
@@ -37,7 +38,7 @@ class Ad extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns the conditions of the ad.
 	 * 
-	 * @return	array<\wcf\data\condition\Condition>
+	 * @return	Condition[]
 	 */
 	public function getConditions() {
 		return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.ad', $this->adID);

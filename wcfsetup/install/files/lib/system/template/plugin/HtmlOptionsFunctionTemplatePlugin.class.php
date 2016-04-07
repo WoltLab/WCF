@@ -26,7 +26,7 @@ use wcf\system\template\TemplateEngine;
 class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePlugin {
 	/**
 	 * selected values
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $selected = array();
 	

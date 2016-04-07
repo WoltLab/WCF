@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -22,7 +23,7 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	
 	/**
 	 * object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	public $objectTypes = array();
 	

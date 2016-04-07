@@ -32,7 +32,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	
 	/**
 	 * list of authors for stacked notifications
-	 * @var	array<\wcf\data\user\UserProfile>
+	 * @var	UserProfile[]
 	 */
 	protected $authors = array();
 	
@@ -56,7 +56,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	
 	/**
 	 * additional data for this event
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	protected $additionalData = array();
 	
@@ -68,7 +68,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	
 	/**
 	 * list of point of times for each period's end
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $periods = array();
 	

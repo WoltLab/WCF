@@ -17,13 +17,13 @@ use wcf\system\exception\PermissionDeniedException;
 abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	/**
 	 * list of all child categories of this category
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
 	protected $childCategories = null;
 	
 	/**
 	 * list of all parent category generations of this category
-	 * @var	array<\wcf\data\category\AbstractDecoratedCategory>
+	 * @var	AbstractDecoratedCategory[]
 	 */
 	protected $parentCategories = null;
 	

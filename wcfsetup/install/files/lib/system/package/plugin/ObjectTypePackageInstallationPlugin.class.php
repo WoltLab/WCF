@@ -26,7 +26,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * list of names of tags which aren't considered as additional data
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public static $reservedTags = array('classname', 'definitionname', 'name');
 	

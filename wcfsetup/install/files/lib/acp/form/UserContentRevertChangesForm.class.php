@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\User;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\edit\EditHistoryManager;
@@ -35,13 +36,13 @@ class UserContentRevertChangesForm extends AbstractForm {
 	
 	/**
 	 * ids of the relevant users
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $userIDs = array();
 	
 	/**
 	 * relevant users
-	 * @var	array<\wcf\data\user\User>
+	 * @var	User[]
 	 */
 	public $users = array();
 	

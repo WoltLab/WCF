@@ -3,6 +3,7 @@ namespace wcf\form;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\UserMenu;
+use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
@@ -24,19 +25,19 @@ class NotificationSettingsForm extends AbstractForm {
 	
 	/**
 	 * list of notification events
-	 * @var	array<array>
+	 * @var	IUserNotificationEvent[]
 	 */
 	public $events = null;
 	
 	/**
 	 * list of settings by event
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	public $settings = array();
 	
 	/**
 	 * list of valid options for the mail notification type.
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $validMailNotificationTypes = array('none', 'instant', 'daily');
 	

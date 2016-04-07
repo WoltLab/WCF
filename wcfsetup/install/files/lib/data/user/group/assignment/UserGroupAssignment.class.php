@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\group\assignment;
+use wcf\data\condition\Condition;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
 use wcf\system\condition\ConditionHandler;
@@ -34,7 +35,7 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns the conditions of the automatic assignement to a user group.
 	 * 
-	 * @return	array<\wcf\data\condition\Condition>
+	 * @return	Condition[]
 	 */
 	public function getConditions() {
 		return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.userGroupAssignment', $this->assignmentID);

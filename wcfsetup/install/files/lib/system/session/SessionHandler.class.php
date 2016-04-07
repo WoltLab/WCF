@@ -57,7 +57,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * group data and permissions
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $groupData = null;
 	
@@ -75,7 +75,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * language ids for active user
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $languageIDs = null;
 	
@@ -141,7 +141,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * list of names of permissions only available for users
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $usersOnlyPermissions = array();
 	
@@ -640,7 +640,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns language ids for active user.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getLanguageIDs() {
 		$this->loadLanguageIDs();
@@ -973,7 +973,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Resets session-specific storage data.
 	 * 
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$userIDs
 	 */
 	public static function resetSessions(array $userIDs = array()) {
 		if (!empty($userIDs)) {

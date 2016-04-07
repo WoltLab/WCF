@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\bbcode;
+use wcf\data\bbcode\attribute\BBCodeAttribute;
 use wcf\system\cache\builder\BBCodeCacheBuilder;
 use wcf\system\SingletonFactory;
 
@@ -16,13 +17,13 @@ use wcf\system\SingletonFactory;
 class BBCodeCache extends SingletonFactory {
 	/**
 	 * cached bbcodes
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
 	protected $cachedBBCodes = array();
 	
 	/**
 	 * list of known highlighters
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $highlighters = array();
 	
@@ -37,7 +38,7 @@ class BBCodeCache extends SingletonFactory {
 	/**
 	 * Returns all bbcodes.
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @return	BBCode[]
 	 */
 	public function getBBCodes() {
 		return $this->cachedBBCodes;
@@ -61,7 +62,7 @@ class BBCodeCache extends SingletonFactory {
 	 * Returns all attributes of a bbcode.
 	 * 
 	 * @param	string		$tag
-	 * @return	array<\wcf\data\bbcode\attribute\BBCodeAttribute>
+	 * @return	BBCodeAttribute[]
 	 */
 	public function getBBCodeAttributes($tag) {
 		return $this->cachedBBCodes[$tag]->getAttributes();
@@ -70,7 +71,7 @@ class BBCodeCache extends SingletonFactory {
 	/**
 	 * Returns a list of known highlighters.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getHighlighters() {
 		if (empty($this->highlighters)) {

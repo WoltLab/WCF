@@ -32,13 +32,13 @@ use wcf\util\FileUtil;
 class Package extends DatabaseObject {
 	/**
 	 * list of packages that this package requires
-	 * @var	array<\wcf\data\package\Package>
+	 * @var	Package[]
 	 */
 	protected $dependencies = null;
 	
 	/**
 	 * list of packages that require this package
-	 * @var	array<\wcf\data\package\Package>
+	 * @var	Package[]
 	 */
 	protected $dependentPackages = null;
 	
@@ -50,7 +50,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * list of packages that were given as required packages during installation
-	 * @var	array<\wcf\data\package\Package>
+	 * @var	Package[]
 	 */
 	protected $requiredPackages = null;
 	
@@ -66,7 +66,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * list of ids of packages which are required by another package
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected static $requiredPackageIDs = null;
 	
@@ -132,7 +132,7 @@ class Package extends DatabaseObject {
 	 * returned packages are the packages given in the <requiredpackages> tag
 	 * in the package.xml of this package.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getRequiredPackages() {
 		if ($this->requiredPackages === null) {
@@ -175,7 +175,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of packages dependent from current package.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getDependentPackages() {
 		if ($this->dependentPackages === null) {

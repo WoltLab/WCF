@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\data\DatabaseObject;
 use wcf\system\exception\SystemException;
 
 /**
@@ -15,7 +16,7 @@ use wcf\system\exception\SystemException;
 abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSearchResultProvider {
 	/**
 	 * list of categories
-	 * @var	array<\wcf\data\DatabaseObject>
+	 * @var	DatabaseObject[]
 	 */
 	protected $categories = array();
 	
@@ -27,7 +28,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	
 	/**
 	 * list of top category names (level 1 and 2)
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $topCategories = array();
 	

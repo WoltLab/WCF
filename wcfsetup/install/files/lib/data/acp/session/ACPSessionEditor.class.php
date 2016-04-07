@@ -45,7 +45,7 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	/**
 	 * Deletes active sessions of the given users.
 	 * 
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$userIDs
 	 */
 	public static function deleteUserSessions(array $userIDs = array()) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();

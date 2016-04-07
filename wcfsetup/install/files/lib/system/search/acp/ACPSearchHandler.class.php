@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\data\acp\search\provider\ACPSearchProvider;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -18,13 +19,13 @@ use wcf\system\SingletonFactory;
 class ACPSearchHandler extends SingletonFactory {
 	/**
 	 * list of application abbreviations
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $abbreviations = array();
 	
 	/**
 	 * list of acp search provider
-	 * @var	array<\wcf\data\acp\search\provider\ACPSearchProvider>
+	 * @var	ACPSearchProvider[]
 	 */
 	protected $cache = null;
 	
@@ -112,7 +113,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * Returns a list of application abbreviations.
 	 * 
 	 * @param	string		$suffix
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getAbbreviations($suffix = '') {
 		if (empty($this->abbreviations)) {

@@ -23,7 +23,7 @@ interface IUserObjectWatch {
 	/**
 	 * Resets the user storage for given users.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]		$userIDs
 	 */
 	public function resetUserStorage(array $userIDs);
 }

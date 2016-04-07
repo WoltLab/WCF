@@ -16,27 +16,27 @@ class DiffHighlighter extends Highlighter {
 	/**
 	 * keywords for an added line, the + is used in unified diffs, the > in
 	 * normal diffs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $add = array("+", ">");
 	
 	/**
 	 * keywords for an deleted line, the - is used in unified diff, the < in
 	 * normal diffs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $delete = array("-", "<");
 	
 	/**
 	 * splitter in changes for normal diff
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $splitter = array("---");
 	
 	/**
 	 * keywords for the line info, the @ is used in unified diffs, the numbers
 	 * in normal diffs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $info = array("@", '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 	

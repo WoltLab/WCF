@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\activity\event;
+use wcf\data\user\activity\event\ViewableUserActivityEvent;
 
 /**
  * Default interface for user activity events.
@@ -15,7 +16,7 @@ interface IUserActivityEvent {
 	/**
 	 * Prepares a list of events for output.
 	 * 
-	 * @param	array<\wcf\data\user\activity\event\ViewableUserActivityEvent>	$events
+	 * @param	ViewableUserActivityEvent[]	$events
 	 */
 	public function prepare(array $events);
 }

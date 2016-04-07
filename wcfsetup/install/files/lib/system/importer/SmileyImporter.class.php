@@ -23,7 +23,7 @@ class SmileyImporter extends AbstractImporter {
 	/**
 	 * known smiley codes
 	 * 
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $knownCodes = array();
 	

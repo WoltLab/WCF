@@ -3,6 +3,7 @@ namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueList;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -24,25 +25,25 @@ use wcf\system\WCF;
 class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * list of definition names by definition id
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $definitions = array();
 	
 	/**
 	 * list of moderation types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $moderationTypes = array();
 	
 	/**
 	 * list of object type names categorized by type
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
 	protected $objectTypeNames = array();
 	
 	/**
 	 * list of object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = array();
 	
@@ -147,7 +148,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Returns a list of moderation types.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getModerationTypes() {
 		return array_keys($this->objectTypeNames);
@@ -156,7 +157,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Returns a list of available definitions.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getDefinitions() {
 		return $this->definitions;
@@ -165,8 +166,8 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Returns a list of object type ids for given definiton ids.
 	 * 
-	 * @param	array<integer>		$definitionIDs
-	 * @return	array<integer>
+	 * @param	integer[]		$definitionIDs
+	 * @return	integer[]
 	 */
 	public function getObjectTypeIDs(array $definitionIDs) {
 		$objectTypeIDs = array();
@@ -314,7 +315,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Saves moderation queue assignments.
 	 * 
-	 * @param	array<boolean>		$assignments
+	 * @param	boolean[]	$assignments
 	 */
 	public function setAssignment(array $assignments) {
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_moderation_queue_to_user
@@ -374,7 +375,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Removes a list of orphaned queue ids.
 	 * 
-	 * @param	array<integer>		$queueIDs
+	 * @param	integer[]		$queueIDs
 	 */
 	public function removeOrphans(array $queueIDs) {
 		if (!empty($queueIDs)) {
@@ -408,7 +409,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Returns a list of object type ids and their parent definition name.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getDefinitionNamesByObjectTypeIDs() {
 		$definitionNames = array();
@@ -425,7 +426,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * Returns a list of definition names associated with the specified object type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getDefinitionNamesByObjectType($objectType) {
 		$definitionNames = array();

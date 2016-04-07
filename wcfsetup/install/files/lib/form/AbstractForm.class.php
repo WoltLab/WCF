@@ -44,7 +44,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	
 	/**
 	 * additional fields
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	public $additionalFields = array();
 	

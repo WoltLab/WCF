@@ -15,7 +15,7 @@ use wcf\system\category\CategoryHandler;
 class UncachedCategoryNodeTree extends CategoryNodeTree {
 	/**
 	 * locally cached categories
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
 	protected $categoryCache = array();
 	

@@ -62,27 +62,27 @@ class UserGroup extends DatabaseObject {
 	
 	/**
 	 * group cache
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
 	protected static $cache = null;
 	
 	/**
 	 * list of accessible groups for active user
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected static $accessibleGroups = null;
 	
 	/**
 	 * group options of this group
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $groupOptions = null;
 	
 	/**
 	 * Returns group ids by given type.
 	 * 
-	 * @param	array<integer>		$types
-	 * @return	array<integer>
+	 * @param	integer[]		$types
+	 * @return	integer[]
 	 */
 	public static function getGroupIDsByType(array $types) {
 		self::getCache();
@@ -101,9 +101,9 @@ class UserGroup extends DatabaseObject {
 	/**
 	 * Returns groups by given type. Returns all groups if no types given.
 	 * 
-	 * @param	array<integer>		$types
-	 * @param	array<integer>		$invalidGroupTypes
-	 * @return	array<\wcf\data\user\group\UserGroup>
+	 * @param	integer[]	$types
+	 * @param	integer[]	$invalidGroupTypes
+	 * @return	UserGroup[]
 	 */
 	public static function getGroupsByType(array $types = array(), array $invalidGroupTypes = array()) {
 		self::getCache();
@@ -200,9 +200,9 @@ class UserGroup extends DatabaseObject {
 	/**
 	 * Returns a list of accessible groups.
 	 * 
-	 * @param	array<integer>		$groupTypes
-	 * @param	array<integer>		$invalidGroupTypes
-	 * @return	array<\wcf\data\user\group\UserGroup>
+	 * @param	integer[]		$groupTypes
+	 * @param	integer[]		$invalidGroupTypes
+	 * @return	UserGroup[]
 	 */
 	public static function getAccessibleGroups(array $groupTypes = array(), array $invalidGroupTypes = array()) {
 		$groups = self::getGroupsByType($groupTypes, $invalidGroupTypes);

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\message\embedded\object;
+use wcf\data\DatabaseObject;
 
 /**
  * Default interface of embedded object handler.
@@ -17,7 +18,7 @@ interface IMessageEmbeddedObjectHandler {
 	 * Returns the IDs of found embedded objects.
 	 * 
 	 * @param	string		$message
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function parseMessage($message);
 	
@@ -25,7 +26,7 @@ interface IMessageEmbeddedObjectHandler {
 	 * Loads and returns embedded objects.
 	 * 
 	 * @param	array		$objectIDs
-	 * @return	array<\wcf\data\DatabaseObject>
+	 * @return	DatabaseObject[]
 	 */
 	public function loadObjects(array $objectIDs);
 }

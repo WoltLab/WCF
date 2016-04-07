@@ -44,7 +44,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Creates a simple notification without stacking support, applies to legacy notifications too.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[][]
 	 */
 	public function createDefault() {
 		$notifications = [];
@@ -81,7 +81,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Creates a notification or adds another author to an existing one.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[][]
 	 */
 	public function createStackable() {
 		// get existing notifications
@@ -170,7 +170,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Loads user notifications.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function getOutstandingNotifications() {
 		$notifications = UserNotificationHandler::getInstance()->getMixedNotifications();

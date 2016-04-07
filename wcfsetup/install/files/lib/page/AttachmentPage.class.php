@@ -56,7 +56,7 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * list of mime types which belong to files that are displayed inline
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg');
 	

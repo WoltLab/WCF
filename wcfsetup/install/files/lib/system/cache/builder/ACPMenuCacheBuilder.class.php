@@ -19,13 +19,13 @@ use wcf\data\option\OptionList;
 class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of option categories which directly contain options
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $categoriesWithOptions = array();
 	
 	/**
 	 * list of option categories grouped by the name of their parent category
-	 * @var	array<\wcf\data\option\category\OptionCategory>
+	 * @var	OptionCategory[]
 	 */
 	protected $categoryStructure = array();
 	
@@ -62,7 +62,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Returns the list with top option categories which contain options.
 	 * 
-	 * @return	array<\wcf\data\option\category\OptionCategory>
+	 * @return	OptionCategory[]
 	 */
 	protected function getTopOptionCategories() {
 		$optionCategoryList = new OptionCategoryList();

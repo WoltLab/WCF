@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\form\AbstractForm;
 use wcf\system\cache\builder\LanguageCacheBuilder;
@@ -38,13 +39,13 @@ class LanguageMultilingualismForm extends AbstractForm {
 	
 	/**
 	 * ids of selected available languages
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $languageIDs = array();
 	
 	/**
 	 * list of available content languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
 	public $languages = array();
 	

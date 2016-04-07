@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
 use wcf\data\IUserContent;

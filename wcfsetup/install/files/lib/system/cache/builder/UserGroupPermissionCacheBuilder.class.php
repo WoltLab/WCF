@@ -2,6 +2,7 @@
 namespace wcf\system\cache\builder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\option\user\group\IUserGroupOptionType;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -18,7 +19,7 @@ use wcf\util\StringUtil;
 class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of used group option type objects
-	 * @var	array<\wcf\system\option\group\IGroupOptionType>
+	 * @var	IUserGroupOptionType[]
 	 */
 	protected $typeObjects = [];
 	

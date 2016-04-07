@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cli\command;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\DatabaseException;
 use wcf\system\importer\ImportHandler;
@@ -63,7 +64,7 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * list of available exporters
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
 	protected $exporters = array();
 	
@@ -75,7 +76,7 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * list of available importers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $importers = array();
 	
@@ -87,7 +88,7 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * selected data types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $selectedData = array();
 	

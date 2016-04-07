@@ -18,7 +18,7 @@ use wcf\system\WCF;
 class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
 	 * list of group ids by type
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
 	protected $groupIDs = null;
 	
@@ -29,7 +29,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	
 	/**
 	 * list of names of tags which aren't considered as additional data
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'moddefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata', 'usersonly');
 	
@@ -142,7 +142,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	/**
 	 * Returns a list of group ids by type.
 	 * 
-	 * @return	array<array>
+	 * @return	integer[][]
 	 */
 	protected function getGroupIDs() {
 		if ($this->groupIDs === null) {

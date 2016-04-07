@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\User;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -37,7 +38,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	
 	/**
 	 * ids of the users whose email addresses are exported
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $userIDs = array();
 	
@@ -55,7 +56,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	
 	/**
 	 * users whose email addresses are exported
-	 * @var	array<\wcf\data\user\User>
+	 * @var	User[]
 	 */
 	public $users = array();
 	

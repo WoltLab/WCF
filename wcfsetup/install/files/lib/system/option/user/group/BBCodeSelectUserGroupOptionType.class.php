@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
 class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUserGroupOptionType {
 	/**
 	 * available BBCodes
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $bbCodes = null;
 	
@@ -63,7 +63,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	/**
 	 * Loads the list of BBCodes for the HTML select element.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	protected function loadBBCodeSelection() {
 		$this->bbCodes = array_keys(BBCodeCache::getInstance()->getBBCodes());

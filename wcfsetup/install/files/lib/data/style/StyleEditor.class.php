@@ -525,7 +525,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * Saves localized style descriptions.
 	 * 
 	 * @param	\wcf\data\style\StyleEditor	$styleEditor
-	 * @param	array<string>			$descriptions
+	 * @param	string[]			$descriptions
 	 */
 	protected static function saveLocalizedDescriptions(StyleEditor $styleEditor, array $descriptions) {
 		// localize package information
@@ -809,7 +809,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Sets the variables of a style.
 	 * 
-	 * @param	array<string>		$variables
+	 * @param	string[]		$variables
 	 */
 	public function setVariables(array $variables = array()) {
 		// delete old variables

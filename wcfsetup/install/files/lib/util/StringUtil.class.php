@@ -377,7 +377,7 @@ final class StringUtil {
 	 * 
 	 * @param	string		$string
 	 * @param	integer		$length
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function split($string, $length = 1) {
 		$result = array();

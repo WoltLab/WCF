@@ -52,7 +52,7 @@ class PaymentMethodHandler extends SingletonFactory {
 	/**
 	 * Returns the available payment methods for selection.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getPaymentMethodSelection() {
 		$selection = array();

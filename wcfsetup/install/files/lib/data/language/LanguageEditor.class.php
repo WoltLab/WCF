@@ -55,7 +55,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Write the languages files.
 	 * 
-	 * @param	array<integer>		$languageCategoryIDs
+	 * @param	integer[]		$languageCategoryIDs
 	 */
 	protected function writeLanguageFiles(array $languageCategoryIDs) {
 		$conditions = new PreparedStatementConditionBuilder();

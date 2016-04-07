@@ -70,7 +70,7 @@ class TagClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the tags which can be deleted.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	protected function validateDelete() {
 		if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {
@@ -83,7 +83,7 @@ class TagClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the tags which can be set as synonyms.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	protected function validateSetAsSynonyms() {
 		if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {

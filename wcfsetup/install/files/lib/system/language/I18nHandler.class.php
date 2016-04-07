@@ -45,7 +45,7 @@ class I18nHandler extends SingletonFactory {
 	
 	/**
 	 * element options
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $elementOptions = [];
 	

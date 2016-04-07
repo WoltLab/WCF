@@ -55,7 +55,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of application abbreviation and default controller name
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $defaultControllers = null;
 	

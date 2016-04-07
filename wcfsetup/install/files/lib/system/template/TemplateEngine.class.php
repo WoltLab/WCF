@@ -35,7 +35,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * directories used as template source
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $templatePaths = array();
 	
@@ -59,7 +59,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * list of registered prefilters
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $prefilters = array();
 	
@@ -77,19 +77,19 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * all available template variables and those assigned during runtime
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $v = array();
 	
 	/**
 	 * all cached variables for usage after execution in sandbox
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $sandboxVars = array();
 	
 	/**
 	 * contains all templates with assigned template listeners.
-	 * @var	array<array>
+	 * @var	string[][][]
 	 */
 	protected $templateListeners = array();
 	
@@ -604,7 +604,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns an array with all prefilters.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getPrefilters() {
 		return $this->prefilters;
@@ -642,7 +642,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Registers prefilters.
 	 * 
-	 * @param	array<string>		$prefilters
+	 * @param	string[]		$prefilters
 	 */
 	public function registerPrefilter(array $prefilters) {
 		foreach ($prefilters as $name) {

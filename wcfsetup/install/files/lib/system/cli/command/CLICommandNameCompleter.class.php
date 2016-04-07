@@ -15,7 +15,7 @@ use phpline\console\completer\Completer;
 class CLICommandNameCompleter implements Completer {
 	/**
 	 * names of all available commands
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	private $commands = array();
 	

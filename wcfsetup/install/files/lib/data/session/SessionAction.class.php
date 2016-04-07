@@ -29,7 +29,7 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * list of data values returned upon a keep alive request
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
 	public $keepAliveData = array();
 	
@@ -44,7 +44,7 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	 * Updates session's last activity time to prevent it from expiring. In addition this method
 	 * will return updated counters for notifications and 3rd party components.
 	 * 
-	 * @return	array<mixed>
+	 * @return	mixed[]
 	 */
 	public function keepAlive() {
 		// ignore sessions created by this request

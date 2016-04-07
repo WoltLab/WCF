@@ -16,7 +16,7 @@ use wcf\system\SingletonFactory;
 class PackageCache extends SingletonFactory {
 	/**
 	 * list of cached packages
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $packages = array();
 	
@@ -58,7 +58,7 @@ class PackageCache extends SingletonFactory {
 	/**
 	 * Returns all packages.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getPackages() {
 		return $this->packages;

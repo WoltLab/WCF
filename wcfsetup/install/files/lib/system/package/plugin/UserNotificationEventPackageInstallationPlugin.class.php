@@ -31,7 +31,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * preset event ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $presetEventIDs = array();
 	
