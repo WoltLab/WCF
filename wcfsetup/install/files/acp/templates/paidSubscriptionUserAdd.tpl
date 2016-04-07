@@ -10,8 +10,18 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.user.add{/lang}</h1>
-	<p class="contentHeaderDescription">{$subscription->title|language}</p>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.user.add{/lang}</h1>
+		<p class="contentHeaderDescription">{$subscription->title|language}</p>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='PaidSubscriptionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -19,16 +29,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.add{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='PaidSubscriptionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{link controller='PaidSubscriptionUserAdd' id=$subscriptionID}{/link}">
 	<div class="section">

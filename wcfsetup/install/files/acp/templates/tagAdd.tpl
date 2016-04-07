@@ -1,7 +1,17 @@
 {include file='header' pageTitle='wcf.acp.tag.'|concat:$action}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.tag.{$action}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.tag.{$action}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='TagList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.tag.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -9,16 +19,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='TagList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.tag.list{/lang}</span></a></li>
-				
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{if $action == 'add'}{link controller='TagAdd'}{/link}{else}{link controller='TagEdit' object=$tagObj}{/link}{/if}">
 	<div class="section">

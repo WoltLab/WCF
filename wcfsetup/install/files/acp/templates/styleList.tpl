@@ -11,21 +11,25 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.style.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="StyleList" link="pageNo=%d"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.style.list{/lang}</h1>
+	</div>
 	
-	<nav>
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
 			<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
-				
-			{event name='contentNavigationButtonsTop'}
+			
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="StyleList" link="pageNo=%d"}{/content}
+	</div>
+{/hascontent}
 
 <div class="section sectionContainerList">
 	<ol class="containerList styleList">
@@ -71,17 +75,21 @@
 	</ol>
 </div>
 
-<div class="contentNavigation">
-	{@$pagesLinks}
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
 	
-	<nav>
+	<nav class="contentFooterNavigation">
 		<ul>
 			<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
 			<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
-				
-			{event name='contentNavigationButtonsBottom'}
+			
+			{event name='contentFooterNavigation'}
 		</ul>
 	</nav>
-</div>
+</footer>
 
 {include file='footer'}

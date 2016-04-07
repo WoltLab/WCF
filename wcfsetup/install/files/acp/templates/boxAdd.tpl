@@ -16,7 +16,17 @@
 {/if}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{if $action == 'add'}{if $isMultilingual}{lang}wcf.acp.box.addMultilingual{/lang}{else}{lang}wcf.acp.box.add{/lang}{/if}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{if $action == 'add'}{if $isMultilingual}{lang}wcf.acp.box.addMultilingual{/lang}{else}{lang}wcf.acp.box.add{/lang}{/if}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='BoxList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.box.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -24,16 +34,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='BoxList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.box.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">
 	<section class="section">

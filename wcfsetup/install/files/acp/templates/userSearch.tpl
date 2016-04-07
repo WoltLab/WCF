@@ -7,17 +7,11 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.user.search{/lang}</h1>
-</header>
-
-{if $errorField == 'search'}
-	<p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
-{else}
-	{include file='formError'}
-{/if}
-
-<div class="contentNavigation">
-	<nav>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.user.search{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li class="dropdown">
 				<a class="button dropdownToggle"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
@@ -32,10 +26,16 @@
 				</ul>
 			</li>
 			
-			{event name='contentNavigationButtons'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{if $errorField == 'search'}
+	<p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+{else}
+	{include file='formError'}
+{/if}
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
 	<section class="section">

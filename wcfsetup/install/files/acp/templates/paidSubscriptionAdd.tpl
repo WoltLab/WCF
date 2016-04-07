@@ -20,7 +20,17 @@
 {include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.{$action}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.{$action}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='PaidSubscriptionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -28,16 +38,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='PaidSubscriptionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{if $action == 'add'}{link controller='PaidSubscriptionAdd'}{/link}{else}{link controller='PaidSubscriptionEdit' id=$subscriptionID}{/link}{/if}">
 	<div class="section">

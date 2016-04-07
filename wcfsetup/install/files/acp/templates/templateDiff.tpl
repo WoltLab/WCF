@@ -1,7 +1,27 @@
 {include file='header' pageTitle="wcf.acp.template.diff"}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.template.diff{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.template.diff{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $diff}
+						<li><a id="requestFullscreen" class="button" style="display: none;"><span class="icon icon16 fa-arrows-alt"></span> <span>{lang}wcf.global.button.fullscreen{/lang}</span></a></li>
+						
+						{if $parent->templateGroupID}
+							<li><a href="{link controller='TemplateEdit' id=$parent->templateID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+						{/if}
+					{/if}
+					
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='formError'}
@@ -34,14 +54,6 @@
 
 {if $diff}
 	<div id="fullscreenContainer">
-		<div class="contentNavigation">
-			<nav>
-				<ul>
-					<li><a id="requestFullscreen" class="button" style="display: none;"><span class="icon icon16 fa-arrows-alt"></span> <span>{lang}wcf.global.button.fullscreen{/lang}</span></a></li>
-				</ul>
-			</nav>
-		</div>
-		
 		<div class="sideBySide">
 			<div class="section">
 				<header class="sectionHeader">
@@ -69,16 +81,6 @@
 						*}{/foreach}{*
 					*}</ol>{*
 				*}</pre>
-				
-				{if $parent->templateGroupID}
-					<div class="contentNavigation">
-						<nav>
-							<ul>
-								<li><a href="{link controller='TemplateEdit' id=$parent->templateID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
-							</ul>
-						</nav>
-					</div>
-				{/if}
 			</div>
 			<div class="section">
 				<header class="sectionHeader">
@@ -108,13 +110,15 @@
 					*}</ol>{*
 				*}</pre>
 				
-				<div class="contentNavigation">
-					<nav>
+				<footer class="contentFooter">
+					<nav class="contentFooterNavigation">
 						<ul>
 							<li><a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+							
+							{event name='contentFooterNavigation'}
 						</ul>
 					</nav>
-				</div>
+				</footer>
 			</div>
 		</div>
 	</div>

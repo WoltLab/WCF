@@ -1,20 +1,20 @@
 {include file='header' pageTitle='wcf.acp.language.export'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.language.export{/lang}</h1>
-</header>
-
-{include file='formError'}
-
-<div class="contentNavigation">
-	<nav>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.language.export{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='LanguageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtons'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{include file='formError'}
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport'}{/link}">
 	<div class="section">

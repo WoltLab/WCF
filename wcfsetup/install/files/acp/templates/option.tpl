@@ -25,8 +25,18 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
-	{hascontent}<p class="contentHeaderDescription">{content}{lang __optional=true}wcf.acp.option.category.{$category->categoryName}.description{/lang}{/content}</p>{/hascontent}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
+		{hascontent}<p class="contentHeaderDescription">{content}{lang __optional=true}wcf.acp.option.category.{$category->categoryName}.description{/lang}{/content}</p>{/hascontent}
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {if $success|isset}
@@ -35,25 +45,13 @@
 
 {include file='formError'}
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
-
 <form method="post" action="{link controller='Option' id=$category->categoryID}{/link}" enctype="multipart/form-data">
 	{*
-		fake fields are a workaround for chrome autofill getting the wrong fields
+		fake fields are a workaround for chrome autofill picking the wrong fields
 		taken from http://stackoverflow.com/a/15917221
 	*}
-	<input style="display:none" type="text" name="fakeusernameremembered "/>
-	<input style="display:none" type="password" name="fakepasswordremembered" />
+	<input style="display:none" type="text" name="fakeusernameremembered">
+	<input style="display:none" type="password" name="fakepasswordremembered">
 	
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 		<nav class="tabMenu">

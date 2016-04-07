@@ -10,7 +10,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog.list{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog.list{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 <form method="post" action="{link controller='PaidSubscriptionTransactionLogList'}{/link}">
@@ -56,24 +66,18 @@
 	</div>
 </form>
 
-<div class="contentNavigation">
-	{assign var='linkParameters' value=''}
-	{if $transactionID}{capture append=linkParameters}&transactionID={@$transactionID|rawurlencode}{/capture}{/if}
-	{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
-	{if $subscriptionID}{capture append=linkParameters}&subscriptionID={@$subscriptionID}{/capture}{/if}
-	
-	{pages print=true assign=pagesLinks controller='PaidSubscriptionTransactionLogList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
-	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $transactionID}{capture append=linkParameters}&transactionID={@$transactionID|rawurlencode}{/capture}{/if}
+			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
+			{if $subscriptionID}{capture append=linkParameters}&subscriptionID={@$subscriptionID}{/capture}{/if}
+			
+			{pages print=true assign=pagesLinks controller='PaidSubscriptionTransactionLogList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox">
@@ -111,19 +115,21 @@
 		
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
-					{content}
-						{event name='contentNavigationButtonsBottom'}
-					{/content}
+					{content}{event name='contentFooterNavigation'}{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

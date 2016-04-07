@@ -11,18 +11,18 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.menu.item.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	<nav>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.menu.item.list{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='MenuItemAdd'}menuID={@$menuID}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsTop'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
 
 {hascontent}
 	<div id="menuItemList" class="section sortableListContainer">

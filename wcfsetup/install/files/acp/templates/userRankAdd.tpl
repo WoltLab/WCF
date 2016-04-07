@@ -9,7 +9,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.user.rank.{$action}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.user.rank.{$action}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='UserRankList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.user.rank.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -17,16 +27,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='UserRankList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.user.rank.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UserRankAdd'}{/link}{else}{link controller='UserRankEdit' id=$rankID}{/link}{/if}">
 	<div class="section">

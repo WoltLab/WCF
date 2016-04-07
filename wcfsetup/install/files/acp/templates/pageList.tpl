@@ -10,28 +10,35 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.page.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{assign var='linkParameters' value=''}
-	{if $name}{capture append=linkParameters}&name={@$name|rawurlencode}{/capture}{/if}
-	{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
-	{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
-	{if $packageID}{capture append=linkParameters}&packageID={@$packageID}{/capture}{/if}
-	{if $pageType}{capture append=linkParameters}&pageType={@$pageType|rawurlencode}{/capture}{/if}
-	{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.page.list{/lang}</h1>
+	</div>
 	
-	<nav>
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='PageLanding'}{/link}" class="button"><span class="icon icon16 fa-home"></span> {lang}wcf.acp.page.landing{/lang}</a></li>
 			<li><a href="{link controller='PageAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
 			<li><a href="{link controller='PageAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.addMultilingual{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsTop'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $name}{capture append=linkParameters}&name={@$name|rawurlencode}{/capture}{/if}
+			{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
+			{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
+			{if $packageID}{capture append=linkParameters}&packageID={@$packageID}{/capture}{/if}
+			{if $pageType}{capture append=linkParameters}&pageType={@$pageType|rawurlencode}{/capture}{/if}
+			
+			{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
+	</div>
+{/hascontent}
 
 <form method="post" action="{link controller='PageList'}{/link}">
 	<section class="section">
@@ -146,20 +153,23 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
 				<li><a href="{link controller='PageLanding'}{/link}" class="button"><span class="icon icon16 fa-home"></span> {lang}wcf.acp.page.landing{/lang}</a></li>
 				<li><a href="{link controller='PageAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
 				<li><a href="{link controller='PageAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.addMultilingual{/lang}</span></a></li>
-		
-				{event name='contentNavigationButtonsBottom'}
+				
+				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
-	</div>
+	</footer>
 {/if}
 
 {include file='footer'}

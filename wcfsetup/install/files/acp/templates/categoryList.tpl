@@ -67,24 +67,24 @@
 {/if}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
-</header>
-
-<div class="contentNavigation">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
+	</div>
+	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canAddCategory()}
 						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 					{/if}
-					
-					{event name='contentNavigationButtons'}
+						
+					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
 
 {hascontent}
 	<div id="categoryList" class="section{if $objectType->getProcessor()->canEditCategory()} sortableListContainer{/if}">

@@ -9,26 +9,30 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.group.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="UserGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.group.list{/lang}</h1>
+	</div>
 	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
 						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
-					
-					{event name='contentNavigationButtonsTop'}
+						
+					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="UserGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 <div class="section tabularBox">
 	<table class="table">
@@ -85,22 +89,26 @@
 	</table>
 </div>
 
-<div class="contentNavigation">
-	{@$pagesLinks}
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
 	
 	{hascontent}
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
 						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
 					
-					{event name='contentNavigationButtonsBottom'}
+					{event name='contentFooterNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</footer>
 
 {include file='footer'}

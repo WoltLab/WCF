@@ -1,8 +1,19 @@
 {include file='header' pageTitle='wcf.acp.template.'|concat:$action}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.template.{$action}{/lang}</h1>
-	{if $action == 'edit'}<p class="contentHeaderDescription">{$template->getPath()}</p>{/if}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.template.{$action}{/lang}</h1>
+		{if $action == 'edit'}<p class="contentHeaderDescription">{$template->getPath()}</p>{/if}
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			{if $action == 'edit'}<li><a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" class="button"><span class="icon icon16 fa-exchange"></span> <span>{lang}wcf.acp.template.diff{/lang}</span></a></li>{/if}
+			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={@$template->templateGroupID}{/if}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -10,17 +21,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			{if $action == 'edit'}<li><a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" class="button"><span class="icon icon16 fa-exchange"></span> <span>{lang}wcf.acp.template.diff{/lang}</span></a></li>{/if}
-			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={@$template->templateGroupID}{/if}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 {if $availableTemplateGroups|count}
 	<form method="post" action="{if $action == 'add'}{link controller='TemplateAdd'}{/link}{else}{link controller='TemplateEdit' id=$templateID}{/link}{/if}">

@@ -21,7 +21,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {if $errorField && $installingImportedStyle}
@@ -29,16 +39,6 @@
 {/if}
 
 {include file='formError'}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">

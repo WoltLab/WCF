@@ -21,7 +21,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.exceptionLog{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.exceptionLog{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='formError'}
@@ -54,19 +64,11 @@
 	</form>
 {/if}
 
-<div class="contentNavigation">
-	{pages print=true controller="ExceptionLogView" link="pageNo=%d&logFile=$logFile"}
-	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true controller="ExceptionLogView" link="pageNo=%d&logFile=$logFile"}{/content}
+	</div>
+{/hascontent}
 
 {if !$logFiles|empty}
 	{if $logFile}

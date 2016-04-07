@@ -43,8 +43,23 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.style.{$action}{/lang}</h1>
-	{if $action == 'edit'}<p class="contentHeaderDescription">{$styleName}</p>{/if}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.style.{$action}{/lang}</h1>
+		{if $action == 'edit'}<p class="contentHeaderDescription">{$styleName}</p>{/if}
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			{if $action == 'edit'}
+				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 fa-download"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+				<li><a class="jsCopyStyle button"><span class="icon icon16 fa-copy"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
+			{/if}
+			
+			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 <p class="info">{lang}wcf.acp.style.protected{/lang}</p>
@@ -54,21 +69,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			{if $action == 'edit'}
-				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 fa-download"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-				<li><a class="jsCopyStyle button"><span class="icon icon16 fa-copy"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
-			{/if}
-			
-			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="styleTabMenuContainer">

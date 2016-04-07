@@ -13,7 +13,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.user.activityPoint.option{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.user.activityPoint.option{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a id="updateEvents" class="button"><span class="icon icon16 fa-repeat"></span> <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -21,16 +31,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a id="updateEvents" class="button"><span class="icon icon16 fa-repeat"></span> <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{link controller='UserActivityPointOption'}{/link}">
 	<section class="section">

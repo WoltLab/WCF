@@ -10,7 +10,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.language.item.list{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.language.item.list{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='formError'}
@@ -68,18 +78,6 @@
 	</div>
 </form>
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			{content}
-				<ul>
-					{event name='contentNavigationButtonsTop'}
-				</ul>
-			{/content}
-		</nav>
-	{/hascontent}
-</div>
-
 {if $objects|count}
 	<div class="section sectionContainerList">
 		<ol class="containerList">
@@ -99,17 +97,19 @@
 		</ol>
 	</div>
 	
-	<div class="contentNavigation">
+	<footer class="contentFooter">
 		{hascontent}
-			<nav>
-				{content}
-					<ul>
-						{event name='contentNavigationButtonsBottom'}
-					</ul>
-				{/content}
+			<nav class="contentFooterNavigation">
+				<ul>
+					{content}
+					
+					
+					{event name='contentFooterNavigation'}
+					{/content}
+				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

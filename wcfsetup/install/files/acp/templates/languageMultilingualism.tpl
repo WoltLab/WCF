@@ -10,7 +10,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.language.multilingualism{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.language.multilingualism{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='formError'}
@@ -18,18 +28,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageMultilingualism'}{/link}">
 	<section class="section">

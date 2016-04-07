@@ -1,7 +1,17 @@
 {include file='header' pageTitle='wcf.acp.application.edit'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.application.edit.title{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.application.edit.title{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='ApplicationManagement'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.application.management{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -9,16 +19,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='ApplicationManagement'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.application.management{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{link controller='ApplicationEdit' id=$application->packageID}{/link}">
 	<section class="section">

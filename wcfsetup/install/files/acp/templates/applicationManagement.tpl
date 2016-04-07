@@ -1,20 +1,18 @@
 {include file='header' pageTitle='wcf.acp.application.list'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.application.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.application.list{/lang}</h1>
+	</div>
+	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
+				{content}{event name='contentHeaderNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
 
 <div class="section tabularBox">
 	<table class="table">
@@ -47,16 +45,14 @@
 	</table>
 </div>
 
-<div class="contentNavigation">
+<footer class="contentFooter">
 	{hascontent}
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsBottom'}
-				{/content}
+				{content}{event name='contentFooterNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</footer>
 
 {include file='footer'}

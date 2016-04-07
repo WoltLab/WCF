@@ -9,21 +9,25 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.user.option.category.list{/lang}</h1>
-</header>
-
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="UserOptionCategoryList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.user.option.category.list{/lang}</h1>
+	</div>
 	
-	<nav>
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsTop'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="UserOptionCategoryList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox">
@@ -58,20 +62,23 @@
 				{/foreach}
 			</tbody>
 		</table>
-		
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
 				<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
 				
-				{event name='contentNavigationButtonsBottom'}
+				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

@@ -21,7 +21,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.template.list{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.template.list{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -70,22 +80,18 @@
 	</div>
 </form>
 
-<div class="contentNavigation">
-	{assign var='linkParameters' value=''}
-	{if $templateGroupID}{capture append=linkParameters}&templateGroupID={@$templateGroupID}{/capture}{/if}
-	{if $searchTemplateName}{capture append=linkParameters}&searchTemplateName={@$searchTemplateName|rawurlencode}{/capture}{/if}
-	{if $application}{capture append=linkParameters}&application={$application}{/capture}{/if}
-	
-	{pages print=true assign=pagesLinks controller="TemplateList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
-	
-	<nav>
-		<ul>
-			<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $templateGroupID}{capture append=linkParameters}&templateGroupID={@$templateGroupID}{/capture}{/if}
+			{if $searchTemplateName}{capture append=linkParameters}&searchTemplateName={@$searchTemplateName|rawurlencode}{/capture}{/if}
+			{if $application}{capture append=linkParameters}&application={$application}{/capture}{/if}
 			
-			{event name='contentNavigationButtonsTop'}
-		</ul>
-	</nav>
-</div>
+			{pages print=true assign=pagesLinks controller="TemplateList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}	
+		{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div id="templateTableContainer" class="section tabularBox">
@@ -129,17 +135,21 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
 				<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 				
-				{event name='contentNavigationButtonsBottom'}
+				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

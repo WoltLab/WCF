@@ -10,15 +10,17 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='CaptchaQuestionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.captcha.question.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
+<div class="contentHeaderTitle">
+
 </div>
+
+<nav class="contentHeaderNavigation">
+	<ul>
+		<li><a href="{link controller='CaptchaQuestionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.captcha.question.list{/lang}</span></a></li>
+		
+		{event name='contentHeaderNavigation'}
+	</ul>
+</nav>
 
 <form id="adForm" method="post" action="{if $action == 'add'}{link controller='CaptchaQuestionAdd'}{/link}{else}{link controller='CaptchaQuestionEdit' id=$captchaQuestion->questionID}{/link}{/if}">
 	<div class="section">

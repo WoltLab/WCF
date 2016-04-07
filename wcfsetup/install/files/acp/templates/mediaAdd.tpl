@@ -16,7 +16,17 @@
 {/if}
 
 <header class="contentHeader">
-	<h1 id="mediaActionTitle" class="contentTitle">{lang}wcf.acp.media.{$action}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 id="mediaActionTitle" class="contentTitle">{lang}wcf.acp.media.{$action}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='MediaList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.media.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {if $action == 'edit'}
@@ -26,16 +36,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='MediaList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.media.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 {if $action == 'add'}
 	<section class="section">

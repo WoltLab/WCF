@@ -1,22 +1,20 @@
 {include file='header' pageTitle='wcf.acp.user.revertChanges'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.user.revertChanges{/lang}</h1>
-</header>
-
-{include file='formError'}
-
-<div class="contentNavigation">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.user.revertChanges{/lang}</h1>
+	</div>
+	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
+				{content}{event name='contentHeaderNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{include file='formError'}
 
 <form method="post" action="{link controller='UserContentRevertChanges'}{/link}">
 	<section class="section">

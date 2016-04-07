@@ -12,21 +12,25 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.cronjob.list{/lang}</h1>
-	<p class="contentHeaderDescription">{lang}wcf.acp.cronjob.subtitle{/lang}</p>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="CronjobList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.cronjob.list{/lang}</h1>
+		<p class="contentHeaderDescription">{lang}wcf.acp.cronjob.subtitle{/lang}</p>
+	</div>
 	
-	<nav>
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsTop'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="CronjobList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {hascontent}
 	<div class="section tabularBox">
@@ -106,16 +110,20 @@
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/hascontent}
 
-<div class="contentNavigation">
-	{@$pagesLinks}
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
 	
-	<nav>
+	<nav class="contentFooterNavigation">
 		<ul>
 			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsBottom'}
+			{event name='contentFooterNavigation'}
 		</ul>
 	</nav>
-</div>
+</footer>
 
 {include file='footer'}

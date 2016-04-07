@@ -1,22 +1,23 @@
 {include file='header' pageTitle='wcf.acp.sessionLog.list'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.sessionLog.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="ACPSessionLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.sessionLog.list{/lang}</h1>
+	</div>
 	
 	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+	<nav class="contentHeaderNavigation">
+		<ul>
+			{content}{event name='contentHeaderNavigation'}{/content}
+		</ul>
+	</nav>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="ACPSessionLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox">
@@ -53,19 +54,21 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
-					{content}
-						{event name='contentNavigationButtonsBottom'}
-					{/content}
+					{content}{event name='contentFooterNavigation'}{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {/if}
 
 {include file='footer'}

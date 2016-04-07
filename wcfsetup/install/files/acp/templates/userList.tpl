@@ -49,24 +49,35 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $__wcf->session->getPermission('admin.user.canAddUser')}
+						<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+					{/if}
+					
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
-{assign var=encodedURL value=$url|rawurlencode}
-{assign var=encodedAction value=$action|rawurlencode}
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="UserList" id=$searchID link="pageNo=%d&action=$encodedAction&sortField=$sortField&sortOrder=$sortOrder"}
-	
-	<nav>
-		<ul>
-			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
-			{/if}
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var=encodedURL value=$url|rawurlencode}
+			{assign var=encodedAction value=$action|rawurlencode}
 			
-			{event name='contentNavigationButtonsTop'}
-		</ul>
-	</nav>
-</div>
+			{pages print=true assign=pagesLinks controller="UserList" id=$searchID link="pageNo=%d&action=$encodedAction&sortField=$sortField&sortOrder=$sortOrder"}
+		{/content}
+	</div>
+{/hascontent}
 
 {if $users|count}
 	<div id="userTableContainer" class="section tabularBox">
@@ -128,21 +139,27 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
-			<ul>
-				{if $__wcf->session->getPermission('admin.user.canAddUser')}
-					<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
-				{/if}
-				
-				{event name='contentNavigationButtonsBottom'}
-			</ul>
-		</nav>
-		
-		<nav class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></nav>
-	</div>
+		{hascontent}
+			<nav class="contentFooterNavigation">
+				<ul>
+					{content}
+						{if $__wcf->session->getPermission('admin.user.canAddUser')}
+							<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+						{/if}
+						
+						{event name='contentFooterNavigation'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</footer>
 {else}
 	<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 {/if}

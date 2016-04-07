@@ -1,7 +1,17 @@
 {include file='header' pageTitle="wcf.acp.language.$action"}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.language.{@$action}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.language.{@$action}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='LanguageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -9,16 +19,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='LanguageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
-				
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
 
 <form method="post" action="{if $action == 'edit'}{link controller='LanguageEdit' id=$languageID}{/link}{else}{link controller='LanguageAdd'}{/link}{/if}">
 	<section class="section">

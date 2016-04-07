@@ -1,7 +1,17 @@
 {include file='header' pageTitle='wcf.acp.smiley.'|concat:$action}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.smiley.{$action}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.smiley.{$action}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='SmileyList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.smiley.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -10,21 +20,8 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					<li><a href="{link controller='SmileyList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.smiley.list{/lang}</span></a></li>
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
-
 <form method="post" action="{if $action == 'add'}{link controller='SmileyAdd'}{/link}{else}{link controller='SmileyEdit' id=$smiley->smileyID}{/link}{/if}" enctype="multipart/form-data">
-	<div class="section">
+	<section class="section">
 		<dl{if $errorField == 'smileyTitle'} class="formError"{/if}>
 			<dt><label for="smileyTitle">{lang}wcf.acp.smiley.title{/lang}</label></dt>
 			<dd>

@@ -36,10 +36,20 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.dataImport{/lang}</h1>
-	{if $exporterName}
-		<p class="contentHeaderDescription">{lang}wcf.acp.dataImport.exporter.{@$exporterName}{/lang}</p>
-	{/if}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.dataImport{/lang}</h1>
+		{if $exporterName}
+			<p class="contentHeaderDescription">{lang}wcf.acp.dataImport.exporter.{@$exporterName}{/lang}</p>
+		{/if}
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='formError'}
@@ -47,18 +57,6 @@
 {if $showInnoDBWarning}
 	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
 {/if}
-
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
 
 {if !$exporterName}
 	{if !$availableExporters|count}

@@ -21,6 +21,8 @@
 					$('.jsUninstallButton[data-object-id={@$packageID}]').trigger('click');
 				}, 250);
 			{/if}
+			
+			new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
 		{/if}
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
@@ -35,26 +37,30 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.package.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.package.list{/lang}</h1>
+	</div>
 	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
-					{event name='contentNavigationButtonsTop'}
+					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox">
@@ -98,32 +104,28 @@
 		</table>
 		
 	</div>
-			
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<script data-relocate="true">
-				//<![CDATA[
-				$(function() {
-					new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
-				});
-				//]]>
-			</script>
-			
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						
-						{event name='contentNavigationButtonsBottom'}
+						{event name='contentFooterNavigation'}
 					{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {/if}
 
 {include file='footer'}

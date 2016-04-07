@@ -25,21 +25,11 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.group.{@$action}{/lang}</h1>
-</header>
-
-{include file='formError'}
-
-{if $warningSelfEdit|isset}
-	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
-{/if}
-
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
-{/if}
-
-<div class="contentNavigation">
-	<nav>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.group.{@$action}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
 				{if $availableUserGroups|count > 1}
@@ -62,10 +52,20 @@
 			
 			<li><a href="{link controller='UserGroupList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtons'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{include file='formError'}
+
+{if $warningSelfEdit|isset}
+	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
+{/if}
+
+{if $success|isset}
+	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
+{/if}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit' id=$groupID}{/link}{/if}">
 	<div class="section">

@@ -1,22 +1,24 @@
 {include file='header' pageTitle='wcf.acp.user.authentication.failure.list'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.user.authentication.failure.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='UserAuthenticationFailureList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.user.authentication.failure.list{/lang}</h1>
+	</div>
 	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
+				{content}{event name='contentHeaderNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='UserAuthenticationFailureList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox">
@@ -51,19 +53,21 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
-					{content}
-						{event name='contentNavigationButtonsBottom'}
-					{/content}
+					{content}{event name='contentFooterNavigation'}{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

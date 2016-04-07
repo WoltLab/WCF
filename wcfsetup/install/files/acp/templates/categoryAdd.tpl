@@ -16,18 +16,12 @@
 {/if}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable($action)}</h1>
-</header>
-
-{include file='formError'}
-
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
-{/if}
-
-<div class="contentNavigation">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable($action)}</h1>
+	</div>
+	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
 					{if $action == 'edit' && $availableCategories->hasChildren()}
@@ -47,12 +41,18 @@
 						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
 					{/if}
 					
-					{event name='contentNavigationButtons'}
+					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{include file='formError'}
+
+{if $success|isset}
+	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
+{/if}
 
 <form method="post" action="{if $action == 'add'}{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}{else}{link controller=$editController application=$objectType->getProcessor()->getApplication() object=$category}{/link}{/if}">
 	{event name='beforeSections'}

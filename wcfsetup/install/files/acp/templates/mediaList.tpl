@@ -44,8 +44,18 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.media.list{/lang}</h1>
-	<p class="contentHeaderDescription">{lang}wcf.acp.media.stats{/lang}</p>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.media.list{/lang}</h1>
+		<p class="contentHeaderDescription">{lang}wcf.acp.media.stats{/lang}</p>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='MediaAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.media.add{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -95,23 +105,18 @@
 	</div>
 </form>
 
-<div class="contentNavigation">
-	{assign var='linkParameters' value=''}
-	
-	{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
-	{if $filename}{capture append=linkParameters}&filename={@$filename|rawurlencode}{/capture}{/if}
-	{if $fileType}{capture append=linkParameters}&fileType={@$fileType|rawurlencode}{/capture}{/if}
-	
-	{pages print=true assign=pagesLinks controller="MediaList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
-	
-	<nav>
-		<ul>
-			<li><a href="{link controller='MediaAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.media.add{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtonsTop'}
-		</ul>
-	</nav>
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
+			{if $filename}{capture append=linkParameters}&filename={@$filename|rawurlencode}{/capture}{/if}
+			{if $fileType}{capture append=linkParameters}&fileType={@$fileType|rawurlencode}{/capture}{/if}
+				
+			{pages print=true assign=pagesLinks controller="MediaList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox">
@@ -159,19 +164,21 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
 				<li><a href="{link controller='MediaAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.media.add{/lang}</span></a></li>
 				
-				{event name='contentNavigationButtonsBottom'}
+				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
-
-		<nav class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.media' ]"></nav>
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

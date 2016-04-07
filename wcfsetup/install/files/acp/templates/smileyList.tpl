@@ -12,20 +12,25 @@
 {/if}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.smiley.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="SmileyList" object=$category link="pageNo=%d"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.smiley.list{/lang}</h1>
+	</div>
 	
-	<nav>
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='SmileyAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.smiley.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsTop'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="SmileyList" object=$category link="pageNo=%d"}{/content}
+	</div>
+{/hascontent}
+
 {if $smileyCount}
 	<div class="section tabMenuContainer">
 		<nav class="menu">{*todo*}

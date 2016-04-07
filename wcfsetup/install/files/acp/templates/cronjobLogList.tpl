@@ -14,26 +14,30 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.cronjob.log{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.cronjob.log{/lang}</h1>
+	</div>
 	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
 					{if $objects|count}
 						<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
 					{/if}
 					
-					{event name='contentNavigationButtonsTop'}
+					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {hascontent}
 	<div class="section tabularBox">
@@ -76,17 +80,27 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
-			<ul>
-				<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
-				
-				{event name='contentNavigationButtonsBottom'}
-			</ul>
-		</nav>
-	</div>
+		{hascontent}
+			<nav class="contentFooterNavigation">
+				<ul>
+					{content}
+						{if $objects|count}
+							<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+						{/if}
+						
+						{event name='contentFooterNavigation'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</footer>
 {hascontentelse}
 	<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
 {/hascontent}

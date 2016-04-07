@@ -9,21 +9,21 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.dashboard.option{/lang}</h1>
-	<p class="contentHeaderDescription">{lang}wcf.dashboard.objectType.{$objectType->objectType}{/lang}</p>
-</header>
-
-<p class="info">{lang}wcf.acp.dashboard.box.sort{/lang}</p>
-
-<div class="contentNavigation">
-	<nav>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.dashboard.option{/lang}</h1>
+		<p class="contentHeaderDescription">{lang}wcf.dashboard.objectType.{$objectType->objectType}{/lang}</p>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='DashboardList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.dashboard.list{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtons'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+<p class="info">{lang}wcf.acp.dashboard.box.sort{/lang}</p>
 
 <div class="section tabMenuContainer">
 	<nav class="tabMenu">

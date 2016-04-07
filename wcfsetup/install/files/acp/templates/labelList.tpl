@@ -28,7 +28,17 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.label.list{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.label.list{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {if $items || $labelSearch || $labelGroup || $cssClassName}
@@ -75,26 +85,23 @@
 	</form>
 {/if}
 
-<div class="contentNavigation">
-	{assign var='linkParameters' value=''}
-	{if $labelSearch}
-		{append var='linkParameters' value='&label='}
-		{append var='linkParameters' value=$labelSearch|rawurlencode}
-	{/if}
-	{if $cssClassName}
-		{append var='linkParameters' value='&cssClassName='}
-		{append var='linkParameters' value=$cssClassName|rawurlencode}
-	{/if}
-	{pages print=true assign=pagesLinks controller="LabelList" object=$labelGroup link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
-	
-	<nav>
-		<ul>
-			<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $labelSearch}
+				{append var='linkParameters' value='&label='}
+				{append var='linkParameters' value=$labelSearch|rawurlencode}
+			{/if}
+			{if $cssClassName}
+				{append var='linkParameters' value='&cssClassName='}
+				{append var='linkParameters' value=$cssClassName|rawurlencode}
+			{/if}
 			
-			{event name='contentNavigationButtonsTop'}
-		</ul>
-	</nav>
-</div>
+			{pages print=true assign=pagesLinks controller="LabelList" object=$labelGroup link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div id="labelTableContainer" class="section tabularBox{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1} sortableListContainer{/if}">
@@ -141,17 +148,21 @@
 		</div>
 	{/if}
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
 				<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
 				
-				{event name='contentNavigationButtonsBottom'}
+				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

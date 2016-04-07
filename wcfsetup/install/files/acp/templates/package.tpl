@@ -13,20 +13,18 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{$package->getName()}</h1>
-</header>
-
-<div class="contentNavigation">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{$package->getName()}</h1>
+	</div>
+	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
+				{content}{event name='contentHeaderNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
 
 <div class="section tabMenuContainer">
 	<nav class="tabMenu">
@@ -190,14 +188,14 @@
 	{event name='tabMenuContents'}
 </div>
 
-<div class="contentNavigation">
-	<nav>
+<footer class="contentFooter">
+	<nav class="contentFooterNavigation">
 		<ul>
-			{event name='contentNavigationButtonsBottom'}
-			
 			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			
+			{event name='contentFooterNavigation'}
 		</ul>
 	</nav>
-</div>
+</footer>
 
 {include file='footer'}

@@ -1,22 +1,20 @@
 {include file='header' pageTitle='wcf.acp.user.merge'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.user.merge{/lang}</h1>
-</header>
-
-{include file='formError'}
-
-<div class="contentNavigation">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.user.merge{/lang}</h1>
+	</div>
+	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
+				{content}{event name='contentHeaderNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{include file='formError'}
 
 <form method="post" action="{link controller='UserMerge'}{/link}">
 	<section class="section">
@@ -57,7 +55,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

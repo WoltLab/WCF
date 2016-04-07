@@ -2,18 +2,18 @@
 {include file='header'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {@$log->logID}</h1>
-</header>
-
-<div class="contentNavigation">
-	<nav>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {@$log->logID}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='PaidSubscriptionTransactionLogList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.transactionLog.list{/lang}</span></a></li>
-		
-			{event name='contentNavigationButtonsTop'}
+			
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
 
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.acp.paidSubscription.transactionLog{/lang}: {@$log->logID}</h2>
@@ -56,14 +56,20 @@
 
 {event name='sections'}
 
-<div class="contentNavigation">
-	<nav>
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
+	
+	<nav class="contentFooterNavigation">
 		<ul>
 			<li><a href="{link controller='PaidSubscriptionTransactionLogList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.transactionLog.list{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsBottom'}
+			{event name='contentFooterNavigation'}
 		</ul>
 	</nav>
-</div>
+</footer>
 
 {include file='footer'}
