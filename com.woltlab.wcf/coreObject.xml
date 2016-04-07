@@ -8,9 +8,6 @@
 			<objectname><![CDATA[wcf\system\request\LinkHandler]]></objectname>
 		</coreobject>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\menu\page\PageMenu]]></objectname>
-		</coreobject>
-		<coreobject>
 			<objectname><![CDATA[wcf\system\menu\acp\ACPMenu]]></objectname>
 		</coreobject>
 		<coreobject>
