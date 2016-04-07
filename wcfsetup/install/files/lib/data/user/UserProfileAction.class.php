@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\bbcode\MessageParser;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -127,7 +128,7 @@ class UserProfileAction extends UserAction {
 		if (count($this->objectIDs) != 1) {
 			throw new UserInputException('objectIDs');
 		}
-		$this->userProfile = UserProfile::getUserProfile(reset($this->objectIDs));
+		$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject(reset($this->objectIDs));
 		
 		if ($this->userProfile === null) {
 			throw new UserInputException('objectIDs');
@@ -175,7 +176,7 @@ class UserProfileAction extends UserAction {
 	public function validateBeginEdit() {
 		if (!empty($this->objectIDs) && count($this->objectIDs) == 1) {
 			$userID = reset($this->objectIDs);
-			$this->userProfile = UserProfile::getUserProfile($userID);
+			$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
 		}
 		
 		if ($this->userProfile === null || !$this->userProfile->userID) {

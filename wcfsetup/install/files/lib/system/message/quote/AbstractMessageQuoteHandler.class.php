@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\message\quote;
-use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -42,7 +42,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 		
 		if (!empty($userIDs)) {
 			$userIDs = array_unique($userIDs);
-			$userProfiles = UserProfile::getUserProfiles($userIDs);
+			$userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 		}
 		
 		WCF::getTPL()->assign(array(

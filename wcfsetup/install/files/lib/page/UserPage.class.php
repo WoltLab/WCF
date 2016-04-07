@@ -10,6 +10,7 @@ use wcf\data\user\profile\visitor\UserProfileVisitorList;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\breadcrumb\Breadcrumb;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\user\profile\UserProfileMenu;
@@ -59,7 +60,7 @@ class UserPage extends AbstractPage {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\UserProfile
+	 * @var	UserProfile
 	 */
 	public $user = null;
 	
@@ -88,7 +89,7 @@ class UserPage extends AbstractPage {
 		parent::readParameters();
 		
 		if (isset($_REQUEST['id'])) $this->userID = intval($_REQUEST['id']);
-		$this->user = UserProfile::getUserProfile($this->userID);
+		$this->user = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
 		if ($this->user === null) {
 			throw new IllegalLinkException();
 		}

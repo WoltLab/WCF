@@ -2,8 +2,8 @@
 namespace wcf\data\user\avatar;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -340,7 +340,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			throw new PermissionDeniedException();
 		}
 		
-		if (!WCF::getSession()->getPermission('user.profile.avatar.canUploadAvatar') || UserProfile::getUserProfile($this->avatar->userID)->disableAvatar) {
+		if (!WCF::getSession()->getPermission('user.profile.avatar.canUploadAvatar') || UserProfileRuntimeCache::getInstance()->getObject($this->avatar->userID)->disableAvatar) {
 			throw new PermissionDeniedException();
 		}
 		

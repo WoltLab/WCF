@@ -3,6 +3,7 @@ namespace wcf\data\user\profile\visitor;
 use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
@@ -25,7 +26,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 	
 	/**
 	 * user profile object
-	 * @var	\wcf\data\user\UserProfile;
+	 * @var	UserProfile;
 	 */
 	public $userProfile = null;
 	
@@ -36,7 +37,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 		$this->readInteger('pageNo');
 		$this->readInteger('userID');
 		
-		$this->userProfile = UserProfile::getUserProfile($this->parameters['userID']);
+		$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
 		if ($this->userProfile->isProtected()) {
 			throw new PermissionDeniedException();
 		}

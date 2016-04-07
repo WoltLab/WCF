@@ -10,6 +10,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -99,7 +100,7 @@ class UserNotificationHandler extends SingletonFactory {
 				$userProfile = new UserProfile(WCF::getUser());
 			}
 			else {
-				$userProfile = UserProfile::getUserProfile($notificationObject->getAuthorID());
+				$userProfile = UserProfileRuntimeCache::getInstance()->getObject($notificationObject->getAuthorID());
 			}
 		}
 		if ($userProfile === null) {

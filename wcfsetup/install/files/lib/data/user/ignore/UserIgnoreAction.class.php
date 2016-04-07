@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user\ignore;
-use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -25,7 +25,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	public function validateIgnore() {
 		$this->readInteger('ignoreUserID', false, 'data');
 		
-		$userProfile = UserProfile::getUserProfile($this->parameters['data']['ignoreUserID']);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['ignoreUserID']);
 		if ($userProfile === null || $userProfile->userID == WCF::getUser()->userID) {
 			throw new IllegalLinkException();
 		}
@@ -63,7 +63,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	public function validateUnignore() {
 		$this->readInteger('ignoreUserID', false, 'data');
 		
-		$userProfile = UserProfile::getUserProfile($this->parameters['data']['ignoreUserID']);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['ignoreUserID']);
 		if ($userProfile === null) {
 			throw new IllegalLinkException();
 		}

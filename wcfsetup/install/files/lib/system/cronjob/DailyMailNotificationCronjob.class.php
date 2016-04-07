@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\mail\Mail;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -126,7 +127,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		}
 		
 		// load authors
-		$authors = UserProfile::getUserProfiles($authorIDs);
+		$authors = UserProfileRuntimeCache::getInstance()->getObjects($authorIDs);
 		$unknownAuthor = new UserProfile(new User(null, array('userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest'))));
 		
 		// load objects associated with each object type

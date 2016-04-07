@@ -1,6 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -35,7 +36,7 @@ class MailForm extends AbstractCaptchaForm {
 	
 	/**
 	 * recipient's user object
-	 * @var	\wcf\data\user\UserProfile
+	 * @var	UserProfile
 	 */
 	public $user = 0;
 	
@@ -70,7 +71,7 @@ class MailForm extends AbstractCaptchaForm {
 		parent::readParameters();
 		
 		if (isset($_REQUEST['id'])) $this->userID = intval($_REQUEST['id']);
-		$this->user = UserProfile::getUserProfile($this->userID);
+		$this->user = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
 		if ($this->user === null) {
 			throw new IllegalLinkException();
 		}

@@ -5,7 +5,7 @@ use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentList;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -56,7 +56,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	 */
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		// check object id
-		$userProfile = UserProfile::getUserProfile($objectID);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
 		if ($userProfile === null) {
 			return false;
 		}
@@ -176,7 +176,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 			}
 		}
 		if (!empty($userIDs)) {
-			$users = UserProfile::getUserProfiles(array_unique($userIDs));
+			$users = UserProfileRuntimeCache::getInstance()->getObjects(array_unique($userIDs));
 		}
 		
 		// set message

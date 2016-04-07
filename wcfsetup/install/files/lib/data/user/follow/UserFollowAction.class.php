@@ -3,6 +3,7 @@ namespace wcf\data\user\follow;
 use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -30,7 +31,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	
 	/**
 	 * user profile object
-	 * @var	\wcf\data\user\UserProfile;
+	 * @var	UserProfile;
 	 */
 	public $userProfile = null;
 	
@@ -158,7 +159,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 		$this->readInteger('pageNo');
 		$this->readInteger('userID');
 		
-		$this->userProfile = UserProfile::getUserProfile($this->parameters['userID']);
+		$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
 		if ($this->userProfile->isProtected()) {
 			throw new PermissionDeniedException();
 		}
