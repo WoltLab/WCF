@@ -513,13 +513,6 @@ CREATE TABLE wcf1_language_item (
 	KEY languageItemOriginIsSystem (languageItemOriginIsSystem)
 );
 
-DROP TABLE IF EXISTS wcf1_language_server;
-CREATE TABLE wcf1_language_server (
-	languageServerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	serverURL VARCHAR(255) NOT NULL DEFAULT '',
-	isDisabled TINYINT(1) NOT NULL DEFAULT 0
-);
-
 DROP TABLE IF EXISTS wcf1_like;
 CREATE TABLE wcf1_like (
 	likeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
