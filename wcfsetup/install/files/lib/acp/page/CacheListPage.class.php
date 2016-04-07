@@ -121,6 +121,7 @@ class CacheListPage extends AbstractPage {
 		// get additional file information
 		$data = array();
 		if (is_array($files)) {
+			/** @var \SplFileInfo $file */
 			foreach ($files as $file) {
 				if ($ignore !== null && $ignore->match($file)) {
 					continue;
@@ -129,7 +130,7 @@ class CacheListPage extends AbstractPage {
 				$data[] = array(
 					'filename' => $file->getBasename(),
 					'filesize' => $file->getSize(),
-					'mtime' => $file->getMtime(),
+					'mtime' => $file->getMTime(),
 					'perm' => substr(sprintf('%o', $file->getPerms()), -3),
 					'writable' => $file->isWritable()
 				);
