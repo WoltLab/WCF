@@ -4,8 +4,6 @@ use wcf\data\modification\log\ModificationLog;
 use wcf\data\modification\log\ModificationLogAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\database\exception\DatabaseQueryException;
-use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;

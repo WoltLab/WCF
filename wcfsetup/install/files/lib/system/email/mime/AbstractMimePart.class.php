@@ -38,7 +38,7 @@ abstract class AbstractMimePart {
 	 * @return	array
 	 */
 	public function getAdditionalHeaders() {
-		return [ ];
+		return [];
 	}
 	
 	/**

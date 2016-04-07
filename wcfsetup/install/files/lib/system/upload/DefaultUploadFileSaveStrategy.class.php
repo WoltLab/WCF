@@ -63,7 +63,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 	 * @param	array		$data
 	 * @throws	SystemException
 	 */
-	public function __construct($actionClassName, array $options = [ ], array $data = [ ]) {
+	public function __construct($actionClassName, array $options = [], array $data = []) {
 		$this->actionClassName = $actionClassName;
 		$this->options = $options;
 		$this->data = $data;
@@ -72,13 +72,13 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			throw new SystemException("'".$this->actionClassName."' does not extend '".AbstractDatabaseObjectAction::class."'");
 		}
 		
-		$this->editorClassName = (new $this->actionClassName([ ], ''))->getClassName();
-		$baseClass = call_user_func([ $this->editorClassName, 'getBaseClass' ]);
+		$this->editorClassName = (new $this->actionClassName([], ''))->getClassName();
+		$baseClass = call_user_func([$this->editorClassName, 'getBaseClass']);
 		if (!is_subclass_of($baseClass, IFile::class)) {
 			throw new SystemException("'".$this->editorClassName."' does not implement '".IFile::class."'");
 		}
 		if (is_subclass_of($baseClass, IThumbnailFile::class)) {
-			$this->options['thumbnailSizes'] = call_user_func([ $baseClass, 'getThumbnailSizes' ]);
+			$this->options['thumbnailSizes'] = call_user_func([$baseClass, 'getThumbnailSizes']);
 		}
 	}
 	
@@ -115,7 +115,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			}
 		}
 		
-		$action = new $this->actionClassName([ ], 'create', [
+		$action = new $this->actionClassName([], 'create', [
 			'data' => $data
 		]);
 		$object = $action->executeAction()['returnValues'];
@@ -212,7 +212,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		$adapter = ImageHandler::getInstance()->getAdapter();
 		$adapter->loadFile($file->getLocation());
 		
-		$updateData = [ ];
+		$updateData = [];
 		foreach ($this->options['thumbnailSizes'] as $type => $sizeData) {
 			$prefix = 'thumbnail';
 			if (!empty($type)) {

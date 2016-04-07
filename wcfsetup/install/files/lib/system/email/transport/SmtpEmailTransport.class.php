@@ -66,7 +66,7 @@ class SmtpEmailTransport implements EmailTransport {
 	 * ESMTP features advertised by the server
 	 * @var	string[]
 	 */
-	protected $features = [ ];
+	protected $features = [];
 	
 	/**
 	 * if this property is an instance of \Exception email delivery will be locked
@@ -158,7 +158,7 @@ class SmtpEmailTransport implements EmailTransport {
 		}
 		while (true);
 		
-		return [ $code, $reply ];
+		return [$code, $reply];
 	}
 	
 	/**
@@ -177,11 +177,11 @@ class SmtpEmailTransport implements EmailTransport {
 	 */
 	protected function connect() {
 		$this->connection = new RemoteFile($this->host, $this->port);
-		$this->read([ 220 ]);
+		$this->read([220]);
 		
 		try {
 			$this->write('EHLO '.Email::getHost());
-			$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([ 250 ])[1])));
+			$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
 		}
 		catch (SystemException $e) {
 			if ($this->starttls == 'encrypt') {
@@ -189,7 +189,7 @@ class SmtpEmailTransport implements EmailTransport {
 			}
 			
 			$this->write('HELO '.Email::getHost());
-			$this->features = [ ];
+			$this->features = [];
 		}
 		
 		switch ($this->starttls) {
@@ -201,7 +201,7 @@ class SmtpEmailTransport implements EmailTransport {
 				$this->starttls();
 				
 				$this->write('EHLO '.Email::getHost());
-				$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([ 250 ])[1])));
+				$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
 			break;
 			case 'may':
 				if (in_array('starttls', $this->features)) {
@@ -211,7 +211,7 @@ class SmtpEmailTransport implements EmailTransport {
 					catch (SystemException $e) { }
 					
 					$this->write('EHLO '.Email::getHost());
-					$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([ 250 ])[1])));
+					$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
 				}
 			break;
 			case 'none':
@@ -224,7 +224,7 @@ class SmtpEmailTransport implements EmailTransport {
 	 */
 	protected function starttls() {
 		$this->write("STARTTLS");
-		$this->read([ 220 ]);
+		$this->read([220]);
 		
 		if (!$this->connection->setTLS(true)) {
 			throw new TransientFailure('enabling TLS failed');
@@ -243,13 +243,13 @@ class SmtpEmailTransport implements EmailTransport {
 			
 			if ($parameters[0] == 'auth') {
 				// try mechanisms in order of preference
-				foreach ([ 'login', 'plain' ] as $method) {
+				foreach (['login', 'plain'] as $method) {
 					if (in_array($method, $parameters)) {
 						switch ($method) {
 							case 'login':
 								try {
 									$this->write('AUTH LOGIN');
-									$this->read([ 334 ]);
+									$this->read([334]);
 								}
 								catch (SystemException $e) {
 									// try next authentication method
@@ -257,17 +257,17 @@ class SmtpEmailTransport implements EmailTransport {
 								}
 								$this->write(base64_encode($this->username));
 								$this->lastWrite = '*redacted*';
-								$this->read([ 334 ]);
+								$this->read([334]);
 								$this->write(base64_encode($this->password));
 								$this->lastWrite = '*redacted*';
-								$this->read([ 235 ]);
+								$this->read([235]);
 								return;
 							break;
 							case 'plain':
 								// RFC 4616
 								try {
 									$this->write('AUTH PLAIN');
-									$this->read([ 334 ]);
+									$this->read([334]);
 								}
 								catch (SystemException $e) {
 									// try next authentication method
@@ -275,7 +275,7 @@ class SmtpEmailTransport implements EmailTransport {
 								}
 								$this->write(base64_encode("\0".$this->username."\0".$this->password));
 								$this->lastWrite = '*redacted*';
-								$this->read([ 235 ]);
+								$this->read([235]);
 								return;
 						}
 					}
@@ -339,13 +339,13 @@ class SmtpEmailTransport implements EmailTransport {
 		}
 		
 		$this->write('RSET');
-		$this->read([ 250 ]);
+		$this->read([250]);
 		$this->write('MAIL FROM:<'.$email->getSender()->getAddress().'>');
-		$this->read([ 250 ]);
+		$this->read([250]);
 		$this->write('RCPT TO:<'.$envelopeTo->getAddress().'>');
-		$this->read([ 250, 251 ]);
+		$this->read([250, 251]);
 		$this->write('DATA');
-		$this->read([ 354 ]);
+		$this->read([354]);
 		$this->connection->write(implode("\r\n", array_map(function ($item) {
 			// 4.5.2 Transparency
 			// o  Before sending a line of mail text, the SMTP client checks the
@@ -356,6 +356,6 @@ class SmtpEmailTransport implements EmailTransport {
 			return $item;
 		}, explode("\r\n", $email))));
 		$this->write(".");
-		$this->read([ 250 ]);
+		$this->read([250]);
 	}
 }

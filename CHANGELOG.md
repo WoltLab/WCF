@@ -61,6 +61,7 @@
 * `wcf\action\AJAXProxyAction::getData()` removed.
 * Version system removed.
 * Support for query string based sessions in Frontend removed.
+* Language server system removed.
 
 #### Documentation
 

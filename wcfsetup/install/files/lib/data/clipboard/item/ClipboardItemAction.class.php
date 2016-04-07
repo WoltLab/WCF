@@ -109,7 +109,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	public function unmarkAll() {
 		ClipboardHandler::getInstance()->unmarkAll($this->objectTypeID);
 		
-		return [ 'objectType' => $this->parameters['objectType'] ];
+		return ['objectType' => $this->parameters['objectType']];
 	}
 	
 	/**
@@ -158,7 +158,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 					'actionName' => $item->getName(),
 					'internalData' => $item->getInternalData(),
 					'parameters' => $item->getParameters(),
-					'label' => WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.' . $item->getName(), [ 'count' => $item->getCount() ]),
+					'label' => WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.' . $item->getName(), ['count' => $item->getCount()]),
 					'url' => $item->getURL()
 				];
 			}

@@ -50,12 +50,12 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 		$className = $this->getListClassName();
 		if (!($objectList instanceof $className)) return;
 		
-		$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' <> ?', [ 0 ]);
+		$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' <> ?', [0]);
 		if (isset($conditionData['endTime'])) {
-			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' < ?', [ strtotime($conditionData['endTime']) + 86400 ]);
+			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' < ?', [strtotime($conditionData['endTime']) + 86400]);
 		}
 		if (isset($conditionData['startTime'])) {
-			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' >= ?', [ strtotime($conditionData['startTime']) ]);
+			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' >= ?', [strtotime($conditionData['startTime'])]);
 		}
 	}
 	

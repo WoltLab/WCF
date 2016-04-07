@@ -39,7 +39,7 @@ class Email {
 	 * Recipients of this email.
 	 * @var	array
 	 */
-	protected $recipients = [ ];
+	protected $recipients = [];
 	
 	/**
 	 * Message-Id header
@@ -51,13 +51,13 @@ class Email {
 	 * References header
 	 * @var	Mailbox[]
 	 */
-	protected $references = [ ];
+	protected $references = [];
 	
 	/**
 	 * In-Reply-To header
 	 * @var	Mailbox[]
 	 */
-	protected $inReplyTo = [ ];
+	protected $inReplyTo = [];
 	
 	/**
 	 * Date header
@@ -75,19 +75,19 @@ class Email {
 	 * User specified X-* headers
 	 * @var	array
 	 */
-	protected $extraHeaders = [ ];
+	protected $extraHeaders = [];
 	
 	/**
 	 * Text parts of this email
 	 * @var	array
 	 */
-	protected $text = [ ];
+	protected $text = [];
 	
 	/**
 	 * Attachments of this email
 	 * @var	array
 	 */
-	protected $attachments = [ ];
+	protected $attachments = [];
 	
 	/**
 	 * Boundary between the 'Text' parts of this email
@@ -338,7 +338,7 @@ class Email {
 				throw new SystemException("The given type '".$type."' is invalid. Must be one of 'to', 'cc', 'bcc'.");
 		}
 		
-		$this->recipients[$recipient->getAddress()] = [ $type, $recipient ];
+		$this->recipients[$recipient->getAddress()] = [$type, $recipient];
 	}
 	
 	/**
@@ -372,7 +372,7 @@ class Email {
 			throw new SystemException("The header '".$header."' may not be set. You may only set user defined headers (starting with 'X-').");
 		}
 		
-		$this->extraHeaders[] = [ $header, EmailGrammar::encodeQuotedPrintableHeader($value) ];
+		$this->extraHeaders[] = [$header, EmailGrammar::encodeQuotedPrintableHeader($value)];
 	}
 	
 	/**
@@ -406,10 +406,10 @@ class Email {
 		}
 		
 		if ($part instanceof TextMimePart) {
-			$this->text[] = [ $priority, $part ];
+			$this->text[] = [$priority, $part];
 		}
 		else {
-			$this->attachments[] = [ $priority, $part ];
+			$this->attachments[] = [$priority, $part];
 		}
 	}
 	
@@ -440,58 +440,58 @@ class Email {
 	 * @throws	SystemException
 	 */
 	public function getHeaders() {
-		$headers = [ ];
-		$to = [ ];
-		$cc = [ ];
+		$headers = [];
+		$to = [];
+		$cc = [];
 		foreach ($this->getRecipients() as $recipient) {
 			if ($recipient[0] == 'to') $to[] = $recipient[1];
 			else if ($recipient[0] == 'cc') $cc[] = $recipient[1];
 		}
-		$headers[] = [ 'from', (string) $this->getSender() ];
+		$headers[] = ['from', (string) $this->getSender()];
 		if ($this->getReplyTo()->getAddress() !== $this->getSender()->getAddress()) {
-			$headers[] = [ 'reply-to', (string) $this->getReplyTo() ];
+			$headers[] = ['reply-to', (string) $this->getReplyTo()];
 		}
 		
 		if ($to) {
-			$headers[] = [ 'to', implode(",\r\n   ", $to) ];
+			$headers[] = ['to', implode(",\r\n   ", $to)];
 		}
 		else {
 			throw new SystemException("Cannot generate message headers, you must specify a recipient.");
 		}
 		
 		if ($cc) {
-			$headers[] = [ 'cc', implode(",\r\n   ", $cc) ];
+			$headers[] = ['cc', implode(",\r\n   ", $cc)];
 		}
 		if ($this->getSubject()) {
-			$headers[] = [ 'subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject()) ];
+			$headers[] = ['subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject())];
 		}
 		else {
 			throw new SystemException("Cannot generate message headers, you must specify a subject.");
 		}
 		
-		$headers[] = [ 'date', $this->getDate()->format(\DateTime::RFC2822) ];
-		$headers[] = [ 'message-id', $this->getMessageID() ];
+		$headers[] = ['date', $this->getDate()->format(\DateTime::RFC2822)];
+		$headers[] = ['message-id', $this->getMessageID()];
 		if ($this->getReferences()) {
-			$headers[] = [ 'references', implode(' ', $this->getReferences()) ];
+			$headers[] = ['references', implode(' ', $this->getReferences())];
 		}
 		if ($this->getInReplyTo()) {
-			$headers[] = [ 'in-reply-to', implode(' ', $this->getInReplyTo()) ];
+			$headers[] = ['in-reply-to', implode(' ', $this->getInReplyTo())];
 		}
-		$headers[] = [ 'mime-version', '1.0' ];
+		$headers[] = ['mime-version', '1.0'];
 		
 		if (!$this->text) {
 			throw new SystemException("Cannot generate message headers, you must specify at least one 'Text' part.");
 		}
 		if ($this->attachments) {
-			$headers[] = [ 'content-type', "multipart/mixed;\r\n   boundary=\"".$this->mimeBoundary."\"" ];
+			$headers[] = ['content-type', "multipart/mixed;\r\n   boundary=\"".$this->mimeBoundary."\""];
 		}
 		else {
 			if (count($this->text) > 1) {
-				$headers[] = [ 'content-type', "multipart/alternative;\r\n   boundary=\"".$this->textBoundary."\"" ];
+				$headers[] = ['content-type', "multipart/alternative;\r\n   boundary=\"".$this->textBoundary."\""];
 			}
 			else {
-				$headers[] = [ 'content-type', $this->text[0][1]->getContentType() ];
-				$headers[] = [ 'content-transfer-encoding', $this->text[0][1]->getContentTransferEncoding() ];
+				$headers[] = ['content-type', $this->text[0][1]->getContentType()];
+				$headers[] = ['content-transfer-encoding', $this->text[0][1]->getContentTransferEncoding()];
 				$headers = array_merge($headers, $this->text[0][1]->getAdditionalHeaders());
 			}
 		}
@@ -599,7 +599,7 @@ class Email {
 	 * @return	AbstractBackgroundJob[]
 	 */
 	public function getJobs() {
-		$jobs = [ ];
+		$jobs = [];
 		
 		// ensure every header is filled in
 		$this->getHeaders();
@@ -615,7 +615,7 @@ class Email {
 				if ($mimePart[1] instanceof IRecipientAwareMimePart) $mimePart[1]->setRecipient($recipient[1]);
 			}
 			
-			$data = [ 'mail' => $mail, 'recipient' => $recipient, 'skip' => false ];
+			$data = ['mail' => $mail, 'recipient' => $recipient, 'skip' => false];
 			EventHandler::getInstance()->fireAction($this, 'getJobs', $data);
 			
 			// an event decided that this email should be skipped

@@ -74,7 +74,7 @@ class TagClipboardAction extends AbstractClipboardAction {
 	 */
 	protected function validateDelete() {
 		if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {
-			return [ ];
+			return [];
 		}
 		
 		return array_keys($this->objects);
@@ -87,11 +87,11 @@ class TagClipboardAction extends AbstractClipboardAction {
 	 */
 	protected function validateSetAsSynonyms() {
 		if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {
-			return [ ];
+			return [];
 		}
 		
 		if (count($this->objects) < 2) {
-			return [ ];
+			return [];
 		}
 		
 		return array_keys($this->objects);

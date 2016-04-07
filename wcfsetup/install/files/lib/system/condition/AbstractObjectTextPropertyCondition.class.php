@@ -43,10 +43,10 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 		if (!($objectList instanceof $className)) return;
 		
 		if ($this->supportsMultipleValues) {
-			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' IN (?)', [ $conditionData[$this->fieldName] ]);
+			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' IN (?)', [$conditionData[$this->fieldName]]);
 		}
 		else {
-			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' = ?', [ $conditionData[$this->fieldName] ]);
+			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' = ?', [$conditionData[$this->fieldName]]);
 		}
 	}
 	

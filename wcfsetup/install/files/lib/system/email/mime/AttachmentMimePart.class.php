@@ -80,7 +80,7 @@ class AttachmentMimePart extends AbstractMimePart {
 	 */
 	public function getAdditionalHeaders() {
 		return [ 
-			[ 'Content-Disposition', 'attachment; filename='.EmailGrammar::encodeHeader($this->filename) ]
+			['Content-Disposition', 'attachment; filename='.EmailGrammar::encodeHeader($this->filename)]
 		];
 	}
 	

@@ -38,7 +38,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 				TIME_NOW - 600 // running longer than 10 minutes
 			]);
 			
-			$jobIDs = [ ];
+			$jobIDs = [];
 			while ($row = $statement->fetchArray()) {
 				$jobIDs[] = $row['jobID'];
 				
@@ -67,7 +67,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 			
 			// delete jobs
 			$condition = new PreparedStatementConditionBuilder();
-			$condition->add('jobID IN (?)', [ $jobIDs ]);
+			$condition->add('jobID IN (?)', [$jobIDs]);
 			$sql = "DELETE FROM	wcf".WCF_N."_background_job ".$condition;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($condition->getParameters());

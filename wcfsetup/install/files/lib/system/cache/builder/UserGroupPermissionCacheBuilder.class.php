@@ -31,7 +31,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		
 		// get option values
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("option_value.groupID IN (?)", [ $parameters ]);
+		$conditions->add("option_value.groupID IN (?)", [$parameters]);
 		
 		$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue
 			FROM		wcf".WCF_N."_user_group_option_value option_value
@@ -42,7 +42,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
 			if (!isset($data[$row['optionName']])) {
-				$data[$row['optionName']] = [ 'type' => $row['optionType'], 'values' => [] ];
+				$data[$row['optionName']] = ['type' => $row['optionType'], 'values' => []];
 			}
 			
 			$data[$row['optionName']]['values'][] = $row['optionValue'];

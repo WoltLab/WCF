@@ -96,7 +96,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 			$sql = "DELETE FROM	wcf".WCF_N."_language_item
 				WHERE		languageItem = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([ 'wcf.acp.cronjob.description.cronjob'.$this->cronjobID ]);
+			$statement->execute(['wcf.acp.cronjob.description.cronjob'.$this->cronjobID]);
 		}
 		
 		// save new descriptions

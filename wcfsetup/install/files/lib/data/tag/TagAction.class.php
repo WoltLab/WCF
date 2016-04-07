@@ -109,7 +109,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	 * @since	2.2
 	 */
 	public function validateSetAsSynonyms() {
-		WCF::getSession()->checkPermissions([ 'admin.content.tag.canManageTag' ]);
+		WCF::getSession()->checkPermissions(['admin.content.tag.canManageTag']);
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
