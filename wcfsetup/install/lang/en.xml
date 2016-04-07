@@ -803,7 +803,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.show_clock"><![CDATA[Show current time in page footer]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
-		<item name="wcf.acp.option.user_online_timeout"><![CDATA["Users Online" Timeout]]></item>
+		<item name="wcf.acp.option.user_online_timeout"><![CDATA[“Users Online” Timeout]]></item>
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Timeout in seconds until an inactive user should be displayed as online.]]></item>
 		<item name="wcf.acp.option.offline"><![CDATA[Enable maintenance mode]]></item>
 		<item name="wcf.acp.option.offline.description"><![CDATA[Disables all applications and prevents access from unprivileged users.]]></item>
