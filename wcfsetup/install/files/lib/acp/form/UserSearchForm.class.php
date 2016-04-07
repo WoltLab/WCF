@@ -143,7 +143,7 @@ class UserSearchForm extends UserOptionListForm {
 			if (!$objectType->conditiongroup) continue;
 			
 			if (!isset($this->conditions[$objectType->conditiongroup])) {
-				$this->conditions[$objectType->conditiongroup] = [ ];
+				$this->conditions[$objectType->conditiongroup] = [];
 			}
 			
 			$this->conditions[$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;

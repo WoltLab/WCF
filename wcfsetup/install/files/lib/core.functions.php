@@ -10,13 +10,13 @@ namespace {
 	use wcf\system\WCF;
 
 	// set exception handler
-	set_exception_handler([ WCF::class, 'handleException' ]);
+	set_exception_handler([WCF::class, 'handleException']);
 	// set php error handler
-	set_error_handler([ WCF::class, 'handleError' ], E_ALL);
+	set_error_handler([WCF::class, 'handleError'], E_ALL);
 	// set shutdown function
-	register_shutdown_function([ WCF::class, 'destruct' ]);
+	register_shutdown_function([WCF::class, 'destruct']);
 	// set autoload function
-	spl_autoload_register([ WCF::class, 'autoload' ]);
+	spl_autoload_register([WCF::class, 'autoload']);
 
 	// define escape string shortcut
 	function escapeString($string) {

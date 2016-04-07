@@ -54,7 +54,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 		if ($time < TIME_NOW) {
 			throw new SystemException("You may not schedule a job in the past (".$time." is smaller than the current timestamp ".TIME_NOW.").");
 		}
-		if (!is_array($jobs)) $jobs = [ $jobs ];
+		if (!is_array($jobs)) $jobs = [$jobs];
 		foreach ($jobs as $job) {
 			if (!($job instanceof AbstractBackgroundJob)) {
 				throw new SystemException('$jobs contains an item that does not extend \wcf\system\background\job\AbstractBackgroundJob.');
@@ -194,7 +194,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$sql = "DELETE FROM	wcf".WCF_N."_background_job
 				WHERE		jobID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([ $row['jobID'] ]);
+			$statement->execute([$row['jobID']]);
 		}
 	}
 	
@@ -212,7 +212,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 			WHERE		status = ?
 				AND	time <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([ 'ready', TIME_NOW ]);
+		$statement->execute(['ready', TIME_NOW]);
 		
 		return $statement->fetchSingleColumn();
 	}

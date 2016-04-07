@@ -27,7 +27,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	 * list of available user groups
 	 * @var	UserGroup[]
 	 */
-	public $availableUserGroups = [ ];
+	public $availableUserGroups = [];
 	
 	/**
 	 * name of the inputs used to store the selected user group ids
@@ -39,7 +39,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	 * ids of selected user groups
 	 * @var	integer[]
 	 */
-	public $userGroupIDs = [ ];
+	public $userGroupIDs = [];
 	
 	/**
 	 * @see	\wcf\data\DatabaseObjectDecorator::__construct()
@@ -47,7 +47,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
 		
-		$this->availableUserGroups = UserGroup::getAccessibleGroups([ ], [ UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS ]);
+		$this->availableUserGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 		
 		uasort($this->availableUserGroups, function(UserGroup $groupA, UserGroup $groupB) {
 			return strcmp($groupA->getName(), $groupB->getName());
@@ -110,7 +110,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::reset()
 	 */
 	public function reset() {
-		$this->userGroupIDs = [ ];
+		$this->userGroupIDs = [];
 	}
 	
 	/**

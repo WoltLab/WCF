@@ -44,7 +44,7 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
 	public function getExtraInformation() {
 		return array_map(function ($val) {
 			static $i = 0;
-			return [ 'Query Parameter '.(++$i), $val ];
+			return ['Query Parameter '.(++$i), $val];
 		}, $this->getParameters());
 	}
 }

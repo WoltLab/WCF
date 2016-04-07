@@ -36,7 +36,7 @@ abstract class AbstractUserBulkProcessingAction extends AbstractBulkProcessingAc
 	protected function getAccessibleUsers(UserList $userList) {
 		// fetch user group ids of all users
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('userID IN (?)', [ $userList->getObjectIDs() ]);
+		$conditionBuilder->add('userID IN (?)', [$userList->getObjectIDs()]);
 		
 		$sql = "SELECT	userID, groupID
 			FROM	wcf".WCF_N."_user_to_group

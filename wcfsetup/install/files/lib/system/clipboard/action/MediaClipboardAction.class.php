@@ -19,7 +19,7 @@ class MediaClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @inheritdoc
 	 */
-	protected $actionClassActions = [ 'delete' ];
+	protected $actionClassActions = ['delete'];
 	
 	/**
 	 * @inheritdoc

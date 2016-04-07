@@ -100,7 +100,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 		foreach ($conditionObjectTypes as $objectType) {
 			if ($objectType->conditiongroup) {
 				if (!isset($this->conditions[$objectType->conditiongroup])) {
-					$this->conditions[$objectType->conditiongroup] = [ ];
+					$this->conditions[$objectType->conditiongroup] = [];
 				}
 				
 				$this->conditions[$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
