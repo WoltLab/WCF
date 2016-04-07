@@ -56,8 +56,7 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
 	 * Fetches the objects for the pending object ids.
 	 */
 	protected function fetchObjects() {
-		/** @var DatabaseObjectList $objectList */
-		$objectList = new $this->listClassName;
+		$objectList = $this->getObjectList();
 		$objectList->setObjectIDs(array_values($this->objectIDs));
 		$objectList->readObjects();
 		$this->objects += $objectList->getObjects();
@@ -92,6 +91,15 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
 		$this->fetchObjects();
 		
 		return $this->objects[$objectID];
+	}
+	
+	/**
+	 * Returns a database object list object to fetch cached objects.
+	 * 
+	 * @return	DatabaseObjectList
+	 */
+	protected function getObjectList() {
+		return new $this->listClassName;
 	}
 	
 	/**
