@@ -968,7 +968,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Show author’s activity points]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Show Selected Author Profile Fields]]></item>
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tags]]></item>
-		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the tagging of content.]]></item>
+		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the use of tags for content.]]></item>
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results Per Page]]></item>
@@ -1355,7 +1355,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Enter your authentication password (optional).]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Username]]></item>
 		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Enter your authentication username (optional).]]></item>
-		<item name="wcf.acp.updateServer.packages"><![CDATA[Package]]></item>
+		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[Address is invalid.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
