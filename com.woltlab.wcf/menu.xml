@@ -9,7 +9,7 @@
 				<position>mainMenu</position>
 				<cssClassName>mainMenu</cssClassName>
 				<showHeader>0</showHeader>
-				<visibleEveryhwere>1</visibleEveryhwere>
+				<visibleEverywhere>1</visibleEverywhere>
 			</box>
 		</menu>
 		
@@ -20,7 +20,7 @@
 			<box>
 				<position>footer</position>
 				<showHeader>0</showHeader>
-				<visibleEveryhwere>1</visibleEveryhwere>
+				<visibleEverywhere>1</visibleEverywhere>
 			</box>
 		</menu>
 	</import>
