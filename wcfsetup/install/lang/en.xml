@@ -764,7 +764,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.import.upload.description"><![CDATA[Upload previously downloaded options file.]]></item>
 		<item name="wcf.acp.option.importAndExport"><![CDATA[Save &amp; Restore Options]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
-		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-generated content, e.g. sessions, profiles or forum posts.]]></item>
+		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-created content, e.g. sessions, profiles, or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator Email]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Enter the administrator’s email address here.]]></item>
 		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Log Filename]]></item>
@@ -813,7 +813,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[Enables you to use HTML in “Maintenance Notice”.]]></item>
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Show version number in copyright notice]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Enable debug mode]]></item>
-		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Enables extensive error messages. Should be always disabled in production environments!]]></item>
+		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Enables extensive error messages. Should always be disabled in production environments!]]></item>
 		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Append the attribute “rel="nofollow"” to all external links]]></item>
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
@@ -860,9 +860,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Show number of shares]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Edits]]></item>
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
-		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores old versions of user created items.]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage time]]></item>
-		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Items in the edit history will be discarded if they are older than the given period. [time in days, 0 to disable]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a>. The Callback URL is: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -972,8 +970,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results Per Page]]></item>
-		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Default Sort Field]]></item>
-		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Default Sort Order]]></item>
+		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Sort By]]></item>
+		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Number of Options]]></item>
@@ -2729,7 +2727,7 @@ Errors are:
 		<item name="wcf.user.gender.female"><![CDATA[Female]]></item>
 		<item name="wcf.user.members"><![CDATA[Members]]></item>
 		<item name="wcf.user.members.noMembers"><![CDATA[No members matched your criteria.]]></item>
-		<item name="wcf.user.members.sort"><![CDATA[Sort Field]]></item>
+		<item name="wcf.user.members.sort"><![CDATA[Sort By]]></item>
 		<item name="wcf.user.members.sort.letters"><![CDATA[First Letter]]></item>
 		<item name="wcf.user.members.sort.letters.all"><![CDATA[All]]></item>
 		<item name="wcf.user.membersList.registrationDate"><![CDATA[Member since {@$user->registrationDate|date}]]></item>
