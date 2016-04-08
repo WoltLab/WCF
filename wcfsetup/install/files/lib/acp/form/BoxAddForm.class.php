@@ -135,7 +135,7 @@ class BoxAddForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		$this->visibleEverywhere = $this->showOrder = 0;
+		$this->visibleEverywhere = $this->showHeader = $this->showOrder = 0;
 		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
 		if (isset($_POST['boxType'])) $this->boxType = $_POST['boxType'];
 		if (isset($_POST['position'])) $this->position = $_POST['position'];

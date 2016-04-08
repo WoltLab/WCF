@@ -95,7 +95,7 @@ class MenuAddForm extends AbstractForm {
 		
 		if (I18nHandler::getInstance()->isPlainValue('title')) $this->title = I18nHandler::getInstance()->getValue('title');
 		
-		$this->visibleEverywhere = $this->showOrder = 0;
+		$this->visibleEverywhere = $this->showHeader = $this->showOrder = 0;
 		if (isset($_POST['position'])) $this->position = $_POST['position'];
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 		if (isset($_POST['visibleEverywhere'])) $this->visibleEverywhere = intval($_POST['visibleEverywhere']);

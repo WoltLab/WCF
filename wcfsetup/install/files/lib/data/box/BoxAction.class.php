@@ -129,9 +129,10 @@ class BoxAction extends AbstractDatabaseObjectAction {
 			
 			foreach ($this->objects as $box) {
 				$deleteStatement->execute([$box->boxID]);
+				$visibleEverywhere = (isset($this->parameters['data']['visibleEverywhere']) ? $this->parameters['data']['visibleEverywhere'] : $box->visibleEverywhere);
 				
 				foreach ($this->parameters['pageIDs'] as $pageID) {
-					$insertStatement->execute([$box->boxID, $pageID, ($box->visibleEverywhere ? 0 : 1)]);
+					$insertStatement->execute([$box->boxID, $pageID, ($visibleEverywhere ? 0 : 1)]);
 				}
 			}
 		}
