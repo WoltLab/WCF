@@ -195,7 +195,7 @@ Examples for medium ID detection:
 	<category name="wcf.acp.dashboard">
 		<item name="wcf.acp.dashboard.list"><![CDATA[Configure Dashboard Pages]]></item>
 		<item name="wcf.acp.dashboard.option"><![CDATA[Configure Dashboard Boxes]]></item>
-		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine show order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
+		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine display order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
 	</category>
 	
 	<category name="wcf.acp.dataImport">
@@ -377,7 +377,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.signature.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.signature.allowedBBCodes.description"><![CDATA[All marked BBCodes may be used within the signature.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priority]]></item>
-		<item name="wcf.acp.group.priority.description"><![CDATA[Determines show order on team page, user rank and “Who is Online” marking based on highest priority.]]></item>
+		<item name="wcf.acp.group.priority.description"><![CDATA[Determines display order on team page, user rank, and “Who is Online” marking based on highest priority.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[“Who is Online” Marking]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Adjust the HTML formatting for members of this group in the “Who is Online” list. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> results in a bolder appearance.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.error.notValid"><![CDATA[There must be an occurrence of “%s”]]></item>
@@ -1212,8 +1212,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.M"><![CDATA[Month(s)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.Y"><![CDATA[Year(s)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLength.error.invalid"><![CDATA[You have entered an invalid length. You may set a maximum of 90 for “Day(s)”, 24 for “Month(s)” or 5 for “Year(s)”.]]></item>
-		<item name="wcf.acp.paidSubscription.showOrder"><![CDATA[Show Order]]></item>
-		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[Sets the show order for paid subscriptions.]]></item>
+		<item name="wcf.acp.paidSubscription.showOrder"><![CDATA[Display Order]]></item>
+		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[Sets the display order for paid subscriptions.]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled"><![CDATA[Disable subscription]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled.description"><![CDATA[Disabling a subscription will make it unpurchasable.]]></item>
 		<item name="wcf.acp.paidSubscription.isRecurring"><![CDATA[Recurring Payment]]></item>
@@ -1393,7 +1393,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
 		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Smiley path is relative to “{$__wcf->getPath()}”.]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on given path]]></item>
-		<item name="wcf.acp.smiley.showOrder"><![CDATA[Show Order]]></item>
+		<item name="wcf.acp.smiley.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.smiley.smileyFile"><![CDATA[Smiley File]]></item>
 		<item name="wcf.acp.smiley.fileUpload"><![CDATA[Upload Smiley]]></item>
 		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[Upload the image file for the smiley.]]></item>
@@ -1614,7 +1614,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Do you really want to delete the category “{lang}wcf.user.option.category.{$category->categoryName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
-		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[Show Order]]></item>
+		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
@@ -1637,7 +1637,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Any changes to default values for user profile settings will be applied to existing users. This overrides all affected settings previously changed by the respective user itself.]]></item>
-		<item name="wcf.acp.user.option.showOrder"><![CDATA[Show Order]]></item>
+		<item name="wcf.acp.user.option.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
 		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Provide a regular expression to validate user input.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Custom User Fields]]></item>
