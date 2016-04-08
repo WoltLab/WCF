@@ -343,7 +343,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Can manage smilies]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Delay for Comments]]></item>
-		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Minimum delay between creation of two comments or replies. [time in seconds, 0 to disable]]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Number of seconds a user must wait between creating two comments or replies. Use 0 to disable.]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Can use smilies]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Can use HTML]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
@@ -862,7 +862,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
 		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores older versions of user-created content.]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage time]]></item>
-		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Number of days until content in the edit history will be pruned. Set 0 to disable.]]></item>
+		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Number of days until content in the edit history will be pruned. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a>. The Callback URL is: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -943,7 +943,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Sort By]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Refresh Page]]></item>
-		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Number of seconds when “Users Online” will be refreshed. Set 0 to disable.]]></item>
+		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Number of seconds when “Users Online” will be refreshed. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Exclude guests from the most-online record]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Notifications]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Number of days until Notifications will be discarded.]]></item>
