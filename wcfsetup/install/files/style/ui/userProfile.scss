@@ -29,7 +29,13 @@
 		}
 	}
 	
-	.userAvatar {
+	.contentHeader {
+		align-items: center;
+		color: $wcfHeaderText;
+		width: 100%;
+	}
+	
+	.contentHeaderIcon {
 		background-color: $wcfHeaderBackground;
 		border-radius: 50%;
 		left: 0;
@@ -46,9 +52,8 @@
 		}
 	}
 	
-	.contentHeader {
-		color: $wcfHeaderText;
-		flex: 1 1 auto;
+	.contentTitle + span {
+		margin-top: 5px;
 	}
 	
 	.buttonGroupNavigation {
