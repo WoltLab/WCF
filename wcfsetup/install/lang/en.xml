@@ -862,7 +862,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
 		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores older versions of user-created content.]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage time]]></item>
-		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Number of days until content in the edit history will be pruned. Use 0 to disable.]]></item>
+		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Number of days until content in the edit history will be removed. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a>. The Callback URL is: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -946,11 +946,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Number of seconds when “Users Online” will be refreshed. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Exclude guests from the most-online record]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Notifications]]></item>
-		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Number of days until Notifications will be discarded.]]></item>
+		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Number of days until Notifications will be removed.]]></item>
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime"><![CDATA[Recent Activity]]></item>
-		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Number of days until Activities will be discarded.]]></item>
+		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Number of days until Activities will be removed.]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profile Visitors]]></item>
-		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Number of days until Profile Visitors will be discarded.]]></item>
+		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Number of days until Profile Visitors will be removed.]]></item>
 		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Likes System]]></item>
@@ -1044,7 +1044,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_user_captcha"><![CDATA[Captcha After Failed Attempts (User)]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[Number of failed login attempts from the same user account until a captcha is enforced, regardless of the IP address.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[Prune Log Entries]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Number of days until logs of failed login attempts will be pruned. Raising the limit will provide a longer history, but at the expense of increased database storage usage.]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Number of days until logs of failed login attempts will be removed. Raising the limit will provide a longer history, but at the expense of increased database storage usage.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Default Gravatar Type]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[The <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">default Gravatar type</a> used if no matching Gravatar was found.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[No default Gravatar]]></item>
