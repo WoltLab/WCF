@@ -97,7 +97,7 @@ class BoxEditForm extends BoxAddForm {
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
 			'className' => $this->className
-		]), 'content' => $content]);
+		]), 'content' => $content, 'pageIDs' => $this->pageIDs]);
 		$this->objectAction->executeAction();
 		
 		// call saved event
@@ -130,6 +130,8 @@ class BoxEditForm extends BoxAddForm {
 			$this->className = $this->box->className;
 			if ($this->box->showHeader) $this->showHeader = 1;
 			if ($this->box->visibleEverywhere) $this->visibleEverywhere = 1;
+			else $this->visibleEverywhere = 0;
+			$this->pageIDs = $this->box->getPageIDs();
 			
 			foreach ($this->box->getBoxContent() as $languageID => $content) {
 				$this->title[$languageID] = $content['title'];

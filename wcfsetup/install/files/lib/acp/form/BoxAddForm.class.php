@@ -5,7 +5,9 @@ use wcf\data\box\BoxAction;
 use wcf\data\box\BoxEditor;
 use wcf\data\media\Media;
 use wcf\data\media\ViewableMediaList;
+use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -113,6 +115,12 @@ class BoxAddForm extends AbstractForm {
 	public $images = [];
 	
 	/**
+	 * page ids
+	 * @var	integer[]
+	 */
+	public $pageIDs = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -136,6 +144,7 @@ class BoxAddForm extends AbstractForm {
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['showHeader'])) $this->showHeader = intval($_POST['showHeader']);
 		if (isset($_POST['className'])) $this->className = StringUtil::trim($_POST['className']);
+		if (isset($_POST['pageIDs']) && is_array($_POST['pageIDs'])) $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
 		
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
@@ -191,6 +200,21 @@ class BoxAddForm extends AbstractForm {
 			}
 			
 			// @todo check class
+		}
+		
+		// validate page ids
+		if (!empty($this->pageIDs)) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('pageID IN (?)', [$this->pageIDs]);
+			$sql = "SELECT  pageID
+				FROM    wcf".WCF_N."_page
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			$this->pageIDs = [];
+			while ($row = $statement->fetchArray()) {
+				$this->pageIDs[] = $row['pageID'];
+			}
 		}
 		
 		// validate images
@@ -251,7 +275,7 @@ class BoxAddForm extends AbstractForm {
 			'showHeader' => $this->showHeader,
 			'className' => $this->className,
 			'identifier' => ''
-		]), 'content' => $content]);
+		]), 'content' => $content, 'pageIDs' => $this->pageIDs ]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		// set generic box identifier
@@ -294,9 +318,11 @@ class BoxAddForm extends AbstractForm {
 			'content' => $this->content,
 			'imageID' => $this->imageID,
 			'images' => $this->images,
+			'pageIDs' => $this->pageIDs,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'availableBoxTypes' => Box::$availableBoxTypes,
-			'availablePositions' => Box::$availablePositions
+			'availablePositions' => Box::$availablePositions,
+			'pageNodeList' => (new PageNodeTree())->getNodeList()
 		]);
 	}
 }

@@ -65,6 +65,22 @@ class BoxAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
+		// save box to page
+		if (!empty($this->parameters['pageIDs'])) {
+			$sql = "INSERT INTO	wcf".WCF_N."_box_to_page
+						(boxID, pageID, visible)
+				VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->parameters['pageIDs'] as $pageID) {
+				$statement->execute([
+					$box->boxID,
+					$pageID,
+					($box->visibleEverywhere ? 0 : 1)
+				]);
+			}
+		}
+		
 		return $box;
 	}
 	
@@ -96,6 +112,26 @@ class BoxAction extends AbstractDatabaseObjectAction {
 						$content['content'],
 						$content['imageID']
 					]);
+				}
+			}
+		}
+		
+		// save box to page
+		if (isset($this->parameters['pageIDs'])) {
+			$sql = "DELETE FROM	wcf".WCF_N."_box_to_page
+				WHERE		boxID = ?";
+			$deleteStatement = WCF::getDB()->prepareStatement($sql);
+			
+			$sql = "INSERT INTO	wcf".WCF_N."_box_to_page
+						(boxID, pageID, visible)
+				VALUES		(?, ?, ?)";
+			$insertStatement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->objects as $box) {
+				$deleteStatement->execute([$box->boxID]);
+				
+				foreach ($this->parameters['pageIDs'] as $pageID) {
+					$insertStatement->execute([$box->boxID, $pageID, ($box->visibleEverywhere ? 0 : 1)]);
 				}
 			}
 		}

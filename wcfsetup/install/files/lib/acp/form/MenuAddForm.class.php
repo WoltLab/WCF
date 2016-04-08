@@ -3,10 +3,13 @@ namespace wcf\acp\form;
 use wcf\data\box\Box;
 use wcf\data\menu\MenuAction;
 use wcf\data\menu\MenuEditor;
+use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -68,6 +71,12 @@ class MenuAddForm extends AbstractForm {
 	public $showHeader = 1;
 	
 	/**
+	 * page ids
+	 * @var	integer[]
+	 */
+	public $pageIDs = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -92,6 +101,7 @@ class MenuAddForm extends AbstractForm {
 		if (isset($_POST['visibleEverywhere'])) $this->visibleEverywhere = intval($_POST['visibleEverywhere']);
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['showHeader'])) $this->showHeader = intval($_POST['showHeader']);
+		if (isset($_POST['pageIDs']) && is_array($_POST['pageIDs'])) $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
 	}
 	
 	/**
@@ -112,6 +122,21 @@ class MenuAddForm extends AbstractForm {
 		
 		// validate box position
 		$this->validatePosition();
+		
+		// validate page ids
+		if (!empty($this->pageIDs)) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('pageID IN (?)', [$this->pageIDs]);
+			$sql = "SELECT  pageID
+				FROM    wcf".WCF_N."_page
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			$this->pageIDs = [];
+			while ($row = $statement->fetchArray()) {
+				$this->pageIDs[] = $row['pageID'];
+			}
+		}
 	}
 	
 	/**
@@ -145,7 +170,7 @@ class MenuAddForm extends AbstractForm {
 			'showOrder' => $this->showOrder,
 			'cssClassName' => $this->cssClassName,
 			'packageID' => 1
-		)));
+		), 'pageIDs' => $this->pageIDs));
 		$returnValues = $this->objectAction->executeAction();
 		// set generic identifier
 		$menuEditor = new MenuEditor($returnValues['returnValues']);
@@ -190,7 +215,9 @@ class MenuAddForm extends AbstractForm {
 			'showOrder' => $this->showOrder,
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'showHeader' => $this->showHeader,
-			'availablePositions' => Box::$availableMenuPositions
+			'pageIDs' => $this->pageIDs,
+			'availablePositions' => Box::$availableMenuPositions,
+			'pageNodeList' => (new PageNodeTree())->getNodeList()
 		));
 	}
 }

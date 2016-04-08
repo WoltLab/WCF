@@ -252,6 +252,16 @@ CREATE TABLE wcf1_box_content (
 	KEY (boxID, languageID)
 );
 
+DROP TABLE IF EXISTS wcf1_box_to_page;
+CREATE TABLE wcf1_box_to_page (
+	boxID INT(10) NOT NULL,
+	pageID INT(10) NOT NULL,
+	visible TINYINT(1) NOT NULL DEFAULT 1,
+	
+	UNIQUE KEY (pageID, boxID),
+	KEY (pageID, visible)
+);
+
 DROP TABLE IF EXISTS wcf1_captcha_question;
 CREATE TABLE wcf1_captcha_question (
 	questionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1649,6 +1659,9 @@ ALTER TABLE wcf1_box ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON D
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (imageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_box_to_page ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
+ALTER TABLE wcf1_box_to_page ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 

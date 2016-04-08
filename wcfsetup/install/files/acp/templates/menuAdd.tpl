@@ -98,6 +98,17 @@
 					<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1" {if $visibleEverywhere}checked="checked" {/if}/> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
 				</dd>
 			</dl>
+			
+			<dl>
+				<dt><label for="pageIDs">{lang}wcf.acp.box.pageIDs{/lang}</label></dt>
+				<dd>
+					<select name="pageIDs[]" id="pageIDs" multiple="multiple" size="20">
+						{foreach from=$pageNodeList item=pageNode}
+							<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID|in_array:$pageIDs} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
+						{/foreach}
+					</select>
+				</dd>
+			</dl>
 		{/if}
 		
 		{event name='dataFields'}

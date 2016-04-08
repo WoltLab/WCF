@@ -53,7 +53,7 @@ class MenuAction extends AbstractDatabaseObjectAction {
 		$boxData = $this->parameters['boxData'];
 		$boxData['menuID'] = $menu->menuID;
 		$boxData['identifier'] = '';
-		$boxAction = new BoxAction([], 'create', ['data' => $boxData]);
+		$boxAction = new BoxAction([], 'create', ['data' => $boxData, 'pageIDs' => (isset($this->parameters['pageIDs']) ? $this->parameters['pageIDs'] : [])]);
 		$returnValues = $boxAction->executeAction();
 		
 		// set generic box identifier

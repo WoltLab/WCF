@@ -88,7 +88,7 @@ class MenuEditForm extends MenuAddForm {
 				'showHeader' => ($this->showHeader) ? 1 : 0,
 				'showOrder' => $this->showOrder,
 				'cssClassName' => $this->cssClassName
-			))));
+			)), 'pageIDs' => $this->pageIDs));
 			$boxAction->executeAction();
 		}
 		
@@ -114,6 +114,7 @@ class MenuEditForm extends MenuAddForm {
 			$this->cssClassName = $this->menu->getBox()->cssClassName;
 			$this->showOrder = $this->menu->getBox()->showOrder;
 			$this->visibleEverywhere = $this->menu->getBox()->visibleEverywhere;
+			$this->pageIDs = $this->menu->getBox()->getPageIDs();
 			$this->showHeader = $this->menu->getBox()->showHeader;
 		}
 	}

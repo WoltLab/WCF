@@ -2,6 +2,7 @@
 namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
+use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 
 /**
@@ -26,8 +27,13 @@ class BoxHandler extends SingletonFactory {
 	 * @inheritDoc
 	 */
 	protected function init() {
+		// get active page id
+		$pageID = RequestHandler::getInstance()->getActiveRequest()->getPageID();
+		
 		// load box layout for active page
 		$boxList = new BoxList();
+		if ($pageID) $boxList->getConditionBuilder()->add('(box.visibleEverywhere = ? AND boxID NOT IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)) OR boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)', array(1, $pageID, 0, $pageID, 1));
+		else $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', array(1));
 		$boxList->sqlOrderBy = 'showOrder';
 		$boxList->readObjects();
 		foreach ($boxList as $box) {

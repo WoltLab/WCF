@@ -38,13 +38,13 @@ class Box extends DatabaseObject {
 	 * box content grouped by language id
 	 * @var	string[][]
 	 */
-	protected $boxContent = null;
+	protected $boxContent;
 	
 	/**
 	 * image media object
 	 * @var	ViewableMedia
 	 */
-	protected $image = null;
+	protected $image;
 	
 	/**
 	 * @inheritDoc
@@ -60,7 +60,7 @@ class Box extends DatabaseObject {
 	 * available box types
 	 * @var	string[]
 	 */
-	public static $availableBoxTypes = ['text', 'html', 'system'];
+	public static $availableBoxTypes = ['text', 'html', 'tpl', 'system'];
 	
 	/**
 	 * available box positions
@@ -79,6 +79,12 @@ class Box extends DatabaseObject {
 	 * @var	Menu
 	 */
 	protected $menu;
+	
+	/**
+	 * box to page assignments
+	 * @var integer[]
+	 */
+	protected $pageIDs;
 	
 	/**
 	 * Returns true if the active user can delete this box.
@@ -289,6 +295,27 @@ class Box extends DatabaseObject {
 	public function hasLink() {
 		// @todo
 		return false;
+	}
+	
+	/**
+	 * Returns box to page assignments.
+	 * 
+	 * @return      integer[]
+	 */
+	public function getPageIDs() {
+		if ($this->pageIDs === null) {
+			$this->pageIDs = [];
+			$sql = "SELECT  pageID
+				FROM    wcf" . WCF_N . "_box_to_page
+				WHERE   boxID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->boxID]);
+			while ($row = $statement->fetchArray()) {
+				$this->pageIDs[] = $row['pageID'];
+			}
+		}
+		
+		return $this->pageIDs;
 	}
 	
 	/**
