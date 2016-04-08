@@ -29,7 +29,7 @@
 	</div>
 {/hascontent}
 
-{hascontent}
+{if $objects|count}
 	<div class="section tabularBox">
 		<table class="table">
 			<thead>
@@ -46,27 +46,25 @@
 			</thead>
 			
 			<tbody>
-				{content}
-					{foreach from=$objects item=updateServer}
-						<tr class="jsUpdateServerRow">
-							<td class="columnIcon">
-								<span class="icon icon16 fa-{if !$updateServer->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$updateServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}"></span>
-								<a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}"></span>
-								
-								{event name='itemButtons'}
-							</td>
-							<td class="columnID">{@$updateServer->packageUpdateServerID}</td>
-							<td class="columnText columnTitle"><a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.acp.updateServer.edit{/lang}">{$updateServer->serverURL}</a></td>
-							<td class="columnDigits">{#$updateServer->packages}</td>
-							<td class="columnStatus"><span class="badge{if $updateServer->status == 'online'} green{else} red{/if}">{@$updateServer->status}</span></td>
-							<td class="columnText" title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</td>
-							<td class="columnDate">{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</td>
+				{foreach from=$objects item=updateServer}
+					<tr class="jsUpdateServerRow">
+						<td class="columnIcon">
+							<span class="icon icon16 fa-{if !$updateServer->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$updateServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}"></span>
+							<a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}"></span>
 							
-							{event name='columns'}
-						</tr>
-					{/foreach}
-				{/content}
+							{event name='itemButtons'}
+						</td>
+						<td class="columnID">{@$updateServer->packageUpdateServerID}</td>
+						<td class="columnText columnTitle"><a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.acp.updateServer.edit{/lang}">{$updateServer->serverURL}</a></td>
+						<td class="columnDigits">{#$updateServer->packages}</td>
+						<td class="columnStatus"><span class="badge{if $updateServer->status == 'online'} green{else} red{/if}">{@$updateServer->status}</span></td>
+						<td class="columnText" title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</td>
+						<td class="columnDate">{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 		
@@ -87,8 +85,8 @@
 			</ul>
 		</nav>
 	</footer>
-{hascontentelse}
+{else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
-{/hascontent}
+{/if}
 
 {include file='footer'}

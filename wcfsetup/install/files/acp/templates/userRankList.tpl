@@ -28,7 +28,7 @@
 	</div>
 {/hascontent}
 
-{hascontent}
+{if $objects|count}
 	<div class="section tabularBox">
 		<table class="table">
 			<thead>
@@ -45,26 +45,24 @@
 			</thead>
 			
 			<tbody>
-				{content}
-					{foreach from=$objects item=userRank}
-						<tr class="jsUserRankRow">
-							<td class="columnIcon">
-								<a href="{link controller='UserRankEdit' id=$userRank->rankID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$userRank->rankID}" data-confirm-message="{lang}wcf.acp.user.rank.delete.sure{/lang}"></span>
-								
-								{event name='rowButtons'}
-							</td>
-							<td class="columnID columnRankID">{@$userRank->rankID}</td>
-							<td class="columnTitle columnRankTitle"><a href="{link controller='UserRankEdit' id=$userRank->rankID}{/link}" title="{lang}wcf.acp.user.rank.edit{/lang}" class="badge label{if $userRank->cssClassName} {$userRank->cssClassName}{/if}">{$userRank->rankTitle|language}</a></td>
-							<td class="columnText columnRankImage">{if $userRank->rankImage}{@$userRank->getImage()}{/if}</td>
-							<td class="columnText columnGroupID">{$userRank->groupName|language}</td>
-							<td class="columnText columnRequiredGender">{if $userRank->requiredGender}{if $userRank->requiredGender == 1}{lang}wcf.user.gender.male{/lang}{else}{lang}wcf.user.gender.female{/lang}{/if}{/if}</td>
-							<td class="columnDigits columnRequiredPoints">{#$userRank->requiredPoints}</td>
+				{foreach from=$objects item=userRank}
+					<tr class="jsUserRankRow">
+						<td class="columnIcon">
+							<a href="{link controller='UserRankEdit' id=$userRank->rankID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$userRank->rankID}" data-confirm-message="{lang}wcf.acp.user.rank.delete.sure{/lang}"></span>
 							
-							{event name='columns'}
-						</tr>
-					{/foreach}
-				{/content}
+							{event name='rowButtons'}
+						</td>
+						<td class="columnID columnRankID">{@$userRank->rankID}</td>
+						<td class="columnTitle columnRankTitle"><a href="{link controller='UserRankEdit' id=$userRank->rankID}{/link}" title="{lang}wcf.acp.user.rank.edit{/lang}" class="badge label{if $userRank->cssClassName} {$userRank->cssClassName}{/if}">{$userRank->rankTitle|language}</a></td>
+						<td class="columnText columnRankImage">{if $userRank->rankImage}{@$userRank->getImage()}{/if}</td>
+						<td class="columnText columnGroupID">{$userRank->groupName|language}</td>
+						<td class="columnText columnRequiredGender">{if $userRank->requiredGender}{if $userRank->requiredGender == 1}{lang}wcf.user.gender.male{/lang}{else}{lang}wcf.user.gender.female{/lang}{/if}{/if}</td>
+						<td class="columnDigits columnRequiredPoints">{#$userRank->requiredPoints}</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 	</div>
@@ -84,8 +82,8 @@
 			</ul>
 		</nav>
 	</footer>
-{hascontentelse}
+{else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
-{/hascontent}
+{/if}
 
 {include file='footer'}

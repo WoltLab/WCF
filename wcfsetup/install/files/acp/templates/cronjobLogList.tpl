@@ -39,7 +39,7 @@
 	</div>
 {/hascontent}
 
-{hascontent}
+{if $objects|count}
 	<div class="section tabularBox">
 		<table class="table">
 			<thead>
@@ -55,27 +55,25 @@
 			</thead>
 			
 			<tbody>
-				{content}
-					{foreach from=$objects item=cronjobLog}
-						<tr>
-							<td class="columnID columnCronjobID">{@$cronjobLog->cronjobID}</td>
-							<td class="columnTitle columnClassName">{$cronjobLog->className}</td>
-							<td class="columnText columnDescription">{$cronjobLog->description|language}</td>
-							<td class="columnDate columnExecTime">{if $cronjobLog->execTime}{@$cronjobLog->execTime|time}{/if}</td>
-							
-							<td class="columnText columnSuccess">
-								{if $cronjobLog->success}
-									<span class="badge green">{lang}wcf.acp.cronjob.log.success{/lang}</span>
-								{elseif $cronjobLog->error}
-									<a class="badge red jsTooltip jsCronjobError" title="{lang}wcf.acp.cronjob.log.error.showDetails{/lang}">{lang}wcf.acp.cronjob.log.error{/lang}</a>
-									<span style="display: none">{@$cronjobLog->error}</span>
-								{/if}
-							</td>
-							
-							{event name='columns'}
-						</tr>
-					{/foreach}
-				{/content}
+				{foreach from=$objects item=cronjobLog}
+					<tr>
+						<td class="columnID columnCronjobID">{@$cronjobLog->cronjobID}</td>
+						<td class="columnTitle columnClassName">{$cronjobLog->className}</td>
+						<td class="columnText columnDescription">{$cronjobLog->description|language}</td>
+						<td class="columnDate columnExecTime">{if $cronjobLog->execTime}{@$cronjobLog->execTime|time}{/if}</td>
+						
+						<td class="columnText columnSuccess">
+							{if $cronjobLog->success}
+								<span class="badge green">{lang}wcf.acp.cronjob.log.success{/lang}</span>
+							{elseif $cronjobLog->error}
+								<a class="badge red jsTooltip jsCronjobError" title="{lang}wcf.acp.cronjob.log.error.showDetails{/lang}">{lang}wcf.acp.cronjob.log.error{/lang}</a>
+								<span style="display: none">{@$cronjobLog->error}</span>
+							{/if}
+						</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 	</div>
@@ -101,8 +99,8 @@
 			</nav>
 		{/hascontent}
 	</footer>
-{hascontentelse}
+{else}
 	<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
-{/hascontent}
+{/if}
 
 {include file='footer'}
