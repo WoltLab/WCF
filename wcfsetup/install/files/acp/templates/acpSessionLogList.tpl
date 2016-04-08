@@ -6,11 +6,12 @@
 	</div>
 	
 	{hascontent}
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{content}{event name='contentHeaderNavigation'}{/content}
-		</ul>
-	</nav>
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {hascontent}
