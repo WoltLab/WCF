@@ -1,11 +1,12 @@
 <?php
 namespace wcf\system\request;
+use wcf\data\page\PageCache;
 
 /**
  * Represents a page request.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -28,6 +29,12 @@ class Request {
 	 * @var	string[]
 	 */
 	protected $metaData;
+	
+	/**
+	 * current page id
+	 * @var integer
+	 */
+	protected $pageID;
 	
 	/**
 	 * page name
@@ -154,5 +161,29 @@ class Request {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Returns the current page id.
+	 * 
+	 * @return      integer         current page id or `0` if unknown
+	 */
+	public function getPageID() {
+		if ($this->pageID === null) {
+			if (isset($this->metaData['cms'])) {
+				$this->pageID = $this->metaData['cms']['pageID'];
+			}
+			else {
+				$page = PageCache::getInstance()->getPageByController($this->className);
+				if ($page !== null) {
+					$this->pageID = $page->pageID;
+				}
+				else {
+					$this->pageID = 0;
+				}
+			}
+		}
+		
+		return $this->pageID;
 	}
 }
