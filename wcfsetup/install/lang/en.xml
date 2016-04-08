@@ -934,7 +934,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of unavailable user titles for members, one title per line.]]></item>
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Show Previous Username]]></item>
-		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Number of days in which previous usernames will be displayed.]]></item>
+		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Number of days when previous usernames will be displayed.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members Per Page]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Sort By]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Sort Order]]></item>
@@ -943,7 +943,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Sort By]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Refresh Page]]></item>
-		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Number of seconds in which “Users Online” will be refreshed. Set 0 to disable.]]></item>
+		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Number of seconds when “Users Online” will be refreshed. Set 0 to disable.]]></item>
 		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Exclude guests from the most-online record]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Notifications]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Number of days until Notifications will be discarded.]]></item>
