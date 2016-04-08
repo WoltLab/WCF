@@ -145,7 +145,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		// validate page type
-		$pageType = $data['elements']['pagetype'];
+		$pageType = $data['elements']['pageType'];
 		$controller = '';
 		$identifier = $data['attributes']['identifier'];
 		$isMultilingual = 0;

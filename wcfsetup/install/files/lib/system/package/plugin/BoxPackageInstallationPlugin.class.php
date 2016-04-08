@@ -94,7 +94,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @throws	SystemException
 	 */
 	protected function prepareImport(array $data) {
-		$boxType = $data['elements']['boxtype'];
+		$boxType = $data['elements']['boxType'];
 		$className = '';
 		$identifier = $data['attributes']['identifier'];
 		$isMultilingual = false;
