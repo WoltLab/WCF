@@ -494,6 +494,7 @@ EXPLANATION;
 			if (!isset($item['line'])) $item['line'] = '?';
 			if (!isset($item['class'])) $item['class'] = '';
 			if (!isset($item['type'])) $item['type'] = '';
+			if (!isset($item['args'])) $item['args'] = [];
 			
 			// strip database credentials
 			if (preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class']) || $item['class'] === 'PDO') {
