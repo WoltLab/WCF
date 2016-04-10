@@ -68,6 +68,12 @@ class SessionHandler extends SingletonFactory {
 	protected $hasValidCookie = false;
 	
 	/**
+	 * true if within ACP or WCFSetup
+	 * @var boolean
+	 */
+	protected $isACP = false;
+	
+	/**
 	 * language id for active user
 	 * @var	integer
 	 */
@@ -163,6 +169,7 @@ class SessionHandler extends SingletonFactory {
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
+		$this->isACP = (class_exists(WCFACP::class, false) || !PACKAGE_ID);
 		$this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData(array(), 'usersOnlyOptions');
 	}
 	
@@ -397,7 +404,7 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		$this->user = new User($this->session->userID);
-		if (class_exists(WCFACP::class, false)) {
+		if ($this->isACP) {
 			$this->virtualSession = ACPSessionVirtual::getExistingSession($sessionID);
 		}
 		else {
@@ -425,7 +432,7 @@ class SessionHandler extends SingletonFactory {
 	protected function loadVirtualSession($forceReload = false) {
 		if ($this->virtualSession === null || $forceReload) {
 			$this->virtualSession = null;
-			if (class_exists(WCFACP::class, false)) {
+			if ($this->isACP) {
 				$virtualSessionAction = new ACPSessionVirtualAction(array(), 'create', array('data' => array('sessionID' => $this->session->sessionID)));
 			}
 			else {
@@ -440,7 +447,7 @@ class SessionHandler extends SingletonFactory {
 				// MySQL error 23000 = unique key
 				// do not check against the message itself, some weird systems localize them
 				if ($e->getCode() == 23000) {
-					if (class_exists(WCFACP::class, false)) {
+					if ($this->isACP) {
 						$this->virtualSession = ACPSessionVirtual::getExistingSession($this->session->sessionID);
 					}
 					else {
@@ -730,7 +737,7 @@ class SessionHandler extends SingletonFactory {
 			case 0:
 				// delete virtual session
 				if ($this->virtualSession) {
-					if (class_exists(WCFACP::class, false)) {
+					if ($this->isACP) {
 						$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
 					}
 					else {
@@ -739,7 +746,7 @@ class SessionHandler extends SingletonFactory {
 					$virtualSessionEditor->delete();
 				}
 				
-				if (class_exists(WCFACP::class, false)) {
+				if ($this->isACP) {
 					$sessionCount = ACPSessionVirtual::countVirtualSessions($this->session->sessionID);
 				}
 				else {
@@ -864,7 +871,7 @@ class SessionHandler extends SingletonFactory {
 		$sessionEditor->update($data);
 		
 		if ($this->virtualSession instanceof ACPSessionVirtual) {
-			if (class_exists(WCFACP::class, false)) {
+			if ($this->isACP) {
 				$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
 			}
 			else {
@@ -894,7 +901,7 @@ class SessionHandler extends SingletonFactory {
 		));
 		
 		if ($this->virtualSession instanceof ACPSessionVirtual) {
-			if (class_exists(WCFACP::class, false)) {
+			if ($this->isACP) {
 				$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
 			}
 			else {
@@ -913,7 +920,7 @@ class SessionHandler extends SingletonFactory {
 			self::resetSessions(array($this->user->userID));
 			
 			// update last activity time
-			if (!class_exists(WCFACP::class, false)) {
+			if (!$this->isACP) {
 				$editor = new UserEditor($this->user);
 				$editor->update(array('lastActivityTime' => TIME_NOW));
 			}

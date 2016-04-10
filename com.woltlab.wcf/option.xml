@@ -519,7 +519,7 @@ private:wcf.acp.option.exception_privacy.private]]></selectoptions>
 			<option name="cookie_prefix">
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue>wcf21_</defaultvalue>
+				<defaultvalue>wcf22_</defaultvalue>
 				<validationpattern>.+</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->

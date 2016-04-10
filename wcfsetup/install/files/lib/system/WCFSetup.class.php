@@ -1223,7 +1223,7 @@ class WCFSetup extends WCF {
 		}
 		
 		// login as admin
-		define('COOKIE_PREFIX', 'wcf2_');
+		define('COOKIE_PREFIX', 'wcf22_');
 		
 		$factory = new ACPSessionFactory();
 		$factory->load();

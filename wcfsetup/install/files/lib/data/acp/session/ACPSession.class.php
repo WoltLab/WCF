@@ -59,7 +59,7 @@ class ACPSession extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function supportsVirtualSessions() {
-		return false;
+		return true;
 	}
 	
 	/**
