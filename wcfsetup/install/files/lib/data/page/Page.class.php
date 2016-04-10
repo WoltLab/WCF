@@ -213,14 +213,13 @@ class Page extends DatabaseObject {
 			throw new SystemException('Pages requiring an object id cannot be set as landing page.');
 		}
 		
+		WCF::getDB()->beginTransaction();
 		// unmark existing landing page
 		$sql = "UPDATE  wcf".WCF_N."_page
-			SET     isLandingPage = ?
-				AND isLandingPage = ?";
+			SET     isLandingPage = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			0,
-			1
+			0
 		]);
 		
 		// set current page as landing page
@@ -232,6 +231,7 @@ class Page extends DatabaseObject {
 			1,
 			$this->pageID
 		]);
+		WCF::getDB()->commitTransaction();
 	}
 	
 	/**
