@@ -298,7 +298,14 @@
 }
 
 .boxFlag > .box24, .boxFlag.box24 {
+	display: flex !important;
 	min-height: 20px;
+}
+
+@include large-screen-only {
+	.dropdownMenu.pageHeaderSearchDropdown {
+		transform: translateY(-10px);
+	}
 }
 
 @include small-screen-only {

@@ -83,7 +83,8 @@
 		}
 		
 		.pageHeaderSearch {
-			flex: 0 0 auto;
+			align-self: stretch;
+			flex: 0 0 50px;
 			margin-bottom: 0;
 			margin-left: 10px;
 			order: 3;
@@ -121,11 +122,6 @@
 		}
 		
 		&:not(.searchBarOpen) {
-			.pageHeaderSearch {
-				font-size: 0;
-				width: 50px;
-			}
-			
 			.pageHeaderSearchInput,
 			.pageHeaderSearchInputButton {
 				display: none;
@@ -134,17 +130,15 @@
 		
 		&.searchBarOpen {
 			.pageHeaderSearchInputContainer {
-				bottom: 0;
-				left: 0;
+				height: 100%;
 				position: absolute;
-				right: 0;
-				top: 0;
+				top: 100%;
+				transform: translateX(-50px);
 				z-index: 100; 
 			}
 			
 			.pageHeaderSearchLabel {
-				position: static;
-				visibility: hidden;
+				background-color: $wcfHeaderSearchBoxBackgroundActive;
 				width: 50px;
 			}
 		}

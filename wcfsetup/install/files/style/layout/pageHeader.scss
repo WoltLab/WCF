@@ -143,28 +143,36 @@
 }
 
 @include large-screen-only {
-	.pageHeader:not(.sticky) .mainMenu {
-		background-color: $wcfHeaderMenuBackground;
-		position: relative;
-		
-		/* The `box-shadow` and the `::before` are used to create a full-width
-		   color stripe that matches the height of the main menu. This trick is
-		   used to allows us to have all elements in the header share a common
-		   ancestor in order to easily move elements with flexbox' `order` property.
-		   
-		   The `box-shadow` is a neat hack because an `::after` element would
-		   increase the page width unless we set `overflow: hidden` to the entire
-		   page header which is bad for multiple reasons. */
-		box-shadow: 900px 0 0 0 $wcfHeaderMenuBackground;
-		
-		&::before {
+	.pageHeader:not(.sticky) {
+		.mainMenu {
 			background-color: $wcfHeaderMenuBackground;
-			bottom: 0;
-			content: "";
-			left: -100%;
-			position: absolute;
-			top: 0;
-			width: 100%;
+			position: relative;
+			
+			/* The `box-shadow` and the `::before` are used to create a full-width
+			   color stripe that matches the height of the main menu. This trick is
+			   used to allows us to have all elements in the header share a common
+			   ancestor in order to easily move elements with flexbox' `order` property.
+			   
+			   The `box-shadow` is a neat hack because an `::after` element would
+			   increase the page width unless we set `overflow: hidden` to the entire
+			   page header which is bad for multiple reasons. */
+			box-shadow: 900px 0 0 0 $wcfHeaderMenuBackground;
+			
+			&::before {
+				background-color: $wcfHeaderMenuBackground;
+				bottom: 0;
+				content: "";
+				left: -100%;
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+		}
+		
+		.pageHeaderSearchInputContainer .pageHeaderSearchInput {
+			padding-bottom: 10px;
+			padding-top: 10px;
+			width: 200px;
 		}
 	}
 }

@@ -76,7 +76,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		_initElement: function(chooserId, element, languageId, languages, callback, allowEmptyValue) {
 			var container = element.parentNode;
 			container.classList.add('dropdown');
-			var dropdownToggle = elCreate('div');
+			var dropdownToggle = elCreate('a');
 			dropdownToggle.className = 'dropdownToggle boxFlag box24 inputPrefix';
 			container.insertBefore(dropdownToggle, element);
 			

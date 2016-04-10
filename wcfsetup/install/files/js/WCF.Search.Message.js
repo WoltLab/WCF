@@ -131,13 +131,12 @@ WCF.Search.Message.SearchArea = Class.extend({
 		
 		if (this._searchArea.hasClass('dropdown')) {
 			var $containerID = this._searchArea.wcfIdentify();
+			var $dropdownMenu = WCF.Dropdown.getDropdownMenu($containerID);
 			var $form = this._searchArea.find('form');
 			if ($form.length === 0) $form = this._searchArea.parent();
 			
 			$form.submit(function() {
 				// copy checkboxes and hidden fields into form
-				var $dropdownMenu = WCF.Dropdown.getDropdownMenu($containerID);
-				
 				$dropdownMenu.find('input[type=hidden]').appendTo($form);
 				$dropdownMenu.find('input[type=checkbox]:checked').each(function(index, input) {
 					var $input = $(input);
@@ -145,6 +144,34 @@ WCF.Search.Message.SearchArea = Class.extend({
 					$('<input type="hidden" name="' + $input.attr('name') + '" value="' + $input.attr('value') + '" />').appendTo($form);
 				});
 			});
+			
+			var $enableFlexWidth = true;
+			require(['Ui/Screen'], function(UiScreen) {
+				UiScreen.on({
+					match: function() { $enableFlexWidth = false; },
+					unmatch: function() { $enableFlexWidth = true; },
+					setup: function() { $enableFlexWidth = false; }
+				})
+			});
+			
+			$dropdownMenu.addClass('pageHeaderSearchDropdown');
+			WCF.Dropdown.registerCallback($containerID, (function(containerID, action) {
+				if ($enableFlexWidth && action === 'open' && elById('pageHeader').classList.contains('sticky')) {
+					var width = elById('pageHeaderSearch').clientWidth + elById('topMenu').clientWidth;
+					if (width < 200) width = 200;
+					
+					this._searchArea.css('width', width + 'px');
+					$dropdownMenu.css('width', width + 'px');
+				}
+				else {
+					this._searchArea.css('width', '');
+					$dropdownMenu.css('width', '');
+				}
+			}).bind(this));
+			
+			$(window).scroll((function () {
+				this._searchArea.css('width', '');
+			}).bind(this));
 		}
 	},
 	
