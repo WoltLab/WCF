@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  * @property-read	integer		$showHeader
  * @property-read	integer		$originIsSystem
  * @property-read	integer		$packageID
- * @property-read	string		$className
+ * @property-read	string		$controller
  * @property-read	integer|null	$menuID
  */
 class Box extends DatabaseObject {
@@ -85,6 +85,12 @@ class Box extends DatabaseObject {
 	 * @var integer[]
 	 */
 	protected $pageIDs;
+	
+	/**
+	 * box controller
+	 * @var \wcf\system\box\IBoxController
+	 */
+	protected $__controller;
 	
 	/**
 	 * Returns true if the active user can delete this box.
@@ -219,8 +225,20 @@ class Box extends DatabaseObject {
 		return !empty($content);
 	}
 	
+	/**
+	 * Returns the box controller.
+	 * 
+	 * @return      \wcf\system\box\IBoxController
+	 */
 	public function getController() {
-		// @todo
+		if ($this->__controller === null) {
+			if ($this->controller && class_exists($this->controller)) {
+				$this->__controller = new $this->controller;
+				$this->__controller->setBox($this);
+			}
+		}
+		
+		return $this->__controller;
 	}
 	
 	/**

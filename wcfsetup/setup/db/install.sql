@@ -237,7 +237,7 @@ CREATE TABLE wcf1_box (
 	showHeader TINYINT(1) NOT NULL DEFAULT 1,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	packageID INT(10) NOT NULL,
-	className VARCHAR(255) NOT NULL DEFAULT '',
+	controller VARCHAR(255) NOT NULL DEFAULT '',
 	menuID INT(10) NULL
 );
 

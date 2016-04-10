@@ -79,10 +79,10 @@ class BoxAddForm extends AbstractForm {
 	public $showHeader = 1;
 	
 	/**
-	 * php class name
+	 * box controller
 	 * @var	string
 	 */
-	public $className = '';
+	public $controller = '';
 	
 	/**
 	 * box name
@@ -143,7 +143,7 @@ class BoxAddForm extends AbstractForm {
 		if (isset($_POST['visibleEverywhere'])) $this->visibleEverywhere = intval($_POST['visibleEverywhere']);
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['showHeader'])) $this->showHeader = intval($_POST['showHeader']);
-		if (isset($_POST['className'])) $this->className = StringUtil::trim($_POST['className']);
+		if (isset($_POST['controller'])) $this->controller = StringUtil::trim($_POST['controller']);
 		if (isset($_POST['pageIDs']) && is_array($_POST['pageIDs'])) $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
 		
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
@@ -195,11 +195,11 @@ class BoxAddForm extends AbstractForm {
 		
 		// validate class name
 		if ($this->boxType == 'system') {
-			if (empty($this->className)) {
-				throw new UserInputException('className');
+			if (empty($this->controller)) {
+				throw new UserInputException('controller');
 			}
 			
-			// @todo check class
+			// @todo check controller
 		}
 		
 		// validate page ids
@@ -273,7 +273,7 @@ class BoxAddForm extends AbstractForm {
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
-			'className' => $this->className,
+			'controller' => $this->controller,
 			'identifier' => ''
 		]), 'content' => $content, 'pageIDs' => $this->pageIDs ]);
 		$returnValues = $this->objectAction->executeAction();
@@ -291,7 +291,7 @@ class BoxAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->boxType = $this->position = $this->cssClassName = $this->className = $this->name = '';
+		$this->boxType = $this->position = $this->cssClassName = $this->controller = $this->name = '';
 		$this->showOrder = 0;
 		$this->visibleEverywhere = $this->showHeader = 1;
 		$this->title = $this->content = $this->images = $this->imageID = [];
@@ -310,7 +310,7 @@ class BoxAddForm extends AbstractForm {
 			'boxType' => $this->boxType,
 			'position' => $this->position,
 			'cssClassName' => $this->cssClassName,
-			'className' => $this->className,
+			'controller' => $this->controller,
 			'showOrder' => $this->showOrder,
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'showHeader' => $this->showHeader,

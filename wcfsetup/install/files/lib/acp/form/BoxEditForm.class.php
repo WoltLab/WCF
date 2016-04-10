@@ -96,7 +96,7 @@ class BoxEditForm extends BoxAddForm {
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
-			'className' => $this->className
+			'controller' => $this->controller
 		]), 'content' => $content, 'pageIDs' => $this->pageIDs]);
 		$this->objectAction->executeAction();
 		
@@ -127,7 +127,7 @@ class BoxEditForm extends BoxAddForm {
 			$this->position = $this->box->position;
 			$this->showOrder = $this->box->showOrder;
 			$this->cssClassName = $this->box->cssClassName;
-			$this->className = $this->box->className;
+			$this->controller = $this->box->controller;
 			if ($this->box->showHeader) $this->showHeader = 1;
 			if ($this->box->visibleEverywhere) $this->visibleEverywhere = 1;
 			else $this->visibleEverywhere = 0;

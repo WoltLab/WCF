@@ -2,14 +2,6 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/page.xsd">
 	<import>
 		<!-- dynamic -->
-		<page identifier="com.woltlab.wcf.Dashboard">
-			<pageType>system</pageType>
-			<controller>wcf\page\DashboardPage</controller>
-			<name language="de"><![CDATA[Dashboard]]></name>
-			<name language="en"><![CDATA[Dashboard]]></name>
-			<options>module_dashboard_page</options>
-		</page>
-		
 		<page identifier="com.woltlab.wcf.MembersList">
 			<pageType>system</pageType>
 			<controller>wcf\page\MembersListPage</controller>
@@ -242,6 +234,19 @@
 		</page>
 		
 		<!-- static -->
+		<page identifier="com.woltlab.wcf.Dashboard">
+			<pageType>text</pageType>
+			<name language="de"><![CDATA[Dashboard]]></name>
+			<name language="en"><![CDATA[Dashboard]]></name>
+			<options>module_dashboard_page</options>
+			
+			<content>
+				<title>Dashboard</title>
+				<content><![CDATA[]]></content>
+				<customURL>dashboard</customURL>
+			</content>
+		</page>
+		
 		<page identifier="com.woltlab.wcf.CookiePolicy">
 			<pageType>text</pageType>
 			<name language="en">Cookie Policy</name>

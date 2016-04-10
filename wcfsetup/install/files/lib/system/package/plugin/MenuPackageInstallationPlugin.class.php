@@ -28,6 +28,12 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	public $boxData = [];
 	
 	/**
+	 * visibility exceptions per box
+	 * @var	string[]
+	 */
+	public $visibilityExceptions = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public $className = MenuEditor::class;
@@ -88,6 +94,13 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					
 					$elements['box']['name'][$element->getAttribute('language')] = $element->nodeValue;
 				}
+				else if ($child->tagName === 'visibilityExceptions') {
+					$elements['box']['visibilityExceptions'] = [];
+					/** @var \DOMElement $child */
+					foreach ($xpath->query('child::*', $child) as $child2) {
+						$elements['box']['visibilityExceptions'][] = $child2->nodeValue;
+					}
+				}
 				else {
 					$elements['box'][$child->tagName] = $child->nodeValue;
 				}
@@ -125,6 +138,10 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				'originIsSystem' => 1,
 				'packageID' => $this->installation->getPackageID()
 			];
+			
+			if (!empty($data['elements']['box']['visibilityExceptions'])) {
+				$this->visibilityExceptions[$identifier] = $data['elements']['box']['visibilityExceptions'];
+			}
 			
 			unset($data['elements']['box']);
 		}
@@ -199,22 +216,57 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$menus[$menu->identifier] = $menu;
 		}
 		
+		// handle visibility exceptions
+		$sql = "DELETE FROM     wcf".WCF_N."_box_to_page
+			WHERE           boxID = ?";
+		$deleteStatement = WCF::getDB()->prepareStatement($sql);
+		$sql = "INSERT IGNORE   wcf".WCF_N."_box_to_page
+					(boxID, pageID, visible)
+			VALUES          (?, ?, ?)";
+		$insertStatement = WCF::getDB()->prepareStatement($sql);
 		foreach ($this->boxData as $identifier => $data) {
 			// connect box with menu
 			if (isset($menus[$identifier])) {
 				$data['menuID'] = $menus[$identifier]->menuID;
 			}
 			
+			$box = null;
 			if (isset($boxes[$identifier])) {
+				$box = $boxes[$identifier];
+				
+				// delete old visibility exceptions
+				$deleteStatement->execute([$box->boxID]);
+				
 				// skip both 'identifier' and 'packageID' as these properties are immutable
 				unset($data['identifier']);
 				unset($data['packageID']);
 				
-				$boxEditor = new BoxEditor($boxes[$identifier]);
+				$boxEditor = new BoxEditor($box);
 				$boxEditor->update($data);
 			}
 			else {
-				BoxEditor::create($data);
+				$box = BoxEditor::create($data);
+			}
+			
+			// save visibility exceptions
+			if (!empty($this->visibilityExceptions[$identifier])) {
+				// get page ids
+				$conditionBuilder = new PreparedStatementConditionBuilder();
+				$conditionBuilder->add('identifier IN (?)', [$this->visibilityExceptions[$identifier]]);
+				$sql = "SELECT  pageID
+					FROM    wcf" . WCF_N . "_page
+					" . $conditionBuilder;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditionBuilder->getParameters());
+				$pageIDs = [];
+				while ($row = $statement->fetchArray()) {
+					$pageIDs[] = $row['pageID'];
+				}
+				
+				// save page ids
+				foreach ($pageIDs as $pageID) {
+					$insertStatement->execute([$box->boxID, $pageID, ($box->visibleEverywhere ? 0 : 1)]);
+				}
 			}
 		}
 	}

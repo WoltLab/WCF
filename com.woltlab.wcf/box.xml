@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/box.xsd">
+	<import>
+		<box identifier="com.woltlab.wcf.RecentActivity">
+			<name language="de">Letzte Aktivitäten</name>
+			<name language="en">Recent Activity</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\RecentActivityBoxController</controller>
+			<position>contentBottom</position>
+			<showHeader>0</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.RecentActivitySidebar">
+			<name language="de">Letzte Aktivitäten (Sidebar)</name>
+			<name language="en">Recent Activity (Sidebar)</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\RecentActivityBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+		</box>
+	</import>
+</data>

@@ -88,6 +88,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 */
 	protected function prepareImport(array $data) {
 		$isStatic = false;
+		
 		if (!empty($data['elements']['content'])) {
 			$isStatic = true;
 			
@@ -260,18 +261,23 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			WCF::getDB()->beginTransaction();
 			foreach ($this->content as $pageID => $contentData) {
 				foreach ($contentData as $languageCode => $content) {
-					$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
-					if ($language !== null) {
-						$statement->execute([
-							$pageID,
-							$language->languageID,
-							$content['title'],
-							$content['content'],
-							$content['metaDescription'],
-							$content['metaKeywords'],
-							$content['customURL']
-						]);
+					$languageID = null;
+					if ($languageCode != '') {
+						$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+						if ($language === null) continue;
+						
+						$languageID = $language->languageID;
 					}
+					
+					$statement->execute([
+						$pageID,
+						$languageID,
+						$content['title'],
+						$content['content'],
+						$content['metaDescription'],
+						$content['metaKeywords'],
+						$content['customURL']
+					]);
 				}
 			}
 			WCF::getDB()->commitTransaction();

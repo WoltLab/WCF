@@ -120,16 +120,16 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'className'} class="formError"{/if}>
-			<dt><label for="className">{lang}wcf.acp.box.className{/lang}</label></dt>
+		<dl{if $errorField == 'controller'} class="formError"{/if}>
+			<dt><label for="controller">{lang}wcf.acp.box.controller{/lang}</label></dt>
 			<dd>
-				<input type="text" id="className" name="className" value="{$className}" class="long" />
-				{if $errorField == 'className'}
+				<input type="text" id="controller" name="controller" value="{$controller}" class="long" />
+				{if $errorField == 'controller'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.box.className.error.{@$errorType}{/lang}
+							{lang}wcf.acp.box.controller.error.{@$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}

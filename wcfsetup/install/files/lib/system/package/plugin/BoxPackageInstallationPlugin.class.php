@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -25,6 +26,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 */
 	public $tagName = 'box';
+	
+	/**
+	 * visibility exceptions per box
+	 * @var	string[]
+	 */
+	public $visibilityExceptions = [];
 	
 	/**
 	 * @inheritDoc
@@ -84,6 +91,13 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				'title' => $children['title']
 			];
 		}
+		else if ($element->tagName === 'visibilityExceptions') {
+			$elements['visibilityExceptions'] = [];
+			/** @var \DOMElement $child */
+			foreach ($xpath->query('child::*', $element) as $child) {
+				$elements['visibilityExceptions'][] = $child->nodeValue;
+			}
+		}
 		else {
 			$elements[$element->tagName] = $nodeValue;
 		}
@@ -95,7 +109,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 */
 	protected function prepareImport(array $data) {
 		$boxType = $data['elements']['boxType'];
-		$className = '';
+		$controller = '';
 		$identifier = $data['attributes']['identifier'];
 		$isMultilingual = false;
 		$position = $data['elements']['position'];
@@ -106,15 +120,16 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		
 		switch ($boxType) {
 			case 'system':
-				if (empty($data['elements']['className'])) {
-					throw new SystemException("Missing required element 'classname' for 'system'-type box '{$identifier}'");
+				if (empty($data['elements']['controller'])) {
+					throw new SystemException("Missing required element 'controller' for 'system'-type box '{$identifier}'");
 				}
 				
-				$className = $data['elements']['className'];
+				$controller = $data['elements']['controller'];
 				break;
 			
 			case 'html':
 			case 'text':
+			case 'tpl':
 				if (empty($data['elements']['content'])) {
 					throw new SystemException("Missing required 'content' element(s) for box '{$identifier}'");
 				}
@@ -139,6 +154,10 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				break;
 		}
 		
+		if (!empty($data['elements']['visibilityExceptions'])) {
+			$this->visibilityExceptions[$identifier] = $data['elements']['visibilityExceptions'];
+		}
+		
 		return [
 			'identifier' => $identifier,
 			'name' => $this->getI18nValues($data['elements']['name'], true),
@@ -150,7 +169,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			'cssClassName' => (!empty($data['elements']['cssClassName'])) ? $data['elements']['cssClassName'] : '',
 			'showHeader' => (!empty($data['elements']['showHeader'])) ? 1 : 0,
 			'originIsSystem' => 1,
-			'className' => $className
+			'controller' => $controller
 		];
 	}
 	
@@ -203,5 +222,58 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		}
 		
 		return parent::import($row, $data);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function postImport() {
+		if (empty($this->visibilityExceptions)) return;
+		
+		// get all boxes belonging to the identifiers
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("identifier IN (?)", [array_keys($this->visibilityExceptions)]);
+		$conditions->add("packageID = ?", [$this->installation->getPackageID()]);
+		
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_box
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$boxes = [];
+		while ($box = $statement->fetchObject(Box::class)) {
+			$boxes[$box->identifier] = $box;
+		}
+		
+		// save visibility exceptions
+		$sql = "DELETE FROM     wcf".WCF_N."_box_to_page
+			WHERE           boxID = ?";
+		$deleteStatement = WCF::getDB()->prepareStatement($sql);		
+		$sql = "INSERT IGNORE   wcf".WCF_N."_box_to_page
+					(boxID, pageID, visible)
+			VALUES          (?, ?, ?)";
+		$insertStatement = WCF::getDB()->prepareStatement($sql);
+		foreach ($this->visibilityExceptions as $boxIdentifier => $pages) {
+			// delete old visibility exceptions
+			$deleteStatement->execute([$boxes[$boxIdentifier]->boxID]);
+			
+			// get page ids
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('identifier IN (?)', array($pages));
+			$sql = "SELECT  pageID
+				FROM    wcf".WCF_N."_page
+				".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			$pageIDs = [];
+			while ($row = $statement->fetchArray()) {
+				$pageIDs[] = $row['pageID'];
+			}
+			
+			// save page ids
+			foreach ($pageIDs as $pageID) {
+				$insertStatement->execute([$boxes[$boxIdentifier]->boxID, $pageID, ($boxes[$boxIdentifier]->visibleEverywhere ? 0 : 1)]);
+			}
+		}
 	}
 }

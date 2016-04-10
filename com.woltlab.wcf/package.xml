@@ -41,6 +41,7 @@
 		<instruction type="page" />
 		<instruction type="menu" />
 		<instruction type="menuItem" />
+		<instruction type="box" />
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	

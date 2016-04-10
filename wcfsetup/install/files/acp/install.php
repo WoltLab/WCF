@@ -54,16 +54,6 @@ $sql = "UPDATE	wcf".WCF_N."_user_group_option
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute([1]);
 
-// landing page
-$sql = "UPDATE  wcf".WCF_N."_page
-	SET     isLandingPage = ?
-	WHERE   identifier = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute([
-	1,
-	'com.woltlab.wcf.Dashboard'
-]);
-
 // get server timezone
 if ($timezone = @date_default_timezone_get()) {
 	if ($timezone != 'Europe/London' && in_array($timezone, DateUtil::getAvailableTimezones())) {

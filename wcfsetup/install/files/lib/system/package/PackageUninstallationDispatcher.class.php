@@ -126,7 +126,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 */
 	protected function executeUninstallScript() {
 		// check if uninstall script file for the uninstalled package exists
-		$uninstallScript = WCF_DIR.'acp/uninstall/'.$this->package->package.'.php';
+		$uninstallScript = WCF_DIR.'acp/uninstall/'.$this->getPackage()->package.'.php';
 		if (file_exists($uninstallScript)) {
 			include($uninstallScript);
 		}
