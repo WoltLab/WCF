@@ -397,23 +397,21 @@
 	
 	.pageHeader {
 		&.searchBarOpen {
-			.pageHeaderContainerLeft {
+			.pageHeaderLogo,
+			.mainMenu,
+			.userPanel {
 				display: none;
 			}
 			
-			.pageHeaderContainerRight {
+			.pageHeaderSearch {
 				flex: 0 0 100%;
 				
-				.pageHeaderSearch {
-					flex: 0 0 100%;
-					
-					.pageHeaderSearchInput {
-						width: 100%;
-					}
-				}
+				.pageHeaderSearchInputContainer {
+					display: block;
+				} 
 				
-				.userPanel {
-					display: none;
+				.pageHeaderSearchInput {
+					width: 100%;
 				}
 			}
 		}
