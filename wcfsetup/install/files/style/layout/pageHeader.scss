@@ -68,6 +68,7 @@
 				> .boxMenuLinkOutstandingItems {
 					background-color: rgb(255, 255, 255);
 					color: rgb(192, 57, 43);
+					margin-left: 5px;
 				}
 			}
 			
@@ -210,11 +211,11 @@
 				}
 				
 				/* special styling for update badge */
-				> span.badgeUpdate {
+				> .badgeUpdate {
 					box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
-					left: 16px;
+					left: 26px;
 					position: absolute;
-					top: -5px;
+					top: 2px;
 				}
 			}
 			
