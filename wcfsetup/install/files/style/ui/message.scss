@@ -1,18 +1,21 @@
 .messageList {
-	border: 1px solid $wcfContentBorder;
-	border-width: 1px 0;
+	border-bottom: 1px solid $wcfContentBorder;
 	
-	> li {
-		@include large-screen-only {
+	@include large-screen-only {
+		border-top: 1px solid $wcfContentBorder;
+		
+		> li {
 			padding: 30px 0;
+			
+			&:not(:first-child) {
+				border-top: 1px solid $wcfContentBorder;
+			}
 		}
-		
-		@include small-screen-only {
-			padding: 20px 0;
-		}
-		
-		&:not(:first-child) {
-			border-top: 1px solid $wcfContentBorder;
+	}
+	
+	@include small-screen-only {
+		> li {
+			padding-bottom: 20px;
 		}
 	}
 }
@@ -158,7 +161,27 @@
 		left: 0;
 		pointer-events: none;
 		position: absolute;
-		bottom: 0;
+		
+		@include large-screen-only {
+			bottom: 0;
+		}
+		
+		@include small-screen-only {
+			color: transparent;
+			padding: 0;
+			width: 0;
+			
+			&::before {
+				background-color: inherit;
+				border: 1px solid rgba(255, 255, 255, 1);
+				border-radius: 50%;
+				content: "";
+				height: 16px;
+				left: 34px; /* 48px (avatar) - 16px (width) - 2px (border-left + border-right) */
+				position: absolute;
+				width: 16px;
+			}
+		}
 	}
 }
 
