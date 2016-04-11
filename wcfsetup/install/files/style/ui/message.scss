@@ -273,6 +273,7 @@
 }
 
 .messageHeaderBox {
+	align-items: center;
 	display: flex;
 	flex: 1 1 auto;
 	flex-wrap: wrap;
@@ -302,6 +303,8 @@
 }
 
 .messageHeaderMetaData {
+	align-items: center;
+	
 	@include inlineList;
 	@include dotSeparated;
 	@include wcfFontSmall;
@@ -316,6 +319,8 @@
 }
 
 .messageStatus {
+	align-items: center;
+	
 	@include inlineList;
 	@include wcfFontSmall;
 	
