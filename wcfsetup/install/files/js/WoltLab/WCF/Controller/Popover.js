@@ -2,7 +2,7 @@
  * Versatile popover manager.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Popover
  */
@@ -87,6 +87,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		 * Initializes a popover handler.
 		 * 
 		 * Usage:
+		 * 
 		 * ControllerPopover.init({
 		 * 	attributeName: 'data-object-id',
 		 * 	className: 'fooLink',
@@ -99,7 +100,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		 * 	}
 		 * });
 		 * 
-		 * @param	{object<string, *>}	options		handler options
+		 * @param	{Object}	options		handler options
 		 */
 		init: function(options) {
 			if (Environment.platform() !== 'desktop') {
@@ -142,8 +143,8 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		/**
 		 * Binds event listeners for popover-enabled elements.
 		 * 
-		 * @param	{object<string, *>}	options		handler options
-		 * @param	{string}		identifier	handler identifier
+		 * @param	{Object}	options		handler options
+		 * @param	{string}	identifier	handler identifier
 		 */
 		_initElements: function(options, identifier) {
 			var elements = options.legacy ? elBySelAll(options.elements) : options.elements;
@@ -245,10 +246,8 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		
 		/**
 		 * Handles the mouse leaving the popover-enabled element or the popover itself.
-		 * 
-		 * @param	{object}	event	event object
 		 */
-		_mouseLeave: function(event) {
+		_mouseLeave: function() {
 			_hoverId = null;
 			
 			if (_timeoutLeave !== null) {
@@ -268,10 +267,8 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		
 		/**
 		 * Handles the mouse start hovering the popover element.
-		 * 
-		 * @param	{object}	event	event object
 		 */
-		_popoverMouseEnter: function(event) {
+		_popoverMouseEnter: function() {
 			if (_timeoutLeave !== null) {
 				window.clearTimeout(_timeoutLeave);
 				_timeoutLeave = null;
@@ -363,7 +360,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			UiAlignment.set(_popover, _elements.get(_activeId).element, {
 				pointer: true,
 				vertical: 'top',
-				verticalOffset: 3
+				verticalOffset: 8
 			});
 		},
 		
@@ -375,9 +372,9 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		/**
 		 * Sends an AJAX requests to the server, simple wrapper to reuse the request object.
 		 * 
-		 * @param	{object<string, *>}	data		request data
-		 * @param	{function<object>}	success		success callback
-		 * @param	{function<object>=}	failure		error callback
+		 * @param	{Object}	data		request data
+		 * @param	{function}	success		success callback
+		 * @param	{function=}	failure		error callback
 		 */
 		ajaxApi: function(data, success, failure) {
 			if (typeof success !== 'function') {
