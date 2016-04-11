@@ -113,5 +113,5 @@ abstract class AbstractBoxController implements IBoxController {
 	/**
 	 * Loads the content of this box.
 	 */
-	protected abstract function loadContent();
+	abstract protected function loadContent();
 }
