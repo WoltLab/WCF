@@ -455,7 +455,7 @@ EXPLANATION;
 													case 'NULL':
 														return 'null';
 													case 'string':
-														return StringUtil::encodeHTML($item);
+														return "'".addcslashes(StringUtil::encodeHTML($item), "\\'")."'";
 													case 'boolean':
 														return $item ? 'true' : 'false';
 													case 'array':
