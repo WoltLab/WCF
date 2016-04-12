@@ -263,7 +263,8 @@ class MenuItemAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->isDisabled = $this->isInternalLink = false;
+		$this->isInternalLink = true;
+		$this->isDisabled = false;
 		$this->pageID = $this->pageObjectID = $this->parentItemID = null;
 		$this->externalURL = $this->title = '';
 		$this->showOrder = 0;
