@@ -280,7 +280,7 @@ class RouteHandler extends SingletonFactory {
 				}
 			}
 			
-			return '/' . implode('/', $path) . '/';
+			return FileUtil::addTrailingSlash('/' . implode('/', $path));
 		}
 		
 		return self::$path;
