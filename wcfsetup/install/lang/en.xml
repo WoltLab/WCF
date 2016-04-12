@@ -343,7 +343,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Can manage smilies]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Delay for Comments]]></item>
-		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Number of seconds between the creation of two comments or replies. Use 0 to disable.]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Number of seconds between creating two comments or replies. Use 0 to disable.]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Can use smilies]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Can use HTML]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
@@ -384,7 +384,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Show members on team page]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Rename]]></item>
-		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Days until members can rename themselves.]]></item>
+		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Members can rename themselves after this time.]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Cannot be blocked]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Likes System]]></item>
