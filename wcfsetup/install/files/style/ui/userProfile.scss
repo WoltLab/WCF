@@ -106,10 +106,11 @@
 
 .userProfile .main {
 	padding-top: 0;
-}
-
-.section.userProfileContent {
-	margin-top: 20px;
+	
+	.userProfileContent,
+	.sidebar {
+		margin-top: 20px;
+	}
 }
 
 .userAvatarList {
