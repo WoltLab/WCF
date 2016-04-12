@@ -26,5 +26,155 @@
 				<page>com.woltlab.wcf.Dashboard</page>
 			</visibilityExceptions>
 		</box>
+		
+		<box identifier="com.woltlab.wcf.PaidSubscriptions">
+			<name language="de">Bezahlte Mitgliedschaften</name>
+			<name language="en">Paid Subscriptions</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\PaidSubscriptionsBoxController</controller>
+			<position>contentBottom</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.PaidSubscriptionsSidebar">
+			<name language="de">Bezahlte Mitgliedschaften (Sidebar)</name>
+			<name language="en">Paid Subscriptions (Sidebar)</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\PaidSubscriptionsBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.RegisterButton">
+			<name language="de">Registrierungs-Button</name>
+			<name language="en">Register Button</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\RegisterButtonBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>0</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<!--<cssClassName></cssClassName> todo -->
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.SignedInAs">
+			<name language="de">Angemeldet als</name>
+			<name language="en">Signed In As</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\SignedInAsBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>0</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.Statistics">
+			<name language="de">Statistiken</name>
+			<name language="en">Statistics</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\StatisticsBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.NewestMembers">
+			<name language="de">Neueste Mitglieder</name>
+			<name language="en">Newest Members</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\NewestMembersBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.MostActiveMembers">
+			<name language="de">Aktivste Mitglieder</name>
+			<name language="en">Most Active Members</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\MostActiveMembersBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.MostLikedMembers">
+			<name language="de">Mitglieder mit den meisten Likes</name>
+			<name language="en">Most Liked Members</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\MostLikedMembersBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.TodaysBirthdays">
+			<name language="de">Heutige Geburtstage</name>
+			<name language="en">Today’s Birthdays</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\TodaysBirthdaysBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.TodaysFollowingBirthdays">
+			<name language="de">Heutige Geburtstage von Nutzern, denen der Nutzer folgt</name>
+			<name language="en">Today’s Birthdays of Users the User Follows</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\TodaysFollowingBirthdaysBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.UsersOnline">
+			<name language="de">Benutzer online</name>
+			<name language="en">Users Online</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\UsersOnlineBoxController</controller>
+			<position>footerBoxes</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.UsersOnlineSidebar">
+			<name language="de">Benutzer online (Sidebar)</name>
+			<name language="en">Users Online (Sidebar)</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\UsersOnlineBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.StaffOnline">
+			<name language="de">Team-Mitglieder online</name>
+			<name language="en">Staff-Members Online</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\StaffOnlineBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.FollowingsOnline">
+			<name language="de">Benutzer online, denen der Nutzer folgt</name>
+			<name language="en">Users Online the User Follows</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\FollowingsBoxController</controller>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
 	</import>
 </data>

@@ -33,7 +33,6 @@
 		<instruction type="bbcode" />
 		<instruction type="smiley" />
 		<instruction type="sitemap" />
-		<instruction type="dashboardBox" />
 		<instruction type="userProfileMenu" />
 		<instruction type="userMenu" />
 		<instruction type="userNotificationEvent" />

@@ -3,7 +3,7 @@
 		<li>
 			<div class="sidebarBoxHeadline" title="{$subscription->description|language}">
 				<h3>{$subscription->title|language}</h3>
-				<small>{lang}wcf.paidSubscription.formattedCost{/lang}</small> 
+				<small>{lang}wcf.paidSubscription.formattedCost{/lang}</small>
 			</div>
 			
 			{if !PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}

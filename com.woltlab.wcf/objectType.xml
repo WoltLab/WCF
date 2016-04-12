@@ -44,20 +44,6 @@
 		</type>
 		
 		<type>
-			<name>com.woltlab.wcf.user.DashboardPage</name>
-			<definitionname>com.woltlab.wcf.user.dashboardContainer</definitionname>
-			<allowcontent>1</allowcontent>
-			<allowsidebar>1</allowsidebar>
-		</type>
-		
-		<type>
-			<name>com.woltlab.wcf.user.MembersListPage</name>
-			<definitionname>com.woltlab.wcf.user.dashboardContainer</definitionname>
-			<allowcontent>0</allowcontent>
-			<allowsidebar>1</allowsidebar>
-		</type>
-		
-		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\UserModerationQueueReportHandler</classname>

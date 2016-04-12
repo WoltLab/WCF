@@ -1947,31 +1947,8 @@ Errors are:
 	</category>
 	
 	<category name="wcf.dashboard">
-		<item name="wcf.dashboard.box.availableBoxes"><![CDATA[Disabled Boxes]]></item>
-		<item name="wcf.dashboard.box.enabledBoxes"><![CDATA[Active Boxes]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.recentActivitySidebar"><![CDATA[Recent Activity]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.statsSidebar"><![CDATA[Statistics]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.newestMembers"><![CDATA[Newest Members]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.mostActiveMembers"><![CDATA[Most Active Members]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.registerButton"><![CDATA[Register Button]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.signedInAs"><![CDATA[Signed In As]]></item>
-		<item name="wcf.dashboard.boxType.content"><![CDATA[Content Area]]></item>
-		<item name="wcf.dashboard.boxType.sidebar"><![CDATA[Sidebar]]></item>
-		<item name="wcf.dashboard.objectType"><![CDATA[Page]]></item>
-		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.DashboardPage"><![CDATA[Dashboard]]></item>
-		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.MembersListPage"><![CDATA[Members List]]></item>
-		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.RecentActivityListPage"><![CDATA[Recent Activities]]></item>
-		<item name="wcf.dashboard.box.mostActiveMembers.points"><![CDATA[{#$activeMember->activityPoints} Point{if $activeMember->activityPoints != 1}s{/if}]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.recentActivity"><![CDATA[Recent Activity]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Most Liked Members]]></item>
-		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysBirthdays"><![CDATA[Today’s Birthdays]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysFollowingBirthdays"><![CDATA[Today’s Birthdays of Users you Follow]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.usersOnlineSidebar"><![CDATA[Users Online]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[Users Online you Follow]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.staffOnlineSidebar"><![CDATA[Staff-Members Online]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.paidSubscriptions"><![CDATA[Paid Subscriptions]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.paidSubscriptionsSidebar"><![CDATA[Paid Subscriptions]]></item>
+		<item name="wcf.dashboard.box.mostActiveMembers.points"><![CDATA[todo{#$activeMember->activityPoints} Point{if $activeMember->activityPoints != 1}s{/if}]]></item>
+		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[todo{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 	</category>
 	
 	<category name="wcf.date">
