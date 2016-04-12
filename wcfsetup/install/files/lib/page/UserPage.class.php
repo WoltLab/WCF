@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * Shows the user profile page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -44,7 +44,7 @@ class UserPage extends AbstractPage {
 	 * overview editable content object type
 	 * @var	\wcf\data\object\type\ObjectType
 	 */
-	public $objectType = null;
+	public $objectType;
 	
 	/**
 	 * profile content for active menu item
@@ -62,25 +62,25 @@ class UserPage extends AbstractPage {
 	 * user object
 	 * @var	UserProfile
 	 */
-	public $user = null;
+	public $user;
 	
 	/**
 	 * follower list
 	 * @var	\wcf\data\user\follow\UserFollowerList
 	 */
-	public $followerList = null;
+	public $followerList;
 	
 	/**
 	 * following list
 	 * @var	\wcf\data\user\follow\UserFollowingList
 	 */
-	public $followingList = null;
+	public $followingList;
 	
 	/**
 	 * visitor list
 	 * @var	\wcf\data\user\profile\visitor\UserProfileVisitorList
 	 */
-	public $visitorList = null;
+	public $visitorList;
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -100,7 +100,7 @@ class UserPage extends AbstractPage {
 		
 		if (isset($_REQUEST['editOnInit'])) $this->editOnInit = true;
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('User', array('object' => $this->user));
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('User', ['object' => $this->user]);
 	}
 	
 	/**
@@ -125,25 +125,25 @@ class UserPage extends AbstractPage {
 		
 		// get followers
 		$this->followerList = new UserFollowerList();
-		$this->followerList->getConditionBuilder()->add('user_follow.followUserID = ?', array($this->userID));
-		$this->followerList->sqlLimit = 12;
+		$this->followerList->getConditionBuilder()->add('user_follow.followUserID = ?', [$this->userID]);
+		$this->followerList->sqlLimit = 7;
 		$this->followerList->readObjects();
 		
 		// get following
 		$this->followingList = new UserFollowingList();
-		$this->followingList->getConditionBuilder()->add('user_follow.userID = ?', array($this->userID));
-		$this->followingList->sqlLimit = 12;
+		$this->followingList->getConditionBuilder()->add('user_follow.userID = ?', [$this->userID]);
+		$this->followingList->sqlLimit = 7;
 		$this->followingList->readObjects();
 		
 		// get visitors
 		if (PROFILE_ENABLE_VISITORS) {
 			$this->visitorList = new UserProfileVisitorList();
-			$this->visitorList->getConditionBuilder()->add('user_profile_visitor.ownerID = ?', array($this->userID));
-			$this->visitorList->sqlLimit = 12;
+			$this->visitorList->getConditionBuilder()->add('user_profile_visitor.ownerID = ?', [$this->userID]);
+			$this->visitorList->sqlLimit = 7;
 			$this->visitorList->readObjects();
 		}
 		
-		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('User', array('object' => $this->user->getDecoratedObject(), 'appendSession' => false)), true);
+		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('User', ['object' => $this->user->getDecoratedObject(), 'appendSession' => false]), true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'profile', true);
 		MetaTagHandler::getInstance()->addTag('profile:username', 'profile:username', $this->user->username, true);
 		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->user->username . ' - ' . WCF::getLanguage()->get('wcf.user.members') . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
@@ -156,7 +156,7 @@ class UserPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'editOnInit' => $this->editOnInit,
 			'overviewObjectType' => $this->objectType,
 			'profileContent' => $this->profileContent,
@@ -166,11 +166,11 @@ class UserPage extends AbstractPage {
 			'followerCount' => $this->followerList->countObjects(),
 			'following' => $this->followingList->getObjects(),
 			'followingCount' => $this->followingList->countObjects(),
-			'visitors' => ($this->visitorList !== null ? $this->visitorList->getObjects() : array()),
+			'visitors' => ($this->visitorList !== null ? $this->visitorList->getObjects() : []),
 			'visitorCount' => ($this->visitorList !== null ? $this->visitorList->countObjects() : 0),
 			'allowSpidersToIndexThisPage' => true,
 			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs())
-		));
+		]);
 	}
 	
 	/**
@@ -180,22 +180,20 @@ class UserPage extends AbstractPage {
 		// update profile hits
 		if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->spiderID && !$this->user->isProtected()) {
 			$editor = new UserEditor($this->user->getDecoratedObject());
-			$editor->updateCounters(array('profileHits' => 1));
+			$editor->updateCounters(['profileHits' => 1]);
 			
 			// save visitor
 			if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
 				if (($visitor = UserProfileVisitor::getObject($this->user->userID, WCF::getUser()->userID)) !== null) {
 					$editor = new UserProfileVisitorEditor($visitor);
-					$editor->update(array(
-						'time' => TIME_NOW
-					));
+					$editor->update(['time' => TIME_NOW]);
 				}
 				else {
-					UserProfileVisitorEditor::create(array(
+					UserProfileVisitorEditor::create([
 						'ownerID' => $this->user->userID,
 						'userID' => WCF::getUser()->userID,
 						'time' => TIME_NOW
-					));
+					]);
 				}
 			}
 		}

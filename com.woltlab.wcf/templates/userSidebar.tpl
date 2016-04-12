@@ -10,7 +10,7 @@
 					{/foreach}
 				</ul>
 				
-				{if $followingCount > 8}
+				{if $followingCount > 7}
 					<a id="followingAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
 				{/if}
 			</div>
@@ -28,7 +28,7 @@
 					{/foreach}
 				</ul>
 					
-				{if $followerCount > 8}
+				{if $followerCount > 7}
 					<a id="followerAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
 				{/if}
 			</div>
@@ -46,7 +46,7 @@
 					{/foreach}
 				</ul>
 					
-				{if $visitorCount > 8}
+				{if $visitorCount > 7}
 					<a id="visitorAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
 				{/if}
 			</div>

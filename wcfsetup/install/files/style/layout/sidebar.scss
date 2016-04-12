@@ -67,6 +67,10 @@
 		> div,
 		> fieldset,
 		> section {
+			.boxContent {
+				@include clearfix;
+			}
+			
 			.button.more {
 				float: right;
 				margin-top: 15px;
