@@ -370,11 +370,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="module_dashboard_page">
-				<categoryname>module.display</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			
 			<option name="module_like">
 				<categoryname>module.community</categoryname>
@@ -1353,7 +1348,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			</option>
 			<!-- /user.cleanup -->
 			
-			<!-- dashboard -->
+			<!-- dashboard TODO -->
 			<option name="recent_activity_items">
 				<categoryname>dashboard.content.recentActivities</categoryname>
 				<optiontype>integer</optiontype>

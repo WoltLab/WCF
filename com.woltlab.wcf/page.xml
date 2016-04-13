@@ -238,7 +238,6 @@
 			<pageType>text</pageType>
 			<name language="de"><![CDATA[Dashboard]]></name>
 			<name language="en"><![CDATA[Dashboard]]></name>
-			<options>module_dashboard_page</options>
 			
 			<content>
 				<title>Dashboard</title>

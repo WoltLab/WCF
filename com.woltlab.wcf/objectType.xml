@@ -499,13 +499,6 @@
 			<categoryname>com.woltlab.wcf.other</categoryname>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.DashboardPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\DashboardPage]]></classname>
-			<options>module_dashboard_page</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.DeletedContentListPage</name>
 			<definitionname>com.woltlab.wcf.page</definitionname>
 			<classname><![CDATA[wcf\page\DeletedContentListPage]]></classname>

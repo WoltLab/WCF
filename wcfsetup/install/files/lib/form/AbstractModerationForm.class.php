@@ -10,7 +10,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 
 /**
@@ -134,9 +133,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 			'commentCanAdd' => true,
 			'commentList' => $this->commentList,
 			'commentObjectTypeID' => $this->commentObjectTypeID,
-			'lastCommentTime' => ($this->commentList ? $this->commentList->getMinCommentTime() : 0),
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'com.woltlab.wcf.ModerationForm'),
-			'sidebarName' => 'com.woltlab.wcf.ModerationForm'
+			'lastCommentTime' => ($this->commentList ? $this->commentList->getMinCommentTime() : 0)
 		]);
 	}
 	

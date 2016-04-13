@@ -100,8 +100,6 @@
 			</div>
 		</form>
 	</section>
-	
-	{@$__boxSidebar}
 {/capture}
 
 {include file='header'}

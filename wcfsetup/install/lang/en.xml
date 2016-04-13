@@ -190,12 +190,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are no entries yet.]]></item>
 	</category>
 	
-	<category name="wcf.acp.dashboard">
-		<item name="wcf.acp.dashboard.list"><![CDATA[Configure Dashboard Pages]]></item>
-		<item name="wcf.acp.dashboard.option"><![CDATA[Configure Dashboard Boxes]]></item>
-		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine show order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
-	</category>
-	
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Data Import]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.alreadySelected"><![CDATA[This data will already be imported.]]></item>
@@ -349,12 +343,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.message.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[Selected BBCodes may be used by members of this group.]]></item>
-		<item name="wcf.acp.group.option.admin.content.dashboard.canEditDashboard"><![CDATA[Can manage dashboard boxes]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Can manage user ranks]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Can manage activity points]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewInvisible"><![CDATA[Can see invisible users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewIpAddress"><![CDATA[Can see IP addresses]]></item>
-		<item name="wcf.acp.group.option.category.admin.content.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.group.option.category.user.profile"><![CDATA[User Profiles]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.avatar"><![CDATA[Avatars]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.rank"><![CDATA[User Ranks]]></item>
@@ -615,8 +607,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley Categories]]></item>
-		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Configure Dashboard Pages]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[User Ranks]]></item>
@@ -910,8 +900,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[User ranks]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff list]]></item>
-		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[Notice: In case the Dashboard is currently defined as landing page, you must set a different landing page through the <a href="{link controller='PageMenuItemList'}{/link}">Page Menu</a> management afterwards.]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Enable password validation]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Password complexity will be validated, unsafe passwords will be rejected.]]></item>
 		<item name="wcf.acp.option.register_password_min_length"><![CDATA[Minimum Password Length]]></item>
@@ -2583,7 +2571,6 @@ Errors are:
 		<item name="wcf.page.com.woltlab.wcf.SettingsForm"><![CDATA[Settings]]></item>
 		<item name="wcf.page.com.woltlab.wcf.SignatureEditForm"><![CDATA[Signature Management]]></item>
 		<item name="wcf.page.com.woltlab.wcf.UserSearchForm"><![CDATA[Members Search]]></item>
-		<item name="wcf.page.com.woltlab.wcf.DashboardPage"><![CDATA[Dashboard]]></item>
 		<item name="wcf.page.com.woltlab.wcf.DeletedContentListPage"><![CDATA[Deleted Content]]></item>
 		<item name="wcf.page.com.woltlab.wcf.FollowingPage"><![CDATA[Followed Users]]></item>
 		<item name="wcf.page.com.woltlab.wcf.IgnoredUsersPage"><![CDATA[Blocked Users]]></item>
@@ -2601,7 +2588,6 @@ Errors are:
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.UsersOnlineList"><![CDATA[List of Users Online]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.MembersList"><![CDATA[Members List]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Team"><![CDATA[List of Staff Members]]></item>
-		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Register"><![CDATA[Registration]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.LostPassword"><![CDATA[Lost Password]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Login"><![CDATA[Login]]></item>
@@ -2890,7 +2876,6 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.birthday.age.to"><![CDATA[to]]></item>
 		<item name="wcf.user.search"><![CDATA[Search Members]]></item>
 		<item name="wcf.user.search.error.noMatches"><![CDATA[Your criteria did not match any member.]]></item>
-		<item name="wcf.user.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Newest Member]]></item>
 		<item name="wcf.user.login.3rdParty"><![CDATA[Third-Party Login]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>

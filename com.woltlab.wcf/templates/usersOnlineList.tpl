@@ -88,8 +88,6 @@
 			</div>
 		{/if}
 	</section>
-	
-	{@$__boxSidebar}
 {/capture}
 
 {include file='header'}

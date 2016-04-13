@@ -52,10 +52,6 @@
 		</definition>
 		
 		<definition>
-			<name>com.woltlab.wcf.user.dashboardContainer</name>
-		</definition>
-		
-		<definition>
 			<name>com.woltlab.wcf.user.objectWatch</name>
 			<interfacename><![CDATA[wcf\system\user\object\watch\IUserObjectWatch]]></interfacename>
 		</definition>

@@ -1,11 +1,9 @@
 <?php
 namespace wcf\page;
 use wcf\data\search\Search;
-use wcf\system\dashboard\DashboardHandler;
 use wcf\system\database\PostgreSQLDatabase;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
@@ -145,14 +143,10 @@ class MembersListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		DashboardHandler::getInstance()->loadBoxes('com.woltlab.wcf.user.MembersListPage', $this);
-		
 		WCF::getTPL()->assign(array(
 			'letters' => str_split(self::$availableLetters),
 			'letter' => $this->letter,
 			'searchID' => $this->searchID,
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'com.woltlab.wcf.user.MembersListPage'),
-			'sidebarName' => 'com.woltlab.wcf.user.MembersListPage',
 			'allowSpidersToIndexThisPage' => true
 		));
 		

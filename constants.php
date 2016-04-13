@@ -44,7 +44,6 @@ define('MODULE_USER_RANK', 1);
 define('MODULE_USER_SIGNATURE', 1);
 define('MODULE_MEMBERS_LIST', 1);
 define('MODULE_TEAM_PAGE', 1);
-define('MODULE_DASHBOARD_PAGE', 1);
 define('MODULE_LIKE', 1);
 define('MODULE_USER_PROFILE_WALL', 1);
 define('MODULE_TAGGING', 1);

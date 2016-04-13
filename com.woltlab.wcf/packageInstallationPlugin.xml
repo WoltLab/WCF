@@ -28,7 +28,6 @@
 		<pip name="userProfileMenu">wcf\system\package\plugin\UserProfileMenuPackageInstallationPlugin</pip>
 		<pip name="userMenu">wcf\system\package\plugin\UserMenuPackageInstallationPlugin</pip>
 		<pip name="userNotificationEvent">wcf\system\package\plugin\UserNotificationEventPackageInstallationPlugin</pip>
-		<pip name="dashboardBox">wcf\system\package\plugin\DashboardBoxPackageInstallationPlugin</pip>
 		<pip name="box">wcf\system\package\plugin\BoxPackageInstallationPlugin</pip>
 		<pip name="menu">wcf\system\package\plugin\MenuPackageInstallationPlugin</pip>
 		<pip name="menuItem">wcf\system\package\plugin\MenuItemPackageInstallationPlugin</pip>

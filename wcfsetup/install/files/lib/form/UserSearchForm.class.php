@@ -3,11 +3,9 @@ namespace wcf\form;
 use wcf\acp\form\UserOptionListForm;
 use wcf\data\search\SearchEditor;
 use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\dashboard\DashboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -106,13 +104,9 @@ class UserSearchForm extends UserOptionListForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		DashboardHandler::getInstance()->loadBoxes('com.woltlab.wcf.user.MembersListPage', $this);
-		
 		WCF::getTPL()->assign([
 			'username' => $this->username,
-			'optionTree' => $this->optionTree,
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'com.woltlab.wcf.user.MembersListPage'),
-			'sidebarName' => 'com.woltlab.wcf.user.MembersListPage'
+			'optionTree' => $this->optionTree
 		]);
 	}
 	

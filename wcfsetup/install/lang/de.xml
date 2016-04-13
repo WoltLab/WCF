@@ -190,13 +190,7 @@
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Fehlermeldung]]></item>
 		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[Derzeit sind keine Einträge vorhanden.]]></item>
 	</category>
-	
-	<category name="wcf.acp.dashboard">
-		<item name="wcf.acp.dashboard.list"><![CDATA[Dashboard-Seiten konfigurieren]]></item>
-		<item name="wcf.acp.dashboard.option"><![CDATA[Dashboard-Boxen konfigurieren]]></item>
-		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sie können die Boxen durch Ziehen und Loslassen mit der Maus sortieren. Boxen können aktiviert bzw. deaktiviert werden, indem Sie die gewünschte Box in „Aktive Boxen“ bzw. „Deaktivierte Boxen“ verschieben.]]></item>
-	</category>
-	
+		
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Datenimport]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.alreadySelected"><![CDATA[Diese Daten werden bereits importiert.]]></item>
@@ -349,12 +343,10 @@
 		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Kann BBCodes benutzen]]></item>
 		<item name="wcf.acp.group.option.user.message.allowedBBCodes"><![CDATA[Erlaubte BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe verwendet werden.]]></item>
-		<item name="wcf.acp.group.option.admin.content.dashboard.canEditDashboard"><![CDATA[Kann Dashboards konfigurieren]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Kann Benutzerränge verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Kann Aktivitätspunkte bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewInvisible"><![CDATA[Kann unsichtbare Benutzer sehen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewIpAddress"><![CDATA[Kann die IP-Adressen der Benutzer sehen]]></item>
-		<item name="wcf.acp.group.option.category.admin.content.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.group.option.category.user.profile"><![CDATA[Benutzerprofile]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.avatar"><![CDATA[Avatare]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.rank"><![CDATA[Benutzerränge]]></item>
@@ -617,8 +609,6 @@
 		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
-		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Seiten konfigurieren]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Aktivitätspunkte]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[Benutzerränge]]></item>
@@ -912,8 +902,6 @@
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signaturen]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Team-Seite]]></item>
-		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[Hinweis: Falls das Dashboard als Startseite definiert ist, muss bei Deaktivierung dieser Option zusätzlich eine neue Startseite in der <a href="{link controller='PageMenuItemList'}{/link}">Hauptmenüverwaltung</a> ausgewählt werden.]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Sicherheitsüberprüfung aktivieren]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Kennwörter werden auf ihre Sicherheit geprüft. Unsichere Kennwörter werden abgelehnt.]]></item>
 		<item name="wcf.acp.option.register_password_min_length"><![CDATA[Minimale Kennwortlänge]]></item>
@@ -2554,7 +2542,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.com.woltlab.wcf.SettingsForm"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.page.com.woltlab.wcf.SignatureEditForm"><![CDATA[Signatur-Verwaltung]]></item>
 		<item name="wcf.page.com.woltlab.wcf.UserSearchForm"><![CDATA[Mitgliedersuche]]></item>
-		<item name="wcf.page.com.woltlab.wcf.DashboardPage"><![CDATA[Dashboard]]></item>
 		<item name="wcf.page.com.woltlab.wcf.DeletedContentListPage"><![CDATA[Gelöschte Inhalte]]></item>
 		<item name="wcf.page.com.woltlab.wcf.FollowingPage"><![CDATA[Benutzer, denen Sie folgen]]></item>
 		<item name="wcf.page.com.woltlab.wcf.IgnoredUsersPage"><![CDATA[Blockierte Benutzer]]></item>
@@ -2572,7 +2559,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.UsersOnlineList"><![CDATA[Benutzer-Online-Liste]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.MembersList"><![CDATA[Mitgliederliste]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Team"><![CDATA[Liste der Team-Mitglieder]]></item>
-		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Register"><![CDATA[Registrierung]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.LostPassword"><![CDATA[Kennwort vergessen]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Login"><![CDATA[Anmeldung]]></item>
@@ -2864,7 +2850,6 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.birthday.age.to"><![CDATA[bis]]></item>
 		<item name="wcf.user.search"><![CDATA[Mitgliedersuche]]></item>
 		<item name="wcf.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Mitglied gefunden.]]></item>
-		<item name="wcf.user.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Neuestes Mitglied]]></item>
 		<item name="wcf.user.login.3rdParty"><![CDATA[Anmeldung über Drittanbieter]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Suchergebnisse]]></item>

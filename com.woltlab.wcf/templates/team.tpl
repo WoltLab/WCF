@@ -26,10 +26,6 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
-{capture assign='sidebarRight'}
-	{@$__boxSidebar}
-{/capture}
-
 {include file='header'}
 
 <header class="contentHeader">

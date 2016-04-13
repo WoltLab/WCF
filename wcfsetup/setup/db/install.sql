@@ -395,23 +395,6 @@ CREATE TABLE wcf1_cronjob_log (
 	error TEXT
 );
 
-DROP TABLE IF EXISTS wcf1_dashboard_box;
-CREATE TABLE wcf1_dashboard_box (
-	boxID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	packageID INT(10) NOT NULL,
-	boxName VARCHAR(255) NOT NULL DEFAULT '',
-	boxType VARCHAR(30) NOT NULL DEFAULT 'sidebar', -- can be 'content' or 'sidebar'
-	className VARCHAR(255) NOT NULL DEFAULT ''
-);
-
-DROP TABLE IF EXISTS wcf1_dashboard_option;
-CREATE TABLE wcf1_dashboard_option (
-	objectTypeID INT(10) NOT NULL,
-	boxID INT(10) NOT NULL,
-	showOrder INT(10) NOT NULL,
-	UNIQUE KEY dashboardOption (objectTypeID, boxID)
-);
-
 DROP TABLE IF EXISTS wcf1_edit_history_entry;
 CREATE TABLE wcf1_edit_history_entry (
 	entryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1814,11 +1797,6 @@ ALTER TABLE wcf1_user_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_gr
 
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_dashboard_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_dashboard_option ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
-ALTER TABLE wcf1_dashboard_option ADD FOREIGN KEY (boxID) REFERENCES wcf1_dashboard_box (boxID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_import_mapping ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 

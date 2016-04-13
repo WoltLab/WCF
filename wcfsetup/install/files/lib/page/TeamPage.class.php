@@ -1,9 +1,7 @@
 <?php
 namespace wcf\page;
 use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\dashboard\DashboardHandler;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 
 /**
@@ -68,11 +66,7 @@ class TeamPage extends MultipleLinkPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		DashboardHandler::getInstance()->loadBoxes('com.woltlab.wcf.user.MembersListPage', $this);
-		
 		WCF::getTPL()->assign(array(
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'com.woltlab.wcf.user.MembersListPage'),
-			'sidebarName' => 'com.woltlab.wcf.user.MembersListPage',
 			'allowSpidersToIndexThisPage' => true
 		));
 	}
