@@ -1,3 +1,4 @@
+/* attachment list in messages */
 .attachmentThumbnailList,
 .attachmentFileList {
 	> ul > li:not(:last-child) {
@@ -5,6 +6,7 @@
 	}
 }
 
+/* attachment in messages */
 .attachmentThumbnail {
 	border-radius: 3px;
 	min-height: #{$wcf_option_attachment_thumbnail_height}px;
@@ -36,6 +38,44 @@
 			height: 0;
 			overflow: hidden;
 			transition: height .12s linear;
+		}
+	}
+}
+
+/* attachments tab in editor */
+.formAttachmentContent {
+	> .formAttachmentList {
+		display: flex;
+		flex-wrap: wrap;
+		margin-right: -20px;
+		
+		> .box64 {
+			display: flex !important; /* jquery-ui sortable sometimes sets display:block */
+			flex: 0 0 calc(50% - 20px);
+			max-width: calc(50% - 20px); /* IE fix */
+			margin-right: 20px;
+			
+			> .attachmentTinyThumbnail {
+				max-height: 64px;
+				max-width: 64px;
+			}
+		}
+	}
+	
+	> dl > dd > div {
+		align-items: center;
+		display: flex;
+		
+		> .button {
+			flex: 0 0 auto;
+			
+			&:not(:first-child) {
+				margin-left: 10px;
+			}
+		}
+		
+		& + small {
+			margin-top: 10px !important;
 		}
 	}
 }
