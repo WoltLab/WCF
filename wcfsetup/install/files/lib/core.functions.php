@@ -49,7 +49,8 @@ namespace wcf\functions\exception {
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
 
-	function logThrowable($logFile, $e) {
+	function logThrowable($e, $logFile = null) {
+		if ($logFile === null) $logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
 		touch($logFile);
 
 		// don't forget to update ExceptionLogViewPage, when changing the log file format
@@ -96,8 +97,7 @@ namespace wcf\functions\exception {
 	}
 
 	function printThrowable($e) {
-		$logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
-		$exceptionID = logThrowable($logFile, $e);
+		$exceptionID = logThrowable($e);
 		
 		$exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
 		$logFile = sanitizePath($logFile);
