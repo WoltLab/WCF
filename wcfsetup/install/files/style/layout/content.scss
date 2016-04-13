@@ -332,17 +332,35 @@ fieldset {
 }
 
 .contentFooter {
-	display: flex;
-	
-	> .paginationBottom {
-		flex: 0 0 auto;
-		margin-top: 20px;
+	@include large-screen-only {
+		display: flex;
+		
+		> .paginationBottom {
+			flex: 0 0 auto;
+			margin-top: 20px;
+		}
+		
+		> .contentFooterNavigation {
+			flex: 1 1 auto;
+			margin: 20px 0 0 20px;
+			text-align: right;
+		}
 	}
 	
-	> .contentFooterNavigation {
-		flex: 1 1 auto;
-		margin: 20px 0 0 20px;
-		text-align: right;
+	@include small-screen-only {
+		> .contentFooterNavigation {
+			margin-top: 20px;
+			
+			.button {
+				display: block;
+				padding: 7px 10px;
+				text-align: center;
+				
+				&:not(:first-child) {
+					margin-top: 10px;
+				}
+			}
+		}
 	}
 }
 
