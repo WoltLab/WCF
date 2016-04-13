@@ -69,6 +69,14 @@ class AJAXInvokeAction extends AbstractSecureAction {
 				$this->throwException($e);
 			}
 		}
+		catch (\Throwable $e) {
+			if ($e instanceof AJAXException) {
+				throw $e;
+			}
+			else {
+				$this->throwException($e);
+			}
+		}
 	}
 	
 	/**
@@ -95,6 +103,9 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			$this->invoke();
 		}
 		catch (\Exception $e) {
+			$this->throwException($e);
+		}
+		catch (\Throwable $e) {
 			$this->throwException($e);
 		}
 		$this->executed();
@@ -151,25 +162,20 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	/**
 	 * Throws an previously catched exception while maintaing the propriate stacktrace.
 	 * 
-	 * @param	\Exception	$e
+	 * @param	\Exception|\Throwable	$e
 	 * @throws	AJAXException
 	 * @throws	\Exception
 	 */
-	protected function throwException(\Exception $e) {
+	protected function throwException($e) {
 		if ($this->inDebugMode) {
 			throw $e;
 		}
-		// TODO: This needs to be updated to the new exception handling code.
-		throw $e;
-		//throw new \Exception('TODO: AJAXInvokeAction::throwException()');
+
 		if ($e instanceof InvalidSecurityTokenException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}
 		else if ($e instanceof PermissionDeniedException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
-		}
-		else if ($e instanceof SystemException) {
-			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString(), array(), $e->getExceptionID());
 		}
 		else if ($e instanceof IllegalLinkException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.illegalLink'), AJAXException::ILLEGAL_LINK, $e->getTraceAsString());
@@ -193,7 +199,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
 		}
 		else {
-			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), array(), ($e instanceof LoggedException ? $e->getExceptionID() : ''));
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), array(), \wcf\functions\exception\logThrowable($e));
 		}
 	}
 	
