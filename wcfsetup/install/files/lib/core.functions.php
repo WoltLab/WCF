@@ -395,6 +395,10 @@ EXPLANATION;
 						<?php } ?>
 						<ul class="exceptionErrorDetails">
 							<li>
+								<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
+								<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(get_class($e)); ?></p>
+							</li>
+							<li>
 								<p class="exceptionFieldTitle">Error Message<span class="exceptionColon">:</span></p>
 								<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getMessage()); ?></p>
 							</li>
