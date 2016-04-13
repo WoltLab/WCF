@@ -3207,6 +3207,9 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a> geantwortet.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Benutzerprofil melden]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[Der Benutzer hat den Zugriff auf sein vollständiges Profil eingeschränkt.]]></item>
+		<item name="wcf.user.profile.user"><![CDATA[Benutzer]]></item>
+		<item name="wcf.user.profile.management"><![CDATA[Verwaltung]]></item>
+		<item name="wcf.user.profile.customization"><![CDATA[Anpassung]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">

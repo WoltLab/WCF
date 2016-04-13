@@ -20,12 +20,12 @@
 }
 
 .userProfileUser {
-	background-color: $wcfHeaderBackground;
+	background-color: $wcfHeaderMenuBackground;
 	
 	> .layoutBoundary {
 		align-items: center;
 		display: flex;
-		padding: 5px 10px 10px 160px;
+		padding: 0 10px 0 160px;
 		position: relative;
 		
 		@include small-screen-only {
@@ -40,7 +40,7 @@
 	}
 	
 	.contentHeaderIcon {
-		background-color: $wcfHeaderBackground;
+		background-color: $wcfHeaderMenuBackground;
 		border-radius: 50%;
 		left: 0;
 		padding: 10px;
@@ -56,23 +56,86 @@
 		}
 	}
 	
-	.contentTitle + span {
-		margin-top: 5px;
+	.contentHeaderTitle {
+		align-items: center;
+		display: flex;
+		
+		> .contentTitle {
+			flex: 0 0 auto;
+		}
+		
+		> span {
+			border: 1px solid rgba(255, 255, 255, 1);
+			flex: 0 0 auto;
+			margin-left: 10px;
+		}
 	}
 	
-	.buttonGroupNavigation {
+	.userProfileButtonContainer {
 		@include large-screen-only {
+			display: flex;
 			flex: 0 0 auto;
 			margin-left: 10px;
 			
-			.button {
-				background-color: $wcfHeaderMenuBackground;
-				color: $wcfHeaderMenuLink;
+			> li {
+				flex: 0 0 auto;
+				position: relative;
 				
-				&.active,
+				> a {
+					background-color: $wcfHeaderMenuBackground;
+					color: $wcfHeaderMenuLink;
+					display: block;
+					padding: 10px;
+					
+					.icon {
+						color: inherit;
+					}
+				}
+				
+				> .userProfileButtonMenu {
+					background-color: $wcfHeaderMenuDropdownBackground;
+					padding: 5px 0;
+					position: absolute;
+					right: 0;
+					visibility: hidden;
+					
+					> li {
+						&.divider:not(:first-child) {
+							border-top: 1px solid $wcfHeaderMenuDropdownBackgroundActive;
+							margin-top: 5px;
+							padding-top: 5px;
+						}
+						
+						> a {
+							color: $wcfHeaderMenuDropdownLink;
+						}
+						
+						> a,
+						> span {
+							display: block;
+							padding: 7px 20px;
+							white-space: nowrap;
+							text-align: right;
+						}
+						
+						&.active > a,
+						> a:hover {
+							background-color: $wcfHeaderMenuDropdownBackgroundActive;
+							color: $wcfHeaderMenuDropdownLinkActive;
+							text-decoration: none;
+						}
+					}
+				}
+				
 				&:hover {
-					background-color: $wcfHeaderMenuBackgroundActive;
-					color: $wcfHeaderMenuLinkActive;
+					> a {
+						background-color: $wcfHeaderMenuBackgroundActive;
+						color: $wcfHeaderMenuLinkActive;
+					}
+					
+					> .userProfileButtonMenu {
+						visibility: visible;
+					}
 				}
 			}
 		}

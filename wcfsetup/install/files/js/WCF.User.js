@@ -717,208 +717,6 @@ WCF.User.Profile.ActivityPointList = {
 };
 
 /**
- * Provides methods to follow an user.
- * 
- * @param	integer		userID
- * @param	boolean		following
- */
-WCF.User.Profile.Follow = Class.extend({
-	/**
-	 * follow button
-	 * @var	jQuery
-	 */
-	_button: null,
-	
-	/**
-	 * true if following current user
-	 * @var	boolean
-	 */
-	_following: false,
-	
-	/**
-	 * action proxy object
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * user id
-	 * @var	integer
-	 */
-	_userID: 0,
-	
-	/**
-	 * Creates a new follow object.
-	 * 
-	 * @param	integer		userID
-	 * @param	boolean		following
-	 */
-	init: function (userID, following) {
-		this._following = following;
-		this._userID = userID;
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		this._createButton();
-		this._showButton();
-	},
-	
-	/**
-	 * Creates the (un-)follow button
-	 */
-	_createButton: function () {
-		this._button = $('<li id="followUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'"><span class="icon icon16 fa-plus"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'</span></a></li>').prependTo($('#profileButtonContainer'));
-		this._button.click($.proxy(this._execute, this));
-	},
-	
-	/**
-	 * Follows or unfollows an user.
-	 */
-	_execute: function (event) {
-		event.preventDefault();
-		var $actionName = (this._following) ? 'unfollow' : 'follow';
-		this._proxy.setOption('data', {
-			'actionName': $actionName,
-			'className': 'wcf\\data\\user\\follow\\UserFollowAction',
-			'parameters': {
-				data: {
-					userID: this._userID
-				}
-			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Displays current follow state.
-	 */
-	_showButton: function () {
-		if (this._following) {
-			this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).addClass('active').children('.icon').removeClass('fa-plus').addClass('fa-minus');
-		}
-		else {
-			this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.follow')).removeClass('active').children('.icon').removeClass('fa-minus').addClass('fa-plus');
-		}
-	},
-	
-	/**
-	 * Update object state on success.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function (data, textStatus, jqXHR) {
-		this._following = data.returnValues.following;
-		this._showButton();
-		
-		var $notification = new WCF.System.Notification();
-		$notification.show();
-	}
-});
-
-/**
- * Provides methods to manage ignored users.
- * 
- * @param	integer		userID
- * @param	boolean		isIgnoredUser
- */
-WCF.User.Profile.IgnoreUser = Class.extend({
-	/**
-	 * ignore button
-	 * @var	jQuery
-	 */
-	_button: null,
-	
-	/**
-	 * ignore state
-	 * @var	boolean
-	 */
-	_isIgnoredUser: false,
-	
-	/**
-	 * ajax proxy object
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * target user id
-	 * @var	integer
-	 */
-	_userID: 0,
-	
-	/**
-	 * Initializes methods to manage an ignored user.
-	 * 
-	 * @param	integer		userID
-	 * @param	boolean		isIgnoredUser
-	 */
-	init: function(userID, isIgnoredUser) {
-		this._userID = userID;
-		this._isIgnoredUser = isIgnoredUser;
-		
-		// initialize proxy
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		// handle button
-		this._updateButton();
-		this._button.click($.proxy(this._click, this));
-	},
-	
-	/**
-	 * Handle clicks, might cause 'ignore' or 'unignore' to be triggered.
-	 */
-	_click: function(event) {
-		event.preventDefault();
-		var $action = (this._isIgnoredUser) ? 'unignore' : 'ignore';
-		
-		this._proxy.setOption('data', {
-			actionName: $action,
-			className: 'wcf\\data\\user\\ignore\\UserIgnoreAction',
-			parameters: {
-				data: {
-					ignoreUserID: this._userID
-				}
-			}
-		});
-		
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Updates button label and function upon successful request.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		this._isIgnoredUser = data.returnValues.isIgnoredUser;
-		this._updateButton();
-		
-		var $notification = new WCF.System.Notification();
-		$notification.show();
-	},
-	
-	/**
-	 * Updates button label and inserts it if not exists.
-	 */
-	_updateButton: function() {
-		if (this._button === null) {
-			this._button = $('<li id="ignoreUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'"><span class="icon icon16 fa-ban"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'</span></a></li>').prependTo($('#profileButtonContainer'));
-		}
-		
-		this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.' + (this._isIgnoredUser ? 'un' : '') + 'ignore'));
-		if (this._isIgnoredUser) this._button.find('.button').addClass('active').children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
-		else this._button.find('.button').removeClass('active').children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
-	}
-});
-
-/**
  * Provides methods to load tab menu content upon request.
  */
 WCF.User.Profile.TabMenu = Class.extend({
@@ -1110,20 +908,22 @@ WCF.User.Profile.Editor = Class.extend({
 	 * Initializes interface buttons.
 	 */
 	_initButtons: function() {
-		var $buttonContainer = $('#profileButtonContainer');
-		
 		// create buttons
 		this._buttons = {
-			beginEdit: $('<li><a class="button"><span class="icon icon16 fa-pencil" /> <span>' + WCF.Language.get('wcf.user.editProfile') + '</span></a></li>').click($.proxy(this._beginEdit, this)).appendTo($buttonContainer)
+			beginEdit: $('.jsButtonEditProfile:eq(0)').click(this._beginEdit.bind(this))
 		};
 	},
 	
 	/**
 	 * Begins editing.
+	 * 
+	 * @param       {Event}         event   event object
 	 */
-	_beginEdit: function() {
+	_beginEdit: function(event) {
+		event.preventDefault();
+		
 		this._actionName = 'beginEdit';
-		this._buttons.beginEdit.hide();
+		this._buttons.beginEdit.parent().addClass('active');
 		$('#profileContent').wcfTabs('select', 'about');
 		
 		// load form
@@ -1199,7 +999,7 @@ WCF.User.Profile.Editor = Class.extend({
 	 */
 	_restore: function() {
 		this._actionName = 'restore';
-		this._buttons.beginEdit.show();
+		this._buttons.beginEdit.parent().removeClass('active');
 		
 		this._destroyEditor();
 		

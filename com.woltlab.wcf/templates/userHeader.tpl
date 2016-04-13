@@ -37,42 +37,73 @@
 						{/if}
 					</div>
 					
-					
-					<div class="buttonGroupNavigation">
-						<ul id="profileButtonContainer" class="buttonGroup">
-							{hascontent}
-								<li class="dropdown">
-									<a href="#" class="button dropdownToggle jsTooltip" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon16 fa-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
-									<ul class="dropdownMenu">
-										{content}
-										{event name='quickSearchItems'}
-										{/content}
-									</ul>
-								</li>
-							{/hascontent}
-							
-							{if $__wcf->session->getPermission('user.profile.canReportContent')}
-								<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a href="#" title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
-							{/if}
-							
-							{if $user->userID != $__wcf->user->userID}
-								{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-									<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 fa-envelope-o"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
-								{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
-									<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 fa-envelope-o"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
+					<ul class="userProfileButtonContainer">
+						{hascontent}
+							<li>
+								<a class="jsTooltip" title="{lang}wcf.user.profile.customization{/lang}"><span class="icon icon32 fa-pencil"></span> <span class="invisible">{lang}wcf.user.profile.customization{/lang}</span></a>
+								<ul class="userProfileButtonMenu" data-menu="customization">
+									{content}
+										{event name='menuCustomization'}
+										
+										{if $user->userID == $__wcf->user->userID}
+											<li><a href="{link controller='AvatarEdit'}{/link}">{lang}wcf.user.avatar.edit{/lang}</a></li>
+										{/if}
+										
+										<li><a href="#" class="jsButtonEditCoverPhoto">todo: edit cover photo</a></li>
+										
+										{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
+											<li class="divider"><a href="#" class="jsButtonEditProfile">{lang}wcf.user.editProfile{/lang}</a></li>
+										{/if}
+									{/content}
+								</ul>
+							</li>
+						{/hascontent}
+						
+						<li>
+							<a class="jsTooltip" title="{lang}wcf.user.profile.user{/lang}"><span class="icon icon32 fa-user"></span> <span class="invisible">{lang}wcf.user.profile.dropdown.interaction{/lang}</span></a>
+							<ul class="userProfileButtonMenu" data-menu="interaction">
+								{event name='menuInteraction'}
+								
+								{if $user->userID != $__wcf->user->userID}
+									{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
+										<li><a href="mailto:{@$user->getEncodedEmail()}">{lang}wcf.user.button.mail{/lang}</a></li>
+									{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
+										<li><a href="{link controller='Mail' object=$user}{/link}">{lang}wcf.user.button.mail{/lang}</a></li>
+									{/if}
 								{/if}
-							{/if}
-							
-							{event name='buttons'}
-							
-							{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
-								<li class="dropdown">
-									<a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="button jsTooltip jsUserInlineEditor" title="{lang}wcf.user.moderate{/lang}"><span class="icon icon16 fa-wrench"></span> <span class="invisible">{lang}wcf.user.moderate{/lang}</span></a>
-									<ul class="dropdownMenu"></ul>
-								</li>
-							{/if}
-						</ul>
-					</div>
+								
+								{if $__wcf->session->getPermission('user.profile.canReportContent')}
+									<li class="jsReportUser divider" data-object-id="{@$user->userID}"><a href="#">{lang}wcf.user.profile.report{/lang}</a></li>
+								{/if}
+							</ul>
+						</li>
+						
+						{hascontent}
+							<li>
+								<a class="jsTooltip" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon32 fa-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
+								<ul class="userProfileButtonMenu" data-menu="search">
+									{content}{event name='menuSearch'}{/content}
+								</ul>
+							</li>
+						{/hascontent}
+						
+						{hascontent}
+							<li>
+								<a class="jsTooltip" title="{lang}wcf.user.profile.management{/lang}"><span class="icon icon32 fa-cog"></span> <span class="invisible">{lang}wcf.user.profile.dropdown.management{/lang}</span></a>
+								<ul class="userProfileButtonMenu" data-menu="management">
+									{content}
+										{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
+											<li><a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="jsUserInlineEditor">{lang}wcf.user.moderate{/lang}</a></li>
+										{/if}
+									
+										{event name='menuManagement'}
+									{/content}
+								</ul>
+							</li>
+						{/hascontent}
+						
+						{event name='buttonMenu'}
+					</ul>
 				</header>
 			</div>
 		</div>

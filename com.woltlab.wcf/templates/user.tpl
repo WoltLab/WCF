@@ -9,27 +9,32 @@
 	
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
-				WCF.Language.addObject({
-					'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}',
+		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
+			require(['Language', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Ignore', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Follow'], function(Language, UiUserProfileMenuItemIgnore, UiUserProfileMenuItemFollow) {
+				Language.addObject({
 					'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
 					'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
 					'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
 					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
 				});
 				
-				{if !$user->getPermission('user.profile.cannotBeIgnored')}
-					new WCF.User.Profile.IgnoreUser({@$user->userID}, {if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}true{else}false{/if});
-				{/if}
+				new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
 				
-				new WCF.User.Profile.Follow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
+				{if !$user->getPermission('user.profile.cannotBeIgnored')}
+				new UiUserProfileMenuItemIgnore({@$user->userID}, {if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}true{else}false{/if});
+				{/if}
+			});
+		{/if}
+		
+		//<![CDATA[
+		$(function() {
+			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
+				WCF.Language.addObject({
+					'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}'
+				});
 			{/if}
 			
 			new WCF.User.Profile.TabMenu({@$user->userID});
-			
-			WCF.TabMenu.init();
 			
 			{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
 				WCF.Language.addObject({
@@ -39,7 +44,7 @@
 				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
 			{/if}
 			
-			{if $followingCount > 10}
+			{if $followingCount > 7}
 				var $followingList = null;
 				$('#followingAll').click(function() {
 					if ($followingList === null) {
@@ -49,7 +54,7 @@
 					$followingList.open();
 				});
 			{/if}
-			{if $followerCount > 10}
+			{if $followerCount > 7}
 				var $followerList = null;
 				$('#followerAll').click(function() {
 					if ($followerList === null) {
@@ -59,7 +64,7 @@
 					$followerList.open();
 				});
 			{/if}
-			{if $visitorCount > 10}
+			{if $visitorCount > 7}
 				var $visitorList = null;
 				$('#visitorAll').click(function() {
 					if ($visitorList === null) {

@@ -23,9 +23,9 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	 * Validates the 'ignore' action.
 	 */
 	public function validateIgnore() {
-		$this->readInteger('ignoreUserID', false, 'data');
+		$this->readInteger('userID', false, 'data');
 		
-		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['ignoreUserID']);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
 		if ($userProfile === null || $userProfile->userID == WCF::getUser()->userID) {
 			throw new IllegalLinkException();
 		}
@@ -42,11 +42,11 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function ignore() {
-		$ignore = UserIgnore::getIgnore($this->parameters['data']['ignoreUserID']);
+		$ignore = UserIgnore::getIgnore($this->parameters['data']['userID']);
 		
 		if (!$ignore->ignoreID) {
 			UserIgnoreEditor::create(array(
-				'ignoreUserID' => $this->parameters['data']['ignoreUserID'],
+				'ignoreUserID' => $this->parameters['data']['userID'],
 				'time' => TIME_NOW,
 				'userID' => WCF::getUser()->userID,
 			));
@@ -61,9 +61,9 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	 * Validates the 'unignore' action.
 	 */
 	public function validateUnignore() {
-		$this->readInteger('ignoreUserID', false, 'data');
+		$this->readInteger('userID', false, 'data');
 		
-		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['ignoreUserID']);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
 		if ($userProfile === null) {
 			throw new IllegalLinkException();
 		}
@@ -75,7 +75,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function unignore() {
-		$ignore = UserIgnore::getIgnore($this->parameters['data']['ignoreUserID']);
+		$ignore = UserIgnore::getIgnore($this->parameters['data']['userID']);
 		
 		if ($ignore->ignoreID) {
 			$ignoreEditor = new UserIgnoreEditor($ignore);

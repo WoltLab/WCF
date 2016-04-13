@@ -176,7 +176,11 @@ define(
 			
 			UiAlignment.set(dropdownMenu, alternateElement || dropdown, {
 				pointerClassNames: ['dropdownArrowBottom', 'dropdownArrowRight'],
-				refDimensionsElement: refDimensionsElement || null
+				refDimensionsElement: refDimensionsElement || null,
+				
+				// alignment
+				horizontal: (elData(dropdownMenu, 'dropdown-alignment-horizontal') === 'right') ? 'right' : 'left',
+				vertical: (elData(dropdownMenu, 'dropdown-alignment-vertical') === 'top') ? 'top' : 'bottom'
 			});
 		},
 		
