@@ -45,7 +45,7 @@ class MostLikedMembersBoxController extends AbstractBoxController {
 	 */
 	public function getLink() {
 		if (MODULE_MEMBERS_LIST) {
-			return LinkHandler::getInstance()->getLink('MembersList', [], 'sortField=likesReceived&sortOrder=DESC');;
+			return LinkHandler::getInstance()->getLink('MembersList', [], 'sortField=likesReceived&sortOrder=DESC');
 		}
 		
 		return '';
