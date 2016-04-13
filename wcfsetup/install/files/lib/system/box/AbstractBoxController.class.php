@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\box;
 use wcf\data\box\Box;
+use wcf\system\event\EventHandler;
 
 /**
  * Default implementation for box controllers.
@@ -23,7 +24,7 @@ abstract class AbstractBoxController implements IBoxController {
 	 * box content
 	 * @var string
 	 */
-	protected $content;
+	public $content;
 	
 	/**
 	 * supported box positions
@@ -44,7 +45,12 @@ abstract class AbstractBoxController implements IBoxController {
 	public function getContent() {
 		if ($this->content === null) {
 			$this->content = '';
+			
+			EventHandler::getInstance()->fireAction($this, 'beforeLoadContent');
+			
 			$this->loadContent();
+			
+			EventHandler::getInstance()->fireAction($this, 'afterLoadContent');
 		}
 		
 		return $this->content;
