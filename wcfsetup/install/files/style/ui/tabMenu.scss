@@ -16,21 +16,31 @@
 			@include inlineList;
 			
 			> li {
+				position: relative;
+				
 				&:not(:last-child) {
 					margin-right: 20px;
+				}
+				
+				&::before {
+					border-top: 1px solid $wcfContentLink;
+					bottom: -1px;
+					content: "";
+					left: 50%;
+					position: absolute;
+					width: 0;
+				}
+				
+				&.active::before {
+					left: 0;
+					transition: left .12s linear, width .12s linear;
+					width: 100%;
 				}
 				
 				&.active > a {
 					cursor: default;
 				}
 			}
-		}
-		
-		> span {
-			border-top: 1px solid $wcfContentLink;
-			bottom: 0;
-			position: absolute;
-			transition: transform .12s linear, width .12s linear;
 		}
 	}
 	
@@ -81,6 +91,23 @@
 		@include inlineList;
 		
 		> li {
+			position: relative;
+			
+			&::before {
+				border-top: 1px solid $wcfContentLink;
+				bottom: -1px;
+				content: "";
+				left: 50%;
+				position: absolute;
+				width: 0;
+			}
+			
+			&.active::before {
+				left: 0;
+				transition: left .12s linear, width .12s linear;
+				width: 100%;
+			}
+			
 			&:not(:last-child) {
 				margin-right: 20px;
 			}
@@ -89,13 +116,6 @@
 				cursor: default;
 			}
 		}
-	}
-	
-	> span {
-		border-top: 1px solid $wcfContentLink;
-		bottom: -5px;
-		position: absolute;
-		transition: transform .12s linear, width .12s linear;
 	}
 	
 	& + .tabMenuContent {
