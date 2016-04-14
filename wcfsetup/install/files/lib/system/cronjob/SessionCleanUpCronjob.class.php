@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\acp\session\virtual\ACPSessionVirtualEditor;
 use wcf\data\acp\session\ACPSessionEditor;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\session\virtual\SessionVirtualEditor;
@@ -23,6 +24,7 @@ class SessionCleanUpCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 		
 		ACPSessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
+		ACPSessionVirtualEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 		SessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 		SessionVirtualEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 	}
