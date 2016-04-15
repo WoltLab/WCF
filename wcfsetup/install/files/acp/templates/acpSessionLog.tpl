@@ -20,7 +20,7 @@
 	</div>
 {/hascontent}
 
-{hascontent}
+{if $objects|count}
 	<div class="section tabularBox">
 		<table class="table">
 			<thead>
@@ -37,20 +37,18 @@
 			</thead>
 			
 			<tbody>
-				{content}
-					{foreach from=$objects item=sessionAccessLog}
-						<tr>
-							<td class="columnID columnSessionAccessLogID">{@$sessionAccessLog->sessionAccessLogID}</td>
-							<td class="columnURL columnIpAddress{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} hot{/if}">{$sessionAccessLog->getIpAddress()}</td>
-							<td class="columnDate columnTime">{@$sessionAccessLog->time|time}</td>
-							<td class="columnText columnClassName">{$sessionAccessLog->className}</td>
-							<td class="columnURL columnRequestURI" title="{$sessionAccessLog->requestURI}">{if !$sessionAccessLog->hasProtectedURI()}<a href="{$sessionAccessLog->requestURI}{@SID_ARG_2ND}">{$sessionAccessLog->requestURI|truncate:50|tableWordwrap}</a>{else}{$sessionAccessLog->requestURI|truncate:50|tableWordwrap}{/if}</td>
-							<td class="columnText columnRequestMethod">{$sessionAccessLog->requestMethod}</td>
-							
-							{event name='columns'}
-						</tr>
-					{/foreach}
-				{/content}
+				{foreach from=$objects item=sessionAccessLog}
+					<tr>
+						<td class="columnID columnSessionAccessLogID">{@$sessionAccessLog->sessionAccessLogID}</td>
+						<td class="columnURL columnIpAddress{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} hot{/if}">{$sessionAccessLog->getIpAddress()}</td>
+						<td class="columnDate columnTime">{@$sessionAccessLog->time|time}</td>
+						<td class="columnText columnClassName">{$sessionAccessLog->className}</td>
+						<td class="columnURL columnRequestURI" title="{$sessionAccessLog->requestURI}">{if !$sessionAccessLog->hasProtectedURI()}<a href="{$sessionAccessLog->requestURI}{@SID_ARG_2ND}">{$sessionAccessLog->requestURI|truncate:50|tableWordwrap}</a>{else}{$sessionAccessLog->requestURI|truncate:50|tableWordwrap}{/if}</td>
+						<td class="columnText columnRequestMethod">{$sessionAccessLog->requestMethod}</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 	</div>
@@ -70,6 +68,6 @@
 			</ul>
 		</nav>
 	</footer>
-{/hascontent}
+{/if}
 
 {include file='footer'}
