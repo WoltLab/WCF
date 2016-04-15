@@ -94,7 +94,13 @@
 }
 
 @include large-screen-only {
+	/* full page login: missing margin due to different DOM */
 	.contentHeader ~ .loginForm {
 		margin-top: 30px;
+	}
+	
+	/* force columns to be 300px wide in login overlay */
+	.dialogContent .loginForm .section {
+		width: 300px;
 	}
 }
