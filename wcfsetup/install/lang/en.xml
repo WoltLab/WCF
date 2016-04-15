@@ -394,7 +394,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Can create comments]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Can edit their own comments]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Can delete their own comments]]></item>
-		<item name="wcf.acp.group.option.user.profileComment.canDeleteCommentInOwnProfile"><![CDATA[Can delete others' comments on their own wall]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canDeleteCommentInOwnProfile"><![CDATA[Can delete others’ comments on their own wall]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Can edit comments]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Can delete comments]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Can moderate comments]]></item>
