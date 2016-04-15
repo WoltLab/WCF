@@ -2742,9 +2742,7 @@ Errors are:
 		<item name="wcf.user.button.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.button.registerNow"><![CDATA[Register Now]]></item>
 		<item name="wcf.user.username.error.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
-		<item name="wcf.user.login.redirect"><![CDATA[You have been logged in.]]></item>
 		<item name="wcf.user.loginOrRegister"><![CDATA[Login{if !REGISTER_DISABLED} or register{/if}]]></item>
-		<item name="wcf.user.logout.redirect"><![CDATA[You have been logged off.]]></item>
 		<item name="wcf.user.useCookies"><![CDATA[Remain logged in]]></item>
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Username or Email Address]]></item>
 		<item name="wcf.user.gender.male"><![CDATA[Male]]></item>
