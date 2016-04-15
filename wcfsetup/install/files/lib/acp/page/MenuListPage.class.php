@@ -15,27 +15,36 @@ use wcf\page\SortablePage;
  */
 class MenuListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cms.menu.list';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\menu\MenuList';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.cms.canManageMenu');
+	public $neededPermissions = ['admin.content.cms.canManageMenu'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'title';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('menuID', 'title', 'items');
+	public $validSortFields = ['menuID', 'title', 'items'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function initObjectList() {
+		parent::initObjectList();
+		
+		$this->objectList->sqlSelects .= '(SELECT COUNT(*) FROM wcf'.WCF_N.'_menu_item WHERE menuID = menu.menuID) AS items';
+	}
 }
