@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\menu\item;
+use wcf\data\menu\Menu;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
-use wcf\data\menu\Menu;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
