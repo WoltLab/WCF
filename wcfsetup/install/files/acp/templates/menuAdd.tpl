@@ -7,6 +7,9 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
+			{if $action == 'edit'}
+				<li><a href="{link controller='MenuItemList' id=$menuID}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.item.list{/lang}</span></a></li>
+			{/if}
 			<li><a href="{link controller='MenuList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
