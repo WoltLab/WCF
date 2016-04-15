@@ -30,7 +30,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			// is true if every file from a multi-file selection is uploaded in its own request
 			singleFileRequests: false,
 			// url for uploading file
-			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN
 		}, options);
 		
 		this._options.url = WCF.convertLegacyURL(this._options.url);

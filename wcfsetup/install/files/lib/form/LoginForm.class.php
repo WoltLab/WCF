@@ -97,11 +97,6 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		if (empty($this->url) || mb_stripos($this->url, '?Login/') !== false) {
 			$this->url = LinkHandler::getInstance()->getLink();
 		}
-		// append missing session id
-		else if (SID_ARG_1ST != '' && !preg_match('/(?:&|\?)s=[a-z0-9]{40}/', $this->url)) {
-			if (mb_strpos($this->url, '?') !== false) $this->url .= SID_ARG_2ND_NOT_ENCODED;
-			else $this->url .= SID_ARG_1ST;
-		}
 		
 		// drop index.php
 		if (!URL_LEGACY_MODE) {

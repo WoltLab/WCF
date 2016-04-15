@@ -135,7 +135,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			$application = $statement->fetchObject('wcf\data\application\Application');
 			
 			// build redirect location
-			$location = $application->getPageURL() . 'acp/index.php?package-list/' . SID_ARG_2ND_NOT_ENCODED;
+			$location = $application->getPageURL() . 'acp/index.php?package-list/';
 			
 			// show success
 			$this->data = array(

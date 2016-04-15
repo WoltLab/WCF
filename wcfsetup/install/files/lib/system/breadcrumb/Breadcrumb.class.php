@@ -45,23 +45,13 @@ class Breadcrumb {
 	}
 	
 	/**
-	 * Sets the target url, by default appends appropriate session id.
+	 * Sets the target url.
 	 * May be left empty to disable url functionality.
 	 * 
 	 * @param	string		$url
-	 * @param	boolean		$appendSession
+	 * @param	boolean		$appendSession	This parameter is unused as of WCF 2.2
 	 */
 	public function setURL($url, $appendSession = false) {
-		// append session id
-		if ($appendSession) {
-			if (mb_strpos($url, '?') === false) {
-				$url .= SID_ARG_1ST;
-			}
-			else {
-				$url .= SID_ARG_2ND_NOT_ENCODED;
-			}
-		}
-		
 		$this->url = $url;
 	}
 	

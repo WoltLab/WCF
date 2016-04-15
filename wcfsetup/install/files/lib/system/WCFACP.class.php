@@ -153,7 +153,7 @@ class WCFACP extends WCF {
 				// drop session id
 				$redirectURI = preg_replace('~[&\?]s=[a-f0-9]{40}(&|$)~', '', WCF::getSession()->requestURI);
 				
-				$path = $application->getPageURL() . 'acp/index.php?login/' . SID_ARG_2ND_NOT_ENCODED . '&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . $redirectURI);
+				$path = $application->getPageURL() . 'acp/index.php?login/&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . $redirectURI);
 				
 				HeaderUtil::redirect($path);
 				exit;

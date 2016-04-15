@@ -39,7 +39,7 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 				options.pinData = true;
 				options.callbackObject = callbackObject;
 				
-				if (!options.url) options.url = 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND;
+				if (!options.url) options.url = 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN
 				
 				request = new AjaxRequest(options);
 				

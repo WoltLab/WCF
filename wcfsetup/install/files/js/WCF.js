@@ -1476,7 +1476,7 @@ WCF.Action.Proxy = Class.extend({
 			success: null,
 			suppressErrors: false,
 			type: 'POST',
-			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN
 			aborted: null,
 			autoAbortPrevious: false
 		}, options);
@@ -6223,7 +6223,7 @@ WCF.Upload = Class.extend({
 		this._options = $.extend(true, {
 			action: 'upload',
 			multiple: false,
-			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN
 		}, options || { });
 		
 		this._options.url = WCF.convertLegacyURL(this._options.url);

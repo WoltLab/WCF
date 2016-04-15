@@ -77,7 +77,7 @@
 										className: 'wcf\\system\\importer\\ImportHandler'
 									},
 									success: function() { window.location.reload(); },
-									url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+									url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN
 								});
 							}
 						});

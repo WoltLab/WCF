@@ -202,18 +202,15 @@ class LoginForm extends AbstractCaptchaForm {
 		$this->saved();
 		
 		if (!empty($this->url)) {
-			// append session
-			if (mb_strpos($this->url, '?') !== false) $this->url .= SID_ARG_2ND_NOT_ENCODED;
-			else $this->url .= SID_ARG_1ST;
 			HeaderUtil::redirect($this->url);
 		}
 		else {
 			if (RequestHandler::getInstance()->inRescueMode()) {
-				$path = RouteHandler::getHost() . RouteHandler::getPath() . SID_ARG_1ST;
+				$path = RouteHandler::getHost() . RouteHandler::getPath();
 			}
 			else {
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
-				$path = $application->getPageURL() . 'acp/' . SID_ARG_1ST;
+				$path = $application->getPageURL() . 'acp/';
 			}
 			
 			HeaderUtil::redirect($path);

@@ -1667,7 +1667,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
-			url: 'index.php/MessageQuote/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/MessageQuote/?t=' + SECURITY_TOKEN
 		});
 		
 		this._toggleShowQuotes();
