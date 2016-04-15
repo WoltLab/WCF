@@ -132,38 +132,10 @@
 				<!-- login box -->
 				<li id="userLogin">
 					<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
-					<div id="loginForm" style="display: none;">
-						{capture assign='__3rdPartyButtons'}
-							{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
-								<li id="githubAuth" class="3rdPartyAuth">
-									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
-								</li>
-							{/if}
-							
-							{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
-								<li id="twitterAuth" class="3rdPartyAuth">
-									<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
-								</li>
-							{/if}
-							
-							{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
-								<li id="facebookAuth" class="3rdPartyAuth">
-									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
-								</li>
-							{/if}
-							
-							{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
-								<li id="googleAuth" class="3rdPartyAuth">
-									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
-								</li>
-							{/if}
-							
-							{event name='3rdpartyButtons'}
-						{/capture}
-						
+					<div id="loginForm" class="loginForm" style="display: none">
 						<form method="post" action="{link controller='Login'}{/link}">
-							<{if $__3rdPartyButtons|trim}section{else}div{/if} class="section">
-								{if $__3rdPartyButtons|trim}<h2 class="sectionTitle">{lang}wcf.user.login{/lang}</h2>{/if}
+							<section class="section loginFormLogin">
+								<h2 class="sectionTitle">{lang}wcf.user.login.login{/lang}</h2>
 								
 								<dl>
 									<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
@@ -172,48 +144,84 @@
 									</dd>
 								</dl>
 								
-								{if !REGISTER_DISABLED}
-									<dl>
-										<dt>{lang}wcf.user.login.action{/lang}</dt>
-										<dd>
-											<label><input type="radio" name="action" value="register" /> {lang}wcf.user.login.action.register{/lang}</label>
-											<label><input type="radio" name="action" value="login" checked="checked" /> {lang}wcf.user.login.action.login{/lang}</label>
-										</dd>
-									</dl>
-								{/if}
-								
 								<dl>
 									<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 									<dd>
 										<input type="password" id="password" name="password" value="" class="long">
+										<small><a href="{link controller='LostPassword'}{/link}">{lang}wcf.user.lostPassword{/lang}</a></small>
 									</dd>
 								</dl>
 								
 								{if $__wcf->getUserAuthenticationFactory()->getUserAuthentication()->supportsPersistentLogins()}
 									<dl>
 										<dt></dt>
-										<dd><label><input type="checkbox" id="useCookies" name="useCookies" value="1" checked="checked"> {lang}wcf.user.useCookies{/lang}</label></dd>
+										<dd>
+											<label for="useCookies"><input type="checkbox" id="useCookies" name="useCookies" value="1" checked> {lang}wcf.user.useCookies{/lang}</label>
+										</dd>
 									</dl>
 								{/if}
 								
-								{event name='loginFields'}
+								{event name='fields'}
 								
-								<div class="formSubmit">
-									<input type="submit" id="loginSubmitButton" name="submitButton" value="{lang}wcf.user.button.login{/lang}" accesskey="s">
-									<a class="button" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a>
+								<div class="userLoginButtons">
+									<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 									<input type="hidden" name="url" value="{$__wcf->session->requestURI}">
 									{@SECURITY_TOKEN_INPUT_TAG}
 								</div>
-							</{if $__3rdPartyButtons|trim}section{else}div{/if}>
+							</section>
 							
-							{if $__3rdPartyButtons|trim}
-								<section class="section">
-									<h2 class="sectionTitle">{lang}wcf.user.login.3rdParty{/lang}</h2>
-									<ul class="buttonList smallButtons thirdPartyLogin">
-										{@$__3rdPartyButtons}	
-									</ul>
+							{if !REGISTER_DISABLED}
+								<section class="section loginFormRegister">
+									<h2 class="sectionTitle">{lang}wcf.user.login.register{/lang}</h2>
+									
+									<p>{lang}wcf.user.login.register.teaser{/lang}</p>
+									
+									<div class="userLoginButtons">
+										<a href="{link controller='Register'}{/link}" class="button loginFormRegisterButton">{lang}wcf.user.login.register.registerNow{/lang}</a>
+									</div>
 								</section>
 							{/if}
+							
+							{hascontent}
+								<section class="section loginFormThirdPartyLogin">
+									<h2 class="sectionTitle">{lang}wcf.user.login.3rdParty{/lang}</h2>
+									
+									<dl>
+										<dt></dt>
+										<dd>
+											<ul class="buttonList smallButtons">
+												{content}
+													{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
+														<li id="githubAuth" class="thirdPartyLogin">
+															<a href="{link controller='GithubAuth'}{/link}" class="button thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
+														</li>
+													{/if}
+													
+													{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
+														<li id="twitterAuth" class="thirdPartyLogin">
+															<a href="{link controller='TwitterAuth'}{/link}" class="button thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
+														</li>
+													{/if}
+													
+													{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
+														<li id="facebookAuth" class="thirdPartyLogin">
+															<a href="{link controller='FacebookAuth'}{/link}" class="button thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
+														</li>
+													{/if}
+													
+													{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
+														<li id="googleAuth" class="thirdPartyLogin">
+															<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+														</li>
+													{/if}
+													
+													{event name='3rdpartyButtons'}
+												{/content}
+											</ul>
+										</dd>
+									</dl>
+								</section>
+							{/hascontent}
 						</form>
 					</div>
 					

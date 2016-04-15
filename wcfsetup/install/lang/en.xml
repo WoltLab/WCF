@@ -2706,6 +2706,10 @@ Errors are:
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.data"><![CDATA[Credentials]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
+		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
+		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
+		<item name="wcf.user.login.register.teaser"><![CDATA[Don’t have an account yet? <a href="{link controller='Register'}{/link}">Register yourself now</a> and be a part of our community!]]></item>
+		<item name="wcf.user.login.register.registerNow"><![CDATA[Register Yourself]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[The entered password is wrong.]]></item>
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
 		<item name="wcf.user.language.description"><![CDATA[User interface language]]></item>
@@ -2738,9 +2742,6 @@ Errors are:
 		<item name="wcf.user.button.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.button.registerNow"><![CDATA[Register Now]]></item>
 		<item name="wcf.user.username.error.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
-		<item name="wcf.user.login.action"><![CDATA[Are you already registered?]]></item>
-		<item name="wcf.user.login.action.login"><![CDATA[Yes, my password is:]]></item>
-		<item name="wcf.user.login.action.register"><![CDATA[No, register now.]]></item>
 		<item name="wcf.user.login.redirect"><![CDATA[You have been logged in.]]></item>
 		<item name="wcf.user.loginOrRegister"><![CDATA[Login{if !REGISTER_DISABLED} or register{/if}]]></item>
 		<item name="wcf.user.logout.redirect"><![CDATA[You have been logged off.]]></item>
