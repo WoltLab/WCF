@@ -104,12 +104,6 @@
 
 <footer class="contentFooter">
 	{hascontent}
-		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
-		</div>
-	{/hascontent}
-	
-	{hascontent}
 		<nav class="contentFooterNavigation">
 			<ul>
 				{content}
