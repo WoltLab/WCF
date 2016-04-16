@@ -208,3 +208,15 @@ input {
 		width: 100%;
 	}
 }
+
+/* grid-based form controls */
+.formGrid {
+	dt {
+		display: none;
+	}
+	
+	.selectDropdown,
+	select {
+		width: 100%;
+	}
+}

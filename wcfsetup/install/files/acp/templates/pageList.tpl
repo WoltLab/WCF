@@ -44,59 +44,61 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<div class="row rowColGap">
-			<div class="row rowColGap col-xs-12 col-md-10">
-				<dl class="col-xs-12 col-md-4 wide">
-					<dt></dt>
-					<dd>
-						<input type="text" id="name" name="name" value="{$name}" placeholder="{lang}wcf.global.name{/lang}" class="long" />
-					</dd>
-				</dl>
-				
-				<dl class="col-xs-12 col-md-4 wide">
-					<dt></dt>
-					<dd>
-						<input type="text" id="pageTitle" name="title" value="{$title}" placeholder="{lang}wcf.acp.page.title{/lang}" class="long" />
-					</dd>
-				</dl>
-				
-				<dl class="col-xs-12 col-md-4 wide">
-					<dt></dt>
-					<dd>
-						<input type="text" id="pageContent" name="content" value="{$content}" placeholder="{lang}wcf.acp.page.content{/lang}" class="long" />
-					</dd>
-				</dl>
-				
-				<dl class="col-xs-12 col-md-4 wide">
-					<dt></dt>
-					<dd>
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="name" name="name" value="{$name}" placeholder="{lang}wcf.global.name{/lang}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="pageTitle" name="title" value="{$title}" placeholder="{lang}wcf.acp.page.title{/lang}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="pageContent" name="content" value="{$content}" placeholder="{lang}wcf.acp.page.content{/lang}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<label class="selectDropdown">
 						<select name="packageID" id="packageID">
 							<option value="0">{lang}wcf.acp.page.packageID{/lang}</option>
 							{foreach from=$availableApplications item=availableApplication}
 								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $packageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
 							{/foreach}
 						</select>
-					</dd>
-				</dl>
-				
-				<dl class="col-xs-12 col-md-4 wide">
-					<dt></dt>
-					<dd>
+					</label>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<label class="selectDropdown">
 						<select name="pageType" id="pageType">
 							<option value="">{lang}wcf.acp.page.pageType{/lang}</option>
 							<option value="static"{if $pageType == 'static'} selected="selected"{/if}>{lang}wcf.acp.page.pageType.static{/lang}</option>
 							<option value="system"{if $pageType == 'system'} selected="selected"{/if}>{lang}wcf.acp.page.pageType.system{/lang}</option>
 						</select>
-					</dd>
-				</dl>
-				
-				{event name='filterFields'}
-			</div>
+					</label>
+				</dd>
+			</dl>
 			
-			<div class="col-xs-12 col-md-2">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				{@SECURITY_TOKEN_INPUT_TAG}
-			</div>
+			{event name='filterFields'}
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</section>
 </form>
