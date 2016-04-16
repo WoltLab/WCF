@@ -20,11 +20,11 @@
 		<item name="wcf.acp.ad.ad.description"><![CDATA[Ad HTML Code]]></item>
 		<item name="wcf.acp.ad.add"><![CDATA[Add Ad]]></item>
 		<item name="wcf.acp.ad.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.ad.conditions.description"><![CDATA[If you choose no conditions, the ad will be shown for every user.]]></item>
+		<item name="wcf.acp.ad.conditions.description"><![CDATA[If you choose no conditions, the ad will be displayed for every user.]]></item>
 		<item name="wcf.acp.ad.conditions.page"><![CDATA[Page]]></item>
-		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the ad to be shown.]]></item>
+		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the ad to be displayed.]]></item>
 		<item name="wcf.acp.ad.conditions.pointInTime"><![CDATA[Time]]></item>
-		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the ad is shown.]]></item>
+		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the ad is displayed.]]></item>
 		<item name="wcf.acp.ad.conditions.user"><![CDATA[Active user]]></item>
 		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the ad.]]></item>
 		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Do you really want to delete the ad “{$ad->adName}”?]]></item>
@@ -40,7 +40,7 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (bottom)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[End of Page]]></item>
 		<item name="wcf.acp.ad.showOrder"><![CDATA[Order]]></item>
-		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Sets the order in which the ads are shown.]]></item>
+		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Sets the order in which the ads are displayed.]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -363,11 +363,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.avatar.canSeeAvatars"><![CDATA[Can see avatars of other users]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canUploadAvatar"><![CDATA[Can upload their own avatar]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximum File Size]]></item>
-		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change email address]]></item>
+		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change their own email address]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Can edit their own user title]]></item>
 		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can send emails to other users]]></item>
-		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Can delete user account]]></item>
-		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can change username]]></item>
+		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Can delete their own user account]]></item>
+		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can change their own username]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can see members list]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Can see user profiles]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can see users online lists]]></item>
@@ -653,7 +653,7 @@ Examples for medium ID detection:
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Add Notice]]></item>
 		<item name="wcf.acp.notice.cssClassName"><![CDATA[Appearance]]></item>
-		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[Choose one of the predefined appearances or select a custom appearance by provinding an own CSS class name.]]></item>
+		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[Choose one of the predefined appearances or select a custom appearance by providing your own CSS class name.]]></item>
 		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Error Message]]></item>
 		<item name="wcf.acp.notice.cssClassName.error.notValid"><![CDATA[The entered CSS class name is invalid.]]></item>
 		<item name="wcf.acp.notice.cssClassName.info"><![CDATA[Information]]></item>
@@ -676,8 +676,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.list"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Notice]]></item>
 		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[Enable HTML code in notice]]></item>
-		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Dismissed notices will be shown again]]></item>
-		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be shown again to users who dismissed the previous version. Guests who dismissed the notice will only see it in a new session.]]></item>
+		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Dismissed notices will be displayed again]]></item>
+		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be displayed again to users who dismissed the previous version. Guests who dismissed the notice will only see it in a new session.]]></item>
 		<item name="wcf.acp.notice.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Sets the order in which the notices are displayed.]]></item>
 	</category>
@@ -832,7 +832,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab news on the administration control panel’s start page.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request your own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for uploaded images]]></item>
@@ -1669,7 +1669,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.general"><![CDATA[User]]></item>
 		<item name="wcf.acp.user.rank.add"><![CDATA[Add User Rank]]></item>
 		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS Class Name]]></item>
-		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide an own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
+		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.error.notValid"><![CDATA[Chosen CSS class name is invalid.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Current Rank Image]]></item>
 		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank “{$userRank->rankTitle|language}”?]]></item>
@@ -1796,7 +1796,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.code.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.bbcode.code.filename.description"><![CDATA[Optional: Specify the displayed filename.]]></item>
 		<item name="wcf.bbcode.code.highlighter"><![CDATA[Syntax Highlighting]]></item>
-		<item name="wcf.bbcode.code.highlighter.description"><![CDATA[Highlighting is not shown within the editor.]]></item>
+		<item name="wcf.bbcode.code.highlighter.description"><![CDATA[Highlighting is not displayed within the editor.]]></item>
 		<item name="wcf.bbcode.code.highlighter.none"><![CDATA[(No Highlighting)]]></item>
 		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML Source Code]]></item>
 		<item name="wcf.bbcode.code.insert"><![CDATA[Insert Source Code]]></item>
@@ -2631,7 +2631,7 @@ Errors are:
 	
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Verification (“reCAPTCHA”)]]></item>
-		<item name="wcf.recaptcha.description"><![CDATA[Please enter the letters that are shown in the picture below (letters are not case-sensitive). If you cannot identify the captcha even after reloading it, please contact the administrator.]]></item>
+		<item name="wcf.recaptcha.description"><![CDATA[Please enter the letters that are displayed in the picture below (letters are not case-sensitive). If you cannot identify the captcha even after reloading it, please contact the administrator.]]></item>
 		<item name="wcf.recaptcha.reload"><![CDATA[Reload]]></item>
 		<item name="wcf.recaptcha.audio"><![CDATA[Audio Version]]></item>
 		<item name="wcf.recaptcha.image"><![CDATA[Image Version]]></item>
@@ -3067,7 +3067,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID || $__wcf->user->enableGravatar}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
-		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Own Avatar]]></item>
+		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.crop"><![CDATA[Crop Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.crop.description"><![CDATA[The scaled versions of your avatar are based on a square cutout. You may specify an individual cutout by holding down your mouse button and moving the highlighted area to the desired position.]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 96×96 pixel, it is recommended to provide a dimension of {@MAX_AVATAR_WIDTH}×{@MAX_AVATAR_HEIGHT} pixel. Any avatar that exceeds this limit will be scaled down if possible.]]></item>
@@ -3087,7 +3087,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 	<category name="wcf.user.condition">
 		<item name="wcf.user.condition.activityPoints"><![CDATA[Points]]></item>
 		<item name="wcf.user.condition.avatar"><![CDATA[Avatar]]></item>
-		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Own Avatar]]></item>
+		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Your Avatar]]></item>
 		<item name="wcf.user.condition.avatar.gravatar"><![CDATA[Gravatar]]></item>
 		<item name="wcf.user.condition.avatar.noAvatar"><![CDATA[No Avatar]]></item>
 		<item name="wcf.user.condition.conditionGroup.contents"><![CDATA[Contents]]></item>
