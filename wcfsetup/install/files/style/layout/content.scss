@@ -344,6 +344,13 @@ fieldset {
 			flex: 1 1 auto;
 			margin: 20px 0 0 20px;
 			text-align: right;
+			
+			> ul {
+				@include inlineList;
+				
+				display: inline-flex;
+				flex-wrap: nowrap;
+			}
 		}
 	}
 	
