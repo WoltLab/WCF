@@ -120,7 +120,7 @@ class PageEditForm extends PageAddForm {
 				);
 			}
 			
-			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data), 'content' => $content));
+			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data), 'content' => $content, 'boxToPage' => $this->getBoxToPage()));
 			$this->objectAction->executeAction();
 		}
 		
@@ -157,6 +157,20 @@ class PageEditForm extends PageAddForm {
 				$this->metaDescription[$languageID] = $content['metaDescription'];
 				$this->metaKeywords[$languageID] = $content['metaKeywords'];
 				$this->customURL[$languageID] = $content['customURL'];
+			}
+			
+			$this->boxIDs = [];
+			foreach ($this->availableBoxes as $box) {
+				if ($box->visibleEverywhere) {
+					if (!in_array($box->boxID, $this->page->getBoxIDs())) {
+						$this->boxIDs[] = $box->boxID;
+					}
+				}
+				else {
+					if (in_array($box->boxID, $this->page->getBoxIDs())) {
+						$this->boxIDs[] = $box->boxID;
+					}
+				}
 			}
 		}
 	}

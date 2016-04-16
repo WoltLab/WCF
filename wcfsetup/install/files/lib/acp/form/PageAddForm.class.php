@@ -2,6 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
+use wcf\data\box\Box;
+use wcf\data\box\BoxList;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
@@ -85,6 +87,12 @@ class PageAddForm extends AbstractForm {
 	public $availableApplications = [];
 	
 	/**
+	 * list of available boxes
+	 * @var	Box[]
+	 */
+	public $availableBoxes = [];
+	
+	/**
 	 * page custom URL
 	 * @var	string[]
 	 */
@@ -121,6 +129,12 @@ class PageAddForm extends AbstractForm {
 	public $metaKeywords = [];
 	
 	/**
+	 * list of box ids
+	 * @var integer[]
+	 */
+	public $boxIDs = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -132,6 +146,12 @@ class PageAddForm extends AbstractForm {
 		$applicationList = new ApplicationList();
 		$applicationList->readObjects();
 		$this->availableApplications = $applicationList->getObjects();
+		
+		// get boxes
+		$boxList = new BoxList();
+		$boxList->sqlOrderBy = 'box.name';
+		$boxList->readObjects();
+		$this->availableBoxes = $boxList->getObjects();
 	}
 	
 	/**
@@ -153,6 +173,7 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
 		if (isset($_POST['metaDescription']) && is_array($_POST['metaDescription'])) $this->metaDescription = ArrayUtil::trim($_POST['metaDescription']);
 		if (isset($_POST['metaKeywords']) && is_array($_POST['metaKeywords'])) $this->metaKeywords = ArrayUtil::trim($_POST['metaKeywords']);
+		if (isset($_POST['boxIDs']) && is_array($_POST['boxIDs'])) $this->boxIDs = ArrayUtil::toIntegerArray($_POST['boxIDs']);
 	}
 	
 	/**
@@ -172,6 +193,8 @@ class PageAddForm extends AbstractForm {
 		$this->validateController();
 		
 		$this->validateCustomUrl();
+		
+		$this->validateBoxIDs();
 	}
 	
 	/**
@@ -243,11 +266,52 @@ class PageAddForm extends AbstractForm {
 	}
 	
 	/**
+	 * Validates box ids.
+	 */
+	protected function validateBoxIDs() {
+		foreach ($this->boxIDs as $boxID) {
+			if (!isset($this->availableBoxes[$boxID])) {
+				throw new UserInputException('boxIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Prepares box to page assignments
+	 * 
+	 * @return      mixed[]
+	 */
+	protected function getBoxToPage() {
+		$boxToPage = [];
+		foreach ($this->availableBoxes as $box) {
+			if ($box->visibleEverywhere) {
+				if (!in_array($box->boxID, $this->boxIDs)) {
+					$boxToPage[] = [
+						'boxID' => $box->boxID,
+						'visible' => 0
+					];
+				}
+			}
+			else {
+				if (in_array($box->boxID, $this->boxIDs)) {
+					$boxToPage[] = [
+						'boxID' => $box->boxID,
+						'visible' => 1
+					];
+				}
+			}
+		}
+		
+		return $boxToPage;
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
+		// prepare page content
 		$content = [];
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
@@ -281,7 +345,7 @@ class PageAddForm extends AbstractForm {
 			'isMultilingual' => $this->isMultilingual,
 			'identifier' => '',
 			'controller' => $this->controller
-		]), 'content' => $content]);
+		]), 'content' => $content, 'boxToPage' => $this->getBoxToPage()]);
 		
 		/** @var Page $page */
 		$page = $this->objectAction->executeAction()['returnValues'];
@@ -313,6 +377,20 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
+	public function readData() {
+		parent::readData();
+		
+		// set default values
+		if (empty($_POST)) {
+			foreach ($this->availableBoxes as $box) {
+				if ($box->visibleEverywhere) $this->boxIDs[] = $box->boxID;
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
@@ -333,9 +411,11 @@ class PageAddForm extends AbstractForm {
 			'content' => $this->content,
 			'metaDescription' => $this->metaDescription,
 			'metaKeywords' => $this->metaKeywords,
+			'boxIDs' => $this->boxIDs,
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'availablePageTypes' => $availablePageTypes,
+			'availableBoxes' => $this->availableBoxes,
 			'pageNodeList' => (new PageNodeTree())->getNodeList()
 		]);
 	}

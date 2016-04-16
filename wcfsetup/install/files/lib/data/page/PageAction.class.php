@@ -76,6 +76,22 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 			}
 		}
 		
+		// save box to page assignments
+		if (!empty($this->parameters['boxToPage'])) {
+			$sql = "INSERT INTO	wcf".WCF_N."_box_to_page
+						(boxID, pageID, visible)
+				VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->parameters['boxToPage'] as $boxData) {
+				$statement->execute([
+					$boxData['boxID'],
+					$page->pageID,
+					$boxData['visible']
+				]);
+			}
+		}
+		
 		return $page;
 	}
 	
@@ -108,6 +124,30 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 						$content['metaDescription'],
 						$content['metaKeywords'],
 						$content['customURL']
+					]);
+				}
+			}
+		}
+		
+		// save box to page assignments
+		if (!empty($this->parameters['boxToPage'])) {
+			$sql = "DELETE FROM	wcf".WCF_N."_box_to_page
+				WHERE		pageID = ?";
+			$deleteStatement = WCF::getDB()->prepareStatement($sql);
+			
+			$sql = "INSERT INTO	wcf".WCF_N."_box_to_page
+						(boxID, pageID, visible)
+				VALUES		(?, ?, ?)";
+			$insertStatement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->objects as $page) {
+				$deleteStatement->execute([$page->pageID]);
+				
+				foreach ($this->parameters['boxToPage'] as $boxData) {
+					$insertStatement->execute([
+						$boxData['boxID'],
+						$page->pageID,
+						$boxData['visible']
 					]);
 				}
 			}

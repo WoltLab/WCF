@@ -175,6 +175,26 @@
 			</dd>
 		</dl>
 		
+		<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
+			<dt><label for="boxIDs">{lang}wcf.acp.page.boxIDs{/lang}</label></dt>
+			<dd>
+				<select name="boxIDs[]" id="boxIDs" multiple="multiple" size="20">
+					{foreach from=$availableBoxes item=availableBox}
+						<option value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} selected="selected"{/if}>{$availableBox->name}</option>
+					{/foreach}
+				</select>
+				{if $errorField == 'boxIDs'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.page.boxIDs.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
 		{event name='dataFields'}
 	</div>
 	
