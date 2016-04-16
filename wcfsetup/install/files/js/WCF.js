@@ -1476,7 +1476,7 @@ WCF.Action.Proxy = Class.extend({
 			success: null,
 			suppressErrors: false,
 			type: 'POST',
-			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN
+			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN,
 			aborted: null,
 			autoAbortPrevious: false
 		}, options);
