@@ -5,6 +5,7 @@ input[type="submit"],
 .button,
 a.button { // a.button is required to override link formatting, such as drop-down buttons
 	background-color: $wcfButtonBackground;
+	border-radius: 0;
 	border-width: 0;
 	color: $wcfButtonText;
 	cursor: pointer;
@@ -16,6 +17,9 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	font-family: $wcfFontFamily;
 	@include wcfFontDefault;
 	@include wcfLineHeight;
+	
+	// removes UA styling enforced by Safari on iOS
+	-webkit-appearance: none;
 	
 	.icon {
 		color: inherit;
