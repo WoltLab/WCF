@@ -117,10 +117,10 @@
 
 .dropdownMenu {
 	background-color: $wcfDropdownBackground;
-	border: 1px solid $wcfDropdownBorder;
+	border-radius: 2px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
 	color: $wcfDropdownText;
 	display: none;
-	float: left;
 	min-width: 160px;
 	padding: 3px 0;
 	pointer-events: all;
@@ -128,32 +128,6 @@
 	text-align: left;
 	visibility: hidden;
 	z-index: 450;
-	
-	@include boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
-	
-	&::after {
-		border: 10px solid transparent;
-		border-bottom-color: $wcfDropdownBorder;
-		border-top-width: 0;
-		content: "";
-		display: inline-block;
-		left: 9px;
-		position: absolute;
-		top: -10px;
-		z-index: 100;
-	}
-	
-	&::before {
-		border: 9px solid transparent;
-		border-bottom-color: $wcfDropdownBackground;
-		border-top-width: 0;
-		content: "";
-		display: inline-block;
-		left: 10px;
-		position: absolute;
-		top: -9px;
-		z-index: 101;
-	}
 	
 	&.dropdownArrowRight {
 		&::after {

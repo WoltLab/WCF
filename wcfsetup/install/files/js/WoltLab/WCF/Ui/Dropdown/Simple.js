@@ -177,6 +177,7 @@ define(
 			UiAlignment.set(dropdownMenu, alternateElement || dropdown, {
 				pointerClassNames: ['dropdownArrowBottom', 'dropdownArrowRight'],
 				refDimensionsElement: refDimensionsElement || null,
+				verticalOffset: 0,
 				
 				// alignment
 				horizontal: (elData(dropdownMenu, 'dropdown-alignment-horizontal') === 'right') ? 'right' : 'left',
