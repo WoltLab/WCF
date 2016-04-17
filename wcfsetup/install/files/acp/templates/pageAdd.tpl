@@ -105,20 +105,20 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'packageID'} class="formError"{/if}>
-			<dt><label for="packageID">{lang}wcf.acp.page.packageID{/lang}</label></dt>
+		<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}>
+			<dt><label for="applicationPackageID">{lang}wcf.acp.page.applicationPackageID{/lang}</label></dt>
 			<dd>
-				<select name="packageID" id="packageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
+				<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
 					{foreach from=$availableApplications item=availableApplication}
-						<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $packageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
+						<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
 					{/foreach}
 				</select>
-				{if $errorField == 'parentPageID'}
+				{if $errorField == 'applicationPackageID'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.acp.page.packageID.error.{@$errorType}{/lang}
+							{lang}wcf.acp.page.applicationPackageID.error.{@$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}

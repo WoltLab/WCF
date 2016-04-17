@@ -61,10 +61,10 @@ class PageListPage extends SortablePage {
 	public $content = '';
 	
 	/**
-	 * package id of the page
+	 * application id of the page
 	 * @var integer
 	 */
-	public $packageID = 0;
+	public $applicationPackageID = 0;
 	
 	/**
 	 * page type
@@ -87,7 +87,7 @@ class PageListPage extends SortablePage {
 		if (!empty($_REQUEST['name'])) $this->name = StringUtil::trim($_REQUEST['name']);
 		if (!empty($_REQUEST['title'])) $this->title = StringUtil::trim($_REQUEST['title']);
 		if (!empty($_REQUEST['content'])) $this->content = StringUtil::trim($_REQUEST['content']);
-		if (isset($_REQUEST['packageID'])) $this->packageID = intval($_REQUEST['packageID']);
+		if (isset($_REQUEST['applicationPackageID'])) $this->applicationPackageID = intval($_REQUEST['applicationPackageID']);
 		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
 		
 		// get available applications
@@ -111,8 +111,8 @@ class PageListPage extends SortablePage {
 		if (!empty($this->content)) {
 			$this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf'.WCF_N.'_page_content WHERE content LIKE ?)', array('%'.$this->content.'%'));
 		}
-		if (!empty($this->packageID)) {
-			$this->objectList->getConditionBuilder()->add('page.packageID = ?', array($this->packageID));
+		if (!empty($this->applicationPackageID)) {
+			$this->objectList->getConditionBuilder()->add('page.applicationPackageID = ?', array($this->applicationPackageID));
 		}
 		if ($this->pageType == 'static') {
 			$this->objectList->getConditionBuilder()->add('page.pageType IN (?, ?, ?)', array('text', 'html', 'tpl'));
@@ -132,7 +132,7 @@ class PageListPage extends SortablePage {
 			'name' => $this->name,
 			'title' => $this->title,
 			'content' => $this->content,
-			'packageID' => $this->packageID,
+			'applicationPackageID' => $this->applicationPackageID,
 			'pageType' => $this->pageType,
 			'availableApplications' => $this->availableApplications
 		));

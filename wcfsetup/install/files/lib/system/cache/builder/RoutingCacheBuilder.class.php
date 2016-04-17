@@ -107,7 +107,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// fetch pages with a controller and a custom url
-		$sql = "SELECT	controller, controllerCustomURL, packageID
+		$sql = "SELECT	controller, controllerCustomURL, applicationPackageID
 			FROM	wcf".WCF_N."_page
 			WHERE	controller <> ''
 				AND controllerCustomURL <> ''";
@@ -119,7 +119,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// fetch content pages using the common page controller
-		$sql = "SELECT		page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.packageID
+		$sql = "SELECT		page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.applicationPackageID
 			FROM		wcf".WCF_N."_page_content page_content
 			LEFT JOIN	wcf".WCF_N."_page page
 			ON		(page.pageID = page_content.pageID)";
@@ -132,7 +132,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		$abbreviations = [];
 		foreach ($rows as $row) {
 			$customUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($row['controllerCustomURL']));
-			$packageID = $row['packageID'];
+			$packageID = $row['applicationPackageID'];
 			if (!isset($abbreviations[$packageID])) {
 				$abbreviations[$packageID] = ApplicationHandler::getInstance()->getAbbreviation($packageID);
 			}

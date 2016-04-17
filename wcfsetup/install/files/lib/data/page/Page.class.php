@@ -24,11 +24,13 @@ use wcf\system\WCF;
  * @property-read	integer|null	$parentPageID
  * @property-read	string		$identifier
  * @property-read	string		$name
+ * @property-read	string		$pageType
  * @property-read	integer		$isDisabled
  * @property-read	integer		$isLandingPage
  * @property-read	integer		$isMultilingual
  * @property-read	integer		$originIsSystem
  * @property-read	integer		$packageID
+ * @property-read	integer		$applicationPackageID
  * @property-read	string		$controller
  * @property-read	string		$handler
  * @property-read	string		$controllerCustomURL
@@ -180,7 +182,7 @@ class Page extends DatabaseObject {
 	 * @return	\wcf\data\application\Application
 	 */
 	public function getApplication() {
-		return ApplicationHandler::getInstance()->getApplicationByID($this->packageID);
+		return ApplicationHandler::getInstance()->getApplicationByID($this->applicationPackageID);
 	}
 	
 	/**

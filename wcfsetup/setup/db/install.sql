@@ -908,6 +908,7 @@ CREATE TABLE wcf1_page (
 	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	packageID INT(10) NOT NULL,
+	applicationPackageID INT(10),
 	controller VARCHAR(255) NOT NULL DEFAULT '',
 	handler VARCHAR(255) NOT NULL DEFAULT '',
 	controllerCustomURL VARCHAR(255) NOT NULL DEFAULT '',
@@ -1742,6 +1743,7 @@ ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (paymentMetho
 
 ALTER TABLE wcf1_page ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_page ADD FOREIGN KEY (applicationPackageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;

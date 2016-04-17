@@ -59,7 +59,7 @@ class PageEditForm extends PageAddForm {
 		$this->pageType = $this->page->pageType;
 		if ($this->page->originIsSystem) {
 			$this->parentPageID = $this->page->parentPageID;
-			$this->packageID = $this->page->packageID;
+			$this->applicationPackageID = $this->page->applicationPackageID;
 			$this->controller = $this->page->controller;
 		}
 		
@@ -89,7 +89,7 @@ class PageEditForm extends PageAddForm {
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'lastUpdateTime' => TIME_NOW,
 			'parentPageID' => ($this->parentPageID ?: null),
-			'packageID' => $this->packageID
+			'applicationPackageID' => $this->applicationPackageID
 		);
 		
 		if ($this->pageType == 'system') {
@@ -145,7 +145,7 @@ class PageEditForm extends PageAddForm {
 			$this->name = $this->page->name;
 			$this->parentPageID = $this->page->parentPageID;
 			$this->pageType = $this->page->pageType;
-			$this->packageID = $this->page->packageID;
+			$this->applicationPackageID = $this->page->applicationPackageID;
 			$this->controller = $this->page->controller;
 			if ($this->page->controllerCustomURL) $this->customURL[0] = $this->page->controllerCustomURL;
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;
@@ -176,7 +176,7 @@ class PageEditForm extends PageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

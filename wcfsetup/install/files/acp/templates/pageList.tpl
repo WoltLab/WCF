@@ -32,7 +32,7 @@
 			{if $name}{capture append=linkParameters}&name={@$name|rawurlencode}{/capture}{/if}
 			{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
 			{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
-			{if $packageID}{capture append=linkParameters}&packageID={@$packageID}{/capture}{/if}
+			{if $applicationPackageID}{capture append=linkParameters}&applicationPackageID={@$applicationPackageID}{/capture}{/if}
 			{if $pageType}{capture append=linkParameters}&pageType={@$pageType|rawurlencode}{/capture}{/if}
 			
 			{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
@@ -70,10 +70,10 @@
 				<dt></dt>
 				<dd>
 					<label class="selectDropdown">
-						<select name="packageID" id="packageID">
-							<option value="0">{lang}wcf.acp.page.packageID{/lang}</option>
+						<select name="applicationPackageID" id="applicationPackageID">
+							<option value="0">{lang}wcf.acp.page.applicationPackageID{/lang}</option>
 							{foreach from=$availableApplications item=availableApplication}
-								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $packageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
+								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
 							{/foreach}
 						</select>
 					</label>

@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\page\PageEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -184,6 +186,19 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				break;
 		}
 		
+		// get application package id
+		$applicationPackageID = 1;
+		if ($this->installation->getPackage()->isApplication) {
+			$applicationPackageID = $this->installation->getPackageID();
+		}
+		if (!empty($data['elements']['application'])) {
+			$application = PackageCache::getInstance()->getPackageByIdentifier($data['elements']['application']);
+			if ($application === null || !$application->isApplication) {
+				throw new SystemException("Unknown application '".$data['elements']['application']."' for page '{$identifier}");
+			}
+			$applicationPackageID = $application->packageID;
+		}
+		
 		return [
 			'pageType' => $pageType,
 			'content' => ($isStatic) ? $data['elements']['content'] : [],
@@ -196,6 +211,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'name' => $name,
 			'originIsSystem' => 1,
 			'parentPageID' => $parentPageID,
+			'applicationPackageID' => $applicationPackageID,
 			'requireObjectID' => (!empty($data['elements']['requireObjectID'])) ? 1 : 0,
 			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
 			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : ''

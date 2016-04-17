@@ -75,10 +75,10 @@ class PageAddForm extends AbstractForm {
 	public $isLandingPage = 0;
 	
 	/**
-	 * package id of the page
+	 * application id of the page
 	 * @var	integer
 	 */
-	public $packageID = 1;
+	public $applicationPackageID = 1;
 	
 	/**
 	 * list of available applications
@@ -165,7 +165,7 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
-		if (isset($_POST['packageID'])) $this->packageID = intval($_POST['packageID']);
+		if (isset($_POST['applicationPackageID'])) $this->applicationPackageID = intval($_POST['applicationPackageID']);
 		if (isset($_POST['controller'])) $this->controller = StringUtil::trim($_POST['controller']);
 		
 		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = ArrayUtil::trim($_POST['customURL']);
@@ -188,7 +188,7 @@ class PageAddForm extends AbstractForm {
 		
 		$this->validateParentPageID();
 		
-		$this->validatePackageID();
+		$this->validateApplicationPackageID();
 		
 		$this->validateController();
 		
@@ -233,9 +233,9 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Validates package id.
 	 */
-	protected function validatePackageID() {
-		if (!isset($this->availableApplications[$this->packageID])) {
-			throw new UserInputException('packageID', 'invalid');
+	protected function validateApplicationPackageID() {
+		if (!isset($this->availableApplications[$this->applicationPackageID])) {
+			throw new UserInputException('applicationPackageID', 'invalid');
 		}
 	}
 	
@@ -340,11 +340,12 @@ class PageAddForm extends AbstractForm {
 			'name' => $this->name,
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'isLandingPage' => 0,
-			'packageID' => ($this->packageID ?: null),
+			'applicationPackageID' => $this->applicationPackageID,
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
 			'identifier' => '',
-			'controller' => $this->controller
+			'controller' => $this->controller,
+			'packageID' => 1
 		]), 'content' => $content, 'boxToPage' => $this->getBoxToPage()]);
 		
 		/** @var Page $page */
@@ -368,7 +369,7 @@ class PageAddForm extends AbstractForm {
 		
 		// reset variables
 		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
-		$this->packageID = 1;
+		$this->applicationPackageID = 1;
 		$this->name = $this->controller = '';
 		$this->pageType = 'text';
 		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = [];
@@ -404,7 +405,7 @@ class PageAddForm extends AbstractForm {
 			'isDisabled' => $this->isDisabled,
 			'isLandingPage' => $this->isLandingPage,
 			'isMultilingual' => $this->isMultilingual,
-			'packageID' => $this->packageID,
+			'applicationPackageID' => $this->applicationPackageID,
 			'controller' => $this->controller,
 			'customURL' => $this->customURL,
 			'title' => $this->title,
