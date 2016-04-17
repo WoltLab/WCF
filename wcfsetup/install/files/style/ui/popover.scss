@@ -13,8 +13,8 @@
 	animation: wcfPopoverOut .3s;
 	animation-fill-mode: forwards;
 	background-color: $wcfContentBackground;
-	border: 1px solid $wcfDropdownBorder;
-	box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
+	border-radius: 2px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 	position: absolute;
 	top: 0;
 	vertical-align: middle;
@@ -33,31 +33,7 @@
 	}
 	
 	> .elementPointer {
-		border-width: 0 10px 10px;
-		border-style: solid;
-		border-color: $wcfDropdownBorder transparent;
-		top: 0;
-		
-		&.flipVertical {
-			border-width: 10px 10px 0;
-			bottom: 0;
-			top: auto;
-			
-			> span {
-				border-width: 10px 10px 0;
-				bottom: 1px;
-				top: auto;
-			}
-		}
-		
-		> span {
-			border-color: $wcfContentBackground transparent;
-			border-style: solid;
-			border-width: 0 10px 10px;
-			left: -10px;
-			position: absolute;
-			top: 1px;
-		} 
+		display: none; 
 	}
 }
 
