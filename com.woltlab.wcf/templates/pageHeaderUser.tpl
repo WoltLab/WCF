@@ -118,7 +118,7 @@
 								window.location = location + delimiter + 'l=' + elData(listItem, 'language-id') + window.location.hash;
 							};
 							
-							LanguageChooser.init('pageLanguageContainer', 'languageID', {@$__wcf->getLanguage()->languageID}, languages, callback);
+							LanguageChooser.init('pageLanguageContainer', 'pageLanguageID', {@$__wcf->getLanguage()->languageID}, languages, callback);
 							EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', function(data) {
 								if (data.identifier === 'com.woltlab.wcf.language') {
 									callback(data.parent);

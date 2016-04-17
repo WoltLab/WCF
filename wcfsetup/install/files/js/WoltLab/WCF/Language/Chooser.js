@@ -2,7 +2,7 @@
  * Dropdown language chooser.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Language/Chooser
  */
@@ -22,12 +22,12 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		/**
 		 * Initializes a language chooser.
 		 * 
-		 * @param	{string}					containerId		input element conainer id
-		 * @param	{string}					chooserId		input element id
-		 * @param	{int}   					languageId		selected language id
-		 * @param	{object<integer, object<string, string>>}	languages		data of available languages
-		 * @param	{function}					callback		function called after a language is selected
-		 * @param	{boolean}					allowEmptyValue		true if no language may be selected
+		 * @param       {string}                                containerId             input element conainer id
+		 * @param       {string}                                chooserId               input element id
+		 * @param       {int}                                   languageId              selected language id
+		 * @param       {object<int, object<string, string>>}   languages               data of available languages
+		 * @param       {function}                              callback                function called after a language is selected
+		 * @param       {boolean}                               allowEmptyValue         true if no language may be selected
 		 */
 		init: function(containerId, chooserId, languageId, languages, callback, allowEmptyValue) {
 			if (_choosers.has(chooserId)) {
@@ -66,23 +66,35 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		/**
 		 * Sets up DOM and event listeners for a language chooser.
 		 *
-		 * @param	{string}				chooserId		chooser id
-		 * @param	{Element}				element			chooser element
-		 * @param	{int}	        			languageId		selected language id
-		 * @param	{object<int, object<string, string>>}	languages		data of available languages
+		 * @param       {string}                                chooserId               chooser id
+		 * @param       {Element}                               element                 chooser element
+		 * @param       {int}                                   languageId              selected language id
+		 * @param       {object<int, object<string, string>>}   languages               data of available languages
 		 * @param       {function}                              callback                callback function invoked on selection change
-		 * @param	{boolean}				allowEmptyValue		true if no language may be selected
+		 * @param       {boolean}                               allowEmptyValue         true if no language may be selected
 		 */
 		_initElement: function(chooserId, element, languageId, languages, callback, allowEmptyValue) {
-			var container = element.parentNode;
-			container.classList.add('dropdown');
+			var container;
+			
+			if (element.parentNode.nodeName === 'DD') {
+				container = elCreate('div');
+				container.className = 'dropdown';
+				element.parentNode.insertBefore(container, element);
+			}
+			else {
+				container = element.parentNode;
+				container.classList.add('dropdown');
+			}
+			
+			elHide(element);
+			
 			var dropdownToggle = elCreate('a');
-			dropdownToggle.className = 'dropdownToggle boxFlag box24 inputPrefix';
-			container.insertBefore(dropdownToggle, element);
+			dropdownToggle.className = 'dropdownToggle boxFlag box24 inputPrefix' + (element.parentNode.nodeName === 'DD' ? ' button' : '');
+			container.appendChild(dropdownToggle);
 			
 			var dropdownMenu = elCreate('ul');
 			dropdownMenu.className = 'dropdownMenu';
-			DomUtil.insertAfter(dropdownMenu, dropdownToggle);
+			container.appendChild(dropdownMenu);
 			
 			var callbackClick = (function(event) {
 				var languageId = ~~elData(event.currentTarget, 'language-id');

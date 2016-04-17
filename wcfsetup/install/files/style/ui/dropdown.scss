@@ -274,6 +274,10 @@
 .boxFlag > .box24, .boxFlag.box24 {
 	display: flex !important;
 	min-height: 20px;
+	
+	&.dropdownToggle {
+		display: inline-flex !important;
+	}
 }
 
 @include large-screen-only {

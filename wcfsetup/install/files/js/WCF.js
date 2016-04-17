@@ -7252,122 +7252,31 @@ WCF.EditableItemList = Class.extend({
 
 /**
  * Provides a language chooser.
+ *
+ * @param       {string}                                containerId             input element conainer id
+ * @param       {string}                                chooserId               input element id
+ * @param       {int}                                   languageId              selected language id
+ * @param       {object<int, object<string, string>>}   languages               data of available languages
+ * @param       {function}                              callback                function called after a language is selected
+ * @param       {boolean}                               allowEmptyValue         true if no language may be selected
  * 
- * @param	string		containerID
- * @param	string		inputFieldID
- * @param	integer		languageID
- * @param	object		languages
- * @param	object		callback
+ * @deprecated  2.2 - please use `WoltLab/WCF/Language/Chooser` instead
  */
 WCF.Language.Chooser = Class.extend({
 	/**
-	 * callback object
-	 * @var	object
-	 */
-	_callback: null,
-	
-	/**
-	 * dropdown object
-	 * @var	jQuery
-	 */
-	_dropdown: null,
-	
-	/**
-	 * input field
-	 * @var	jQuery
-	 */
-	_input: null,
-	
-	/**
 	 * Initializes the language chooser.
-	 * 
-	 * @param	string		containerID
-	 * @param	string		inputFieldID
-	 * @param	integer		languageID
-	 * @param	object		languages
-	 * @param	object		callback
-	 * @param	boolean		allowEmptyValue
+	 *
+	 * @param       {string}                                containerId             input element conainer id
+	 * @param       {string}                                chooserId               input element id
+	 * @param       {int}                                   languageId              selected language id
+	 * @param       {object<int, object<string, string>>}   languages               data of available languages
+	 * @param       {function}                              callback                function called after a language is selected
+	 * @param       {boolean}                               allowEmptyValue         true if no language may be selected
 	 */
-	init: function(containerID, inputFieldID, languageID, languages, callback, allowEmptyValue) {
-		var $container = $('#' + containerID);
-		if ($container.length != 1) {
-			console.debug("[WCF.Language.Chooser] Invalid container id '" + containerID + "' given");
-			return;
-		}
-		
-		// bind language id input
-		this._input = $('#' + inputFieldID);
-		if (!this._input.length) {
-			this._input = $('<input type="hidden" name="' + inputFieldID + '" value="' + languageID + '" />').appendTo($container);
-		}
-		
-		// handle callback
-		if (callback !== undefined) {
-			if (!$.isFunction(callback)) {
-				console.debug("[WCF.Language.Chooser] Given callback is invalid");
-				return;
-			}
-			
-			this._callback = callback;
-		}
-		
-		// create language dropdown
-		this._dropdown = $('<div class="dropdown" id="' + containerID + '-languageChooser" />').appendTo($container);
-		$('<div class="dropdownToggle boxFlag box24" data-toggle="' + containerID + '-languageChooser"></div>').appendTo(this._dropdown);
-		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._dropdown);
-		
-		for (var $languageID in languages) {
-			var $language = languages[$languageID];
-			var $item = $('<li class="boxFlag"><a class="box24"><div><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <div><h3>' + $language.languageName + '</h3></div></a></li>').appendTo($dropdownMenu);
-			$item.data('languageID', $languageID).click($.proxy(this._click, this));
-			
-			// update dropdown label
-			if ($languageID == languageID) {
-				var $html = $('' + $item.html());
-				var $innerContent = $html.children().detach();
-				this._dropdown.children('.dropdownToggle').empty().append($innerContent);
-			}
-		}
-		
-		// allow an empty selection (e.g. using as language filter)
-		if (allowEmptyValue) {
-			$('<li class="dropdownDivider" />').appendTo($dropdownMenu);
-			var $item = $('<li><a>' + WCF.Language.get('wcf.global.language.noSelection') + '</a></li>').data('languageID', 0).click($.proxy(this._click, this)).appendTo($dropdownMenu);
-			
-			if (languageID === 0) {
-				this._dropdown.children('.dropdownToggle').empty().append($item.html());
-			}
-		}
-		else if (languageID === 0) {
-			var $dropdownToggle = $('<div><span class="icon icon24 fa-question" /></div> <div><h3>' + WCF.Language.get('wcf.global.language.noSelection') + '</h3></div>');
-			this._dropdown.children('.dropdownToggle').empty().append($dropdownToggle);
-		}
-		
-		WCF.Dropdown.destroy(containerID + '-languageChooser');
-		WCF.Dropdown.init();
-	},
-	
-	/**
-	 * Handles click events.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $item = $(event.currentTarget);
-		var $languageID = $item.data('languageID');
-		
-		// update input field
-		this._input.val($languageID);
-		
-		// update dropdown label
-		var $html = $('' + $item.html());
-		var $innerContent = ($languageID === 0) ? $html : $html.children().detach();
-		this._dropdown.children('.dropdownToggle').empty().append($innerContent);
-		
-		// execute callback
-		if (this._callback !== null) {
-			this._callback($item);
-		}
+	init: function(containerId, chooserId, languageId, languages, callback, allowEmptyValue) {
+		require(['WoltLab/WCF/Language/Chooser'], function(LanguageChooser) {
+			LanguageChooser.init(containerId, chooserId, languageId, languages, callback, allowEmptyValue);
+		});
 	}
 });
 
