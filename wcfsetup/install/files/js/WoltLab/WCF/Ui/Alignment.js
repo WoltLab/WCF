@@ -152,11 +152,16 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 				el.classList[(left === 'auto' ? 'add' : 'remove')](options.pointerClassNames[pointerRight]);
 			}
 			
+			if (bottom !== 'auto') bottom = Math.round(bottom) + 'px';
+			if (left !== 'auto') left = Math.ceil(left) + 'px';
+			if (right !== 'auto') right = Math.floor(right) + 'px';
+			if (top !== 'auto') top = Math.round(top) + 'px';
+			
 			DomUtil.setStyles(el, {
-				bottom: bottom + (bottom !== 'auto' ? 'px' : ''),
-				left: left + (left !== 'auto' ? 'px' : ''),
-				right: right + (right !== 'auto' ? 'px' : ''),
-				top: top + (top !== 'auto' ? 'px' : '')
+				bottom: bottom,
+				left: left,
+				right: right,
+				top: top
 			});
 			
 			elShow(el);
