@@ -224,7 +224,7 @@
 	flex-direction: column;
 	
 	@include large-screen-only {
-		margin: 0 20px;
+		margin-left: 20px;
 	}
 	
 	@include small-screen-only {
