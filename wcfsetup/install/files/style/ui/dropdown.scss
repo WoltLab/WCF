@@ -15,7 +15,7 @@
 	
 	&.inputAddon {
 		> .dropdownToggle {
-			padding: $wcfGapTiny;
+			padding: 4px 7px;
 			
 			> span.active:after {
 				content: "\f0d7"; // @TODO: use a variable instead
