@@ -25,19 +25,91 @@
 
 {hascontent}
 	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller="BoxList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $name}{capture append=linkParameters}&name={@$name|rawurlencode}{/capture}{/if}
+			{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
+			{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
+			{if $position}{capture append=linkParameters}&position={@$position}{/capture}{/if}
+			{if $boxType}{capture append=linkParameters}&boxType={@$boxType|rawurlencode}{/capture}{/if}
+		
+			{pages print=true assign=pagesLinks controller="BoxList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
 	</div>
 {/hascontent}
+
+<form method="post" action="{link controller='BoxList'}{/link}">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="name" name="name" value="{$name}" placeholder="{lang}wcf.global.name{/lang}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="boxTitle" name="title" value="{$title}" placeholder="{lang}wcf.acp.box.title{/lang}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="boxContent" name="content" value="{$content}" placeholder="{lang}wcf.acp.box.content{/lang}" class="long" />
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<label class="selectDropdown">
+						<select name="position" id="boxPosition">
+							<option value="0">{lang}wcf.acp.box.position{/lang}</option>
+							{foreach from=$availablePositions item=availablePosition}
+								<option value="{@$availablePosition}"{if $availablePosition == $position} selected="selected"{/if}>{@$availablePosition}</option>
+							{/foreach}
+						</select>
+					</label>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<label class="selectDropdown">
+						<select name="boxType" id="boxType">
+							<option value="">{lang}wcf.acp.box.boxType{/lang}</option>
+							<option value="static"{if $boxType == 'static'} selected="selected"{/if}>{lang}wcf.acp.box.boxType.static{/lang}</option>
+							<option value="system"{if $boxType == 'system'} selected="selected"{/if}>{lang}wcf.acp.box.boxType.system{/lang}</option>
+						</select>
+					</label>
+				</dd>
+			</dl>
+			
+			{event name='filterFields'}
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
+	</section>
+</form>
 
 {if $objects|count}
 	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnPageID{if $sortField == 'boxID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxID&sortOrder={if $sortField == 'boxID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
-					<th class="columnText columnBoxType{if $sortField == 'boxType'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxType&sortOrder={if $sortField == 'boxType' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.box.boxType{/lang}</a></th>
-					<th class="columnText columnPosition{if $sortField == 'position'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=position&sortOrder={if $sortField == 'position' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.box.position{/lang}</a></th>
+					<th class="columnPageID{if $sortField == 'boxID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxID&sortOrder={if $sortField == 'boxID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.name{/lang}</a></th>
+					<th class="columnText columnBoxType{if $sortField == 'boxType'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxType&sortOrder={if $sortField == 'boxType' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.box.boxType{/lang}</a></th>
+					<th class="columnText columnPosition{if $sortField == 'position'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=position&sortOrder={if $sortField == 'position' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.box.position{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
