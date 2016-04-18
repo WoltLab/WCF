@@ -170,7 +170,7 @@ define(
 		setAlignment: function(dropdown, dropdownMenu, alternateElement) {
 			// check if button belongs to an i18n textarea
 			var button = elBySel('.dropdownToggle', dropdown), refDimensionsElement;
-			if (button !== null && button.classList.contains('dropdownCaptionTextarea')) {
+			if (button !== null && button.parentNode.classList.contains('inputAddonTextarea')) {
 				refDimensionsElement = button;
 			}
 			
