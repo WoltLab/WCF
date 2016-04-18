@@ -389,6 +389,12 @@ define(
 				
 				this.rebuild(id);
 				
+				// set focus on first applicable element
+				var focusElement = elBySel('.jsDialogAutoFocus', data.dialog);
+				if (focusElement !== null && focusElement.offsetParent !== null) {
+					focusElement.focus();
+				}
+				
 				if (typeof data.onShow === 'function') {
 					data.onShow(id);
 				}
