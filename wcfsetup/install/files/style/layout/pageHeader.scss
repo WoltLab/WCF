@@ -1,7 +1,3 @@
-/* @TODO */
-.interactiveDropdown { display: none; }
-/* @TODO END */
-
 .pageHeaderContainer {
 	background-color: $wcfHeaderBackground;
 	color: $wcfHeaderText;
@@ -219,6 +215,7 @@
 				}
 			}
 			
+			&.dropdownOpen > a,
 			&.open > a {
 				background: linear-gradient(to top, $wcfHeaderMenuBackground 0%, $wcfHeaderMenuBackgroundActive 50%);
 				color: $wcfHeaderMenuLinkActive;

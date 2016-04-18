@@ -5,10 +5,9 @@
 /* styling for interactive dropdowns (currently only used in the user panel) */
 .interactiveDropdown {
 	background-color: $wcfContentBackground;
-	border: 1px solid $wcfDropdownBorder;
-	box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
+	border-radius: 2px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 	color: $wcfContentText;
-	display: block;
 	pointer-events: all;
 	position: absolute;
 	visibility: hidden;
@@ -18,51 +17,12 @@
 	left: -200%;
 	
 	> .elementPointer {
-		border-color: $wcfDropdownBorder transparent;
-		border-style: solid;
-		border-width: 0 10px 10px;
-		content: "";
-		display: block;
-		position: absolute;
-		z-index: 100;
-		
-		> span {
-			border-color: $wcfSidebarBackground transparent;
-			border-style: solid;
-			border-width: 0 10px 10px;
-			content: "";
-			display: block;
-			position: absolute;
-			top: 1px;
-			z-index: 101;
-		}
-		
-		&.left {
-			left: 15px;
-			
-			> span {
-				left: -10px;
-			}
-		}
-		
-		&.right {
-			right: 15px;
-			
-			> span {
-				right: -10px;
-			}
-		}
+		display: none;
 	}
 	
 	&.interactiveDropdownUserMenu > .interactiveDropdownItemsContainer {
 		overflow: visible;
 		max-height: none;
-	}
-	
-	@include small-screen-only {
-		> .elementPointer {
-			display: none;
-		}
 	}
 }
 

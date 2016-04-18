@@ -4,7 +4,7 @@
 			{if PACKAGE_ID}
 				<li id="userMenu" class="dropdown">
 					<a class="dropdownToggle" data-toggle="userMenu">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</a>
-					<ul class="dropdownMenu">
+					<ul class="dropdownMenu" data-dropdown-alignment-horizontal="right">
 						{* TODO: this was copied straight from the frontend *}
 						<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}{/link}" class="box32">
 								<div>{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
@@ -26,7 +26,7 @@
 				
 				<li id="jumpToPage" class="dropdown">
 					<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon32 fa-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
-					<ul class="dropdownMenu">
+					<ul class="dropdownMenu" data-dropdown-alignment-horizontal="right">
 						{foreach from=$__wcf->getFrontendMenu()->getMenuItemNodeList() item=_menuItem}
 							{if !$_menuItem->getMenuItem()->parentItemID && $_menuItem->getMenuItem()->getPage()}
 								<li><a href="{$_menuItem->getMenuItem()->getPage()->getLink()}">{$_menuItem->getMenuItem()->getPage()}</a></li>
@@ -45,7 +45,7 @@
 			<li id="woltlab" class="dropdown">
 				<a class="dropdownToggle" data-toggle="woltlab"><span class="icon icon32 fa-info"></span> <span>WoltLab&reg;</span></a>
 				
-				<ul class="dropdownMenu">
+				<ul class="dropdownMenu" data-dropdown-alignment-horizontal="right">
 					<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://www.woltlab.com"|rawurlencode}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
 					<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://community.woltlab.com"|rawurlencode}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
 					<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://www.woltlab.com/ticket-add/"|rawurlencode}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>
