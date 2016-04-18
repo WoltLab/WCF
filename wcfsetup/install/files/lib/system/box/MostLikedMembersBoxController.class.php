@@ -32,7 +32,7 @@ class MostLikedMembersBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasImage() {
+	public function hasLink() {
 		if (MODULE_MEMBERS_LIST) {
 			return true;
 		}
