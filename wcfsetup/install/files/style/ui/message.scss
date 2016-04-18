@@ -223,10 +223,6 @@
 	flex: auto;
 	flex-direction: column;
 	
-	@include large-screen-only {
-		margin-left: 20px;
-	}
-	
 	@include small-screen-only {
 		margin-top: 20px;
 	}

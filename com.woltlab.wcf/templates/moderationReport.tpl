@@ -32,7 +32,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.moderation.report{/lang}: {$queue->getTitle()}</h1>
+		<h1 class="contentTitle">{lang}wcf.moderation.report{/lang}</h1>
 		
 		{if $queue->lastChangeTime}
 			<dl class="plain inlineDataList">

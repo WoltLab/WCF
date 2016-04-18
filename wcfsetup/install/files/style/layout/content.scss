@@ -47,6 +47,14 @@
 		}
 	}
 	
+	.contentTitle + .inlineDataList {
+		margin-top: 5px;
+	}
+	
+	.inlineDataList {
+		color: $wcfContentDimmedText;
+	}
+	
 	@include large-screen-only {
 		display: flex;
 		

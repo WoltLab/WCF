@@ -31,7 +31,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.moderation.activation{/lang}: {$queue->getTitle()}</h1>
+		<h1 class="contentTitle">{lang}wcf.moderation.activation{/lang}</h1>
 		
 		{if $queue->lastChangeTime}
 			<dl class="plain inlineDataList">
