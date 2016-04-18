@@ -5,7 +5,7 @@ input[type="submit"],
 .button,
 a.button { // a.button is required to override link formatting, such as drop-down buttons
 	background-color: $wcfButtonBackground;
-	border-radius: 0;
+	border-radius: 2px;
 	border-width: 0;
 	color: $wcfButtonText;
 	cursor: pointer;
@@ -129,13 +129,13 @@ a.button {
 		}
 		
 		&:first-child .button {
-			border-top-left-radius: 3px;
-			border-bottom-left-radius: 3px;
+			border-top-left-radius: 2px;
+			border-bottom-left-radius: 2px;
 		}
 		
 		&:last-child .button {
-			border-top-right-radius: 3px;
-			border-bottom-right-radius: 3px;
+			border-top-right-radius: 2px;
+			border-bottom-right-radius: 2px;
 		}
 		
 		.button {

@@ -102,6 +102,7 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 			
 			UiAlignment.set(_tooltip, element, {
 				horizontal: 'center',
+				verticalOffset: 4,
 				pointer: true,
 				pointerClassNames: ['inverse'],
 				vertical: 'top'

@@ -25,6 +25,7 @@
 	> li {
 		animation: wcfPageActionOut .3s;
 		animation-fill-mode: forwards;
+		display: flex;
 		
 		// required to animate 'max-width' properly when removing items
 		max-width: 400px;
@@ -46,12 +47,13 @@
 		}
 		
 		> a {
-			background-color: rgba(0, 0, 0, .6);
+			background-color: rgba(0, 0, 0, .7);
+			border-radius: 2px;
 			color: rgba(224, 224, 224, 1);
 			padding: 5px 10px;
 			
 			> .icon {
-				color: rgba(224, 224, 224, 1);
+				color: inherit;
 			}
 		}
 		
@@ -59,10 +61,6 @@
 		&.dropdownOpen > a {
 			background-color: rgba(0, 0, 0, 1);
 			color: rgba(255, 255, 255, 1);
-			
-			> .icon {
-				color: rgba(255, 255, 255, 1);
-			}
 		}
 	}
 }
