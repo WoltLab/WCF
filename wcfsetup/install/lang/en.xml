@@ -2604,6 +2604,7 @@ Errors are:
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.AvatarEdit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Settings"><![CDATA[Settings]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.SignatureEdit"><![CDATA[Signature Management]]></item>
+		<item name="wcf.page.comments"><![CDATA[Comments]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

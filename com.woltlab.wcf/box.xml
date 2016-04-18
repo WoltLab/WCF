@@ -176,5 +176,15 @@
 			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
 		</box>
+		
+		<box identifier="com.woltlab.wcf.PageComments">
+			<name language="de">Kommentare</name>
+			<name language="en">Page Comments</name>
+			<boxType>system</boxType>
+			<controller>wcf\system\box\PageCommentsBoxController</controller>
+			<position>contentBottom</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+		</box>
 	</import>
 </data>

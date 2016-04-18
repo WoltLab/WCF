@@ -2567,6 +2567,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.AvatarEdit"><![CDATA[Avatar-Verwaltung]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.SignatureEdit"><![CDATA[Signatur-Verwaltung]]></item>
+		<item name="wcf.page.comments"><![CDATA[Kommentare]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

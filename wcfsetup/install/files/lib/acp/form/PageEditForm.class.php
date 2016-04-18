@@ -94,7 +94,7 @@ class PageEditForm extends PageAddForm {
 		
 		if ($this->pageType == 'system') {
 			$data['controllerCustomURL'] = (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : '');
-			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data)));
+			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data), 'boxToPage' => $this->getBoxToPage()));
 			$this->objectAction->executeAction();
 		}
 		else {

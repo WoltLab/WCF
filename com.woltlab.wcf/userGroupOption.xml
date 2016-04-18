@@ -29,11 +29,18 @@
 				<parent>user.message</parent>
 			</category>
 			
+			<category name="user.pageComment">
+				<parent>user</parent>
+			</category>
+			
 			<category name="mod" />
 			<category name="mod.general">
 				<parent>mod</parent>
 			</category>
 			<category name="mod.profileComment">
+				<parent>mod.general</parent>
+			</category>
+			<category name="mod.pageComment">
 				<parent>mod.general</parent>
 			</category>
 			
@@ -693,6 +700,25 @@ png]]></defaultvalue>
 			</option>
 			<!-- /user.profile -->
 			
+			<option name="user.pageComment.canAddComment">
+				<categoryname>user.pageComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.pageComment.canEditComment">
+				<categoryname>user.pageComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="user.pageComment.canDeleteComment">
+				<categoryname>user.pageComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			
 			<option name="mod.general.canUseModeration">
 				<categoryname>mod.general</categoryname>
 				<optiontype>boolean</optiontype>
@@ -738,6 +764,28 @@ png]]></defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /mod.general -->
+			
+			<option name="mod.pageComment.canEditComment">
+				<categoryname>mod.pageComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<moddefaultvalue>1</moddefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="mod.pageComment.canDeleteComment">
+				<categoryname>mod.pageComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<moddefaultvalue>1</moddefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="mod.pageComment.canModerateComment">
+				<categoryname>mod.pageComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<moddefaultvalue>1</moddefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
 			
 			<!-- user.profileComment -->
 			<option name="user.profileComment.canAddComment">

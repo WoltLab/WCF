@@ -151,6 +151,12 @@
 			<classname><![CDATA[wcf\system\user\notification\object\type\ModerationQueueCommentResponseUserNotificationObjectType]]></classname>
 			<category>com.woltlab.wcf.moderation</category>
 		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.page</name>
+			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
+			<classname><![CDATA[wcf\system\comment\manager\PageCommentManager]]></classname>
+		</type>
 		<!-- /comments -->
 		
 		<!-- moderation -->
