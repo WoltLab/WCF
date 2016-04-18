@@ -31,6 +31,9 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
+			{if !$page->requireObjectID}
+				<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
+			{/if}
 			<li><a href="{link controller='PageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
