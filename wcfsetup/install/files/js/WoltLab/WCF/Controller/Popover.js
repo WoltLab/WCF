@@ -359,8 +359,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			
 			UiAlignment.set(_popover, _elements.get(_activeId).element, {
 				pointer: true,
-				vertical: 'top',
-				verticalOffset: 0
+				vertical: 'top'
 			});
 		},
 		

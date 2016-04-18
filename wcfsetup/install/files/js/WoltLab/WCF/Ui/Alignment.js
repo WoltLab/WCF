@@ -23,7 +23,7 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 		set: function(el, ref, options) {
 			options = Core.extend({
 				// offset to reference element
-				verticalOffset: 10,
+				verticalOffset: 0,
 				
 				// align the pointer element, expects .elementPointer as a direct child of given element
 				pointer: false,
