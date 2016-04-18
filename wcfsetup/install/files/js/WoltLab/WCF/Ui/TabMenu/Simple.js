@@ -17,6 +17,7 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 		this._container = container;
 		this._containers = new Dictionary();
 		this._isLegacy = null;
+		this._store = null;
 		this._tabs = new Dictionary();
 	}
 	
@@ -139,7 +140,7 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 				}
 				
 				if (!selectTab) {
-					var preselect = elData(this._container, 'preselect');
+					var preselect = elData(this._container, 'preselect') || elData(this._container, 'active');
 					if (preselect === "true" || !preselect) preselect = true;
 					
 					if (preselect === true) {
@@ -160,6 +161,17 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 					});
 					
 					this.select(null, selectTab, true);
+				}
+				
+				var store = elData(this._container, 'store');
+				if (store) {
+					var input = elCreate('input');
+					input.type = 'hidden';
+					input.name = store;
+					
+					this._container.appendChild(input);
+					
+					this._store = input;
 				}
 			}
 			
@@ -226,6 +238,10 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 				tab.classList.add('ui-state-active');
 				newContent.classList.add('ui-state-active');
 				newContent.classList.remove('hidden');
+			}
+			
+			if (this._store) {
+				this._store.value = name;
 			}
 			
 			if (!disableEvent) {
