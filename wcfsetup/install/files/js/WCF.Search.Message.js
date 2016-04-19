@@ -147,7 +147,7 @@ WCF.Search.Message.SearchArea = Class.extend({
 			
 			var $enableFlexWidth = true;
 			require(['Ui/Screen'], function(UiScreen) {
-				UiScreen.on({
+				UiScreen.on('screen-md-down', {
 					match: function() { $enableFlexWidth = false; },
 					unmatch: function() { $enableFlexWidth = true; },
 					setup: function() { $enableFlexWidth = false; }

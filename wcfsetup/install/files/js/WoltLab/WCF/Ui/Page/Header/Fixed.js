@@ -25,7 +25,7 @@ define(['Core', 'EventHandler', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/SimpleDropdo
 			this._initStickyPageHeader();
 			this._initSearchBar();
 			
-			UiScreen.on({
+			UiScreen.on('screen-md-down', {
 				match: function() { _isMobile = true; },
 				unmatch: function() { _isMobile = false; },
 				setup: function() { _isMobile = true; }

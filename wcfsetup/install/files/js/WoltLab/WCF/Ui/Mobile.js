@@ -46,9 +46,9 @@ define(
 				document.documentElement.classList.add('mobile');
 			}
 			
-			UiScreen.on({
-				small: this.enable.bind(this),
-				large: this.disable.bind(this),
+			UiScreen.on('screen-md-down', {
+				match: this.enable.bind(this),
+				unmatch: this.disable.bind(this),
 				setup: this._init.bind(this)
 			});
 		},

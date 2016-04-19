@@ -13,6 +13,17 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 	var _mql = new Dictionary();
 	var _scrollDisableCounter = 0;
 	
+	var _mqMap = Dictionary.fromObject({
+		'screen-xs': '(max-width: 544px)',                              /* smartphone */
+		'screen-sm': '(min-width: 545px) and (max-width: 768px)',       /* tablet (portrait) */
+		'screen-sm-down': '(max-width: 768px)',                         /* smartphone + tablet (portrait) */
+		'screen-sm-up': '(min-width: 545px)',                           /* tablet(portrait) + tablet (landscape) + desktop */
+		'screen-md': '(min-width: 769px) and (max-width: 1024px)',      /* tablet (landscape) */
+		'screen-md-down': '(max-width: 1024px)',                        /* smartphone + tablet (portrait) + tablet (landscape) */
+		'screen-md-up': '(min-width: 1024px)',                          /* tablet (landscape) + desktop */
+		'screen-lg': '(min-width: 1025px)'                              /* desktop */
+	});
+	
 	/**
 	 * @exports     WoltLab/WCF/Ui/Screen
 	 */
@@ -21,32 +32,26 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		 * Registers event listeners for media query match/unmatch.
 		 * 
 		 * The `callbacks` object may contain the following keys:
-		 *  - `small` or `match`, triggered when media query matches
-		 *  - `large` or `unmatch`, triggered when media query no longer matches
+		 *  - `match`, triggered when media query matches
+		 *  - `unmatch`, triggered when media query no longer matches
 		 *  - `setup`, invoked when media query first matches
-		 * 
-		 * The `small` and `large` keys only exist to increase readability when omitting
-		 * the `query` argument and thus default to match the default value of `query`.
-		 * 
-		 * `query` will default to `(max-width: 767px)`, it allows any value that can
-		 * be evaluated with `window.matchMedia`.
 		 * 
 		 * Returns a UUID that is used to internal identify the callbacks, can be used
 		 * to remove binding by calling the `remove` method.
 		 * 
-		 * @param       {object}        callbacks
-		 * @param       {string=}       query
+		 * @param       {string}        query           media query
+		 * @param       {object}        callbacks       callback functions
 		 * @return      {string}        UUID for listener removal
 		 */
-		on: function(callbacks, query) {
+		on: function(query, callbacks) {
 			var uuid = Core.getUuid(), queryObject = this._getQueryObject(query);
 			
-			if (typeof callbacks.small === 'function' || typeof callbacks.match === 'function') {
-				queryObject.callbacksMatch.set(uuid, callbacks.small || callbacks.match);
+			if (typeof callbacks.match === 'function') {
+				queryObject.callbacksMatch.set(uuid, callbacks.match);
 			}
 			
-			if (typeof callbacks.large === 'function' || typeof callbacks.unmatch === 'function') {
-				queryObject.callbacksUnmatch.set(uuid, callbacks.large || callbacks.unmatch);
+			if (typeof callbacks.unmatch === 'function') {
+				queryObject.callbacksUnmatch.set(uuid, callbacks.unmatch);
 			}
 			
 			if (typeof callbacks.setup === 'function') {
@@ -63,11 +68,11 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		
 		/**
 		 * Removes all listeners identified by their common UUID.
-		 * 
+		 *
+		 * @param       {string}        query   must match the `query` argument used when calling `on()`
 		 * @param       {string}        uuid    UUID received when calling `on()`
-		 * @param       {string=}       query   must match the `query` argument used when calling `on()`
 		 */
-		remove: function(uuid, query) {
+		remove: function(query, uuid) {
 			var queryObject = this._getQueryObject(query);
 			
 			queryObject.callbacksMatch.delete(uuid);
@@ -78,18 +83,11 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		/**
 		 * Returns a boolean value if a media query expression currently matches.
 		 * 
-		 * @param       {string=}       query   CSS media query
+		 * @param       {string}        query   CSS media query
 		 * @returns     {boolean}       true if query matches
 		 */
 		is: function(query) {
-			var queryObject = this._getQueryObject(query);
-			
-			if (query === 'large') {
-				// the query matches for max-width, we need to inverse the logic here
-				return !queryObject.mql.matches;
-			}
-			
-			return queryObject.mql.matches;
+			return this._getQueryObject(query).mql.matches;
 		},
 		
 		/**
@@ -125,15 +123,16 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		
 		/**
 		 * 
-		 * @param       {string=}       query   CSS media query
+		 * @param       {string}        query   CSS media query
 		 * @return      {Object}        object containing callbacks and MediaQueryList
 		 * @protected
 		 */
 		_getQueryObject: function(query) {
-			if (typeof query !== 'string') query = '';
-			if (query === '' || query === 'small' || query === 'large') {
-				query = '(max-width: 767px)';
+			if (typeof query !== 'string' || query.trim() === '') {
+				throw new TypeError("Expected a non-empty string for parameter 'query'.");
 			}
+			
+			if (_mqMap.has(query)) query = _mqMap.get(query);
 			
 			var queryObject = _mql.get(query);
 			if (!queryObject) {
