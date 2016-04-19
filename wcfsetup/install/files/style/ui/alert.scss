@@ -5,11 +5,11 @@
 	border-left: 5px solid transparent;
 	margin-top: 20px;
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		padding: 10px 20px;
 	}
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		padding: 10px;
 	}
 }

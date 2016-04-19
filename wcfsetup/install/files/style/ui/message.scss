@@ -1,7 +1,7 @@
 .messageList {
 	border-bottom: 1px solid $wcfContentBorder;
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		border-top: 1px solid $wcfContentBorder;
 		
 		> li {
@@ -13,7 +13,7 @@
 		}
 	}
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		> li {
 			padding-bottom: 20px;
 		}
@@ -48,7 +48,7 @@
 .message {
 	display: flex;
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		flex-direction: column;
 	}
 	
@@ -79,7 +79,7 @@
 	color: $wcfSidebarText;
 	position: relative;
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		align-self: flex-start;
 		border-radius: 3px;
 		flex: 0 0 240px;
@@ -91,7 +91,7 @@
 		}
 	}
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		flex: 0 0 auto;
 		margin: 0 -10px;
 		padding: 10px;
@@ -162,11 +162,11 @@
 		pointer-events: none;
 		position: absolute;
 		
-		@include large-screen-only {
+		@include screen-md-up {
 			bottom: 0;
 		}
 		
-		@include small-screen-only {
+		@include screen-sm-down {
 			color: transparent;
 			padding: 0;
 			width: 0;
@@ -223,7 +223,7 @@
 	flex: auto;
 	flex-direction: column;
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		margin-top: 20px;
 	}
 	
@@ -326,11 +326,11 @@
 }
 
 .messageQuickOptions {
-	@include large-screen-only {
+	@include screen-md-up {
 		@include inlineList;
 	}
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		flex: 0 0 24px;
 		height: 1.5em;
 		position: relative;
@@ -423,11 +423,11 @@
 	}
 	
 	> .messageFooterButtons {
-		@include large-screen-only {
+		@include screen-md-up {
 			flex: auto;
 		}
 		
-		@include small-screen-only {
+		@include screen-sm-down {
 			display: none;
 		}
 	}

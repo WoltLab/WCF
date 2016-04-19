@@ -3,7 +3,7 @@
 	will-change: transform;
 }
 
-@include large-screen-only {
+@include screen-lg {
 	.pageHeaderContainer.stickyPageHeader {
 		z-index: 300;
 	}
@@ -148,7 +148,7 @@
 // force sticky header on handheld devices, there is no difference when scrolled
 // all the way up and it might flicker when scrolling due to the inconsistent
 // scroll event being fired
-@include small-screen-only {
+@include screen-md-down {
 	.pageHeaderContainer {
 		height: 50px;
 		z-index: 300;

@@ -11,7 +11,7 @@
 	will-change: opacity;
 	z-index: 399;
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		padding: 100px 0;
 	}
 	
@@ -47,14 +47,14 @@
 .dialogContainer {
 	z-index: 200;
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		left: 0 !important;
 		position: fixed;
 		right: 0 !important;
 		top: 0 !important;
 	}
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		animation: wcfDialogOut .3s;
 		animation-fill-mode: forwards;
 		box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
@@ -106,11 +106,11 @@
 		overflow: auto;
 		
 		&:not(.dialogContentNoPadding) {
-			@include small-screen-only {
+			@include screen-sm-down {
 				padding: 10px;
 			}
 			
-			@include large-screen-only {
+			@include screen-md-up {
 				padding: 30px 20px 10px 20px;
 			}
 			

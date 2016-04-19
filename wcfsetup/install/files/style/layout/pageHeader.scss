@@ -15,27 +15,27 @@
 .pageHeader .layoutBoundary {
 	display: flex;
 	
-	@include large-screen-only {
+	@include screen-md-down {
+		padding: 10px;
+	}
+	
+	@include screen-lg {
 		align-items: center;
 		flex-wrap: wrap;
 		padding-top: 20px;
 		padding-bottom: 0;
 	}
-	
-	@include small-screen-only {
-		padding: 10px;
-	}
 }
 
 /* LOGO */
 .pageHeaderLogo {
-	.pageHeaderLogoSmall {
-		display: none;
-	}
-	
-	@include large-screen-only {
+	@include screen-lg {
 		flex: 0 0 50%;
 		margin-bottom: 20px;
+		
+		.pageHeaderLogoSmall {
+			display: none;
+		}
 	}
 }
 
@@ -141,7 +141,7 @@
 	}
 }
 
-@include large-screen-only {
+@include screen-lg {
 	.pageHeader:not(.sticky) {
 		.mainMenu {
 			background-color: $wcfHeaderMenuBackground;
@@ -178,6 +178,7 @@
 
 /* user panel */
 .userPanel {
+	background-color: $wcfHeaderMenuBackground;
 	flex: 0 0 auto;
 	
 	> ul {
@@ -241,7 +242,7 @@
 
 /* SEARCH AREA */
 .pageHeaderSearch {
-	@include large-screen-only {
+	@include screen-lg {
 		align-self: flex-start;
 		flex: 0 0 50%;
 		margin-bottom: 20px;
@@ -331,7 +332,7 @@
 	}
 }
 
-@include small-screen-only {
+@include screen-md-down {
 	.pageHeaderContainer {
 		// touch browser allow to scroll past the page top before they bounce back,
 		// but in that case the original background color is visible

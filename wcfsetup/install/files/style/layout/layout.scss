@@ -36,11 +36,11 @@ a {
 	color: $wcfContentText;
 	flex: 1 0 auto;
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		padding: 60px 0;
 	}
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		padding: 30px 0;
 		width: 100%;
 	}
@@ -55,7 +55,7 @@ a {
 }
 
 /* use flex-box to enforce a proper side-by-side layout on desktop */
-@include large-screen-only {
+@include screen-md-up {
 	.main > div {
 		display: flex;
 	}
@@ -105,7 +105,7 @@ a {
    <content>
    <rightSidebar>
 */
-@include small-screen-only {
+@include screen-sm-down {
 	.sidebar {
 		margin: 0 -10px;
 	}

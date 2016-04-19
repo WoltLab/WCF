@@ -199,21 +199,21 @@
 		&:not(.boxBorderless) {
 			background-color: $wcfSidebarBackground;
 			
-			@include large-screen-only {
-				padding: 20px;
-				
-				.boxMenu {
-					margin-left: -20px;
-					margin-right: -20px;
-				}
-			}
-			
-			@include small-screen-only {
+			@include screen-md-down {
 				padding: 20px 10px;
 				
 				.boxMenu {
 					margin-left: -10px;
 					margin-right: -10px;
+				}
+			}
+			
+			@include screen-lg {
+				padding: 20px;
+				
+				.boxMenu {
+					margin-left: -20px;
+					margin-right: -20px;
 				}
 			}
 		}
@@ -364,15 +364,15 @@
 		margin-left: -10px;
 		margin-right: -10px;
 		
-		@include large-screen-only {
+		@include screen-sm-down {
+			padding: 20px 0;
+		}
+		
+		@include screen-md-up {
 			display: flex;
 			flex-wrap: wrap;
 			margin-bottom: -40px;
 			padding: 40px 0;
-		}
-		
-		@include small-screen-only {
-			padding: 20px 0;
 		}
 	}
 	
@@ -381,18 +381,18 @@
 		padding-left: 10px;
 		padding-right: 10px;
 		
-		@include large-screen-only {
+		@include screen-sm-down {
+			& + .box {
+				margin-top: 40px;
+			}
+		}
+		
+		@include screen-md-up {
 			flex: 0 0 50%;
 			margin-bottom: 40px;
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
-			}
-		}
-		
-		@include small-screen-only {
-			& + .box {
-				margin-top: 40px;
 			}
 		}
 	}

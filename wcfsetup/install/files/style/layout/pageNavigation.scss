@@ -1,4 +1,4 @@
-@include large-screen-only {
+@include screen-md-up {
 	.pageNavigation {
 		background-color: $wcfNavigationBackground;
 		color: $wcfNavigationText;
@@ -45,7 +45,7 @@
 	}
 }
 
-@include small-screen-only {
+@include screen-sm-down {
 	.pageNavigation {
 		display: none;
 	}

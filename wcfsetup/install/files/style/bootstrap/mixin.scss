@@ -63,16 +63,3 @@
 	box-shadow: $parameters;
 }
 /** /deprecated */
-
-@mixin small-screen-only() {
-	/* 768px - 1px */
-	@media (max-width: 767px) {
-		@content;
-	}
-}
-
-@mixin large-screen-only() {
-	@media (min-width: 768px) {
-		@content;
-	}
-}

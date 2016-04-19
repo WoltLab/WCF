@@ -89,13 +89,13 @@
 				
 				@include userSelectNone;
 				
-				@include large-screen-only {
+				@include screen-md-up {
 					> .icon {
 						display: none;
 					}
 				}
 				
-				@include small-screen-only {
+				@include screen-sm-down {
 					> .icon {
 						display: block;
 					}

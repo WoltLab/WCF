@@ -81,7 +81,7 @@
 }
 
 .tabularBox {
-	@include small-screen-only {
+	@include screen-sm-down {
 		overflow: auto;
 	}
 }

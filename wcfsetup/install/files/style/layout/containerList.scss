@@ -2,12 +2,12 @@
 	position: relative;
 	transition: background-color .2s;
 	
-	@include large-screen-only {
-		padding: 20px;
+	@include screen-md-down {
+		padding: 10px 0;
 	}
 	
-	@include small-screen-only {
-		padding: 10px 0;
+	@include screen-lg {
+		padding: 20px;
 	}
 	
 	&:not(:last-child) {
@@ -91,7 +91,16 @@
 }
 
 .containerBoxList {
-	@include large-screen-only {
+	@include screen-sm-down {
+		&.doubleColumned,
+		&.tripleColumned {
+			> li + li {
+				margin-top: 10px;
+			}
+		}
+	}
+	
+	@include screen-md-up {
 		&.doubleColumned,
 		&.tripleColumned {
 			display: flex;
@@ -123,15 +132,6 @@
 			flex: 0 0 calc(100% / 3);
 			/* work-around for IE10 */
 			width: calc(100% / 3);
-		}
-	}
-	
-	@include small-screen-only {
-		&.doubleColumned,
-		&.tripleColumned {
-			> li + li {
-				margin-top: 10px;
-			}
 		}
 	}
 }

@@ -60,7 +60,7 @@
 		}
 	}
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		-webkit-column-count: 2;
 		-moz-column-count: 2;
 		column-count: 2;
@@ -93,7 +93,7 @@
 	}
 }
 
-@include large-screen-only {
+@include screen-md-up {
 	/* full page login: missing margin due to different DOM */
 	.contentHeader ~ .loginForm {
 		margin-top: 30px;

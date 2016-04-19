@@ -126,7 +126,7 @@
 	margin-left: 100%;
 }
 
-@include large-screen-only {
+@include screen-md-up {
 	.col-md-1 {
 		flex: 0 0 8.333333%;
 	}
@@ -297,7 +297,7 @@
 	align-items: flex-end;
 }
 
-@include large-screen-only {
+@include screen-md-up {
 	.row-md-top {
 		-ms-grid-row-align: flex-start;
 		align-items: flex-start;
@@ -324,7 +324,7 @@
 	align-self: flex-end;
 }
 
-@include large-screen-only {
+@include screen-md-up {
 	.col-md-top {
 		align-self: flex-start;
 	}

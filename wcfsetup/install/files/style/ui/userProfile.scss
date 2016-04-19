@@ -10,11 +10,11 @@
 	   and a clear separation if the images color is close to the surrounding elements */
 	box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, .6), inset 0 -10px 10px -10px rgba(0, 0, 0, .6);
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		height: 200px;
 	}
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		height: 100px;
 	}
 }
@@ -28,7 +28,7 @@
 		padding: 0 10px 0 160px;
 		position: relative;
 		
-		@include small-screen-only {
+		@include screen-sm-down {
 			padding-left: 90px;
 		}
 	}
@@ -48,7 +48,7 @@
 		top: 50%;
 		transform: translateY(-50%);
 		
-		@include small-screen-only {
+		@include screen-sm-down {
 			.userAvatarImage {
 				height: 64px !important;
 				width: 64px !important;
@@ -72,7 +72,7 @@
 	}
 	
 	.userProfileButtonContainer {
-		@include large-screen-only {
+		@include screen-md-up {
 			display: flex;
 			flex: 0 0 auto;
 			margin-left: 10px;
@@ -142,7 +142,7 @@
 			}
 		}
 		
-		@include small-screen-only {
+		@include screen-sm-down {
 			display: none;
 		}
 	}
@@ -163,7 +163,7 @@
 	> .layoutBoundary {
 		padding: 10px 10px 10px 160px;
 		
-		@include small-screen-only {
+		@include screen-sm-down {
 			padding: 20px 10px 10px;
 		}
 	}

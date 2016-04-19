@@ -109,13 +109,7 @@ select {
 		margin-top: 30px;
 	}
 	
-	@include large-screen-only {
-		> :not(:first-child) {
-			margin-left: 10px;
-		}
-	}
-	
-	@include small-screen-only {
+	@include screen-xs {
 		> .button,
 		> button,
 		> input {
@@ -126,6 +120,12 @@ select {
 			&:not(:first-child) {
 				margin-top: 10px;
 			}
+		}
+	}
+	
+	@include screen-sm-up {
+		> :not(:first-child) {
+			margin-left: 10px;
 		}
 	}
 }

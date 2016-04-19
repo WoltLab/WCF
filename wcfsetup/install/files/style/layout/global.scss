@@ -1,12 +1,12 @@
 .layoutBoundary {
 	margin: 0 auto;
 	
-	@include small-screen-only {
+	@include screen-md-down {
 		padding: 0 10px;
 		width: 100%;
 	}
 	
-	@include large-screen-only {
+	@include screen-lg {
 		padding: 0 20px;
 		
 		@if $useFluidLayout {

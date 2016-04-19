@@ -9,7 +9,7 @@
 		@include wcfFontSection;
 	}
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		> ul {
 			border-bottom: 1px solid $wcfContentBorderInner;
 			
@@ -44,7 +44,7 @@
 		}
 	}
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		> ul {
 			border-bottom: 1px solid $wcfContentLink;
 			display: block;

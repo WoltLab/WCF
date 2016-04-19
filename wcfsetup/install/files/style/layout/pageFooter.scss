@@ -3,11 +3,11 @@
 	color: $wcfFooterText;
 	flex: 0 0 auto;
 	
-	@include large-screen-only {
+	@include screen-md-up {
 		padding: 40px 0;
 	}
 	
-	@include small-screen-only {
+	@include screen-sm-down {
 		padding: 20px 0;
 	}
 	

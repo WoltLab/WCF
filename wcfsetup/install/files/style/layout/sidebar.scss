@@ -19,11 +19,11 @@
 		> section:not(.box) {
 			background-color: $wcfSidebarBackground;
 			
-			@include large-screen-only {
+			@include screen-md-up {
 				padding: 20px;
 			}
 			
-			@include small-screen-only {
+			@include screen-sm-down {
 				padding: 20px 10px;
 			}
 			

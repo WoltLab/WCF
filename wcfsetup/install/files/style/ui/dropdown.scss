@@ -280,13 +280,13 @@
 	}
 }
 
-@include large-screen-only {
+@include screen-md-up {
 	.dropdownMenu.pageHeaderSearchDropdown {
 		transform: translateY(-10px);
 	}
 }
 
-@include small-screen-only {
+@include screen-sm-down {
 	.dropdownMenu {
 		left: 0 !important;
 		right: 0 !important;

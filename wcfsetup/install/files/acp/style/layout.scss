@@ -18,7 +18,7 @@
 	top: 0;
 	z-index: 300;
 	
-	@include large-screen-only {
+	@include screen-lg {
 		.pageHeader .layoutBoundary {
 			height: 50px;
 			padding: 10px 10px 10px 0;
@@ -66,7 +66,7 @@
 		}
 	}
 	
-	@include small-screen-only {
+	@include screen-md-down {
 		max-width: 100vw;
 	}
 }
@@ -88,7 +88,7 @@
 	flex: 1 0 auto;
 }
 
-@include large-screen-only {
+@include screen-lg {
 	.acpPageMenu .icon, .acpPageSubMenu .icon {
 		color: inherit;
 	}
@@ -189,7 +189,7 @@
 	}
 }
 
-@include small-screen-only {
+@include screen-md-down {
 	.acpPageMenu,
 	.acpPageSubMenu {
 		display: none;
@@ -199,11 +199,11 @@
 .main {
 	flex: 1 1 auto;
 	
-	@include large-screen-only {
+	@include screen-lg {
 		padding: 40px 0 40px 20px;
 	}
 	
-	@include small-screen-only {
+	@include screen-md-down {
 		padding: 20px 0;
 	}
 }
