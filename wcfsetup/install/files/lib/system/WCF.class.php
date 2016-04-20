@@ -920,7 +920,7 @@ class WCF {
 	 * 
 	 * @return      boolean
 	 */
-	public function isLandingPage() {
+	public static function isLandingPage() {
 		return RequestHandler::getInstance()->getActiveRequest()->isLandingPage();
 	}
 	
