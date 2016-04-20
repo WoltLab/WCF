@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{if !$page->isLandingPage}{$content[title]} - {/if}{PAGE_TITLE|language}</title>
+	<title>{if !$__wcf->isLandingPage()}{$content[title]} - {/if}{PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
 	
@@ -12,7 +12,7 @@
 
 {include file='header'}
 
-{if $page->isLandingPage}
+{if $__wcf->isLandingPage()}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{PAGE_TITLE|language}</h1>
