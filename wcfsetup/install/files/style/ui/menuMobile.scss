@@ -1,63 +1,120 @@
-/* animations for overlay appearing from the left */
-@keyframes wcfMenuOverlayLeft {
-	0%   { visibility: hidden;  transform: translateX(-100%); }
-	100% { visibility: visible; transform: translateX(0);     }
-}
-
-@keyframes wcfMenuOverlayLeftOut {
-	0%   { visibility: visible; transform: translateX(0);     }
-	99%  { visibility: visible; transform: translateX(-100%); }
-	100% { visibility: hidden;  transform: translateX(-100%); }
-}
-
-/* animations for overlay appearing from the right */
-@keyframes wcfMenuOverlayRight {
-	0%   { visibility: hidden;  transform: translateX(100%); }
-	100% { visibility: visible; transform: translateX(0);    }
-}
-
-@keyframes wcfMenuOverlayRightOut {
-	0%   { visibility: visible; transform: translateX(0);    }
-	99%  { visibility: visible; transform: translateX(100%); }
-	100% { visibility: hidden;  transform: translateX(100%); }
+@include screen-sm-up {
+	.pageContainer {
+		&.menuOverlay-pageMainMenuMobile {
+			transform: translateX(350px);
+			
+			.mainMenu {
+				visibility: hidden;
+			}
+		}
+		
+		&.menuOverlay-pageUserMenuMobile {
+			transform: translateX(-350px);
+			
+			.userPanel {
+				visibility: hidden;
+			}
+		}
+	}
 }
 
 /* menu container */
 .menuOverlayMobile {
+	background-color: rgb(52, 73, 94);
 	bottom: 0;
-	left: 0;
-	max-width: 100vw;
+	display: none;
 	overflow: hidden;
+	position: absolute;
+	top: 0;
+	z-index: 320;
+	
+	&.open {
+		display: block;
+		
+		@include screen-sm-up {
+			+ .menuOverlayMobileBackdrop {
+				display: block;
+			}
+		}
+	}
+	
+	> .menuOverlayItemList {
+		// we use `transform: translateX()` for performance reasons
+		transition: transform .24s cubic-bezier(.25, .46, .45, .94);
+		
+		/* work-around to avoid setting explicit visibility */
+		visibility: visible;
+	}
+	
+	&.allowScroll {
+		.menuOverlayItemList:not(.hidden) {
+			overflow: auto;
+		}
+	}
+	
+	&:not(.allowScroll) {
+		// block UI while switching between menus
+		&::before {
+			bottom: 0;
+			content: "";
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 500;
+		}
+	}
+	
+	@include screen-xs {
+		left: 0;
+		max-width: 100vw;
+		right: 0;
+		
+		.menuOverlayItemList {
+			right: 0;
+		}
+	}
+	
+	@include screen-sm-up {
+		width: 350px;
+		
+		&.pageMainMenuMobile {
+			left: 0;
+			
+			& + .menuOverlayMobileBackdrop {
+				box-shadow: inset 5px 0 10px -5px rgba(0, 0, 0, .6);
+				left: 350px;
+			}
+			
+			.menuOverlayItemList {
+				left: 0;
+			}
+		}
+		
+		&.pageUserMenuMobile {
+			right: 0;
+			
+			& + .menuOverlayMobileBackdrop {
+				box-shadow: inset -5px 0 10px -5px rgba(0, 0, 0, .6);
+				right: 350px;
+			}
+			
+			.menuOverlayItemList {
+				right: 0;
+			}
+		}
+	}
+}
+
+.menuOverlayMobileBackdrop {
+	background-color: rgba(0, 0, 0, .4);
+	bottom: 0;
+	display: none;
+	left: 0;
 	position: fixed;
 	right: 0;
 	top: 0;
-	visibility: hidden;
-	z-index: 320;
-	
-	&.enableAnimation {
-		animation: wcfMenuOverlayLeftOut .3s;
-		animation-fill-mode: forwards;
-		
-		/* different animation for user menu */
-		&.pageUserMenuMobile {
-			animation-name: wcfMenuOverlayRightOut;
-		}
-	}
-	
-	&.open {
-		animation: wcfMenuOverlayLeft .3s;
-		animation-fill-mode: forwards;
-		
-		/* different animation for user menu */
-		&.pageUserMenuMobile {
-			animation-name: wcfMenuOverlayRight;
-		}
-	}
-	
-	/* work-around to avoid setting explicit visibility */
-	> .menuOverlayItemList:not(.hidden) {
-		visibility: inherit;
-	}
+	z-index: 500;
 }
 
 .menuOverlayItemWrapper {
@@ -73,27 +130,23 @@
 
 .menuOverlayItemList {
 	background-color: rgb(52, 73, 94);
-	box-shadow: -5px 0 10px 0 rgba(0, 0, 0, .2);
+	height: 100%;
 	list-style-type: none;
 	margin: 0;
-	padding: 10px 0;
-	position: fixed;
+	padding: 5px 0;
+	position: absolute;
 	top: 0;
 	left: -1px;
-	right: 0;
 	bottom: 0;
 	width: calc(100% + 1px);
 	z-index: 450;
-	transition: margin-left .3s cubic-bezier(.25, .46, .45, .94);
-	transition-timing-function: linear;
-	will-change: margin-left;
 	
-	/* chaining `.hidden` and `.active` below is required because each active
-	   item list receives `.active` but it could still be `.hidden` due to
-	   a child list being active */
-	&.hidden,
-	&.hidden.active {
-		margin-left: -25%;
+	@include screen-sm-up {
+		width: 350px;
+	}
+	
+	&:not(.activeList) {
+		display: none;
 	}
 }
 
@@ -113,13 +166,8 @@
 	
 	/* nested item list */
 	> .menuOverlayItemList {
-		margin-left: 110%;
+		margin-left: 100%;
 		z-index: 500;
-		
-		&.active {
-			margin-left: 0;
-			overflow: scroll;
-		}
 	}
 }
 

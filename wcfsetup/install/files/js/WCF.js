@@ -5871,7 +5871,7 @@ WCF.InlineEditor = Class.extend({
 				return;
 			}
 			
-			$trigger.click($.proxy(self._show, self)).data('elementID', $elementID);
+			$trigger.on(WCF_CLICK_EVENT, $.proxy(self._show, self)).data('elementID', $elementID);
 			if ($quickOption) {
 				// simulate click on target action
 				$trigger.disableSelection().data('optionName', $quickOption).dblclick($.proxy(self._click, self));

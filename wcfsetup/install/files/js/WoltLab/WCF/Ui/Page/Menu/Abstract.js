@@ -6,8 +6,10 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Page/Menu/Abstract
  */
-define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen'], function(Environment, EventHandler, ObjectMap, DomTraverse, UiScreen) {
+define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 'Ui/Screen'], function(Environment, EventHandler, ObjectMap, DomTraverse, DomUtil, UiScreen) {
 	"use strict";
+	
+	var _pageContainer = elById('pageContainer');
 	
 	/**
 	 * @param       {string}        eventIdentifier         event namespace
@@ -25,10 +27,13 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 		 * @param       {string}        buttonSelector          CSS selector for toggle button
 		 */
 		init: function(eventIdentifier, elementId, buttonSelector) {
+			this._activeList = [];
+			this._depth = 0;
 			this._enabled = true;
 			this._eventIdentifier = eventIdentifier;
 			this._items = new ObjectMap();
 			this._menu = elById(elementId);
+			this._removeActiveList = false;
 			
 			var callbackOpen = this.open.bind(this);
 			var button = elBySel(buttonSelector);
@@ -52,6 +57,25 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 					}
 				}
 			}).bind(this));
+			
+			this._menu.children[0].addEventListener('transitionend', (function() {
+				this._menu.classList.add('allowScroll');
+				
+				if (this._removeActiveList) {
+					this._removeActiveList = false;
+					
+					var list = this._activeList.pop();
+					if (list) {
+						list.classList.remove('activeList');
+					}
+				}
+			}).bind(this));
+			
+			var backdrop = elCreate('div');
+			backdrop.className = 'menuOverlayMobileBackdrop';
+			backdrop.addEventListener(WCF_CLICK_EVENT, this.close.bind(this));
+			
+			DomUtil.insertAfter(backdrop, this._menu);
 		},
 		
 		/**
@@ -68,10 +92,13 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 				event.preventDefault();
 			}
 			
-			this._menu.classList.add('enableAnimation');
 			this._menu.classList.add('open');
+			this._menu.classList.add('allowScroll');
+			this._menu.children[0].classList.add('activeList');
 			
 			UiScreen.scrollDisable();
+			
+			_pageContainer.classList.add('menuOverlay-' + this._menu.id);
 		},
 		
 		/**
@@ -83,16 +110,14 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 			if (event instanceof Event) {
 				event.preventDefault();
 			}
-			else if (event === true) {
-				this._menu.classList.remove('enableAnimation');
-			}
 			
 			if (this._menu.classList.contains('open')) {
 				this._menu.classList.remove('open');
 				
 				UiScreen.scrollEnable();
+				
+				_pageContainer.classList.remove('menuOverlay-' + this._menu.id);
 			}
-			
 		},
 		
 		/**
@@ -176,7 +201,7 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 			});
 			
 			if (itemTitle === '') {
-				itemTitle = DomTraverse.childByClass(item, 'menuOverlayItemTitle').textContent
+				itemTitle = DomTraverse.childByClass(item, 'menuOverlayItemTitle').textContent;
 				elData(itemList, 'title', itemTitle);
 			}
 			
@@ -279,9 +304,13 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 				event.preventDefault();
 			}
 			
+			this._menu.classList.remove('allowScroll');
+			this._removeActiveList = true;
+			
 			var data = this._items.get(item);
-			data.itemList.classList.remove('active');
 			data.parentItemList.classList.remove('hidden');
+			
+			this._updateDepth(false);
 		},
 		
 		/**
@@ -313,8 +342,20 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Ui/Screen']
 				}
 			}
 			
-			data.itemList.classList.add('active');
+			this._menu.classList.remove('allowScroll');
+			
+			data.itemList.classList.add('activeList');
 			data.parentItemList.classList.add('hidden');
+			
+			this._activeList.push(data.itemList);
+			
+			this._updateDepth(true);
+		},
+		
+		_updateDepth: function(increase) {
+			this._depth += (increase) ? 1 : -1;
+			
+			this._menu.children[0].style.setProperty('transform', 'translateX(' + (this._depth * -100) + '%)', '')
 		}
 	};
 	

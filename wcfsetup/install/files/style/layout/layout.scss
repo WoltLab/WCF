@@ -1,3 +1,15 @@
+html.disableScrolling {
+	overflow: hidden !important;
+	
+	body {
+		overflow: hidden !important;
+		
+		@include screen-md-down {
+			position: fixed !important;
+		}
+	}
+}
+
 html, body {
 	height: 100%;
 	
@@ -8,6 +20,7 @@ html, body {
 body {
 	font-family: $wcfFontFamily;
 	position: relative;
+	width: 100%;
 	word-wrap: break-word;
 }
 

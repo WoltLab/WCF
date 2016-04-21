@@ -11,7 +11,7 @@
 	will-change: opacity;
 	z-index: 399;
 	
-	@include screen-md-up {
+	@include screen-sm-up {
 		padding: 100px 0;
 	}
 	
@@ -47,14 +47,14 @@
 .dialogContainer {
 	z-index: 200;
 	
-	@include screen-sm-down {
+	@include screen-xs {
 		left: 0 !important;
 		position: fixed;
 		right: 0 !important;
 		top: 0 !important;
 	}
 	
-	@include screen-md-up {
+	@include screen-sm-up {
 		animation: wcfDialogOut .3s;
 		animation-fill-mode: forwards;
 		box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);

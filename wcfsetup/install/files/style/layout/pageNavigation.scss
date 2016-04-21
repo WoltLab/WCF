@@ -1,4 +1,4 @@
-@include screen-md-up {
+@include screen-lg {
 	.pageNavigation {
 		background-color: $wcfNavigationBackground;
 		color: $wcfNavigationText;
@@ -45,7 +45,7 @@
 	}
 }
 
-@include screen-sm-down {
+@include screen-md-down {
 	.pageNavigation {
 		display: none;
 	}

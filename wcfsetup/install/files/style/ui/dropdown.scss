@@ -269,28 +269,13 @@
 		max-height: 300px;
 		overflow: auto;
 	}
-}
-
-.boxFlag > .box24, .boxFlag.box24 {
-	display: flex !important;
-	min-height: 20px;
 	
-	&.dropdownToggle {
-		display: inline-flex !important;
-	}
-}
-
-@include screen-md-up {
-	.dropdownMenu.pageHeaderSearchDropdown {
-		transform: translateY(-10px);
-	}
-}
-
-@include screen-sm-down {
-	.dropdownMenu {
+	@include screen-xs {
 		left: 0 !important;
 		right: 0 !important;
-		
+	}
+	
+	@include screen-md-down {
 		li {
 			overflow: hidden;
 			
@@ -300,5 +285,20 @@
 				white-space: normal;
 			}
 		}
+	}
+	
+	@include screen-md-up {
+		.dropdownMenu.pageHeaderSearchDropdown {
+			transform: translateY(-10px);
+		}
+	}
+}
+
+.boxFlag > .box24, .boxFlag.box24 {
+	display: flex !important;
+	min-height: 20px;
+	
+	&.dropdownToggle {
+		display: inline-flex !important;
 	}
 }

@@ -9,7 +9,6 @@
 define(['Core', 'Dictionary'], function(Core, Dictionary) {
 	"use strict";
 	
-	var _bodyOverflow = '';
 	var _mql = new Dictionary();
 	var _scrollDisableCounter = 0;
 	
@@ -95,9 +94,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		 */
 		scrollDisable: function() {
 			if (_scrollDisableCounter === 0) {
-				_bodyOverflow = document.body.style.getPropertyValue('overflow');
-				
-				document.body.style.setProperty('overflow', 'hidden', '');
+				document.documentElement.classList.add('disableScrolling');
 			}
 			
 			_scrollDisableCounter++;
@@ -111,12 +108,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 				_scrollDisableCounter--;
 				
 				if (_scrollDisableCounter === 0) {
-					if (_bodyOverflow) {
-						document.body.style.setProperty('overflow', _bodyOverflow, '');
-					}
-					else {
-						document.body.style.removeProperty('overflow');
-					}
+					document.documentElement.classList.remove('disableScrolling');
 				}
 			}
 		},
