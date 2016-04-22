@@ -19,9 +19,16 @@
 	}
 }
 
-/* tablet(portrait) + tablet (landscape) + desktop */
+/* tablet (portrait) + tablet (landscape) + desktop */
 @mixin screen-sm-up() {
 	@media (min-width: 545px) {
+		@content;
+	}
+}
+
+/* tablet (portrait) + tablet (landscape) */
+@mixin screen-sm-md() {
+	@media (min-width: 545px) and (max-width: 1024px) {
 		@content;
 	}
 }
