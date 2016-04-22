@@ -49,13 +49,13 @@ a {
 	color: $wcfContentText;
 	flex: 1 0 auto;
 	
-	@include screen-md-up {
-		padding: 60px 0;
-	}
-	
-	@include screen-sm-down {
+	@include screen-md-down {
 		padding: 30px 0;
 		width: 100%;
+	}
+	
+	@include screen-lg {
+		padding: 60px 0;
 	}
 	
 	a {

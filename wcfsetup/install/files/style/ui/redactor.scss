@@ -1,6 +1,10 @@
 .redactor-box {
 	position: relative;
 	
+	&:not(:first-child) {
+		margin-top: 20px;
+	}
+	
 	& + .messageTabMenu {
 		padding: 0;
 	}
