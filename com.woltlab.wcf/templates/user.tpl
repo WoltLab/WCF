@@ -1,10 +1,6 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{$user->username} - {lang}wcf.user.members{/lang}{/capture}
 
-<head>
-	<title>{$user->username} - {lang}wcf.user.members{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
+{capture assign='headContent'}
 	<link rel="canonical" href="{link controller='User' object=$user}{/link}" />
 	
 	{event name='javascriptInclude'}
@@ -38,7 +34,7 @@
 			
 			{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
 				WCF.Language.addObject({
-					'wcf.user.editProfile': '{lang}wcf.user.editProfile{/lang}',
+					'wcf.user.editProfile': '{lang}wcf.user.editProfile{/lang}'
 				});
 				
 				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
@@ -135,17 +131,13 @@
 			}
 		</style>
 	</noscript>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="userProfile">
+{/capture}
 
 {include file='userHeader' assign='boxesTop'}
 
 {include file='userSidebar' assign='sidebarRight'}
 
 {include file='header'}
-
-{include file='userNotice'}
 
 {if !$user->isProtected()}
 	<div id="profileContent" class="section tabMenuContainer userProfileContent" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
@@ -174,6 +166,3 @@
 {/if}
 
 {include file='footer'}
-
-</body>
-</html>

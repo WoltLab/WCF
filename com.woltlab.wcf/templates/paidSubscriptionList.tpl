@@ -1,10 +1,8 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.menu.settings.paidSubscription{/lang} - {lang}wcf.user.menu.settings{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.menu.settings.paidSubscription{/lang} - {lang}wcf.user.menu.settings{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
+{capture assign='contentTitle'}{lang}wcf.user.menu.settings.paidSubscription{/lang}{/capture}
+
+{capture assign='headContent'}
 	{if PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}
 		<script data-relocate="true">
 			$(function() {
@@ -28,29 +26,11 @@
 			</style>
 		</noscript>
 	{/if}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{/capture}
 
 {include file='userMenuSidebar'}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.user.menu.settings.paidSubscription{/lang}</h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {if $subscriptions|count}
 	<section class="section sectionContainerList paidSubscriptionList">
@@ -123,6 +103,3 @@
 </footer>
 
 {include file='footer'}
-
-</body>
-</html>

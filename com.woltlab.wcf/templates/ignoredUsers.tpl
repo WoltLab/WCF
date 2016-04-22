@@ -1,39 +1,10 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.ignoredUsers{/lang} - {lang}wcf.user.usercp{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.ignoredUsers{/lang} - {lang}wcf.user.usercp{/lang} - {PAGE_TITLE|language}</title>
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.Action.Delete('wcf\\data\\user\\ignore\\UserIgnoreAction', '.jsIgnoredUser');
-		});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentTitle'}{lang}wcf.user.ignoredUsers{/lang} <span class="badge">{#$items}</span>{/capture}
 
 {include file='userMenuSidebar'}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.user.ignoredUsers{/lang} <span class="badge">{#$items}</span></h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {hascontent}
 	<div class="paginationTop">
@@ -86,7 +57,12 @@
 	<p class="info">{lang}wcf.user.ignoredUsers.noUsers{/lang}</p>
 {/if}
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Action.Delete('wcf\\data\\user\\ignore\\UserIgnoreAction', '.jsIgnoredUser');
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

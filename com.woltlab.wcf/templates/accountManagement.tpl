@@ -1,32 +1,10 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.accountManagement{/lang} - {lang}wcf.user.usercp{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.accountManagement{/lang} - {lang}wcf.user.usercp{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentTitle'}{lang}wcf.user.accountManagement{/lang}{/capture}
 
 {include file='userMenuSidebar'}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.user.accountManagement{/lang}</h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {include file='formError'}
 
@@ -290,6 +268,3 @@
 </form>
 
 {include file='footer'}
-
-</body>
-</html>

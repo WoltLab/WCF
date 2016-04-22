@@ -1,34 +1,14 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.usersOnline{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.usersOnline{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
+{capture assign='contentTitle'}{lang}wcf.user.usersOnline{/lang}{/capture}
+
+{capture assign='contentHeader'}
 	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}" />
-	
-	<script data-relocate="true">
-		//<![CDATA[
-			$(function() {
-				WCF.Language.addObject({
-					'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
-					'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
-					'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
-					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
-				});
-				
-				new WCF.User.Action.Follow($('.userList > li'));
-				new WCF.User.Action.Ignore($('.userList > li'));
-			});
-		//]]>
-	</script>
-	
+		
 	{if USERS_ONLINE_PAGE_REFRESH > 0}
 		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}" />
 	{/if}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{/capture}
 
 {capture assign='sidebarRight'}
 	<section class="box">
@@ -91,22 +71,6 @@
 {/capture}
 
 {include file='header'}
-
-{include file='userNotice'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.user.usersOnline{/lang}</h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
 
 {assign var=usersOnlineList value=''}
 {assign var=usersOnline value=0}
@@ -249,7 +213,20 @@
 	{/hascontent}
 </footer>
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
+			'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
+			'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
+			'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
+		});
+		
+		new WCF.User.Action.Follow($('.userList > li'));
+		new WCF.User.Action.Ignore($('.userList > li'));
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

@@ -1,3 +1,17 @@
+{include file='documentHeader'}
+
+<head>
+	<title>{if $pageTitle|isset}{@$pageTitle} - {/if}{PAGE_TITLE|language}</title>
+	
+	{include file='headInclude'}
+	
+	{if !$headContent|empty}
+		{@$headContent}
+	{/if}
+</head>
+
+<body id="tpl_{$templateNameApplication}_{$templateName}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+
 <a id="top"></a>
 
 <div id="pageContainer" class="pageContainer">
@@ -74,6 +88,27 @@
 			
 			<div id="content" class="content">
 				{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}
+				
+				{if !$contentHeader|empty}
+					{@$contentHeader}
+				{elseif !$contentTitle|empty}
+					<header class="contentHeader">
+						<div class="contentHeaderTitle">
+							<h1 class="contentTitle">{@$contentTitle}</h1>
+							{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
+						</div>
+						
+						{hascontent}
+							<nav class="contentHeaderNavigation">
+								<ul>
+									{content}{event name='contentHeaderNavigation'}{/content}
+								</ul>
+							</nav>
+						{/hascontent}
+					</header>
+				{/if}
+				
+				{include file='userNotice'}
 				
 				{hascontent}
 					<div class="boxesContentTop">

@@ -1,35 +1,8 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.login{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.login{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.User.Login(false);
-		})
-		//]]>
-	</script>
-</head>
+{capture assign='contentTitle'}{lang}wcf.user.login{/lang}{/capture}
 
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 {include file='header' __disableLoginLink=true __disableAds=true}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle"><h1 class="contentTitle">{lang}wcf.user.login{/lang}</h1></div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {if !$errorField|empty && $errorField == 'cookie'}
 	<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
@@ -150,7 +123,12 @@
 	</form>
 </div>
 
-{include file='footer' __disableAds=true}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.User.Login(false);
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer' __disableAds=true}

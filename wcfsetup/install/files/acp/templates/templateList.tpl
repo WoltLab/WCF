@@ -40,44 +40,48 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<div class="row rowColGap">
-			<dl class="col-xs-12 col-md-4">
-				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
-				<dd>
-					<select name="templateGroupID" id="templateGroupID">
-						<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-						{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
-					</select>
-				</dd>
-			</dl>
+		<div class="row rowColGap formGrid">
+			{if $availableTemplateGroups|count}
+				<dl class="col-xs-12 col-md-4">
+					<dt></dt>
+					<dd>
+						<select name="templateGroupID" id="templateGroupID">
+							<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
+							{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
+						</select>
+					</dd>
+				</dl>
+			{/if}
+			
+			{if $availableApplications|count > 1}
+				<dl class="col-xs-12 col-md-4">
+					<dt></dt>
+					<dd>
+						<select name="application" id="application">
+							<option value="">{lang}wcf.acp.template.application{/lang}</option>
+							{foreach from=$availableApplications key=abbreviation item=availableApplication}
+								<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
+							{/foreach}
+						</select>
+					</dd>
+				</dl>
+			{/if}
 			
 			<dl class="col-xs-12 col-md-4">
-				<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
+				<dt></dt>
 				<dd>
-					<select name="application" id="application">
-						<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
-						{foreach from=$availableApplications key=abbreviation item=availableApplication}
-							<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
-						{/foreach}
-					</select>
-				</dd>
-			</dl>
-			
-			<dl class="col-xs-12 col-md-4">
-				<dt><label for="searchTemplateName">{lang}wcf.global.name{/lang}</label></dt>
-				<dd>
-					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" class="long" />
+					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" placeholder="{lang}wcf.global.name{/lang}" class="long" />
 				</dd>
 			</dl>
 			
 			{event name='filterFields'}
 		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
 	</section>
-	
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SECURITY_TOKEN_INPUT_TAG}
-	</div>
 </form>
 
 {hascontent}
