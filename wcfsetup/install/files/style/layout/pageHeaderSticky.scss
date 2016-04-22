@@ -152,7 +152,7 @@
 	}
 }
 
-// force sticky header on tabkets, there is no difference when scrolled
+// force sticky header on tablets, there is no difference when scrolled
 // all the way up and it might flicker when scrolling due to the inconsistent
 // scroll event being fired
 @include screen-sm-md {
