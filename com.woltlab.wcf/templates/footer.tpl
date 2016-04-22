@@ -90,3 +90,6 @@
 {@FOOTER_CODE}
 
 <a id="bottom"></a>
+				
+</body>
+</html>

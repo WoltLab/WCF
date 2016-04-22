@@ -64,9 +64,9 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<div class="row rowColGap">
+		<div class="row rowColGap formGrid">
 			<dl class="col-xs-12 col-md-4">
-				<dt><label for="filename">{lang}wcf.media.filename{/lang}</label></dt>
+				<dt></dt>
 				<dd>
 					<div class="inputAddon dropdown" id="mediaSearch">
 						<span class="button dropdownToggle inputPrefix">
@@ -81,28 +81,26 @@
 							<li class="dropdownDivider"></li>
 							<li data-file-type="all"><span>{lang}wcf.media.search.filetype.all{/lang}</span></li>
 						</ul>
-						<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
+						<input type="text" id="filename" name="filename" value="{$filename}" placeholder="{lang}wcf.media.filename{/lang}" class="long" />
 					</div>
 				</dd>
 			</dl>
 			
 			<dl class="col-xs-12 col-md-4">
-				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dt></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="long" />
+					<input type="text" id="username" name="username" value="{$username}" placeholder="{lang}wcf.user.username{/lang}" class="long" />
 				</dd>
 			</dl>
 		
 			{event name='filterFields'}
-		</div>	
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
 	</section>
-	
-	{event name='sections'}
-	
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SECURITY_TOKEN_INPUT_TAG}
-	</div>
 </form>
 
 {hascontent}

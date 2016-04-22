@@ -1,38 +1,8 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.search{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.search{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.Search.User('#searchUsername', null, false, [ ], false);
-		});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentTitle'}{lang}wcf.user.search{/lang}{/capture}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.user.search{/lang}</h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {if $errorField == 'search'}
 	<p class="error">{lang}wcf.user.search.error.noMatches{/lang}</p>
@@ -72,7 +42,12 @@
 	</div>
 </form>
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Search.User('#searchUsername', null, false, [ ], false);
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

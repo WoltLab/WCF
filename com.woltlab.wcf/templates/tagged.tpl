@@ -1,10 +1,8 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
+{capture assign='contentTitle'}{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang}{/capture}
+
+{capture assign='headContent'}
 	{if $pageNo < $pages}
 		<link rel="next" href="{link controller='Tagged' object=$tag}objectType={@$objectType}&pageNo={@$pageNo+1}{/link}" />
 	{/if}
@@ -12,9 +10,7 @@
 		<link rel="prev" href="{link controller='Tagged' object=$tag}objectType={@$objectType}{if $pageNo > 2}&pageNo={@$pageNo-1}{/if}{/link}" />
 	{/if}
 	<link rel="canonical" href="{link controller='Tagged' object=$tag}objectType={@$objectType}{if $pageNo > 1}&pageNo={@$pageNo}{/if}{/link}" />
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{/capture}
 
 {capture assign='sidebarLeft'}
 	<section class="box">
@@ -39,22 +35,6 @@
 {/capture}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang}</h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {hascontent}
 	<div class="paginationTop">
@@ -85,6 +65,3 @@
 </footer>
 
 {include file='footer'}
-
-</body>
-</html>

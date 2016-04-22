@@ -1,39 +1,10 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.option.category.settings.{$category}{/lang} - {lang}wcf.user.menu.settings{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.option.category.settings.{$category}{/lang} - {lang}wcf.user.menu.settings{/lang} - {PAGE_TITLE|language}</title>
-	{include file='headInclude'}
-
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.Option.Handler();
-		});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentTitle'}{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.option.category.settings.{$category}{/lang}{/capture}
 
 {include file='userMenuSidebar'}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.option.category.settings.{$category}{/lang}</h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {include file='formError'}
 
@@ -134,7 +105,12 @@
 	</div>
 </form>
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Option.Handler();
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

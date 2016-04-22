@@ -32,39 +32,41 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<div class="row rowColGap">
+		<div class="row rowColGap formGrid">
 			<dl class="col-xs-12 col-md-4">
-				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dt></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="long" />
+					<input type="text" id="username" name="username" value="{$username}" placeholder="{lang}wcf.user.username{/lang}" class="long" />
 				</dd>
 			</dl>
 			
 			<dl class="col-xs-12 col-md-4">
-				<dt><label for="filename">{lang}wcf.attachment.filename{/lang}</label></dt>
+				<dt></dt>
 				<dd>
-					<input type="text" id="filename" name="filename" value="{$filename}" class="long" />
+					<input type="text" id="filename" name="filename" value="{$filename}" placeholder="{lang}wcf.attachment.filename{/lang}" class="long" />
 				</dd>
 			</dl>
 			
-			<dl class="col-xs-12 col-md-4">
-				<dt><label for="fileType">{lang}wcf.attachment.fileType{/lang}</label></dt>
-				<dd>
-					<select name="fileType" id="fileType">
-						<option value="">{lang}wcf.global.noSelection{/lang}</option>
-						{htmlOptions options=$availableFileTypes selected=$fileType}
-					</select>
-				</dd>
-			</dl>
+			{if $availableFileTypes|count > 1}
+				<dl class="col-xs-12 col-md-4">
+					<dt></dt>
+					<dd>
+						<select name="fileType" id="fileType">
+							<option value="">{lang}wcf.attachment.fileType{/lang}</option>
+							{htmlOptions options=$availableFileTypes selected=$fileType}
+						</select>
+					</dd>
+				</dl>
+			{/if}
 			
 			{event name='filterFields'}
-		</div>	
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
 	</section>
-	
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SECURITY_TOKEN_INPUT_TAG}
-	</div>
 </form>
 
 {hascontent}

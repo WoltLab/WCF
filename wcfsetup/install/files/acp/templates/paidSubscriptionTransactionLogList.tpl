@@ -27,27 +27,27 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
-		<div class="row rowColGap">
+		<div class="row rowColGap formGrid">
 			<dl class="col-xs-12 col-md-4">
-				<dt><label for="transactionID">{lang}wcf.acp.paidSubscription.transactionLog.transactionID{/lang}</label></dt>
+				<dt></dt>
 				<dd>
-					<input type="text" id="transactionID" name="transactionID" value="{$transactionID}" class="long" />
+					<input type="text" id="transactionID" name="transactionID" value="{$transactionID}" placeholder="{lang}wcf.acp.paidSubscription.transactionLog.transactionID{/lang}" class="long" />
 				</dd>
 			</dl>
 			
 			<dl class="col-xs-12 col-md-4">
-				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dt></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="long" />
+					<input type="text" id="username" name="username" value="{$username}" placeholder="{lang}wcf.user.username{/lang}" class="long" />
 				</dd>
 			</dl>
 			
-			{if $availableSubscriptions|count}
+			{if $availableSubscriptions|count > 1}
 				<dl class="col-xs-12 col-md-4">
-					<dt><label for="subscriptionID">{lang}wcf.acp.paidSubscription.subscription{/lang}</label></dt>
+					<dt></dt>
 					<dd>
 						<select name="subscriptionID" id="subscriptionID">
-							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+							<option value="0">{lang}wcf.acp.paidSubscription.subscription{/lang}</option>
 							{foreach from=$availableSubscriptions item=availableSubscription}
 								<option value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID == $subscriptionID} selected="selected"{/if}>{$availableSubscription->title|language}</option>
 							{/foreach}
@@ -58,12 +58,12 @@
 			
 			{event name='filterFields'}
 		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
 	</section>
-	
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SECURITY_TOKEN_INPUT_TAG}
-	</div>
 </form>
 
 {hascontent}

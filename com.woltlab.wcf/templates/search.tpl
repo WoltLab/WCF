@@ -1,20 +1,8 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.search.title{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.search.title{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentTitle'}{lang}wcf.search.title{/lang}{/capture}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.search.title{/lang}</h1>
-</header>
-
-{include file='userNotice'}
 
 {include file='formError'}
 
@@ -131,8 +119,6 @@
 	</div>
 </form>
 
-{include file='footer'}
-
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
@@ -143,5 +129,4 @@
 	//]]>
 </script>
 
-</body>
-</html>
+{include file='footer'}

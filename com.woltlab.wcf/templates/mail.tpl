@@ -1,29 +1,8 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.mail.title{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.mail.title{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-</head>
+{capture assign='contentTitle'}{lang}wcf.user.mail.title{/lang}{/capture}
 
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.user.mail.title{/lang}</h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {include file='formError'}
 
@@ -107,6 +86,3 @@
 </form>
 
 {include file='footer'}
-
-</body>
-</html>

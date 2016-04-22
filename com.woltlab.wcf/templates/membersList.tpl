@@ -1,11 +1,10 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{if $searchID}{lang}wcf.user.search.results{/lang}{else}{lang}wcf.user.members{/lang}{/if}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
-<head>
-	<title>{if $searchID}{lang}wcf.user.search.results{/lang}{else}{lang}wcf.user.members{/lang}{/if} {if $pageNo > 1}- {lang}wcf.page.pageNo{/lang} {/if}- {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
-	{capture assign='canonicalURLParameters'}sortField={@$sortField}&sortOrder={@$sortOrder}{if $letter}&letter={@$letter|rawurlencode}{/if}{/capture}
+{capture assign='contentTitle'}{if $searchID}{lang}wcf.user.search.results{/lang}{else}{lang}wcf.user.members{/lang}{/if} <span class="badge">{#$items}</span>{/capture}
+
+{capture assign='canonicalURLParameters'}sortField={@$sortField}&sortOrder={@$sortOrder}{if $letter}&letter={@$letter|rawurlencode}{/if}{/capture}
+
+{capture assign='headContent'}
 	{if $pageNo < $pages}
 		<link rel="next" href="{link controller='MembersList'}pageNo={@$pageNo+1}&{@$canonicalURLParameters}{/link}" />
 	{/if}
@@ -13,30 +12,7 @@
 		<link rel="prev" href="{link controller='MembersList'}{if $pageNo > 2}pageNo={@$pageNo-1}&{/if}{@$canonicalURLParameters}{/link}" />
 	{/if}
 	<link rel="canonical" href="{link controller='MembersList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}{@$canonicalURLParameters}{/link}" />
-	
-	<script data-relocate="true">
-		//<![CDATA[
-			$(function() {
-				WCF.Language.addObject({
-					'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
-					'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
-					'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
-					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
-				});
-				
-				new WCF.User.Action.Follow($('.userList > li'));
-				new WCF.User.Action.Ignore($('.userList > li'));
-				
-				new WCF.Search.User('#searchUsername', function(data) {
-					var $link = '{link controller='User' id=2147483646 title='wcfTitlePlaceholder' encode=false}{/link}';
-					window.location = $link.replace('2147483646', data.objectID).replace('wcfTitlePlaceholder', data.label);
-				}, false, [ ], false);
-			});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{/capture}	
 
 {capture assign='sidebarRight'}
 	{assign var=encodedLetter value=$letter|rawurlencode}
@@ -104,22 +80,6 @@
 
 {include file='header'}
 
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $searchID}{lang}wcf.user.search.results{/lang}{else}{lang}wcf.user.members{/lang}{/if} <span class="badge">{#$items}</span></h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
-
 {hascontent}
 	<div class="paginationTop">
 		{content}
@@ -160,7 +120,25 @@
 	{/hascontent}
 </footer>
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
+			'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
+			'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
+			'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
+		});
+		
+		new WCF.User.Action.Follow($('.userList > li'));
+		new WCF.User.Action.Ignore($('.userList > li'));
+		
+		new WCF.Search.User('#searchUsername', function(data) {
+			var $link = '{link controller='User' id=2147483646 title='wcfTitlePlaceholder' encode=false}{/link}';
+			window.location = $link.replace('2147483646', data.objectID).replace('wcfTitlePlaceholder', data.label);
+		}, false, [ ], false);
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

@@ -1512,7 +1512,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.group"><![CDATA[Templategruppe]]></item>
 		<item name="wcf.acp.template.group.default"><![CDATA[Standardtemplates]]></item>
 		<item name="wcf.acp.template.application"><![CDATA[Anwendung]]></item>
-		<item name="wcf.acp.template.application.all"><![CDATA[Keine Filterung]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Template hinzufügen]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Template bearbeiten]]></item>
 		<item name="wcf.acp.template.copy"><![CDATA[Template kopieren]]></item>

@@ -1,21 +1,6 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.moderation.moderation{/lang}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
-<head>
-	<title>{lang}wcf.moderation.moderation{/lang} {if $pageNo > 1}- {lang}wcf.page.pageNo{/lang} {/if}- {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.Moderation.Queue.MarkAsRead();
-			new WCF.Moderation.Queue.MarkAllAsRead();
-		});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentTitle'}{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge">{#$items}</span>{/capture}
 
 {capture assign='sidebarLeft'}
 	<section class="box">
@@ -67,22 +52,6 @@
 {/capture}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge">{#$items}</span></h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {hascontent}
 	<div class="paginationTop">
@@ -156,7 +125,13 @@
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Moderation.Queue.MarkAsRead();
+		new WCF.Moderation.Queue.MarkAllAsRead();
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

@@ -1,58 +1,16 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.register{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.register{/lang} - {PAGE_TITLE|language}</title>
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
-				'wcf.user.username.error.notValid': '{lang}wcf.user.username.error.notValid{/lang}',
-				'wcf.user.username.error.notUnique': '{lang}wcf.user.username.error.notUnique{/lang}',
-				'wcf.user.email.error.notValid' : '{lang}wcf.user.email.error.notValid{/lang}',
-				'wcf.user.email.error.notUnique' : '{lang}wcf.user.email.error.notUnique{/lang}',
-				'wcf.user.confirmEmail.error.notEqual' : '{lang}wcf.user.confirmEmail.error.notEqual{/lang}',
-				'wcf.user.password.error.notSecure' : '{lang}wcf.user.password.error.notSecure{/lang}',
-				'wcf.user.confirmPassword.error.notEqual' : '{lang}wcf.user.confirmPassword.error.notEqual{/lang}'
-			});
-			
-			new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[confirmEmail]}'), null);
-			new WCF.User.Registration.Validation.Password($('#{@$randomFieldNames[password]}'), $('#{@$randomFieldNames[confirmPassword]}'), null);
-			new WCF.User.Registration.Validation.Username($('#{@$randomFieldNames[username]}', null, {
-				minlength: {@REGISTER_USERNAME_MIN_LENGTH},
-				maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
-			}));
-		});
-		//]]>
-	</script>
-	
+{capture assign='contentTitle'}{lang}wcf.user.register{/lang}{/capture}
+
+{capture assign='headContent'}
 	<style type="text/css">	
 		#fieldset1 {
 			display: none;
 		}
 	</style>
-</head>
+{/capture}
 
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 {include file='header' __disableLoginLink=true __disableAds=true}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.user.register{/lang}</h1>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {if $isExternalAuthentication}
 	<p class="info">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</p>
@@ -236,7 +194,28 @@
 	</div>
 </form>
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
+			'wcf.user.username.error.notValid': '{lang}wcf.user.username.error.notValid{/lang}',
+			'wcf.user.username.error.notUnique': '{lang}wcf.user.username.error.notUnique{/lang}',
+			'wcf.user.email.error.notValid' : '{lang}wcf.user.email.error.notValid{/lang}',
+			'wcf.user.email.error.notUnique' : '{lang}wcf.user.email.error.notUnique{/lang}',
+			'wcf.user.confirmEmail.error.notEqual' : '{lang}wcf.user.confirmEmail.error.notEqual{/lang}',
+			'wcf.user.password.error.notSecure' : '{lang}wcf.user.password.error.notSecure{/lang}',
+			'wcf.user.confirmPassword.error.notEqual' : '{lang}wcf.user.confirmPassword.error.notEqual{/lang}'
+		});
+		
+		new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[confirmEmail]}'), null);
+		new WCF.User.Registration.Validation.Password($('#{@$randomFieldNames[password]}'), $('#{@$randomFieldNames[confirmPassword]}'), null);
+		new WCF.User.Registration.Validation.Username($('#{@$randomFieldNames[username]}', null, {
+			minlength: {@REGISTER_USERNAME_MIN_LENGTH},
+			maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
+		}));
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

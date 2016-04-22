@@ -1,20 +1,8 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{$object->getTitle()} - {lang}wcf.edit.versions{/lang}{/capture}
 
-<head>
-	<title>{$object->getTitle()} - {lang}wcf.edit.versions{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body id="tpl_{$templateNameApplication}_{$templateName}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentTitle'}{lang}wcf.edit.versions{/lang}: {$object->getTitle()}{/capture}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.edit.versions{/lang}: {$object->getTitle()}</h1>
-</header>
-
-{include file='userNotice'}
 
 {if $diff}
 <div class="section editHistoryDiff">
@@ -131,6 +119,3 @@
 </form>
 
 {include file='footer'}
-
-</body>
-</html>

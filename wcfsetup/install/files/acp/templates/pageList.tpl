@@ -25,21 +25,6 @@
 	</nav>
 </header>
 
-{hascontent}
-	<div class="paginationTop">
-		{content}
-			{assign var='linkParameters' value=''}
-			{if $name}{capture append=linkParameters}&name={@$name|rawurlencode}{/capture}{/if}
-			{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
-			{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
-			{if $applicationPackageID}{capture append=linkParameters}&applicationPackageID={@$applicationPackageID}{/capture}{/if}
-			{if $pageType}{capture append=linkParameters}&pageType={@$pageType|rawurlencode}{/capture}{/if}
-			
-			{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
-		{/content}
-	</div>
-{/hascontent}
-
 <form method="post" action="{link controller='PageList'}{/link}">
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
@@ -102,6 +87,21 @@
 		</div>
 	</section>
 </form>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}
+		{assign var='linkParameters' value=''}
+		{if $name}{capture append=linkParameters}&name={@$name|rawurlencode}{/capture}{/if}
+		{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
+		{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
+		{if $applicationPackageID}{capture append=linkParameters}&applicationPackageID={@$applicationPackageID}{/capture}{/if}
+		{if $pageType}{capture append=linkParameters}&pageType={@$pageType|rawurlencode}{/capture}{/if}
+		
+		{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox">

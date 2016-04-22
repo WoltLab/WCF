@@ -1,36 +1,28 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.search.results{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.search.results{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentHeader'}
+	<header class="contentHeader">
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
+			<p class="contentHeaderDescription">{lang}wcf.search.results.description{/lang}</p>
+		</div>
+		
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul>
+					{content}
+						{if $alterable}
+							<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
+						{/if}
+						{event name='contentHeaderNavigation'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</header>
+{/capture}
 
 {include file='header'}
-
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
-		<p class="contentHeaderDescription">{lang}wcf.search.results.description{/lang}</p>
-	</div>
-	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}
-					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
-					{/if}
-					{event name='contentHeaderNavigation'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</header>
-
-{include file='userNotice'}
 
 {hascontent}
 	<div class="paginationTop">
@@ -65,6 +57,3 @@
 </footer>
 
 {include file='footer'}
-
-</body>
-</html>
