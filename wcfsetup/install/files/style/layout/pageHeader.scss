@@ -333,12 +333,6 @@
 }
 
 @include screen-md-down {
-	.pageHeaderContainer {
-		// touch browser allow to scroll past the page top before they bounce back,
-		// but in that case the original background color is visible
-		background-color: transparent;
-	}
-	
 	.pageHeader > div > div {
 		padding-bottom: 10px;
 		padding-top: 10px;
