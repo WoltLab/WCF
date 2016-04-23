@@ -11,7 +11,7 @@
 		<header class="contentHeader">
 			<div class="contentHeaderTitle">
 				<h1 class="contentTitle">{PAGE_TITLE|language}</h1>
-				{hascontent}<p>{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
+				{hascontent}<p class="contentHeaderDescription">{content}{PAGE_DESCRIPTION|language}{/content}</p>{/hascontent}
 			</div>
 			
 			{hascontent}
