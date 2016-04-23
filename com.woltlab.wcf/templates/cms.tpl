@@ -49,7 +49,7 @@
 	{elseif $page->pageType == 'html'}
 		{@$content[content]}
 	{elseif $page->pageType == 'tpl'}
-		{*todo*}
+		{include file=$page->getTplName($contentLanguageID)}
 	{/if}
 {/if}
 

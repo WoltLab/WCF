@@ -92,6 +92,15 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 			}
 		}
 		
+		// save template
+		if ($page->pageType == 'tpl') {
+			if (!empty($this->parameters['content'])) {
+				foreach ($this->parameters['content'] as $languageID => $content) {
+					file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+				}
+			}
+		}
+		
 		return $page;
 	}
 	
@@ -125,6 +134,13 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 						$content['metaKeywords'],
 						$content['customURL']
 					]);
+				}
+				
+				// save template
+				if ($page->pageType == 'tpl') {
+					foreach ($this->parameters['content'] as $languageID => $content) {
+						file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+					}
 				}
 			}
 		}
@@ -206,5 +222,23 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	 */
 	public function getSearchResultList() {
 		return $this->pageEditor->getHandler()->lookup($this->parameters['data']['searchString']);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function delete() {
+		foreach ($this->objects as $page) {
+			if ($page->pageType == 'tpl') {
+				foreach ($page->getPageContent() as $languageID => $content) {
+					$file = WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl';
+					if (file_exists($file)) {
+						@unlink($file);
+					}	
+				}
+			}
+		}
+		
+		parent::delete();
 	}
 }

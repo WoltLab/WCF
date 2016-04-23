@@ -273,6 +273,24 @@ class Page extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the template name of this page.
+	 * 
+	 * @param       integer         $languageID
+	 * @return      string
+	 */
+	public function getTplName($languageID = null) {
+		if ($this->pageType == 'tpl') {
+			if ($this->isMultilingual) {
+				return '__cms_page_' . $this->pageID . '_' . $languageID;
+			}
+			
+			return '__cms_page_' . $this->pageID;
+		}
+		
+		return '';
+	}
+	
+	/**
 	 * Returns the page with the given identifier.
 	 * 
 	 * @param	string		$identifier	unique page identifier
