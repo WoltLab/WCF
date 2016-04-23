@@ -36,15 +36,7 @@
 						</small>
 					{/if}
 					<small>{lang}wcf.user.accountManagement.password.description{/lang}</small>
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt></dt>
-				<dd>
-					<ul class="buttonList smallButtons">
-						<li><a class="button small" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a></li>
-					</ul>
+					<small><a href="{link controller='LostPassword'}{/link}">{lang}wcf.user.lostPassword{/lang}</a></small>
 				</dd>
 			</dl>
 			

@@ -19,9 +19,7 @@
 {include file='formError'}
 
 <form method="post" action="{link controller='Register'}{/link}">
-	<section class="section">
-		<h2 class="sectionTitle">{lang}wcf.user.username{/lang}</h2>
-		
+	<div class="section">
 		<dl{if $errorType.username|isset} class="formError"{/if}>
 			<dt>
 				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label>
@@ -40,7 +38,7 @@
 		</dl>
 		
 		{event name='usernameFields'}
-	</section>
+	</div>
 	
 	<section class="section" id="fieldset1">
 		<header class="sectionHeader">

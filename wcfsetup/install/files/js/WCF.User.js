@@ -2515,7 +2515,7 @@ WCF.User.Avatar.Upload = WCF.Upload.extend({
 	 */
 	_updateImage: function(url, canCrop) {
 		$('#avatarUpload > dt > img').remove();
-		var $image = $('<img src="' + url + '" alt="" />').css({
+		var $image = $('<img src="' + url + '" class="userAvatarImage" alt="" />').css({
 			'height': 'auto',
 			'max-height': '96px',
 			'max-width': '96px',
@@ -2553,7 +2553,7 @@ WCF.User.Avatar.Upload = WCF.Upload.extend({
 		return {
 			userID: this._userID
 		};
-	},
+	}
 });
 
 /**

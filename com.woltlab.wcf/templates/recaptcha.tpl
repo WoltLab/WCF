@@ -4,8 +4,10 @@
 	{* No explicit keys were set, use legacy V1 API and WoltLab's OEM keys *}
 	{if RECAPTCHA_PUBLICKEY === '' || RECAPTCHA_PRIVATEKEY === ''}
 	<section class="section">
-		<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
-		<small>{lang}wcf.recaptcha.description{/lang}</small>
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
+			<small class="sectionDescription">{lang}wcf.recaptcha.description{/lang}</small>
+		</header>
 		
 		<dl class="wide reCaptcha{if $errorField|isset && $errorField == 'recaptchaString'} formError{/if}">
 			{if !$ajaxCaptcha|isset || !$ajaxCaptcha}

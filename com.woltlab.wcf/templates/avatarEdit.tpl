@@ -98,11 +98,11 @@
 			});
 			
 			{if !$__wcf->user->disableAvatar}
-			{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
-			new WCF.User.Avatar.Upload(0, new WCF.User.Avatar.Crop({@$__wcf->getUserProfileHandler()->getAvatar()->avatarID}));
-			{else}
-			new WCF.User.Avatar.Upload();
-			{/if}
+				{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
+					new WCF.User.Avatar.Upload(0, new WCF.User.Avatar.Crop({@$__wcf->getUserProfileHandler()->getAvatar()->avatarID}));
+				{else}
+					new WCF.User.Avatar.Upload();
+				{/if}
 			{/if}
 		});
 		//]]>
