@@ -590,9 +590,9 @@
 		
 		<!-- notice conditions -->
 		<type>
-			<name>com.woltlab.wcf.page.controller</name>
+			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<classname><![CDATA[wcf\system\condition\page\MultiPageCondition]]></classname>
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		
@@ -749,9 +749,9 @@
 		
 		<!-- ad conditions -->
 		<type>
-			<name>com.woltlab.wcf.page.controller</name>
+			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<classname><![CDATA[wcf\system\condition\page\MultiPageCondition]]></classname>
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		
@@ -1102,5 +1102,20 @@
 			<conditiongroup>userOptions</conditiongroup>
 		</type>
 		<!-- /user search conditions -->
+		
+		<!-- deprecated -->
+		<type>
+			<name>com.woltlab.wcf.page.controller</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.page</conditionobject>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page.controller</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.page</conditionobject>
+		</type>
+		<!-- /deprecated -->
 	</import>
 </data>

@@ -166,7 +166,7 @@ class Request {
 	/**
 	 * Returns the current page id.
 	 * 
-	 * @return      integer         current page id or `0` if unknown
+	 * @return	integer		current page id or `0` if unknown
 	 */
 	public function getPageID() {
 		if ($this->pageID === null) {
