@@ -6,9 +6,9 @@
 		
 		<div class="boxContent">
 			<nav>
-				<ul>
+				<ul class="boxMenu">
 					{foreach from=$availableObjectTypes item=availableObjectType}
-						<li{if $objectType == $availableObjectType->objectType} class="active"{/if}><a href="{link controller='DeletedContentList'}objectType={@$availableObjectType->objectType}{/link}">{lang}wcf.moderation.deletedContent.objectType.{@$availableObjectType->objectType}{/lang}</a></li>
+						<li{if $objectType == $availableObjectType->objectType} class="active"{/if}><a class="boxMenuLink" href="{link controller='DeletedContentList'}objectType={@$availableObjectType->objectType}{/link}">{lang}wcf.moderation.deletedContent.objectType.{@$availableObjectType->objectType}{/lang}</a></li>
 					{/foreach}
 				</ul>
 			</nav>
