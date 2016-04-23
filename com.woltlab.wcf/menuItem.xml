@@ -34,8 +34,8 @@
 		</item>
 		<item identifier="com.woltlab.wcf.UserSearch">
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<title language="de"><![CDATA[Benutzer suchen]]></title>
-			<title language="en"><![CDATA[Search Users]]></title>
+			<title language="de"><![CDATA[Mitgliedersuche]]></title>
+			<title language="en"><![CDATA[Search Members]]></title>
 			<page>com.woltlab.wcf.UserSearch</page>
 		</item>
 		
