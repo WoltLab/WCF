@@ -28,7 +28,10 @@ class BoxHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		// get active page id
-		$pageID = RequestHandler::getInstance()->getActiveRequest()->getPageID();
+		$pageID = 0;
+		if (($request = RequestHandler::getInstance()->getActiveRequest()) !== null) {
+			$pageID = $request->getPageID();
+		}
 		
 		// load box layout for active page
 		$boxList = new BoxList();
