@@ -2,7 +2,7 @@
  * List implementation relying on an array or if supported on a Set to hold values.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/List
  */
@@ -16,12 +16,12 @@ define([], function() {
 	 */
 	function List() {
 		this._set = (_hasSet) ? new Set() : [];
-	};
+	}
 	List.prototype = {
 		/**
 		 * Appends an element to the list, silently rejects adding an already existing value.
 		 * 
-		 * @param	{*}	value	unique element
+		 * @param       {?}     value   unique element
 		 */
 		add: function(value) {
 			if (_hasSet) {
@@ -47,8 +47,8 @@ define([], function() {
 		/**
 		 * Removes an element from the list, returns true if the element was in the list.
 		 * 
-		 * @param	{*}		value	element
-		 * @return	{boolean}	true if element was in the list
+		 * @param       {?}             value   element
+		 * @return      {boolean}       true if element was in the list
 		 */
 		'delete': function(value) {
 			if (_hasSet) {
@@ -82,8 +82,8 @@ define([], function() {
 		/**
 		 * Returns true if the list contains the element.
 		 * 
-		 * @param	{*}		value	element
-		 * @return	{boolean}	true if element is in the list
+		 * @param       {?}             value   element
+		 * @return      {boolean}       true if element is in the list
 		 */
 		has: function(value) {
 			if (_hasSet) {
@@ -99,7 +99,7 @@ define([], function() {
 		enumerable: false,
 		configurable: true,
 		get: function() {
-			if (_hasMap) {
+			if (_hasSet) {
 				return this._set.size;
 			}
 			else {
