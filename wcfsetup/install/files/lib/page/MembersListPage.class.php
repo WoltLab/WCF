@@ -1,9 +1,11 @@
 <?php
 namespace wcf\page;
 use wcf\data\search\Search;
+use wcf\data\user\User;
 use wcf\system\database\PostgreSQLDatabase;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
@@ -11,7 +13,7 @@ use wcf\util\HeaderUtil;
  * Shows members page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -25,42 +27,42 @@ class MembersListPage extends SortablePage {
 	public static $availableLetters = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('user.profile.canViewMembersList');
+	public $neededPermissions = ['user.profile.canViewMembersList'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_MEMBERS_LIST');
+	public $neededModules = ['MODULE_MEMBERS_LIST'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
+	 * @inheritDoc
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = MEMBERS_LIST_USERS_PER_PAGE;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = MEMBERS_LIST_DEFAULT_SORT_FIELD;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortOrder
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = MEMBERS_LIST_DEFAULT_SORT_ORDER;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('username', 'registrationDate', 'activityPoints', 'likesReceived', 'lastActivityTime');
+	public $validSortFields = ['username', 'registrationDate', 'activityPoints', 'likesReceived', 'lastActivityTime'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\user\UserProfileList';
 	
@@ -83,7 +85,7 @@ class MembersListPage extends SortablePage {
 	public $search = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -103,20 +105,20 @@ class MembersListPage extends SortablePage {
 		
 		if (!empty($_POST)) {
 			$parameters = http_build_query($_POST, '', '&');
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', array(), $parameters));
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', [], $parameters));
 			exit;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
 		if ($this->search !== null) {
 			$searchData = unserialize($this->search->searchData);
-			$this->objectList->getConditionBuilder()->add("user_table.userID IN (?)", array($searchData['matches']));
+			$this->objectList->getConditionBuilder()->add("user_table.userID IN (?)", [$searchData['matches']]);
 			unset($searchData);
 		}
 		
@@ -132,23 +134,41 @@ class MembersListPage extends SortablePage {
 				}
 			}
 			else {
-				$this->objectList->getConditionBuilder()->add("username LIKE ?", array($this->letter.'%'));
+				$this->objectList->getConditionBuilder()->add("username LIKE ?", [$this->letter.'%']);
 			}
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
+	 */
+	protected function readObjects() {
+		parent::readObjects();
+		
+		$userIDs = [];
+		/** @var User $user */
+		foreach ($this->objectList as $user) {
+			$userIDs[] = $user->userID;
+		}
+		
+		if (!empty($userIDs)) {
+			// preload user storage to avoid reading storage for each user separately at runtime
+			UserStorageHandler::getInstance()->loadStorage($userIDs);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'letters' => str_split(self::$availableLetters),
 			'letter' => $this->letter,
 			'searchID' => $this->searchID,
 			'allowSpidersToIndexThisPage' => true
-		));
+		]);
 		
 		if (count($this->objectList) === 0) {
 			@header('HTTP/1.0 404 Not Found');
