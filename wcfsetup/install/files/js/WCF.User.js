@@ -2190,7 +2190,7 @@ WCF.User.Action.Ignore = Class.extend({
 			'className': 'wcf\\data\\user\\ignore\\UserIgnoreAction',
 			'parameters': {
 				data: {
-					ignoreUserID: this._userID
+					userID: this._userID
 				}
 			}
 		});
