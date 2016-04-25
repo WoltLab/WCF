@@ -3,10 +3,7 @@
 .success,
 .warning {
 	border-left: 5px solid transparent;
-	
-	&:not(:first-child) {
-		margin-top: 20px;
-	}
+	margin-top: 20px;
 	
 	@include screen-md-up {
 		padding: 10px 20px;
