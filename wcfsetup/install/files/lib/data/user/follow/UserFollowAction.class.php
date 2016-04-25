@@ -47,9 +47,9 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 		
 		// check if current user is ignored by target user
 		$sql = "SELECT  ignoreID
-				FROM    wcf".WCF_N."_user_ignore
-				WHERE   userID = ?
-					AND ignoreUserID = ?";
+			FROM    wcf".WCF_N."_user_ignore
+			WHERE   userID = ?
+				AND ignoreUserID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			$this->parameters['data']['userID'],
