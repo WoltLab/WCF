@@ -4,6 +4,7 @@ use wcf\system\benchmark\Benchmark;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\exception\DatabaseTransactionException;
+use wcf\system\database\statement\PreparedStatement;
 use wcf\system\WCF;
 
 /**
