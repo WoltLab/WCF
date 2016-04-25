@@ -14,10 +14,12 @@
 					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
 				});
 				
-				new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
+				{if !$user->isIgnoredUser($__wcf->user->userID)}
+					new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
+				{/if}
 				
 				{if !$user->getPermission('user.profile.cannotBeIgnored')}
-				new UiUserProfileMenuItemIgnore({@$user->userID}, {if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}true{else}false{/if});
+					new UiUserProfileMenuItemIgnore({@$user->userID}, {if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}true{else}false{/if});
 				{/if}
 			});
 		{/if}

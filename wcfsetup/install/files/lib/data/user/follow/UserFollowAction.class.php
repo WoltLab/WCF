@@ -41,8 +41,23 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	public function validateFollow() {
 		$this->readInteger('userID', false, 'data');
 		
-		// validate if you're retarded
 		if ($this->parameters['data']['userID'] == WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
+		
+		// check if current user is ignored by target user
+		$sql = "SELECT  ignoreID
+				FROM    wcf".WCF_N."_user_ignore
+				WHERE   userID = ?
+					AND ignoreUserID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->parameters['data']['userID'],
+			WCF::getUser()->userID
+		]);
+		
+		$ignoreID = $statement->fetchSingleColumn();
+		if ($ignoreID !== false) {
 			throw new PermissionDeniedException();
 		}
 	}
