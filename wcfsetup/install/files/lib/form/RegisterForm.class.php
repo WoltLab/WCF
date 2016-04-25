@@ -186,6 +186,15 @@ class RegisterForm extends UserAddForm {
 		if (empty($_POST)) {
 			$this->languageID = WCF::getLanguage()->languageID;
 			
+			if (WCF::getSession()->getVar('__username')) {
+				$this->username = WCF::getSession()->getVar('__username');
+ 				WCF::getSession()->unregister('__username');
+ 			}
+			if (WCF::getSession()->getVar('__email')) {
+				$this->email = $this->confirmEmail = WCF::getSession()->getVar('__email');
+				WCF::getSession()->unregister('__email');
+			}
+			
 			WCF::getSession()->register('registrationStartTime', TIME_NOW);
 			
 			// generate random field names
