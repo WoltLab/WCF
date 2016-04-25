@@ -2,8 +2,8 @@
 .ignoredUserContent {
 	/* no grayscale filter in IE11 due to completely lacking support */
 	
-	filter: grayscale(100%) !important; /* Firefox, Edge */
 	-webkit-filter: grayscale(100%) !important; /* Chrome, Safari, Opera */
+	filter: grayscale(100%) !important; /* Firefox, Edge */
 		
 	&:not(:hover) {
 		opacity: .5 !important;
