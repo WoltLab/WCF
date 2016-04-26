@@ -67,8 +67,8 @@ class ACPTemplateEngine extends TemplateEngine {
 	 * @see	\wcf\system\template\TemplateEngine::getTemplateListenerCode()
 	 */
 	public function getTemplateListenerCode($templateName, $eventName) {
-		// skip template listeners within WCF ACP
-		if (defined('PACKAGE_ID') && PACKAGE_ID == 1) {
+		// skip template listeners within WCFSetup
+		if (!PACKAGE_ID) {
 			return '';
 		}
 		
