@@ -3,8 +3,8 @@ namespace wcf\page;
 use wcf\data\page\PageCache;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\online\UsersOnlineList;
-use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\page\handler\IOnlineLocationPageHandler;
+use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -101,9 +101,7 @@ class UsersOnlineListPage extends SortablePage {
 		parent::readData();
 		
 		// add breadcrumbs
-		if (MODULE_MEMBERS_LIST) {
-			WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.user.members'), LinkHandler::getInstance()->getLink('MembersList')));
-		}
+		if (MODULE_MEMBERS_LIST) PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
 		
 		// cache all necessary data for showing locations
 		foreach ($this->objectList as $userOnline) {

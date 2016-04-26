@@ -3,13 +3,12 @@ namespace wcf\form;
 use wcf\data\comment\StructuredCommentList;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
-use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\request\LinkHandler;
+use wcf\system\page\PageLocationManager;
 use wcf\system\WCF;
 
 /**
@@ -102,10 +101,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 			$this->assignedUserID = $this->queue->assignedUserID;
 		}
 		
-		WCF::getBreadcrumbs()->add(new Breadcrumb(
-			WCF::getLanguage()->get('wcf.moderation.moderation'),
-			LinkHandler::getInstance()->getLink('ModerationList')
-		));
+		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.ModerationList');
 		
 		$this->commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue');
 		$this->commentManager = CommentHandler::getInstance()->getObjectType($this->commentObjectTypeID)->getProcessor();

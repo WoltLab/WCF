@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Resolves incoming requests and performs lookups for controller to url mappings.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -57,7 +57,7 @@ class ControllerMap extends SingletonFactory {
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	url controller
 	 * @param	boolean		$isAcpRequest	true if this is an ACP request
-	 * @return	mixed	array containing className, controller and pageType or a string containing the controller name for aliased controllers
+	 * @return	mixed           array containing className, controller and pageType or a string containing the controller name for aliased controllers
 	 * @throws	SystemException
 	 */
 	public function resolve($application, $controller, $isAcpRequest) {

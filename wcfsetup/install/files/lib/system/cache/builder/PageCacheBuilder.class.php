@@ -2,6 +2,7 @@
 namespace wcf\system\cache\builder;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
+use wcf\system\WCF;
 
 /**
  * Caches the page data.
@@ -12,6 +13,7 @@ use wcf\data\page\PageList;
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
+ * @since       2.2
  */
 class PageCacheBuilder extends AbstractCacheBuilder {
 	/**
@@ -22,12 +24,28 @@ class PageCacheBuilder extends AbstractCacheBuilder {
 			'identifier' => [],
 			'controller' => [],
 			'pages' => [],
+			'pageTitles' => [],
 			'landingPage' => null
 		];
 		
 		$pageList = new PageList();
 		$pageList->readObjects();
 		$data['pages'] = $pageList->getObjects();
+		
+		// get page titles
+		$sql = "SELECT  pageID, languageID, title
+			FROM    wcf".WCF_N."_page_content";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		while ($row = $statement->fetchArray()) {
+			$pageID = $row['pageID'];
+			
+			if (!isset($data['pageTitles'])) {
+				$data['pageTitles'][$pageID] = [];
+			}
+			
+			$data['pageTitles'][$pageID][$row['languageID'] ?: 0] = $row['title'];
+		}
 		
 		// build lookup table
 		/** @var Page $page */

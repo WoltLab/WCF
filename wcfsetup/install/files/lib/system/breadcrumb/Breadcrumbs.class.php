@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\breadcrumb;
+use wcf\data\page\PageCache;
+use wcf\system\page\PageLocationManager;
 use wcf\system\SingletonFactory;
 
 /**
@@ -17,7 +19,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * list of breadcrumbs
 	 * @var	Breadcrumb[]
 	 */
-	protected $items = [];
+	protected $items = null;
 	
 	/**
 	 * Current iterator-index
@@ -37,9 +39,10 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * Adds a breadcrumb (insertion order is crucial!).
 	 * 
 	 * @param	Breadcrumb	$item
+	 * @deprecated  2.2
 	 */
 	public function add(Breadcrumb $item) {
-		$this->items[] = $item;
+		throw new \BadMethodCallException("Breadcrumbs::add() is no longer supported, please use " . PageLocationManager::class . " instead.");
 	}
 	
 	/**
@@ -48,6 +51,10 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * @return	Breadcrumb[]
 	 */
 	public function get() {
+		if ($this->items === null) {
+			$this->loadBreadcrumbs();
+		}
+		
 		return $this->items;
 	}
 	
@@ -57,15 +64,10 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * @param	Breadcrumb	$item
 	 * @param	integer		$index
 	 * @return	boolean
+	 * @deprecated  2.2
 	 */
 	public function replace(Breadcrumb $item, $index) {
-		if (isset($this->items[$index])) {
-			$this->items[$index] = $item;
-			
-			return true;
-		}
-		
-		return false;
+		throw new \BadMethodCallException("Breadcrumbs::replace() is no longer supported, please use " . PageLocationManager::class . " instead.");
 	}
 	
 	/**
@@ -73,21 +75,53 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * 
 	 * @param	integer		$index
 	 * @return	boolean
+	 * @deprecated  2.2
 	 */
 	public function remove($index) {
-		if (isset($this->items[$index])) {
-			unset($this->items[$index]);
-			
-			return true;
+		throw new \BadMethodCallException("Breadcrumbs::remove() is no longer supported, please use " . PageLocationManager::class . " instead.");
+	}
+	
+	protected function loadBreadcrumbs() {
+		$this->items = [];
+		$locations = PageLocationManager::getInstance()->getLocations();
+		
+		// locations are provided starting with the current location followed
+		// by all relevant ancestors, but breadcrumbs appear in the reverse order
+		$locations = array_reverse($locations);
+		
+		// add the landing page as first location, unless it is already included
+		$landingPage = PageCache::getInstance()->getLandingPage();
+		$addLandingPage = true;
+		for ($i = 0, $length = count($locations); $i < $length; $i++) {
+			if ($locations[$i]['pageID'] == $landingPage->pageID) {
+				$addLandingPage = false;
+				break;
+			}
 		}
 		
-		return false;
+		if ($addLandingPage) {
+			array_unshift($locations, [
+				'link' => $landingPage->getLink(),
+				'title' => $landingPage->getTitle()
+			]);
+		}
+		
+		// ignore the last location as it represents the current page
+		array_pop($locations);
+		
+		for ($i = 0, $length = count($locations); $i < $length; $i++) {
+			$this->items[] = new Breadcrumb($locations[$i]['title'], $locations[$i]['link']);
+		}
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function count() {
+		if ($this->items === null) {
+			$this->loadBreadcrumbs();
+		}
+		
 		return count($this->items);
 	}
 	

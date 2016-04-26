@@ -11,7 +11,7 @@ namespace wcf\data;
  * @subpackage	data
  * @category	Community Framework
  */
-interface IUserContent extends ILinkableObject, ITitledObject {
+interface IUserContent extends ITitledLinkObject {
 	/**
 	 * Returns message creation timestamp.
 	 * 

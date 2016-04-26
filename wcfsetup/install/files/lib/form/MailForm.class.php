@@ -6,6 +6,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\mail\Mail;
+use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -16,7 +17,7 @@ use wcf\util\UserUtil;
  * Shows the user mail form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -24,7 +25,7 @@ use wcf\util\UserUtil;
  */
 class MailForm extends AbstractCaptchaForm {
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
+	 * @inheritDoc
 	 */
 	public $useCaptcha = PROFILE_MAIL_USE_CAPTCHA;
 	
@@ -65,7 +66,12 @@ class MailForm extends AbstractCaptchaForm {
 	public $email = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
+	 */
+	public $neededPermissions = ['user.profile.canMail'];
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -80,11 +86,11 @@ class MailForm extends AbstractCaptchaForm {
 			throw new PermissionDeniedException();
 		}
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('Mail', array('object' => $this->user->getDecoratedObject()));
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('Mail', ['object' => $this->user->getDecoratedObject()]);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -97,7 +103,7 @@ class MailForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if (!WCF::getUser()->userID) {
@@ -122,7 +128,7 @@ class MailForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -131,18 +137,18 @@ class MailForm extends AbstractCaptchaForm {
 		$userLanguage = $this->user->getLanguage();
 		
 		// build message data
-		$subjectData = array(
+		$subjectData = [
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->email,
 			'subject' => $this->subject
-		);
-		$messageData = array(
+		];
+		$messageData = [
 			'message' => $this->message,
 			'recipient' => $this->user,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->email,
-		);
+		];
 		
 		// build mail
-		$mail = new Mail(array($this->user->username => $this->user->email), $userLanguage->getDynamicVariable('wcf.user.mail.mail.subject', $subjectData), $userLanguage->getDynamicVariable('wcf.user.mail.mail', $messageData));
+		$mail = new Mail([$this->user->username => $this->user->email], $userLanguage->getDynamicVariable('wcf.user.mail.mail.subject', $subjectData), $userLanguage->getDynamicVariable('wcf.user.mail.mail', $messageData));
 		$mail->setLanguage($userLanguage);
 		
 		// add reply-to tag
@@ -158,40 +164,39 @@ class MailForm extends AbstractCaptchaForm {
 		$this->saved();
 		
 		// forward to profile page
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink('User', array('object' => $this->user)), WCF::getLanguage()->getDynamicVariable('wcf.user.mail.sent', array('user' => $this->user)));
+		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink('User', ['object' => $this->user]), WCF::getLanguage()->getDynamicVariable('wcf.user.mail.sent', ['user' => $this->user]));
 		exit;
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
 		
-		WCF::getBreadcrumbs()->add($this->user->getBreadcrumb());
+		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.User', $this->user->userID, $this->user);
+		if (MODULE_MEMBERS_LIST) PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'user' => $this->user,
 			'showAddress' => $this->showAddress,
 			'message' => $this->message,
 			'subject' => $this->subject,
 			'email' => $this->email
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
-		WCF::getSession()->checkPermissions(array('user.profile.canMail'));
-		
 		if (!$this->user->isAccessible('canMail')) {
 			throw new PermissionDeniedException();
 		}

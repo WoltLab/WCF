@@ -1,8 +1,7 @@
 <?php
 namespace wcf\page;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
-use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\request\LinkHandler;
+use wcf\system\page\PageLocationManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
 
@@ -10,7 +9,7 @@ use wcf\system\WCF;
  * Shows the global recent activity list page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -19,12 +18,12 @@ use wcf\system\WCF;
 class RecentActivityListPage extends AbstractPage {
 	/**
 	 * viewable user activity event list
-	 * @var	\wcf\data\user\activity\event\ViewableUserActivityEventList
+	 * @var	ViewableUserActivityEventList
 	 */
 	public $eventList = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -33,11 +32,11 @@ class RecentActivityListPage extends AbstractPage {
 		$this->eventList->readObjects();
 		
 		// add breadcrumbs
-		if (MODULE_MEMBERS_LIST) WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.user.members'), LinkHandler::getInstance()->getLink('MembersList')));
+		if (MODULE_MEMBERS_LIST) PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -47,10 +46,10 @@ class RecentActivityListPage extends AbstractPage {
 		// removes orphaned and non-accessable events
 		UserActivityEventHandler::validateEvents($this->eventList);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'eventList' => $this->eventList,
 			'lastEventTime' => $lastEventTime,
 			'allowSpidersToIndexThisPage' => true
-		));
+		]);
 	}
 }

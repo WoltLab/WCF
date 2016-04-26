@@ -2,6 +2,7 @@
 namespace wcf\data\page;
 use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Provides access to the page cache.
@@ -12,6 +13,7 @@ use wcf\system\SingletonFactory;
  * @package	com.woltlab.wcf
  * @subpackage	data.page
  * @category	Community Framework
+ * @since       2.2
  */
 class PageCache extends SingletonFactory {
 	/**
@@ -67,5 +69,40 @@ class PageCache extends SingletonFactory {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns the localized page title by page id, optionally retrieving the title
+	 * for given language id if it is a multilingual page.
+	 * 
+	 * @param       integer         $pageID         page id
+	 * @param       integer         $languageID     specific value by language id
+	 * @return      string          localized page title
+	 */
+	public function getPageTitle($pageID, $languageID = null) {
+		if (isset($this->cache['pageTitles'][$pageID])) {
+			$page = $this->getPage($pageID);
+			if ($page->isMultilingual) {
+				if ($languageID !== null && isset($this->cache['pageTitles'][$pageID][$languageID])) {
+					return $this->cache['pageTitles'][$pageID][$languageID];
+				}
+				
+				return $this->cache['pageTitles'][$pageID][WCF::getUser()->getLanguage()->languageID];
+			}
+			else {
+				return $this->cache['pageTitles'][$pageID][0];
+			}
+		}
+		
+		return '';
+	}
+	
+	/**
+	 * Returns the global landing page.
+	 * 
+	 * @return      Page
+	 */
+	public function getLandingPage() {
+		return $this->cache['landingPage'];
 	}
 }

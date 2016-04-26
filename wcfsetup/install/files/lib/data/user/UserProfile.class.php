@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\ITitledLinkObject;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\IUserAvatar;
@@ -9,8 +10,6 @@ use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\rank\UserRank;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\breadcrumb\IBreadcrumbProvider;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
@@ -74,7 +73,7 @@ use wcf\util\StringUtil;
  * @property-read	integer		$likesReceived
  * @property-read	string		$socialNetworkPrivacySettings
  */
-class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider {
+class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * @inheritDoc
 	 */
@@ -689,15 +688,6 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	}
 	
 	/**
-	 * @inheritDoc
-	 */
-	public function getBreadcrumb() {
-		return new Breadcrumb($this->username, LinkHandler::getInstance()->getLink('User', [
-			'object' => $this
-		]));
-	}
-	
-	/**
 	 * Returns the encoded email address.
 	 * 
 	 * @return	string
@@ -832,6 +822,20 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		$link = LinkHandler::getInstance()->getLink('User', ['object' => $this->getDecoratedObject()]);
 		
 		return '<a href="'.$link.'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getLink() {
+		return $this->getDecoratedObject()->getLink();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return $this->getDecoratedObject()->getTitle();
 	}
 	
 	/**

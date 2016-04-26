@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\page;
+use wcf\data\ITitledLinkObject;
 use wcf\data\page\PageCache;
 use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
@@ -14,6 +15,7 @@ use wcf\system\SingletonFactory;
  * @package	com.woltlab.wcf
  * @subpackage	system.page
  * @category	Community Framework
+ * @since       2.2
  */
 class PageLocationManager extends SingletonFactory {
 	/**
@@ -34,8 +36,12 @@ class PageLocationManager extends SingletonFactory {
 		}
 		
 		$metaData = $activeRequest->getMetaData();
+		$link = $title = '';
+		$page = null;
 		if (isset($metaData['cms'])) {
 			$pageID = $metaData['cms']['pageID'];
+			
+			$page = PageCache::getInstance()->getPage($pageID);
 		}
 		else {
 			$page = PageCache::getInstance()->getPageByController($activeRequest->getClassName());
@@ -48,8 +54,11 @@ class PageLocationManager extends SingletonFactory {
 		
 		if ($pageID !== null) {
 			$this->stack[] = [
+				'identifier' => $page->identifier,
+				'link' => $page->getLink(),
 				'pageID' => $pageID,
-				'pageObjectID' => $pageObjectID
+				'pageObjectID' => $pageObjectID,
+				'title' => $page->getTitle()
 			];
 		}
 	}
@@ -58,19 +67,39 @@ class PageLocationManager extends SingletonFactory {
 	 * Appends a parent location to the stack, the later it is added the lower
 	 * is its assumed priority when matching suitable menu items.
 	 * 
-	 * @param	string		$identifier	internal page identifier
-	 * @param	integer		$pageObjectID	page object id
+	 * @param	string		        $identifier	        internal page identifier
+	 * @param	integer		        $pageObjectID	        page object id
+	 * @param       ITitledLinkObject       $locationObject         optional label for breadcrumbs usage
 	 * @throws	SystemException
 	 */
-	public function addParentLocation($identifier, $pageObjectID = 0) {
+	public function addParentLocation($identifier, $pageObjectID = 0, ITitledLinkObject $locationObject = null) {
 		$page = PageCache::getInstance()->getPageByIdentifier($identifier);
 		if ($page === null) {
 			throw new SystemException("Unknown page identifier '".$identifier."'.");
 		}
 		
+		// check if the provided location is already part of the stack
+		for ($i = 0, $length = count($this->stack); $i < $length; $i++) {
+			if ($this->stack[$i]['identifier'] == $identifier && $this->stack[$i]['pageObjectID'] == $pageObjectID) {
+				return;
+			}
+		}
+		
+		if ($locationObject !== null) {
+			$link = $locationObject->getLink();
+			$title = $locationObject->getTitle();
+		}
+		else {
+			$link = $page->getLink();
+			$title = $page->getTitle();
+		}
+		
 		$this->stack[] = [
+			'identifier' => $identifier,
+			'link' => $link,
 			'pageID' => $page->pageID,
-			'pageObjectID' => $pageObjectID
+			'pageObjectID' => $pageObjectID,
+			'title' => $title
 		];
 	}
 	

@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\page;
 use wcf\data\DatabaseObject;
+use wcf\data\ILinkableObject;
+use wcf\data\ITitledObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\application\ApplicationHandler;
@@ -13,7 +15,7 @@ use wcf\system\WCF;
  * Represents a page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.page
@@ -39,7 +41,7 @@ use wcf\system\WCF;
  * @property-read	string		$permissions
  * @property-read	string		$options
  */
-class Page extends DatabaseObject {
+class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	use TDatabaseObjectOptions;
 	use TDatabaseObjectPermissions;
 	
@@ -146,9 +148,7 @@ class Page extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the page URL.
-	 * 
-	 * @return	string
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		if ($this->controller) {
@@ -165,6 +165,18 @@ class Page extends DatabaseObject {
 		else {
 			return LinkHandler::getInstance()->getCmsLink($this->pageID);
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		$title = PageCache::getInstance()->getPageTitle($this->pageID);
+		if (empty($title)) {
+			$title = $this->getGenericTitle();
+		}
+		
+		return $title;
 	}
 	
 	/**
@@ -288,6 +300,15 @@ class Page extends DatabaseObject {
 		}
 		
 		return '';
+	}
+	
+	/**
+	 * Returns the value of a generic phrase based upon a page's identifier.
+	 * 
+	 * @return      string  generic title
+	 */
+	protected function getGenericTitle() {
+		return WCF::getLanguage()->get('wcf.page.' . $this->identifier);
 	}
 	
 	/**

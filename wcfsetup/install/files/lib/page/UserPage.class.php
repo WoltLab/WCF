@@ -9,11 +9,11 @@ use wcf\data\user\profile\visitor\UserProfileVisitorEditor;
 use wcf\data\user\profile\visitor\UserProfileVisitorList;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
-use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\user\profile\UserProfileMenu;
+use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\MetaTagHandler;
 use wcf\system\WCF;
@@ -110,7 +110,7 @@ class UserPage extends AbstractPage {
 		parent::readData();
 		
 		// add breadcrumbs
-		if (MODULE_MEMBERS_LIST) WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.user.members'), LinkHandler::getInstance()->getLink('MembersList')));
+		if (MODULE_MEMBERS_LIST) PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
 		
 		// get profile content
 		if ($this->editOnInit) {
