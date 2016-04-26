@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\user;
-use wcf\data\ITitledLinkObject;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\IUserAvatar;
@@ -10,6 +9,7 @@ use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\rank\UserRank;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\ITitledLinkObject;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;

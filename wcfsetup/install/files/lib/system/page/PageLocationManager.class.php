@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\page;
-use wcf\data\ITitledLinkObject;
 use wcf\data\page\PageCache;
+use wcf\data\ITitledLinkObject;
 use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;

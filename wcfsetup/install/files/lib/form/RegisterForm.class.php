@@ -27,7 +27,7 @@ use wcf\util\UserRegistrationUtil;
  * Shows the user registration form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -48,7 +48,7 @@ class RegisterForm extends UserAddForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array();
+	public $neededPermissions = [];
 	
 	/**
 	 * holds a language variable with information about the registration process
@@ -76,7 +76,7 @@ class RegisterForm extends UserAddForm {
 	 * field names
 	 * @var	array
 	 */
-	public $randomFieldNames = array();
+	public $randomFieldNames = [];
 	
 	/**
 	 * min number of seconds between form request and submit
@@ -132,7 +132,7 @@ class RegisterForm extends UserAddForm {
 		if (isset($_POST[$this->randomFieldNames['password']])) $this->password = $_POST[$this->randomFieldNames['password']];
 		if (isset($_POST[$this->randomFieldNames['confirmPassword']])) $this->confirmPassword = $_POST[$this->randomFieldNames['confirmPassword']];
 		
-		$this->groupIDs = array();
+		$this->groupIDs = [];
 		
 		if ($this->captchaObjectType) {
 			$this->captchaObjectType->getProcessor()->readFormParameters();
@@ -158,7 +158,7 @@ class RegisterForm extends UserAddForm {
 		
 		// validate registration time
 		if (!$this->isExternalAuthentication && (!WCF::getSession()->getVar('registrationStartTime') || (TIME_NOW - WCF::getSession()->getVar('registrationStartTime')) < self::$minRegistrationTime)) {
-			throw new UserInputException('registrationStartTime', array());
+			throw new UserInputException('registrationStartTime', []);
 		}
 	}
 	
@@ -188,8 +188,8 @@ class RegisterForm extends UserAddForm {
 			
 			if (WCF::getSession()->getVar('__username')) {
 				$this->username = WCF::getSession()->getVar('__username');
- 				WCF::getSession()->unregister('__username');
- 			}
+				WCF::getSession()->unregister('__username');
+			}
 			if (WCF::getSession()->getVar('__email')) {
 				$this->email = $this->confirmEmail = WCF::getSession()->getVar('__email');
 				WCF::getSession()->unregister('__email');
@@ -198,13 +198,13 @@ class RegisterForm extends UserAddForm {
 			WCF::getSession()->register('registrationStartTime', TIME_NOW);
 			
 			// generate random field names
-			$this->randomFieldNames = array(
+			$this->randomFieldNames = [
 				'username' => UserRegistrationUtil::getRandomFieldName('username'),
 				'email' => UserRegistrationUtil::getRandomFieldName('email'),
 				'confirmEmail' => UserRegistrationUtil::getRandomFieldName('confirmEmail'),
 				'password' => UserRegistrationUtil::getRandomFieldName('password'),
 				'confirmPassword' => UserRegistrationUtil::getRandomFieldName('confirmPassword')
-			);
+			];
 			
 			WCF::getSession()->register('registrationRandomFieldNames', $this->randomFieldNames);
 		}
@@ -223,11 +223,11 @@ class RegisterForm extends UserAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'captchaObjectType' => $this->captchaObjectType,
 			'isExternalAuthentication' => $this->isExternalAuthentication,
 			'randomFieldNames' => $this->randomFieldNames
-		));
+		]);
 	}
 	
 	/**
@@ -420,7 +420,7 @@ class RegisterForm extends UserAddForm {
 			$activationCode = UserRegistrationUtil::getActivationCode();
 			$this->additionalFields['activationCode'] = $activationCode;
 			$addDefaultGroups = false;
-			$this->groupIDs = UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE, UserGroup::GUESTS));
+			$this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
 		}
 		
 		// check gravatar support
@@ -429,18 +429,18 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		// create user
-		$data = array(
-			'data' => array_merge($this->additionalFields, array(
+		$data = [
+			'data' => array_merge($this->additionalFields, [
 				'username' => $this->username,
 				'email' => $this->email,
 				'password' => $this->password,
-			)),
+			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions,
 			'addDefaultGroups' => $addDefaultGroups
-		);
-		$this->objectAction = new UserAction(array(), 'create', $data);
+		];
+		$this->objectAction = new UserAction([], 'create', $data);
 		$result = $this->objectAction->executeAction();
 		$user = $result['returnValues'];
 		$userEditor = new UserEditor($user);
@@ -450,10 +450,10 @@ class RegisterForm extends UserAddForm {
 		
 		// set avatar if provided
 		if (!empty($avatarURL)) {
-			$userAvatarAction = new UserAvatarAction(array(), 'fetchRemoteAvatar', array(
+			$userAvatarAction = new UserAvatarAction([], 'fetchRemoteAvatar', [
 				'url' => $avatarURL,
 				'userEditor' => $userEditor
-			));
+			]);
 			$userAvatarAction->executeAction();
 		}
 		
@@ -467,9 +467,9 @@ class RegisterForm extends UserAddForm {
 				$this->message = 'wcf.user.register.success';
 			}
 			else {
-				$mail = new Mail(array($this->username => $this->email),
+				$mail = new Mail([$this->username => $this->email],
 					WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'),
-					WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail', array('user' => $user))
+					WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail', ['user' => $user])
 				);
 				$mail->send();
 				$this->message = 'wcf.user.register.needActivation';
@@ -487,7 +487,7 @@ class RegisterForm extends UserAddForm {
 			// send mail
 			$mail = new Mail(MAIL_ADMIN_ADDRESS, 
 				$language->getDynamicVariable('wcf.user.register.notification.mail.subject'),
-				$language->getDynamicVariable('wcf.user.register.notification.mail', array('user' => $user))
+				$language->getDynamicVariable('wcf.user.register.notification.mail', ['user' => $user])
 			);
 			$mail->setLanguage($language);
 			$mail->send();
@@ -508,7 +508,7 @@ class RegisterForm extends UserAddForm {
 		$this->saved();
 		
 		// forward to index page
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable($this->message, array('user' => $user)), 15);
+		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]), 15);
 		exit;
 	}
 }
