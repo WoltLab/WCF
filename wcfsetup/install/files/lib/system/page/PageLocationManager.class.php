@@ -52,7 +52,7 @@ class PageLocationManager extends SingletonFactory {
 			}
 		}
 		
-		if ($pageID !== null) {
+		if ($page !== null) {
 			$this->stack[] = [
 				'identifier' => $page->identifier,
 				'link' => $page->getLink(),
