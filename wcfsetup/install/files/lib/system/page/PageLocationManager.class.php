@@ -36,7 +36,6 @@ class PageLocationManager extends SingletonFactory {
 		}
 		
 		$metaData = $activeRequest->getMetaData();
-		$link = $title = '';
 		$page = null;
 		if (isset($metaData['cms'])) {
 			$pageID = $metaData['cms']['pageID'];

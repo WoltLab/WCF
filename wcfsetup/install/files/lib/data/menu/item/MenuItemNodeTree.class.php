@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\menu\item;
 use wcf\system\page\PageLocationManager;
+use wcf\system\request\RequestHandler;
 
 /**
  * Represents a menu item node tree.
@@ -63,16 +64,19 @@ class MenuItemNodeTree {
 		
 		// find possible active menu items
 		$activeMenuItems = [];
-		$possibleLocations = PageLocationManager::getInstance()->getLocations();
-		$length = count($possibleLocations);
-		foreach ($menuItemList as $menuItem) {
-			for ($i = 0; $i < $length; $i++) {
-				if ($menuItem->pageID == $possibleLocations[$i]['pageID'] && $menuItem->pageObjectID == $possibleLocations[$i]['pageObjectID']) {
-					if (!isset($activeMenuItems[$i])) {
-						$activeMenuItems[$i] = [];
+		
+		if (!RequestHandler::getInstance()->isACPRequest()) {
+			$possibleLocations = PageLocationManager::getInstance()->getLocations();
+			$length = count($possibleLocations);
+			foreach ($menuItemList as $menuItem) {
+				for ($i = 0; $i < $length; $i++) {
+					if ($menuItem->pageID == $possibleLocations[$i]['pageID'] && $menuItem->pageObjectID == $possibleLocations[$i]['pageObjectID']) {
+						if (!isset($activeMenuItems[$i])) {
+							$activeMenuItems[$i] = [];
+						}
+						
+						$activeMenuItems[$i][] = $menuItem->itemID;
 					}
-					
-					$activeMenuItems[$i][] = $menuItem->itemID;
 				}
 			}
 		}
