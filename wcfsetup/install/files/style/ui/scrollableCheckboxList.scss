@@ -1,0 +1,15 @@
+.scrollableCheckboxList {
+	background-color: $wcfInputBackground;
+	border: 1px solid $wcfInputBorder;
+	color: $wcfInputText;
+	max-height: 250px;
+	max-width: 400px;
+	overflow: auto;
+	padding: 5px;
+	
+	li {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}

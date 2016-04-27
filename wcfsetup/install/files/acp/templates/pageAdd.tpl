@@ -179,13 +179,15 @@
 		</dl>
 		
 		<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
-			<dt><label for="boxIDs">{lang}wcf.acp.page.boxIDs{/lang}</label></dt>
+			<dt>{lang}wcf.acp.page.boxIDs{/lang}</dt>
 			<dd>
-				<select name="boxIDs[]" id="boxIDs" multiple="multiple" size="20">
+				<ul class="scrollableCheckboxList">
 					{foreach from=$availableBoxes item=availableBox}
-						<option value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} selected="selected"{/if}>{$availableBox->name}</option>
+						<li>
+							<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked="checked"{/if} /> {$availableBox->name}</label>
+						</li>
 					{/foreach}
-				</select>
+				</ul>
 				{if $errorField == 'boxIDs'}
 					<small class="innerError">
 						{if $errorType == 'empty'}

@@ -151,13 +151,15 @@
 		</dl>
 		
 		<dl>
-			<dt><label for="pageIDs">{lang}wcf.acp.box.pageIDs{/lang}</label></dt>
+			<dt>{lang}wcf.acp.box.pageIDs{/lang}</dt>
 			<dd>
-				<select name="pageIDs[]" id="pageIDs" multiple="multiple" size="20">
+				<ul class="scrollableCheckboxList">
 					{foreach from=$pageNodeList item=pageNode}
-						<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID|in_array:$pageIDs} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
+						<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
+							<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID|in_array:$pageIDs} checked="checked"{/if} /> {$pageNode->getPage()->name}</label>
+						</li>
 					{/foreach}
-				</select>
+				</ul>
 			</dd>
 		</dl>
 		
