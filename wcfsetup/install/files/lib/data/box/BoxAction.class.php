@@ -81,6 +81,15 @@ class BoxAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
+		// save template
+		if ($box->boxType == 'tpl') {
+			if (!empty($this->parameters['content'])) {
+				foreach ($this->parameters['content'] as $languageID => $content) {
+					file_put_contents(WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+				}
+			}
+		}
+		
 		return $box;
 	}
 	
@@ -112,6 +121,13 @@ class BoxAction extends AbstractDatabaseObjectAction {
 						$content['content'],
 						$content['imageID']
 					]);
+				}
+				
+				// save template
+				if ($box->boxType == 'tpl') {
+					foreach ($this->parameters['content'] as $languageID => $content) {
+						file_put_contents(WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+					}
 				}
 			}
 		}
@@ -149,5 +165,23 @@ class BoxAction extends AbstractDatabaseObjectAction {
 				throw new PermissionDeniedException();
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function delete() {
+		foreach ($this->objects as $box) {
+			if ($box->boxType == 'tpl') {
+				foreach ($box->getBoxContent() as $languageID => $content) {
+					$file = WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl';
+					if (file_exists($file)) {
+						@unlink($file);
+					}
+				}
+			}
+		}
+		
+		parent::delete();
 	}
 }

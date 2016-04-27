@@ -168,6 +168,9 @@ class Box extends DatabaseObject {
 		else if ($this->boxType == 'menu') {
 			return $this->getMenu()->getContent();
 		}
+		else if ($this->boxType == 'tpl') {
+			return WCF::getTPL()->fetch($this->getTplName(WCF::getLanguage()->languageID), 'wcf', [], true);
+		}
 		
 		$boxContent = $this->getBoxContent();
 		$content = '';
@@ -313,6 +316,24 @@ class Box extends DatabaseObject {
 	public function hasLink() {
 		// @todo
 		return false;
+	}
+	
+	/**
+	 * Returns the template name of this box.
+	 *
+	 * @param       integer         $languageID
+	 * @return      string
+	 */
+	public function getTplName($languageID = null) {
+		if ($this->boxType == 'tpl') {
+			if ($this->isMultilingual) {
+				return '__cms_box_' . $this->boxID . '_' . $languageID;
+			}
+			
+			return '__cms_box_' . $this->boxID;
+		}
+		
+		return '';
 	}
 	
 	/**

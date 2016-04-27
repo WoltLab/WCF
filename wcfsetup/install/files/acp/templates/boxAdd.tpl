@@ -238,7 +238,7 @@
 			
 			{foreach from=$availableLanguages item=availableLanguage}
 				<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
-					<div>
+					<div class="section">
 						{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 							<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
 								<dt><label for="image{@$availableLanguage->languageID}">{lang}wcf.acp.box.image{/lang}</label></dt>
