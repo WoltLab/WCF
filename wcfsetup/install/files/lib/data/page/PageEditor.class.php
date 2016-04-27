@@ -2,6 +2,7 @@
 namespace wcf\data\page;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 
 /**
@@ -26,5 +27,6 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 */
 	public static function resetCache() {
 		RoutingCacheBuilder::getInstance()->reset();
+		PageCacheBuilder::getInstance()->reset();
 	}
 }
