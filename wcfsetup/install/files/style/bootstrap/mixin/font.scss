@@ -54,7 +54,7 @@
 
 @mixin wcfFontTitle {
 	font-weight: 300;
-	line-height: 1;
+	line-height: 1.05;
 	
 	@include screen-md-up {
 		font-size: $wcfFontSizeTitle;
