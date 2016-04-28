@@ -2523,38 +2523,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.category.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.other"><![CDATA[Weitere Seiten]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
-		<item name="wcf.page.com.woltlab.wcf.AccountManagementForm"><![CDATA[Benutzerkonto-Verwaltung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.AvatarEditForm"><![CDATA[Avatar-Verwaltung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.DisclaimerForm"><![CDATA[Disclaimer]]></item>
-		<item name="wcf.page.com.woltlab.wcf.EmailActivationForm"><![CDATA[Aktivierung neuer E-Mail-Adresse]]></item>
-		<item name="wcf.page.com.woltlab.wcf.EmailNewActivationCodeForm"><![CDATA[E-Mail-Aktivierungscode-Anforderung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.LoginForm"><![CDATA[Anmeldung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.LostPasswordForm"><![CDATA[Kennwort vergessen]]></item>
-		<item name="wcf.page.com.woltlab.wcf.MailForm"><![CDATA[E-Mail-Formular]]></item>
-		<item name="wcf.page.com.woltlab.wcf.ModerationActivationForm"><![CDATA[Inhaltsfreischaltung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.ModerationReportForm"><![CDATA[Inhaltsmeldung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.NewPasswordForm"><![CDATA[Neues Kennwort]]></item>
-		<item name="wcf.page.com.woltlab.wcf.NotificationSettingsForm"><![CDATA[Benachrichtigungseinstellungen]]></item>
-		<item name="wcf.page.com.woltlab.wcf.RegisterActivationForm"><![CDATA[Registrierung abschließen]]></item>
-		<item name="wcf.page.com.woltlab.wcf.RegisterForm"><![CDATA[Registrierung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.RegisterNewActivationCodeForm"><![CDATA[Aktivierungscode-Anforderung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.SearchForm"><![CDATA[Suche]]></item>
-		<item name="wcf.page.com.woltlab.wcf.SettingsForm"><![CDATA[Einstellungen]]></item>
-		<item name="wcf.page.com.woltlab.wcf.SignatureEditForm"><![CDATA[Signatur-Verwaltung]]></item>
-		<item name="wcf.page.com.woltlab.wcf.UserSearchForm"><![CDATA[Mitgliedersuche]]></item>
-		<item name="wcf.page.com.woltlab.wcf.DeletedContentListPage"><![CDATA[Gelöschte Inhalte]]></item>
-		<item name="wcf.page.com.woltlab.wcf.FollowingPage"><![CDATA[Benutzer, denen Sie folgen]]></item>
-		<item name="wcf.page.com.woltlab.wcf.IgnoredUsersPage"><![CDATA[Blockierte Benutzer]]></item>
-		<item name="wcf.page.com.woltlab.wcf.MembersListPage"><![CDATA[Mitglieder]]></item>
-		<item name="wcf.page.com.woltlab.wcf.ModerationListPage"><![CDATA[Moderation]]></item>
-		<item name="wcf.page.com.woltlab.wcf.NotificationListPage"><![CDATA[Benachrichtigungen]]></item>
-		<item name="wcf.page.com.woltlab.wcf.PaidSubscriptionListPage"><![CDATA[Bezahlte Mitgliedschaften]]></item>
-		<item name="wcf.page.com.woltlab.wcf.RecentActivityListPage"><![CDATA[Letzte Aktivitäten]]></item>
-		<item name="wcf.page.com.woltlab.wcf.SearchResultPage"><![CDATA[Suchergebnisse]]></item>
-		<item name="wcf.page.com.woltlab.wcf.TaggedPage"><![CDATA[Inhalte mit bestimmtem Tag]]></item>
-		<item name="wcf.page.com.woltlab.wcf.TeamPage"><![CDATA[Team-Mitglieder]]></item>
-		<item name="wcf.page.com.woltlab.wcf.UserPage"><![CDATA[Benutzerprofil]]></item>
-		<item name="wcf.page.com.woltlab.wcf.UsersOnlineListPage"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.page.comments"><![CDATA[Kommentare]]></item>
+		
+		<!-- TODO: these variables are mostly irrelevant, but some are still of use, such as the custom phrase for the user profile -->
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.UsersOnlineList"><![CDATA[Benutzer-Online-Liste]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.MembersList"><![CDATA[Mitgliederliste]]></item>
@@ -2566,7 +2537,41 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.AvatarEdit"><![CDATA[Avatar-Verwaltung]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.SignatureEdit"><![CDATA[Signatur-Verwaltung]]></item>
-		<item name="wcf.page.comments"><![CDATA[Kommentare]]></item>
+		
+		<item name="wcf.page.com.woltlab.wcf.AccountManagement"><![CDATA[Benutzerkonto-Verwaltung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.AvatarEdit"><![CDATA[Avatar-Verwaltung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Dashboard"><![CDATA[Dashboard]]></item>
+		<item name="wcf.page.com.woltlab.wcf.DeletedContentList"><![CDATA[Gelöschte Inhalte]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Disclaimer"><![CDATA[Disclaimer]]></item>
+		<item name="wcf.page.com.woltlab.wcf.EditHistory"><![CDATA[TODO]]></item>
+		<item name="wcf.page.com.woltlab.wcf.EmailActivation"><![CDATA[Aktivierung neuer E-Mail-Adresse]]></item>
+		<item name="wcf.page.com.woltlab.wcf.EmailNewActivationCode"><![CDATA[E-Mail-Aktivierungscode-Anforderung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Following"><![CDATA[Benutzer, denen Sie folgen]]></item>
+		<item name="wcf.page.com.woltlab.wcf.IgnoredUsers"><![CDATA[Blockierte Benutzer]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Login"><![CDATA[Anmeldung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.LostPassword"><![CDATA[Kennwort vergessen]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Mail"><![CDATA[E-Mail-Formular]]></item>
+		<item name="wcf.page.com.woltlab.wcf.MembersList"><![CDATA[Mitglieder]]></item>
+		<item name="wcf.page.com.woltlab.wcf.ModerationActivation"><![CDATA[Inhaltsfreischaltung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.ModerationList"><![CDATA[Moderation]]></item>
+		<item name="wcf.page.com.woltlab.wcf.ModerationReport"><![CDATA[Inhaltsmeldung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.NewPassword"><![CDATA[Neues Kennwort]]></item>
+		<item name="wcf.page.com.woltlab.wcf.NotificationList"><![CDATA[Benachrichtigungen]]></item>
+		<item name="wcf.page.com.woltlab.wcf.NotificationSettings"><![CDATA[Benachrichtigungseinstellungen]]></item>
+		<item name="wcf.page.com.woltlab.wcf.PaidSubscriptionList"><![CDATA[Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.page.com.woltlab.wcf.RecentActivityList"><![CDATA[Letzte Aktivitäten]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Register"><![CDATA[Registrierung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.RegisterActivation"><![CDATA[Registrierung abschließen]]></item>
+		<item name="wcf.page.com.woltlab.wcf.RegisterNewActivationCode"><![CDATA[Aktivierungscode-Anforderung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Search"><![CDATA[Suche]]></item>
+		<item name="wcf.page.com.woltlab.wcf.SearchResult"><![CDATA[Suchergebnisse]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.page.com.woltlab.wcf.SignatureEdit"><![CDATA[Signatur-Verwaltung]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Tagged"><![CDATA[Inhalte mit bestimmtem Tag]]></item>
+		<item name="wcf.page.com.woltlab.wcf.Team"><![CDATA[Team]]></item>
+		<item name="wcf.page.com.woltlab.wcf.User"><![CDATA[Benutzerprofil]]></item>
+		<item name="wcf.page.com.woltlab.wcf.UserSearch"><![CDATA[Benutzer suchen]]></item>
+		<item name="wcf.page.com.woltlab.wcf.UsersOnlineList"><![CDATA[Benutzer Online]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
