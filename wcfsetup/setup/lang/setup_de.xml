@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch">
 	<category name="wcf.global">
-		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} Installation]]></item>
-		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
-		<item name="wcf.global.title.subtitle"><![CDATA[Vorbereiten der Installation]]></item>
+		<item name="wcf.global.title"><![CDATA[{$setupPackageName} Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
@@ -20,12 +18,11 @@
 		<item name="wcf.global.license.missingAcception"><![CDATA[Um mit der Installation fortfahren zu können, müssen Sie die Lizenzbestimmungen akzeptieren.]]></item>
 		<item name="wcf.global.systemRequirements.required"><![CDATA[Benötigte Systemvoraussetzungen]]></item>
 		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Empfohlene Systemvoraussetzungen]]></item>
-		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Benötigt:]]></item>
-		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Gefunden:]]></item>
-		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Empfohlen:]]></item>
+		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Benötigt]]></item>
+		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Gefunden]]></item>
+		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Empfohlen]]></item>
 		<item name="wcf.global.systemRequirements.php"><![CDATA[Installierte Version der Skriptsprache „PHP“]]></item>
 		<item name="wcf.global.systemRequirements.php.description"><![CDATA[Die installierte Version der Skriptsprache „PHP“ ist für einen stabilen Betrieb dieser Software zu alt. Bitte veranlassen Sie eine Aktualisierung der installierten Version bevor Sie mit der Installation fortfahren.]]></item>
-		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[TODO: Ihre PHP Version ist stark veraltet. Für einen einwandfreien Betrieb empfehlen wir PHP Version 5.3.2 oder höher.]]></item>
 		<item name="wcf.global.systemRequirements.sql"><![CDATA[Datenbank-Unterstützung]]></item>
 		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[nicht gefunden]]></item>
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[Ohne die Unterstützung einer kompatiblen Datenbank kann diese Software nicht installiert werden.]]></item>
@@ -45,7 +42,6 @@
 		<item name="wcf.global.languages.error.empty"><![CDATA[Bitte wählen Sie mindestens eine Sprache aus!]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Datenbankzugang konfigurieren]]></item>
 		<item name="wcf.global.configureDB.description"><![CDATA[Die Daten der Software werden in einer SQL-Datenbank gespeichert. Bitte geben Sie die Zugangsdaten für diese Datenbank an! Falls Ihnen die Zugangsdaten nicht bekannt sind, wenden Sie sich bitte an Ihren Serveradministrator oder Webhoster.]]></item>
-		<item name="wcf.global.configureDB.accessData"><![CDATA[Datenbankzugangsdaten]]></item>
 		<item name="wcf.global.configureDB.host"><![CDATA[Server-Hostname]]></item>
 		<item name="wcf.global.configureDB.user"><![CDATA[Benutzername]]></item>
 		<item name="wcf.global.configureDB.password"><![CDATA[Kennwort]]></item>
@@ -61,7 +57,6 @@
 		<item name="wcf.global.configureDB.class.PostgreSQLDatabase"><![CDATA[PostgreSQL 8.2+]]></item>
 		<item name="wcf.global.createUser"><![CDATA[Administrator erstellen]]></item>
 		<item name="wcf.global.createUser.description"><![CDATA[Der Installationsassistent erstellt nun ein Administrator-Konto für Sie. Bitte geben Sie dazu einen Benutzernamen, eine E-Mail-Adresse und ein Kennwort ein.]]></item>
-		<item name="wcf.global.createUser.data"><![CDATA[Benutzerdaten]]></item>
 		<item name="wcf.global.createUser.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.global.createUser.email"><![CDATA[E-Mail-Adresse]]></item>
 		<item name="wcf.global.createUser.confirmEmail"><![CDATA[E-Mail-Adresse wiederholen]]></item>
@@ -76,18 +71,14 @@
 		<item name="wcf.global.wcfDir.error"><![CDATA[Beim Versuch die Dateien zu entpacken, ist folgender Fehler aufgetreten:
 		<br /><strong>{$exception->getMessage()}</strong><br />
 		Bitte kontrollieren Sie, ob das Zielverzeichnis existiert und beschreibbar ist.]]></item>
-		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
-		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 		<item name="wcf.global.applicationDirectory"><![CDATA[Installationsverzeichnisse]]></item>
-		<item name="wcf.global.applicationDirectory.description"><![CDATA[Geben Sie die Verzeichnisse an die für die Installation der aufgeführten Anwendungen verwendet werden sollen.]]></item>
+		<item name="wcf.global.applicationDirectory.description"><![CDATA[Geben Sie die Verzeichnisse an, die für die Installation der aufgeführten Anwendungen verwendet werden sollen. Die Eingabe der Verzeichnisse erfolgt relativ zum Hauptverzeichnis der Website („{$documentRoot}“).]]></item>
 		<item name="wcf.global.applicationDirectory.error"><![CDATA[Die Eingaben für die Installationsverzeichnisse sind ungültig. Bitte überprüfen Sie die markierten Felder.]]></item>
 		<item name="wcf.global.applicationDirectory.error.duplicate"><![CDATA[Dieses Verzeichnis wurde bereits für eine andere Anwendung angegeben.]]></item>
 		<item name="wcf.global.applicationDirectory.error.makePath"><![CDATA[Das angegebene Verzeichnis kann auf Grund unzureichender Berechtigungen nicht erstellt werden.]]></item>
 		<item name="wcf.global.applicationDirectory.error.makeWritable"><![CDATA[Das angegebene Verzeichnis ist für PHP nicht beschreibbar, bitte überprüfen Sie die Berechtigungen.]]></item>
 		<item name="wcf.global.applicationDirectory.error.notEmpty"><![CDATA[In diesem Verzeichnis befindet sich bereits eine Anwendung.]]></item>
 		<item name="wcf.global.applicationDirectory.error.outsideDocumentRoot"><![CDATA[Das Verzeichnis befindet sich außerhalb des Hauptverzeichnis der Website.]]></item>
-		<item name="wcf.global.applicationDirectory.path"><![CDATA[Installationsverzeichnisse]]></item>
-		<item name="wcf.global.applicationDirectory.path.description"><![CDATA[Die Eingabe der Verzeichnisse erfolgt relativ zum Hauptverzeichnis der Website („{$documentRoot}“).]]></item>
 		<item name="wcf.global.applicationDirectory.url"><![CDATA[Endgültige URL für Anwendungen]]></item>
 		<item name="wcf.global.applicationDirectory.url.description"><![CDATA[Nach der Installation werden die Anwendungen unter den folgenden URLs erreichbar sein.]]></item>
 	</category>

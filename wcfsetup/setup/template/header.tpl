@@ -2,7 +2,7 @@
 <html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
 	<meta charset="utf-8" />
-	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.pageTitle{/lang}</title>
+	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.title{/lang}</title>
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/setup/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}WCFSetup.css" />
 	
@@ -22,32 +22,28 @@
 	{/if}
 </head>
 
-<body id="tplWCFInstaller">
+<body>
 	<a id="top"></a>
 	
-	<header id="pageHeader" class="layoutFluid">
-		<div>
-			<div id="logo" class="logo">
-				<a>
-					<h1>{lang}wcf.global.pageTitle{/lang}</h1>
-					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo.png" alt="" style="height: 80px; width: 502px;" />
-				</a>
-			</div>
-			
-			<nav class="navigation navigationHeader">
-				<ul class="navigationIcons">
-					<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
-				</ul>
-			</nav>
+	<div id="pageContainer" class="pageContainer">
+		<div id="pageHeaderContainer" class="pageHeaderContainer">
+			<header id="pageHeader" class="pageHeader">
+				<div>
+					<div class="layoutBoundary">
+						<div id="pageHeaderLogo" class="pageHeaderLogo">
+							<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo.png" alt="" style="height: 40px; width: 288px;" />
+						</div>
+					</div>
+				</div>
+			</header>
 		</div>
-	</header>
-	
-	<div id="main" class="layoutFluid">
-		<div>
-			<div>
-				<section id="content" class="content">
-					<header class="boxHeadline">
-						<h1>{lang}wcf.global.title{/lang}</h1>
-						<p>{lang}wcf.global.title.subtitle{/lang}</p>
-						<p><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>
+		
+		<section id="main" class="main" role="main">
+			<div class="layoutBoundary">
+				<div id="content" class="content">
+					<header class="contentHeader">
+						<div class="contentHeaderTitle">
+							<h1 class="contentTitle">{lang}wcf.global.title{/lang}</h1>
+							<p class="contentHeaderDescription"><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>
+						</div>
 					</header>

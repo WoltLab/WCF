@@ -1,74 +1,110 @@
 {include file='header'}
 
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.global.systemRequirements.required{/lang}</h2>
-</header>
-
-<div class="container containerPadding marginTop">
-	<fieldset>
-		<legend>{lang}wcf.global.systemRequirements.php{/lang}</legend>
-		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 5.5.4</dt>
-			<dd>
-				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.phpVersion.result}red{else}green{/if}">{$system.phpVersion.value}</span>
-				{if !$system.phpVersion.result}<small>{lang}wcf.global.systemRequirements.php.description{/lang}</small>{/if}
-			</dd>
-		</dl>
-	</fieldset>
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.required{/lang}</h2>
 	
-	<fieldset>
-		<legend>{lang}wcf.global.systemRequirements.memoryLimit{/lang}</legend>
-		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 128 M</dt>
-			<dd>
-				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.memoryLimit.result}red{else}green{/if}">{$system.memoryLimit.value}</span>
-				{if !$system.memoryLimit.result}<small>{lang}wcf.global.systemRequirements.memoryLimit.description{/lang}</small>{/if}
-			</dd>
-		</dl>
-	</fieldset>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.php{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
+				<dd>5.5.4</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+				<dd>
+					<span class="badge {if !$system.phpVersion.result}red{else}green{/if}">{$system.phpVersion.value}</span>
+					{if !$system.phpVersion.result}<small>{lang}wcf.global.systemRequirements.php.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</div>
+	</section>
+		
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.memoryLimit{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
+				<dd>128M</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+				<dd>
+					<span class="badge {if !$system.memoryLimit.result}red{else}green{/if}">{$system.memoryLimit.value}</span>
+					{if !$system.memoryLimit.result}<small>{lang}wcf.global.systemRequirements.memoryLimit.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</div>
+	</section>
 	
-	<fieldset>
-		<legend>{lang}wcf.global.systemRequirements.sql{/lang}</legend>
-		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
-			<dd>
-				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.sql.result}red{else}green{/if}">
-				{if !$system.sql.result}{lang}wcf.global.systemRequirements.sql.notFound{/lang}{else}
-					{implode from=$system.sql.value item=$sqlType glue=', '}{lang}wcf.global.configureDB.class.{@$sqlType}{/lang}{/implode}
-				{/if}</span>
-				{if !$system.sql.result}<small>{lang}wcf.global.systemRequirements.sql.description{/lang}</small>{/if}
-			</dd>
-		</dl>
-	</fieldset>
-</div>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.sql{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
+				<dd>{lang}wcf.global.systemRequirements.active{/lang}</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+				<dd>
+					<span class="badge {if !$system.sql.result}red{else}green{/if}">
+					{if !$system.sql.result}{lang}wcf.global.systemRequirements.sql.notFound{/lang}{else}
+						{implode from=$system.sql.value item=$sqlType glue=', '}{lang}wcf.global.configureDB.class.{@$sqlType}{/lang}{/implode}
+					{/if}</span>
+					{if !$system.sql.result}<small>{lang}wcf.global.systemRequirements.sql.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</div>
+	</section>
+</section>
 
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.global.systemRequirements.recommended{/lang}</h2>
-</header>
-
-<div class="container containerPadding marginTop">
-	<fieldset>
-		<legend>{lang}wcf.global.systemRequirements.uploadMaxFilesize{/lang}</legend>
-		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} &gt; 0</dt>
-			<dd>
-				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.uploadMaxFilesize.result}yellow{else}green{/if}">{$system.uploadMaxFilesize.value}</span>
-				{if !$system.uploadMaxFilesize.result}<small>{lang}wcf.global.systemRequirements.uploadMaxFilesize.description{/lang}</small>{/if}
-			</dd>
-		</dl>
-	</fieldset>
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.recommended{/lang}</h2>
 	
-	<fieldset>
-		<legend>{lang}wcf.global.systemRequirements.gdLib{/lang}</legend>
-		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} 2.0.0</dt>
-			<dd>
-				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.gdLib.result}yellow{else}green{/if}">{$system.gdLib.value}</span>
-				{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
-			</dd>
-		</dl>
-	</fieldset>
-</div>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.uploadMaxFilesize{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang}</dt>
+				<dd>&gt; 0</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+				<dd>
+					<span class="badge {if !$system.uploadMaxFilesize.result}yellow{else}green{/if}">{$system.uploadMaxFilesize.value}</span>
+					{if !$system.uploadMaxFilesize.result}<small>{lang}wcf.global.systemRequirements.uploadMaxFilesize.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</div>
+	</section>
+	
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.gdLib{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang}</dt>
+				<dd>2.0.0</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-6">
+				<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+				<dd>
+					<span class="badge {if !$system.gdLib.result}yellow{else}green{/if}">{$system.gdLib.value}</span>
+					{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</div>
+	</section>
+</section>
 
 <form method="post" action="install.php">
 	<div class="formSubmit">
