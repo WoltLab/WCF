@@ -450,6 +450,10 @@
 	}
 	
 	.footerLinks {
+		&:not(:first-child) {
+			margin-top: 40px;
+		}
+		
 		.boxMenu {
 			display: flex;
 			flex-wrap: wrap;

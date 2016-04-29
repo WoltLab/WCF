@@ -1,4 +1,4 @@
-.pageFooter {
+.boxesFooter {
 	background-color: $wcfFooterBackground;
 	color: $wcfFooterText;
 	flex: 0 0 auto;
@@ -19,22 +19,33 @@
 			text-decoration: underline;
 		}
 	}
+}
+
+.pageFooterCopyright {
+	background-color: $wcfFooterCopyrightBackground;
+	color: $wcfFooterCopyrightText;
+	flex: 0 0 auto;
+	text-align: center;
 	
-	.footerContent {
-		> div {
-			&:not(:first-child) {
-				margin-top: 20px;
-			}
-			
-			// copyright and benchmark link styling
-			a {
-				// use text color instead
-				color: $wcfFooterText;
-			}
-		}
+	@include screen-md-up {
+		padding: 40px 0;
+	}
+	
+	@include screen-sm-down {
+		padding: 20px 0;
+	}
+	
+	> .layoutBoundary > div:not(:first-child) {
+		margin-top: 10px;
+	}
+	
+	a {
+		// use text color instead
+		color: $wcfFooterText;
 		
-		&:not(:first-child) > div:first-child {
-			margin-top: 40px;
+		&:hover {
+			color: $wcfFooterCopyrightLinkActive;
+			text-decoration: underline;
 		}
 	}
 }
