@@ -15,6 +15,8 @@
 	
 	<div id="pageFooterCopyright" class="pageFooterCopyright">
 		<div class="layoutBoundary">
+			{event name='footerContents'}
+			
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 			
 			{include file='pageFooterCopyright'}
