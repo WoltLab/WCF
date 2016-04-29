@@ -50,7 +50,7 @@
 		<item name="wcf.global.configureDB.number"><![CDATA[Installationsnummer]]></item>
 		<item name="wcf.global.configureDB.number.description"><![CDATA[Die Installationsnummer erlaubt Ihnen mehrere Installationen der Software in der gleichen Datenbank zu speichern. Wenn dies Ihre erste Installation der Software in dieser Datenbank ist, sollten Sie hier den Wert <em>1</em> wählen.]]></item>
 		<item name="wcf.global.configureDB.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
-		<br /><strong>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</strong>]]></item>
+		<br /><strong>{$exception->getMessage()}{if $exception->getPrevious()}<br />{$exception->getPrevious()->getMessage()}{/if}</strong>]]></item>
 		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Folgende Tabelle{if $conflictedTables|count > 1}n{/if} existier{if $conflictedTables|count > 1}en{else}t{/if} schon in der Datenbank „{$dbName}“:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />Um dieses Problem zu beheben, können Sie:<br />1. diese Tabelle{if $conflictedTables|count > 1}n{/if} manuell löschen und die „Weiter“ Schaltfläche betätigen, oder<br />2. Sie geben die Daten einer anderen Datenbank ein und betätigen die „Weiter“ Schaltfläche, oder<br />3. Sie geben eine von „{$dbNumber}“ unterschiedliche Installationsnummer an und betätigen die „Weiter“ Schaltfläche.]]></item>
 		<item name="wcf.global.configureDB.class"><![CDATA[Datenbank-Typ]]></item>
 		<item name="wcf.global.configureDB.class.MySQLDatabase"><![CDATA[MySQL 5.1+]]></item>
