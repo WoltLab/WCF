@@ -20,15 +20,20 @@
 	
 	@include screen-lg {
 		.pageHeader .layoutBoundary {
+			background-color: rgb(44, 62, 80);
 			height: 50px;
 			padding: 10px 10px 10px 0;
 		}
 		
 		.pageHeaderLogo {
+			align-items: center;
+			background-color: rgb(52, 73, 94);
+			display: flex;
 			flex: 0 0 120px;
+			height: 50px;
+			justify-content: center;
 			margin: 0;
 			order: 1;
-			text-align: center;
 			
 			.pageHeaderLogoLarge {
 				display: none;
@@ -200,7 +205,7 @@
 	flex: 1 1 auto;
 	
 	@include screen-lg {
-		padding: 40px 0 40px 20px;
+		padding: 40px 0;
 	}
 	
 	@include screen-md-down {
