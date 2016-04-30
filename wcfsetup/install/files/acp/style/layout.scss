@@ -1,3 +1,5 @@
+$wcfAcpMenuWidth: 150px;
+
 .layoutBoundary {
 	margin: 0;
 	max-width: none;
@@ -29,7 +31,7 @@
 			align-items: center;
 			background-color: rgb(52, 73, 94);
 			display: flex;
-			flex: 0 0 120px;
+			flex: 0 0 $wcfAcpMenuWidth;
 			height: 50px;
 			justify-content: center;
 			margin: 0;
@@ -100,7 +102,7 @@
 	
 	.acpPageMenu {
 		background-color: rgb(44, 62, 80);
-		flex: 0 0 120px;
+		flex: 0 0 $wcfAcpMenuWidth;
 		text-align: center;
 		overflow: hidden;
 		

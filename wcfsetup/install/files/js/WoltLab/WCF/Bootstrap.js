@@ -13,13 +13,13 @@ define(
 		'favico',                  'enquire',                'perfect-scrollbar',      'WoltLab/WCF/Date/Time/Relative',
 		'Ui/SimpleDropdown',       'WoltLab/WCF/Ui/Mobile',  'WoltLab/WCF/Ui/TabMenu', 'WoltLab/WCF/Ui/FlexibleMenu',
 		'Ui/Dialog',               'WoltLab/WCF/Ui/Tooltip', 'WoltLab/WCF/Language',   'WoltLab/WCF/Environment',
-		'WoltLab/WCF/Date/Picker', 'EventHandler',           'Core'
+		'WoltLab/WCF/Date/Picker', 'EventHandler',           'Core',                   'WoltLab/WCF/Ui/Page/JumpToTop'
 	], 
 	function(
 		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
 		 UiSimpleDropdown,         UiMobile,                 UiTabMenu,                UiFlexibleMenu,
 		 UiDialog,                 UiTooltip,                Language,                 Environment,
-		 DatePicker,               EventHandler,             Core
+		 DatePicker,               EventHandler,             Core,                     UiPageJumpToTop
 	)
 {
 	"use strict";
@@ -64,6 +64,8 @@ define(
 			//UiFlexibleMenu.setup();
 			UiDialog.setup();
 			UiTooltip.setup();
+			
+			new UiPageJumpToTop();
 			
 			// convert method=get into method=post
 			var forms = elBySelAll('form[method=get]');
