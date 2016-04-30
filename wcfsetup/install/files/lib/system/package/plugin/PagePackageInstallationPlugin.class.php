@@ -162,7 +162,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			case 'html':
 			case 'text':
-			case 'tpl':	
+			case 'tpl':
 				if (empty($data['elements']['content'])) {
 					throw new SystemException("Missing required 'content' element(s) for page '{$identifier}'");
 				}
@@ -262,6 +262,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		// store content for later import
 		$this->content[$object->pageID] = $content;
+		
+		return $object;
 	}
 	
 	/**

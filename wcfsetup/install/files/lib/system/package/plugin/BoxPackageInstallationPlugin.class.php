@@ -4,6 +4,7 @@ use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -21,6 +22,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 */
 	public $className = BoxEditor::class;
+	
+	/**
+	 * box contents
+	 * @var	array
+	 */
+	protected $content = [];
 	
 	/**
 	 * @inheritDoc
@@ -108,6 +115,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @throws	SystemException
 	 */
 	protected function prepareImport(array $data) {
+		$content = [];
 		$boxType = $data['elements']['boxType'];
 		$controller = '';
 		$identifier = $data['attributes']['identifier'];
@@ -147,6 +155,8 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					}
 				}
 				
+				$content = $data['elements']['content'];
+				
 				break;
 			
 			default:
@@ -160,6 +170,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		
 		return [
 			'identifier' => $identifier,
+			'content' => $content,
 			'name' => $this->getI18nValues($data['elements']['name'], true),
 			'boxType' => $boxType,
 			'position' => $position,
@@ -215,19 +226,57 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
+		// extract content
+		$content = $data['content'];
+		unset($data['content']);
+		
 		// updating boxes is only supported for 'system' type boxes, all other
 		// types would potentially overwrite changes made by the user if updated
 		if (!empty($row) && $row['boxType'] !== 'system') {
-			return new Box(null, $row);
+			$box = new Box(null, $row);
+		}
+		else {
+			$box = parent::import($row, $data);
 		}
 		
-		return parent::import($row, $data);
+		// store content for later import
+		$this->content[$box->boxID] = $content;
+		
+		return $box;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	protected function postImport() {
+		if (!empty($this->content)) {
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_box_content
+							(boxID, languageID, title, content)
+				VALUES			(?, ?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($this->content as $boxID => $contentData) {
+				foreach ($contentData as $languageCode => $content) {
+					$languageID = null;
+					if ($languageCode != '') {
+						$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+						if ($language === null) continue;
+						
+						$languageID = $language->languageID;
+					}
+					
+					$statement->execute([
+						$boxID,
+						$languageID,
+						$content['title'],
+						isset($content['content']) ? $content['content'] : ''
+					]);
+				}
+			}
+			WCF::getDB()->commitTransaction();
+		}
+		
 		if (empty($this->visibilityExceptions)) return;
 		
 		// get all boxes belonging to the identifiers
@@ -248,7 +297,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		// save visibility exceptions
 		$sql = "DELETE FROM     wcf".WCF_N."_box_to_page
 			WHERE           boxID = ?";
-		$deleteStatement = WCF::getDB()->prepareStatement($sql);		
+		$deleteStatement = WCF::getDB()->prepareStatement($sql);
 		$sql = "INSERT IGNORE   wcf".WCF_N."_box_to_page
 					(boxID, pageID, visible)
 			VALUES          (?, ?, ?)";
