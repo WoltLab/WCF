@@ -209,6 +209,18 @@ input {
 	}
 }
 
+.formError {
+	dt {
+		color: rgba(204, 0, 1, 1) !important;
+	}
+	
+	input,
+	select,
+	textarea {
+		border-color: rgba(204, 0, 1, 1) !important;
+	}
+}
+
 /* grid-based form controls */
 .formGrid {
 	dt {
