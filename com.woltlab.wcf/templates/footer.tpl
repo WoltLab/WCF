@@ -89,6 +89,10 @@
 
 {@FOOTER_CODE}
 
+<noscript>
+	<p class="javascriptDisabledWarning">{lang}wcf.page.javascriptDisabled{/lang}</p>
+</noscript>
+
 <a id="bottom"></a>
 				
 </body>
