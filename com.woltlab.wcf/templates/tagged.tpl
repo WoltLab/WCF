@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang}{/capture}
+{capture assign='pageTitle'}{lang}wcf.tagging.taggedObjects.{@$objectType}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/lang}{/capture}
 
 {capture assign='contentTitle'}{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang}{/capture}
 

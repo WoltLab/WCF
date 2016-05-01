@@ -126,8 +126,7 @@ class TaggedPage extends MultipleLinkPage {
 			'availableObjectTypes' => $this->availableObjectTypes,
 			'objectType' => $this->objectType->objectType,
 			'resultListTemplateName' => $this->objectType->getProcessor()->getTemplateName(),
-			'resultListApplication' => $this->objectType->getProcessor()->getApplication(),
-			'allowSpidersToIndexThisPage' => true
+			'resultListApplication' => $this->objectType->getProcessor()->getApplication()
 		));
 		
 		if (count($this->objectList) === 0) {
