@@ -1,10 +1,10 @@
 <?php
 namespace wcf\page;
-use wcf\data\DatabaseObjectList;
 use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\DatabaseObjectList;
 use wcf\system\edit\IHistorySavingObject;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
