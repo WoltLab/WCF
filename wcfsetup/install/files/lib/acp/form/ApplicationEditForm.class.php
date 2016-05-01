@@ -169,8 +169,8 @@ class ApplicationEditForm extends AbstractForm {
 		
 		// save application
 		$this->objectAction = new ApplicationAction(array($this->application->getDecoratedObject()), 'update', array('data' => array_merge($this->additionalFields, array(
-			'cookieDomain' => $this->cookieDomain,
-			'domainName' => $this->domainName,
+			'cookieDomain' => mb_strtolower($this->cookieDomain),
+			'domainName' => mb_strtolower($this->domainName),
 			'domainPath' => $this->domainPath
 		))));
 		$this->objectAction->executeAction();
