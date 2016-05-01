@@ -1,8 +1,11 @@
 <?php
 namespace wcf\page;
+use wcf\data\DatabaseObjectList;
 use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\edit\IHistorySavingObject;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -14,7 +17,7 @@ use wcf\util\StringUtil;
  * Compares two templates.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -22,15 +25,15 @@ use wcf\util\StringUtil;
  */
 class EditHistoryPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_EDIT_HISTORY');
+	public $neededModules = ['MODULE_EDIT_HISTORY'];
 	
 	/**
 	 * DatabaseObjectList object
-	 * @var	\wcf\data\DatabaseObjectList
+	 * @var	DatabaseObjectList
 	 */
-	public $objectList = null;
+	public $objectList;
 	
 	/**
 	 * left / old version id
@@ -40,9 +43,9 @@ class EditHistoryPage extends AbstractPage {
 	
 	/**
 	 * left / old version
-	 * @var	\wcf\data\edit\history\entry\EditHistoryEntry
+	 * @var	EditHistoryEntry
 	 */
-	public $old = null;
+	public $old;
 	
 	/**
 	 * right / new version id
@@ -52,21 +55,21 @@ class EditHistoryPage extends AbstractPage {
 	
 	/**
 	 * right / new version
-	 * @var	\wcf\data\edit\history\entry\EditHistoryEntry
+	 * @var	EditHistoryEntry
 	 */
-	public $new = null;
+	public $new;
 	
 	/**
 	 * differences between both versions
-	 * @var	\wcf\util\Diff
+	 * @var	Diff
 	 */
-	public $diff = null;
+	public $diff;
 	
 	/**
 	 * object type of the requested object
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
-	public $objectType = null;
+	public $objectType;
 	
 	/**
 	 * id of the requested object
@@ -76,12 +79,12 @@ class EditHistoryPage extends AbstractPage {
 	
 	/**
 	 * requested object
-	 * @var	\wcf\system\edit\IHistorySavingObject
+	 * @var	IHistorySavingObject
 	 */
-	public $object = null;
+	public $object;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -121,7 +124,7 @@ class EditHistoryPage extends AbstractPage {
 		$this->object = $processor->getObjectByID($this->objectID);
 		if (!$this->object->getObjectID()) throw new IllegalLinkException();
 		$processor->checkPermissions($this->object);
-		$this->object->addBreadcrumbs();
+		$this->object->setLocation();
 		
 		if (isset($_REQUEST['newID']) && !$this->new) {
 			$this->new = $this->object;
@@ -129,26 +132,26 @@ class EditHistoryPage extends AbstractPage {
 		}
 		
 		if (!empty($_POST)) {
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('EditHistory', array(
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('EditHistory', [
 				'objectID' => $this->objectID,
 				'objectType' => $this->objectType->objectType,
 				'newID' => $this->newID,
 				'oldID' => $this->oldID
-			)));
+			]));
 			exit;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
 		
 		$this->objectList = new EditHistoryEntryList();
 		$this->objectList->sqlOrderBy = "time DESC, entryID DESC";
-		$this->objectList->getConditionBuilder()->add('objectTypeID = ?', array($this->objectType->objectTypeID));
-		$this->objectList->getConditionBuilder()->add('objectID = ?', array($this->objectID));
+		$this->objectList->getConditionBuilder()->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
+		$this->objectList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
 		$this->objectList->readObjects();
 		
 		// valid IDs were given, calculate diff
@@ -169,12 +172,12 @@ class EditHistoryPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'oldID' => $this->oldID,
 			'old' => $this->old,
 			'newID' => $this->newID,
@@ -184,6 +187,6 @@ class EditHistoryPage extends AbstractPage {
 			'objects' => $this->objectList,
 			'objectID' => $this->objectID,
 			'objectType' => $this->objectType
-		));
+		]);
 	}
 }

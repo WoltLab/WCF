@@ -8,20 +8,13 @@ use wcf\data\IUserContent;
  * Represents an object that saves it's edit history.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.edit
  * @category	Community Framework
  */
 interface IHistorySavingObject extends IDatabaseObjectProcessor, IUserContent {
-	/**
-	 * Reverts the object's text to the given EditHistoryEntry.
-	 * 
-	 * @param	\wcf\data\edit\history\entry\EditHistoryEntry
-	 */
-	public function revertVersion(EditHistoryEntry $edit);
-	
 	/**
 	 * Returns the object's current edit reason.
 	 * 
@@ -37,7 +30,14 @@ interface IHistorySavingObject extends IDatabaseObjectProcessor, IUserContent {
 	public function getMessage();
 	
 	/**
-	 * Adds the object's breadcrumbs.
+	 * Reverts the object's text to the given EditHistoryEntry.
+	 * 
+	 * @param	EditHistoryEntry        $edit
 	 */
-	public function addBreadcrumbs();
+	public function revertVersion(EditHistoryEntry $edit);
+	
+	/**
+	 * Sets the page location data.
+	 */
+	public function setLocation();
 }

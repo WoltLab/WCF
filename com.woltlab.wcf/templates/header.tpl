@@ -101,7 +101,11 @@
 						{hascontent}
 							<nav class="contentHeaderNavigation">
 								<ul>
-									{content}{event name='contentHeaderNavigation'}{/content}
+									{content}
+										{if !$contentHeaderNavigation|empty}{@$contentHeaderNavigation}{/if}
+										
+										{event name='contentHeaderNavigation'}
+									{/content}
 								</ul>
 							</nav>
 						{/hascontent}

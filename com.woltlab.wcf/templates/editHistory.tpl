@@ -2,6 +2,8 @@
 
 {capture assign='contentTitle'}{lang}wcf.edit.versions{/lang}: {$object->getTitle()}{/capture}
 
+{capture assign='contentHeaderNavigation'}<li><a href="{$object->getLink()}" class="button">{lang}wcf.edit.button.goToContent{/lang}</a></li>{/capture}
+
 {include file='header'}
 
 {if $diff}
