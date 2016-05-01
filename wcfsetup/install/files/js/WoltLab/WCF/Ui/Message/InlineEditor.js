@@ -417,7 +417,8 @@ define(
 			};
 			
 			var id = this._getEditorId();
-			EventHandler.fire('com.woltlab.wcf.redactor', 'getText_' + id, parameters.data);
+			
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'getText_' + id, parameters.data);
 			EventHandler.fire('com.woltlab.wcf.messageOptionsInline', 'submit_' + id, parameters);
 			
 			Ajax.api(this, {

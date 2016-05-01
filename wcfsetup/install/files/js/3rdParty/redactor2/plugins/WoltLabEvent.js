@@ -31,6 +31,11 @@ $.Redactor.prototype.WoltLabEvent = function() {
 				
 				return (data.cancel === false);
 			};
+			
+			// provide editor message on callback
+			EventHandler.add('com.woltlab.wcf.redactor2', 'getText_' + elementId, (function(data) {
+				data.message = this.code.get();
+			}).bind(this));
 		},
 		
 		register: function(callbackName, callback) {
