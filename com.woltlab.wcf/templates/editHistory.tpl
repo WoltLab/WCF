@@ -2,7 +2,7 @@
 
 {capture assign='contentTitle'}{lang}wcf.edit.versions{/lang}: {$object->getTitle()}{/capture}
 
-{capture assign='contentHeaderNavigation'}<li><a href="{$object->getLink()}" class="button">{lang}wcf.edit.button.goToContent{/lang}</a></li>{/capture}
+{capture assign='contentHeaderNavigation'}<li><a href="{$object->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.edit.button.goToContent{/lang}</span></a></li>{/capture}
 
 {include file='header'}
 
