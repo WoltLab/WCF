@@ -107,22 +107,6 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'controller'} class="formError"{/if}>
-			<dt><label for="controller">{lang}wcf.acp.page.controller{/lang}</label></dt>
-			<dd>
-				<input type="text" id="controller" name="controller" value="{$controller}" class="long"{if $action == 'edit' && $page->originIsSystem} readonly="readonly"{/if} />
-				{if $errorField == 'controller'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.page.controller.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
 		{if !$isMultilingual}
 			<dl{if $errorField == 'customURL'} class="formError"{/if}>
 				<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>

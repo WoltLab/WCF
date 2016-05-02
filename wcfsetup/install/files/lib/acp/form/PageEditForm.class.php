@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the page add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -38,6 +38,8 @@ class PageEditForm extends PageAddForm {
 	
 	/**
 	 * @inheritDoc
+	 * 
+	 * @throws      IllegalLinkException
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -67,7 +69,6 @@ class PageEditForm extends PageAddForm {
 		if ($this->page->originIsSystem) {
 			$this->parentPageID = $this->page->parentPageID;
 			$this->applicationPackageID = $this->page->applicationPackageID;
-			$this->controller = $this->page->controller;
 		}
 		
 		if ($this->page->requireObjectID) {
@@ -79,17 +80,17 @@ class PageEditForm extends PageAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	protected function validatePageType() {
-		// type is immutable
+	protected function validateName() {
+		if (mb_strtolower($this->name) != mb_strtolower($this->page->name)) {
+			parent::validateName();
+		}
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected function validateName() {
-		if (mb_strtolower($this->name) != mb_strtolower($this->page->name)) {
-			parent::validateName();
-		}
+	protected function validatePageType() {
+		// type is immutable
 	}
 	
 	/**
@@ -167,7 +168,6 @@ class PageEditForm extends PageAddForm {
 			$this->parentPageID = $this->page->parentPageID;
 			$this->pageType = $this->page->pageType;
 			$this->applicationPackageID = $this->page->applicationPackageID;
-			$this->controller = $this->page->controller;
 			if ($this->page->controllerCustomURL) $this->customURL[0] = $this->page->controllerCustomURL;
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;
 			if ($this->page->isDiabled) $this->isDisabled = 1;

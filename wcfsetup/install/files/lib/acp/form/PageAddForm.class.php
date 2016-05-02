@@ -103,12 +103,6 @@ class PageAddForm extends AbstractForm {
 	public $customURL = [];
 	
 	/**
-	 * page controller
-	 * @var string
-	 */
-	public $controller = '';
-	
-	/**
 	 * page titles
 	 * @var	string[]
 	 */
@@ -192,7 +186,6 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
 		if (isset($_POST['applicationPackageID'])) $this->applicationPackageID = intval($_POST['applicationPackageID']);
-		if (isset($_POST['controller'])) $this->controller = StringUtil::trim($_POST['controller']);
 		
 		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = ArrayUtil::trim($_POST['customURL']);
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
@@ -216,8 +209,6 @@ class PageAddForm extends AbstractForm {
 		
 		$this->validateApplicationPackageID();
 		
-		$this->validateController();
-		
 		$this->validateCustomUrl();
 		
 		$this->validateBoxIDs();
@@ -237,6 +228,8 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * Validates page type.
+	 * 
+	 * @throws      UserInputException
 	 */
 	protected function validatePageType() {
 		if (!in_array($this->pageType, Page::$availablePageTypes) || $this->pageType == 'system') {
@@ -250,6 +243,8 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * Validates parent page id.
+	 * 
+	 * @throws      UserInputException
 	 */
 	protected function validateParentPageID() {
 		if ($this->parentPageID) {
@@ -262,6 +257,8 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * Validates package id.
+	 * 
+	 * @throws      UserInputException
 	 */
 	protected function validateApplicationPackageID() {
 		if (!isset($this->availableApplications[$this->applicationPackageID])) {
@@ -270,22 +267,9 @@ class PageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * Validates controller.
-	 */
-	protected function validateController() {
-		if ($this->pageType == 'system') {
-			if (!$this->controller) {
-				throw new UserInputException('controller');
-			}
-			
-			if (!class_exists($this->controller)) {
-				throw new UserInputException('controller', 'notFound');
-			}
-		}
-	}
-	
-	/**
 	 * Validates custom urls.
+	 * 
+	 * @throws      UserInputException
 	 */
 	protected function validateCustomUrl() {
 		foreach ($this->customURL as $type => $customURL) {
@@ -297,6 +281,8 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * Validates box ids.
+	 * 
+	 * @throws      UserInputException
 	 */
 	protected function validateBoxIDs() {
 		foreach ($this->boxIDs as $boxID) {
@@ -383,7 +369,6 @@ class PageAddForm extends AbstractForm {
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
 			'identifier' => '',
-			'controller' => $this->controller,
 			'packageID' => 1
 		]), 'content' => $content, 'boxToPage' => $this->getBoxToPage()]);
 		
@@ -437,7 +422,6 @@ class PageAddForm extends AbstractForm {
 			'isLandingPage' => $this->isLandingPage,
 			'isMultilingual' => $this->isMultilingual,
 			'applicationPackageID' => $this->applicationPackageID,
-			'controller' => $this->controller,
 			'customURL' => $this->customURL,
 			'title' => $this->title,
 			'content' => $this->content,
