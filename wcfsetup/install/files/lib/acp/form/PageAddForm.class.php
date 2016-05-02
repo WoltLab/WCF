@@ -9,11 +9,15 @@ use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -139,8 +143,24 @@ class PageAddForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
+		// work-around to force adding pages via dialog overlay
+		if (empty($_POST) && !isset($_GET['pageType'])) {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PageList', ['showPageAddDialog' => 1]));
+			exit;
+		}
+		
 		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
+		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
+		
+		if ($this->action == 'add') {
+			try {
+				$this->validatePageType();
+			}
+			catch (UserInputException $e) {
+				throw new IllegalLinkException();
+			}
+		}
 		
 		// get available applications
 		$applicationList = new ApplicationList();
@@ -161,7 +181,6 @@ class PageAddForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['parentPageID'])) $this->parentPageID = intval($_POST['parentPageID']);
-		if (isset($_POST['pageType'])) $this->pageType = $_POST['pageType'];
 		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
@@ -213,8 +232,12 @@ class PageAddForm extends AbstractForm {
 	 * Validates page type.
 	 */
 	protected function validatePageType() {
-		if (!in_array($this->pageType, Page::$availablePageTypes) || ($this->isMultilingual && $this->pageType == 'system')) {
+		if (!in_array($this->pageType, Page::$availablePageTypes) || ($this->action == 'add' && $this->pageType == 'system')) {
 			throw new UserInputException('pageType');
+		}
+		
+		if ($this->pageType == 'system') {
+			$this->isMultilingual = 0;
 		}
 	}
 	
@@ -311,6 +334,15 @@ class PageAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		$parseHTML = function($content) {
+			if ($this->pageType == 'text') {
+				$htmlInputProcessor = new HtmlInputProcessor();
+				$content = $htmlInputProcessor->process($content);
+			}
+			
+			return $content;
+		};
+		
 		// prepare page content
 		$content = [];
 		if ($this->isMultilingual) {
@@ -318,7 +350,7 @@ class PageAddForm extends AbstractForm {
 				$content[$language->languageID] = [
 					'customURL' => (!empty($_POST['customURL'][$language->languageID]) ? $_POST['customURL'][$language->languageID] : ''),
 					'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
-					'content' => (!empty($_POST['content'][$language->languageID]) ? $_POST['content'][$language->languageID] : ''),
+					'content' => (!empty($_POST['content'][$language->languageID]) ? $parseHTML($_POST['content'][$language->languageID]) : ''),
 					'metaDescription' => (!empty($_POST['metaDescription'][$language->languageID]) ? $_POST['metaDescription'][$language->languageID] : ''),
 					'metaKeywords' => (!empty($_POST['metaKeywords'][$language->languageID]) ? $_POST['metaKeywords'][$language->languageID] : '')
 				];
@@ -328,7 +360,7 @@ class PageAddForm extends AbstractForm {
 			$content[0] = [
 				'customURL' => (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : ''),
 				'title' => (!empty($_POST['title'][0]) ? $_POST['title'][0] : ''),
-				'content' => (!empty($_POST['content'][0]) ? $_POST['content'][0] : ''),
+				'content' => (!empty($_POST['content'][0]) ? $parseHTML($_POST['content'][0]) : ''),
 				'metaDescription' => (!empty($_POST['metaDescription'][0]) ? $_POST['metaDescription'][0] : ''),
 				'metaKeywords' => (!empty($_POST['metaKeywords'][0]) ? $_POST['metaKeywords'][0] : '')
 			];
@@ -364,15 +396,9 @@ class PageAddForm extends AbstractForm {
 		// call saved event
 		$this->saved();
 		
-		// show success
-		WCF::getTPL()->assign('success', true);
-		
-		// reset variables
-		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
-		$this->applicationPackageID = 1;
-		$this->name = $this->controller = '';
-		$this->pageType = 'text';
-		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = [];
+		// forward to page list
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PageList'));
+		exit;
 	}
 	
 	/**
@@ -395,8 +421,6 @@ class PageAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$availablePageTypes = Page::$availablePageTypes;
-		if ($this->isMultilingual) unset($availablePageTypes[array_search('system', $availablePageTypes)]);
 		WCF::getTPL()->assign([
 			'action' => 'add',
 			'parentPageID' => $this->parentPageID,
@@ -415,7 +439,6 @@ class PageAddForm extends AbstractForm {
 			'boxIDs' => $this->boxIDs,
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
-			'availablePageTypes' => $availablePageTypes,
 			'availableBoxes' => $this->availableBoxes,
 			'pageNodeList' => (new PageNodeTree())->getNodeList()
 		]);

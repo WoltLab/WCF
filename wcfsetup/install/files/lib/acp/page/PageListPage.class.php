@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
@@ -9,7 +10,7 @@ use wcf\util\StringUtil;
  * Shows a list of pages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -30,7 +31,7 @@ class PageListPage extends SortablePage {
 	/**
 	 * @inheritdoc
 	 */
-	public $neededPermissions = array('admin.content.cms.canManagePage');
+	public $neededPermissions = ['admin.content.cms.canManagePage'];
 	
 	/**
 	 * @inheritdoc
@@ -40,7 +41,7 @@ class PageListPage extends SortablePage {
 	/**
 	 * @inheritdoc
 	 */
-	public $validSortFields = array('pageID', 'name', 'lastUpdateTime');
+	public $validSortFields = ['pageID', 'name', 'lastUpdateTime'];
 	
 	/**
 	 * name
@@ -74,9 +75,15 @@ class PageListPage extends SortablePage {
 	
 	/**
 	 * list of available applications
-	 * @var \wcf\data\application\Application[]
+	 * @var Application[]
 	 */
 	public $availableApplications = [];
+	
+	/**
+	 * display 'Add Page' dialog on load
+	 * @var integer
+	 */
+	public $showPageAddDialog = 0;
 	
 	/**
 	 * @inheritdoc
@@ -89,6 +96,7 @@ class PageListPage extends SortablePage {
 		if (!empty($_REQUEST['content'])) $this->content = StringUtil::trim($_REQUEST['content']);
 		if (isset($_REQUEST['applicationPackageID'])) $this->applicationPackageID = intval($_REQUEST['applicationPackageID']);
 		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
+		if (!empty($_REQUEST['showPageAddDialog'])) $this->showPageAddDialog = 1;
 		
 		// get available applications
 		$applicationList = new ApplicationList();
@@ -103,22 +111,22 @@ class PageListPage extends SortablePage {
 		parent::initObjectList();
 		
 		if (!empty($this->name)) {
-			$this->objectList->getConditionBuilder()->add('page.name LIKE ?', array('%'.$this->name.'%'));
+			$this->objectList->getConditionBuilder()->add('page.name LIKE ?', ['%'.$this->name.'%']);
 		}
 		if (!empty($this->title)) {
-			$this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf'.WCF_N.'_page_content WHERE title LIKE ?)', array('%'.$this->title.'%'));
+			$this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf'.WCF_N.'_page_content WHERE title LIKE ?)', ['%'.$this->title.'%']);
 		}
 		if (!empty($this->content)) {
-			$this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf'.WCF_N.'_page_content WHERE content LIKE ?)', array('%'.$this->content.'%'));
+			$this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf'.WCF_N.'_page_content WHERE content LIKE ?)', ['%'.$this->content.'%']);
 		}
 		if (!empty($this->applicationPackageID)) {
-			$this->objectList->getConditionBuilder()->add('page.applicationPackageID = ?', array($this->applicationPackageID));
+			$this->objectList->getConditionBuilder()->add('page.applicationPackageID = ?', [$this->applicationPackageID]);
 		}
 		if ($this->pageType == 'static') {
-			$this->objectList->getConditionBuilder()->add('page.pageType IN (?, ?, ?)', array('text', 'html', 'tpl'));
+			$this->objectList->getConditionBuilder()->add('page.pageType IN (?, ?, ?)', ['text', 'html', 'tpl']);
 		}
 		else if ($this->pageType == 'system') {
-			$this->objectList->getConditionBuilder()->add('page.pageType IN (?)', array('system'));
+			$this->objectList->getConditionBuilder()->add('page.pageType IN (?)', ['system']);
 		}
 	}
 	
@@ -128,13 +136,14 @@ class PageListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'name' => $this->name,
 			'title' => $this->title,
 			'content' => $this->content,
 			'applicationPackageID' => $this->applicationPackageID,
 			'pageType' => $this->pageType,
-			'availableApplications' => $this->availableApplications
-		));
+			'availableApplications' => $this->availableApplications,
+			'showPageAddDialog' => $this->showPageAddDialog
+		]);
 	}
 }

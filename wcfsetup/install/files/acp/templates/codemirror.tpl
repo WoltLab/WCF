@@ -9,6 +9,18 @@
 {if $codemirrorMode|isset}
 	<script data-relocate="true">window.define.amd = undefined;</script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{if $codemirrorMode == 'text/x-less'}css/css{else}{$codemirrorMode}/{$codemirrorMode}{/if}.js"></script>
+	
+	{if $codemirrorMode == 'htmlmixed' || $codemirrorMode == 'smartymixed'}
+		{if $codemirrorMode == 'smartymixed'}
+			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/smarty/smarty.js"></script>
+		{/if}
+		
+		<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/css/css.js"></script>
+		<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/javascript/javascript.js"></script>
+		<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/xml/xml.js"></script>
+	{/if}
+	
 	<script data-relocate="true">window.define.amd = window.__require_define_amd;</script>
 {/if}
 {event name='javascriptIncludes'}

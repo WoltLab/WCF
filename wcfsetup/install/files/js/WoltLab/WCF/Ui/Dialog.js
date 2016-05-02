@@ -121,6 +121,10 @@ define(
 				
 				setupData.source = document.createDocumentFragment();
 				setupData.source.appendChild(dialogElement);
+				
+				// remove id and `display: none` from dialog element
+				dialogElement.removeAttribute('id');
+				elShow(dialogElement);
 			}
 			else if (setupData.source === null) {
 				// `null` means there is no static markup and `html` should be used instead

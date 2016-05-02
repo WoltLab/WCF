@@ -65,27 +65,6 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'pageType'} class="formError"{/if}>
-			<dt><label for="pageType">{lang}wcf.acp.page.pageType{/lang}</label></dt>
-			<dd>
-				<select name="pageType" id="pageType"{if $action == 'edit'} disabled="disabled"{/if}>
-					{foreach from=$availablePageTypes item=availablePageType}
-						<option value="{@$availablePageType}"{if $availablePageType == $pageType} selected="selected"{/if}>{lang}wcf.acp.page.pageType.{@$availablePageType}{/lang}</option>
-					{/foreach}
-				</select>
-				
-				{if $errorField == 'pageType'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.page.pageType.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-	
 		<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
 			<dt><label for="parentPageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
 			<dd>
@@ -227,7 +206,8 @@
 				<dl{if $errorField == 'content'} class="formError"{/if}>
 					<dt><label for="content0">{lang}wcf.acp.page.content{/lang}</label></dt>
 					<dd>
-						<textarea name="content[0]" id="content0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
+						{include file='__pageAddContent' languageID=0}
+						
 						{if $errorField == 'content'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -321,7 +301,8 @@
 							<dl{if $errorField == 'content'} class="formError"{/if}>
 								<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.page.content{/lang}</label></dt>
 								<dd>
-									<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
+									{include file='__pageAddContent' languageID=$availableLanguage->languageID}
+									
 									{if $errorField == 'content'}
 										<small class="innerError">
 											{if $errorType == 'empty'}
@@ -377,6 +358,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
+		<input type="hidden" name="pageType" value="{$pageType}">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
