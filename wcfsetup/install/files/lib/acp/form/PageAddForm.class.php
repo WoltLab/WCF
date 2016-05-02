@@ -144,23 +144,7 @@ class PageAddForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		// work-around to force adding pages via dialog overlay
-		if (empty($_POST) && !isset($_GET['pageType'])) {
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PageList', ['showPageAddDialog' => 1]));
-			exit;
-		}
-		
-		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
-		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
-		
-		if ($this->action == 'add') {
-			try {
-				$this->validatePageType();
-			}
-			catch (UserInputException $e) {
-				throw new IllegalLinkException();
-			}
-		}
+		$this->readPageType();
 		
 		// get available applications
 		$applicationList = new ApplicationList();
@@ -172,6 +156,29 @@ class PageAddForm extends AbstractForm {
 		$boxList->sqlOrderBy = 'box.name';
 		$boxList->readObjects();
 		$this->availableBoxes = $boxList->getObjects();
+	}
+	
+	/**
+	 * Reads basic page parameters controlling type and i18n.
+	 * 
+	 * @throws      IllegalLinkException
+	 */
+	protected function readPageType() {
+		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
+		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
+		
+		// work-around to force adding pages via dialog overlay
+		if (empty($_POST) && $this->pageType == '') {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PageList', ['showPageAddDialog' => 1]));
+			exit;
+		}
+		
+		try {
+			$this->validatePageType();
+		}
+		catch (UserInputException $e) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
@@ -232,7 +239,7 @@ class PageAddForm extends AbstractForm {
 	 * Validates page type.
 	 */
 	protected function validatePageType() {
-		if (!in_array($this->pageType, Page::$availablePageTypes) || ($this->action == 'add' && $this->pageType == 'system')) {
+		if (!in_array($this->pageType, Page::$availablePageTypes) || $this->pageType == 'system') {
 			throw new UserInputException('pageType');
 		}
 		

@@ -34,7 +34,7 @@ class PageEditForm extends PageAddForm {
 	 * page object
 	 * @var	Page
 	 */
-	public $page = null;
+	public $page;
 	
 	/**
 	 * @inheritDoc
@@ -48,6 +48,13 @@ class PageEditForm extends PageAddForm {
 			throw new IllegalLinkException();
 		}
 		if ($this->page->isMultilingual) $this->isMultilingual = 1;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function readPageType() {
+		// not required for editing
 	}
 	
 	/**
@@ -72,6 +79,13 @@ class PageEditForm extends PageAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function validatePageType() {
+		// type is immutable
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function validateName() {
 		if (mb_strtolower($this->name) != mb_strtolower($this->page->name)) {
 			parent::validateName();
@@ -84,43 +98,50 @@ class PageEditForm extends PageAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$data = array(
+		$data = [
 			'name' => $this->name,
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'lastUpdateTime' => TIME_NOW,
 			'parentPageID' => ($this->parentPageID ?: null),
 			'applicationPackageID' => $this->applicationPackageID
-		);
+		];
 		
 		if ($this->pageType == 'system') {
 			$data['controllerCustomURL'] = (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : '');
-			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data), 'boxToPage' => $this->getBoxToPage()));
+			$this->objectAction = new PageAction([$this->page], 'update', [
+				'data' => array_merge($this->additionalFields, $data),
+				'boxToPage' => $this->getBoxToPage()
+			]);
 			$this->objectAction->executeAction();
 		}
 		else {
-			$content = array();
+			$content = [];
 			if ($this->page->isMultilingual) {
 				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-					$content[$language->languageID] = array(
+					$content[$language->languageID] = [
 						'customURL' => (!empty($_POST['customURL'][$language->languageID]) ? $_POST['customURL'][$language->languageID] : ''),
 						'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
 						'content' => (!empty($_POST['content'][$language->languageID]) ? $_POST['content'][$language->languageID] : ''),
 						'metaDescription' => (!empty($_POST['metaDescription'][$language->languageID]) ? $_POST['metaDescription'][$language->languageID] : ''),
 						'metaKeywords' => (!empty($_POST['metaKeywords'][$language->languageID]) ? $_POST['metaKeywords'][$language->languageID] : '')
-					);
+					];
 				}
 			}
 			else {
-				$content[0] = array(
+				$content[0] = [
 					'customURL' => (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : ''),
 					'title' => (!empty($_POST['title'][0]) ? $_POST['title'][0] : ''),
 					'content' => (!empty($_POST['content'][0]) ? $_POST['content'][0] : ''),
 					'metaDescription' => (!empty($_POST['metaDescription'][0]) ? $_POST['metaDescription'][0] : ''),
 					'metaKeywords' => (!empty($_POST['metaKeywords'][0]) ? $_POST['metaKeywords'][0] : '')
-				);
+				];
 			}
 			
-			$this->objectAction = new PageAction(array($this->page), 'update', array('data' => array_merge($this->additionalFields, $data), 'content' => $content, 'boxToPage' => $this->getBoxToPage()));
+			$this->objectAction = new PageAction([$this->page], 'update', [
+				'data' => array_merge($this->additionalFields, $data),
+				'content' => $content,
+				'boxToPage' => $this->getBoxToPage()
+			]);
 			$this->objectAction->executeAction();
 		}
 		
@@ -181,10 +202,10 @@ class PageEditForm extends PageAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'pageID' => $this->pageID,
 			'page' => $this->page
-		));
+		]);
 	}
 }
