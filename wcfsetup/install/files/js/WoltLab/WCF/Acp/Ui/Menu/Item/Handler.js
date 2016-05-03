@@ -34,14 +34,6 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 			_containerExternalLink = elById('externalURLContainer');
 			_containerPageObjectId = elById('pageObjectIDContainer');
 			
-			elBySelAll('input[name="isInternalLink"]', null, (function(input) {
-				input.addEventListener('change', this._toggleIsInternalLink.bind(this, input.value));
-				
-				if (input.checked) {
-					this._toggleIsInternalLink(input.value);
-				}
-			}).bind(this));
-			
 			if (_handlers.size) {
 				_pageId = elById('pageID');
 				_pageId.addEventListener('change', this._togglePageId.bind(this));
@@ -61,6 +53,14 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 					elShow(_containerPageObjectId);
 				}
 			}
+			
+			elBySelAll('input[name="isInternalLink"]', null, (function(input) {
+				input.addEventListener('change', this._toggleIsInternalLink.bind(this, input.value));
+				
+				if (input.checked) {
+					this._toggleIsInternalLink(input.value);
+				}
+			}).bind(this));
 		},
 		
 		/**
@@ -70,8 +70,16 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 		 * @protected
 		 */
 		_toggleIsInternalLink: function(value) {
-			window[(~~value ? 'elShow' : 'elHide')](_containerInternalLink);
-			window[(~~value ? 'elHide' : 'elShow')](_containerExternalLink);
+			if (~~value) {
+				elShow(_containerInternalLink);
+				elHide(_containerExternalLink);
+				this._togglePageId();
+			}
+			else {
+				elHide(_containerInternalLink);
+				elHide(_containerPageObjectId);
+				elShow(_containerExternalLink);
+			}
 		},
 		
 		/**
