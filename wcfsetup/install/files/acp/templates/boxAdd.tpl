@@ -12,6 +12,23 @@
 				}
 			});
 		});
+		
+		require(['Dictionary', 'Language', 'WoltLab/WCF/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
+			Language.addObject({
+				'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
+				'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
+				'wcf.page.pageObjectID.search.results.description': '{lang}wcf.page.pageObjectID.search.results.description{/lang}',
+				'wcf.page.pageObjectID.search.terms': '{lang}wcf.page.pageObjectID.search.terms{/lang}',
+				'wcf.page.pageObjectID.search.terms.description': '{lang}wcf.page.pageObjectID.search.terms.description{/lang}'
+			});
+			
+			var handlers = new Dictionary();
+			{foreach from=$pageHandlers key=handlerPageID item=requireObjectID}
+				handlers.set({@$handlerPageID}, {if $requireObjectID}true{else}false{/if});
+			{/foreach}
+			
+			AcpUiBoxHandler.init(handlers);
+		});
 	</script>
 {/if}
 
@@ -164,6 +181,78 @@
 		</dl>
 		
 		{event name='dataFields'}
+	</section>
+	
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.box.link{/lang}</h2>
+		
+		<dl>
+			<dt></dt>
+			<dd class="floated">
+				<label><input type="radio" name="linkType" value="none"{if $linkType == 'none'} checked="checked"{/if} /> {lang}wcf.acp.box.linkType.none{/lang}</label>
+				<label><input type="radio" name="linkType" value="internal"{if $linkType == 'internal'} checked="checked"{/if} /> {lang}wcf.acp.box.linkType.internal{/lang}</label>
+				<label><input type="radio" name="linkType" value="external"{if $linkType == 'external'} checked="checked"{/if} /> {lang}wcf.acp.box.linkType.external{/lang}</label>
+			</dd>
+		</dl>
+		
+		<dl id="linkPageIDContainer"{if $errorField == 'linkPageID'} class="formError"{/if}{if $linkType != 'internal'} style="display: none;"{/if}>
+			<dt><label for="linkPageID">{lang}wcf.acp.box.linkPageID{/lang}</label></dt>
+			<dd>
+				<select name="linkPageID" id="linkPageID">
+					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+					
+					{foreach from=$pageNodeList item=pageNode}
+						<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $linkPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
+					{/foreach}
+				</select>
+				{if $errorField == 'linkPageID'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.box.linkPageID.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
+		<dl id="linkPageObjectIDContainer"{if $errorField == 'linkPageObjectID'} class="formError"{/if}{if !$linkPageID || !$pageHandler[$linkPageID]|isset} style="display: none;"{/if}>
+			<dt><label for="linkPageObjectID">{lang}wcf.acp.box.linkPageObjectID{/lang}</label></dt>
+			<dd>
+				<div class="inputAddon">
+					<input type="text" id="linkPageObjectID" name="linkPageObjectID" value="{$linkPageObjectID}" class="short">
+					<a href="#" id="searchLinkPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.acp.page.objectID.search{/lang}"><span class="icon icon16 fa-search"></span></a>
+				</div>
+				{if $errorField == 'linkPageObjectID'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.box.linkPageObjectID.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
+		<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $linkType != 'external'} style="display: none;"{/if}>
+			<dt><label for="externalURL">{lang}wcf.acp.box.link.externalURL{/lang}</label></dt>
+			<dd>
+				<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" />
+				{if $errorField == 'externalURL'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.box.link.externalURL.error.{$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
+		{event name='linkFields'}
 	</section>
 	
 	{if !$isMultilingual}

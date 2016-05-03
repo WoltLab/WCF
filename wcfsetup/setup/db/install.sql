@@ -238,7 +238,10 @@ CREATE TABLE wcf1_box (
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	packageID INT(10) NOT NULL,
 	controller VARCHAR(255) NOT NULL DEFAULT '',
-	menuID INT(10) NULL
+	menuID INT(10),
+	linkPageID INT(10),
+	linkPageObjectID INT(10) NOT NULL DEFAULT 0,
+	externalURL VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_box_content;
@@ -1639,6 +1642,7 @@ ALTER TABLE wcf1_bbcode_attribute ADD FOREIGN KEY (bbcodeID) REFERENCES wcf1_bbc
 
 ALTER TABLE wcf1_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON DELETE CASCADE;
+ALTER TABLE wcf1_box ADD FOREIGN KEY (linkPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;

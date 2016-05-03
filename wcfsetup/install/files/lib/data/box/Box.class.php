@@ -4,6 +4,11 @@ use wcf\data\media\ViewableMedia;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
 use wcf\data\DatabaseObject;
+use wcf\data\page\Page;
+use wcf\data\page\PageCache;
+use wcf\system\exception\SystemException;
+use wcf\system\page\handler\ILookupPageHandler;
+use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -32,6 +37,9 @@ use wcf\util\StringUtil;
  * @property-read	integer		$packageID
  * @property-read	string		$controller
  * @property-read	integer|null	$menuID
+ * @property-read	integer		$linkPageID
+ * @property-read	integer		$linkPageObjectID
+ * @property-read	string		$externalURL
  */
 class Box extends DatabaseObject {
 	/**
@@ -91,6 +99,17 @@ class Box extends DatabaseObject {
 	 * @var \wcf\system\box\IBoxController
 	 */
 	protected $__controller;
+	
+	/**
+	 * @var	IMenuPageHandler
+	 */
+	protected $linkPageHandler;
+	
+	/**
+	 * page object
+	 * @var	Page
+	 */
+	protected $linkPage;
 	
 	/**
 	 * Returns true if the active user can delete this box.
@@ -308,14 +327,68 @@ class Box extends DatabaseObject {
 		return (isset($boxContent[0]) && $boxContent[0]['imageID']);
 	}
 	
+	/**
+	 * Returns the URL of this box.
+	 *
+	 * @return	string
+	 */
 	public function getLink() {
-		// @todo
-		return '';
+		if ($this->linkPageObjectID) {
+			$handler = $this->getLinkPageHandler();
+			if ($handler && $handler instanceof ILookupPageHandler) {
+				return $handler->getLink($this->linkPageObjectID);
+			}
+		}
+		
+		if ($this->linkPageID) {
+			return $this->getLinkPage()->getLink();
+		}
+		else {
+			return $this->externalURL;
+		}
 	}
 	
+	/**
+	 * Returns true if this box has a link.
+	 *
+	 * @return	boolean
+	 */
 	public function hasLink() {
-		// @todo
-		return false;
+		return ($this->linkPageID || !empty($this->externalURL));
+	}
+	
+	/**
+	 * Returns the IMenuPageHandler of the linked page.
+	 *
+	 * @return	IMenuPageHandler|null
+	 * @throws	SystemException
+	 */
+	protected function getLinkPageHandler() {
+		$page = $this->getLinkPage();
+		if ($page !== null && $page->handler) {
+			if ($this->linkPageHandler === null) {
+				$className = $page->handler;
+				$this->linkPageHandler = new $className;
+				if (!($this->linkPageHandler instanceof IMenuPageHandler)) {
+					throw new SystemException("Expected a valid handler implementing '" . IMenuPageHandler::class . "'.");
+				}
+			}
+		}
+		
+		return $this->linkPageHandler;
+	}
+	
+	/**
+	 * Returns the page that is linked by this box.
+	 *
+	 * @return	Page|null
+	 */
+	public function getLinkPage() {
+		if ($this->linkPage === null && $this->linkPageID) {
+			$this->linkPage = PageCache::getInstance()->getPage($this->linkPageID);
+		}
+		
+		return $this->linkPage;
 	}
 	
 	/**

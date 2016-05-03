@@ -132,6 +132,11 @@ class BoxEditForm extends BoxAddForm {
 			if ($this->box->visibleEverywhere) $this->visibleEverywhere = 1;
 			else $this->visibleEverywhere = 0;
 			$this->pageIDs = $this->box->getPageIDs();
+			$this->linkPageID = $this->box->linkPageID;
+			$this->linkPageObjectID = $this->box->linkPageObjectID;
+			$this->externalURL = $this->box->externalURL;
+			if ($this->linkPageID) $this->linkType = 'internal';
+			if ($this->externalURL) $this->linkType = 'external';
 			
 			foreach ($this->box->getBoxContent() as $languageID => $content) {
 				$this->title[$languageID] = $content['title'];

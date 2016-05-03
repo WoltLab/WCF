@@ -5,11 +5,13 @@ use wcf\data\box\BoxAction;
 use wcf\data\box\BoxEditor;
 use wcf\data\media\Media;
 use wcf\data\media\ViewableMediaList;
+use wcf\data\page\Page;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -121,12 +123,60 @@ class BoxAddForm extends AbstractForm {
 	public $pageIDs = [];
 	
 	/**
+	 * link type
+	 * @var string
+	 */
+	public $linkType = 'none';
+	
+	/**
+	 * link page id
+	 * @var int
+	 */
+	public $linkPageID = 0;
+	
+	/**
+	 * link page object id
+	 * @var int
+	 */
+	public $linkPageObjectID = 0;
+	
+	/**
+	 * link external URL
+	 * @var string
+	 */
+	public $externalURL = '';
+	
+	/**
+	 * list of page handlers by page id
+	 * @var	\wcf\system\page\handler\IMenuPageHandler[]
+	 */
+	public $pageHandlers = [];
+	
+	/**
+	 * nested list of page nodes
+	 * @var	\RecursiveIteratorIterator
+	 */
+	public $pageNodeList;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
 	
 		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
+		
+		$this->pageNodeList = (new PageNodeTree())->getNodeList();
+		
+		// fetch page handlers
+		foreach ($this->pageNodeList as $pageNode) {
+			$handler = $pageNode->getPage()->getHandler();
+			if ($handler !== null) {
+				if ($handler instanceof ILookupPageHandler) {
+					$this->pageHandlers[$pageNode->getPage()->pageID] = $pageNode->getPage()->requireObjectID;
+				}
+			}
+		}
 	}
 	
 	/**
@@ -145,6 +195,11 @@ class BoxAddForm extends AbstractForm {
 		if (isset($_POST['showHeader'])) $this->showHeader = intval($_POST['showHeader']);
 		if (isset($_POST['controller'])) $this->controller = StringUtil::trim($_POST['controller']);
 		if (isset($_POST['pageIDs']) && is_array($_POST['pageIDs'])) $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
+		
+		if (isset($_POST['linkType'])) $this->linkType = $_POST['linkType'];
+		if (!empty($_POST['linkPageID'])) $this->linkPageID = intval($_POST['linkPageID']);
+		if (!empty($_POST['linkPageObjectID'])) $this->linkPageObjectID = intval($_POST['linkPageObjectID']);
+		if (isset($_POST['externalURL'])) $this->externalURL = StringUtil::trim($_POST['externalURL']);
 		
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
@@ -200,6 +255,43 @@ class BoxAddForm extends AbstractForm {
 			}
 			
 			// @todo check controller
+		}
+		
+		// validate link
+		if ($this->linkType == 'internal') {
+			$this->externalURL = '';
+			
+			if (!$this->linkPageID) {
+				throw new UserInputException('linkPageID');
+			}
+			$page = new Page($this->linkPageID);
+			if (!$page->pageID) {
+				throw new UserInputException('linkPageID', 'invalid');
+			}
+			
+			// validate page object id
+			if (isset($this->pageHandlers[$page->pageID])) {
+				if ($this->pageHandlers[$page->pageID] && !$this->linkPageObjectID) {
+					throw new UserInputException('linkPageObjectID');
+				}
+				
+				/** @var ILookupPageHandler $handler */
+				$handler = $page->getHandler();
+				if ($this->linkPageObjectID && !$handler->isValid($this->linkPageObjectID)) {
+					throw new UserInputException('linkPageObjectID', 'invalid');
+				}
+			}
+		}
+		else if ($this->linkType == 'external') {
+			$this->linkPageID = $this->linkPageObjectID = null;
+			
+			if (empty($this->externalURL)) {
+				throw new UserInputException('externalURL');
+			}
+		}
+		else {
+			$this->linkPageID = $this->linkPageObjectID = null;
+			$this->externalURL = '';
 		}
 		
 		// validate page ids
@@ -274,6 +366,9 @@ class BoxAddForm extends AbstractForm {
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
 			'controller' => $this->controller,
+			'linkPageID' => $this->linkPageID,
+			'linkPageObjectID' => ($this->linkPageObjectID ?: 0),
+			'externalURL' => $this->externalURL,
 			'identifier' => ''
 		]), 'content' => $content, 'pageIDs' => $this->pageIDs ]);
 		$returnValues = $this->objectAction->executeAction();
@@ -319,10 +414,15 @@ class BoxAddForm extends AbstractForm {
 			'imageID' => $this->imageID,
 			'images' => $this->images,
 			'pageIDs' => $this->pageIDs,
+			'linkType' => $this->linkType,
+			'linkPageID' => $this->linkPageID,
+			'linkPageObjectID' => $this->linkPageObjectID,
+			'externalURL' => $this->externalURL,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'availableBoxTypes' => Box::$availableBoxTypes,
 			'availablePositions' => Box::$availablePositions,
-			'pageNodeList' => (new PageNodeTree())->getNodeList()
+			'pageNodeList' => $this->pageNodeList,
+			'pageHandlers' => $this->pageHandlers
 		]);
 	}
 }
