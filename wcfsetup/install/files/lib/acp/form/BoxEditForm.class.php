@@ -96,7 +96,10 @@ class BoxEditForm extends BoxAddForm {
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
-			'controller' => $this->controller
+			'controller' => $this->controller,
+			'linkPageID' => $this->linkPageID,
+			'linkPageObjectID' => ($this->linkPageObjectID ?: 0),
+			'externalURL' => $this->externalURL
 		]), 'content' => $content, 'pageIDs' => $this->pageIDs]);
 		$this->objectAction->executeAction();
 		
