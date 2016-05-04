@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Abstract implementation of a condition with select options.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -34,20 +34,18 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 	const NO_SELECTION_VALUE = -1;
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		if ($this->fieldValue != self::NO_SELECTION_VALUE) {
-			return array(
-				$this->fieldName => $this->fieldValue
-			);
+			return [$this->fieldName => $this->fieldValue];
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getFieldElement()
+	 * @inheritDoc
 	 */
 	protected function getFieldElement() {
 		$options = $this->getOptions();
@@ -64,6 +62,15 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 		$fieldElement .= "</select>";
 		
 		return $fieldElement;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHTML() {
+		if (empty($this->getOptions())) return '';
+		
+		return parent::getHTML();
 	}
 	
 	/**
@@ -100,28 +107,28 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 	abstract protected function getOptions();
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST[$this->fieldName])) $this->fieldValue = intval($_POST[$this->fieldName]);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->fieldValue = self::NO_SELECTION_VALUE;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		$this->fieldValue = $condition->conditionData[$this->fieldName];
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if ($this->fieldValue != self::NO_SELECTION_VALUE) {

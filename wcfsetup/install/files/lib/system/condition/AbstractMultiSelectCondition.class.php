@@ -8,7 +8,7 @@ use wcf\util\ArrayUtil;
  * Abstract implementation of a condition with multi select options.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -70,7 +70,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	 * @inheritDoc
 	 */
 	public function reset() {
-		$this->fieldValue = array();
+		$this->fieldValue = [];
 	}
 	
 	/**
