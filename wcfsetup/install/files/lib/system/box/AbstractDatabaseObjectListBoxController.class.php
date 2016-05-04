@@ -2,9 +2,9 @@
 namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
-use wcf\data\DatabaseObjectList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\DatabaseObjectList;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\event\EventHandler;

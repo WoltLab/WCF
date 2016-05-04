@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\box;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;

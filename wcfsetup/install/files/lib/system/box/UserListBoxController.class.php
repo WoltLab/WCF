@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\box;
-use wcf\data\DatabaseObject;
 use wcf\data\user\UserProfileList;
+use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\MostActiveMembersCacheBuilder;
 use wcf\system\cache\builder\MostLikedMembersCacheBuilder;
 use wcf\system\cache\builder\NewestMembersCacheBuilder;
