@@ -33,7 +33,7 @@ final class PasswordUtil {
 	private static $supportedEncryptionTypes = array(
 		'ipb2',		// Invision Power Board 2.x
 		'ipb3',		// Invision Power Board 3.x
-		'ipb4'		// Invision Power Board 4.x
+		'ipb4',		// Invision Power Board 4.x
 		'mybb1',	// MyBB 1.x
 		'phpbb3',	// phpBB 3.x
 		'phpass',	// phpass Portable Hashes
