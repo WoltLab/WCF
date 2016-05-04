@@ -16,6 +16,7 @@ use wcf\util\DateUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.box
  * @category	Community Framework
+ * @since	2.2
  */
 class TodaysBirthdaysBoxController extends AbstractBoxController {
 	/**
@@ -28,13 +29,6 @@ class TodaysBirthdaysBoxController extends AbstractBoxController {
 	 * @var string
 	 */
 	protected $templateName = 'boxTodaysBirthdays';
-		
-	/**
-	 * @inheritDoc
-	 */
-	public function getTitle() {
-		return WCF::getLanguage()->get('wcf.page.todaysBirthdays'); // @todo
-	}
 	
 	/**
 	 * @inheritDoc
@@ -84,5 +78,7 @@ class TodaysBirthdaysBoxController extends AbstractBoxController {
 	 * 
 	 * @param       integer[]       $userIDs
 	 */
-	protected function filterUserIDs(&$userIDs) {}
+	protected function filterUserIDs(&$userIDs) {
+		// does nothing, can be overwritten by child classes
+	}
 }

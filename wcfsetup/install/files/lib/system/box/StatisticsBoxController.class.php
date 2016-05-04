@@ -12,19 +12,13 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.box
  * @category	Community Framework
+ * @since	2.2
  */
 class StatisticsBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
 	protected $supportedPositions = ['sidebarLeft', 'sidebarRight'];
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getTitle() {
-		return WCF::getLanguage()->get('wcf.page.statistics'); // @todo
-	}
 	
 	/**
 	 * @inheritDoc

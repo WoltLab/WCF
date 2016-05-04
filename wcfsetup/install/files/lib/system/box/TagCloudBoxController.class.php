@@ -36,13 +36,6 @@ class TagCloudBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	public function getTitle() {
-		return WCF::getLanguage()->get('wcf.tagging.tags');
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected function loadContent() {
 		if (MODULE_TAGGING && WCF::getSession()->getPermission('user.tag.canViewTag') && (!$this->neededPermission || WCF::getSession()->getPermission($this->neededPermission))) {
 			$languageIDs = [];

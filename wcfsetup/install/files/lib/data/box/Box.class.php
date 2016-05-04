@@ -1,8 +1,12 @@
 <?php
 namespace wcf\data\box;
+use wcf\data\condition\Condition;
 use wcf\data\media\ViewableMedia;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\box\IConditionBoxController;
+use wcf\system\condition\ConditionHandler;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
@@ -24,6 +28,7 @@ use wcf\util\StringUtil;
  * @since	2.2
  *
  * @property-read	integer		$boxID
+ * @property-read	integer|null	$objectTypeID		id of the box controller object type
  * @property-read	string		$identifier
  * @property-read	string		$name
  * @property-read	string		$boxType
@@ -35,11 +40,11 @@ use wcf\util\StringUtil;
  * @property-read	integer		$showHeader
  * @property-read	integer		$originIsSystem
  * @property-read	integer		$packageID
- * @property-read	string		$controller
  * @property-read	integer|null	$menuID
  * @property-read	integer		$linkPageID
  * @property-read	integer		$linkPageObjectID
  * @property-read	string		$externalURL
+ * @property-read	mixed[]		$additionalData
  */
 class Box extends DatabaseObject {
 	/**
@@ -90,15 +95,41 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * box to page assignments
-	 * @var integer[]
+	 * @var	integer[]
 	 */
 	protected $pageIDs;
 	
 	/**
 	 * box controller
-	 * @var \wcf\system\box\IBoxController
+	 * @var	\wcf\system\box\IBoxController
 	 */
-	protected $__controller;
+	protected $controller;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __get($name) {
+		$value = parent::__get($name);
+		
+		if ($value === null && isset($this->data['additionalData'][$name])) {
+			$value = $this->data['additionalData'][$name];
+		}
+		
+		return $value;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function handleData($data) {
+		parent::handleData($data);
+		
+		// handle condition data
+		$this->data['additionalData'] = @unserialize($data['additionalData']);
+		if (!is_array($this->data['additionalData'])) {
+			$this->data['additionalData'] = [];
+		}
+	}
 	
 	/**
 	 * @var	IMenuPageHandler
@@ -151,28 +182,35 @@ class Box extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the title of the box as set in the box content database table.
+	 * 
+	 * @return	string
+	 */
+	public function getBoxContentTitle() {
+		$boxContent = $this->getBoxContent();
+		if ($this->isMultilingual) {
+			if (isset($boxContent[WCF::getLanguage()->languageID])) {
+				return $boxContent[WCF::getLanguage()->languageID]['title'];
+			}
+		}
+		else if (isset($boxContent[0])) {
+			return $boxContent[0]['title'];
+		}
+		
+		return '';
+	}
+	
+	/**
 	 * Returns the title for the rendered version of this box.
 	 * 
 	 * @return	string
 	 */
 	public function getTitle() {
-		if ($this->boxType == 'system') {
-			return $this->getController()->getTitle();
-		}
-		else if ($this->boxType == 'menu') {
+		if ($this->boxType == 'menu') {
 			return $this->getMenu()->getTitle();
 		}
-		else {
-			$boxContent = $this->getBoxContent();
-			if ($this->isMultilingual) {
-				if (isset($boxContent[WCF::getLanguage()->languageID])) return $boxContent[WCF::getLanguage()->languageID]['title'];
-			}
-			else {
-				if (isset($boxContent[0])) return $boxContent[0]['title'];
-			}
-		}
 		
-		return '';
+		return $this->getBoxContentTitle();
 	}
 	
 	/**
@@ -253,14 +291,14 @@ class Box extends DatabaseObject {
 	 * @return      \wcf\system\box\IBoxController
 	 */
 	public function getController() {
-		if ($this->__controller === null) {
-			if ($this->controller && class_exists($this->controller)) {
-				$this->__controller = new $this->controller;
-				$this->__controller->setBox($this);
-			}
+		if ($this->controller === null && $this->objectTypeID) {
+			$className = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->className;
+			
+			$this->controller = new $className;
+			$this->controller->setBox($this);
 		}
 		
-		return $this->__controller;
+		return $this->controller;
 	}
 	
 	/**
@@ -422,12 +460,41 @@ class Box extends DatabaseObject {
 				WHERE   boxID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->boxID]);
-			while ($row = $statement->fetchArray()) {
-				$this->pageIDs[] = $row['pageID'];
+			while ($pageID = $statement->fetchColumn()) {
+				$this->pageIDs[] = $pageID;
 			}
 		}
 		
 		return $this->pageIDs;
+	}
+	
+	/**
+	 * Returns the conditions of the notice.
+	 *
+	 * @return	Condition[]
+	 */
+	public function getConditions() {
+		if ($this->boxType === 'system' && $this->getController() instanceof IConditionBoxController && $this->getController()->getConditionDefinition()) {
+			return ConditionHandler::getInstance()->getConditions($this->getController()->getConditionDefinition(), $this->boxID);
+		}
+		
+		return [];
+	}
+	
+	/**
+	 * Returns the box with the given idnetifier.
+	 *
+	 * @param	string		$identifier
+	 * @return	Box
+	 */
+	public static function getBoxByIdentifier($identifier) {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_box
+			WHERE	identifier = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$identifier]);
+		
+		return $statement->fetchObject(self::class);
 	}
 	
 	/**
@@ -449,7 +516,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns the box with the menu id.
 	 *
-	 * @param	int		$menuID
+	 * @param	int	$menuID
 	 * @return	Box
 	 */
 	public static function getBoxByMenuID($menuID) {

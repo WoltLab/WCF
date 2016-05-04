@@ -2,8 +2,11 @@
 namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
+use wcf\data\condition\ConditionAction;
+use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Handles boxes.
@@ -43,6 +46,47 @@ class BoxHandler extends SingletonFactory {
 			if (!isset($this->boxes[$box->position])) $this->boxes[$box->position] = [];
 			$this->boxes[$box->position][] = $box;
 		}
+	}
+	
+	/**
+	 * Creates a new condition for an existing box.
+	 * 
+	 * Note: The primary use of this method is to be used during package installation.
+	 * 
+	 * @param	string		$boxIdentifier
+	 * @param	string		$conditionDefinition
+	 * @param	string		$conditionObjectType
+	 * @param	array		$conditionData
+	 * @throws	SystemException
+	 */
+	public function createBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, array $conditionData) {
+		// do not rely on caches during package installation
+		$sql = "SELECT		objectTypeID
+			FROM		wcf".WCF_N."_object_type object_type
+			INNER JOIN	wcf".WCF_N."_object_type_definition object_type_definition
+			ON		(object_type.definitionID = object_type_definition.definitionID)
+			WHERE		objectType = ?
+					AND definitionName = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$conditionObjectType, $conditionDefinition]);
+		$objectTypeID = $statement->fetchSingleColumn();
+		
+		if (!$objectTypeID) {
+			throw new SystemException("Unknown box condition '{$conditionObjectType}' of condition definition '{$conditionDefinition}'");
+		}
+		
+		$box = Box::getBoxByIdentifier($boxIdentifier);
+		if ($box === null) {
+			throw new SystemException("Unknown box with idenifier '{$boxIdentifier}'");
+		}
+		
+		(new ConditionAction([], 'create', [
+			'data' => [
+				'conditionData' => serialize($conditionData),
+				'objectID' => $box->boxID,
+				'objectTypeID' => $objectTypeID
+			]
+		]))->executeAction();
 	}
 	
 	/**

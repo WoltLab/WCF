@@ -12,6 +12,7 @@ use wcf\system\event\EventHandler;
  * @package	com.woltlab.wcf
  * @subpackage	system.box
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractBoxController implements IBoxController {
 	/**
@@ -33,10 +34,10 @@ abstract class AbstractBoxController implements IBoxController {
 	protected $supportedPositions = [];
 	
 	/**
-	 * @inheritDoc
+	 * Creates a new instance of AbstractBoxController.
 	 */
-	public function getTitle() {
-		return '';
+	public function __construct() {
+		EventHandler::getInstance()->fireAction($this, '__construct');
 	}
 	
 	/**

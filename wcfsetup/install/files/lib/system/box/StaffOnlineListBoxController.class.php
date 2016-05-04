@@ -4,9 +4,9 @@ use wcf\data\user\online\UsersOnlineList;
 use wcf\system\WCF;
 
 /**
- * Lists online users the active user is following.
- * 
- * @author	Marcel Werk
+ * Box controller for a list of staff members who are currently online.
+ *
+ * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -14,12 +14,7 @@ use wcf\system\WCF;
  * @category	Community Framework
  * @since	2.2
  */
-class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxController {
-	/**
-	 * @inheritDoc
-	 */
-	public $defaultLimit = 10;
-	
+class StaffOnlineListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
 	 * @inheritDoc
 	 */
@@ -30,7 +25,7 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
 	 */
 	protected function getObjectList() {
 		$objectList = new UsersOnlineList();
-		$objectList->getConditionBuilder()->add('session.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+		$objectList->getConditionBuilder()->add('session.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (SELECT groupID FROM wcf'.WCF_N.'_user_group WHERE showOnTeamPage = ?))', [1]);
 		
 		return $objectList;
 	}
@@ -39,14 +34,14 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
 	 * @inheritDoc
 	 */
 	protected function getTemplate() {
-		return WCF::getTPL()->fetch('boxFollowingsOnline', 'wcf', ['usersOnlineList' => $this->objectList]);
+		return WCF::getTPL()->fetch('boxStaffOnline', 'wcf', ['usersOnlineList' => $this->objectList]);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function hasContent() {
-		if (!MODULE_USERS_ONLINE || !WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList') || empty(WCF::getUserProfileHandler()->getFollowingUsers())) {
+		if (!MODULE_USERS_ONLINE || WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList')) {
 			return false;
 		}
 		

@@ -207,6 +207,11 @@
 			<interfacename><![CDATA[wcf\system\bulk\processing\IBulkProcessingAction]]></interfacename>
 		</definition>
 		
+		<definition>
+			<name>com.woltlab.wcf.boxController</name>
+			<interfacename>wcf\system\box\IBoxController</interfacename>
+		</definition>
+		
 		<!-- deprecated -->
 		<definition>
 			<name>com.woltlab.wcf.user.online.location</name>

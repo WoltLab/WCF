@@ -879,8 +879,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.option.category.dashboard.content"><![CDATA[Content Area]]></item>
 		<item name="wcf.acp.option.category.dashboard.sidebar"><![CDATA[Sidebar]]></item>
-		<item name="wcf.acp.option.category.dashboard.content.recentActivities"><![CDATA[Recent Activities]]></item>
-		<item name="wcf.acp.option.category.dashboard.sidebar.recentActivities"><![CDATA[Recent Activities]]></item>
 		<item name="wcf.acp.option.category.user.profile"><![CDATA[Profile]]></item>
 		<item name="wcf.acp.option.category.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.acp.option.category.user.signature"><![CDATA[Signature]]></item>
@@ -954,8 +952,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Recent Activities will be removed after the selected days.]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profile Visitors]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile Visitors will be removed after the selected days.]]></item>
-		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Number of Entries]]></item>
-		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Likes System]]></item>
 		<item name="wcf.acp.option.module_like"><![CDATA[Likes System]]></item>
 		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can like their own content]]></item>
@@ -1941,11 +1937,6 @@ Errors are:
 		<item name="wcf.condition.timestamp.error.startNotValid"><![CDATA[The end date is not valid.]]></item>
 	</category>
 	
-	<category name="wcf.dashboard">
-		<item name="wcf.dashboard.box.mostActiveMembers.points"><![CDATA[todo{#$activeMember->activityPoints} Point{if $activeMember->activityPoints != 1}s{/if}]]></item>
-		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[todo{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
-	</category>
-	
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
 		<item name="wcf.date.timeFormat"><![CDATA[g:ia]]></item>
@@ -2926,6 +2917,9 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.panel.markAsRead"><![CDATA[Mark as Read]]></item>
 		<item name="wcf.user.panel.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.user.panel.showAll"><![CDATA[Show All]]></item>
+		<item name="wcf.user.boxList.description.activityPoints"><![CDATA[{#$boxUser->activityPoints} Point{if $boxUser->activityPoints != 1}s{/if}]]></item>
+		<item name="wcf.user.boxList.description.likesReceived"><![CDATA[{#$boxUser->likesReceived} Like{if $boxUser->likesReceived != 1}s{/if}]]></item>
+		<item name="wcf.user.boxList.description.registrationDate"><![CDATA[{@$boxUser->registrationDate|time}]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

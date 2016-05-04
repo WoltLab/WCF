@@ -880,8 +880,6 @@
 		<item name="wcf.acp.option.category.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.option.category.dashboard.content"><![CDATA[Inhaltsbereich]]></item>
 		<item name="wcf.acp.option.category.dashboard.sidebar"><![CDATA[Seitenleiste]]></item>
-		<item name="wcf.acp.option.category.dashboard.content.recentActivities"><![CDATA[Letzte Aktivität]]></item>
-		<item name="wcf.acp.option.category.dashboard.sidebar.recentActivities"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.acp.option.category.user.profile"><![CDATA[Profil]]></item>
 		<item name="wcf.acp.option.category.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.acp.option.category.user.signature"><![CDATA[Signatur]]></item>
@@ -950,8 +948,6 @@
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Zeitraum nach dem letzte Aktivitäten automatisch verworfen werden.]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profil-Besucher]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Zeitraum nach dem Profil-Besucher automatisch verworfen werden.]]></item>
-		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Anzahl Einträge]]></item>
-		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Anzahl Einträge]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Like-System]]></item>
 		<item name="wcf.acp.option.module_like"><![CDATA[Like-System]]></item>
 		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Benutzer können eigene Inhalte liken]]></item>
@@ -1932,11 +1928,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.condition.timestamp.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
 	</category>
 	
-	<category name="wcf.dashboard">
-		<item name="wcf.dashboard.box.mostActiveMembers.points"><![CDATA[todo{#$activeMember->activityPoints} Punkt{if $activeMember->activityPoints != 1}e{/if}]]></item>
-		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[todo{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
-	</category>
-	
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[j. F Y]]></item>
 		<item name="wcf.date.timeFormat"><![CDATA[H:i]]></item>
@@ -2893,6 +2884,9 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.panel.markAsRead"><![CDATA[Als gelesen markieren]]></item>
 		<item name="wcf.user.panel.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.user.panel.showAll"><![CDATA[Alle anzeigen]]></item>
+		<item name="wcf.user.boxList.description.activityPoints"><![CDATA[{#$boxUser->activityPoints} Punkt{if $boxUser->activityPoints != 1}e{/if}]]></item>
+		<item name="wcf.user.boxList.description.likesReceived"><![CDATA[{#$boxUser->likesReceived} Like{if $boxUser->likesReceived != 1}s{/if}]]></item>
+		<item name="wcf.user.boxList.description.registrationDate"><![CDATA[{@$boxUser->registrationDate|time}]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

@@ -11,19 +11,13 @@ use wcf\data\box\Box;
  * @package	com.woltlab.wcf
  * @subpackage	system.box
  * @category	Community Framework
+ * @since	2.2
  */
 interface IBoxController {
 	/**
-	 * Returns the title of this box.
-	 * 
-	 * @return      string
-	 */
-	public function getTitle();
-	
-	/**
 	 * Returns the content of this box.
 	 *
-	 * @return      string
+	 * @return	string
 	 */
 	public function getContent();
 	
@@ -72,14 +66,14 @@ interface IBoxController {
 	/**
 	 * Sets the database object of this box.
 	 *
-	 * @param       Box            $box
+	 * @param	Box	$box
 	 */
 	public function setBox(Box $box);
 	
 	/**
 	 * Returns a list of supported box positions.
 	 * 
-	 * @return      string[]
+	 * @return	string[]
 	 */
 	public function getSupportedPositions();
 }

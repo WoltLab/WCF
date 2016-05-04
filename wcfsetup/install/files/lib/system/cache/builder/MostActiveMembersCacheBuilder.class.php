@@ -6,28 +6,25 @@ use wcf\data\user\UserList;
  * Caches a list of the most active members.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class MostActiveMembersCacheBuilder extends AbstractCacheBuilder {
+class MostActiveMembersCacheBuilder extends AbstractSortedUserCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
+	 * @inheritDoc
 	 */
 	protected $maxLifetime = 600;
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
-	protected function rebuild(array $parameters) {
-		$userProfileList = new UserList();
-		$userProfileList->getConditionBuilder()->add('user_table.activityPoints > 0');
-		$userProfileList->sqlOrderBy = 'user_table.activityPoints DESC';
-		$userProfileList->sqlLimit = 5;
-		$userProfileList->readObjectIDs();
-		
-		return $userProfileList->getObjectIDs();
-	}
+	protected $positiveValuesOnly = true;
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $sortField = 'activityPoints';
 }

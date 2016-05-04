@@ -4,9 +4,9 @@ use wcf\data\user\UserProfileAction;
 use wcf\system\WCF;
 
 // set default landing page
-$sql = "UPDATE  wcf".WCF_N."_page
-	SET     isLandingPage = ?
-	WHERE   identifier = ?";
+$sql = "UPDATE	wcf".WCF_N."_page
+	SET	isLandingPage = ?
+	WHERE	identifier = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute([
 	1,
@@ -15,7 +15,7 @@ $statement->execute([
 
 // update administrator user rank and user online marking
 $editor = new UserEditor(WCF::getUser());
-$action = new UserProfileAction(array($editor), 'updateUserRank');
+$action = new UserProfileAction([$editor], 'updateUserRank');
 $action->executeAction();
-$action = new UserProfileAction(array($editor), 'updateUserOnlineMarking');
+$action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
 $action->executeAction();

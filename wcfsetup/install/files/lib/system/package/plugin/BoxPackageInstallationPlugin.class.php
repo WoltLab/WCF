@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
+use wcf\data\object\type\ObjectType;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -28,6 +29,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @var	array
 	 */
 	protected $content = [];
+	
+	/**
+	 * list of element names which are not considered as additional data
+	 * @var	string[]
+	 */
+	public static $reservedTags = ['boxType', 'content', 'cssClassName', 'name', 'objectType', 'position', 'showHeader', 'visibilityExceptions', 'visibleEverywhere'];
 	
 	/**
 	 * @inheritDoc
@@ -66,7 +73,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
 		
-		if ($element->tagName === 'name' || $element->tagName === 'title') {
+		if ($element->tagName === 'name') {
 			if (empty($element->getAttribute('language'))) {
 				throw new SystemException("Missing required attribute 'language' for '" . $element->tagName . "' element (box '" . $element->parentNode->getAttribute('identifier') . "')");
 			}
@@ -89,12 +96,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			if (empty($children['title'])) {
 				throw new SystemException("Expected non-empty child element 'title' for 'content' element (box '" . $element->parentNode->getAttribute('identifier') . "')");
 			}
-			if (empty($children['content'])) {
-				throw new SystemException("Expected non-empty child element 'content' for 'content' element (box '" . $element->parentNode->getAttribute('identifier') . "')");
-			}
 			
 			$elements['content'][$element->getAttribute('language')] = [
-				'content' => $children['content'],
+				'content' => isset($children['content']) ? $children['content'] : '',
 				'title' => $children['title']
 			];
 		}
@@ -117,7 +121,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	protected function prepareImport(array $data) {
 		$content = [];
 		$boxType = $data['elements']['boxType'];
-		$controller = '';
+		$objectTypeID = null;
 		$identifier = $data['attributes']['identifier'];
 		$isMultilingual = false;
 		$position = $data['elements']['position'];
@@ -126,19 +130,38 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			throw new SystemException("Unknown box position '{$position}' for box '{$identifier}'");
 		}
 		
+		$ignoreMissingContent = false;
 		switch ($boxType) {
 			case 'system':
-				if (empty($data['elements']['controller'])) {
-					throw new SystemException("Missing required element 'controller' for 'system'-type box '{$identifier}'");
+				if (empty($data['elements']['objectType'])) {
+					throw new SystemException("Missing required element 'objectType' for 'system'-type box '{$identifier}'");
 				}
 				
-				$controller = $data['elements']['controller'];
-				break;
+				$sql = "SELECT		objectTypeID
+					FROM		wcf".WCF_N."_object_type object_type
+					LEFT JOIN	wcf".WCF_N."_object_type_definition object_type_definition
+					ON		(object_type_definition.definitionID = object_type.definitionID)
+					WHERE		objectType = ?
+							AND definitionName = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([$data['elements']['objectType'], 'com.woltlab.wcf.boxController']);
+				$objectTypeID = $statement->fetchSingleColumn();
+				if (!$objectTypeID) {
+					throw new SystemException("Unknown object type '{$data['elements']['objectType']}' for 'system'-type box '{$identifier}'");
+				}
+				
+				$ignoreMissingContent = true;
+				
+				// fallthrough
 			
 			case 'html':
 			case 'text':
 			case 'tpl':
 				if (empty($data['elements']['content'])) {
+					if ($ignoreMissingContent) {
+						break;
+					}
+					
 					throw new SystemException("Missing required 'content' element(s) for box '{$identifier}'");
 				}
 				
@@ -168,6 +191,13 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$this->visibilityExceptions[$identifier] = $data['elements']['visibilityExceptions'];
 		}
 		
+		$additionalData = [];
+		foreach ($data['elements'] as $tagName => $nodeValue) {
+			if (!in_array($tagName, self::$reservedTags)) {
+				$additionalData[$tagName] = $nodeValue;
+			}
+		}
+		
 		return [
 			'identifier' => $identifier,
 			'content' => $content,
@@ -180,7 +210,8 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			'cssClassName' => (!empty($data['elements']['cssClassName'])) ? $data['elements']['cssClassName'] : '',
 			'showHeader' => (!empty($data['elements']['showHeader'])) ? 1 : 0,
 			'originIsSystem' => 1,
-			'controller' => $controller
+			'objectTypeID' => $objectTypeID,
+			'additionalData' => serialize($additionalData)
 		];
 	}
 	
@@ -192,15 +223,15 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			FROM	wcf".WCF_N."_box
 			WHERE	identifier = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['identifier'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**
@@ -300,7 +331,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		$deleteStatement = WCF::getDB()->prepareStatement($sql);
 		$sql = "INSERT IGNORE   wcf".WCF_N."_box_to_page
 					(boxID, pageID, visible)
-			VALUES          (?, ?, ?)";
+			VALUES		(?, ?, ?)";
 		$insertStatement = WCF::getDB()->prepareStatement($sql);
 		foreach ($this->visibilityExceptions as $boxIdentifier => $pages) {
 			// delete old visibility exceptions
@@ -308,15 +339,15 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			
 			// get page ids
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('identifier IN (?)', array($pages));
+			$conditionBuilder->add('identifier IN (?)', [$pages]);
 			$sql = "SELECT  pageID
 				FROM    wcf".WCF_N."_page
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
 			$pageIDs = [];
-			while ($row = $statement->fetchArray()) {
-				$pageIDs[] = $row['pageID'];
+			while ($pageID = $statement->fetchColumn()) {
+				$pageIDs[] = $pageID;
 			}
 			
 			// save page ids

@@ -18,7 +18,7 @@ interface ICondition extends IDatabaseObjectProcessor {
 	 * Returns the data saved with the condition used to check if the condition
 	 * is fulfilled. If null is returned, there is no condition to be created.
 	 * 
-	 * @return	mixed
+	 * @return	array|null
 	 */
 	public function getData();
 	

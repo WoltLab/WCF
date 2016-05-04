@@ -1103,6 +1103,69 @@
 		</type>
 		<!-- /user search conditions -->
 		
+		<!-- box controllers -->
+		<type>
+			<name>com.woltlab.wcf.recentActivityList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\RecentActivityListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.paidSubscriptions</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\PaidSubscriptionsBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.registerButton</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\RegisterButtonBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.signedInAs</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\SignedInAsBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.statistics</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\StatisticsBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\userListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userOnlineList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\UserOnlineListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.staffOnlineList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\StaffOnlineListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.todaysBirthdays</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\TodaysBirthdaysBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.todaysFollowingBirthdays</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\TodaysFollowingBirthdaysBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.followingsOnline</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\FollowingsOnlineBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.pageCommentList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\PageCommentListBoxController</classname>
+		</type>
+		<!-- /box controllers -->
+		
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

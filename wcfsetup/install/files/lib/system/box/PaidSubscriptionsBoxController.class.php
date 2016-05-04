@@ -14,19 +14,13 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.box
  * @category	Community Framework
+ * @since	2.2
  */
 class PaidSubscriptionsBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
 	protected $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getTitle() {
-		return WCF::getLanguage()->get('wcf.user.menu.settings.paidSubscription');
-	}
 	
 	/**
 	 * @inheritDoc
@@ -86,7 +80,6 @@ class PaidSubscriptionsBoxController extends AbstractBoxController {
 				
 				$this->content = WCF::getTPL()->fetch($templateName);
 			}
-			
 		}
 	}
 }

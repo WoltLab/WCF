@@ -11,19 +11,13 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.box
  * @category	Community Framework
+ * @since	2.2
  */
 class TodaysFollowingBirthdaysBoxController extends TodaysBirthdaysBoxController {
 	/**
 	 * @inheritDoc
 	 */
 	protected $templateName = 'boxTodaysFollowingBirthdays';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getTitle() {
-		return WCF::getLanguage()->get('wcf.page.todaysFollowingBirthdays'); // @todo
-	}
 	
 	/**
 	 * @inheritDoc

@@ -11,6 +11,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.box
  * @category	Community Framework
+ * @since	2.2
  */
 class SignedInAsBoxController extends AbstractBoxController {
 	/**

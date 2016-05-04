@@ -4,7 +4,9 @@
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}
 		
-		require(['WoltLab/WCF/Media/Manager/Select'], function(MediaManagerSelect) {
+		require(['WoltLab/WCF/Acp/Ui/Box/Controller/Handler', 'WoltLab/WCF/Media/Manager/Select'], function(AcpUiBoxControllerHandler, MediaManagerSelect) {
+			AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
+			
 			new MediaManagerSelect({
 				dialogTitle: '{lang}wcf.acp.box.image.dialog.title{/lang}',
 				fileTypeFilters: {
@@ -93,6 +95,27 @@
 			</dd>
 		</dl>
 		
+		<dl id="boxControllerContainer"{if $errorField == 'boxControllerID'} class="formError"{/if}{if !$boxController} style="display: none;"{/if}>
+			<dt><label for="boxControllerID">{lang}wcf.acp.box.boxController{/lang}</label></dt>
+			<dd>
+				<select name="boxControllerID" id="boxControllerID">
+					{foreach from=$availableBoxControllers item=availableBoxController}
+						<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected="selected"{/if}>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
+					{/foreach}
+				</select>
+				
+				{if $errorField == 'boxType'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.box.boxController.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
 		<dl{if $errorField == 'position'} class="formError"{/if}>
 			<dt><label for="position">{lang}wcf.acp.box.position{/lang}</label></dt>
 			<dd>
@@ -131,22 +154,6 @@
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
 							{lang}wcf.acp.box.cssClassName.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		<dl{if $errorField == 'controller'} class="formError"{/if}>
-			<dt><label for="controller">{lang}wcf.acp.box.controller{/lang}</label></dt>
-			<dd>
-				<input type="text" id="controller" name="controller" value="{$controller}" class="long" />
-				{if $errorField == 'controller'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.box.controller.error.{@$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -255,9 +262,15 @@
 		{event name='linkFields'}
 	</section>
 	
+	<div id="boxConditions">
+		{if $boxController && $boxController->getProcessor()|is_subclass_of:'wcf\system\box\IConditionBoxController'}
+			{@$boxController->getProcessor()->getConditionsTemplate()}
+		{/if}
+	</div>
+	
 	{if !$isMultilingual}
 		<section class="section">
-			<h2 class="sectionTitle">content</h2>
+			<h2 class="sectionTitle">{* TODO *}content</h2>
 			
 			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 				<dl{if $errorField == 'image'} class="formError"{/if}>

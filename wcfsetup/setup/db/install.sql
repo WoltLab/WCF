@@ -226,6 +226,7 @@ CREATE TABLE wcf1_bbcode_media_provider (
 DROP TABLE IF EXISTS wcf1_box;
 CREATE TABLE wcf1_box (
 	boxID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10),
 	identifier VARCHAR(255) NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	boxType VARCHAR(255) NOT NULL,
@@ -237,11 +238,11 @@ CREATE TABLE wcf1_box (
 	showHeader TINYINT(1) NOT NULL DEFAULT 1,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	packageID INT(10) NOT NULL,
-	controller VARCHAR(255) NOT NULL DEFAULT '',
-	menuID INT(10),
+	menuID INT(10) NULL,
 	linkPageID INT(10),
 	linkPageObjectID INT(10) NOT NULL DEFAULT 0,
-	externalURL VARCHAR(255) NOT NULL DEFAULT ''
+	externalURL VARCHAR(255) NOT NULL DEFAULT '',
+	additionalData TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_box_content;
@@ -1640,6 +1641,7 @@ ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 
 ALTER TABLE wcf1_bbcode_attribute ADD FOREIGN KEY (bbcodeID) REFERENCES wcf1_bbcode (bbcodeID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_box ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (linkPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;

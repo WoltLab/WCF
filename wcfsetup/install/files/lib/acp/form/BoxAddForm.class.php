@@ -5,9 +5,12 @@ use wcf\data\box\BoxAction;
 use wcf\data\box\BoxEditor;
 use wcf\data\media\Media;
 use wcf\data\media\ViewableMediaList;
+use wcf\data\object\type\ObjectType;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
+use wcf\system\box\IConditionBoxController;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -81,12 +84,6 @@ class BoxAddForm extends AbstractForm {
 	public $showHeader = 1;
 	
 	/**
-	 * box controller
-	 * @var	string
-	 */
-	public $controller = '';
-	
-	/**
 	 * box name
 	 * @var	string
 	 */
@@ -121,6 +118,18 @@ class BoxAddForm extends AbstractForm {
 	 * @var	integer[]
 	 */
 	public $pageIDs = [];
+	
+	/**
+	 * object type id of the selected box controller
+	 * @var	integer
+	 */
+	public $boxControllerID = 0;
+	
+	/**
+	 * selected box controller object type 
+	 * @var	ObjectType
+	 */
+	public $boxController;
 	
 	/**
 	 * link type
@@ -193,7 +202,6 @@ class BoxAddForm extends AbstractForm {
 		if (isset($_POST['visibleEverywhere'])) $this->visibleEverywhere = intval($_POST['visibleEverywhere']);
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['showHeader'])) $this->showHeader = intval($_POST['showHeader']);
-		if (isset($_POST['controller'])) $this->controller = StringUtil::trim($_POST['controller']);
 		if (isset($_POST['pageIDs']) && is_array($_POST['pageIDs'])) $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
 		
 		if (isset($_POST['linkType'])) $this->linkType = $_POST['linkType'];
@@ -203,6 +211,7 @@ class BoxAddForm extends AbstractForm {
 		
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
+		if (isset($_POST['boxControllerID'])) $this->boxControllerID = intval($_POST['boxControllerID']);
 		
 		if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
 			if (isset($_POST['imageID']) && is_array($_POST['imageID'])) $this->imageID = ArrayUtil::toIntegerArray($_POST['imageID']);
@@ -243,18 +252,23 @@ class BoxAddForm extends AbstractForm {
 			throw new UserInputException('boxType');
 		}
 		
+		if ($this->boxType === 'system') {
+			$this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
+			if ($this->boxController === null || $this->boxController->getDefinition()->definitionName != 'com.woltlab.wcf.boxController') {
+				throw new UserInputException('boxController');
+			}
+			
+			if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
+				$this->boxController->getProcessor()->readConditions();
+			}
+		}
+		else {
+			$this->boxControllerID = 0;
+		}
+		
 		// validate box position
 		if (!in_array($this->position, Box::$availablePositions)) {
 			throw new UserInputException('position');
-		}
-		
-		// validate class name
-		if ($this->boxType == 'system') {
-			if (empty($this->controller)) {
-				throw new UserInputException('controller');
-			}
-			
-			// @todo check controller
 		}
 		
 		// validate link
@@ -317,6 +331,10 @@ class BoxAddForm extends AbstractForm {
 				}
 			}
 		}
+		
+		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
+			$this->boxController->getProcessor()->validateConditions();
+		}
 	}
 	
 	/**
@@ -357,6 +375,7 @@ class BoxAddForm extends AbstractForm {
 		
 		$this->objectAction = new BoxAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'name' => $this->name,
+			'objectTypeID' => $this->boxControllerID,
 			'packageID' => 1,
 			'isMultilingual' => $this->isMultilingual,
 			'boxType' => $this->boxType,
@@ -365,19 +384,23 @@ class BoxAddForm extends AbstractForm {
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
-			'controller' => $this->controller,
 			'linkPageID' => $this->linkPageID,
 			'linkPageObjectID' => ($this->linkPageObjectID ?: 0),
 			'externalURL' => $this->externalURL,
 			'identifier' => ''
 		]), 'content' => $content, 'pageIDs' => $this->pageIDs ]);
-		$returnValues = $this->objectAction->executeAction();
+		$box = $this->objectAction->executeAction()['returnValues'];
 		
 		// set generic box identifier
-		$boxEditor = new BoxEditor($returnValues['returnValues']);
+		$boxEditor = new BoxEditor($box);
 		$boxEditor->update([
 			'identifier' => 'com.woltlab.wcf.genericBox'.$boxEditor->boxID
 		]);
+		
+		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
+			$this->boxController->getProcessor()->setBox($box, false);
+			$this->boxController->getProcessor()->saveConditions();
+		}
 		
 		// call saved event
 		$this->saved();
@@ -386,10 +409,11 @@ class BoxAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->boxType = $this->position = $this->cssClassName = $this->controller = $this->name = '';
-		$this->showOrder = 0;
+		$this->boxType = $this->position = $this->cssClassName = $this->name = '';
+		$this->showOrder = $this->boxControllerID = 0;
 		$this->visibleEverywhere = $this->showHeader = 1;
 		$this->title = $this->content = $this->images = $this->imageID = [];
+		$this->boxController = null;
 	}
 	
 	/**
@@ -405,7 +429,6 @@ class BoxAddForm extends AbstractForm {
 			'boxType' => $this->boxType,
 			'position' => $this->position,
 			'cssClassName' => $this->cssClassName,
-			'controller' => $this->controller,
 			'showOrder' => $this->showOrder,
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'showHeader' => $this->showHeader,
@@ -421,6 +444,8 @@ class BoxAddForm extends AbstractForm {
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'availableBoxTypes' => Box::$availableBoxTypes,
 			'availablePositions' => Box::$availablePositions,
+			'availableBoxControllers' => ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController'),
+			'boxController' => $this->boxController,
 			'pageNodeList' => $this->pageNodeList,
 			'pageHandlers' => $this->pageHandlers
 		]);

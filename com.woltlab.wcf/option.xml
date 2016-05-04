@@ -234,16 +234,10 @@
 				<category name="dashboard.content">
 					<parent>dashboard</parent>
 				</category>
-					<category name="dashboard.content.recentActivities">
-						<parent>dashboard.content</parent>
-					</category>
 				
 				<category name="dashboard.sidebar">
 					<parent>dashboard</parent>
 				</category>
-					<category name="dashboard.sidebar.recentActivities">
-						<parent>dashboard.sidebar</parent>
-					</category>
 			
 			<!-- cms -->
 			<category name="cms"></category>
@@ -1348,24 +1342,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			</option>
 			<!-- /user.cleanup -->
 			
-			<!-- dashboard TODO -->
-			<option name="recent_activity_items">
-				<categoryname>dashboard.content.recentActivities</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>10</defaultvalue>
-				<minvalue>5</minvalue>
-				<maxvalue>100</maxvalue>
-			</option>
-			
-			<option name="recent_activity_sidebar_items">
-				<categoryname>dashboard.sidebar.recentActivities</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>5</defaultvalue>
-				<minvalue>5</minvalue>
-				<maxvalue>50</maxvalue>
-			</option>
-			<!-- /dashboard -->
-			
 			<option name="like_allow_for_own_content">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1550,5 +1526,10 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 		<option name="enable_pluginstore_widget" />
 		<option name="mail_use_formatted_address" />
 		<option name="mail_debug_logfile_path" />
+		<option name="recent_activity_items" />
+		<option name="recent_activity_sidebar_items" />
+		
+		<optioncategory name="dashboard.content.recentActivities" />
+		<optioncategory name="dashboard.sidebar.recentActivities" />
 	</delete>
 </data>

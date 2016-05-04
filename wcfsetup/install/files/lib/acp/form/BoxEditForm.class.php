@@ -2,7 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
+use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -69,7 +71,7 @@ class BoxEditForm extends BoxAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$content = array();
+		$content = [];
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
@@ -89,6 +91,7 @@ class BoxEditForm extends BoxAddForm {
 		
 		$this->objectAction = new BoxAction([$this->box], 'update', ['data' => array_merge($this->additionalFields, [
 			'name' => $this->name,
+			'objectTypeID' => $this->boxControllerID,
 			'isMultilingual' => $this->isMultilingual,
 			'boxType' => $this->boxType,
 			'position' => $this->position,
@@ -96,12 +99,16 @@ class BoxEditForm extends BoxAddForm {
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
-			'controller' => $this->controller,
 			'linkPageID' => $this->linkPageID,
 			'linkPageObjectID' => ($this->linkPageObjectID ?: 0),
 			'externalURL' => $this->externalURL
 		]), 'content' => $content, 'pageIDs' => $this->pageIDs]);
 		$this->objectAction->executeAction();
+		
+		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
+			$this->boxController->getProcessor()->setBox($this->box, false);
+			$this->boxController->getProcessor()->saveConditions();
+		}
 		
 		// call saved event
 		$this->saved();
@@ -130,7 +137,7 @@ class BoxEditForm extends BoxAddForm {
 			$this->position = $this->box->position;
 			$this->showOrder = $this->box->showOrder;
 			$this->cssClassName = $this->box->cssClassName;
-			$this->controller = $this->box->controller;
+			$this->boxControllerID = $this->box->objectTypeID;
 			if ($this->box->showHeader) $this->showHeader = 1;
 			if ($this->box->visibleEverywhere) $this->visibleEverywhere = 1;
 			else $this->visibleEverywhere = 0;
@@ -147,6 +154,13 @@ class BoxEditForm extends BoxAddForm {
 				$this->imageID[$languageID] = $content['imageID'];
 			}
 			
+			if ($this->boxControllerID) {
+				$this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
+				if ($this->boxController->getProcessor() instanceof IConditionBoxController) {
+					$this->boxController->getProcessor()->setBox($this->box);
+				}
+			}
+			
 			$this->readBoxImages();
 		}
 	}
@@ -157,10 +171,10 @@ class BoxEditForm extends BoxAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'boxID' => $this->boxID,
 			'box' => $this->box
-		));
+		]);
 	}
 }
