@@ -26,7 +26,7 @@
 	position: relative;
 	
 	&::before {
-		content: $fa-var-square-o;
+		content: "\f096";
 		display: block;
 		font-family: FontAwesome;
 		position: absolute;
@@ -34,7 +34,7 @@
 	
 	&::after {
 		color: rgb(0, 150, 0);
-		content: $fa-var-check;
+		content: "\f00c";
 		display: none;
 		font-family: FontAwesome;
 		position: absolute;
@@ -336,7 +336,7 @@
 		position: relative;
 		
 		&::before {
-			content: $fa-var-bars;
+			content: "\f0c9";
 			font-family: FontAwesome;
 			font-size: 18px;
 			position: absolute;

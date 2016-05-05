@@ -358,7 +358,7 @@
 		order: 3;
 		
 		&::before {
-			content: $fa-var-user;
+			content: "\f007";
 		}
 		
 		> .userPanelItems {
@@ -371,7 +371,7 @@
 		order: 1;
 		
 		&::before {
-			content: $fa-var-bars;
+			content: "\f0c9";
 		}
 		
 		> .boxContent {

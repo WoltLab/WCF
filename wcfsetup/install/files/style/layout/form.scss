@@ -80,7 +80,7 @@ select {
 	display: inline-block !important;
 	
 	&::after {
-		content: $fa-var-caret-down;
+		content: "\f0d7";
 		display: block;
 		font-family: FontAwesome;
 		font-size: 14px;

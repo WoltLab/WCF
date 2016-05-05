@@ -57,7 +57,7 @@
 				&.active {
 					pointer-events: none;
 					> a::after {
-						content: $fa-var-caret-down;
+						content: "\f0d7";
 						font-family: FontAwesome;
 						margin-left: 7px;
 					}

@@ -9,6 +9,7 @@
 	
 	<!-- Stylesheets -->
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 	{@$__wcf->getStyleHandler()->getStylesheet(true)}
 	{event name='stylesheets'}
 	

@@ -20,10 +20,10 @@ $types = array(
 );
 
 // get parameters
-$type = $_GET['type'];
-$font = (!empty($_GET['font']) ? basename($_GET['font']) : 'fontawesome-webfont');
+$type = (!empty($_GET['type']) ? $_GET['type'] : '');
+$font = (!empty($_GET['font']) ? basename($_GET['font']) : '');
 
-if (!empty($type)) {
+if (!empty($type) && !empty($font)) {
 	if (isset($types[$type])) {
 		if (file_exists($font . '.' . $type)) {
 			$filename = $font . '.' . $type;
