@@ -85,7 +85,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	protected function getObjectList() {
 		// use specialized cache builders
 		if ($this->box->sortOrder && $this->box->sortField && isset($this->cacheBuilders[$this->box->sortField])) {
-			$this->userIDs = $this->cacheBuilders[$this->box->sortField]::getInstance()->getData([
+			$this->userIDs = call_user_func([$this->cacheBuilders[$this->box->sortField], 'getInstance'])->getData([
 				'limit' => $this->box->limit,
 				'sortOrder' => $this->sortOrder
 			]);
