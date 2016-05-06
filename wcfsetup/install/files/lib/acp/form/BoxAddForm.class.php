@@ -373,9 +373,8 @@ class BoxAddForm extends AbstractForm {
 			];
 		}
 		
-		$this->objectAction = new BoxAction([], 'create', ['data' => array_merge($this->additionalFields, [
+		$data = [
 			'name' => $this->name,
-			'objectTypeID' => $this->boxControllerID,
 			'packageID' => 1,
 			'isMultilingual' => $this->isMultilingual,
 			'boxType' => $this->boxType,
@@ -388,7 +387,12 @@ class BoxAddForm extends AbstractForm {
 			'linkPageObjectID' => ($this->linkPageObjectID ?: 0),
 			'externalURL' => $this->externalURL,
 			'identifier' => ''
-		]), 'content' => $content, 'pageIDs' => $this->pageIDs ]);
+		];
+		if ($this->boxControllerID) {
+			$data['objectTypeID'] = $this->boxControllerID;
+		}
+		
+		$this->objectAction = new BoxAction([], 'create', ['data' => array_merge($this->additionalFields, $data), 'content' => $content, 'pageIDs' => $this->pageIDs ]);
 		$box = $this->objectAction->executeAction()['returnValues'];
 		
 		// set generic box identifier

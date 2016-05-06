@@ -89,9 +89,8 @@ class BoxEditForm extends BoxAddForm {
 			];
 		}
 		
-		$this->objectAction = new BoxAction([$this->box], 'update', ['data' => array_merge($this->additionalFields, [
+		$data = [
 			'name' => $this->name,
-			'objectTypeID' => $this->boxControllerID,
 			'isMultilingual' => $this->isMultilingual,
 			'boxType' => $this->boxType,
 			'position' => $this->position,
@@ -102,7 +101,12 @@ class BoxEditForm extends BoxAddForm {
 			'linkPageID' => $this->linkPageID,
 			'linkPageObjectID' => ($this->linkPageObjectID ?: 0),
 			'externalURL' => $this->externalURL
-		]), 'content' => $content, 'pageIDs' => $this->pageIDs]);
+		];
+		if ($this->boxControllerID) {
+			$data['objectTypeID'] = $this->boxControllerID;
+		}
+		
+		$this->objectAction = new BoxAction([$this->box], 'update', ['data' => array_merge($this->additionalFields, $data), 'content' => $content, 'pageIDs' => $this->pageIDs]);
 		$this->objectAction->executeAction();
 		
 		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
