@@ -282,9 +282,22 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			if (!$file->getValidationErrorType()) {
 				// shrink preview image if necessary
 				$fileLocation = $file->getLocation();
-				$imageData = getimagesize($fileLocation);
-				if ($imageData[0] > Style::PREVIEW_IMAGE_MAX_WIDTH || $imageData[1] > Style::PREVIEW_IMAGE_MAX_HEIGHT) {
-					try {
+				try {
+					if (($imageData = getimagesize($fileLocation)) === false) {
+						throw new UserInputException('image');
+					}
+					switch ($imageData[2]) {
+						case IMG_PNG:
+						case IMG_JPEG:
+						case IMG_JPG:
+						case IMG_GIF:
+							// fine
+						break;
+						default:
+							throw new UserInputException('image');
+					}
+
+					if ($imageData[0] > Style::PREVIEW_IMAGE_MAX_WIDTH || $imageData[1] > Style::PREVIEW_IMAGE_MAX_HEIGHT) {
 						$adapter = ImageHandler::getInstance()->getAdapter();
 						$adapter->loadFile($fileLocation);
 						$fileLocation = FileUtil::getTemporaryFilename();
@@ -292,9 +305,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 						$adapter->writeImage($thumbnail, $fileLocation);
 						$imageData = getimagesize($fileLocation);
 					}
-					catch (SystemException $e) {
-						throw new UserInputException('image');
-					}
+				}
+				catch (SystemException $e) {
+					throw new UserInputException('image');
 				}
 				
 				// move uploaded file
