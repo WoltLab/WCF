@@ -508,11 +508,11 @@ final class FileUtil {
 	 */
 	public static function getMimeType($filename) {
 		if (self::$finfo === null) {
-			if (!class_exists('\finfo', false)) return '';
+			if (!class_exists('\finfo', false)) return 'application/octet-stream';
 			self::$finfo = new \finfo(FILEINFO_MIME_TYPE);
 		}
 		
-		return self::$finfo->file($filename);
+		return self::$finfo->file($filename) ?: 'application/octet-stream';
 	}
 	
 	/**

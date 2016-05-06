@@ -485,7 +485,20 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					FileUtil::makeWritable($filename);
 			
 					if (file_exists($filename)) {
-						$style->update(['image' => 'stylePreview-'.$style->styleID.$fileExtension]);
+						try {
+							if (($imageData = getimagesize($filename)) !== false) {
+								switch ($imageData[2]) {
+									case IMG_PNG:
+									case IMG_JPEG:
+									case IMG_JPG:
+									case IMG_GIF:
+										$style->update(['image' => 'stylePreview-'.$style->styleID.$fileExtension]);
+								}
+							}
+						}
+						catch (SystemException $e) {
+							// broken image
+						}
 					}
 				}
 			}
