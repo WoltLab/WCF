@@ -184,12 +184,21 @@ function escapeString($string) {
  *
  * @param	Exception	$e
  */
-function handleException(\Exception $e) {
-	if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
-		$e->show();
-		exit;
-	}
-	
+function handleException($e) {
+		try {
+			if (!($e instanceof \Exception)) throw $e;
+			
+			if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
+				$e->show();
+				exit;
+			}
+		}
+		catch (\Throwable $exception) {
+			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		}
+		catch (\Exception $exception) {
+			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		}
 	print $e;
 }
 
