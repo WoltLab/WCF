@@ -8,7 +8,7 @@ use wcf\data\user\UserList;
  * IObjectListCondition::addObjectListCondition().
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -17,7 +17,7 @@ use wcf\data\user\UserList;
  */
 trait TObjectListUserCondition {
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @inheritDoc
 	 */
 	public function addUserCondition(Condition $condition, UserList $userList) {
 		$this->addObjectListCondition($userList, $condition->conditionData);

@@ -21,26 +21,26 @@ class UserTimestampPropertyCondition extends AbstractTimestampCondition implemen
 	use TObjectUserCondition;
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractTimestampCondition::$className
+	 * @inheritDoc
 	 */
 	protected $className = User::class;
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractTimestampCondition::getLanguageItemPrefix()
+	 * @inheritDoc
 	 */
 	protected function getLanguageItemPrefix() {
 		return 'wcf.user.condition';
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractTimestampCondition::getPropertyName()
+	 * @inheritDoc
 	 */
 	protected function getPropertyName() {
 		return $this->getDecoratedObject()->propertyname;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;

@@ -17,7 +17,7 @@ use wcf\util\ArrayUtil;
 abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	/**
 	 * selected values
-	 * @var	mixed[]
+	 * @var	array
 	 */
 	protected $fieldValue = [];
 	

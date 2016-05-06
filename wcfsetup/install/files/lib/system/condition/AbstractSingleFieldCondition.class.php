@@ -78,7 +78,7 @@ abstract class AbstractSingleFieldCondition extends AbstractCondition implements
 	abstract protected function getFieldElement();
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		return <<<HTML

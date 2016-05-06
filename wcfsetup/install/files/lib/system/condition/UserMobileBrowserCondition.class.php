@@ -9,7 +9,7 @@ use wcf\util\UserUtil;
  * Condition implementation if it is the active user uses a mobile browser.
  * 
  * @author	Joshua Ruesweg, Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -17,7 +17,7 @@ use wcf\util\UserUtil;
  */
 class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements IContentCondition {
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
+	 * @inheritDoc
 	 */
 	protected $label = 'wcf.user.condition.mobileBrowser';
 	
@@ -34,22 +34,22 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
 	protected $usesNoMobileBrowser = 0;
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		if ($this->usesMobileBrowser || $this->usesNoMobileBrowser) {
-			return array(
+			return [
 				// if notUseMobileBrowser is selected usesMobileBrowser is 0
 				// otherwise notUseMobileBrowser is 1
 				'usesMobileBrowser' => $this->usesMobileBrowser
-			);
+			];
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getHTML()
+	 * @inheritDoc
 	 */
 	public function getFieldElement() {
 		$usesMobileBrowserLabel = WCF::getLanguage()->get('wcf.user.condition.mobileBrowser.usesMobileBrowser');
@@ -71,7 +71,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['usesMobileBrowser'])) $this->usesMobileBrowser = 1;
@@ -79,7 +79,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->usesMobileBrowser = 0;
@@ -87,7 +87,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		$this->usesMobileBrowser = $condition->usesMobileBrowser;
@@ -95,7 +95,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if ($this->usesMobileBrowser && $this->usesNoMobileBrowser) {
@@ -106,7 +106,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		return (($condition->usesMobileBrowser && UserUtil::usesMobileBrowser()) || (!$condition->usesMobileBrowser && !UserUtil::usesMobileBrowser()));

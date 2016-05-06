@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Abstract implementation of a condition for an integer value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -52,10 +52,10 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 	protected $propertyName = '';
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
-		$data = array();
+		$data = [];
 		
 		if ($this->lessThan !== null) {
 			$data['lessThan'] = $this->lessThan;
@@ -72,34 +72,34 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::getData()
+	 * @inheritDoc
 	 */
 	protected function getErrorMessageElement() {
 		if ($this->errorMessage) {
 			$errorMessage = '';
 			switch ($this->errorMessage) {
 				case 'wcf.condition.greaterThan.error.maxValue':
-					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, array(
+					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, [
 						'maxValue' => $this->maxValue - 1
-					));
+					]);
 				break;
 				
 				case 'wcf.condition.lessThan.error.maxValue':
-					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, array(
+					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, [
 						'maxValue' => $this->maxValue
-					));
+					]);
 				break;
 				
 				case 'wcf.condition.greaterThan.error.minValue':
-					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, array(
+					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, [
 						'minValue' => $this->minValue
-					));
+					]);
 				break;
 				
 				case 'wcf.condition.lessThan.error.minValue':
-					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, array(
+					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, [
 						'minValue' => $this->minValue + 1
-					));
+					]);
 				break;
 				
 				default:
@@ -114,7 +114,7 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getFieldElement()
+	 * @inheritDoc
 	 */
 	public function getFieldElement() {
 		$greaterThanPlaceHolder = WCF::getLanguage()->get('wcf.condition.greaterThan');
@@ -190,7 +190,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['lessThan_'.$this->getIdentifier()]) && strlen($_POST['lessThan_'.$this->getIdentifier()])) $this->lessThan = intval($_POST['lessThan_'.$this->getIdentifier()]);
@@ -198,7 +198,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->lessThan = null;
@@ -206,7 +206,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		$this->lessThan = $condition->lessThan;
@@ -214,7 +214,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if ($this->lessThan !== null) {

@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
+use wcf\system\exception\InvalidArgumentException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -44,11 +45,13 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	protected $startTime = '';
 	
 	/**
-	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
+	 * @inheritDoc
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		$className = $this->getListClassName();
-		if (!($objectList instanceof $className)) return;
+		if (!($objectList instanceof $className)) {
+			throw new InvalidArgumentException("Object list is no instance of '{$className}', instance of '".get_class($objectList)."' given.");
+		}
 		
 		$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' <> ?', [0]);
 		if (isset($conditionData['endTime'])) {
@@ -60,7 +63,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IObjectCondition::checkObject()
+	 * @inheritDoc
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData) {
 		$className = $this->getClassName();
@@ -86,10 +89,10 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
-		$data = array();
+		$data = [];
 		
 		if (strlen($this->startTime)) {
 			$data['startTime'] = $this->startTime;
@@ -106,7 +109,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getFieldElement()
+	 * @inheritDoc
 	 */
 	protected function getFieldElement() {
 		$start = WCF::getLanguage()->get('wcf.date.period.start');
@@ -119,7 +122,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getLabel()
+	 * @inheritDoc
 	 */
 	protected function getLabel() {
 		return WCF::getLanguage()->get($this->getLanguageItemPrefix().'.'.$this->getPropertyName());
@@ -151,7 +154,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST[$this->getPropertyName().'EndTime'])) $this->endTime = $_POST[$this->getPropertyName().'EndTime'];
@@ -159,7 +162,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->endTime = '';
@@ -167,7 +170,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		if ($condition->endTime) {
@@ -179,7 +182,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$endTime = $startTime = null;

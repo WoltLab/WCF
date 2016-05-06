@@ -2,13 +2,14 @@
 namespace wcf\system\condition;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
+use wcf\system\exception\InvalidArgumentException;
 
 /**
  * Abstract condition implementation for check a text-typed property of a database
  * object.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -36,11 +37,13 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	protected $propertyName = '';
 	
 	/**
-	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
+	 * @inheritDoc
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		$className = $this->getListClassName();
-		if (!($objectList instanceof $className)) return;
+		if (!($objectList instanceof $className)) {
+			throw new InvalidArgumentException("Object list is no instance of '{$className}', instance of '".get_class($objectList)."' given.");
+		}
 		
 		if ($this->supportsMultipleValues) {
 			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' IN (?)', [$conditionData[$this->fieldName]]);
@@ -51,7 +54,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IObjectCondition::checkObject()
+	 * @inheritDoc
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData) {
 		$className = $this->getClassName();
@@ -70,7 +73,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		$value = parent::getData();

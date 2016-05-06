@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Condition implementation for the current time.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -24,12 +24,12 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	protected $endTime = '00:00';
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$label
+	 * @inheritDoc
 	 */
-	protected $labels = array(
+	protected $labels = [
 		'time' => 'wcf.date.time',
 		'timezone' => 'wcf.date.timezone'
-	);
+	];
 	
 	/**
 	 * start time
@@ -44,10 +44,10 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	protected $timezone = 0;
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
-		$data = array();
+		$data = [];
 		
 		if ($this->startTime) {
 			$data['startTime'] = $this->startTime;
@@ -68,7 +68,7 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		$start = WCF::getLanguage()->get('wcf.date.period.start');
@@ -111,7 +111,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['endTime'])) $this->endTime = StringUtil::trim($_POST['endTime']);
@@ -120,7 +120,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->endTime = '00:00';
@@ -129,7 +129,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		if ($condition->endTime) {
@@ -144,7 +144,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if ($this->startTime == '00:00' && $this->endTime == '00:00') {
@@ -186,7 +186,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		$timezone = WCF::getUser()->getTimeZone();

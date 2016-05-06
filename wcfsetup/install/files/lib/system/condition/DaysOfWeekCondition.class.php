@@ -8,7 +8,7 @@ use wcf\util\DateUtil;
  * Condition implementation for the days of the week.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -16,25 +16,25 @@ use wcf\util\DateUtil;
  */
 class DaysOfWeekCondition extends AbstractMultiSelectCondition implements IContentCondition {
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
+	 * @inheritDoc
 	 */
 	protected $description = 'wcf.global.multiSelect';
 	
 	/**
-	 * @see	wcf\system\condition\AbstractSelectCondition::$fieldName
+	 * @inheritDoc
 	 */
 	protected $fieldName = 'daysOfWeek';
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
+	 * @inheritDoc
 	 */
 	protected $label = 'wcf.date.daysOfWeek';
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSelectCondition::getOptions()
+	 * @inheritDoc
 	 */
 	protected function getOptions() {
-		$options = array();
+		$options = [];
 		
 		$daysOfWeek = DateUtil::getWeekDays();
 		foreach ($daysOfWeek as $index => $day) {
@@ -45,7 +45,7 @@ class DaysOfWeekCondition extends AbstractMultiSelectCondition implements IConte
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		$date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
