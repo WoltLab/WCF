@@ -1560,8 +1560,8 @@ CREATE TABLE wcf1_user_profile_menu_item (
 DROP TABLE IF EXISTS wcf1_user_profile_visitor;
 CREATE TABLE wcf1_user_profile_visitor (
 	visitorID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	ownerID INT(10),
-	userID INT(10),
+	ownerID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
 	time INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (ownerID, userID),
 	KEY (time)
