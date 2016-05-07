@@ -110,7 +110,7 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * regular expression to find string separators
-	 * @var	\wcf\system\Regex
+	 * @var	string
 	 */
 	public $separatorsRegEx = '';
 	
