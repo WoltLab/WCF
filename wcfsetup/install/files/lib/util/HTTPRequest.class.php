@@ -94,7 +94,7 @@ final class HTTPRequest {
 	
 	/**
 	 * request headers
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	private $headers = array();
 	

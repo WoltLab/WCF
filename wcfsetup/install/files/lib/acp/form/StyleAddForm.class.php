@@ -81,7 +81,7 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * list of color variables
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	public $colors = [];
 	

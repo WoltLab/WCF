@@ -20,7 +20,7 @@ final class StringStack {
 	
 	/**
 	 * local string stack
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	protected static $stringStack = array();
 	

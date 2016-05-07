@@ -23,7 +23,7 @@ class ObjectTypeCache extends SingletonFactory {
 	
 	/**
 	 * object type definition ids grouped by category name
-	 * @var	integer[]
+	 * @var	integer[][]
 	 */
 	protected $definitionsByCategory = array();
 	
