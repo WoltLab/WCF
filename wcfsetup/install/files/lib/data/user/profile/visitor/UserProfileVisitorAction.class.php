@@ -62,10 +62,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 			ORDER BY	time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
 		$statement->execute(array($this->parameters['userID']));
-		$userIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$userIDs[] = $row['userID'];
-		}
+		$userIDs = $statement->fetchColumns();
 		
 		// create group
 		$group = new GroupedUserList();

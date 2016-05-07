@@ -168,9 +168,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$this->userID]);
-					while ($row = $statement->fetchArray()) {
-						$this->followingUserIDs[] = $row['followUserID'];
-					}
+					$this->followingUserIDs = $statement->fetchColumns();
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update($this->userID, 'followingUserIDs', serialize($this->followingUserIDs));
@@ -204,9 +202,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 						WHERE	followUserID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$this->userID]);
-					while ($row = $statement->fetchArray()) {
-						$this->followerUserIDs[] = $row['userID'];
-					}
+					$this->followerUserIDs = $statement->fetchColumns();
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update($this->userID, 'followerUserIDs', serialize($this->followerUserIDs));
@@ -240,9 +236,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$this->userID]);
-					while ($row = $statement->fetchArray()) {
-						$this->ignoredUserIDs[] = $row['ignoreUserID'];
-					}
+					$this->ignoredUserIDs = $statement->fetchColumns();
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update($this->userID, 'ignoredUserIDs', serialize($this->ignoredUserIDs));

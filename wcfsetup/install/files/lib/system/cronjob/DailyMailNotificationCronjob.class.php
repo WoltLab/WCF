@@ -32,7 +32,6 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 		
 		// get user ids
-		$userIDs = array();
 		$sql = "SELECT	DISTINCT userID
 			FROM	wcf".WCF_N."_user_notification
 			WHERE	mailNotified = ?
@@ -44,9 +43,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			TIME_NOW - 3600 * 23,
 			0
 		));
-		while ($row = $statement->fetchArray()) {
-			$userIDs[] = $row['userID'];
-		}
+		$userIDs = $statement->fetchColumns();
 		if (empty($userIDs)) return;
 		
 		// get users

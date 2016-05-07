@@ -464,7 +464,6 @@ class PackageInstallationScheduler {
 		
 		// get highest version of the required major release
 		if (preg_match('/(\d+\.\d+\.)/', $version, $match)) {
-			$packageVersions = array();
 			$sql = "SELECT	DISTINCT packageVersion
 				FROM	wcf".WCF_N."_package_update_version
 				WHERE	packageUpdateID IN (
@@ -478,9 +477,7 @@ class PackageInstallationScheduler {
 				$package->package,
 				$match[1].'%'
 			));
-			while ($row = $statement->fetchArray()) {
-				$packageVersions[] = $row['packageVersion'];
-			}
+			$packageVersions = $statement->fetchColumns();
 			
 			if (count($packageVersions) > 1) {
 				// sort by version number

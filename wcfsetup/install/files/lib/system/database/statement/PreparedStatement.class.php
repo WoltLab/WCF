@@ -160,6 +160,21 @@ class PreparedStatement {
 	}
 	
 	/**
+	 * Returns a specific column for all of the remaining rows.
+	 * 
+	 * @param	integer		$columnNumber
+	 * @return	array
+	 */
+	public function fetchColumns($columnNumber = 0) {
+		$columns = [];
+		while ($column = $this->fetchColumn($columnNumber)) {
+			$columns[] = $column;
+		}
+		
+		return $columns;
+	}
+	
+	/**
 	 * Fetches the next row from a result set in a database object.
 	 * 
 	 * @param	string			$className

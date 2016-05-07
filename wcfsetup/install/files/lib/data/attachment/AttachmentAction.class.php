@@ -245,7 +245,6 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		$this->parameters['attachmentIDs'] = ArrayUtil::toIntegerArray($this->parameters['attachmentIDs']);
 		
 		// check attachment ids
-		$attachmentIDs = [];
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("attachmentID IN (?)", [$this->parameters['attachmentIDs']]);
 		$conditions->add("objectTypeID = ?", [$objectType->objectTypeID]);
@@ -262,9 +261,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$attachmentIDs[] = $row['attachmentID'];
-		}
+		$attachmentIDs = $statement->fetchColumns();
 		
 		foreach ($this->parameters['attachmentIDs'] as $attachmentID) {
 			if (!in_array($attachmentID, $attachmentIDs)) {

@@ -258,10 +258,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					" . $conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditionBuilder->getParameters());
-				$pageIDs = [];
-				while ($row = $statement->fetchArray()) {
-					$pageIDs[] = $row['pageID'];
-				}
+				$pageIDs = $statement->fetchColumns();
 				
 				// save page ids
 				foreach ($pageIDs as $pageID) {

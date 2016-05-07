@@ -454,15 +454,13 @@ class Box extends DatabaseObject {
 	 */
 	public function getPageIDs() {
 		if ($this->pageIDs === null) {
-			$this->pageIDs = [];
 			$sql = "SELECT  pageID
 				FROM    wcf" . WCF_N . "_box_to_page
 				WHERE   boxID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->boxID]);
-			while ($pageID = $statement->fetchColumn()) {
-				$this->pageIDs[] = $pageID;
-			}
+			
+			$this->pageIDs = $statement->fetchColumns();
 		}
 		
 		return $this->pageIDs;

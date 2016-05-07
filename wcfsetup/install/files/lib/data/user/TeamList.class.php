@@ -51,9 +51,7 @@ class TeamList extends UserProfileList {
 			ORDER BY	user_group.priority DESC".(!empty($this->sqlOrderBy) ? ", ".$this->sqlOrderBy : '');
 		$statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
 		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$this->objectIDs[] = $row['objectID'];
-		}
+		$this->objectIDs = $statement->fetchColumns();
 	}
 	
 	/**

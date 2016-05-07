@@ -132,10 +132,7 @@ class MenuAddForm extends AbstractForm {
 				" . $conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
-			$this->pageIDs = [];
-			while ($row = $statement->fetchArray()) {
-				$this->pageIDs[] = $row['pageID'];
-			}
+			$this->pageIDs = $statement->fetchColumns();
 		}
 	}
 	

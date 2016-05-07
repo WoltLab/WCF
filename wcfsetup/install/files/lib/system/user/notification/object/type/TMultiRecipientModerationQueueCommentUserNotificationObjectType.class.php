@@ -30,8 +30,6 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType {
 			return [];
 		}
 		
-		$recipientIDs = [];
-		
 		// 1. fetch assigned user
 		// 2. fetch users who commented on the moderation queue entry
 		// 3. fetch users who responded to a comment on the moderation queue entry
@@ -65,9 +63,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType {
 			$comment->objectID,
 			$objectTypeID
 		]);
-		while ($userID = $statement->fetchColumn()) {
-			$recipientIDs[] = $userID;
-		}
+		$recipientIDs = $statement->fetchColumns();
 		
 		// make sure that all users can (still) access the moderation queue entry
 		if (!empty($recipientIDs)) {
@@ -80,11 +76,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType {
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
-			
-			$recipientIDs = [];
-			while ($userID = $statement->fetchColumn()) {
-				$recipientIDs[] = $userID;
-			}
+			$recipientIDs = $statement->fetchColumns();
 			
 			// make sure that all users (still) have permission to access moderation
 			if (!$recipientIDs) {

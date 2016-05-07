@@ -233,7 +233,6 @@ class UserListPage extends SortablePage {
 	 */
 	protected function readUsers() {
 		// get user ids
-		$userIDs = [];
 		$sql = "SELECT		user_table.userID
 			FROM		wcf".WCF_N."_user user_table
 			".(isset($this->options[$this->sortField]) ? "LEFT JOIN wcf".WCF_N."_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)" : '')."
@@ -241,9 +240,7 @@ class UserListPage extends SortablePage {
 			ORDER BY	".(($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'user_option_value.userOption'.$this->options[$this->sortField]->optionID : $this->sortField)." ".$this->sortOrder;
 		$statement = WCF::getDB()->prepareStatement($sql, $this->itemsPerPage, ($this->pageNo - 1) * $this->itemsPerPage);
 		$statement->execute($this->conditions->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$userIDs[] = $row['userID'];
-		}
+		$userIDs = $statement->fetchColumns();
 		
 		// get user data
 		if (!empty($userIDs)) {

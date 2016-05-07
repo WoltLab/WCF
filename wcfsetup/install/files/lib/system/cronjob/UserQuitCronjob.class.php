@@ -21,7 +21,6 @@ class UserQuitCronjob extends AbstractCronjob {
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
-		$userIDs = array();
 		$sql = "SELECT	userID
 			FROM	wcf".WCF_N."_user
 			WHERE	quitStarted > ?
@@ -31,9 +30,7 @@ class UserQuitCronjob extends AbstractCronjob {
 			0,
 			(TIME_NOW - 7 * 24 * 3600)
 		));
-		while ($row = $statement->fetchArray()) {
-			$userIDs[] = $row['userID'];
-		}
+		$userIDs = $statement->fetchColumns();
 		
 		if (!empty($userIDs)) {
 			$action = new UserAction($userIDs, 'delete');

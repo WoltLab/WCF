@@ -22,7 +22,6 @@ class AttachmentCleanUpCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 		
 		// delete orphaned attachments
-		$attachmentIDs = array();
 		$sql = "SELECT	attachmentID
 			FROM	wcf".WCF_N."_attachment
 			WHERE	objectID = ?
@@ -32,9 +31,7 @@ class AttachmentCleanUpCronjob extends AbstractCronjob {
 			0,
 			(TIME_NOW - 86400)
 		));
-		while ($row = $statement->fetchArray()) {
-			$attachmentIDs[] = $row['attachmentID'];
-		}
+		$attachmentIDs = $statement->fetchColumns();
 		
 		if (!empty($attachmentIDs)) {
 			AttachmentEditor::deleteAll($attachmentIDs);

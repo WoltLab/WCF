@@ -53,7 +53,6 @@ class UserObjectWatchHandler extends SingletonFactory {
 		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
 		
 		// get subscriber
-		$userIDs = array();
 		$conditionsBuilder = new PreparedStatementConditionBuilder();
 		$conditionsBuilder->add('objectTypeID = ?', array($objectTypeObj->objectTypeID));
 		$conditionsBuilder->add('objectID IN (?)', array($objectIDs));
@@ -62,9 +61,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 			".$conditionsBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionsBuilder->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$userIDs[] = $row['userID'];
-		}
+		$userIDs = $statement->fetchColumns();
 		
 		if (!empty($userIDs)) {
 			// reset user storage

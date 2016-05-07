@@ -133,10 +133,7 @@ class EditHistoryManager extends SingletonFactory {
 			$userIDs
 		));
 		
-		$entryIDs = array();
-		while ($entryID = $statement->fetchColumn()) {
-			$entryIDs[] = $entryID;
-		}
+		$entryIDs = $statement->fetchColumns();
 		if (empty($entryIDs)) return;
 		
 		$list = new EditHistoryEntryList();

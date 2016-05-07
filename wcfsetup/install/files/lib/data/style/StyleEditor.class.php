@@ -420,9 +420,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						WHERE	templateGroupID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$style->templateGroupID]);
-					while ($row = $statement->fetchArray()) {
-						$knownTemplates[] = $row['templateName'];
-					}
+					$knownTemplates = $statement->fetchColumns();
 				}
 				
 				// copy templates

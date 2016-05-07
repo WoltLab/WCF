@@ -270,15 +270,12 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 */
 	public function getBoxIDs() {
 		if ($this->boxIDs === null) {
-			$this->boxIDs = [];
 			$sql = "SELECT  boxID
 				FROM    wcf" . WCF_N . "_box_to_page
 				WHERE   pageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->pageID]);
-			while ($row = $statement->fetchArray()) {
-				$this->boxIDs[] = $row['boxID'];
-			}
+			$this->boxIDs = $statement->fetchColumns();
 		}
 		
 		return $this->boxIDs;

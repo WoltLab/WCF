@@ -97,9 +97,7 @@ class UserQuickSearchAction extends AbstractAction {
 					WHERE		banned = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute(array(1));
-				while ($row = $statement->fetchArray()) {
-					$this->matches[] = $row['userID'];
-				}
+				$this->matches = $statement->fetchColumns();
 				break;
 				
 			case 'newest':
@@ -113,9 +111,7 @@ class UserQuickSearchAction extends AbstractAction {
 					ORDER BY	user_table.registrationDate DESC";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute();
-				while ($row = $statement->fetchArray()) {
-					$this->matches[] = $row['userID'];
-				}
+				$this->matches = $statement->fetchColumns();
 				break;
 			
 			case 'disabled':
@@ -129,9 +125,7 @@ class UserQuickSearchAction extends AbstractAction {
 					ORDER BY	user_table.registrationDate DESC";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute(array(0));
-				while ($row = $statement->fetchArray()) {
-					$this->matches[] = $row['userID'];
-				}
+				$this->matches = $statement->fetchColumns();
 				break;
 			
 			case 'disabledAvatars':
@@ -142,9 +136,7 @@ class UserQuickSearchAction extends AbstractAction {
 					WHERE		disableAvatar = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute(array(1));
-				while ($row = $statement->fetchArray()) {
-					$this->matches[] = $row['userID'];
-				}
+				$this->matches = $statement->fetchColumns();
 				break;
 					
 			case 'disabledSignatures':
@@ -155,9 +147,7 @@ class UserQuickSearchAction extends AbstractAction {
 					WHERE		disableSignature = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute(array(1));
-				while ($row = $statement->fetchArray()) {
-					$this->matches[] = $row['userID'];
-				}
+				$this->matches = $statement->fetchColumns();
 				break;
 		}
 		

@@ -89,10 +89,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$queueIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$queueIDs[] = $row['queueID'];
-		}
+		$queueIDs = $statement->fetchColumns();
 		
 		if (!empty($queueIDs)) {
 			$queueAction = new ModerationQueueAction($queueIDs, 'delete');

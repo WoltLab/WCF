@@ -51,11 +51,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 			WHERE	optionType = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array('BBCodeSelect'));
-		
-		$optionIDs = array();
-		while ($optionID = $statement->fetchColumn()) {
-			$optionIDs[] = $optionID;
-		}
+		$optionIDs = $statement->fetchColumns();
 		
 		if (!empty($optionIDs)) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
