@@ -187,7 +187,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($text, $x, $y, $font, $size, $opacity = 1) {
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1.0) {
 		$draw = new \ImagickDraw();
 		$draw->setFillOpacity($opacity);
 		$draw->setFillColor($this->color);
@@ -214,7 +214,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
 	 */
-	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1) {
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0) {
 		$draw = new \ImagickDraw();
 		$draw->setFont($font);
 		$draw->setFontSize($size);

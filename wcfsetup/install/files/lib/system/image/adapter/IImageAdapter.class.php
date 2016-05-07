@@ -93,7 +93,7 @@ interface IImageAdapter {
 	 * @see		\wcf\system\image\adapter\IImageAdapter::getImage()
 	 * @see		\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
-	public function drawText($text, $x, $y, $font, $size, $opacity = 1);
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1.0);
 	
 	/**
 	 * Draws (multiple lines of) text on the image at the given relative position
@@ -108,7 +108,7 @@ interface IImageAdapter {
 	 * @param	integer		$size		font size
 	 * @param	float		$opacity
 	 */
-	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1);
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0);
 	
 	/**
 	 * Returns true if the given text fits the image.

@@ -185,7 +185,7 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($text, $x, $y, $font, $size, $opacity = 1) {
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1.0) {
 		// set opacity
 		$color = imagecolorallocatealpha($this->image, $this->colorData['red'], $this->colorData['green'], $this->colorData['blue'], (1 - $opacity) * 127);
 		
@@ -196,7 +196,7 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
 	 */
-	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1) {
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0) {
 		// split text into multiple lines
 		$lines = explode("\n", StringUtil::unifyNewlines($text));
 		

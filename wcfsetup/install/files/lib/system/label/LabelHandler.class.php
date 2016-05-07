@@ -197,9 +197,9 @@ class LabelHandler extends SingletonFactory {
 	/**
 	 * Returns all assigned labels, optionally filtered to validate permissions.
 	 * 
-	 * @param	integer			$objectTypeID
-	 * @param	integer[]		$objectIds
-	 * @param	boolean			$validatePermissions
+	 * @param	integer		$objectTypeID
+	 * @param	integer[]	$objectIDs
+	 * @param	boolean		$validatePermissions
 	 * @return	array
 	 */
 	public function getAssignedLabels($objectTypeID, array $objectIDs, $validatePermissions = true) {
@@ -343,8 +343,8 @@ class LabelHandler extends SingletonFactory {
 	/**
 	 * Removes all assigned labels for given object ids.
 	 * 
-	 * @param	integer			$objectTypeID
-	 * @param	integer[]		$objectID
+	 * @param	integer		$objectTypeID
+	 * @param	integer[]	$objectIDs
 	 */
 	public function removeLabels($objectTypeID, array $objectIDs) {
 		$conditions = new PreparedStatementConditionBuilder();

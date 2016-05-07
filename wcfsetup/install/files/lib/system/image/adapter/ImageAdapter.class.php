@@ -128,7 +128,7 @@ class ImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($text, $x, $y, $font, $size, $opacity = 1) {
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1.0) {
 		if (!$this->adapter->hasColor()) {
 			throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
 		}
@@ -144,7 +144,7 @@ class ImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
 	 */
-	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1) {
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0) {
 		if (!$this->adapter->hasColor()) {
 			throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
 		}

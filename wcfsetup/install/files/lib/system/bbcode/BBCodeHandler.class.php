@@ -94,7 +94,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Sets the allowed BBCodes.
 	 * 
-	 * @param	string[]
+	 * @param	string[]	$bbCodes
 	 */
 	public function setAllowedBBCodes(array $bbCodes) {
 		$this->allowedBBCodes = $bbCodes;

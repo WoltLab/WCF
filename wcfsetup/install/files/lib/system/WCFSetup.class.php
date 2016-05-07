@@ -25,7 +25,7 @@ use wcf\util\UserUtil;
 use wcf\util\XML;
 
 // define
-define('PACKAGE_ID', '0');
+define('PACKAGE_ID', 0);
 define('HTTP_ENABLE_NO_CACHE_HEADERS', 0);
 define('HTTP_ENABLE_GZIP', 0);
 define('HTTP_GZIP_LEVEL', 0);
