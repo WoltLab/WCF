@@ -39,7 +39,7 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 			$parameters['userID'] = null;
 		}
 		
-		return parent::update($parameters);
+		parent::update($parameters);
 	}
 	
 	/**

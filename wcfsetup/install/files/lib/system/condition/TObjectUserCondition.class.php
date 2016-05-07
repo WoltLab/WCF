@@ -19,6 +19,6 @@ trait TObjectUserCondition {
 	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		$this->checkObject($user, $condition->conditionData);
+		return $this->checkObject($user, $condition->conditionData);
 	}
 }
