@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\user\UserList;
 
 /**
  * Caches a list of the most active members.

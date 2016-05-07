@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\page\PageEditor;
 use wcf\system\exception\SystemException;

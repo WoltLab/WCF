@@ -2,7 +2,6 @@
 namespace wcf\system\package\plugin;
 use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
-use wcf\data\object\type\ObjectType;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -12,11 +11,12 @@ use wcf\system\WCF;
  * Installs, updates and deletes boxes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
  * @category	Community Framework
+ * @since	2.2
  */
 class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
