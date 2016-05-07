@@ -343,7 +343,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Can manage Smilies]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Delay for Comments]]></item>
-		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Seconds allowed between creating two comments or replies. Use 0 to disable.]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Seconds required between creating two comments or replies. Use 0 to disable.]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Can use Smilies]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Can use HTML]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
@@ -2284,14 +2284,14 @@ Errors are:
 		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Dislikes Received]]></item>
 		<item name="wcf.like.dislikesGiven"><![CDATA[Dislikes Given]]></item>
-		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} and {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} and {if $others == 1}one{else}{#$others}{/if} other{if $others > 1}s{/if}{/if} Like{if $users.length == 1}s{/if} this.{/literal}]]></item>
+		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} and {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} and {if $others == 1}one{else}{#$others}{/if} other{if $others > 1}s{/if}{/if} like{if $users.length == 1}s{/if} this.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
 		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
 		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[More Likes]]></item>
-		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are no more Likes]]></item>
+		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are no more likes]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
 	</category>
@@ -3172,9 +3172,9 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} wrote comments on your wall:
 {link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.comment.like.title"><![CDATA[Likes a comment (Wall)]]></item>
-		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} users Like your comment (Wall)]]></item>
-		<item name="wcf.user.notification.comment.like.message"><![CDATA[{@$author->getAnchorTag()} Likes your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall{/link}">{$owner->username}’s wall</a>{/if}.]]></item>
-		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} Like your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall{/link}">{$owner->username}’s wall</a>{/if}.]]></item>
+		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} users like your comment (Wall)]]></item>
+		<item name="wcf.user.notification.comment.like.message"><![CDATA[{@$author->getAnchorTag()} likes your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall{/link}">{$owner->username}’s wall</a>{/if}.]]></item>
+		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} like your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall{/link}">{$owner->username}’s wall</a>{/if}.]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a reply to your comment on <a href="{link controller='User' object=$owner}#wall{/link}">{if $owner->userID == $__wcf->getUser()->userID}your{else}{$owner->username}’s{/if} wall</a>.]]></item>
@@ -3188,9 +3188,9 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.commentResponse.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to your comment on {if $owner->userID == $__wcf->getUser()->userID}your{else}{$owner->username}'s{/if} wall:
 {link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title"><![CDATA[Likes your reply to a comment (Wall)]]></item>
-		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} users Like your reply to a comment (Wall)]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[{@$author->getAnchorTag()} Likes your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall{/link}">{$owner->username}’s wall</a>{/if}.]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} Like your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall{/link}">{$owner->username}’s wall</a>{/if}.]]></item>
+		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} users like your reply to a comment (Wall)]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[{@$author->getAnchorTag()} likes your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall{/link}">{$owner->username}’s wall</a>{/if}.]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} like your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall{/link}">{$owner->username}’s wall</a>{/if}.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title.stacked"><![CDATA[{#$timesTriggered} new replies (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a reply to {$commentAuthor->username}’s comment on <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>.]]></item>
@@ -3206,8 +3206,8 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Notify when I receive new comments on my wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[Notify when I receive new replies to my comments]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Notify when I receive new replies to comments on my wall]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Notify when my comments are Liked]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Notify when replies to my comments are Liked]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Notify when my comments are liked]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Notify when replies to my comments are liked]]></item>
 	</category>
 	
 	<category name="wcf.user.profile">
