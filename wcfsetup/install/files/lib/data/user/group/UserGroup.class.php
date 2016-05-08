@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\user\group;
-use wcf\data\ITitledObject;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\cache\builder\UserGroupCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
