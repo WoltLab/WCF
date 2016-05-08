@@ -628,7 +628,7 @@ class SessionHandler extends SingletonFactory {
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->user->userID));
-			$groupIDs = $statement->fetchColumns();
+			$groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		}
 		else {
 			$groupIDs = $this->user->getGroupIDs();
@@ -671,7 +671,7 @@ class SessionHandler extends SingletonFactory {
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->user->userID));
-			$this->languageIDs = $statement->fetchColumns();
+			$this->languageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		}
 		else {
 			$this->languageIDs = $this->user->getLanguageIDs();

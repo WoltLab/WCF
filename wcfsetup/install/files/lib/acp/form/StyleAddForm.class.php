@@ -336,7 +336,7 @@ class StyleAddForm extends AbstractForm {
 			FROM	wcf".WCF_N."_style_variable";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$variables = $statement->fetchColumns();
+		$variables = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideScss']));
 		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$');

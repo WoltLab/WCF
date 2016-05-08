@@ -42,7 +42,7 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 			ORDER BY	time ASC, responseID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute(array($response->commentID));
-		$responseIDs = $statement->fetchColumns();
+		$responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		// update parent comment
 		$sql = "UPDATE	wcf".WCF_N."_comment

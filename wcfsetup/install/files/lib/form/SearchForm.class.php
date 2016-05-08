@@ -495,7 +495,7 @@ class SearchForm extends AbstractCaptchaForm {
 				WHERE	username ".($this->nameExactly ? "= ?" : "LIKE ?");
 			$statement = WCF::getDB()->prepareStatement($sql, 100);
 			$statement->execute(array($this->username.(!$this->nameExactly ? '%' : '')));
-			$userIDs = $statement->fetchColumns();
+			$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
 			if (empty($userIDs)) {
 				$this->throwNoMatchesException();

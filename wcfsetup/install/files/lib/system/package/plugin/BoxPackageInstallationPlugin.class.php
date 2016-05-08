@@ -345,7 +345,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
-			$pageIDs = $statement->fetchColumns();
+			$pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
 			// save page ids
 			foreach ($pageIDs as $pageID) {

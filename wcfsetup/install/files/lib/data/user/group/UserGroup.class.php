@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\group;
+use wcf\data\ITitledObject;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\UserGroupCacheBuilder;
@@ -25,7 +26,7 @@ use wcf\system\WCF;
  * @property-read	string		$userOnlineMarking
  * @property-read	integer		$showOnTeamPage
  */
-class UserGroup extends DatabaseObject {
+class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * group type everyone user group
 	 * @var	integer
@@ -370,5 +371,12 @@ class UserGroup extends DatabaseObject {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->groupName);
 	}
 }

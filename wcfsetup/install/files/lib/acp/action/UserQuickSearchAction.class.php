@@ -97,7 +97,7 @@ class UserQuickSearchAction extends AbstractAction {
 					WHERE		banned = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute(array(1));
-				$this->matches = $statement->fetchColumns();
+				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 				
 			case 'newest':
@@ -111,7 +111,7 @@ class UserQuickSearchAction extends AbstractAction {
 					ORDER BY	user_table.registrationDate DESC";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute();
-				$this->matches = $statement->fetchColumns();
+				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 			
 			case 'disabled':
@@ -125,7 +125,7 @@ class UserQuickSearchAction extends AbstractAction {
 					ORDER BY	user_table.registrationDate DESC";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute(array(0));
-				$this->matches = $statement->fetchColumns();
+				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 			
 			case 'disabledAvatars':
@@ -136,7 +136,7 @@ class UserQuickSearchAction extends AbstractAction {
 					WHERE		disableAvatar = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute(array(1));
-				$this->matches = $statement->fetchColumns();
+				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 					
 			case 'disabledSignatures':
@@ -147,7 +147,7 @@ class UserQuickSearchAction extends AbstractAction {
 					WHERE		disableSignature = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
 				$statement->execute(array(1));
-				$this->matches = $statement->fetchColumns();
+				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 		}
 		

@@ -460,7 +460,7 @@ class Box extends DatabaseObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->boxID]);
 			
-			$this->pageIDs = $statement->fetchColumns();
+			$this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		}
 		
 		return $this->pageIDs;

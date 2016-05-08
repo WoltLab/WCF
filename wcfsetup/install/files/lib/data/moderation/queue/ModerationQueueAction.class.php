@@ -120,7 +120,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			ORDER BY	moderation_queue.lastChangeTime DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute($conditions->getParameters());
-		$queueIDs = $statement->fetchColumns();
+		$queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		$queues = array();
 		if (!empty($queueIDs)) {

@@ -51,7 +51,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 			WHERE	optionType = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array('BBCodeSelect'));
-		$optionIDs = $statement->fetchColumns();
+		$optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($optionIDs)) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();

@@ -20,6 +20,7 @@ use wcf\system\WCF;
  * 
  * @method	boolean		closeCursor()
  * @method	mixed		fetch($fetch_style, $cursor_orientation = \PDO::FETCH_ORI_NEXT, $cursor_offset = 0)
+ * @method	array		fetchAll($fetch_style = \PDO::ATTR_DEFAULT_FETCH_MODE, $fetch_argument = null, $ctor_args = [])
  * @method	mixed		fetchColumn($column_number = 0)
  */
 class PreparedStatement {
@@ -157,21 +158,6 @@ class PreparedStatement {
 		$this->closeCursor();
 		
 		return $column;
-	}
-	
-	/**
-	 * Returns a specific column for all of the remaining rows.
-	 * 
-	 * @param	integer		$columnNumber
-	 * @return	array
-	 */
-	public function fetchColumns($columnNumber = 0) {
-		$columns = [];
-		while ($column = $this->fetchColumn($columnNumber)) {
-			$columns[] = $column;
-		}
-		
-		return $columns;
 	}
 	
 	/**

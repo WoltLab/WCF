@@ -43,7 +43,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			TIME_NOW - 3600 * 23,
 			0
 		));
-		$userIDs = $statement->fetchColumns();
+		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		if (empty($userIDs)) return;
 		
 		// get users

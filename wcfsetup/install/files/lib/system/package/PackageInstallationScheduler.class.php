@@ -477,7 +477,7 @@ class PackageInstallationScheduler {
 				$package->package,
 				$match[1].'%'
 			));
-			$packageVersions = $statement->fetchColumns();
+			$packageVersions = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
 			if (count($packageVersions) > 1) {
 				// sort by version number

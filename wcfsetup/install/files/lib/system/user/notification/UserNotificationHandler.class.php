@@ -156,7 +156,7 @@ class UserNotificationHandler extends SingletonFactory {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			$notificationIDs = $statement->fetchColumns();
+			$notificationIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
 			// filter array of existing notifications and remove values which
 			// do not have a notification from this author yet (inverse logic!)
@@ -706,7 +706,7 @@ class UserNotificationHandler extends SingletonFactory {
 		$statement->execute(array(
 			$objectTypeObj->objectTypeID
 		));
-		$eventIDs = $statement->fetchColumns();
+		$eventIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($eventIDs)) {
 			$conditions = new PreparedStatementConditionBuilder();
@@ -718,7 +718,7 @@ class UserNotificationHandler extends SingletonFactory {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			$userIDs = $statement->fetchColumns();
+			$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
 			// reset number of notifications
 			if (!empty($userIDs)) {

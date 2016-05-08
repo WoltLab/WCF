@@ -95,7 +95,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$groupIDs = $statement->fetchColumns();
+		$groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!UserGroup::isAccessibleGroup($groupIDs)) {
 			throw new PermissionDeniedException();

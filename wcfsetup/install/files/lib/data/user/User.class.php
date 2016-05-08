@@ -208,7 +208,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$this->userID]);
-					$this->groupIDs = $statement->fetchColumns();
+					$this->groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 					
 					// update storage data
 					if (!$skipCache) {
@@ -246,7 +246,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$this->userID]);
-					$this->languageIDs = $statement->fetchColumns();
+					$this->languageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update($this->userID, 'languageIDs', serialize($this->languageIDs));

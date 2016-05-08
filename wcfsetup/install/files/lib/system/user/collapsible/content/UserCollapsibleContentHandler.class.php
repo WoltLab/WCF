@@ -102,7 +102,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 						$objectTypeID,
 						WCF::getUser()->userID
 					));
-					$this->collapsedContent[$objectTypeID] = $statement->fetchColumns();
+					$this->collapsedContent[$objectTypeID] = $statement->fetchAll(\PDO::FETCH_COLUMN);
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'collapsedContent-'.$objectTypeID, serialize($this->collapsedContent[$objectTypeID]));

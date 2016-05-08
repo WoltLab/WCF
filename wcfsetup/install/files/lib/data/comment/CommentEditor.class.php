@@ -29,7 +29,7 @@ class CommentEditor extends DatabaseObjectEditor {
 			ORDER BY	time ASC, responseID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute(array($this->commentID));
-		$responseIDs = $statement->fetchColumns();
+		$responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		$this->update(array(
 			'responseIDs' => serialize($responseIDs)

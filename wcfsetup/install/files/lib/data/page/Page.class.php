@@ -275,7 +275,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 				WHERE   pageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->pageID]);
-			$this->boxIDs = $statement->fetchColumns();
+			$this->boxIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		}
 		
 		return $this->boxIDs;

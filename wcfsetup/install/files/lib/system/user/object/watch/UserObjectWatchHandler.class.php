@@ -61,7 +61,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 			".$conditionsBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionsBuilder->getParameters());
-		$userIDs = $statement->fetchColumns();
+		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($userIDs)) {
 			// reset user storage

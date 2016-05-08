@@ -132,7 +132,7 @@ class MenuAddForm extends AbstractForm {
 				" . $conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
-			$this->pageIDs = $statement->fetchColumns();
+			$this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		}
 	}
 	

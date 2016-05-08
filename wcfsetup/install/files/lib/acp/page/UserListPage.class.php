@@ -240,7 +240,7 @@ class UserListPage extends SortablePage {
 			ORDER BY	".(($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'user_option_value.userOption'.$this->options[$this->sortField]->optionID : $this->sortField)." ".$this->sortOrder;
 		$statement = WCF::getDB()->prepareStatement($sql, $this->itemsPerPage, ($this->pageNo - 1) * $this->itemsPerPage);
 		$statement->execute($this->conditions->getParameters());
-		$userIDs = $statement->fetchColumns();
+		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		// get user data
 		if (!empty($userIDs)) {

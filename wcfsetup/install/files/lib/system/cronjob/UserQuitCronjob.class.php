@@ -30,7 +30,7 @@ class UserQuitCronjob extends AbstractCronjob {
 			0,
 			(TIME_NOW - 7 * 24 * 3600)
 		));
-		$userIDs = $statement->fetchColumns();
+		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($userIDs)) {
 			$action = new UserAction($userIDs, 'delete');

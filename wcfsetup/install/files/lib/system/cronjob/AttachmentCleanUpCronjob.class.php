@@ -31,7 +31,7 @@ class AttachmentCleanUpCronjob extends AbstractCronjob {
 			0,
 			(TIME_NOW - 86400)
 		));
-		$attachmentIDs = $statement->fetchColumns();
+		$attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($attachmentIDs)) {
 			AttachmentEditor::deleteAll($attachmentIDs);

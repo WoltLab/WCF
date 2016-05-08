@@ -100,7 +100,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
-				$languageItemIDs = $statement->fetchColumns();
+				$languageItemIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				
 				$objectAction = new LanguageItemAction($languageItemIDs, 'delete');
 				$objectAction->executeAction();

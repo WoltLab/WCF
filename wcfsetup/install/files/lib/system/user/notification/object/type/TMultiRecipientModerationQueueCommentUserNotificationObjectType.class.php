@@ -63,7 +63,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType {
 			$comment->objectID,
 			$objectTypeID
 		]);
-		$recipientIDs = $statement->fetchColumns();
+		$recipientIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		// make sure that all users can (still) access the moderation queue entry
 		if (!empty($recipientIDs)) {
@@ -76,7 +76,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType {
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
-			$recipientIDs = $statement->fetchColumns();
+			$recipientIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
 			// make sure that all users (still) have permission to access moderation
 			if (!$recipientIDs) {

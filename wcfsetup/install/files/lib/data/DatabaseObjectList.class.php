@@ -165,7 +165,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 				".(!empty($this->sqlOrderBy) ? "ORDER BY ".$this->sqlOrderBy : '');
 		$statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
 		$statement->execute($this->getConditionBuilder()->getParameters());
-		$this->objectIDs = $statement->fetchColumns();
+		$this->objectIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 	}
 	
 	/**

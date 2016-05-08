@@ -261,7 +261,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$attachmentIDs = $statement->fetchColumns();
+		$attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		foreach ($this->parameters['attachmentIDs'] as $attachmentID) {
 			if (!in_array($attachmentID, $attachmentIDs)) {
