@@ -20,7 +20,7 @@
 		<item name="wcf.acp.ad.ad.description"><![CDATA[Ad HTML Code]]></item>
 		<item name="wcf.acp.ad.add"><![CDATA[Add Ad]]></item>
 		<item name="wcf.acp.ad.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.ad.conditions.description"><![CDATA[If you choose no conditions, the ad will be displayed for every user.]]></item>
+		<item name="wcf.acp.ad.conditions.description"><![CDATA[If no conditions are specified, the ad will display for every user.]]></item>
 		<item name="wcf.acp.ad.conditions.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the ad to be displayed.]]></item>
 		<item name="wcf.acp.ad.conditions.pointInTime"><![CDATA[Time]]></item>
@@ -348,7 +348,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Can use HTML]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.message.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
-		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[Selected BBCodes may be used by members of this group.]]></item>
+		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[All selected BBCodes can be used by the users of this user group.]]></item>
 		<item name="wcf.acp.group.option.admin.content.dashboard.canEditDashboard"><![CDATA[Can manage dashboard boxes]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Can manage user ranks]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Can manage activity points]]></item>
@@ -375,7 +375,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Can use HTML in signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Can use smilies in signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
-		<item name="wcf.acp.group.option.user.signature.allowedBBCodes.description"><![CDATA[All marked BBCodes can be used in the signature.]]></item>
+		<item name="wcf.acp.group.option.user.signature.allowedBBCodes.description"><![CDATA[All selected BBCodes can be used in the signature.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priority]]></item>
 		<item name="wcf.acp.group.priority.description"><![CDATA[Determines the display order on the team page, user rank, and “Users Online” marking based on highest priority.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[“Users Online” Marking]]></item>
@@ -660,7 +660,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.cssClassName.success"><![CDATA[Success Message]]></item>
 		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warning]]></item>
 		<item name="wcf.acp.notice.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.notice.conditions.description"><![CDATA[If you choose no conditions, the notice will be displayed for every user.]]></item>
+		<item name="wcf.acp.notice.conditions.description"><![CDATA[If no conditions are specified, the notice will display for every user.]]></item>
 		<item name="wcf.acp.notice.conditions.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the notice to be displayed.]]></item>
 		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Time]]></item>
@@ -675,7 +675,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[If a user dismisses a notice, it will not display for them again.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Notice]]></item>
-		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[Enable HTML code in notice]]></item>
+		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[Enable HTML]]></item>
+		<item name="wcf.acp.notice.noticeUseHtml.description"><![CDATA[Allows you to use HTML code in the notice.]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Dismissed notices will be displayed again.]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be displayed again to users who dismissed the previous version. Guests who dismissed the notice will only see it in a new session.]]></item>
 		<item name="wcf.acp.notice.showOrder"><![CDATA[Display Order]]></item>
@@ -828,7 +829,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab news]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab News]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s start page.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
@@ -921,7 +922,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_min_user_age"><![CDATA[Minimum Age]]></item>
 		<item name="wcf.acp.option.register_min_user_age.description"><![CDATA[Specifying a value requires the user to provide a birthday during registration.]]></item>
 		<item name="wcf.acp.option.register_disabled"><![CDATA[Disable registration]]></item>
-		<item name="wcf.acp.option.register_disabled.description"><![CDATA[Disables registration for all users, new users may be created through an administrator.]]></item>
+		<item name="wcf.acp.option.register_disabled.description"><![CDATA[Disables registration for all users, new users can be created through an administrator.]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer"><![CDATA[Enable disclaimer]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer.description"><![CDATA[Disclaimer must be accepted during registration.]]></item>
 		<item name="wcf.acp.option.register_admin_notification"><![CDATA[Notify administrator of new registrations]]></item>
@@ -1678,7 +1679,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.rank.image"><![CDATA[Rank Image]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[Path must be either relative to WCF’s directory or absolute.]]></item>
-		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[Rank might be optionally restricted to a specific gender.]]></item>
+		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[Rank might optionally be restricted to a specific gender.]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints"><![CDATA[Points]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[Required amount of activity points to obtain this rank.]]></item>
 		<item name="wcf.acp.user.rank.requirement"><![CDATA[Restrictions]]></item>
