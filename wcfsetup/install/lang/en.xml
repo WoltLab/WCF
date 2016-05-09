@@ -335,7 +335,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximum File Size]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
-		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments Per Message]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Can manage attachments]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
@@ -936,7 +936,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of unavailable user titles for members, one title per line.]]></item>
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Display Previous Username]]></item>
 		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous usernames will be displayed for the following days.]]></item>
-		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members Per Page]]></item>
+		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members per Page]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Sort By]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field.description"><![CDATA[You can sort the members list by one of the following options.]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Sort Order]]></item>
@@ -976,7 +976,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the use of tags for content.]]></item>
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
-		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results Per Page]]></item>
+		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results per Page]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Sort By]]></item>
 		<item name="wcf.acp.option.search_default_sort_field.description"><![CDATA[You can sort the search results by one of the following options.]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Sort Order]]></item>
@@ -1596,7 +1596,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.search.display.columns.other"><![CDATA[Other]]></item>
 		<item name="wcf.acp.user.search.display.columns.profile"><![CDATA[Profile]]></item>
 		<item name="wcf.acp.user.search.display.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.user.search.display.itemsPerPage"><![CDATA[Users Per Page]]></item>
+		<item name="wcf.acp.user.search.display.itemsPerPage"><![CDATA[Users per Page]]></item>
 		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[No users matched your criteria.]]></item>
 		<item name="wcf.acp.user.search.matches"><![CDATA[{#$items} result{if $items != 1}s{/if}]]></item>
@@ -1666,7 +1666,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
 		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not banned]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
-		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points Per Activity]]></item>
+		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points per Activity]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Delete user(s)]]></item>
 		<item name="wcf.acp.user.general"><![CDATA[User]]></item>
 		<item name="wcf.acp.user.rank.add"><![CDATA[Add User Rank]]></item>
