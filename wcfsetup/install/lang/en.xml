@@ -937,13 +937,13 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Display Previous Username]]></item>
 		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous usernames will be displayed for the following days.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members per Page]]></item>
-		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Sort By]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Sort by]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field.description"><![CDATA[You can sort the members list by one of the following options.]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order.description"><![CDATA[The default sort order for the members list.]]></item>
 		<item name="wcf.acp.option.users_online_show_guests"><![CDATA[Display guests]]></item>
 		<item name="wcf.acp.option.users_online_show_robots"><![CDATA[Display search engine spiders]]></item>
-		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Sort By]]></item>
+		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Sort by]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_field.description"><![CDATA[You can sort the “Users Online” list by one of the following options.]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order.description"><![CDATA[The default sort order for the “Users Online” list.]]></item>
@@ -977,7 +977,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results per Page]]></item>
-		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Sort By]]></item>
+		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Sort by]]></item>
 		<item name="wcf.acp.option.search_default_sort_field.description"><![CDATA[You can sort the search results by one of the following options.]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.search_default_sort_order.description"><![CDATA[The default sort order for the search results.]]></item>
@@ -1615,8 +1615,8 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Email Subject]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Email Message]]></item>
 		<item name="wcf.acp.user.quickSearch"><![CDATA[Quick Search]]></item>
-		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Banned Users]]></item>
-		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Newest Users]]></item>
+		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Banned users]]></item>
+		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Newest users]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
@@ -1699,9 +1699,9 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Permanently Block]]></item>
 		<item name="wcf.acp.user.disable"><![CDATA[Disable]]></item>
 		<item name="wcf.acp.user.enable"><![CDATA[Approve]]></item>
-		<item name="wcf.acp.user.quickSearch.disabled"><![CDATA[Users Awaiting Approval]]></item>
-		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Blocked Avatars]]></item>
-		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked Signatures]]></item>
+		<item name="wcf.acp.user.quickSearch.disabled"><![CDATA[Users awaiting approval]]></item>
+		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Blocked avatars]]></item>
+		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked signatures]]></item>
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
@@ -2401,7 +2401,7 @@ Errors are:
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Approval]]></item>
 		<item name="wcf.moderation.activation.details"><![CDATA[Information]]></item>
-		<item name="wcf.moderation.activation.content"><![CDATA[Content Awaiting Approval]]></item>
+		<item name="wcf.moderation.activation.content"><![CDATA[Content awaiting approval]]></item>
 		<item name="wcf.moderation.activation.enableContent"><![CDATA[Approve]]></item>
 		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Do you really want to approve this content?]]></item>
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Delete Content]]></item>
@@ -2420,7 +2420,7 @@ Errors are:
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Delete Report]]></item>
 		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to delete this report?]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
-		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported By]]></item>
+		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported by]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Reported Content]]></item>
 		<item name="wcf.moderation.report.success"><![CDATA[Content has been reported.]]></item>
 	</category>
@@ -2652,7 +2652,7 @@ Errors are:
 		<item name="wcf.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.search.results.change"><![CDATA[Change Search]]></item>
 		<item name="wcf.search.results.description"><![CDATA[Search results {#$startIndex}-{#$endIndex} of {#$items}{if $query} for “<strong>{$query}</strong>”{/if}.{if $items == 1000} There are more results available, please enhance your search parameters.{/if}{if $highlight}<br />These terms were highlighted: <span class="highlight">{$highlight}</span>{/if}]]></item>
-		<item name="wcf.search.sortBy"><![CDATA[Sort By]]></item>
+		<item name="wcf.search.sortBy"><![CDATA[Sort by]]></item>
 		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevance]]></item>
 		<item name="wcf.search.sortBy.time"><![CDATA[Time]]></item>
 		<item name="wcf.search.sortBy.username"><![CDATA[Author]]></item>
@@ -2737,7 +2737,7 @@ Errors are:
 		<item name="wcf.user.gender.female"><![CDATA[Female]]></item>
 		<item name="wcf.user.members"><![CDATA[Members]]></item>
 		<item name="wcf.user.members.noMembers"><![CDATA[No members matched your criteria.]]></item>
-		<item name="wcf.user.members.sort"><![CDATA[Sort By]]></item>
+		<item name="wcf.user.members.sort"><![CDATA[Sort by]]></item>
 		<item name="wcf.user.members.sort.letters"><![CDATA[First Letter]]></item>
 		<item name="wcf.user.members.sort.letters.all"><![CDATA[All]]></item>
 		<item name="wcf.user.membersList.registrationDate"><![CDATA[Member since {@$user->registrationDate|date}]]></item>
@@ -3114,9 +3114,9 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.state"><![CDATA[State]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Banned]]></item>
 		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[You may not simultaneously select “Banned“ and “Not Banned“.]]></item>
-		<item name="wcf.user.condition.state.isDisabled"><![CDATA[Awaiting Approval]]></item>
+		<item name="wcf.user.condition.state.isDisabled"><![CDATA[Awaiting approval]]></item>
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Approved]]></item>
-		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You may not simultaneously select “Approved“ and “Awaiting Approval“.]]></item>
+		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You may not simultaneously select “Approved“ and “Awaiting approval“.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not Banned]]></item>
 	</category>
 	
