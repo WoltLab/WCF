@@ -4,7 +4,6 @@ use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
-use wcf\system\exception\InvalidArgumentException;
 use wcf\system\WCF;
 
 /**
@@ -35,7 +34,7 @@ class UserEmailCondition extends AbstractTextCondition implements IContentCondit
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof UserList)) {
-			throw new InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
 		
 		$objectList->getConditionBuilder()->add('user_table.email LIKE ?', ['%'.addcslashes($conditionData['email'], '_%').'%']);

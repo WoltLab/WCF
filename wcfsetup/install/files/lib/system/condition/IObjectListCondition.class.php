@@ -21,6 +21,7 @@ interface IObjectListCondition extends ICondition {
 	 * 
 	 * @param	DatabaseObjectList	$objectList
 	 * @param	array			$conditionData
+	 * @throws	\InvalidArgumentException	if the given object list object is no object of the expected database object list class 
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData);
 }

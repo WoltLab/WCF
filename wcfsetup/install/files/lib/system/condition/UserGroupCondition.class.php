@@ -5,7 +5,6 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
-use wcf\system\exception\InvalidArgumentException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -63,7 +62,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof UserList)) {
-			throw new InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
 		
 		if (isset($conditionData['groupIDs'])) {

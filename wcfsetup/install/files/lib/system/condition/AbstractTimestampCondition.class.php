@@ -3,7 +3,6 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
-use wcf\system\exception\InvalidArgumentException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -50,7 +49,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		$className = $this->getListClassName();
 		if (!($objectList instanceof $className)) {
-			throw new InvalidArgumentException("Object list is no instance of '{$className}', instance of '".get_class($objectList)."' given.");
+			throw new \InvalidArgumentException("Object list is no instance of '{$className}', instance of '".get_class($objectList)."' given.");
 		}
 		
 		$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' <> ?', [0]);

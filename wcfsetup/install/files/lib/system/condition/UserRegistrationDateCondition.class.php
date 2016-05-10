@@ -4,7 +4,6 @@ use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
-use wcf\system\exception\InvalidArgumentException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -43,7 +42,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof UserList)) {
-			throw new InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
 		
 		if (isset($conditionData['registrationDateEnd'])) {
