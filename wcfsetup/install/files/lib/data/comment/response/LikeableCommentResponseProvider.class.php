@@ -13,30 +13,33 @@ use wcf\system\WCF;
  * Object type provider for likeable comment responses.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ * 
+ * @method	LikeableCommentResponse		getObjectByID($objectID)
+ * @method	LikeableCommentResponse[]	getObjectsByIDs(array $objectIDs)
  */
 class LikeableCommentResponseProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider, IViewableLikeProvider {
 	/**
-	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\comment\response\CommentResponse';
+	public $className = CommentResponse::class;
 	
 	/**
-	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$decoratorClassName
+	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'wcf\data\comment\response\LikeableCommentResponse';
+	public $decoratorClassName = LikeableCommentResponse::class;
 	
 	/**
-	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$listClassName
+	 * @inheritDoc
 	 */
-	public $listClassName = 'wcf\data\comment\response\CommentResponseList';
+	public $listClassName = CommentResponseList::class;
 	
 	/**
-	 * @see	\wcf\data\like\ILikeObjectTypeProvider::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions(ILikeObject $response) {
 		if (!$response->responseID) return false;
@@ -50,18 +53,18 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 	}
 	
 	/**
-	 * @see	\wcf\system\like\IViewableLikeProvider::prepare()
+	 * @inheritDoc
 	 */
 	public function prepare(array $likes) {
-		$responseIDs = array();
+		$responseIDs = [];
 		foreach ($likes as $like) {
 			$responseIDs[] = $like->objectID;
 		}
 		
 		// get objects type ids
-		$responses = array();
+		$responses = [];
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('comment_response.responseID IN (?)', array($responseIDs));
+		$conditionBuilder->add('comment_response.responseID IN (?)', [$responseIDs]);
 		$sql = "SELECT		comment.objectTypeID, comment_response.responseID
 			FROM		wcf".WCF_N."_comment_response comment_response
 			LEFT JOIN	wcf".WCF_N."_comment comment
@@ -74,11 +77,11 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 		}
 		
 		// group likes by object type id
-		$likeData = array();
+		$likeData = [];
 		foreach ($likes as $like) {
 			if (isset($responses[$like->objectID])) {
 				if (!isset($likeData[$responses[$like->objectID]])) {
-					$likeData[$responses[$like->objectID]] = array();
+					$likeData[$responses[$like->objectID]] = [];
 				}
 				$likeData[$responses[$like->objectID]][] = $like;
 			}
