@@ -11,5 +11,9 @@ use wcf\data\DatabaseObjectList;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.notification.event
  * @category	Community Framework
+ *
+ * @method	UserNotificationEvent		current()
+ * @method	UserNotificationEvent[]		getObjects()
+ * @method	UserNotificationEvent|null	search($objectID)
  */
 class UserNotificationEventList extends DatabaseObjectList { }

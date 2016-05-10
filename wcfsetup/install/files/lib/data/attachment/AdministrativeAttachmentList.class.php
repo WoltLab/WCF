@@ -7,17 +7,21 @@ use wcf\system\WCF;
  * Represents a list of attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.attachment
  * @category	Community Framework
+ *
+ * @method	AdministrativeAttachment	current()
+ * @method	AdministrativeAttachment[]	getObjects()
+ * @method	AdministrativeAttachment|null	search($objectID)
  */
 class AdministrativeAttachmentList extends AttachmentList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'wcf\data\attachment\AdministrativeAttachment';
+	public $decoratorClassName = AdministrativeAttachment::class;
 	
 	/**
 	 * Creates a new AdministrativeAttachmentList object.
@@ -30,15 +34,15 @@ class AdministrativeAttachmentList extends AttachmentList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
 		
 		// cache objects
-		$groupedObjectIDs = array();
+		$groupedObjectIDs = [];
 		foreach ($this->objects as $attachment) {
-			if (!isset($groupedObjectIDs[$attachment->objectTypeID])) $groupedObjectIDs[$attachment->objectTypeID] = array();
+			if (!isset($groupedObjectIDs[$attachment->objectTypeID])) $groupedObjectIDs[$attachment->objectTypeID] = [];
 			$groupedObjectIDs[$attachment->objectTypeID][] = $attachment->objectID;
 		}
 		
@@ -54,9 +58,9 @@ class AdministrativeAttachmentList extends AttachmentList {
 	 * @return	string[]
 	 */
 	public function getAvailableFileTypes() {
-		$fileTypes = array();
-		$sql = "SELECT		DISTINCT attachment.fileType
-			FROM		wcf".WCF_N."_attachment attachment
+		$fileTypes = [];
+		$sql = "SELECT	DISTINCT attachment.fileType
+			FROM	wcf".WCF_N."_attachment attachment
 			".$this->getConditionBuilder();
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->getConditionBuilder()->getParameters());

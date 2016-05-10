@@ -11,6 +11,10 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
+ *
+ * @method	ViewableComment		current()
+ * @method	ViewableComment[]		getObjects()
+ * @method	ViewableComment|null		search($objectID)
  */
 class ViewableCommentList extends CommentList {
 	/**

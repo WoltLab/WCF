@@ -5,25 +5,29 @@ namespace wcf\data\user;
  * Represents a list of user profiles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
+ *
+ * @method	UserProfile		current()
+ * @method	UserProfile[]		getObjects()
+ * @method	UserProfile|null	search($objectID)
  */
 class UserProfileList extends UserList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'user_table.username';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'wcf\data\user\UserProfile';
+	public $decoratorClassName = UserProfile::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -43,7 +47,7 @@ class UserProfileList extends UserList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		if ($this->objectIDs === null) {

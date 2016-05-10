@@ -12,6 +12,10 @@ use wcf\data\DatabaseObjectList;
  * @subpackage	data.menu.item
  * @category	Community Framework
  * @since	2.2
+ *
+ * @method	MenuItem	current()
+ * @method	MenuItem[]	getObjects()
+ * @method	MenuItem|null	search($objectID)
  */
 class MenuItemList extends DatabaseObjectList {
 	/**

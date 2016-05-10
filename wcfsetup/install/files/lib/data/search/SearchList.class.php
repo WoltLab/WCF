@@ -11,10 +11,14 @@ use wcf\data\DatabaseObjectList;
  * @package	com.woltlab.wcf
  * @subpackage	data.search
  * @category	Community Framework
+ *
+ * @method	Search		current()
+ * @method	Search[]	getObjects()
+ * @method	Search|null	search($objectID)
  */
 class SearchList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\search\Search';
+	public $className = Search::class;
 }

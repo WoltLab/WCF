@@ -11,15 +11,19 @@ use wcf\util\StringUtil;
  * Represents a list of currently online users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.online
  * @category	Community Framework
+ *
+ * @method	UsersOnline		current()
+ * @method	UsersOnline[]		getObjects()
+ * @method	UsersOnline|null	search($objectID)
  */
 class UsersOnlineList extends SessionList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'user_table.username';
 	
@@ -41,7 +45,7 @@ class UsersOnlineList extends SessionList {
 	public $usersOnlineMarkings = null;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -57,7 +61,7 @@ class UsersOnlineList extends SessionList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();

@@ -14,6 +14,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.activity.event
  * @category	Community Framework
+ *
+ * @method	ViewableUserActivityEvent		current()
+ * @method	ViewableUserActivityEvent[]		getObjects()
+ * @method	ViewableUserActivityEvent|null		search($objectID)
  */
 class ViewableUserActivityEventList extends UserActivityEventList {
 	/**
@@ -22,7 +26,7 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	public $className = UserActivityEvent::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = ViewableUserActivityEvent::class;
 	

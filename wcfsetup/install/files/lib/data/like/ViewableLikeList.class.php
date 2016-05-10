@@ -13,6 +13,10 @@ use wcf\system\like\IViewableLikeProvider;
  * @package	com.woltlab.wcf
  * @subpackage	data.like
  * @category	Community Framework
+ *
+ * @method	ViewableLike		current()
+ * @method	ViewableLike[]		getObjects()
+ * @method	ViewableLike|null	search($objectID)
  */
 class ViewableLikeList extends LikeList {
 	/**

@@ -11,10 +11,14 @@ use wcf\data\DatabaseObjectList;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.object.watch
  * @category	Community Framework
+ *
+ * @method	UserObjectWatch		current()
+ * @method	UserObjectWatch[]	getObjects()
+ * @method	UserObjectWatch|null	search($objectID)
  */
 class UserObjectWatchList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\object\watch\UserObjectWatch';
+	public $className = UserObjectWatch::class;
 }

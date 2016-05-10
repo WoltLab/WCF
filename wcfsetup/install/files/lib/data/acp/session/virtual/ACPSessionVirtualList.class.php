@@ -6,15 +6,19 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of virtual sessions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.virtual
  * @category	Community Framework
+ *
+ * @method	ACPSessionVirtual		current()
+ * @method	ACPSessionVirtual[]		getObjects()
+ * @method	ACPSessionVirtual|null		search($objectID)
  */
 class ACPSessionVirtualList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
 	public $className = ACPSessionVirtual::class;
 }

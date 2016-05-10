@@ -11,15 +11,19 @@ use wcf\data\DatabaseObjectList;
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ *
+ * @method	CommentResponse		current()
+ * @method	CommentResponse[]	getObjects()
+ * @method	CommentResponse|null	search($objectID)
  */
 class CommentResponseList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\comment\response\CommentResponse';
+	public $className = CommentResponse::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'comment_response.time ASC';
 }

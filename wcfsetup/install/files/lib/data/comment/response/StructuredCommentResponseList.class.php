@@ -15,6 +15,10 @@ use wcf\system\like\LikeHandler;
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ *
+ * @method	StructuredCommentResponse		current()
+ * @method	StructuredCommentResponse[]		getObjects()
+ * @method	StructuredCommentResponse|null		search($objectID)
  */
 class StructuredCommentResponseList extends CommentResponseList {
 	/**

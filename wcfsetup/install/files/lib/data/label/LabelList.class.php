@@ -11,6 +11,10 @@ use wcf\data\DatabaseObjectList;
  * @package	com.woltlab.wcf
  * @subpackage	data.label
  * @category	Community Framework
+ *
+ * @method	Label		current()
+ * @method	Label[]		getObjects()
+ * @method	Label|null	search($objectID)
  */
 class LabelList extends DatabaseObjectList {
 	/**

@@ -7,12 +7,16 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * Represents a list of madia files.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.media
  * @category	Community Framework
  * @since	2.2
+ *
+ * @method	Media		current()
+ * @method	Media[]		getObjects()
+ * @method	Media|null	search($objectID)
  */
 class MediaList extends DatabaseObjectList {
 	/**
