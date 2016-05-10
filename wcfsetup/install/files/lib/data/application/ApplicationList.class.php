@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	Application		current()
  * @method	Application[]		getObjects()
  * @method	Application|null	search($objectID)
+ * @property	Application[]		$objects
  */
 class ApplicationList extends DatabaseObjectList {
 	/**

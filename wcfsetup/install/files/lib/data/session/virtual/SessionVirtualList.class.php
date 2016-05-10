@@ -16,6 +16,7 @@ use wcf\data\acp\session\virtual\ACPSessionVirtualList;
  * @method	SessionVirtual		current()
  * @method	SessionVirtual[]	getObjects()
  * @method	SessionVirtual|null	search($objectID)
+ * @property	SessionVirtual[]	$objects
  */
 class SessionVirtualList extends ACPSessionVirtualList {
 	/**

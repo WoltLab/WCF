@@ -15,5 +15,6 @@ use wcf\data\DatabaseObjectList;
  * @method	UserAvatar		current()
  * @method	UserAvatar[]		getObjects()
  * @method	UserAvatar|null		search($objectID)
+ * @property	UserAvatar[]		$objects
  */
 class UserAvatarList extends DatabaseObjectList { }

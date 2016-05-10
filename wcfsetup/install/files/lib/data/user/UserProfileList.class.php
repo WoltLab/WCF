@@ -14,6 +14,7 @@ namespace wcf\data\user;
  * @method	UserProfile		current()
  * @method	UserProfile[]		getObjects()
  * @method	UserProfile|null	search($objectID)
+ * @property	UserProfile[]		$objects
  */
 class UserProfileList extends UserList {
 	/**

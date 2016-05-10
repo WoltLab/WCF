@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	ClipboardAction		current()
  * @method	ClipboardAction[]	getObjects()
  * @method	ClipboardAction|null	search($objectID)
+ * @property	ClipboardAction[]	$objects
  */
 class ClipboardActionList extends DatabaseObjectList {
 	/**

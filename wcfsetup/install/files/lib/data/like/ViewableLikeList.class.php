@@ -17,6 +17,7 @@ use wcf\system\like\IViewableLikeProvider;
  * @method	ViewableLike		current()
  * @method	ViewableLike[]		getObjects()
  * @method	ViewableLike|null	search($objectID)
+ * @property	ViewableLike[]		$objects
  */
 class ViewableLikeList extends LikeList {
 	/**

@@ -19,6 +19,7 @@ use wcf\system\like\LikeHandler;
  * @method	StructuredCommentResponse		current()
  * @method	StructuredCommentResponse[]		getObjects()
  * @method	StructuredCommentResponse|null		search($objectID)
+ * @property	StructuredCommentResponse[]		$objects
  */
 class StructuredCommentResponseList extends CommentResponseList {
 	/**

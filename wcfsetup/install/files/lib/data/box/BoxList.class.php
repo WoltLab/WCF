@@ -16,6 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method	Box		current()
  * @method	Box[]		getObjects()
  * @method	Box|null	search($objectID)
+ * @property	Box[]		$objects
  */
 class BoxList extends DatabaseObjectList {
 	/**

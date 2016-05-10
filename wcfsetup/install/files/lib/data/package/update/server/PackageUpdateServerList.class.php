@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	PackageUpdateServer		current()
  * @method	PackageUpdateServer[]		getObjects()
  * @method	PackageUpdateServer|null	search($objectID)
+ * @property	PackageUpdateServer[]		$objects
  */
 class PackageUpdateServerList extends DatabaseObjectList {
 	/**

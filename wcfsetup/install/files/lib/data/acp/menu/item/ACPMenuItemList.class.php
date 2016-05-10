@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	ACPMenuItem		current()
  * @method	ACPMenuItem[]		getObjects()
  * @method	ACPMenuItem|null	search($objectID)
+ * @property	ACPMenuItem[]		$objects
  */
 class ACPMenuItemList extends DatabaseObjectList {
 	/**

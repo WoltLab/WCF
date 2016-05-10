@@ -15,10 +15,11 @@ use wcf\data\DatabaseObjectList;
  * @method	Package		current()
  * @method	Package[]	getObjects()
  * @method	Package|null	search($objectID)
+ * @property	Package[]	$objects
  */
 class PackageList extends DatabaseObjectList {
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\package\Package';
+	public $className = Package::class;
 }

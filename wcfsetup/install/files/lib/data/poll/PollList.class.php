@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	Poll		current()
  * @method	Poll[]		getObjects()
  * @method	Poll|null	search($objectID)
+ * @property	Poll[]		$objects
  */
 class PollList extends DatabaseObjectList {
 	/**

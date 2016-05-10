@@ -15,5 +15,6 @@ use wcf\data\DatabaseObjectList;
  * @method	UserGroupAssignment		current()
  * @method	UserGroupAssignment[]		getObjects()
  * @method	UserGroupAssignment|null	search($objectID)
+ * @property	UserGroupAssignment[]		$objects
  */
 class UserGroupAssignmentList extends DatabaseObjectList { }

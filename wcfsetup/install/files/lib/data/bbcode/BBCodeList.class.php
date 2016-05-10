@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	BBCode		current()
  * @method	BBCode[]	getObjects()
  * @method	BBCode|null	search($objectID)
+ * @property	BBCode[]	$objects
  */
 class BBCodeList extends DatabaseObjectList {
 	/**

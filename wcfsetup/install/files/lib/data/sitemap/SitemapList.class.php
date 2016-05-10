@@ -15,5 +15,6 @@ use wcf\data\DatabaseObjectList;
  * @method	Sitemap		current()
  * @method	Sitemap[]	getObjects()
  * @method	Sitemap|null	search($objectID)
+ * @property	Sitemap[]	$objects
  */
 class SitemapList extends DatabaseObjectList { }

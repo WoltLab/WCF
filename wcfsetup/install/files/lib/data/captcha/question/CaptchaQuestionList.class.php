@@ -15,5 +15,6 @@ use wcf\data\DatabaseObjectList;
  * @method	CaptchaQuestion		current()
  * @method	CaptchaQuestion[]	getObjects()
  * @method	CaptchaQuestion|null	search($objectID)
+ * @property	CaptchaQuestion[]	$objects
  */
 class CaptchaQuestionList extends DatabaseObjectList { }

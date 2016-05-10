@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	ModificationLog		current()
  * @method	ModificationLog[]	getObjects()
  * @method	ModificationLog|null	search($objectID)
+ * @property	ModificationLog[]	$objects
  */
 class ModificationLogList extends DatabaseObjectList {
 	/**

@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	ACLOption		current()
  * @method	ACLOption[]		getObjects()
  * @method	ACLOption|null		search($objectID)
+ * @property	ACLOption[]		$objects
  */
 class ACLOptionList extends DatabaseObjectList {
 	/**

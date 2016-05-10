@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	BBCodeMediaProvider		current()
  * @method	BBCodeMediaProvider[]		getObjects()
  * @method	BBCodeMediaProvider|null	search($objectID)
+ * @property	BBCodeMediaProvider[]		$objects
  */
 class BBCodeMediaProviderList extends DatabaseObjectList {
 	/**

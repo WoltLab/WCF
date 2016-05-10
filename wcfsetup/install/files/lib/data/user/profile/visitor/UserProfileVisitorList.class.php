@@ -17,6 +17,7 @@ use wcf\data\DatabaseObjectList;
  * @method	UserProfile		current()
  * @method	UserProfile[]		getObjects()
  * @method	UserProfile|null	search($objectID)
+ * @property	UserProfile[]		$objects
  */
 class UserProfileVisitorList extends DatabaseObjectList {
 	/**

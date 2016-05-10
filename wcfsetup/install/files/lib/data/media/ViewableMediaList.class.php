@@ -16,6 +16,7 @@ use wcf\system\WCF;
  * @method	ViewableMedia		current()
  * @method	ViewableMedia[]		getObjects()
  * @method	ViewableMedia|null	search($objectID)
+ * @property	ViewableMedia[]		$objects
  */
 class ViewableMediaList extends MediaList {
 	/**

@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	LanguageCategory	current()
  * @method	LanguageCategory[]	getObjects()
  * @method	LanguageCategory|null	search($objectID)
+ * @property	LanguageCategory[]	$objects
  */
 class LanguageCategoryList extends DatabaseObjectList {
 	/**

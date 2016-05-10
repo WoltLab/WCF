@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	ACPSession		current()
  * @method	ACPSession[]		getObjects()
  * @method	ACPSession|null		search($objectID)
+ * @property	ACPSession[]		$objects
  */
 class ACPSessionList extends DatabaseObjectList {
 	/**

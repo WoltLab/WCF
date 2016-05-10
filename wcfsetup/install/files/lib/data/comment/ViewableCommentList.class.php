@@ -13,8 +13,9 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @category	Community Framework
  *
  * @method	ViewableComment		current()
- * @method	ViewableComment[]		getObjects()
- * @method	ViewableComment|null		search($objectID)
+ * @method	ViewableComment[]	getObjects()
+ * @method	ViewableComment|null	search($objectID)
+ * @property	ViewableComment[]	$objects
  */
 class ViewableCommentList extends CommentList {
 	/**

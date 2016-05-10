@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method	Tag		current()
  * @method	Tag[]		getObjects()
  * @method	Tag|null	search($objectID)
+ * @property	Tag[]		$objects
  */
 class TagList extends DatabaseObjectList {
 	/**
