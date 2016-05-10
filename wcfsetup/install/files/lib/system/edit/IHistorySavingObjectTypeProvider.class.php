@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\edit;
 use wcf\data\object\type\IObjectTypeProvider;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Represents an object which edit history can be saved.
@@ -14,13 +15,12 @@ use wcf\data\object\type\IObjectTypeProvider;
  */
 interface IHistorySavingObjectTypeProvider extends IObjectTypeProvider {
 	/**
-	 * Checks the permissions to review the edit history
-	 * and to revert to an older version of the given
-	 * IHistorySavingObject.
-	 * You must throw a \wcf\system\exception\PermissionDeniedException
-	 * to deny access!
+	 * Checks the permissions to review the edit history and to revert to an
+	 * older version of the given IHistorySavingObject.
 	 * 
-	 * @param	\wcf\system\edit\IHistorySavingObject	$object
+	 * @param	IHistorySavingObject	$object
+	 * @throws	PermissionDeniedException	if access is denied
+	 * @throws	\InvalidArgumentException	if given object has not be provided by this provider and thus cannot be checked by this method
 	 */
 	public function checkPermissions(IHistorySavingObject $object);
 	
