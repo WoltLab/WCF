@@ -675,8 +675,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[If a user dismisses a notice, it will not display for them again.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Notice]]></item>
-		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[Enable HTML]]></item>
-		<item name="wcf.acp.notice.noticeUseHtml.description"><![CDATA[Allows you to use HTML code in the notice.]]></item>
+		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[Enable HTML code in notice]]></item>
+		<item name="wcf.acp.notice.noticeUseHtml.description"><![CDATA[]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Dismissed notices will be displayed again.]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be displayed again to users who dismissed the previous version. Guests who dismissed the notice will only see it in a new session.]]></item>
 		<item name="wcf.acp.notice.showOrder"><![CDATA[Display Order]]></item>
@@ -810,8 +810,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.offline.description"><![CDATA[Disables all applications and prevents access from unprivileged users.]]></item>
 		<item name="wcf.acp.option.offline_message"><![CDATA[“Maintenance Mode” Notice]]></item>
 		<item name="wcf.acp.option.offline_message.description"><![CDATA[The notice that is displayed to visitors while “Maintenance Mode” is enabled.]]></item>
-		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[Enable HTML]]></item>
-		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[Allows you to use HTML code in the “Maintenance Mode” notice.]]></item>
+		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[Enable HTML code in “Maintenance Mode” notice]]></item>
+		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Display version number in copyright notice]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Enable debug mode]]></item>
 		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Enables extensive error messages, it should always be disabled in production environments!]]></item>
@@ -1571,7 +1571,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Separator]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Text Separator]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[User Group(s)]]></item>
-		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users which are not part of the selected user groups.]]></item>
+		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users which are not part of the selected user groups]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[All Users]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Users]]></item>
@@ -1602,8 +1602,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.search.matches"><![CDATA[{#$items} result{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[Send email to users]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[Send email to all users]]></item>
-		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML]]></item>
-		<item name="wcf.acp.user.sendMail.enableHTML.description"><![CDATA[Allows you to use HTML code in the email message.]]></item>
+		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML code in email message]]></item>
+		<item name="wcf.acp.user.sendMail.enableHTML.description"><![CDATA[]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender’s Email]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.{if MAIL_USE_FORMATTED_ADDRESS} It is possible to use the following format:{/if}<br />
 {if MAIL_USE_FORMATTED_ADDRESS}<em>Sender Name &lt;email@example.com&gt;</em><br />{/if}
@@ -1704,7 +1704,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked Signatures]]></item>
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
-		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting Approval]]></item>
+		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail"><![CDATA[Dear {@$username},
 
 Your password has been changed by an administrator.
