@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\label\object;
 use wcf\data\label\group\ViewableLabelGroup;
+use wcf\data\label\Label;
 
 /**
  * Every label object handler has to implement this interface.

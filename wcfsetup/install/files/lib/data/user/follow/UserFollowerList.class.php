@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\follow;
+use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 
 /**

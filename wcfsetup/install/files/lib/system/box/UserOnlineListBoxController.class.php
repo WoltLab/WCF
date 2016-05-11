@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\box;
 use wcf\data\user\online\UsersOnlineList;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
