@@ -44,6 +44,7 @@ class GZipFile extends File {
 	 * 
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
 	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
