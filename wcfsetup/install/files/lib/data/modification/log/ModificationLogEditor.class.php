@@ -6,15 +6,18 @@ use wcf\data\DatabaseObjectEditor;
  * Provides functions to edit modification logs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.modification.log
  * @category	Community Framework
+ * 
+ * @method	ModificationLog		getDecoratedObject()
+ * @mixin	ModificationLog
  */
 class ModificationLogEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\modification\log\ModificationLog';
+	protected static $baseClass = ModificationLog::class;
 }

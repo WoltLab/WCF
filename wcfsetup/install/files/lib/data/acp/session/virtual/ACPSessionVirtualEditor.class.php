@@ -7,15 +7,18 @@ use wcf\system\WCF;
  * Provides functions to edit virtual sessions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.virtual
  * @category	Community Framework
+ * 
+ * @method	ACPSessionVirtual	getDecoratedObject()
+ * @mixin	ACPSessionVirtual
  */
 class ACPSessionVirtualEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
 	protected static $baseClass = ACPSessionVirtual::class;
 	
@@ -23,9 +26,7 @@ class ACPSessionVirtualEditor extends DatabaseObjectEditor {
 	 * Updates last activity time of this virtual session.
 	 */
 	public function updateLastActivityTime() {
-		$this->update(array(
-			'lastActivityTime' => TIME_NOW
-		));
+		$this->update(['lastActivityTime' => TIME_NOW]);
 	}
 	
 	/**
@@ -34,9 +35,9 @@ class ACPSessionVirtualEditor extends DatabaseObjectEditor {
 	 * @param	integer		$timestamp
 	 */
 	public static function deleteExpiredSessions($timestamp) {
-		$sql = "DELETE FROM	".call_user_func(array(static::$baseClass, 'getDatabaseTableName'))."
+		$sql = "DELETE FROM	".call_user_func([static::$baseClass, 'getDatabaseTableName'])."
 			WHERE		lastActivityTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($timestamp));
+		$statement->execute([$timestamp]);
 	}
 }

@@ -9,21 +9,23 @@ use wcf\system\WCF;
  * Wrapper for the profile of the active user to be used as a core object.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user
  * @category	Community Framework
+ * 
+ * @mixin	UserProfile
  */
 class UserProfileHandler extends SingletonFactory {
 	/**
 	 * user profile object
-	 * @var	\wcf\data\user\UserProfile
+	 * @var	UserProfile
 	 */
 	protected $userProfile = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->userProfile = new UserProfile(WCF::getUser());
@@ -37,7 +39,7 @@ class UserProfileHandler extends SingletonFactory {
 	 * @return	mixed
 	 */
 	public function __call($name, $arguments) {
-		return call_user_func_array(array($this->userProfile, $name), $arguments);
+		return call_user_func_array([$this->userProfile, $name], $arguments);
 	}
 	
 	/**

@@ -12,11 +12,14 @@ use wcf\util\FileUtil;
  * Provides functions to edit options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.option
  * @category	Community Framework
+ * 
+ * @method	Option		getDecoratedObject()
+ * @mixin	Option
  */
 class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
@@ -26,9 +29,9 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	const FILENAME = 'options.inc.php';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\option\Option';
+	protected static $baseClass = Option::class;
 	
 	/**
 	 * Imports the given options.
@@ -41,12 +44,12 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 			FROM		wcf".WCF_N."_option";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$optionIDs = array();
+		$optionIDs = [];
 		while ($row = $statement->fetchArray()) {
 			$optionIDs[$row['optionName']] = $row['optionID'];
 		}
 		
-		$newOptions = array();
+		$newOptions = [];
 		foreach ($options as $name => $value) {
 			if (isset($optionIDs[$name])) {
 				$newOptions[$optionIDs[$name]] = $value;
@@ -66,7 +69,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 			FROM	wcf".WCF_N."_option
 			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('cache_source_type'));
+		$statement->execute(['cache_source_type']);
 		$row = $statement->fetchArray();
 		
 		$sql = "UPDATE	wcf".WCF_N."_option
@@ -81,10 +84,10 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 				$flushCache = true;
 			}
 			
-			$statement->execute(array(
+			$statement->execute([
 				$value,
 				$id
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 		
@@ -104,7 +107,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		// reset cache

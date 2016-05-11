@@ -6,15 +6,18 @@ use wcf\data\DatabaseObjectEditor;
  * Provides functions to edit package updates.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update
  * @category	Community Framework
+ *
+ * @method	PackageUpdate	getDecoratedObject()
+ * @mixin	PackageUpdate
  */
 class PackageUpdateEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\package\update\PackageUpdate';
+	protected static $baseClass = PackageUpdate::class;
 }

@@ -14,6 +14,9 @@ use wcf\system\user\activity\event\UserActivityEventHandler;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.activity.event
  * @category	Community Framework
+ * 
+ * @method	UserActivityEvent	getDecoratedObject()
+ * @mixin	UserActivityEvent
  */
 class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**

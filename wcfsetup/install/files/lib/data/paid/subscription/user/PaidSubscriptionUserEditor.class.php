@@ -6,15 +6,18 @@ use wcf\data\DatabaseObjectEditor;
  * Provides functions to edit paid subscription users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription.user
  * @category	Community Framework
+ * 
+ * @method	PaidSubscriptionUser		getDecoratedObject()
+ * @mixin	PaidSubscriptionUser
  */
 class PaidSubscriptionUserEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\paid\subscription\user\PaidSubscriptionUser';
+	protected static $baseClass = PaidSubscriptionUser::class;
 }

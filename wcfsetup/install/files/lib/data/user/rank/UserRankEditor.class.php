@@ -8,20 +8,23 @@ use wcf\system\user\storage\UserStorageHandler;
  * Provides functions to edit user ranks.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.rank
  * @category	Community Framework
+ * 
+ * @method	UserRank	getDecoratedObject()
+ * @mixin	UserRank
  */
 class UserRankEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\rank\UserRank';
+	protected static $baseClass = UserRank::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		UserStorageHandler::getInstance()->resetAll('userRank');

@@ -6,17 +6,20 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a tag in a tag cloud.
  * 
  * @author	Marcel Werk
- * @copyright	2009-2013 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.tag
  * @category	Community Framework
+ * 
+ * @method	Tag	getDecoratedObject()
+ * @mixin	Tag
  */
 class TagCloudTag extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\tag\Tag';
+	protected static $baseClass = Tag::class;
 	
 	/**
 	 * size of the tag in a weighted list

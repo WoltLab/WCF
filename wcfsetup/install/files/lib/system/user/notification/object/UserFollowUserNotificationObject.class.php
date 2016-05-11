@@ -1,46 +1,50 @@
 <?php
 namespace wcf\system\user\notification\object;
+use wcf\data\user\follow\UserFollow;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
  * Represents a following user as a notification object.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.object
  * @category	Community Framework
+ * 
+ * @method	UserFollow	getDecoratedObject()
+ * @mixin	UserFollow
  */
 class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IStackableUserNotificationObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\follow\UserFollow';
+	protected static $baseClass = UserFollow::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getAuthorID()
+	 * @inheritDoc
 	 */
 	public function getAuthorID() {
 		return $this->userID;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IStackableUserNotificationObject::getRelatedObjectID()
+	 * @inheritDoc
 	 */
 	public function getRelatedObjectID() {
 		return $this->followUserID; 

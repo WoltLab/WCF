@@ -11,23 +11,26 @@ use wcf\system\WCF;
  * Provides functions to edit cronjobs.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.cronjob
  * @category	Community Framework
+ * 
+ * @method	Cronjob		getDecoratedObject()
+ * @mixin	Cronjob
  */
 class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\cronjob\Cronjob';
+	protected static $baseClass = Cronjob::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
-		$descriptions = array();
+	public static function create(array $parameters = []) {
+		$descriptions = [];
 		if (isset($parameters['description']) && is_array($parameters['description'])) {
 			if (count($parameters['description']) > 1) {
 				$descriptions = $parameters['description'];
@@ -80,7 +83,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 				FROM	wcf".WCF_N."_language_category
 				WHERE	languageCategory = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array('wcf.acp.cronjob'));
+			$statement->execute(['wcf.acp.cronjob']);
 			$languageCategory = $statement->fetchObject('wcf\data\language\category\LanguageCategory');
 			
 			$languages = new LanguageList();
@@ -111,26 +114,24 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 				$value = $descriptions[$language->languageCode];
 			}
 			
-			$statement->execute(array(
+			$statement->execute([
 				$language->languageID,
 				'wcf.acp.cronjob.description.cronjob'.$this->cronjobID,
 				$value,
 				$languageCategory->languageCategoryID,
 				$this->packageID
-			));
+			]);
 		}
 		
 		// update cronjob
-		$this->update(array(
-			'description' => 'wcf.acp.cronjob.description.cronjob'.$this->cronjobID
-		));
+		$this->update(['description' => 'wcf.acp.cronjob.description.cronjob'.$this->cronjobID]);
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::update()
+	 * @inheritDoc
 	 */
-	public function update(array $parameters = array()) {
-		$descriptions = array();
+	public function update(array $parameters = []) {
+		$descriptions = [];
 		if (isset($parameters['description']) && is_array($parameters['description'])) {
 			if (count($parameters['description']) > 1) {
 				$descriptions = $parameters['description'];
@@ -150,7 +151,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		CronjobCacheBuilder::getInstance()->reset();

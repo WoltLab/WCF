@@ -18,10 +18,7 @@ use wcf\system\WCF;
  * @subpackage	system.database.statement
  * @category	Community Framework
  * 
- * @method	boolean		closeCursor()
- * @method	mixed		fetch($fetch_style, $cursor_orientation = \PDO::FETCH_ORI_NEXT, $cursor_offset = 0)
- * @method	array		fetchAll($fetch_style = \PDO::ATTR_DEFAULT_FETCH_MODE, $fetch_argument = null, $ctor_args = [])
- * @method	mixed		fetchColumn($column_number = 0)
+ * @mixin	\PDOStatement
  */
 class PreparedStatement {
 	/**

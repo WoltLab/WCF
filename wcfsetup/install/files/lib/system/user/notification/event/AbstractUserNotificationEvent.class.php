@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\data\language\Language;
+use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
@@ -12,21 +13,24 @@ use wcf\util\DateUtil;
  * Provides a default implementation for user notification events.
  * 
  * @author	Marcel Werk, Oliver Kliebisch
- * @copyright	2001-2015 WoltLab GmbH, Oliver Kliebisch
+ * @copyright	2001-2016 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.event
  * @category	Community Framework
+ * 
+ * @method	UserNotificationEvent	getDecoratedObject()
+ * @mixin	UserNotificationEvent
  */
 abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator implements IUserNotificationEvent {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\notification\event\UserNotificationEvent';
+	protected static $baseClass = UserNotificationEvent::class;
 	
 	/**
 	 * author object
-	 * @var	\wcf\data\user\UserProfile
+	 * @var	UserProfile
 	 */
 	protected $author = null;
 	
@@ -34,7 +38,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * list of authors for stacked notifications
 	 * @var	UserProfile[]
 	 */
-	protected $authors = array();
+	protected $authors = [];
 	
 	/**
 	 * notification stacking support
@@ -44,13 +48,13 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	
 	/**
 	 * user notification
-	 * @var	\wcf\data\user\notification\UserNotification
+	 * @var	UserNotification
 	 */
 	protected $notification = null;
 	
 	/**
 	 * user notification object
-	 * @var	\wcf\system\user\notification\object\IUserNotificationObject
+	 * @var	IUserNotificationObject
 	 */
 	protected $userNotificationObject = null;
 	
@@ -58,11 +62,11 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * additional data for this event
 	 * @var	mixed[]
 	 */
-	protected $additionalData = array();
+	protected $additionalData = [];
 	
 	/**
 	 * language object
-	 * @var	\wcf\data\language\Language
+	 * @var	Language
 	 */
 	protected $language = null;
 	
@@ -70,19 +74,19 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * list of point of times for each period's end
 	 * @var	string[]
 	 */
-	protected static $periods = array();
+	protected static $periods = [];
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setAuthors()
+	 * @inheritDoc
 	 */
 	public function setAuthors(array $authors) {
 		$this->authors = $authors;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setObject()
+	 * @inheritDoc
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array()) {
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = []) {
 		$this->notification = $notification;
 		$this->userNotificationObject = $object;
 		$this->author = $author;
@@ -90,65 +94,65 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getAuthorID()
+	 * @inheritDoc
 	 */
 	public function getAuthorID() {
 		return $this->author->userID;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getAuthor()
+	 * @inheritDoc
 	 */
 	public function getAuthor() {
 		return $this->author;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getAuthors()
+	 * @inheritDoc
 	 */
 	public function getAuthors() {
 		return $this->authors;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible() {
 		return $this->getDecoratedObject()->validateOptions() && $this->getDecoratedObject()->validatePermissions();
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailTitle()
+	 * @inheritDoc
 	 */
 	public function getEmailTitle() {
 		return $this->getTitle();
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
+	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
 		return $this->getMessage();
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 * @inheritDoc
 	 */
 	public function getEventHash() {
 		return sha1($this->eventID . '-' . $this->userNotificationObject->getObjectID());
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setLanguage()
+	 * @inheritDoc
 	 */
 	public function setLanguage(Language $language) {
 		$this->language = $language;
 	}
 	
 	/**
-	 * Gets the language of this event.
+	 * Returns the language of this event.
 	 * 
-	 * @return	\wcf\data\language\Language
+	 * @return	Language
 	 */
 	public function getLanguage() {
 		if ($this->language !== null) return $this->language;
@@ -156,7 +160,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isStackable()
+	 * @inheritDoc
 	 */
 	public function isStackable() {
 		return $this->stackable;
@@ -196,35 +200,35 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::supportsEmailNotification()
+	 * @inheritDoc
 	 */
 	public function supportsEmailNotification() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::checkAccess()
+	 * @inheritDoc
 	 */
 	public function checkAccess() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::deleteNoAccessNotification()
+	 * @inheritDoc
 	 */
 	public function deleteNoAccessNotification() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isConfirmed()
+	 * @inheritDoc
 	 */
 	public function isConfirmed() {
 		return ($this->notification->confirmTime > 0);
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getNotification()
+	 * @inheritDoc
 	 */
 	public function getNotification() {
 		return $this->notification;

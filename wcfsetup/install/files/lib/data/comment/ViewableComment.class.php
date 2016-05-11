@@ -14,6 +14,9 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
+ * 
+ * @method	Comment		getDecoratedObject()
+ * @mixin	Comment
  */
 class ViewableComment extends DatabaseObjectDecorator {
 	use TLegacyUserPropertyAccess;

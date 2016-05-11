@@ -11,10 +11,13 @@ use wcf\data\DatabaseObjectEditor;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.menu.item
  * @category	Community Framework
+ * 
+ * @method	ACPMenuItem	getDecoratedObject()
+ * @mixin	ACPMenuItem
  */
 class ACPMenuItemEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\acp\menu\item\ACPMenuItem';
+	protected static $baseClass = ACPMenuItem::class;
 }

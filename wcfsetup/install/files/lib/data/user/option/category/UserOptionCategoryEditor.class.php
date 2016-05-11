@@ -8,22 +8,25 @@ use wcf\system\cache\builder\UserOptionCacheBuilder;
  * Provides functions to add, edit and delete user option categories.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option.category
  * @category	Community Framework
+ *
+ * @method	UserOptionCategory	getDecoratedObject()
+ * @mixin	UserOptionCategory
  */
 class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\user\option\category\UserOptionCategory::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\option\category\UserOptionCategory';
+	protected static $baseClass = UserOptionCategory::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		// obtain default values
 		if (!isset($parameters['packageID'])) $parameters['packageID'] = PACKAGE_ID;
 		
@@ -31,7 +34,7 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditable
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		UserOptionCacheBuilder::getInstance()->reset();

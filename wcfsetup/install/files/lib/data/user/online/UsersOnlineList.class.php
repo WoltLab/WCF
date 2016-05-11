@@ -17,10 +17,10 @@ use wcf\util\StringUtil;
  * @subpackage	data.user.online
  * @category	Community Framework
  *
- * @method	UsersOnline		current()
- * @method	UsersOnline[]		getObjects()
- * @method	UsersOnline|null	search($objectID)
- * @property	UsersOnline[]		$objects
+ * @method	UserOnline		current()
+ * @method	UserOnline[]		getObjects()
+ * @method	UserOnline|null	search($objectID)
+ * @property	UserOnline[]		$objects
  */
 class UsersOnlineList extends SessionList {
 	/**

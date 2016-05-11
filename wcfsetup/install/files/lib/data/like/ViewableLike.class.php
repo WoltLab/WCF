@@ -14,6 +14,9 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @package	com.woltlab.wcf
  * @subpackage	data.like
  * @category	Community Framework
+ * 
+ * @method	Like	getDecoratedObject()
+ * @mixin	Like
  */
 class ViewableLike extends DatabaseObjectDecorator {
 	/**

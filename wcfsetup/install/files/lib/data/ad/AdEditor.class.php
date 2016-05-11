@@ -16,12 +16,15 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.ad
  * @category	Community Framework
+ * 
+ * @method	Ad	getDecoratedObject()
+ * @mixin	Ad
  */
 class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\ad\Ad';
+	protected static $baseClass = Ad::class;
 	
 	/**
 	 * Sets the show order of the ad.

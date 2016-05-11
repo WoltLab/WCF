@@ -11,17 +11,20 @@ use wcf\system\WCF;
  * Provides functions to edit notices.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.notice
  * @category	Community Framework
+ * 
+ * @method	Notice		getDecoratedObject()
+ * @mixin	Notice
  */
 class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\notice\Notice';
+	protected static $baseClass = Notice::class;
 	
 	/**
 	 * Sets the show order of the notice.
@@ -47,25 +50,23 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
 				SET	showOrder = showOrder + 1
 				WHERE	showOrder >= ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$showOrder
-			));
+			]);
 			
 			$newShowOrder = $showOrder;
 		}
 		
-		$this->update(array(
-			'showOrder' => $newShowOrder
-		));
+		$this->update(['showOrder' => $newShowOrder]);
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		NoticeCacheBuilder::getInstance()->reset();
-		ConditionCacheBuilder::getInstance()->reset(array(
+		ConditionCacheBuilder::getInstance()->reset([
 			'definitionID' => ObjectTypeCache::getInstance()->getDefinitionByName('com.woltlab.wcf.condition.notice')->definitionID
-		));
+		]);
 	}
 }

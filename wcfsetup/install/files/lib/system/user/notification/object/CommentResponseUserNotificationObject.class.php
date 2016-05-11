@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\notification\object;
+use wcf\data\comment\response\CommentResponse;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
@@ -11,29 +12,32 @@ use wcf\data\DatabaseObjectDecorator;
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.object
  * @category	Community Framework
+ * 
+ * @method	CommentResponse		getDecoratedObject()
+ * @mixin	CommentResponse
  */
 class CommentResponseUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\comment\response\CommentResponse';
+	protected static $baseClass = CommentResponse::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getAuthorID()
+	 * @inheritDoc
 	 */
 	public function getAuthorID() {
 		return $this->userID;

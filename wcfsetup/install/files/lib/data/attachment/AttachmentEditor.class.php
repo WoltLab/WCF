@@ -13,32 +13,35 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.attachment
  * @category	Community Framework
+ *
+ * @method	Attachment	getDecoratedObject()
+ * @mixin	Attachment
  */
 class AttachmentEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	public static $baseClass = 'wcf\data\attachment\Attachment';
+	public static $baseClass = Attachment::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$sql = "DELETE FROM	wcf".WCF_N."_attachment
 			WHERE		attachmentID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->attachmentID));
+		$statement->execute([$this->attachmentID]);
 		
 		$this->deleteFiles();
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		// delete files first
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add("attachmentID IN (?)", array($objectIDs));
+		$conditionBuilder->add("attachmentID IN (?)", [$objectIDs]);
 		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_attachment

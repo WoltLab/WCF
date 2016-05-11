@@ -6,15 +6,18 @@ use wcf\data\DatabaseObjectEditor;
  * Provides functions to edit package installation queues.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.queue
  * @category	Community Framework
+ * 
+ * @method	PackageInstallationQueue	getDecoratedObject()
+ * @mixin	PackageInstallationQueue
  */
 class PackageInstallationQueueEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\package\installation\queue\PackageInstallationQueue';
+	protected static $baseClass = PackageInstallationQueue::class;
 }

@@ -6,15 +6,18 @@ use wcf\data\DatabaseObjectEditor;
  * Extends the poll option object with functions to create, update and delete poll options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.poll.option
  * @category	Community Framework
+ * 
+ * @method	PollOption	getDecoratedObject()
+ * @mixin	PollOption
  */
 class PollOptionEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\poll\option\PollOption';
+	protected static $baseClass = PollOption::class;
 }

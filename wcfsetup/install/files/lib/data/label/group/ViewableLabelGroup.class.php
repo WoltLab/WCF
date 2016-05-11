@@ -10,17 +10,20 @@ use wcf\system\WCF;
  * Represents a viewable label group.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.label.group
  * @category	Community Framework
+ * 
+ * @method	LabelGroup	getDecoratedObject()
+ * @mixin	LabelGroup
  */
 class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, ITraversableObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\label\group\LabelGroup';
+	protected static $baseClass = LabelGroup::class;
 	
 	/**
 	 * list of labels
@@ -52,7 +55,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Adds a label.
 	 * 
-	 * @param	\wcf\data\label\Label	$label
+	 * @param	Label	$label
 	 */
 	public function addLabel(Label $label) {
 		$this->labels[$label->labelID] = $label;
@@ -139,7 +142,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	 * Returns a label by id.
 	 * 
 	 * @param	integer		$labelID
-	 * @return	\wcf\data\label\Label
+	 * @return	Label|null
 	 */
 	public function getLabel($labelID) {
 		if (isset($this->labels[$labelID])) {
@@ -150,14 +153,14 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->labels);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$objectID = $this->indexToObject[$this->index];
@@ -168,35 +171,35 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	 * CAUTION: This methods does not return the current iterator index,
 	 * rather than the object key which maps to that index.
 	 * 
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->indexToObject[$this->index];
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->indexToObject[$this->index]);
 	}
 	
 	/**
-	 * @see	\SeekableIterator::seek()
+	 * @inheritDoc
 	 */
 	public function seek($index) {
 		$this->index = $index;
@@ -207,7 +210,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	}
 	
 	/**
-	 * @see	\wcf\data\ITraversableObject::seekTo()
+	 * @inheritDoc
 	 */
 	public function seekTo($objectID) {
 		$this->index = array_search($objectID, $this->indexToObject);
@@ -218,7 +221,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	}
 	
 	/**
-	 * @see	\wcf\data\ITraversableObject::search()
+	 * @inheritDoc
 	 */
 	public function search($objectID) {
 		try {

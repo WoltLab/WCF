@@ -7,20 +7,23 @@ use wcf\data\IEditableCachedObject;
  * Provides functions to edit object types.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.object.type
  * @category	Community Framework
+ * 
+ * @method	ObjectType	getDecoratedObject()
+ * @mixin	ObjectType
  */
 class ObjectTypeEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\object\type\ObjectType';
+	protected static $baseClass = ObjectType::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		ObjectTypeCache::getInstance()->resetCache();

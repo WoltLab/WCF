@@ -6,11 +6,14 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a category node.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
  * @category	Community Framework
+ * 
+ * @method	Category	getDecoratedObject()
+ * @mixin	Category
  */
 class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator, \Countable {
 	/**
@@ -27,19 +30,19 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	
 	/**
 	 * parent node object
-	 * @var	\wcf\data\category\CategoryNode
+	 * @var	CategoryNode
 	 */
 	protected $parentNode = null;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\category\Category';
+	protected static $baseClass = Category::class;
 	
 	/**
 	 * Adds the given category node as child node.
 	 * 
-	 * @param	\wcf\data\category\CategoryNode		$categoryNode
+	 * @param	CategoryNode		$categoryNode
 	 */
 	public function addChild(CategoryNode $categoryNode) {
 		$categoryNode->setParentNode($this);
@@ -50,7 +53,7 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	/**
 	 * Sets parent node object.
 	 * 
-	 * @param	\wcf\data\category\CategoryNode		$parentNode
+	 * @param	CategoryNode		$parentNode
 	 */
 	public function setParentNode(CategoryNode $parentNode) {
 		$this->parentNode = $parentNode;
@@ -88,56 +91,56 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->children);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		return $this->children[$this->index];
 	}
 	
 	/**
-	 * @see	\RecursiveIterator::getChildren()
+	 * @inheritDoc
 	 */
 	public function getChildren() {
 		return $this->children[$this->index];
 	}
 	
 	/**
-	 * @see	\RecursiveIterator::getChildren()
+	 * @inheritDoc
 	 */
 	public function hasChildren() {
 		return !empty($this->children);
 	}
 	
 	/**
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		$this->index++;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->children[$this->index]);

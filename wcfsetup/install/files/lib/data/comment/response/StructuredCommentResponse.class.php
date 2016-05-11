@@ -13,6 +13,9 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ * 
+ * @method	CommentResponse		getDecoratedObject()
+ * @mixin	CommentResponse
  */
 class StructuredCommentResponse extends DatabaseObjectDecorator {
 	/**

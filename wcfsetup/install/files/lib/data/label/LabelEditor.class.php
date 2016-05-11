@@ -14,6 +14,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.label
  * @category	Community Framework
+ * 
+ * @method	Label	getDecoratedObject()
+ * @mixin	Label
  */
 class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

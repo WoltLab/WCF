@@ -11,17 +11,20 @@ use wcf\util\StringUtil;
  * Represents a viewable user option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option
  * @category	Community Framework
+ * 
+ * @method	UserOption	getDecoratedObject()
+ * @mixin	UserOption
  */
 class ViewableUserOption extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\option\UserOption';
+	protected static $baseClass = UserOption::class;
 	
 	/**
 	 * list of output objects
@@ -44,7 +47,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	/**
 	 * Sets option values for a specific user.
 	 * 
-	 * @param	\wcf\data\user\User	$user
+	 * @param	User	$user
 	 */
 	public function setOptionValue(User $user) {
 		$userOption = 'userOption' . $this->optionID;
@@ -63,7 +66,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	/**
 	 * Returns the output object for current user option.
 	 * 
-	 * @return	\wcf\system\option\user\IUserOptionOutput
+	 * @return	IUserOptionOutput
 	 * @throws	SystemException
 	 */
 	public function getOutputObject() {
@@ -74,8 +77,8 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 			}
 			
 			// validate interface
-			if (!is_subclass_of($this->outputClass, 'wcf\system\option\user\IUserOptionOutput')) {
-				throw new SystemException("'".$this->outputClass."' does not implement 'wcf\system\option\user\IUserOptionOutput'");
+			if (!is_subclass_of($this->outputClass, IUserOptionOutput::class)) {
+				throw new SystemException("'".$this->outputClass."' does not implement '".IUserOptionOutput::class."'");
 			}
 			
 			self::$outputObjects[$this->outputClass] = new $this->outputClass();
@@ -88,7 +91,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	 * Returns the user option with the given name
 	 * 
 	 * @param	string		$name
-	 * @return	\wcf\data\user\option\ViewableUserOption
+	 * @return	ViewableUserOption
 	 */
 	public static function getUserOption($name) {
 		if (!isset(self::$userOptions[$name])) {

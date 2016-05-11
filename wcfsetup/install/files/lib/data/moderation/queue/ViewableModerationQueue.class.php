@@ -21,6 +21,9 @@ use wcf\system\visitTracker\VisitTracker;
  * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
  * @category	Community Framework
+ * 
+ * @method	ModerationQueue		getDecoratedObject()
+ * @mixin	ModerationQueue
  */
 class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkableObject, ITitledObject {
 	/**

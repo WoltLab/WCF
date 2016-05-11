@@ -14,17 +14,20 @@ use wcf\util\StringUtil;
  * Provides functions to edit users.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
+ * 
+ * @method	User	getDecoratedObject()
+ * @mixin	User
  */
 class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\User';
+	protected static $baseClass = User::class;
 	
 	/**
 	 * list of user options default values
@@ -33,9 +36,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	protected static $userOptionDefaultValues = null;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		// create salt and password hash
 		if ($parameters['password'] !== '') {
 			$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
@@ -56,9 +59,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		// unmark users
 		ClipboardHandler::getInstance()->unmark($objectIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 		
@@ -66,9 +69,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::update()
+	 * @inheritDoc
 	 */
-	public function update(array $parameters = array()) {
+	public function update(array $parameters = []) {
 		// update salt and create new password hash
 		if (isset($parameters['password']) && $parameters['password'] !== '') {
 			$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
@@ -92,7 +95,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	protected static function createUserOptions($userID) {
 		// fetch default values
 		if (self::$userOptionDefaultValues === null) {
-			self::$userOptionDefaultValues = array();
+			self::$userOptionDefaultValues = [];
 			
 			$sql = "SELECT	optionID, defaultValue
 				FROM	wcf".WCF_N."_user_option";
@@ -107,7 +110,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 		
 		// insert default values
 		$keys = $values = '';
-		$statementParameters = array($userID);
+		$statementParameters = [$userID];
 		foreach (self::$userOptionDefaultValues as $optionID => $optionValue) {
 			$keys .= ', userOption'.$optionID;
 			$values .= ', ?';
@@ -126,9 +129,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * 
 	 * @param	array		$userOptions
 	 */
-	public function updateUserOptions(array $userOptions = array()) {
+	public function updateUserOptions(array $userOptions = []) {
 		$updateSQL = '';
-		$statementParameters = array();
+		$statementParameters = [];
 		foreach ($userOptions as $optionID => $optionValue) {
 			if (!empty($updateSQL)) $updateSQL .= ',';
 			
@@ -156,7 +159,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	public function addToGroups(array $groupIDs, $deleteOldGroups = true, $addDefaultGroups = true) {
 		// add default groups
 		if ($addDefaultGroups) {
-			$groupIDs = array_merge($groupIDs, UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE, UserGroup::USERS)));
+			$groupIDs = array_merge($groupIDs, UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]));
 			$groupIDs = array_unique($groupIDs);
 		}
 		
@@ -165,7 +168,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 			$sql = "DELETE FROM	wcf".WCF_N."_user_to_group
 				WHERE		userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->userID));
+			$statement->execute([$this->userID]);
 		}
 		
 		// insert new groups
@@ -175,7 +178,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 				VALUES			(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($groupIDs as $groupID) {
-				$statement->execute(array($this->userID, $groupID));
+				$statement->execute([$this->userID, $groupID]);
 			}
 		}
 	}
@@ -190,7 +193,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 						(userID, groupID)
 			VALUES			(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->userID, $groupID));
+		$statement->execute([$this->userID, $groupID]);
 	}
 	
 	/**
@@ -203,7 +206,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 			WHERE		userID = ?
 					AND groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->userID, $groupID));
+		$statement->execute([$this->userID, $groupID]);
 	}
 	
 	/**
@@ -217,10 +220,10 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 					AND groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($groupIDs as $groupID) {
-			$statement->execute(array(
+			$statement->execute([
 				$this->userID,
 				$groupID
-			));
+			]);
 		}
 	}
 	
@@ -236,7 +239,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 			$sql = "DELETE FROM	wcf".WCF_N."_user_to_language
 				WHERE		userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->userID));
+			$statement->execute([$this->userID]);
 		}
 		
 		// insert language ids
@@ -248,24 +251,24 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 		if (!empty($languageIDs)) {
 			WCF::getDB()->beginTransaction();
 			foreach ($languageIDs as $languageID) {
-				$statement->execute(array(
+				$statement->execute([
 					$this->userID,
 					$languageID
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
 		else {
 			// no language id given, use default language id instead
-			$statement->execute(array(
+			$statement->execute([
 				$this->userID,
 				LanguageFactory::getInstance()->getDefaultLanguageID()
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		SessionHandler::resetSessions();

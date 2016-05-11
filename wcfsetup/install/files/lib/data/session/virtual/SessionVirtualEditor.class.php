@@ -7,11 +7,14 @@ use wcf\data\acp\session\virtual\ACPSessionVirtualEditor;
  * 
  * @see		\wcf\data\acp\session\virtual\ACPSessionVirtualEditor
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.session.virtual
  * @category	Community Framework
+ * 
+ * @method	SessionVirtual		getDecoratedObject()
+ * @mixin	SessionVirtual
  */
 class SessionVirtualEditor extends ACPSessionVirtualEditor {
 	/**

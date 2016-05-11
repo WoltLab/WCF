@@ -10,12 +10,15 @@ use wcf\system\WCF;
  * Provides functions to edit menus.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.menu
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	Menu	getDecoratedObject()
+ * @mixin	Menu
  */
 class MenuEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

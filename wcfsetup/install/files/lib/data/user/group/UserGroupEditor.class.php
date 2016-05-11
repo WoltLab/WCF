@@ -12,22 +12,25 @@ use wcf\system\WCF;
  * Provides functions to edit user groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
  * @category	Community Framework
+ *
+ * @method	UserGroup	getDecoratedObject()
+ * @mixin	UserGroup
  */
 class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\group\UserGroup';
+	protected static $baseClass = UserGroup::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		$group = parent::create($parameters);
 		
 		// update accessible groups
@@ -37,9 +40,9 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::__deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		$returnValue = parent::deleteAll($objectIDs);
 		
 		// remove user to group assignments
@@ -67,7 +70,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			WHERE		groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($groupIDs as $groupID) {
-			$statement->execute(array($groupID));
+			$statement->execute([$groupID]);
 		}
 	}
 	
@@ -83,7 +86,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			WHERE		groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($groupIDs as $groupID) {
-			$statement->execute(array($groupID));
+			$statement->execute([$groupID]);
 		}
 	}
 	
@@ -92,13 +95,13 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * 
 	 * @param	array		$groupOptions
 	 */
-	public function updateGroupOptions(array $groupOptions = array()) {
+	public function updateGroupOptions(array $groupOptions = []) {
 		WCF::getDB()->beginTransaction();
 		// delete old group options
 		$sql = "DELETE FROM	wcf".WCF_N."_user_group_option_value
 			WHERE		groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->groupID));
+		$statement->execute([$this->groupID]);
 		
 		// insert new options
 		$sql = "INSERT INTO	wcf".WCF_N."_user_group_option_value
@@ -106,7 +109,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($groupOptions as $id => $value) {
-			$statement->execute(array($this->groupID, $id, $value));
+			$statement->execute([$this->groupID, $id, $value]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -123,16 +126,16 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			FROM	wcf".WCF_N."_user_group_option
 			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('admin.user.accessibleGroups'));
+		$statement->execute(['admin.user.accessibleGroups']);
 		$optionID = $statement->fetchColumn();
 		$statement->closeCursor();
 		
 		if (!$optionID) throw new SystemException("Unable to find 'admin.user.accessibleGroups' user option");
 		
 		$userGroupList = new UserGroupList();
-		$userGroupList->getConditionBuilder()->add('user_group.groupID <> ?', array($groupID));
+		$userGroupList->getConditionBuilder()->add('user_group.groupID <> ?', [$groupID]);
 		$userGroupList->readObjects();
-		$groupIDs = array();
+		$groupIDs = [];
 		foreach ($userGroupList as $userGroup) {
 			$groupIDs[] = $userGroup->groupID;
 		}
@@ -147,7 +150,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			FROM		wcf".WCF_N."_user_group_option_value
 			WHERE		optionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($optionID));
+		$statement->execute([$optionID]);
 		while ($row = $statement->fetchArray()) {
 			$valueIDs = explode(',', $row['optionValue']);
 			if ($delete) {
@@ -161,12 +164,12 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 				}
 			}
 			
-			$updateStatement->execute(array(implode(',', $valueIDs), $row['groupID'], $optionID));
+			$updateStatement->execute([implode(',', $valueIDs), $row['groupID'], $optionID]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		// clear cache

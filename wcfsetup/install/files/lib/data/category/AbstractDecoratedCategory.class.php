@@ -8,11 +8,14 @@ use wcf\system\exception\PermissionDeniedException;
  * Abstract implementation of a decorated category.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
  * @category	Community Framework
+ * 
+ * @method	Category	getDecoratedObject()
+ * @mixin	Category
  */
 abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	/**
@@ -29,17 +32,17 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	
 	/**
 	 * parent category of this category
-	 * @var	\wcf\data\category\AbstractDecoratedCategory
+	 * @var	AbstractDecoratedCategory
 	 */
 	protected $parentCategory = null;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\category\Category';
+	protected static $baseClass = Category::class;
 	
 	/**
-	 * @see	\wcf\data\IPermissionObject::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions(array $permissions) {
 		foreach ($permissions as $permission) {
@@ -50,11 +53,11 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * @see	\wcf\data\category\Category::getChildCategories()
+	 * @inheritDoc
 	 */
 	public function getChildCategories() {
 		if ($this->childCategories === null) {
-			$this->childCategories = array();
+			$this->childCategories = [];
 			foreach ($this->getDecoratedObject()->getChildCategories() as $category) {
 				$this->childCategories[$category->categoryID] = new static($category);
 			}
@@ -64,11 +67,11 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * @see	\wcf\data\category\Category::getParentCategories()
+	 * @inheritDoc
 	 */
 	public function getParentCategories() {
 		if ($this->parentCategories === null) {
-			$this->parentCategories = array();
+			$this->parentCategories = [];
 			foreach ($this->getDecoratedObject()->getParentCategories() as $category) {
 				$this->parentCategories[$category->categoryID] = new static($category);
 			}
@@ -78,7 +81,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * @see	\wcf\data\category\Category::getParentCategory()
+	 * @inheritDoc
 	 */
 	public function getParentCategory() {
 		if ($this->parentCategoryID && $this->parentCategory === null) {
@@ -89,7 +92,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * @see	\wcf\data\category\Category::isParentCategory()
+	 * @inheritDoc
 	 */
 	public function isParentCategory(AbstractDecoratedCategory $category) {
 		return $this->getDecoratedObject()->isParentCategory($category->getDecoratedObject());
@@ -100,7 +103,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	 * category exists.
 	 * 
 	 * @param	integer		$categoryID
-	 * @return	\wcf\data\category\AbstractDecoratedCategory
+	 * @return	AbstractDecoratedCategory
 	 */
 	public static function getCategory($categoryID) {
 		$category = CategoryHandler::getInstance()->getCategory($categoryID);

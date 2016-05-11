@@ -10,25 +10,28 @@ use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
  * Executes user group assignment-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.assignment
  * @category	Community Framework
+ * 
+ * @method	UserGroupAssignment	getDecoratedObject()
+ * @mixin	UserGroupAssignment
  */
 class UserGroupAssignmentEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\group\assignment\UserGroupAssignment';
+	protected static $baseClass = UserGroupAssignment::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		UserGroupAssignmentCacheBuilder::getInstance()->reset();
-		ConditionCacheBuilder::getInstance()->reset(array(
+		ConditionCacheBuilder::getInstance()->reset([
 			'definitionID' => ObjectTypeCache::getInstance()->getDefinitionByName('com.woltlab.wcf.condition.userGroupAssignment')->definitionID
-		));
+		]);
 	}
 }

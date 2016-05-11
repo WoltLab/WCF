@@ -6,15 +6,18 @@ use wcf\data\DatabaseObjectEditor;
  * Provides functions to edit option categories.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.option.category
  * @category	Community Framework
+ * 
+ * @method	OptionCategory		getDecoratedObject()
+ * @mixin	OptionCategory
  */
 class OptionCategoryEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\option\category\OptionCategory';
+	protected static $baseClass = OptionCategory::class;
 }

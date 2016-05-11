@@ -11,10 +11,13 @@ use wcf\data\DatabaseObjectEditor;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.log
  * @category	Community Framework
+ * 
+ * @method	ACPSessionLog	getDecoratedObject()
+ * @mixin	ACPSessionLog
  */
 class ACPSessionLogEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\acp\session\log\ACPSessionLog';
+	protected static $baseClass = ACPSessionLog::class;
 }

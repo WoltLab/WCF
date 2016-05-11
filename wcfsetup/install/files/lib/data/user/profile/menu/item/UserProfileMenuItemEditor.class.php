@@ -9,22 +9,25 @@ use wcf\system\WCF;
  * Provides functions to edit user profile menu items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.profile.menu.item
  * @category	Community Framework
+ * 
+ * @method	UserProfileMenuItem	getDecoratedObject()
+ * @mixin	UserProfileMenuItem
  */
 class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\profile\menu\item\UserProfileMenuItem';
+	protected static $baseClass = UserProfileMenuItem::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		// calculate show order
 		$parameters['showOrder'] = self::getShowOrder($parameters['showOrder']);
 		
@@ -32,9 +35,9 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::update()
+	 * @inheritDoc
 	 */
-	public function update(array $parameters = array()) {
+	public function update(array $parameters = []) {
 		if (isset($parameters['showOrder'])) {
 			$this->updateShowOrder($parameters['showOrder']);
 		}
@@ -43,7 +46,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		// update show order
@@ -51,7 +54,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 			SET	showOrder = showOrder - 1
 			WHERE	showOrder >= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->showOrder));
+		$statement->execute([$this->showOrder]);
 		
 		parent::delete();
 	}
@@ -69,10 +72,10 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 					WHERE	showOrder >= ?
 						AND showOrder < ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$showOrder,
 					$this->showOrder
-				));
+				]);
 			}
 			else if ($showOrder > $this->showOrder) {
 				$sql = "UPDATE	wcf".WCF_N."_user_profile_menu_item
@@ -80,10 +83,10 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 					WHERE	showOrder <= ?
 						AND showOrder > ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$showOrder,
 					$this->showOrder
-				));
+				]);
 			}
 		}
 	}
@@ -110,14 +113,14 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 				SET	showOrder = showOrder + 1
 				WHERE	showOrder >= ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($showOrder));
+			$statement->execute([$showOrder]);
 		}
 		
 		return $showOrder;
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		UserProfileMenuCacheBuilder::getInstance()->reset();

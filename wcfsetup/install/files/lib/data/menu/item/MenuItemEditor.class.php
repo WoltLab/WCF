@@ -16,6 +16,9 @@ use wcf\system\WCF;
  * @subpackage	data.menu.item
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	MenuItem	getDecoratedObject()
+ * @mixin	MenuItem
  */
 class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

@@ -13,20 +13,23 @@ use wcf\system\WCF;
  * Likeable object implementation for comment responses.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ * 
+ * @method	CommentResponse		getDecoratedObject()
+ * @mixin	CommentResponse
  */
 class LikeableCommentResponse extends AbstractLikeObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\comment\response\CommentResponse';
+	protected static $baseClass = CommentResponse::class;
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::getObjectType()
+	 * @inheritDoc
 	 */
 	public function getObjectType() {
 		if ($this->objectType === null) {
@@ -37,28 +40,28 @@ class LikeableCommentResponse extends AbstractLikeObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->message;
 	}
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL() {
 		return $this->getLink();
 	}
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::getUserID()
+	 * @inheritDoc
 	 */
 	public function getUserID() {
 		return $this->userID;
 	}
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::sendNotification()
+	 * @inheritDoc
 	 */
 	public function sendNotification(Like $like) {
 		$comment = new Comment($this->object->commentID);
@@ -67,11 +70,11 @@ class LikeableCommentResponse extends AbstractLikeObject {
 			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.response.like.notification');
 			if ($this->userID != WCF::getUser()->userID) {
 				$notificationObject = new LikeUserNotificationObject($like);
-				UserNotificationHandler::getInstance()->fireEvent('like', $objectType->objectType.'.response.like.notification', $notificationObject, array($this->userID), array(
+				UserNotificationHandler::getInstance()->fireEvent('like', $objectType->objectType.'.response.like.notification', $notificationObject, [$this->userID], [
 					'commentID' => $comment->commentID,
 					'commentUserID' => $comment->userID,
 					'objectID' => $comment->objectID
-				));
+				]);
 			}
 		}
 	}
