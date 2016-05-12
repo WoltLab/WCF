@@ -73,7 +73,7 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 			if (~~value) {
 				elShow(_containerInternalLink);
 				elHide(_containerExternalLink);
-				this._togglePageId();
+				if (_handlers.size) this._togglePageId();
 			}
 			else {
 				elHide(_containerInternalLink);
