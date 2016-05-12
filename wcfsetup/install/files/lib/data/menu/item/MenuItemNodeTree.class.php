@@ -102,7 +102,7 @@ class MenuItemNodeTree {
 				for ($i = 0, $length = count($itemIDs); $i < $length; $i++) {
 					/** @var MenuItemNode $node */
 					foreach ($nodeList as $node) {
-						if ($node->getMenuItem()->itemID == $itemIDs[$i]) {
+						if ($node->itemID == $itemIDs[$i]) {
 							$node->setIsActive();
 							
 							// only one effective item can be marked as active, use the first

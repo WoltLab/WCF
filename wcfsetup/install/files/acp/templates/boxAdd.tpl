@@ -180,7 +180,7 @@
 				<ul class="scrollableCheckboxList">
 					{foreach from=$pageNodeList item=pageNode}
 						<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
-							<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID|in_array:$pageIDs} checked="checked"{/if} /> {$pageNode->getPage()->name}</label>
+							<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked="checked"{/if} /> {$pageNode->name}</label>
 						</li>
 					{/foreach}
 				</ul>
@@ -209,7 +209,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$pageNodeList item=pageNode}
-						<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $linkPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
+						<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'linkPageID'}

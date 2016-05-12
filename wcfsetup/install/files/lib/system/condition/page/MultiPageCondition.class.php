@@ -45,7 +45,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
 		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple="multiple" size="10">';
 		/** @var PageNode $pageNode */
 		foreach ($pageNodes as $pageNode) {
-			$fieldElement .= '<option value="'.$pageNode->getPage()->pageID.'">'.($pageNode->getDepth() > 1 ? str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $pageNode->getDepth() - 1) : '').$pageNode->getPage()->name.'</option>';
+			$fieldElement .= '<option value="'.$pageNode->pageID.'">'.($pageNode->getDepth() > 1 ? str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $pageNode->getDepth() - 1) : '').$pageNode->name.'</option>';
 		}
 		$fieldElement .= "</select>";
 		

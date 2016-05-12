@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\page;
+use wcf\data\DatabaseObjectDecorator;
 
 /**
  * Represents a page node element.
@@ -11,8 +12,11 @@ namespace wcf\data\page;
  * @subpackage	data.page
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	Page	getDecoratedObject()
+ * @mixin	Page
  */
-class PageNode implements \Countable, \RecursiveIterator {
+class PageNode extends DatabaseObjectDecorator implements \Countable, \RecursiveIterator {
 	/**
 	 * parent node
 	 * @var	PageNode
@@ -23,13 +27,7 @@ class PageNode implements \Countable, \RecursiveIterator {
 	 * children of this node
 	 * @var	PageNode[]
 	 */
-	protected $children = array();
-	
-	/**
-	 * page object
-	 * @var	Page
-	 */
-	protected $page = null;
+	protected $children = [];
 	
 	/**
 	 * node depth
@@ -44,6 +42,11 @@ class PageNode implements \Countable, \RecursiveIterator {
 	private $position = 0;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected static $baseClass = Page::class;
+	
+	/**
 	 * Creates a new PageNode object.
 	 * 
 	 * @param	PageNode	$parentNode
@@ -51,8 +54,12 @@ class PageNode implements \Countable, \RecursiveIterator {
 	 * @param	integer		$depth
 	 */
 	public function __construct($parentNode = null, Page $page = null, $depth = 0) {
+		if ($page === null) {
+			$page = new Page(null, []);
+		}
+		parent::__construct($page);
+		
 		$this->parentNode = $parentNode;
-		$this->page = $page;
 		$this->depth = $depth;
 	}
 	
@@ -72,15 +79,6 @@ class PageNode implements \Countable, \RecursiveIterator {
 	 */
 	public function getParentNode() {
 		return $this->parentNode;
-	}
-	
-	/**
-	 * Returns the page object of this node
-	 * 
-	 * @return	Page
-	 */
-	public function getPage() {
-		return $this->page;
 	}
 	
 	/**

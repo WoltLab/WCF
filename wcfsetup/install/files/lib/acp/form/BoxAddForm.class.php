@@ -179,10 +179,10 @@ class BoxAddForm extends AbstractForm {
 		
 		// fetch page handlers
 		foreach ($this->pageNodeList as $pageNode) {
-			$handler = $pageNode->getPage()->getHandler();
+			$handler = $pageNode->getHandler();
 			if ($handler !== null) {
 				if ($handler instanceof ILookupPageHandler) {
-					$this->pageHandlers[$pageNode->getPage()->pageID] = $pageNode->getPage()->requireObjectID;
+					$this->pageHandlers[$pageNode->pageID] = $pageNode->requireObjectID;
 				}
 			}
 		}

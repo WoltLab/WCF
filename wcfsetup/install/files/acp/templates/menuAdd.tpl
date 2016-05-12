@@ -107,7 +107,7 @@
 				<dd>
 					<select name="pageIDs[]" id="pageIDs" multiple="multiple" size="20">
 						{foreach from=$pageNodeList item=pageNode}
-							<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID|in_array:$pageIDs} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
+							<option value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 						{/foreach}
 					</select>
 				</dd>

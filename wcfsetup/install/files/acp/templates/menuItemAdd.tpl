@@ -48,7 +48,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$menuItemNodeList item=menuItemNode}
-						<option value="{@$menuItemNode->getMenuItem()->itemID}"{if $menuItemNode->getMenuItem()->itemID == $parentItemID} selected="selected"{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{lang}{$menuItemNode->getMenuItem()->title}{/lang}</option>
+						<option value="{@$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentItemID} selected="selected"{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{lang}{$menuItemNode->title}{/lang}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'parentItemID'}
@@ -102,7 +102,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$pageNodeList item=pageNode}
-						<option value="{@$pageNode->getPage()->pageID}"{if $pageNode->getPage()->pageID == $pageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->getPage()->name}</option>
+						<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'pageID'}

@@ -20,8 +20,8 @@
 					<a href="{link forceFrontend=true}{/link}" class="dropdownToggle jsTooltip" title="{lang}wcf.global.jumpToPage{/lang}"><span class="icon icon32 fa-home"></span></a>
 					<ul class="dropdownMenu" data-dropdown-alignment-horizontal="right">
 						{foreach from=$__wcf->getFrontendMenu()->getMenuItemNodeList() item=_menuItem}
-							{if !$_menuItem->getMenuItem()->parentItemID && $_menuItem->getMenuItem()->getPage()}
-								<li><a href="{$_menuItem->getMenuItem()->getPage()->getLink()}">{$_menuItem->getMenuItem()->getPage()}</a></li>
+							{if !$_menuItem->parentItemID && $_menuItem->getPage()}
+								<li><a href="{$_menuItem->getPage()->getLink()}">{$_menuItem->getPage()}</a></li>
 							{/if}
 						{/foreach}
 					</ul>

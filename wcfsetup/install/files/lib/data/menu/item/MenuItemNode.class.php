@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\menu\item;
+use wcf\data\DatabaseObjectDecorator;
 
 /**
  * Represents a menu item node element.
@@ -11,8 +12,11 @@ namespace wcf\data\menu\item;
  * @subpackage	data.menu.item
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	MenuItem	getDecoratedObject()
+ * @mixin	MenuItem
  */
-class MenuItemNode implements \Countable, \RecursiveIterator {
+class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \RecursiveIterator {
 	/**
 	 * children of this node
 	 * @var	MenuItemNode[]
@@ -32,12 +36,6 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	protected $isActive = false;
 	
 	/**
-	 * menu item object
-	 * @var	MenuItem
-	 */
-	protected $menuItem;
-	
-	/**
 	 * parent node
 	 * @var	MenuItemNode
 	 */
@@ -50,6 +48,11 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	private $position = 0;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected static $baseClass = MenuItem::class;
+	
+	/**
 	 * Creates a new MenuItemNode object.
 	 * 
 	 * @param	MenuItemNode		$parentNode
@@ -57,8 +60,12 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	 * @param	integer			$depth
 	 */
 	public function __construct($parentNode = null, MenuItem $menuItem = null, $depth = 0) {
+		if ($menuItem === null) {
+			$menuItem = new MenuItem(null, []);
+		}
+		parent::__construct($menuItem);
+		
 		$this->parentNode = $parentNode;
-		$this->menuItem = $menuItem;
 		$this->depth = $depth;
 	}
 	
@@ -78,15 +85,6 @@ class MenuItemNode implements \Countable, \RecursiveIterator {
 	 */
 	public function getParentNode() {
 		return $this->parentNode;
-	}
-	
-	/**
-	 * Returns the menu item object of this node.
-	 * 
-	 * @return	MenuItem
-	 */
-	public function getMenuItem() {
-		return $this->menuItem;
 	}
 	
 	/**
