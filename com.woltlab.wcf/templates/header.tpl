@@ -10,7 +10,7 @@
 	{/if}
 </head>
 
-<body id="tpl_{$templateNameApplication}_{$templateName}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+<body id="tpl_{$templateNameApplication}_{$templateName}" data-template="{$templateName}" data-application="{$templateNameApplication}"{if !$page|empty} data-page-id="{@$page->pageID}"{/if}>
 
 <a id="top"></a>
 
