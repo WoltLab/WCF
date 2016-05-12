@@ -1550,6 +1550,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		WCF.Dropdown._closeAll();
 		
 		this._container.addClass('open');
+		this._triggerElement.addClass('openDropdown');
 		
 		this.render();
 	},
@@ -1559,6 +1560,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 */
 	close: function() {
 		this._container.removeClass('open');
+		this._triggerElement.removeClass('openDropdown');
 	},
 	
 	/**
