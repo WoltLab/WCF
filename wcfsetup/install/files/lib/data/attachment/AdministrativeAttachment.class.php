@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\attachment;
-use wcf\data\IUserContent;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\IUserContent;
 
 /**
  * Represents an attachment.
