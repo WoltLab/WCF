@@ -19,8 +19,10 @@
 </script>
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}</h1>
-	<p class="contentHeaderDescription">{$archive->getLocalizedPackageInfo('packageDescription')}</p>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}</h1>
+		<p class="contentHeaderDescription">{$archive->getLocalizedPackageInfo('packageDescription')}</p>
+	</div>
 </header>
 
 {if !$validationPassed}
