@@ -120,6 +120,10 @@ class MenuItem extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isVisible() {
+		if ($this->isDisabled) {
+			return false;
+		}
+		
 		if ($this->getPage() !== null && !$this->getPage()->isVisible()) {
 			return false;
 		}
