@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\output;
+use wcf\system\html\output\node\HtmlOutputNodeProcessor;
 
 /**
  * TOOD documentation
@@ -11,14 +12,18 @@ class HtmlOutputProcessor {
 	 */
 	protected $htmlOutputNodeProcessor;
 	
-	public function __construct(HtmlOutputNodeProcessor $htmlOutputNodeProcessor) {
-		$this->htmlOutputNodeProcessor = $htmlOutputNodeProcessor;
+	public function process($html) {
+		$this->getHtmlOutputNodeProcessor()->load($html);
+		$this->getHtmlOutputNodeProcessor()->process();
+		
+		return $this->getHtmlOutputNodeProcessor()->getHtml();
 	}
 	
-	public function process($html) {
-		$this->htmlOutputNodeProcessor->load($html);
-		$this->htmlOutputNodeProcessor->process();
+	protected function getHtmlOutputNodeProcessor() {
+		if ($this->htmlOutputNodeProcessor === null) {
+			$this->htmlOutputNodeProcessor = new HtmlOutputNodeProcessor();
+		}
 		
-		return $this->htmlOutputNodeProcessor->getHtml();
+		return $this->htmlOutputNodeProcessor;
 	}
 }

@@ -1,8 +1,6 @@
 <?php
-namespace wcf\system\html\output;
+namespace wcf\system\html\output\node;
 use wcf\system\html\node\HtmlNodeProcessor;
-use wcf\system\html\output\node\HtmlOutputNodeBlockquote;
-use wcf\system\html\output\node\HtmlOutputNodeWoltlabMention;
 
 /**
  * TOOD documentation

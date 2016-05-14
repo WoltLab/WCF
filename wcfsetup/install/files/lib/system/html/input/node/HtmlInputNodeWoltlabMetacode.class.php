@@ -81,17 +81,6 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
 				// attributes are invalid, remove element from DOM
 				DOMUtil::removeNode($element, true);
 			}
-			
-			
-			continue;
-			$parsedTag = HtmlBBCodeParser::getInstance()->getHtmlOutput($name, $attributes);
-			
-			$nodeIdentifier = StringUtil::getRandomID();
-			$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
-				'parsedTag' => $parsedTag
-			]);
-			
-			$htmlNodeProcessor->renameTag($metacode, 'wcfNode-' . $nodeIdentifier);
 		}
 	}
 	
