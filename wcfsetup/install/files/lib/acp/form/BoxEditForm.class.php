@@ -143,6 +143,7 @@ class BoxEditForm extends BoxAddForm {
 			$this->cssClassName = $this->box->cssClassName;
 			$this->boxControllerID = $this->box->objectTypeID;
 			if ($this->box->showHeader) $this->showHeader = 1;
+			else $this->showHeader = 0;
 			if ($this->box->visibleEverywhere) $this->visibleEverywhere = 1;
 			else $this->visibleEverywhere = 0;
 			$this->pageIDs = $this->box->getPageIDs();
