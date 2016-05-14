@@ -1,7 +1,8 @@
 <?php
 namespace wcf\system\html\output\node;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\html\output\HtmlOutputNodeProcessor;
+use wcf\system\html\node\AbstractHtmlNode;
+use wcf\system\html\node\HtmlNodeProcessor;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -10,24 +11,25 @@ use wcf\util\StringUtil;
  * TOOD documentation
  * @since	2.2
  */
-class HtmlOutputNodeBlockquote implements IHtmlOutputNode {
-	public function process(HtmlOutputNodeProcessor $htmlOutputNodeProcessor) {
-		$elements = $htmlOutputNodeProcessor->getDocument()->getElementsByTagName('blockquote');
-		while ($elements->length) {
-			/** @var \DOMElement $blockquote */
-			$blockquote = $elements->item(0);
-			
-			if ($blockquote->getAttribute('class') === 'quoteBox') {
+class HtmlOutputNodeBlockquote extends AbstractHtmlNode {
+	protected $tagName = 'blockquote';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function process(array $elements, HtmlNodeProcessor $htmlNodeProcessor) {
+		foreach ($elements as $element) {
+			if ($element->getAttribute('class') === 'quoteBox') {
 				$nodeIdentifier = StringUtil::getRandomID();
-				$htmlOutputNodeProcessor->addNodeData($this, $nodeIdentifier, [
-					'title' => ($blockquote->hasAttribute('data-quote-title')) ? $blockquote->getAttribute('data-quote-title') : '',
-					'url' => ($blockquote->hasAttribute('data-quote-url')) ? $blockquote->getAttribute('data-quote-url') : ''
+				$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
+					'title' => ($element->hasAttribute('data-quote-title')) ? $element->getAttribute('data-quote-title') : '',
+					'url' => ($element->hasAttribute('data-quote-url')) ? $element->getAttribute('data-quote-url') : ''
 				]);
 				
-				$htmlOutputNodeProcessor->renameTag($blockquote, 'wcfNode-' . $nodeIdentifier);
+				$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
 			}
 			else {
-				$htmlOutputNodeProcessor->unwrapContent($blockquote);
+				$htmlNodeProcessor->unwrapContent($element);
 			}
 		}
 	}

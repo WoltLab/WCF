@@ -7,14 +7,11 @@ use wcf\system\html\node\HtmlNodeProcessor;
  * @since	2.2
  */
 class HtmlInputNodeProcessor extends HtmlNodeProcessor {
-	public function load($html) {
-		parent::load($html);
-		
-		$this->nodeData = [];
-	}
-	
 	public function process() {
-		$woltlabMention = new HtmlInputNodeWoltlabMention();
-		$woltlabMention->process($this);
+		// process metacode markers first
+		$this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacodeMarker());
+		
+		// handle static converters
+		$this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacode());
 	}
 }

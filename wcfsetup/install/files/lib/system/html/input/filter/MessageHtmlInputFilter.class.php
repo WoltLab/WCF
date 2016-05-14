@@ -38,5 +38,16 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 			'data-user-id' => 'Number',
 			'data-username' => 'Text'
 		]);
+		
+		$definition->addElement('woltlab-metacode', 'Inline', 'Inline', '', [
+			'data-attributes' => 'Text',
+			'data-name' => 'Text'
+		]);
+		
+		$definition->addElement('woltlab-metacode-marker', 'Inline', 'Empty', '', [
+			'data-attributes' => 'Text',
+			'data-name' => 'Text',
+			'data-uuid' => 'Text'
+		]);
 	}
 }

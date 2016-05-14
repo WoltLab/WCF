@@ -267,13 +267,13 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			throw new UserInputException('text', 'tooLong');
 		}
 		
-		if ($this->enableBBCodes && $this->allowedBBCodesPermission) {
+		/*if ($this->enableBBCodes && $this->allowedBBCodesPermission) {
 			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($this->text, ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission))));
 			if (!empty($disallowedBBCodes)) {
 				WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
 				throw new UserInputException('text', 'disallowedBBCodes');
 			}
-		}
+		}*/
 		
 		// search for censored words
 		if (ENABLE_CENSORSHIP) {

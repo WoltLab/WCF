@@ -1,8 +1,10 @@
 <?php
 namespace wcf\system\html\input;
+use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
+use wcf\util\StringUtil;
 
 /**
  * TOOD documentation
@@ -20,6 +22,12 @@ class HtmlInputProcessor {
 	protected $htmlInputNodeProcessor;
 	
 	public function process($html) {
+		// enforce consistent newlines
+		$html = StringUtil::unifyNewlines($html);
+		
+		// transform bbcodes into metacode markers
+		$html = HtmlBBCodeParser::getInstance()->parse($html);
+		
 		// filter HTML
 		$html = $this->getHtmlInputFilter()->apply($html);
 		
