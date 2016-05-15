@@ -8,6 +8,8 @@ use wcf\system\html\node\HtmlNodeProcessor;
  */
 class HtmlOutputNodeProcessor extends HtmlNodeProcessor {
 	public function process() {
+		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabMetacode());
+		
 		// TODO: this should be dynamic to some extent
 		$this->invokeHtmlNode(new HtmlOutputNodeBlockquote());
 		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabMention());

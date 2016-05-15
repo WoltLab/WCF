@@ -41,7 +41,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
 			}
 			
 			// handle simple mapping types
-			if (isset($name, $this->simpleMapping)) {
+			if (isset($this->simpleMapping[$name])) {
 				$newElement = $element->ownerDocument->createElement($this->simpleMapping[$name]);
 				DOMUtil::replaceElement($element, $newElement);
 				

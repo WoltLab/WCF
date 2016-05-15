@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\input\node;
+use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\exception\SystemException;
 use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\HtmlNodeProcessor;
@@ -314,29 +315,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlNode {
 		/** @var \DOMElement $end */
 		$end = $pair['close'];
 		
-		$attributes = '';
-		if (!empty($pair['attributes'])) {
-			$pair['attributes'] = base64_decode($pair['attributes'], true);
-			if ($pair['attributes'] !== false) {
-				try {
-					$pair['attributes'] = JSON::decode($pair['attributes']);
-				}
-				catch (SystemException $e) {
-					$pair['attributes'] = [];
-				}
-				
-				if (!empty($pair['attributes'])) {
-					foreach ($pair['attributes'] as &$attribute) {
-						$attribute = "'" . addcslashes($attribute, "'") . "'";
-					}
-					unset($attribute);
-					
-					$attributes = '=' . implode(",", $attributes);
-				}
-			}
-		}
-		
-		$textNode = $start->ownerDocument->createTextNode('[' . $pair['name'] . $attributes . ']');
+		$attributes = (isset($pair['attributes'])) ? $pair['attributes'] : '';
+		$textNode = $start->ownerDocument->createTextNode(HtmlBBCodeParser::getInstance()->buildBBCodeTag($pair['name'], $attributes));
 		DOMUtil::insertBefore($textNode, $start);
 		DOMUtil::removeNode($start);
 		

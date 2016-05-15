@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\html\node;
 use wcf\system\exception\SystemException;
+use wcf\util\JSON;
 
 /**
  * TOOD documentation
@@ -82,6 +83,24 @@ class HtmlNodeProcessor {
 			'identifier' => $nodeIdentifier,
 			'object' => $htmlNode
 		];
+	}
+	
+	public function parseAttributes($attributes) {
+		if (empty($attributes)) {
+			return [];
+		}
+		
+		$parsedAttributes = base64_decode($attributes, true);
+		if ($parsedAttributes !== false) {
+			try {
+				$parsedAttributes = JSON::decode($parsedAttributes);
+			}
+			catch (SystemException $e) {
+				$parsedAttributes = [];
+			}
+		}
+		
+		return $parsedAttributes;
 	}
 	
 	protected function invokeHtmlNode(IHtmlNode $htmlNode) {
