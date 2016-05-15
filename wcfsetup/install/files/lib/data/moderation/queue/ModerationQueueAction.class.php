@@ -101,8 +101,6 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	 * @return	string[]
 	 */
 	public function getOutstandingQueues() {
-		$objectTypeIDs = ModerationQueueManager::getInstance()->getObjectTypeIDs(array_keys(ModerationQueueManager::getInstance()->getDefinitions()));
-		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("moderation_queue_to_user.userID = ?", array(WCF::getUser()->userID));
 		$conditions->add("moderation_queue_to_user.isAffected = ?", array(1));

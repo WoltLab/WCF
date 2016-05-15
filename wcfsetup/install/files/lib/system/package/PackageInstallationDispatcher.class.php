@@ -276,7 +276,6 @@ class PackageInstallationDispatcher {
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
-			$package = $this->getPackage();
 			// check if we're doing an iterative update of the same package
 			if ($this->previousPackageData !== null && $this->getPackage()->package == $this->previousPackageData['package']) {
 				if (Package::compareVersion($this->getPackage()->packageVersion, $this->previousPackageData['packageVersion'], '<')) {

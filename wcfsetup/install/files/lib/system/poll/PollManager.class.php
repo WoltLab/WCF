@@ -273,7 +273,7 @@ class PollManager extends SingletonFactory {
 			// remove poll
 			if (empty($this->pollData['question'])) {
 				$action = new PollAction(array($this->poll), 'delete');
-				$returnValues = $action->executeAction();
+				$action->executeAction();
 				$this->poll = null;
 				
 				return 0;
@@ -284,7 +284,7 @@ class PollManager extends SingletonFactory {
 					'data' => $this->pollData,
 					'options' => $this->pollOptions
 				));
-				$returnValues = $action->executeAction();
+				$action->executeAction();
 			}
 		}
 		

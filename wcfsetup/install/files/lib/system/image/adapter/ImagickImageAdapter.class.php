@@ -52,7 +52,7 @@ class ImagickImageAdapter implements IImageAdapter {
 		
 		// check if writing animated gifs is supported
 		$version = $this->imagick->getVersion();
-		$versionNumber = preg_match('~([0-9]+\.[0-9]+\.[0-9]+)~', $version['versionString'], $match);
+		preg_match('~([0-9]+\.[0-9]+\.[0-9]+)~', $version['versionString'], $match);
 		if (version_compare($match[0], '6.3.6') < 0) {
 			$this->supportsWritingAnimatedGIF = false;
 		}

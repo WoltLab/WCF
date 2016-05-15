@@ -344,7 +344,6 @@ class BasicFileUtil {
 			}
 		}
 		
-		$startIndex = 0;
 		if (is_dir($filename)) {
 			if (self::$mode == 0644) {
 				@chmod($filename, 0755);

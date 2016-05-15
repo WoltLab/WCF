@@ -31,8 +31,6 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		
 		// extract sql file from archive
 		if ($queries = $this->getSQL($this->instruction['value'])) {
-			$package = $this->installation->getPackage();
-			
 			// replace app1_ with app{WCF_N}_ in the table names for
 			// all applications
 			$packageList = new PackageList();

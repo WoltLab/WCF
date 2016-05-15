@@ -85,7 +85,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 				'title' => $this->title
 			))
 		));
-		$returnValues = $this->objectAction->executeAction();
+		$this->objectAction->executeAction();
 		
 		// transform conditions array into one-dimensional array
 		$conditions = array();

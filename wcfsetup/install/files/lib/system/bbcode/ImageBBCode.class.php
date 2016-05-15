@@ -43,11 +43,8 @@ class ImageBBCode extends AbstractBBCode {
 				$style = 'float: ' . $float . '; margin: ' . ($float == 'left' ? '0 15px 7px 0' : '0 0 7px 15px') . ';';
 			}
 			
-			$width = 0;
 			if (isset($openingTag['attributes'][2])) {
-				$width = $openingTag['attributes'][2];
-				
-				$style .= 'width: ' . $width . 'px;';
+				$style .= 'width: ' . $openingTag['attributes'][2] . 'px;';
 			}
 			
 			return '<img src="'.$src.'" class="jsResizeImage" alt=""'.($style ? ' style="' . $style . '"' : '').($dataSource ? ' data-source="'.StringUtil::encodeJS($dataSource).'"' : '').' />';

@@ -24,7 +24,7 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 			return;
 		}
 		
-		$comments = $commentIDs = array();
+		$commentIDs = array();
 		foreach ($events as $event) {
 			$commentIDs[] = $event->objectID;
 		}

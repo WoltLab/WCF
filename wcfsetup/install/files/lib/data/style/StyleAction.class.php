@@ -295,14 +295,13 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 						default:
 							throw new UserInputException('image');
 					}
-
+					
 					if ($imageData[0] > Style::PREVIEW_IMAGE_MAX_WIDTH || $imageData[1] > Style::PREVIEW_IMAGE_MAX_HEIGHT) {
 						$adapter = ImageHandler::getInstance()->getAdapter();
 						$adapter->loadFile($fileLocation);
 						$fileLocation = FileUtil::getTemporaryFilename();
 						$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT, false);
 						$adapter->writeImage($thumbnail, $fileLocation);
-						$imageData = getimagesize($fileLocation);
 					}
 				}
 				catch (SystemException $e) {

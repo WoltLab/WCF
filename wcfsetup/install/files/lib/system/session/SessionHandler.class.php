@@ -256,7 +256,6 @@ class SessionHandler extends SingletonFactory {
 	 * attacker.
 	 */
 	protected function changeSessionID() {
-		$oldSessionID = $this->session->sessionID;
 		$newSessionID = StringUtil::getRandomID();
 		
 		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */

@@ -24,8 +24,6 @@ class DefaultAvatar implements IUserAvatar {
 	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
 	 */
 	public function getURL($size = null) {
-		if ($size === null) $size = $this->size;
-		
 		return WCF::getPath().'images/avatars/avatar-default.svg';
 	}
 	

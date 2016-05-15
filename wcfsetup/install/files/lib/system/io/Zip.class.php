@@ -256,7 +256,6 @@ class Zip extends File implements IArchive {
 		}
 		
 		// read headers
-		$header = array();
 		$header = unpack('vminVersion/vgeneralPurposeBit/vcompression/vmtime/vmdate', $this->read(10));
 		$second = ($header['mtime'] & ((1 << 5) - 1)) * 2;
 		$minute = ($header['mtime'] >> 5) & ((1 << 6) - 1);

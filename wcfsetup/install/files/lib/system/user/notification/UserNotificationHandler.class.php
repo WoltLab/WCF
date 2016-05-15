@@ -396,7 +396,7 @@ class UserNotificationHandler extends SingletonFactory {
 			);
 		}
 		
-		$authorIDs = $eventIDs = $notificationIDs = $objectTypes = array();
+		$eventIDs = $notificationIDs = $objectTypes = array();
 		foreach ($notificationObjects as $notification) {
 			// cache object types
 			if (!isset($objectTypes[$notification->objectType])) {
@@ -749,7 +749,6 @@ class UserNotificationHandler extends SingletonFactory {
 		}
 		
 		// get objects
-		$objectTypeObject = $this->availableObjectTypes[$objectType];
 		$event = $this->availableEvents[$objectType][$eventName];
 		
 		// mark as confirmed

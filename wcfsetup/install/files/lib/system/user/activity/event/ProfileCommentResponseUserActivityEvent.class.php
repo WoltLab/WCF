@@ -25,7 +25,7 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
 			return;
 		}
 		
-		$responses = $responseIDs = [];
+		$responseIDs = [];
 		foreach ($events as $event) {
 			$responseIDs[] = $event->objectID;
 		}
