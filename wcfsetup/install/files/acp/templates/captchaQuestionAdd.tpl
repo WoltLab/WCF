@@ -1,7 +1,17 @@
 {include file='header' pageTitle='wcf.acp.captcha.question.'|concat:$action}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.captcha.question.{$action}{/lang}</h1>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.captcha.question.{$action}{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='CaptchaQuestionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.captcha.question.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -9,18 +19,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
-
-<div class="contentHeaderTitle">
-
-</div>
-
-<nav class="contentHeaderNavigation">
-	<ul>
-		<li><a href="{link controller='CaptchaQuestionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.captcha.question.list{/lang}</span></a></li>
-		
-		{event name='contentHeaderNavigation'}
-	</ul>
-</nav>
 
 <form id="adForm" method="post" action="{if $action == 'add'}{link controller='CaptchaQuestionAdd'}{/link}{else}{link controller='CaptchaQuestionEdit' id=$captchaQuestion->questionID}{/link}{/if}">
 	<div class="section">
