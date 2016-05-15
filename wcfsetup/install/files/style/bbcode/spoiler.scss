@@ -1,0 +1,13 @@
+.spoilerBox > div {
+	border-left: 5px solid $wcfContentBorderInner;
+	margin-top: 10px;
+	padding: 10px 0 10px 20px;
+	
+	> p:first-child {
+		margin-top: 0;
+	}
+	
+	> p:last-child {
+		margin-bottom: 0;
+	}
+}

@@ -1,7 +1,7 @@
 <!-- begin:parser_nonessential -->
 <div class="spoilerBox jsSpoilerBox">
 	<header class="jsOnly">
-		<a class="button jsSpoilerToggle"{if $buttonTitle} data-has-custom-label="true"{/if}>{if $buttonTitle}{@$buttonTitle}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
+		<a class="button small jsSpoilerToggle"{if $buttonTitle} data-has-custom-label="true"{/if}>{if $buttonTitle}{@$buttonTitle}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
 	</header>
 	
 	<div style="display: none">
@@ -12,32 +12,23 @@
 {if !$__wcfSpoilerBBCodeJavaScript|isset}
 	{assign var='__wcfSpoilerBBCodeJavaScript' value=true}
 	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			$('.jsSpoilerBox').each(function(index, spoilerBox) {
-				var $toggle = $(spoilerBox).removeClass('jsSpoilerBox').find('> header > .jsSpoilerToggle');
-				$toggle.click(function() {
-					$toggle.toggleClass('active').parent().next().slideToggle({
-						complete: function() {
-							var $container = $(this);
-							if ($container.is(':visible')) {
-								WCF.DOMNodeInsertedHandler.execute();
-							}
-							
-							if (!$toggle.data('hasCustomLabel')) {
-								if ($container.is(':visible')) {
-									$toggle.text('{lang}wcf.bbcode.spoiler.hide{/lang}');
-								}
-								else {
-									$toggle.text('{lang}wcf.bbcode.spoiler.show{/lang}');
-								}
-							}
-						}
-					});
-				});
+		elBySelAll('.jsSpoilerBox', null, function(spoilerBox) {
+			spoilerBox.classList.remove('jsSpoilerBox');
+			
+			var toggleButton = elBySel('.jsSpoilerToggle', spoilerBox);
+			var container = toggleButton.parentNode.nextElementSibling;
+			
+			toggleButton.addEventListener(WCF_CLICK_EVENT, function(event) {
+				event.preventDefault();
+				
+				toggleButton.classList.toggle('active');
+				window[(toggleButton.classList.contains('active') ? 'elShow' : 'elHide')](container);
+				
+				if (!elDataBool(toggleButton, 'has-custom-label')) {
+					toggleButton.textContent = (toggleButton.classList.contains('active')) ? '{lang}wcf.bbcode.spoiler.hide{/lang}' : '{lang}wcf.bbcode.spoiler.show{/lang}';
+				}
 			});
 		});
-		//]]>
 	</script>
 {/if}
 <!-- end:parser_nonessential -->
