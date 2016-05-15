@@ -69,8 +69,6 @@
 	<category name="wcf.acp.bbcode">
 		<item name="wcf.acp.bbcode.add"><![CDATA[Add BBCode]]></item>
 		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Newly created BBCodes will be accessible for everyone. You can restrict usage by editing the specific user group permissions.]]></item>
-		<item name="wcf.acp.bbcode.allowedChildren"><![CDATA[Allowed Children]]></item>
-		<item name="wcf.acp.bbcode.allowedChildren.error.notValid"><![CDATA[List of allowed children is invalid.]]></item>
 		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribute]]></item>
 		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[Attribute HTML code]]></item>
 		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
@@ -89,6 +87,8 @@
 		<item name="wcf.acp.bbcode.edit"><![CDATA[Edit BBCode]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
+		<item name="wcf.acp.bbcode.isBlockElement"><![CDATA[BBCode represents a block element]]></item>
+		<item name="wcf.acp.bbcode.isBlockElement.description"><![CDATA[Block elements are treated differently when processed. They can contain line breaks and paragraphs, and generally take up the entire available width. Common examples for block elements include quotes and lists.<br>Heads up! You must not set this option for inline elements such as bold or links.]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of BBCodes and smilies.]]></item>
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>

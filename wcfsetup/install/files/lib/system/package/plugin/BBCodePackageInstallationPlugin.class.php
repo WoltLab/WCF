@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\bbcode\attribute\BBCodeAttributeEditor;
+use wcf\data\bbcode\BBCodeEditor;
 use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -11,7 +12,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes bbcodes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
@@ -19,17 +20,17 @@ use wcf\util\StringUtil;
  */
 class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\bbcode\BBCodeEditor';
+	public $className = BBCodeEditor::class;
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'bbcode';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	@inheritDoc
 	 */
 	public $tagName = 'bbcode';
 	
@@ -37,10 +38,10 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * list of attributes per bbcode id
 	 * @var	mixed[][]
 	 */
-	protected $attributes = array();
+	protected $attributes = [];
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -48,27 +49,28 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
+	 * @inheritDoc
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
 		
 		// read pages
 		if ($element->tagName == 'attributes') {
-			$nodeValue = array();
+			$nodeValue = [];
 			
 			$attributes = $xpath->query('child::*', $element);
+			/** @var \DOMElement $attribute */
 			foreach ($attributes as $attribute) {
 				$attributeNo = $attribute->getAttribute('name');
-				$nodeValue[$attributeNo] = array();
+				$nodeValue[$attributeNo] = [];
 				
 				$attributeValues = $xpath->query('child::*', $attribute);
 				foreach ($attributeValues as $attributeValue) {
@@ -81,21 +83,21 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
-		$data = array(
+		$data = [
 			'bbcodeTag' => mb_strtolower(StringUtil::trim($data['attributes']['name'])),
 			'htmlOpen' => (!empty($data['elements']['htmlopen']) ? $data['elements']['htmlopen'] : ''),
 			'htmlClose' => (!empty($data['elements']['htmlclose']) ? $data['elements']['htmlclose'] : ''),
-			'allowedChildren' => (!empty($data['elements']['allowedchildren']) ? $data['elements']['allowedchildren'] : 'all'),
 			'wysiwygIcon' => (!empty($data['elements']['wysiwygicon']) ? $data['elements']['wysiwygicon'] : ''),
-			'attributes' => (isset($data['elements']['attributes']) ? $data['elements']['attributes'] : array()),
+			'attributes' => (isset($data['elements']['attributes']) ? $data['elements']['attributes'] : []),
 			'className' => (!empty($data['elements']['classname']) ? $data['elements']['classname'] : ''),
+			'isBlockElement' => (!empty($data['elements']['isBlockElement']) ? 1 : 0),
 			'isSourceCode' => (!empty($data['elements']['sourcecode']) ? 1 : 0),
 			'buttonLabel' => (isset($data['elements']['buttonlabel']) ? $data['elements']['buttonlabel'] : ''),
 			'originIsSystem' => 1
-		);
+		];
 		
 		if ($data['wysiwygIcon'] && $data['buttonLabel']) {
 			$data['showButton'] = 1;
@@ -105,13 +107,9 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
+	 * @inheritDoc
 	 */
 	protected function validateImport(array $data) {
-		if ($data['bbcodeTag'] == 'all' || $data['bbcodeTag'] == 'none') {
-			throw new SystemException("BBCodes can't be called 'all' or 'none'");
-		}
-		
 		// check if bbcode tag already exists
 		$sqlData = $this->findExistingItem($data);
 		$statement = WCF::getDB()->prepareStatement($sqlData['sql']);
@@ -124,26 +122,26 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	bbcodeTag = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['bbcodeTag'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
 		// extract attributes
@@ -158,11 +156,11 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::postImport()
+	 * @inheritDoc
 	 */
 	protected function postImport() {
 		$condition = new PreparedStatementConditionBuilder();
-		$condition->add('bbcodeID IN (?)', array(array_keys($this->attributes)));
+		$condition->add('bbcodeID IN (?)', [array_keys($this->attributes)]);
 		
 		// clear attributes
 		$sql = "DELETE FROM	wcf".WCF_N."_bbcode_attribute
@@ -173,21 +171,21 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		if (!empty($this->attributes)) {
 			foreach ($this->attributes as $bbcodeID => $bbcodeAttributes) {
 				foreach ($bbcodeAttributes as $attributeNo => $attribute) {
-					BBCodeAttributeEditor::create(array(
+					BBCodeAttributeEditor::create([
 						'bbcodeID' => $bbcodeID,
 						'attributeNo' => $attributeNo,
 						'attributeHtml' => (!empty($attribute['html']) ? $attribute['html'] : ''),
 						'validationPattern' => (!empty($attribute['validationpattern']) ? $attribute['validationpattern'] : ''),
 						'required' => (!empty($attribute['required']) ? $attribute['required'] : 0),
 						'useText' => (!empty($attribute['usetext']) ? $attribute['usetext'] : 0),
-					));
+					]);
 				}
 			}
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @inheritDoc
 	 * @since	2.2
 	 */
 	public static function getDefaultFilename() {

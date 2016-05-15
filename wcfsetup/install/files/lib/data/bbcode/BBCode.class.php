@@ -21,8 +21,8 @@ use wcf\system\WCF;
  * @property-read	integer		$packageID
  * @property-read	string		$htmlOpen
  * @property-read	string		$htmlClose
- * @property-read	string		$allowedChildren
  * @property-read	string		$className
+ * @property-read       integer         $isBlockElement
  * @property-read	string		$wysiwygIcon
  * @property-read	string		$buttonLabel
  * @property-read	integer		$isSourceCode

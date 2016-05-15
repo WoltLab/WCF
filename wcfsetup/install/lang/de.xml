@@ -69,8 +69,6 @@
 	<category name="wcf.acp.bbcode">
 		<item name="wcf.acp.bbcode.add"><![CDATA[BBCode hinzufügen]]></item>
 		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Beachten Sie, dass der neu erstellte BBCode standardmäßig überall verwendet werden kann. Soll das nicht der Fall sein, bearbeiten Sie nach der Erstellung des BBCodes die entsprechenden Benutzergruppenrechte.]]></item>
-		<item name="wcf.acp.bbcode.allowedChildren"><![CDATA[Erlaubte Kindelemente]]></item>
-		<item name="wcf.acp.bbcode.allowedChildren.error.notValid"><![CDATA[Die Form für die erlaubten Kindelemente ist ungültig.]]></item>
 		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribut]]></item>
 		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[HTML-Code des Attributs]]></item>
 		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
@@ -89,6 +87,8 @@
 		<item name="wcf.acp.bbcode.edit"><![CDATA[BBCode bearbeiten]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Schließendes HTML-Tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Öffnendes HTML-Tag]]></item>
+		<item name="wcf.acp.bbcode.isBlockElement"><![CDATA[BBCode als Block-Element behandeln]]></item>
+		<item name="wcf.acp.bbcode.isBlockElement.description"><![CDATA[Bei der Verarbeitung von BBCodes gelten abweichende Regeln für die Behandlung von Block-Elementen. Diese können Zeilenumbrüche und Absätze enthalten und beanspruchen immer die volle Breite; Typische Beispiele sind Zitate oder Listen.<br>Hinweis: Diese Option darf nicht für Inline-Elemente (z.B. Fettdruck oder Links) gesetzt werden.]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Inhalt als Quelltext behandeln]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Der Inhalt dieses BBCodes wird als Quelltext interpretiert, BBCodes und Smileys werden nicht umgewandelt.]]></item>
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>

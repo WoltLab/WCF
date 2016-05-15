@@ -134,19 +134,11 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'allowedChildren'} class="formError"{/if}>
-			<dt><label for="allowedChildren">{lang}wcf.acp.bbcode.allowedChildren{/lang}</label></dt>
+		<dl>
+			<dt></dt>
 			<dd>
-				<input type="text" id="allowedChildren" name="allowedChildren" value="{$allowedChildren}" class="long" required="required" pattern="^((all|none)\^)?([a-zA-Z0-9]+,)*[a-zA-Z0-9]+$" />
-				{if $errorField == 'allowedChildren'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.bbcode.allowedChildren.error.{$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
+				<label for="isBlockElement"><input type="checkbox" id="isBlockElement" name="isBlockElement" value="1"{if $isBlockElement} checked{/if}> {lang}wcf.acp.bbcode.isBlockElement{/lang}</label>
+				<small>{lang}wcf.acp.bbcode.isBlockElement.description{/lang}</small>
 			</dd>
 		</dl>
 		

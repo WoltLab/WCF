@@ -4,36 +4,29 @@
 		<bbcode name="b">
 			<htmlopen>b</htmlopen>
 			<htmlclose>b</htmlclose>
-			<allowedchildren>all^b</allowedchildren>
 		</bbcode>
 		<bbcode name="i">
 			<htmlopen>i</htmlopen>
 			<htmlclose>i</htmlclose>
-			<allowedchildren>all^i</allowedchildren>
 		</bbcode>
 		<bbcode name="u">
 			<htmlopen>span style="text-decoration: underline"</htmlopen>
 			<htmlclose>span</htmlclose>
-			<allowedchildren>all^u</allowedchildren>
 		</bbcode>
 		<bbcode name="s">
 			<htmlopen>s</htmlopen>
 			<htmlclose>s</htmlclose>
-			<allowedchildren>all^s</allowedchildren>
 		</bbcode>
 		<bbcode name="sub">
 			<htmlopen>sub</htmlopen>
 			<htmlclose>sub</htmlclose>
-			<allowedchildren>all^sub</allowedchildren>
 		</bbcode>
 		<bbcode name="sup">
 			<htmlopen>sup</htmlopen>
 			<htmlclose>sup</htmlclose>
-			<allowedchildren>all^sup</allowedchildren>
 		</bbcode>
 		<bbcode name="email">
 			<classname><![CDATA[wcf\system\bbcode\EmailBBCode]]></classname>
-			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -86,6 +79,7 @@
 					<required>1</required>
 				</attribute>
 			</attributes>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="quote">
 			<classname><![CDATA[wcf\system\bbcode\QuoteBBCode]]></classname>
@@ -95,10 +89,10 @@
 			</attributes>
 			<wysiwygicon>fa-quote-left</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.quote</buttonlabel>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="code">
 			<classname><![CDATA[wcf\system\bbcode\CodeBBCode]]></classname>
-			<allowedchildren>none</allowedchildren>
 			<attributes>
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
@@ -107,10 +101,10 @@
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-code</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.code</buttonlabel>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="img">
 			<classname><![CDATA[wcf\system\bbcode\ImageBBCode]]></classname>
-			<allowedchildren>none</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -127,7 +121,6 @@
 		</bbcode>
 		<bbcode name="url">
 			<classname><![CDATA[wcf\system\bbcode\URLBBCode]]></classname>
-			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -138,16 +131,16 @@
 		</bbcode>
 		<bbcode name="list">
 			<classname><![CDATA[wcf\system\bbcode\ListBBCode]]></classname>
-			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font,list,url,email,attach,tt</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$</validationpattern>
 				</attribute>
 			</attributes>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="table">
 			<classname><![CDATA[wcf\system\bbcode\TableBBCode]]></classname>
-			<allowedchildren>all^table</allowedchildren>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="media">
 			<classname><![CDATA[wcf\system\bbcode\MediaBBCode]]></classname>
@@ -160,11 +153,11 @@
 			</attributes>
 			<wysiwygicon>fa-eye-slash</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.spoiler</buttonlabel>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="tt">
 			<htmlopen>kbd</htmlopen>
 			<htmlclose>kbd</htmlclose>
-			<allowedchildren>none</allowedchildren>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-terminal</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.inlineCode</buttonlabel>

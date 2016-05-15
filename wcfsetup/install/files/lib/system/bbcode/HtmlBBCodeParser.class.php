@@ -13,12 +13,13 @@ use wcf\util\StringUtil;
  * are <iframe> or other embedded media that is allowed as a result of a bbcode, but
  * not allowed to be directly provided by a user. 
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     com.woltlab.wcf
+ * @subpackage  system.bbcode
+ * @category    Community Framework
+ * @since       2.2
  */
 class HtmlBBCodeParser extends BBCodeParser {
 	/**
@@ -169,11 +170,12 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Builds a plain bbcode string, used for unknown bbcodes.
 	 * 
-	 * @param       string          $name           bbcode identifier
-	 * @param       array           $attributes     list of attributes
+	 * @param       string          $name                   bbcode identifier
+	 * @param       array           $attributes             list of attributes
+	 * @param       boolean         $openingTagOnly         only render the opening tag
 	 * @return      string
 	 */
-	protected function buildBBCodeTag($name, $attributes) {
+	public function buildBBCodeTag($name, $attributes, $openingTagOnly = false) {
 		if (!empty($attributes)) {
 			foreach ($attributes as &$attribute) {
 				$attribute = "'" . addcslashes($attribute, "'") . "'";
@@ -186,7 +188,43 @@ class HtmlBBCodeParser extends BBCodeParser {
 			$attributes = '';
 		}
 		
+		if ($openingTagOnly) {
+			return '[' . $name . $attributes . ']';
+		}
+		
 		return '[' . $name . $attributes . ']<!-- META_CODE_INNER_CONTENT -->[/' . $name . ']';
+	}
+	
+	/**
+	 * Returns the list of bbcodes that represent block elements.
+	 * 
+	 * @return      string[]        list of bbcode block elements
+	 */
+	public function getBlockBBCodes() {
+		$bbcodes = [];
+		foreach ($this->bbcodes as $name => $bbcode) {
+			if ($bbcode->isBlockElement) {
+				$bbcodes[] = $name;
+			}
+		}
+		
+		return $bbcodes;
+	}
+	
+	/**
+	 * Returns the list of bbcodes that represent source code elements.
+	 * 
+	 * @return      string[]        list of bbcode source code elements
+	 */
+	public function getSourceBBCodes() {
+		$bbcodes = [];
+		foreach ($this->bbcodes as $name => $bbcode) {
+			if ($bbcode->isSourceCode) {
+				$bbcodes[] = $name;
+			}
+		}
+		
+		return $bbcodes;
 	}
 	
 	/**
