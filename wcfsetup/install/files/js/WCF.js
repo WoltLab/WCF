@@ -1137,12 +1137,14 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		
 		this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
 		
-		if (!$.browser.mobile && $itemContainer !== null) {
-			// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
-			$itemContainer.perfectScrollbar({
-				suppressScrollX: true
-			});
-		}
+		require(['Environment'], function(Environment) {
+			if (Environment.platform() !== 'desktop' && $itemContainer !== null) {
+				// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
+				$itemContainer.perfectScrollbar({
+					suppressScrollX: true
+				});
+			}
+		});
 		
 		this._container.appendTo(dropdownContainer);
 	},
@@ -1249,15 +1251,17 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * Rebuilds the desktop scrollbar.
 	 */
 	rebuildScrollbar: function() {
-		if (!$.browser.mobile) {
-			var $itemContainer = this._itemList.parent();
-			
-			// do NOT use 'update', seems to be broken
-			$itemContainer.perfectScrollbar('destroy');
-			$itemContainer.perfectScrollbar({
-				suppressScrollX: true
-			});
-		}
+		require(['Environment'], function(Environment) {
+			if (Environment.platform() !== 'desktop') {
+				var $itemContainer = this._itemList.parent();
+				
+				// do NOT use 'update', seems to be broken
+				$itemContainer.perfectScrollbar('destroy');
+				$itemContainer.perfectScrollbar({
+					suppressScrollX: true
+				});
+			}
+		}.bind(this));
 	}
 });
 
@@ -6907,7 +6911,13 @@ WCF.Popover = Class.extend({
 	 * @param	string		selector
 	 */
 	init: function(selector) {
-		if ($.browser.mobile) return;
+		var mobile = false;
+		require(['Environment'], function(Environment) {
+			if (Environment.platform() !== 'desktop') {
+				mobile = true;
+			}
+		}.bind(this));
+		if (mobile) return;
 		
 		// assign default values
 		this._activeElementID = '';
