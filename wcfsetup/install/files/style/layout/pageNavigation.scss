@@ -29,6 +29,10 @@
 		}
 	}
 	
+	.boxesHeaderBoxes + .pageNavigation {
+		margin-top: 1px;
+	}
+	
 	.pageNavigationIcons {
 		display: flex;
 		flex: 0 0 auto;

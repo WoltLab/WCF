@@ -22,10 +22,23 @@
 }
 
 .boxContent {
-	& + .boxContent,
+	& + .boxContent {
+		margin-top: 20px;
+	}
+}
+
+.boxContent {
 	& + .boxTitle {
 		margin-top: 30px;
 	}
+}
+
+.boxContentSeparator {
+	background: $wcfContentBorderInner;
+	border: 0;
+	height: 1px;
+	margin: 30px auto;
+	width: 60%;
 }
 
 /* styling for boxes in <hero> position */
@@ -58,45 +71,77 @@
 
 /* styling for boxes in <headerBoxes> position */
 .boxesHeaderBoxes {
-	background-color: rgb(247, 248, 250); // @todo
+	background-color: $wcfFooterBoxBackground;
+	color: $wcfFooterBoxText;
+	
+	a {
+		color: $wcfFooterBoxLink;
+		
+		&:hover {
+			color: $wcfFooterBoxLinkActive;
+			text-decoration: underline;
+			
+			.icon {
+				color: $wcfFooterBoxLinkActive;
+			}
+		}
+	}
+	
+	.icon {
+		color: inherit;
+	}
 	
 	.boxContainer {
-		display: flex;
-		flex-wrap: wrap;
 		margin-left: -10px;
 		margin-right: -10px;
-		padding: 40px 0;
+		
+		@include screen-sm-down {
+			padding: 20px 0;
+		}
+		
+		@include screen-md-up {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: -20px;
+			padding: 40px 0;
+		}
 	}
 	
 	.box {
-		flex: 0 0 25%;
 		overflow: hidden;
 		padding-left: 10px;
 		padding-right: 10px;
 		
-		&:nth-child(4n+1):not(:first-child) {
-			margin-top: 20px;
+		@include screen-sm-down {
+			& + .box {
+				margin-top: 20px;
+			}
 		}
 		
-		/* one item */
-		&:first-child:nth-last-child(1) {
-			flex-basis: 100%;
-		}
-		
-		/* two items */
-		&:first-child:nth-last-child(2),
-		&:first-child:nth-last-child(2) ~ .box {
-			flex-basis: 50%;
-		}
-		
-		/* three items */
-		&:first-child:nth-last-child(3),
-		&:first-child:nth-last-child(3) ~ .box {
-			flex-basis: 33.3333%;
-		}
-		
-		a:hover {
-			text-decoration: underline;
+		@include screen-md-up {
+			flex: 0 0 25%;
+			margin-bottom: 20px;
+			
+			&.boxFullWidth {
+				flex-basis: 100%;
+			}
+			
+			/* one item */
+			&:first-child:nth-last-child(1) {
+				flex-basis: 100%;
+			}
+			
+			/* two items */
+			&:first-child:nth-last-child(2),
+			&:first-child:nth-last-child(2) ~ .box {
+				flex-basis: 50%;
+			}
+			
+			/* three items */
+			&:first-child:nth-last-child(3),
+			&:first-child:nth-last-child(3) ~ .box {
+				flex-basis: 33.3333%;
+			}
 		}
 	}
 	
@@ -324,8 +369,8 @@
 	}
 }
 
-.boxesContentTop {
-	margin-bottom: 40px;
+.boxesContentTop:not(:first-child) {
+	margin-top: 40px;
 }
 
 .boxesContentBottom {
@@ -417,6 +462,31 @@
 
 /* styling for boxes in <footer> position */
 .boxesFooter {
+	background-color: $wcfFooterBackground;
+	color: $wcfFooterText;
+	flex: 0 0 auto;
+	
+	@include screen-md-up {
+		padding: 40px 0;
+	}
+	
+	@include screen-sm-down {
+		padding: 20px 0;
+	}
+	
+	.icon {
+		color: $wcfFooterText;
+	}
+	
+	a {
+		color: $wcfFooterLink;
+		
+		&:hover {
+			color: $wcfFooterLinkActive;
+			text-decoration: underline;
+		}
+	}
+	
 	.box {
 		&:not(:first-child) {
 			margin-top: 20px;

@@ -18,6 +18,8 @@ html, body {
 }
 
 body {
+	background-color: $wcfContentBackground;
+	color: $wcfContentText;
 	font-family: $wcfFontFamily;
 	position: relative;
 	width: 100%;
@@ -25,15 +27,17 @@ body {
 }
 
 a {
+	color: $wcfContentLink;
 	cursor: pointer;
 	text-decoration: none;
 	
 	&:hover {
+		color: $wcfContentLinkActive;
 		text-decoration: none;
 	}
 }
 
-#pageContainer {
+.pageContainer {
 	display: flex;
 	height: 100%;
 	flex-direction: column;
@@ -45,8 +49,6 @@ a {
 }
 
 .main {
-	background-color: $wcfContentBackground;
-	color: $wcfContentText;
 	flex: 1 0 auto;
 	
 	@include screen-md-down {
@@ -56,14 +58,6 @@ a {
 	
 	@include screen-lg {
 		padding: 60px 0;
-	}
-	
-	a {
-		color: $wcfContentLink;
-		
-		&:hover {
-			color: $wcfContentLinkActive;
-		}
 	}
 }
 
