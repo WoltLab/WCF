@@ -389,7 +389,7 @@ class BoxAddForm extends AbstractForm {
 			$data['objectTypeID'] = $this->boxControllerID;
 		}
 		
-		$this->objectAction = new BoxAction([], 'create', ['data' => array_merge($this->additionalFields, $data), 'content' => $content, 'pageIDs' => $this->pageIDs ]);
+		$this->objectAction = new BoxAction([], 'create', ['data' => array_merge($this->additionalFields, $data), 'content' => $content, 'pageIDs' => $this->pageIDs]);
 		$box = $this->objectAction->executeAction()['returnValues'];
 		
 		// set generic box identifier
@@ -413,7 +413,7 @@ class BoxAddForm extends AbstractForm {
 		$this->boxType = $this->position = $this->cssClassName = $this->name = '';
 		$this->showOrder = $this->boxControllerID = 0;
 		$this->visibleEverywhere = $this->showHeader = 1;
-		$this->title = $this->content = $this->images = $this->imageID = [];
+		$this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = [];
 		$this->boxController = null;
 	}
 	
