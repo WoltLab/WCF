@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Every object with permissions has to implement this interface.
@@ -13,10 +14,10 @@ namespace wcf\data;
  */
 interface IPermissionObject {
 	/**
-	 * Checks if the active user has the given permissions for this object and
-	 * throws a PermissionDeniedException if they don't have one of the permissions.
+	 * Checks if the active user has the given permissions for this object.
 	 * 
-	 * @param	string[]		$permissions
+	 * @param	string[]	$permissions
+	 * @throws	PermissionDeniedException	if the active user does not have at least one of the given permissions.
 	 */
 	public function checkPermissions(array $permissions);
 	
@@ -24,7 +25,7 @@ interface IPermissionObject {
 	 * Returns the permission value of the given permission for this object
 	 * and the active user.
 	 * 
-	 * @param	string			$permission
+	 * @param	string		$permission
 	 * @return	mixed
 	 */
 	public function getPermission($permission);
