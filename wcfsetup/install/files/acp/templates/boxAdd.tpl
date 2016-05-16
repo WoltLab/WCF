@@ -347,7 +347,11 @@
 							<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
 								<dt><label for="image{@$availableLanguage->languageID}">{lang}wcf.acp.box.image{/lang}</label></dt>
 								<dd>
-									<div id="imageDisplay{@$availableLanguage->languageID}"></div>
+									<div id="imageDisplay{@$availableLanguage->languageID}">
+										{if $images[$availableLanguage->languageID]|isset}
+											{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}
+										{/if}
+									</div>
 									<p class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.acp.box.image.button.chooseImage{/lang}</p>
 									<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{@$imageID[$availableLanguage->languageID]}"{/if} />
 									{if $errorField == 'image'|concat:$availableLanguage->languageID}
