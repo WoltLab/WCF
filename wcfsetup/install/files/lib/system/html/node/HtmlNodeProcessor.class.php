@@ -96,6 +96,7 @@ class HtmlNodeProcessor {
 				$parsedAttributes = JSON::decode($parsedAttributes);
 			}
 			catch (SystemException $e) {
+				/* parse errors can occur if user provided malicious content - ignore them */
 				$parsedAttributes = [];
 			}
 		}
@@ -106,7 +107,7 @@ class HtmlNodeProcessor {
 	protected function invokeHtmlNode(IHtmlNode $htmlNode) {
 		$tagName = $htmlNode->getTagName();
 		if (empty($tagName)) {
-			throw new SystemException("Missing tag name for " . get_class($htmlNode));
+			throw new \UnexpectedValueException("Missing tag name for " . get_class($htmlNode));
 		}
 		
 		$elements = [];

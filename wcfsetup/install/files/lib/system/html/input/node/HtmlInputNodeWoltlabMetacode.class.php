@@ -48,9 +48,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
 				continue;
 			}
 			
-			$attributes = $element->getAttribute('data-attributes');
-			if (!empty($attributes)) $attributes = @json_decode(base64_decode($attributes), true);
-			if (!is_array($attributes)) $attributes = [];
+			$attributes = $htmlNodeProcessor->parseAttributes($element->getAttribute('data-attributes'));
 			
 			// check for converters
 			$converter = (isset($converters[$name])) ? $converters[$name] : null;
@@ -72,7 +70,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
 			if ($converter->validateAttributes($attributes)) {
 				$newElement = $converter->convert(DOMUtil::childNodesToFragment($element), $attributes);
 				if (!($newElement instanceof \DOMElement)) {
-					throw new SystemException("Expected a valid DOMElement as return value.");
+					throw new \UnexpectedValueException("Expected a valid DOMElement as return value.");
 				}
 				
 				DOMUtil::replaceElement($element, $newElement);

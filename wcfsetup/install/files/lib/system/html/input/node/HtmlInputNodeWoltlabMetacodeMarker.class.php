@@ -4,6 +4,7 @@ use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\HtmlNodeProcessor;
 use wcf\util\DOMUtil;
+use wcf\util\StringUtil;
 
 /**
  * Transforms bbcode markers into the custom HTML element `<woltlab-metacode>`. This process
@@ -244,6 +245,18 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlNode {
 	 * @param       string          $attributes     encoded attribute string
 	 */
 	protected function convertBlockElement($name, $start, $end, $attributes) {
+		// we need to ensure proper nesting, block elements are not allowed to
+		// be placed inside paragraphs, but being a direct child of another block
+		// element is completely fine
+		$parent = $start;
+		do {
+			$parent = $parent->parentNode;
+		}
+		while ($parent->nodeName === 'p' || !$this->isBlockElement($parent));
+		
+		$element = DOMUtil::splitParentsUntil($start, $parent);
+		DOMUtil::insertBefore($start, $element);
+		
 		$commonAncestor = DOMUtil::getCommonAncestor($start, $end);
 		$lastElement = DOMUtil::splitParentsUntil($end, $commonAncestor, false);
 		
@@ -361,10 +374,19 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlNode {
 	protected function isBlockElement(\DOMNode $node) {
 		switch ($node->nodeName) {
 			case 'blockquote':
+			case 'body':
 			case 'code':
 			case 'div':
 			case 'p':
 				return true;
+				break;
+			
+			case 'woltlab-metacode':
+				/** @var \DOMElement $node */
+				if (in_array($node->getAttribute('data-name'), $this->blockElements)) {
+					return true;
+				}
+				break;
 		}
 		
 		return false;

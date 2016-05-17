@@ -176,7 +176,7 @@ final class DOMUtil {
 			}
 		}
 		
-		throw new SystemException("Unable to determine relative node position.");
+		throw new \RuntimeException("Unable to determine relative node position.");
 	}
 	
 	/**
@@ -205,6 +205,35 @@ final class DOMUtil {
 	}
 	
 	/**
+	 * Returns true if this node is empty.
+	 * 
+	 * @param       \DOMNode        $node           node
+	 * @return      boolean         true if node is empty
+	 */
+	public static function isEmpty(\DOMNode $node) {
+		if ($node->nodeType === XML_TEXT_NODE) {
+			return (StringUtil::trim($node->nodeValue) === '');
+		}
+		else if ($node->nodeType === XML_ELEMENT_NODE) {
+			/** @var \DOMElement $node */
+			if (self::isVoidElement($node)) {
+				return false;
+			}
+			else if ($node->hasChildNodes()) {
+				for ($i = 0, $length = $node->childNodes->length; $i < $length; $i++) {
+					if (!self::isEmpty($node->childNodes[$i])) {
+						return false;
+					}
+				}
+			}
+			
+			return true;
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * Returns true if given node is the first node of its given ancestor.
 	 * 
 	 * @param       \DOMNode        $node           node
@@ -213,10 +242,7 @@ final class DOMUtil {
 	 */
 	public static function isFirstNode(\DOMNode $node, \DOMElement $ancestor) {
 		if ($node->previousSibling === null) {
-			if ($node->previousSibling === null) {
-				throw new \InvalidArgumentException("Provided node is a not a descendant of ancestor element.");
-			}
-			else if ($node->parentNode === $ancestor || $node->parentNode->nodeName === 'body') {
+			if ($node->parentNode === $ancestor || $node->parentNode->nodeName === 'body') {
 				return true;
 			}
 			else {
@@ -250,6 +276,21 @@ final class DOMUtil {
 			}
 		}
 		else if ($node->parentNode->nodeName === 'body') {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Returns true if provided element is a void element. Void elements are elements
+	 * that neither contain content nor have a closing tag, such as `<br>`.
+	 * 
+	 * @param       \DOMElement     $element        element
+	 * @return      boolean         true if provided element is a void element
+	 */
+	public static function isVoidElement(\DOMElement $element) {
+		if (preg_match('~^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$~', $element->nodeName)) {
 			return true;
 		}
 		
