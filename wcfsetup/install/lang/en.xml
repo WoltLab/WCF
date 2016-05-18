@@ -2920,6 +2920,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.boxList.description.activityPoints"><![CDATA[{#$boxUser->activityPoints} Point{if $boxUser->activityPoints != 1}s{/if}]]></item>
 		<item name="wcf.user.boxList.description.likesReceived"><![CDATA[{#$boxUser->likesReceived} Like{if $boxUser->likesReceived != 1}s{/if}]]></item>
 		<item name="wcf.user.boxList.description.registrationDate"><![CDATA[{@$boxUser->registrationDate|time}]]></item>
+		<item name="wcf.user.mostOnlineUsers"><![CDATA[Most Online Users]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

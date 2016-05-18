@@ -2887,6 +2887,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.boxList.description.activityPoints"><![CDATA[{#$boxUser->activityPoints} Punkt{if $boxUser->activityPoints != 1}e{/if}]]></item>
 		<item name="wcf.user.boxList.description.likesReceived"><![CDATA[{#$boxUser->likesReceived} Like{if $boxUser->likesReceived != 1}s{/if}]]></item>
 		<item name="wcf.user.boxList.description.registrationDate"><![CDATA[{@$boxUser->registrationDate|time}]]></item>
+		<item name="wcf.user.mostOnlineUsers"><![CDATA[Meiste Benutzer online]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

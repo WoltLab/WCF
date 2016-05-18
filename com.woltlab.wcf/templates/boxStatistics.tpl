@@ -1,8 +1,13 @@
 <dl class="plain dataList">
+	{event name='stats'}
+	
 	<dt>{lang}wcf.user.members{/lang}</dt>
 	<dd>{#$statistics[members]}</dd>
 	
-	{event name='stats'}
+	{if USERS_ONLINE_RECORD}
+		<dt>{lang}wcf.user.mostOnlineUsers{/lang}</dt>
+		<dd title="{@USERS_ONLINE_RECORD_TIME|plainTime}" class="jsTooltip">{#USERS_ONLINE_RECORD}</dd>
+	{/if}
 	
 	{if $statistics[newestMember]}
 		<dt>{lang}wcf.user.newestMember{/lang}</dt>
