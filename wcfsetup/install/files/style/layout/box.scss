@@ -387,17 +387,9 @@
 	a {
 		color: $wcfFooterBoxLink;
 		
-		.icon {
-			color: $wcfFooterBoxLink;
-		}
-		
 		&:hover {
 			color: $wcfFooterBoxLinkActive;
 			text-decoration: underline;
-			
-			.icon {
-				color: $wcfFooterBoxLinkActive;
-			}
 		}
 	}
 	
