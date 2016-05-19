@@ -5,6 +5,8 @@ use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
+use wcf\data\page\Page;
+use wcf\data\page\PageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
 use wcf\system\box\BoxHandler;
@@ -20,6 +22,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
@@ -794,6 +797,24 @@ class WCF {
 	 */
 	public function getAnchor($fragment) {
 		return self::getRequestURI() . '#' . $fragment;
+	}
+	
+	/**
+	 * Returns the currently active page or null if unknown.
+	 * 
+	 * @return Page|null
+	 */
+	public static function getActivePage() {
+		return PageCache::getInstance()->getPageByController(self::getActiveRequest()->getClassName());
+	}
+	
+	/**
+	 * Returns the currently active request.
+	 * 
+	 * @return Request
+	 */
+	public static function getActiveRequest() {
+		return RequestHandler::getInstance()->getActiveRequest();
 	}
 	
 	/**
