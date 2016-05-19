@@ -91,7 +91,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @return	boolean
 	 */
 	public function canDisable() {
-		if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && !$this->originIsSystem && !$this->isLandingPage) {
+		if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType != 'system') && !$this->isLandingPage) {
 			return true;
 		}
 		
@@ -217,6 +217,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @return	boolean		false if the page should be hidden from menus
 	 */
 	public function isVisible() {
+		if ($this->isDisabled) return false;
 		if (!$this->validateOptions()) return false;
 		if (!$this->validatePermissions()) return false;
 		
