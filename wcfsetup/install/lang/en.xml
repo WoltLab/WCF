@@ -801,7 +801,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Allow session sharing]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (PC, tablet, smartphone, etc) concurrently, all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all other device sessions to terminate. It is not recommended to disable this option.]]></item>
-		<item name="wcf.acp.option.show_clock"><![CDATA[Show current time in page footer]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[“Users Online” Timeout]]></item>
@@ -959,10 +958,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Show like summary]]></item>
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User profile wall]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Sidebar]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_avatar"><![CDATA[Show avatar]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Show online status]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_rank"><![CDATA[Show user rank]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_message_group_starter_icon"><![CDATA[Highlight thread starter]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Show author’s likes received]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Show author’s activity points]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Show Selected Author Profile Fields]]></item>
@@ -1014,8 +1010,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Use Current User Location]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[When entering a location, the current location of the user is used as start point on the map.]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[Apply “Users Online” markings for usernames]]></item>
-		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Enable Privacy Policy Page]]></item>
-		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Inform users regarding the use of their personal data.]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on “Cookie Usage”]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable URL-Rewrite]]></item>

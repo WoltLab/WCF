@@ -310,12 +310,6 @@
 				<hidden>1</hidden>
 			</option>
 			
-			<option name="module_privacy_policy_page">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			
 			<option name="module_cookie_policy_page">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
@@ -415,11 +409,6 @@
 				<optiontype>text</optiontype>
 			</option>
 			<option name="show_version_number">
-				<categoryname>general.page</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="show_clock">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
@@ -1364,22 +1353,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			</option>
 			
 			<option name="message_sidebar_enable_online_status">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="message_sidebar_enable_rank">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<options>module_user_rank</options>
-			</option>
-			<option name="message_sidebar_enable_avatar">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="message_sidebar_enable_message_group_starter_icon">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>

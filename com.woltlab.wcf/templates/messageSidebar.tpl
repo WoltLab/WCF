@@ -9,15 +9,13 @@
 		{if $userProfile->userID}
 			{assign var='username' value=$userProfile->username}
 			
-			{if MESSAGE_SIDEBAR_ENABLE_AVATAR}
-				{if $userProfile->getAvatar()}
-					<div class="userAvatar">
-						{capture assign='__userAvatar'}{@$userProfile->getAvatar()->getImageTag(128)}{/capture}
-						<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}">{@'<img'|str_replace:'<img itemprop="photo"':$__userAvatar}</a>
-						
-						{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
-					</div>
-				{/if}
+			{if $userProfile->getAvatar()}
+				<div class="userAvatar">
+					{capture assign='__userAvatar'}{@$userProfile->getAvatar()->getImageTag(128)}{/capture}
+					<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}">{@'<img'|str_replace:'<img itemprop="photo"':$__userAvatar}</a>
+					
+					{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
+				</div>
 			{/if}
 			
 			<div class="messageAuthorContainer">
@@ -29,7 +27,7 @@
 				{event name='messageAuthorContainer'}
 			</div>
 			
-			{if MODULE_USER_RANK && MESSAGE_SIDEBAR_ENABLE_RANK}
+			{if MODULE_USER_RANK}
 				{if $userProfile->getUserTitle()}
 					<div class="userTitle">
 						<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}" itemprop="title">{$userProfile->getUserTitle()}</span>

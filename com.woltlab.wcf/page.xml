@@ -310,7 +310,6 @@
 			<pageType>text</pageType>
 			<name language="en">Privacy Policy</name>
 			<name language="de">Datenschutzerklärung</name>
-			<options>module_privacy_policy_page</options>
 			
 			<content language="en">
 				<title>Privacy Policy</title>
