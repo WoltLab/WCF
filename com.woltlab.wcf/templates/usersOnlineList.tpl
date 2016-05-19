@@ -2,9 +2,9 @@
 
 {capture assign='contentTitle'}{lang}wcf.user.usersOnline{/lang}{/capture}
 
-{capture assign='contentHeader'}
+{capture assign='headContent'}
 	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}" />
-		
+	
 	{if USERS_ONLINE_PAGE_REFRESH > 0}
 		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}" />
 	{/if}
