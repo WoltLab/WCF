@@ -2631,6 +2631,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
 		<item name="wcf.search.title"><![CDATA[Suche]]></item>
 		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
+		<item name="wcf.search.type.everywhere"><![CDATA[Alles]]></item>
 		<item name="wcf.search.error.noMatches"><![CDATA[Es wurde kein{if !$query|empty} mit Ihrer Suchanfrage „{$query}“ übereinstimmender{/if} Eintrag gefunden.]]></item>
 		<item name="wcf.search.error.user.noMatches"><![CDATA[Es wurde kein Eintrag von diesem Autor gefunden.]]></item>
 	</category>

@@ -2667,6 +2667,7 @@ Errors are:
 		<item name="wcf.search.subjectOnly"><![CDATA[Search subject only]]></item>
 		<item name="wcf.search.title"><![CDATA[Search]]></item>
 		<item name="wcf.search.type"><![CDATA[Search in]]></item>
+		<item name="wcf.search.type.everywhere"><![CDATA[Everywhere]]></item>
 		<item name="wcf.search.error.noMatches"><![CDATA[No items matched your search{if !$query|empty} terms: “{$query}”{/if}.]]></item>
 		<item name="wcf.search.error.user.noMatches"><![CDATA[There were no items matching this author.]]></item>
 	</category>

@@ -27,7 +27,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 			if (!(this._element instanceof Element)) {
 				throw new TypeError("Expected a valid DOM element.");
 			}
-			else if (this._element.nodeName !== 'INPUT' || this._element.type !== 'text') {
+			else if (this._element.nodeName !== 'INPUT' || (this._element.type !== 'search' && this._element.type !== 'text')) {
 				throw new Error('Expected an input[type="text"].');
 			}
 			
@@ -44,6 +44,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 					className: '',
 					interfaceName: 'wcf\\data\\ISearchAction'
 				},
+				callbackDropdownInit: null,
 				callbackSelect: null,
 				delay: 500,
 				minLength: 3,
@@ -251,6 +252,10 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 				this._list.className = 'dropdownMenu';
 				
 				createdList = true;
+				
+				if (typeof this._options.callbackDropdownInit === 'function') {
+					this._options.callbackDropdownInit(this._list);
+				}
 			}
 			else {
 				// reset current list

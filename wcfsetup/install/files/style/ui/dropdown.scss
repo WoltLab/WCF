@@ -129,6 +129,11 @@
 	visibility: hidden;
 	z-index: 450;
 	
+	&.dropdownMenuPageSearch {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+	
 	&.dropdownArrowRight {
 		&::after {
 			left: auto;

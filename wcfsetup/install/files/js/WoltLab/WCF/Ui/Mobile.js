@@ -18,7 +18,6 @@ define(
 	var _options = {};
 	var _pageMenuMain = null;
 	var _pageMenuUser = null;
-	var _sidebar = null;
 	
 	/**
 	 * @exports	WoltLab/WCF/Ui/Mobile
@@ -36,7 +35,6 @@ define(
 			
 			_buttonGroupNavigations = elByClass('buttonGroupNavigation');
 			_main = elById('main');
-			_sidebar = elBySel('#main > div > div > .sidebar', _main);
 			
 			if (Environment.touch()) {
 				document.documentElement.classList.add('touch');
@@ -78,53 +76,12 @@ define(
 		},
 		
 		_init: function() {
-			//this._initSidebarToggleButtons();
-			//this._initSearchBar();
+			this._initSearchBar();
 			this._initButtonGroupNavigation();
 			this._initMobileMenu();
 			
 			UiCloseOverlay.add('WoltLab/WCF/Ui/Mobile', this._closeAllMenus.bind(this));
 			DomChangeListener.add('WoltLab/WCF/Ui/Mobile', this._initButtonGroupNavigation.bind(this));
-		},
-		
-		_initSidebarToggleButtons: function() {
-			if (_sidebar === null) return;
-			
-			var sidebarPosition = (_main.classList.contains('sidebarOrientationLeft')) ? 'Left' : '';
-			sidebarPosition = (sidebarPosition) ? sidebarPosition : (_main.classList.contains('sidebarOrientationRight') ? 'Right' : '');
-			
-			if (!sidebarPosition) {
-				return;
-			}
-			
-			// use icons if language item is empty/non-existent
-			var languageShowSidebar = 'wcf.global.sidebar.show' + sidebarPosition + 'Sidebar';
-			if (languageShowSidebar === Language.get(languageShowSidebar) || Language.get(languageShowSidebar) === '') {
-				languageShowSidebar = elCreate('span');
-				languageShowSidebar.className = 'icon icon16 fa-angle-double-' + sidebarPosition.toLowerCase();
-			}
-			
-			var languageHideSidebar = 'wcf.global.sidebar.hide' + sidebarPosition + 'Sidebar';
-			if (languageHideSidebar === Language.get(languageHideSidebar) || Language.get(languageHideSidebar) === '') {
-				languageHideSidebar = elCreate('span');
-				languageHideSidebar.className = 'icon icon16 fa-angle-double-' + (sidebarPosition === 'Left' ? 'right' : 'left');
-			}
-			
-			// add toggle buttons
-			var showSidebar = elCreate('span');
-			showSidebar.className = 'button small mobileSidebarToggleButton';
-			showSidebar.addEventListener('click', function() { _main.classList.add('mobileShowSidebar'); });
-			if (languageShowSidebar instanceof Element) showSidebar.appendChild(languageShowSidebar);
-			else showSidebar.textContent = languageShowSidebar;
-			
-			var hideSidebar = elCreate('span');
-			hideSidebar.className = 'button small mobileSidebarToggleButton';
-			hideSidebar.addEventListener('click', function() { _main.classList.remove('mobileShowSidebar'); });
-			if (languageHideSidebar instanceof Element) hideSidebar.appendChild(languageHideSidebar);
-			else hideSidebar.textContent = languageHideSidebar;
-			
-			elBySel('.content').appendChild(showSidebar);
-			_sidebar.appendChild(hideSidebar);
 		},
 		
 		_initSearchBar: function() {

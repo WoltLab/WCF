@@ -173,8 +173,6 @@
 		}
 		
 		.pageHeaderSearchInputContainer .pageHeaderSearchInput {
-			padding-bottom: 10px;
-			padding-top: 10px;
 			width: 200px;
 		}
 	}
@@ -259,32 +257,41 @@
 }
 
 .pageHeaderSearchInputContainer {
-	display: inline-block;
+	background-color: $wcfHeaderSearchBoxBackground;
+	border-radius: 2px;
+	display: inline-flex;
+	padding: 2px;
 	position: relative;
 	
-	&:hover {
-		.pageHeaderSearchInput {
-			background-color: $wcfHeaderSearchBoxBackgroundActive;
-			color: $wcfHeaderSearchBoxTextActive;
-		}
-		
-		.pageHeaderSearchInputButton > .icon {
-			color: $wcfHeaderSearchBoxTextActive;
-		}
+	.pageHeaderSearchType > .button {
+		border-radius: 2px 0 0 2px;
+		padding: 4px 7px;
+	}
+	
+	.pageHeaderSearchInputButton {
+		border-radius: 0 2px 2px 0;
+		padding: 4px 7px;
 	}
 	
 	.pageHeaderSearchInput {
-		background-color: $wcfHeaderSearchBoxBackground;
+		background-color: transparent;
 		border-width: 0;
 		color: $wcfHeaderSearchBoxText;
-		padding: 6px 30px 6px 8px;
 		
-		&:focus {
-			background-color: $wcfHeaderSearchBoxBackgroundActive;
+		&:focus,
+		&:hover {
+			background-color: transparent;
 			color: $wcfHeaderSearchBoxTextActive;
 			
-			~ .pageHeaderSearchInputButton > .icon {
-				color: $wcfHeaderSearchBoxTextActive;
+			/* set placeholder color */
+			&::-webkit-input-placeholder { /* WebKit browsers */
+				color: $wcfHeaderSearchBoxPlaceholderActive;
+			}
+			&::-moz-placeholder { /* Mozilla Firefox 19+ */
+				color: $wcfHeaderSearchBoxPlaceholderActive;
+			}
+			&:-ms-input-placeholder { /* Internet Explorer 10+ */
+				color: $wcfHeaderSearchBoxPlaceholderActive;
 			}
 		}
 		
@@ -298,40 +305,10 @@
 		&:-ms-input-placeholder { /* Internet Explorer 10+ */
 			color: $wcfHeaderSearchBoxPlaceholder;
 		}
-				
+		
 		/* remove broken cancel-button (webkit) */
 		&::-webkit-search-cancel-button {
 			display:none;
-		}
-	}
-	
-	&:hover .pageHeaderSearchInput,
-	.pageHeaderSearchInput:focus {
-		/* set placeholder color */
-		&::-webkit-input-placeholder { /* WebKit browsers */
-			color: $wcfHeaderSearchBoxPlaceholderActive;
-		}
-		&::-moz-placeholder { /* Mozilla Firefox 19+ */
-			color: $wcfHeaderSearchBoxPlaceholderActive;
-		}
-		&:-ms-input-placeholder { /* Internet Explorer 10+ */
-			color: $wcfHeaderSearchBoxPlaceholderActive;
-		}
-	}
-	
-	.pageHeaderSearchInputButton {
-		background: none;
-		border: 0 none;
-		height: 20px;
-		margin: -10px 5px 0 0;
-		padding: 0;
-		position: absolute;
-		right: 0;
-		top: 50%;
-		width: 20px;
-		
-		> .icon {
-			color: $wcfHeaderSearchBoxText;
 		}
 	}
 }

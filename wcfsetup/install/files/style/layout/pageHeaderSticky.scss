@@ -123,18 +123,17 @@
 		}
 		
 		&:not(.searchBarOpen) {
-			.pageHeaderSearchInput,
-			.pageHeaderSearchInputButton {
+			.pageHeaderSearchInputContainer {
 				display: none;
 			}
 		}
 		
 		&.searchBarOpen {
 			.pageHeaderSearchInputContainer {
-				height: 100%;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
 				position: absolute;
-				top: 100%;
-				transform: translateX(-50px);
+				top: 50px !important;
 				z-index: 100; 
 			}
 			
