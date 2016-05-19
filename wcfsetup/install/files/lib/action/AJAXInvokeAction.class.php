@@ -8,6 +8,8 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
+use wcf\system\IAJAXInvokeAction;
+use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
@@ -31,7 +33,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	
 	/**
 	 * action object
-	 * @var	\wcf\system\SingletonFactory
+	 * @var	SingletonFactory
 	 */
 	public $actionObject = null;
 	
@@ -54,7 +56,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	protected $response = null;
 	
 	/**
-	 * @see	\wcf\action\IAction::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		try {
@@ -79,7 +81,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -92,7 +94,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -120,11 +122,11 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 */
 	protected function invoke() {
 		// check for interface and inheritance of SingletonFactory
-		if (!is_subclass_of($this->className, 'wcf\system\IAJAXInvokeAction')) {
-			throw new SystemException("'".$this->className."' does not implement 'wcf\system\IAJAXInvokeAction'");
+		if (!is_subclass_of($this->className, IAJAXInvokeAction::class)) {
+			throw new SystemException("'".$this->className."' does not implement '".IAJAXInvokeAction::class."'");
 		}
-		else if (!is_subclass_of($this->className, 'wcf\system\SingletonFactory')) {
-			throw new SystemException("'".$this->className."' does not extend 'wcf\system\SingletonFactory'");
+		else if (!is_subclass_of($this->className, SingletonFactory::class)) {
+			throw new SystemException("'".$this->className."' does not extend '".SingletonFactory::class."'");
 		}
 		
 		// validate action name
@@ -138,7 +140,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new PermissionDeniedException();
 		}
 		
-		$this->actionObject = call_user_func(array($this->className, 'getInstance'));
+		$this->actionObject = call_user_func([$this->className, 'getInstance']);
 		
 		// check for validate method
 		$validateMethod = 'validate'.ucfirst($this->actionName);
@@ -164,12 +166,13 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * @param	\Exception|\Throwable	$e
 	 * @throws	AJAXException
 	 * @throws	\Exception
+	 * @throws	\Throwable
 	 */
 	protected function throwException($e) {
 		if ($this->inDebugMode) {
 			throw $e;
 		}
-
+		
 		if ($e instanceof InvalidSecurityTokenException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}
@@ -182,23 +185,23 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		else if ($e instanceof UserInputException) {
 			// repackage as ValidationActionException
 			$exception = new ValidateActionException($e->getField(), $e->getType(), $e->getVariables());
-			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
+			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
 				'errorMessage' => $exception->getMessage(),
 				'errorType' => $e->getType(),
 				'fieldName' => $exception->getFieldName(),
-			));
+			]);
 		}
 		else if ($e instanceof ValidateActionException) {
-			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
 				'errorMessage' => $e->getMessage(),
 				'fieldName' => $e->getFieldName()
-			));
+			]);
 		}
 		else if ($e instanceof NamedUserException) {
 			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
 		}
 		else {
-			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), array(), \wcf\functions\exception\logThrowable($e));
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), [], \wcf\functions\exception\logThrowable($e));
 		}
 	}
 	
