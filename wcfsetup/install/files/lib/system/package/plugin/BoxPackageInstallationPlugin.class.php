@@ -132,6 +132,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		
 		$ignoreMissingContent = false;
 		switch ($boxType) {
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'system':
 				if (empty($data['elements']['objectType'])) {
 					throw new SystemException("Missing required element 'objectType' for 'system'-type box '{$identifier}'");

@@ -66,6 +66,7 @@ class UserImporter extends AbstractImporter {
 		// fetch user with same username
 		$conflictingUser = User::getUserByUsername($data['username']);
 		switch (ImportHandler::getInstance()->getUserMergeMode()) {
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case self::MERGE_MODE_USERNAME_OR_EMAIL:
 				// merge target will be the conflicting user
 				$targetUser = $conflictingUser;
