@@ -1,19 +1,19 @@
-{capture assign='__searchFormLink'}{link controller='Search'}{/link}{/capture}
+{capture assign='__searchLink'}{link controller='Search'}{/link}{/capture}
 
 {event name='settings'}
 
 <div id="pageHeaderSearch" class="pageHeaderSearch">
-	<form method="post" action="{@$__searchFormLink}">
+	<form method="post" action="{@$__searchLink}">
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">
 			<div class="pageHeaderSearchType dropdown">
-				<a href="#" class="button dropdownToggle">{lang}wcf.search.type.{if !$searchObjectTypeName|empty}{@$searchObjectTypeName}{else}everywhere{/if}{/lang}</a>
+				<a href="#" class="button dropdownToggle">{lang}wcf.search.type.{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{else}everywhere{/if}{/lang}</a>
 				<ul class="dropdownMenu">
-					<li><a href="#" data-object-type="">{lang}wcf.search.type.everywhere{/lang}</a></li>
+					<li><a href="#" data-object-type="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 					<li class="dropdownDivider"></li>
 					
 					{hascontent}
 						{content}
-							{event name='searchTypesScoped'}
+							{if !$__searchTypesScoped|empty}{@$__searchTypesScoped}{/if}
 						{/content}
 						
 						<li class="dropdownDivider"></li>
@@ -26,7 +26,7 @@
 					{/foreach}
 					
 					<li class="dropdownDivider"></li>
-					<li><a href="{@$__searchFormLink}">{lang}wcf.search.extended{/lang}</a></li>
+					<li><a href="{@$__searchLink}">{lang}wcf.search.extended{/lang}</a></li>
 				</ul>
 			</div>
 			
@@ -36,23 +36,19 @@
 				<span class="icon icon16 fa-search pointer" title="{lang}wcf.global.search{/lang}"></span>
 			</button>
 			
-			{if !$searchObjectTypeName|empty}<input type="hidden" name="types[]" value="{$searchObjectTypeName}">{/if}
+			<div id="pageHeaderSearchParameters"></div>
 			
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 		
 		<label for="pageHeaderSearchInput" class="pageHeaderSearchLabel"></label>
-		
-		{if !$searchObjectTypeName|empty}<input type="hidden" name="types[]" value="{$searchObjectTypeName}">{/if}
-		
-		{@SECURITY_TOKEN_INPUT_TAG}
 	</form>
 </div>
 
 {if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 	<script data-relocate="true">
 		require(['WoltLab/WCF/Ui/Search/Page'], function(UiSearchPage) {
-			UiSearchPage.init();
+			UiSearchPage.init('{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{else}everywhere{/if}');
 		});
 	</script>
 {/if}
