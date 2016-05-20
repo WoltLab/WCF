@@ -242,7 +242,7 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 				
 				listItem = elCreate('li');
 				link = elCreate('a');
-				link.addEventListener('click', callbackClick);
+				link.addEventListener(WCF_CLICK_EVENT, callbackClick);
 				link.className = 'box16';
 				link.innerHTML = '<span>' + user.icon + '</span> <span>' + user.label + '</span>';
 				elData(link, 'user-id', user.objectID);

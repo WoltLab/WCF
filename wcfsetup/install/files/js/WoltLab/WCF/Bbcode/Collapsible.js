@@ -33,7 +33,7 @@ define([], function() {
 						toggleButton.textContent = elData(toggleButton, 'title-' + (expand ? 'collapse' : 'expand'));
 					};
 					
-					toggleButton.addEventListener('click', toggle);
+					toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
 					
 					// searching in a page causes Google Chrome to scroll
 					// the box if something inside it matches

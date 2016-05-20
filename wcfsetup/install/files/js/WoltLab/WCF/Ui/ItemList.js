@@ -180,7 +180,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			var list = elCreate('ol');
 			list.className = 'inputItemList';
 			elData(list, 'element-id', element.id);
-			list.addEventListener('click', function(event) {
+			list.addEventListener(WCF_CLICK_EVENT, function(event) {
 				if (event.target === list) element.focus();
 			});
 			
@@ -347,7 +347,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			
 			var button = elCreate('a');
 			button.className = 'icon icon16 fa-times';
-			button.addEventListener('click', _callbackRemoveItem);
+			button.addEventListener(WCF_CLICK_EVENT, _callbackRemoveItem);
 			listItem.appendChild(content);
 			listItem.appendChild(button);
 			

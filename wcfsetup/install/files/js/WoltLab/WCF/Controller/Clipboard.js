@@ -90,7 +90,7 @@ define(
 					var markAll = elBySel('.jsClipboardMarkAll', container);
 					if (markAll !== null) {
 						elData(markAll, 'container-id', containerId);
-						markAll.addEventListener('click', this._markAll.bind(this));
+						markAll.addEventListener(WCF_CLICK_EVENT, this._markAll.bind(this));
 					}
 					
 					containerData = {
@@ -107,7 +107,7 @@ define(
 					
 					if (!_knownCheckboxes.has(checkbox)) {
 						elData(checkbox, 'container-id', containerId);
-						checkbox.addEventListener('click', _callbackCheckbox);
+						checkbox.addEventListener(WCF_CLICK_EVENT, _callbackCheckbox);
 						
 						_knownCheckboxes.add(checkbox);
 					}
@@ -485,7 +485,7 @@ define(
 					dropdown.appendChild(item);
 					
 					elData(item, 'type', typeName);
-					item.addEventListener('click', _callbackItem);
+					item.addEventListener(WCF_CLICK_EVENT, _callbackItem);
 					
 					_itemData.set(item, itemData);
 				}
@@ -500,7 +500,7 @@ define(
 				label = elCreate('span');
 				label.textContent = Language.get('wcf.clipboard.item.unmarkAll');
 				unmarkAll.appendChild(label);
-				unmarkAll.addEventListener('click', _callbackUnmarkAll);
+				unmarkAll.addEventListener(WCF_CLICK_EVENT, _callbackUnmarkAll);
 				dropdown.appendChild(unmarkAll);
 				
 				if (keepEditors.indexOf(typeName) !== -1) {

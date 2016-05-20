@@ -27,7 +27,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/W
 			if (store) {
 				var storeElement = elById(store);
 				if (storeElement && storeElement.tagName === 'INPUT') {
-					this._buttons[i].addEventListener('click', this._click.bind(this));
+					this._buttons[i].addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 					
 					this._storeElements.set(button, storeElement);
 				}
@@ -50,7 +50,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/W
 				var chooseIcon = elByClass('jsMediaSelectIcon', listItem)[0];
 				if (chooseIcon) {
 					chooseIcon.classList.remove('jsMediaSelectIcon');
-					chooseIcon.addEventListener('click', this._chooseMedia.bind(this));
+					chooseIcon.addEventListener(WCF_CLICK_EVENT, this._chooseMedia.bind(this));
 				}
 			}
 		},

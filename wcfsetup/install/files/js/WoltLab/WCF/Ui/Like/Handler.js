@@ -126,7 +126,7 @@ define(
 					
 					summaryContent = elCreate('span');
 					summaryContent.className = 'likesSummaryContent';
-					summaryContent.addEventListener('click', this._showSummary.bind(this, element));
+					summaryContent.addEventListener(WCF_CLICK_EVENT, this._showSummary.bind(this, element));
 					summary.appendChild(summaryContent);
 					
 					if (this._options.summaryPrepend) {
@@ -148,7 +148,7 @@ define(
 				badge = elCreate('a');
 				badge.href = '#';
 				badge.className = 'wcfLikeCounter jsTooltip' + (this._options.badgeClassNames ? ' ' + this._options.badgeClassNames : '');
-				badge.addEventListener('click', this._showSummary.bind(this, element));
+				badge.addEventListener(WCF_CLICK_EVENT, this._showSummary.bind(this, element));
 				
 				if (badgeContainer.nodeName === 'OL' || badgeContainer.nodeName === 'UL') {
 					listItem = elCreate('li');
@@ -204,7 +204,7 @@ define(
 			button.href = '#';
 			button.title = title;
 			button.innerHTML = '<span class="icon icon16 fa-thumbs-o-' + (isLike ? 'up' : 'down') + '" /> <span class="invisible">' + title + '</span>';
-			button.addEventListener('click', this._like.bind(this, element));
+			button.addEventListener(WCF_CLICK_EVENT, this._like.bind(this, element));
 			elData(button, 'type', (isLike ? 'like' : 'dislike'));
 			
 			listItem.appendChild(button);

@@ -173,10 +173,10 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 					var item = elCreate('li');
 					item.innerHTML = hiddenItem.innerHTML;
 					
-					item.addEventListener('click', (function(event) {
+					item.addEventListener(WCF_CLICK_EVENT, (function(event) {
 						event.preventDefault();
 						
-						Core.triggerEvent(elBySel('a', hiddenItem), 'click');
+						Core.triggerEvent(elBySel('a', hiddenItem), WCF_CLICK_EVENT);
 						
 						// force a rebuild to guarantee the active item being visible
 						setTimeout(function() {

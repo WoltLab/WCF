@@ -57,7 +57,7 @@ define(['Language'], function(Language) {
 				_notificationElement.id = 'systemNotification';
 				
 				_message = elCreate('p');
-				_message.addEventListener('click', _callbackHide);
+				_message.addEventListener(WCF_CLICK_EVENT, _callbackHide);
 				_notificationElement.appendChild(_message);
 				
 				document.body.appendChild(_notificationElement);

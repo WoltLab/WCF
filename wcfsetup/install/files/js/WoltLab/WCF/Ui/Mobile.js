@@ -87,7 +87,7 @@ define(
 		_initSearchBar: function() {
 			var _searchBar = elBySel('.searchBar');
 			
-			_searchBar.addEventListener('click', function() {
+			_searchBar.addEventListener(WCF_CLICK_EVENT, function() {
 				if (_enabled) {
 					_searchBar.classList.add('searchBarOpen');
 					
@@ -97,7 +97,7 @@ define(
 				return false;
 			});
 			
-			_main.addEventListener('click', function() { _searchBar.classList.remove('searchBarOpen'); });
+			_main.addEventListener(WCF_CLICK_EVENT, function() { _searchBar.classList.remove('searchBarOpen'); });
 		},
 		
 		_initButtonGroupNavigation: function() {
@@ -115,7 +115,7 @@ define(
 				button.appendChild(span);
 				
 				(function(button) {
-					button.addEventListener('click', function(ev) {
+					button.addEventListener(WCF_CLICK_EVENT, function(ev) {
 						var next = button.nextElementSibling;
 						if (next !== null) {
 							next.classList.toggle('open');

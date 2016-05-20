@@ -63,7 +63,7 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 					
 					element.addEventListener('mouseenter', this._mouseEnter.bind(this));
 					element.addEventListener('mouseleave', this._mouseLeave.bind(this));
-					element.addEventListener('click', this._mouseLeave.bind(this));
+					element.addEventListener(WCF_CLICK_EVENT, this._mouseLeave.bind(this));
 				}
 			}
 		},

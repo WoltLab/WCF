@@ -27,7 +27,7 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 					this._fileType = initialFileType;
 				}
 				
-				this._fileTypes[i].addEventListener('click', selectFileType);
+				this._fileTypes[i].addEventListener(WCF_CLICK_EVENT, selectFileType);
 			}
 			
 			if (initialFileType && initialFileType.length) {
