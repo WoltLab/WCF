@@ -87,7 +87,16 @@
 	margin-top: 10px;
 	position: relative;
 	
+	> ul > li > a {
+		display: block;
+		padding: 5px 0;
+		
+		@include wcfFontHeadline;
+	}
+	
 	> ul {
+		border-bottom: 1px solid $wcfContentBorderInner;
+		
 		@include inlineList;
 		
 		> li {
