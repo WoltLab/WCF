@@ -156,10 +156,19 @@ class SearchForm extends AbstractCaptchaForm {
 		if (isset($_REQUEST['types']) && is_array($_REQUEST['types'])) {
 			$this->selectedObjectTypes = $_REQUEST['types'];
 			
-			// validate given values
-			foreach ($this->selectedObjectTypes as $objectTypeName) {
-				if (SearchEngine::getInstance()->getObjectType($objectTypeName) === null) {
-					throw new IllegalLinkException();
+			// handle special selection to search in all areas
+			if (isset($this->selectedObjectTypes[0]) && $this->selectedObjectTypes[0] === 'everywhere') {
+				$this->selectedObjectTypes = [];
+				foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $typeName => $typeObject) {
+					$this->selectedObjectTypes[] = $typeName;
+				}
+			}
+			else {
+				// validate given values
+				foreach ($this->selectedObjectTypes as $objectTypeName) {
+					if (SearchEngine::getInstance()->getObjectType($objectTypeName) === null) {
+						throw new IllegalLinkException();
+					}
 				}
 			}
 		}
@@ -207,7 +216,10 @@ class SearchForm extends AbstractCaptchaForm {
 			case 'subject':
 			case 'time':
 			case 'username': break;
+			
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'relevance': if (!$this->submit || !empty($this->query)) break;
+			
 			default: 
 				if (!$this->submit || !empty($this->query)) $this->sortField = 'relevance';
 				else $this->sortField = 'time';

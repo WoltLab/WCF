@@ -56,7 +56,6 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 		_initSearchBar: function() {
 			var searchContainer = elById('pageHeaderSearch');
 			searchContainer.addEventListener(WCF_CLICK_EVENT, function(event) {
-				event.preventDefault();
 				event.stopPropagation();
 			});
 			

@@ -66,13 +66,13 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 		 * @protected
 		 */
 		_keydown: function(event) {
-			if (this._activeItem !== null || this._options.preventSubmit) {
+			if ((this._activeItem !== null && UiSimpleDropdown.isOpen(this._dropdownContainerId)) || this._options.preventSubmit) {
 				if (EventKey.Enter(event)) {
 					event.preventDefault();
 				}
 			}
 			
-			if (EventKey.ArrowUp(event) || EventKey.ArrowDown(event)) {
+			if (EventKey.ArrowUp(event) || EventKey.ArrowDown(event) || EventKey.Escape(event)) {
 				event.preventDefault();
 			}
 		},
@@ -86,6 +86,10 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 		_keyup: function(event) {
 			// handle dropdown keyboard navigation
 			if (this._activeItem !== null) {
+				if (!UiSimpleDropdown.isOpen(this._dropdownContainerId)) {
+					return;
+				}
+				
 				if (EventKey.ArrowUp(event)) {
 					event.preventDefault();
 					
@@ -101,6 +105,13 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 					
 					return this._keyboardSelectItem();
 				}
+			}
+			
+			// close list on escape
+			if (EventKey.Escape(event)) {
+				UiSimpleDropdown.close(this._dropdownContainerId);
+				
+				return;
 			}
 			
 			var value = this._element.value.trim();
