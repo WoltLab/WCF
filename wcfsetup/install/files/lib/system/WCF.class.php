@@ -939,7 +939,7 @@ class WCF {
 	/**
 	 * Returns true if currently active request represents the landing page.
 	 * 
-	 * @return      boolean
+	 * @return	boolean
 	 */
 	public static function isLandingPage() {
 		return RequestHandler::getInstance()->getActiveRequest()->isLandingPage();

@@ -236,17 +236,17 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 		
 		WCF::getDB()->beginTransaction();
 		// unmark existing landing page
-		$sql = "UPDATE  wcf".WCF_N."_page
-			SET     isLandingPage = ?";
+		$sql = "UPDATE	wcf".WCF_N."_page
+			SET	isLandingPage = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			0
 		]);
 		
 		// set current page as landing page
-		$sql = "UPDATE  wcf".WCF_N."_page
-			SET     isLandingPage = ?
-			WHERE   pageID = ?";
+		$sql = "UPDATE	wcf".WCF_N."_page
+			SET	isLandingPage = ?
+			WHERE	pageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			1,
@@ -267,13 +267,13 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns box to page assignments.
 	 *
-	 * @return      integer[]
+	 * @return	integer[]
 	 */
 	public function getBoxIDs() {
 		if ($this->boxIDs === null) {
-			$sql = "SELECT  boxID
-				FROM    wcf" . WCF_N . "_box_to_page
-				WHERE   pageID = ?";
+			$sql = "SELECT	boxID
+				FROM	wcf" . WCF_N . "_box_to_page
+				WHERE	pageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->pageID]);
 			$this->boxIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -285,8 +285,8 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns the template name of this page.
 	 * 
-	 * @param       integer         $languageID
-	 * @return      string
+	 * @param	integer		$languageID
+	 * @return	string
 	 */
 	public function getTplName($languageID = null) {
 		if ($this->pageType == 'tpl') {
@@ -303,7 +303,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns the value of a generic phrase based upon a page's identifier.
 	 * 
-	 * @return      string  generic title
+	 * @return	string  generic title
 	 */
 	protected function getGenericTitle() {
 		return WCF::getLanguage()->get('wcf.page.' . $this->identifier);

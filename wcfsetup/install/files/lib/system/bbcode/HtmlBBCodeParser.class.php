@@ -13,13 +13,13 @@ use wcf\util\StringUtil;
  * are <iframe> or other embedded media that is allowed as a result of a bbcode, but
  * not allowed to be directly provided by a user. 
  * 
- * @author      Alexander Ebert
- * @copyright   2001-2016 WoltLab GmbH
- * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     com.woltlab.wcf
- * @subpackage  system.bbcode
- * @category    Community Framework
- * @since       2.2
+ * @author	Alexander Ebert
+ * @copyright	2001-2016 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.bbcode
+ * @category	Community Framework
+ * @since	2.2
  */
 class HtmlBBCodeParser extends BBCodeParser {
 	/**
@@ -144,9 +144,9 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Builds the bbcode output.
 	 * 
-	 * @param       string          $name           bbcode identifier
-	 * @param       array           $attributes     list of attributes
-	 * @return      string          parsed bbcode
+	 * @param	string		$name		bbcode identifier
+	 * @param	array		$attributes	list of attributes
+	 * @return	string		parsed bbcode
 	 */
 	public function getHtmlOutput($name, array $attributes) {
 		if (isset($this->bbcodes[$name])) {
@@ -170,10 +170,10 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Builds a plain bbcode string, used for unknown bbcodes.
 	 * 
-	 * @param       string          $name                   bbcode identifier
-	 * @param       array           $attributes             list of attributes
-	 * @param       boolean         $openingTagOnly         only render the opening tag
-	 * @return      string
+	 * @param	string		$name			bbcode identifier
+	 * @param	array		$attributes		list of attributes
+	 * @param	boolean		$openingTagOnly		only render the opening tag
+	 * @return	string
 	 */
 	public function buildBBCodeTag($name, $attributes, $openingTagOnly = false) {
 		if (!empty($attributes)) {
@@ -198,7 +198,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Returns the list of bbcodes that represent block elements.
 	 * 
-	 * @return      string[]        list of bbcode block elements
+	 * @return	string[]	list of bbcode block elements
 	 */
 	public function getBlockBBCodes() {
 		$bbcodes = [];
@@ -214,7 +214,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Returns the list of bbcodes that represent source code elements.
 	 * 
-	 * @return      string[]        list of bbcode source code elements
+	 * @return	string[]	list of bbcode source code elements
 	 */
 	public function getSourceBBCodes() {
 		$bbcodes = [];
@@ -230,10 +230,10 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Compiles tag fragments into the custom HTML element.
 	 * 
-	 * @param       array   $openingTag     opening tag data
-	 * @param       string  $content        content between opening and closing tag
-	 * @param       array   $closingTag     closing tag data
-	 * @return      string  custom HTML element
+	 * @param	array   $openingTag	opening tag data
+	 * @param	string  $content	content between opening and closing tag
+	 * @param	array   $closingTag	closing tag data
+	 * @return	string  custom HTML element
 	 */
 	protected function compileTag(array $openingTag, $content, array $closingTag) {
 		return $this->buildOpeningTag($openingTag) . $content . $this->buildClosingTag($closingTag);
@@ -283,8 +283,8 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Returns true if provided name is a valid bbcode identifier.
 	 * 
-	 * @param       string          $name           bbcode identifier
-	 * @return      boolean         true if provided name is a valid bbcode identifier
+	 * @param	string		$name		bbcode identifier
+	 * @return	boolean		true if provided name is a valid bbcode identifier
 	 */
 	protected function isValidBBCodeName($name) {
 		return preg_match($this->validBBCodePattern, $name) === 1;

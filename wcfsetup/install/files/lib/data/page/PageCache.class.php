@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.page
  * @category	Community Framework
- * @since       2.2
+ * @since	2.2
  */
 class PageCache extends SingletonFactory {
 	/**
@@ -75,9 +75,9 @@ class PageCache extends SingletonFactory {
 	 * Returns the localized page title by page id, optionally retrieving the title
 	 * for given language id if it is a multilingual page.
 	 * 
-	 * @param       integer         $pageID         page id
-	 * @param       integer         $languageID     specific value by language id
-	 * @return      string          localized page title
+	 * @param	integer		$pageID		page id
+	 * @param	integer		$languageID	specific value by language id
+	 * @return	string	localized page title
 	 */
 	public function getPageTitle($pageID, $languageID = null) {
 		if (isset($this->cache['pageTitles'][$pageID])) {
@@ -100,7 +100,7 @@ class PageCache extends SingletonFactory {
 	/**
 	 * Returns the global landing page.
 	 * 
-	 * @return      Page
+	 * @return	Page
 	 */
 	public function getLandingPage() {
 		return $this->cache['landingPage'];

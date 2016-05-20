@@ -59,7 +59,7 @@ interface IBoxController {
 	/**
 	 * Returns the database object of this box.
 	 * 
-	 * @return      Box
+	 * @return	Box
 	 */
 	public function getBox();
 	

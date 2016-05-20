@@ -10,6 +10,6 @@ namespace wcf\data;
  * @package	com.woltlab.wcf
  * @subpackage	data
  * @category	Community Framework
- * @since       2.2
+ * @since	2.2
  */
 interface ITitledLinkObject extends ILinkableObject, ITitledObject {}

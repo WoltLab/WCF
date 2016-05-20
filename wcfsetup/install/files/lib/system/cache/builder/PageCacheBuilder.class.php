@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
- * @since       2.2
+ * @since	2.2
  */
 class PageCacheBuilder extends AbstractCacheBuilder {
 	/**
@@ -33,8 +33,8 @@ class PageCacheBuilder extends AbstractCacheBuilder {
 		$data['pages'] = $pageList->getObjects();
 		
 		// get page titles
-		$sql = "SELECT  pageID, languageID, title
-			FROM    wcf".WCF_N."_page_content";
+		$sql = "SELECT	pageID, languageID, title
+			FROM	wcf".WCF_N."_page_content";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {

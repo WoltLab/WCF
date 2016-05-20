@@ -243,9 +243,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @return	integer
 	 */
 	protected function getItemOrder($position) {
-		$sql = "SELECT  MAX(showOrder) AS showOrder
+		$sql = "SELECT	MAX(showOrder) AS showOrder
 			FROM	wcf".WCF_N."_box
-			WHERE   position = ?";
+			WHERE	position = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute([$position]);
 		
@@ -327,10 +327,10 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		}
 		
 		// save visibility exceptions
-		$sql = "DELETE FROM     wcf".WCF_N."_box_to_page
-			WHERE           boxID = ?";
+		$sql = "DELETE FROM	wcf".WCF_N."_box_to_page
+			WHERE		boxID = ?";
 		$deleteStatement = WCF::getDB()->prepareStatement($sql);
-		$sql = "INSERT IGNORE   wcf".WCF_N."_box_to_page
+		$sql = "INSERT IGNORE	wcf".WCF_N."_box_to_page
 					(boxID, pageID, visible)
 			VALUES		(?, ?, ?)";
 		$insertStatement = WCF::getDB()->prepareStatement($sql);
@@ -341,8 +341,8 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			// get page ids
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('identifier IN (?)', [$pages]);
-			$sql = "SELECT  pageID
-				FROM    wcf".WCF_N."_page
+			$sql = "SELECT	pageID
+				FROM	wcf".WCF_N."_page
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());

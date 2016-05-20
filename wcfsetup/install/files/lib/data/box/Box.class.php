@@ -5,6 +5,7 @@ use wcf\data\media\ViewableMedia;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\condition\ConditionHandler;
 use wcf\data\page\Page;
@@ -288,7 +289,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns the box controller.
 	 * 
-	 * @return      \wcf\system\box\IBoxController
+	 * @return	IBoxController
 	 */
 	public function getController() {
 		if ($this->controller === null && $this->objectTypeID) {
@@ -432,8 +433,8 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns the template name of this box.
 	 *
-	 * @param       integer         $languageID
-	 * @return      string
+	 * @param	integer		$languageID
+	 * @return	string
 	 */
 	public function getTplName($languageID = null) {
 		if ($this->boxType == 'tpl') {
@@ -450,13 +451,13 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns box to page assignments.
 	 * 
-	 * @return      integer[]
+	 * @return	integer[]
 	 */
 	public function getPageIDs() {
 		if ($this->pageIDs === null) {
-			$sql = "SELECT  pageID
-				FROM    wcf" . WCF_N . "_box_to_page
-				WHERE   boxID = ?";
+			$sql = "SELECT	pageID
+				FROM	wcf" . WCF_N . "_box_to_page
+				WHERE	boxID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->boxID]);
 			

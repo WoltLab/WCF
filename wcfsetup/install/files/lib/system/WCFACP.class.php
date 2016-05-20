@@ -73,8 +73,8 @@ class WCFACP extends WCF {
 	/**
 	 * Returns the main menu object.
 	 * 
-	 * @return      Menu|null       menu object
-	 * @since       2.2
+	 * @return	Menu|null	menu object
+	 * @since	2.2
 	 */
 	public function getFrontendMenu() {
 		return MenuCache::getInstance()->getMainMenu();

@@ -39,7 +39,7 @@ class PageEditForm extends PageAddForm {
 	/**
 	 * @inheritDoc
 	 * 
-	 * @throws      IllegalLinkException
+	 * @throws	IllegalLinkException
 	 */
 	public function readParameters() {
 		parent::readParameters();

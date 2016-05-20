@@ -217,12 +217,12 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		// handle visibility exceptions
-		$sql = "DELETE FROM     wcf".WCF_N."_box_to_page
-			WHERE           boxID = ?";
+		$sql = "DELETE FROM	wcf".WCF_N."_box_to_page
+			WHERE		boxID = ?";
 		$deleteStatement = WCF::getDB()->prepareStatement($sql);
-		$sql = "INSERT IGNORE   wcf".WCF_N."_box_to_page
+		$sql = "INSERT IGNORE	wcf".WCF_N."_box_to_page
 					(boxID, pageID, visible)
-			VALUES          (?, ?, ?)";
+			VALUES		(?, ?, ?)";
 		$insertStatement = WCF::getDB()->prepareStatement($sql);
 		foreach ($this->boxData as $identifier => $data) {
 			// connect box with menu
@@ -253,8 +253,8 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				// get page ids
 				$conditionBuilder = new PreparedStatementConditionBuilder();
 				$conditionBuilder->add('identifier IN (?)', [$this->visibilityExceptions[$identifier]]);
-				$sql = "SELECT  pageID
-					FROM    wcf" . WCF_N . "_page
+				$sql = "SELECT	pageID
+					FROM	wcf" . WCF_N . "_page
 					" . $conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditionBuilder->getParameters());

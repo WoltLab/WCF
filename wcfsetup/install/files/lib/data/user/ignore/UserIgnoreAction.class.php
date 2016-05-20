@@ -56,9 +56,9 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');
 			
 			// check if target user is following the current user
-			$sql = "SELECT  *
-				FROM    wcf".WCF_N."_user_follow
-				WHERE   userID = ?
+			$sql = "SELECT	*
+				FROM	wcf".WCF_N."_user_follow
+				WHERE	userID = ?
 					AND followUserID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([

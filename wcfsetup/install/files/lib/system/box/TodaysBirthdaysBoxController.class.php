@@ -76,7 +76,7 @@ class TodaysBirthdaysBoxController extends AbstractBoxController {
 	/**
 	 * Filters given user ids.
 	 * 
-	 * @param       integer[]       $userIDs
+	 * @param	integer[]	$userIDs
 	 */
 	protected function filterUserIDs(&$userIDs) {
 		// does nothing, can be overwritten by child classes

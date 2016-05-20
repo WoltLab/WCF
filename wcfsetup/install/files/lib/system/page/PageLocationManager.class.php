@@ -15,7 +15,7 @@ use wcf\system\SingletonFactory;
  * @package	com.woltlab.wcf
  * @subpackage	system.page
  * @category	Community Framework
- * @since       2.2
+ * @since	2.2
  */
 class PageLocationManager extends SingletonFactory {
 	/**
@@ -66,9 +66,9 @@ class PageLocationManager extends SingletonFactory {
 	 * Appends a parent location to the stack, the later it is added the lower
 	 * is its assumed priority when matching suitable menu items.
 	 * 
-	 * @param	string		        $identifier	        internal page identifier
-	 * @param	integer		        $pageObjectID	        page object id
-	 * @param       ITitledLinkObject       $locationObject         optional label for breadcrumbs usage
+	 * @param	string			$identifier		internal page identifier
+	 * @param	integer			$pageObjectID		page object id
+	 * @param	ITitledLinkObject	$locationObject		optional label for breadcrumbs usage
 	 * @throws	SystemException
 	 */
 	public function addParentLocation($identifier, $pageObjectID = 0, ITitledLinkObject $locationObject = null) {

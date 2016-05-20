@@ -155,7 +155,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Reads basic page parameters controlling type and i18n.
 	 * 
-	 * @throws      IllegalLinkException
+	 * @throws	IllegalLinkException
 	 */
 	protected function readPageType() {
 		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
@@ -229,7 +229,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Validates page type.
 	 * 
-	 * @throws      UserInputException
+	 * @throws	UserInputException
 	 */
 	protected function validatePageType() {
 		if (!in_array($this->pageType, Page::$availablePageTypes) || $this->pageType == 'system') {
@@ -244,7 +244,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Validates parent page id.
 	 * 
-	 * @throws      UserInputException
+	 * @throws	UserInputException
 	 */
 	protected function validateParentPageID() {
 		if ($this->parentPageID) {
@@ -258,7 +258,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Validates package id.
 	 * 
-	 * @throws      UserInputException
+	 * @throws	UserInputException
 	 */
 	protected function validateApplicationPackageID() {
 		if (!isset($this->availableApplications[$this->applicationPackageID])) {
@@ -269,7 +269,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Validates custom urls.
 	 * 
-	 * @throws      UserInputException
+	 * @throws	UserInputException
 	 */
 	protected function validateCustomUrl() {
 		foreach ($this->customURL as $type => $customURL) {
@@ -282,7 +282,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Validates box ids.
 	 * 
-	 * @throws      UserInputException
+	 * @throws	UserInputException
 	 */
 	protected function validateBoxIDs() {
 		foreach ($this->boxIDs as $boxID) {
@@ -295,7 +295,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Prepares box to page assignments
 	 * 
-	 * @return      mixed[]
+	 * @return	mixed[]
 	 */
 	protected function getBoxToPage() {
 		$boxToPage = [];

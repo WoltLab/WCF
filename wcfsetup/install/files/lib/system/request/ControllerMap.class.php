@@ -57,7 +57,7 @@ class ControllerMap extends SingletonFactory {
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	url controller
 	 * @param	boolean		$isAcpRequest	true if this is an ACP request
-	 * @return	mixed           array containing className, controller and pageType or a string containing the controller name for aliased controllers
+	 * @return	mixed		array containing className, controller and pageType or a string containing the controller name for aliased controllers
 	 * @throws	SystemException
 	 */
 	public function resolve($application, $controller, $isAcpRequest) {
@@ -250,9 +250,9 @@ class ControllerMap extends SingletonFactory {
 	/**
 	 * Returns true if currently active request represents the landing page.
 	 * 
-	 * @param       string[]        $classData
-	 * @param       array           $metaData
-	 * @return      boolean
+	 * @param	string[]	$classData
+	 * @param	array		$metaData
+	 * @return	boolean
 	 */
 	public function isLandingPage(array $classData, array $metaData) {
 		if ($classData['className'] !== $this->landingPages['wcf'][2]) {

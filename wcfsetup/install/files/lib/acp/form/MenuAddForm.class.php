@@ -127,8 +127,8 @@ class MenuAddForm extends AbstractForm {
 		if (!empty($this->pageIDs)) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('pageID IN (?)', [$this->pageIDs]);
-			$sql = "SELECT  pageID
-				FROM    wcf".WCF_N."_page
+			$sql = "SELECT	pageID
+				FROM	wcf".WCF_N."_page
 				" . $conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());

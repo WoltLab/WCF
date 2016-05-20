@@ -176,7 +176,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Suffix used to tell ACP and frontend cookies apart
 	 * 
-	 * @param       string  $cookieSuffix   cookie suffix
+	 * @param	string  $cookieSuffix   cookie suffix
 	 */
 	public function setCookieSuffix($cookieSuffix) {
 		$this->cookieSuffix = $cookieSuffix;

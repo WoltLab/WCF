@@ -32,7 +32,7 @@ interface IHistorySavingObject extends IDatabaseObjectProcessor, IUserContent {
 	/**
 	 * Reverts the object's text to the given EditHistoryEntry.
 	 * 
-	 * @param	EditHistoryEntry        $edit
+	 * @param	EditHistoryEntry	$edit
 	 */
 	public function revertVersion(EditHistoryEntry $edit);
 	
