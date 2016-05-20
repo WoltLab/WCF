@@ -10,7 +10,7 @@
 	{/if}
 </head>
 
-<body id="tpl_{$templateNameApplication}_{$templateName}" data-template="{$templateName}" data-application="{$templateNameApplication}"{if !$page|empty} data-page-id="{@$page->pageID}"{/if}>
+<body id="tpl_{$templateNameApplication}_{$templateName}" data-template="{$templateName}" data-application="{$templateNameApplication}"{if $__wcf->getActivePage() != null} data-page-id="{@$__wcf->getActivePage()->pageID}" data-page-identifier="{$__wcf->getActivePage()->identifier}"{/if}>
 
 <a id="top"></a>
 
