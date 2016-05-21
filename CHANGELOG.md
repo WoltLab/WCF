@@ -62,6 +62,7 @@
 * Version system removed.
 * Support for query string based sessions in Frontend removed.
 * Language server system removed.
+* Deprecated methods in `wcf\util\StringUtil` removed.
 
 #### Documentation
 
