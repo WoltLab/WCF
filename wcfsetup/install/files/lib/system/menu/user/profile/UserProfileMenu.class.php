@@ -121,6 +121,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Returns a specific menu item.
 	 * 
+	 * @param	string		$menuItem
 	 * @return	UserProfileMenuItem
 	 */
 	public function getMenuItem($menuItem) {

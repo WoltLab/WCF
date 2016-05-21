@@ -120,6 +120,7 @@ class I18nHandler extends SingletonFactory {
 	/**
 	 * Returns true if given element has enabled i18n functionality.
 	 * 
+	 * @param	string		$elementID
 	 * @return	boolean
 	 */
 	public function hasI18nValues($elementID) {

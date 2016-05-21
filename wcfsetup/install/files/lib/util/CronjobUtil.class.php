@@ -323,6 +323,7 @@ final class CronjobUtil {
 	 * 
 	 * @param	array		$values
 	 * @param	integer		$timeBase
+	 * @param	boolean		$addAnDay
 	 * @return	boolean
 	 */
 	protected static function calculateMinute(array &$values, &$timeBase, $addAnDay) {

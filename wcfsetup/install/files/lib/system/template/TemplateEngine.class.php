@@ -720,7 +720,7 @@ class TemplateEngine extends SingletonFactory {
 	 * 
 	 * @deprecated
 	 */
-	public function hasTemplateListeners($templateName, $application = 'wcf') {
+	public function hasTemplateListeners() {
 		return false;
 	}
 	

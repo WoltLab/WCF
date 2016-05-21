@@ -61,7 +61,8 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Returns an object type from cache.
 	 * 
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @param	string		$objectName
+	 * @return	ObjectType
 	 */
 	public function getObjectType($objectName) {
 		if (isset($this->cache[$objectName])) {
@@ -74,9 +75,9 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Gets a like object.
 	 * 
-	 * @param	\wcf\data\object\type\ObjectType		$objectType
-	 * @param	integer					$objectID
-	 * @return	\wcf\data\like\object\LikeObject
+	 * @param	ObjectType	$objectType
+	 * @param	integer		$objectID
+	 * @return	LikeObject
 	 */
 	public function getLikeObject(ObjectType $objectType, $objectID) {
 		if (isset($this->likeObjectCache[$objectType->objectTypeID][$objectID])) {
@@ -89,7 +90,7 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Gets the like objects of a specific object type.
 	 * 
-	 * @param	\wcf\data\object\type\ObjectType		$objectType
+	 * @param	ObjectType	$objectType
 	 * @return	LikeObject[]
 	 */
 	public function getLikeObjects(ObjectType $objectType) {
@@ -104,8 +105,8 @@ class LikeHandler extends SingletonFactory {
 	 * Loads the like data for a set of objects and returns the number of loaded
 	 * like objects
 	 * 
-	 * @param	\wcf\data\object\type\ObjectType		$objectType
-	 * @param	array					$objectIDs
+	 * @param	ObjectType	$objectType
+	 * @param	array		$objectIDs
 	 * @return	integer
 	 */
 	public function loadLikeObjects(ObjectType $objectType, array $objectIDs) {
@@ -151,10 +152,10 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Saves the like of an object.
 	 * 
-	 * @param	\wcf\data\like\object\ILikeObject	$likeable
-	 * @param	\wcf\data\user\User			$user
-	 * @param	integer					$likeValue
-	 * @param	integer					$time
+	 * @param	ILikeObject	$likeable
+	 * @param	User		$user
+	 * @param	integer		$likeValue
+	 * @param	integer		$time
 	 * @return	array
 	 */
 	public function like(ILikeObject $likeable, User $user, $likeValue, $time = TIME_NOW) {
@@ -330,10 +331,10 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Reverts the like of an object.
 	 * 
-	 * @param	\wcf\data\like\Like			$like
-	 * @param	\wcf\data\like\object\ILikeObject	$likeable
-	 * @param	\wcf\data\like\object\LikeObject	$likeObject
-	 * @param	\wcf\data\user\User			$user
+	 * @param	Like		$like
+	 * @param	ILikeObject	$likeable
+	 * @param	LikeObject	$likeObject
+	 * @param	User		$user
 	 * @return	array
 	 */
 	public function revertLike(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user) {
@@ -418,9 +419,9 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Removes all likes for given objects.
 	 * 
-	 * @param	string			$objectType
-	 * @param	integer[]		$objectIDs
-	 * @param	string[]		$notificationObjectTypes
+	 * @param	string		$objectType
+	 * @param	integer[]	$objectIDs
+	 * @param	string[]	$notificationObjectTypes
 	 */
 	public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = []) {
 		$objectTypeObj = $this->getObjectType($objectType);
@@ -491,8 +492,8 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Returns current like object status.
 	 * 
-	 * @param	\wcf\data\like\object\LikeObject		$likeObject
-	 * @param	\wcf\data\user\User			$user
+	 * @param	LikeObject	$likeObject
+	 * @param	User		$user
 	 * @return	array
 	 */
 	protected function loadLikeStatus(LikeObject $likeObject, User $user) {

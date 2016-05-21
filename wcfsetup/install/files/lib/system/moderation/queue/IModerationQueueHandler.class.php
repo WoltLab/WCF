@@ -64,6 +64,7 @@ interface IModerationQueueHandler {
 	/**
 	 * Returns true if the affected content may be removed.
 	 * 
+	 * @param	ModerationQueue		$queue
 	 * @return	boolean
 	 */
 	public function canRemoveContent(ModerationQueue $queue);

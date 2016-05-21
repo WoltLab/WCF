@@ -225,6 +225,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Caches comments.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function cacheComments($string) {
 		if ($this->cacheCommentsRegEx !== null) {
@@ -248,6 +251,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Caches quotes.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function cacheQuotes($string) {
 		if ($this->quotesRegEx !== null) {
@@ -261,6 +267,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights operators.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightOperators($string) {
 		if (!empty($this->operators)) {
@@ -272,6 +281,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights keywords.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightKeywords($string) {
 		$_this = $this;
@@ -300,6 +312,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights numbers.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightNumbers($string) {
 		$string = preg_replace('!(?<='.$this->separatorsRegEx.')(-?\d+)(?='.$this->separatorsRegEx.')!i', '<span class="hlNumbers">\\0</span>', $string);
@@ -309,6 +324,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights quotes.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightQuotes($string) {
 		return StringStack::reinsertStrings($string, 'highlighterQuotes');
@@ -316,6 +334,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights comments.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightComments($string) {
 		return StringStack::reinsertStrings($string, 'highlighterComments');

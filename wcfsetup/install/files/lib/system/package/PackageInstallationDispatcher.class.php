@@ -784,6 +784,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Prompts a selection of optional packages.
 	 * 
+	 * @param	string[][]	$packages
 	 * @return	mixed
 	 */
 	protected function promptOptionalPackages(array $packages) {

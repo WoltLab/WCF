@@ -14,6 +14,8 @@ namespace wcf\system\cli\command;
 interface ICLICommand {
 	/**
 	 * Executes the command.
+	 * 
+	 * @param	array		$parameters
 	 */
 	public function execute(array $parameters);
 	

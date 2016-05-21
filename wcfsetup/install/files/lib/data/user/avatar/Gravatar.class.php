@@ -65,6 +65,7 @@ class Gravatar extends DefaultAvatar {
 	 * 
 	 * @param	integer		$userID
 	 * @param	string		$gravatar
+	 * @param	string		$fileExtension
 	 */
 	public function __construct($userID, $gravatar, $fileExtension = 'png') {
 		$this->userID = $userID;

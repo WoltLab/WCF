@@ -55,6 +55,8 @@ interface ICategoryType {
 	 * 		newParentCategoryID => 2
 	 * 	],
 	 * ]
+	 * 
+	 * @param	array		$categoryData
 	 */
 	public function changedParentCategories(array $categoryData);
 	

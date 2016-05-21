@@ -1125,6 +1125,7 @@ class TemplateScriptingCompiler {
 	 * Compiles a variable tag and returns the compiled PHP code.
 	 * 
 	 * @param	string		$tag
+	 * @param	boolean		$replaceQuotes
 	 * @return	string
 	 * @throws	SystemException
 	 */
@@ -1518,6 +1519,9 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Callback function used in replaceLiterals()
+	 * 
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private function replaceLiteralsCallback($matches) {
 		return StringStack::pushToStringStack($matches[1], 'literal');
@@ -1548,6 +1552,9 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Callback function used in replaceQuotes()
+	 *
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private function replaceSingleQuotesCallback($matches) {
 		return StringStack::pushToStringStack($matches[0], 'singleQuote');
@@ -1555,6 +1562,9 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Callback function used in replaceQuotes()
+	 *
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private function replaceDoubleQuotesCallback($matches) {
 		// parse unescaped simple vars in double quotes
@@ -1588,6 +1598,9 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Callback function used in replaceConstants()
+	 *
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private function replaceConstantsCallback($matches) {
 		return StringStack::pushToStringStack($matches[1], 'constants');

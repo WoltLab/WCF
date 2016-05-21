@@ -51,6 +51,7 @@ final class UserRegistrationUtil {
 	/**
 	 * Returns false if the given name is a forbidden username.
 	 * 
+	 * @param	string		$name
 	 * @return	boolean
 	 */
 	public static function checkForbiddenUsernames($name) {
@@ -60,6 +61,7 @@ final class UserRegistrationUtil {
 	/**
 	 * Returns false if the given email is a forbidden email.
 	 * 
+	 * @param	string		$email
 	 * @return	boolean
 	 */
 	public static function checkForbiddenEmails($email) {

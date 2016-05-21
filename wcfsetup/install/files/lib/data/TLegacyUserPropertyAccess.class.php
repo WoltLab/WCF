@@ -15,7 +15,12 @@ namespace wcf\data;
  */
 trait TLegacyUserPropertyAccess {
 	/**
+	 * Returns the value of a object data variable with the given name.
+	 * 
 	 * @see	\wcf\data\IStorableObject::__get()
+	 *
+	 * @param	string		$name
+	 * @return	mixed
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);

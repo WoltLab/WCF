@@ -66,6 +66,8 @@ class UserOptionHandler extends OptionHandler {
 	
 	/**
 	 * Shows empty options.
+	 * 
+	 * @param	boolean		$show
 	 */
 	public function showEmptyOptions($show = true) {
 		$this->removeEmptyOptions = !$show;

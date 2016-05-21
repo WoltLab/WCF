@@ -111,7 +111,10 @@ class PostgreSQLDatabase extends Database {
 	}
 	
 	/**
-	 * Callback function used in fixQuery()
+	 * Callback function used in fixQuery().
+	 * 
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private static function replaceQuotesCallback($matches) {
 		return StringStack::pushToStringStack($matches[0], 'postgresQuotes');

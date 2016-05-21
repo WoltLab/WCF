@@ -361,6 +361,12 @@ final class StringUtil {
 	 * 
 	 * This function is considered to be slow, if $search contains
 	 * only ASCII characters, please use str_ireplace() instead.
+	 * 
+	 * @param	string		$search
+	 * @param	string		$replace
+	 * @param	string		$subject
+	 * @param	integer		$count
+	 * @return	string
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
 		$startPos = mb_strpos(mb_strtolower($subject), mb_strtolower($search));
@@ -425,6 +431,12 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php str_pad function with multibyte support.
+	 * 
+	 * @param	string		$input
+	 * @param	integer		$padLength
+	 * @param	string		$padString
+	 * @param	integer		$padType
+	 * @return	string
 	 */
 	public static function pad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT) {
 		$additionalPadding = strlen($input) - mb_strlen($input);

@@ -30,6 +30,7 @@ final class StringStack {
 	 * @param	string		$string
 	 * @param	string		$type
 	 * @return	string		$hash
+	 * @param	string		$delimiter
 	 */
 	public static function pushToStringStack($string, $type = 'default', $delimiter = '@@') {
 		self::$i++;

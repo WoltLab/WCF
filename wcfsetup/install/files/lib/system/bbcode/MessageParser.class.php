@@ -130,7 +130,8 @@ class MessageParser extends BBCodeParser {
 	 * Parses smiley codes.
 	 * 
 	 * @param	string		$text
-	 * @return	string		text
+	 * @param	boolean		$enableHtml
+	 * @return	string
 	 */
 	protected function parseSmilies($text, $enableHtml = false) {
 		foreach ($this->smilies as $code => $html) {

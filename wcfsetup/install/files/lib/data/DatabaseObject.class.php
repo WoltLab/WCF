@@ -160,6 +160,7 @@ abstract class DatabaseObject implements IStorableObject {
 	 * @param	DatabaseObject[]	$objects
 	 * @param	mixed			$sortBy
 	 * @param	string			$sortOrder
+	 * @param	boolean			$maintainIndexAssociation
 	 */
 	public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true) {
 		$sortArray = $objects2 = [];

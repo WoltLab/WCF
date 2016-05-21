@@ -99,9 +99,10 @@ class CacheListPage extends AbstractPage {
 	/**
 	 * Reads the information of cached files
 	 * 
-	 * @param	string			$cacheType
-	 * @param	string			$cacheDir
-	 * @param	\wcf\system\Regex	$ignore
+	 * @param	string		$cacheType
+	 * @param	string		$cacheDir
+	 * @param	Regex		$ignore
+	 * @param	string		$extension
 	 */
 	protected function readCacheFiles($cacheType, $cacheDir, Regex $ignore = null, $extension = 'php') {
 		if (!isset($this->cacheData[$cacheType])) {

@@ -60,6 +60,7 @@ class AttachmentHandler implements \Countable {
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
 	 * @param	string		$tmpHash
+	 * @param	integer		$parentObjectID
 	 * @throws	SystemException
 	 */
 	public function __construct($objectType, $objectID, $tmpHash = '', $parentObjectID = 0) {

@@ -36,6 +36,10 @@ final class HeaderUtil {
 	
 	/**
 	 * Alias to php setcookie() function.
+	 * 
+	 * @param	string		$name
+	 * @param	string		$value
+	 * @param	integer		$expire
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		$application = ApplicationHandler::getInstance()->getActiveApplication();

@@ -28,7 +28,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	 * This is a heavily modified constructor which behaves differently from other DBOActions,
 	 * primarily because this class just masquerades as a regular DBOAction.
 	 * 
-	 * @see	\wcf\data\AbstractDatabaseObjectAction
+	 * @inheritDoc
 	 */
 	public function __construct(array $objects, $action, array $parameters = []) {
 		$this->action = $action;

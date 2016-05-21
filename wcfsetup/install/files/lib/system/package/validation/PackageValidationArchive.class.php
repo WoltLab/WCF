@@ -83,6 +83,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * mode will toggle between different checks. 
 	 * 
 	 * @param	integer		$validationMode
+	 * @param	string		$requiredVersion
 	 * @return	boolean
 	 */
 	public function validate($validationMode, $requiredVersion = '') {

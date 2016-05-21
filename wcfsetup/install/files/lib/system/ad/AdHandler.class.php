@@ -68,6 +68,7 @@ class AdHandler extends SingletonFactory {
 	/**
 	 * Returns all available ad location object types.
 	 * 
+	 * @param	string|null	$categoryName
 	 * @return	ObjectType[]
 	 */
 	public function getLocationObjectTypes($categoryName = null) {

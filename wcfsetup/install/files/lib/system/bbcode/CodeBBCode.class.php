@@ -226,6 +226,7 @@ class CodeBBCode extends AbstractBBCode {
 	 * 
 	 * @param	string		$code
 	 * @param	integer		$start
+	 * @param	string		$split
 	 * @return	string
 	 */
 	protected static function makeLineNumbers($code, $start, $split = "\n") {

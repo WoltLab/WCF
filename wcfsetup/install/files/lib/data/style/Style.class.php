@@ -128,6 +128,9 @@ class Style extends DatabaseObject {
 	
 	/**
 	 * TODO: add documentation
+	 * 
+	 * @param	string		$variables
+	 * @return	array
 	 * @since	2.2
 	 */
 	public static function splitLessVariables($variables) {
@@ -141,6 +144,10 @@ class Style extends DatabaseObject {
 	
 	/**
 	 * TODO: add documentation
+	 * 
+	 * @param	string		$preset
+	 * @param	string		$custom
+	 * @return	string
 	 * @since	2.2
 	 */
 	public static function joinLessVariables($preset, $custom) {

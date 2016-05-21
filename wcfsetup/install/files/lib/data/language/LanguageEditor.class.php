@@ -114,6 +114,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Exports this language.
+	 * 
+	 * @param	integer[]	$packageIDArray
+	 * @param	boolean		$exportCustomValues
 	 */
 	public function export($packageIDArray = [], $exportCustomValues = false) {
 		$conditions = new PreparedStatementConditionBuilder();

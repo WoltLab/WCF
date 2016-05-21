@@ -82,6 +82,7 @@ class GroupedAttachmentList extends AttachmentList {
 	/**
 	 * Returns the objects of the list.
 	 * 
+	 * @param	integer		$objectID
 	 * @return	Attachment[]
 	 */
 	public function getGroupedObjects($objectID) {

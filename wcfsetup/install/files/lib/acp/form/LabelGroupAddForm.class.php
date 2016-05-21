@@ -268,6 +268,8 @@ class LabelGroupAddForm extends AbstractForm {
 	
 	/**
 	 * Sets object type relations.
+	 * 
+	 * @param	array|null	$data
 	 */
 	protected function setObjectTypeRelations($data = null) {
 		if (!empty($_POST)) {

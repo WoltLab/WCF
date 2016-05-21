@@ -99,6 +99,7 @@ abstract class Database {
 	 * @param	string		$password		SQL database server password
 	 * @param	string		$database		SQL database server database name
 	 * @param	integer		$port			SQL database server port
+	 * @param	boolean		$failsafeTest
 	 */
 	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false) {
 		$this->host = $host;

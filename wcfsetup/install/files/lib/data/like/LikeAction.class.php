@@ -155,6 +155,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	 * Sets like/dislike for an object, executing this method again with the same parameters
 	 * will revert the status (removing like/dislike).
 	 * 
+	 * @param	integer		$likeValue
 	 * @return	array
 	 */
 	protected function updateLike($likeValue) {

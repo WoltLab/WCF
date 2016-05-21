@@ -88,6 +88,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * 
 	 * @param	string		$link
 	 * @param	integer		$pageNo
+	 * @param	integer		$pages
 	 * @return	string
 	 */
 	protected function makeNextLink($link, $pageNo, $pages) {

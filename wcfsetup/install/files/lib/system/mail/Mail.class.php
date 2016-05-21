@@ -111,7 +111,7 @@ class Mail {
 	 * @param	string		$cc
 	 * @param	string		$bcc
 	 * @param	array		$attachments
-	 * @param	integer		$priority
+	 * @param	integer|string	$priority
 	 * @param	string		$header
 	 */
 	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = [], $priority = '', $header = '') {
@@ -526,6 +526,9 @@ class Mail {
 	
 	/**
 	 * Encodes string for MIME header.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function encodeMIMEHeader($string) {
 		if (function_exists('mb_encode_mimeheader')) {

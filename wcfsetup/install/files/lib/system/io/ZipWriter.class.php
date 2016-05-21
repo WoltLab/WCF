@@ -24,6 +24,7 @@ class ZipWriter {
 	 * Adds a folder to the Zip archive.
 	 * 
 	 * @param	string		$name		dirname
+	 * @param	integer		$date
 	 */
 	public function addDir($name, $date = TIME_NOW) {
 		// replace backward slashes with forward slashes in the dirname

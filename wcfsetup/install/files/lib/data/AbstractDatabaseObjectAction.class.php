@@ -155,8 +155,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * This function can be overridden in children to perform custom initialization
 	 * of a DBOAction before the 'initializeAction' event is fired.
+	 * 
+	 * @param	string		$baseClass
+	 * @param	string		$indexName
 	 */
-	protected function __init($baseClass, $indexName) { }
+	protected function __init($baseClass, $indexName) {
+		// does nothing
+	}
 	
 	/**
 	 * @inheritDoc
