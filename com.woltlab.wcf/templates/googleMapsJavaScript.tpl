@@ -14,6 +14,7 @@
 			disableDoubleClickZoom: {if GOOGLE_MAPS_ENABLE_DOUBLE_CLICK_ZOOM}0{else}1{/if},
 			draggable: {@GOOGLE_MAPS_ENABLE_DRAGGING},
 			mapType: '{@GOOGLE_MAPS_TYPE}',
+			markerClustererImagePath: '{@$__wcf->getPath()}images/markerClusterer/',
 			scaleControl: {@GOOGLE_MAPS_ENABLE_SCALE_CONTROL},
 			scrollwheel: {@GOOGLE_MAPS_ENABLE_SCROLL_WHEEL_ZOOM},
 			type: '{@GOOGLE_MAPS_TYPE}',

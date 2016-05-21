@@ -185,15 +185,23 @@ function escapeString($string) {
 /**
  * Calls the show method on the given exception.
  *
- * @param	Exception	$e
+ * @param	mixed	$e
  */
-function handleException(\Exception $e) {
-	if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
-		$e->show();
-		exit;
+function handleException($e) {
+	try {
+		if (!($e instanceof \Exception)) throw $e;
+		
+		if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
+			$e->show();
+			exit;
+		}
 	}
-	
-	print $e;
+	catch (\Throwable $exception) {
+		die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+	}
+	catch (\Exception $exception) {
+		die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+	}
 }
 
 /**

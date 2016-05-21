@@ -34,7 +34,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$columns = array();
 		$regex = new Regex('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE);
 		
-		$sql = "SHOW COLUMNS FROM ".$tableName;
+		$sql = "SHOW COLUMNS FROM `".$tableName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
@@ -59,7 +59,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 */
 	public function getIndices($tableName) {
 		$indices = array();
-		$sql = "SHOW INDEX FROM ".$tableName;
+		$sql = "SHOW INDEX FROM `".$tableName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
@@ -90,7 +90,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		}
 		
 		// create table
-		$sql = "CREATE TABLE ".$tableName." (
+		$sql = "CREATE TABLE `".$tableName."` (
 				".$columnDefinition."
 				".(!empty($indexDefinition) ? ',' : '')."
 				".$indexDefinition."
@@ -103,7 +103,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::dropTable()
 	 */
 	public function dropTable($tableName) {
-		$sql = "DROP TABLE IF EXISTS ".$tableName;
+		$sql = "DROP TABLE IF EXISTS `".$tableName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
@@ -112,7 +112,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::addColumn()
 	 */
 	public function addColumn($tableName, $columnName, $columnData) {
-		$sql = "ALTER TABLE ".$tableName." ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
+		$sql = "ALTER TABLE `".$tableName."` ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
@@ -121,7 +121,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::alterColumn()
 	 */
 	public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData) {
-		$sql = "ALTER TABLE ".$tableName." CHANGE COLUMN ".$oldColumnName." ".$this->buildColumnDefinition($newColumnName, $newColumnData);
+		$sql = "ALTER TABLE `".$tableName."` CHANGE COLUMN `".$oldColumnName."` ".$this->buildColumnDefinition($newColumnName, $newColumnData);
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
@@ -130,7 +130,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::dropColumn()
 	 */
 	public function dropColumn($tableName, $columnName) {
-		$sql = "ALTER TABLE ".$tableName." DROP COLUMN ".$columnName;
+		$sql = "ALTER TABLE `".$tableName."` DROP COLUMN `".$columnName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
@@ -139,7 +139,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
-		$sql = "ALTER TABLE ".$tableName." ADD ".$this->buildIndexDefinition($indexName, $indexData);
+		$sql = "ALTER TABLE `".$tableName."` ADD ".$this->buildIndexDefinition($indexName, $indexData);
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
@@ -148,19 +148,19 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addForeignKey($tableName, $indexName, $indexData) {
-		$sql = "ALTER TABLE ".$tableName." ADD";
+		$sql = "ALTER TABLE `".$tableName."` ADD";
 		
 		// add index name
 		if (!empty($indexName)) $sql .= " CONSTRAINT `".$indexName."`";
 		
 		// add columns
-		$sql .= " FOREIGN KEY (".str_replace(',', ',', preg_replace('/\s+/', '', $indexData['columns'])).")";
+		$sql .= " FOREIGN KEY (`".str_replace(',', '`,`', preg_replace('/\s+/', '', $indexData['columns']))."`)";
 		
 		// add referenced table name
-		$sql .= " REFERENCES ".$indexData['referencedTable'];
+		$sql .= " REFERENCES `".$indexData['referencedTable']."`";
 		
 		// add referenced columns
-		$sql .= " (".str_replace(',', ',', preg_replace('/\s+/', '', $indexData['referencedColumns'])).")";
+		$sql .= " (`".str_replace(',', '`,`', preg_replace('/\s+/', '', $indexData['referencedColumns']))."`)";
 		
 		// add operation and action
 		if (!empty($indexData['operation'])) $sql .= " ON ".$indexData['operation']." ".$indexData['action'];
@@ -175,7 +175,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::dropIndex()
 	 */
 	public function dropIndex($tableName, $indexName) {
-		$sql = "ALTER TABLE ".$tableName." DROP INDEX ".$indexName;
+		$sql = "ALTER TABLE `".$tableName."` DROP INDEX `".$indexName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
@@ -184,7 +184,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {
-		$sql = "ALTER TABLE ".$tableName." DROP FOREIGN KEY `".$indexName."`";
+		$sql = "ALTER TABLE `".$tableName."` DROP FOREIGN KEY `".$indexName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
@@ -198,7 +198,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 */
 	protected function buildColumnDefinition($columnName, $columnData) {
 		// column name
-		$definition = $columnName;
+		$definition = "`".$columnName."`";
 		// column type
 		$definition .= " ".$columnData['type'];
 		// column length and decimals
@@ -229,7 +229,6 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @return	string
 	 */
 	protected function buildIndexDefinition($indexName, $indexData) {
-		$definition = "";
 		// index type
 		if ($indexData['type'] == 'PRIMARY') $definition = "PRIMARY KEY";
 		else if ($indexData['type'] == 'UNIQUE') $definition = "UNIQUE KEY";
@@ -237,9 +236,9 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		else $definition = "KEY";
 		
 		// index name
-		if (!empty($indexName)) $definition .= " ".$indexName."";
+		if (!empty($indexName)) $definition .= " `".$indexName."`";
 		// columns
-		$definition .= " (".str_replace(',', ',', preg_replace('/\s+/', '', $indexData['columns'])).")";
+		$definition .= " (`".str_replace(',', '`,`', preg_replace('/\s+/', '', $indexData['columns']))."`)";
 		
 		return $definition;
 	}
