@@ -261,6 +261,7 @@ class ImportCLICommand implements ICLICommand {
 		]));
 		
 		while (true) {
+			/** @var string|null $exporterIndex */
 			$exporterIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.exporter').'> ');
 			if ($exporterIndex === null) exit;
 			
@@ -350,6 +351,7 @@ class ImportCLICommand implements ICLICommand {
 			}
 			
 			// read index of selected primary import data type
+			/** @var string|null $selectedObjectTypeIndex */
 			$selectedObjectTypeIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.data').'> ');
 			if ($selectedObjectTypeIndex === null) exit;
 			
