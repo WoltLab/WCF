@@ -77,7 +77,7 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	public function matches($requestURL) {
 		if (parent::matches($requestURL)) {
 			$this->routeData['application'] = $this->staticApplication;
-			$this->routeData['controller'] = ControllerMap::getInstance()->lookup($this->staticController);
+			$this->routeData['controller'] = ControllerMap::getInstance()->lookup($this->staticApplication, $this->staticController);
 			$this->routeData['isDefaultController'] = false;
 			
 			return true;
