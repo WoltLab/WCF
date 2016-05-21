@@ -35,12 +35,12 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::install()
 	 */
-	public function __construct(PackageInstallationDispatcher $installation, $instruction = array()) {
+	public function __construct(PackageInstallationDispatcher $installation, $instruction = []) {
 		parent::__construct($installation, $instruction);
 		
 		// autoset 'tableName' property
 		if (empty($this->tableName) && !empty($this->className)) {
-			$this->tableName = call_user_func(array($this->className, 'getDatabaseTableAlias'));
+			$this->tableName = call_user_func([$this->className, 'getDatabaseTableAlias']);
 		}
 		
 		// autoset 'tagName' property
@@ -88,13 +88,13 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 */
 	protected function deleteItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:delete/ns:'.$this->tagName);
-		$items = array();
+		$items = [];
 		foreach ($elements as $element) {
-			$data = array(
-				'attributes' => array(),
-				'elements' => array(),
+			$data = [
+				'attributes' => [],
+				'elements' => [],
 				'value' => $element->nodeValue
-			);
+			];
 			
 			// get attributes
 			$attributes = $xpath->query('attribute::*', $element);
@@ -125,11 +125,11 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	protected function importItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:'.$this->tagName);
 		foreach ($elements as $element) {
-			$data = array(
-				'attributes' => array(),
-				'elements' => array(),
+			$data = [
+				'attributes' => [],
+				'elements' => [],
 				'nodeValue' => ''
-			);
+			];
 			
 			// fetch attributes
 			$attributes = $xpath->query('attribute::*', $element);
@@ -166,7 +166,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			}
 			
 			// ensure a valid parameter for import()
-			if ($row === false) $row = array();
+			if ($row === false) $row = [];
 			
 			// import items
 			$this->import($row, $data);
@@ -252,11 +252,11 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			// create new item
 			$this->prepareCreate($data);
 			
-			return call_user_func(array($this->className, 'create'), $data);
+			return call_user_func([$this->className, 'create'], $data);
 		}
 		else {
 			// update existing item
-			$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+			$baseClass = call_user_func([$this->className, 'getBaseClass']);
 			
 			/** @var \wcf\data\DatabaseObjectEditor $itemEditor */
 			$itemEditor = new $this->className(new $baseClass(null, $row));
@@ -374,7 +374,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 		if ($showOrder === null) {
 			// get greatest showOrder value
 			$conditions = new PreparedStatementConditionBuilder();
-			if ($columnName !== null) $conditions->add($columnName." = ?", array($parentName));
+			if ($columnName !== null) $conditions->add($columnName." = ?", [$parentName]);
 			
 			$sql = "SELECT	MAX(showOrder) AS showOrder
 				FROM	".$this->application.WCF_N."_".$this->tableName.$tableNameExtension."
@@ -392,7 +392,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 				".($columnName !== null ? "AND ".$columnName." = ?" : "");
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
-			$data = array($showOrder);
+			$data = [$showOrder];
 			if ($columnName !== null) $data[] = $parentName;
 			
 			$statement->execute($data);

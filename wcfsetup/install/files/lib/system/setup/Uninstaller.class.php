@@ -97,7 +97,7 @@ class Uninstaller {
 	protected function uninstall() {
 		if ($this->checkTargetDir()) {
 			// delete all files
-			$directories = array();
+			$directories = [];
 			foreach ($this->files as $file) {
 				$this->deleteFile($this->targetDir.$file);
 				

@@ -22,7 +22,7 @@ class PackageListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage');
+	public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
@@ -48,7 +48,7 @@ class PackageListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'packageDescription', 'packageDate', 'packageURL', 'isApplication', 'author', 'authorURL', 'installDate', 'updateDate');
+	public $validSortFields = ['packageID', 'package', 'packageDir', 'packageName', 'packageDescription', 'packageDate', 'packageURL', 'isApplication', 'author', 'authorURL', 'installDate', 'updateDate'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -70,9 +70,9 @@ class PackageListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'packageID' => $this->packageID
-		));
+		]);
 	}
 	
 	/**

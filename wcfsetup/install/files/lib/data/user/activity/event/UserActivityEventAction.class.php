@@ -20,7 +20,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	public $allowGuestAccess = array('load');
+	public $allowGuestAccess = ['load'];
 	
 	/**
 	 * Validates parameters to load recent activity entries.
@@ -40,46 +40,46 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	public function load() {
 		$eventList = new ViewableUserActivityEventList();
 		if ($this->parameters['lastEventID']) {
-			$eventList->getConditionBuilder()->add("user_activity_event.time <= ?", array($this->parameters['lastEventTime']));
-			$eventList->getConditionBuilder()->add("user_activity_event.eventID < ?", array($this->parameters['lastEventID']));
+			$eventList->getConditionBuilder()->add("user_activity_event.time <= ?", [$this->parameters['lastEventTime']]);
+			$eventList->getConditionBuilder()->add("user_activity_event.eventID < ?", [$this->parameters['lastEventID']]);
 		}
 		else {
-			$eventList->getConditionBuilder()->add("user_activity_event.time < ?", array($this->parameters['lastEventTime']));
+			$eventList->getConditionBuilder()->add("user_activity_event.time < ?", [$this->parameters['lastEventTime']]);
 		}
 		
 		// profile view
 		if ($this->parameters['userID']) {
-			$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", array($this->parameters['userID']));
+			$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", [$this->parameters['userID']]);
 		}
 		else if ($this->parameters['filteredByFollowedUsers'] && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
-			$eventList->getConditionBuilder()->add('user_activity_event.userID IN (?)', array(WCF::getUserProfileHandler()->getFollowingUsers()));
+			$eventList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
 		}
 		
 		$eventList->readObjects();
 		$lastEventTime = $eventList->getLastEventTime();
 		
 		if (!$lastEventTime) {
-			return array();
+			return [];
 		}
 		
 		// removes orphaned and non-accessable events
 		UserActivityEventHandler::validateEvents($eventList);
 		
 		if (!count($eventList)) {
-			return array();
+			return [];
 		}
 		
 		// parse template
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'eventList' => $eventList
-		));
+		]);
 		
 		$events = $eventList->getObjects();
-		return array(
+		return [
 			'lastEventID' => end($events)->eventID,
 			'lastEventTime' => $lastEventTime,
 			'template' => WCF::getTPL()->fetch('recentActivityListItem')
-		);
+		];
 	}
 	
 	/**
@@ -88,11 +88,11 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	public function validateSwitchContext() { }
 	
 	public function switchContext() {
-		$userAction = new UserAction(array(WCF::getUser()), 'update', array(
-			'options' => array(
+		$userAction = new UserAction([WCF::getUser()], 'update', [
+			'options' => [
 				User::getUserOptionID('recentActivitiesFilterByFollowing') => (WCF::getUser()->recentActivitiesFilterByFollowing ? 0 : 1)
-			)
-		));
+			]
+		]);
 		$userAction->executeAction();
 	}
 }

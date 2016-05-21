@@ -37,7 +37,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 		}
 		
 		// fetch ordered pips
-		$pips = array();
+		$pips = [];
 		$sql = "SELECT		pluginName, className,
 					CASE pluginName WHEN 'packageinstallationplugin' THEN 1 WHEN 'file' THEN 2 ELSE 0 END AS pluginOrder
 			FROM		wcf".WCF_N."_package_installation_plugin
@@ -56,18 +56,18 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 		$sequenceNo = 0;
 		
 		foreach ($pips as $pip) {
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->queue->queueID,
 				$this->installation->queue->processNo,
 				$sequenceNo,
 				$this->node,
 				$this->parentNode,
 				'pip',
-				serialize(array(
+				serialize([
 					'pluginName' => $pip['pluginName'],
 					'className' => $pip['className']
-				))
-			));
+				])
+			]);
 			
 			$sequenceNo++;
 		}
@@ -84,7 +84,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
 			VALUES		(?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			0,
@@ -92,6 +92,6 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 			$this->parentNode,
 			'package',
 			'a:0:{}'
-		));
+		]);
 	}
 }

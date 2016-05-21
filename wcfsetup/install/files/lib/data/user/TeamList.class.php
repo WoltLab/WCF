@@ -19,7 +19,7 @@ class TeamList extends UserProfileList {
 	 * teams included in the list
 	 * @var	Team[]
 	 */
-	protected $teams = array();
+	protected $teams = [];
 	
 	/**
 	 * @see	\wcf\data\DatabaseObjectList::countObjects()
@@ -40,7 +40,7 @@ class TeamList extends UserProfileList {
 	 * @see	\wcf\data\DatabaseObjectList::readObjectIDs()
 	 */
 	public function readObjectIDs() {
-		$this->objectIDs = array();
+		$this->objectIDs = [];
 		$sql = "SELECT		user_to_group.userID AS objectID
 			FROM		wcf".WCF_N."_user_group user_group,
 					wcf".WCF_N."_user_to_group user_to_group

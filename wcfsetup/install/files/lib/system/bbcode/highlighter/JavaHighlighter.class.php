@@ -15,12 +15,12 @@ class JavaHighlighter extends Highlighter {
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
-	protected $separators = array("(", ")", "{", "}", "[", "]", ";", ".", ",", "<", ">");
+	protected $separators = ["(", ")", "{", "}", "[", "]", ";", ".", ",", "<", ">"];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'package',
 		'abstract',
 		'break',
@@ -72,12 +72,12 @@ class JavaHighlighter extends Highlighter {
 		'static',
 		'void',
 		'import'
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
 	 */
-	protected $keywords3 = array(
+	protected $keywords3 = [
 		'Boolean',
 		'Float',
 		'Character',
@@ -100,5 +100,5 @@ class JavaHighlighter extends Highlighter {
 		'HashMap',
 		'List',
 		'ArrayList'
-	);
+	];
 }

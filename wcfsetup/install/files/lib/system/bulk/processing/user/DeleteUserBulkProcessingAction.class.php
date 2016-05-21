@@ -38,7 +38,7 @@ class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 		$userList = parent::getObjectList();
 		
 		// deny self deletion
-		$userList->getConditionBuilder()->add('user_table.userID <> ?', array(WCF::getUser()->userID));
+		$userList->getConditionBuilder()->add('user_table.userID <> ?', [WCF::getUser()->userID]);
 		
 		return $userList;
 	}

@@ -38,7 +38,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * result objects
 	 * @var	DatabaseObject[]
 	 */
-	public $objects = array();
+	public $objects = [];
 	
 	/**
 	 * ids of result objects
@@ -126,7 +126,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			}
 			
 			$objectClassName = $this->objectClassName ?: $this->className;
-			$baseClassName = call_user_func(array($this->decoratorClassName, 'getBaseClass'));
+			$baseClassName = call_user_func([$this->decoratorClassName, 'getBaseClass']);
 			if ($objectClassName != $baseClassName && !is_subclass_of($baseClassName, $objectClassName)) {
 				throw new SystemException("'".$this->decoratorClassName."' can't decorate objects of class '".$objectClassName."'");
 			}
@@ -157,7 +157,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * Reads the object ids from database.
 	 */
 	public function readObjectIDs() {
-		$this->objectIDs = array();
+		$this->objectIDs = [];
 		$sql = "SELECT	".$this->getDatabaseTableAlias().".".$this->getDatabaseTableIndexName()." AS objectID
 			FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 				".$this->sqlConditionJoins."
@@ -207,7 +207,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		}
 		
 		// use table index as array index
-		$objects = array();
+		$objects = [];
 		foreach ($this->objects as $object) {
 			$objectID = $object->getObjectID();
 			$objects[$objectID] = $object;
@@ -260,7 +260,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @return	string
 	 */
 	public function getDatabaseTableName() {
-		return call_user_func(array($this->className, 'getDatabaseTableName'));
+		return call_user_func([$this->className, 'getDatabaseTableName']);
 	}
 	
 	/**
@@ -269,7 +269,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @return	string
 	 */
 	public function getDatabaseTableIndexName() {
-		return call_user_func(array($this->className, 'getDatabaseTableIndexName'));
+		return call_user_func([$this->className, 'getDatabaseTableIndexName']);
 	}
 	
 	/**
@@ -278,7 +278,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @return	string
 	 */
 	public function getDatabaseTableAlias() {
-		return call_user_func(array($this->className, 'getDatabaseTableAlias'));
+		return call_user_func([$this->className, 'getDatabaseTableAlias']);
 	}
 	
 	/**

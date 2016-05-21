@@ -16,12 +16,12 @@ class TexHighlighter extends Highlighter {
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
 	 */
-	protected $quotes = array();
+	protected $quotes = [];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
 	 */
-	protected $singleLineComment = array('%');
+	protected $singleLineComment = ['%'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightKeywords()

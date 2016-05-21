@@ -19,10 +19,10 @@ class ImageHandler extends SingletonFactory {
 	 * list of valid image adapters.
 	 * @var	string[]
 	 */
-	protected $imageAdapters = array(
+	protected $imageAdapters = [
 		'gd' => 'wcf\system\image\adapter\GDImageAdapter',
 		'imagick' => 'wcf\system\image\adapter\ImagickImageAdapter'
-	);
+	];
 	
 	/**
 	 * image adapter class name
@@ -39,7 +39,7 @@ class ImageHandler extends SingletonFactory {
 		}
 		
 		$imageAdapter = $this->imageAdapters[IMAGE_ADAPTER_TYPE];
-		$isSupported = call_user_func(array($imageAdapter, 'isSupported'));
+		$isSupported = call_user_func([$imageAdapter, 'isSupported']);
 		
 		// fallback to GD if image adapter is not available
 		if (!$isSupported) {

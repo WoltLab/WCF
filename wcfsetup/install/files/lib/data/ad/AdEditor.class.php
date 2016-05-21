@@ -50,16 +50,16 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 				SET	showOrder = showOrder + 1
 				WHERE	showOrder >= ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$showOrder
-			));
+			]);
 			
 			$newShowOrder = $showOrder;
 		}
 		
-		$this->update(array(
+		$this->update([
 			'showOrder' => $newShowOrder
-		));
+		]);
 	}
 	
 	/**
@@ -67,8 +67,8 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 */
 	public static function resetCache() {
 		AdCacheBuilder::getInstance()->reset();
-		ConditionCacheBuilder::getInstance()->reset(array(
+		ConditionCacheBuilder::getInstance()->reset([
 			'definitionID' => ObjectTypeCache::getInstance()->getDefinitionByName('com.woltlab.wcf.condition.ad')->definitionID
-		));
+		]);
 	}
 }

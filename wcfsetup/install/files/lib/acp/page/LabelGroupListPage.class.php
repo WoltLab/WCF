@@ -26,12 +26,12 @@ class LabelGroupListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('groupID', 'groupName', 'groupDescription', 'showOrder');
+	public $validSortFields = ['groupID', 'groupName', 'groupDescription', 'showOrder'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.label.canManageLabel');
+	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

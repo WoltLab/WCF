@@ -27,14 +27,14 @@ class PermissionDeniedException extends UserException {
 	public function show() {
 		@header('HTTP/1.0 403 Forbidden');
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'name' => get_class($this),
 			'file' => $this->getFile(),
 			'line' => $this->getLine(),
 			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'permissionDenied',
 			'templateNameApplication' => 'wcf'
-		));
+		]);
 		WCF::getTPL()->display('permissionDenied');
 	}
 }

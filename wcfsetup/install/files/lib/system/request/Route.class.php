@@ -34,7 +34,7 @@ class Route implements IRoute {
 	 * schema component options
 	 * @var	array
 	 */
-	protected $parameterOptions = array();
+	protected $parameterOptions = [];
 	
 	/**
 	 * route name
@@ -46,7 +46,7 @@ class Route implements IRoute {
 	 * route schema data
 	 * @var	array
 	 */
-	protected $routeSchema = array();
+	protected $routeSchema = [];
 	
 	/**
 	 * parsed route data
@@ -58,7 +58,7 @@ class Route implements IRoute {
 	 * cached list of transformed controller names
 	 * @var	string[]
 	 */
-	protected static $controllerNames = array();
+	protected static $controllerNames = [];
 	
 	/**
 	 * list of application abbreviation and default controller name
@@ -99,7 +99,7 @@ class Route implements IRoute {
 				throw new SystemException("Placeholder expected, but invalid string '" . $part . "' given.");
 			}
 			
-			$part = str_replace(array('{', '}'), '', $part);
+			$part = str_replace(['{', '}'], '', $part);
 			if ($part == 'controller') {
 				if ($this->controller !== null) {
 					throw new SystemException('Controller may not be part of the scheme if a route controller is given.');
@@ -126,11 +126,11 @@ class Route implements IRoute {
 	 * @param	boolean		$isOptional
 	 */
 	public function setParameterOption($key, $default = null, $regexPattern = null, $isOptional = false) {
-		$this->parameterOptions[$key] = array(
+		$this->parameterOptions[$key] = [
 			'default' => $default,
 			'isOptional' => $isOptional,
 			'regexPattern' => $regexPattern
-		);
+		];
 	}
 	
 	/**
@@ -138,7 +138,7 @@ class Route implements IRoute {
 	 */
 	public function matches($requestURL) {
 		$urlParts = $this->getParts($requestURL);
-		$data = array();
+		$data = [];
 		
 		// handle each route schema component
 		for ($i = 0, $size = count($this->routeSchema); $i < $size; $i++) {
@@ -380,7 +380,7 @@ class Route implements IRoute {
 	 */
 	protected static function loadDefaultControllers() {
 		if (self::$defaultControllers === null) {
-			self::$defaultControllers = array();
+			self::$defaultControllers = [];
 			
 			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 				$app = WCF::getApplicationObject($application);

@@ -35,7 +35,7 @@ class RemoveFromUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUse
 		
 		// the active user may not remove themselves from any user group
 		// to avoid potential permission issues
-		$userList->getConditionBuilder()->add('user_table.userID <> ?', array(WCF::getUser()->userID));
+		$userList->getConditionBuilder()->add('user_table.userID <> ?', [WCF::getUser()->userID]);
 		
 		return $userList;
 	}

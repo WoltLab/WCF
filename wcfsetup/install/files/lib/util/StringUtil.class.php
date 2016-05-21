@@ -380,7 +380,7 @@ final class StringUtil {
 	 * @return	string[]
 	 */
 	public static function split($string, $length = 1) {
-		$result = array();
+		$result = [];
 		for ($i = 0, $max = mb_strlen($string); $i < $max; $i += $length) {
 			$result[] = mb_substr($string, $i, $length);
 		}
@@ -648,7 +648,7 @@ final class StringUtil {
 		if (mb_strlen(self::stripHTML($string)) <= $length) {
 			return $string;
 		}
-		$openTags = array();
+		$openTags = [];
 		$truncatedString = '';
 		
 		// initalize length counter with the ending length

@@ -31,7 +31,7 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_USER_SIGNATURE');
+	public $neededModules = ['MODULE_USER_SIGNATURE'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$templateName
@@ -116,9 +116,9 @@ class SignatureEditForm extends MessageForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'signatureCache' => $this->signatureCache
-		));
+		]);
 	}
 	
 	/**
@@ -137,14 +137,14 @@ class SignatureEditForm extends MessageForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserAction([WCF::getUser()], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'signature' => $this->text,
 				'signatureEnableBBCodes' => $this->enableBBCodes,
 				'signatureEnableHtml' => $this->enableHtml,
 				'signatureEnableSmilies' => $this->enableSmilies
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		SignatureCache::getInstance()->getSignature(new User(WCF::getUser()->userID));
 		$this->saved();

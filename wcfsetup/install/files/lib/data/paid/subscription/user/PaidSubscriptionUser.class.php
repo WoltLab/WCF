@@ -73,7 +73,7 @@ class PaidSubscriptionUser extends DatabaseObject {
 			WHERE	subscriptionID = ?
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($subscriptionID, $userID));
+		$statement->execute([$subscriptionID, $userID]);
 		$row = $statement->fetchArray();
 		if ($row !== false) {
 			return new PaidSubscriptionUser(null, $row);

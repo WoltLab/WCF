@@ -36,10 +36,10 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'assignment' => $this->assignment
-		));
+		]);
 	}
 	
 	/**
@@ -78,17 +78,17 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new UserGroupAssignmentAction(array($this->assignment), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserGroupAssignmentAction([$this->assignment], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'groupID' => $this->groupID,
 				'isDisabled' => $this->isDisabled,
 				'title' => $this->title
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->conditions as $groupedObjectTypes) {
 			$conditions = array_merge($conditions, $groupedObjectTypes);
 		}

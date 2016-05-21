@@ -106,9 +106,9 @@ class GravatarDownloadAction extends AbstractAction {
 				// update file extension
 				if ($fileExtension != $this->user->gravatarFileExtension) {
 					$editor = new UserEditor($this->user);
-					$editor->update(array(
+					$editor->update([
 						'gravatarFileExtension' => $fileExtension
-					));
+					]);
 				}
 				
 				@header('Content-Type: '.$mimeType);
@@ -118,9 +118,9 @@ class GravatarDownloadAction extends AbstractAction {
 			catch (SystemException $e) {
 				// disable gravatar
 				$editor = new UserEditor($this->user);
-				$editor->update(array(
+				$editor->update([
 					'enableGravatar' => 0
-				));
+				]);
 			}
 		}
 		

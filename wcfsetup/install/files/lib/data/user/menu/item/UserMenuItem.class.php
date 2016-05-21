@@ -78,7 +78,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 		}
 		
 		$this->parseController();
-		return LinkHandler::getInstance()->getLink($this->controller, array('application' => $this->application), $this->menuItemLink);
+		return LinkHandler::getInstance()->getLink($this->controller, ['application' => $this->application], $this->menuItemLink);
 	}
 	
 	/**

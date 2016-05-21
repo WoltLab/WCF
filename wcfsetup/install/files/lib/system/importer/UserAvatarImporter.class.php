@@ -25,7 +25,7 @@ class UserAvatarImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// check file location
 		if (!@file_exists($additionalData['fileLocation'])) return 0;
 		
@@ -64,7 +64,7 @@ class UserAvatarImporter extends AbstractImporter {
 			}
 			
 			// create thumbnails
-			$action = new UserAvatarAction(array($avatar), 'generateThumbnails');
+			$action = new UserAvatarAction([$avatar], 'generateThumbnails');
 			$action->executeAction();
 			
 			// update owner
@@ -72,7 +72,7 @@ class UserAvatarImporter extends AbstractImporter {
 				SET	avatarID = ?
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($avatar->avatarID, $data['userID']));
+			$statement->execute([$avatar->avatarID, $data['userID']]);
 			
 			return $avatar->avatarID;
 		}

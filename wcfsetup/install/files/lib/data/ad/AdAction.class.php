@@ -21,17 +21,17 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.ad.canManageAd');
+	protected $permissionsDelete = ['admin.ad.canManageAd'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.ad.canManageAd');
+	protected $permissionsUpdate = ['admin.ad.canManageAd'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
@@ -64,9 +64,9 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	 */
 	public function toggle() {
 		foreach ($this->objects as $ad) {
-			$ad->update(array(
+			$ad->update([
 				'isDisabled' => $ad->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	
@@ -119,10 +119,10 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 		$showOrder = $this->parameters['data']['offset'];
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'][0] as $adID) {
-			$statement->execute(array(
+			$statement->execute([
 				$showOrder++,
 				$adID
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

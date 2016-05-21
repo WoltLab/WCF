@@ -17,7 +17,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 	 * input parameters
 	 * @var	array
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * Adds a new condition. The parameters array has to be a numbered array.
@@ -25,7 +25,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 	 * @param	string		$condition
 	 * @param	array		$parameters
 	 */
-	public function add($condition, array $parameters = array()) {
+	public function add($condition, array $parameters = []) {
 		if (!empty($parameters)) {
 			$count = 0;
 			$callback = function ($matches) use (&$count, $parameters, $condition) {

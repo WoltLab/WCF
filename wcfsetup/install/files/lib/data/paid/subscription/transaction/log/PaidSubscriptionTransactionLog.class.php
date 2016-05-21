@@ -107,7 +107,7 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 			WHERE	paymentMethodObjectTypeID = ?
 				AND transactionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($paymentMethodObjectTypeID, $transactionID));
+		$statement->execute([$paymentMethodObjectTypeID, $transactionID]);
 		$row = $statement->fetchArray();
 		if ($row !== false) {
 			return new PaidSubscriptionTransactionLog(null, $row);

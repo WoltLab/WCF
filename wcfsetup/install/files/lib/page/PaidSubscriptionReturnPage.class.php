@@ -25,10 +25,10 @@ class PaidSubscriptionReturnPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'message' => WCF::getLanguage()->get('wcf.paidSubscription.returnMessage'),
 			'wait' => 60,
 			'url' => LinkHandler::getInstance()->getLink()
-		));
+		]);
 	}
 }

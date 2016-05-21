@@ -16,10 +16,10 @@ class UserRankAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.user.rank.canManageRank');
+	protected $permissionsDelete = ['admin.user.rank.canManageRank'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('delete');
+	protected $requireACP = ['delete'];
 }

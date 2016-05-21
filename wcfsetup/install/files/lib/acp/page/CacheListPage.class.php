@@ -27,7 +27,7 @@ class CacheListPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.canManageApplication');
+	public $neededPermissions = ['admin.configuration.canManageApplication'];
 	
 	/**
 	 * indicates if cache was cleared
@@ -39,13 +39,13 @@ class CacheListPage extends AbstractPage {
 	 * contains a list of cache resources
 	 * @var	array
 	 */
-	public $caches = array();
+	public $caches = [];
 	
 	/**
 	 * contains general cache information
 	 * @var	array
 	 */
-	public $cacheData = array();
+	public $cacheData = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -63,12 +63,12 @@ class CacheListPage extends AbstractPage {
 		parent::readData();
 		
 		// init cache data
-		$this->cacheData = array(
+		$this->cacheData = [
 			'source' => get_class(CacheHandler::getInstance()->getCacheSource()),
 			'version' => '',
 			'size' => 0,
 			'files' => 0
-		);
+		];
 		
 		switch ($this->cacheData['source']) {
 			case 'wcf\system\cache\source\DiskCacheSource':
@@ -105,7 +105,7 @@ class CacheListPage extends AbstractPage {
 	 */
 	protected function readCacheFiles($cacheType, $cacheDir, Regex $ignore = null, $extension = 'php') {
 		if (!isset($this->cacheData[$cacheType])) {
-			$this->cacheData[$cacheType] = array();
+			$this->cacheData[$cacheType] = [];
 		}
 		
 		// get files in cache directory
@@ -119,7 +119,7 @@ class CacheListPage extends AbstractPage {
 		$files = $directoryUtil->getFileObjects(SORT_ASC, new Regex('\.'.$extension.'$'));
 		
 		// get additional file information
-		$data = array();
+		$data = [];
 		if (is_array($files)) {
 			/** @var \SplFileInfo $file */
 			foreach ($files as $file) {
@@ -127,13 +127,13 @@ class CacheListPage extends AbstractPage {
 					continue;
 				}
 				
-				$data[] = array(
+				$data[] = [
 					'filename' => $file->getBasename(),
 					'filesize' => $file->getSize(),
 					'mtime' => $file->getMTime(),
 					'perm' => substr(sprintf('%o', $file->getPerms()), -3),
 					'writable' => $file->isWritable()
-				);
+				];
 				
 				$this->cacheData['files']++;
 				$this->cacheData['size'] += $file->getSize();
@@ -149,10 +149,10 @@ class CacheListPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'caches' => $this->caches,
 			'cacheData' => $this->cacheData,
 			'cleared' => $this->cleared
-		));
+		]);
 	}
 }

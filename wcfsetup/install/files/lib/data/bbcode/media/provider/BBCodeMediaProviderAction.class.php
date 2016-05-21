@@ -21,15 +21,15 @@ class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.content.bbcode.canManageBBCode');
+	protected $permissionsDelete = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.content.bbcode.canManageBBCode');
+	protected $permissionsUpdate = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('delete', 'update');
+	protected $requireACP = ['delete', 'update'];
 }

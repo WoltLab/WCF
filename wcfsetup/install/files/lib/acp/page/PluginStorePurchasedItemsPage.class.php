@@ -27,31 +27,31 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage');
+	public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
 	
 	/**
 	 * list of purchased products grouped by WCF major release
 	 * @var	array<array>
 	 */
-	public $products = array();
+	public $products = [];
 	
 	/**
 	 * list of product data grouped by WCF major release
 	 * @var	array<array>
 	 */
-	public $productData = array();
+	public $productData = [];
 	
 	/**
 	 * list of installed update servers (Plugin-Store only)
 	 * @var	PackageUpdateServer[]
 	 */
-	public $updateServers = array();
+	public $updateServers = [];
 	
 	/**
 	 * list of supported WCF major releases (Plugin-Store)
 	 * @var	string[]
 	 */
-	public $wcfMajorReleases = array();
+	public $wcfMajorReleases = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -87,24 +87,24 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 		foreach ($this->products as $packageUpdateID => $product) {
 			$wcfMajorRelease = $product['wcfMajorRelease'];
 			if (!isset($this->productData[$wcfMajorRelease])) {
-				$this->productData[$wcfMajorRelease] = array();
+				$this->productData[$wcfMajorRelease] = [];
 			}
 			
 			$languageCode = WCF::getLanguage()->languageCode;
 			$packageName = (isset($product['packageName'][$languageCode])) ? $product['packageName'][$languageCode] : $product['packageName']['en'];
 			
-			$this->productData[$wcfMajorRelease][$packageUpdateID] = array(
+			$this->productData[$wcfMajorRelease][$packageUpdateID] = [
 				'author' => $product['author'],
 				'authorURL' => $product['authorURL'],
 				'package' => $product['package'],
 				'packageName' => $packageName,
 				'pluginStoreURL' => $product['pluginStoreURL'],
-				'version' => array(
+				'version' => [
 					'available' => $product['lastVersion'],
 					'installed' => ''
-				),
+				],
 				'status' => (isset($this->updateServers[$wcfMajorRelease]) ? 'install' : 'unavailable')
-			);
+			];
 			
 			$package = PackageCache::getInstance()->getPackageByIdentifier($product['package']);
 			if ($package !== null) {
@@ -130,10 +130,10 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'productData' => $this->productData,
 			'updateServers' => $this->updateServers,
 			'wcfMajorReleases' => $this->wcfMajorReleases
-		));
+		]);
 	}
 }

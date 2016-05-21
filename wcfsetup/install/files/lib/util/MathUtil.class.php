@@ -36,11 +36,11 @@ final class MathUtil {
 		$lambda = $longitude * pi() / 180;
 		$phi = $latitude * pi() / 180;
 		
-		return array(
+		return [
 			6371 * cos($phi) * cos($lambda),	// x
 			6371 * cos($phi) * sin($lambda),	// y
 			6371 * sin($phi)			// z
-		);
+		];
 	}
 	
 	private function __construct() { }

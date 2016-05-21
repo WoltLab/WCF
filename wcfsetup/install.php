@@ -19,7 +19,7 @@ set_exception_handler('handleException');
 set_error_handler('handleError', E_ALL);
 
 // define list of needed file
-$neededFilesPattern = array(
+$neededFilesPattern = [
 	'!^setup/.*!',
 	'!^install/files/acp/images/wcfLogo.*!',
 	'!^install/files/acp/style/setup/.*!',
@@ -29,7 +29,7 @@ $neededFilesPattern = array(
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
 	'!^install/lang/.*!',
-	'!^install/packages/.*!');
+	'!^install/packages/.*!'];
 	
 // define needed functions and classes
 /**
@@ -383,7 +383,7 @@ class BasicFileUtil {
  */
 class Tar {
 	protected $archiveName = '';
-	protected $contentList = array();
+	protected $contentList = [];
 	protected $opened = false;
 	protected $read = false;
 	protected $file = null;
@@ -588,7 +588,7 @@ class Tar {
 	 * This does not get the entire to memory but only parts of it.
 	 */
 	protected function readContent() {
-		$this->contentList = array();
+		$this->contentList = [];
 		$this->read = true;
 		$i = 0;
 		
@@ -636,7 +636,7 @@ class Tar {
 			return false;
 		}
 		
-		$header = array();
+		$header = [];
 		$checksum = 0;
 		// First part of the header
 		for ($i = 0; $i < 148; $i++) {

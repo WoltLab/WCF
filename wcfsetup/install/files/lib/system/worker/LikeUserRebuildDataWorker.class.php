@@ -55,15 +55,15 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 					AND likeValue = ?
 			ORDER BY	time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 3);
-		$userData = $userIDs = array();
+		$userData = $userIDs = [];
 		foreach ($this->objectList as $likeObject) {
-			$userData[$likeObject->likeObjectID] = array();
+			$userData[$likeObject->likeObjectID] = [];
 			
-			$statement->execute(array(
+			$statement->execute([
 				$likeObject->objectID,
 				$likeObject->objectTypeID,
 				Like::LIKE
-			));
+			]);
 			while ($row = $statement->fetchArray()) {
 				$userData[$likeObject->likeObjectID][] = $row['userID'];
 				$userIDs[] = $row['userID'];
@@ -76,13 +76,13 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 		
 		// fetch usernames
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($userIDs));
+		$conditions->add("userID IN (?)", [$userIDs]);
 		$sql = "SELECT	userID, username
 			FROM	wcf".WCF_N."_user
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$usernames = array();
+		$usernames = [];
 		while ($row = $statement->fetchArray()) {
 			$usernames[$row['userID']] = $row['username'];
 		}
@@ -96,17 +96,17 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 		WCF::getDB()->beginTransaction();
 		foreach ($userData as $likeObjectID => $data) {
 			foreach ($data as &$value) {
-				$value = array(
+				$value = [
 					'userID' => $value,
 					'username' => $usernames[$value]
-				);
+				];
 			}
 			unset($value);
 			
-			$statement->execute(array(
+			$statement->execute([
 				serialize($data),
 				$likeObjectID
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

@@ -50,7 +50,7 @@ class Poll extends DatabaseObject {
 	 * list of poll options
 	 * @var	PollOption[]
 	 */
-	protected $options = array();
+	protected $options = [];
 	
 	/**
 	 * related object
@@ -120,7 +120,7 @@ class Poll extends DatabaseObject {
 			return;
 		}
 		
-		$optionList = PollManager::getInstance()->getPollOptions(array($this->pollID));
+		$optionList = PollManager::getInstance()->getPollOptions([$this->pollID]);
 		foreach ($optionList as $option) {
 			$this->options[$option->optionID] = $option;
 			

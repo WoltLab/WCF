@@ -17,7 +17,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::getTableNames()
 	 */
 	public function getTableNames() {
-		$existingTables = array();
+		$existingTables = [];
 		$sql = "SHOW TABLES FROM `".$this->dbObj->getDatabaseName()."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
@@ -31,7 +31,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::getColumns()
 	 */
 	public function getColumns($tableName) {
-		$columns = array();
+		$columns = [];
 		$regex = new Regex('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE);
 		
 		$sql = "SHOW COLUMNS FROM `".$tableName."`";
@@ -41,14 +41,14 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$regex->match($row['Type']);
 			$typeMatches = $regex->getMatches();
 			
-			$columns[] = array('name' => $row['Field'], 'data' => array(
+			$columns[] = ['name' => $row['Field'], 'data' => [
 				'type' => ((empty($typeMatches)) ? $row['Type'] : $typeMatches[1]),
 				'length' => ((empty($typeMatches)) ? '' : $typeMatches[2]),
 				'notNull' => (($row['Null'] == 'YES') ? false : true),
 				'key' => (($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : '')),
 				'default' => $row['Default'],
 				'autoIncrement' => ($row['Extra'] == 'auto_increment' ? true : false)
-			));
+			]];
 		}
 		
 		return $columns;
@@ -58,7 +58,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::getIndices()
 	 */
 	public function getIndices($tableName) {
-		$indices = array();
+		$indices = [];
 		$sql = "SHOW INDEX FROM `".$tableName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
@@ -72,7 +72,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	/**
 	 * @see	\wcf\system\database\editor\DatabaseEditor::createTable()
 	 */
-	public function createTable($tableName, $columns, $indices = array()) {
+	public function createTable($tableName, $columns, $indices = []) {
 		$columnDefinition = $indexDefinition = '';
 		
 		// build column definition

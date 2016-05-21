@@ -21,7 +21,7 @@ class UserGroupAssignmentListPage extends MultipleLinkPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canManageGroupAssignment');
+	public $neededPermissions = ['admin.user.canManageGroupAssignment'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

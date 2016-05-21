@@ -17,13 +17,13 @@ class UploadHandler {
 	 * list of uploaded files
 	 * @var	UploadFile[]
 	 */
-	protected $files = array();
+	protected $files = [];
 	
 	/**
 	 * list of validation errors.
 	 * @var	array
 	 */
-	protected $erroneousFiles = array();
+	protected $erroneousFiles = [];
 	
 	/**
 	 * Creates a new UploadHandler object.
@@ -33,13 +33,13 @@ class UploadHandler {
 	protected function __construct(array $rawFileData) {
 		if (is_array($rawFileData['name'])) {
 			// iOS work-around
-			$newRawFileData = array(
-				'name' => array(),
-				'type' => array(),
-				'tmp_name' => array(),
-				'error' => array(),
-				'size' => array()
-			);
+			$newRawFileData = [
+				'name' => [],
+				'type' => [],
+				'tmp_name' => [],
+				'error' => [],
+				'size' => []
+			];
 			$i = 0;
 			foreach (array_keys($rawFileData['name']) as $internalFileID) {
 				$newRawFileData['name'][$i] = '__wcf_' . $internalFileID . '_' . $rawFileData['name'][$internalFileID]; // __wcf_X_filename.ext

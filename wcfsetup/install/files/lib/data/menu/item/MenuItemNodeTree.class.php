@@ -123,7 +123,7 @@ class MenuItemNodeTree {
 	 * @return	MenuItemNode[]		nested menu item tree
 	 */
 	protected function generateNodeTree($parentID = null, MenuItemNode $parentNode = null) {
-		$nodes = array();
+		$nodes = [];
 		
 		$itemIDs = (isset($this->menuItemStructure[$parentID]) ? $this->menuItemStructure[$parentID] : []);
 		foreach ($itemIDs as $itemID) {

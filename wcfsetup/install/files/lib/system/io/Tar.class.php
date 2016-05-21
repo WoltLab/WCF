@@ -32,7 +32,7 @@ class Tar implements IArchive {
 	 * content of the tar file
 	 * @var	array
 	 */
-	protected $contentList = array();
+	protected $contentList = [];
 	
 	/**
 	 * indicates if tar file is opened
@@ -245,7 +245,7 @@ class Tar implements IArchive {
 	 * This does not get the entire to memory but only parts of it.
 	 */
 	protected function readContent() {
-		$this->contentList = array();
+		$this->contentList = [];
 		$this->read = true;
 		$i = 0;
 		
@@ -293,7 +293,7 @@ class Tar implements IArchive {
 			return false;
 		}
 		
-		$header = array();
+		$header = [];
 		$checksum = 0;
 		// First part of the header
 		for ($i = 0; $i < 148; $i++) {

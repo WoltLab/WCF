@@ -17,7 +17,7 @@ class CoreObjectCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$data = array();
+		$data = [];
 		
 		$coreObjectList = new CoreObjectList();
 		$coreObjectList->readObjects();

@@ -20,7 +20,7 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * child category nodes
 	 * @var	CategoryNode[]
 	 */
-	protected $children = array();
+	protected $children = [];
 	
 	/**
 	 * current iterator key

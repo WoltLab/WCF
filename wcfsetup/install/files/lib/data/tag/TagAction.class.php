@@ -21,7 +21,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction
 	 */
-	protected $allowGuestAccess = array('getSearchResultList');
+	protected $allowGuestAccess = ['getSearchResultList'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
@@ -31,17 +31,17 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.content.tag.canManageTag');
+	protected $permissionsDelete = ['admin.content.tag.canManageTag'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.content.tag.canManageTag');
+	protected $permissionsUpdate = ['admin.content.tag.canManageTag'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('delete', 'update');
+	protected $requireACP = ['delete', 'update'];
 	
 	/**
 	 * tag for which other tags will be used as synonyms
@@ -64,16 +64,16 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	 * @see	\wcf\data\ISearchAction::getSearchResultList()
 	 */
 	public function getSearchResultList() {
-		$excludedSearchValues = array();
+		$excludedSearchValues = [];
 		if (isset($this->parameters['data']['excludedSearchValues'])) {
 			$excludedSearchValues = $this->parameters['data']['excludedSearchValues'];
 		}
-		$list = array();
+		$list = [];
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add("name LIKE ?", array($this->parameters['data']['searchString'].'%'));
+		$conditionBuilder->add("name LIKE ?", [$this->parameters['data']['searchString'].'%']);
 		if (!empty($excludedSearchValues)) {
-			$conditionBuilder->add("name NOT IN (?)", array($excludedSearchValues));
+			$conditionBuilder->add("name NOT IN (?)", [$excludedSearchValues]);
 		}
 		
 		// find tags
@@ -83,10 +83,10 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$list[] = array(
+			$list[] = [
 				'label' => $row['name'],
 				'objectID' => $row['tagID']
-			);
+			];
 		}
 		
 		return $list;
@@ -151,7 +151,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	 * @param	integer[]		$tagIDs
 	 * @since	2.2
 	 */
-	protected function unmarkItems(array $tagIDs = array()) {
+	protected function unmarkItems(array $tagIDs = []) {
 		if (empty($tagIDs)) {
 			$tagIDs = $this->objectIDs;
 		}

@@ -29,7 +29,7 @@ class LanguageImportForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * file name
@@ -59,7 +59,7 @@ class LanguageImportForm extends AbstractForm {
 	 * list of available languages
 	 * @var	Language[]
 	 */
-	public $languages = array();
+	public $languages = [];
 	
 	/**
 	 * @see	\wcf\form\IForm::readFormParameters()
@@ -123,10 +123,10 @@ class LanguageImportForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'languages' => $this->languages,
 			'languageFile' => $this->languageFile
-		));
+		]);
 	}
 	
 	/**

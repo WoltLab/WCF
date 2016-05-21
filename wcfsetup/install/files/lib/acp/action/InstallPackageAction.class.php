@@ -74,14 +74,14 @@ class InstallPackageAction extends AbstractDialogAction {
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $step->getNode());
 		
 		if ($step->hasDocument()) {
-			$this->data = array(
+			$this->data = [
 				'currentAction' => $this->getCurrentAction($queueID),
 				'innerTemplate' => $step->getTemplate(),
 				'node' => $step->getNode(),
 				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
 				'step' => 'install',
 				'queueID' => $queueID
-			);
+			];
 		}
 		else {
 			if ($step->getNode() == '') {
@@ -115,7 +115,7 @@ class InstallPackageAction extends AbstractDialogAction {
 					FROM	wcf".WCF_N."_application
 					WHERE	packageID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($packageID));
+				$statement->execute([$packageID]);
 				$application = $statement->fetchObject('wcf\data\application\Application');
 				
 				// build redirect location
@@ -124,25 +124,25 @@ class InstallPackageAction extends AbstractDialogAction {
 				WCF::resetZendOpcache();
 				
 				// show success
-				$this->data = array(
+				$this->data = [
 					'currentAction' => $this->getCurrentAction(null),
 					'progress' => 100,
 					'redirectLocation' => $location,
 					'step' => 'success'
-				);
+				];
 				return;
 			}
 			
 			WCF::resetZendOpcache();
 			
 			// continue with next node
-			$this->data = array(
+			$this->data = [
 				'currentAction' => $this->getCurrentAction($queueID),
 				'step' => 'install',
 				'node' => $step->getNode(),
 				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
 				'queueID' => $queueID
-			);
+			];
 		}
 	}
 	
@@ -161,19 +161,19 @@ class InstallPackageAction extends AbstractDialogAction {
 		$nextNode = $this->installation->nodeBuilder->getNextNode();
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $nextNode);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'installationType' => $this->queue->action,
 			'packageName' => $this->installation->queue->packageName
-		));
+		]);
 		
-		$this->data = array(
+		$this->data = [
 			'template' => WCF::getTPL()->fetch($this->templateName),
 			'step' => 'install',
 			'node' => $nextNode,
 			'currentAction' => $this->getCurrentAction($queueID),
 			'progress' => 0,
 			'queueID' => $queueID
-		);
+		];
 	}
 	
 	/**
@@ -182,10 +182,10 @@ class InstallPackageAction extends AbstractDialogAction {
 	 * @return	array
 	 */
 	protected function stepRollback() {
-		$this->data = array(
+		$this->data = [
 			'packageID' => $this->queue->packageID,
 			'step' => 'rollback'
-		);
+		];
 	}
 	
 	/**
@@ -220,7 +220,7 @@ class InstallPackageAction extends AbstractDialogAction {
 			// build package name
 			$packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
 			$installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
-			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.'.$installationType, array('packageName' => $packageName));
+			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.'.$installationType, ['packageName' => $packageName]);
 		}
 		
 		return $currentAction;

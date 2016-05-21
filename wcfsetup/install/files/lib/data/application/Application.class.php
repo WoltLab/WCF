@@ -103,11 +103,11 @@ class Application extends DatabaseObject {
 	 */
 	public static function getDirectory($abbreviation) {
 		if (static::$directories === null) {
-			static::$directories = array();
+			static::$directories = [];
 			
 			// read application directories
 			$packageList = new PackageList();
-			$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+			$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
 			$packageList->readObjects();
 			foreach ($packageList as $package) {
 				$abbr = Package::getAbbreviation($package->package);

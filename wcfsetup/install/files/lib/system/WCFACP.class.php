@@ -162,14 +162,14 @@ class WCFACP extends WCF {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 					try {
-						WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+						WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
 					}
 					catch (PermissionDeniedException $e) {
 						throw new AJAXException(self::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 					}
 				}
 				else {
-					WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+					WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
 				}
 				
 				// force debug mode if in ACP and authenticated
@@ -210,9 +210,9 @@ class WCFACP extends WCF {
 		$host = RouteHandler::getHost();
 		$path = RouteHandler::getPath();
 		
-		self::getTPL()->assign(array(
+		self::getTPL()->assign([
 			'baseHref' => $host . $path
-		));
+		]);
 	}
 	
 	/**

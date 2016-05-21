@@ -17,7 +17,7 @@ class FormDocument {
 	 * list of FormElementContainer objects
 	 * @var	IFormElementContainer[]
 	 */
-	protected $containers = array();
+	protected $containers = [];
 	
 	/**
 	 * form document name
@@ -106,7 +106,7 @@ class FormDocument {
 	 * Handles request input variables.
 	 */
 	public function handleRequest() {
-		$variables = array();
+		$variables = [];
 		
 		foreach ($_REQUEST as $key => $value) {
 			if (mb_strpos($key, $this->getName().'_') !== false) {

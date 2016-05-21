@@ -28,7 +28,7 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
 		$data['commentID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['commentID']);
@@ -41,7 +41,7 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 			WHERE		commentID = ?
 			ORDER BY	time ASC, responseID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
-		$statement->execute(array($response->commentID));
+		$statement->execute([$response->commentID]);
 		$responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		// update parent comment
@@ -50,10 +50,10 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 				responses = responses + 1
 			WHERE	commentID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			serialize($responseIDs),
 			$response->commentID
-		));
+		]);
 		
 		return $response->responseID;
 	}

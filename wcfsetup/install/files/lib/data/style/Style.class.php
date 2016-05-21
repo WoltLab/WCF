@@ -46,7 +46,7 @@ class Style extends DatabaseObject {
 	 * list of style variables
 	 * @var	string[]
 	 */
-	protected $variables = array();
+	protected $variables = [];
 	
 	const PREVIEW_IMAGE_MAX_HEIGHT = 64;
 	const PREVIEW_IMAGE_MAX_WIDTH = 102;
@@ -104,7 +104,7 @@ class Style extends DatabaseObject {
 			ON		(value.variableID = variable.variableID AND value.styleID = ?)
 			ORDER BY	variable.variableID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->styleID));
+		$statement->execute([$this->styleID]);
 		while ($row = $statement->fetchArray()) {
 			$variableName = $row['variableName'];
 			$variableValue = (isset($row['variableValue'])) ? $row['variableValue'] : $row['defaultValue'];

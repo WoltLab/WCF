@@ -56,9 +56,9 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 		
 		I18nHandler::getInstance()->save('categoryName', 'wcf.user.option.category.'.$this->category->categoryName, 'wcf.user.option');
 		
-		$this->objectAction = new UserOptionCategoryAction(array($this->category), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserOptionCategoryAction([$this->category], 'update', ['data' => array_merge($this->additionalFields, [
 			'showOrder' => $this->showOrder
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -86,10 +86,10 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'categoryID' => $this->categoryID,
 			'category' => $this->category
-		));
+		]);
 	}
 }

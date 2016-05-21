@@ -15,47 +15,47 @@ class BashHighlighter extends Highlighter {
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
-	protected $separators = array(';', '=');
+	protected $separators = [';', '='];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
 	 */
-	protected $quotes = array('"', "'", '`');
+	protected $quotes = ['"', "'", '`'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
 	 */
-	protected $singleLineComment = array('#');
+	protected $singleLineComment = ['#'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
 	 */
-	protected $commentStart = array();
+	protected $commentStart = [];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
 	 */
-	protected $commentEnd = array();
+	protected $commentEnd = [];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
-	protected $operators = array('||', '&&', '&', '|', '<<=', '>>=', '<<', '+=', '-=', '*=', '/=', '%=',
+	protected $operators = ['||', '&&', '&', '|', '<<=', '>>=', '<<', '+=', '-=', '*=', '/=', '%=',
 					'-gt', '-lt', '-n', '-a', '-o',
-					'+', '-', '*', '/', '%', '<', '?', ':', '==', '!=', '=', '!', '>', '2>', '>>');
+					'+', '-', '*', '/', '%', '<', '?', ':', '==', '!=', '=', '!', '>', '2>', '>>'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		'true',
 		'false'
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'if',
 		'then',
 		'else',
@@ -68,12 +68,12 @@ class BashHighlighter extends Highlighter {
 		'case',
 		'in',
 		'esac'
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
 	 */
-	protected $keywords3 = array(
+	protected $keywords3 = [
 		'echo',
 		'exit',
 		'unset',
@@ -83,12 +83,12 @@ class BashHighlighter extends Highlighter {
 		'sed',
 		'grep',
 		'awk'
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords4
 	 */
-	protected $keywords4 = array(
+	protected $keywords4 = [
 		'$?'
-	);
+	];
 }

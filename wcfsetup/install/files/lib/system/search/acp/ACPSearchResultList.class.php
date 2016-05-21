@@ -29,7 +29,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	 * result list
 	 * @var	ACPSearchResult[]
 	 */
-	protected $results = array();
+	protected $results = [];
 	
 	/**
 	 * Creates a new ACPSearchResultList.
@@ -58,7 +58,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	public function reduceResults($count) {
 		// more results than available should be whiped, just set it to 0
 		if ($count >= count($this->results)) {
-			$this->results = array();
+			$this->results = [];
 		}
 		else {
 			while ($count > 0) {

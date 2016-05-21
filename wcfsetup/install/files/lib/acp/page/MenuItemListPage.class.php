@@ -26,7 +26,7 @@ class MenuItemListPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.cms.canManageMenu');
+	public $neededPermissions = ['admin.content.cms.canManageMenu'];
 	
 	/**
 	 * menu item list
@@ -80,10 +80,10 @@ class MenuItemListPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'menuID' => $this->menuID,
 			'menu' => $this->menu,
 			'menuItemNodeList' => $this->menuItems->getNodeList()
-		));
+		]);
 	}
 }

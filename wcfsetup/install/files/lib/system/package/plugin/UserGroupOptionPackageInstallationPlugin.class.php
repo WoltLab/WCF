@@ -31,7 +31,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * list of names of tags which aren't considered as additional data
 	 * @var	string[]
 	 */
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'moddefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata', 'usersonly');
+	public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'moddefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata', 'usersonly'];
 	
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
@@ -58,7 +58,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['usersonly'])) $usersOnly = $option['usersonly'];
 		
 		// collect additional tags and their values
-		$additionalData = array();
+		$additionalData = [];
 		foreach ($option as $tag => $value) {
 			if (!in_array($tag, self::$reservedTags)) $additionalData[$tag] = $value;
 		}
@@ -69,13 +69,13 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			WHERE	optionName = ?
 			AND	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$optionName,
 			$this->installation->getPackageID()
-		));
+		]);
 		$row = $statement->fetchArray();
 		
-		$data = array(
+		$data = [
 			'categoryName' => $categoryName,
 			'optionType' => $optionType,
 			'defaultValue' => (isset($option['userdefaultvalue']) ? $userDefaultValue : $defaultValue),
@@ -86,7 +86,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			'options' => $options,
 			'usersOnly' => $usersOnly,
 			'additionalData' => serialize($additionalData)
-		);
+		];
 		
 		if (!empty($row['optionID'])) {
 			$groupOption = new UserGroupOption(null, $row);
@@ -102,7 +102,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$optionID = $groupOptionEditor->optionID;
 			
 			$this->getGroupIDs();
-			$values = array();
+			$values = [];
 			foreach ($this->groupIDs['all'] as $groupID) {
 				$values[$groupID] = $defaultValue;
 			}
@@ -129,11 +129,11 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$statement = WCF::getDB()->prepareStatement($sql);
 			WCF::getDB()->beginTransaction();
 			foreach ($values as $groupID => $value) {
-				$statement->execute(array(
+				$statement->execute([
 					$groupID,
 					$optionID,
 					$value
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -146,12 +146,12 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 */
 	protected function getGroupIDs() {
 		if ($this->groupIDs === null) {
-			$this->groupIDs = array(
-				'admin' => array(),
-				'mod' => array(),
-				'all' => array(),
-				'registered' => array()
-			);
+			$this->groupIDs = [
+				'admin' => [],
+				'mod' => [],
+				'all' => [],
+				'registered' => []
+			];
 			
 			$sql = "SELECT	groupID, groupType
 				FROM	wcf".WCF_N."_user_group";

@@ -23,7 +23,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	 * list of grouped user group assignment condition object types
 	 * @var	array
 	 */
-	protected $groupedObjectTypes = array();
+	protected $groupedObjectTypes = [];
 	
 	/**
 	 * Checks if the users with the given ids should be assigned to new user
@@ -44,7 +44,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 		$assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
 		foreach ($userList as $user) {
 			$groupIDs = $user->getGroupIDs();
-			$newGroupIDs = array();
+			$newGroupIDs = [];
 			
 			foreach ($assignments as $assignment) {
 				if (in_array($assignment->groupID, $groupIDs) || in_array($assignment->groupID, $newGroupIDs)) {
@@ -66,11 +66,11 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 			}
 			
 			if (!empty($newGroupIDs)) {
-				$userAction = new UserAction(array($user), 'addToGroups', array(
+				$userAction = new UserAction([$user], 'addToGroups', [
 					'addDefaultGroups' => false,
 					'deleteOldGroups' => false,
 					'groups' => $newGroupIDs
-				));
+				]);
 				$userAction->executeAction();
 			}
 		}
@@ -94,9 +94,9 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	 */
 	public function getUsers(UserGroupAssignment $assignment) {
 		$userList = new UserList();
-		$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID = ?)', array(
+		$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID = ?)', [
 			$assignment->groupID
-		));
+		]);
 		
 		$conditions = $assignment->getConditions();
 		foreach ($conditions as $condition) {
@@ -116,7 +116,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 			if (!$objectType->conditiongroup) continue;
 			
 			if (!isset($this->groupedObjectTypes[$objectType->conditiongroup])) {
-				$this->groupedObjectTypes[$objectType->conditiongroup] = array();
+				$this->groupedObjectTypes[$objectType->conditiongroup] = [];
 			}
 			
 			$this->groupedObjectTypes[$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;

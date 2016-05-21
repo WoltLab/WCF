@@ -22,7 +22,7 @@ class UserStatsCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
-		$data = array();
+		$data = [];
 		
 		// number of members
 		$sql = "SELECT	COUNT(*) AS amount

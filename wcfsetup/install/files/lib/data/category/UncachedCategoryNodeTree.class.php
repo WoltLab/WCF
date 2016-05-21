@@ -17,25 +17,25 @@ class UncachedCategoryNodeTree extends CategoryNodeTree {
 	 * locally cached categories
 	 * @var	Category[]
 	 */
-	protected $categoryCache = array();
+	protected $categoryCache = [];
 	
 	/**
 	 * locally cached category ids grouped by the id of their parent category
 	 * @var	array
 	 */
-	protected $categoryStructureCache = array();
+	protected $categoryStructureCache = [];
 	
 	/**
 	 * @see	\wcf\data\category\CategoryNodeTree::buildTree()
 	 */
 	protected function buildTree() {
 		$categoryList = new CategoryList();
-		$categoryList->getConditionBuilder()->add('category.objectTypeID = ?', array(CategoryHandler::getInstance()->getObjectTypeByName($this->objectType)->objectTypeID));
+		$categoryList->getConditionBuilder()->add('category.objectTypeID = ?', [CategoryHandler::getInstance()->getObjectTypeByName($this->objectType)->objectTypeID]);
 		$categoryList->sqlOrderBy = "category.showOrder ASC";
 		$categoryList->readObjects();
 		foreach ($categoryList as $category) {
 			if (!isset($this->categoryStructureCache[$category->parentCategoryID])) {
-				$this->categoryStructureCache[$category->parentCategoryID] = array();
+				$this->categoryStructureCache[$category->parentCategoryID] = [];
 			}
 			
 			$this->categoryStructureCache[$category->parentCategoryID][] = $category->categoryID;
@@ -56,7 +56,7 @@ class UncachedCategoryNodeTree extends CategoryNodeTree {
 	 * @see	\wcf\data\category\CategoryNodeTree::getChildCategories()
 	 */
 	protected function getChildCategories(CategoryNode $parentNode) {
-		$categories = array();
+		$categories = [];
 		if (isset($this->categoryStructureCache[$parentNode->categoryID])) {
 			foreach ($this->categoryStructureCache[$parentNode->categoryID] as $categoryID) {
 				$categories[$categoryID] = $this->getCategory($categoryID);

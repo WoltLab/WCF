@@ -27,8 +27,8 @@ class ACPSessionVirtualAction extends AbstractDatabaseObjectAction {
 	 */
 	public function create() {
 		// try to find an existing virtual session
-		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
-		$virtualSession = call_user_func(array($baseClass, 'getExistingSession'), $this->parameters['data']['sessionID']);
+		$baseClass = call_user_func([$this->className, 'getBaseClass']);
+		$virtualSession = call_user_func([$baseClass, 'getExistingSession'], $this->parameters['data']['sessionID']);
 		if ($virtualSession !== null) {
 			return $virtualSession;
 		}

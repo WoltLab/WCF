@@ -20,7 +20,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer {
 	 * list of IFormElement objects
 	 * @var	IFormElement[]
 	 */
-	protected $children = array();
+	protected $children = [];
 	
 	/**
 	 * element description or help text

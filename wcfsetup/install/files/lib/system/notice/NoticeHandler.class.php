@@ -19,7 +19,7 @@ class NoticeHandler extends SingletonFactory {
 	 * list with all enabled notices
 	 * @var	Notice[]
 	 */
-	protected $notices = array();
+	protected $notices = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFacetory::init()
@@ -34,7 +34,7 @@ class NoticeHandler extends SingletonFactory {
 	 * @return	Notice[]
 	 */
 	public function getVisibleNotices() {
-		$notices = array();
+		$notices = [];
 		foreach ($this->notices as $notice) {
 			if ($notice->isDismissed()) continue;
 			

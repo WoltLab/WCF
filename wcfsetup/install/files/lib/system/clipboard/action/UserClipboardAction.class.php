@@ -20,12 +20,12 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$actionClassActions
 	 */
-	protected $actionClassActions = array('delete');
+	protected $actionClassActions = ['delete'];
 	
 	/**
 	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
-	protected $supportedActions = array('assignToGroup', 'ban', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword');
+	protected $supportedActions = ['assignToGroup', 'ban', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword'];
 	
 	/**
 	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
@@ -44,9 +44,9 @@ class UserClipboardAction extends AbstractClipboardAction {
 			break;
 			
 			case 'delete':
-				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage', array(
+				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage', [
 					'count' => $item->getCount()
-				)));
+				]));
 			break;
 			
 			case 'exportMailAddress':
@@ -62,9 +62,9 @@ class UserClipboardAction extends AbstractClipboardAction {
 			break;
 			
 			case 'sendNewPassword':
-				$item->addParameter('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage', array(
+				$item->addParameter('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage', [
 					'count' => $item->getCount()
-				)));
+				]));
 			break;
 		}
 		
@@ -93,7 +93,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	protected function validateDelete() {
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.user.canDeleteUser')) {
-			return array();
+			return [];
 		}
 		
 		return $this->__validateAccessibleGroups(array_keys($this->objects));
@@ -107,7 +107,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	protected function validateBan() {
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.user.canBanUser')) {
-			return array();
+			return [];
 		}
 		
 		return $this->__validateAccessibleGroups(array_keys($this->objects));
@@ -128,11 +128,11 @@ class UserClipboardAction extends AbstractClipboardAction {
 		}
 		
 		// no valid users found
-		if (empty($userIDs)) return array();
+		if (empty($userIDs)) return [];
 		
 		// fetch user to group associations
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($userIDs));
+		$conditions->add("userID IN (?)", [$userIDs]);
 		
 		$sql = "SELECT	userID, groupID
 			FROM	wcf".WCF_N."_user_to_group
@@ -140,10 +140,10 @@ class UserClipboardAction extends AbstractClipboardAction {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		
-		$userToGroup = array();
+		$userToGroup = [];
 		while ($row = $statement->fetchArray()) {
 			if (!isset($userToGroup[$row['userID']])) {
-				$userToGroup[$row['userID']] = array();
+				$userToGroup[$row['userID']] = [];
 			}
 			
 			$userToGroup[$row['userID']][] = $row['groupID'];
@@ -167,7 +167,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	public function validateSendNewPassword() {
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.user.canEditPassword')) {
-			return array();
+			return [];
 		}
 		
 		return $this->__validateAccessibleGroups(array_keys($this->objects));
@@ -182,10 +182,10 @@ class UserClipboardAction extends AbstractClipboardAction {
 	protected function validateEnable() {
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
-			return array();
+			return [];
 		}
 		
-		$userIDs = array();
+		$userIDs = [];
 		foreach ($this->objects as $user) {
 			if ($user->activationCode) $userIDs[] = $user->userID;
 		}
@@ -202,11 +202,11 @@ class UserClipboardAction extends AbstractClipboardAction {
 	protected function validateMerge() {
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {
-			return array();
+			return [];
 		}
 		
 		$userIDs = array_keys($this->objects);
-		if (count($userIDs) < 2) return array();
+		if (count($userIDs) < 2) return [];
 		
 		return $userIDs;
 	}

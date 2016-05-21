@@ -27,7 +27,7 @@ class TemplateGroupAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.template.canManageTemplate');
+	public $neededPermissions = ['admin.template.canManageTemplate'];
 	
 	/**
 	 * template group name
@@ -51,7 +51,7 @@ class TemplateGroupAddForm extends AbstractForm {
 	 * available template groups
 	 * @var	array
 	 */
-	public $availableTemplateGroups = array();
+	public $availableTemplateGroups = [];
 	
 	/**
 	 * @see	\wcf\form\IForm::readFormParameters()
@@ -93,7 +93,7 @@ class TemplateGroupAddForm extends AbstractForm {
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->templateGroupName));
+		$statement->execute([$this->templateGroupName]);
 		
 		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('templateGroupName', 'notUnique');
@@ -116,7 +116,7 @@ class TemplateGroupAddForm extends AbstractForm {
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupFolderName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->templateGroupFolderName));
+		$statement->execute([$this->templateGroupFolderName]);
 		
 		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('templateGroupFolderName', 'notUnique');
@@ -129,11 +129,11 @@ class TemplateGroupAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new TemplateGroupAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TemplateGroupAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'templateGroupName' => $this->templateGroupName,
 			'templateGroupFolderName' => $this->templateGroupFolderName,
 			'parentTemplateGroupID' => ($this->parentTemplateGroupID ?: null)
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -142,16 +142,16 @@ class TemplateGroupAddForm extends AbstractForm {
 		$this->parentTemplateGroupID = 0;
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		$this->availableTemplateGroups = TemplateGroup::getSelectList(array(), 1);
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([], 1);
 
 		parent::readData();
 	}
@@ -162,12 +162,12 @@ class TemplateGroupAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'templateGroupName' => $this->templateGroupName,
 			'templateGroupFolderName' => $this->templateGroupFolderName,
 			'parentTemplateGroupID' => $this->parentTemplateGroupID,
 			'availableTemplateGroups' => $this->availableTemplateGroups
-		));
+		]);
 	}
 }

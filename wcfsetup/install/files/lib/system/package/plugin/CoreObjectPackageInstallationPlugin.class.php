@@ -28,10 +28,10 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -39,9 +39,9 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		return [
 			'objectName' => $data['elements']['objectname']
-		);
+		];
 	}
 	
 	/**
@@ -52,15 +52,15 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	objectName = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['objectName'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**

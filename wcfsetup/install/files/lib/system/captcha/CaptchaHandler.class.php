@@ -28,7 +28,7 @@ class CaptchaHandler extends SingletonFactory {
 	 * @return	string[]
 	 */
 	public function getCaptchaSelection() {
-		$selection = array();
+		$selection = [];
 		foreach ($this->objectTypes as $objectType) {
 			if ($objectType->getProcessor()->isAvailable()) {
 				$selection[$objectType->objectType] = WCF::getLanguage()->get('wcf.captcha.'.$objectType->objectType);

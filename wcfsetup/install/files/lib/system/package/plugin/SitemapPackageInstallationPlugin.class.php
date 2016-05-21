@@ -28,10 +28,10 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -42,13 +42,13 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		$showOrder = (isset($data['elements']['showOrder'])) ? intval($data['elements']['showOrder']) : null;
 		$showOrder = $this->getShowOrder($showOrder, null, 'showOrder');
 		
-		return array(
+		return [
 			'sitemapName' => $data['attributes']['name'],
 			'className' => $data['elements']['classname'],
 			'showOrder' => $showOrder,
 			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
 			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : ''
-		);
+		];
 	}
 	
 	/**
@@ -59,15 +59,15 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	sitemapName = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['sitemapName'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**

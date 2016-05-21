@@ -19,20 +19,20 @@ class BBCodeCache extends SingletonFactory {
 	 * cached bbcodes
 	 * @var	BBCode[]
 	 */
-	protected $cachedBBCodes = array();
+	protected $cachedBBCodes = [];
 	
 	/**
 	 * list of known highlighters
 	 * @var	string[]
 	 */
-	protected $highlighters = array();
+	protected $highlighters = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get bbcode cache
-		$this->cachedBBCodes = BBCodeCacheBuilder::getInstance()->getData(array(), 'bbcodes');
+		$this->cachedBBCodes = BBCodeCacheBuilder::getInstance()->getData([], 'bbcodes');
 	}
 	
 	/**
@@ -75,7 +75,7 @@ class BBCodeCache extends SingletonFactory {
 	 */
 	public function getHighlighters() {
 		if (empty($this->highlighters)) {
-			$this->highlighters = BBCodeCacheBuilder::getInstance()->getData(array(), 'highlighters');
+			$this->highlighters = BBCodeCacheBuilder::getInstance()->getData([], 'highlighters');
 		}
 		
 		return $this->highlighters;

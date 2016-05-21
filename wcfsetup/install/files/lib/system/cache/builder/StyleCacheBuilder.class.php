@@ -18,10 +18,10 @@ class StyleCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$data = array(
+		$data = [
 			'default' => 0,
-			'styles' => array()
-		);
+			'styles' => []
+		];
 		
 		// get all styles
 		$sql = "SELECT		*

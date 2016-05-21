@@ -18,7 +18,7 @@ class UserNotificationEventCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
-		$data = array();
+		$data = [];
 		
 		// get events
 		$sql = "SELECT		event.*, object_type.objectType
@@ -29,7 +29,7 @@ class UserNotificationEventCacheBuilder extends AbstractCacheBuilder {
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			if (!isset($data[$row['objectType']])) {
-				$data[$row['objectType']] = array();
+				$data[$row['objectType']] = [];
 			}
 			
 			if (!isset($data[$row['objectType']][$row['eventName']])) {

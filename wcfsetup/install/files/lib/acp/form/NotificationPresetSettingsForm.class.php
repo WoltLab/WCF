@@ -29,7 +29,7 @@ class NotificationPresetSettingsForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canEditUser');
+	public $neededPermissions = ['admin.user.canEditUser'];
 	
 	/**
 	 * list of notification events
@@ -41,7 +41,7 @@ class NotificationPresetSettingsForm extends AbstractForm {
 	 * list of settings by event
 	 * @var	mixed[][]
 	 */
-	public $settings = array();
+	public $settings = [];
 	
 	/**
 	 * true to apply change to existing users
@@ -53,7 +53,7 @@ class NotificationPresetSettingsForm extends AbstractForm {
 	 * list of valid options for the mail notification type.
 	 * @var	string[]
 	 */
-	protected static $validMailNotificationTypes = array('none', 'instant', 'daily');
+	protected static $validMailNotificationTypes = ['none', 'instant', 'daily'];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -81,7 +81,7 @@ class NotificationPresetSettingsForm extends AbstractForm {
 		parent::validate();
 		
 		// valid event ids
-		$validEventIDs = array();
+		$validEventIDs = [];
 		foreach ($this->events as $events) {
 			foreach ($events as $event) {
 				$validEventIDs[] = $event->eventID;
@@ -119,14 +119,14 @@ class NotificationPresetSettingsForm extends AbstractForm {
 		
 		// default values
 		if (empty($_POST)) {
-			$eventIDs = array();
+			$eventIDs = [];
 			foreach ($this->events as $events) {
 				foreach ($events as $event) {
 					$eventIDs[] = $event->eventID;
-					$this->settings[$event->eventID] = array(
+					$this->settings[$event->eventID] = [
 						'enabled' => $event->preset,
 						'mailNotificationType' => $event->presetMailNotificationType
-					);
+					];
 				}
 			}
 		}
@@ -138,13 +138,13 @@ class NotificationPresetSettingsForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$groupedEvents = array();
+		$groupedEvents = [];
 		foreach ($this->events as $objectType => $events) {
 			$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType', $objectType);
 			$category = ($objectTypeObj->category ?: $objectType);
 			
 			if (!isset($groupedEvents[$category])) {
-				$groupedEvents[$category] = array();
+				$groupedEvents[$category] = [];
 			}
 			
 			foreach ($events as $event) $groupedEvents[$category][] = $event;
@@ -152,11 +152,11 @@ class NotificationPresetSettingsForm extends AbstractForm {
 		
 		ksort($groupedEvents);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'events' => $groupedEvents,
 			'settings' => $this->settings,
 			'applyChangesToExistingUsers' => $this->applyChangesToExistingUsers
-		));
+		]);
 	}
 	
 	/**
@@ -178,18 +178,18 @@ class NotificationPresetSettingsForm extends AbstractForm {
 				}
 				
 				if ($event->preset != $preset || $event->presetMailNotificationType != $presetMailNotificationType) {
-					$editor = new UserNotificationEventEditor(new UserNotificationEvent(null, array('eventID' => $event->eventID)));
-					$editor->update(array(
+					$editor = new UserNotificationEventEditor(new UserNotificationEvent(null, ['eventID' => $event->eventID]));
+					$editor->update([
 						'preset' => $preset,
 						'presetMailNotificationType' => $presetMailNotificationType
-					));
+					]);
 					
 					if ($this->applyChangesToExistingUsers) {
 						if (!$preset) {
 							$sql = "DELETE FROM	wcf".WCF_N."_user_notification_event_to_user
 								WHERE		eventID = ?";
 							$statement = WCF::getDB()->prepareStatement($sql);
-							$statement->execute(array($event->eventID));
+							$statement->execute([$event->eventID]);
 						}
 						else {
 							$sql = "REPLACE INTO	wcf".WCF_N."_user_notification_event_to_user
@@ -197,7 +197,7 @@ class NotificationPresetSettingsForm extends AbstractForm {
 								SELECT		userID, ?, ?
 								FROM		wcf".WCF_N."_user";
 							$statement = WCF::getDB()->prepareStatement($sql);
-							$statement->execute(array($event->eventID, $presetMailNotificationType));
+							$statement->execute([$event->eventID, $presetMailNotificationType]);
 						}
 					}
 				}

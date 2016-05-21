@@ -27,7 +27,7 @@ class LanguageListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -37,7 +37,7 @@ class LanguageListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('languageID', 'languageCode', 'languageName', 'users', 'variables', 'customVariables');
+	public $validSortFields = ['languageID', 'languageCode', 'languageName', 'users', 'variables', 'customVariables'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
@@ -56,8 +56,8 @@ class LanguageListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'languages' => $this->objectList->getObjects()
-		));
+		]);
 	}
 }

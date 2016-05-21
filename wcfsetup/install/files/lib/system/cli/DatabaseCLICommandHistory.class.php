@@ -30,7 +30,7 @@ class DatabaseCLICommandHistory extends MemoryHistory {
 			$sql = "DELETE FROM	wcf".WCF_N."_cli_history
 				WHERE		userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(WCF::getUser()->userID));
+			$statement->execute([WCF::getUser()->userID]);
 		}
 		
 		$sql = "INSERT INTO	wcf".WCF_N."_cli_history (userID, command)
@@ -39,7 +39,7 @@ class DatabaseCLICommandHistory extends MemoryHistory {
 		WCF::getDB()->beginTransaction();
 		
 		foreach ($this as $item) {
-			$statement->execute(array(WCF::getUser()->userID, $item));
+			$statement->execute([WCF::getUser()->userID, $item]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -52,7 +52,7 @@ class DatabaseCLICommandHistory extends MemoryHistory {
 			FROM	wcf".WCF_N."_cli_history
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(WCF::getUser()->userID));
+		$statement->execute([WCF::getUser()->userID]);
 		
 		while ($row = $statement->fetchArray()) {
 			$this->add($row['command']);

@@ -22,22 +22,22 @@ class LabelGroupAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.content.label.canManageLabel');
+	protected $permissionsCreate = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.content.label.canManageLabel');
+	protected $permissionsDelete = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.content.label.canManageLabel');
+	protected $permissionsUpdate = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()

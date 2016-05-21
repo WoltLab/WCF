@@ -38,18 +38,18 @@ class UserMailForm extends AbstractForm {
 	 * list of group ids
 	 * @var	integer[]
 	 */
-	public $groupIDs = array();
+	public $groupIDs = [];
 	
 	/**
 	 * list of groups
 	 * @var	UserGroup[]
 	 */
-	public $groups = array();
+	public $groups = [];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canMailUser');
+	public $neededPermissions = ['admin.user.canMailUser'];
 	
 	/**
 	 * message subject
@@ -67,7 +67,7 @@ class UserMailForm extends AbstractForm {
 	 * list of user ids
 	 * @var	integer[]
 	 */
-	public $userIDs = array();
+	public $userIDs = [];
 	
 	/**
 	 * list of users
@@ -132,9 +132,9 @@ class UserMailForm extends AbstractForm {
 		
 		// save config in session
 		$userMailData = WCF::getSession()->getVar('userMailData');
-		if ($userMailData === null) $userMailData = array();
+		if ($userMailData === null) $userMailData = [];
 		$mailID = count($userMailData);
-		$userMailData[$mailID] = array(
+		$userMailData[$mailID] = [
 			'action' => $this->action,
 			'userIDs' => $this->userIDs,
 			'groupIDs' => implode(',', $this->groupIDs),
@@ -142,7 +142,7 @@ class UserMailForm extends AbstractForm {
 			'text' => $this->text,
 			'from' => $this->from,
 			'enableHTML' => $this->enableHTML
-		);
+		];
 		WCF::getSession()->register('userMailData', $userMailData);
 		$this->saved();
 		
@@ -179,12 +179,12 @@ class UserMailForm extends AbstractForm {
 		
 		if (!empty($this->userIDs)) {
 			$this->userList = new UserList();
-			$this->userList->getConditionBuilder()->add("user_table.userID IN (?)", array($this->userIDs));
+			$this->userList->getConditionBuilder()->add("user_table.userID IN (?)", [$this->userIDs]);
 			$this->userList->sqlOrderBy = "user_table.username ASC";
 			$this->userList->readObjects();
 		}
 		
-		$this->groups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE));
+		$this->groups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE]);
 	}
 	
 	/**
@@ -193,7 +193,7 @@ class UserMailForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'enableHTML' => $this->enableHTML,
 			'from' => $this->from,
 			'groupIDs' => $this->groupIDs,
@@ -202,6 +202,6 @@ class UserMailForm extends AbstractForm {
 			'text' => $this->text,
 			'userIDs' => $this->userIDs,
 			'userList' => $this->userList
-		));
+		]);
 	}
 }

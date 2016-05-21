@@ -26,7 +26,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 			parent::setValue($value);
 		}
 		else {
-			$this->value = array_map(array('wcf\util\StringUtil', 'trim'), $value);
+			$this->value = array_map(['wcf\util\StringUtil', 'trim'], $value);
 		}
 	}
 	

@@ -117,14 +117,14 @@ class SearchResultTextParser extends SingletonFactory {
 					}
 				}
 				else {
-					$matches = array();
+					$matches = [];
 					$shiftLength = static::MAX_LENGTH;
 					// find first match of each keyword
 					foreach ($this->searchQuery as $keyword) {
 						$start = mb_strripos($text, $keyword);
 						if ($start !== false) {
 							$shiftLength -= mb_strlen($keyword);
-							$matches[$keyword] = array('start' => $start, 'end' => $start + mb_strlen($keyword));
+							$matches[$keyword] = ['start' => $start, 'end' => $start + mb_strlen($keyword)];
 						}
 					}
 					

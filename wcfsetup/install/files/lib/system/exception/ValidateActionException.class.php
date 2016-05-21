@@ -28,7 +28,7 @@ class ValidateActionException extends \Exception {
 	/**
 	 * @see	\Exception::__construct()
 	 */
-	public function __construct($fieldName, $errorMessage = 'empty', array $variables = array()) {
+	public function __construct($fieldName, $errorMessage = 'empty', array $variables = []) {
 		$this->errorMessage = $errorMessage;
 		if (mb_strpos($this->errorMessage, '.') === false) {
 			$this->errorMessage = WCF::getLanguage()->get('wcf.global.form.error.'.$this->errorMessage);
@@ -38,7 +38,7 @@ class ValidateActionException extends \Exception {
 		}
 		
 		$this->fieldName = $fieldName;
-		$this->message = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.invalidParameter', array('fieldName' => $this->fieldName));
+		$this->message = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.invalidParameter', ['fieldName' => $this->fieldName]);
 	}
 	
 	/**

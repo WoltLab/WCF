@@ -24,7 +24,7 @@ class NotificationListPage extends MultipleLinkPage {
 	 * list of outstanding notifications
 	 * @var	mixed[][]
 	 */
-	public $notifications = array();
+	public $notifications = [];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::countItems()
@@ -58,9 +58,9 @@ class NotificationListPage extends MultipleLinkPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'notifications' => $this->notifications
-		));
+		]);
 	}
 	
 	/**

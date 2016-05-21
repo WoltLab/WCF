@@ -22,17 +22,17 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.language.canManageLanguage');
+	protected $permissionsCreate = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.language.canManageLanguage');
+	protected $permissionsDelete = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.language.canManageLanguage');
+	protected $permissionsUpdate = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * language editor object
@@ -43,7 +43,7 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'setAsDefault', 'update');
+	protected $requireACP = ['create', 'delete', 'setAsDefault', 'update'];
 	
 	/**
 	 * Validates permission to set a language as default.

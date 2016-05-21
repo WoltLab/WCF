@@ -42,7 +42,7 @@ class OptionForm extends AbstractOptionListForm {
 	 * the option tree
 	 * @var	array
 	 */
-	public $optionTree = array();
+	public $optionTree = [];
 	
 	/**
 	 * @see	\wcf\acp\form\AbstractOptionListForm::$languageItemPattern
@@ -73,7 +73,7 @@ class OptionForm extends AbstractOptionListForm {
 		
 		// save options
 		$saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
-		$this->objectAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
+		$this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -107,11 +107,11 @@ class OptionForm extends AbstractOptionListForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'category' => $this->category,
 			'optionName' => $this->optionName,
 			'optionTree' => $this->optionTree
-		));
+		]);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ class OptionForm extends AbstractOptionListForm {
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.option.category.'.$this->category->categoryName);
 		
 		// check permission
-		WCF::getSession()->checkPermissions(array('admin.configuration.canEditOption'));
+		WCF::getSession()->checkPermissions(['admin.configuration.canEditOption']);
 		
 		if ($this->category->categoryName == 'module') {
 			// check master password

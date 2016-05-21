@@ -71,31 +71,31 @@ class WCF {
 	 * list of currently loaded applications
 	 * @var	Application[]
 	 */
-	protected static $applications = array();
+	protected static $applications = [];
 	
 	/**
 	 * list of currently loaded application objects
 	 * @var	IApplication[]
 	 */
-	protected static $applicationObjects = array();
+	protected static $applicationObjects = [];
 	
 	/**
 	 * list of autoload directories
 	 * @var	array
 	 */
-	protected static $autoloadDirectories = array();
+	protected static $autoloadDirectories = [];
 	
 	/**
 	 * list of unique instances of each core object
 	 * @var	SingletonFactory[]
 	 */
-	protected static $coreObject = array();
+	protected static $coreObject = [];
 	
 	/**
 	 * list of cached core objects
 	 * @var	string[]
 	 */
-	protected static $coreObjectCache = array();
+	protected static $coreObjectCache = [];
 	
 	/**
 	 * database object
@@ -449,7 +449,7 @@ class WCF {
 	 */
 	protected function initApplications() {
 		// step 1) load all applications
-		$loadedApplications = array();
+		$loadedApplications = [];
 		
 		// register WCF as application
 		self::$applications['wcf'] = ApplicationHandler::getInstance()->getApplicationByID(1);
@@ -551,7 +551,7 @@ class WCF {
 			}
 			
 			// init application and assign it as template variable
-			self::$applicationObjects[$application->packageID] = call_user_func(array($className, 'getInstance'));
+			self::$applicationObjects[$application->packageID] = call_user_func([$className, 'getInstance']);
 			$this->getTPL()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
 		}
 		else {
@@ -620,11 +620,11 @@ class WCF {
 	 * Assigns some default variables to the template engine.
 	 */
 	protected function assignDefaultTemplateVariables() {
-		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
-		self::getTPL()->assign(array(
+		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang']);
+		self::getTPL()->assign([
 			'__wcf' => $this,
 			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated since 2.1, use LAST_UPDATE_TIME directly
-		));
+		]);
 	}
 	
 	/**
@@ -723,7 +723,7 @@ class WCF {
 				throw new SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
 			}
 			
-			self::$coreObject[$className] = call_user_func(array($objectName, 'getInstance'));
+			self::$coreObject[$className] = call_user_func([$objectName, 'getInstance']);
 			return self::$coreObject[$className];
 		}
 	}

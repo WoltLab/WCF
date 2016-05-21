@@ -72,18 +72,18 @@ class TemplateEditForm extends TemplateAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new TemplateAction(array($this->template), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TemplateAction([$this->template], 'update', ['data' => array_merge($this->additionalFields, [
 			'templateName' => $this->tplName,
 			'templateGroupID' => $this->templateGroupID,
 			'lastModificationTime' => TIME_NOW
-		)), 'source' => $this->templateSource));
+		]), 'source' => $this->templateSource]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -105,10 +105,10 @@ class TemplateEditForm extends TemplateAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'templateID' => $this->templateID,
 			'template' => $this->template
-		));
+		]);
 	}
 }

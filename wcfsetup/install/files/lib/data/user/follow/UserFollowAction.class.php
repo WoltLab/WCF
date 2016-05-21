@@ -27,7 +27,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('getGroupedUserList');
+	protected $allowGuestAccess = ['getGroupedUserList'];
 	
 	/**
 	 * user profile object
@@ -72,26 +72,26 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 		
 		// not following right now
 		if (!$follow->followID) {
-			$follow = UserFollowEditor::create(array(
+			$follow = UserFollowEditor::create([
 				'userID' => WCF::getUser()->userID,
 				'followUserID' => $this->parameters['data']['userID'],
 				'time' => TIME_NOW
-			));
+			]);
 			
 			// send notification
-			UserNotificationHandler::getInstance()->fireEvent('following', 'com.woltlab.wcf.user.follow', new UserFollowUserNotificationObject($follow), array($follow->followUserID));
+			UserNotificationHandler::getInstance()->fireEvent('following', 'com.woltlab.wcf.user.follow', new UserFollowUserNotificationObject($follow), [$follow->followUserID]);
 			
 			// fire activity event
 			UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.user.recentActivityEvent.follow', $this->parameters['data']['userID']);
 			
 			// reset storage
-			UserStorageHandler::getInstance()->reset(array($this->parameters['data']['userID']), 'followerUserIDs');
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'followingUserIDs');
+			UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'followerUserIDs');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'followingUserIDs');
 		}
 		
-		return array(
+		return [
 			'following' => 1
-		);
+		];
 	}
 	
 	/**
@@ -114,16 +114,16 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 			$followEditor->delete();
 			
 			// remove activity event
-			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.user.recentActivityEvent.follow', array($this->parameters['data']['userID']));
+			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.user.recentActivityEvent.follow', [$this->parameters['data']['userID']]);
 		}
 		
 		// reset storage
-		UserStorageHandler::getInstance()->reset(array($this->parameters['data']['userID']), 'followerUserIDs');
-		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'followingUserIDs');
+		UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'followerUserIDs');
+		UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'followingUserIDs');
 		
-		return array(
+		return [
 			'following' => 0
-		);
+		];
 	}
 	
 	/**
@@ -153,16 +153,16 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	public function delete() {
 		$returnValues = parent::delete();
 		
-		$followUserIDs = array();
+		$followUserIDs = [];
 		foreach ($this->objects as $follow) {
 			$followUserIDs[] = $follow->followUserID;
 			// remove activity event
-			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.user.recentActivityEvent.follow', array($follow->followUserID));
+			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.user.recentActivityEvent.follow', [$follow->followUserID]);
 		}
 		
 		// reset storage
 		UserStorageHandler::getInstance()->reset($followUserIDs, 'followerUserIDs');
-		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'followingUserIDs');
+		UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'followingUserIDs');
 		
 		return $returnValues;
 	}
@@ -189,7 +189,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 			FROM	wcf".WCF_N."_user_follow
 			WHERE	followUserID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->parameters['userID']));
+		$statement->execute([$this->parameters['userID']]);
 		$pageCount = ceil($statement->fetchSingleColumn() / 20);
 		
 		// get user ids
@@ -197,7 +197,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 			FROM	wcf".WCF_N."_user_follow
 			WHERE	followUserID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
-		$statement->execute(array($this->parameters['userID']));
+		$statement->execute([$this->parameters['userID']]);
 		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		// create group
@@ -207,13 +207,13 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 		// load user profiles
 		GroupedUserList::loadUsers();
 		
-		WCF::getTPL()->assign(array(
-			'groupedUsers' => array($group)
-		));
+		WCF::getTPL()->assign([
+			'groupedUsers' => [$group]
+		]);
 		
-		return array(
+		return [
 			'pageCount' => $pageCount,
 			'template' => WCF::getTPL()->fetch('groupedUserList')
-		);
+		];
 	}
 }

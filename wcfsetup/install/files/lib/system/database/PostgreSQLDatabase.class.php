@@ -86,8 +86,8 @@ class PostgreSQLDatabase extends Database {
 	 */
 	public static function fixQuery($query) {
 		// replace quotes
-		$query = preg_replace_callback('~\'([^\'\\\\]+|\\\\.)*\'~', array('self', 'replaceQuotesCallback'), $query);
-		$query = preg_replace_callback('~"([^"\\\\]+|\\\\.)*"~', array('self', 'replaceQuotesCallback'), $query);
+		$query = preg_replace_callback('~\'([^\'\\\\]+|\\\\.)*\'~', ['self', 'replaceQuotesCallback'], $query);
+		$query = preg_replace_callback('~"([^"\\\\]+|\\\\.)*"~', ['self', 'replaceQuotesCallback'], $query);
 		
 		// double quote identifiers (column & table names ...)
 		$query = preg_replace('~(?<=^|\s|\.|\(|,)([A-Za-z0-9_-]*[a-z]{1}[A-Za-z0-9_-]*)(?=$|\s|\.|\)|,|=)~', '"\\1"', $query);

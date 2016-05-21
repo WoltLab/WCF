@@ -24,7 +24,7 @@ class StatPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.management.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
 	 * start date (yyyy-mm-dd)
@@ -42,7 +42,7 @@ class StatPage extends AbstractPage {
 	 * available object type
 	 * @var	array
 	 */
-	public $availableObjectTypes = array();
+	public $availableObjectTypes = [];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::readData()
@@ -61,7 +61,7 @@ class StatPage extends AbstractPage {
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler');
 		foreach ($objectTypes as $objectType) {
 			if (!isset($this->availableObjectTypes[$objectType->categoryname])) {
-				$this->availableObjectTypes[$objectType->categoryname] = array();
+				$this->availableObjectTypes[$objectType->categoryname] = [];
 			}
 			
 			$this->availableObjectTypes[$objectType->categoryname][] = $objectType;
@@ -74,10 +74,10 @@ class StatPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'endDate' => $this->endDate,
 			'startDate' => $this->startDate,
 			'availableObjectTypes' => $this->availableObjectTypes
-		));
+		]);
 	}
 }

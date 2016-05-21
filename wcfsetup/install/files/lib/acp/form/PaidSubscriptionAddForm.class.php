@@ -32,12 +32,12 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$templateName
@@ -108,31 +108,31 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	 * list of group ids
 	 * @var	integer[]
 	 */
-	public $groupIDs = array();
+	public $groupIDs = [];
 	
 	/**
 	 * list of excluded subscriptions
 	 * @var	integer[]
 	 */
-	public $excludedSubscriptionIDs = array();
+	public $excludedSubscriptionIDs = [];
 	
 	/**
 	 * available user groups
 	 * @var	array
 	 */
-	public $availableUserGroups = array();
+	public $availableUserGroups = [];
 	
 	/**
 	 * list of available currencies
 	 * @var	string[]
 	 */
-	public $availableCurrencies = array();
+	public $availableCurrencies = [];
 	
 	/**
 	 * list of available subscriptions
 	 * @var	array
 	 */
-	public $availableSubscriptions = array();
+	public $availableSubscriptions = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -144,7 +144,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('title');
 		
 		// get available user groups
-		$this->availableUserGroups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
+		$this->availableUserGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 		
 		if (!count(PaymentMethodHandler::getInstance()->getPaymentMethods())) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.acp.paidSubscription.error.noPaymentMethods'));
@@ -257,7 +257,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		parent::save();
 		
 		// save subscription
-		$this->objectAction = new PaidSubscriptionAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PaidSubscriptionAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'description' => $this->description,
 			'isDisabled' => $this->isDisabled,	
@@ -269,7 +269,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 			'isRecurring' => $this->isRecurring,
 			'groupIDs' => implode(',', $this->groupIDs),
 			'excludedSubscriptionIDs' => implode(',', $this->excludedSubscriptionIDs)
-		))));
+		])]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		// save i18n values
@@ -281,13 +281,13 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		$this->title = $this->description = '';
 		$this->isDisabled = $this->showOrder = $this->cost = $this->subscriptionLength = $this->isRecurring = 0;
 		$this->currency = 'EUR';
-		$this->groupIDs = array();
+		$this->groupIDs = [];
 		I18nHandler::getInstance()->reset();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -302,9 +302,9 @@ class PaidSubscriptionAddForm extends AbstractForm {
 			
 			// update database
 			$editor = new PaidSubscriptionEditor($subscription);
-			$editor->update(array(
+			$editor->update([
 				$columnName => 'wcf.paidSubscription.subscription'.$subscription->subscriptionID.($columnName == 'description' ? '.description' : '')
-			));
+			]);
 		}
 	}
 	
@@ -316,7 +316,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'isDisabled' => $this->isDisabled,
 			'showOrder' => $this->showOrder,
@@ -330,6 +330,6 @@ class PaidSubscriptionAddForm extends AbstractForm {
 			'availableCurrencies' => $this->availableCurrencies,
 			'availableUserGroups' => $this->availableUserGroups,
 			'availableSubscriptions' => $this->availableSubscriptions
-		));
+		]);
 	}
 }

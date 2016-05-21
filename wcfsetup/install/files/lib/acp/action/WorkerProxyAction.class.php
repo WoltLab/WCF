@@ -32,7 +32,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	 * parameters for worker action
 	 * @var	array
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * worker object
@@ -40,7 +40,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	 */
 	protected $worker = null;
 	
-	public static $allowInvoke = array();
+	public static $allowInvoke = [];
 	
 	/**
 	 * @see	\wcf\action\IAction::readParameters()
@@ -108,13 +108,13 @@ class WorkerProxyAction extends AJAXInvokeAction {
 		if ($parameters === null) $parameters = $this->parameters;
 		
 		// build return values
-		$returnValues = array(
+		$returnValues = [
 			'className' => $this->className,
 			'loopCount' => ($this->loopCount + 1),
 			'parameters' => $parameters,
 			'proceedURL' => $proceedURL,
 			'progress' => $progress
-		);
+		];
 		
 		// include template on startup
 		if ($this->loopCount == -1) {

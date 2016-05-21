@@ -40,9 +40,9 @@ class TemplateGroup extends DatabaseObject {
 	 * @param	integer		$initialDepth	Specifies the initial indentation depth of the list
 	 * @return	array
 	 */
-	public static function getSelectList($ignore = array(), $initialDepth = 0) {
+	public static function getSelectList($ignore = [], $initialDepth = 0) {
 		if (self::$templateGroupStructure === null) {
-			self::$templateGroupStructure = array();
+			self::$templateGroupStructure = [];
 			
 			$sql = "SELECT		templateGroupID, templateGroupName, parentTemplateGroupID
 				FROM		wcf".WCF_N."_template_group
@@ -54,7 +54,7 @@ class TemplateGroup extends DatabaseObject {
 			}
 		}
 		
-		self::$selectList = array();
+		self::$selectList = [];
 		self::makeSelectList(0, $initialDepth, $ignore);
 		
 		return self::$selectList;
@@ -67,7 +67,7 @@ class TemplateGroup extends DatabaseObject {
 	 * @param	integer		$depth			current list depth
 	 * @param	array		$ignore			list of template group ids to ignore in result
 	 */
-	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = array()) {
+	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = []) {
 		if (!isset(self::$templateGroupStructure[$parentID ?: 0])) return;
 		
 		foreach (self::$templateGroupStructure[$parentID ?: 0] as $templateGroup) {

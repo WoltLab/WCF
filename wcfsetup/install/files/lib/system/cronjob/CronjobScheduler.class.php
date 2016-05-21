@@ -23,13 +23,13 @@ class CronjobScheduler extends SingletonFactory {
 	 * cached times of the next and after next cronjob execution
 	 * @var	integer[]
 	 */
-	protected $cache = array();
+	protected $cache = [];
 	
 	/**
 	 * list of editors for outstanding cronjobs
 	 * @var	CronjobEditor[]
 	 */
-	protected $cronjobEditors = array();
+	protected $cronjobEditors = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -55,15 +55,15 @@ class CronjobScheduler extends SingletonFactory {
 		
 		foreach ($this->cronjobEditors as $cronjobEditor) {
 			// mark cronjob as being executed
-			$cronjobEditor->update(array(
+			$cronjobEditor->update([
 				'state' => Cronjob::EXECUTING
-			));
+			]);
 			
 			// create log entry
-			$log = CronjobLogEditor::create(array(
+			$log = CronjobLogEditor::create([
 				'cronjobID' => $cronjobEditor->cronjobID,
 				'execTime' => TIME_NOW
-			));
+			]);
 			$logEditor = new CronjobLogEditor($log);
 			
 			// check if all required options are set for cronjob to be executed
@@ -87,13 +87,13 @@ class CronjobScheduler extends SingletonFactory {
 			$afterNextExec = $cronjobEditor->getNextExec(($nextExec + 120));
 			
 			// mark cronjob as done
-			$cronjobEditor->update(array(
+			$cronjobEditor->update([
 				'lastExec' => TIME_NOW,
 				'afterNextExec' => $afterNextExec,
 				'failCount' => 0,
 				'nextExec' => $nextExec,
 				'state' => Cronjob::READY
-			));
+			]);
 		}
 	}
 	
@@ -116,20 +116,20 @@ class CronjobScheduler extends SingletonFactory {
 				AND cronjob.isDisabled = ?
 				AND cronjob.failCount < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			TIME_NOW,
 			TIME_NOW,
 			0,
 			Cronjob::MAX_FAIL_COUNT
-		));
+		]);
 		while ($row = $statement->fetchArray()) {
 			$cronjob = new Cronjob(null, $row);
 			$cronjobEditor = new CronjobEditor($cronjob);
 			$executeCronjob = true;
 			
-			$data = array(
+			$data = [
 				'state' => Cronjob::PENDING
-			);
+			];
 			
 			// reset cronjob if it got stuck before and afterNextExec is in the past
 			if ($cronjobEditor->afterNextExec <= TIME_NOW) {
@@ -192,23 +192,23 @@ class CronjobScheduler extends SingletonFactory {
 	 */
 	protected function logResult(CronjobLogEditor $logEditor, SystemException $exception = null) {
 		if ($exception !== null) {
-			$errString = implode("\n", array(
+			$errString = implode("\n", [
 				$exception->getMessage(),
 				$exception->getCode(),
 				$exception->getFile(),
 				$exception->getLine(),
 				$exception->getTraceAsString()
-			));
+			]);
 			
-			$logEditor->update(array(
+			$logEditor->update([
 				'success' => 0,
 				'error' => $errString
-			));
+			]);
 		}
 		else {
-			$logEditor->update(array(
+			$logEditor->update([
 				'success' => 1
-			));
+			]);
 		}
 	}
 	

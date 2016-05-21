@@ -17,21 +17,21 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.captcha.canManageCaptchaQuestion');
+	protected $permissionsDelete = ['admin.captcha.canManageCaptchaQuestion'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.captcha.canManageCaptchaQuestion');
+	protected $permissionsUpdate = ['admin.captcha.canManageCaptchaQuestion'];
 	
 	/**
 	 * @see	\wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $question) {
-			$question->update(array(
+			$question->update([
 				'isDisabled' => $question->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	

@@ -23,19 +23,19 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * id map cache
 	 * @var	array
 	 */
-	protected $idMappingCache = array();
+	protected $idMappingCache = [];
 	
 	/**
 	 * list of available importers
 	 * @var	array
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * list of available importer processors
 	 * @var	array
 	 */
-	protected $importers = array();
+	protected $importers = [];
 	
 	/**
 	 * user merge mode
@@ -53,7 +53,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * list of methods allowed for remote invoke
 	 * @var	string[]
 	 */
-	public static $allowInvoke = array('resetMapping');
+	public static $allowInvoke = ['resetMapping'];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -97,8 +97,8 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 			$importer = $this->getImporter($type);
 			$tableName = $indexName = '';
 			if ($importer->getClassName()) {
-				$tableName = call_user_func(array($importer->getClassName(), 'getDatabaseTableName'));
-				$indexName = call_user_func(array($importer->getClassName(), 'getDatabaseTableIndexName'));
+				$tableName = call_user_func([$importer->getClassName(), 'getDatabaseTableName']);
+				$indexName = call_user_func([$importer->getClassName(), 'getDatabaseTableIndexName']);
 			}
 			
 			$sql = "SELECT		import_mapping.newID
@@ -109,7 +109,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 						AND import_mapping.oldID = ?
 						".($tableName ? "AND object_table.".$indexName." IS NOT NULL" : '');
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->importHash, $objectTypeID, $oldID));
+			$statement->execute([$this->importHash, $objectTypeID, $oldID]);
 			$row = $statement->fetchArray();
 			if ($row !== false) $this->idMappingCache[$objectTypeID][$oldID] = $row['newID'];
 		}
@@ -131,7 +131,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 						(importHash, objectTypeID, oldID, newID)
 			VALUES			(?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->importHash, $objectTypeID, $oldID, $newID));
+		$statement->execute([$this->importHash, $objectTypeID, $oldID, $newID]);
 		
 		unset($this->idMappingCache[$objectTypeID][$oldID]);
 	}
@@ -140,7 +140,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * Validates accessibility of resetMapping().
 	 */
 	public function validateResetMapping() {
-		WCF::getSession()->checkPermissions(array('admin.management.canImportData'));
+		WCF::getSession()->checkPermissions(['admin.management.canImportData']);
 		
 		// reset caches
 		CacheHandler::getInstance()->flushAll();
@@ -155,7 +155,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
-		$this->idMappingCache = array();
+		$this->idMappingCache = [];
 	}
 	
 	/**

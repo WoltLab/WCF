@@ -38,11 +38,11 @@ class ModerationReportForm extends AbstractModerationForm {
 		parent::assignVariables();
 		
 		$reportUser = UserProfile::getUserProfile($this->queue->userID);
-		if ($reportUser === null) $reportUser = new UserProfile(new User(null, array()));
-		WCF::getTPL()->assign(array(
+		if ($reportUser === null) $reportUser = new UserProfile(new User(null, []));
+		WCF::getTPL()->assign([
 			'reportedContent' => ModerationQueueReportManager::getInstance()->getReportedContent($this->queue),
 			'queueManager' => ModerationQueueReportManager::getInstance(),
 			'reportUser' => $reportUser
-		));
+		]);
 	}
 }

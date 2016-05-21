@@ -59,16 +59,16 @@ class Like extends DatabaseObject {
 				AND objectID = ?
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$objectID,
 			$userID
-		));
+		]);
 		
 		$row = $statement->fetchArray();
 		
 		if (!$row) {
-			$row = array();
+			$row = [];
 		}
 		
 		return new Like(null, $row);

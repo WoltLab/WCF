@@ -27,7 +27,7 @@ class GoogleAuthAction extends AbstractAction {
 	/**
 	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
-	public $neededModules = array('GOOGLE_PUBLIC_KEY', 'GOOGLE_PRIVATE_KEY');
+	public $neededModules = ['GOOGLE_PUBLIC_KEY', 'GOOGLE_PRIVATE_KEY'];
 	
 	/**
 	 * @see	\wcf\action\IAction::execute()
@@ -35,20 +35,20 @@ class GoogleAuthAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		$callbackURL = LinkHandler::getInstance()->getLink('GoogleAuth', array(
+		$callbackURL = LinkHandler::getInstance()->getLink('GoogleAuth', [
 			'appendSession' => false
-		));
+		]);
 		// user accepted the connection
 		if (isset($_GET['code'])) {
 			try {
 				// fetch access_token
-				$request = new HTTPRequest('https://accounts.google.com/o/oauth2/token', array(), array(
+				$request = new HTTPRequest('https://accounts.google.com/o/oauth2/token', [], [
 					'code' => $_GET['code'],
 					'client_id' => StringUtil::trim(GOOGLE_PUBLIC_KEY),
 					'client_secret' => StringUtil::trim(GOOGLE_PRIVATE_KEY),
 					'redirect_uri' => $callbackURL,
 					'grant_type' => 'authorization_code'
-				));
+				]);
 				$request->execute();
 				$reply = $request->getReply();
 				
@@ -96,7 +96,7 @@ class GoogleAuthAction extends AbstractAction {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
 						$password = StringUtil::getRandomID();
 						$userEditor = new UserEditor($user);
-						$userEditor->update(array('password' => $password));
+						$userEditor->update(['password' => $password]);
 						
 						// reload user to retrieve salt
 						$user = new User($user->userID);

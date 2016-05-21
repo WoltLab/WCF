@@ -58,10 +58,10 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		
 		// get selected values
 		if (isset($tagArgs['selected'])) {
-			if (!is_array($tagArgs['selected'])) $tagArgs['selected'] = array($tagArgs['selected']);
+			if (!is_array($tagArgs['selected'])) $tagArgs['selected'] = [$tagArgs['selected']];
 		}
 		else {
-			$tagArgs['selected'] = array();
+			$tagArgs['selected'] = [];
 		}
 		if (!isset($tagArgs['separator'])) {
 			$tagArgs['separator'] = '';

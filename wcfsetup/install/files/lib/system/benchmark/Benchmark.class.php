@@ -27,7 +27,7 @@ class Benchmark extends SingletonFactory {
 	 * benchmark items
 	 * @var	array
 	 */
-	protected $items = array();
+	protected $items = [];
 	
 	/**
 	 * number of executed sql queries

@@ -47,7 +47,7 @@ class ConditionBuilder {
 	 * @param	mixed		$conditions
 	 */
 	public function add($conditions) {
-		if (!is_array($conditions)) $conditions = array($conditions);
+		if (!is_array($conditions)) $conditions = [$conditions];
 		
 		foreach ($conditions as $condition) {
 			if (!empty($this->conditions)) $this->conditions .= $this->concat;

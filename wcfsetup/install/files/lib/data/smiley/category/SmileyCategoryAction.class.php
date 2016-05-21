@@ -23,7 +23,7 @@ class SmileyCategoryAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('getSmilies');
+	protected $allowGuestAccess = ['getSmilies'];
 	
 	/**
 	 * active smiley category
@@ -48,13 +48,13 @@ class SmileyCategoryAction extends AbstractDatabaseObjectAction {
 	public function getSmilies() {
 		$this->smileyCategory->loadSmilies();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'smilies' => $this->smileyCategory
-		));
+		]);
 		
-		return array(
+		return [
 			'smileyCategoryID' => $this->smileyCategory->categoryID,
 			'template' => WCF::getTPL()->fetch('__messageFormSmilies')
-		);
+		];
 	}
 }

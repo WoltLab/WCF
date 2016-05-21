@@ -26,7 +26,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOption');
+	public $neededPermissions = ['admin.user.canManageUserOption'];
 	
 	/**
 	 * category name
@@ -79,11 +79,11 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new UserOptionCategoryAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserOptionCategoryAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'parentCategoryName' => 'profile',
 			'categoryName' => $this->categoryName,
 			'showOrder' => $this->showOrder
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		// update name
@@ -91,9 +91,9 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		$categoryID = $returnValues['returnValues']->categoryID;
 		I18nHandler::getInstance()->save('categoryName', 'wcf.user.option.category.category'.$categoryID, 'wcf.user.option');
 		$categoryEditor = new UserOptionCategoryEditor($returnValues['returnValues']);
-		$categoryEditor->update(array(
+		$categoryEditor->update([
 			'categoryName' => 'category'.$categoryID
-		));
+		]);
 		$this->saved();
 		
 		// reset values
@@ -103,9 +103,9 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		I18nHandler::getInstance()->reset();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -116,10 +116,10 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'categoryName' => $this->categoryName,
 			'showOrder' => $this->showOrder
-		));
+		]);
 	}
 }

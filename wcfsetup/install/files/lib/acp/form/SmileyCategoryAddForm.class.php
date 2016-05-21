@@ -30,5 +30,5 @@ class SmileyCategoryAddForm extends AbstractCategoryAddForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_SMILEY');
+	public $neededModules = ['MODULE_SMILEY'];
 }

@@ -33,7 +33,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * preset event ids
 	 * @var	integer[]
 	 */
-	protected $presetEventIDs = array();
+	protected $presetEventIDs = [];
 	
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
@@ -44,10 +44,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 					AND eventName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->getPackageID(),
 				$item['elements']['name']
-			));
+			]);
 		}
 	}
 	
@@ -65,7 +65,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 					WHERE	definitionName = 'com.woltlab.wcf.notification.objectType'
 				)";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute(array($data['elements']['objecttype']));
+		$statement->execute([$data['elements']['objecttype']]);
 		$row = $statement->fetchArray();
 		if (empty($row['objectTypeID'])) throw new SystemException("unknown notification object type '".$data['elements']['objecttype']."' given");
 		$objectTypeID = $row['objectTypeID'];
@@ -75,7 +75,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			$presetMailNotificationType = $data['elements']['presetmailnotificationtype'];
 		}
 		
-		return array(
+		return [
 			'eventName' => $data['elements']['name'],
 			'className' => $data['elements']['classname'],
 			'objectTypeID' => $objectTypeID,
@@ -83,7 +83,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
 			'preset' => (!empty($data['elements']['preset']) ? 1 : 0),
 			'presetMailNotificationType' => $presetMailNotificationType
-		);
+		];
 	}
 	
 	/**
@@ -112,7 +112,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		$statement = WCF::getDB()->prepareStatement($sql);
 		WCF::getDB()->beginTransaction();
 		foreach ($this->presetEventIDs as $eventID => $mailNotificationType) {
-			$statement->execute(array($eventID, $mailNotificationType));
+			$statement->execute([$eventID, $mailNotificationType]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -125,14 +125,14 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	objectTypeID = ?
 				AND eventName = ?";
-		$parameters = array(
+		$parameters = [
 			$data['objectTypeID'],
 			$data['eventName']
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

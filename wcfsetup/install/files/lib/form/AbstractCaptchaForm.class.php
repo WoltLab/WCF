@@ -39,10 +39,10 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'captchaObjectType' => $this->captchaObjectType,
 			'useCaptcha' => $this->useCaptcha
-		));
+		]);
 	}
 	
 	/**

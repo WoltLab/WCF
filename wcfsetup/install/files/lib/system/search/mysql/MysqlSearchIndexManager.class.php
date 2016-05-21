@@ -27,7 +27,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 					(objectID, subject, message, time, userID, username, languageID, metaData)
 			VALUES		(?, ?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectID, $subject, $message, $time, $userID, $username, $languageID, $metaData));
+		$statement->execute([$objectID, $subject, $message, $time, $userID, $username, $languageID, $metaData]);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		// delete existing entry
-		$this->delete($objectType, array($objectID));
+		$this->delete($objectType, [$objectID]);
 		
 		// save new entry
 		$this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
@@ -50,7 +50,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
-			$statement->execute(array($objectID));
+			$statement->execute([$objectID]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -75,31 +75,31 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 			FROM	wcf".WCF_N."_package_installation_sql_log
 			WHERE	sqlTable = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($tableName));
+		$statement->execute([$tableName]);
 		
 		if ($statement->fetchSingleColumn()) {
 			// table already exists
 			return false;
 		}
 		
-		$columns = array(
-			array('name' => 'objectID', 'data' => array('length' => 10, 'notNull' => true, 'type' => 'int')),
-			array('name' => 'subject', 'data' => array('default' => '', 'length' => 255, 'notNull' => true, 'type' => 'varchar')),
-			array('name' => 'message', 'data' => array('type' => 'mediumtext')),
-			array('name' => 'metaData', 'data' => array('type' => 'mediumtext')),
-			array('name' => 'time', 'data' => array('default' => 0, 'length' => 10, 'notNull' => true, 'type' => 'int')),
-			array('name' => 'userID', 'data' => array('default' => '', 'length' => 10, 'type' => 'int')),
-			array('name' => 'username', 'data' => array('default' => '', 'length' => 255,'notNull' => true, 'type' => 'varchar')),
-			array('name' => 'languageID', 'data' => array('default' => 0, 'length' => 10, 'notNull' => true, 'type' => 'int'))
-		);
+		$columns = [
+			['name' => 'objectID', 'data' => ['length' => 10, 'notNull' => true, 'type' => 'int']],
+			['name' => 'subject', 'data' => ['default' => '', 'length' => 255, 'notNull' => true, 'type' => 'varchar']],
+			['name' => 'message', 'data' => ['type' => 'mediumtext']],
+			['name' => 'metaData', 'data' => ['type' => 'mediumtext']],
+			['name' => 'time', 'data' => ['default' => 0, 'length' => 10, 'notNull' => true, 'type' => 'int']],
+			['name' => 'userID', 'data' => ['default' => '', 'length' => 10, 'type' => 'int']],
+			['name' => 'username', 'data' => ['default' => '', 'length' => 255,'notNull' => true, 'type' => 'varchar']],
+			['name' => 'languageID', 'data' => ['default' => 0, 'length' => 10, 'notNull' => true, 'type' => 'int']]
+		];
 		
-		$indices = array(
-			array('name' => 'objectAndLanguage', 'data' => array('columns' => 'objectID, languageID', 'type' => 'UNIQUE')),
-			array('name' => 'fulltextIndex', 'data' => array('columns' => 'subject, message, metaData', 'type' => 'FULLTEXT')),
-			array('name' => 'fulltextIndexSubjectOnly', 'data' => array('columns' => 'subject', 'type' => 'FULLTEXT')),
-			array('name' => 'language', 'data' => array('columns' => 'languageID', 'type' => 'KEY')),
-			array('name' => 'user', 'data' => array('columns' => 'userID, time', 'type'=> 'KEY'))
-		);
+		$indices = [
+			['name' => 'objectAndLanguage', 'data' => ['columns' => 'objectID, languageID', 'type' => 'UNIQUE']],
+			['name' => 'fulltextIndex', 'data' => ['columns' => 'subject, message, metaData', 'type' => 'FULLTEXT']],
+			['name' => 'fulltextIndexSubjectOnly', 'data' => ['columns' => 'subject', 'type' => 'FULLTEXT']],
+			['name' => 'language', 'data' => ['columns' => 'languageID', 'type' => 'KEY']],
+			['name' => 'user', 'data' => ['columns' => 'userID, time', 'type'=> 'KEY']]
+		];
 		
 		WCF::getDB()->getEditor()->createTable($tableName, $columns, $indices);
 		
@@ -114,10 +114,10 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 					(packageID, sqlTable)
 			VALUES		(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectType->packageID,
 			$tableName
-		));
+		]);
 		
 		return true;
 	}

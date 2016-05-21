@@ -20,10 +20,10 @@ class ACLOptionCategoryCacheBuilder extends AbstractCacheBuilder {
 		$list = new ACLOptionCategoryList();
 		$list->readObjects();
 		
-		$data = array();
+		$data = [];
 		foreach ($list as $aclOptionCategory) {
 			if (!isset($data[$aclOptionCategory->objectTypeID])) {
-				$data[$aclOptionCategory->objectTypeID] = array();
+				$data[$aclOptionCategory->objectTypeID] = [];
 			}
 			
 			$data[$aclOptionCategory->objectTypeID][$aclOptionCategory->categoryName] = $aclOptionCategory;

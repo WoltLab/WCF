@@ -22,13 +22,13 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	 * list of available object types
 	 * @var	array
 	 */
-	protected $availableObjectTypes = array();
+	protected $availableObjectTypes = [];
 	
 	/**
 	 * list of application packages
 	 * @var	Package[]
 	 */
-	protected static $packages = array();
+	protected static $packages = [];
 	
 	/**
 	 * search index manager object
@@ -94,7 +94,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 				$className = 'wcf\system\search\mysql\MysqlSearchIndexManager';
 			}
 			
-			$this->searchIndexManager = call_user_func(array($className, 'getInstance'));
+			$this->searchIndexManager = call_user_func([$className, 'getInstance']);
 		}
 		
 		return $this->searchIndexManager;
@@ -174,7 +174,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 			if (!empty($tableName)) {
 				if (empty(self::$packages)) {
 					$packageList = new PackageList();
-					$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+					$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
 					$packageList->readObjects();
 					
 					self::$packages = $packageList->getObjects();

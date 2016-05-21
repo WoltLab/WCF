@@ -138,7 +138,7 @@ class Package extends DatabaseObject {
 		if ($this->requiredPackages === null) {
 			self::loadRequirements();
 			
-			$this->requiredPackages = array();
+			$this->requiredPackages = [];
 			if (isset(self::$requirements[$this->packageID])) {
 				foreach (self::$requirements[$this->packageID] as $packageID) {
 					$this->requiredPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
@@ -181,7 +181,7 @@ class Package extends DatabaseObject {
 		if ($this->dependentPackages === null) {
 			self::loadRequirements();
 			
-			$this->dependentPackages = array();
+			$this->dependentPackages = [];
 			foreach (self::$requirements as $packageID => $requiredPackageIDs) {
 				if (in_array($this->packageID, $requiredPackageIDs)) {
 					$this->dependentPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
@@ -213,11 +213,11 @@ class Package extends DatabaseObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
 			
-			self::$requiredPackageIDs = array();
-			self::$requirements = array();
+			self::$requiredPackageIDs = [];
+			self::$requirements = [];
 			while ($row = $statement->fetchArray()) {
 				if (!isset(self::$requirements[$row['packageID']])) {
-					self::$requirements[$row['packageID']] = array();
+					self::$requirements[$row['packageID']] = [];
 				}
 				
 				self::$requirements[$row['packageID']][] = $row['requirement'];
@@ -240,7 +240,7 @@ class Package extends DatabaseObject {
 			FROM	wcf".WCF_N."_package
 			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($package));
+		$statement->execute([$package]);
 		
 		return $statement->fetchSingleColumn() > 0;
 	}

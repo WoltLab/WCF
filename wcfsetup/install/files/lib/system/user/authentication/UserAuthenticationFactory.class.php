@@ -38,7 +38,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 			throw new SystemException("'" . $this->className . "' does not implement 'wcf\system\user\authentication\IUserAuthentication'");
 		}
 		
-		$this->userAuthentication = call_user_func(array($this->className, 'getInstance'));
+		$this->userAuthentication = call_user_func([$this->className, 'getInstance']);
 	}
 	
 	/**

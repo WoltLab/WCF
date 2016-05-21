@@ -24,7 +24,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	 * list of object types
 	 * @var	ObjectType[]
 	 */
-	public $objectTypes = array();
+	public $objectTypes = [];
 	
 	/**
 	 * object type id

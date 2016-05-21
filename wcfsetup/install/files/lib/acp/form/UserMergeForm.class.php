@@ -25,7 +25,7 @@ class UserMergeForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canEditUser');
+	public $neededPermissions = ['admin.user.canEditUser'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
@@ -36,13 +36,13 @@ class UserMergeForm extends AbstractForm {
 	 * ids of the relevant users
 	 * @var	integer[]
 	 */
-	public $userIDs = array();
+	public $userIDs = [];
 	
 	/**
 	 * relevant users
 	 * @var	User[]
 	 */
-	public $users = array();
+	public $users = [];
 	
 	/**
 	 * destination user id
@@ -54,7 +54,7 @@ class UserMergeForm extends AbstractForm {
 	 * ids of merge users (without destination user)
 	 * @var	integer[]
 	 */
-	public $mergedUserIDs = array();
+	public $mergedUserIDs = [];
 	
 	/**
 	 * id of the user clipboard item object type
@@ -110,141 +110,141 @@ class UserMergeForm extends AbstractForm {
 		
 		// poll_option_vote
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE IGNORE	wcf".WCF_N."_poll_option_vote
 			SET		userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// comment
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE	wcf".WCF_N."_comment
 			SET	userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// comment_response
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE	wcf".WCF_N."_comment_response
 			SET	userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// profile comments
 		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.user.profileComment');
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("objectTypeID = ?", array($objectType->objectTypeID));
-		$conditions->add("objectID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("objectTypeID = ?", [$objectType->objectTypeID]);
+		$conditions->add("objectID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE	wcf".WCF_N."_comment
 			SET	objectID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// like (userID)
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE IGNORE	wcf".WCF_N."_like
 			SET		userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		// like (objectUserID)
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("objectUserID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("objectUserID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE	wcf".WCF_N."_like
 			SET	objectUserID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// like_object
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("objectUserID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("objectUserID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE	wcf".WCF_N."_like_object
 			SET	objectUserID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// user_follow (userID)
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
-		$conditions->add("followUserID <> ?", array($this->destinationUserID));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
+		$conditions->add("followUserID <> ?", [$this->destinationUserID]);
 		$sql = "UPDATE IGNORE	wcf".WCF_N."_user_follow
 			SET		userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		// user_follow (followUserID)
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("followUserID IN (?)", array($this->mergedUserIDs));
-		$conditions->add("userID <> ?", array($this->destinationUserID));
+		$conditions->add("followUserID IN (?)", [$this->mergedUserIDs]);
+		$conditions->add("userID <> ?", [$this->destinationUserID]);
 		$sql = "UPDATE IGNORE	wcf".WCF_N."_user_follow
 			SET		followUserID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// user_ignore (userID)
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
-		$conditions->add("ignoreUserID <> ?", array($this->destinationUserID));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
+		$conditions->add("ignoreUserID <> ?", [$this->destinationUserID]);
 		$sql = "UPDATE IGNORE	wcf".WCF_N."_user_ignore
 			SET		userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		// user_ignore (ignoreUserID)
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("ignoreUserID IN (?)", array($this->mergedUserIDs));
-		$conditions->add("userID <> ?", array($this->destinationUserID));
+		$conditions->add("ignoreUserID IN (?)", [$this->mergedUserIDs]);
+		$conditions->add("userID <> ?", [$this->destinationUserID]);
 		$sql = "UPDATE IGNORE	wcf".WCF_N."_user_ignore
 			SET		ignoreUserID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// user_object_watch
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE IGNORE	wcf".WCF_N."_user_object_watch
 			SET		userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// user_activity_event
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE	wcf".WCF_N."_user_activity_event
 			SET	userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// attachments
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE	wcf".WCF_N."_attachment
 			SET	userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// modification_log
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$conditions->add("userID IN (?)", [$this->mergedUserIDs]);
 		$sql = "UPDATE	wcf".WCF_N."_modification_log
 			SET	userID = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
 		// delete merged users
 		$action = new UserAction($this->mergedUserIDs, 'delete');
@@ -267,10 +267,10 @@ class UserMergeForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'users' => $this->users,
 			'userIDs' => $this->userIDs,
 			'destinationUserID' => $this->destinationUserID
-		));
+		]);
 	}
 }

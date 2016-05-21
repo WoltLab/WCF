@@ -27,13 +27,13 @@ abstract class AbstractAction implements IAction {
 	 * needed modules to execute this action
 	 * @var	string[]
 	 */
-	public $neededModules = array();
+	public $neededModules = [];
 	
 	/**
 	 * needed permissions to execute this action
 	 * @var	string[]
 	 */
-	public $neededPermissions = array();
+	public $neededPermissions = [];
 	
 	/**
 	 * @see	\wcf\form\IAction::__run()

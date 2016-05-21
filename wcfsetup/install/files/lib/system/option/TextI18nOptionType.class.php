@@ -27,11 +27,11 @@ class TextI18nOptionType extends TextOptionType {
 	public function getFormElement(Option $option, $value) {
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'inputType' => $this->inputType,
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textI18nOptionType');
 	}
 	

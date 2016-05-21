@@ -151,10 +151,10 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'] as $labelIDs) {
 			foreach ($labelIDs as $labelID) {
-				$statement->execute(array(
+				$statement->execute([
 					$showOrder++,
 					$labelID
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();

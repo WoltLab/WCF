@@ -16,9 +16,9 @@ class SofortUeberweisungPaymentMethod extends AbstractPaymentMethod {
 	 * @see	\wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
 	 */
 	public function getSupportedCurrencies() {
-		return array(
+		return [
 			'EUR' // Euro
-		);
+		];
 	}
 	
 	/**

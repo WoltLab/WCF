@@ -19,8 +19,8 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
-		$attributes = array();
-		$data = array('bbcodes' => array(), 'highlighters' => array());
+		$attributes = [];
+		$data = ['bbcodes' => [], 'highlighters' => []];
 		
 		// get attributes
 		$sql = "SELECT		attribute.*, bbcode.bbcodeTag
@@ -32,7 +32,7 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-			if (!isset($attributes[$row['bbcodeTag']])) $attributes[$row['bbcodeTag']] = array();
+			if (!isset($attributes[$row['bbcodeTag']])) $attributes[$row['bbcodeTag']] = [];
 			
 			$attributes[$row['bbcodeTag']][$row['attributeNo']] = new BBCodeAttribute(null, $row);
 		}
@@ -44,7 +44,7 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-			$row['attributes'] = (isset($attributes[$row['bbcodeTag']]) ? $attributes[$row['bbcodeTag']] : array());
+			$row['attributes'] = (isset($attributes[$row['bbcodeTag']]) ? $attributes[$row['bbcodeTag']] : []);
 			$data['bbcodes'][$row['bbcodeTag']] = new BBCode(null, $row);
 		}
 		

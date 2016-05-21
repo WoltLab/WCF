@@ -21,7 +21,7 @@ class CaptchaQuestionListPage extends MultipleLinkPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.captcha.canManageCaptchaQuestion');
+	public $neededPermissions = ['admin.captcha.canManageCaptchaQuestion'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

@@ -61,9 +61,9 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 		
 		$this->parseController();
 		
-		$linkParameters = array(
+		$linkParameters = [
 			'application' => $this->application
-		);
+		];
 		
 		// links of top option category menu items need the id of the option
 		// category

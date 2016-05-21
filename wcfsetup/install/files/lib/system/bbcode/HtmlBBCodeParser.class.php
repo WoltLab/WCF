@@ -63,7 +63,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 		$buffer =& $this->parsedText;
 		
 		// stack of buffered tags
-		$bufferedTagStack = array();
+		$bufferedTagStack = [];
 		
 		// loop through the tags
 		$i = -1;

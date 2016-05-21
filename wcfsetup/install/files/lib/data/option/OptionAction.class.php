@@ -21,22 +21,22 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.configuration.canEditOption');
+	protected $permissionsCreate = ['admin.configuration.canEditOption'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.configuration.canEditOption');
+	protected $permissionsDelete = ['admin.configuration.canEditOption'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.configuration.canEditOption');
+	protected $permissionsUpdate = ['admin.configuration.canEditOption'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'import', 'update', 'updateAll');
+	protected $requireACP = ['create', 'delete', 'import', 'update', 'updateAll'];
 	
 	/**
 	 * Validates permissions and parameters.
@@ -57,7 +57,7 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	 */
 	public function import() {
 		// create data
-		call_user_func(array($this->className, 'import'), $this->parameters['data']);
+		call_user_func([$this->className, 'import'], $this->parameters['data']);
 	}
 	
 	/**
@@ -65,6 +65,6 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	 */
 	public function updateAll() {
 		// create data
-		call_user_func(array($this->className, 'updateAll'), $this->parameters['data']);
+		call_user_func([$this->className, 'updateAll'], $this->parameters['data']);
 	}
 }

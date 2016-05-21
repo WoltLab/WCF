@@ -27,7 +27,7 @@ class GithubAuthAction extends AbstractAction {
 	/**
 	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
-	public $neededModules = array('GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY');
+	public $neededModules = ['GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY'];
 	
 	/**
 	 * @see	\wcf\action\IAction::execute()
@@ -39,11 +39,11 @@ class GithubAuthAction extends AbstractAction {
 		if (isset($_GET['code'])) {
 			try {
 				// fetch access_token
-				$request = new HTTPRequest('https://github.com/login/oauth/access_token', array(), array(
+				$request = new HTTPRequest('https://github.com/login/oauth/access_token', [], [
 					'client_id' => StringUtil::trim(GITHUB_PUBLIC_KEY),
 					'client_secret' => StringUtil::trim(GITHUB_PRIVATE_KEY),
 					'code' => $_GET['code']
-				));
+				]);
 				$request->execute();
 				$reply = $request->getReply();
 				
@@ -82,7 +82,7 @@ class GithubAuthAction extends AbstractAction {
 			if (!$user->userID) {
 				$user = $this->getUser($data['access_token']);
 				$userEditor = new UserEditor($user);
-				$userEditor->update(array('authData' => 'github:'.$userData['id']));
+				$userEditor->update(['authData' => 'github:'.$userData['id']]);
 			}
 			
 			if ($user->userID) {
@@ -95,7 +95,7 @@ class GithubAuthAction extends AbstractAction {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
 						$password = StringUtil::getRandomID();
 						$userEditor = new UserEditor($user);
-						$userEditor->update(array('password' => $password));
+						$userEditor->update(['password' => $password]);
 						
 						// reload user to retrieve salt
 						$user = new User($user->userID);

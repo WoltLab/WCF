@@ -21,12 +21,12 @@ class PaidSubscriptionUserListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -36,7 +36,7 @@ class PaidSubscriptionUserListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('subscriptionUserID', 'userID', 'subscriptionID', 'startDate', 'endDate');
+	public $validSortFields = ['subscriptionUserID', 'userID', 'subscriptionID', 'startDate', 'endDate'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -49,7 +49,7 @@ class PaidSubscriptionUserListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add('isActive = ?', array(1));
+		$this->objectList->getConditionBuilder()->add('isActive = ?', [1]);
 		$this->objectList->sqlSelects = 'user_table.username, paid_subscription.title';
 		$this->objectList->sqlJoins = "LEFT JOIN wcf".WCF_N."_user user_table ON (user_table.userID = paid_subscription_user.userID)";
 		$this->objectList->sqlJoins .= " LEFT JOIN wcf".WCF_N."_paid_subscription paid_subscription ON (paid_subscription.subscriptionID = paid_subscription_user.subscriptionID)";

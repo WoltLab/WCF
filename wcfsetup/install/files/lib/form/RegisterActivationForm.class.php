@@ -96,7 +96,7 @@ class RegisterActivationForm extends AbstractForm {
 		parent::save();
 		
 		// enable user
-		$this->objectAction = new UserAction(array($this->user), 'enable', array('skipNotification' => true));
+		$this->objectAction = new UserAction([$this->user], 'enable', ['skipNotification' => true]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -111,10 +111,10 @@ class RegisterActivationForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'username' => $this->username,
 			'activationCode' => $this->activationCode
-		));
+		]);
 	}
 	
 	/**

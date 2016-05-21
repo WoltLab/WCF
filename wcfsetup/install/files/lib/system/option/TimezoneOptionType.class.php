@@ -20,16 +20,16 @@ class TimezoneOptionType extends AbstractOptionType {
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		$timezoneOptions = array();
+		$timezoneOptions = [];
 		foreach (DateUtil::getAvailableTimezones() as $timezone) {
 			$timezoneOptions[$timezone] = WCF::getLanguage()->get('wcf.date.timezone.'.str_replace('/', '.', strtolower($timezone)));
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'selectOptions' => $timezoneOptions,
 			'value' => ($value ?: TIMEZONE)
-		));
+		]);
 		return WCF::getTPL()->fetch('selectOptionType');
 	}
 	

@@ -44,6 +44,6 @@ class DateUserOptionOutput implements IUserOptionOutput {
 		if (isset($optionValue[1])) $month = intval($optionValue[1]);
 		if (isset($optionValue[2])) $day = intval($optionValue[2]);
 		
-		return array('year' => $year, 'month' => $month, 'day' => $day);
+		return ['year' => $year, 'month' => $month, 'day' => $day];
 	}
 }

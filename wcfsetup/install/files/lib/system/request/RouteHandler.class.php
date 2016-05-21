@@ -69,7 +69,7 @@ class RouteHandler extends SingletonFactory {
 	 * list of available routes
 	 * @var	IRoute[]
 	 */
-	protected $routes = array();
+	protected $routes = [];
 	
 	/**
 	 * parsed route data
@@ -263,7 +263,7 @@ class RouteHandler extends SingletonFactory {
 	 * @param	array		$removeComponents
 	 * @return	string
 	 */
-	public static function getPath(array $removeComponents = array()) {
+	public static function getPath(array $removeComponents = []) {
 		if (empty(self::$path)) {
 			self::$path = FileUtil::addTrailingSlash(dirname($_SERVER['SCRIPT_NAME']));
 		}
@@ -368,7 +368,7 @@ class RouteHandler extends SingletonFactory {
 	 */
 	protected function loadDefaultControllers() {
 		if ($this->defaultControllers === null) {
-			$this->defaultControllers = array();
+			$this->defaultControllers = [];
 			
 			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 				$app = WCF::getApplicationObject($application);

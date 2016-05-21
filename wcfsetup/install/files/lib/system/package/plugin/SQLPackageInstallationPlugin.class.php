@@ -34,7 +34,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			// replace app1_ with app{WCF_N}_ in the table names for
 			// all applications
 			$packageList = new PackageList();
-			$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+			$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
 			$packageList->readObjects();
 			foreach ($packageList as $package) {
 				$abbreviation = Package::getAbbreviation($package->package);
@@ -46,8 +46,8 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$parser = new PackageInstallationSQLParser($queries, $this->installation->getPackage(), $this->installation->getAction());
 			$conflicts = $parser->test();
 			if (!empty($conflicts) && (isset($conflicts['CREATE TABLE']) || isset($conflicts['DROP TABLE']))) {
-				$unknownCreateTable = isset($conflicts['CREATE TABLE']) ? $conflicts['CREATE TABLE'] : array();
-				$unknownDropTable = isset($conflicts['DROP TABLE']) ? $conflicts['DROP TABLE'] : array();
+				$unknownCreateTable = isset($conflicts['CREATE TABLE']) ? $conflicts['CREATE TABLE'] : [];
+				$unknownDropTable = isset($conflicts['DROP TABLE']) ? $conflicts['DROP TABLE'] : [];
 				
 				$errorMessage = "Can't";
 				if (!empty($unknownDropTable)) {
@@ -90,8 +90,8 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			WHERE		packageID = ?
 			ORDER BY	sqlIndex DESC, sqlColumn DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
-		$entries = array();
+		$statement->execute([$this->installation->getPackageID()]);
+		$entries = [];
 		while ($row = $statement->fetchArray()) {
 			$entries[] = $row;
 		}

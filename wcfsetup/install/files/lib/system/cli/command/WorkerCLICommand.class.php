@@ -32,15 +32,15 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 	 * Initializes the argument parser.
 	 */
 	public function __construct() {
-		$this->argv = new ArgvParser(array(
+		$this->argv = new ArgvParser([
 			'l|list' => CLIWCF::getLanguage()->get('wcf.cli.worker.list'),
 			'setParameter=s' => CLIWCF::getLanguage()->get('wcf.cli.worker.setParameter')
-		));
-		$this->argv->setOptions(array(
+		]);
+		$this->argv->setOptions([
 			ArgvParser::CONFIG_FREEFORM_FLAGS => true,
 			ArgvParser::CONFIG_PARSEALL => false,
 			ArgvParser::CONFIG_CUMULATIVE_PARAMETERS => true
-		));
+		]);
 	}
 	
 	/**
@@ -87,12 +87,12 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		
 		// parse parameters
 		$options = $this->argv->getOptions();
-		$parameters = array();
+		$parameters = [];
 		foreach ($options as $option) {
 			$value = $this->argv->getOption($option);
 			if ($option === 'setParameter') {
 				if (!is_array($value)) {
-					$value = array($value);
+					$value = [$value];
 				}
 				
 				foreach ($value as $parameter) {
@@ -110,9 +110,9 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		$worker->getProgress(); // make sure objects are counted
 		
 		// initialize progressbar
-		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
+		$progressbar = new ProgressBar(new ConsoleProgressBar([
 			'width' => CLIWCF::getTerminal()->getWidth()
-		)));
+		]));
 		$progress = 0;
 		for ($i = 0; $progress < 100; $i++) {
 			$worker->setLoopCount($i);
@@ -140,12 +140,12 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		$directory = DirectoryUtil::getInstance(WCF_DIR.'lib/system/worker/');
 		$workerList = $directory->getFiles(SORT_ASC, new Regex('Worker\.class\.php$'));
 		
-		$table = array(
-			array(
+		$table = [
+			[
 				'Class',
 				'Description'
-			)
-		);
+			]
+		];
 		foreach ($workerList as $worker) {
 			$class = 'wcf\system\worker\\'.basename($worker, '.class.php');
 			if (!class_exists($class) && !interface_exists($class)) {
@@ -168,10 +168,10 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 				}
 			}
 			
-			$table[] = array(
+			$table[] = [
 				basename($worker, '.class.php'),
 				$comment
-			);
+			];
 		}
 		
 		return $table;

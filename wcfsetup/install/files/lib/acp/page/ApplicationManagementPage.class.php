@@ -29,7 +29,7 @@ class ApplicationManagementPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.canManageApplication');
+	public $neededPermissions = ['admin.configuration.canManageApplication'];
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()
@@ -47,8 +47,8 @@ class ApplicationManagementPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'applicationList' => $this->applicationList
-		));
+		]);
 	}
 }

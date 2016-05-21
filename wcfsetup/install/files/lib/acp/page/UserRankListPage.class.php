@@ -21,12 +21,12 @@ class UserRankListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.rank.canManageRank');
+	public $neededPermissions = ['admin.user.rank.canManageRank'];
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_USER_RANK');
+	public $neededModules = ['MODULE_USER_RANK'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -41,7 +41,7 @@ class UserRankListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$validSortFields
 	 */
-	public $validSortFields = array('rankID', 'groupID', 'requiredPoints', 'rankTitle', 'rankImage', 'requiredGender');
+	public $validSortFields = ['rankID', 'groupID', 'requiredPoints', 'rankTitle', 'rankImage', 'requiredGender'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::show()

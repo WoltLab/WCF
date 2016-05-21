@@ -18,7 +18,7 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('getSearchResultList');
+	protected $requireACP = ['getSearchResultList'];
 	
 	/**
 	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
@@ -31,17 +31,17 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
 	 * @see	\wcf\data\ISearchAction::getSearchResultList()
 	 */
 	public function getSearchResultList() {
-		$data = array();
+		$data = [];
 		$results = ACPSearchHandler::getInstance()->search($this->parameters['data']['searchString']);
 		
 		foreach ($results as $resultList) {
-			$items = array();
+			$items = [];
 			foreach ($resultList as $item) {
-				$items[] = array(
+				$items[] = [
 					'link' => $item->getLink(),
 					'subtitle' => $item->getSubtitle(),
 					'title' => $item->getTitle()
-				);
+				];
 			}
 			
 			foreach ($items as $key => &$item) {
@@ -59,10 +59,10 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
 			}
 			unset($item);
 			
-			$data[] = array(
+			$data[] = [
 				'items' => $items,
 				'title' => $resultList->getTitle()
-			);
+			];
 		}
 		
 		return $data;

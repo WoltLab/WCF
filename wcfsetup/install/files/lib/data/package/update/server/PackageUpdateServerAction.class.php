@@ -22,22 +22,22 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.configuration.package.canEditServer');
+	protected $permissionsCreate = ['admin.configuration.package.canEditServer'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.configuration.package.canEditServer');
+	protected $permissionsDelete = ['admin.configuration.package.canEditServer'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.configuration.package.canEditServer');
+	protected $permissionsUpdate = ['admin.configuration.package.canEditServer'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
 	 * @see	\wcf\data\IToggleAction::validateToggle()
@@ -51,7 +51,7 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 	 */
 	public function toggle() {
 		foreach ($this->objects as $server) {
-			$server->update(array('isDisabled' => ($server->isDisabled) ? 0 : 1));
+			$server->update(['isDisabled' => ($server->isDisabled) ? 0 : 1]);
 		}
 	}
 }

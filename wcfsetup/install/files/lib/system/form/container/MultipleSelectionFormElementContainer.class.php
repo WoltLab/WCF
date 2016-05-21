@@ -16,7 +16,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 	 * container value
 	 * @var	array
 	 */
-	protected $value = array();
+	protected $value = [];
 	
 	/**
 	 * Sets container value.

@@ -42,13 +42,13 @@ class UserFollow extends DatabaseObject {
 			WHERE	userID = ?
 				AND followUserID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$userID,
 			$followUserID
-		));
+		]);
 		
 		$row = $statement->fetchArray();
-		if (!$row) $row = array();
+		if (!$row) $row = [];
 		
 		return new UserFollow(null, $row);
 	}

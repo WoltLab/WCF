@@ -17,7 +17,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	 * list of full quotes for insertation
 	 * @var	string[]
 	 */
-	public $fullQuotes = array();
+	public $fullQuotes = [];
 	
 	/**
 	 * quotable database object
@@ -29,7 +29,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	 * list of quotes (shortened)
 	 * @var	string[]
 	 */
-	public $quotes = array();
+	public $quotes = [];
 	
 	/**
 	 * current iterator index

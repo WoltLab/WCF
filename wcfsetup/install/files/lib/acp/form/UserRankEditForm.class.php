@@ -64,7 +64,7 @@ class UserRankEditForm extends UserRankAddForm {
 		}
 		
 		// update label
-		$this->objectAction = new UserRankAction(array($this->rank), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserRankAction([$this->rank], 'update', ['data' => array_merge($this->additionalFields, [
 			'rankTitle' => $this->rankTitle,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
 			'groupID' => $this->groupID,
@@ -72,7 +72,7 @@ class UserRankEditForm extends UserRankAddForm {
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
 			'requiredGender' => $this->requiredGender
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -80,9 +80,9 @@ class UserRankEditForm extends UserRankAddForm {
 		if ($this->cssClassName != 'custom') $this->customCssClassName = '';
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -115,10 +115,10 @@ class UserRankEditForm extends UserRankAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'rankID' => $this->rankID,
 			'rank' => $this->rank,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

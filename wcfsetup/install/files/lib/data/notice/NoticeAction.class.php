@@ -22,22 +22,22 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('dismiss');
+	protected $allowGuestAccess = ['dismiss'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.notice.canManageNotice');
+	protected $permissionsDelete = ['admin.notice.canManageNotice'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.notice.canManageNotice');
+	protected $permissionsUpdate = ['admin.notice.canManageNotice'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
@@ -76,12 +76,12 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 							(noticeID, userID)
 				VALUES			(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				reset($this->objectIDs),
 				WCF::getUser()->userID
-			));
+			]);
 			
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'dismissedNotices');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'dismissedNotices');
 		}
 		else {
 			$dismissedNotices = WCF::getSession()->getVar('dismissedNotices');
@@ -90,17 +90,17 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 				$dismissedNotices[] = reset($this->objectIDs);
 			}
 			else {
-				$dismissedNotices = array(
+				$dismissedNotices = [
 					reset($this->objectIDs)
-				);
+				];
 			}
 			
 			WCF::getSession()->register('dismissedNotices', serialize($dismissedNotices));
 		}
 		
-		return array(
+		return [
 			'noticeID' => reset($this->objectIDs)
-		);
+		];
 	}
 	
 	/**
@@ -108,9 +108,9 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	 */
 	public function toggle() {
 		foreach ($this->objects as $notice) {
-			$notice->update(array(
+			$notice->update([
 				'isDisabled' => $notice->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	
@@ -170,10 +170,10 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 		$showOrder = $this->parameters['data']['offset'];
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'][0] as $noticeID) {
-			$statement->execute(array(
+			$statement->execute([
 				$showOrder++,
 				$noticeID
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

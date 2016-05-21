@@ -172,7 +172,7 @@ class Zip extends File implements IArchive {
 		}
 		$this->seek(-4, SEEK_CUR);
 		
-		$files = array();
+		$files = [];
 		while ($this->read(4) === self::CENTRAL_DIRECTORY_SIGNATURE) {
 			$data = unpack('vversion/vminVersion/vgeneralPurposeBit/vcompression/vmtime/vmdate', $this->read(12));
 			// calculate timestamp
@@ -213,7 +213,7 @@ class Zip extends File implements IArchive {
 		if ($eof['commentLength'] > 0) $eof['comment'] = $this->read($eof['commentLength']);
 		else $eof['comment'] = '';
 		
-		return array('files' => $files, 'eof' => $eof);
+		return ['files' => $files, 'eof' => $eof];
 	}
 	
 	/**
@@ -318,7 +318,7 @@ class Zip extends File implements IArchive {
 			}
 		}
 		
-		return array('header' => $header, 'content' => $content);
+		return ['header' => $header, 'content' => $content];
 	}
 	
 	/**

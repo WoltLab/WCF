@@ -17,7 +17,7 @@ class NamedUserException extends UserException {
 	 * Shows a styled page with the given error message.
 	 */
 	public function show() {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'name' => get_class($this),
 			'file' => $this->getFile(),
 			'line' => $this->getLine(),
@@ -25,7 +25,7 @@ class NamedUserException extends UserException {
 			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'userException',
 			'templateNameApplication' => 'wcf'
-		));
+		]);
 		WCF::getTPL()->display('userException');
 	}
 }

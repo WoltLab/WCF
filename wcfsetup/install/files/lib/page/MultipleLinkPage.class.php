@@ -218,7 +218,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 		parent::assignVariables();
 		
 		// assign page parameters
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'pageNo' => $this->pageNo,
 			'pages' => $this->pages,
 			'items' => $this->items,
@@ -226,6 +226,6 @@ abstract class MultipleLinkPage extends AbstractPage {
 			'startIndex' => $this->startIndex,
 			'endIndex' => $this->endIndex,
 			'objects' => $this->objectList
-		));
+		]);
 	}
 }

@@ -21,7 +21,7 @@ class PackageUpdateServerListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.package.canEditServer');
+	public $neededPermissions = ['admin.configuration.package.canEditServer'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -31,7 +31,7 @@ class PackageUpdateServerListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('packageUpdateServerID', 'serverURL', 'status', 'errorMessage', 'lastUpdateTime', 'packages');
+	public $validSortFields = ['packageUpdateServerID', 'serverURL', 'status', 'errorMessage', 'lastUpdateTime', 'packages'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

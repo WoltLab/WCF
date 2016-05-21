@@ -58,7 +58,7 @@ abstract class DatabaseEditor {
 	 * @param	array		$columns
 	 * @param	array		$indices
 	 */
-	abstract public function createTable($tableName, $columns, $indices = array());
+	abstract public function createTable($tableName, $columns, $indices = []);
 	
 	/**
 	 * Drops a database table.

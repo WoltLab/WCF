@@ -22,7 +22,7 @@ class UserQuickSearchAction extends AbstractAction {
 	/**
 	 * @see	\wcf\action\AbstractAction::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canEditUser');
+	public $neededPermissions = ['admin.user.canEditUser'];
 	
 	/**
 	 * search mode
@@ -34,7 +34,7 @@ class UserQuickSearchAction extends AbstractAction {
 	 * matches
 	 * @var	integer[]
 	 */
-	public $matches = array();
+	public $matches = [];
 	
 	/**
 	 * results per page
@@ -46,7 +46,7 @@ class UserQuickSearchAction extends AbstractAction {
 	 * shown columns
 	 * @var	string[]
 	 */
-	public $columns = array('registrationDate', 'lastActivityTime');
+	public $columns = ['registrationDate', 'lastActivityTime'];
 	
 	/**
 	 * sort field
@@ -96,7 +96,7 @@ class UserQuickSearchAction extends AbstractAction {
 					ON		(option_value.userID = user_table.userID)
 					WHERE		banned = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
-				$statement->execute(array(1));
+				$statement->execute([1]);
 				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 				
@@ -124,7 +124,7 @@ class UserQuickSearchAction extends AbstractAction {
 					WHERE		activationCode <> ?
 					ORDER BY	user_table.registrationDate DESC";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
-				$statement->execute(array(0));
+				$statement->execute([0]);
 				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 			
@@ -135,7 +135,7 @@ class UserQuickSearchAction extends AbstractAction {
 					ON		(option_value.userID = user_table.userID)
 					WHERE		disableAvatar = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
-				$statement->execute(array(1));
+				$statement->execute([1]);
 				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 					
@@ -146,7 +146,7 @@ class UserQuickSearchAction extends AbstractAction {
 					ON		(option_value.userID = user_table.userID)
 					WHERE		disableSignature = ?";
 				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
-				$statement->execute(array(1));
+				$statement->execute([1]);
 				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 		}
@@ -156,22 +156,22 @@ class UserQuickSearchAction extends AbstractAction {
 		}
 		
 		// store search result in database
-		$data = serialize(array(
+		$data = serialize([
 			'matches' => $this->matches,
 			'itemsPerPage' => $this->itemsPerPage,
 			'columns' => $this->columns
-		));
+		]);
 		
-		$search = SearchEditor::create(array(
+		$search = SearchEditor::create([
 			'userID' => WCF::getUser()->userID,
 			'searchData' => $data,
 			'searchTime' => TIME_NOW,
 			'searchType' => 'users'
-		));
+		]);
 		$this->executed();
 		
 		// forward to result page
-		$url = LinkHandler::getInstance()->getLink('UserList', array('id' => $search->searchID), 'sortField='.rawurlencode($this->sortField).'&sortOrder='.rawurlencode($this->sortOrder));
+		$url = LinkHandler::getInstance()->getLink('UserList', ['id' => $search->searchID], 'sortField='.rawurlencode($this->sortField).'&sortOrder='.rawurlencode($this->sortOrder));
 		HeaderUtil::redirect($url);
 		exit;
 	}

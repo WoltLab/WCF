@@ -17,7 +17,7 @@ class ModerationQueueActivationAction extends ModerationQueueAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('enableContent', 'removeContent');
+	protected $allowGuestAccess = ['enableContent', 'removeContent'];
 	
 	/**
 	 * moderation queue editor object

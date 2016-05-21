@@ -24,7 +24,7 @@ class PackagePage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage');
+	public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
 	
 	/**
 	 * id of the package

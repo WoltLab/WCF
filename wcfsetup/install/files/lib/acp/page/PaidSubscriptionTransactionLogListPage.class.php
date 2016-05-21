@@ -24,12 +24,12 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -44,7 +44,7 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('logID', 'subscriptionUserID', 'userID', 'subscriptionID', 'paymentMethodObjectTypeID', 'logTime', 'transactionID', 'logMessage');
+	public $validSortFields = ['logID', 'subscriptionUserID', 'userID', 'subscriptionID', 'paymentMethodObjectTypeID', 'logTime', 'transactionID', 'logMessage'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -87,13 +87,13 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 		parent::initObjectList();
 		
 		if ($this->transactionID) {
-			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.transactionID LIKE ?', array('%' . $this->transactionID . '%'));
+			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.transactionID LIKE ?', ['%' . $this->transactionID . '%']);
 		}
 		if ($this->username) {
-			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.userID IN (SELECT userID FROM wcf'.WCF_N.'_user WHERE username LIKE ?)', array('%' . $this->username . '%'));
+			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.userID IN (SELECT userID FROM wcf'.WCF_N.'_user WHERE username LIKE ?)', ['%' . $this->username . '%']);
 		}
 		if ($this->subscriptionID) {
-			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.subscriptionID = ?', array($this->subscriptionID));
+			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.subscriptionID = ?', [$this->subscriptionID]);
 		}
 		
 		$this->objectList->sqlSelects = 'user_table.username, paid_subscription.title';
@@ -107,11 +107,11 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'transactionID' => $this->transactionID,
 			'username' => $this->username,
 			'subscriptionID' => $this->subscriptionID,
 			'availableSubscriptions' => PaidSubscriptionCacheBuilder::getInstance()->getData()
-		));
+		]);
 	}
 }

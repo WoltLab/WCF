@@ -32,10 +32,10 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -43,11 +43,11 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		return [
 			'className' => $data['nodeValue'],
 			'pluginName' => $data['attributes']['name'],
 			'priority' => ($this->installation->getPackage()->package == 'com.woltlab.wcf' ? 1 : 0)
-		);
+		];
 	}
 	
 	/**
@@ -66,14 +66,14 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	pluginName = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['pluginName'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

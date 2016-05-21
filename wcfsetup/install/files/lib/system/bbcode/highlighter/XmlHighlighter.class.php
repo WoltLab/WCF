@@ -24,32 +24,32 @@ class XmlHighlighter extends Highlighter {
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
 	 */
-	protected $quotes = array('"');
+	protected $quotes = ['"'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
 	 */
-	protected $singleLineComment = array();
+	protected $singleLineComment = [];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
 	 */
-	protected $commentStart = array("<!--");
+	protected $commentStart = ["<!--"];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
 	 */
-	protected $commentEnd = array("-->");
+	protected $commentEnd = ["-->"];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
-	protected $separators = array("<", ">");
+	protected $separators = ["<", ">"];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
-	protected $operators = array();
+	protected $operators = [];
 	
 	const XML_ATTRIBUTE_NAME = '[a-z0-9](?:(?:(?<!-)-)?[a-z0-9])*';
 	

@@ -68,10 +68,10 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		}
 		
 		if ($this->queue->action == 'install') {
-			WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage'));
+			WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
 		}
 		else {
-			WCF::getSession()->checkPermissions(array('admin.configuration.package.canUpdatePackage'));
+			WCF::getSession()->checkPermissions(['admin.configuration.package.canUpdatePackage']);
 		}
 		
 		$this->installingImportedStyle = WCF::getSession()->getVar('stylePackageImportLocation') !== null;
@@ -98,13 +98,13 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'archive' => $this->packageInstallationDispatcher->getArchive(),
 			'packageValidationArchives' => PackageValidationManager::getInstance()->getPackageValidationArchiveList(),
 			'queue' => $this->queue,
 			'validationPassed' => $this->validationPassed,
 			'installingImportedStyle' => $this->installingImportedStyle
-		));
+		]);
 	}
 	
 	/**

@@ -18,10 +18,10 @@ class SpoilerBBCode extends AbstractBBCode {
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		if ($parser->getOutputType() == 'text/html') {
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'content' => $content,
 				'buttonTitle' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '')
-			));
+			]);
 			return WCF::getTPL()->fetch('spoilerBBCodeTag');
 		}
 		if ($parser->getOutputType() == 'text/simplified-html') {

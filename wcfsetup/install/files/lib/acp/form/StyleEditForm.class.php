@@ -124,8 +124,8 @@ class StyleEditForm extends StyleAddForm {
 			unset($this->variables['overrideScssCustom']);
 		}*/
 		
-		$this->objectAction = new StyleAction(array($this->style), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new StyleAction([$this->style], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
 				'styleVersion' => $this->styleVersion,
@@ -136,10 +136,10 @@ class StyleEditForm extends StyleAddForm {
 				'license' => $this->license,
 				'authorName' => $this->authorName,
 				'authorURL' => $this->authorURL
-			)),
+			]),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
-		));
+		]);
 		$this->objectAction->executeAction();
 		
 		// save description
@@ -162,10 +162,10 @@ class StyleEditForm extends StyleAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'style' => $this->style,
 			'styleID' => $this->styleID
-		));
+		]);
 	}
 }

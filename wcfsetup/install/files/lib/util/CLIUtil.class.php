@@ -21,7 +21,7 @@ final class CLIUtil {
 	 * @return	string
 	 */
 	public static function generateTable(array $table) {
-		$columnSize = array();
+		$columnSize = [];
 		foreach ($table as $row) {
 			$i = 0;
 			foreach ($row as $column) {

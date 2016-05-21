@@ -19,7 +19,7 @@ class FileReader {
 	 * http options
 	 * @var	array
 	 */
-	protected $options = array(
+	protected $options = [
 		'filename' => '',
 		'mimeType' => 'application/octet-stream',
 		'filesize' => 0,
@@ -28,13 +28,13 @@ class FileReader {
 		'lastModificationTime' => 0,
 		'expirationDate' => 0,
 		'maxAge' => 0
-	);
+	];
 	
 	/**
 	 * list of header items
 	 * @var	array
 	 */
-	protected $headers = array();
+	protected $headers = [];
 	
 	/**
 	 * start byte

@@ -96,11 +96,11 @@ class Notice extends DatabaseObject implements IRouteController {
 						FROM	wcf".WCF_N."_notice_dismissed
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(
+					$statement->execute([
 						WCF::getUser()->userID
-					));
+					]);
 					
-					$noticeIDs = array();
+					$noticeIDs = [];
 					while ($noticeID = $statement->fetchColumn()) {
 						$noticeIDs[] = $noticeID;
 						

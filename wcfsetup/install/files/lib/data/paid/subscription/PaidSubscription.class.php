@@ -47,7 +47,7 @@ class PaidSubscription extends DatabaseObject {
 	 */
 	public function getPurchaseButtons() {
 		$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.payment.type', 'com.woltlab.wcf.payment.type.paidSubscription');
-		$buttons = array();
+		$buttons = [];
 		foreach (PaymentMethodHandler::getInstance()->getPaymentMethods() as $paymentMethod) {
 			// check if payment method supports recurring payments
 			if ($this->isRecurring && !$paymentMethod->supportsRecurringPayments()) continue;

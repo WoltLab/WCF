@@ -30,10 +30,10 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 */
 	public function getFormElement(Option $option, $value) {
 		$availableOptions = $option->parseMultipleEnableOptions();
-		$options = array(
-			'disableOptions' => array(),
-			'enableOptions' => array()
-		);
+		$options = [
+			'disableOptions' => [],
+			'enableOptions' => []
+		];
 		
 		foreach ($availableOptions as $key => $enableOptions) {
 			$optionData = Option::parseEnableOptions($enableOptions);
@@ -42,13 +42,13 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 			$options['enableOptions'][$key] = $optionData['enableOptions'];
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch($this->templateName);
 	}
 	
@@ -80,7 +80,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
 		
-		$conditions->add("option_value.userOption".$option->optionID." = ?", array(StringUtil::trim($value)));
+		$conditions->add("option_value.userOption".$option->optionID." = ?", [StringUtil::trim($value)]);
 		return true;
 	}
 	
@@ -88,7 +88,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
-		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', array(StringUtil::trim($value)));
+		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', [StringUtil::trim($value)]);
 	}
 	
 	/**

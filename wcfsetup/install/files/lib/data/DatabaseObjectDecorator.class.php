@@ -84,35 +84,35 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 			throw new SystemException("unknown method '".$name."'");
 		}
 		
-		return call_user_func_array(array($this->object, $name), $arguments);
+		return call_user_func_array([$this->object, $name], $arguments);
 	}
 	
 	/**
 	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
-		return call_user_func(array(static::$baseClass, 'getDatabaseTableAlias'));
+		return call_user_func([static::$baseClass, 'getDatabaseTableAlias']);
 	}
 	
 	/**
 	 * @see	\wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
-		return call_user_func(array(static::$baseClass, 'getDatabaseTableName'));
+		return call_user_func([static::$baseClass, 'getDatabaseTableName']);
 	}
 	
 	/**
 	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
 	 */
 	public static function getDatabaseTableIndexIsIdentity() {
-		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexIsIdentity'));
+		return call_user_func([static::$baseClass, 'getDatabaseTableIndexIsIdentity']);
 	}
 	
 	/**
 	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
-		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexName'));
+		return call_user_func([static::$baseClass, 'getDatabaseTableIndexName']);
 	}
 	
 	/**

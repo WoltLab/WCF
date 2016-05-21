@@ -21,7 +21,7 @@ class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * cycle data
 	 * @var	array
 	 */
-	protected $cycles = array();
+	protected $cycles = [];
 	
 	/**
 	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()

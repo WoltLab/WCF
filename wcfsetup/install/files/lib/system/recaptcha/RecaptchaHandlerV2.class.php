@@ -30,7 +30,7 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 			throw new UserInputException('recaptchaString', 'false');
 		}
 		
-		$request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret='.rawurlencode(RECAPTCHA_PRIVATEKEY).'&response='.rawurlencode($response).'&remoteip='.rawurlencode(UserUtil::getIpAddress()), array('timeout' => 10));
+		$request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret='.rawurlencode(RECAPTCHA_PRIVATEKEY).'&response='.rawurlencode($response).'&remoteip='.rawurlencode(UserUtil::getIpAddress()), ['timeout' => 10]);
 		
 		try {
 			$request->execute();

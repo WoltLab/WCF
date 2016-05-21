@@ -45,7 +45,7 @@ class LikeObject extends DatabaseObject {
 	 * list of users who liked this object
 	 * @var	User[]
 	 */
-	protected $users = array();
+	protected $users = [];
 	
 	/**
 	 * @inheritDoc
@@ -110,14 +110,14 @@ class LikeObject extends DatabaseObject {
 			WHERE	objectTypeID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$objectID
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		if (!$row) {
-			$row = array();
+			$row = [];
 		}
 		
 		return new LikeObject(null, $row);

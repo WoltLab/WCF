@@ -23,7 +23,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('getSearchResultList');
+	protected $allowGuestAccess = ['getSearchResultList'];
 	
 	/**
 	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
@@ -36,7 +36,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	 * @see	\wcf\data\ISearchAction::getSearchResultList()
 	 */
 	public function getSearchResultList() {
-		$list = array();
+		$list = [];
 		
 		// find users
 		$sql = "SELECT		*
@@ -44,12 +44,12 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 			WHERE		keyword LIKE ?
 			ORDER BY	searches DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 10);
-		$statement->execute(array($this->parameters['data']['searchString'].'%'));
+		$statement->execute([$this->parameters['data']['searchString'].'%']);
 		while ($row = $statement->fetchArray()) {
-			$list[] = array(
+			$list[] = [
 				'label' => $row['keyword'],
 				'objectID' => $row['keywordID']
-			);
+			];
 		}
 		
 		return $list;

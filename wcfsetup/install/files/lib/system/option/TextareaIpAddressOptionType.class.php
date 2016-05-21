@@ -33,10 +33,10 @@ class TextareaIpAddressOptionType extends TextOptionType {
 			$value = implode("\n", $ips);
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textareaOptionType');
 	}
 	

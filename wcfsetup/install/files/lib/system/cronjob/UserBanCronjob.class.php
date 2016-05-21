@@ -28,13 +28,13 @@ class UserBanCronjob extends AbstractCronjob {
 				AND banExpires <> ?
 				AND banExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			0,
 			1,
 			0,
 			TIME_NOW
-		));
+		]);
 		
 		// enable avatars
 		$sql = "UPDATE	wcf".WCF_N."_user
@@ -44,13 +44,13 @@ class UserBanCronjob extends AbstractCronjob {
 				AND disableAvatarExpires <> ?
 				AND disableAvatarExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			0,
 			1,
 			0,
 			TIME_NOW
-		));
+		]);
 		
 		// enable signatures
 		$sql = "UPDATE	wcf".WCF_N."_user
@@ -60,12 +60,12 @@ class UserBanCronjob extends AbstractCronjob {
 				AND disableSignatureExpires <> ?
 				AND disableSignatureExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			0,
 			1,
 			0,
 			TIME_NOW
-		));
+		]);
 	}
 }

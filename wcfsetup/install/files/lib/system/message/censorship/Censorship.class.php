@@ -18,7 +18,7 @@ class Censorship extends SingletonFactory {
 	 * censored words
 	 * @var	string[]
 	 */
-	protected $censoredWords = array();
+	protected $censoredWords = [];
 	
 	/**
 	 * word delimiters
@@ -30,13 +30,13 @@ class Censorship extends SingletonFactory {
 	 * list of words
 	 * @var	string[]
 	 */
-	protected $words = array();
+	protected $words = [];
 	
 	/**
 	 * list of matches
 	 * @var	array
 	 */
-	protected $matches = array();
+	protected $matches = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -52,7 +52,7 @@ class Censorship extends SingletonFactory {
 				continue;
 			}
 			
-			$displayedCensoredWord = str_replace(array('~', '*'), '', $censoredWord);
+			$displayedCensoredWord = str_replace(['~', '*'], '', $censoredWord);
 			
 			// check if censored word contains at least one delimiter
 			if (preg_match('!'.$this->delimiters.'+!', $displayedCensoredWord)) {
@@ -75,7 +75,7 @@ class Censorship extends SingletonFactory {
 	 */
 	public function test($text) {
 		// reset values
-		$this->matches = $this->words = array();
+		$this->matches = $this->words = [];
 		
 		// string to lower case
 		$text = mb_strtolower($text);

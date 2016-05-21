@@ -22,7 +22,7 @@ class UserGroupListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canEditGroup', 'admin.user.canDeleteGroup');
+	public $neededPermissions = ['admin.user.canEditGroup', 'admin.user.canDeleteGroup'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -32,7 +32,7 @@ class UserGroupListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('groupID', 'groupName', 'groupType', 'members', 'priority');
+	public $validSortFields = ['groupID', 'groupName', 'groupType', 'members', 'priority'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -81,8 +81,8 @@ class UserGroupListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'deletedGroups' => $this->deletedGroups
-		));
+		]);
 	}
 }

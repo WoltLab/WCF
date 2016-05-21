@@ -126,7 +126,7 @@ final class Regex {
 	 * last matches
 	 * @var	array
 	 */
-	private $matches = array();
+	private $matches = [];
 	
 	/**
 	 * Creates a regex.

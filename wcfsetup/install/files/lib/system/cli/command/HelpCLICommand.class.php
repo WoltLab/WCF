@@ -25,12 +25,12 @@ class HelpCLICommand implements IArgumentedCLICommand {
 	 * Initializes the argument parser.
 	 */
 	public function __construct() {
-		$this->argv = new ArgvParser(array());
-		$this->argv->setOptions(array(
+		$this->argv = new ArgvParser([]);
+		$this->argv->setOptions([
 			ArgvParser::CONFIG_FREEFORM_FLAGS => true,
 			ArgvParser::CONFIG_PARSEALL => false,
 			ArgvParser::CONFIG_CUMULATIVE_PARAMETERS => true
-		));
+		]);
 	}
 	
 	/**
@@ -48,12 +48,12 @@ class HelpCLICommand implements IArgumentedCLICommand {
 		$commands = CLICommandHandler::getCommands();
 		
 		if (!isset($commands[$args[0]])) {
-			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', array('command' => $args[0])), $this->getUsage());
+			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', ['command' => $args[0]]), $this->getUsage());
 		}
 		
 		$command = $commands[$args[0]];
 		if (!($command instanceof IArgumentedCLICommand)) {
-			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.help.noArguments', array('command' => $args[0])), $this->getUsage());
+			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.help.noArguments', ['command' => $args[0]]), $this->getUsage());
 		}
 		
 		CLIWCF::getReader()->println($command->getUsage());

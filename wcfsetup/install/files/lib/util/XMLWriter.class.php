@@ -40,7 +40,7 @@ class XMLWriter {
 	 * @param	string[]	$attributes
 	 * @throws	SystemException
 	 */
-	public function beginDocument($rootElement, $namespace, $schemaLocation, array $attributes = array()) {
+	public function beginDocument($rootElement, $namespace, $schemaLocation, array $attributes = []) {
 		if ($this->activeDocument) {
 			throw new SystemException("Could not begin a new document unless the previous is finished");
 		}
@@ -54,11 +54,11 @@ class XMLWriter {
 		
 		$this->xml->startDocument('1.0', 'UTF-8');
 		$this->startElement($rootElement);
-		$attributes = array_merge($attributes, array(
+		$attributes = array_merge($attributes, [
 			'xmlns' => $namespace,
 			'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
 			'xsi:schemaLocation' => $namespace . ' ' . $schemaLocation
-		));
+		]);
 		$this->writeAttributes($attributes);
 		
 		$this->activeDocument = true;
@@ -96,7 +96,7 @@ class XMLWriter {
 	 * @param	string		$element
 	 * @param	string[]	$attributes
 	 */
-	public function startElement($element, array $attributes = array()) {
+	public function startElement($element, array $attributes = []) {
 		$this->xml->startElement($element);
 		$this->openElements++;
 		
@@ -122,7 +122,7 @@ class XMLWriter {
 	 * @param	string		$cdata
 	 * @param	string[]	$attributes
 	 */
-	public function writeElement($element, $cdata, array $attributes = array()) {
+	public function writeElement($element, $cdata, array $attributes = []) {
 		$this->startElement($element);
 		
 		// write attributes
@@ -143,7 +143,7 @@ class XMLWriter {
 	 * @param	string		$value
 	 */
 	public function writeAttribute($attribute, $value) {
-		$this->writeAttributes(array($attribute => $value));
+		$this->writeAttributes([$attribute => $value]);
 	}
 	
 	/**

@@ -22,17 +22,17 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.paidSubscription.canManageSubscription');
+	protected $permissionsDelete = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.paidSubscription.canManageSubscription');
+	protected $permissionsUpdate = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
@@ -56,7 +56,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 		$subscriptionUser = parent::create();
 		
 		// update group memberships
-		$action = new PaidSubscriptionUserAction(array($subscriptionUser), 'addGroupMemberships');
+		$action = new PaidSubscriptionUserAction([$subscriptionUser], 'addGroupMemberships');
 		$action->executeAction();
 		
 		return $subscriptionUser;
@@ -98,14 +98,14 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 				$endDate = $this->parameters['data']['endDate'];
 			}
 			
-			$subscriptionUser->update(array(
+			$subscriptionUser->update([
 				'endDate' => $endDate,
 				'isActive' => 1
-			));
+			]);
 			
 			if (!$subscriptionUser->isActive) {
 				// update group memberships
-				$action = new PaidSubscriptionUserAction(array($subscriptionUser), 'addGroupMemberships');
+				$action = new PaidSubscriptionUserAction([$subscriptionUser], 'addGroupMemberships');
 				$action->executeAction();
 			}
 		}
@@ -129,10 +129,10 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->objects as $subscriptionUser) {
-			$subscriptionUser->update(array('isActive' => 0));
+			$subscriptionUser->update(['isActive' => 0]);
 			
 			// update group memberships
-			$action = new PaidSubscriptionUserAction(array($subscriptionUser), 'removeGroupMemberships');
+			$action = new PaidSubscriptionUserAction([$subscriptionUser], 'removeGroupMemberships');
 			$action->executeAction();
 		}
 	}
@@ -161,10 +161,10 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->objects as $subscriptionUser) {
-			$subscriptionUser->update(array('isActive' => 1));
+			$subscriptionUser->update(['isActive' => 1]);
 				
 			// update group memberships
-			$action = new PaidSubscriptionUserAction(array($subscriptionUser), 'addGroupMemberships');
+			$action = new PaidSubscriptionUserAction([$subscriptionUser], 'addGroupMemberships');
 			$action->executeAction();
 		}
 	}
@@ -193,18 +193,18 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->objects as $subscriptionUser) {
-			$groupIDs = array();
+			$groupIDs = [];
 			foreach (explode(',', $subscriptionUser->getSubscription()->groupIDs) as $groupID) {
 				if (UserGroup::getGroupByID($groupID) !== null) {
 					$groupIDs[] = $groupID;
 				}
 			}
 			if (!empty($groupIDs)) {
-				$action = new UserAction(array($subscriptionUser->userID), 'addToGroups', array(
+				$action = new UserAction([$subscriptionUser->userID], 'addToGroups', [
 					'groups' => $groupIDs,
 					'deleteOldGroups' => false,
 					'addDefaultGroups' => false
-				));
+				]);
 				$action->executeAction();
 			}
 		}
@@ -219,16 +219,16 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->objects as $subscriptionUser) {
-			$groupIDs = array();
+			$groupIDs = [];
 			foreach (explode(',', $subscriptionUser->getSubscription()->groupIDs) as $groupID) {
 				if (UserGroup::getGroupByID($groupID) !== null) {
 					$groupIDs[] = $groupID;
 				}
 			}
 			if (!empty($groupIDs)) {
-				$action = new UserAction(array($subscriptionUser->userID), 'removeFromGroups', array(
+				$action = new UserAction([$subscriptionUser->userID], 'removeFromGroups', [
 					'groups' => $groupIDs,
-				));
+				]);
 				$action->executeAction();
 			}
 		}

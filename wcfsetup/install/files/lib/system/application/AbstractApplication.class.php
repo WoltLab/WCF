@@ -98,6 +98,6 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	 * @see	\wcf\system\application\IApplication::__callStatic()
 	 */
 	public static function __callStatic($method, array $arguments) {
-		return call_user_func_array(array('wcf\system\WCF', $method), $arguments);
+		return call_user_func_array(['wcf\system\WCF', $method], $arguments);
 	}
 }

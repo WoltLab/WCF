@@ -74,7 +74,7 @@ class UserProfileMenuItem extends DatabaseObject {
 				throw new SystemException("'".$this->className."' does not implement 'wcf\system\menu\user\profile\content\IUserProfileMenuContent'");
 			}
 			
-			$this->contentManager = call_user_func(array($this->className, 'getInstance'));
+			$this->contentManager = call_user_func([$this->className, 'getInstance']);
 		}
 		
 		return $this->contentManager;

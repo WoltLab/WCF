@@ -30,7 +30,7 @@ class BoxListPage extends SortablePage {
 	/**
 	 * @inheritdoc
 	 */
-	public $neededPermissions = array('admin.content.cms.canManageBox');
+	public $neededPermissions = ['admin.content.cms.canManageBox'];
 	
 	/**
 	 * @inheritdoc
@@ -40,7 +40,7 @@ class BoxListPage extends SortablePage {
 	/**
 	 * @inheritdoc
 	 */
-	public $validSortFields = array('boxID', 'name', 'boxType', 'position', 'showOrder');
+	public $validSortFields = ['boxID', 'name', 'boxType', 'position', 'showOrder'];
 	
 	/**
 	 * name
@@ -92,25 +92,25 @@ class BoxListPage extends SortablePage {
 		parent::initObjectList();
 		
 		// hide menu boxes
-		$this->objectList->getConditionBuilder()->add('box.boxType <> ?', array('menu'));
+		$this->objectList->getConditionBuilder()->add('box.boxType <> ?', ['menu']);
 		
 		if (!empty($this->name)) {
-			$this->objectList->getConditionBuilder()->add('box.name LIKE ?', array('%'.$this->name.'%'));
+			$this->objectList->getConditionBuilder()->add('box.name LIKE ?', ['%'.$this->name.'%']);
 		}
 		if (!empty($this->title)) {
-			$this->objectList->getConditionBuilder()->add('box.boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_content WHERE title LIKE ?)', array('%'.$this->title.'%'));
+			$this->objectList->getConditionBuilder()->add('box.boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_content WHERE title LIKE ?)', ['%'.$this->title.'%']);
 		}
 		if (!empty($this->content)) {
-			$this->objectList->getConditionBuilder()->add('box.boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_content WHERE content LIKE ?)', array('%'.$this->content.'%'));
+			$this->objectList->getConditionBuilder()->add('box.boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_content WHERE content LIKE ?)', ['%'.$this->content.'%']);
 		}
 		if (!empty($this->position)) {
-			$this->objectList->getConditionBuilder()->add('box.position = ?', array($this->position));
+			$this->objectList->getConditionBuilder()->add('box.position = ?', [$this->position]);
 		}
 		if ($this->boxType == 'static') {
-			$this->objectList->getConditionBuilder()->add('box.boxType IN (?, ?, ?)', array('text', 'html', 'tpl'));
+			$this->objectList->getConditionBuilder()->add('box.boxType IN (?, ?, ?)', ['text', 'html', 'tpl']);
 		}
 		else if ($this->boxType == 'system') {
-			$this->objectList->getConditionBuilder()->add('box.boxType IN (?)', array('system'));
+			$this->objectList->getConditionBuilder()->add('box.boxType IN (?)', ['system']);
 		}
 	}
 	
@@ -120,13 +120,13 @@ class BoxListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'name' => $this->name,
 			'title' => $this->title,
 			'content' => $this->content,
 			'boxType' => $this->boxType,
 			'position' => $this->position,
 			'availablePositions' => Box::$availablePositions
-		));
+		]);
 	}
 }

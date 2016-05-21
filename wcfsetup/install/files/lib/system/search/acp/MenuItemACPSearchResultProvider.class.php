@@ -19,22 +19,22 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 	 * @see	\wcf\system\search\acp\IACPSearchResultProvider::search()
 	 */
 	public function search($query) {
-		$results = array();
+		$results = [];
 		
 		// search by language item
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
+		$conditions->add("languageID = ?", [WCF::getLanguage()->languageID]);
 		
 		// filter by language item
 		$languageItemsConditions = '';
-		$languageItemsParameters = array();
+		$languageItemsParameters = [];
 		foreach (ACPSearchHandler::getInstance()->getAbbreviations('.acp.menu.link.%') as $abbreviation) {
 			if (!empty($languageItemsConditions)) $languageItemsConditions .= " OR ";
 			$languageItemsConditions .= "languageItem LIKE ?";
 			$languageItemsParameters[] = $abbreviation;
 		}
 		$conditions->add("(".$languageItemsConditions.")", $languageItemsParameters);
-		$conditions->add("languageItemValue LIKE ?", array('%'.$query.'%'));
+		$conditions->add("languageItemValue LIKE ?", ['%'.$query.'%']);
 		
 		$sql = "SELECT		languageItem, languageItemValue
 			FROM		wcf".WCF_N."_language_item
@@ -42,17 +42,17 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 			ORDER BY	languageItemValue ASC";
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
-		$languageItems = array();
+		$languageItems = [];
 		while ($row = $statement->fetchArray()) {
 			$languageItems[$row['languageItem']] = $row['languageItemValue'];
 		}
 		
 		if (empty($languageItems)) {
-			return array();
+			return [];
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("menuItem IN (?)", array(array_keys($languageItems)));
+		$conditions->add("menuItem IN (?)", [array_keys($languageItems)]);
 		$conditions->add("menuItemController <> ''");
 		
 		$sql = "SELECT	*
@@ -70,15 +70,15 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 			}
 			
 			$parentMenuItem = $menuItem->parentMenuItem;
-			$parentMenuItems = array();
+			$parentMenuItems = [];
 			while ($parentMenuItem && isset($menuItems[$parentMenuItem])) {
 				array_unshift($parentMenuItems, $parentMenuItem);
 				
 				$parentMenuItem = $menuItems[$parentMenuItem]->parentMenuItem;
 			}
-			$results[] = new ACPSearchResult($languageItems[$menuItem->menuItem], $menuItem->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', array(
+			$results[] = new ACPSearchResult($languageItems[$menuItem->menuItem], $menuItem->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', [
 				'pieces' => $parentMenuItems
-			)));
+			]));
 		}
 		
 		return $results;

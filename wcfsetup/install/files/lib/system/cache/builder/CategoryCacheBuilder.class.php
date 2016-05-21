@@ -23,13 +23,13 @@ class CategoryCacheBuilder extends AbstractCacheBuilder {
 		$list->sqlOrderBy = "category.showOrder ASC";
 		$list->readObjects();
 		
-		$data = array(
+		$data = [
 			'categories' => $list->getObjects(),
-			'objectTypeCategoryIDs' => array()
-		);
+			'objectTypeCategoryIDs' => []
+		];
 		foreach ($list as $category) {
 			if (!isset($data['objectTypeCategoryIDs'][$category->objectType])) {
-				$data['objectTypeCategoryIDs'][$category->objectType] = array();
+				$data['objectTypeCategoryIDs'][$category->objectType] = [];
 			}
 			
 			$data['objectTypeCategoryIDs'][$category->objectType][] = $category->categoryID;

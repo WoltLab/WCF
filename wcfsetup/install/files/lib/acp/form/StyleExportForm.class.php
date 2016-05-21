@@ -58,7 +58,7 @@ class StyleExportForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.style.canManageStyle');
+	public $neededPermissions = ['admin.style.canManageStyle'];
 	
 	/**
 	 * package identifier
@@ -167,7 +167,7 @@ class StyleExportForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'canExportImages' => $this->canExportImages,
 			'canExportTemplates' => $this->canExportTemplates,
 			'exportAsPackage' => $this->exportAsPackage,
@@ -176,6 +176,6 @@ class StyleExportForm extends AbstractForm {
 			'packageName' => $this->packageName,
 			'style' => $this->style,
 			'styleID' => $this->styleID
-		));
+		]);
 	}
 }

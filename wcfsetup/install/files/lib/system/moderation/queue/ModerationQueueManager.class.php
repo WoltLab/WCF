@@ -27,25 +27,25 @@ class ModerationQueueManager extends SingletonFactory {
 	 * list of definition names by definition id
 	 * @var	string[]
 	 */
-	protected $definitions = array();
+	protected $definitions = [];
 	
 	/**
 	 * list of moderation types
 	 * @var	ObjectType[]
 	 */
-	protected $moderationTypes = array();
+	protected $moderationTypes = [];
 	
 	/**
 	 * list of object type names categorized by type
 	 * @var	integer[][]
 	 */
-	protected $objectTypeNames = array();
+	protected $objectTypeNames = [];
 	
 	/**
 	 * list of object types
 	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -65,7 +65,7 @@ class ModerationQueueManager extends SingletonFactory {
 			}
 			
 			$this->definitions[$definition->definitionID] = $definition->definitionName;
-			$this->objectTypeNames[$definition->definitionName] = array();
+			$this->objectTypeNames[$definition->definitionName] = [];
 			
 			$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes($definition->definitionName);
 			foreach ($objectTypes as $objectType) {
@@ -170,7 +170,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * @return	integer[]
 	 */
 	public function getObjectTypeIDs(array $definitionIDs) {
-		$objectTypeIDs = array();
+		$objectTypeIDs = [];
 		foreach ($definitionIDs as $definitionID) {
 			if (isset($this->definitions[$definitionID])) {
 				foreach ($this->objectTypeNames[$this->definitions[$definitionID]] as $objectTypeID) {
@@ -222,9 +222,9 @@ class ModerationQueueManager extends SingletonFactory {
 			
 			// count outstanding and assigned queues
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("moderation_queue_to_user.userID = ?", array(WCF::getUser()->userID));
-			$conditions->add("moderation_queue_to_user.isAffected = ?", array(1));
-			$conditions->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
+			$conditions->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
+			$conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
+			$conditions->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
 			
 			$sql = "SELECT		COUNT(*)
 				FROM		wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user
@@ -259,10 +259,10 @@ class ModerationQueueManager extends SingletonFactory {
 			
 			// count outstanding and assigned queues
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("moderation_queue_to_user.userID = ?", array(WCF::getUser()->userID));
-			$conditions->add("moderation_queue_to_user.isAffected = ?", array(1));
-			$conditions->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
-			$conditions->add("moderation_queue.time > ?", array(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')));
+			$conditions->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
+			$conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
+			$conditions->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+			$conditions->add("moderation_queue.time > ?", [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]);
 			$conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
 			
 			$sql = "SELECT		COUNT(*)
@@ -293,10 +293,10 @@ class ModerationQueueManager extends SingletonFactory {
 		$queueList->readObjects();
 		
 		if (count($queueList)) {
-			$queues = array();
+			$queues = [];
 			foreach ($queueList as $queue) {
 				if (!isset($queues[$queue->objectTypeID])) {
-					$queues[$queue->objectTypeID] = array();
+					$queues[$queue->objectTypeID] = [];
 				}
 				
 				$queues[$queue->objectTypeID][$queue->queueID] = $queue;
@@ -325,11 +325,11 @@ class ModerationQueueManager extends SingletonFactory {
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($assignments as $queueID => $isAffected) {
-			$statement->execute(array(
+			$statement->execute([
 				$queueID,
 				WCF::getUser()->userID,
 				($isAffected ? 1 : 0)
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -346,24 +346,24 @@ class ModerationQueueManager extends SingletonFactory {
 					AND moderation_queue_to_user.isAffected = ?
 					AND moderation_queue.status <> ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			WCF::getUser()->userID,
 			1,
 			ModerationQueue::STATUS_DONE
-		));
+		]);
 		
-		$queues = array();
+		$queues = [];
 		while ($row = $statement->fetchArray()) {
 			$objectTypeID = $row['objectTypeID'];
 			if (!isset($queues[$objectTypeID])) {
-				$queues[$objectTypeID] = array();
+				$queues[$objectTypeID] = [];
 			}
 			
 			$queues[$objectTypeID][$row['objectID']] = $row['queueID'];
 		}
 		
 		if (!empty($queues)) {
-			$queueIDs = array();
+			$queueIDs = [];
 			foreach ($queues as $objectTypeID => $objectQueues) {
 				$queueIDs = array_merge($queueIDs, $this->getProcessor($this->definitions[$this->objectTypes[$objectTypeID]->definitionID], null, $objectTypeID)->identifyOrphans($objectQueues));
 			}
@@ -380,7 +380,7 @@ class ModerationQueueManager extends SingletonFactory {
 	public function removeOrphans(array $queueIDs) {
 		if (!empty($queueIDs)) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("queueID IN (?)", array($queueIDs));
+			$conditions->add("queueID IN (?)", [$queueIDs]);
 			$sql = "DELETE FROM	wcf".WCF_N."_moderation_queue
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -401,8 +401,8 @@ class ModerationQueueManager extends SingletonFactory {
 			UserStorageHandler::getInstance()->resetAll('unreadModerationCount');
 		}
 		else {
-			UserStorageHandler::getInstance()->reset(array($userID), 'outstandingModerationCount');
-			UserStorageHandler::getInstance()->reset(array($userID), 'unreadModerationCount');
+			UserStorageHandler::getInstance()->reset([$userID], 'outstandingModerationCount');
+			UserStorageHandler::getInstance()->reset([$userID], 'unreadModerationCount');
 		}
 	}
 	
@@ -412,7 +412,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * @return	string[]
 	 */
 	public function getDefinitionNamesByObjectTypeIDs() {
-		$definitionNames = array();
+		$definitionNames = [];
 		foreach ($this->objectTypeNames as $definitionName => $objectTypes) {
 			foreach ($objectTypes as $objectTypeID) {
 				$definitionNames[$objectTypeID] = $definitionName;
@@ -429,7 +429,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * @return	string[]
 	 */
 	public function getDefinitionNamesByObjectType($objectType) {
-		$definitionNames = array();
+		$definitionNames = [];
 		foreach ($this->objectTypeNames as $definitionName => $objectTypes) {
 			if (isset($objectTypes[$objectType])) {
 				$definitionNames[] = $definitionName;

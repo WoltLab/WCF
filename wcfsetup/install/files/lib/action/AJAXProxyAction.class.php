@@ -32,13 +32,13 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	 * list of object ids
 	 * @var	integer[]
 	 */
-	protected $objectIDs = array();
+	protected $objectIDs = [];
 	
 	/**
 	 * additional parameters
 	 * @var	mixed[]
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * @see	\wcf\action\IAction::readParameters()
@@ -81,13 +81,13 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	protected function sendResponse() {
 		// add benchmark and debug data
 		if (ENABLE_BENCHMARK) {
-			$this->response['benchmark'] = array(
+			$this->response['benchmark'] = [
 				'executionTime' => WCF::getBenchmark()->getExecutionTime().'s',
 				'memoryUsage' => WCF::getBenchmark()->getMemoryUsage(),
 				'phpExecution' => StringUtil::formatNumeric((WCF::getBenchmark()->getExecutionTime() - WCF::getBenchmark()->getQueryExecutionTime()) / WCF::getBenchmark()->getExecutionTime() * 100).'%',
 				'sqlExecution' => StringUtil::formatNumeric(WCF::getBenchmark()->getQueryExecutionTime() / WCF::getBenchmark()->getExecutionTime() * 100).'%',
 				'sqlQueries' => WCF::getBenchmark()->getQueryCount()
-			);
+			];
 			
 			if (ENABLE_DEBUG_MODE) {
 				$this->response['benchmark']['items'] = WCF::getBenchmark()->getItems();

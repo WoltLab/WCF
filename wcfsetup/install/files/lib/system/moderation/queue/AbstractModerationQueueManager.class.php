@@ -80,41 +80,41 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	 * @param	integer		$containerID
 	 * @param	array		$additionalData
 	 */
-	protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = array()) {
+	protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = []) {
 		$sql = "SELECT	queueID
 			FROM	wcf".WCF_N."_moderation_queue
 			WHERE	objectTypeID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$objectID
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		if ($row === false) {
-			$objectAction = new ModerationQueueAction(array(), 'create', array(
-				'data' => array(
+			$objectAction = new ModerationQueueAction([], 'create', [
+				'data' => [
 					'objectTypeID' => $objectTypeID,
 					'objectID' => $objectID,
 					'containerID' => $containerID,
 					'userID' => (WCF::getUser()->userID ?: null),
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
-				)
-			));
+				]
+			]);
 			$objectAction->executeAction();
 		}
 		else {
-			$objectAction = new ModerationQueueAction(array($row['queueID']), 'update', array(
-				'data' => array(
+			$objectAction = new ModerationQueueAction([$row['queueID']], 'update', [
+				'data' => [
 					'status' => ModerationQueue::STATUS_OUTSTANDING,
 					'containerID' => $containerID,
 					'userID' => (WCF::getUser()->userID ?: null),
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
-				)
-			));
+				]
+			]);
 			$objectAction->executeAction();
 		}
 		
@@ -129,8 +129,8 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	 */
 	protected function removeEntries($objectTypeID, array $objectIDs) {
 		$queueList = new ModerationQueueList();
-		$queueList->getConditionBuilder()->add("moderation_queue.objectTypeID = ?", array($objectTypeID));
-		$queueList->getConditionBuilder()->add("moderation_queue.objectID IN (?)", array($objectIDs));
+		$queueList->getConditionBuilder()->add("moderation_queue.objectTypeID = ?", [$objectTypeID]);
+		$queueList->getConditionBuilder()->add("moderation_queue.objectID IN (?)", [$objectIDs]);
 		$queueList->readObjects();
 		
 		if (count($queueList)) {

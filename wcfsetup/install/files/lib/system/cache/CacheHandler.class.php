@@ -105,7 +105,7 @@ class CacheHandler extends SingletonFactory {
 	 * @param	array						$parameters
 	 * @return	string
 	 */
-	protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = array()) {
+	protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = []) {
 		$className = explode('\\', get_class($cacheBuilder));
 		$application = array_shift($className);
 		$cacheName = str_replace('CacheBuilder', '', array_pop($className));

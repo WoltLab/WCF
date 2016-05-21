@@ -156,15 +156,15 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			FROM	wcf".WCF_N."_menu_item
 			WHERE	identifier = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['identifier'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**

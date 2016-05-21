@@ -33,10 +33,10 @@ class AbstractCommentImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
-		$comment = CommentEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+		$comment = CommentEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
 		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $comment->commentID);
 		

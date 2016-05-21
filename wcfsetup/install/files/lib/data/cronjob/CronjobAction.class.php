@@ -28,27 +28,27 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.management.canManageCronjob');
+	protected $permissionsCreate = ['admin.management.canManageCronjob'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.management.canManageCronjob');
+	protected $permissionsDelete = ['admin.management.canManageCronjob'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.management.canManageCronjob');
+	protected $permissionsUpdate = ['admin.management.canManageCronjob'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('executeCronjobs');
+	protected $allowGuestAccess = ['executeCronjobs'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'update', 'toggle', 'execute');
+	protected $requireACP = ['create', 'delete', 'update', 'toggle', 'execute'];
 	
 	/**
 	 * @see	\wcf\data\IDeleteAction::validateDelete()
@@ -94,9 +94,9 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 */
 	public function toggle() {
 		foreach ($this->objects as $cronjob) {
-			$cronjob->update(array(
+			$cronjob->update([
 				'isDisabled' => $cronjob->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	
@@ -111,16 +111,16 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 * Executes cronjobs.
 	 */
 	public function execute() {
-		$return = array();
+		$return = [];
 		
 		foreach ($this->objects as $key => $cronjob) {
 			// mark them as pending
-			$cronjob->update(array('state' => Cronjob::PENDING));
+			$cronjob->update(['state' => Cronjob::PENDING]);
 		}
 		
 		foreach ($this->objects as $cronjob) {
 			// it now time for executing
-			$cronjob->update(array('state' => Cronjob::EXECUTING));
+			$cronjob->update(['state' => Cronjob::EXECUTING]);
 			$className = $cronjob->className;
 			$executable = new $className();
 			
@@ -138,20 +138,20 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 				catch (\Exception $exception) { }
 			}
 			
-			CronjobLogEditor::create(array(
+			CronjobLogEditor::create([
 				'cronjobID' => $cronjob->cronjobID,
 				'execTime' => TIME_NOW,
 				'success' => ($exception ? 0 : 1),
 				'error' => ($exception ? $exception->getMessage() : '')
-			));
+			]);
 			
 			// calculate next exec-time
 			$nextExec = $cronjob->getNextExec();
-			$data = array(
+			$data = [
 				'lastExec' => TIME_NOW,
 				'nextExec' => $nextExec, 
 				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
-			);
+			];
 			
 			// cronjob failed
 			if ($exception) {
@@ -180,7 +180,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			// build the return value
 			if ($exception === null && !$cronjob->isDisabled) {
 				$dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
-				$return[$cronjob->cronjobID] = array(
+				$return[$cronjob->cronjobID] = [
 					'time' => $nextExec,
 					'formatted' => str_replace(
 						'%time%', 
@@ -191,11 +191,11 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 							WCF::getLanguage()->get('wcf.date.dateTimeFormat')
 						)
 					)
-				);
+				];
 			}
 			
 			// we are finished
-			$cronjob->update(array('state' => Cronjob::READY));
+			$cronjob->update(['state' => Cronjob::READY]);
 			
 			// throw exception again to show error message
 			if ($exception) {
@@ -218,7 +218,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 */
 	public function executeCronjobs() {
 		// switch session owner to 'system' during execution of cronjobs
-		WCF::getSession()->changeUser(new User(null, array('userID' => 0, 'username' => 'System')), true);
+		WCF::getSession()->changeUser(new User(null, ['userID' => 0, 'username' => 'System']), true);
 		WCF::getSession()->disableUpdate();
 		
 		CronjobScheduler::getInstance()->executeCronjobs();

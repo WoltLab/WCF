@@ -26,7 +26,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 	 * @see	\wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
 	 */
 	public function getSupportedCurrencies() {
-		return array(
+		return [
 			'AUD', // Australian Dollar
 			'BRL', // Brazilian Real
 			'CAD', // Canadian Dollar
@@ -52,7 +52,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 			'THB', // Thai Baht
 			'TRY', // Turkish Lira
 			'USD'  // U.S. Dollar
-		);
+		];
 	}
 	
 	/**
@@ -77,7 +77,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 					<input type="hidden" name="lc" value="'.strtoupper(WCF::getLanguage()->languageCode).'" />
 					<input type="hidden" name="no_note" value="1" />
 					<input type="hidden" name="no_shipping" value="1" />
-					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', array('appendSession' => false))).'" />
+					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', ['appendSession' => false])).'" />
 					<input type="hidden" name="quantity" value="1" />
 					<input type="hidden" name="return" value="'.StringUtil::encodeHTML($returnURL).'" />
 			
@@ -98,7 +98,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 					<input type="hidden" name="lc" value="'.strtoupper(WCF::getLanguage()->languageCode).'" />
 					<input type="hidden" name="no_note" value="1" />
 					<input type="hidden" name="no_shipping" value="1" />
-					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', array('appendSession' => false))).'" />
+					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', ['appendSession' => false])).'" />
 					<input type="hidden" name="quantity" value="1" />
 					<input type="hidden" name="return" value="'.StringUtil::encodeHTML($returnURL).'" />	
 					

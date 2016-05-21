@@ -51,7 +51,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 		// multiselect
 		if (mb_strpos($value, "\n") !== false) {
 			$values = explode("\n", $value);
-			$result = array();
+			$result = [];
 			foreach ($values as $value) {
 				if (isset($options[$value])) {
 					$result[] = $options[$value];

@@ -56,7 +56,7 @@ class ApplicationEditForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.canManageApplication');
+	public $neededPermissions = ['admin.configuration.canManageApplication'];
 	
 	/**
 	 * application package id
@@ -149,11 +149,11 @@ class ApplicationEditForm extends AbstractForm {
 				AND domainPath = ?
 				AND packageID <> ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute(array(
+		$statement->execute([
 			$this->domainName,
 			$this->domainPath,
 			$this->application->packageID
-		));
+		]);
 		$row = $statement->fetchArray();
 		if ($row) {
 			WCF::getTPL()->assign('conflictApplication', PackageCache::getInstance()->getPackage($row['packageID']));
@@ -168,11 +168,11 @@ class ApplicationEditForm extends AbstractForm {
 		parent::save();
 		
 		// save application
-		$this->objectAction = new ApplicationAction(array($this->application->getDecoratedObject()), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new ApplicationAction([$this->application->getDecoratedObject()], 'update', ['data' => array_merge($this->additionalFields, [
 			'cookieDomain' => $this->cookieDomain,
 			'domainName' => $this->domainName,
 			'domainPath' => $this->domainPath
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		$this->saved();
@@ -181,9 +181,9 @@ class ApplicationEditForm extends AbstractForm {
 		ApplicationHandler::rebuild();
 		
 		// show success.
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -192,12 +192,12 @@ class ApplicationEditForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'application' => $this->application,
 			'cookieDomain' => $this->cookieDomain,
 			'domainName' => $this->domainName,
 			'domainPath' => $this->domainPath,
 			'packageID' => $this->packageID
-		));
+		]);
 	}
 }

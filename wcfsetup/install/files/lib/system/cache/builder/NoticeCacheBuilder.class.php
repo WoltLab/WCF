@@ -18,7 +18,7 @@ class NoticeCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected function rebuild(array $parameters) {
 		$noticeList = new NoticeList();
-		$noticeList->getConditionBuilder()->add('isDisabled = ?', array(0));
+		$noticeList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$noticeList->sqlOrderBy = 'showOrder ASC';
 		$noticeList->readObjects();
 		

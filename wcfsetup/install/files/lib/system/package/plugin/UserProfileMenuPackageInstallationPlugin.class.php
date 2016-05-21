@@ -37,10 +37,10 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -53,13 +53,13 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$showOrder = $this->getShowOrder($showOrder);
 		
 		// merge values and default values
-		return array(
+		return [
 			'menuItem' => $data['attributes']['name'],
 			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
 			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : '',
 			'showOrder' => $showOrder,
 			'className' => $data['elements']['classname']
-		);
+		];
 	}
 	
 	/**
@@ -70,14 +70,14 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	menuItem = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['menuItem'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

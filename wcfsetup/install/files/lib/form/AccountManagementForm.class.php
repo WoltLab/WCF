@@ -273,7 +273,7 @@ class AccountManagementForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'password' => $this->password,
 			'email' => $this->email,
 			'confirmEmail' => $this->confirmEmail,
@@ -292,7 +292,7 @@ class AccountManagementForm extends AbstractForm {
 			'facebookDisconnect' => $this->facebookDisconnect,
 			'googleConnect' => $this->googleConnect,
 			'googleDisconnect' => $this->googleDisconnect
-		));
+		]);
 	}
 	
 	/**
@@ -311,8 +311,8 @@ class AccountManagementForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$success = array();
-		$updateParameters = array();
+		$success = [];
+		$updateParameters = [];
 		
 		// quit
 		if (WCF::getSession()->getPermission('user.profile.canQuit')) {
@@ -353,13 +353,13 @@ class AccountManagementForm extends AbstractForm {
 				$updateParameters['reactivationCode'] = $activationCode;
 				$updateParameters['newEmail'] = $this->email;
 				
-				$messageData = array(
+				$messageData = [
 					'username' => WCF::getUser()->username,
 					'userID' => WCF::getUser()->userID,
 					'activationCode' => $activationCode
-				);
+				];
 				
-				$mail = new Mail(array(WCF::getUser()->username => $this->email), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
+				$mail = new Mail([WCF::getUser()->username => $this->email], WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
 				$mail->send();
 				$success[] = 'wcf.user.changeEmail.needReactivation';
 			}
@@ -431,12 +431,12 @@ class AccountManagementForm extends AbstractForm {
 			$success[] = 'wcf.user.3rdparty.google.disconnect.success';
 		}
 		
-		$data = array();
+		$data = [];
 		if (!empty($updateParameters) || !empty($this->additionalFields)) {
 			$data['data'] = array_merge($this->additionalFields, $updateParameters);
 		}
 		
-		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', $data);
+		$this->objectAction = new UserAction([WCF::getUser()], 'update', $data);
 		$this->objectAction->executeAction();
 		
 		// update cookie
@@ -449,7 +449,7 @@ class AccountManagementForm extends AbstractForm {
 		
 		$this->saved();
 		
-		$success = array_merge($success, WCF::getTPL()->get('success') ?: array());
+		$success = array_merge($success, WCF::getTPL()->get('success') ?: []);
 		
 		// show success message
 		WCF::getTPL()->assign('success', $success);

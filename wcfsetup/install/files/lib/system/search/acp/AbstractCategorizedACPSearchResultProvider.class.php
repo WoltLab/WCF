@@ -18,7 +18,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * list of categories
 	 * @var	DatabaseObject[]
 	 */
-	protected $categories = array();
+	protected $categories = [];
 	
 	/**
 	 * class name for category list
@@ -30,7 +30,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * list of top category names (level 1 and 2)
 	 * @var	string[]
 	 */
-	protected $topCategories = array();
+	protected $topCategories = [];
 	
 	/**
 	 * Creates a new categorized ACP search result provider.
@@ -112,7 +112,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 		}
 		
 		// create level 2 categories
-		$topCategories = array();
+		$topCategories = [];
 		foreach ($this->categories as $category) {
 			if ($category->parentCategoryName && in_array($category->parentCategoryName, $this->topCategories)) {
 				$topCategories[] = $category->categoryName;

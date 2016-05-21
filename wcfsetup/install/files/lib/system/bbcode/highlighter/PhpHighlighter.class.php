@@ -13,7 +13,7 @@ use wcf\system\Regex;
  * @category	Community Framework
  */
 class PhpHighlighter extends Highlighter {
-	public static $colorToClass = array();
+	public static $colorToClass = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -21,7 +21,7 @@ class PhpHighlighter extends Highlighter {
 	protected function init() {
 		parent::init();
 		
-		$types = array('default' => 'hlKeywords1', 'keyword' => 'hlKeywords2', 'comment' => 'hlComments', 'string' => 'hlQuotes');
+		$types = ['default' => 'hlKeywords1', 'keyword' => 'hlKeywords2', 'comment' => 'hlComments', 'string' => 'hlQuotes'];
 		
 		self::$colorToClass['<span style="color: '.ini_get('highlight.html').'">'] = '<span>';
 		foreach ($types as $type => $class) {

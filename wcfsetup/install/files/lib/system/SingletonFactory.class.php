@@ -17,7 +17,7 @@ abstract class SingletonFactory {
 	 * list of singletons
 	 * @var	SingletonFactory[]
 	 */
-	protected static $__singletonObjects = array();
+	protected static $__singletonObjects = [];
 	
 	/**
 	 * Singletons do not support a public constructor. Override init() if

@@ -18,7 +18,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::getTableNames()
 	 */
 	public function getTableNames() {
-		$existingTables = array();
+		$existingTables = [];
 		$sql = "SELECT		tablename
 			FROM		pg_catalog.pg_tables
 			WHERE		schemaname = 'public'
@@ -35,7 +35,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::getColumns()
 	 */
 	public function getColumns($tableName) {
-		$columns = array();
+		$columns = [];
 		$sql = "SELECT	pg_attribute.*, pg_type.typname, pg_constraint.contype, pg_attribute.adsrc
 			FROM	pg_attribute,
 				pg_class,
@@ -47,16 +47,16 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 				AND pg_attribute.attnum > 0
 				AND pg_class.relname = ?";
 		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute(array($tableName));
+		$statement->execute([$tableName]);
 		while ($row = $statement->fetchArray()) {
-			$columns[] = array('name' => $row['attname'], 'data' => array(
+			$columns[] = ['name' => $row['attname'], 'data' => [
 				'type' => $row['typname'],
 				'length' => $row['attlen'],
 				'notNull' => $row['attnotnull'],
 				'key' => (($row['contype'] == 'p') ? 'PRIMARY' : (($row['contype'] == 'u') ? 'UNIQUE' : '')),
 				'default' => $row['adsrc'],
 				'autoIncrement' => ($row['contype'] == 'p')
-			));
+			]];
 		}
 		
 		return $columns;
@@ -66,12 +66,12 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @see	\wcf\system\database\editor\DatabaseEditor::getIndices()
 	 */
 	public function getIndices($tableName) {
-		$indices = array();
+		$indices = [];
 		$sql = "SELECT	indexname
 			FROM	pg_indexes
 			WHERE	tablename = ?";
 		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute(array($tableName));
+		$statement->execute([$tableName]);
 		while ($row = $statement->fetchArray()) {
 			$indices[] = $row['indexname'];
 		}
@@ -117,7 +117,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	/**
 	 * @see	\wcf\system\database\editor\DatabaseEditor::createTable()
 	 */
-	public function createTable($tableName, $columns, $indices = array()) {
+	public function createTable($tableName, $columns, $indices = []) {
 		$columnDefinition = $indexDefinition = '';
 		
 		// build column definition

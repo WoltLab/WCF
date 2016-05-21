@@ -28,12 +28,12 @@ class AbstractWatchedObjectImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
 		
 		try {
-			$watch = UserObjectWatchEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+			$watch = UserObjectWatchEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 			return $watch->watchID;
 		}
 		catch (DatabaseException $e) {

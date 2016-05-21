@@ -21,14 +21,14 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
 	public function parseMessage($message) {
 		$parsedAttachmentIDs = array_unique(ArrayUtil::toIntegerArray(array_merge(self::getFirstParameters($message, 'attach'), self::getTextParameters($message, 'attach'))));
 		if (!empty($parsedAttachmentIDs)) {
-			$attachmentIDs = array();
+			$attachmentIDs = [];
 			foreach ($parsedAttachmentIDs as $parsedAttachmentID) {
 				if ($parsedAttachmentID) $attachmentIDs[] = $parsedAttachmentID;
 			}
 			
 			if (!empty($attachmentIDs)) {
 				$attachmentList = new AttachmentList();
-				$attachmentList->getConditionBuilder()->add("attachment.attachmentID IN (?)", array($attachmentIDs));
+				$attachmentList->getConditionBuilder()->add("attachment.attachmentID IN (?)", [$attachmentIDs]);
 				$attachmentList->readObjectIDs();
 				
 				return $attachmentList->getObjectIDs();
@@ -47,9 +47,9 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
 		$attachmentList->readObjects();
 		
 		// group attachments by object type
-		$groupedAttachments = array();
+		$groupedAttachments = [];
 		foreach ($attachmentList->getObjects() as $attachment) {
-			if (!isset($groupedAttachments[$attachment->objectTypeID])) $groupedAttachments[$attachment->objectTypeID] = array();
+			if (!isset($groupedAttachments[$attachment->objectTypeID])) $groupedAttachments[$attachment->objectTypeID] = [];
 			$groupedAttachments[$attachment->objectTypeID][] = $attachment;
 		}
 		

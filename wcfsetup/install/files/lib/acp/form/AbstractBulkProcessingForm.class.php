@@ -24,7 +24,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	 * object action object type types
 	 * @var	ObjectType[]
 	 */
-	public $actions = array();
+	public $actions = [];
 	
 	/**
 	 * number of objects affected by bulk processing
@@ -36,7 +36,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	 * object condition object type types
 	 * @var	ObjectType[]
 	 */
-	public $conditions = array();
+	public $conditions = [];
 	
 	/**
 	 * list with bulk processed objects

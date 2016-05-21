@@ -21,7 +21,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * list of application abbreviations
 	 * @var	string[]
 	 */
-	public $abbreviations = array();
+	public $abbreviations = [];
 	
 	/**
 	 * list of acp search provider
@@ -45,7 +45,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * @throws	SystemException
 	 */
 	public function search($query, $limit = 10) {
-		$data = array();
+		$data = [];
 		$maxResultsPerProvider = ceil($limit / 2);
 		$totalResultCount = 0;
 		
@@ -130,7 +130,7 @@ class ACPSearchHandler extends SingletonFactory {
 		}
 		
 		if (!empty($suffix)) {
-			$abbreviations = array();
+			$abbreviations = [];
 			foreach ($this->abbreviations as $abbreviation) {
 				$abbreviations[] = $abbreviation . $suffix;
 			}

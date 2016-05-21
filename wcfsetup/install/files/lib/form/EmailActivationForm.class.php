@@ -95,13 +95,13 @@ class EmailActivationForm extends AbstractForm {
 		parent::save();
 		
 		// enable new email
-		$this->objectAction = new UserAction(array($this->user), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserAction([$this->user], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'email' => $this->user->newEmail,
 				'newEmail' => '',
 				'reactivationCode' => 0
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -116,10 +116,10 @@ class EmailActivationForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'u' => $this->userID,
 			'a' => $this->activationCode
-		));
+		]);
 	}
 	
 	/**

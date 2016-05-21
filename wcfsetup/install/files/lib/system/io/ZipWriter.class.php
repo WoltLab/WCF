@@ -14,8 +14,8 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class ZipWriter {
-	protected $headers = array();
-	protected $data = array();
+	protected $headers = [];
+	protected $data = [];
 	protected $endOfData = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 	protected $lastOffset = 0;
 	protected $zipComment = '';

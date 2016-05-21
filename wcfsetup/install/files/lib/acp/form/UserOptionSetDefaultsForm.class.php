@@ -24,7 +24,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOption');
+	public $neededPermissions = ['admin.user.canManageUserOption'];
 	
 	/**
 	 * user option handler
@@ -87,7 +87,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 				WHERE	optionID IN (?".str_repeat(', ?', count($optionIDs) - 1).")";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($optionIDs);
-			$optionIDs = $optionValues = array();
+			$optionIDs = $optionValues = [];
 			while ($row = $statement->fetchArray()) {
 				if ($row['defaultValue'] != $saveOptions[$row['optionID']]) {
 					$optionIDs[] = $row['optionID'];
@@ -109,7 +109,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 			WHERE	optionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($saveOptions as $optionID => $value) {
-			$statement->execute(array($value, $optionID));
+			$statement->execute([$value, $optionID]);
 		}
 		
 		// reset cache
@@ -136,9 +136,9 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'optionTree' => $this->optionHandler->getOptionTree(),
 			'applyChangesToExistingUsers' => $this->applyChangesToExistingUsers
-		));
+		]);
 	}
 }

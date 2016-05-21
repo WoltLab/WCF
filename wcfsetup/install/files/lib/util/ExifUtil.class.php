@@ -85,7 +85,7 @@ final class ExifUtil {
 			}
 		}
 		
-		return array();
+		return [];
 	}
 	
 	/**
@@ -188,7 +188,7 @@ final class ExifUtil {
 	 * @return	array
 	 */
 	public static function getFormattedExifData(array $rawExifData) {
-		$exifData = array();
+		$exifData = [];
 		
 		// unit is second (unsigned rational)
 		if (isset($rawExifData['ExposureTime']) && is_string($rawExifData['ExposureTime'])) {

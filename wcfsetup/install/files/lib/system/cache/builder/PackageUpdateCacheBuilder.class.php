@@ -19,6 +19,6 @@ class PackageUpdateCacheBuilder extends AbstractCacheBuilder {
 	public function rebuild(array $parameters) {
 		$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 		
-		return array('updates' => count($updates));
+		return ['updates' => count($updates)];
 	}
 }

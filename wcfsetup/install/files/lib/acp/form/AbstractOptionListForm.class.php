@@ -17,12 +17,12 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	/**
 	 * @see	\wcf\form\AbstractForm::$errorField
 	 */
-	public $errorField = array();
+	public $errorField = [];
 	
 	/**
 	 * @see	\wcf\form\AbstractForm::$errorType
 	 */
-	public $errorType = array();
+	public $errorType = [];
 	
 	/**
 	 * name of the active option category

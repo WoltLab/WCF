@@ -18,7 +18,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	 * list of user profiles shared across all instances of GroupedUserList
 	 * @var	UserProfile[]
 	 */
-	protected static $users = array();
+	protected static $users = [];
 	
 	/**
 	 * group name
@@ -42,7 +42,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	 * list of user ids assigned for this group
 	 * @var	integer[]
 	 */
-	protected $userIDs = array();
+	protected $userIDs = [];
 	
 	/**
 	 * Creates a new grouped list of users.
@@ -103,7 +103,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	 * Loads user profiles for outstanding user ids.
 	 */
 	public static function loadUsers() {
-		$userIDs = array();
+		$userIDs = [];
 		foreach (self::$users as $userID => $user) {
 			if ($user === null) {
 				$userIDs[] = $userID;

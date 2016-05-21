@@ -46,20 +46,20 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		
 		foreach ($items as $item) {
 			if (!isset($item['attributes']['name'])) {
-				$legacyStatement->execute(array(
+				$legacyStatement->execute([
 					$this->installation->getPackageID(),
 					(isset($item['elements']['environment']) ? $item['elements']['environment'] : 'user'),
 					$item['elements']['eventclassname'],
 					$item['elements']['eventname'],
 					(isset($item['elements']['inherit'])) ? $item['elements']['inherit'] : 0,
 					$item['elements']['listenerclassname']
-				));
+				]);
 			}
 			else {
-				$statement->execute(array(
+				$statement->execute([
 					$this->installation->getPackageID(),
 					$item['attributes']['name']
-				));
+				]);
 			}
 		}
 	}
@@ -72,7 +72,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		if ($nice < -128) $nice = -128;
 		else if ($nice > 127) $nice = 127;
 		
-		return array(
+		return [
 			'environment' => (isset($data['elements']['environment']) ? $data['elements']['environment'] : 'user'),
 			'eventClassName' => $data['elements']['eventclassname'],
 			'eventName' => $data['elements']['eventname'],
@@ -82,7 +82,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			'niceValue' => $nice,
 			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
 			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '')
-		);
+		];
 	}
 	
 	/**
@@ -100,9 +100,9 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		// update event listener name
 		if (!$eventListener->listenerName) {
 			$eventListenerEditor = new EventListenerEditor($eventListener);
-			$eventListenerEditor->update(array(
+			$eventListenerEditor->update([
 				'listenerName' => EventListener::AUTOMATIC_NAME_PREFIX.$eventListener->listenerID
-			));
+			]);
 			
 			$eventListener = new EventListener($eventListener->listenerID);
 		}
@@ -122,29 +122,29 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 					AND eventClassName = ?
 					AND eventName = ?
 					AND listenerClassName = ?";
-			$parameters = array(
+			$parameters = [
 				$this->installation->getPackageID(),
 				$data['environment'],
 				$data['eventClassName'],
 				$data['eventName'],
 				$data['listenerClassName']
-			);
+			];
 		}
 		else {
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_".$this->tableName."
 				WHERE	packageID = ?
 					AND listenerName = ?";
-			$parameters = array(
+			$parameters = [
 				$this->installation->getPackageID(),
 				$data['listenerName']
-			);
+			];
 		}
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**

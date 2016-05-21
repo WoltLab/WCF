@@ -18,7 +18,7 @@ class TypedTagCloud extends TagCloud {
 	 * object type ids
 	 * @var	integer[]
 	 */
-	protected $objectTypeIDs = array();
+	protected $objectTypeIDs = [];
 	
 	/**
 	 * Contructs a new TypedTagCloud object.
@@ -26,7 +26,7 @@ class TypedTagCloud extends TagCloud {
 	 * @param	string		$objectType
 	 * @param	integer[]	$languageIDs
 	 */
-	public function __construct($objectType, array $languageIDs = array()) {
+	public function __construct($objectType, array $languageIDs = []) {
 		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.tagging.taggableObject', $objectType);
 		$this->objectTypeIDs[] = $objectTypeObj->objectTypeID;
 		
@@ -37,9 +37,9 @@ class TypedTagCloud extends TagCloud {
 	 * Loads the tag cloud cache.
 	 */
 	protected function loadCache() {
-		$this->tags = TypedTagCloudCacheBuilder::getInstance()->getData(array(
+		$this->tags = TypedTagCloudCacheBuilder::getInstance()->getData([
 			'languageIDs' => $this->languageIDs,
 			'objectTypeIDs' => $this->objectTypeIDs
-		));
+		]);
 	}
 }

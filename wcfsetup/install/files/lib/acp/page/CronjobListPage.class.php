@@ -21,7 +21,7 @@ class CronjobListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.management.canManageCronjob');
+	public $neededPermissions = ['admin.management.canManageCronjob'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -31,7 +31,7 @@ class CronjobListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow');
+	public $validSortFields = ['cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

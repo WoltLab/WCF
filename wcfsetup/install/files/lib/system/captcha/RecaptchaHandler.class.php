@@ -39,9 +39,9 @@ class RecaptchaHandler implements ICaptchaHandler {
 		}
 		else {
 			// V2
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'recaptchaLegacyMode' => true
-			));
+			]);
 		}
 		
 		return WCF::getTPL()->fetch('recaptcha');

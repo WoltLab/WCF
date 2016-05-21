@@ -49,11 +49,11 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 		AbstractForm::save();
 		
 		// save server
-		$this->objectAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PackageUpdateServerAction([$this->packageUpdateServerID], 'update', ['data' => array_merge($this->additionalFields, [
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -80,10 +80,10 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 			
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'packageUpdateServerID' => $this->packageUpdateServerID,
 			'packageUpdateServer' => $this->updateServer,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

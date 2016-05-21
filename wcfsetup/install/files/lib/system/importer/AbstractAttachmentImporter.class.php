@@ -29,7 +29,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// check file location
 		if (!@file_exists($additionalData['fileLocation'])) return 0;
 		
@@ -55,7 +55,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 		}
 		
 		// save attachment
-		$attachment = AttachmentEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+		$attachment = AttachmentEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
 		// check attachment directory
 		// and create subdirectory if necessary

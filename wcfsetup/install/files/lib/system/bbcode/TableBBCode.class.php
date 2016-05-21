@@ -25,7 +25,7 @@ class TableBBCode extends AbstractBBCode {
 			if ($regex->match($parsedContent, true)) {
 				$matches = $regex->getMatches();
 				
-				$openTags = array();
+				$openTags = [];
 				$openTDs = 0;
 				$firstRowTDs = 0;
 				

@@ -15,19 +15,19 @@ class JsHighlighter extends Highlighter {
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
-	protected $separators = array("(", ")", "{", "}", "[", "]", ";", ".", ",");
+	protected $separators = ["(", ")", "{", "}", "[", "]", ";", ".", ","];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
-	protected $operators = array("=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!=",
+	protected $operators = ["=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!=",
 		"&&", "||", "++", "--", "+", "-", "*", "/", "&", "|", "^", "%", "<<", ">>", ">>>", "+=", "-=", "*=",
-		"/=", "&=", "|=", "^=", "%=", "<<=", ">>=", ">>>=");
+		"/=", "&=", "|=", "^=", "%=", "<<=", ">>=", ">>>="];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		"String",
 		"Array",
 		"RegExp",
@@ -62,12 +62,12 @@ class JsHighlighter extends Highlighter {
 		"onSelect",
 		"onSubmit",
 		"onUnload"
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		"break",
 		"continue",
 		"do",
@@ -128,5 +128,5 @@ class JsHighlighter extends Highlighter {
 		"true",
 		"try",
 		"volatile"
-	);
+	];
 }

@@ -63,7 +63,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 */
 	public function toggle() {
 		foreach ($this->objects as $object) {
-			$object->update(array('isDisabled' => ($object->isDisabled) ? 0 : 1));
+			$object->update(['isDisabled' => ($object->isDisabled) ? 0 : 1]);
 		}
 	}
 	

@@ -39,17 +39,17 @@ class QuoteBBCode extends AbstractBBCode {
 				}
 			}
 			
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'content' => $content,
 				'quoteLink' => $quoteLink,
 				'quoteAuthor' => $quoteAuthor,
 				'quoteAuthorObject' => $quoteAuthorObject,
 				'isExternalQuoteLink' => $externalQuoteLink
-			));
+			]);
 			return WCF::getTPL()->fetch('quoteBBCodeTag');
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
-			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.text', array('content' => $content, 'cite' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '')))."\n";
+			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.text', ['content' => $content, 'cite' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '')])."\n";
 		}
 	}
 }

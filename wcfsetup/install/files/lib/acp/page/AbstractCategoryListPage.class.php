@@ -98,14 +98,14 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'addController' => $this->addController,
 			'categoryNodeList' => $this->categoryNodeTree->getIterator(),
 			'collapsedCategoryIDs' => $this->collapsedCategoryIDs,
 			'collapsibleObjectTypeID' => $this->collapsibleObjectTypeID,
 			'editController' => $this->editController,
 			'objectType' => $this->objectType
-		));
+		]);
 		
 		if ($this->pageTitle) {
 			WCF::getTPL()->assign('pageTitle', $this->pageTitle);

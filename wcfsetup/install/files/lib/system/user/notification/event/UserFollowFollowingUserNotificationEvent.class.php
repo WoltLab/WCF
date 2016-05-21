@@ -24,7 +24,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	public function getTitle() {
 		$count = count($this->getAuthors());
 		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.title.stacked', array('count' => $count));
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.title.stacked', ['count' => $count]);
 		}
 		
 		return $this->getLanguage()->get('wcf.user.notification.follow.title');
@@ -38,15 +38,15 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 		$count = count($authors);
 		
 		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message.stacked', [
 				'author' => $this->author,
 				'authors' => $authors,
 				'count' => $count,
 				'others' => $count - 1
-			));
+			]);
 		}
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message', array('author' => $this->author));
+		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message', ['author' => $this->author]);
 	}
 	
 	/**
@@ -57,23 +57,23 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 		$count = count($authors);
 		
 		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail.stacked', [
 				'author' => $this->author,
 				'authors' => $authors,
 				'count' => $count,
 				'others' => $count - 1,
 				'notificationType' => $notificationType
-			));
+			]);
 		}
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail', array('author' => $this->author));
+		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail', ['author' => $this->author]);
 	}
 	
 	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', array('object' => $this->author));
+		return LinkHandler::getInstance()->getLink('User', ['object' => $this->author]);
 	}
 	
 	/**

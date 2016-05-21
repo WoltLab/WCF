@@ -25,12 +25,12 @@ class PackageUpdatePage extends AbstractPage {
 	 * list of available updates
 	 * @var	array
 	 */
-	public $availableUpdates = array();
+	public $availableUpdates = [];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.package.canUpdatePackage');
+	public $neededPermissions = ['admin.configuration.package.canUpdatePackage'];
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()
@@ -47,9 +47,9 @@ class PackageUpdatePage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'availableUpdates' => $this->availableUpdates
-		));
+		]);
 	}
 	
 	/**

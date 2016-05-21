@@ -61,12 +61,12 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 			FROM	wcf".WCF_N."_acp_template
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		
-		$templates = array();
+		$templates = [];
 		while ($row = $statement->fetchArray()) {
 			if (!isset($templates[$row['application']])) {
-				$templates[$row['application']] = array();
+				$templates[$row['application']] = [];
 			}
 			
 			$templates[$row['application']][] = 'acp/templates/'.$row['templateName'].'.tpl';

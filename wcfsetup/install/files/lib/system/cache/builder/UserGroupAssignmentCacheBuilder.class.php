@@ -18,7 +18,7 @@ class UserGroupAssignmentCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected function rebuild(array $parameters) {
 		$assignmentList = new UserGroupAssignmentList();
-		$assignmentList->getConditionBuilder()->add('isDisabled = ?', array(0));
+		$assignmentList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$assignmentList->readObjects();
 		
 		return $assignmentList->getObjects();

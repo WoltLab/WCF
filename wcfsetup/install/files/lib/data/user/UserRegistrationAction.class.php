@@ -17,7 +17,7 @@ class UserRegistrationAction extends UserAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('validateEmailAddress', 'validatePassword', 'validateUsername');
+	protected $allowGuestAccess = ['validateEmailAddress', 'validatePassword', 'validateUsername'];
 	
 	/**
 	 * Validates the validate username function.
@@ -47,22 +47,22 @@ class UserRegistrationAction extends UserAction {
 	 */
 	public function validateUsername() {
 		if (!UserRegistrationUtil::isValidUsername($this->parameters['username'])) {
-			return array(
+			return [
 				'isValid' => false,
 				'error' => 'notValid'
-			);
+			];
 		}
 		
 		if (!UserUtil::isAvailableUsername($this->parameters['username'])) {
-			return array(
+			return [
 				'isValid' => false,
 				'error' => 'notUnique'
-			);
+			];
 		}
 		
-		return array(
+		return [
 			'isValid' => true
-		);
+		];
 	}
 	
 	/**
@@ -72,22 +72,22 @@ class UserRegistrationAction extends UserAction {
 	 */
 	public function validateEmailAddress() {
 		if (!UserRegistrationUtil::isValidEmail($this->parameters['email'])) {
-			return array(
+			return [
 				'isValid' => false,
 				'error' => 'notValid'
-			);
+			];
 		}
 		
 		if (!UserUtil::isAvailableEmail($this->parameters['email'])) {
-			return array(
+			return [
 				'isValid' => false,
 				'error' => 'notUnique'
-			);
+			];
 		}
 		
-		return array(
+		return [
 			'isValid' => true
-		);
+		];
 	}
 	
 	/**
@@ -97,14 +97,14 @@ class UserRegistrationAction extends UserAction {
 	 */
 	public function validatePassword() {
 		if (!UserRegistrationUtil::isSecurePassword($this->parameters['password'])) {
-			return array(
+			return [
 				'isValid' => false,
 				'error' => 'notSecure'
-			);
+			];
 		}
 		
-		return array(
+		return [
 			'isValid' => true
-		);
+		];
 	}
 }

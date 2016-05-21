@@ -47,7 +47,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	
 	protected function getAvailableSubscriptions() {
 		$subscriptionList = new PaidSubscriptionList();
-		$subscriptionList->getConditionBuilder()->add('subscriptionID <> ?', array($this->subscriptionID));
+		$subscriptionList->getConditionBuilder()->add('subscriptionID <> ?', [$this->subscriptionID]);
 		$subscriptionList->sqlOrderBy = 'title';
 		$subscriptionList->readObjects();
 		$this->availableSubscriptions = $subscriptionList->getObjects();
@@ -128,7 +128,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 		}
 		
 		// save subscription
-		$this->objectAction = new PaidSubscriptionAction(array($this->subscription), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PaidSubscriptionAction([$this->subscription], 'update', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'description' => $this->description,
 			'isDisabled' => $this->isDisabled,	
@@ -140,14 +140,14 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 			'isRecurring' => $this->isRecurring,
 			'groupIDs' => implode(',', $this->groupIDs),
 			'excludedSubscriptionIDs' => implode(',', $this->excludedSubscriptionIDs)
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -159,10 +159,10 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 		$useRequestData = (empty($_POST)) ? false : true;
 		I18nHandler::getInstance()->assignVariables($useRequestData);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'subscriptionID' => $this->subscriptionID,
 			'subscription' => $this->subscription
-		));
+		]);
 	}
 }

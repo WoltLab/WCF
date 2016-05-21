@@ -20,22 +20,22 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider {
 	 */
 	public function search($query) {
 		if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {
-			return array();
+			return [];
 		}
 		
-		$results = array();
+		$results = [];
 		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user
 			WHERE	username LIKE ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($query.'%'));
+		$statement->execute([$query.'%']);
 		
 		while ($user = $statement->fetchObject('wcf\data\user\User')) {
 			if (UserGroup::isAccessibleGroup($user->getGroupIDs())) {
-				$results[] = new ACPSearchResult($user->username, LinkHandler::getInstance()->getLink('UserEdit', array(
+				$results[] = new ACPSearchResult($user->username, LinkHandler::getInstance()->getLink('UserEdit', [
 					'object' => $user
-				)));
+				]));
 			}
 		}
 		

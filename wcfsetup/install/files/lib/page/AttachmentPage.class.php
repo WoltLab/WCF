@@ -58,7 +58,7 @@ class AttachmentPage extends AbstractPage {
 	 * list of mime types which belong to files that are displayed inline
 	 * @var	string[]
 	 */
-	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg');
+	public static $inlineMimeTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg'];
 	
 	/**
 	 * etag for this attachment
@@ -78,7 +78,7 @@ class AttachmentPage extends AbstractPage {
 			throw new IllegalLinkException();
 		}
 		
-		$parameters = array('object' => $this->attachment);
+		$parameters = ['object' => $this->attachment];
 		if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType) {
 			$this->tiny = intval($_REQUEST['tiny']);
 			$parameters['tiny'] = $this->tiny;
@@ -142,7 +142,7 @@ class AttachmentPage extends AbstractPage {
 		}
 		
 		// init file reader
-		$this->fileReader = new FileReader($location, array(
+		$this->fileReader = new FileReader($location, [
 			'filename' => $this->attachment->filename,
 			'mimeType' => $mimeType,
 			'filesize' => $filesize,
@@ -151,7 +151,7 @@ class AttachmentPage extends AbstractPage {
 			'lastModificationTime' => $this->attachment->uploadTime,
 			'expirationDate' => TIME_NOW + 31536000,
 			'maxAge' => 31536000
-		));
+		]);
 		
 		if ($this->eTag !== null) {
 			$this->fileReader->addHeader('ETag', '"'.$this->eTag.'"');
@@ -173,10 +173,10 @@ class AttachmentPage extends AbstractPage {
 		if (!$this->tiny && !$this->thumbnail) {
 			// update download count
 			$editor = new AttachmentEditor($this->attachment);
-			$editor->update(array(
+			$editor->update([
 				'downloads' => $this->attachment->downloads + 1,
 				'lastDownloadTime' => TIME_NOW
-			));
+			]);
 		}
 		
 		// send file to client

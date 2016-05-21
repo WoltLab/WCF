@@ -40,7 +40,7 @@ class MailWorker extends AbstractWorker {
 	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermissions(array('admin.user.canMailUser'));
+		WCF::getSession()->checkPermissions(['admin.user.canMailUser']);
 		
 		if (!isset($this->parameters['mailID'])) {
 			throw new SystemException("mailID missing");
@@ -60,14 +60,14 @@ class MailWorker extends AbstractWorker {
 	public function countObjects() {
 		$this->conditions = new PreparedStatementConditionBuilder();
 		if ($this->mailData['action'] == '') {
-			$this->conditions->add("user.userID IN (?)", array($this->mailData['userIDs']));
+			$this->conditions->add("user.userID IN (?)", [$this->mailData['userIDs']]);
 		}
 		else {
-			$this->conditions->add("user.activationCode = ?", array(0));
-			$this->conditions->add("user.banned = ?", array(0));
+			$this->conditions->add("user.activationCode = ?", [0]);
+			$this->conditions->add("user.banned = ?", [0]);
 			
 			if ($this->mailData['action'] == 'group') {
-				$this->conditions->add("user.userID IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", array($this->mailData['groupIDs']));
+				$this->conditions->add("user.userID IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", [$this->mailData['groupIDs']]);
 			}
 		}
 		
@@ -129,7 +129,7 @@ class MailWorker extends AbstractWorker {
 	 */
 	protected function sendMail(User $user) {
 		try {
-			$mail = new Mail(array($user->username => $user->email), $this->mailData['subject'], str_replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
+			$mail = new Mail([$user->username => $user->email], $this->mailData['subject'], str_replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
 			if ($this->mailData['enableHTML']) $mail->setContentType('text/html');
 			$mail->setLanguage($user->getLanguage());
 			$mail->send();

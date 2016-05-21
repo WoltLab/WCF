@@ -21,7 +21,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 			FROM	".$tableName."
 			WHERE	".$dateColumnName." BETWEEN ? AND ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($date, $date + 86399));
+		$statement->execute([$date, $date + 86399]);
 		return $statement->fetchColumn();
 	}
 	
@@ -33,7 +33,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 			FROM	".$tableName."
 			WHERE	".$dateColumnName." < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($date + 86400));
+		$statement->execute([$date + 86400]);
 		return $statement->fetchColumn();
 	}
 	

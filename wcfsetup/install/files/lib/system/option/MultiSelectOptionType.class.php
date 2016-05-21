@@ -35,11 +35,11 @@ class MultiSelectOptionType extends SelectOptionType {
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
-		));
+		]);
 		return WCF::getTPL()->fetch($this->formElementTemplate);
 	}
 	
@@ -47,12 +47,12 @@ class MultiSelectOptionType extends SelectOptionType {
 	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
-		));
+		]);
 		return WCF::getTPL()->fetch($this->searchableFormElementTemplate);
 	}
 	
@@ -60,7 +60,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		$options = $this->getSelectOptions($option);
 		foreach ($newValue as $value) {
 			if (!isset($options[$value])) {
@@ -73,7 +73,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		return implode("\n", $newValue);
 	}
 	

@@ -22,7 +22,7 @@ class BrainfuckHighlighter extends Highlighter {
 		$string = preg_replace('/[\\.,]+/', '<span class="hlKeywords2">\\0</span>', $string);
 		$string = preg_replace('/[\\[\\]]+/', '<span class="hlKeywords3">\\0</span>', $string);
 		
-		$string = str_replace(array('||span class="hlComments"||', '||/span||'), array('<span class="hlComments">', '</span>'), $string);
+		$string = str_replace(['||span class="hlComments"||', '||/span||'], ['<span class="hlComments">', '</span>'], $string);
 		return $string;
 	}
 }

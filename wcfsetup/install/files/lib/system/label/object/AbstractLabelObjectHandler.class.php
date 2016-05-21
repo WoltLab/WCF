@@ -20,7 +20,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	 * list of available label groups
 	 * @var	ViewableLabelGroup[]
 	 */
-	protected $labelGroups = array();
+	protected $labelGroups = [];
 	
 	/**
 	 * object type name
@@ -50,22 +50,22 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	/**
 	 * @see	\wcf\system\label\manager\ILabelObjectHandler::getLabelGroupIDs()
 	 */
-	public function getLabelGroupIDs(array $parameters = array()) {
+	public function getLabelGroupIDs(array $parameters = []) {
 		return array_keys($this->labelGroups);
 	}
 	
 	/**
 	 * @see	\wcf\system\label\manager\ILabelObjectHandler::getLabelGroups()
 	 */
-	public function getLabelGroups(array $parameters = array()) {
+	public function getLabelGroups(array $parameters = []) {
 		$groupIDs = $this->getLabelGroupIDs($parameters);
 		
-		$data = array();
+		$data = [];
 		foreach ($groupIDs as $groupID) {
 			$data[$groupID] = $this->labelGroups[$groupID];
 		}
 		
-		uasort($data, array('\wcf\data\label\group\LabelGroup', 'sortLabelGroups'));
+		uasort($data, ['\wcf\data\label\group\LabelGroup', 'sortLabelGroups']);
 		
 		return $data;
 	}
@@ -82,8 +82,8 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 			}
 		}
 		
-		$validationErrors = array();
-		$satisfiedGroups = array();
+		$validationErrors = [];
+		$satisfiedGroups = [];
 		foreach ($labelIDs as $groupID => $labelID) {
 			// only one label per group is allowed
 			if (is_array($labelID)) {

@@ -21,7 +21,7 @@ class CLICommandHandler {
 	 * list of all available commands
 	 * @var	ICLICommand[]
 	 */
-	private static $commands = array();
+	private static $commands = [];
 	
 	/**
 	 * Returns all available commands.
@@ -96,7 +96,7 @@ class CLICommandHandler {
 		$tmp = '';
 		$escaped = false;
 		$quoted = false;
-		$return = array();
+		$return = [];
 		// handle quotes
 		foreach ($chars as $char) {
 			// escaped chars are simply added

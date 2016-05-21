@@ -63,11 +63,11 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 						(packageID, filename, application)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->getPackageID(),
 				'config.inc.php',
 				Package::getAbbreviation($this->installation->getPackage()->package)
-			));
+			]);
 			
 			// load application
 			WCF::loadRuntimeApplication($this->installation->getPackageID());
@@ -89,12 +89,12 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			FROM	wcf".WCF_N."_package_installation_file_log
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		
-		$files = array();
+		$files = [];
 		while ($row = $statement->fetchArray()) {
 			if (!isset($files[$row['application']])) {
-				$files[$row['application']] = array();
+				$files[$row['application']] = [];
 			}
 			
 			$files[$row['application']][] = $row['filename'];

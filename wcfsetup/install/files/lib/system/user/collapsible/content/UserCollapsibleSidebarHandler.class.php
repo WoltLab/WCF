@@ -20,7 +20,7 @@ class UserCollapsibleSidebarHandler extends SingletonFactory implements IAJAXInv
 	 * list of methods allowed for remote invoke
 	 * @var	string[]
 	 */
-	public static $allowInvoke = array('toggle');
+	public static $allowInvoke = ['toggle'];
 	
 	/**
 	 * Toggles a sidebar.

@@ -25,7 +25,7 @@ class SmileyImporter extends AbstractImporter {
 	 * 
 	 * @var	string[]
 	 */
-	public $knownCodes = array();
+	public $knownCodes = [];
 	
 	/**
 	 * Reads out known smiley codes.
@@ -37,7 +37,7 @@ class SmileyImporter extends AbstractImporter {
 		$statement->execute();
 		
 		while ($row = $statement->fetchArray()) {
-			$known = array();
+			$known = [];
 			if (!empty($row['aliases'])) {
 				$known = explode("\n", $row['aliases']);
 			}
@@ -52,7 +52,7 @@ class SmileyImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// copy smiley
 		$data['smileyPath'] = 'images/smilies/'.basename($additionalData['fileLocation']);
 		if (!@copy($additionalData['fileLocation'], WCF_DIR.$data['smileyPath'])) return 0;
@@ -64,7 +64,7 @@ class SmileyImporter extends AbstractImporter {
 		if (!isset($data['aliases'])) $data['aliases'] = '';
 		
 		// check aliases
-		$aliases = array();
+		$aliases = [];
 		if (!empty($data['aliases'])) {
 			$aliases = explode("\n", StringUtil::unifyNewlines($data['aliases']));
 			foreach ($aliases as $key => $alias) {

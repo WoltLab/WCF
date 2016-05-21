@@ -25,7 +25,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.bbcode.canManageBBCode');
+	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * id of the edited media provider
@@ -59,19 +59,19 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 		AbstractForm::save();
 		
 		// update media-provider
-		$this->objectAction = new BBCodeMediaProviderAction(array($this->providerID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new BBCodeMediaProviderAction([$this->providerID], 'update', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'regex' => $this->regex,
 			'html' => $this->html
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -93,9 +93,9 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'mediaProvider' => $this->mediaProvider,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

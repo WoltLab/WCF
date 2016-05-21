@@ -41,7 +41,7 @@ class BBCodeAttribute extends DatabaseObject {
 	public static function getAttributesByBBCode(BBCode $bbcode) {
 		$attributeList = new BBCodeAttributeList();
 		$attributeList->sqlOrderBy = "bbcode_attribute.attributeNo ASC";
-		$attributeList->getConditionBuilder()->add('bbcode_attribute.bbcodeID = ?', array($bbcode->bbcodeID));
+		$attributeList->getConditionBuilder()->add('bbcode_attribute.bbcodeID = ?', [$bbcode->bbcodeID]);
 		$attributeList->readObjects();
 		return $attributeList->getObjects();
 	}

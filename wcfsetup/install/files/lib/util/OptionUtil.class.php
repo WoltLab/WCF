@@ -19,7 +19,7 @@ final class OptionUtil {
 	 * @return	array
 	 */
 	public static function parseSelectOptions($selectOptions) {
-		$result = array();
+		$result = [];
 		$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($selectOptions)));
 		foreach ($options as $option) {
 			$key = $value = $option;
@@ -42,7 +42,7 @@ final class OptionUtil {
 	 * @return	array
 	 */
 	public static function parseMultipleEnableOptions($enableOptions) {
-		$result = array();
+		$result = [];
 		if (!empty($enableOptions)) {
 			$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($enableOptions)));
 			$key = -1;

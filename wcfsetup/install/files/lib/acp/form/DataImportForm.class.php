@@ -25,7 +25,7 @@ class DataImportForm extends AbstractForm {
 	 * additional data
 	 * @var	array
 	 */
-	public $additionalData = array();
+	public $additionalData = [];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
@@ -35,13 +35,13 @@ class DataImportForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.management.canImportData');
+	public $neededPermissions = ['admin.management.canImportData'];
 	
 	/**
 	 * list of available exporters
 	 * @var	array
 	 */
-	public $exporters = array();
+	public $exporters = [];
 	
 	/**
 	 * exporter name
@@ -59,19 +59,19 @@ class DataImportForm extends AbstractForm {
 	 * list of available importers
 	 * @var	string[]
 	 */
-	public $importers = array();
+	public $importers = [];
 	
 	/**
 	 * list of supported data types
 	 * @var	array
 	 */
-	public $supportedData = array();
+	public $supportedData = [];
 	
 	/**
 	 * selected data types
 	 * @var	array
 	 */
-	public $selectedData = array();
+	public $selectedData = [];
 	
 	/**
 	 * database host name
@@ -247,7 +247,7 @@ class DataImportForm extends AbstractForm {
 		$queue = $this->exporter->getQueue();
 		
 		// save import data
-		WCF::getSession()->register('importData', array(
+		WCF::getSession()->register('importData', [
 			'exporterName' => $this->exporterName,
 			'dbHost' => $this->dbHost,
 			'dbUser' => $this->dbUser,
@@ -257,7 +257,7 @@ class DataImportForm extends AbstractForm {
 			'fileSystemPath' => $this->fileSystemPath,
 			'userMergeMode' => $this->userMergeMode,
 			'additionalData' => $this->additionalData
-		));
+		]);
 		
 		WCF::getTPL()->assign('queue', $queue);
 	}
@@ -298,7 +298,7 @@ class DataImportForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'exporter' => $this->exporter,
 			'importers' => $this->importers,
 			'exporterName' => $this->exporterName,
@@ -315,6 +315,6 @@ class DataImportForm extends AbstractForm {
 			'showInnoDBWarning' => $this->showInnoDBWarning,
 			'showMappingNotice' => $this->showMappingNotice,
 			'additionalData' => $this->additionalData
-		));
+		]);
 	}
 }

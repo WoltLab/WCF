@@ -36,12 +36,12 @@ class SmileyAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
+	public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_SMILEY');
+	public $neededModules = ['MODULE_SMILEY'];
 	
 	/**
 	 * primary smiley code
@@ -89,7 +89,7 @@ class SmileyAddForm extends AbstractForm {
 	 * data of the uploaded smiley file
 	 * @var	array()
 	 */
-	public $fileUpload = array();
+	public $fileUpload = [];
 	
 	/**
 	 * temporary name of the uploaded smiley file
@@ -105,7 +105,7 @@ class SmileyAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'smileyTitle' => $this->smileyTitle,
 			'showOrder' => $this->showOrder,
@@ -115,7 +115,7 @@ class SmileyAddForm extends AbstractForm {
 			'smileyPath' => $this->smileyPath,
 			'categoryNodeList' => $this->categoryNodeTree->getIterator(),
 			'uploadedFilename' => $this->uploadedFilename
-		));
+		]);
 	}
 	
 	/**
@@ -161,8 +161,8 @@ class SmileyAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new SmileyAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new SmileyAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'smileyTitle' => $this->smileyTitle,
 				'smileyCode' => $this->smileyCode,
 				'aliases' => $this->aliases,
@@ -170,9 +170,9 @@ class SmileyAddForm extends AbstractForm {
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null,
 				'packageID' => 1
-			)),
+			]),
 			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/'.$this->uploadedFilename : ''
-		));
+		]);
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		$smileyEditor = new SmileyEditor($returnValues['returnValues']);
@@ -182,9 +182,9 @@ class SmileyAddForm extends AbstractForm {
 			I18nHandler::getInstance()->save('smileyTitle', 'wcf.smiley.title'.$smileyID, 'wcf.smiley', 1);
 			
 			// update title
-			$smileyEditor->update(array(
+			$smileyEditor->update([
 				'smileyTitle' => 'wcf.smiley.title'.$smileyID
-			));
+			]);
 		}
 		
 		// reset values
@@ -265,7 +265,7 @@ class SmileyAddForm extends AbstractForm {
 		// validate smiley code and aliases against existing smilies
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		if (isset($this->smiley)) {
-			$conditionBuilder->add('smileyID <> ?', array($this->smiley->smileyID));
+			$conditionBuilder->add('smileyID <> ?', [$this->smiley->smileyID]);
 		}
 		$sql = "SELECT	smileyCode, aliases
 			FROM	wcf".WCF_N."_smiley
@@ -275,7 +275,7 @@ class SmileyAddForm extends AbstractForm {
 		
 		$aliases = explode("\n", $this->aliases);
 		while ($row = $statement->fetchArray()) {
-			$known = array();
+			$known = [];
 			if (!empty($row['aliases'])) {
 				$known = explode("\n", $row['aliases']);
 			}

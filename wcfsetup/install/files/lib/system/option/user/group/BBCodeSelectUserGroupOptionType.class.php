@@ -29,7 +29,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) {
-			$newValue = array();
+			$newValue = [];
 		}
 		
 		return implode(',', $newValue);
@@ -43,7 +43,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			$this->loadBBCodeSelection();
 		}
 		
-		$selectedBBCodes = array();
+		$selectedBBCodes = [];
 		if ($value == 'all') {
 			$selectedBBCodes = $this->bbCodes;
 		}
@@ -51,11 +51,11 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			$selectedBBCodes = explode(',', $value);
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'bbCodes' => $this->bbCodes,
 			'option' => $option,
 			'selectedBBCodes' => $selectedBBCodes
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('bbCodeSelectOptionType');
 	}
@@ -82,7 +82,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			$defaultValue = $this->bbCodes;
 		}
 		else if (empty($defaultValue) || $defaultValue == 'none') {
-			$defaultValue = array();
+			$defaultValue = [];
 		}
 		else {
 			$defaultValue = explode(',', StringUtil::unifyNewlines($defaultValue));
@@ -91,7 +91,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			$groupValue = $this->bbCodes;
 		}
 		else if (empty($groupValue) || $groupValue == 'none') {
-			$groupValue = array();
+			$groupValue = [];
 		}
 		else {
 			$groupValue = explode(',', StringUtil::unifyNewlines($groupValue));
@@ -108,7 +108,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) {
-			$newValue = array();
+			$newValue = [];
 		}
 		
 		if ($this->bbCodes === null) {

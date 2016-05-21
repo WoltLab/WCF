@@ -24,19 +24,19 @@ class PaidSubscriptionListPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
 	 * list of available paid subscriptions
 	 * @var	array
 	 */
-	public $subscriptions = array();
+	public $subscriptions = [];
 	
 	/**
 	 * list of user subscriptions
 	 * @var	\wcf\data\paid\subscription\user\PaidSubscriptionUserList
 	 */
-	public $userSubscriptionList = array();
+	public $userSubscriptionList = [];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::readData()
@@ -49,8 +49,8 @@ class PaidSubscriptionListPage extends AbstractPage {
 		
 		// get user subscriptions
 		$this->userSubscriptionList = new PaidSubscriptionUserList();
-		$this->userSubscriptionList->getConditionBuilder()->add('userID = ?', array(WCF::getUser()->userID));
-		$this->userSubscriptionList->getConditionBuilder()->add('isActive = ?', array(1));
+		$this->userSubscriptionList->getConditionBuilder()->add('userID = ?', [WCF::getUser()->userID]);
+		$this->userSubscriptionList->getConditionBuilder()->add('isActive = ?', [1]);
 		$this->userSubscriptionList->readObjects();
 		
 		foreach ($this->userSubscriptionList as $userSubscription) {
@@ -74,10 +74,10 @@ class PaidSubscriptionListPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'subscriptions' => $this->subscriptions,
 			'userSubscriptions' => $this->userSubscriptionList
-		));
+		]);
 	}
 	
 	/**

@@ -18,7 +18,7 @@ class SitemapAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('getSitemap');
+	protected $allowGuestAccess = ['getSitemap'];
 	
 	/**
 	 * Validates the 'getSitemap' action.
@@ -36,24 +36,24 @@ class SitemapAction extends AbstractDatabaseObjectAction {
 	 */
 	public function getSitemap() {
 		if (isset($this->parameters['sitemapName'])) {
-			return array(
+			return [
 				'sitemapName' => $this->parameters['sitemapName'],
 				'template' => SitemapHandler::getInstance()->getSitemap($this->parameters['sitemapName'])
-			);
+			];
 		}
 		else {
 			$sitemapName = SitemapHandler::getInstance()->getDefaultSitemapName();
 			
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'defaultSitemapName' => $sitemapName,
 				'sitemap' => SitemapHandler::getInstance()->getSitemap($sitemapName),
 				'tree' => SitemapHandler::getInstance()->getTree()
-			));
+			]);
 			
-			return array(
+			return [
 				'sitemapName' => $sitemapName,
 				'template' => WCF::getTPL()->fetch('sitemap')
-			);
+			];
 		}
 	}
 }

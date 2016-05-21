@@ -20,16 +20,16 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 	 */
 	public function search($query) {
 		if (!WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage') && !WCF::getSession()->getPermission('admin.configuration.package.canUninstallPackage')) {
-			return array();
+			return [];
 		}
 		
-		$results = array();
+		$results = [];
 		
 		// search by language item
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
-		$conditions->add("languageItem LIKE ?", array('wcf.acp.package.packageName.package%'));
-		$conditions->add("languageItemValue LIKE ?", array('%'.$query.'%'));
+		$conditions->add("languageID = ?", [WCF::getLanguage()->languageID]);
+		$conditions->add("languageItem LIKE ?", ['wcf.acp.package.packageName.package%']);
+		$conditions->add("languageItemValue LIKE ?", ['%'.$query.'%']);
 		
 		$sql = "SELECT		languageItem
 			FROM		wcf".WCF_N."_language_item
@@ -37,14 +37,14 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		
-		$packageIDs = array();
+		$packageIDs = [];
 		while ($row = $statement->fetchArray()) {
 			$packageIDs[] = str_replace('wcf.acp.package.packageName.package', '', $row['languageItem']);
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder(false);
 		if (!empty($packageIDs)) {
-			$conditions->add("packageID IN (?)", array($packageIDs));
+			$conditions->add("packageID IN (?)", [$packageIDs]);
 		}
 		
 		$sql = "SELECT	*
@@ -53,16 +53,16 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 				OR package LIKE ?
 				".(count($conditions->getParameters()) ? "OR ".$conditions : "");
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge(array(
+		$statement->execute(array_merge([
 			'%'.$query.'%',
 			'%'.$query.'%'
-		), $conditions->getParameters()));
+		], $conditions->getParameters()));
 		
 		while ($package = $statement->fetchObject('wcf\data\package\Package')) {
-			$results[] = new ACPSearchResult($package->getName(), LinkHandler::getInstance()->getLink('Package', array(
+			$results[] = new ACPSearchResult($package->getName(), LinkHandler::getInstance()->getLink('Package', [
 				'id' => $package->packageID,
 				'title' => $package->getName()
-			)));
+			]));
 		}
 		
 		return $results;

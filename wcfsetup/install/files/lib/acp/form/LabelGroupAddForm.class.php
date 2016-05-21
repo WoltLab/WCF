@@ -31,7 +31,7 @@ class LabelGroupAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.label.canManageLabel');
+	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * force users to select a label
@@ -55,19 +55,19 @@ class LabelGroupAddForm extends AbstractForm {
 	 * list of label object type handlers
 	 * @var	ILabelObjectTypeHandler[]
 	 */
-	public $labelObjectTypes = array();
+	public $labelObjectTypes = [];
 	
 	/**
 	 * list of label object type containers
 	 * @var	LabelObjectTypeContainer[]
 	 */
-	public $labelObjectTypeContainers = array();
+	public $labelObjectTypeContainers = [];
 	
 	/**
 	 * list of label group to object type relations
 	 * @var	array<array>
 	 */
-	public $objectTypes = array();
+	public $objectTypes = [];
 	
 	/**
 	 * object type id
@@ -160,12 +160,12 @@ class LabelGroupAddForm extends AbstractForm {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new LabelGroupAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new LabelGroupAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'forceSelection' => ($this->forceSelection ? 1 : 0),
 			'groupName' => $this->groupName,
 			'groupDescription' => $this->groupDescription,
 			'showOrder' => $this->showOrder
-		))));
+		])]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
@@ -173,9 +173,9 @@ class LabelGroupAddForm extends AbstractForm {
 				
 			// update group name
 			$groupEditor = new LabelGroupEditor($returnValues['returnValues']);
-			$groupEditor->update(array(
+			$groupEditor->update([
 				'groupName' => 'wcf.acp.label.group'.$returnValues['returnValues']->groupID
-			));
+			]);
 		}
 		
 		// save acl
@@ -194,14 +194,14 @@ class LabelGroupAddForm extends AbstractForm {
 		// reset values
 		$this->forceSelection = false;
 		$this->groupName = $this->groupDescription = '';
-		$this->objectTypes = array();
+		$this->objectTypes = [];
 		$this->showOrder = 0;
 		$this->setObjectTypeRelations();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 		
 		I18nHandler::getInstance()->reset();
 	}
@@ -215,7 +215,7 @@ class LabelGroupAddForm extends AbstractForm {
 		ACLHandler::getInstance()->assignVariables($this->objectTypeID);
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'forceSelection' => $this->forceSelection,
 			'groupName' => $this->groupName,
@@ -223,7 +223,7 @@ class LabelGroupAddForm extends AbstractForm {
 			'labelObjectTypeContainers' => $this->labelObjectTypeContainers,
 			'objectTypeID' => $this->objectTypeID,
 			'showOrder' => $this->showOrder
-		));
+		]);
 	}
 	
 	/**
@@ -239,7 +239,7 @@ class LabelGroupAddForm extends AbstractForm {
 			$sql = "DELETE FROM	wcf".WCF_N."_label_group_to_object
 				WHERE		groupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($groupID));
+			$statement->execute([$groupID]);
 		}
 		
 		// insert new relations
@@ -254,11 +254,11 @@ class LabelGroupAddForm extends AbstractForm {
 					// use "0" (stored as NULL) for simple true/false states
 					if (!$objectID) $objectID = null;
 					
-					$statement->execute(array(
+					$statement->execute([
 						$groupID,
 						$objectTypeID,
 						$objectID
-					));
+					]);
 				}
 			}
 		}

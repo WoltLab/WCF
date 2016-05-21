@@ -77,9 +77,9 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 			FROM	wcf".WCF_N."_bbcode
 			WHERE	bbcodeTag = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($tag));
+		$statement->execute([$tag]);
 		$row = $statement->fetchArray();
-		if (!$row) $row = array();
+		if (!$row) $row = [];
 		
 		return new self(null, $row);
 	}

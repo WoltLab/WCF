@@ -22,7 +22,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	 * allowed file extensions
 	 * @var	string[]
 	 */
-	protected $fileExtensions = array();
+	protected $fileExtensions = [];
 	
 	/**
 	 * regex for validation of allowed file extension

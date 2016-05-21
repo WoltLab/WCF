@@ -63,12 +63,12 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 			ON		(template_group.templateGroupID = template.templateGroupID)
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		
-		$templates = array();
+		$templates = [];
 		while ($row = $statement->fetchArray()) {
 			if (!isset($templates[$row['application']])) {
-				$templates[$row['application']] = array();
+				$templates[$row['application']] = [];
 			}
 			
 			$templates[$row['application']][] = 'templates/'.$row['templateGroupFolderName'].$row['templateName'].'.tpl';

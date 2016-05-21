@@ -57,9 +57,9 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 		if (count($objectList)) {
 			// save config in session
 			$userMailData = WCF::getSession()->getVar('userMailData');
-			if ($userMailData === null) $userMailData = array();
+			if ($userMailData === null) $userMailData = [];
 			$this->mailID = count($userMailData);
-			$userMailData[$this->mailID] = array(
+			$userMailData[$this->mailID] = [
 				'action' => '',
 				'enableHTML' => $this->enableHTML,
 				'from' => $this->from,
@@ -67,7 +67,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 				'subject' => $this->subject,
 				'text' => $this->text,
 				'userIDs' => $objectList->getObjectIDs()
-			);
+			];
 			WCF::getSession()->register('userMailData', $userMailData);
 		}
 	}

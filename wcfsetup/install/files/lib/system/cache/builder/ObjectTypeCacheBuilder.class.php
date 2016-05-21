@@ -19,12 +19,12 @@ class ObjectTypeCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$data = array(
-			'categories' => array(),
-			'definitions' => array(),
-			'objectTypes' => array(),
-			'groupedObjectTypes' => array()
-		);
+		$data = [
+			'categories' => [],
+			'definitions' => [],
+			'objectTypes' => [],
+			'groupedObjectTypes' => []
+		];
 		
 		// get definitions
 		$sql = "SELECT	*
@@ -36,7 +36,7 @@ class ObjectTypeCacheBuilder extends AbstractCacheBuilder {
 			
 			if ($row['categoryName']) {
 				if (!isset($data['categories'][$row['categoryName']])) {
-					$data['categories'][$row['categoryName']] = array();
+					$data['categories'][$row['categoryName']] = [];
 				}
 				
 				$data['categories'][$row['categoryName']][] = $row['definitionID'];
@@ -52,7 +52,7 @@ class ObjectTypeCacheBuilder extends AbstractCacheBuilder {
 			$data['objectTypes'][$row['objectTypeID']] = $objectType = new ObjectType(null, $row);
 			
 			$definition = $data['definitions'][$objectType->definitionID];
-			if (!isset($data['groupedObjectTypes'][$definition->definitionName])) $data['groupedObjectTypes'][$definition->definitionName] = array();
+			if (!isset($data['groupedObjectTypes'][$definition->definitionName])) $data['groupedObjectTypes'][$definition->definitionName] = [];
 			$data['groupedObjectTypes'][$definition->definitionName][$objectType->objectType] = $objectType;
 		}
 		

@@ -32,10 +32,10 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -43,11 +43,11 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		return [
 			'interfaceName' => (isset($data['elements']['interfacename']) ? $data['elements']['interfacename'] : ''),
 			'definitionName' => $data['elements']['name'],
 			'categoryName' => (isset($data['elements']['categoryname']) ? $data['elements']['categoryname'] : '')
-		);
+		];
 	}
 	
 	/**
@@ -57,11 +57,11 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	definitionName = ?";
-		$parameters = array($data['definitionName']);
+		$parameters = [$data['definitionName']];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

@@ -26,7 +26,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	 * list of names of tags which aren't considered as additional data
 	 * @var	string[]
 	 */
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata', 'supporti18n', 'requirei18n');
+	public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata', 'supporti18n', 'requirei18n'];
 	
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
@@ -53,13 +53,13 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		if (isset($option['requirei18n'])) $requireI18n = $option['requirei18n'];
 		
 		// collect additional tags and their values
-		$additionalData = array();
+		$additionalData = [];
 		foreach ($option as $tag => $value) {
 			if (!in_array($tag, self::$reservedTags)) $additionalData[$tag] = $value;
 		}
 		
 		// build update or create data
-		$data = array(
+		$data = [
 			'categoryName' => $categoryName,
 			'optionType' => $optionType,
 			'validationPattern' => $validationPattern,
@@ -72,16 +72,16 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 			'supportI18n' => $supportI18n,
 			'requireI18n' => $requireI18n,
 			'additionalData' => serialize($additionalData)
-		);
+		];
 		
 		// try to find an existing option for updating
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$optionName
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		// result was 'false' thus create a new item

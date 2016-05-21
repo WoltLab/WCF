@@ -63,10 +63,10 @@ class MessageFormSettingsHandler {
 			$enableBBCodes = $preParse = ($object->enableBBCodes) ? 1 : 0;
 		}
 		
-		return array(
+		return [
 			'enableSmilies' => $enableSmilies,
 			'enableBBCodes' => $enableBBCodes,
 			'preParse' => $preParse
-		);
+		];
 	}
 }

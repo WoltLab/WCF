@@ -66,7 +66,7 @@ class CronjobEditForm extends CronjobAddForm {
 		}
 		
 		// update cronjob
-		$data = array_merge($this->additionalFields, array(
+		$data = array_merge($this->additionalFields, [
 			'className' => $this->className,
 			'description' => $this->description,
 			'startMinute' => $this->startMinute,
@@ -74,17 +74,17 @@ class CronjobEditForm extends CronjobAddForm {
 			'startDom' => $this->startDom,
 			'startMonth' => $this->startMonth,
 			'startDow' => $this->startDow
-		));
+		]);
 		
-		$this->objectAction = new CronjobAction(array($this->cronjobID), 'update', array('data' => $data));
+		$this->objectAction = new CronjobAction([$this->cronjobID], 'update', ['data' => $data]);
 		$this->objectAction->executeAction();
 		
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -114,9 +114,9 @@ class CronjobEditForm extends CronjobAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'cronjobID' => $this->cronjobID,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

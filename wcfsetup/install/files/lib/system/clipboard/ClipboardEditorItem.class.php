@@ -17,7 +17,7 @@ final class ClipboardEditorItem {
 	 * internal data
 	 * @var	array
 	 */
-	protected $internalData = array();
+	protected $internalData = [];
 	
 	/**
 	 * item name
@@ -29,7 +29,7 @@ final class ClipboardEditorItem {
 	 * list of parameters passed to ClipboardProxyAction
 	 * @var	array
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * redirect url

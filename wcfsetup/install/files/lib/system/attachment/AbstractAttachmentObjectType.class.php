@@ -19,7 +19,7 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType {
 	 * cached objects
 	 * @var	DatabaseObject[]
 	 */
-	protected $cachedObjects = array();
+	protected $cachedObjects = [];
 	
 	/**
 	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxSize()
@@ -77,10 +77,10 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType {
 	 */
 	public function setPermissions(array $attachments) {
 		foreach ($attachments as $attachment) {
-			$attachment->setPermissions(array(
+			$attachment->setPermissions([
 				'canDownload' => $this->canDownload($attachment->objectID),
 				'canViewPreview' => $this->canViewPreview($attachment->objectID)
-			));
+			]);
 		}
 	}
 }

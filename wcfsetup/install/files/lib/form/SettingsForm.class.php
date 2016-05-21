@@ -44,7 +44,7 @@ class SettingsForm extends AbstractForm {
 	/**
 	 * @see	\wcf\form\AbstractForm::$errorType
 	 */
-	public $errorType = array();
+	public $errorType = [];
 	
 	/**
 	 * option category
@@ -56,25 +56,25 @@ class SettingsForm extends AbstractForm {
 	 * list of available content languages
 	 * @var	Language[]
 	 */
-	public $availableContentLanguages = array();
+	public $availableContentLanguages = [];
 	
 	/**
 	 * list of available languages
 	 * @var	Language[]
 	 */
-	public $availableLanguages = array();
+	public $availableLanguages = [];
 	
 	/**
 	 * list of available styles
 	 * @var	Style[]
 	 */
-	public $availableStyles = array();
+	public $availableStyles = [];
 	
 	/**
 	 * list of content language ids
 	 * @var	integer[]
 	 */
-	public $contentLanguageIDs = array();
+	public $contentLanguageIDs = [];
 	
 	/**
 	 * language id
@@ -193,23 +193,23 @@ class SettingsForm extends AbstractForm {
 		parent::save();
 		
 		$saveOptions = $this->optionHandler->save();
-		$parameters = array('options' => $saveOptions);
+		$parameters = ['options' => $saveOptions];
 		// static options
 		if ($this->category == 'general') {
-			$parameters['data'] = array_merge($this->additionalFields, array(
+			$parameters['data'] = array_merge($this->additionalFields, [
 				'languageID' => $this->languageID,
 				'styleID' => $this->styleID
-			));
+			]);
 			$parameters['languageIDs'] = $this->contentLanguageIDs;
 		}
 		
-		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', $parameters);
+		$this->objectAction = new UserAction([WCF::getUser()], 'update', $parameters);
 		$this->objectAction->executeAction();
 		
 		// static options
 		if ($this->category == 'general') {
 			// reset user language ids cache
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'languageIDs');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'languageIDs');
 		}
 		$this->saved();
 		
@@ -222,20 +222,20 @@ class SettingsForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'optionTree' => $this->optionHandler->getOptionTree(),
 			'category' => $this->category
-		));
+		]);
 		// static options
 		if ($this->category == 'general') {
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'availableContentLanguages' => $this->availableContentLanguages,
 				'availableLanguages' => $this->availableLanguages,
 				'availableStyles' => $this->availableStyles,
 				'contentLanguageIDs' => $this->contentLanguageIDs,
 				'languageID' => $this->languageID,
 				'styleID' => $this->styleID
-			));
+			]);
 		}
 	}
 	

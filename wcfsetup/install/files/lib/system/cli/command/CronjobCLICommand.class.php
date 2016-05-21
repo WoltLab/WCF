@@ -25,7 +25,7 @@ class CronjobCLICommand implements IArgumentedCLICommand {
 	 * Initializes the argument parser.
 	 */
 	public function __construct() {
-		$this->argv = new ArgvParser(array());
+		$this->argv = new ArgvParser([]);
 	}
 	
 	/**

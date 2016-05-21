@@ -40,7 +40,7 @@ class CaptchaQuestionAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.captcha.canManageCaptchaQuestion');
+	public $neededPermissions = ['admin.captcha.canManageCaptchaQuestion'];
 	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()
@@ -50,11 +50,11 @@ class CaptchaQuestionAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'isDisabled' => $this->isDisabled,
 			'invalidRegex' => $this->invalidRegex
-		));
+		]);
 	}
 	
 	/**
@@ -84,18 +84,18 @@ class CaptchaQuestionAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new CaptchaQuestionAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new CaptchaQuestionAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'answers' => I18nHandler::getInstance()->isPlainValue('answers') ? I18nHandler::getInstance()->getValue('answers') : '',
 				'isDisabled' => $this->isDisabled,
 				'question' => I18nHandler::getInstance()->isPlainValue('question') ? I18nHandler::getInstance()->getValue('question') : ''
-			))
-		));
+			])
+		]);
 		$returnValues = $this->objectAction->executeAction();
 		$questionID = $returnValues['returnValues']->questionID;
 		
 		// set i18n values
-		$questionUpdates = array();
+		$questionUpdates = [];
 		if (!I18nHandler::getInstance()->isPlainValue('question')) {
 			I18nHandler::getInstance()->save('question', 'wcf.captcha.question.question.question'.$questionID, 'wcf.captcha.question', 1);
 			

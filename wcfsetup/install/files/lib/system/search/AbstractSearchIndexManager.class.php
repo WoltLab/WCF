@@ -26,11 +26,11 @@ abstract class AbstractSearchIndexManager extends SingletonFactory implements IS
 			FROM	wcf".WCF_N."_object_type_definition
 			WHERE	definitionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('com.woltlab.wcf.searchableObjectType'));
+		$statement->execute(['com.woltlab.wcf.searchableObjectType']);
 		$row = $statement->fetchArray();
 		
 		$objectTypeList = new ObjectTypeList();
-		$objectTypeList->getConditionBuilder()->add("object_type.definitionID = ?", array($row['definitionID']));
+		$objectTypeList->getConditionBuilder()->add("object_type.definitionID = ?", [$row['definitionID']]);
 		$objectTypeList->readObjects();
 		
 		foreach ($objectTypeList as $objectType) {

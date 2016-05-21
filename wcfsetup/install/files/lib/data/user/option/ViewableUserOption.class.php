@@ -30,13 +30,13 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	 * list of output objects
 	 * @var	IUserOptionOutput[]
 	 */
-	public static $outputObjects = array();
+	public static $outputObjects = [];
 	
 	/**
 	 * cached user options
 	 * @var	ViewableUserOption[]
 	 */
-	public static $userOptions = array();
+	public static $userOptions = [];
 	
 	/**
 	 * user option value
@@ -95,7 +95,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	 */
 	public static function getUserOption($name) {
 		if (!isset(self::$userOptions[$name])) {
-			$options = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+			$options = UserOptionCacheBuilder::getInstance()->getData([], 'options');
 			self::$userOptions[$name] = new ViewableUserOption($options[$name]);
 		}
 		

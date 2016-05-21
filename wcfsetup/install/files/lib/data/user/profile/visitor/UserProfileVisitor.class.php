@@ -42,7 +42,7 @@ class UserProfileVisitor extends DatabaseObject {
 			WHERE	ownerID = ?
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($ownerID, $userID));
+		$statement->execute([$ownerID, $userID]);
 		if ($row = $statement->fetchArray()) {
 			return new UserProfileVisitor(null, $row);
 		}

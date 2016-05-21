@@ -30,7 +30,7 @@ class PollAction extends AJAXProxyAction {
 	 * list of option ids
 	 * @var	integer[]
 	 */
-	public $optionIDs = array();
+	public $optionIDs = [];
 	
 	/**
 	 * poll object
@@ -63,7 +63,7 @@ class PollAction extends AJAXProxyAction {
 		if (isset($_POST['actionName'])) $this->actionName = StringUtil::trim($_POST['actionName']);
 		if (isset($_POST['pollID'])) $this->pollID = intval($_POST['pollID']);
 		
-		$polls = PollManager::getInstance()->getPolls(array($this->pollID));
+		$polls = PollManager::getInstance()->getPolls([$this->pollID]);
 		if (!isset($polls[$this->pollID])) {
 			throw new UserInputException('pollID');
 		}
@@ -106,7 +106,7 @@ class PollAction extends AJAXProxyAction {
 				throw new PermissionDeniedException();
 			}
 			
-			$optionIDs = array();
+			$optionIDs = [];
 			foreach ($this->poll->getOptions() as $option) {
 				$optionIDs[] = $option->optionID;
 			}
@@ -125,10 +125,10 @@ class PollAction extends AJAXProxyAction {
 	public function execute() {
 		AbstractAction::execute();
 		
-		$returnValues = array(
+		$returnValues = [
 			'actionName' => $this->actionName,
 			'pollID' => $this->pollID
-		);
+		];
 		
 		switch ($this->actionName) {
 			case 'getResult':
@@ -158,9 +158,9 @@ class PollAction extends AJAXProxyAction {
 	 * @param	array		$returnValues
 	 */
 	public function getResult(array &$returnValues) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'poll' => $this->poll
-		));
+		]);
 		
 		$returnValues['resultTemplate'] = WCF::getTPL()->fetch('pollResult');
 	}
@@ -171,9 +171,9 @@ class PollAction extends AJAXProxyAction {
 	 * @param	array		$returnValues
 	 */
 	public function getVote(array &$returnValues) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'poll' => $this->poll
-		));
+		]);
 		
 		$returnValues['voteTemplate'] = WCF::getTPL()->fetch('pollVote');
 	}
@@ -184,11 +184,11 @@ class PollAction extends AJAXProxyAction {
 	 * @param	mixed[]		$returnValues
 	 */
 	protected function vote(array &$returnValues) {
-		$pollAction = new \wcf\data\poll\PollAction(array($this->poll), 'vote', array('optionIDs' => $this->optionIDs));
+		$pollAction = new \wcf\data\poll\PollAction([$this->poll], 'vote', ['optionIDs' => $this->optionIDs]);
 		$pollAction->executeAction();
 		
 		// update poll object
-		$polls = PollManager::getInstance()->getPolls(array($this->pollID));
+		$polls = PollManager::getInstance()->getPolls([$this->pollID]);
 		$this->poll = $polls[$this->pollID];
 		if ($this->relatedObject !== null) {
 			$this->poll->setRelatedObject($this->relatedObject);

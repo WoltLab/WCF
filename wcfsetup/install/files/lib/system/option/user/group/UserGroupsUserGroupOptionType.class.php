@@ -45,7 +45,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		$groups = UserGroup::getGroupsByType();
 		
 		// get new value
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		$selectedGroups = ArrayUtil::toIntegerArray($newValue);
 		
 		// check groups
@@ -60,7 +60,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		$newValue = ArrayUtil::toIntegerArray($newValue);
 		sort($newValue, SORT_NUMERIC);
 		return implode(',', $newValue);
@@ -70,8 +70,8 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge($defaultValue, $groupValue) {
-		$defaultValue = empty($defaultValue) ? array() : explode(',', StringUtil::unifyNewlines($defaultValue));
-		$groupValue = empty($groupValue) ? array() : explode(',', StringUtil::unifyNewlines($groupValue));
+		$defaultValue = empty($defaultValue) ? [] : explode(',', StringUtil::unifyNewlines($defaultValue));
+		$groupValue = empty($groupValue) ? [] : explode(',', StringUtil::unifyNewlines($groupValue));
 		
 		return implode(',', array_unique(array_merge($defaultValue, $groupValue)));
 	}
@@ -80,8 +80,8 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	 * @see	\wcf\system\option\IOptionType::compare()
 	 */
 	public function compare($value1, $value2) {
-		$value1 = ($value1) ? explode(',', $value1) : array();
-		$value2 = ($value2) ? explode(',', $value2) : array();
+		$value1 = ($value1) ? explode(',', $value1) : [];
+		$value2 = ($value2) ? explode(',', $value2) : [];
 		
 		// check if value1 contains more elements than value2
 		$diff = array_diff($value1, $value2);

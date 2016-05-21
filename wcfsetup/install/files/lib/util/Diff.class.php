@@ -36,13 +36,13 @@ class Diff {
 	 * original array, as given by the user
 	 * @var	array
 	 */
-	protected $a = array();
+	protected $a = [];
 	
 	/**
 	 * modified array, as given by the user
 	 * @var	array
 	 */
-	protected $b = array();
+	protected $b = [];
 	
 	/**
 	 * size of a
@@ -192,32 +192,32 @@ class Diff {
 		if ($this->d !== null) return;
 		$lcs = $this->getLCS();
 		
-		$this->d = array();
+		$this->d = [];
 		$positionA = 0;
 		$positionB = 0;
 		foreach ($lcs as $item) {
 			// find next matching item in a, every item in between must be removed
 			while ($positionA < $this->sizeA && $this->a[$positionA] !== $item) {
-				$this->d[] = array(self::REMOVED, $this->a[$positionA++]);
+				$this->d[] = [self::REMOVED, $this->a[$positionA++]];
 			}
 			
 			// find next matching item in b, every item in between must be removed
 			while ($positionB < $this->sizeB && $this->b[$positionB] !== $item) {
-				$this->d[] = array(self::ADDED, $this->b[$positionB++]);
+				$this->d[] = [self::ADDED, $this->b[$positionB++]];
 			}
 			
 			// we are back in our longest common subsequence
-			$this->d[] = array(self::SAME, $item);
+			$this->d[] = [self::SAME, $item];
 			$positionA++;
 			$positionB++;
 		}
 		
 		// append remaining items of `a` and `b`
 		while ($positionA < $this->sizeA) {
-			$this->d[] = array(self::REMOVED, $this->a[$positionA++]);
+			$this->d[] = [self::REMOVED, $this->a[$positionA++]];
 		}
 		while ($positionB < $this->sizeB) {
-			$this->d[] = array(self::ADDED, $this->b[$positionB++]);
+			$this->d[] = [self::ADDED, $this->b[$positionB++]];
 		}
 	}
 	
@@ -240,7 +240,7 @@ class Diff {
 	public function getUnixDiff($context = 2) {
 		$d = $this->getRawDiff();
 		
-		$result = array();
+		$result = [];
 		$result[] = "--- a";
 		$result[] = "+++ b";
 		

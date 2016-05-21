@@ -22,7 +22,7 @@ class UserRankImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.group', $data['groupID']);
 		if (!$data['groupID']) $data['groupID'] = UserGroup::getGroupByType(UserGroup::USERS)->groupID;
 		

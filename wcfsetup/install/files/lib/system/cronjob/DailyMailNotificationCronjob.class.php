@@ -38,11 +38,11 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 				AND time < ?
 				AND confirmTime = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			TIME_NOW - 3600 * 23,
 			0
-		));
+		]);
 		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		if (empty($userIDs)) return;
 		
@@ -54,9 +54,9 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// get notifications
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("notification.userID IN (?)", array($userIDs));
-		$conditions->add("notification.mailNotified = ?", array(0));
-		$conditions->add("notification.confirmTime = ?", array(0));
+		$conditions->add("notification.userID IN (?)", [$userIDs]);
+		$conditions->add("notification.mailNotified = ?", [0]);
+		$conditions->add("notification.confirmTime = ?", [0]);
 		
 		$sql = "SELECT		notification.*, notification_event.eventID, object_type.objectType
 			FROM		wcf".WCF_N."_user_notification notification
@@ -71,8 +71,8 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// mark notifications as done
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($userIDs));
-		$conditions->add("mailNotified = ?", array(0));
+		$conditions->add("userID IN (?)", [$userIDs]);
+		$conditions->add("mailNotified = ?", [0]);
 		$sql = "UPDATE	wcf".WCF_N."_user_notification
 			SET	mailNotified = 1
 			".$conditions;
@@ -80,19 +80,19 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		$statement2->execute($conditions->getParameters());
 		
 		// collect data
-		$eventsToUser = $objectTypes = $eventIDs = $notificationObjects = array();
+		$eventsToUser = $objectTypes = $eventIDs = $notificationObjects = [];
 		$availableObjectTypes = UserNotificationHandler::getInstance()->getAvailableObjectTypes();
 		while ($row = $statement->fetchArray()) {
-			if (!isset($eventsToUser[$row['userID']])) $eventsToUser[$row['userID']] = array();
+			if (!isset($eventsToUser[$row['userID']])) $eventsToUser[$row['userID']] = [];
 			$eventsToUser[$row['userID']][] = $row['notificationID'];
 			
 			// cache object types
 			if (!isset($objectTypes[$row['objectType']])) {
-				$objectTypes[$row['objectType']] = array(
+				$objectTypes[$row['objectType']] = [
 					'objectType' => $availableObjectTypes[$row['objectType']],
-					'objectIDs' => array(),
-					'objects' => array()
-				);
+					'objectIDs' => [],
+					'objects' => []
+				];
 			}
 			
 			$objectTypes[$row['objectType']]['objectIDs'][] = $row['objectID'];
@@ -103,21 +103,21 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// load authors
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("notificationID IN (?)", array(array_keys($notificationObjects)));
+		$conditions->add("notificationID IN (?)", [array_keys($notificationObjects)]);
 		$sql = "SELECT		notificationID, authorID
 			FROM		wcf".WCF_N."_user_notification_author
 			".$conditions."
 			ORDER BY	time ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$authorIDs = $authorToNotification = array();
+		$authorIDs = $authorToNotification = [];
 		while ($row = $statement->fetchArray()) {
 			if ($row['authorID']) {
 				$authorIDs[] = $row['authorID'];
 			}
 			
 			if (!isset($authorToNotification[$row['notificationID']])) {
-				$authorToNotification[$row['notificationID']] = array();
+				$authorToNotification[$row['notificationID']] = [];
 			}
 			
 			$authorToNotification[$row['notificationID']][] = $row['authorID'];
@@ -125,7 +125,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// load authors
 		$authors = UserProfileRuntimeCache::getInstance()->getObjects($authorIDs);
-		$unknownAuthor = new UserProfile(new User(null, array('userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest'))));
+		$unknownAuthor = new UserProfile(new User(null, ['userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest')]));
 		
 		// load objects associated with each object type
 		foreach ($objectTypes as $objectType => $objectData) {
@@ -134,7 +134,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// load required events
 		$eventList = new UserNotificationEventList();
-		$eventList->getConditionBuilder()->add("user_notification_event.eventID IN (?)", array($eventIDs));
+		$eventList->getConditionBuilder()->add("user_notification_event.eventID IN (?)", [$eventIDs]);
 		$eventList->readObjects();
 		$eventObjects = $eventList->getObjects();
 		
@@ -147,9 +147,9 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			if ($user->banned) continue;
 			
 			// add mail header
-			$message = $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.header', array(
+			$message = $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.header', [
 				'user' => $user
-			));
+			]);
 			
 			foreach ($events as $notificationID) {
 				$notification = $notificationObjects[$notificationID];
@@ -165,7 +165,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 				$class->setLanguage($user->getLanguage());
 				
 				if (isset($authorToNotification[$notification->notificationID])) {
-					$eventAuthors = array();
+					$eventAuthors = [];
 					foreach ($authorToNotification[$notification->notificationID] as $userID) {
 						if (!$userID) {
 							$eventAuthors[0] = $unknownAuthor;
@@ -187,19 +187,19 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			$token = $user->notificationMailToken;
 			if (!$token) {
 				// generate token if not present
-				$token = mb_substr(StringUtil::getHash(serialize(array($user->userID, StringUtil::getRandomID()))), 0, 20);
+				$token = mb_substr(StringUtil::getHash(serialize([$user->userID, StringUtil::getRandomID()])), 0, 20);
 				$editor = new UserEditor($user);
-				$editor->update(array('notificationMailToken' => $token));
+				$editor->update(['notificationMailToken' => $token]);
 			}
 			
 			$message .= "\n\n";
-			$message .= $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.footer', array(
+			$message .= $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.footer', [
 				'user' => $user,
 				'token' => $token
-			));
+			]);
 			
 			// build mail
-			$mail = new Mail(array($user->username => $user->email), $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.subject', array('count' => count($events))), $message);
+			$mail = new Mail([$user->username => $user->email], $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.subject', ['count' => count($events)]), $message);
 			$mail->setLanguage($user->getLanguage());
 			$mail->send();
 		}

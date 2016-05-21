@@ -18,7 +18,7 @@ class UserContentClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
-	protected $supportedActions = array('revertContentChanges');
+	protected $supportedActions = ['revertContentChanges'];
 	
 	/**
 	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
@@ -61,15 +61,15 @@ class UserContentClipboardAction extends AbstractClipboardAction {
 	 */
 	protected function validateRevertContentChanges() {
 		if (!MODULE_EDIT_HISTORY) {
-			return array();
+			return [];
 		}
 		
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.content.canBulkRevertContentChanges')) {
-			return array();
+			return [];
 		}
 		
-		$userIDs = array();
+		$userIDs = [];
 		foreach ($this->objects as $user) {
 			$userIDs[] = $user->userID;
 		}

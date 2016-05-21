@@ -147,7 +147,7 @@ class QuickReplyManager extends SingletonFactory {
 		$object->validateMessage($this->container, $parameters['data']['message']);
 		
 		// check for message quote ids
-		$parameters['removeQuoteIDs'] = (isset($parameters['removeQuoteIDs']) && is_array($parameters['removeQuoteIDs'])) ? ArrayUtil::trim($parameters['removeQuoteIDs']) : array();
+		$parameters['removeQuoteIDs'] = (isset($parameters['removeQuoteIDs']) && is_array($parameters['removeQuoteIDs'])) ? ArrayUtil::trim($parameters['removeQuoteIDs']) : [];
 		
 		// check for tmp hash (attachments)
 		$parameters['tmpHash'] = '';
@@ -177,10 +177,10 @@ class QuickReplyManager extends SingletonFactory {
 	 * @return	array
 	 */
 	public function createMessage(IMessageQuickReplyAction $object, array &$parameters, $containerActionClassName, $sortOrder, $templateName, $application = 'wcf') {
-		$additionalFields = array();
+		$additionalFields = [];
 		EventHandler::getInstance()->fireAction($this, 'createMessage', $additionalFields);
 		
-		$tableIndexName = call_user_func(array($this->container, 'getDatabaseTableIndexName'));
+		$tableIndexName = call_user_func([$this->container, 'getDatabaseTableIndexName']);
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
 		$parameters['data']['time'] = TIME_NOW;
 		$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
@@ -200,13 +200,13 @@ class QuickReplyManager extends SingletonFactory {
 		}
 		
 		$message = $object->create();
-		$eventParameters = array('message' => $message);
+		$eventParameters = ['message' => $message];
 		EventHandler::getInstance()->fireAction($this, 'createdMessage', $eventParameters);
 		
 		if ($message instanceof IMessage && !$message->isVisible()) {
-			return array(
+			return [
 				'isVisible' => false
-			);
+			];
 		}
 		
 		// resolve the page no
@@ -220,13 +220,13 @@ class QuickReplyManager extends SingletonFactory {
 			// calculate start index
 			$startIndex = $count - (count($messageList) - 1);
 			
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'attachmentList' => $messageList->getAttachmentList(),
 				'container' => $this->container,
 				'objects' => $messageList,
 				'startIndex' => $startIndex,
 				'sortOrder' => $sortOrder,
-			));
+			]);
 			
 			// assign 'to top' link
 			if (isset($parameters['anchor'])) {
@@ -235,20 +235,20 @@ class QuickReplyManager extends SingletonFactory {
 			
 			// update visit time (messages shouldn't occur as new upon next visit)
 			if (is_subclass_of($containerActionClassName, 'wcf\data\IVisitableObjectAction')) {
-				$containerAction = new $containerActionClassName(array(($this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container)), 'markAsRead');
+				$containerAction = new $containerActionClassName([($this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container)], 'markAsRead');
 				$containerAction->executeAction();
 			}
 			
-			return array(
+			return [
 				'lastPostTime' => $message->time,
 				'template' => WCF::getTPL()->fetch($templateName, $application)
-			);
+			];
 		}
 		else {
 			// redirect
-			return array(
+			return [
 				'url' => $object->getRedirectUrl($this->container, $message)
-			);
+			];
 		}
 	}
 	

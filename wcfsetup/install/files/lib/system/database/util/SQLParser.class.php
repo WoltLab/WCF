@@ -21,7 +21,7 @@ class SQLParser {
 	 * list of sql queries
 	 * @var	string[]
 	 */
-	protected $queryArray = array();
+	protected $queryArray = [];
 	
 	/**
 	 * Creates a new SQLParser object.
@@ -64,7 +64,7 @@ class SQLParser {
 				// get table name
 				if (preg_match('~^CREATE\s+TABLE\s+(\w+)\s*\(~i', $query, $match)) {
 					$tableName = $match[1];
-					$columns = $indices = array();
+					$columns = $indices = [];
 					
 					// find columns
 					if (preg_match_all("~(?:\(|,)\s*(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\s*\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(\d+.\d+|\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~i", $query, $matches)) {
@@ -72,15 +72,15 @@ class SQLParser {
 							$columName = strtoupper($matches[1][$i]);
 							if ($columName == 'UNIQUE' || $columName == 'KEY' || $columName == 'PRIMARY' || $columName == 'FULLTEXT') continue;
 							
-							$column = array('name' => $matches[1][$i]);
+							$column = ['name' => $matches[1][$i]];
 							$columnType = strtolower($matches[2][$i]);
-							$column['data'] = array(
+							$column['data'] = [
 								'type' => $columnType,
 								'notNull' => ((!empty($matches[4][$i]) && strtoupper($matches[4][$i]) == 'NOT NULL') ? true : false),
 								'default' => $matches[5][$i],
 								'autoIncrement' => (!empty($matches[6][$i]) ? true : false),
 								'key' => strtoupper($matches[7][$i])
-							);
+							];
 							if (!empty($matches[3][$i])) {
 								if ($columnType == 'enum') $column['data']['values'] = $matches[3][$i];
 								else {
@@ -104,7 +104,7 @@ class SQLParser {
 					// find indices
 					if (preg_match_all('~(?:\(|,)\s*(?:(?:(?:(UNIQUE|FULLTEXT)(?:\s+(?:INDEX|KEY))?|(?:INDEX|KEY))(?:\s+(\w+))?)|(PRIMARY) KEY)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is', $query, $matches)) {
 						for ($i = 0, $j = count($matches[0]); $i < $j; $i++) {
-							$index = array('name' => $matches[2][$i], 'data' => array());
+							$index = ['name' => $matches[2][$i], 'data' => []];
 							$index['data']['type'] = strtoupper((!empty($matches[1][$i]) ? $matches[1][$i] : $matches[3][$i]));
 							$index['data']['columns'] = $matches[4][$i];
 							$indices[] = $index;
@@ -118,28 +118,28 @@ class SQLParser {
 			case 'ALTER TABLE':
 				// add index
 				if (preg_match('~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+(?:(UNIQUE|FULLTEXT)\s+)?(?:INDEX|KEY)\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is', $query, $match)) {
-					$this->executeAddIndexStatement($match[1], ($match[3] ?: self::getGenericIndexName($match[1], $match[4])), array('type' => strtoupper($match[2]), 'columns' => $match[4]));
+					$this->executeAddIndexStatement($match[1], ($match[3] ?: self::getGenericIndexName($match[1], $match[4])), ['type' => strtoupper($match[2]), 'columns' => $match[4]]);
 				}
 				// add foreign key
 				else if (preg_match('~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+FOREIGN KEY\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)\s+REFERENCES\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)(?:\s+ON\s+DELETE\s+(CASCADE|SET NULL|NO ACTION))?(?:\s+ON\s+UPDATE\s+(CASCADE|SET NULL|NO ACTION))?~is', $query, $match)) {
-					$this->executeAddForeignKeyStatement($match[1], ($match[2] ?: self::getGenericIndexName($match[1], $match[3], 'fk')), array(
+					$this->executeAddForeignKeyStatement($match[1], ($match[2] ?: self::getGenericIndexName($match[1], $match[3], 'fk')), [
 						'columns' => $match[3],
 						'referencedTable' => $match[4],
 						'referencedColumns' => $match[5],
 						'ON DELETE' => isset($match[6]) ? $match[6] : '',
 						'ON UPDATE' => isset($match[7]) ? $match[7] : ''
-					));
+					]);
 				}
 				// add/change column
 				else if (preg_match("~^ALTER\s+TABLE\s+(\w+)\s+(?:(ADD)\s+(?:COLUMN\s+)?|(CHANGE)\s+(?:COLUMN\s+)?(\w+)\s+)(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\s*\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(-?\d+.\d+|-?\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~is", $query, $match)) {
 					$columnType = strtolower($match[6]);
-					$columnData = array(
+					$columnData = [
 						'type' => $columnType,
 						'notNull' => ((!empty($match[8]) && strtoupper($match[8]) == 'NOT NULL') ? true : false),
 						'default' => (isset($match[9]) ? $match[9] : ''),
 						'autoIncrement' => (!empty($match[10]) ? true : false),
 						'key' => (!empty($match[11]) ? strtoupper($match[11]) : '')
-					);
+					];
 					if (!empty($match[7])) {
 						if ($columnType == 'enum') $columnData['values'] = $match[7];
 						else {
@@ -179,7 +179,7 @@ class SQLParser {
 			
 			case 'CREATE INDEX': 
 				if (preg_match('~^CREATE\s+(?:(UNIQUE|FULLTEXT)\s+)?INDEX\s+(\w+)\s+ON\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is', $query, $match)) {
-					$this->executeAddIndexStatement($match[3], ($match[2] ?: self::getGenericIndexName($match[3], $match[4])), array('type' => strtoupper($match[1]), 'columns' => $match[4]));
+					$this->executeAddIndexStatement($match[3], ($match[2] ?: self::getGenericIndexName($match[3], $match[4])), ['type' => strtoupper($match[1]), 'columns' => $match[4]]);
 				}
 				else {
 					throw new SystemException("Unsupported SQL statement '".$query."'");
@@ -220,7 +220,7 @@ class SQLParser {
 	 * @param	array		$columns
 	 * @param	array		$indices
 	 */
-	protected function executeCreateTableStatement($tableName, $columns, $indices = array()) {
+	protected function executeCreateTableStatement($tableName, $columns, $indices = []) {
 		WCF::getDB()->getEditor()->createTable($tableName, $columns, $indices);
 	}
 	

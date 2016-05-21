@@ -27,19 +27,19 @@ class SimpleMessageParser extends SingletonFactory {
 	 * list of smilies
 	 * @var	Smiley[]
 	 */
-	protected $smilies = array();
+	protected $smilies = [];
 	
 	/**
 	 * cached URLs
 	 * @var	string[]
 	 */
-	protected $cachedURLs = array();
+	protected $cachedURLs = [];
 	
 	/**
 	 * cached e-mails
 	 * @var	string[]
 	 */
-	protected $cachedEmails = array();
+	protected $cachedEmails = [];
 	
 	/**
 	 * currently parsed message
@@ -80,7 +80,7 @@ class SimpleMessageParser extends SingletonFactory {
 	 */
 	public function parse($message, $parseURLs = true, $parseSmilies = true) {
 		$this->message = $message;
-		$this->cachedURLs = $this->cachedEmails = array();
+		$this->cachedURLs = $this->cachedEmails = [];
 		
 		// call event
 		EventHandler::getInstance()->fireAction($this, 'beforeParsing');
@@ -107,8 +107,8 @@ class SimpleMessageParser extends SingletonFactory {
 		}
 		
 		// replace bad html tags (script etc.)
-		$badSearch = array('/(javascript):/i', '/(about):/i', '/(vbscript):/i');
-		$badReplace = array('$1<b></b>:', '$1<b></b>:', '$1<b></b>:');
+		$badSearch = ['/(javascript):/i', '/(about):/i', '/(vbscript):/i'];
+		$badReplace = ['$1<b></b>:', '$1<b></b>:', '$1<b></b>:'];
 		$this->message = preg_replace($badSearch, $badReplace, $this->message);
 		
 		// call event
@@ -153,11 +153,11 @@ class SimpleMessageParser extends SingletonFactory {
 			~ix';
 		
 		// parse urls
-		$text = preg_replace_callback($urlPattern, array($this, 'cacheURLsCallback'), $text);
+		$text = preg_replace_callback($urlPattern, [$this, 'cacheURLsCallback'], $text);
 		
 		// parse emails
 		if (mb_strpos($text, '@') !== false) {
-			$text = preg_replace_callback($emailPattern, array($this, 'cacheEmailsCallback'), $text);
+			$text = preg_replace_callback($emailPattern, [$this, 'cacheEmailsCallback'], $text);
 		}
 		
 		return $text;

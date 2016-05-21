@@ -62,13 +62,13 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	 * list of available content languages
 	 * @var	Language[]
 	 */
-	public $availableContentLanguages = array();
+	public $availableContentLanguages = [];
 	
 	/**
 	 * list of default smilies
 	 * @var	Smiley[]
 	 */
-	public $defaultSmilies = array();
+	public $defaultSmilies = [];
 	
 	/**
 	 * enables bbcodes
@@ -146,7 +146,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	 * list of smiley categories
 	 * @var	SmileyCategory[]
 	 */
-	public $smileyCategories = array();
+	public $smileyCategories = [];
 	
 	/**
 	 * message subject
@@ -369,7 +369,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'attachmentHandler' => $this->attachmentHandler,
 			'attachmentObjectID' => $this->attachmentObjectID,
 			'attachmentObjectType' => $this->attachmentObjectType,
@@ -391,7 +391,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			'subject' => $this->subject,
 			'text' => $this->text,
 			'tmpHash' => $this->tmpHash
-		));
+		]);
 		
 		if ($this->allowedBBCodesPermission) {
 			WCF::getTPL()->assign('allowedBBCodes', explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($this->allowedBBCodesPermission))));

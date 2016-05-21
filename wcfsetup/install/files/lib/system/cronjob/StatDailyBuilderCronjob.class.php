@@ -39,7 +39,7 @@ class StatDailyBuilderCronjob extends AbstractCronjob {
 		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler') as $objectType) {
 			$data = $objectType->getProcessor()->getData($date);
 			
-			$statement->execute(array($objectType->objectTypeID, $d->format('Y-m-d'), $data['counter'], $data['total']));
+			$statement->execute([$objectType->objectTypeID, $d->format('Y-m-d'), $data['counter'], $data['total']]);
 		}
 	}
 }

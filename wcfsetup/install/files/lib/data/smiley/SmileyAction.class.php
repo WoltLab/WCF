@@ -25,17 +25,17 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.content.smiley.canManageSmiley');
+	protected $permissionsDelete = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.content.smiley.canManageSmiley');
+	protected $permissionsUpdate = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('delete', 'update', 'updatePosition');
+	protected $requireACP = ['delete', 'update', 'updatePosition'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
@@ -48,9 +48,9 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 			@rename($this->parameters['fileLocation'], WCF_DIR.'images/smilies/'.$smileyFilename);
 			
 			$smileyEditor = new SmileyEditor($smiley);
-			$smileyEditor->update(array(
+			$smileyEditor->update([
 				'smileyPath' => 'images/smilies/'.$smileyFilename
-			));
+			]);
 			
 			$smiley = new Smiley($smiley->smileyID);
 		}
@@ -110,7 +110,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 			if ($smiley === null) continue;
 			
 			$editor = new SmileyEditor($smiley);
-			$editor->update(array('showOrder' => $i++));
+			$editor->update(['showOrder' => $i++]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

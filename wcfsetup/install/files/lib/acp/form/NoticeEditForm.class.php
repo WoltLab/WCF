@@ -51,11 +51,11 @@ class NoticeEditForm extends NoticeAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'notice' => $this->notice,
 			'resetIsDismissed' => $this->resetIsDismissed
-		));
+		]);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ class NoticeEditForm extends NoticeAddForm {
 			$this->showOrder = $this->notice->showOrder;
 			
 			$conditions = $this->notice->getConditions();
-			$conditionsByObjectTypeID = array();
+			$conditionsByObjectTypeID = [];
 			foreach ($conditions as $condition) {
 				$conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
 			}
@@ -130,8 +130,8 @@ class NoticeEditForm extends NoticeAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new NoticeAction(array($this->notice), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new NoticeAction([$this->notice], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 				'isDisabled' => $this->isDisabled,
 				'isDismissible' => $this->isDismissible,
@@ -139,8 +139,8 @@ class NoticeEditForm extends NoticeAddForm {
 				'noticeName' => $this->noticeName,
 				'noticeUseHtml' => $this->noticeUseHtml,
 				'showOrder' => $this->showOrder
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		if (I18nHandler::getInstance()->isPlainValue('notice')) {
@@ -153,7 +153,7 @@ class NoticeEditForm extends NoticeAddForm {
 		}
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
 			foreach ($groupedObjectTypes as $objectTypes) {
 				if (is_array($objectTypes)) {
@@ -171,9 +171,9 @@ class NoticeEditForm extends NoticeAddForm {
 			$sql = "DELETE FROM	wcf".WCF_N."_notice_dismissed
 				WHERE		noticeID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->notice->noticeID
-			));
+			]);
 			
 			$this->resetIsDismissed = 0;
 			

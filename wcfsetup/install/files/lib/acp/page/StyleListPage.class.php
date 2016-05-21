@@ -21,7 +21,7 @@ class StyleListPage extends MultipleLinkPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.style.canManageStyle');
+	public $neededPermissions = ['admin.style.canManageStyle'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

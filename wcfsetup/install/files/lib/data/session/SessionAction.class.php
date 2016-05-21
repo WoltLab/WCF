@@ -20,7 +20,7 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('keepAlive');
+	protected $allowGuestAccess = ['keepAlive'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
@@ -31,7 +31,7 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	 * list of data values returned upon a keep alive request
 	 * @var	mixed[]
 	 */
-	public $keepAliveData = array();
+	public $keepAliveData = [];
 	
 	/**
 	 * Validates the 'keepAlive' action.
@@ -56,9 +56,9 @@ class SessionAction extends AbstractDatabaseObjectAction {
 		SessionHandler::getInstance()->keepAlive();
 		
 		// update notification counts
-		$this->keepAliveData = array(
+		$this->keepAliveData = [
 			'userNotificationCount' => UserNotificationHandler::getInstance()->getNotificationCount(true)
-		);
+		];
 		
 		// notify 3rd party components
 		EventHandler::getInstance()->fireAction($this, 'keepAlive');

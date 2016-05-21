@@ -21,13 +21,13 @@ class MessageParser extends BBCodeParser {
 	 * list of smilies
 	 * @var	Smiley[]
 	 */
-	protected $smilies = array();
+	protected $smilies = [];
 	
 	/**
 	 * cached bbcodes
 	 * @var	array
 	 */
-	protected $cachedCodes = array();
+	protected $cachedCodes = [];
 	
 	/**
 	 * currently parsed message
@@ -69,7 +69,7 @@ class MessageParser extends BBCodeParser {
 	 * @return	string		parsed message
 	 */
 	public function parse($message, $enableSmilies = true, $enableHtml = false, $enableBBCodes = true, $doKeywordHighlighting = true) {
-		$this->cachedCodes = array();
+		$this->cachedCodes = [];
 		$this->message = $message;
 		
 		// call event
@@ -116,8 +116,8 @@ class MessageParser extends BBCodeParser {
 		}
 		
 		// replace bad html tags (script etc.)
-		$badSearch = array('/(javascript):/i', '/(about):/i', '/(vbscript):/i');
-		$badReplace = array('$1<b></b>:', '$1<b></b>:', '$1<b></b>:');
+		$badSearch = ['/(javascript):/i', '/(about):/i', '/(vbscript):/i'];
+		$badReplace = ['$1<b></b>:', '$1<b></b>:', '$1<b></b>:'];
 		$this->message = preg_replace($badSearch, $badReplace, $this->message);
 		
 		// call event
@@ -155,7 +155,7 @@ class MessageParser extends BBCodeParser {
 					(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
 				)?\])
 				(.*?)
-				(?:\[/\\2\])~six", array($this, 'cacheCodesCallback'), $text);
+				(?:\[/\\2\])~six", [$this, 'cacheCodesCallback'], $text);
 		}
 		return $text;
 	}

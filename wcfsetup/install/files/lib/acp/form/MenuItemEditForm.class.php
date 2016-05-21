@@ -89,7 +89,7 @@ class MenuItemEditForm extends MenuItemAddForm {
 		}
 		
 		// update menu
-		$this->objectAction = new MenuItemAction(array($this->itemID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new MenuItemAction([$this->itemID], 'update', ['data' => array_merge($this->additionalFields, [
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'title' => $this->title,
 			'pageID' => $this->pageID,
@@ -97,14 +97,14 @@ class MenuItemEditForm extends MenuItemAddForm {
 			'externalURL' => $this->externalURL,
 			'parentItemID' => $this->parentItemID,
 			'showOrder' => $this->showOrder
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -138,10 +138,10 @@ class MenuItemEditForm extends MenuItemAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'itemID' => $this->itemID,
 			'menuItem' => $this->menuItem
-		));
+		]);
 	}
 }

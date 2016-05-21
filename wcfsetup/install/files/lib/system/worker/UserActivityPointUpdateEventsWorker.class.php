@@ -25,7 +25,7 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	 * object types
 	 * @var	ObjectType[]
 	 */
-	public $objectTypes = array();
+	public $objectTypes = [];
 	
 	/**
 	 * @see	\wcf\system\worker\IWorker
@@ -40,7 +40,7 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermissions(array('admin.user.canEditActivityPoints'));
+		WCF::getSession()->checkPermissions(['admin.user.canEditActivityPoints']);
 	}
 	
 	/**
@@ -61,10 +61,10 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 					SET		activityPoints = items * ?
 					WHERE		objectTypeID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$objectType->points,
 					$objectType->objectTypeID
-				));
+				]);
 			}
 			
 			$i++;

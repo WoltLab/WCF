@@ -28,7 +28,7 @@ class AbstractPollOptionVoteImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
 		
@@ -42,7 +42,7 @@ class AbstractPollOptionVoteImporter extends AbstractImporter {
 						(pollID, optionID, userID)
 			VALUES			(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($data['pollID'], $data['optionID'], $data['userID']));
+		$statement->execute([$data['pollID'], $data['optionID'], $data['userID']]);
 		
 		return 1;
 	}

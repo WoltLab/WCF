@@ -19,7 +19,7 @@ class SignatureCache extends SingletonFactory {
 	 * cached signatures
 	 * @var	string
 	 */
-	protected $signatures = array();
+	protected $signatures = [];
 	
 	/**
 	 * Returns a parsed user signature.

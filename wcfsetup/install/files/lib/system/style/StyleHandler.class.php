@@ -23,7 +23,7 @@ class StyleHandler extends SingletonFactory {
 	 * style information cache
 	 * @var	array
 	 */
-	protected $cache = array();
+	protected $cache = [];
 	
 	/**
 	 * active style object
@@ -45,7 +45,7 @@ class StyleHandler extends SingletonFactory {
 	 * @return	Style[]
 	 */
 	public function getAvailableStyles() {
-		$styles = array();
+		$styles = [];
 		
 		foreach ($this->cache['styles'] as $styleID => $style) {
 			if (!$style->isDisabled || WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {

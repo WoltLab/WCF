@@ -46,7 +46,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	 * additional fields
 	 * @var	mixed[]
 	 */
-	public $additionalFields = array();
+	public $additionalFields = [];
 	
 	/**
 	 * @see	\wcf\form\IForm::submit()
@@ -124,10 +124,10 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 		parent::assignVariables();
 		
 		// assign default variables
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'activeTabMenuItem' => $this->activeTabMenuItem,
 			'errorField' => $this->errorField,
 			'errorType' => $this->errorType
-		));
+		]);
 	}
 }

@@ -29,7 +29,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	 * list of grouped user group assignment condition object types
 	 * @var	array
 	 */
-	public $conditions = array();
+	public $conditions = [];
 	
 	/**
 	 * id of the selected user group
@@ -46,7 +46,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canManageGroupAssignment');
+	public $neededPermissions = ['admin.user.canManageGroupAssignment'];
 	
 	/**
 	 * title of the user group assignment
@@ -58,7 +58,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	 * list of selectable user groups
 	 * @var	UserGroup[]
 	 */
-	public $userGroups = array();
+	public $userGroups = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()
@@ -66,25 +66,25 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'groupedObjectTypes' => $this->conditions,
 			'groupID' => $this->groupID,
 			'isDisabled' => $this->isDisabled,
 			'title' => $this->title,
 			'userGroups' => $this->userGroups
-		));
+		]);
 	}
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		$this->userGroups = UserGroup::getGroupsByType(array(), array(
+		$this->userGroups = UserGroup::getGroupsByType([], [
 			UserGroup::EVERYONE,
 			UserGroup::GUESTS,
 			UserGroup::USERS
-		));
+		]);
 		foreach ($this->userGroups as $key => $userGroup) {
 			if (!$userGroup->isAccessible()) {
 				unset($this->userGroups[$key]);
@@ -123,17 +123,17 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new UserGroupAssignmentAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserGroupAssignmentAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'groupID' => $this->groupID,
 				'isDisabled' => $this->isDisabled,
 				'title' => $this->title
-			))
-		));
+			])
+		]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->conditions as $groupedObjectTypes) {
 			$conditions = array_merge($conditions, $groupedObjectTypes);
 		}

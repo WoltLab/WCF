@@ -19,7 +19,7 @@ interface ICacheBuilder {
 	 * @param	string		$arrayIndex
 	 * @return	mixed
 	 */
-	public function getData(array $parameters = array(), $arrayIndex = '');
+	public function getData(array $parameters = [], $arrayIndex = '');
 	
 	/**
 	 * Returns maximum lifetime for cache resource.
@@ -34,5 +34,5 @@ interface ICacheBuilder {
 	 * 
 	 * @param	array		$parameters
 	 */
-	public function reset(array $parameters = array());
+	public function reset(array $parameters = []);
 }

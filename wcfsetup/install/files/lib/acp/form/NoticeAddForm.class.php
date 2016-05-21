@@ -31,14 +31,14 @@ class NoticeAddForm extends AbstractForm {
 	 * list pf pre-defined CSS class names
 	 * @var	string[]
 	 */
-	public $availableCssClassNames = array(
+	public $availableCssClassNames = [
 		'info',
 		'success',
 		'warning',
 		'error',
 		
 		'custom'
-	);
+	];
 	
 	/**
 	 * name of the chosen CSS class name
@@ -56,7 +56,7 @@ class NoticeAddForm extends AbstractForm {
 	 * grouped notice condition object types
 	 * @var	array
 	 */
-	public $groupedConditionObjectTypes = array();
+	public $groupedConditionObjectTypes = [];
 	
 	/**
 	 * 1 if the notice is disabled
@@ -73,7 +73,7 @@ class NoticeAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.notice.canManageNotice');
+	public $neededPermissions = ['admin.notice.canManageNotice'];
 	
 	/**
 	 * name of the notice
@@ -101,7 +101,7 @@ class NoticeAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'availableCssClassNames' => $this->availableCssClassNames,
 			'cssClassName' => $this->cssClassName,
@@ -112,7 +112,7 @@ class NoticeAddForm extends AbstractForm {
 			'noticeName' => $this->noticeName,
 			'noticeUseHtml' => $this->noticeUseHtml,
 			'showOrder' => $this->showOrder
-		));
+		]);
 	}
 	
 	/**
@@ -124,12 +124,12 @@ class NoticeAddForm extends AbstractForm {
 			if (!$objectType->conditionobject) continue;
 			
 			if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject])) {
-				$this->groupedConditionObjectTypes[$objectType->conditionobject] = array();
+				$this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
 			}
 			
 			if ($objectType->conditiongroup) {
 				if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
-					$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = array();
+					$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
 				}
 				
 				$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
@@ -187,8 +187,8 @@ class NoticeAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new NoticeAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new NoticeAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 				'isDisabled' => $this->isDisabled,
 				'isDismissible' => $this->isDismissible,
@@ -196,8 +196,8 @@ class NoticeAddForm extends AbstractForm {
 				'noticeName' => $this->noticeName,
 				'noticeUseHtml' => $this->noticeUseHtml,
 				'showOrder' => $this->showOrder
-			))
-		));
+			])
+		]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('notice')) {
@@ -205,13 +205,13 @@ class NoticeAddForm extends AbstractForm {
 			
 			// update notice name
 			$noticeEditor = new NoticeEditor($returnValues['returnValues']);
-			$noticeEditor->update(array(
+			$noticeEditor->update([
 				'notice' => 'wcf.notice.notice.notice'.$returnValues['returnValues']->noticeID
-			));
+			]);
 		}
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
 			foreach ($groupedObjectTypes as $objectTypes) {
 				if (is_array($objectTypes)) {

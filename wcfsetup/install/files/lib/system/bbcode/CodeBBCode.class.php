@@ -37,7 +37,7 @@ class CodeBBCode extends AbstractBBCode {
 	 * already used ids for line numbers to prevent duplicate ids in the output
 	 * @var	string[]
 	 */
-	private static $codeIDs = array();
+	private static $codeIDs = [];
 	
 	/**
 	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
@@ -131,21 +131,21 @@ class CodeBBCode extends AbstractBBCode {
 			$highlightedContent = self::fixMarkup(explode("\n", $className::getInstance()->highlight($content)));
 			
 			// show template
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'lineNumbers' => self::makeLineNumbers($content, $this->startLineNumber),
 				'startLineNumber' => $this->startLineNumber,
 				'content' => $highlightedContent,
 				'highlighter' => $className::getInstance(),
 				'filename' => $this->filename,
 				'lines' => substr_count($content, "\n") + 1
-			));
+			]);
 			return WCF::getTPL()->fetch('codeBBCodeTag');
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
-			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.text', array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.text', [
 				'highlighterTitle' => $className::getInstance()->getTitle(),
 				'lines' => substr_count($content, "\n") + 1
-			));
+			]);
 		}
 	}
 	
@@ -217,7 +217,7 @@ class CodeBBCode extends AbstractBBCode {
 	protected static function makeLineNumbers($code, $start, $split = "\n") {
 		$lines = explode($split, $code);
 		
-		$lineNumbers = array();
+		$lineNumbers = [];
 		$i = -1;
 		// find an unused codeID
 		do {
@@ -260,7 +260,7 @@ class CodeBBCode extends AbstractBBCode {
 			$emptyTagRegex = new Regex('<span(?: class="(?:[^"])*")?></span>');
 		}
 		
-		$openTags = array();
+		$openTags = [];
 		foreach ($lines as &$line) {
 			$spanRegex->match($line, true);
 			// open all tags again

@@ -42,7 +42,7 @@ class UserOptionCategory extends DatabaseObject {
 				FROM	wcf".WCF_N."_user_option_category option_category
 				WHERE	option_category.categoryID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($categoryID));
+			$statement->execute([$categoryID]);
 			$row = $statement->fetchArray();
 		}
 		
@@ -69,7 +69,7 @@ class UserOptionCategory extends DatabaseObject {
 			FROM	wcf".WCF_N."_user_option_category
 			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($categoryName));
+		$statement->execute([$categoryName]);
 		$row = $statement->fetchArray();
 		if ($row === false) return null;
 		

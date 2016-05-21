@@ -53,10 +53,10 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 				WHERE		packageID = ?
 						AND filename = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->getPackageID(),
 				$this->instruction['value']
-			));
+			]);
 		}
 	}
 	

@@ -38,7 +38,7 @@ class SMTPMailSender extends MailSender {
 	 * mail recipients
 	 * @var	array
 	 */
-	protected $recipients = array();
+	protected $recipients = [];
 	
 	/**
 	 * Creates a new SMTPMailSender object.
@@ -160,7 +160,7 @@ class SMTPMailSender extends MailSender {
 	 * @see	\wcf\system\mail\MailSender::sendMail()
 	 */
 	public function sendMail(Mail $mail) {
-		$this->recipients = array();
+		$this->recipients = [];
 		if (count($mail->getTo()) > 0) $this->recipients = $mail->getTo();
 		if (count($mail->getCC()) > 0) $this->recipients = array_merge($this->recipients, $mail->getCC());
 		if (count($mail->getBCC())> 0) $this->recipients = array_merge($this->recipients, $mail->getBCC());

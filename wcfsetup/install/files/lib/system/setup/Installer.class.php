@@ -123,8 +123,8 @@ class Installer {
 		$tar = new Tar($this->source);
 		
 		// distinct directories and files
-		$directories = array();
-		$files = array();
+		$directories = [];
+		$files = [];
 		foreach ($tar->getContentList() as $index => $file) {
 			if (empty($this->folder) || mb_strpos($file['filename'], $this->folder) === 0) {
 				if (!empty($this->folder)) {
@@ -146,7 +146,7 @@ class Installer {
 		$this->checkFiles($files);
 		
 		// now create the directories
-		$errors = array();
+		$errors = [];
 		foreach ($directories as $dir) {
 			try {
 				$this->createDir($dir);

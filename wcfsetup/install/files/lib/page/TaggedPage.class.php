@@ -23,17 +23,17 @@ class TaggedPage extends MultipleLinkPage {
 	 * list of available taggable object types
 	 * @var	ObjectType[]
 	 */
-	public $availableObjectTypes = array();
+	public $availableObjectTypes = [];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_TAGGING');
+	public $neededModules = ['MODULE_TAGGING'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('user.tag.canViewTag');
+	public $neededPermissions = ['user.tag.canViewTag'];
 	
 	/**
 	 * tag id
@@ -120,14 +120,14 @@ class TaggedPage extends MultipleLinkPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'tag' => $this->tag,
 			'tags' => $this->tagCloud->getTags(100),
 			'availableObjectTypes' => $this->availableObjectTypes,
 			'objectType' => $this->objectType->objectType,
 			'resultListTemplateName' => $this->objectType->getProcessor()->getTemplateName(),
 			'resultListApplication' => $this->objectType->getProcessor()->getApplication()
-		));
+		]);
 		
 		if (count($this->objectList) === 0) {
 			@header('HTTP/1.0 404 Not Found');

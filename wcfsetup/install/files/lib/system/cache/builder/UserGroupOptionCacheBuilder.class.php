@@ -28,7 +28,7 @@ class UserGroupOptionCacheBuilder extends OptionCacheBuilder {
 	public function rebuild(array $parameters) {
 		$data = parent::rebuild($parameters);
 		
-		$usersOnlyPermissions = array();
+		$usersOnlyPermissions = [];
 		foreach ($data['options'] as $option) {
 			if ($option->usersOnly) {
 				$usersOnlyPermissions[] = $option->optionName;

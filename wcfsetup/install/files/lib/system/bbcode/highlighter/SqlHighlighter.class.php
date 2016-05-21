@@ -23,22 +23,22 @@ class SqlHighlighter extends Highlighter {
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
 	 */
-	protected $quotes = array("'", '"');
+	protected $quotes = ["'", '"'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
 	 */
-	protected $singleLineComment = array('#', '--');
+	protected $singleLineComment = ['#', '--'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
-	protected $separators = array('(', ')', ',', ';');
+	protected $separators = ['(', ')', ',', ';'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
-	protected $operators = array('<>', '~=', '!=', '^=', '=', '<', '<=', '>', '>=', '*', '/', '+', '-', '||', '@', '%', '&', '?', '\$');
+	protected $operators = ['<>', '~=', '!=', '^=', '=', '<', '<=', '>', '>=', '*', '/', '+', '-', '||', '@', '%', '&', '?', '\$'];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheComments()
@@ -83,7 +83,7 @@ class SqlHighlighter extends Highlighter {
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		'action',
 		'add',
 		'aggregate',
@@ -316,12 +316,12 @@ class SqlHighlighter extends Highlighter {
 		'year',
 		'year_month',
 		'zerofill'
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'ABS',
 		'ACOS',
 		'ADDDATE',
@@ -430,5 +430,5 @@ class SqlHighlighter extends Highlighter {
 		'WEEK',
 		'WEEKDAY',
 		'YEAR'
-	);
+	];
 }

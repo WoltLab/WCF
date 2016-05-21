@@ -34,7 +34,7 @@ class MessageOptionType extends TextareaOptionType {
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		$allowedBBCodes = array();
+		$allowedBBCodes = [];
 		if ($option->allowedbbcodepermission) {
 			$allowedBBCodes = explode(',', WCF::getSession()->getPermission($option->allowedbbcodepermission));
 		}
@@ -43,11 +43,11 @@ class MessageOptionType extends TextareaOptionType {
 		}
 		BBCodeHandler::getInstance()->setAllowedBBCodes($allowedBBCodes);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'defaultSmilies' => SmileyCache::getInstance()->getCategorySmilies(),
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('messageOptionType');
 	}

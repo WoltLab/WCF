@@ -33,13 +33,13 @@ class UserSearchForm extends UserOptionListForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canSearchUser');
+	public $neededPermissions = ['admin.user.canSearchUser'];
 	
 	/**
 	 * list of grouped user group assignment condition object types
 	 * @var	array
 	 */
-	public $conditions = array();
+	public $conditions = [];
 	
 	/**
 	 * list with searched users
@@ -75,7 +75,7 @@ class UserSearchForm extends UserOptionListForm {
 	 * shown columns
 	 * @var	string[]
 	 */
-	public $columns = array('registrationDate', 'lastActivityTime');
+	public $columns = ['registrationDate', 'lastActivityTime'];
 	
 	/**
 	 * number of results
@@ -163,14 +163,14 @@ class UserSearchForm extends UserOptionListForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'groupedObjectTypes' => $this->conditions,
 			'sortField' => $this->sortField,
 			'sortOrder' => $this->sortOrder,
 			'itemsPerPage' => $this->itemsPerPage,
 			'columns' => $this->columns,
 			'columnOptions' => $this->optionHandler->getCategoryOptions('profile')
-		));
+		]);
 	}
 	
 	/**
@@ -186,12 +186,12 @@ class UserSearchForm extends UserOptionListForm {
 			'columns' => $this->columns
 		]);
 		
-		$search = SearchEditor::create(array(
+		$search = SearchEditor::create([
 			'userID' => WCF::getUser()->userID,
 			'searchData' => $data,
 			'searchTime' => TIME_NOW,
 			'searchType' => 'users'
-		));
+		]);
 		
 		// get new search id
 		$this->searchID = $search->searchID;

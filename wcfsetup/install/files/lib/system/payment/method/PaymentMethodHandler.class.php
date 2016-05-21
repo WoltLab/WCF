@@ -19,13 +19,13 @@ class PaymentMethodHandler extends SingletonFactory {
 	 * payment methods
 	 * @var	array
 	 */
-	protected $paymentMethods = array();
+	protected $paymentMethods = [];
 	
 	/**
 	 * payment method object types
 	 * @var	array
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -55,7 +55,7 @@ class PaymentMethodHandler extends SingletonFactory {
 	 * @return	string[]
 	 */
 	public function getPaymentMethodSelection() {
-		$selection = array();
+		$selection = [];
 		foreach ($this->objectTypes as $objectType) {
 			$selection[$objectType->objectType] = WCF::getLanguage()->get('wcf.payment.'.$objectType->objectType);
 		}

@@ -34,18 +34,18 @@ class UserGroupOptionForm extends AbstractForm {
 	 * list of parsed form elements per group
 	 * @var	string[]
 	 */
-	public $formElements = array();
+	public $formElements = [];
 	
 	/**
 	 * list of accessible groups
 	 * @var	UserGroup[]
 	 */
-	public $groups = array();
+	public $groups = [];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canEditGroup');
+	public $neededPermissions = ['admin.user.canEditGroup'];
 	
 	/**
 	 * user group option type object
@@ -57,13 +57,13 @@ class UserGroupOptionForm extends AbstractForm {
 	 * list of parent categories
 	 * @var	UserGroupOptionCategory[]
 	 */
-	public $parentCategories = array();
+	public $parentCategories = [];
 	
 	/**
 	 * list of values per user group
 	 * @var	array
 	 */
-	public $values = array();
+	public $values = [];
 	
 	/**
 	 * user group option object
@@ -95,7 +95,7 @@ class UserGroupOptionForm extends AbstractForm {
 			$categoryList = new UserGroupOptionCategoryList();
 			$categoryList->readObjects();
 			
-			$categories = array();
+			$categories = [];
 			foreach ($categoryList as $category) {
 				$categories[$category->categoryName] = $category;
 			}
@@ -201,8 +201,8 @@ class UserGroupOptionForm extends AbstractForm {
 		if (empty($_POST)) {
 			// read values of accessible user groups
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("groupID IN (?)", array(array_keys($this->groups)));
-			$conditions->add("optionID = ?", array($this->userGroupOption->optionID));
+			$conditions->add("groupID IN (?)", [array_keys($this->groups)]);
+			$conditions->add("optionID = ?", [$this->userGroupOption->optionID]);
 			
 			$sql = "SELECT	groupID, optionValue
 				FROM	wcf".WCF_N."_user_group_option_value
@@ -227,7 +227,7 @@ class UserGroupOptionForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new UserGroupOptionAction(array($this->userGroupOption), 'updateValues', array('values' => $this->values));
+		$this->objectAction = new UserGroupOptionAction([$this->userGroupOption], 'updateValues', ['values' => $this->values]);
 		$this->objectAction->executeAction();
 		
 		// fire saved event
@@ -242,13 +242,13 @@ class UserGroupOptionForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'formElements' => $this->formElements,
 			'groups' => $this->groups,
 			'parentCategories' => $this->parentCategories,
 			'userGroupOption' => $this->userGroupOption,
 			'values' => $this->values
-		));
+		]);
 	}
 	
 	/**

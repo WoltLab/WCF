@@ -33,7 +33,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 	 * response data
 	 * @var	array
 	 */
-	public $data = array();
+	public $data = [];
 	
 	/**
 	 * @see	\wcf\action\IAction::readParameters()

@@ -70,7 +70,7 @@ class Option extends DatabaseObject {
 		parent::handleData($data);
 		
 		// unserialize additional data
-		$this->data['additionalData'] = (empty($data['additionalData']) ? array() : @unserialize($data['additionalData']));
+		$this->data['additionalData'] = (empty($data['additionalData']) ? [] : @unserialize($data['additionalData']));
 	}
 	
 	/**
@@ -84,7 +84,7 @@ class Option extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
-		$options = array();
+		$options = [];
 		while ($row = $statement->fetchArray()) {
 			$option = new Option(null, $row);
 			$options[$option->getConstantName()] = $option;
@@ -117,10 +117,10 @@ class Option extends DatabaseObject {
 			}
 		}
 		
-		return array(
+		return [
 			'disableOptions' => $disableOptions,
 			'enableOptions' => $enableOptions
-		);
+		];
 	}
 	
 	/**
@@ -129,7 +129,7 @@ class Option extends DatabaseObject {
 	 * @return	array
 	 */
 	public function parseSelectOptions() {
-		$result = array();
+		$result = [];
 		$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->selectOptions)));
 		foreach ($options as $option) {
 			$key = $value = $option;
@@ -151,7 +151,7 @@ class Option extends DatabaseObject {
 	 * @return	array
 	 */
 	public function parseMultipleEnableOptions() {
-		$result = array();
+		$result = [];
 		if (!empty($this->enableOptions)) {
 			$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->enableOptions)));
 			$key = -1;

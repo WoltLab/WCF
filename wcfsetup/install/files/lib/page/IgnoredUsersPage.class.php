@@ -35,7 +35,7 @@ class IgnoredUsersPage extends MultipleLinkPage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add("user_ignore.userID = ?", array(WCF::getUser()->userID));
+		$this->objectList->getConditionBuilder()->add("user_ignore.userID = ?", [WCF::getUser()->userID]);
 	}
 	
 	/**

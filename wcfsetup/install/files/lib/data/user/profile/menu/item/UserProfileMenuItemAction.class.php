@@ -19,7 +19,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('getContent');
+	protected $allowGuestAccess = ['getContent'];
 	
 	/**
 	 * menu item
@@ -50,9 +50,9 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	public function getContent() {
 		$contentManager = $this->menuItem->getContentManager();
 		
-		return array(
+		return [
 			'containerID' => $this->parameters['data']['containerID'],
 			'template' => $contentManager->getContent($this->parameters['data']['userID'])
-		);
+		];
 	}
 }

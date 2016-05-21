@@ -42,7 +42,7 @@ class LikeHandler extends SingletonFactory {
 	 * loaded like objects
 	 * @var	LikeObject[][]
 	 */
-	protected $likeObjectCache = array();
+	protected $likeObjectCache = [];
 	
 	/**
 	 * cached object types
@@ -97,7 +97,7 @@ class LikeHandler extends SingletonFactory {
 			return $this->likeObjectCache[$objectType->objectTypeID];
 		}
 		
-		return array();
+		return [];
 	}
 	
 	/**
@@ -116,8 +116,8 @@ class LikeHandler extends SingletonFactory {
 		$i = 0;
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("like_object.objectTypeID = ?", array($objectType->objectTypeID));
-		$conditions->add("like_object.objectID IN (?)", array($objectIDs));
+		$conditions->add("like_object.objectTypeID = ?", [$objectType->objectTypeID]);
+		$conditions->add("like_object.objectID IN (?)", [$objectIDs]);
 		$parameters = $conditions->getParameters();
 		
 		if (WCF::getUser()->userID) {
@@ -175,7 +175,7 @@ class LikeHandler extends SingletonFactory {
 			// like data
 			$cumulativeLikes = 0;
 			$newValue = $oldValue = null;
-			$users = array();
+			$users = [];
 			
 			// update existing object
 			if ($likeObject->likeObjectID) {
@@ -216,16 +216,16 @@ class LikeHandler extends SingletonFactory {
 				}
 				
 				// build update date
-				$updateData = array(
+				$updateData = [
 					'likes' => $likes,
 					'dislikes' => $dislikes,
 					'cumulativeLikes' => $cumulativeLikes
-				);
+				];
 				
 				if ($likeValue == 1) {
 					$users = unserialize($likeObject->cachedUsers);
 					if (count($users) < 3) {
-						$users[$user->userID] = array('userID' => $user->userID, 'username' => $user->username);
+						$users[$user->userID] = ['userID' => $user->userID, 'username' => $user->username];
 						$updateData['cachedUsers'] = serialize($users);
 					}
 				}
@@ -244,11 +244,11 @@ class LikeHandler extends SingletonFactory {
 			else {
 				$cumulativeLikes = $likeValue;
 				$newValue = $likeValue;
-				$users = array();
-				if ($likeValue == 1) $users = array($user->userID => array('userID' => $user->userID, 'username' => $user->username));
+				$users = [];
+				if ($likeValue == 1) $users = [$user->userID => ['userID' => $user->userID, 'username' => $user->username]];
 				
 				// create cache
-				$likeObject = LikeObjectEditor::create(array(
+				$likeObject = LikeObjectEditor::create([
 					'objectTypeID' => $likeable->getObjectType()->objectTypeID,
 					'objectID' => $likeable->getObjectID(),
 					'objectUserID' => ($likeable->getUserID() ?: null),
@@ -256,35 +256,35 @@ class LikeHandler extends SingletonFactory {
 					'dislikes' => ($likeValue == Like::DISLIKE) ? 1 : 0,
 					'cumulativeLikes' => $cumulativeLikes,
 					'cachedUsers' => serialize($users)
-				));
+				]);
 			}
 			
 			// update owner's like counter
 			if ($likeable->getUserID()) {
 				if ($like->likeID) {
 					$userEditor = new UserEditor(new User($likeable->getUserID()));
-					$userEditor->updateCounters(array(
+					$userEditor->updateCounters([
 						'likesReceived' => ($like->likeValue == Like::LIKE ? -1 : 1)
-					));
+					]);
 				}
 				else if ($likeValue == Like::LIKE) {
 					$userEditor = new UserEditor(new User($likeable->getUserID()));
-					$userEditor->updateCounters(array(
+					$userEditor->updateCounters([
 						'likesReceived' => 1
-					));
+					]);
 				}
 			}
 			
 			if (!$like->likeID) {
 				// save like
-				$like = LikeEditor::create(array(
+				$like = LikeEditor::create([
 					'objectID' => $likeable->getObjectID(),
 					'objectTypeID' => $likeable->getObjectType()->objectTypeID,
 					'objectUserID' => ($likeable->getUserID() ?: null),
 					'userID' => $user->userID,
 					'time' => $time,
 					'likeValue' => $likeValue
-				));
+				]);
 				
 				if ($likeValue == Like::LIKE && $likeable->getUserID()) {
 					UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
@@ -293,14 +293,14 @@ class LikeHandler extends SingletonFactory {
 			}
 			else {
 				$likeEditor = new LikeEditor($like);
-				$likeEditor->update(array(
+				$likeEditor->update([
 					'time' => $time,
 					'likeValue' => $likeValue
-				));
+				]);
 				
 				if ($likeable->getUserID()) {
 					if ($likeValue == Like::DISLIKE) {
-						UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($likeable->getUserID() => 1));
+						UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
 					}
 					else {
 						UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
@@ -318,13 +318,13 @@ class LikeHandler extends SingletonFactory {
 			WCF::getDB()->rollBackTransaction();
 		}
 		
-		return array(
+		return [
 			'data' => $this->loadLikeStatus($likeObject, $user),
 			'like' => $like,
 			'newValue' => $newValue,
 			'oldValue' => $oldValue,
 			'users' => $users
-		);
+		];
 	}
 	
 	/**
@@ -359,16 +359,16 @@ class LikeHandler extends SingletonFactory {
 			}
 			
 			// build update data
-			$updateData = array(
+			$updateData = [
 				'likes' => $likes,
 				'dislikes' => $dislikes,
 				'cumulativeLikes' => $cumulativeLikes
-			);
+			];
 			
 			$users = $likeObject->getUsers();
-			$usersArray = array();
+			$usersArray = [];
 			foreach ($users as $user2) {
-				$usersArray[$user2->userID] = array('userID' => $user2->userID, 'username' => $user2->username);
+				$usersArray[$user2->userID] = ['userID' => $user2->userID, 'username' => $user2->username];
 			}
 			
 			if (isset($usersArray[$user->userID])) {
@@ -390,11 +390,11 @@ class LikeHandler extends SingletonFactory {
 			if ($likeable->getUserID()) {
 				if ($like->likeValue == Like::LIKE) {
 					$userEditor = new UserEditor(new User($likeable->getUserID()));
-					$userEditor->updateCounters(array(
+					$userEditor->updateCounters([
 						'likesReceived' => -1
-					));
+					]);
 					
-					UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($likeable->getUserID() => 1));
+					UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
 				}
 			}
 			
@@ -407,12 +407,12 @@ class LikeHandler extends SingletonFactory {
 			WCF::getDB()->rollBackTransaction();
 		}
 		
-		return array(
+		return [
 			'data' => $this->loadLikeStatus($likeObject, $user),
 			'newValue' => null,
 			'oldValue' => $like->likeValue,
 			'users' => $usersArray
-		);
+		];
 	}
 	
 	/**
@@ -422,19 +422,19 @@ class LikeHandler extends SingletonFactory {
 	 * @param	integer[]		$objectIDs
 	 * @param	string[]		$notificationObjectTypes
 	 */
-	public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = array()) {
+	public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = []) {
 		$objectTypeObj = $this->getObjectType($objectType);
 		
 		// get like objects
 		$likeObjectList = new LikeObjectList();
-		$likeObjectList->getConditionBuilder()->add('like_object.objectTypeID = ?', array($objectTypeObj->objectTypeID));
-		$likeObjectList->getConditionBuilder()->add('like_object.objectID IN (?)', array($objectIDs));
+		$likeObjectList->getConditionBuilder()->add('like_object.objectTypeID = ?', [$objectTypeObj->objectTypeID]);
+		$likeObjectList->getConditionBuilder()->add('like_object.objectID IN (?)', [$objectIDs]);
 		$likeObjectList->readObjects();
 		$likeObjects = $likeObjectList->getObjects();
 		$likeObjectIDs = $likeObjectList->getObjectIDs();
 		
 		// reduce count of received users
-		$users = array();
+		$users = [];
 		foreach ($likeObjects as $likeObject) {
 			if ($likeObject->likes) {
 				if (!isset($users[$likeObject->objectUserID])) $users[$likeObject->objectUserID] = 0;
@@ -442,20 +442,20 @@ class LikeHandler extends SingletonFactory {
 			}
 		}
 		foreach ($users as $userID => $receivedLikes) {
-			$userEditor = new UserEditor(new User(null, array('userID' => $userID)));
-			$userEditor->updateCounters(array(
+			$userEditor = new UserEditor(new User(null, ['userID' => $userID]));
+			$userEditor->updateCounters([
 				'likesReceived' => $receivedLikes * -1
-			));
+			]);
 		}
 		
 		// get like ids
 		$likeList = new LikeList();
-		$likeList->getConditionBuilder()->add('like_table.objectTypeID = ?', array($objectTypeObj->objectTypeID));
-		$likeList->getConditionBuilder()->add('like_table.objectID IN (?)', array($objectIDs));
+		$likeList->getConditionBuilder()->add('like_table.objectTypeID = ?', [$objectTypeObj->objectTypeID]);
+		$likeList->getConditionBuilder()->add('like_table.objectID IN (?)', [$objectIDs]);
 		$likeList->readObjects();
 		
 		if (count($likeList)) {
-			$likeData = array();
+			$likeData = [];
 			foreach ($likeList as $like) {
 				$likeData[$like->likeID] = $like->userID;
 			}
@@ -505,10 +505,10 @@ class LikeHandler extends SingletonFactory {
 					AND like_table.userID = ?)
 			WHERE		like_object.likeObjectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$user->userID,
 			$likeObject->likeObjectID
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		return $row;

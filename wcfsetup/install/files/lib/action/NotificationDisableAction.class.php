@@ -89,21 +89,21 @@ class NotificationDisableAction extends AbstractAction {
 				WHERE	userID = ?
 					AND eventID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				'none',
 				$this->userID,
 				$this->eventID
-			));
+			]);
 		}
 		else {
 			$sql = "UPDATE	wcf".WCF_N."_user_notification_event_to_user
 				SET	mailNotificationType = ?
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				'none',
 				$this->userID
-			));
+			]);
 		}
 		
 		$this->executed();

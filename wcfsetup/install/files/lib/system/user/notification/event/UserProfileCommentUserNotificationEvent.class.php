@@ -25,10 +25,10 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	public function getTitle() {
 		$count = count($this->getAuthors());
 		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.title.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.title.stacked', [
 				'count' => $count,
 				'timesTriggered' => $this->notification->timesTriggered
-			));
+			]);
 		}
 		
 		return $this->getLanguage()->get('wcf.user.notification.comment.title');
@@ -45,18 +45,18 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 			}
 			$count = count($authors);
 			
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.message.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.message.stacked', [
 				'author' => $this->author,
 				'authors' => array_values($authors),
 				'count' => $count,
 				'others' => $count - 1,
 				'guestTimesTriggered' => $this->notification->guestTimesTriggered
-			));
+			]);
 		}
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.message', array(
+		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.message', [
 			'author' => $this->author
-		));
+		]);
 	}
 	
 	/**
@@ -72,7 +72,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 			}
 			$count = count($authors);
 			
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail.stacked', [
 				'author' => $this->author,
 				'authors' => array_values($authors),
 				'count' => $count,
@@ -80,22 +80,22 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 				'owner' => $user,
 				'notificationType' => $notificationType,
 				'guestTimesTriggered' => $this->notification->guestTimesTriggered
-			));
+			]);
 		}
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail', array(
+		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail', [
 			'comment' => $this->userNotificationObject,
 			'author' => $this->author,
 			'owner' => $user,
 			'notificationType' => $notificationType
-		));
+		]);
 	}
 	
 	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', array('id' => $this->userNotificationObject->objectID), '#wall');
+		return LinkHandler::getInstance()->getLink('User', ['id' => $this->userNotificationObject->objectID], '#wall');
 	}
 	
 	/**

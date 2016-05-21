@@ -165,7 +165,7 @@ class PackageStartInstallForm extends AbstractForm {
 		
 		// insert queue
 		$isApplication = PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getPackageInfo('isApplication');
-		$this->queue = PackageInstallationQueueEditor::create(array(
+		$this->queue = PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
 			'package' => PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getPackageInfo('name'),
@@ -174,7 +174,7 @@ class PackageStartInstallForm extends AbstractForm {
 			'archive' => $archive,
 			'action' => ($this->package != null ? 'update' : 'install'),
 			'isApplication' => (!$isApplication ? '0' : '1')
-		));
+		]);
 		
 		$this->saved();
 		
@@ -188,10 +188,10 @@ class PackageStartInstallForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'package' => $this->package,
 			'installingImportedStyle' => $this->stylePackageImportLocation != ''
-		));
+		]);
 	}
 	
 	/**

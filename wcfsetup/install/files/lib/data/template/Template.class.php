@@ -48,7 +48,7 @@ class Template extends DatabaseObject {
 				ON		(package.packageID = template.packageID)
 				WHERE		template.templateID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($id));
+			$statement->execute([$id]);
 			$row = $statement->fetchArray();
 			
 			if ($row !== false) {
@@ -63,7 +63,7 @@ class Template extends DatabaseObject {
 				$row['packageDir'] = PackageCache::getInstance()->getPackage($application->packageID)->packageDir;
 			}
 			else {
-				$row = array();
+				$row = [];
 			}
 		}
 		else if ($object !== null) {

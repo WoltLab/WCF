@@ -208,8 +208,8 @@ final class ArrayUtil {
 		}
 		
 		// get parameters
-		$params1 = array($array1, $array2);
-		$params2 = array($array2, $array1);
+		$params1 = [$array1, $array2];
+		$params2 = [$array2, $array1];
 		if ($callback !== null) {
 			$params1[] = $callback;
 			$params2[] = $callback;

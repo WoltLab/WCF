@@ -24,8 +24,8 @@ class HourlyCleanUpCronjob extends AbstractCronjob {
 		// disable expired paid subscriptions
 		if (MODULE_PAID_SUBSCRIPTION) {
 			$subscriptionUserList = new PaidSubscriptionUserList();
-			$subscriptionUserList->getConditionBuilder()->add('isActive = ?', array(1));
-			$subscriptionUserList->getConditionBuilder()->add('endDate > 0 AND endDate < ?', array(TIME_NOW));
+			$subscriptionUserList->getConditionBuilder()->add('isActive = ?', [1]);
+			$subscriptionUserList->getConditionBuilder()->add('endDate > 0 AND endDate < ?', [TIME_NOW]);
 			$subscriptionUserList->readObjects();
 			
 			if (count($subscriptionUserList->getObjects())) {

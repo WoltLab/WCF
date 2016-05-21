@@ -27,10 +27,10 @@ class AttachmentCleanUpCronjob extends AbstractCronjob {
 			WHERE	objectID = ?
 				AND uploadTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			(TIME_NOW - 86400)
-		));
+		]);
 		$attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($attachmentIDs)) {

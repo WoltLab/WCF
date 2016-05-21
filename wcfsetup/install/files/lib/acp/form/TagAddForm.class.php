@@ -29,18 +29,18 @@ class TagAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.tag.canManageTag');
+	public $neededPermissions = ['admin.content.tag.canManageTag'];
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_TAGGING');
+	public $neededModules = ['MODULE_TAGGING'];
 	
 	/**
 	 * list of available languages
 	 * @var	array
 	 */
-	public $availableLanguages = array();
+	public $availableLanguages = [];
 	
 	/**
 	 * name value
@@ -58,7 +58,7 @@ class TagAddForm extends AbstractForm {
 	 * synonyms
 	 * @var	string[]
 	 */
-	public $synonyms = array();
+	public $synonyms = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -148,10 +148,10 @@ class TagAddForm extends AbstractForm {
 		parent::save();
 		
 		// save tag
-		$this->objectAction = new TagAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TagAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'name' => $this->name,
 			'languageID' => $this->languageID
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		$editor = new TagEditor($returnValues['returnValues']);
@@ -162,11 +162,11 @@ class TagAddForm extends AbstractForm {
 			// find existing tag
 			$synonymObj = Tag::getTag($synonym, $this->languageID);
 			if ($synonymObj === null) {
-				$synonymAction = new TagAction(array(), 'create', array('data' => array(
+				$synonymAction = new TagAction([], 'create', ['data' => [
 					'name' => $synonym,
 					'languageID' => $this->languageID,
 					'synonymFor' => $editor->tagID
-				)));
+				]]);
 				$synonymAction->executeAction();
 			}
 			else {
@@ -178,12 +178,12 @@ class TagAddForm extends AbstractForm {
 		
 		// reset values
 		$this->name = '';
-		$this->synonyms = array();
+		$this->synonyms = [];
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -192,12 +192,12 @@ class TagAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'availableLanguages' => $this->availableLanguages,
 			'name' => $this->name,
 			'languageID' => $this->languageID,
 			'synonyms' => $this->synonyms
-		));
+		]);
 	}
 }

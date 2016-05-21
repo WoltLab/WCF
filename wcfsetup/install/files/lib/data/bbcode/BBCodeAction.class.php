@@ -27,17 +27,17 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.content.bbcode.canManageBBCode');
+	protected $permissionsDelete = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.content.bbcode.canManageBBCode');
+	protected $permissionsUpdate = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('delete', 'toggle', 'update');
+	protected $requireACP = ['delete', 'toggle', 'update'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
@@ -50,14 +50,14 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 			FROM	wcf".WCF_N."_user_group_option
 			WHERE	optionType = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('BBCodeSelect'));
+		$statement->execute(['BBCodeSelect']);
 		$optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($optionIDs)) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add("optionID IN (?)", array($optionIDs));
-			$conditionBuilder->add("groupID IN (?)", array(UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE))));
-			$conditionBuilder->add("optionValue <> ?", array('all'));
+			$conditionBuilder->add("optionID IN (?)", [$optionIDs]);
+			$conditionBuilder->add("groupID IN (?)", [UserGroup::getGroupIDsByType([UserGroup::EVERYONE])]);
+			$conditionBuilder->add("optionValue <> ?", ['all']);
 			
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_user_group_option_value
@@ -80,11 +80,11 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 					$row['optionValue'] = $bbCode->bbcodeTag;
 				}
 				
-				$updateStatement->execute(array(
+				$updateStatement->execute([
 					$row['optionValue'],
 					$row['optionID'],
 					$row['groupID']
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 			
@@ -120,9 +120,9 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	 */
 	public function toggle() {
 		foreach ($this->objects as $bbcode) {
-			$bbcode->update(array(
+			$bbcode->update([
 				'isDisabled' => $bbcode->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 }

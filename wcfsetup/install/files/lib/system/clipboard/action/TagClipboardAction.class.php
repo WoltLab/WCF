@@ -18,12 +18,12 @@ class TagClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$actionClassActions
 	 */
-	protected $actionClassActions = array('delete');
+	protected $actionClassActions = ['delete'];
 	
 	/**
 	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
-	protected $supportedActions = array('delete', 'setAsSynonyms');
+	protected $supportedActions = ['delete', 'setAsSynonyms'];
 	
 	/**
 	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()

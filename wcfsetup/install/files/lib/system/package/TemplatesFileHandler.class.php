@@ -37,14 +37,14 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 		unset($file);
 		
 		// get existing templates
-		$existingTemplates = $updateTemplateIDs = array();
+		$existingTemplates = $updateTemplateIDs = [];
 		$sql = "SELECT	templateName, templateID
 			FROM	wcf".WCF_N."_template
 			WHERE	packageID = ?
 				AND application = ?
 				AND templateGroupID IS NULL";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID, $this->application));
+		$statement->execute([$packageID, $this->application]);
 		while ($row = $statement->fetchArray()) {
 			$existingTemplates[$row['templateName']] = $row['templateID'];
 		}
@@ -60,24 +60,24 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 				continue;
 			}
 			
-			$statement->execute(array(
+			$statement->execute([
 				$packageID,
 				$file,
 				TIME_NOW,
 				$this->application
-			));
+			]);
 		}
 		
 		if (!empty($updateTemplateIDs)) {
 			// update old templates
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('templateID IN (?)', array($updateTemplateIDs));
+			$conditionBuilder->add('templateID IN (?)', [$updateTemplateIDs]);
 			
 			$sql = "UPDATE	wcf".WCF_N."_template
 				SET	lastModificationTime = ?
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array_merge(array(TIME_NOW), $conditionBuilder->getParameters()));
+			$statement->execute(array_merge([TIME_NOW], $conditionBuilder->getParameters()));
 		}
 	}
 }

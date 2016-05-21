@@ -58,7 +58,7 @@ class Gravatar extends DefaultAvatar {
 	 * urls of this gravatar
 	 * @var	string[]
 	 */
-	protected $url = array();
+	protected $url = [];
 	
 	/**
 	 * Creates a new Gravatar object.
@@ -97,9 +97,9 @@ class Gravatar extends DefaultAvatar {
 				$this->url[$size] = WCF::getPath().$cachedFilename;
 			}
 			else {
-				$this->url[$size] = LinkHandler::getInstance()->getLink('GravatarDownload', array(
+				$this->url[$size] = LinkHandler::getInstance()->getLink('GravatarDownload', [
 					'forceFrontend' => true
-				), 'userID='.$this->userID.'&size='.$size);
+				], 'userID='.$this->userID.'&size='.$size);
 			}
 		}
 		

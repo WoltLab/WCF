@@ -105,7 +105,7 @@ class UserOptionHandler extends OptionHandler {
 	 * @param	\wcf\data\user\User	$user
 	 */
 	public function setUser(User $user) {
-		$this->optionValues = array();
+		$this->optionValues = [];
 		$this->user = $user;
 		
 		$this->init();
@@ -119,7 +119,7 @@ class UserOptionHandler extends OptionHandler {
 	 * Resets the option values.
 	 */
 	public function resetOptionValues() {
-		$this->optionValues = array();
+		$this->optionValues = [];
 	}
 	
 	/**

@@ -17,7 +17,7 @@ class GroupedAttachmentList extends AttachmentList {
 	 * grouped objects
 	 * @var	array
 	 */
-	public $groupedObjects = array();
+	public $groupedObjects = [];
 	
 	/**
 	 * object type
@@ -44,12 +44,12 @@ class GroupedAttachmentList extends AttachmentList {
 		parent::__construct();
 		
 		$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType);
-		$this->getConditionBuilder()->add('attachment.objectTypeID = ?', array($this->objectType->objectTypeID));
+		$this->getConditionBuilder()->add('attachment.objectTypeID = ?', [$this->objectType->objectTypeID]);
 		
-		$this->getConditionBuilder()->add('(SELECT embeddedObjectID FROM wcf'.WCF_N.'_message_embedded_object WHERE messageObjectTypeID = ? AND messageID = attachment.objectID AND embeddedObjectTypeID = ? AND embeddedObjectID = attachment.attachmentID) IS NULL', array(
+		$this->getConditionBuilder()->add('(SELECT embeddedObjectID FROM wcf'.WCF_N.'_message_embedded_object WHERE messageObjectTypeID = ? AND messageID = attachment.objectID AND embeddedObjectTypeID = ? AND embeddedObjectID = attachment.attachmentID) IS NULL', [
 			ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $objectType),
 			ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', 'com.woltlab.wcf.attachment')
-		));
+		]);
 	}
 	
 	/**
@@ -61,7 +61,7 @@ class GroupedAttachmentList extends AttachmentList {
 		// group by object id
 		foreach ($this->objects as $attachmentID => $attachment) {
 			if (!isset($this->groupedObjects[$attachment->objectID])) {
-				$this->groupedObjects[$attachment->objectID] = array();
+				$this->groupedObjects[$attachment->objectID] = [];
 			}
 			
 			$this->groupedObjects[$attachment->objectID][$attachmentID] = $attachment;
@@ -89,6 +89,6 @@ class GroupedAttachmentList extends AttachmentList {
 			return $this->groupedObjects[$objectID];
 		}
 		
-		return array();
+		return [];
 	}
 }

@@ -49,7 +49,7 @@ class Smiley extends DatabaseObject {
 	 * @return	string[]
 	 */
 	public function getAliases() {
-		if (!$this->aliases) return array();
+		if (!$this->aliases) return [];
 		
 		return explode("\n", StringUtil::unifyNewlines($this->aliases));
 	}

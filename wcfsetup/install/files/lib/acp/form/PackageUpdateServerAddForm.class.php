@@ -27,7 +27,7 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.package.canEditServer');
+	public $neededPermissions = ['admin.configuration.package.canEditServer'];
 	
 	/**
 	 * server url
@@ -80,11 +80,11 @@ class PackageUpdateServerAddForm extends AbstractForm {
 		parent::save();
 		
 		// save server
-		$this->objectAction = new PackageUpdateServerAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PackageUpdateServerAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -101,12 +101,12 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword,
 			'action' => 'add'
-		));
+		]);
 	}
 	
 	/**

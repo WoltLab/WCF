@@ -21,20 +21,20 @@ class LanguageCategoryAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.language.canManageLanguage');
+	protected $permissionsCreate = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.language.canManageLanguage');
+	protected $permissionsDelete = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.language.canManageLanguage');
+	protected $permissionsUpdate = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 }

@@ -26,19 +26,19 @@ class UserBirthdayCacheBuilder extends AbstractCacheBuilder {
 		$userOptionID = User::getUserOptionID('birthday');
 		if ($userOptionID === null) {
 			// birthday profile field missing; skip
-			return array();
+			return [];
 		}
 		
-		$data = array();
+		$data = [];
 		$birthday = 'userOption'.$userOptionID;
 		$sql = "SELECT	userID, ".$birthday."
 			FROM	wcf".WCF_N."_user_option_value
 			WHERE	".$birthday." LIKE ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('%-' . ($parameters['month'] < 10 ? '0' : '') . $parameters['month'] . '-%'));
+		$statement->execute(['%-' . ($parameters['month'] < 10 ? '0' : '') . $parameters['month'] . '-%']);
 		while ($row = $statement->fetchArray()) {
 			list($year, $month, $day) = explode('-', $row[$birthday]);
-			if (!isset($data[$month . '-' . $day])) $data[$month . '-' . $day] = array();
+			if (!isset($data[$month . '-' . $day])) $data[$month . '-' . $day] = [];
 			$data[$month . '-' . $day][] = $row['userID'];
 		}
 		

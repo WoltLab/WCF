@@ -21,12 +21,12 @@ class PaidSubscriptionListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -36,7 +36,7 @@ class PaidSubscriptionListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('subscriptionID', 'title', 'showOrder', 'cost', 'subscriptionLength');
+	public $validSortFields = ['subscriptionID', 'title', 'showOrder', 'cost', 'subscriptionLength'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

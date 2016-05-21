@@ -32,17 +32,17 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 		
 		if (!empty($spiders)) {
 			$existingSpiders = SpiderCacheBuilder::getInstance()->getData();
-			$statementParameters = array();
+			$statementParameters = [];
 			foreach ($spiders as $spider) {
 				$identifier = mb_strtolower($spider->getAttribute('ident'));
 				$name = $xpath->query('ns:name', $spider)->item(0);
 				$info = $xpath->query('ns:url', $spider)->item(0);
 				
-				$statementParameters[$identifier] = array(
+				$statementParameters[$identifier] = [
 					'spiderIdentifier' => $identifier,
 					'spiderName' => $name->nodeValue,
 					'spiderURL' => $info ? $info->nodeValue : ''
-				);
+				];
 			}
 			
 			if (!empty($statementParameters)) {
@@ -55,11 +55,11 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 				
 				WCF::getDB()->beginTransaction();
 				foreach ($statementParameters as $parameters) {
-					$statement->execute(array(
+					$statement->execute([
 						$parameters['spiderIdentifier'],
 						$parameters['spiderName'],
 						$parameters['spiderURL']
-					));
+					]);
 				}
 				WCF::getDB()->commitTransaction();
 			}
@@ -69,7 +69,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($existingSpiders as $spider) {
 				if (!isset($statementParameters[$spider->spiderIdentifier])) {
-					$statement->execute(array($spider->spiderIdentifier));
+					$statement->execute([$spider->spiderIdentifier]);
 				}
 			}
 			

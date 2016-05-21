@@ -21,7 +21,7 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * counter data
 	 * @var	array
 	 */
-	protected $counters = array();
+	protected $counters = [];
 	
 	/**
 	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
@@ -32,13 +32,13 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		}
 		
 		if (!isset($this->counters[$tagArgs['name']])) {
-			$this->counters[$tagArgs['name']] = array(
+			$this->counters[$tagArgs['name']] = [
 				'skip' => isset($tagArgs['skip']) ? $tagArgs['skip'] : 1,
 				'direction' => isset($tagArgs['direction']) ? $tagArgs['direction'] : 'up',
 				'assign' => (isset($tagArgs['assign']) && !empty($tagArgs['assign'])) ? $tagArgs['assign'] : null,
 				'print' => isset($tagArgs['print']) ? $tagArgs['print'] : false,
 				'count' => isset($tagArgs['start']) ? $tagArgs['start'] : 1
-			);
+			];
 		}
 		
 		$counter =& $this->counters[$tagArgs['name']];

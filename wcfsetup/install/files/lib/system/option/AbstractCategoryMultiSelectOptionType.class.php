@@ -37,11 +37,11 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 		$categoryList = $categoryTree->getIterator();
 		$categoryList->setMaxDepth(0);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'categoryList' => $categoryList,
 			'option' => $option,
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
-		));
+		]);
 		return WCF::getTPL()->fetch('categoryMultiSelectOptionType');
 	}
 	
@@ -49,7 +49,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		$newValue = ArrayUtil::toIntegerArray($newValue);
 		
 		foreach ($newValue as $categoryID) {
@@ -63,7 +63,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		return implode("\n", ArrayUtil::toIntegerArray($newValue));
 	}
 }

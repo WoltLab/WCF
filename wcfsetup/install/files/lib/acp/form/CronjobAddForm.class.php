@@ -29,7 +29,7 @@ class CronjobAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.management.canManageCronjob');
+	public $neededPermissions = ['admin.management.canManageCronjob'];
 	
 	/**
 	 * cronjob class name
@@ -151,7 +151,7 @@ class CronjobAddForm extends AbstractForm {
 		parent::save();
 		
 		// save cronjob
-		$data = array_merge($this->additionalFields, array(
+		$data = array_merge($this->additionalFields, [
 			'className' => $this->className,
 			'packageID' => $this->packageID,
 			'description' => $this->description,
@@ -160,9 +160,9 @@ class CronjobAddForm extends AbstractForm {
 			'startDom' => $this->startDom,
 			'startMonth' => $this->startMonth,
 			'startDow' => $this->startDow
-		));
+		]);
 		
-		$this->objectAction = new CronjobAction(array(), 'create', array('data' => $data));
+		$this->objectAction = new CronjobAction([], 'create', ['data' => $data]);
 		$this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('description')) {
@@ -172,9 +172,9 @@ class CronjobAddForm extends AbstractForm {
 			
 			// update group name
 			$cronjobEditor = new CronjobEditor($returnValues['returnValues']);
-			$cronjobEditor->update(array(
+			$cronjobEditor->update([
 				'description' => 'wcf.acp.cronjob.description.cronjob'.$cronjobID
-			));
+			]);
 		}
 		
 		$this->saved();
@@ -185,9 +185,9 @@ class CronjobAddForm extends AbstractForm {
 		I18nHandler::getInstance()->reset();
 		
 		// show success.
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -198,7 +198,7 @@ class CronjobAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'className' => $this->className,
 			'description' => $this->description,
 			'startMinute' => $this->startMinute,
@@ -207,6 +207,6 @@ class CronjobAddForm extends AbstractForm {
 			'startMonth' => $this->startMonth,
 			'startDow' => $this->startDow,
 			'action' => 'add'
-		));
+		]);
 	}
 }

@@ -22,7 +22,7 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	 * local tag stack
 	 * @var	string[]
 	 */
-	protected $tagStack = array();
+	protected $tagStack = [];
 	
 	/**
 	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeStart()
@@ -39,7 +39,7 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 		
 		$hash = StringUtil::getRandomID();
 		$glue = isset($tagArgs['glue']) ? $tagArgs['glue'] : "', '";
-		$this->tagStack[] = array('hash' => $hash, 'glue' => $glue);
+		$this->tagStack[] = ['hash' => $hash, 'glue' => $glue];
 		
 		$phpCode = "<?php\n";
 		$phpCode .= "\$_length".$hash." = count(".$tagArgs['from'].");\n";

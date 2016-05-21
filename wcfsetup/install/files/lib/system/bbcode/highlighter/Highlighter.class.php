@@ -28,73 +28,73 @@ abstract class Highlighter extends SingletonFactory {
 	 * comment end delimiter
 	 * @var	string[]
 	 */
-	protected $commentEnd = array("*/");
+	protected $commentEnd = ["*/"];
 	
 	/**
 	 * comment start delimiter
 	 * @var	string[]
 	 */
-	protected $commentStart = array("/*");
+	protected $commentStart = ["/*"];
 	
 	/**
 	 * escape sequence
 	 * @var	string[]
 	 */
-	protected $escapeSequence = array("\\");
+	protected $escapeSequence = ["\\"];
 	
 	/**
 	 * categorized keywords
 	 * @var	string[]
 	 */
-	protected $keywords1 = array();
+	protected $keywords1 = [];
 	
 	/**
 	 * categorized keywords
 	 * @var	string[]
 	 */
-	protected $keywords2 = array();
+	protected $keywords2 = [];
 	
 	/**
 	 * categorized keywords
 	 * @var	string[]
 	 */
-	protected $keywords3 = array();
+	protected $keywords3 = [];
 	
 	/**
 	 * categorized keywords
 	 * @var	string[]
 	 */
-	protected $keywords4 = array();
+	protected $keywords4 = [];
 	
 	/**
 	 * categorized keywords
 	 * @var	string[]
 	 */
-	protected $keywords5 = array();
+	protected $keywords5 = [];
 	
 	/**
 	 * list of arithmetic operators
 	 * @var	string[]
 	 */
-	protected $operators = array();
+	protected $operators = [];
 	
 	/**
 	 * list of quote marks
 	 * @var	string[]
 	 */
-	protected $quotes = array("'", '"');
+	protected $quotes = ["'", '"'];
 	
 	/**
 	 * list of separator sequences
 	 * @var	string[]
 	 */
-	protected $separators = array();
+	protected $separators = [];
 	
 	/**
 	 * inline comment sequence
 	 * @var	string[]
 	 */
-	protected $singleLineComment = array("//");
+	protected $singleLineComment = ["//"];
 	
 	/**
 	 * regular expression to extract comments
@@ -172,7 +172,7 @@ abstract class Highlighter extends SingletonFactory {
 		$quotesRegEx = '';
 		foreach ($this->quotes as $quote) {
 			if ($quotesRegEx !== '') $quotesRegEx .= '|';
-			if (!is_array($quote)) $quote = array($quote, $quote);
+			if (!is_array($quote)) $quote = [$quote, $quote];
 			list($opening, $closing) = $quote;
 			
 			$opening = preg_quote($opening);

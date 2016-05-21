@@ -35,7 +35,7 @@ class PaypalCallbackAction extends AbstractAction {
 					$url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 				}
 				
-				$request = new HTTPRequest($url, array(), array_merge(array('cmd' => '_notify-validate'), $_POST));
+				$request = new HTTPRequest($url, [], array_merge(['cmd' => '_notify-validate'], $_POST));
 				$request->execute();
 				$reply = $request->getReply();
 				$content = $reply['body'];

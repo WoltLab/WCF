@@ -22,7 +22,7 @@ class PHPInfoPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage');
+	public $neededPermissions = ['admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage'];
 	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()
@@ -60,8 +60,8 @@ class PHPInfoPage extends AbstractPage {
 			return $ret;
 		}, $info);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'phpInfo' => $info
-		));
+		]);
 	}
 }

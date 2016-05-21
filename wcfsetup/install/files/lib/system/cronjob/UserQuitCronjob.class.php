@@ -26,10 +26,10 @@ class UserQuitCronjob extends AbstractCronjob {
 			WHERE	quitStarted > ?
 				AND quitStarted < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			(TIME_NOW - 7 * 24 * 3600)
-		));
+		]);
 		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($userIDs)) {

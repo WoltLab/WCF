@@ -29,16 +29,16 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	 * list of labels
 	 * @var	Label[]
 	 */
-	protected $labels = array();
+	protected $labels = [];
 	
 	/**
 	 * list of permissions by type
 	 * @var	integer[][]
 	 */
-	protected $permissions = array(
-		'group' => array(),
-		'user' => array()
-	);
+	protected $permissions = [
+		'group' => [],
+		'user' => []
+	];
 	
 	/**
 	 * current iterator index

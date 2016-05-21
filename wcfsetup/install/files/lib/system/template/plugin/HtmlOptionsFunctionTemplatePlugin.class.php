@@ -28,7 +28,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 	 * selected values
 	 * @var	string[]
 	 */
-	protected $selected = array();
+	protected $selected = [];
 	
 	/**
 	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
@@ -44,7 +44,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 						$tagArgs['options'] = array_combine($tagArgs['values'], $tagArgs['output']);
 					}
 					else {
-						$tagArgs['options'] = array();
+						$tagArgs['options'] = [];
 					}
 				}
 				else {
@@ -52,7 +52,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 				}
 			}
 			else {
-				$tagArgs['options'] = array();
+				$tagArgs['options'] = [];
 			}
 		}
 		
@@ -68,10 +68,10 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 		}
 		
 		// get selected values
-		$this->selected = array();
+		$this->selected = [];
 		if (isset($tagArgs['selected'])) {
 			$this->selected = $tagArgs['selected'];
-			if (!is_array($this->selected)) $this->selected = array($this->selected);
+			if (!is_array($this->selected)) $this->selected = [$this->selected];
 		}
 		
 		// create option list

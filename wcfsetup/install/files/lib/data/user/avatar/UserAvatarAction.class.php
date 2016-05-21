@@ -78,14 +78,14 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 				$fileLocation = $this->enforceDimensions($file->getLocation());
 				$imageData = getimagesize($fileLocation);
 				
-				$data = array(
+				$data = [
 					'avatarName' => $file->getFilename(),
 					'avatarExtension' => $file->getFileExtension(),
 					'width' => $imageData[0],
 					'height' => $imageData[1],
 					'userID' => $userID,
 					'fileHash' => sha1_file($fileLocation)
-				);
+				];
 				
 				// create avatar
 				$avatar = UserAvatarEditor::create($data);
@@ -102,31 +102,31 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 					@unlink($fileLocation);
 					
 					// create thumbnails
-					$action = new UserAvatarAction(array($avatar), 'generateThumbnails');
+					$action = new UserAvatarAction([$avatar], 'generateThumbnails');
 					$action->executeAction();
 					
 					// delete old avatar
 					if ($user->avatarID) {
-						$action = new UserAvatarAction(array($user->avatarID), 'delete');
+						$action = new UserAvatarAction([$user->avatarID], 'delete');
 						$action->executeAction();
 					}
 					
 					// update user
 					$userEditor = new UserEditor($user);
-					$userEditor->update(array(
+					$userEditor->update([
 						'avatarID' => $avatar->avatarID,
 						'enableGravatar' => 0
-					));
+					]);
 					
 					// reset user storage
-					UserStorageHandler::getInstance()->reset(array($userID), 'avatar');
+					UserStorageHandler::getInstance()->reset([$userID], 'avatar');
 					
 					// return result
-					return array(
+					return [
 						'avatarID' => $avatar->avatarID,
 						'canCrop' => $avatar->canCrop(),
 						'url' => $avatar->getURL(96)
-					);
+					];
 				}
 				else {
 					// moving failed; delete avatar
@@ -140,7 +140,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$file->setValidationErrorType($e->getType());
 		}
 		
-		return array('errorType' => $file->getValidationErrorType());
+		return ['errorType' => $file->getValidationErrorType()];
 	}
 	
 	/**
@@ -214,14 +214,14 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			return;
 		}
 		
-		$data = array(
+		$data = [
 			'avatarName' => $tmp['basename'],
 			'avatarExtension' => $tmp['extension'],
 			'width' => $imageData[0],
 			'height' => $imageData[1],
 			'userID' => $this->parameters['userEditor']->userID,
 			'fileHash' => sha1_file($filename)
-		);
+		];
 		
 		// create avatar
 		$avatar = UserAvatarEditor::create($data);
@@ -238,7 +238,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			@unlink($filename);
 			
 			// create thumbnails
-			$action = new UserAvatarAction(array($avatar), 'generateThumbnails');
+			$action = new UserAvatarAction([$avatar], 'generateThumbnails');
 			$action->executeAction();
 			
 			$avatarID = $avatar->avatarID;
@@ -253,20 +253,20 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		
 		// update user
 		if ($avatarID) {
-			$this->parameters['userEditor']->update(array(
+			$this->parameters['userEditor']->update([
 				'avatarID' => $avatarID,
 				'enableGravatar' => 0
-			));
+			]);
 			
 			// delete old avatar
 			if ($this->parameters['userEditor']->avatarID) {
-				$action = new UserAvatarAction(array($this->parameters['userEditor']->avatarID), 'delete');
+				$action = new UserAvatarAction([$this->parameters['userEditor']->avatarID], 'delete');
 				$action->executeAction();
 			}
 		}
 		
 		// reset user storage
-		UserStorageHandler::getInstance()->reset(array($this->parameters['userEditor']->userID), 'avatar');
+		UserStorageHandler::getInstance()->reset([$this->parameters['userEditor']->userID], 'avatar');
 	}
 	
 	/**
@@ -320,13 +320,13 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function getCropDialog() {
-		return array(
+		return [
 			'cropX' => $this->avatar->cropX,
 			'cropY' => $this->avatar->cropY,
-			'template' => WCF::getTPL()->fetch('avatarCropDialog', 'wcf', array(
+			'template' => WCF::getTPL()->fetch('avatarCropDialog', 'wcf', [
 				'avatar' => $this->avatar
-			))
-		);
+			])
+		];
 	}
 	
 	/**
@@ -372,13 +372,13 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// update database entry
-		$this->avatar->update(array(
+		$this->avatar->update([
 			'cropX' => $this->parameters['cropX'],
 			'cropY' => $this->parameters['cropY']
-		));
+		]);
 		
-		return array(
+		return [
 			'url' => $this->avatar->getURL(96)
-		);
+		];
 	}
 }

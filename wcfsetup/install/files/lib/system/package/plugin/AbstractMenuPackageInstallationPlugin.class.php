@@ -23,10 +23,10 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -40,7 +40,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		$showOrder = $this->getShowOrder($showOrder, $parent, 'parentMenuItem');
 		
 		// merge values and default values
-		return array(
+		return [
 			'menuItem' => $data['attributes']['name'],
 			'menuItemController' => isset($data['elements']['controller']) ? $data['elements']['controller'] : '',
 			'menuItemLink' => (isset($data['elements']['link'])) ? $data['elements']['link'] : '',
@@ -48,7 +48,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			'parentMenuItem' => (isset($data['elements']['parent'])) ? $data['elements']['parent'] : '',
 			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : '',
 			'showOrder' => $showOrder
-		);
+		];
 	}
 	
 	/**
@@ -63,7 +63,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	menuItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($data['parentMenuItem']));
+		$statement->execute([$data['parentMenuItem']]);
 		
 		if (!$statement->fetchSingleColumn()) {
 			throw new SystemException("Unable to find parent 'menu item' with name '".$data['parentMenuItem']."' for 'menu item' with name '".$data['menuItem']."'.");
@@ -78,14 +78,14 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	menuItem = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['menuItem'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

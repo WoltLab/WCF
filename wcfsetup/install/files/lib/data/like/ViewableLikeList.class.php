@@ -46,17 +46,17 @@ class ViewableLikeList extends LikeList {
 	public function readObjects() {
 		parent::readObjects();
 		
-		$userIDs = array();
-		$likeGroups = array();
+		$userIDs = [];
+		$likeGroups = [];
 		foreach ($this->objects as &$like) {
 			$userIDs[] = $like->userID;
 			
 			if (!isset($likeGroups[$like->objectTypeID])) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($like->objectTypeID);
-				$likeGroups[$like->objectTypeID] = array(
+				$likeGroups[$like->objectTypeID] = [
 					'provider' => $objectType->getProcessor(),
-					'objects' => array()
-				);
+					'objects' => []
+				];
 			}
 			
 			$likeGroups[$like->objectTypeID]['objects'][] = $like;

@@ -42,7 +42,7 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 				}
 				
 				if (is_subclass_of($this->className, 'wcf\system\SingletonFactory')) {
-					$this->processor = call_user_func(array($this->className, 'getInstance'));
+					$this->processor = call_user_func([$this->className, 'getInstance']);
 				}
 				else {
 					if (!is_subclass_of($this->className, 'wcf\data\IDatabaseObjectProcessor')) {

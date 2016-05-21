@@ -30,12 +30,12 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * subscription id
@@ -125,23 +125,23 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 		parent::save();
 		
 		$userSubscription = PaidSubscriptionUser::getSubscriptionUser($this->subscriptionID, $this->user->userID);
-		$data = array();
+		$data = [];
 		if ($this->subscription->subscriptionLength) {
 			$data['endDate'] = $this->endDateTime->getTimestamp();
 		}
 		if ($userSubscription === null) {
 			// create new subscription
-			$action = new PaidSubscriptionUserAction(array(), 'create', array(
+			$action = new PaidSubscriptionUserAction([], 'create', [
 				'user' => $this->user,
 				'subscription' => $this->subscription,
 				'data' => $data
-			));
+			]);
 			$returnValues = $action->executeAction();
 			$userSubscription = $returnValues['returnValues'];
 		}
 		else {
 			// extend existing subscription
-			$action = new PaidSubscriptionUserAction(array($userSubscription), 'extend', array('data' => $data));
+			$action = new PaidSubscriptionUserAction([$userSubscription], 'extend', ['data' => $data]);
 			$action->executeAction();
 		}
 		$this->saved();
@@ -150,9 +150,9 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 		$this->username = $this->endDate = '';
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -176,11 +176,11 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'subscriptionID' => $this->subscriptionID,
 			'subscription' => $this->subscription,
 			'username' => $this->username,
 			'endDate' => $this->endDate
-		));
+		]);
 	}
 }

@@ -36,7 +36,7 @@ class UserProfileCommentUserNotificationObjectType extends AbstractUserNotificat
 			FROM	wcf".WCF_N."_comment
 			WHERE	commentID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectID));
+		$statement->execute([$objectID]);
 		$row = $statement->fetchArray();
 		
 		return ($row ? $row['objectID'] : 0);

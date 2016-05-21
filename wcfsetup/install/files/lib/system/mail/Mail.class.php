@@ -45,7 +45,7 @@ class Mail {
 	 * mail recipients
 	 * @var	string[]
 	 */
-	protected $to = array();
+	protected $to = [];
 	
 	/**
 	 * mail subject
@@ -69,19 +69,19 @@ class Mail {
 	 * mail carbon copy
 	 * @var	string[]
 	 */
-	protected $cc = array();
+	protected $cc = [];
 	
 	/**
 	 * mail blind carbon copy
 	 * @var	string[]
 	 */
-	protected $bcc = array();
+	protected $bcc = [];
 	
 	/**
 	 * mail attachments
 	 * @var	array
 	 */
-	protected $attachments = array();
+	protected $attachments = [];
 	
 	/**
 	 * priority of the mail
@@ -114,10 +114,10 @@ class Mail {
 	 * @param	integer		$priority
 	 * @param	string		$header
 	 */
-	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = array(), $priority = '', $header = '') {
+	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = [], $priority = '', $header = '') {
 		$this->setBoundary();
 		
-		if (empty($from)) $from = array(MAIL_FROM_NAME => MAIL_FROM_ADDRESS);
+		if (empty($from)) $from = [MAIL_FROM_NAME => MAIL_FROM_ADDRESS];
 		if (empty($priority)) $priority = 3;
 		
 		$this->setFrom($from);
@@ -438,7 +438,7 @@ class Mail {
 	 * @param	string		$name		filename
 	 */
 	public function addAttachment($path, $name = '') {
-		$this->attachments[] = array('path' => $path, 'name' => ($name ?: basename($path)));
+		$this->attachments[] = ['path' => $path, 'name' => ($name ?: basename($path))];
 	}
 	
 	/**

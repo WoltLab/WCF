@@ -154,11 +154,11 @@ class MenuAddForm extends AbstractForm {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new MenuAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new MenuAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'packageID' => 1,
 			'identifier' => ''
-		)), 'boxData' => array(
+		]), 'boxData' => [
 			'name' => $this->title,
 			'boxType' => 'menu',
 			'position' => $this->position,
@@ -167,21 +167,21 @@ class MenuAddForm extends AbstractForm {
 			'showOrder' => $this->showOrder,
 			'cssClassName' => $this->cssClassName,
 			'packageID' => 1
-		), 'pageIDs' => $this->pageIDs));
+		], 'pageIDs' => $this->pageIDs]);
 		$returnValues = $this->objectAction->executeAction();
 		// set generic identifier
 		$menuEditor = new MenuEditor($returnValues['returnValues']);
-		$menuEditor->update(array(
+		$menuEditor->update([
 			'identifier' => 'com.woltlab.wcf.genericMenu'.$menuEditor->menuID
-		));
+		]);
 		// save i18n
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
 			I18nHandler::getInstance()->save('title', 'wcf.menu.menu'.$menuEditor->menuID, 'wcf.menu', 1);
 				
 			// update title
-			$menuEditor->update(array(
+			$menuEditor->update([
 				'title' => 'wcf.menu.menu'.$menuEditor->menuID
-			));
+			]);
 		}
 		$this->saved();
 		
@@ -189,9 +189,9 @@ class MenuAddForm extends AbstractForm {
 		$this->title = '';
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 		
 		I18nHandler::getInstance()->reset();
 	}
@@ -204,7 +204,7 @@ class MenuAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'title' => 'title',
 			'position' => $this->position,
@@ -215,6 +215,6 @@ class MenuAddForm extends AbstractForm {
 			'pageIDs' => $this->pageIDs,
 			'availablePositions' => Box::$availableMenuPositions,
 			'pageNodeList' => (new PageNodeTree())->getNodeList()
-		));
+		]);
 	}
 }

@@ -43,7 +43,7 @@ class UserFollowingAction extends UserFollowAction {
 			FROM	wcf".WCF_N."_user_follow
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->parameters['userID']));
+		$statement->execute([$this->parameters['userID']]);
 		$pageCount = ceil($statement->fetchSingleColumn() / 20);
 		
 		// get user ids
@@ -51,7 +51,7 @@ class UserFollowingAction extends UserFollowAction {
 			FROM	wcf".WCF_N."_user_follow
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
-		$statement->execute(array($this->parameters['userID']));
+		$statement->execute([$this->parameters['userID']]);
 		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		// create group
@@ -61,13 +61,13 @@ class UserFollowingAction extends UserFollowAction {
 		// load user profiles
 		GroupedUserList::loadUsers();
 		
-		WCF::getTPL()->assign(array(
-			'groupedUsers' => array($group)
-		));
+		WCF::getTPL()->assign([
+			'groupedUsers' => [$group]
+		]);
 		
-		return array(
+		return [
 			'pageCount' => $pageCount,
 			'template' => WCF::getTPL()->fetch('groupedUserList')
-		);
+		];
 	}
 }

@@ -22,11 +22,11 @@ class PaymentMethodSelectOptionType extends AbstractOptionType {
 	public function getFormElement(Option $option, $value) {
 		$selectOptions = PaymentMethodHandler::getInstance()->getPaymentMethodSelection();
 		
-		return WCF::getTPL()->fetch('paymentMethodSelectOptionType', 'wcf', array(
+		return WCF::getTPL()->fetch('paymentMethodSelectOptionType', 'wcf', [
 			'selectOptions' => $selectOptions,
 			'option' => $option,
 			'value' => explode(',', $value)
-		));
+		]);
 	}
 	
 	/**
@@ -34,7 +34,7 @@ class PaymentMethodSelectOptionType extends AbstractOptionType {
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) {
-			$newValue = array();
+			$newValue = [];
 		}
 		
 		$selectOptions = PaymentMethodHandler::getInstance()->getPaymentMethodSelection();

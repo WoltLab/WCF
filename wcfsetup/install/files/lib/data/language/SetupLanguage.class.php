@@ -46,13 +46,13 @@ class SetupLanguage extends Language {
 			$xml->load(TMP_DIR.'setup/lang/setup_'.$this->languageCode.'.xml');
 			
 			// get language items
-			$categoriesToCache = array();
+			$categoriesToCache = [];
 			$items = $xml->xpath()->query('/ns:language/ns:category/ns:item');
 			foreach ($items as $item) {
-				$categoriesToCache[] = array(
+				$categoriesToCache[] = [
 					'name' => $item->getAttribute('name'),
 					'cdata' => $item->nodeValue
-				);
+				];
 			}
 			
 			// update language files here

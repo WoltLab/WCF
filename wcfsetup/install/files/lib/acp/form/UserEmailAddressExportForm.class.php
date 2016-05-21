@@ -28,7 +28,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canMailUser');
+	public $neededPermissions = ['admin.user.canMailUser'];
 	
 	/**
 	 * type of the file containg the exported email addresses
@@ -40,7 +40,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	 * ids of the users whose email addresses are exported
 	 * @var	integer[]
 	 */
-	public $userIDs = array();
+	public $userIDs = [];
 	
 	/**
 	 * string used to separate email adresses
@@ -58,7 +58,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	 * users whose email addresses are exported
 	 * @var	User[]
 	 */
-	public $users = array();
+	public $users = [];
 	
 	/**
 	 * clipboard item type id
@@ -115,7 +115,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->userIDs));
+		$conditions->add("userID IN (?)", [$this->userIDs]);
 		
 		// count users
 		$sql = "SELECT	COUNT(*)
@@ -162,11 +162,11 @@ class UserEmailAddressExportForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'users' => $this->users,
 			'separator' => $this->separator,
 			'textSeparator' => $this->textSeparator,
 			'fileType' => $this->fileType
-		));
+		]);
 	}
 }

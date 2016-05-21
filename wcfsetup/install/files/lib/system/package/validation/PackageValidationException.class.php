@@ -20,7 +20,7 @@ class PackageValidationException extends SystemException {
 	 * list of additional details for each subtype
 	 * @var	string[]
 	 */
-	protected $details = array();
+	protected $details = [];
 	
 	/**
 	 * missing archive, expects the detail 'archive' and optionally 'targetArchive' (extracting archive from the archive)
@@ -95,7 +95,7 @@ class PackageValidationException extends SystemException {
 	 * @param	integer		$code
 	 * @param	string[]	$details
 	 */
-	public function __construct($code, array $details = array()) {
+	public function __construct($code, array $details = []) {
 		$this->details = $details;
 		
 		parent::__construct($this->getLegacyMessage($code), $code);

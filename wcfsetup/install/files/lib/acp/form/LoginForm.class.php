@@ -150,16 +150,16 @@ class LoginForm extends AbstractCaptchaForm {
 		// save authentication failure
 		if (ENABLE_USER_AUTHENTICATION_FAILURE) {
 			if ($this->errorField == 'username' || $this->errorField == 'password') {
-				$action = new UserAuthenticationFailureAction(array(), 'create', array(
-					'data' => array(
+				$action = new UserAuthenticationFailureAction([], 'create', [
+					'data' => [
 						'environment' => (RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user'),
 						'userID' => ($this->user !== null ? $this->user->userID : null),
 						'username' => $this->username,
 						'time' => TIME_NOW,
 						'ipAddress' => UserUtil::getIpAddress(),
 						'userAgent' => UserUtil::getUserAgent()
-					)
-				));
+					]
+				]);
 				$action->executeAction();
 				
 				if ($this->captchaObjectType) {
@@ -239,10 +239,10 @@ class LoginForm extends AbstractCaptchaForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'username' => $this->username,
 			'password' => $this->password,
 			'url' => $this->url
-		));
+		]);
 	}
 }

@@ -24,7 +24,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * red, green, blue data of the active color
 	 * @var	array
 	 */
-	protected $colorData = array();
+	protected $colorData = [];
 	
 	/**
 	 * image height
@@ -280,11 +280,11 @@ class GDImageAdapter implements IImageAdapter {
 		$this->color = imagecolorallocate($this->image, $red, $green, $blue);
 		
 		// save data of the color
-		$this->colorData = array(
+		$this->colorData = [
 			'red' => $red,
 			'green' => $green,
 			'blue' => $blue
-		);
+		];
 	}
 	
 	/**

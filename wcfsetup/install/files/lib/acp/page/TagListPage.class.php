@@ -24,12 +24,12 @@ class TagListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.tag.canManageTag');
+	public $neededPermissions = ['admin.content.tag.canManageTag'];
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_TAGGING');
+	public $neededModules = ['MODULE_TAGGING'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -39,7 +39,7 @@ class TagListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('tagID', 'languageID', 'name', 'usageCount');
+	public $validSortFields = ['tagID', 'languageID', 'name', 'usageCount'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -58,10 +58,10 @@ class TagListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.tag')),
 			'search' => $this->search
-		));
+		]);
 	}
 	
 	/**
@@ -87,7 +87,7 @@ class TagListPage extends SortablePage {
 		$this->objectList->sqlJoins .= " LEFT JOIN wcf".WCF_N."_tag synonym ON tag.synonymFor = synonym.tagID";
 		
 		if ($this->search !== '') {
-			$this->objectList->getConditionBuilder()->add('tag.name LIKE ?', array($this->search.'%'));
+			$this->objectList->getConditionBuilder()->add('tag.name LIKE ?', [$this->search.'%']);
 		}
 	}
 }

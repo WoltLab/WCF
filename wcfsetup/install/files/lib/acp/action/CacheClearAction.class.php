@@ -21,7 +21,7 @@ class CacheClearAction extends AbstractAction {
 	/**
 	 * @see	\wcf\action\AbstractAction::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.management.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
 	 * @see	\wcf\action\IAction::execute()

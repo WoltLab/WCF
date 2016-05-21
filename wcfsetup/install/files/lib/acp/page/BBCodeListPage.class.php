@@ -26,7 +26,7 @@ class BBCodeListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.bbcode.canManageBBCode');
+	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -41,5 +41,5 @@ class BBCodeListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('bbcodeID', 'bbcodeTag', 'className');
+	public $validSortFields = ['bbcodeID', 'bbcodeTag', 'className'];
 }

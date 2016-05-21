@@ -80,15 +80,15 @@ class AttachmentBBCode extends AbstractBBCode {
 						$class = 'messageFloatObject'.ucfirst($alignment);
 					}
 					
-					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment)));
+					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]));
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
 					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '"><img src="' . $source . '" style="width: '.$width.'px" alt="" /></a>';
 				}
 				else {
-					$linkParameters = array(
+					$linkParameters = [
 						'object' => $attachment
-					);
+					];
 					if ($attachment->hasThumbnail()) $linkParameters['thumbnail'] = 1;
 					
 					$class = '';
@@ -107,7 +107,7 @@ class AttachmentBBCode extends AbstractBBCode {
 					
 					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.($imageClasses ? ' class="'.$imageClasses.'"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height).'px;" alt="" />';
 					if ($attachment->hasThumbnail() && $attachment->canDownload()) {
-						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment))).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">'.$result.'</a>';
+						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">'.$result.'</a>';
 					}
 				}
 				
@@ -115,16 +115,16 @@ class AttachmentBBCode extends AbstractBBCode {
 			}
 			else {
 				// file
-				return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', array(
+				return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
 					'object' => $attachment
-				)), ((!empty($content) && $content != $attachmentID) ? $content : $attachment->filename));
+				]), ((!empty($content) && $content != $attachmentID) ? $content : $attachment->filename));
 			}
 		}
 		
 		// fallback
-		return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', array(
+		return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
 			'id' => $attachmentID
-		)));
+		]));
 	}
 	
 	/**

@@ -21,7 +21,7 @@ class UserFollowerImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		$data['followUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['followUserID']);
 		if (!$data['userID'] || !$data['followUserID']) return 0;
@@ -32,11 +32,11 @@ class UserFollowerImporter extends AbstractImporter {
 						(userID, followUserID, time)
 			VALUES			(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$data['userID'],
 			$data['followUserID'],
 			$data['time']
-		));
+		]);
 		
 		return WCF::getDB()->getInsertID('wcf'.WCF_N.'_user_follow', 'followID');
 	}

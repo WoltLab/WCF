@@ -20,7 +20,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	 * package update version
 	 * @var	array
 	 */
-	protected $packageUpdateVersion = array();
+	protected $packageUpdateVersion = [];
 	
 	/**
 	 * HTTP request object
@@ -41,7 +41,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
 	 * @param	array							$packageUpdateVersion
 	 */
-	public function __construct(HTTPRequest $request, PackageUpdateServer $updateServer, array $packageUpdateVersion = array()) {
+	public function __construct(HTTPRequest $request, PackageUpdateServer $updateServer, array $packageUpdateVersion = []) {
 		$this->request = $request;
 		$this->updateServer = $updateServer;
 		$this->packageUpdateVersion = $packageUpdateVersion;
@@ -53,11 +53,11 @@ class PackageUpdateUnauthorizedException extends UserException {
 	 * @return	string
 	 */
 	public function getRenderedTemplate() {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'packageUpdateVersion' => $this->packageUpdateVersion,
 			'request' => $this->request,
 			'updateServer' => $this->updateServer
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('packageUpdateUnauthorized');
 	}

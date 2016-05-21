@@ -31,7 +31,7 @@ abstract class SortablePage extends MultipleLinkPage {
 	 * list of valid sort fields
 	 * @var	string[]
 	 */
-	public $validSortFields = array();
+	public $validSortFields = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -90,9 +90,9 @@ abstract class SortablePage extends MultipleLinkPage {
 		parent::assignVariables();
 		
 		// assign sorting parameters
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'sortField' => $this->sortField,
 			'sortOrder' => $this->sortOrder
-		));
+		]);
 	}
 }

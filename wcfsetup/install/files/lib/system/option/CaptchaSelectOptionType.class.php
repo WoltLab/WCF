@@ -23,18 +23,18 @@ class CaptchaSelectOptionType extends AbstractOptionType {
 		$selectOptions = CaptchaHandler::getInstance()->getCaptchaSelection();
 		if ($option->allowemptyvalue) {
 			$selectOptions = array_merge(
-				array(
+				[
 					'' => WCF::getLanguage()->get('wcf.captcha.useNoCaptcha')
-				),
+				],
 				$selectOptions
 			);
 		}
 		
-		return WCF::getTPL()->fetch('selectOptionType', 'wcf', array(
+		return WCF::getTPL()->fetch('selectOptionType', 'wcf', [
 			'selectOptions' => $selectOptions,
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 	}
 	
 	/**

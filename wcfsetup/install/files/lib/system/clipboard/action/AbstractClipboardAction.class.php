@@ -21,19 +21,19 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	 * list of the clipboard actions which are executed by the action class
 	 * @var	string[]
 	 */
-	protected $actionClassActions = array();
+	protected $actionClassActions = [];
 	
 	/**
 	 * relevant database objects
 	 * @var	DatabaseObject[]
 	 */
-	protected $objects = array();
+	protected $objects = [];
 	
 	/**
 	 * list of the supported clipboard actions
 	 * @var	string[]
 	 */
-	protected $supportedActions = array();
+	protected $supportedActions = [];
 	
 	/**
 	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
@@ -72,8 +72,8 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	 * @see	\wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
 	 */
 	public function getEditorLabel(array $objects) {
-		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.'.$this->getTypeName().'.marked', array(
+		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.'.$this->getTypeName().'.marked', [
 			'count' => count($objects)
-		));
+		]);
 	}
 }

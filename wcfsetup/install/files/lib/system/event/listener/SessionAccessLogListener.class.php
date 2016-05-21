@@ -28,22 +28,22 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 				WHERE	sessionID = ?
 					AND lastActivityTime >= ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				WCF::getSession()->sessionID,
 				(TIME_NOW - SESSION_TIMEOUT)
-			));
+			]);
 			$row = $statement->fetchArray();
 			if (!empty($row['sessionLogID'])) {
 				$sessionLogID = $row['sessionLogID'];
 				
-				$sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog(null, array('sessionLogID' => $sessionLogID)));
-				$sessionLogEditor->update(array(
+				$sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog(null, ['sessionLogID' => $sessionLogID]));
+				$sessionLogEditor->update([
 					'lastActivityTime' => TIME_NOW
-				));
+				]);
 			}
 			else {
 				// create new session log
-				$sessionLog = ACPSessionLogEditor::create(array(
+				$sessionLog = ACPSessionLogEditor::create([
 					'sessionID' => WCF::getSession()->sessionID,
 					'userID' => WCF::getUser()->userID,
 					'ipAddress' => UserUtil::getIpAddress(),
@@ -51,7 +51,7 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 					'userAgent' => WCF::getSession()->userAgent,
 					'time' => TIME_NOW,
 					'lastActivityTime' => TIME_NOW
-				));
+				]);
 				$sessionLogID = $sessionLog->sessionLogID;
 			}
 			
@@ -64,14 +64,14 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 			$requestURI = preg_replace('/(?:\?|&)s=[a-f0-9]{40}/', '', $requestURI);
 			
 			// save access
-			ACPSessionAccessLogEditor::create(array(
+			ACPSessionAccessLogEditor::create([
 				'sessionLogID' => $sessionLogID,
 				'ipAddress' => UserUtil::getIpAddress(),
 				'time' => TIME_NOW,
 				'requestURI' => $requestURI,
 				'requestMethod' => WCF::getSession()->requestMethod,
 				'className' => get_class($eventObj)
-			));
+			]);
 		}
 	}
 }

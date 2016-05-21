@@ -53,8 +53,8 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 			$statement->execute();
 		}
 		
-		$itemsToUser = array();
-		$likeObjectData = array();
+		$itemsToUser = [];
+		$likeObjectData = [];
 		foreach ($this->objectList as $like) {
 			if ($like->objectUserID && $like->likeValue == Like::LIKE) {
 				if (!isset($itemsToUser[$like->objectUserID])) {
@@ -65,15 +65,15 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 			}
 			
 			if (!isset($likeObjectData[$like->objectTypeID])) {
-				$likeObjectData[$like->objectTypeID] = array();
+				$likeObjectData[$like->objectTypeID] = [];
 			}
 			if (!isset($likeObjectData[$like->objectTypeID][$like->objectID])) {
-				$likeObjectData[$like->objectTypeID][$like->objectID] = array(
+				$likeObjectData[$like->objectTypeID][$like->objectID] = [
 					'likes' => 0,
 					'dislikes' => 0,
 					'cumulativeLikes' => 0,
 					'objectUserID' => $like->objectUserID
-				);
+				];
 			}
 			
 			if ($like->likeValue == Like::LIKE) {
@@ -99,14 +99,14 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		WCF::getDB()->beginTransaction();
 		foreach ($likeObjectData as $objectTypeID => $objects) {
 			foreach ($objects as $objectID => $data) {
-				$statement->execute(array(
+				$statement->execute([
 					$objectTypeID,
 					$objectID,
 					$data['objectUserID'],
 					$data['likes'],
 					$data['dislikes'],
 					$data['cumulativeLikes']
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();

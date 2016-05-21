@@ -20,7 +20,7 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('getGroupedUserList');
+	protected $allowGuestAccess = ['getGroupedUserList'];
 	
 	/**
 	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
@@ -44,8 +44,8 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 		if (isset($value[2])) $day = intval($value[2]);
 		
 		// get users
-		$users = array();
-		$userOptions = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+		$users = [];
+		$userOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');
 		if (isset($userOptions['birthday'])) {
 			$birthdayUserOption = $userOptions['birthday'];
 			
@@ -63,13 +63,13 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 			}
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'users' => $users,
 			'year' => $year
-		));
-		return array(
+		]);
+		return [
 			'pageCount' => 1,
 			'template' => WCF::getTPL()->fetch('userBirthdayList')
-		);
+		];
 	}
 }

@@ -55,7 +55,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// get all style of this package
 		$isDefault = false;
 		$styleList = new StyleList();
-		$styleList->getConditionBuilder()->add("packageID = ?", array($this->installation->getPackageID()));
+		$styleList->getConditionBuilder()->add("packageID = ?", [$this->installation->getPackageID()]);
 		$styleList->readObjects();
 		
 		foreach ($styleList->getObjects() as $style) {

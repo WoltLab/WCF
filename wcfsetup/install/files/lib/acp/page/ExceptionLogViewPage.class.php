@@ -28,7 +28,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.management.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
@@ -51,13 +51,13 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	 * available logfiles
 	 * @var	string[]
 	 */
-	public $logFiles = array();
+	public $logFiles = [];
 	
 	/**
 	 * exceptions shown
 	 * @var	array
 	 */
-	public $exceptions = array();
+	public $exceptions = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -119,7 +119,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		try {
 			$this->exceptions = call_user_func_array('array_merge', array_map(
 				function($v) {
-					return array($v[0] => $v[1]);
+					return [$v[0] => $v[1]];
 				},
 				array_chunk($contents, 2)
 			));
@@ -212,11 +212,11 @@ Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})', Regex::DOT_ALL);
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'exceptionID' => $this->exceptionID,
 			'logFiles' => array_flip(array_map('basename', $this->logFiles)),
 			'logFile' => $this->logFile,
 			'exceptions' => $this->exceptions
-		));
+		]);
 	}
 }

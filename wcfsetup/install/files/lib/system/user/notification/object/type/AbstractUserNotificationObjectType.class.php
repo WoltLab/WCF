@@ -35,7 +35,7 @@ class AbstractUserNotificationObjectType extends AbstractObjectTypeProcessor imp
 	 * @see	\wcf\system\user\notification\object\type\IUserNotificationObjectType::getObjectsByIDs()
 	 */
 	public function getObjectsByIDs(array $objectIDs) {
-		$indexName = call_user_func(array(static::$objectClassName, 'getDatabaseTableIndexName'));
+		$indexName = call_user_func([static::$objectClassName, 'getDatabaseTableIndexName']);
 		
 		$objectList = new static::$objectListClassName();
 		$objectList->setObjectIDs($objectIDs);
@@ -50,10 +50,10 @@ class AbstractUserNotificationObjectType extends AbstractObjectTypeProcessor imp
 				// '__unknownNotificationObject' tells the notification API
 				// that the object does not exist anymore so that the related
 				// notification can be deleted automatically
-				$objects[$objectID] = new static::$decoratorClassName(new static::$objectClassName(null, array(
+				$objects[$objectID] = new static::$decoratorClassName(new static::$objectClassName(null, [
 					'__unknownNotificationObject' => true,
 					$indexName => $objectID
-				)));
+				]));
 			}
 		}
 		

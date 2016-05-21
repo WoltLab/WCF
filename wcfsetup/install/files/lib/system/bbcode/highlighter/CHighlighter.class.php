@@ -15,19 +15,19 @@ class CHighlighter extends Highlighter {
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
-	protected $separators = array('(', ')', '{', '}', '[', ']', ';', '.', ',');
+	protected $separators = ['(', ')', '{', '}', '[', ']', ';', '.', ','];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
-	protected $operators = array('=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
+	protected $operators = ['=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
 		'&&', '||', '++', '--', '+', '-', '*', '/', '&', '|', '^', '%', '<<', '>>', '>>>', '+=', '-=', '*=',
-		'/=', '&=', '|=', '^=', '%=', '<<=', '>>=', '>>>=');
+		'/=', '&=', '|=', '^=', '%=', '<<=', '>>=', '>>>='];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		'and',
 		'and_eq',
 		'asm',
@@ -71,12 +71,12 @@ class CHighlighter extends Highlighter {
 		'while',
 		'xor',
 		'xor_eq'
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'auto',
 		'bool',
 		'char',
@@ -107,17 +107,17 @@ class CHighlighter extends Highlighter {
 		'void',
 		'volatile',
 		'wchar_t'
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
 	 */
-	protected $keywords3 = array(
+	protected $keywords3 = [
 		'#include',
 		'#define',
 		'#if',
 		'#else',
 		'#ifdef',
 		'#endif'
-	);
+	];
 }

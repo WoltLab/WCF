@@ -21,7 +21,7 @@ class UserOptionListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOption');
+	public $neededPermissions = ['admin.user.canManageUserOption'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -36,7 +36,7 @@ class UserOptionListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
-	public $validSortFields = array('optionID', 'optionName', 'categoryName', 'optionType', 'showOrder');
+	public $validSortFields = ['optionID', 'optionName', 'categoryName', 'optionType', 'showOrder'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::initObjectList
@@ -44,6 +44,6 @@ class UserOptionListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add("option_table.categoryName IN (SELECT categoryName FROM wcf".WCF_N."_user_option_category WHERE parentCategoryName = ?)", array('profile'));
+		$this->objectList->getConditionBuilder()->add("option_table.categoryName IN (SELECT categoryName FROM wcf".WCF_N."_user_option_category WHERE parentCategoryName = ?)", ['profile']);
 	}
 }

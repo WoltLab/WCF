@@ -27,19 +27,19 @@ class UserActivityPointOptionForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canEditActivityPoints');
+	public $neededPermissions = ['admin.user.canEditActivityPoints'];
 	
 	/**
 	 * points to objectType
 	 * @var	integer[]
 	 */
-	public $points = array();
+	public $points = [];
 	
 	/**
 	 * valid object types
 	 * @var	ObjectType[]
 	 */
-	public $objectTypes = array();
+	public $objectTypes = [];
 	
 	/**
 	 * @see	\wcf\form\IForm::readFormParameters()
@@ -86,7 +86,7 @@ class UserActivityPointOptionForm extends AbstractForm {
 			$editor = new ObjectTypeEditor($objectType);
 			$data = $objectType->additionalData;
 			$data['points'] = $this->points[$objectType->objectTypeID];
-			$editor->update(array('additionalData' => serialize($data)));
+			$editor->update(['additionalData' => serialize($data)]);
 		}
 		
 		ObjectTypeEditor::resetCache();
@@ -102,9 +102,9 @@ class UserActivityPointOptionForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'objectTypes' => $this->objectTypes,
 			'points' => $this->points
-		));
+		]);
 	}
 }

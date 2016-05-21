@@ -22,14 +22,14 @@ class UserGroupImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		if ($data['groupType'] < 4) {
 			$newGroupID = UserGroup::getGroupByType($data['groupType'])->groupID;
 		}
 		else {
-			$action = new UserGroupAction(array(), 'create', array(
+			$action = new UserGroupAction([], 'create', [
 				'data' => $data
-			));
+			]);
 			$returnValues = $action->executeAction();
 			$newGroupID = $returnValues['returnValues']->groupID;
 		}

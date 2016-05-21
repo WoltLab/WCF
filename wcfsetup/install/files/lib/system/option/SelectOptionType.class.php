@@ -22,14 +22,14 @@ class SelectOptionType extends RadioButtonOptionType {
 	public function getFormElement(Option $option, $value) {
 		$options = $this->parseEnableOptions($option);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value,
 			'allowEmptyValue' => ($this->allowEmptyValue || $option->allowEmptyValue)
-		));
+		]);
 		return WCF::getTPL()->fetch('selectOptionType');
 	}
 	
@@ -39,14 +39,14 @@ class SelectOptionType extends RadioButtonOptionType {
 	public function getSearchFormElement(Option $option, $value) {
 		$options = $this->parseEnableOptions($option);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'searchOption' => ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('selectSearchableOptionType');
 	}
 	
@@ -78,10 +78,10 @@ class SelectOptionType extends RadioButtonOptionType {
 			}
 		}
 		
-		return array(
+		return [
 			'disableOptions' => $disableOptions,
 			'enableOptions' => $enableOptions
-		);
+		];
 	}
 	
 	/**

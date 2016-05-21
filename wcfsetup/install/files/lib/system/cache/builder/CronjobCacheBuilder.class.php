@@ -22,12 +22,12 @@ class CronjobCacheBuilder extends AbstractCacheBuilder {
 			FROM	wcf".WCF_N."_cronjob
 			WHERE	isDisabled = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(0));
+		$statement->execute([0]);
 		$row = $statement->fetchArray();
 		
-		return array(
+		return [
 			'afterNextExec' => $row['afterNextExec'],
 			'nextExec' => $row['nextExec']
-		);
+		];
 	}
 }

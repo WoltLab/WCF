@@ -88,7 +88,7 @@ class TarWriter extends Tar {
 	 * @throws	SystemException
 	 */
 	public function add($files, $addDir = '', $removeDir = '') {
-		if (!is_array($files)) $files = array($files);
+		if (!is_array($files)) $files = [$files];
 		if (empty($files)) return false;
 		
 		$result = true;

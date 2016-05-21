@@ -22,7 +22,7 @@ class PageManager extends SingletonFactory {
 	 * list of available page object types
 	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -75,11 +75,11 @@ class PageManager extends SingletonFactory {
 			}
 		}
 		
-		$selection = array();
+		$selection = [];
 		foreach ($objectTypes as $objectType) {
 			$categoryName = WCF::getLanguage()->get('wcf.page.category.'.$objectType->categoryname);
 			if (!isset($selection[$categoryName])) {
-				$selection[$categoryName] = array();
+				$selection[$categoryName] = [];
 			}
 			
 			$selection[$categoryName][$objectType->objectTypeID] = WCF::getLanguage()->get('wcf.page.'.$objectType->objectType);

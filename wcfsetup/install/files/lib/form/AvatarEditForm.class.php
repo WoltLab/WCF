@@ -91,7 +91,7 @@ class AvatarEditForm extends AbstractForm {
 		if ($this->avatarType != 'custom') {
 			// delete custom avatar
 			if (WCF::getUser()->avatarID) {
-				$action = new UserAvatarAction(array(WCF::getUser()->avatarID), 'delete');
+				$action = new UserAvatarAction([WCF::getUser()->avatarID], 'delete');
 				$action->executeAction();
 			}
 		}
@@ -99,33 +99,33 @@ class AvatarEditForm extends AbstractForm {
 		// update user
 		switch ($this->avatarType) {
 			case 'none':
-				$data = array(
+				$data = [
 					'avatarID' => null,
 					'enableGravatar' => 0
-				);
+				];
 			break;
 				
 			case 'custom':
-				$data = array(
+				$data = [
 					'enableGravatar' => 0
-				);
+				];
 			break;
 				
 			case 'gravatar':
-				$data = array(
+				$data = [
 					'avatarID' => null,
 					'enableGravatar' => 1
-				);
+				];
 			break;
 		}
-		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', array(
+		$this->objectAction = new UserAction([WCF::getUser()], 'update', [
 			'data' => array_merge($this->additionalFields, $data)
-		));
+		]);
 		$this->objectAction->executeAction();
 		
 		// check if the user will be automatically added to new user groups
 		// because of the changed avatar
-		UserGroupAssignmentHandler::getInstance()->checkUsers(array(WCF::getUser()->userID));
+		UserGroupAssignmentHandler::getInstance()->checkUsers([WCF::getUser()->userID]);
 		
 		// reset gravatar cache
 		if ($this->avatarType == 'gravatar') {
@@ -162,9 +162,9 @@ class AvatarEditForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'avatarType' => $this->avatarType
-		));
+		]);
 	}
 	
 	/**

@@ -18,21 +18,21 @@ interface IEditableObject extends IStorableObject {
 	 * @param	array		$parameters
 	 * @return	\wcf\data\IStorableObject
 	 */
-	public static function create(array $parameters = array());
+	public static function create(array $parameters = []);
 	
 	/**
 	 * Updates this object.
 	 * 
 	 * @param	array		$parameters
 	 */
-	public function update(array $parameters = array());
+	public function update(array $parameters = []);
 	
 	/**
 	 * Updates the counters of this object.
 	 * 
 	 * @param	array		$counters
 	 */
-	public function updateCounters(array $counters = array());
+	public function updateCounters(array $counters = []);
 	
 	/**
 	 * Deletes this object.
@@ -46,5 +46,5 @@ interface IEditableObject extends IStorableObject {
 	 * @param	array		$objectIDs
 	 * @return	integer
 	 */
-	public static function deleteAll(array $objectIDs = array());
+	public static function deleteAll(array $objectIDs = []);
 }

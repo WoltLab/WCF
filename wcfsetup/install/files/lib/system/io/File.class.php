@@ -44,7 +44,7 @@ class File {
 	 * @param	array		$options
 	 * @throws	SystemException
 	 */
-	public function __construct($filename, $mode = 'wb', $options = array()) {
+	public function __construct($filename, $mode = 'wb', $options = []) {
 		$this->filename = $filename;
 		if (!empty($options)) {
 			$context = stream_context_create($options);

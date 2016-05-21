@@ -48,7 +48,7 @@ class SearchResultPage extends MultipleLinkPage {
 	 * messages
 	 * @var	array
 	 */
-	public $messages = array();
+	public $messages = [];
 	
 	/**
 	 * search data
@@ -114,14 +114,14 @@ class SearchResultPage extends MultipleLinkPage {
 	 * Caches the message data.
 	 */
 	protected function cacheMessageData() {
-		$types = array();
+		$types = [];
 		
 		// group object id by object type
 		for ($i = $this->startIndex - 1; $i < $this->endIndex; $i++) {
 			$type = $this->searchData['results'][$i]['objectType'];
 			$objectID = $this->searchData['results'][$i]['objectID'];
 			
-			if (!isset($types[$type])) $types[$type] = array();
+			if (!isset($types[$type])) $types[$type] = [];
 			$types[$type][] = $objectID;
 		}
 		
@@ -156,7 +156,7 @@ class SearchResultPage extends MultipleLinkPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'query' => $this->searchData['query'],
 			'objects' => $this->messages,
 			'searchData' => $this->searchData,
@@ -169,7 +169,7 @@ class SearchResultPage extends MultipleLinkPage {
 			'resultListTemplateName' => $this->resultListTemplateName,
 			'resultListApplication' => $this->resultListApplication,
 			'application' => ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID)
-		));
+		]);
 	}
 	
 	/**

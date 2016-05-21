@@ -41,13 +41,13 @@ class UserIgnore extends DatabaseObject {
 			WHERE	userID = ?
 				AND ignoreUserID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			WCF::getUser()->userID,
 			$ignoreUserID
-		));
+		]);
 		
 		$row = $statement->fetchArray();
-		if (!$row) $row = array();
+		if (!$row) $row = [];
 		
 		return new UserIgnore(null, $row);
 	}

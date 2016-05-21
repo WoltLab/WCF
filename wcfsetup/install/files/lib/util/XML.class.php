@@ -152,15 +152,15 @@ class XML {
 	 * @return	string[][]
 	 */
 	protected function pollErrors() {
-		$errors = array();
+		$errors = [];
 		$errorList = libxml_get_errors();
 		
 		foreach ($errorList as $error) {
-			$errors[] = array(
+			$errors[] = [
 				'message' => $error->message,
 				'line' => $error->line,
 				'file' => $this->path
-			);
+			];
 		}
 		
 		libxml_clear_errors();
@@ -175,7 +175,7 @@ class XML {
 	 * @param	array		$errors
 	 * @throws	SystemException
 	 */
-	protected function throwException($message, array $errors = array()) {
+	protected function throwException($message, array $errors = []) {
 		if (!empty($errors)) {
 			$description = '<b>LibXML output:</b><pre>';
 			foreach ($errors as $error) {

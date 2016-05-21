@@ -31,13 +31,13 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					AND templateName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->getPackageID(),
 				$item['elements']['environment'],
 				$item['elements']['eventname'],
 				$item['attributes']['name'],
 				$item['elements']['templatename']
-			));
+			]);
 		}
 	}
 	
@@ -53,7 +53,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			$niceValue = 127;
 		}
 		
-		return array(
+		return [
 			'environment' => $data['elements']['environment'],
 			'eventName' => $data['elements']['eventname'],
 			'niceValue' => $niceValue,
@@ -62,7 +62,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : ''),
 			'templateCode' => $data['elements']['templatecode'],
 			'templateName' => $data['elements']['templatename']
-		);
+		];
 	}
 	
 	/**
@@ -76,18 +76,18 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				AND templateName = ?
 				AND eventName = ?
 				AND environment = ?";
-		$parameters = array(
+		$parameters = [
 			$this->installation->getPackageID(),
 			$data['name'],
 			$data['templateName'],
 			$data['eventName'],
 			$data['environment']
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**

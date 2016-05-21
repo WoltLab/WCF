@@ -27,7 +27,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		if ($element->tagName == 'description') {
 			if (!isset($elements['description'])) {
-				$elements['description'] = array();
+				$elements['description'] = [];
 			}
 			
 			$elements['description'][$element->getAttribute('language')] = $element->nodeValue;
@@ -53,16 +53,16 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		
 		foreach ($items as $item) {
 			if (!isset($item['attributes']['name'])) {
-				$legacyStatement->execute(array(
+				$legacyStatement->execute([
 					$item['elements']['classname'],
 					$this->installation->getPackageID()
-				));
+				]);
 			}
 			else {
-				$statement->execute(array(
+				$statement->execute([
 					$item['attributes']['name'],
 					$this->installation->getPackageID()
-				));
+				]);
 			}
 		}
 	}
@@ -71,7 +71,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		return [
 			'canBeDisabled' => (isset($data['elements']['canbedisabled'])) ? intval($data['elements']['canbedisabled']) : 1,
 			'canBeEdited' => (isset($data['elements']['canbeedited'])) ? intval($data['elements']['canbeedited']) : 1,
 			'className' => (isset($data['elements']['classname'])) ? $data['elements']['classname'] : '',
@@ -84,7 +84,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			'startHour' => $data['elements']['starthour'],
 			'startMinute' => $data['elements']['startminute'],
 			'startMonth' => $data['elements']['startmonth']
-		);
+		];
 	}
 	
 	/**
@@ -109,9 +109,9 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		// update cronjob name
 		if (!$cronjob->cronjobName) {
 			$cronjobEditor = new CronjobEditor($cronjob);
-			$cronjobEditor->update(array(
+			$cronjobEditor->update([
 				'cronjobName' => Cronjob::AUTOMATIC_NAME_PREFIX.$cronjob->cronjobID
-			));
+			]);
 			
 			$cronjob = new Cronjob($cronjob->cronjobID);
 		}
@@ -129,15 +129,15 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	packageID = ?
 				AND cronjobName = ?";
-		$parameters = array(
+		$parameters = [
 			$this->installation->getPackageID(),
 			$data['cronjobName']
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**

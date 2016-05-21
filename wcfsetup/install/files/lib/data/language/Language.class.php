@@ -36,13 +36,13 @@ class Language extends DatabaseObject {
 	 * list of language items
 	 * @var	string[]
 	 */
-	protected $items = array();
+	protected $items = [];
 	
 	/**
 	 * list of dynamic language items
 	 * @var	string[]
 	 */
-	protected $dynamicItems = array();
+	protected $dynamicItems = [];
 	
 	/**
 	 * instance of LanguageEditor
@@ -127,7 +127,7 @@ class Language extends DatabaseObject {
 	 * @param	boolean		$optional
 	 * @return	string		result
 	 */
-	public function getDynamicVariable($item, array $variables = array(), $optional = false) {
+	public function getDynamicVariable($item, array $variables = [], $optional = false) {
 		$staticItem = $this->get($item, $optional);
 		if (!$staticItem) return '';
 		

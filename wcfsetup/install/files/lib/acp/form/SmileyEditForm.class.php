@@ -26,7 +26,7 @@ class SmileyEditForm extends SmileyAddForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
+	public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
 	 * smiley id
@@ -69,17 +69,17 @@ class SmileyEditForm extends SmileyAddForm {
 		}
 		
 		// update bbcode
-		$this->objectAction = new SmileyAction(array($this->smileyID), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new SmileyAction([$this->smileyID], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'smileyTitle' => $this->smileyTitle,
 				'smileyCode' => $this->smileyCode,
 				'aliases' => $this->aliases,
 				'smileyPath' => $this->smileyPath,
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null
-			)),
+			]),
 			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/'.$this->uploadedFilename : ''
-		));
+		]);
 		$this->objectAction->executeAction();
 		
 		$this->uploadedFilename = '';
@@ -87,9 +87,9 @@ class SmileyEditForm extends SmileyAddForm {
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -118,9 +118,9 @@ class SmileyEditForm extends SmileyAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'smiley' => $this->smiley,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

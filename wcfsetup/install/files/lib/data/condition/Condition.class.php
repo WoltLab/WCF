@@ -61,7 +61,7 @@ class Condition extends DatabaseObject {
 		// handle condition data
 		$this->data['conditionData'] = @unserialize($data['conditionData']);
 		if (!is_array($this->data['conditionData'])) {
-			$this->data['conditionData'] = array();
+			$this->data['conditionData'] = [];
 		}
 	}
 	

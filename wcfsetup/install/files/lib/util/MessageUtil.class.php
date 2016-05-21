@@ -77,7 +77,7 @@ class MessageUtil {
 			return $matches[1];
 		}
 		
-		return array();
+		return [];
 	}
 	
 	/**
@@ -87,7 +87,7 @@ class MessageUtil {
 	 * @return	string[]
 	 */
 	public static function getQuotedUsers($text) {
-		$usernames = array();
+		$usernames = [];
 		if (preg_match_all("~(?:\[(quote)=(?:')?(.+?)(?:')?(?:,[^\]]*)?\]|\[/quote\])~i", $text, $matches)) {
 			$level = 0;
 			

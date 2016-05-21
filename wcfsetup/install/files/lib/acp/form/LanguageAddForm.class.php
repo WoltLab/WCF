@@ -33,7 +33,7 @@ class LanguageAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * language object
@@ -57,7 +57,7 @@ class LanguageAddForm extends AbstractForm {
 	 * list of available languages
 	 * @var	Language[]
 	 */
-	public $languages = array();
+	public $languages = [];
 	
 	/**
 	 * source language object
@@ -139,11 +139,11 @@ class LanguageAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->language = LanguageEditor::create(array(
+		$this->language = LanguageEditor::create([
 			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
 			'languageCode' => mb_strtolower($this->languageCode)
-		));
+		]);
 		$languageEditor = new LanguageEditor($this->sourceLanguage);
 		$languageEditor->copy($this->language);
 		
@@ -171,13 +171,13 @@ class LanguageAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'countryCode' => $this->countryCode,
 			'languageName' => $this->languageName,
 			'languageCode' => $this->languageCode,
 			'sourceLanguageID' => $this->sourceLanguageID,
 			'languages' => $this->languages,
 			'action' => 'add'
-		));
+		]);
 	}
 }

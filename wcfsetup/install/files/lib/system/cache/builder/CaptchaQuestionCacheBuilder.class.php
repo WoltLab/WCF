@@ -18,7 +18,7 @@ class CaptchaQuestionCacheBuilder extends AbstractCacheBuilder {
 	 */
 	public function rebuild(array $parameters) {
 		$questionList = new CaptchaQuestionList();
-		$questionList->getConditionBuilder()->add('isDisabled = ?', array(0));
+		$questionList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$questionList->readObjects();
 		
 		return $questionList->getObjects();

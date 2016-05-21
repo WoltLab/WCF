@@ -31,7 +31,7 @@ class TemplateAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.template.canManageTemplate');
+	public $neededPermissions = ['admin.template.canManageTemplate'];
 	
 	/**
 	 * template name
@@ -55,7 +55,7 @@ class TemplateAddForm extends AbstractForm {
 	 * available template groups
 	 * @var	array
 	 */
-	public $availableTemplateGroups = array();
+	public $availableTemplateGroups = [];
 	
 	/**
 	 * template's package id
@@ -116,7 +116,7 @@ class TemplateAddForm extends AbstractForm {
 				WHERE	templateName = ?
 					AND templateGroupID IS NULL";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->tplName));
+			$statement->execute([$this->tplName]);
 			$row = $statement->fetchArray();
 			if ($row !== false) {
 				$this->packageID = $row['packageID'];
@@ -147,14 +147,14 @@ class TemplateAddForm extends AbstractForm {
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('templateName = ?', array($this->tplName));
-		$conditionBuilder->add('templateGroupID = ?', array($this->templateGroupID));
+		$conditionBuilder->add('templateName = ?', [$this->tplName]);
+		$conditionBuilder->add('templateGroupID = ?', [$this->templateGroupID]);
 		
 		if ($this->copiedTemplate !== null) {
-			$conditionBuilder->add('(packageID = ? OR application = ?)', array($this->packageID, $this->copiedTemplate->application));
+			$conditionBuilder->add('(packageID = ? OR application = ?)', [$this->packageID, $this->copiedTemplate->application]);
 		}
 		else {
-			$conditionBuilder->add('packageID = ?', array($this->packageID));
+			$conditionBuilder->add('packageID = ?', [$this->packageID]);
 		}
 		
 		$sql = "SELECT	COUNT(*)
@@ -192,12 +192,12 @@ class TemplateAddForm extends AbstractForm {
 			$this->application = Package::getAbbreviation(PackageCache::getInstance()->getPackage($this->packageID)->package);
 		}
 		
-		$this->objectAction = new TemplateAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TemplateAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'application' => $this->application,
 			'templateName' => $this->tplName,
 			'packageID' => $this->packageID,
 			'templateGroupID' => $this->templateGroupID
-		)), 'source' => $this->templateSource));
+		]), 'source' => $this->templateSource]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -206,9 +206,9 @@ class TemplateAddForm extends AbstractForm {
 		$this->templateGroupID = 0;
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -231,13 +231,13 @@ class TemplateAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'tplName' => $this->tplName,
 			'templateGroupID' => $this->templateGroupID,
 			'templateSource' => $this->templateSource,
 			'availableTemplateGroups' => $this->availableTemplateGroups,
 			'copy' => $this->copy
-		));
+		]);
 	}
 }

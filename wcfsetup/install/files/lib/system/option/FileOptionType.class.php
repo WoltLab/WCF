@@ -24,7 +24,7 @@ class FileOptionType extends AbstractOptionType {
 	 * upload handler for option files
 	 * @var	UploadHandler[]
 	 */
-	protected $uploadHandlers = array();
+	protected $uploadHandlers = [];
 	
 	/**
 	 * Creates the upload handler for the given option.
@@ -81,10 +81,10 @@ class FileOptionType extends AbstractOptionType {
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('fileOptionType');
 	}

@@ -20,7 +20,7 @@ interface ILabelObjectHandler {
 	 * @param	array		$parameters
 	 * @return	integer[]
 	 */
-	public function getLabelGroupIDs(array $parameters = array());
+	public function getLabelGroupIDs(array $parameters = []);
 	
 	/**
 	 * Returns a list of label groups.
@@ -28,7 +28,7 @@ interface ILabelObjectHandler {
 	 * @param	array		$parameters
 	 * @return	ViewableLabelGroup[]
 	 */
-	public function getLabelGroups(array $parameters = array());
+	public function getLabelGroups(array $parameters = []);
 	
 	/**
 	 * Returns true, if all given label ids are valid and accessible.

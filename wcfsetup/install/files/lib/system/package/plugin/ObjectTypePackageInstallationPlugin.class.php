@@ -28,7 +28,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * list of names of tags which aren't considered as additional data
 	 * @var	string[]
 	 */
-	public static $reservedTags = array('classname', 'definitionname', 'name');
+	public static $reservedTags = ['classname', 'definitionname', 'name'];
 	
 	/**
 	 * Gets the definition id by name
@@ -43,7 +43,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 			FROM	wcf".WCF_N."_object_type_definition
 			WHERE	definitionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute(array($definitionName));
+		$statement->execute([$definitionName]);
 		$row = $statement->fetchArray();
 		if (empty($row['definitionID'])) throw new SystemException("unknown object type definition '".$definitionName."' given");
 		return $row['definitionID'];
@@ -59,11 +59,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->getDefinitionID($item['elements']['definitionname']),
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -71,17 +71,17 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		$additionalData = array();
+		$additionalData = [];
 		foreach ($data['elements'] as $tagName => $nodeValue) {
 			if (!in_array($tagName, self::$reservedTags)) $additionalData[$tagName] = $nodeValue;
 		}
 		
-		return array(
+		return [
 			'definitionID' => $this->getDefinitionID($data['elements']['definitionname']),
 			'objectType' => $data['elements']['name'],
 			'className' => (isset($data['elements']['classname']) ? $data['elements']['classname'] : ''),
 			'additionalData' => serialize($additionalData)
-		);
+		];
 	}
 	
 	/**
@@ -93,15 +93,15 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 			WHERE	objectType = ?
 				AND definitionID = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['objectType'],
 			$data['definitionID'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

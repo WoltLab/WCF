@@ -22,12 +22,12 @@ class UserContentRevertChangesForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_EDIT_HISTORY');
+	public $neededModules = ['MODULE_EDIT_HISTORY'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.canBulkRevertContentChanges');
+	public $neededPermissions = ['admin.content.canBulkRevertContentChanges'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
@@ -38,13 +38,13 @@ class UserContentRevertChangesForm extends AbstractForm {
 	 * ids of the relevant users
 	 * @var	integer[]
 	 */
-	public $userIDs = array();
+	public $userIDs = [];
 	
 	/**
 	 * relevant users
 	 * @var	User[]
 	 */
-	public $users = array();
+	public $users = [];
 	
 	/**
 	 * timeframe to consider
@@ -118,10 +118,10 @@ class UserContentRevertChangesForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'users' => $this->users,
 			'userIDs' => $this->userIDs,
 			'timeframe' => $this->timeframe
-		));
+		]);
 	}
 }

@@ -51,11 +51,11 @@ class ACPSessionVirtual extends DatabaseObject {
 				AND ipAddress = ?
 				AND userAgent = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$sessionID,
 			UserUtil::getIpAddress(),
 			UserUtil::getUserAgent()
-		));
+		]);
 		
 		return $statement->fetchObject(static::class);
 	}
@@ -71,7 +71,7 @@ class ACPSessionVirtual extends DatabaseObject {
 			FROM	".static::getDatabaseTableName()."
 			WHERE	sessionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($sessionID));
+		$statement->execute([$sessionID]);
 		
 		return $statement->fetchColumn();
 	}

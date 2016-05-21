@@ -28,7 +28,7 @@ class UserInputException extends UserException {
 	 * variables for AJAX error handling
 	 * @var	array
 	 */
-	protected $variables = array();
+	protected $variables = [];
 	
 	/**
 	 * Creates a new UserInputException.
@@ -37,7 +37,7 @@ class UserInputException extends UserException {
 	 * @param	string		$type		kind of this error
 	 * @param	array		$variables	additional variables for AJAX error handling
 	 */
-	public function __construct($field = '', $type = 'empty', array $variables = array()) {
+	public function __construct($field = '', $type = 'empty', array $variables = []) {
 		$this->field = $field;
 		$this->type = $type;
 		$this->variables = $variables;

@@ -44,12 +44,12 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	public function updateCounter($objectID, $value) {
 		$entry = new ModerationQueue($objectID);
 		$editor = new ModerationQueueEditor($entry);
-		$editor->updateCounters(array(
+		$editor->updateCounters([
 			'comments' => $value
-		));
-		$editor->update(array(
+		]);
+		$editor->update([
 			'lastChangeTime' => TIME_NOW
-		));
+		]);
 	}
 	
 	/**

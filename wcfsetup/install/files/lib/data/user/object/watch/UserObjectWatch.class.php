@@ -46,7 +46,7 @@ class UserObjectWatch extends DatabaseObject {
 				AND userID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectTypeID, $userID, $objectID));
+		$statement->execute([$objectTypeID, $userID, $objectID]);
 		$row = $statement->fetch();
 		if (!$row) return null;
 		return new UserObjectWatch(null, $row);

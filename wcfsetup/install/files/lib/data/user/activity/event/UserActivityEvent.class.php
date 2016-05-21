@@ -53,7 +53,7 @@ class UserActivityEvent extends DatabaseObject {
 		
 		$this->data['additionalData'] = @unserialize($this->data['additionalData']);
 		if (!is_array($this->data['additionalData'])) {
-			$this->data['additionalData'] = array();
+			$this->data['additionalData'] = [];
 		}
 	}
 }

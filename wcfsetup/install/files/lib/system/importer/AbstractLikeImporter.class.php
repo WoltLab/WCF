@@ -27,7 +27,7 @@ class AbstractLikeImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		if ($data['objectUserID']) $data['objectUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectUserID']);
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
@@ -37,14 +37,14 @@ class AbstractLikeImporter extends AbstractImporter {
 						(objectID, objectTypeID, objectUserID, userID, time, likeValue)
 			VALUES			(?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$data['objectID'],
 			$this->objectTypeID,
 			$data['objectUserID'],
 			$data['userID'],
 			$data['time'],
 			$data['likeValue']
-		));
+		]);
 		
 		return 0;
 	}

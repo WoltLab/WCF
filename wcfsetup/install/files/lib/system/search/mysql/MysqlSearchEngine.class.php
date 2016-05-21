@@ -28,15 +28,15 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	/**
 	 * @see	\wcf\system\search\AbstractSearchEngine::$specialCharacters
 	 */
-	protected $specialCharacters = array('(', ')', '@', '+', '-', '"', '<', '>', '~', '*');
+	protected $specialCharacters = ['(', ')', '@', '+', '-', '"', '<', '>', '~', '*'];
 	
 	/**
 	 * @see	\wcf\system\search\ISearchEngine::search()
 	 */
-	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
+	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000) {
 		// build search query
 		$sql = '';
-		$parameters = array();
+		$parameters = [];
 		foreach ($objectTypes as $objectTypeName) {
 			$objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
 			
@@ -81,14 +81,14 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 		}
 		
 		// send search query
-		$messages = array();
+		$messages = [];
 		$statement = WCF::getDB()->prepareStatement($sql, $limit);
 		$statement->execute($parameters);
 		while ($row = $statement->fetchArray()) {
-			$messages[] = array(
+			$messages[] = [
 				'objectID' => $row['objectID'],
 				'objectType' => $row['objectType']
-			);
+			];
 		}
 		
 		return $messages;
@@ -104,7 +104,7 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 			$q = $this->parseSearchQuery($q);
 			
 			$fulltextCondition = new PreparedStatementConditionBuilder(false);
-			$fulltextCondition->add("MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST (? IN BOOLEAN MODE)", array($q));
+			$fulltextCondition->add("MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST (? IN BOOLEAN MODE)", [$q]);
 			
 			if ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC') {
 				$relevanceCalc = "MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST ('".escapeString($q)."') + (5 / (1 + POW(LN(1 + (".TIME_NOW." - time) / 2592000), 2))) AS relevance";
@@ -119,11 +119,11 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 			".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
 			LIMIT		".($limit == 1000 ? SearchEngine::INNER_SEARCH_LIMIT : $limit);
 		
-		return array(
+		return [
 			'fulltextCondition' => $fulltextCondition,
 			'searchIndexCondition' => $searchIndexCondition,
 			'sql' => $sql
-		);
+		];
 	}
 	
 	/**
@@ -140,7 +140,7 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 			}
 			catch (DatabaseException $e) {
 				// fallback if user is disallowed to issue 'SHOW VARIABLES'
-				$row = array('Value' => 4);
+				$row = ['Value' => 4];
 			}
 			
 			$this->ftMinWordLen = $row['Value'];

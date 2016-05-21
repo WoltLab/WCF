@@ -44,14 +44,14 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 						AND comment_response.time BETWEEN ? AND ?
 			)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$date,
 			$date + 86399,
 			$objectTypeID,
 			$date,
 			$date + 86399
-		));
+		]);
 		$counter = $statement->fetchColumn();
 		
 		$sql = "SELECT (
@@ -68,17 +68,17 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 						AND comment_response.time < ?
 			)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$date + 86400,
 			$objectTypeID,
 			$date + 86400
-		));
+		]);
 		$total = $statement->fetchColumn();
 		
-		return array(
+		return [
 			'counter' => $counter,
 			'total' => $total
-		);
+		];
 	}
 }

@@ -20,7 +20,7 @@ class PackageValidationManager extends SingletonFactory {
 	 * list of known package installation plugins
 	 * @var	string[]
 	 */
-	protected $packageInstallationPlugins = array();
+	protected $packageInstallationPlugins = [];
 	
 	/**
 	 * package validation archive object
@@ -32,7 +32,7 @@ class PackageValidationManager extends SingletonFactory {
 	 * virtual package list containing package => packageVersion
 	 * @var	string[]
 	 */
-	protected $virtualPackageList = array();
+	protected $virtualPackageList = [];
 	
 	/**
 	 * validation will only check if the primary package looks like it can be installed or updated
@@ -74,7 +74,7 @@ class PackageValidationManager extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function validate($archive, $deepInspection) {
-		$this->virtualPackageList = array();
+		$this->virtualPackageList = [];
 		$this->packageValidationArchive = new PackageValidationArchive($archive);
 		
 		if ($deepInspection) {
@@ -138,7 +138,7 @@ class PackageValidationManager extends SingletonFactory {
 	 */
 	public function getPackageValidationArchiveList() {
 		$packageValidationArchive = new PackageValidationArchive('');
-		$packageValidationArchive->setChildren(array($this->packageValidationArchive));
+		$packageValidationArchive->setChildren([$this->packageValidationArchive]);
 		
 		return new \RecursiveIteratorIterator($packageValidationArchive, \RecursiveIteratorIterator::SELF_FIRST);
 	}
@@ -185,7 +185,7 @@ class PackageValidationManager extends SingletonFactory {
 	 */
 	public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction) {
 		if (isset($this->packageInstallationPlugins[$pip])) {
-			return call_user_func(array($this->packageInstallationPlugins[$pip], 'isValid'), $archive, $instruction);
+			return call_user_func([$this->packageInstallationPlugins[$pip], 'isValid'], $archive, $instruction);
 		}
 		
 		return true;

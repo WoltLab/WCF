@@ -107,10 +107,10 @@ class MasterPasswordForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'masterPassword' => $this->masterPassword,
 			'relativeWcfDir' => RELATIVE_WCF_DIR,
 			'url' => $this->url
-		));
+		]);
 	}
 }

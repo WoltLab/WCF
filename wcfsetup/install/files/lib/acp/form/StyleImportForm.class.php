@@ -30,13 +30,13 @@ class StyleImportForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.style.canManageStyle');
+	public $neededPermissions = ['admin.style.canManageStyle'];
 	
 	/**
 	 * upload data
 	 * @var	string[]
 	 */
-	public $source = array();
+	public $source = [];
 	
 	/**
 	 * style editor object
@@ -99,9 +99,9 @@ class StyleImportForm extends AbstractForm {
 			
 			WCF::getSession()->register('stylePackageImportLocation', $filename);
 			
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PackageStartInstall', array(
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PackageStartInstall', [
 				'action' => 'install'
-			)));
+			]));
 			exit;
 		}
 		catch (SystemException $e) {

@@ -115,10 +115,10 @@ define('MASTER_PASSWORD', '".PasswordUtil::getDoubleSaltedHash($this->masterPass
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'confirmMasterPassword' => $this->confirmMasterPassword,
 			'exampleMasterPassword' => PasswordUtil::getRandomPassword(16),
 			'relativeWcfDir' => RELATIVE_WCF_DIR
-		));
+		]);
 	}
 }

@@ -28,35 +28,35 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.configuration.package.canInstallPackage');
+	protected $permissionsCreate = ['admin.configuration.package.canInstallPackage'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.configuration.package.canUninstallPackage');
+	protected $permissionsDelete = ['admin.configuration.package.canUninstallPackage'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.configuration.package.canUpdatePackage');
+	protected $permissionsUpdate = ['admin.configuration.package.canUpdatePackage'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('searchForPurchasedItems');
+	protected $requireACP = ['searchForPurchasedItems'];
 	
 	/**
 	 * Validates parameters to search for purchased items in the WoltLab Plugin-Store.
 	 */
 	public function validateSearchForPurchasedItems() {
-		WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage'));
+		WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage']);
 		
 		$this->readString('password', true);
 		$this->readString('username', true);
 		
 		if (empty($this->parameters['username'])) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("serverURL IN (?)", array(array('http://store.woltlab.com/maelstrom/', 'http://store.woltlab.com/typhoon/')));
+			$conditions->add("serverURL IN (?)", [['http://store.woltlab.com/maelstrom/', 'http://store.woltlab.com/typhoon/']]);
 			$conditions->add("loginUsername <> ''");
 			$conditions->add("loginPassword <> ''");
 			
@@ -82,24 +82,24 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 */
 	public function searchForPurchasedItems() {
 		if (!RemoteFile::supportsSSL()) {
-			return array(
+			return [
 				'noSSL' => WCF::getLanguage()->get('wcf.acp.pluginStore.api.noSSL')
-			);
+			];
 		}
 		
 		if (empty($this->parameters['username']) || empty($this->parameters['password'])) {
-			return array(
+			return [
 				'template' => $this->renderAuthorizationDialog(false)
-			);
+			];
 		}
 		
-		$request = new HTTPRequest('https://api.woltlab.com/1.0/customer/purchases/list.json', array(
+		$request = new HTTPRequest('https://api.woltlab.com/1.0/customer/purchases/list.json', [
 			'method' => 'POST'
-		), array(
+		], [
 			'username' => $this->parameters['username'],
 			'password' => $this->parameters['password'],
 			'wcfVersion' => WCF_VERSION
-		));
+		]);
 		
 		$request->execute();
 		$reply = $request->getReply();
@@ -109,30 +109,30 @@ class PackageAction extends AbstractDatabaseObjectAction {
 		switch ($code) {
 			case 200:
 				if (empty($response['products'])) {
-					return array(
+					return [
 						'noResults' => WCF::getLanguage()->get('wcf.acp.pluginStore.purchasedItems.noResults')
-					);
+					];
 				}
 				else {
 					WCF::getSession()->register('__pluginStoreProducts', $response['products']);
 					WCF::getSession()->register('__pluginStoreWcfMajorReleases', $response['wcfMajorReleases']);
 					
-					return array(
+					return [
 						'redirectURL' => LinkHandler::getInstance()->getLink('PluginStorePurchasedItems')
-					);
+					];
 				}
 			break;
 			
 			// authentication error
 			case 401:
-				return array(
+				return [
 					'template' => $this->renderAuthorizationDialog(true)
-				);
+				];
 			break;
 			
 			// any other kind of errors
 			default:
-				throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginStore.api.error', array('status' => $code)));
+				throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginStore.api.error', ['status' => $code]));
 			break;
 		}
 	}
@@ -144,9 +144,9 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 * @return	string
 	 */
 	protected function renderAuthorizationDialog($rejected) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'rejected' => $rejected
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('pluginStoreAuthorization');
 	}

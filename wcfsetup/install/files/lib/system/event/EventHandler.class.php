@@ -160,7 +160,7 @@ class EventHandler extends SingletonFactory {
 	 * @param	array		&$parameters
 	 * @throws	SystemException
 	 */
-	public function fireAction($eventObj, $eventName, array &$parameters = array()) {
+	public function fireAction($eventObj, $eventName, array &$parameters = []) {
 		// get class name
 		if (is_object($eventObj)) $className = get_class($eventObj);
 		else $className = $eventObj;

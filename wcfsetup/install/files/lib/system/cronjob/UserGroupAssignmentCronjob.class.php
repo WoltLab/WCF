@@ -23,21 +23,21 @@ class UserGroupAssignmentCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 		
 		$assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
-		$usersToGroup = array();
+		$usersToGroup = [];
 		foreach ($assignments as $assignment) {
 			if (!isset($usersToGroup[$assignment->groupID])) {
-				$usersToGroup[$assignment->groupID] = array();
+				$usersToGroup[$assignment->groupID] = [];
 			}
 			
 			$usersToGroup[$assignment->groupID] = array_merge($usersToGroup[$assignment->groupID], UserGroupAssignmentHandler::getInstance()->getUsers($assignment));
 		}
 		
 		foreach ($usersToGroup as $groupID => $users) {
-			$userAction = new UserAction(array_unique($users), 'addToGroups', array(
+			$userAction = new UserAction(array_unique($users), 'addToGroups', [
 				'addDefaultGroups' => false,
 				'deleteOldGroups' => false,
-				'groups' => array($groupID)
-			));
+				'groups' => [$groupID]
+			]);
 			$userAction->executeAction();
 		}
 	}

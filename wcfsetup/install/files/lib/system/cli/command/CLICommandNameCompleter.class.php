@@ -17,7 +17,7 @@ class CLICommandNameCompleter implements Completer {
 	 * names of all available commands
 	 * @var	string[]
 	 */
-	private $commands = array();
+	private $commands = [];
 	
 	/**
 	 * Creates a new instance of CLICommandNameCompleter.

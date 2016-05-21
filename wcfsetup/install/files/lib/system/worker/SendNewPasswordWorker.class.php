@@ -31,7 +31,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	 */
 	public function countObjects() {
 		$userList = new UserList();
-		$userList->getConditionBuilder()->add('user_table.userID IN (?)', array($this->parameters['userIDs']));
+		$userList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->parameters['userIDs']]);
 		
 		return $userList->countObjects();
 	}
@@ -42,7 +42,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	public function execute() {
 		$userList = new UserList();
 		$userList->decoratorClassName = 'wcf\data\user\UserEditor';
-		$userList->getConditionBuilder()->add('user_table.userID IN (?)', array($this->parameters['userIDs']));
+		$userList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->parameters['userIDs']]);
 		$userList->sqlLimit = $this->limit;
 		$userList->sqlOffset = $this->limit * $this->loopCount;
 		$userList->readObjects();
@@ -81,18 +81,18 @@ class SendNewPasswordWorker extends AbstractWorker {
 	protected function sendNewPassword(UserEditor $userEditor) {
 		$newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 12 ? REGISTER_PASSWORD_MIN_LENGTH : 12));
 		
-		$userAction = new UserAction(array($userEditor), 'update', array(
-			'data' => array(
+		$userAction = new UserAction([$userEditor], 'update', [
+			'data' => [
 				'password' => $newPassword
-			)
-		));
+			]
+		]);
 		$userAction->executeAction();
 		
 		// send mail
-		$mail = new Mail(array($userEditor->username => $userEditor->email), $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'), $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail', array(
+		$mail = new Mail([$userEditor->username => $userEditor->email], $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'), $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail', [
 			'password' => $newPassword,
 			'username' => $userEditor->username,
-		)));
+		]));
 		$mail->send();
 	}
 	
@@ -100,7 +100,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermissions(array('admin.user.canEditPassword'));
+		WCF::getSession()->checkPermissions(['admin.user.canEditPassword']);
 		
 		if (!isset($this->parameters['userIDs']) || !is_array($this->parameters['userIDs']) || empty($this->parameters['userIDs'])) {
 			throw new SystemException("'userIDs' parameter is missing or invalid");

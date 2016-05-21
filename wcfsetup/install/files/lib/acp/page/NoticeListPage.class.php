@@ -26,7 +26,7 @@ class NoticeListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.notice.canManageNotice');
+	public $neededPermissions = ['admin.notice.canManageNotice'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -36,5 +36,5 @@ class NoticeListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$objectListClassName
 	 */
-	public $validSortFields = array('noticeID', 'noticeName', 'showOrder');
+	public $validSortFields = ['noticeID', 'noticeName', 'showOrder'];
 }

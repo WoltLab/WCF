@@ -27,7 +27,7 @@ class LabelEditForm extends LabelAddForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.label.canManageLabel');
+	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * label id
@@ -70,12 +70,12 @@ class LabelEditForm extends LabelAddForm {
 		}
 		
 		// update label
-		$this->objectAction = new LabelAction(array($this->labelID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new LabelAction([$this->labelID], 'update', ['data' => array_merge($this->additionalFields, [
 			'label' => $this->label,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
 			'groupID' => $this->groupID,
 			'showOrder' => $this->showOrder
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');
@@ -89,9 +89,9 @@ class LabelEditForm extends LabelAddForm {
 		if ($this->cssClassName != 'custom') $this->customCssClassName = '';
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -123,9 +123,9 @@ class LabelEditForm extends LabelAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'label' => $this->labelObj,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

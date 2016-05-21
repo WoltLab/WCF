@@ -111,13 +111,13 @@ abstract class RecaptchaForm extends AbstractForm {
 		}
 		else {
 			// V2
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'recaptchaLegacyMode' => true
-			));
+			]);
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'useCaptcha' => $this->useCaptcha
-		));
+		]);
 	}
 }

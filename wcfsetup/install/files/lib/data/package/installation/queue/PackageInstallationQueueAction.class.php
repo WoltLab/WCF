@@ -38,7 +38,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('cancelInstallation', 'prepareQueue');
+	protected $requireACP = ['cancelInstallation', 'prepareQueue'];
 	
 	/**
 	 * Validates the 'prepareQueue' action:
@@ -51,7 +51,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 			throw new UserInputException('packageID');
 		}
 		
-		if (!isset($this->parameters['action']) || !in_array($this->parameters['action'], array('install', 'update', 'uninstall', 'rollback'))) {
+		if (!isset($this->parameters['action']) || !in_array($this->parameters['action'], ['install', 'update', 'uninstall', 'rollback'])) {
 			throw new UserInputException('action');
 		}
 	}
@@ -64,7 +64,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	public function prepareQueue() {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		
-		$queue = PackageInstallationQueueEditor::create(array(
+		$queue = PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
 			'package' => $this->package->package,
@@ -72,11 +72,11 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 			'packageID' => $this->package->packageID,
 			'action' => $this->parameters['action'],
 			'installationType' => 'other'
-		));
+		]);
 		
-		return array(
+		return [
 			'queueID' => $queue->queueID
-		);
+		];
 	}
 	
 	/**
@@ -84,7 +84,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateCancelInstallation() {
 		// check permissions
-		WCF::getSession()->checkPermissions(array('admin.configuration.package.canInstallPackage'));
+		WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
 		
 		// validate queue
 		$this->queue = $this->getSingleObject();
@@ -105,8 +105,8 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 		
 		$this->queue->delete();
 		
-		return array(
+		return [
 			'url' => LinkHandler::getInstance()->getLink('PackageList')
-		);
+		];
 	}
 }

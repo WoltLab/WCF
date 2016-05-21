@@ -17,17 +17,17 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.paidSubscription.canManageSubscription');
+	protected $permissionsDelete = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.paidSubscription.canManageSubscription');
+	protected $permissionsUpdate = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
@@ -62,9 +62,9 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 	 */
 	public function toggle() {
 		foreach ($this->objects as $object) {
-			$object->update(array(
+			$object->update([
 				'isDisabled' => $object->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	

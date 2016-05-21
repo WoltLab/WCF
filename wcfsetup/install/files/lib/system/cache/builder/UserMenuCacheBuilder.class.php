@@ -18,7 +18,7 @@ class UserMenuCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
-		$data = array();
+		$data = [];
 		
 		// get all option categories
 		$sql = "SELECT		*
@@ -26,15 +26,15 @@ class UserMenuCacheBuilder extends AbstractCacheBuilder {
 			WHERE		parentCategoryName = ?
 			ORDER BY	showOrder ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('settings'));
+		$statement->execute(['settings']);
 		while ($row = $statement->fetchArray()) {
 			if (!isset($data['wcf.user.menu.settings'])) {
-				$data['wcf.user.menu.settings'] = array();
+				$data['wcf.user.menu.settings'] = [];
 			}
 			
 			$categoryShortName = str_replace('settings.', '', $row['categoryName']);
 			
-			$data['wcf.user.menu.settings'][] = new UserMenuItem(null, array(
+			$data['wcf.user.menu.settings'][] = new UserMenuItem(null, [
 				'packageID' => $row['packageID'],
 				'menuItem' => 'wcf.user.option.category.'.$row['categoryName'],
 				'parentMenuItem' => 'wcf.user.menu.settings',
@@ -42,7 +42,7 @@ class UserMenuCacheBuilder extends AbstractCacheBuilder {
 				'menuItemLink' => ($categoryShortName != 'general' ? 'category='.$categoryShortName : ''),
 				'permissions' => $row['permissions'],
 				'options' => $row['options']
-			));
+			]);
 		}
 		
 		// get all menu items
@@ -53,7 +53,7 @@ class UserMenuCacheBuilder extends AbstractCacheBuilder {
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			if (!isset($data[$row['parentMenuItem']])) {
-				$data[$row['parentMenuItem']] = array();
+				$data[$row['parentMenuItem']] = [];
 			}
 			
 			$data[$row['parentMenuItem']][] = new UserMenuItem(null, $row);

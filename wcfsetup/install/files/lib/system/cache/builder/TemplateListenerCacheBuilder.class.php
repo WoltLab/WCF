@@ -20,13 +20,13 @@ class TemplateListenerCacheBuilder extends AbstractCacheBuilder {
 	public function rebuild(array $parameters) {
 		// get templates for current package id
 		$templateListenerList = new TemplateListenerList();
-		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", array($parameters['environment']));
+		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", [$parameters['environment']]);
 		$templateListenerList->sqlOrderBy = "template_listener.listenerID ASC";
 		$templateListenerList->readObjects();
 		
-		$data = array();
+		$data = [];
 		foreach ($templateListenerList->getObjects() as $templateListener) {
-			$data[$templateListener->templateName] = array();
+			$data[$templateListener->templateName] = [];
 		}
 		
 		return $data;

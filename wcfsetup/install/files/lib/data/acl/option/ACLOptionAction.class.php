@@ -22,7 +22,7 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('loadAll');
+	protected $requireACP = ['loadAll'];
 	
 	/**
 	 * Validates parameters for ACL options.
@@ -39,7 +39,7 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function loadAll() {
-		$objectIDs = ($this->parameters['objectID']) ? array($this->parameters['objectID']) : array();
+		$objectIDs = ($this->parameters['objectID']) ? [$this->parameters['objectID']] : [];
 		$permissions = ACLHandler::getInstance()->getPermissions($this->parameters['objectTypeID'], $objectIDs, $this->parameters['categoryName'], true);
 		
 		return $permissions;

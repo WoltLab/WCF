@@ -58,11 +58,11 @@ class LanguageEditForm extends LanguageAddForm {
 		AbstractForm::save();
 		
 		$editor = new LanguageEditor($this->language);
-		$editor->update(array(
+		$editor->update([
 			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
-			'languageCode' => mb_strtolower($this->languageCode)		
-		));
+			'languageCode' => mb_strtolower($this->languageCode)
+		]);
 		LanguageFactory::getInstance()->clearCache();
 		$this->saved();
 		
@@ -89,10 +89,10 @@ class LanguageEditForm extends LanguageAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'languageID' => $this->languageID,
 			'language' => $this->language,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

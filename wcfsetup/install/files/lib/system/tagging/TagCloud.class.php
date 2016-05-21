@@ -31,7 +31,7 @@ class TagCloud {
 	 * list of tags
 	 * @var	TagCloudTag[]
 	 */
-	protected $tags = array();
+	protected $tags = [];
 	
 	/**
 	 * max value of tag counter
@@ -49,14 +49,14 @@ class TagCloud {
 	 * active language ids
 	 * @var	integer[]
 	 */
-	protected $languageIDs = array();
+	protected $languageIDs = [];
 	
 	/**
 	 * Contructs a new TagCloud object.
 	 * 
 	 * @param	integer[]	$languageIDs
 	 */
-	public function __construct(array $languageIDs = array()) {
+	public function __construct(array $languageIDs = []) {
 		$this->languageIDs = $languageIDs;
 		if (empty($this->languageIDs)) {
 			$this->languageIDs = array_keys(LanguageFactory::getInstance()->getLanguages());

@@ -18,7 +18,7 @@ class AttachmentPage extends \wcf\page\AttachmentPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.attachment.canManageAttachment');
+	public $neededPermissions = ['admin.attachment.canManageAttachment'];
 	
 	/**
 	 * @see	\wcf\page\IPage::checkPermissions()

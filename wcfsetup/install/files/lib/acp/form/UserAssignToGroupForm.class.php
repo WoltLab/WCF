@@ -29,7 +29,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canEditUser');
+	public $neededPermissions = ['admin.user.canEditUser'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
@@ -40,25 +40,25 @@ class UserAssignToGroupForm extends AbstractForm {
 	 * ids of the relevant users
 	 * @var	integer[]
 	 */
-	public $userIDs = array();
+	public $userIDs = [];
 	
 	/**
 	 * ids of the assigned user groups
 	 * @var	integer[]
 	 */
-	public $groupIDs = array();
+	public $groupIDs = [];
 	
 	/**
 	 * relevant users
 	 * @var	User[]
 	 */
-	public $users = array();
+	public $users = [];
 	
 	/**
 	 * assigned user groups
 	 * @var	UserGroup[]
 	 */
-	public $groups = array();
+	public $groups = [];
 	
 	/**
 	 * id of the user clipboard item object type
@@ -121,7 +121,7 @@ class UserAssignToGroupForm extends AbstractForm {
 		parent::save();
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->userIDs));
+		$conditions->add("userID IN (?)", [$this->userIDs]);
 		
 		$sql = "SELECT	userID, groupID
 			FROM	wcf".WCF_N."_user_to_group
@@ -129,7 +129,7 @@ class UserAssignToGroupForm extends AbstractForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		
-		$groups = array();
+		$groups = [];
 		while ($row = $statement->fetchArray()) {
 			$groups[$row['userID']][] = $row['groupID'];
 		}
@@ -142,10 +142,10 @@ class UserAssignToGroupForm extends AbstractForm {
 			$groupsIDs = array_merge($groups[$user->userID], $this->groupIDs);
 			$groupsIDs = array_unique($groupsIDs);
 			
-			$action = new UserAction(array(new UserEditor($user)), 'addToGroups', array(
+			$action = new UserAction([new UserEditor($user)], 'addToGroups', [
 				'groups' => $groupsIDs,
 				'addDefaultGroups' => false
-			));
+			]);
 			$action->executeAction();
 		}
 		
@@ -154,11 +154,11 @@ class UserAssignToGroupForm extends AbstractForm {
 		
 		$this->saved();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'groupIDs' => $this->groupIDs,
 			'message' => 'wcf.acp.user.assignToGroup.success',
 			'users' => $this->users
-		));
+		]);
 		WCF::getTPL()->display('success');
 		exit;
 	}
@@ -178,18 +178,18 @@ class UserAssignToGroupForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'users' => $this->users,
 			'userIDs' => $this->userIDs,
 			'groupIDs' => $this->groupIDs,
 			'groups' => $this->groups
-		));
+		]);
 	}
 	
 	/**
 	 * Get a list of available groups.
 	 */
 	protected function readGroups() {
-		$this->groups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
+		$this->groups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 	}
 }

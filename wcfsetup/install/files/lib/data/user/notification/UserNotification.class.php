@@ -61,7 +61,7 @@ class UserNotification extends DatabaseObject {
 		
 		$this->data['additionalData'] = @unserialize($this->data['additionalData']);
 		if (!is_array($this->data['additionalData'])) {
-			$this->data['additionalData'] = array();
+			$this->data['additionalData'] = [];
 		}
 	}
 	
@@ -80,7 +80,7 @@ class UserNotification extends DatabaseObject {
 				AND eventID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID, $eventID, $objectID));
+		$statement->execute([$packageID, $eventID, $objectID]);
 		$row = $statement->fetchArray();
 		if ($row !== false) return new UserNotification(null, $row);
 		

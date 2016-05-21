@@ -37,7 +37,7 @@ class ACLOption extends DatabaseObject {
 	 */
 	public static function getOptions($objectTypeID) {
 		$optionList = new ACLOptionList();
-		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", array($objectTypeID));
+		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", [$objectTypeID]);
 		$optionList->readObjects();
 		
 		return $optionList;

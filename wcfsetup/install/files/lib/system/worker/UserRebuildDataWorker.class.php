@@ -43,7 +43,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 	public function execute() {
 		parent::execute();
 		
-		$users = $userIDs = array();
+		$users = $userIDs = [];
 		foreach ($this->getObjectList() as $user) {
 			$users[] = new UserEditor($user);
 			$userIDs[] = $user->userID;
@@ -62,7 +62,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			// update like counter
 			if (MODULE_LIKE) {
 				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add('user_table.userID IN (?)', array($userIDs));
+				$conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
 				$sql = "UPDATE	wcf".WCF_N."_user user_table
 					SET	likesReceived = (
 							SELECT	COUNT(*)

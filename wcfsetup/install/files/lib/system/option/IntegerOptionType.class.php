@@ -24,11 +24,11 @@ class IntegerOptionType extends TextOptionType {
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'inputClass' => $this->inputClass,
 			'value' => $value
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('integerOptionType');
 	}

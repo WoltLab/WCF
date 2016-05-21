@@ -28,15 +28,15 @@ class ModerationQueueCronjob extends AbstractCronjob {
 			WHERE	status = ?
 				AND lastChangeTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			ModerationQueue::STATUS_DONE,
 			(TIME_NOW - (86400 * 30))
-		));
+		]);
 		$queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($queueIDs)) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("queueID IN (?)", array($queueIDs));
+			$conditions->add("queueID IN (?)", [$queueIDs]);
 			
 			$sql = "DELETE FROM	wcf".WCF_N."_moderation_queue
 				".$conditions;

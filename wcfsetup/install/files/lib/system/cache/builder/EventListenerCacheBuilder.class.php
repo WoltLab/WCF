@@ -21,15 +21,15 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$actions = array(
-			'admin' => array(),
-			'user' => array()
-		);
+		$actions = [
+			'admin' => [],
+			'user' => []
+		];
 		
-		$inheritedActions = array(
-			'admin' => array(),
-			'user' => array()
-		);
+		$inheritedActions = [
+			'admin' => [],
+			'user' => []
+		];
 		
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_event_listener
@@ -41,13 +41,13 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 			
 			if (!$eventListener->inherit) {
 				if (!isset($actions[$eventListener->environment])) {
-					$actions[$eventListener->environment] = array();
+					$actions[$eventListener->environment] = [];
 				}
 				
 				foreach ($eventNames as $eventName) {
 					$key = EventHandler::generateKey($eventListener->eventClassName, $eventName);
 					if (!isset($actions[$eventListener->environment][$key])) {
-						$actions[$eventListener->environment][$key] = array();
+						$actions[$eventListener->environment][$key] = [];
 					}
 					
 					$actions[$eventListener->environment][$key][] = $eventListener;
@@ -55,12 +55,12 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 			}
 			else {
 				if (!isset($inheritedActions[$eventListener->environment])) {
-					$inheritedActions[$eventListener->environment] = array();
+					$inheritedActions[$eventListener->environment] = [];
 				}
 				
 				foreach ($eventNames as $eventName) {
 					if (!isset($inheritedActions[$eventListener->environment][$eventListener->eventClassName])) {
-						$inheritedActions[$eventListener->environment][$eventListener->eventClassName] = array();
+						$inheritedActions[$eventListener->environment][$eventListener->eventClassName] = [];
 					}
 					
 					$inheritedActions[$eventListener->environment][$eventListener->eventClassName][$eventName][] = $eventListener;
@@ -68,9 +68,9 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 			}
 		}
 		
-		return array(
+		return [
 			'actions' => $actions,
 			'inheritedActions' => $inheritedActions
-		);
+		];
 	}
 }

@@ -30,5 +30,5 @@ class SmileyCategoryListPage extends AbstractCategoryListPage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_SMILEY');
+	public $neededModules = ['MODULE_SMILEY'];
 }

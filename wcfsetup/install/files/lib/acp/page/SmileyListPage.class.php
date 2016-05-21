@@ -26,12 +26,12 @@ class SmileyListPage extends MultipleLinkPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
+	public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_SMILEY');
+	public $neededModules = ['MODULE_SMILEY'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -64,7 +64,7 @@ class SmileyListPage extends MultipleLinkPage {
 	 * available categories
 	 * @var	SmileyCategory[]
 	 */
-	public $categories = array();
+	public $categories = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -87,11 +87,11 @@ class SmileyListPage extends MultipleLinkPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'category' => $this->category,
 			'categories' => $this->categories,
 			'smileyCount' => count(SmileyCache::getInstance()->getSmilies())
-		));
+		]);
 	}
 	
 	/**
@@ -101,10 +101,10 @@ class SmileyListPage extends MultipleLinkPage {
 		parent::initObjectList();
 		
 		if ($this->categoryID) {
-			$this->objectList->getConditionBuilder()->add('categoryID = ?', array($this->categoryID));
+			$this->objectList->getConditionBuilder()->add('categoryID = ?', [$this->categoryID]);
 		}
 		else {
-			$this->objectList->getConditionBuilder()->add('categoryID IS NULL', array());
+			$this->objectList->getConditionBuilder()->add('categoryID IS NULL', []);
 		}
 	}
 	

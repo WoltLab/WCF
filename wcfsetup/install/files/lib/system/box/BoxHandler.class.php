@@ -38,8 +38,8 @@ class BoxHandler extends SingletonFactory {
 		
 		// load box layout for active page
 		$boxList = new BoxList();
-		if ($pageID) $boxList->getConditionBuilder()->add('(box.visibleEverywhere = ? AND boxID NOT IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)) OR boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)', array(1, $pageID, 0, $pageID, 1));
-		else $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', array(1));
+		if ($pageID) $boxList->getConditionBuilder()->add('(box.visibleEverywhere = ? AND boxID NOT IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)) OR boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)', [1, $pageID, 0, $pageID, 1]);
+		else $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', [1]);
 		$boxList->sqlOrderBy = 'showOrder';
 		$boxList->readObjects();
 		foreach ($boxList as $box) {

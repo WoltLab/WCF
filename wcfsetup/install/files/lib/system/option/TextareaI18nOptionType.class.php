@@ -27,10 +27,10 @@ class TextareaI18nOptionType extends TextareaOptionType {
 	public function getFormElement(Option $option, $value) {
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textareaI18nOptionType');
 	}
 	

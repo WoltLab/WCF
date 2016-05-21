@@ -81,7 +81,7 @@ final class HeaderUtil {
 			@header('X-Frame-Options: SAMEORIGIN');
 		}
 		
-		ob_start(array('wcf\util\HeaderUtil', 'parseOutput'));
+		ob_start(['wcf\util\HeaderUtil', 'parseOutput']);
 	}
 	
 	/**
@@ -104,7 +104,7 @@ final class HeaderUtil {
 		self::$output = $output;
 		
 		// move script tags to the bottom of the page
-		$javascript = array();
+		$javascript = [];
 		self::$output = preg_replace_callback('~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?</script>\s*)(?P<conditionAfter><!\[ENDIF]-->\s*)?~s', function($matches) use (&$javascript) {
 			$match = '';
 			if (isset($matches['conditionBefore'])) $match .= $matches['conditionBefore'];
@@ -159,14 +159,14 @@ final class HeaderUtil {
 	 * @param	string		$status
 	 */
 	public static function delayedRedirect($location, $message, $delay = 5, $status = 'success') {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'url' => $location,
 			'message' => $message,
 			'wait' => $delay,
 			'templateName' => 'redirect',
 			'templateNameApplication' => 'wcf',
 			'status' => $status
-		));
+		]);
 		WCF::getTPL()->display('redirect');
 	}
 	

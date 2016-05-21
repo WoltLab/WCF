@@ -44,7 +44,7 @@ class Tag extends DatabaseObject implements IRouteController {
 			WHERE	languageID = ?
 				AND name = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($languageID, $name));
+		$statement->execute([$languageID, $name]);
 		$row = $statement->fetchArray();
 		if ($row !== false) return new Tag(null, $row);
 		

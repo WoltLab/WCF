@@ -22,7 +22,7 @@ final class StringStack {
 	 * local string stack
 	 * @var	string[][]
 	 */
-	protected static $stringStack = array();
+	protected static $stringStack = [];
 	
 	/**
 	 * Replaces a string with an unique hash value.
@@ -36,7 +36,7 @@ final class StringStack {
 		$hash = $delimiter.StringUtil::getHash(self::$i.uniqid(microtime()).$string).$delimiter;
 		
 		if (!isset(self::$stringStack[$type])) {
-			self::$stringStack[$type] = array();
+			self::$stringStack[$type] = [];
 		}
 		
 		self::$stringStack[$type][$hash] = $string;
@@ -75,7 +75,7 @@ final class StringStack {
 			return self::$stringStack[$type];
 		}
 		
-		return array();
+		return [];
 	}
 	
 	private function __construct() { }

@@ -22,7 +22,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * list of pages per action id
 	 * @var	mixed[][]
 	 */
-	protected $pages = array();
+	protected $pages = [];
 	
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
@@ -39,11 +39,11 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$item['elements']['actionclassname'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -55,7 +55,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		
 		// read pages
 		if ($element->tagName == 'pages') {
-			$nodeValue = array();
+			$nodeValue = [];
 			
 			$pages = $xpath->query('child::ns:page', $element);
 			foreach ($pages as $page) {
@@ -73,12 +73,12 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$showOrder = (isset($data['elements']['showorder'])) ? intval($data['elements']['showorder']) : null;
 		$showOrder = $this->getShowOrder($showOrder, $data['elements']['actionclassname'], 'actionClassName');
 		
-		return array(
+		return [
 			'actionClassName' => $data['elements']['actionclassname'],
 			'actionName' => $data['attributes']['name'],
 			'pages' => $data['elements']['pages'],
 			'showOrder' => $showOrder
-		);
+		];
 	}
 	
 	/**
@@ -90,16 +90,16 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 			WHERE	actionName = ?
 				AND actionClassName = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['actionName'],
 			$data['actionClassName'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**
@@ -125,7 +125,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_page
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		
 		if (!empty($this->pages)) {
 			// insert pages
@@ -135,11 +135,11 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($this->pages as $actionID => $pages) {
 				foreach ($pages as $pageClassName) {
-					$statement->execute(array(
+					$statement->execute([
 						$pageClassName,
 						$this->installation->getPackageID(),
 						$actionID
-					));
+					]);
 				}
 			}
 		}

@@ -33,10 +33,10 @@ class AbstractCategoryImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		if (!empty($data['parentCategoryID'])) $data['parentCategoryID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['parentCategoryID']);
 		
-		$category = CategoryEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+		$category = CategoryEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
 		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $category->categoryID);
 		

@@ -29,7 +29,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	 * list of meta tags
 	 * @var	array
 	 */
-	protected $objects = array();
+	protected $objects = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -54,11 +54,11 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 			$this->indexToObject[] = $identifier;
 		}
 		
-		$this->objects[$identifier] = array(
+		$this->objects[$identifier] = [
 			'isProperty' => $isProperty,
 			'name' => $name,
 			'value' => $value
-		);
+		];
 		
 		// replace description if Open Graph Protocol tag was given
 		if ($name == 'og:description') {

@@ -29,12 +29,12 @@ class AdAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.ad.canManageAd');
+	public $neededPermissions = ['admin.ad.canManageAd'];
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_WCF_AD');
+	public $neededModules = ['MODULE_WCF_AD'];
 	
 	/**
 	 * html code of the ad
@@ -52,7 +52,7 @@ class AdAddForm extends AbstractForm {
 	 * grouped ad condition object types
 	 * @var	array
 	 */
-	public $groupedConditionObjectTypes = array();
+	public $groupedConditionObjectTypes = [];
 	
 	/**
 	 * 1 if the ad is disabled
@@ -64,13 +64,13 @@ class AdAddForm extends AbstractForm {
 	 * list of available location object types
 	 * @var	ObjectType[]
 	 */
-	public $locationObjectTypes = array();
+	public $locationObjectTypes = [];
 	
 	/**
 	 * list of available locations
 	 * @var	string[]
 	 */
-	public $locations = array();
+	public $locations = [];
 	
 	/**
 	 * id of the selected location's object type
@@ -90,7 +90,7 @@ class AdAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'ad' => $this->ad,
 			'adName' => $this->adName,
@@ -100,7 +100,7 @@ class AdAddForm extends AbstractForm {
 			'groupedConditionObjectTypes' => $this->groupedConditionObjectTypes,
 			'objectTypeID' => $this->objectTypeID,
 			'showOrder' => $this->showOrder
-		));
+		]);
 	}
 	
 	/**
@@ -112,12 +112,12 @@ class AdAddForm extends AbstractForm {
 			if (!$objectType->conditionobject) continue;
 			
 			if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject])) {
-				$this->groupedConditionObjectTypes[$objectType->conditionobject] = array();
+				$this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
 			}
 			
 			if ($objectType->conditiongroup) {
 				if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
-					$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = array();
+					$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
 				}
 				
 				$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
@@ -167,19 +167,19 @@ class AdAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new AdAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new AdAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'ad' => $this->ad,
 				'adName' => $this->adName,
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectTypeID,
 				'showOrder' => $this->showOrder
-			))
-		));
+			])
+		]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
 			foreach ($groupedObjectTypes as $objectTypes) {
 				if (is_array($objectTypes)) {

@@ -29,7 +29,7 @@ class ACPSessionLogPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.management.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -39,7 +39,7 @@ class ACPSessionLogPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('sessionAccessLogID', 'ipAddress', 'time', 'requestURI', 'requestMethod', 'className');
+	public $validSortFields = ['sessionAccessLogID', 'ipAddress', 'time', 'requestURI', 'requestMethod', 'className'];
 	
 	/**
 	 * session log id
@@ -78,7 +78,7 @@ class ACPSessionLogPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add('sessionLogID = ?', array($this->sessionLogID));
+		$this->objectList->getConditionBuilder()->add('sessionLogID = ?', [$this->sessionLogID]);
 	}
 	
 	/**
@@ -96,9 +96,9 @@ class ACPSessionLogPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'sessionLogID' => $this->sessionLogID,
 			'sessionLog' => $this->sessionLog
-		));
+		]);
 	}
 }

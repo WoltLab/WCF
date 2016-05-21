@@ -29,7 +29,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * needed avatar thumbnail sizes
 	 * @var	integer[]
 	 */
-	public static $avatarThumbnailSizes = array(32, 96, 128);
+	public static $avatarThumbnailSizes = [32, 96, 128];
 	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName

@@ -25,16 +25,16 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 				// get registered files of other packages for the
 				// same application
 				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add('packageID <> ?', array($this->packageInstallation->getPackageID()));
-				$conditions->add('filename IN (?)', array($files));
-				$conditions->add('application = ?', array($this->application));
+				$conditions->add('packageID <> ?', [$this->packageInstallation->getPackageID()]);
+				$conditions->add('filename IN (?)', [$files]);
+				$conditions->add('application = ?', [$this->application]);
 				
 				$sql = "SELECT	filename, packageID
 					FROM	wcf".WCF_N."_package_installation_file_log
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
-				$lockedFiles = array();
+				$lockedFiles = [];
 				while ($row = $statement->fetchArray()) {
 					$lockedFiles[$row['filename']] = $row['packageID'];
 				}
@@ -68,11 +68,11 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($files as $file) {
-			$statement->execute(array(
+			$statement->execute([
 				$this->packageInstallation->getPackageID(),
 				$file,
 				$this->application
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

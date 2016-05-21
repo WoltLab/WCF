@@ -30,13 +30,13 @@ class MessageQuoteAction extends AJAXProxyAction {
 	 * list of quote ids
 	 * @var	string[]
 	 */
-	public $quoteIDs = array();
+	public $quoteIDs = [];
 	
 	/**
 	 * list of object types
 	 * @var	string[]
 	 */
-	public $objectTypes = array();
+	public $objectTypes = [];
 	
 	/**
 	 * @see	\wcf\action\IAction::readParameters()
@@ -68,15 +68,15 @@ class MessageQuoteAction extends AJAXProxyAction {
 		$returnValues = null;
 		switch ($this->actionName) {
 			case 'count':
-				$returnValues = array(
+				$returnValues = [
 					'count' => $this->count()
-				);
+				];
 			break;
 			
 			case 'getQuotes':
-				$returnValues = array(
+				$returnValues = [
 					'template' => $this->getQuotes()
-				);
+				];
 			break;
 			
 			case 'markForRemoval':
@@ -84,15 +84,15 @@ class MessageQuoteAction extends AJAXProxyAction {
 			break;
 			
 			case 'remove':
-				$returnValues = array(
+				$returnValues = [
 					'count' => $this->remove()
-				);
+				];
 			break;
 			
 			case 'removeMarkedQuotes':
-				$returnValues = array(
+				$returnValues = [
 					'count' => $this->removeMarkedQuotes()
-				);
+				];
 			break;
 			
 			default:

@@ -23,13 +23,13 @@ class RebuildDataPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.management.canRebuildData');
+	public $neededPermissions = ['admin.management.canRebuildData'];
 	
 	/**
 	 * object types
 	 * @var	array
 	 */
-	public $objectTypes = array();
+	public $objectTypes = [];
 	
 	/**
 	 * display a warning if InnoDB uses a slow configuration
@@ -76,9 +76,9 @@ class RebuildDataPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'objectTypes' => $this->objectTypes,
 			'showInnoDBWarning' => $this->showInnoDBWarning
-		));
+		]);
 	}
 }

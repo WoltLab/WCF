@@ -32,7 +32,7 @@ final class DateUtil {
 	 * list of available time zones
 	 * @var	string[]
 	 */
-	protected static $availableTimezones = array(
+	protected static $availableTimezones = [
 		// there is not support for UTC-12:00 in php
 		// '...', // (UTC-12:00) International Date Line West
 		'Pacific/Samoa', // (UTC-11:00) Midway Island, American Samoa
@@ -128,7 +128,7 @@ final class DateUtil {
 		'Pacific/Fiji', // (UTC+12:00) Fiji
 		'Pacific/Tongatapu', // (UTC+13:00) Nukualofa
 		'Pacific/Apia', // (UTC+13:00) Samoa
-	);
+	];
 	
 	/**
 	 * first day of the week
@@ -203,7 +203,7 @@ final class DateUtil {
 		}
 		
 		if ($fullInterval) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full.'.$direction, array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full.'.$direction, [
 				'days' => $days - 7 * $weeks,
 				'firstElement' => $years ? 'years' : ($months ? 'months' : ($weeks ? 'weeks' : ($days ? 'days' : ($hours ? 'hours' : 'minutes')))),
 				'hours' => $hours,
@@ -212,42 +212,42 @@ final class DateUtil {
 				'months' => $months,
 				'weeks' => $weeks,
 				'years' => $years
-			));
+			]);
 		}
 		
 		if ($years) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years.'.$direction, array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years.'.$direction, [
 				'years' => $years
-			));
+			]);
 		}
 		
 		if ($months) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months.'.$direction, array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months.'.$direction, [
 				'months' => $months
-			));
+			]);
 		}
 		
 		if ($weeks) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks.'.$direction, array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks.'.$direction, [
 				'weeks' => $weeks
-			));
+			]);
 		}
 		
 		if ($days) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days.'.$direction, array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days.'.$direction, [
 				'days' => $days
-			));
+			]);
 		}
 		
 		if ($hours) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours.'.$direction, array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours.'.$direction, [
 				'hours' => $hours
-			));
+			]);
 		}
 		
-		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes.'.$direction, array(
+		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes.'.$direction, [
 			'minutes' => $minutes
-		));
+		]);
 	}
 	
 	/**
@@ -262,7 +262,7 @@ final class DateUtil {
 		if ($language->languageCode != 'en') {
 			// full textual representation of the day of the week (l)
 			if (strpos($format, 'l') !== false) {
-				$date = str_replace(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'), array(
+				$date = str_replace(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], [
 					$language->get('wcf.date.day.sunday'),
 					$language->get('wcf.date.day.monday'),
 					$language->get('wcf.date.day.tuesday'),
@@ -270,12 +270,12 @@ final class DateUtil {
 					$language->get('wcf.date.day.thursday'),
 					$language->get('wcf.date.day.friday'),
 					$language->get('wcf.date.day.saturday')
-				), $date);
+				], $date);
 			}
 			
 			// textual representation of a day, three letters (D)
 			if (strpos($format, 'D') !== false) {
-				$date = str_replace(array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), array(
+				$date = str_replace(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], [
 					$language->get('wcf.date.day.sun'),
 					$language->get('wcf.date.day.mon'),
 					$language->get('wcf.date.day.tue'),
@@ -283,12 +283,12 @@ final class DateUtil {
 					$language->get('wcf.date.day.thu'),
 					$language->get('wcf.date.day.fri'),
 					$language->get('wcf.date.day.sat')
-				), $date);
+				], $date);
 			}
 			
 			// full textual representation of a month (F)
 			if (strpos($format, 'F') !== false) {
-				$date = str_replace(array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'), array(
+				$date = str_replace(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], [
 					$language->get('wcf.date.month.january'),
 					$language->get('wcf.date.month.february'),
 					$language->get('wcf.date.month.march'),
@@ -301,12 +301,12 @@ final class DateUtil {
 					$language->get('wcf.date.month.october'),
 					$language->get('wcf.date.month.november'),
 					$language->get('wcf.date.month.december')
-				), $date);
+				], $date);
 			}
 			
 			// short textual representation of a month (M)
 			if (strpos($format, 'M') !== false) {
-				$date = str_replace(array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'), array(
+				$date = str_replace(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], [
 					$language->get('wcf.date.month.short.jan'),
 					$language->get('wcf.date.month.short.feb'),
 					$language->get('wcf.date.month.short.mar'),
@@ -319,7 +319,7 @@ final class DateUtil {
 					$language->get('wcf.date.month.short.oct'),
 					$language->get('wcf.date.month.short.nov'),
 					$language->get('wcf.date.month.short.dec')
-				), $date);
+				], $date);
 			}
 		}
 		
@@ -409,7 +409,7 @@ final class DateUtil {
 	public static function getWeekDays() {
 		if (self::$weekDays === null) {
 			if (self::getFirstDayOfTheWeek() == 1) {
-				self::$weekDays = array(
+				self::$weekDays = [
 					1 => 'monday',
 					2 => 'tuesday',
 					3 => 'wednesday',
@@ -417,10 +417,10 @@ final class DateUtil {
 					5 => 'friday',
 					6 => 'saturday',
 					0 => 'sunday'
-				);
+				];
 			}
 			else {
-				self::$weekDays = array(
+				self::$weekDays = [
 					0 => 'sunday',
 					1 => 'monday',
 					2 => 'tuesday',
@@ -428,7 +428,7 @@ final class DateUtil {
 					4 => 'thursday',
 					5 => 'friday',
 					6 => 'saturday'
-				);
+				];
 			}
 		}
 		
@@ -443,7 +443,7 @@ final class DateUtil {
 	public static function getShortWeekDays() {
 		if (self::$shortWeekDays === null) {
 			if (self::getFirstDayOfTheWeek() == 1) {
-				self::$shortWeekDays = array(
+				self::$shortWeekDays = [
 					1 => 'mon',
 					2 => 'tue',
 					3 => 'wed',
@@ -451,10 +451,10 @@ final class DateUtil {
 					5 => 'fri',
 					6 => 'sat',
 					0 => 'sun'
-				);
+				];
 			}
 			else {
-				self::$shortWeekDays = array(
+				self::$shortWeekDays = [
 					0 => 'sun',
 					1 => 'mon',
 					2 => 'tue',
@@ -462,7 +462,7 @@ final class DateUtil {
 					4 => 'thu',
 					5 => 'fri',
 					6 => 'sat'
-				);
+				];
 			}
 		}
 		

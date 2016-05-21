@@ -22,25 +22,25 @@ class CategoryHandler extends SingletonFactory {
 	 * cached categories
 	 * @var	Category[]
 	 */
-	protected $categories = array();
+	protected $categories = [];
 	
 	/**
 	 * category ids grouped by the object type they belong to
 	 * @var	integer[][]
 	 */
-	protected $objectTypeCategoryIDs = array();
+	protected $objectTypeCategoryIDs = [];
 	
 	/**
 	 * mapes the names of the category object types to the object type ids
 	 * @var	integer[]
 	 */
-	protected $objectTypeIDs = array();
+	protected $objectTypeIDs = [];
 	
 	/**
 	 * list of category object types
 	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * Returns all category objects with the given object type. If no object
@@ -50,7 +50,7 @@ class CategoryHandler extends SingletonFactory {
 	 * @return	mixed[]
 	 */
 	public function getCategories($objectType = null) {
-		$categories = array();
+		$categories = [];
 		if ($objectType === null) {
 			foreach ($this->objectTypes as $objectType) {
 				$categories[$objectType->objectType] = $this->getCategories($objectType->objectType);
@@ -94,7 +94,7 @@ class CategoryHandler extends SingletonFactory {
 			throw new SystemException("Missing object type id");
 		}
 		
-		$categories = array();
+		$categories = [];
 		foreach ($this->categories as $category) {
 			if ($category->parentCategoryID == $categoryID && ($categoryID || $category->objectTypeID == $objectTypeID)) {
 				$categories[$category->categoryID] = $category;
@@ -150,8 +150,8 @@ class CategoryHandler extends SingletonFactory {
 			$this->objectTypeIDs[$objectType->objectTypeID] = $objectType->objectType;
 		}
 		
-		$this->categories = CategoryCacheBuilder::getInstance()->getData(array(), 'categories');
-		$this->objectTypeCategoryIDs = CategoryCacheBuilder::getInstance()->getData(array(), 'objectTypeCategoryIDs');
+		$this->categories = CategoryCacheBuilder::getInstance()->getData([], 'categories');
+		$this->objectTypeCategoryIDs = CategoryCacheBuilder::getInstance()->getData([], 'objectTypeCategoryIDs');
 	}
 	
 	/**

@@ -26,7 +26,7 @@ class ModerationListPage extends SortablePage {
 	 * list of available definitions
 	 * @var	string[]
 	 */
-	public $availableDefinitions = array();
+	public $availableDefinitions = [];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -52,7 +52,7 @@ class ModerationListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('mod.general.canUseModeration');
+	public $neededPermissions = ['mod.general.canUseModeration'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -68,7 +68,7 @@ class ModerationListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('assignedUsername', 'lastChangeTime', 'queueID', 'time', 'username', 'comments');
+	public $validSortFields = ['assignedUsername', 'lastChangeTime', 'queueID', 'time', 'username', 'comments'];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -95,25 +95,25 @@ class ModerationListPage extends SortablePage {
 		parent::initObjectList();
 		
 		// filter by object type id
-		$objectTypeIDs = ModerationQueueManager::getInstance()->getObjectTypeIDs( ($this->definitionID ? array($this->definitionID) : array_keys($this->availableDefinitions)) );
+		$objectTypeIDs = ModerationQueueManager::getInstance()->getObjectTypeIDs( ($this->definitionID ? [$this->definitionID] : array_keys($this->availableDefinitions)) );
 		if (empty($objectTypeIDs)) {
 			// no object type ids given? screw that, display nothing
 			$this->objectList->getConditionBuilder()->add("0 = 1");
 			return;
 		}
 		
-		$this->objectList->getConditionBuilder()->add("moderation_queue.objectTypeID IN (?)", array($objectTypeIDs));
+		$this->objectList->getConditionBuilder()->add("moderation_queue.objectTypeID IN (?)", [$objectTypeIDs]);
 		
 		// filter by assigned user id
 		if ($this->assignedUserID == 0) $this->objectList->getConditionBuilder()->add("moderation_queue.assignedUserID IS NULL");
-		else if ($this->assignedUserID > 0) $this->objectList->getConditionBuilder()->add("moderation_queue.assignedUserID = ?", array($this->assignedUserID));
+		else if ($this->assignedUserID > 0) $this->objectList->getConditionBuilder()->add("moderation_queue.assignedUserID = ?", [$this->assignedUserID]);
 		
 		// filter by status
 		if ($this->status == ModerationQueue::STATUS_DONE) {
-			$this->objectList->getConditionBuilder()->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_DONE, ModerationQueue::STATUS_CONFIRMED, ModerationQueue::STATUS_REJECTED)));
+			$this->objectList->getConditionBuilder()->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_DONE, ModerationQueue::STATUS_CONFIRMED, ModerationQueue::STATUS_REJECTED]]);
 		}
 		else {
-			$this->objectList->getConditionBuilder()->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
+			$this->objectList->getConditionBuilder()->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
 		}
 	}
 	
@@ -123,12 +123,12 @@ class ModerationListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'assignedUserID' => $this->assignedUserID,
 			'availableDefinitions' => $this->availableDefinitions,
 			'definitionID' => $this->definitionID,
 			'definitionNames' => ModerationQueueManager::getInstance()->getDefinitionNamesByObjectTypeIDs(),
 			'status' => $this->status
-		));
+		]);
 	}
 }

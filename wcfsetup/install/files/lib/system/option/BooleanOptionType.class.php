@@ -23,12 +23,12 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 	public function getFormElement(Option $option, $value) {
 		$options = Option::parseEnableOptions($option->enableOptions);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('booleanOptionType');
 	}
 	
@@ -54,7 +54,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 		$value = intval($value);
 		if (!$value) return false;
 		
-		$conditions->add("option_value.userOption".$option->optionID." = ?", array(1));
+		$conditions->add("option_value.userOption".$option->optionID." = ?", [1]);
 		return true;
 	}
 	
@@ -65,7 +65,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 		$value = intval($value);
 		if (!$value) return;
 		
-		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', array(1));
+		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', [1]);
 	}
 	
 	/**

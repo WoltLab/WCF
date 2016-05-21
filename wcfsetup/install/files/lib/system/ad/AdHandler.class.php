@@ -22,13 +22,13 @@ class AdHandler extends SingletonFactory {
 	 * list of ad objects grouped by ad location
 	 * @var	array
 	 */
-	protected $ads = array();
+	protected $ads = [];
 	
 	/**
 	 * list of ad location object types
 	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * Returns the ad output for the given ad location.
@@ -75,7 +75,7 @@ class AdHandler extends SingletonFactory {
 			return $this->objectTypes;
 		}
 		
-		$objectTypes = array();
+		$objectTypes = [];
 		foreach ($this->objectTypes as $key => $objectType) {
 			if ($objectType->categoryname == $categoryName) {
 				$objectTypes[$key] = $objectType;
@@ -100,11 +100,11 @@ class AdHandler extends SingletonFactory {
 			}
 		}
 		
-		$selection = array();
+		$selection = [];
 		foreach ($objectTypes as $objectType) {
 			$categoryName = WCF::getLanguage()->get('wcf.acp.ad.location.category.'.$objectType->categoryname);
 			if (!isset($selection[$categoryName])) {
-				$selection[$categoryName] = array();
+				$selection[$categoryName] = [];
 			}
 			
 			$selection[$categoryName][$objectType->objectTypeID] = WCF::getLanguage()->get('wcf.acp.ad.location.'.$objectType->objectType);
@@ -120,9 +120,9 @@ class AdHandler extends SingletonFactory {
 		
 		ksort($selection);
 		
-		$selection = array_merge(array(
+		$selection = array_merge([
 			$globalCategory => $globalLocations
-		), $selection);
+		], $selection);
 		
 		return $selection;
 	}

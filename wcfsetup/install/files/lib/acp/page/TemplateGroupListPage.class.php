@@ -21,7 +21,7 @@ class TemplateGroupListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.template.canManageTemplate');
+	public $neededPermissions = ['admin.template.canManageTemplate'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -36,7 +36,7 @@ class TemplateGroupListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
-	public $validSortFields = array('templateGroupID', 'templateGroupName', 'templateGroupFolderName', 'templates');
+	public $validSortFields = ['templateGroupID', 'templateGroupName', 'templateGroupFolderName', 'templates'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::initObjectList()

@@ -18,7 +18,7 @@ class PackageCache extends SingletonFactory {
 	 * list of cached packages
 	 * @var	mixed[][]
 	 */
-	protected $packages = array();
+	protected $packages = [];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()

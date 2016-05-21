@@ -30,22 +30,22 @@ class ConditionCacheBuilder extends AbstractCacheBuilder {
 		
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes($definition->definitionName);
 		if (empty($objectTypes)) {
-			return array();
+			return [];
 		}
 		
-		$objectTypeIDs = array();
+		$objectTypeIDs = [];
 		foreach ($objectTypes as $objectType) {
 			$objectTypeIDs[] = $objectType->objectTypeID;
 		}
 		
 		$conditionList = new ConditionList();
-		$conditionList->getConditionBuilder()->add('condition_table.objectTypeID IN (?)', array($objectTypeIDs));
+		$conditionList->getConditionBuilder()->add('condition_table.objectTypeID IN (?)', [$objectTypeIDs]);
 		$conditionList->readObjects();
 		
-		$groupedConditions = array();
+		$groupedConditions = [];
 		foreach ($conditionList as $condition) {
 			if (!isset($groupedConditions[$condition->objectID])) {
-				$groupedConditions[$condition->objectID] = array();
+				$groupedConditions[$condition->objectID] = [];
 			}
 			
 			$groupedConditions[$condition->objectID][$condition->conditionID] = $condition;

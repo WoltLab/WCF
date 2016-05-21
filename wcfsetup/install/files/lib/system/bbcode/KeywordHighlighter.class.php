@@ -19,13 +19,13 @@ class KeywordHighlighter extends SingletonFactory {
 	 * search keywords
 	 * @var	string[]
 	 */
-	protected $keywords = array();
+	protected $keywords = [];
 	
 	/**
 	 * search query parameters
 	 * @var	string[]
 	 */
-	protected static $searchQueryKeys = array(
+	protected static $searchQueryKeys = [
 		'q',		// google, msn, altavista
 		'p',		// yahoo
 		'query',	// lycos, fireball
@@ -55,7 +55,7 @@ class KeywordHighlighter extends SingletonFactory {
 		//'k',
 		//'t',
 		'va'
-	);
+	];
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -110,12 +110,12 @@ class KeywordHighlighter extends SingletonFactory {
 			$keywordString = StringUtil::trim(mb_substr($keywordString, 1, -1));
 			
 			if (!empty($keywordString)) {
-				$this->keywords = array_merge($this->keywords, array(StringUtil::encodeHTML($keywordString)));
+				$this->keywords = array_merge($this->keywords, [StringUtil::encodeHTML($keywordString)]);
 			}
 		}
 		else {
 			// replace word delimiters by space
-			$keywordString = str_replace(array('.', ','), ' ', $keywordString);
+			$keywordString = str_replace(['.', ','], ' ', $keywordString);
 			
 			$keywords = ArrayUtil::encodeHTML(ArrayUtil::trim(explode(' ', $keywordString)));
 			if (!empty($keywords)) {

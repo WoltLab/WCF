@@ -103,21 +103,21 @@ class NewPasswordForm extends AbstractForm {
 		$this->newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 12 ? REGISTER_PASSWORD_MIN_LENGTH : 12));
 		
 		// update user
-		$this->objectAction = new UserAction(array($this->user), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserAction([$this->user], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'password' => $this->newPassword,
 				'lastLostPasswordRequestTime' => 0,
 				'lostPasswordKey' => ''
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// send mail
-		$mail = new Mail(array($this->user->username => $this->user->email), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail', array(
+		$mail = new Mail([$this->user->username => $this->user->email], WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail', [
 			'username' => $this->user->username,
 			'userID' => $this->user->userID,
 			'newPassword' => $this->newPassword
-		)));
+		]));
 		$mail->send();
 		$this->saved();
 		
@@ -132,10 +132,10 @@ class NewPasswordForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'userID' => $this->userID,
 			'lostPasswordKey' => $this->lostPasswordKey
-		));
+		]);
 	}
 	
 	/**

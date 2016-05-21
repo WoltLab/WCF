@@ -53,11 +53,11 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 			throw new SystemException("DatabaseObject class name '" . $this->className . "' is missing or invalid");
 		}
 		
-		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
-		$tableName = call_user_func(array($this->className, 'getDatabaseTableName'));
+		$indexName = call_user_func([$this->className, 'getDatabaseTableIndexName']);
+		$tableName = call_user_func([$this->className, 'getDatabaseTableName']);
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add($indexName . " IN (?)", array(array_keys($queues)));
+		$conditions->add($indexName . " IN (?)", [array_keys($queues)]);
 		
 		$sql = "SELECT	" . $indexName . "
 			FROM	" . $tableName . "
@@ -81,8 +81,8 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("objectTypeID = ?", array($objectTypeID));
-		$conditions->add("objectID IN (?)", array($objectIDs));
+		$conditions->add("objectTypeID = ?", [$objectTypeID]);
+		$conditions->add("objectID IN (?)", [$objectIDs]);
 		
 		$sql = "SELECT	queueID
 			FROM	wcf".WCF_N."_moderation_queue

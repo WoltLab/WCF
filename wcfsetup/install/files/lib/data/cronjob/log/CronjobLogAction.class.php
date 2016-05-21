@@ -22,13 +22,13 @@ class CronjobLogAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('clearAll');
+	protected $requireACP = ['clearAll'];
 	
 	/**
 	 * Validates the clear all action.
 	 */
 	public function validateClearAll() {
-		WCF::getSession()->checkPermissions(array('admin.management.canManageCronjob'));
+		WCF::getSession()->checkPermissions(['admin.management.canManageCronjob']);
 	}
 	
 	/**

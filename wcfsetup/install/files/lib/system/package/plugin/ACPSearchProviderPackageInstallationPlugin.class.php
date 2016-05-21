@@ -30,10 +30,10 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -46,11 +46,11 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 		$showOrder = (isset($data['elements']['showorder'])) ? $data['elements']['showorder'] : null;
 		$showOrder = $this->getShowOrder($showOrder);
 		
-		return array(
+		return [
 			'className' => $data['elements']['classname'],
 			'providerName' => $data['attributes']['name'],
 			'showOrder' => $showOrder
-		);
+		];
 	}
 	
 	/**
@@ -61,15 +61,15 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	providerName = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['providerName'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**

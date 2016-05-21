@@ -71,25 +71,25 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new TemplateGroupAction(array($this->templateGroup), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TemplateGroupAction([$this->templateGroup], 'update', ['data' => array_merge($this->additionalFields, [
 			'templateGroupName' => $this->templateGroupName,
 			'templateGroupFolderName' => $this->templateGroupFolderName,
 			'parentTemplateGroupID' => ($this->parentTemplateGroupID ?: null)
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		$this->availableTemplateGroups = TemplateGroup::getSelectList(array($this->templateGroupID), 1);
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([$this->templateGroupID], 1);
 		
 		AbstractForm::readData();
 		
@@ -107,10 +107,10 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'templateGroupID' => $this->templateGroupID,
 			'templateGroup' => $this->templateGroup
-		));
+		]);
 	}
 }

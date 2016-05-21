@@ -33,8 +33,8 @@ class AbstractPollImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
-		$poll = PollEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+	public function import($oldID, array $data, array $additionalData = []) {
+		$poll = PollEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
 		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $poll->pollID);
 		

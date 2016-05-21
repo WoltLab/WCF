@@ -43,10 +43,10 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'captchaQuestion' => $this->captchaQuestion
-		));
+		]);
 	}
 	
 	/**
@@ -100,13 +100,13 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 			I18nHandler::getInstance()->save('answers', 'wcf.captcha.question.question.answers'.$this->captchaQuestion->questionID, 'wcf.captcha.question', 1);
 		}
 		
-		$this->objectAction = new CaptchaQuestionAction(array($this->captchaQuestion), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new CaptchaQuestionAction([$this->captchaQuestion], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'answers' => I18nHandler::getInstance()->isPlainValue('answers') ? I18nHandler::getInstance()->getValue('answers') : 'wcf.captcha.question.question.answers'.$this->captchaQuestion->questionID,
 				'isDisabled' => $this->isDisabled,
 				'question' => I18nHandler::getInstance()->isPlainValue('question') ? I18nHandler::getInstance()->getValue('question') : 'wcf.captcha.question.question.question'.$this->captchaQuestion->questionID
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		$this->saved();

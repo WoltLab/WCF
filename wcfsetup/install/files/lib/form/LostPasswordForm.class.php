@@ -91,7 +91,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 		
 		// check whether a lost password request was sent in the last 24 hours
 		if ($this->user->lastLostPasswordRequestTime && TIME_NOW - 86400 < $this->user->lastLostPasswordRequestTime) {
-			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.error.tooManyRequests', array('hours' => ceil(($this->user->lastLostPasswordRequestTime - (TIME_NOW - 86400)) / 3600))));
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.error.tooManyRequests', ['hours' => ceil(($this->user->lastLostPasswordRequestTime - (TIME_NOW - 86400)) / 3600)]));
 		}
 	}
 	
@@ -105,20 +105,20 @@ class LostPasswordForm extends AbstractCaptchaForm {
 		$lostPasswordKey = StringUtil::getRandomID();
 		
 		// save key and request time in database
-		$this->objectAction = new UserAction(array($this->user), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserAction([$this->user], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'lostPasswordKey' => $lostPasswordKey,
 				'lastLostPasswordRequestTime' => TIME_NOW
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// send mail
-		$mail = new Mail(array($this->user->username => $this->user->email), WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail', array(
+		$mail = new Mail([$this->user->username => $this->user->email], WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail', [
 			'username' => $this->user->username,
 			'userID' => $this->user->userID,
 			'key' => $lostPasswordKey
-		)));
+		]));
 		$mail->send();
 		$this->saved();
 		
@@ -133,9 +133,9 @@ class LostPasswordForm extends AbstractCaptchaForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'username' => $this->username,
 			'email' => $this->email
-		));
+		]);
 	}
 }

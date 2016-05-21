@@ -29,7 +29,7 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_avatar
 			WHERE		avatarID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->avatarID));
+		$statement->execute([$this->avatarID]);
 		
 		$this->deleteFiles();
 	}
@@ -37,7 +37,7 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 	/**
 	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_avatar
 			WHERE	avatarID IN (".str_repeat('?,', count($objectIDs) - 1)."?)";

@@ -22,7 +22,7 @@ class LabelGroupImporter extends AbstractImporter {
 	/**
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// save label group
 		$labelGroup = LabelGroupEditor::create($data);
 		
@@ -35,7 +35,7 @@ class LabelGroupImporter extends AbstractImporter {
 			
 			foreach ($additionalData['objects'] as $objectTypeID => $objectIDs) {
 				foreach ($objectIDs as $objectID) {
-					$statement->execute(array($labelGroup->groupID, $objectTypeID, $objectID));
+					$statement->execute([$labelGroup->groupID, $objectTypeID, $objectID]);
 				}
 			}
 		}

@@ -21,7 +21,7 @@ class UserLocation implements IUserOnlineLocation {
 	 * user ids
 	 * @var	integer[]
 	 */
-	protected $userIDs = array();
+	protected $userIDs = [];
 	
 	/**
 	 * list of users
@@ -48,14 +48,14 @@ class UserLocation implements IUserOnlineLocation {
 			return '';
 		}
 		
-		return WCF::getLanguage()->getDynamicVariable($languageVariable, array('user' => $this->users[$user->objectID]));
+		return WCF::getLanguage()->getDynamicVariable($languageVariable, ['user' => $this->users[$user->objectID]]);
 	}
 	
 	/**
 	 * Loads the users.
 	 */
 	protected function readUsers() {
-		$this->users = array();
+		$this->users = [];
 		
 		if (empty($this->userIDs)) return;
 		$this->userIDs = array_unique($this->userIDs);

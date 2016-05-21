@@ -37,10 +37,10 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
@@ -48,12 +48,12 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		return [
 			'smileyCode' => $data['attributes']['name'],
 			'smileyTitle' => $data['elements']['title'],
 			'smileyPath' => $data['elements']['path'],
 			'aliases' => (isset($data['elements']['aliases']) ? $data['elements']['aliases'] : '')
-		);
+		];
 	}
 	
 	/**
@@ -64,14 +64,14 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	smileyCode = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['smileyCode'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

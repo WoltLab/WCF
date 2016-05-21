@@ -18,14 +18,14 @@ class AdCacheBuilder extends AbstractCacheBuilder {
 	 */
 	public function rebuild(array $parameters) {
 		$adList = new AdList();
-		$adList->getConditionBuilder()->add('isDisabled = ?', array(0));
+		$adList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$adList->sqlOrderBy = 'showOrder ASC';
 		$adList->readObjects();
 		
-		$data = array();
+		$data = [];
 		foreach ($adList as $ad) {
 			if (!isset($data[$ad->objectTypeID])) {
-				$data[$ad->objectTypeID] = array();
+				$data[$ad->objectTypeID] = [];
 			}
 			
 			$data[$ad->objectTypeID][$ad->adID] = $ad;

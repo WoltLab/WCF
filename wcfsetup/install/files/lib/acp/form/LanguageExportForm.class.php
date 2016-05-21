@@ -28,7 +28,7 @@ class LanguageExportForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * language id
@@ -46,13 +46,13 @@ class LanguageExportForm extends AbstractForm {
 	 * selected packages
 	 * @var	string[]
 	 */
-	public $selectedPackages = array();
+	public $selectedPackages = [];
 	
 	/**
 	 * available packages
 	 * @var	string[]
 	 */
-	public $packages = array();
+	public $packages = [];
 	
 	/**
 	 * true to export custom variables
@@ -140,14 +140,14 @@ class LanguageExportForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'languageID' => $this->languageID,
 			'languages' => LanguageFactory::getInstance()->getLanguages(),
 			'selectedPackages' => $this->selectedPackages,
 			'packages' => $this->packages,
 			'selectAllPackages' => true,
 			'packageNameLength' => $this->packageNameLength
-		));
+		]);
 	}
 	
 	/**

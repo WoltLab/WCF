@@ -35,7 +35,7 @@ class FollowingPage extends MultipleLinkPage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add("user_follow.userID = ?", array(WCF::getUser()->userID));
+		$this->objectList->getConditionBuilder()->add("user_follow.userID = ?", [WCF::getUser()->userID]);
 	}
 	
 	/**

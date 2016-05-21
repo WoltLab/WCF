@@ -84,7 +84,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	 * @see	\wcf\system\comment\manager\ICommentManager::getLink()
 	 */
 	public function getLink($objectTypeID, $objectID) {
-		return LinkHandler::getInstance()->getLink('User', array('id' => $objectID));
+		return LinkHandler::getInstance()->getLink('User', ['id' => $objectID]);
 	}
 	
 	/**
@@ -135,7 +135,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		
 		$commentLikeObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
 		
-		$commentIDs = $responseIDs = array();
+		$commentIDs = $responseIDs = [];
 		foreach ($likes as $like) {
 			if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
 				$commentIDs[] = $like->objectID;
@@ -146,7 +146,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		}
 		
 		// fetch response
-		$userIDs = $responses = array();
+		$userIDs = $responses = [];
 		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
 			$responseList->setObjectIDs($responseIDs);
@@ -168,7 +168,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		$comments = $commentList->getObjects();
 		
 		// fetch users
-		$users = array();
+		$users = [];
 		foreach ($comments as $comment) {
 			$userIDs[] = $comment->objectID;
 			if ($comment->userID) {
@@ -190,11 +190,11 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 						$like->setIsAccessible();
 						
 						// short output
-						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment', array(
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment', [
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'user' => $users[$comment->objectID],
 							'like' => $like
-						));
+						]);
 						$like->setTitle($text);
 						
 						// output
@@ -212,12 +212,12 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 						$like->setIsAccessible();
 						
 						// short output
-						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment.response', array(
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment.response', [
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'user' => $users[$comment->objectID],
 							'like' => $like
-						));
+						]);
 						$like->setTitle($text);
 						
 						// output

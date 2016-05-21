@@ -21,20 +21,20 @@ class ACPTemplateAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.template.canAddTemplate');
+	protected $permissionsCreate = ['admin.template.canAddTemplate'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.template.canDeleteTemplate');
+	protected $permissionsDelete = ['admin.template.canDeleteTemplate'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.template.canUpdateTemplate');
+	protected $permissionsUpdate = ['admin.template.canUpdateTemplate'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 }

@@ -59,20 +59,20 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 		$activationCode = UserRegistrationUtil::getActivationCode();
 		
 		// save user
-		$this->objectAction = new UserAction(array($this->user), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserAction([$this->user], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'reactivationCode' => $activationCode
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// send activation mail
-		$messageData = array(
+		$messageData = [
 			'username' => $this->user->username,
 			'userID' => $this->user->userID,
 			'activationCode' => $activationCode
-		);
-		$mail = new Mail(array($this->user->username => $this->user->newEmail), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
+		];
+		$mail = new Mail([$this->user->username => $this->user->newEmail], WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
 		$mail->send();
 		$this->saved();
 		

@@ -23,7 +23,7 @@ class DeletedContentListPage extends MultipleLinkPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('mod.general.canUseModeration');
+	public $neededPermissions = ['mod.general.canUseModeration'];
 	
 	/**
 	 * object type object
@@ -65,11 +65,11 @@ class DeletedContentListPage extends MultipleLinkPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'availableObjectTypes' => ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.deletedContent'),
 			'objectType' => $this->objectType->objectType,
 			'resultListTemplateName' => $this->objectType->getProcessor()->getTemplateName(),
 			'resultListApplication' => $this->objectType->getProcessor()->getApplication()
-		));
+		]);
 	}
 }

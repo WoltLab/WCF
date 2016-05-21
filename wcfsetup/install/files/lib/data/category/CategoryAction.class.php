@@ -31,7 +31,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
@@ -52,9 +52,9 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 */
 	public function toggle() {
 		foreach ($this->objects as $categoryEditor) {
-			$categoryEditor->update(array(
+			$categoryEditor->update([
 				'isDisabled' => 1 - $categoryEditor->isDisabled
-			));
+			]);
 		}
 	}
 	
@@ -94,7 +94,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 		
 		if (isset($this->parameters['data']['parentCategoryID'])) {
 			$objectType = null;
-			$parentUpdates = array();
+			$parentUpdates = [];
 			
 			foreach ($this->objects as $category) {
 				if ($objectType === null) {
@@ -102,10 +102,10 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 				}
 				
 				if ($category->parentCategoryID != $this->parameters['data']['parentCategoryID']) {
-					$parentUpdates[$category->categoryID] = array(
+					$parentUpdates[$category->categoryID] = [
 						'oldParentCategoryID' => $category->parentCategoryID,
 						'newParentCategoryID' => $this->parameters['data']['parentCategoryID']
-					);
+					];
 				}
 			}
 			
@@ -120,7 +120,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 */
 	public function updatePosition() {
 		$objectType = null;
-		$parentUpdates = array();
+		$parentUpdates = [];
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'] as $parentCategoryID => $categoryIDs) {
@@ -132,16 +132,16 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 				}
 				
 				if ($category->parentCategoryID != $parentCategoryID) {
-					$parentUpdates[$categoryID] = array(
+					$parentUpdates[$categoryID] = [
 						'oldParentCategoryID' => $category->parentCategoryID,
 						'newParentCategoryID' => $parentCategoryID
-					);
+					];
 				}
 				
-				$this->objects[$categoryID]->update(array(
+				$this->objects[$categoryID]->update([
 					'parentCategoryID' => $parentCategoryID ? $this->objects[$parentCategoryID]->categoryID : 0,
 					'showOrder' => $showOrder++
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();

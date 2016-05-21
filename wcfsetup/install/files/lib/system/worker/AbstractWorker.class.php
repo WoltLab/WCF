@@ -34,7 +34,7 @@ abstract class AbstractWorker implements IWorker {
 	 * list of additional parameters
 	 * @var	array
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * @see	\wcf\system\worker\IWorker::__construct()

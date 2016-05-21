@@ -32,7 +32,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.bbcode.canManageBBCode');
+	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$templateName
@@ -93,11 +93,11 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 		parent::save();
 		
 		// save media provider
-		$this->objectAction = new BBCodeMediaProviderAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new BBCodeMediaProviderAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'regex' => $this->regex,
 			'html' => $this->html
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -105,9 +105,9 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 		$this->title = $this->regex = $this->html = '';
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -116,11 +116,11 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'title' => $this->title,
 			'regex' => $this->regex,
 			'html' => $this->html
-		));
+		]);
 	}
 }

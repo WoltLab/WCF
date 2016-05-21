@@ -30,7 +30,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	 * 
 	 * @see	\wcf\data\AbstractDatabaseObjectAction
 	 */
-	public function __construct(array $objects, $action, array $parameters = array()) {
+	public function __construct(array $objects, $action, array $parameters = []) {
 		$this->action = $action;
 		$this->parameters = $parameters;
 		

@@ -18,17 +18,17 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.user.canManageGroupAssignment');
+	protected $permissionsDelete = ['admin.user.canManageGroupAssignment'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.user.canManageGroupAssignment');
+	protected $permissionsUpdate = ['admin.user.canManageGroupAssignment'];
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
 	 * @see	\wcf\data\IDeleteAction::delete()
@@ -44,9 +44,9 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
 	 */
 	public function toggle() {
 		foreach ($this->objects as $assignment) {
-			$assignment->update(array(
+			$assignment->update([
 				'isDisabled' => $assignment->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	

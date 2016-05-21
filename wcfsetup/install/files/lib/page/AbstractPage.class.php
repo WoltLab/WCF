@@ -65,13 +65,13 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	 * needed modules to view this page
 	 * @var	string[]
 	 */
-	public $neededModules = array();
+	public $neededModules = [];
 	
 	/**
 	 * needed permissions to view this page
 	 * @var	string[]
 	 */
-	public $neededPermissions = array();
+	public $neededPermissions = [];
 	
 	/**
 	 * name of the template for the called page
@@ -132,10 +132,10 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		EventHandler::getInstance()->fireAction($this, 'assignVariables');
 		
 		// assign parameters
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => $this->action,
 			'templateName' => $this->templateName
-		));
+		]);
 	}
 	
 	/**

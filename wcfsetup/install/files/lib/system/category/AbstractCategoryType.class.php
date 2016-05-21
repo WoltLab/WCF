@@ -57,7 +57,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 * key is the definition name and value the object type name)
 	 * @var	string[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * @see	\wcf\system\category\ICategoryType::afterDeletion()
@@ -68,12 +68,12 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 		if (!empty($categoryIDs)) {
 			// move child categories to parent category
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add("categoryID IN (?)", array($categoryIDs));
+			$conditionBuilder->add("categoryID IN (?)", [$categoryIDs]);
 			$sql = "UPDATE	wcf".WCF_N."_category
 				SET	parentCategoryID = ?
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array_merge(array($categoryEditor->parentCategoryID), $conditionBuilder->getParameters()));
+			$statement->execute(array_merge([$categoryEditor->parentCategoryID], $conditionBuilder->getParameters()));
 		}
 	}
 	

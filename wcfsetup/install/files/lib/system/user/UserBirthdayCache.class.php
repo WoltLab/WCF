@@ -18,13 +18,13 @@ class UserBirthdayCache extends SingletonFactory {
 	 * loaded months
 	 * @var	integer[]
 	 */
-	protected $monthsLoaded = array();
+	protected $monthsLoaded = [];
 	
 	/**
 	 * user birthdays
 	 * @var	integer[]
 	 */
-	protected $birthdays = array();
+	protected $birthdays = [];
 	
 	/**
 	 * Loads the birthday cache.
@@ -33,7 +33,7 @@ class UserBirthdayCache extends SingletonFactory {
 	 */
 	protected function loadMonth($month) {
 		if (!isset($this->monthsLoaded[$month])) {
-			$this->birthdays = array_merge($this->birthdays, UserBirthdayCacheBuilder::getInstance()->getData(array('month' => $month)));
+			$this->birthdays = array_merge($this->birthdays, UserBirthdayCacheBuilder::getInstance()->getData(['month' => $month]));
 			$this->monthsLoaded[$month] = true;
 		}
 	}
@@ -51,6 +51,6 @@ class UserBirthdayCache extends SingletonFactory {
 		$index = ($month < 10 ? '0' : '') . $month . '-' . ($day < 10 ? '0' : '') . $day;
 		if (isset($this->birthdays[$index])) return $this->birthdays[$index];
 		
-		return array();
+		return [];
 	}
 }

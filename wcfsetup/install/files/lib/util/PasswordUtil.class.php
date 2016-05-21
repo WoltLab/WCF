@@ -30,7 +30,7 @@ final class PasswordUtil {
 	 * list of supported encryption type by software identifier
 	 * @var	string[]
 	 */
-	private static $supportedEncryptionTypes = array(
+	private static $supportedEncryptionTypes = [
 		'ipb2',		// Invision Power Board 2.x
 		'ipb3',		// Invision Power Board 3.x
 		'mybb1',	// MyBB 1.x
@@ -51,7 +51,7 @@ final class PasswordUtil {
 		'joomla3',	// Joomla 3.x
 		'cryptMD5',
 		'invalid',	// Never going to match anything
-	);
+	];
 	
 	/**
 	 * blowfish cost factor

@@ -37,49 +37,49 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * list of object ids
 	 * @var	integer[]
 	 */
-	protected $objectIDs = array();
+	protected $objectIDs = [];
 	
 	/**
 	 * list of object editors
 	 * @var	DatabaseObjectEditor[]
 	 */
-	protected $objects = array();
+	protected $objects = [];
 	
 	/**
 	 * multi-dimensional array of parameters required by an action
 	 * @var	mixed[][]
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * list of permissions required to create objects
 	 * @var	string[]
 	 */
-	protected $permissionsCreate = array();
+	protected $permissionsCreate = [];
 	
 	/**
 	 * list of permissions required to delete objects
 	 * @var	string[]
 	 */
-	protected $permissionsDelete = array();
+	protected $permissionsDelete = [];
 	
 	/**
 	 * list of permissions required to update objects
 	 * @var	string[]
 	 */
-	protected $permissionsUpdate = array();
+	protected $permissionsUpdate = [];
 	
 	/**
 	 * disallow requests for specified methods if the origin is not the ACP
 	 * @var	string[]
 	 */
-	protected $requireACP = array();
+	protected $requireACP = [];
 	
 	/**
 	 * Resets cache if any of the listed actions is invoked
 	 * @var	string[]
 	 */
-	protected $resetCache = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	protected $resetCache = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * values returned by executed action
@@ -92,7 +92,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * is completely disabled
 	 * @var	string[]
 	 */
-	protected $allowGuestAccess = array();
+	protected $allowGuestAccess = [];
 	
 	const TYPE_INTEGER = 1;
 	const TYPE_STRING = 2;
@@ -110,7 +110,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	array		$parameters
 	 * @throws	SystemException
 	 */
-	public function __construct(array $objects, $action, array $parameters = array()) {
+	public function __construct(array $objects, $action, array $parameters = []) {
 		// set class name
 		if (empty($this->className)) {
 			$className = get_called_class();
@@ -120,8 +120,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			}
 		}
 		
-		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
-		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+		$indexName = call_user_func([$this->className, 'getDatabaseTableIndexName']);
+		$baseClass = call_user_func([$this->className, 'getBaseClass']);
 		
 		foreach ($objects as $object) {
 			if (is_object($object)) {
@@ -182,7 +182,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		}
 		
 		// execute action
-		call_user_func_array(array($this, $actionName), $this->getParameters());
+		call_user_func_array([$this, $actionName], $this->getParameters());
 		
 		// fire event action
 		EventHandler::getInstance()->fireAction($this, 'validateAction');
@@ -197,7 +197,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			throw new SystemException("call to undefined function '".$this->getActionName()."'");
 		}
 		
-		$this->returnValues = call_user_func(array($this, $this->getActionName()));
+		$this->returnValues = call_user_func([$this, $this->getActionName()]);
 		
 		// reset cache
 		if (in_array($this->getActionName(), $this->resetCache)) {
@@ -215,7 +215,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	protected function resetCache() {
 		if (is_subclass_of($this->className, 'wcf\data\IEditableCachedObject')) {
-			call_user_func(array($this->className, 'resetCache'));
+			call_user_func([$this->className, 'resetCache']);
 		}
 	}
 	
@@ -242,7 +242,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		$this->objects = $objects;
 		
 		// update object IDs
-		$this->objectIDs = array();
+		$this->objectIDs = [];
 		foreach ($this->objects as $object) {
 			$this->objectIDs[] = $object->getObjectID();
 		}
@@ -259,11 +259,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @see	\wcf\data\IDatabaseObjectAction::getReturnValues()
 	 */
 	public function getReturnValues() {
-		return array(
+		return [
 			'actionName' => $this->action,
 			'objectIDs' => $this->getObjectIDs(),
 			'returnValues' => $this->returnValues
-		);
+		];
 	}
 	
 	/**
@@ -329,7 +329,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @return	\wcf\data\DatabaseObject
 	 */
 	public function create() {
-		return call_user_func(array($this->className, 'create'), $this->parameters['data']);
+		return call_user_func([$this->className, 'create'], $this->parameters['data']);
 	}
 	
 	/**
@@ -341,13 +341,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		}
 		
 		// get ids
-		$objectIDs = array();
+		$objectIDs = [];
 		foreach ($this->objects as $object) {
 			$objectIDs[] = $object->getObjectID();
 		}
 		
 		// execute action
-		return call_user_func(array($this->className, 'deleteAll'), $objectIDs);
+		return call_user_func([$this->className, 'deleteAll'], $objectIDs);
 	}
 	
 	/**
@@ -380,11 +380,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		}
 		
 		// get base class
-		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+		$baseClass = call_user_func([$this->className, 'getBaseClass']);
 		
 		// get db information
-		$tableName = call_user_func(array($this->className, 'getDatabaseTableName'));
-		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
+		$tableName = call_user_func([$this->className, 'getDatabaseTableName']);
+		$indexName = call_user_func([$this->className, 'getDatabaseTableIndexName']);
 		
 		// get objects
 		$sql = "SELECT	*
@@ -513,7 +513,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			case self::TYPE_INTEGER:
 				if (!isset($target[$variableName])) {
 					if ($allowEmpty) {
-						$target[$variableName] = ($structure === self::STRUCT_FLAT) ? 0 : array();
+						$target[$variableName] = ($structure === self::STRUCT_FLAT) ? 0 : [];
 					}
 					else {
 						throw new UserInputException($variableName);
@@ -544,7 +544,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			case self::TYPE_STRING:
 				if (!isset($target[$variableName])) {
 					if ($allowEmpty) {
-						$target[$variableName] = ($structure === self::STRUCT_FLAT) ? '' : array();
+						$target[$variableName] = ($structure === self::STRUCT_FLAT) ? '' : [];
 					}
 					else {
 						throw new UserInputException($variableName);
@@ -594,7 +594,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			case self::TYPE_JSON:
 				if (!isset($target[$variableName])) {
 					if ($allowEmpty) {
-						$target[$variableName] = array();
+						$target[$variableName] = [];
 					}
 					else {
 						throw new UserInputException($variableName);

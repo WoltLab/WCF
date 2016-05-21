@@ -33,7 +33,7 @@ trait TMultiCategoryObject {
 	 * ids of the object's categories
 	 * @var	integer[]
 	 */
-	protected $categoryIDs = array();
+	protected $categoryIDs = [];
 	
 	/**
 	 * list of the object's leaf categories
@@ -58,7 +58,7 @@ trait TMultiCategoryObject {
 	 */
 	public function getCategories() {
 		if ($this->categories === null) {
-			$this->categories = array();
+			$this->categories = [];
 			
 			$className = static::getCategoryClassName();
 			if (!is_subclass_of($className, AbstractDecoratedCategory::class)) {
@@ -80,7 +80,7 @@ trait TMultiCategoryObject {
 							)
 					ORDER BY	parentCategoryID, showOrder";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($this->getObjectID()));
+				$statement->execute([$this->getObjectID()]);
 				while ($categoryID = $statement->fetchColumn()) {
 					$this->categories[$categoryID] = $className::getCategory($categoryID);
 				}

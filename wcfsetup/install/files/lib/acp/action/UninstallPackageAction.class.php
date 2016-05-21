@@ -67,13 +67,13 @@ class UninstallPackageAction extends InstallPackageAction {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 			
 		// create queue
-		$queue = PackageInstallationQueueEditor::create(array(
+		$queue = PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
 			'packageName' => $package->getName(),
 			'packageID' => $package->packageID,
 			'action' => 'uninstall'
-		));
+		]);
 		
 		// initialize uninstallation
 		$this->installation = new PackageUninstallationDispatcher($queue);
@@ -81,19 +81,19 @@ class UninstallPackageAction extends InstallPackageAction {
 		$this->installation->nodeBuilder->purgeNodes();
 		$this->installation->nodeBuilder->buildNodes();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'queue' => $queue
-		));
+		]);
 		
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($queue->processNo, $this->installation->nodeBuilder->getNextNode());
-		$this->data = array(
+		$this->data = [
 			'template' => WCF::getTPL()->fetch($this->templateName),
 			'step' => 'uninstall',
 			'node' => $this->installation->nodeBuilder->getNextNode(),
 			'currentAction' => $this->getCurrentAction($queueID),
 			'progress' => 0,
 			'queueID' => $queueID
-		);
+		];
 	}
 	
 	/**
@@ -131,30 +131,30 @@ class UninstallPackageAction extends InstallPackageAction {
 				FROM	wcf".WCF_N."_application
 				WHERE	packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageID));
+			$statement->execute([$packageID]);
 			$application = $statement->fetchObject('wcf\data\application\Application');
 			
 			// build redirect location
 			$location = $application->getPageURL() . 'acp/index.php?package-list/';
 			
 			// show success
-			$this->data = array(
+			$this->data = [
 				'currentAction' => WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.success'),
 				'progress' => 100,
 				'redirectLocation' => $location,
 				'step' => 'success'
-			);
+			];
 			return;
 		}
 		
 		// continue with next node
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $this->installation->nodeBuilder->getNextNode($this->node));
-		$this->data = array(
+		$this->data = [
 			'step' => 'uninstall',
 			'node' => $node,
 			'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
 			'queueID' => $queueID
-		);
+		];
 	}
 	
 	/**
@@ -185,7 +185,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			// build package name
 			$packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
 			$installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
-			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.step.'.$installationType, array('packageName' => $packageName));
+			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.step.'.$installationType, ['packageName' => $packageName]);
 		}
 		
 		return $currentAction;

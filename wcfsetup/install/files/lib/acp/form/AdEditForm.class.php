@@ -41,10 +41,10 @@ class AdEditForm extends AdAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'adObject' => $this->adObject
-		));
+		]);
 	}
 	
 	/**
@@ -61,7 +61,7 @@ class AdEditForm extends AdAddForm {
 			$this->showOrder = $this->adObject->showOrder;
 			
 			$conditions = $this->adObject->getConditions();
-			$conditionsByObjectTypeID = array();
+			$conditionsByObjectTypeID = [];
 			foreach ($conditions as $condition) {
 				$conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
 			}
@@ -102,19 +102,19 @@ class AdEditForm extends AdAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new AdAction(array($this->adObject), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new AdAction([$this->adObject], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'ad' => $this->ad,
 				'adName' => $this->adName,
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectTypeID,
 				'showOrder' => $this->showOrder
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
 			foreach ($groupedObjectTypes as $objectTypes) {
 				if (is_array($objectTypes)) {

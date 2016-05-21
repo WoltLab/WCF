@@ -26,7 +26,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	 * list of available object types
 	 * @var	array
 	 */
-	protected $availableObjectTypes = array();
+	protected $availableObjectTypes = [];
 	
 	/**
 	 * search engine object
@@ -90,7 +90,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 				$className = 'wcf\system\search\mysql\MysqlSearchEngine';
 			}
 				
-			$this->searchEngine = call_user_func(array($className, 'getInstance'));
+			$this->searchEngine = call_user_func([$className, 'getInstance']);
 		}
 		
 		return $this->searchEngine;
@@ -99,7 +99,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	/**
 	 * @see	\wcf\system\search\ISearchEngine::search()
 	 */
-	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
+	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000) {
 		return $this->getSearchEngine()->search($q, $objectTypes, $subjectOnly, $searchIndexCondition, $additionalConditions, $orderBy, $limit);
 	}
 	

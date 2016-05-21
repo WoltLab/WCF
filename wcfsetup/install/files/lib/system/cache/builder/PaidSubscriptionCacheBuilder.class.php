@@ -18,7 +18,7 @@ class PaidSubscriptionCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected function rebuild(array $parameters) {
 		$subscriptionList = new PaidSubscriptionList();
-		$subscriptionList->getConditionBuilder()->add('isDisabled = ?', array(0));
+		$subscriptionList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$subscriptionList->sqlOrderBy = 'showOrder';
 		$subscriptionList->readObjects();
 		

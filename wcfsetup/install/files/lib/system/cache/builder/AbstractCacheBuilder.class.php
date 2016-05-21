@@ -19,7 +19,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	 * list of cache resources by index
 	 * @var	mixed[][]
 	 */
-	protected $cache = array();
+	protected $cache = [];
 	
 	/**
 	 * maximum cache lifetime in seconds, '0' equals infinite
@@ -30,7 +30,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	/**
 	 * @inheritDoc
 	 */
-	public function getData(array $parameters = array(), $arrayIndex = '') {
+	public function getData(array $parameters = [], $arrayIndex = '') {
 		$index = CacheHandler::getInstance()->getCacheIndex($parameters);
 		
 		if (!isset($this->cache[$index])) {
@@ -65,7 +65,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	/**
 	 * @inheritDoc
 	 */
-	public function reset(array $parameters = array()) {
+	public function reset(array $parameters = []) {
 		CacheHandler::getInstance()->flush($this, $parameters);
 	}
 	

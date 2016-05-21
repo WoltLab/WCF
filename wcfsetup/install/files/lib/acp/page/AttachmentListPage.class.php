@@ -25,7 +25,7 @@ class AttachmentListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.attachment.canManageAttachment');
+	public $neededPermissions = ['admin.attachment.canManageAttachment'];
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -40,7 +40,7 @@ class AttachmentListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('attachmentID', 'filename', 'filesize', 'downloads', 'uploadTime', 'lastDownloadTime');
+	public $validSortFields = ['attachmentID', 'filename', 'filesize', 'downloads', 'uploadTime', 'lastDownloadTime'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -69,13 +69,13 @@ class AttachmentListPage extends SortablePage {
 	 * available file types
 	 * @var	string[]
 	 */
-	public $availableFileTypes = array();
+	public $availableFileTypes = [];
 	
 	/**
 	 * attachment stats
 	 * @var	array
 	 */
-	public $stats = array();
+	public $stats = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -94,14 +94,14 @@ class AttachmentListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$objectTypeIDs = array();
+		$objectTypeIDs = [];
 		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.attachment.objectType') as $objectType) {
 			if (!$objectType->private) {
 				$objectTypeIDs[] = $objectType->objectTypeID;
 			}
 		}
 		
-		if (!empty($objectTypeIDs)) $this->objectList->getConditionBuilder()->add('attachment.objectTypeID IN (?)', array($objectTypeIDs));
+		if (!empty($objectTypeIDs)) $this->objectList->getConditionBuilder()->add('attachment.objectTypeID IN (?)', [$objectTypeIDs]);
 		else $this->objectList->getConditionBuilder()->add('1 = 0');
 		$this->objectList->getConditionBuilder()->add("attachment.tmpHash = ''");
 		
@@ -113,14 +113,14 @@ class AttachmentListPage extends SortablePage {
 		if (!empty($this->username)) {
 			$user = User::getUserByUsername($this->username);
 			if ($user->userID) {
-				$this->objectList->getConditionBuilder()->add('attachment.userID = ?', array($user->userID));
+				$this->objectList->getConditionBuilder()->add('attachment.userID = ?', [$user->userID]);
 			}
 		}
 		if (!empty($this->filename)) {
-			$this->objectList->getConditionBuilder()->add('attachment.filename LIKE ?', array($this->filename.'%'));
+			$this->objectList->getConditionBuilder()->add('attachment.filename LIKE ?', [$this->filename.'%']);
 		}
 		if (!empty($this->fileType)) {
-			$this->objectList->getConditionBuilder()->add('attachment.fileType LIKE ?', array($this->fileType));
+			$this->objectList->getConditionBuilder()->add('attachment.fileType LIKE ?', [$this->fileType]);
 		}
 	}
 	
@@ -130,12 +130,12 @@ class AttachmentListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'stats' => $this->stats,
 			'username' => $this->username,
 			'filename' => $this->filename,
 			'fileType' => $this->fileType,
 			'availableFileTypes' => $this->availableFileTypes
-		));
+		]);
 	}
 }

@@ -27,7 +27,7 @@ class FacebookAuthAction extends AbstractAction {
 	/**
 	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
-	public $neededModules = array('FACEBOOK_PUBLIC_KEY', 'FACEBOOK_PRIVATE_KEY');
+	public $neededModules = ['FACEBOOK_PUBLIC_KEY', 'FACEBOOK_PRIVATE_KEY'];
 	
 	/**
 	 * @see	\wcf\action\IAction::execute()
@@ -94,7 +94,7 @@ class FacebookAuthAction extends AbstractAction {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
 						$password = StringUtil::getRandomID();
 						$userEditor = new UserEditor($user);
-						$userEditor->update(array('password' => $password));
+						$userEditor->update(['password' => $password]);
 						
 						// reload user to retrieve salt
 						$user = new User($user->userID);

@@ -38,7 +38,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * install/update instructions
 	 * @var	array
 	 */
-	public $instruction = array();
+	public $instruction = [];
 	
 	/**
 	 * Creates a new AbstractPackageInstallationPlugin object.
@@ -46,7 +46,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * @param	\wcf\system\package\PackageInstallationDispatcher	$installation
 	 * @param	array							$instruction
 	 */
-	public function __construct(PackageInstallationDispatcher $installation, $instruction = array()) {
+	public function __construct(PackageInstallationDispatcher $installation, $instruction = []) {
 		$this->installation = $installation;
 		$this->instruction = $instruction;
 		
@@ -83,7 +83,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		
 		return $statement->fetchSingleColumn() > 0;
 	}
@@ -98,7 +98,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 		$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 	}
 	
 	/**

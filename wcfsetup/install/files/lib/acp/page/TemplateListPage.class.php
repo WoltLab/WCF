@@ -26,7 +26,7 @@ class TemplateListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.template.canManageTemplate');
+	public $neededPermissions = ['admin.template.canManageTemplate'];
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -46,7 +46,7 @@ class TemplateListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('templateID', 'templateName', 'lastModificationTime');
+	public $validSortFields = ['templateID', 'templateName', 'lastModificationTime'];
 	
 	/**
 	 * template group id
@@ -70,13 +70,13 @@ class TemplateListPage extends SortablePage {
 	 * available template groups
 	 * @var	array
 	 */
-	public $availableTemplateGroups = array();
+	public $availableTemplateGroups = [];
 	
 	/**
 	 * available applications
 	 * @var	array
 	 */
-	public $availableApplications = array();
+	public $availableApplications = [];
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -95,11 +95,11 @@ class TemplateListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		if ($this->templateGroupID) $this->objectList->getConditionBuilder()->add('template.templateGroupID = ?', array($this->templateGroupID));
+		if ($this->templateGroupID) $this->objectList->getConditionBuilder()->add('template.templateGroupID = ?', [$this->templateGroupID]);
 		else $this->objectList->getConditionBuilder()->add('template.templateGroupID IS NULL');
 		
-		if ($this->searchTemplateName) $this->objectList->getConditionBuilder()->add('templateName LIKE ?', array('%'.$this->searchTemplateName.'%'));
-		if ($this->application) $this->objectList->getConditionBuilder()->add('application = ?', array($this->application));
+		if ($this->searchTemplateName) $this->objectList->getConditionBuilder()->add('templateName LIKE ?', ['%'.$this->searchTemplateName.'%']);
+		if ($this->application) $this->objectList->getConditionBuilder()->add('application = ?', [$this->application]);
 	}
 	
 	/**
@@ -109,7 +109,7 @@ class TemplateListPage extends SortablePage {
 		parent::readData();
 		
 		// get template groups
-		$this->availableTemplateGroups = TemplateGroup::getSelectList(array(), 1);
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([], 1);
 		
 		// get applications
 		$applications = ApplicationHandler::getInstance()->getApplications();
@@ -134,12 +134,12 @@ class TemplateListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'templateGroupID' => $this->templateGroupID,
 			'searchTemplateName' => $this->searchTemplateName,
 			'application' => $this->application,
 			'availableTemplateGroups' => $this->availableTemplateGroups,
 			'availableApplications' => $this->availableApplications
-		));
+		]);
 	}
 }

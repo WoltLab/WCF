@@ -34,7 +34,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	 * parsed contents of $_REQUEST['id']
 	 * @var	integer[]
 	 */
-	public $objectIDs = array();
+	public $objectIDs = [];
 	
 	/**
 	 * list of feed-entries for the current page
@@ -54,10 +54,10 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'items' => $this->items,
 			'title' => $this->title
-		));
+		]);
 	}
 	
 	/**

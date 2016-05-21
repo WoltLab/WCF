@@ -18,7 +18,7 @@ class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$data = array();
+		$data = [];
 		foreach (CategoryHandler::getInstance()->getCategories() as $objectTypeName => $categories) {
 			$objectType = CategoryHandler::getInstance()->getObjectTypeByName($objectTypeName);
 			$aclObjectType = $objectType->getProcessor()->getObjectTypeName('com.woltlab.wcf.acl');
@@ -29,17 +29,17 @@ class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder {
 			$aclOptions = ACLHandler::getInstance()->getPermissions(ACLHandler::getInstance()->getObjectTypeID($aclObjectType), array_keys($categories));
 			$options = $aclOptions['options']->getObjects();
 			
-			foreach (array('group', 'user') as $type) {
+			foreach (['group', 'user'] as $type) {
 				foreach ($aclOptions[$type] as $categoryID => $optionData) {
 					if (!isset($data[$categoryID])) {
-						$data[$categoryID] = array(
-							'group' => array(),
-							'user' => array()
-						);
+						$data[$categoryID] = [
+							'group' => [],
+							'user' => []
+						];
 					}
 					
 					foreach ($optionData as $typeID => $optionValues) {
-						$data[$categoryID][$type][$typeID] = array();
+						$data[$categoryID][$type][$typeID] = [];
 						
 						foreach ($optionValues as $optionID => $optionValue) {
 							$data[$categoryID][$type][$typeID][$options[$optionID]->optionName] = $optionValue;

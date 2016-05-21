@@ -17,10 +17,10 @@ class UserGroupCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$data = array(
-			'types' => array(),
-			'groups' => array()
-		);
+		$data = [
+			'types' => [],
+			'groups' => []
+		];
 		
 		// get all user groups
 		$groupList = new UserGroupList();
@@ -29,7 +29,7 @@ class UserGroupCacheBuilder extends AbstractCacheBuilder {
 		
 		foreach ($groups as $group) {
 			if (!isset($data['types'][$group->groupType])) {
-				$data['types'][$group->groupType] = array();
+				$data['types'][$group->groupType] = [];
 			}
 			
 			$data['types'][$group->groupType][] = $group->groupID;

@@ -19,13 +19,13 @@ abstract class TreeMenu extends SingletonFactory {
 	 * list of visible menu items
 	 * @var	ITreeMenuItem[]
 	 */
-	public $menuItemList = array();
+	public $menuItemList = [];
 	
 	/**
 	 * list of the names of the active menu items
 	 * @var	string[]
 	 */
-	public $activeMenuItems = array();
+	public $activeMenuItems = [];
 	
 	/**
 	 * list of all menu items
@@ -60,7 +60,7 @@ abstract class TreeMenu extends SingletonFactory {
 		// call loadCache event
 		EventHandler::getInstance()->fireAction($this, 'loadCache');
 		
-		$this->menuItems = array();
+		$this->menuItems = [];
 	}
 	
 	/**
@@ -161,7 +161,7 @@ abstract class TreeMenu extends SingletonFactory {
 	 * @param	string		$menuItem	name of the active menu item
 	 */
 	public function setActiveMenuItem($menuItem) {
-		$newActiveMenuItems = array();
+		$newActiveMenuItems = [];
 		while (isset($this->menuItemList[$menuItem])) {
 			$newActiveMenuItems[] = $menuItem;
 			$menuItem = $this->menuItemList[$menuItem]->parentMenuItem;
@@ -203,6 +203,6 @@ abstract class TreeMenu extends SingletonFactory {
 	public function getMenuItems($parentMenuItem = null) {
 		if ($parentMenuItem === null) return $this->menuItems;
 		if (isset($this->menuItems[$parentMenuItem])) return $this->menuItems[$parentMenuItem];
-		return array();
+		return [];
 	}
 }
