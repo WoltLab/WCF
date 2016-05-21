@@ -32,6 +32,7 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$query.'%']);
 		
+		/** @var User $user */
 		while ($user = $statement->fetchObject(User::class)) {
 			if (UserGroup::isAccessibleGroup($user->getGroupIDs())) {
 				$results[] = new ACPSearchResult($user->username, LinkHandler::getInstance()->getLink('UserEdit', [

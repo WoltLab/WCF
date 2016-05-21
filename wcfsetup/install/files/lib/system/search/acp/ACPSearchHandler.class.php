@@ -56,6 +56,7 @@ class ACPSearchHandler extends SingletonFactory {
 				throw new ImplementationException($className, IACPSearchResultProvider::class);
 			}
 			
+			/** @var IACPSearchResultProvider $provider */
 			$provider = new $className();
 			$results = $provider->search($query, $maxResultsPerProvider);
 			

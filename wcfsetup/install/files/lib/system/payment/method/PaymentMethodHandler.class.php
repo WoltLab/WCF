@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\payment\method;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -17,13 +18,13 @@ use wcf\system\WCF;
 class PaymentMethodHandler extends SingletonFactory {
 	/**
 	 * payment methods
-	 * @var	array
+	 * @var	IPaymentMethod[]
 	 */
 	protected $paymentMethods = [];
 	
 	/**
 	 * payment method object types
-	 * @var	array
+	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = [];
 	
@@ -43,7 +44,7 @@ class PaymentMethodHandler extends SingletonFactory {
 	/**
 	 * Returns the available payment methods.
 	 * 
-	 * @return	array
+	 * @return	IPaymentMethod[]
 	 */
 	public function getPaymentMethods() {
 		return $this->paymentMethods;

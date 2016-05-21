@@ -10,6 +10,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
 use wcf\system\upload\AvatarUploadFileValidationStrategy;
+use wcf\system\upload\UploadFile;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -66,7 +67,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 * Handles uploaded attachments.
 	 */
 	public function upload() {
-		// save files
+		/** @var UploadFile[] $files */
 		$files = $this->parameters['__files']->getFiles();
 		$userID = (!empty($this->parameters['userID']) ? intval($this->parameters['userID']) : WCF::getUser()->userID);
 		$user = ($userID != WCF::getUser()->userID ? new User($userID) : WCF::getUser());

@@ -25,7 +25,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	
 	/**
 	 * list of available object types
-	 * @var	array
+	 * @var	ISearchableObjectType[]
 	 */
 	protected $availableObjectTypes = [];
 	
@@ -51,7 +51,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	/**
 	 * Returns a list of available object types.
 	 * 
-	 * @return	array
+	 * @return	ISearchableObjectType[]
 	 */
 	public function getAvailableObjectTypes() {
 		return $this->availableObjectTypes;
@@ -61,7 +61,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	 * Returns the object type with the given name.
 	 * 
 	 * @param	string		$objectTypeName
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ISearchableObjectType|null
 	 */
 	public function getObjectType($objectTypeName) {
 		if (isset($this->availableObjectTypes[$objectTypeName])) {

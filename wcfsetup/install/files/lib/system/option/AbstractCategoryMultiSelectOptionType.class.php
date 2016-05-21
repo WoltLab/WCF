@@ -34,6 +34,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
+		/** @var CategoryNodeTree $categoryTree */
 		$categoryTree = new $this->nodeTreeClassname($this->objectType);
 		$categoryList = $categoryTree->getIterator();
 		$categoryList->setMaxDepth(0);

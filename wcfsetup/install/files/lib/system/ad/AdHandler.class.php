@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\ad;
+use wcf\data\ad\Ad;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\AdCacheBuilder;
@@ -20,7 +21,7 @@ use wcf\system\WCF;
 class AdHandler extends SingletonFactory {
 	/**
 	 * list of ad objects grouped by ad location
-	 * @var	array
+	 * @var	Ad[][]
 	 */
 	protected $ads = [];
 	

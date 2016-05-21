@@ -48,6 +48,8 @@ class SetupLanguage extends Language {
 			// get language items
 			$categoriesToCache = [];
 			$items = $xml->xpath()->query('/ns:language/ns:category/ns:item');
+			
+			/** @var \DOMElement $item */
 			foreach ($items as $item) {
 				$categoriesToCache[] = [
 					'name' => $item->getAttribute('name'),
