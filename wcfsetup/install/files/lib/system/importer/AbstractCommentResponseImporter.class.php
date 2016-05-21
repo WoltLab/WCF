@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Imports comment responses.
  * 
  * @author	Tim Duesterhus, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer

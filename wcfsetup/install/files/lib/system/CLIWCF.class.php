@@ -28,7 +28,7 @@ set_exception_handler(['wcf\system\CLIWCF', 'handleCLIException']);
  * Extends WCF class with functions for CLI.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
