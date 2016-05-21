@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  */
 class ModerationQueueReportAction extends ModerationQueueAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['prepareReport', 'removeContent', 'removeReport', 'report'];
 	

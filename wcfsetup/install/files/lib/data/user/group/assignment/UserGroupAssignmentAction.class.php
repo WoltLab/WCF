@@ -16,22 +16,22 @@ use wcf\system\condition\ConditionHandler;
  */
 class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.user.canManageGroupAssignment'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = ['admin.user.canManageGroupAssignment'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.userGroupAssignment', $this->objectIDs);
@@ -40,7 +40,7 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
 		foreach ($this->objects as $assignment) {
@@ -51,7 +51,7 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();

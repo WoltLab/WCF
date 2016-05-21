@@ -16,7 +16,7 @@ use wcf\system\option\FileSizeOptionType;
  */
 class FileSizeUserGroupOptionType extends FileSizeOptionType implements IUserGroupOptionType {
 	/**
-	 * @see	\wcf\system\option\user.group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		if ($groupValue > $defaultValue) {

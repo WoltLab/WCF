@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class LanguageModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (($lang = $tplObj->get('__language')) === null) {

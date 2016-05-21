@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::executeAction()
+	 * @inheritDoc
 	 */
 	public function executeAction(DatabaseObjectList $objectList) {
 		if (!($objectList instanceof UserList)) return;
@@ -32,7 +32,7 @@ class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getObjectList()
+	 * @inheritDoc
 	 */
 	public function getObjectList() {
 		$userList = parent::getObjectList();

@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  */
 class ImageBBCode extends AbstractBBCode {
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		$src = '';

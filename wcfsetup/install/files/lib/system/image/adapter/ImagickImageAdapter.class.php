@@ -59,7 +59,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::load()
+	 * @inheritDoc
 	 */
 	public function load($image, $type = '') {
 		if (!($image instanceof \Imagick)) {
@@ -72,7 +72,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::loadFile()
+	 * @inheritDoc
 	 */
 	public function loadFile($file) {
 		try {
@@ -108,14 +108,14 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 * @inheritDoc
 	 */
 	public function createEmptyImage($width, $height) {
 		$this->imagick->newImage($width, $height, 'white');
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::createThumbnail()
+	 * @inheritDoc
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		$thumbnail = clone $this->imagick;
@@ -146,7 +146,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::clip()
+	 * @inheritDoc
 	 */
 	public function clip($originX, $originY, $width, $height) {
 		if ($this->imagick->getImageFormat() == 'GIF') {
@@ -164,7 +164,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
+	 * @inheritDoc
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight) {
 		$this->clip($originX, $originY, $originWidth, $originHeight);
@@ -173,7 +173,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawRectangle()
+	 * @inheritDoc
 	 */
 	public function drawRectangle($startX, $startY, $endX, $endY) {
 		$draw = new \ImagickDraw();
@@ -185,7 +185,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
+	 * @inheritDoc
 	 */
 	public function drawText($text, $x, $y, $font, $size, $opacity = 1.0) {
 		$draw = new \ImagickDraw();
@@ -212,7 +212,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
+	 * @inheritDoc
 	 */
 	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0) {
 		$draw = new \ImagickDraw();
@@ -269,7 +269,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::textFitsImage()
+	 * @inheritDoc
 	 */
 	public function textFitsImage($text, $margin, $font, $size) {
 		$draw = new \ImagickDraw();
@@ -281,14 +281,14 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::adjustFontSize()
+	 * @inheritDoc
 	 */
 	public function adjustFontSize($text, $margin, $font, $size) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::setColor()
+	 * @inheritDoc
 	 */
 	public function setColor($red, $green, $blue) {
 		$this->color = new \ImagickPixel();
@@ -296,7 +296,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::hasColor()
+	 * @inheritDoc
 	 */
 	public function hasColor() {
 		if ($this->color instanceof \ImagickPixel) {
@@ -307,7 +307,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 * @inheritDoc
 	 */
 	public function setTransparentColor($red, $green, $blue) {
 		$color = 'rgb(' . $red . ',' . $green . ',' . $blue . ')';
@@ -315,14 +315,14 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @inheritDoc
 	 */
 	public function getImage() {
 		return $this->imagick;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::writeImage()
+	 * @inheritDoc
 	 */
 	public function writeImage($image, $filename) {
 		if (!($image instanceof \Imagick)) {
@@ -341,28 +341,28 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getHeight()
+	 * @inheritDoc
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getWidth()
+	 * @inheritDoc
 	 */
 	public function getWidth() {
 		return $this->width;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getType()
+	 * @inheritDoc
 	 */
 	public function getType() {
 		return 0;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
+	 * @inheritDoc
 	 */
 	public function rotate($degrees) {
 		$image = clone $this->imagick;
@@ -372,7 +372,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 * @inheritDoc
 	 */
 	public function overlayImage($file, $x, $y, $opacity) {
 		try {
@@ -399,14 +399,14 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImageRelative()
+	 * @inheritDoc
 	 */
 	public function overlayImageRelative($file, $position, $margin, $opacity) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::isSupported()
+	 * @inheritDoc
 	 */
 	public static function isSupported() {
 		return class_exists('\Imagick', false);

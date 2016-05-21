@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultProvider implements IACPSearchResultProvider {
 	/**
-	 * @see	\wcf\system\search\acp\AbstractCategorizedACPSearchResultProvider::$listClassName
+	 * @inheritDoc
 	 */
 	protected $listClassName = 'wcf\data\user\group\option\category\UserGroupOptionCategoryList';
 	
 	/**
-	 * @see	\wcf\system\search\acp\IACPSearchResultProvider::search()
+	 * @inheritDoc
 	 */
 	public function search($query) {
 		$results = [];

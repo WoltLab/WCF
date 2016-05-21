@@ -28,7 +28,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 	}
 	
 	/**
-	 * @see	\wcf\system\form\IFormElementContainer::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML($formName) {
 		$content = '';

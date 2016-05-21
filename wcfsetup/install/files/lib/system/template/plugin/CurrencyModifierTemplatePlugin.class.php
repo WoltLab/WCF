@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class CurrencyModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return number_format(round($tagArgs[0], 2), 2, WCF::getLanguage()->get('wcf.global.decimalPoint'), WCF::getLanguage()->get('wcf.global.thousandsSeparator'));

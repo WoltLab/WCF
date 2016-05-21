@@ -13,17 +13,17 @@ namespace wcf\system\cache\builder;
  */
 class UserGroupOptionCacheBuilder extends OptionCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$optionClassName
+	 * @inheritDoc
 	 */
 	protected $optionClassName = 'wcf\data\user\group\option\UserGroupOption';
 	
 	/**
-	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$tableName
+	 * @inheritDoc
 	 */
 	protected $tableName = 'user_group_option';
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$data = parent::rebuild($parameters);

@@ -14,7 +14,7 @@ use wcf\data\category\CategoryList;
  */
 class CategoryCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$list = new CategoryList();

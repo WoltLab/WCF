@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class CronjobLogAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\cronjob\log\CronjobLogEditor';
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['clearAll'];
 	

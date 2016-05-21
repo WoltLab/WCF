@@ -17,33 +17,33 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  */
 class PasswordOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\TextOptionType::$inputType
+	 * @inheritDoc
 	 */
 	protected $inputType = 'password';
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
+	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(User $user, Option $option, $value) {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 * @inheritDoc
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;

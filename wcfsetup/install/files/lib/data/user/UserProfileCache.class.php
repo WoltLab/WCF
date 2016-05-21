@@ -18,35 +18,35 @@ use wcf\system\SingletonFactory;
  */
 class UserProfileCache extends SingletonFactory {
 	/**
-	 * @see	UserProfiltRuntimeCache::cacheObjectID()
+	 * @inheritDoc
 	 */
 	public function cacheUserID($userID) {
 		UserProfileRuntimeCache::getInstance()->cacheObjectID($userID);
 	}
 	
 	/**
-	 * @see	UserProfiltRuntimeCache::cacheUserIDs()
+	 * @inheritDoc
 	 */
 	public function cacheUserIDs(array $userIDs) {
 		UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
 	}
 	
 	/**
-	 * @see	UserProfiltRuntimeCache::getCachedObjects()
+	 * @inheritDoc
 	 */
 	public function getCachedUserProfiles() {
 		return UserProfileRuntimeCache::getInstance()->getCachedObjects();
 	}
 	
 	/**
-	 * @see	UserProfiltRuntimeCache::getObject()
+	 * @inheritDoc
 	 */
 	public function getUserProfile($userID) {
 		return UserProfileRuntimeCache::getInstance()->getObject($userID);
 	}
 	
 	/**
-	 * @see	UserProfiltRuntimeCache::getObjects()
+	 * @inheritDoc
 	 */
 	public function getUserProfiles(array $userIDs) {
 		return UserProfileRuntimeCache::getInstance()->getObjects($userIDs);

@@ -26,7 +26,7 @@ class AbstractPollOptionVoteImporter extends AbstractImporter {
 	protected $pollObjectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);

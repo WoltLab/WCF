@@ -18,32 +18,32 @@ use wcf\util\StringUtil;
  */
 class AttachmentListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.attachment.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.attachment.canManageAttachment'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'uploadTime';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortOrder
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['attachmentID', 'filename', 'filesize', 'downloads', 'uploadTime', 'lastDownloadTime'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\attachment\AdministrativeAttachmentList';
 	
@@ -78,7 +78,7 @@ class AttachmentListPage extends SortablePage {
 	public $stats = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -89,7 +89,7 @@ class AttachmentListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -125,7 +125,7 @@ class AttachmentListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

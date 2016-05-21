@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'option';
 	
@@ -29,7 +29,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata', 'supporti18n', 'requirei18n'];
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @inheritDoc
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values

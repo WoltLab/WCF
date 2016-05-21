@@ -48,7 +48,7 @@ class SimpleMessageParser extends SingletonFactory {
 	public $message = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();

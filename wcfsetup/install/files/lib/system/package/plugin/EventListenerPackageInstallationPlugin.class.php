@@ -17,17 +17,17 @@ use wcf\system\WCF;
  */
 class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\event\listener\EventListenerEditor';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @inheritDoc
 	 */
 	public $tagName = 'eventlistener';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -65,7 +65,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		$nice = (isset($data['elements']['nice'])) ? intval($data['elements']['nice']) : 0;
@@ -86,7 +86,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
 		// if an event listener is updated without a name given, keep the
@@ -111,7 +111,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		if (!$data['listenerName']) {
@@ -148,7 +148,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		parent::uninstall();

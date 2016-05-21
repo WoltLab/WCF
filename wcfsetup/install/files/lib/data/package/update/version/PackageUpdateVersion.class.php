@@ -24,12 +24,12 @@ use wcf\data\DatabaseObject;
  */
 class PackageUpdateVersion extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'package_update_version';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'packageUpdateVersionID';
 }

@@ -22,12 +22,12 @@ use wcf\util\PasswordUtil;
  */
 class SendNewPasswordWorker extends AbstractWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 50;
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::countObjects()
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		$userList = new UserList();
@@ -37,7 +37,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		$userList = new UserList();
@@ -53,14 +53,14 @@ class SendNewPasswordWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProceedURL()
+	 * @inheritDoc
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('UserList');
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProgress()
+	 * @inheritDoc
 	 */
 	public function getProgress() {
 		$progress = parent::getProgress();
@@ -97,7 +97,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(['admin.user.canEditPassword']);

@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class StyleEditForm extends StyleAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style';
 	
@@ -36,7 +36,7 @@ class StyleEditForm extends StyleAddForm {
 	public $styleID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->styleID = intval($_REQUEST['id']);
@@ -49,7 +49,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\StyleAddForm::readStyleVariables()
+	 * @inheritDoc
 	 */
 	protected function readStyleVariables() {
 		$this->variables = $this->style->getVariables();
@@ -74,7 +74,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\StyleAddForm::setVariables()
+	 * @inheritDoc
 	 */
 	protected function setVariables() {
 		parent::setVariables();
@@ -86,7 +86,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -110,7 +110,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -155,7 +155,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

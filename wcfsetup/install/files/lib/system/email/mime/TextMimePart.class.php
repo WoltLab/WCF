@@ -38,21 +38,21 @@ class TextMimePart extends AbstractMimePart {
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContentType()
+	 * @inheritDoc
 	 */
 	public function getContentType() {
 		return $this->mimeType."; charset=UTF-8";
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContentTransferEncoding()
+	 * @inheritDoc
 	 */
 	public function getContentTransferEncoding() {
 		return 'quoted-printable';
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContent()
+	 * @inheritDoc
 	 */
 	public function getContent() {
 		return $this->content;

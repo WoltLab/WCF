@@ -45,12 +45,12 @@ class InstallPackageAction extends AbstractDialogAction {
 	public $queueID = 0;
 	
 	/**
-	 * @see	\wcf\action\AbstractDialogAction::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'packageInstallationStep';
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -189,7 +189,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\AbstractDialogAction\AbstractDialogAction::validateStep()
+	 * @inheritDoc
 	 */
 	protected function validateStep() {
 		switch ($this->step) {

@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class UserGroupOptionHandler extends OptionHandler {
 	/**
-	 * @see	\wcf\system\option\OptionHandler::$cacheClass
+	 * @inheritDoc
 	 */
 	protected $cacheClass = 'wcf\system\cache\builder\UserGroupOptionCacheBuilder';
 	
@@ -45,7 +45,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::getTypeObject()
+	 * @inheritDoc
 	 */
 	public function getTypeObject($type) {
 		$objectType = parent::getTypeObject($type);
@@ -58,7 +58,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::checkOption()
+	 * @inheritDoc
 	 */
 	protected function checkOption(Option $option) {
 		if (parent::checkOption($option)) {
@@ -74,7 +74,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::getClassName()
+	 * @inheritDoc
 	 */
 	protected function getClassName($type) {
 		$className = 'wcf\system\option\user\group\\'.ucfirst($type).'UserGroupOptionType';
@@ -91,7 +91,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
@@ -129,7 +129,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::validateOption()
+	 * @inheritDoc
 	 */
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);

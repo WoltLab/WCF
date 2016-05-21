@@ -19,12 +19,12 @@ use wcf\system\WCF;
  */
 class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'package_installation_sql_log';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -81,7 +81,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// get logged sql tables/columns
@@ -152,14 +152,14 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @inheritDoc
 	 */
 	public static function getDefaultFilename() {
 		return 'install.sql';
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 * @inheritDoc
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
 		if (!$instruction) {

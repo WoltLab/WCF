@@ -38,7 +38,7 @@ class FileOptionType extends AbstractOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		$this->createUploadHandler($option);
@@ -78,7 +78,7 @@ class FileOptionType extends AbstractOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign([
@@ -90,7 +90,7 @@ class FileOptionType extends AbstractOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		$this->createUploadHandler($option);

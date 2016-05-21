@@ -18,7 +18,7 @@ class LogoutAction extends \wcf\acp\action\LogoutAction {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		AbstractSecureAction::execute();

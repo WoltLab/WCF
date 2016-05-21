@@ -14,7 +14,7 @@ use wcf\data\paid\subscription\PaidSubscriptionList;
  */
 class PaidSubscriptionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$subscriptionList = new PaidSubscriptionList();

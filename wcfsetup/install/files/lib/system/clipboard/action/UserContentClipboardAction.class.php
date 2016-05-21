@@ -16,12 +16,12 @@ use wcf\system\WCF;
  */
 class UserContentClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
+	 * @inheritDoc
 	 */
 	protected $supportedActions = ['revertContentChanges'];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		$item = parent::execute($objects, $action);
@@ -41,14 +41,14 @@ class UserContentClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getClassName()
+	 * @inheritDoc
 	 */
 	public function getClassName() {
 		return 'wcf\data\user\UserContentAction';
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 * @inheritDoc
 	 */
 	public function getTypeName() {
 		return 'com.woltlab.wcf.user';

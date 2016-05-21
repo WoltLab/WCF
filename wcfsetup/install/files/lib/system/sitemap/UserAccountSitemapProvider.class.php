@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class UserAccountSitemapProvider implements ISitemapProvider {
 	/**
-	 * @see	\wcf\system\sitemap\ISitemapProvider::getTemplate()
+	 * @inheritDoc
 	 */
 	public function getTemplate() {
 		return WCF::getTPL()->fetch('sitemapUserAccount');

@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class UserOptionSetDefaultsForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.userOptionDefaults';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.user.canManageUserOption'];
 	
@@ -39,7 +39,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	public $applyChangesToExistingUsers = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -60,7 +60,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -69,7 +69,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -120,7 +120,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -131,7 +131,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

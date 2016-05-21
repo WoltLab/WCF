@@ -16,7 +16,7 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  */
 abstract class AbstractSharedUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setObject()
+	 * @inheritDoc
 	 */
 	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = []) {
 		parent::setObject($notification, $object, $author, $additionalData);

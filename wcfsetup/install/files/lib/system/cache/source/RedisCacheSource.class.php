@@ -63,7 +63,7 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flush()
+	 * @inheritDoc
 	 */
 	public function flush($cacheName, $useWildcard) {
 		$parts = explode('-', $cacheName, 2);
@@ -85,7 +85,7 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
+	 * @inheritDoc
 	 */
 	public function flushAll() {
 		// set flush key to current time if it does not exist yet (this prevents falling back to 0 if the key gets deleted)
@@ -96,7 +96,7 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::get()
+	 * @inheritDoc
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$parts = explode('-', $cacheName, 2);
@@ -137,7 +137,7 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::set()
+	 * @inheritDoc
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		// split parameterized cache entry names into cache name and cache index

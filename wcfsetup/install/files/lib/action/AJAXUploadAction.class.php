@@ -15,7 +15,7 @@ use wcf\util\JSON;
  */
 class AJAXUploadAction extends AJAXProxyAction {
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -24,7 +24,7 @@ class AJAXUploadAction extends AJAXProxyAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\AJAXInvokeAction::sendResponse()
+	 * @inheritDoc
 	 */
 	protected function sendResponse() {
 		if (!isset($_POST['isFallback'])) {

@@ -17,27 +17,27 @@ use wcf\system\WCF;
  */
 class ACPSessionLogPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.session';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'acpSessionLog';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'time';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['sessionAccessLogID', 'ipAddress', 'time', 'requestURI', 'requestMethod', 'className'];
 	
@@ -54,12 +54,12 @@ class ACPSessionLogPage extends SortablePage {
 	public $sessionLog = null;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\acp\session\access\log\ACPSessionAccessLogList';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -73,7 +73,7 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -82,7 +82,7 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readObjects()
+	 * @inheritDoc
 	 */
 	protected function readObjects() {
 		$this->sqlOrderBy = 'acp_session_access_log.'.$this->sortField." ".$this->sortOrder;
@@ -91,7 +91,7 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

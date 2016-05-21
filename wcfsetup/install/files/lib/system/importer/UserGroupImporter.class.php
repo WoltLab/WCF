@@ -15,12 +15,12 @@ use wcf\data\user\group\UserGroupAction;
  */
 class UserGroupImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\user\group\UserGroup';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		if ($data['groupType'] < 4) {

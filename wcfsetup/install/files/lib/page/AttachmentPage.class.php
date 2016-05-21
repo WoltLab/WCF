@@ -20,7 +20,7 @@ use wcf\util\FileReader;
  */
 class AttachmentPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\IPage::$useTemplate
+	 * @inheritDoc
 	 */
 	public $useTemplate = false;
 	
@@ -67,7 +67,7 @@ class AttachmentPage extends AbstractPage {
 	public $eTag = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -92,7 +92,7 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		parent::checkPermissions();
@@ -116,7 +116,7 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -159,7 +159,7 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		parent::show();

@@ -21,7 +21,7 @@ use wcf\util\DateUtil;
  */
 class TimeModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$timestamp = intval($tagArgs[0]);

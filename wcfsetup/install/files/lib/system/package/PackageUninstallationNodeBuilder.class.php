@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	/**
-	 * @see	\wcf\system\package\PackageInstallationNodeBuilder::buildNodes()
+	 * @inheritDoc
 	 */
 	public function buildNodes() {
 		if (!empty($this->parentNode)) {
@@ -29,7 +29,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	}
 	
 	/**
-	 * @see	\wcf\system\package\PackageInstallationNodeBuilder::buildPluginNodes()
+	 * @inheritDoc
 	 */
 	protected function buildPluginNodes() {
 		if (empty($this->node)) {
@@ -74,7 +74,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	}
 	
 	/**
-	 * @see	\wcf\system\package\PackageInstallationNodeBuilder::buildPackageNode()
+	 * @inheritDoc
 	 */
 	protected function buildPackageNode() {
 		$this->parentNode = $this->node;

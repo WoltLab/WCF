@@ -13,17 +13,17 @@ namespace wcf\system\user\notification\object\type;
  */
 class UserProfileCommentResponseUserNotificationObjectType extends AbstractUserNotificationObjectType {
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$decoratorClassName
+	 * @inheritDoc
 	 */
 	protected static $decoratorClassName = 'wcf\system\user\notification\object\CommentResponseUserNotificationObject';
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectClassName
+	 * @inheritDoc
 	 */
 	protected static $objectClassName = 'wcf\data\comment\response\CommentResponse';
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectListClassName
+	 * @inheritDoc
 	 */
 	protected static $objectListClassName = 'wcf\data\comment\response\CommentResponseList';
 }

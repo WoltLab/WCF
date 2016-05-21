@@ -17,7 +17,7 @@ use wcf\system\menu\user\profile\UserProfileMenu;
  */
 class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getContent'];
 	

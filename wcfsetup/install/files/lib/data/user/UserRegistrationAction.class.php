@@ -15,7 +15,7 @@ use wcf\util\UserUtil;
  */
 class UserRegistrationAction extends UserAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['validateEmailAddress', 'validatePassword', 'validateUsername'];
 	

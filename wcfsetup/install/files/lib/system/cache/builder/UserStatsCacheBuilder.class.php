@@ -14,12 +14,12 @@ use wcf\system\WCF;
  */
 class UserStatsCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
+	 * @inheritDoc
 	 */
 	protected $maxLifetime = 600;
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$data = [];

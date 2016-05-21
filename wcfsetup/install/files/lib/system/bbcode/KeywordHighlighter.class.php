@@ -58,7 +58,7 @@ class KeywordHighlighter extends SingletonFactory {
 	];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// take keywords from request

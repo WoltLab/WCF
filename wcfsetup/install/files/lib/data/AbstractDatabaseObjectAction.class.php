@@ -159,7 +159,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	protected function __init($baseClass, $indexName) { }
 	
 	/**
-	 * @see	\wcf\data\IDatabaseObjectAction::validateAction()
+	 * @inheritDoc
 	 */
 	public function validateAction() {
 		// validate if user is logged in
@@ -189,7 +189,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	\wcf\data\IDatabaseObjectAction::executeAction()
+	 * @inheritDoc
 	 */
 	public function executeAction() {
 		// execute action
@@ -220,14 +220,14 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	\wcf\data\IDatabaseObjectAction::getActionName()
+	 * @inheritDoc
 	 */
 	public function getActionName() {
 		return $this->action;
 	}
 	
 	/**
-	 * @see	\wcf\data\IDatabaseObjectAction::getObjectIDs()
+	 * @inheritDoc
 	 */
 	public function getObjectIDs() {
 		return $this->objectIDs;
@@ -249,14 +249,14 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	\wcf\data\IDatabaseObjectAction::getParameters()
+	 * @inheritDoc
 	 */
 	public function getParameters() {
 		return $this->parameters;
 	}
 	
 	/**
-	 * @see	\wcf\data\IDatabaseObjectAction::getReturnValues()
+	 * @inheritDoc
 	 */
 	public function getReturnValues() {
 		return [
@@ -280,7 +280,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		// validate permissions
@@ -333,7 +333,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		if (empty($this->objects)) {

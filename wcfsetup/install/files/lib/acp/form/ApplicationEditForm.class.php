@@ -25,7 +25,7 @@ use wcf\util\StringUtil;
  */
 class ApplicationEditForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
@@ -54,7 +54,7 @@ class ApplicationEditForm extends AbstractForm {
 	public $domainPath = '';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.configuration.canManageApplication'];
 	
@@ -65,12 +65,12 @@ class ApplicationEditForm extends AbstractForm {
 	public $packageID = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'applicationEdit';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -83,7 +83,7 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -94,7 +94,7 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -107,7 +107,7 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -162,7 +162,7 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -187,7 +187,7 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

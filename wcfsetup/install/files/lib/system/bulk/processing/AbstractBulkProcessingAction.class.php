@@ -15,35 +15,35 @@ use wcf\data\object\type\AbstractObjectTypeProcessor;
  */
 abstract class AbstractBulkProcessingAction extends AbstractObjectTypeProcessor implements IBulkProcessingAction {
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::isAvailable()
+	 * @inheritDoc
 	 */
 	public function isAvailable() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		// does nothing

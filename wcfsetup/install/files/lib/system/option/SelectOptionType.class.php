@@ -17,7 +17,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	protected $allowEmptyValue = false;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		$options = $this->parseEnableOptions($option);
@@ -34,7 +34,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$options = $this->parseEnableOptions($option);
@@ -85,7 +85,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 * @inheritDoc
 	 */
 	public function hideLabelInSearch() {
 		return true;

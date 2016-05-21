@@ -253,7 +253,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeCreateTableStatement()
+	 * @inheritDoc
 	 */
 	protected function executeCreateTableStatement($tableName, $columns, $indices = []) {
 		if ($this->test) {
@@ -277,7 +277,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeAddColumnStatement()
+	 * @inheritDoc
 	 */
 	protected function executeAddColumnStatement($tableName, $columnName, $columnData) {
 		if ($this->test) {
@@ -295,7 +295,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeAddColumnStatement()
+	 * @inheritDoc
 	 */
 	protected function executeAlterColumnStatement($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		if ($this->test) {
@@ -318,7 +318,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeAddIndexStatement()
+	 * @inheritDoc
 	 */
 	protected function executeAddIndexStatement($tableName, $indexName, $indexData) {
 		if (!$this->test) {
@@ -331,7 +331,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeAddForeignKeyStatement()
+	 * @inheritDoc
 	 */
 	protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData) {
 		if (!$this->test) {
@@ -344,7 +344,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeDropColumnStatement()
+	 * @inheritDoc
 	 */
 	protected function executeDropColumnStatement($tableName, $columnName) {
 		if ($this->test) {
@@ -364,7 +364,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeDropIndexStatement()
+	 * @inheritDoc
 	 */
 	protected function executeDropIndexStatement($tableName, $indexName) {
 		if ($this->test) {
@@ -384,7 +384,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeDropForeignKeyStatement()
+	 * @inheritDoc
 	 */
 	protected function executeDropForeignKeyStatement($tableName, $indexName) {
 		if ($this->test) {
@@ -404,7 +404,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeDropTableStatement()
+	 * @inheritDoc
 	 */
 	protected function executeDropTableStatement($tableName) {
 		if ($this->test) {
@@ -424,7 +424,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeStandardStatement()
+	 * @inheritDoc
 	 */
 	protected function executeStandardStatement($query) {
 		if (!$this->test) {

@@ -17,7 +17,7 @@ use wcf\util\XML;
  */
 class SetupLanguage extends Language {
 	/**
-	 * @see	\wcf\data\DatabaseObject::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($languageID, array $row, Language $language = null) {
 		if ($row === null) {
@@ -28,7 +28,7 @@ class SetupLanguage extends Language {
 	}
 	
 	/**
-	 * @see	\wcf\data\language\Language::loadCategory()
+	 * @inheritDoc
 	 */
 	protected function loadCategory($category) {
 		return false;

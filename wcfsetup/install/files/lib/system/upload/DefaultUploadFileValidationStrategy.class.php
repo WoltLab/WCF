@@ -43,7 +43,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	}
 	
 	/**
-	 * @see	\wcf\system\upload\IUploadFileValidationStrategy::validate()
+	 * @inheritDoc
 	 */
 	public function validate(UploadFile $uploadFile) {
 		if ($uploadFile->getErrorCode() != 0) {

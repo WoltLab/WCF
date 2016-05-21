@@ -18,12 +18,12 @@ use wcf\system\WCF;
  */
 class SessionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['keepAlive'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\session\SessionEditor';
 	

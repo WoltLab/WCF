@@ -16,7 +16,7 @@ use wcf\system\application\ApplicationHandler;
  */
 class TemplateList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\template\Template';
 	
@@ -32,7 +32,7 @@ class TemplateList extends DatabaseObjectList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();

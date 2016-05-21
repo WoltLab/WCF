@@ -14,7 +14,7 @@ use wcf\data\captcha\question\CaptchaQuestionList;
  */
 class CaptchaQuestionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$questionList = new CaptchaQuestionList();

@@ -13,7 +13,7 @@ namespace wcf\system\stat;
  */
 class UserStatDailyHandler extends AbstractStatDailyHandler {
 	/**
-	 * @see	\wcf\system\stat\IStatDailyHandler::getData()
+	 * @inheritDoc
 	 */
 	public function getData($date) {
 		return [

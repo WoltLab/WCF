@@ -18,12 +18,12 @@ use wcf\system\WCF;
  */
 class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getGroupedUserList'];
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readString('date');
@@ -34,7 +34,7 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		$year = $month = $day = 0;

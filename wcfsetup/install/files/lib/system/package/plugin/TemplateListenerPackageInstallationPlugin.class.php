@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\template\listener\TemplateListenerEditor';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -42,7 +42,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		$niceValue = isset($data['elements']['nice']) ? intval($data['elements']['nice']) : 0;
@@ -66,7 +66,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -91,7 +91,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @inheritDoc
 	 */
 	protected function cleanup() {
 		// clear cache immediately

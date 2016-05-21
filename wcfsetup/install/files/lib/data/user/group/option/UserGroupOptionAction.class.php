@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\user\group\option\UserGroupOptionEditor';
 	

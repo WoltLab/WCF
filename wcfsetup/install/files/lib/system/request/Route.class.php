@@ -134,7 +134,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::matches()
+	 * @inheritDoc
 	 */
 	public function matches($requestURL) {
 		$urlParts = $this->getParts($requestURL);
@@ -199,7 +199,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::getRouteData()
+	 * @inheritDoc
 	 */
 	public function getRouteData() {
 		return $this->routeData;
@@ -224,7 +224,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::canHandle()
+	 * @inheritDoc
 	 */
 	public function canHandle(array $components) {
 		foreach ($this->routeSchema as $schemaPart) {
@@ -256,7 +256,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::buildLink()
+	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
 		$application = (isset($components['application'])) ? $components['application'] : null;
@@ -351,7 +351,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::isACP()
+	 * @inheritDoc
 	 */
 	public function isACP() {
 		return $this->isACP;

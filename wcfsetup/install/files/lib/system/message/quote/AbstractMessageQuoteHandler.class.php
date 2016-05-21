@@ -28,7 +28,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 	public $quotedMessages = [];
 	
 	/**
-	 * @see	\wcf\system\message\quote\IMessageQuoteHandler::render()
+	 * @inheritDoc
 	 */
 	public function render(array $data, $supportPaste = false) {
 		$messages = $this->getMessages($data);
@@ -55,7 +55,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 	}
 	
 	/**
-	 * @see	\wcf\system\message\quote\IMessageQuoteHandler::renderQuotes()
+	 * @inheritDoc
 	 */
 	public function renderQuotes(array $data, $render = true, $renderAsString = true) {
 		$messages = $this->getMessages($data);

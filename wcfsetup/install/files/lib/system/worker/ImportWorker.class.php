@@ -30,7 +30,7 @@ class ImportWorker extends AbstractWorker {
 	protected $exporter = null;
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(['admin.management.canImportData']);
@@ -60,14 +60,14 @@ class ImportWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::countObjects()
+	 * @inheritDoc
 	 */
 	protected function countObjects() {
 		$this->count = $this->exporter->countLoops($this->parameters['objectType']);
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProgress()
+	 * @inheritDoc
 	 */
 	public function getProgress() {
 		$this->countObjects();
@@ -82,7 +82,7 @@ class ImportWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		if (!$this->count) {
@@ -98,7 +98,7 @@ class ImportWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProceedURL()
+	 * @inheritDoc
 	 */
 	public function getProceedURL() {
 		return '';

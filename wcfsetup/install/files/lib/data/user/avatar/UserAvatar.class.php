@@ -32,12 +32,12 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	public static $avatarThumbnailSizes = [32, 96, 128];
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_avatar';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'avatarID';
 	
@@ -91,7 +91,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL($size = null) {
 		if ($size !== null && $size !== 'resized') {
@@ -102,7 +102,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getImageTag()
+	 * @inheritDoc
 	 */
 	public function getImageTag($size = null) {
 		$width = $this->width;
@@ -150,7 +150,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getCropImageTag()
+	 * @inheritDoc
 	 */
 	public function getCropImageTag($size = null) {
 		$imageTag = $this->getImageTag($size);
@@ -162,21 +162,21 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getWidth()
+	 * @inheritDoc
 	 */
 	public function getWidth() {
 		return $this->width;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getHeight()
+	 * @inheritDoc
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::canCrop()
+	 * @inheritDoc
 	 */
 	public function canCrop() {
 		return $this->width != $this->height && $this->width > self::$maxThumbnailSize && $this->height > self::$maxThumbnailSize;

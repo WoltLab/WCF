@@ -34,7 +34,7 @@ abstract class SortablePage extends MultipleLinkPage {
 	public $validSortFields = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -45,7 +45,7 @@ abstract class SortablePage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->validateSortOrder();
@@ -84,7 +84,7 @@ abstract class SortablePage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

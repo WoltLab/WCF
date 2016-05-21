@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class AbstractLikeImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\like\Like';
 	
@@ -25,7 +25,7 @@ class AbstractLikeImporter extends AbstractImporter {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		if ($data['objectUserID']) $data['objectUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectUserID']);

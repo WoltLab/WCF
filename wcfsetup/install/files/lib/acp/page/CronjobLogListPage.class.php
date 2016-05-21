@@ -14,42 +14,42 @@ use wcf\page\SortablePage;
  */
 class CronjobLogListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.cronjob';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.management.canManageCronjob'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = 100;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'execTime';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortOrder
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['cronjobID', 'className', 'description', 'execTime', 'success'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\cronjob\log\CronjobLogList';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -59,7 +59,7 @@ class CronjobLogListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readObjects()
+	 * @inheritDoc
 	 */
 	protected function readObjects() {
 		$this->sqlOrderBy = (($this->sortField == 'className' || $this->sortField == 'description') ? 'cronjob.' : 'cronjob_log.').$this->sortField." ".$this->sortOrder;

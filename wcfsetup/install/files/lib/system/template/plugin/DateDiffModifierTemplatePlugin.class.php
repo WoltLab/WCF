@@ -21,7 +21,7 @@ use wcf\util\DateUtil;
  */
 class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (!isset($tagArgs[1])) {

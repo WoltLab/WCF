@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements IEditableObject {
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
 	public static function create(array $parameters = []) {
 		$keys = $values = '';
@@ -48,7 +48,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::update()
+	 * @inheritDoc
 	 */
 	public function update(array $parameters = []) {
 		if (empty($parameters)) return;
@@ -70,7 +70,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::updateCounters()
+	 * @inheritDoc
 	 */
 	public function updateCounters(array $counters = []) {
 		if (empty($counters)) return;
@@ -92,14 +92,14 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		static::deleteAll([$this->getObjectID()]);
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
 	public static function deleteAll(array $objectIDs = []) {
 		$sql = "DELETE FROM	".static::getDatabaseTableName()."

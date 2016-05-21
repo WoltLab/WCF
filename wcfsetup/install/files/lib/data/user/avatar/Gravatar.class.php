@@ -73,7 +73,7 @@ class Gravatar extends DefaultAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL($size = null) {
 		if ($size === null) $size = $this->size;
@@ -125,7 +125,7 @@ class Gravatar extends DefaultAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getImageTag()
+	 * @inheritDoc
 	 */
 	public function getImageTag($size = null) {
 		if ($size === null) $size = $this->size;
@@ -149,7 +149,7 @@ class Gravatar extends DefaultAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::canCrop()
+	 * @inheritDoc
 	 */
 	public function canCrop() {
 		return false;

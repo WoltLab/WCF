@@ -28,7 +28,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 	protected $userAuthentication = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// call loadInstance event

@@ -30,7 +30,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	public $tableName = 'bbcode';
 	
 	/**
-	 * @see	@inheritDoc
+	 * @inheritDoc
 	 */
 	public $tagName = 'bbcode';
 	

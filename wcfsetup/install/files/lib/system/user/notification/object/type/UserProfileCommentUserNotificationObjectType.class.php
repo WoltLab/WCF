@@ -14,22 +14,22 @@ use wcf\system\WCF;
  */
 class UserProfileCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements ICommentUserNotificationObjectType {
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$decoratorClassName
+	 * @inheritDoc
 	 */
 	protected static $decoratorClassName = 'wcf\system\user\notification\object\CommentUserNotificationObject';
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectClassName
+	 * @inheritDoc
 	 */
 	protected static $objectClassName = 'wcf\data\comment\Comment';
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectListClassName
+	 * @inheritDoc
 	 */
 	protected static $objectListClassName = 'wcf\data\comment\CommentList';
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\ICommentUserNotificationObjectType::getOwnerID()
+	 * @inheritDoc
 	 */
 	public function getOwnerID($objectID) {
 		$sql = "SELECT	objectID

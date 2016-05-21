@@ -74,7 +74,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\wcf\system\user\GroupedUserList::getGroupName()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getGroupName();
@@ -120,14 +120,14 @@ class GroupedUserList implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->userIDs);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$userID = $this->userIDs[$this->index];
@@ -145,21 +145,21 @@ class GroupedUserList implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->userIDs[$this->index]);

@@ -47,7 +47,7 @@ class StaticRoute extends FlexibleRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::buildLink()
+	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
 		// static routes don't have these components
@@ -58,7 +58,7 @@ class StaticRoute extends FlexibleRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::canHandle()
+	 * @inheritDoc
 	 */
 	public function canHandle(array $components) {
 		if (isset($components['application']) && $components['application'] == $this->staticApplication) {
@@ -71,7 +71,7 @@ class StaticRoute extends FlexibleRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::matches()
+	 * @inheritDoc
 	 */
 	public function matches($requestURL) {
 		if (parent::matches($requestURL)) {

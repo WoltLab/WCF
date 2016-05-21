@@ -23,7 +23,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
 	public $optionHandler = null;
 	
 	/**
-	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::getContent()
+	 * @inheritDoc
 	 */
 	public function getContent($userID) {
 		if ($this->optionHandler === null) {
@@ -44,7 +44,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible($userID) {
 		return true;

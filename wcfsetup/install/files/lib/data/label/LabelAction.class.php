@@ -62,7 +62,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();

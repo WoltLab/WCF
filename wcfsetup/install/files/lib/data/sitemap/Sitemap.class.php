@@ -40,7 +40,7 @@ class Sitemap extends DatabaseObject {
 	protected static $databaseTableName = 'sitemap';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'sitemapID';
 	

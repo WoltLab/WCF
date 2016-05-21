@@ -16,7 +16,7 @@ use wcf\system\exception\IllegalLinkException;
  */
 class EditHistoryEntryAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\edit\history\entry\EditHistoryEntryEditor';
 	

@@ -26,7 +26,7 @@ class ValidateActionException extends \Exception {
 	protected $fieldName = '';
 	
 	/**
-	 * @see	\Exception::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($fieldName, $errorMessage = 'empty', array $variables = []) {
 		$this->errorMessage = $errorMessage;
@@ -60,7 +60,7 @@ class ValidateActionException extends \Exception {
 	}
 	
 	/**
-	 * @see	\Exception::__toString()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->message;

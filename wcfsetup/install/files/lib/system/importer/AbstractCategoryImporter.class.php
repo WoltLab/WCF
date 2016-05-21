@@ -14,7 +14,7 @@ use wcf\data\category\CategoryEditor;
  */
 class AbstractCategoryImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\category\Category';
 	
@@ -31,7 +31,7 @@ class AbstractCategoryImporter extends AbstractImporter {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		if (!empty($data['parentCategoryID'])) $data['parentCategoryID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['parentCategoryID']);

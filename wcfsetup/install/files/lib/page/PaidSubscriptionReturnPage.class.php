@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class PaidSubscriptionReturnPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'redirect';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

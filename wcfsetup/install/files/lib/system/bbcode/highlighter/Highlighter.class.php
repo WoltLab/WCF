@@ -115,7 +115,7 @@ abstract class Highlighter extends SingletonFactory {
 	public $separatorsRegEx = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->buildRegularExpressions();

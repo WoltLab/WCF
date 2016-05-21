@@ -23,12 +23,12 @@ use wcf\util\UserUtil;
  */
 class ACPSessionAccessLog extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'acp_session_access_log';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'sessionAccessLogID';
 	

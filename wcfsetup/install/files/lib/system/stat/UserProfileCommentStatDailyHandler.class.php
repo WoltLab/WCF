@@ -13,7 +13,7 @@ namespace wcf\system\stat;
  */
 class UserProfileCommentStatDailyHandler extends AbstractCommentStatDailyHandler {
 	/**
-	 * @see	\wcf\system\stat\AbstractCommentStatDailyHandler::$objectType
+	 * @inheritDoc
 	 */
 	protected $objectType = 'com.woltlab.wcf.user.profileComment';
 }

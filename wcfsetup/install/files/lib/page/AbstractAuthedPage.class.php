@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  */
 abstract class AbstractAuthedPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();

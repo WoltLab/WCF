@@ -24,49 +24,49 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	protected $definitionName = '';
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::assignQueues()
+	 * @inheritDoc
 	 */
 	public function assignQueues($objectTypeID, array $queues) {
 		ModerationQueueManager::getInstance()->getProcessor($this->definitionName, null, $objectTypeID)->assignQueues($queues);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::isValid()
+	 * @inheritDoc
 	 */
 	public function isValid($objectType, $objectID = null) {
 		return ModerationQueueManager::getInstance()->isValid($this->definitionName, $objectType);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getObjectTypeID()
+	 * @inheritDoc
 	 */
 	public function getObjectTypeID($objectType) {
 		return ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $objectType);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getProcessor()
+	 * @inheritDoc
 	 */
 	public function getProcessor($objectType, $objectTypeID = null) {
 		return ModerationQueueManager::getInstance()->getProcessor($this->definitionName, $objectType, $objectTypeID);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::populate()
+	 * @inheritDoc
 	 */
 	public function populate($objectTypeID, array $objects) {
 		ModerationQueueManager::getInstance()->getProcessor($this->definitionName, null, $objectTypeID)->populate($objects);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::canRemoveContent()
+	 * @inheritDoc
 	 */
 	public function canRemoveContent(ModerationQueue $queue) {
 		return $this->getProcessor(null, $queue->objectTypeID)->canRemoveContent($queue);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::removeContent()
+	 * @inheritDoc
 	 */
 	public function removeContent(ModerationQueue $queue, $message = '') {
 		$this->getProcessor(null, $queue->objectTypeID)->removeContent($queue, $message);

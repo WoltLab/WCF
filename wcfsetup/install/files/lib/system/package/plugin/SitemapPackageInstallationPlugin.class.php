@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\sitemap\SitemapEditor';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -36,7 +36,7 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		$showOrder = (isset($data['elements']['showOrder'])) ? intval($data['elements']['showOrder']) : null;
@@ -52,7 +52,7 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -71,7 +71,7 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @inheritDoc
 	 */
 	protected function cleanup() {
 		SitemapCacheBuilder::getInstance()->reset();

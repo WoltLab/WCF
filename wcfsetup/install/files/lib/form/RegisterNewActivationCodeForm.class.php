@@ -48,7 +48,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	public $user = null;
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -59,7 +59,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -129,7 +129,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -159,7 +159,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -170,7 +170,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -183,7 +183,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		if (REGISTER_ACTIVATION_METHOD != 1) {

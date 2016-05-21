@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."
@@ -31,7 +31,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		// adjust show order
@@ -52,7 +52,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
+	 * @inheritDoc
 	 */
 	protected function validateImport(array $data) {
 		if (empty($data['parentMenuItem'])) {
@@ -71,7 +71,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*

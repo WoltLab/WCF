@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class UserGroupAssignmentAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group.assignment';
 	
@@ -44,7 +44,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	public $isDisabled = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.user.canManageGroupAssignment'];
 	
@@ -61,7 +61,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	public $userGroups = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -77,7 +77,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->userGroups = UserGroup::getGroupsByType([], [
@@ -101,7 +101,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -118,7 +118,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -157,7 +157,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();

@@ -29,12 +29,12 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	protected $objectType = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$returnValue = parent::delete();
@@ -48,7 +48,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
 		foreach ($this->objects as $categoryEditor) {
@@ -59,7 +59,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleContainerAction::toggleContainer()
+	 * @inheritDoc
 	 */
 	public function toggleContainer() {
 		$collapsibleObjectTypeName = $this->objects[0]->getProcessor()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
@@ -80,7 +80,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		// check if showOrder needs to be recalculated
@@ -116,7 +116,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::updatePosition()
+	 * @inheritDoc
 	 */
 	public function updatePosition() {
 		$objectType = null;
@@ -152,7 +152,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateCreate() {
 		$this->readInteger('objectTypeID', false, 'data');
@@ -167,7 +167,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		// read objects
@@ -187,21 +187,21 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		$this->validateUpdate();
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleContainerAction::validateToggleContainer()
+	 * @inheritDoc
 	 */
 	public function validateToggleContainer() {
 		$this->validateUpdate();
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateUpdate()
+	 * @inheritDoc
 	 */
 	public function validateUpdate() {
 		// read objects
@@ -221,7 +221,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
+	 * @inheritDoc
 	 */
 	public function validateUpdatePosition() {
 		// validate 'structure' parameter

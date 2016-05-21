@@ -15,7 +15,7 @@ use wcf\system\moderation\queue\ModerationQueueActivationManager;
  */
 class ModerationQueueActivationAction extends ModerationQueueAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['enableContent', 'removeContent'];
 	

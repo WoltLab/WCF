@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\user\notification\event\UserNotificationEventEditor';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'user_notification_event';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @inheritDoc
 	 */
 	public $tagName = 'event';
 	
@@ -36,7 +36,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	protected $presetEventIDs = [];
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -52,7 +52,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		// get object type id
@@ -87,7 +87,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
 		$result = parent::import($row, $data);
@@ -100,7 +100,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @inheritDoc
 	 */
 	protected function cleanup() {
 		if (empty($this->presetEventIDs)) return;
@@ -118,7 +118,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*

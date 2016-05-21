@@ -49,7 +49,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	public $additionalFields = [];
 	
 	/**
-	 * @see	\wcf\form\IForm::submit()
+	 * @inheritDoc
 	 */
 	public function submit() {
 		// call submit event
@@ -69,7 +69,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		// call readFormParameters event
@@ -79,7 +79,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		// call validate event
@@ -91,7 +91,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		// call save event
@@ -107,7 +107,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		if (!empty($_POST) || !empty($_FILES)) {
@@ -118,7 +118,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

@@ -36,7 +36,7 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	protected $supportedActions = [];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		if (!in_array($action->actionName, $this->supportedActions)) {
@@ -69,7 +69,7 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
+	 * @inheritDoc
 	 */
 	public function getEditorLabel(array $objects) {
 		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.'.$this->getTypeName().'.marked', [

@@ -25,17 +25,17 @@ use wcf\util\FileUtil;
  */
 class Template extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'template';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'templateID';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {

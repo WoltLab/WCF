@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 	/**
-	 * @see	\wcf\system\search\acp\IACPSearchResultProvider::search()
+	 * @inheritDoc
 	 */
 	public function search($query) {
 		if (!WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage') && !WCF::getSession()->getPermission('admin.configuration.package.canUninstallPackage')) {

@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class SmileyImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\smiley\Smiley';
 	
@@ -50,7 +50,7 @@ class SmileyImporter extends AbstractImporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		// copy smiley

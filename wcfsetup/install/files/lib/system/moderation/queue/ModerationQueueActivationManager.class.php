@@ -17,7 +17,7 @@ use wcf\system\request\LinkHandler;
  */
 class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	/**
-	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueManager::$definitionName
+	 * @inheritDoc
 	 */
 	protected $definitionName = 'com.woltlab.wcf.moderation.activation';
 	
@@ -41,7 +41,7 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink($queueID) {
 		return LinkHandler::getInstance()->getLink('ModerationActivation', ['id' => $queueID]);

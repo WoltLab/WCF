@@ -35,7 +35,7 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::create()
+	 * @inheritDoc
 	 */
 	public function update(array $parameters = []) {
 		if (isset($parameters['userID']) && !$parameters['userID']) {

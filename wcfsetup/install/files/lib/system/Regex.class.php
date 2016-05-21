@@ -156,14 +156,14 @@ final class Regex {
 	}
 	
 	/**
-	 * @see	Regex::__construct()
+	 * @inheritDoc
 	 */
 	public static function compile($regex, $modifier = self::MODIFIER_NONE) {
 		return new self($regex, $modifier);
 	}
 	
 	/**
-	 * @see	Regex::match()
+	 * @inheritDoc
 	 */
 	public function __invoke($string) {
 		return $this->match($string);

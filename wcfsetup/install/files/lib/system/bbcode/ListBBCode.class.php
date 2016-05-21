@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  */
 class ListBBCode extends AbstractBBCode {
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		if (mb_strpos($content, '[*]') !== false) {

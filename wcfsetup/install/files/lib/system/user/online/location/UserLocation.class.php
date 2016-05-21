@@ -30,14 +30,14 @@ class UserLocation implements IUserOnlineLocation {
 	protected $users = null;
 	
 	/**
-	 * @see	\wcf\system\user\online\location\IUserOnlineLocation::cache()
+	 * @inheritDoc
 	 */
 	public function cache(UserOnline $user) {
 		if ($user->objectID) $this->userIDs[] = $user->objectID;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\online\location\IUserOnlineLocation::get()
+	 * @inheritDoc
 	 */
 	public function get(UserOnline $user, $languageVariable = '') {
 		if ($this->users === null) {

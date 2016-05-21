@@ -15,12 +15,12 @@ use wcf\data\user\UserEditor;
  */
 class AssignToUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUserBulkProcessingAction {
 	/**
-	 * @see	\wcf\system\bulk\processing\user\AbstractUserGroupsUserBulkProcessingAction::$inputName
+	 * @inheritDoc
 	 */
 	public $inputName = 'assignToUserGroupIDs';
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\user\AbstractUserGroupsUserBulkProcessingAction::executeUserAction()
+	 * @inheritDoc
 	 */
 	protected function executeUserAction(UserEditor $user) {
 		$user->addToGroups($this->userGroupIDs, false, false);

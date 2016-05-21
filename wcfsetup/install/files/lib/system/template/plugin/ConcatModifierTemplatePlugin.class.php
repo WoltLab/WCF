@@ -19,7 +19,7 @@ use wcf\system\template\TemplateEngine;
  */
 class ConcatModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\ITemplatePluginModifier::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (count($tagArgs) < 2) {

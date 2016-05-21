@@ -13,7 +13,7 @@ namespace wcf\system\cache\builder;
  */
 class TypedTagCloudCacheBuilder extends TagCloudCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$this->objectTypeIDs = $parameters['objectTypeIDs'];

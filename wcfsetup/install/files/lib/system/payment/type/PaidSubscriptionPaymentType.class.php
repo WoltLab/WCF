@@ -20,7 +20,7 @@ use wcf\system\exception\SystemException;
  */
 class PaidSubscriptionPaymentType extends AbstractPaymentType {
 	/**
-	 * @see	wcf\system\payment\type\IPaymentType::processTransaction()
+	 * @inheritDoc
 	 */
 	public function processTransaction($paymentMethodObjectTypeID, $token, $amount, $currency, $transactionID, $status, $transactionDetails) {
 		$userSubscription = $user = $subscription = null;

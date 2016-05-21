@@ -16,7 +16,7 @@ use wcf\data\DatabaseObject;
  */
 class LanguageCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$data = [

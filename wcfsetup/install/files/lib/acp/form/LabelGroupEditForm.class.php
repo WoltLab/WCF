@@ -20,12 +20,12 @@ use wcf\system\WCF;
  */
 class LabelGroupEditForm extends LabelGroupAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.label';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
@@ -42,7 +42,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	public $group = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -55,7 +55,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -98,7 +98,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -114,7 +114,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -129,7 +129,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\LabelGroupAddForm::setObjectTypeRelations()
+	 * @inheritDoc
 	 */
 	protected function setObjectTypeRelations($data = null) {
 		if (empty($_POST)) {

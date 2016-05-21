@@ -30,7 +30,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	protected $languageIDs = [];
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
+	 * @inheritDoc
 	 */
 	protected $maxLifetime = 3600;
 	
@@ -41,7 +41,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	protected $objectTypeIDs = [];
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$this->languageIDs = $this->parseLanguageIDs($parameters);

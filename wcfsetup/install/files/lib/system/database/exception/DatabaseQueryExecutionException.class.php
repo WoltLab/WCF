@@ -21,7 +21,7 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
 	protected $parameters = [];
 	
 	/**
-	 * @see	\Exception::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($message, $parameters, \PDOException $previous = null) {
 		\Exception::__construct($message, 0, $previous);
@@ -39,7 +39,7 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
 	}
 	
 	/**
-	 * @see	\wcf\system\exception\IExtraInformationException::getExtraInformation()
+	 * @inheritDoc
 	 */
 	public function getExtraInformation() {
 		return array_map(function ($val) {

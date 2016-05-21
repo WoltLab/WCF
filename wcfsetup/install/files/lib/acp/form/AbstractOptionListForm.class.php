@@ -15,12 +15,12 @@ use wcf\system\exception\UserInputException;
  */
 abstract class AbstractOptionListForm extends AbstractForm {
 	/**
-	 * @see	\wcf\form\AbstractForm::$errorField
+	 * @inheritDoc
 	 */
 	public $errorField = [];
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::$errorType
+	 * @inheritDoc
 	 */
 	public $errorType = [];
 	
@@ -55,7 +55,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public $supportI18n = true;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -72,7 +72,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -81,7 +81,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$this->errorType = array_merge($this->optionHandler->validate(), $this->errorType);
@@ -94,7 +94,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();

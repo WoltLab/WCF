@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	/**
-	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueManager::$definitionName
+	 * @inheritDoc
 	 */
 	protected $definitionName = 'com.woltlab.wcf.moderation.report';
 	
@@ -85,7 +85,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink($queueID) {
 		return LinkHandler::getInstance()->getLink('ModerationReport', ['id' => $queueID]);
@@ -136,7 +136,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueManager::addEntry()
+	 * @inheritDoc
 	 */
 	protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = []) {
 		$sql = "SELECT	queueID

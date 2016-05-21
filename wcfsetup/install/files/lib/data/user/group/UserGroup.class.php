@@ -52,12 +52,12 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	const OTHER = 4;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_group';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'groupID';
 	
@@ -265,7 +265,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\group\UserGroup::getName()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getName();

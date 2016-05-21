@@ -49,7 +49,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 	public $text = '';
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::executeAction()
+	 * @inheritDoc
 	 */
 	public function executeAction(DatabaseObjectList $objectList) {
 		if (!($objectList instanceof UserList)) return;
@@ -73,7 +73,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		return WCF::getTPL()->fetch('sendMailUserBulkProcessing', 'wcf', [
@@ -86,7 +86,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['enableHTML'])) $this->enableHTML = intval($_POST['enableHTML']);
@@ -96,7 +96,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if (empty($this->subject)) {

@@ -16,17 +16,17 @@ use wcf\system\WCF;
  */
 class TagClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$actionClassActions
+	 * @inheritDoc
 	 */
 	protected $actionClassActions = ['delete'];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
+	 * @inheritDoc
 	 */
 	protected $supportedActions = ['delete', 'setAsSynonyms'];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		$item = parent::execute($objects, $action);
@@ -54,14 +54,14 @@ class TagClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getClassName()
+	 * @inheritDoc
 	 */
 	public function getClassName() {
 		return 'wcf\data\tag\TagAction';
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 * @inheritDoc
 	 */
 	public function getTypeName() {
 		return 'com.woltlab.wcf.tag';

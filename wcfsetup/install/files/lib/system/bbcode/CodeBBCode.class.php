@@ -40,7 +40,7 @@ class CodeBBCode extends AbstractBBCode {
 	private static $codeIDs = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		// encode html

@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::add()
+	 * @inheritDoc
 	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		if ($languageID === null) $languageID = 0;
@@ -31,7 +31,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::update()
+	 * @inheritDoc
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		// delete existing entry
@@ -42,7 +42,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::delete()
+	 * @inheritDoc
 	 */
 	public function delete($objectType, array $objectIDs) {
 		$sql = "DELETE FROM	" . SearchIndexManager::getTableName($objectType) . "
@@ -56,7 +56,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::reset()
+	 * @inheritDoc
 	 */
 	public function reset($objectType) {
 		$sql = "TRUNCATE TABLE " . SearchIndexManager::getTableName($objectType);
@@ -65,7 +65,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\AbstractSearchIndexManager::createSearchIndex()
+	 * @inheritDoc
 	 */
 	protected function createSearchIndex(ObjectType $objectType) {
 		$tableName = SearchIndexManager::getTableName($objectType);

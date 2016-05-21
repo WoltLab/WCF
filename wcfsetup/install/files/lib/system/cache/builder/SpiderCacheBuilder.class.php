@@ -14,7 +14,7 @@ use wcf\data\spider\SpiderList;
  */
 class SpiderCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$spiderList = new SpiderList();

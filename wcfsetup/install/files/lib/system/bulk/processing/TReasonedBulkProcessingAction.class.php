@@ -22,7 +22,7 @@ trait TReasonedBulkProcessingAction {
 	protected $reason = '';
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		return WCF::getTPL()->fetch('reasonedBulkProcessingAction', 'wcf', [
@@ -39,14 +39,14 @@ trait TReasonedBulkProcessingAction {
 	abstract protected function getReasonFieldName();
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST[$this->getReasonFieldName()])) $this->reason = StringUtil::trim($_POST[$this->getReasonFieldName()]);
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->reason = '';

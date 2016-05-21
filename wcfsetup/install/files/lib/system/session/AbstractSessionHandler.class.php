@@ -20,7 +20,7 @@ abstract class AbstractSessionHandler extends SingletonFactory {
 	protected $sessionHandler = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected final function init() {
 		$this->sessionHandler = SessionHandler::getInstance();

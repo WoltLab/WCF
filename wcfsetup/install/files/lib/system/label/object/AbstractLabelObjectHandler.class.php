@@ -35,7 +35,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->labelGroups = LabelHandler::getInstance()->getLabelGroups();
@@ -48,14 +48,14 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	}
 	
 	/**
-	 * @see	\wcf\system\label\manager\ILabelObjectHandler::getLabelGroupIDs()
+	 * @inheritDoc
 	 */
 	public function getLabelGroupIDs(array $parameters = []) {
 		return array_keys($this->labelGroups);
 	}
 	
 	/**
-	 * @see	\wcf\system\label\manager\ILabelObjectHandler::getLabelGroups()
+	 * @inheritDoc
 	 */
 	public function getLabelGroups(array $parameters = []) {
 		$groupIDs = $this->getLabelGroupIDs($parameters);
@@ -71,7 +71,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	}
 	
 	/**
-	 * @see	\wcf\system\label\manager\ILabelObjectHandler::validateLabelIDs()
+	 * @inheritDoc
 	 */
 	public function validateLabelIDs(array $labelIDs, $optionName = '', $legacyReturnValue = true) {
 		$optionID = 0;
@@ -136,21 +136,21 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	}
 	
 	/**
-	 * @see	\wcf\system\label\manager\ILabelObjectHandler::setLabels()
+	 * @inheritDoc
 	 */
 	public function setLabels(array $labelIDs, $objectID, $validatePermissions = true) {
 		LabelHandler::getInstance()->setLabels($labelIDs, $this->objectTypeID, $objectID, $validatePermissions);
 	}
 	
 	/**
-	 * @see	\wcf\system\label\manager\ILabelObjectHandler::removeLabels()
+	 * @inheritDoc
 	 */
 	public function removeLabels($objectID, $validatePermissions = true) {
 		LabelHandler::getInstance()->removeLabels($this->objectTypeID, $objectID);
 	}
 	
 	/**
-	 * @see	\wcf\system\label\manager\ILabelObjectHandler::getAssignedLabels()
+	 * @inheritDoc
 	 */
 	public function getAssignedLabels(array $objectIDs, $validatePermissions = true) {
 		return LabelHandler::getInstance()->getAssignedLabels($this->objectTypeID, $objectIDs, $validatePermissions);

@@ -26,17 +26,17 @@ use wcf\data\DatabaseObject;
  */
 class EditHistoryEntry extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'edit_history_entry';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'entryID';
 	
 	/**
-	 * @see	\wcf\data\edit\history\entry\EntryHistoryEntry::getObject()
+	 * @inheritDoc
 	 */
 	protected $object = null;
 	

@@ -60,7 +60,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	protected $objectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::afterDeletion()
+	 * @inheritDoc
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor) {
 		$categoryIDs = array_keys(CategoryHandler::getInstance()->getChildCategories($categoryEditor->categoryID));
@@ -78,42 +78,42 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canAddCategory()
+	 * @inheritDoc
 	 */
 	public function canAddCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canAddCategory');
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canDeleteCategory()
+	 * @inheritDoc
 	 */
 	public function canDeleteCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canDeleteCategory');
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canEditCategory()
+	 * @inheritDoc
 	 */
 	public function canEditCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canEditCategory');
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::changedParentCategories()
+	 * @inheritDoc
 	 */
 	public function changedParentCategories(array $categoryData) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::forceDescription()
+	 * @inheritDoc
 	 */
 	public function forceDescription() {
 		return $this->hasDescription() && $this->forceDescription;
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getApplication()
+	 * @inheritDoc
 	 */
 	public function getApplication() {
 		$classParts = explode('\\', get_called_class());
@@ -121,7 +121,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getObjectTypeName()
+	 * @inheritDoc
 	 */
 	public function getObjectTypeName($definitionName) {
 		if (isset($this->objectTypes[$definitionName])) {
@@ -132,21 +132,21 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getDescriptionLangVarCategory()
+	 * @inheritDoc
 	 */
 	public function getDescriptionLangVarCategory() {
 		return $this->i18nLangVarCategory;
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getI18nLangVarPrefix()
+	 * @inheritDoc
 	 */
 	public function getI18nLangVarPrefix() {
 		return $this->i18nLangVarCategory.'.category';
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getLanguageVariable()
+	 * @inheritDoc
 	 */
 	public function getLanguageVariable($name, $optional = false) {
 		if ($this->langVarPrefix) {
@@ -160,21 +160,21 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getMaximumNestingLevel()
+	 * @inheritDoc
 	 */
 	public function getMaximumNestingLevel() {
 		return $this->maximumNestingLevel;
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getTitleLangVarCategory()
+	 * @inheritDoc
 	 */
 	public function getTitleLangVarCategory() {
 		return $this->i18nLangVarCategory;
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::hasDescription()
+	 * @inheritDoc
 	 */
 	public function hasDescription() {
 		return $this->hasDescription;

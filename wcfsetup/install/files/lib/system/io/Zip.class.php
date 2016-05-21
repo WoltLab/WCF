@@ -21,7 +21,7 @@ class Zip extends File implements IArchive {
 	protected $centralDirectory = null;
 	
 	/**
-	 * @see	\wcf\system\io\File::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($filename) {
 		parent::__construct($filename, 'rb');
@@ -30,7 +30,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getIndexByFilename()
+	 * @inheritDoc
 	 */
 	public function getIndexByFilename($filename) {
 		if (isset($this->centralDirectory['files'][$filename])) return $this->centralDirectory['files'][$filename]['offset'];
@@ -38,14 +38,14 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getContentList()
+	 * @inheritDoc
 	 */
 	public function getContentList() {
 		return $this->centralDirectory['files'];
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getFileInfo()
+	 * @inheritDoc
 	 */
 	public function getFileInfo($offset) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
@@ -73,7 +73,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extractToString()
+	 * @inheritDoc
 	 */
 	public function extractToString($offset) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
@@ -90,7 +90,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extract()
+	 * @inheritDoc
 	 */
 	public function extract($offset, $destination) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);

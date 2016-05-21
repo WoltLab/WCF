@@ -16,32 +16,32 @@ use wcf\util\StringUtil;
  */
 class SqlHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$allowsNewslinesInQuotes
+	 * @inheritDoc
 	 */
 	protected $allowsNewslinesInQuotes = true;
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @inheritDoc
 	 */
 	protected $quotes = ["'", '"'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
 	protected $singleLineComment = ['#', '--'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
 	protected $separators = ['(', ')', ',', ';'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
 	protected $operators = ['<>', '~=', '!=', '^=', '=', '<', '<=', '>', '>=', '*', '/', '+', '-', '||', '@', '%', '&', '?', '\$'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheComments()
+	 * @inheritDoc
 	 */
 	protected function cacheComments($string) {
 		if ($this->cacheCommentsRegEx !== null) {
@@ -68,7 +68,7 @@ class SqlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheQuotes()
+	 * @inheritDoc
 	 */
 	protected function cacheQuotes($string) {
 		if ($this->quotesRegEx !== null) {
@@ -81,7 +81,7 @@ class SqlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
 	protected $keywords1 = [
 		'action',
@@ -319,7 +319,7 @@ class SqlHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
 	protected $keywords2 = [
 		'ABS',

@@ -13,19 +13,19 @@ namespace wcf\system\bbcode\highlighter;
  */
 class JsHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
 	protected $separators = ["(", ")", "{", "}", "[", "]", ";", ".", ","];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
 	protected $operators = ["=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!=",
 		"&&", "||", "++", "--", "+", "-", "*", "/", "&", "|", "^", "%", "<<", ">>", ">>>", "+=", "-=", "*=",
 		"/=", "&=", "|=", "^=", "%=", "<<=", ">>=", ">>>="];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
 	protected $keywords1 = [
 		"String",
@@ -65,7 +65,7 @@ class JsHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
 	protected $keywords2 = [
 		"break",

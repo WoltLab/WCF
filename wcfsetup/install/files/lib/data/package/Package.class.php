@@ -55,12 +55,12 @@ class Package extends DatabaseObject {
 	protected $requiredPackages = null;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'package';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'packageID';
 	
@@ -110,7 +110,7 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\package\Package::getName()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getName();

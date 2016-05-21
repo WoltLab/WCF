@@ -13,38 +13,38 @@ namespace wcf\system\bbcode\highlighter;
  */
 class PythonHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
 	protected $separators = ['(', ')',/* from __future__ import braces '{', '}', */'[', ']', ';', '.', ',', ':'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
 	protected $singleLineComment = ['#'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
+	 * @inheritDoc
 	 */
 	protected $commentStart = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
+	 * @inheritDoc
 	 */
 	protected $commentEnd = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
 	protected $operators = ['+=', '-=', '**=', '*=', '//=', '/=', '%=', '~=', '+', '-', '**', '*', '//', '/', '%', 
 					'&=', '<<=', '>>=', '^=', '~', '&', '^', '|', '<<', '>>', '=', '!=', '<', '>', '<=', '>='];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @inheritDoc
 	 */
 	protected $quotes = [["r'", "'"], ["u'", "'"], ['r"', '"'], ['u"', '"'], "'", '"'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
 	protected $keywords1 = [
 		'print',
@@ -62,7 +62,7 @@ class PythonHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
 	protected $keywords2 = [
 		'if',
@@ -77,7 +77,7 @@ class PythonHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
 	protected $keywords3 = [
 		'from',
@@ -88,7 +88,7 @@ class PythonHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords4
+	 * @inheritDoc
 	 */
 	protected $keywords4 = [
 		'__name__',

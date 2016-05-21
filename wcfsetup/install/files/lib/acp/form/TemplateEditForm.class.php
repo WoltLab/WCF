@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class TemplateEditForm extends TemplateAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template';
 	
@@ -35,7 +35,7 @@ class TemplateEditForm extends TemplateAddForm {
 	public $template = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\TemplateAddForm::validateName()
+	 * @inheritDoc
 	 */
 	protected function validateName() {
 		if ($this->tplName != $this->template->templateName) {
@@ -58,7 +58,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\TemplateAddForm::validateName()
+	 * @inheritDoc
 	 */
 	protected function validateGroup() {
 		if ($this->templateGroupID != $this->template->templateGroupID) {
@@ -67,7 +67,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -87,7 +87,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -100,7 +100,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

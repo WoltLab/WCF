@@ -36,7 +36,7 @@ class VisitTracker extends SingletonFactory {
 	protected $userVisits = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get available object types

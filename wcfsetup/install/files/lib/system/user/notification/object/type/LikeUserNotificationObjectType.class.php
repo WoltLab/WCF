@@ -13,17 +13,17 @@ namespace wcf\system\user\notification\object\type;
  */
 class LikeUserNotificationObjectType extends AbstractUserNotificationObjectType {
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$decoratorClassName
+	 * @inheritDoc
 	 */
 	protected static $decoratorClassName = 'wcf\system\user\notification\object\LikeUserNotificationObject';
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectClassName
+	 * @inheritDoc
 	 */
 	protected static $objectClassName = 'wcf\data\like\Like';
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectListClassName
+	 * @inheritDoc
 	 */
 	protected static $objectListClassName = 'wcf\data\like\LikeList';
 }

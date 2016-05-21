@@ -36,7 +36,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @see	\wcf\system\user\object\watch\UserObjectWatchHandler::resetObjects();
+	 * @inheritDoc
 	 */
 	public function resetObject($objectType, $objectID) {
 		$this->resetObjects($objectType, [$objectID]);

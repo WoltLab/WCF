@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create();
+	 * @inheritDoc
 	 */
 	public function create() {
 		$event = parent::create();

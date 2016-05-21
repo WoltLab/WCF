@@ -24,7 +24,7 @@ class EditHistoryManager extends SingletonFactory {
 	protected $availableObjectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get available object types

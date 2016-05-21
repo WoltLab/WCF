@@ -18,27 +18,27 @@ use wcf\system\WCF;
  */
 class SmileyAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\smiley\SmileyEditor';
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['delete', 'update', 'updatePosition'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
 	 */
 	public function create() {
 		$smiley = parent::create();
@@ -59,7 +59,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		if (empty($this->objects)) {
@@ -78,7 +78,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
+	 * @inheritDoc
 	 */
 	public function validateUpdatePosition() {
 		// validate permissions
@@ -97,7 +97,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::updatePosition()
+	 * @inheritDoc
 	 */
 	public function updatePosition() {
 		$smileyList = new SmileyList();

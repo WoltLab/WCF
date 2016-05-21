@@ -24,7 +24,7 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected $counters = [];
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (!isset($tagArgs['name'])) {

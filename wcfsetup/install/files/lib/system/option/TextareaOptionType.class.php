@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class TextareaOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign([
@@ -27,7 +27,7 @@ class TextareaOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		WCF::getTPL()->assign([
@@ -39,7 +39,7 @@ class TextareaOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		$newValue = StringUtil::unifyNewlines(parent::getData($option, $newValue));
@@ -56,7 +56,7 @@ class TextareaOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		$value1 = explode("\n", StringUtil::unifyNewlines($value1));

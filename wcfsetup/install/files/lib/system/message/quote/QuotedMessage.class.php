@@ -66,7 +66,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->object->getTitle();
@@ -113,14 +113,14 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->quotes);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$objectID = $this->indexToObject[$this->index];
@@ -138,21 +138,21 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->indexToObject[$this->index]);

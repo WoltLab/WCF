@@ -14,12 +14,12 @@ use wcf\system\application\ApplicationHandler;
  */
 class ACPTemplateEngine extends TemplateEngine {
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::$environment
+	 * @inheritDoc
 	 */
 	protected $environment = 'admin';
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::__construct()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
@@ -44,7 +44,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::getCompiledFilename()
+	 * @inheritDoc
 	 */
 	public function getCompiledFilename($templateName, $application) {
 		$abbreviation = 'wcf';
@@ -56,7 +56,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::setTemplateGroupID()
+	 * @inheritDoc
 	 */
 	public final function setTemplateGroupID($templateGroupID) {
 		// template groups are not supported by the acp template engine
@@ -64,7 +64,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::getTemplateListenerCode()
+	 * @inheritDoc
 	 */
 	public function getTemplateListenerCode($templateName, $eventName) {
 		// skip template listeners within WCFSetup

@@ -23,17 +23,17 @@ use wcf\system\WCF;
  */
 class UserOptionCategory extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_option_category';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'categoryID';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($categoryID, $row = null, UserOptionCategory $category = null) {
 		if ($categoryID !== null) {

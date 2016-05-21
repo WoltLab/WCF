@@ -15,7 +15,7 @@ use wcf\system\menu\TreeMenu;
  */
 class ACPMenu extends TreeMenu {
 	/**
-	 * @see	TreeMenu::loadCache()
+	 * @inheritDoc
 	 */
 	protected function loadCache() {
 		parent::loadCache();

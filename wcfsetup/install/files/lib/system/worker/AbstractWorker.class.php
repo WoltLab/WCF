@@ -37,14 +37,14 @@ abstract class AbstractWorker implements IWorker {
 	protected $parameters = [];
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct(array $parameters) {
 		$this->parameters = $parameters;
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getLoopCount()
+	 * @inheritDoc
 	 */
 	public function setLoopCount($loopCount) {
 		$this->loopCount = $loopCount;
@@ -56,7 +56,7 @@ abstract class AbstractWorker implements IWorker {
 	abstract protected function countObjects();
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProgress()
+	 * @inheritDoc
 	 */
 	public function getProgress() {
 		$this->countObjects();
@@ -71,14 +71,14 @@ abstract class AbstractWorker implements IWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getParameters()
+	 * @inheritDoc
 	 */
 	public function getParameters() {
 		return $this->parameters;
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::finalize()
+	 * @inheritDoc
 	 */
 	public function finalize() {
 		// does nothing

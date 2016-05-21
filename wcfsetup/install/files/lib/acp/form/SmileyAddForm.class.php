@@ -24,22 +24,22 @@ use wcf\util\StringUtil;
  */
 class SmileyAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'smileyAdd';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_SMILEY'];
 	
@@ -98,7 +98,7 @@ class SmileyAddForm extends AbstractForm {
 	public $uploadedFilename = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -119,7 +119,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -128,7 +128,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -137,7 +137,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -156,7 +156,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -204,7 +204,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();

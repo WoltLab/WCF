@@ -20,12 +20,12 @@ use wcf\util\DateUtil;
  */
 class BirthdayOptionType extends DateOptionType {
 	/**
-	 * @see	\wcf\system\option\TextOptionType::$inputClass
+	 * @inheritDoc
 	 */
 	protected $inputClass = 'birthday';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		parent::validate($option, $newValue);
@@ -39,14 +39,14 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		return $newValue;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		if ($value == '0000-00-00') $value = '';
@@ -55,7 +55,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$ageFrom = $ageTo = '';
@@ -71,7 +71,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
+	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (empty($value['ageFrom']) && empty($value['ageTo'])) return false;
@@ -100,7 +100,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		$ageFrom = intval($value['ageFrom']);
@@ -125,7 +125,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(User $user, Option $option, $value) {
 		if (!$user->birthdayShowYear || !$user->birthday) return false;
@@ -147,7 +147,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 * @inheritDoc
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		if (!$newValue['ageFrom'] && !$newValue['ageTo']) return null;
@@ -156,7 +156,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 * @inheritDoc
 	 */
 	public function hideLabelInSearch() {
 		return false;

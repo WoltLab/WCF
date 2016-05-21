@@ -33,7 +33,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	public $tagName = '';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function __construct(PackageInstallationDispatcher $installation, $instruction = []) {
 		parent::__construct($installation, $instruction);
@@ -50,7 +50,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -72,7 +72,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		parent::uninstall();
@@ -413,7 +413,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 * @inheritDoc
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
 		if (!$instruction) {

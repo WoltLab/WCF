@@ -40,7 +40,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	protected $primaryController = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected final function init() {
 		if (empty($this->abbreviation)) {
@@ -65,14 +65,14 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	}
 	
 	/**
-	 * @see	\wcf\system\application\IApplication::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\application\IApplication::isActiveApplication()
+	 * @inheritDoc
 	 */
 	public function isActiveApplication() {
 		return $this->isActiveApplication;
@@ -88,14 +88,14 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	}
 	
 	/**
-	 * @see	\wcf\system\application\IApplication::getPrimaryController()
+	 * @inheritDoc
 	 */
 	public function getPrimaryController() {
 		return $this->primaryController;
 	}
 	
 	/**
-	 * @see	\wcf\system\application\IApplication::__callStatic()
+	 * @inheritDoc
 	 */
 	public static function __callStatic($method, array $arguments) {
 		return call_user_func_array(['wcf\system\WCF', $method], $arguments);

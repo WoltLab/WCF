@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  */
 class PollAction extends AJAXProxyAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
@@ -51,7 +51,7 @@ class PollAction extends AJAXProxyAction {
 	public $relatedObject = null;
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (!MODULE_POLL) {
@@ -120,7 +120,7 @@ class PollAction extends AJAXProxyAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		AbstractAction::execute();

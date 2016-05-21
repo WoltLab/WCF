@@ -14,7 +14,7 @@ use wcf\system\Regex;
  */
 class TableBBCode extends AbstractBBCode {
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		if ($parser->getOutputType() == 'text/html') {

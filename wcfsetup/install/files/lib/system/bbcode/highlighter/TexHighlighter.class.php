@@ -14,17 +14,17 @@ use wcf\system\Regex;
  */
 class TexHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @inheritDoc
 	 */
 	protected $quotes = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
 	protected $singleLineComment = ['%'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightKeywords()
+	 * @inheritDoc
 	 */
 	protected function highlightKeywords($string) {
 		$string = Regex::compile('\\$([^\\$]*)\\$', Regex::DOT_ALL)->replace($string, '<span class="hlKeywords2">\\0</span>');
@@ -35,7 +35,7 @@ class TexHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightNumbers()
+	 * @inheritDoc
 	 */
 	protected function highlightNumbers($string) {
 		// do not highlight numbers

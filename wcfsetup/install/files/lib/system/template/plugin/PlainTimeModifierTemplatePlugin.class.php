@@ -21,7 +21,7 @@ use wcf\util\DateUtil;
  */
 class PlainTimeModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$dateTime = DateUtil::getDateTimeByTimestamp($tagArgs[0]);

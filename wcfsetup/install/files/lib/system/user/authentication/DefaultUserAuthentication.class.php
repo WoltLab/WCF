@@ -17,14 +17,14 @@ use wcf\util\PasswordUtil;
  */
 class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
-	 * @see	\wcf\system\user\authentication\IUserAuthentication::supportsPersistentLogins()
+	 * @inheritDoc
 	 */
 	public function supportsPersistentLogins() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\authentication\IUserAuthentication::storeAccessData()
+	 * @inheritDoc
 	 */
 	public function storeAccessData(User $user, $username, $password) {
 		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
@@ -32,7 +32,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @see	\wcf\system\user\authentication\IUserAuthentication::loginManually()
+	 * @inheritDoc
 	 */
 	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User') {
 		$user = $this->getUserByLogin($username);
@@ -51,7 +51,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @see	\wcf\system\user\authentication\IUserAuthentication::loginAutomatically()
+	 * @inheritDoc
 	 */
 	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User') {
 		if (!$persistent) return null;

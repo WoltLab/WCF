@@ -13,12 +13,12 @@ namespace wcf\acp\form;
  */
 class UserBulkProcessingForm extends AbstractBulkProcessingForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.bulkProcessing';
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractBulkProcessingForm::$objectTypeName
+	 * @inheritDoc
 	 */
 	public $objectTypeName = 'com.woltlab.wcf.bulkProcessing.user';
 }

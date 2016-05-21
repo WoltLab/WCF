@@ -16,14 +16,14 @@ use wcf\util\StringUtil;
  */
 class PaypalPaymentMethod extends AbstractPaymentMethod {
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::supportsRecurringPayments()
+	 * @inheritDoc
 	 */
 	public function supportsRecurringPayments() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
+	 * @inheritDoc
 	 */
 	public function getSupportedCurrencies() {
 		return [
@@ -56,7 +56,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 	}
 	
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::getPurchaseButton()
+	 * @inheritDoc
 	 */
 	public function getPurchaseButton($cost, $currency, $name, $token, $returnURL, $cancelReturnURL, $isRecurring = false, $subscriptionLength = 0, $subscriptionLengthUnit = '') {
 		if ($isRecurring) {

@@ -31,7 +31,7 @@ class ImageHandler extends SingletonFactory {
 	protected $adapterClassName = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		if (!isset($this->imageAdapters[IMAGE_ADAPTER_TYPE])) {

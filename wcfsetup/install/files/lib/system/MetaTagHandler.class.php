@@ -32,7 +32,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	protected $objects = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// set default tags
@@ -80,14 +80,14 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->objects);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$tag = $this->objects[$this->indexToObject[$this->index]];
@@ -106,21 +106,21 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->indexToObject[$this->index]);

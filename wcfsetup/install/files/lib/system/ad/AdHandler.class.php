@@ -128,7 +128,7 @@ class AdHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->ads = AdCacheBuilder::getInstance()->getData();

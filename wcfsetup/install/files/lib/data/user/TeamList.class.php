@@ -22,7 +22,7 @@ class TeamList extends UserProfileList {
 	protected $teams = [];
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::countObjects()
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		$sql = "SELECT	COUNT(*)
@@ -37,7 +37,7 @@ class TeamList extends UserProfileList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjectIDs()
+	 * @inheritDoc
 	 */
 	public function readObjectIDs() {
 		$this->objectIDs = [];
@@ -55,7 +55,7 @@ class TeamList extends UserProfileList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();

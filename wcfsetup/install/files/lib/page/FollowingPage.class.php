@@ -15,22 +15,22 @@ use wcf\system\WCF;
  */
 class FollowingPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\user\follow\UserFollowingList';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'user_follow.time DESC';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readData()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -39,7 +39,7 @@ class FollowingPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\Page::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab

@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 class BBCodeMediaProviderAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.bbcode.mediaProvider.add';
 	
@@ -30,12 +30,12 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	public $html = '';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'bbcodeMediaProviderAdd';
 	
@@ -52,7 +52,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	public $regex = '';
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -63,7 +63,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -87,7 +87,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -111,7 +111,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

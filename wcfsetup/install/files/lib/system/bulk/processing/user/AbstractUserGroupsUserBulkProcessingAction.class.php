@@ -42,7 +42,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	public $userGroupIDs = [];
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
@@ -55,7 +55,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::executeAction()
+	 * @inheritDoc
 	 */
 	public function executeAction(DatabaseObjectList $objectList) {
 		if (!($objectList instanceof UserList)) return;
@@ -82,7 +82,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	abstract protected function executeUserAction(UserEditor $user);
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		return WCF::getTPL()->fetch('userGroupListUserBulkProcessing', 'wcf', [
@@ -93,28 +93,28 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::isAvailable()
+	 * @inheritDoc
 	 */
 	public function isAvailable() {
 		return !empty($this->availableUserGroups);
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST[$this->inputName])) $this->userGroupIDs = ArrayUtil::toIntegerArray($_POST[$this->inputName]);
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->userGroupIDs = [];
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if (empty($this->userGroupIDs)) {

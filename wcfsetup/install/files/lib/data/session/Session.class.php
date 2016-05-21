@@ -33,7 +33,7 @@ class Session extends ACPSession {
 	}
 	
 	/**
-	 * @see	\wcf\data\acp\session\ACPSession::supportsVirtualSessions()
+	 * @inheritDoc
 	 */
 	public static function supportsVirtualSessions() {
 		return (SESSION_ENABLE_VIRTUALIZATION) ? true : false;

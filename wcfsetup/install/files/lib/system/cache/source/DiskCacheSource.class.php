@@ -26,7 +26,7 @@ class DiskCacheSource implements ICacheSource {
 	protected $directoryUtil = null;
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flush()
+	 * @inheritDoc
 	 */
 	public function flush($cacheName, $useWildcard) {
 		if ($useWildcard) {
@@ -38,7 +38,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
+	 * @inheritDoc
 	 */
 	public function flushAll() {
 		$this->getDirectoryUtil()->removePattern(new Regex('.*\.php$'));
@@ -47,7 +47,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::get()
+	 * @inheritDoc
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$filename = $this->getFilename($cacheName);
@@ -65,7 +65,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::set()
+	 * @inheritDoc
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		$writer = new AtomicWriter($this->getFilename($cacheName));

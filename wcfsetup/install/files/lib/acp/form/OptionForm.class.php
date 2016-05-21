@@ -45,12 +45,12 @@ class OptionForm extends AbstractOptionListForm {
 	public $optionTree = [];
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractOptionListForm::$languageItemPattern
+	 * @inheritDoc
 	 */
 	protected $languageItemPattern = 'wcf.acp.option.option\d+';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
@@ -66,7 +66,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -85,7 +85,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -102,7 +102,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -115,7 +115,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active menu item

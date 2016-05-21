@@ -22,12 +22,12 @@ use wcf\system\WCF;
  */
 class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getGroupedUserList'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\poll\PollEditor';
 	
@@ -38,7 +38,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	protected $poll = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['time'])) $this->parameters['data']['time'] = TIME_NOW;
@@ -66,7 +66,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();
@@ -242,7 +242,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readInteger('pollID');
@@ -258,7 +258,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		// get options

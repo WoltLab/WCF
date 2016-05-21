@@ -14,7 +14,7 @@ use wcf\data\object\type\ObjectTypeCache;
  */
 class UserCommentImporter extends AbstractCommentImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractCommentImporter::$objectTypeName
+	 * @inheritDoc
 	 */
 	protected $objectTypeName = 'com.woltlab.wcf.user.comment';
 	
@@ -27,7 +27,7 @@ class UserCommentImporter extends AbstractCommentImporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		$data['objectID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectID']);

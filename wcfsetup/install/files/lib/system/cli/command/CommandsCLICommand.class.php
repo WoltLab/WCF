@@ -15,14 +15,14 @@ use wcf\util\CLIUtil;
  */
 class CommandsCLICommand implements ICLICommand {
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		CLIWCF::getReader()->println(CLIUtil::generateList(array_keys(CLICommandHandler::getCommands())));
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		return true;

@@ -20,7 +20,7 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
 	use TUserGroupOptionType;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		$options = Option::parseEnableOptions($option->enableOptions);
@@ -37,14 +37,14 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		return ($newValue == -1) ? -1 : parent::getData($option, $newValue);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		// force value for 'Never'

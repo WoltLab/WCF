@@ -24,7 +24,7 @@ use wcf\system\WCF;
  */
 class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\moderation\queue\ModerationQueueEditor';
 	
@@ -41,7 +41,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	public $user = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['lastChangeTime'])) {
@@ -52,7 +52,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		if (!isset($this->parameters['data']['lastChangeTime'])) {
@@ -305,7 +305,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\IVisitableObjectAction::validateMarkAsRead()
+	 * @inheritDoc
 	 */
 	public function validateMarkAsRead() {
 		if (empty($this->objects)) {

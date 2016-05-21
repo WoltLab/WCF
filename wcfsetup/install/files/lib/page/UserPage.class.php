@@ -30,7 +30,7 @@ use wcf\system\WCF;
  */
 class UserPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
+	 * @inheritDoc
 	 */
 	public $enableTracking = true;
 	
@@ -83,7 +83,7 @@ class UserPage extends AbstractPage {
 	public $visitorList;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -104,7 +104,7 @@ class UserPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -151,7 +151,7 @@ class UserPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -174,7 +174,7 @@ class UserPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// update profile hits
@@ -202,14 +202,14 @@ class UserPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\ITrackablePage::getObjectType()
+	 * @inheritDoc
 	 */
 	public function getObjectType() {
 		return 'com.woltlab.wcf.user';
 	}
 	
 	/**
-	 * @see	\wcf\page\ITrackablePage::getObjectID()
+	 * @inheritDoc
 	 */
 	public function getObjectID() {
 		return $this->userID;

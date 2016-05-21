@@ -35,7 +35,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	protected $searchEngine = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get available object types
@@ -97,14 +97,14 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::search()
+	 * @inheritDoc
 	 */
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000) {
 		return $this->getSearchEngine()->search($q, $objectTypes, $subjectOnly, $searchIndexCondition, $additionalConditions, $orderBy, $limit);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::getInnerJoin()
+	 * @inheritDoc
 	 */
 	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000) {
 		$conditionBuilderClassName = $this->getConditionBuilderClassName();
@@ -116,14 +116,14 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::getConditionBuilderClassName()
+	 * @inheritDoc
 	 */
 	public function getConditionBuilderClassName() {
 		return $this->getSearchEngine()->getConditionBuilderClassName();
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::removeSpecialCharacters()
+	 * @inheritDoc
 	 */
 	public function removeSpecialCharacters($string) {
 		return $this->getSearchEngine()->removeSpecialCharacters($string);

@@ -103,7 +103,7 @@ class SmtpEmailTransport implements EmailTransport {
 	}
 	
 	/**
-	 * @see	\wcf\system\email\transport\SmtpTransport::disconnect()
+	 * @inheritDoc
 	 */
 	public function __destruct() {
 		$this->disconnect();

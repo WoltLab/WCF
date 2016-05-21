@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  */
 class EncodeJSModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return StringUtil::encodeJS($tagArgs[0]);

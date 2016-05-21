@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class TemplateGroupEditForm extends TemplateGroupAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template';
 	
@@ -35,7 +35,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	public $templateGroup = null;
 	
 	/**
-	 * @see	\wcf\patge\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -48,7 +48,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\TemplateGroupAddForm::validateName()
+	 * @inheritDoc
 	 */
 	protected function validateName() {
 		if ($this->templateGroupName != $this->templateGroup->templateGroupName) {
@@ -57,7 +57,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\TemplateGroupAddForm::validateFolderName()
+	 * @inheritDoc
 	 */
 	protected function validateFolderName() {
 		if ($this->templateGroupFolderName != $this->templateGroup->templateGroupFolderName) {
@@ -66,7 +66,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -86,7 +86,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->availableTemplateGroups = TemplateGroup::getSelectList([$this->templateGroupID], 1);
@@ -102,7 +102,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

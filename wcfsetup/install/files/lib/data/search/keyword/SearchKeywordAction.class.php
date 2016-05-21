@@ -16,24 +16,24 @@ use wcf\system\WCF;
  */
 class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\search\keyword\SearchKeywordEditor';
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getSearchResultList'];
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
+	 * @inheritDoc
 	 */
 	public function validateGetSearchResultList() {
 		$this->readString('searchString', false, 'data');
 	}
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::getSearchResultList()
+	 * @inheritDoc
 	 */
 	public function getSearchResultList() {
 		$list = [];

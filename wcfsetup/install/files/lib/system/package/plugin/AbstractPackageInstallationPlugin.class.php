@@ -55,7 +55,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		// call 'install' event
@@ -63,7 +63,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		// call 'update' event
@@ -73,7 +73,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
+	 * @inheritDoc
 	 */
 	public function hasUninstall() {
 		// call 'hasUninstall' event
@@ -89,7 +89,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// call 'uninstall' event
@@ -110,7 +110,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 * @inheritDoc
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
 		return true;

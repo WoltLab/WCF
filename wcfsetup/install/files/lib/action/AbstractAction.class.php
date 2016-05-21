@@ -36,12 +36,12 @@ abstract class AbstractAction implements IAction {
 	public $neededPermissions = [];
 	
 	/**
-	 * @see	\wcf\form\IAction::__run()
+	 * @inheritDoc
 	 */
 	public final function __construct() { }
 	
 	/**
-	 * @see	\wcf\action\IAction::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		// call default methods
@@ -50,7 +50,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -58,7 +58,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::checkModules()
+	 * @inheritDoc
 	 */
 	public function checkModules() {
 		// call checkModules event
@@ -73,7 +73,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		// call checkPermissions event
@@ -86,7 +86,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		// check if active user is logged in

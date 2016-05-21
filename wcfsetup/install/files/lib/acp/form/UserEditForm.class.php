@@ -28,12 +28,12 @@ use wcf\util\StringUtil;
  */
 class UserEditForm extends UserAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.user.canEditUser'];
 	
@@ -98,7 +98,7 @@ class UserEditForm extends UserAddForm {
 	public $disableAvatarExpires = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->userID = intval($_REQUEST['id']);
@@ -123,7 +123,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -155,7 +155,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		if (empty($_POST)) {
@@ -210,7 +210,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -233,7 +233,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -374,7 +374,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validateUsername()
+	 * @inheritDoc
 	 */
 	protected function validateUsername($username) {
 		if (mb_strtolower($this->user->username) != mb_strtolower($username)) {
@@ -383,7 +383,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validateEmail()
+	 * @inheritDoc
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		// check confirm input
@@ -397,7 +397,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validatePassword()
+	 * @inheritDoc
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (!empty($password) || !empty($confirmPassword)) {
@@ -437,7 +437,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$this->validateAvatar();

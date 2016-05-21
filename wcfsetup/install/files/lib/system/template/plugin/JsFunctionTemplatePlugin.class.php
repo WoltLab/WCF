@@ -42,7 +42,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected $includedFiles = [];
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// needed arguments: application and lib/file

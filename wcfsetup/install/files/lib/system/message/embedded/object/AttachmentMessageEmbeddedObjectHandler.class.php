@@ -16,7 +16,7 @@ use wcf\util\ArrayUtil;
  */
 class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler {
 	/**
-	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::parseMessage()
+	 * @inheritDoc
 	 */
 	public function parseMessage($message) {
 		$parsedAttachmentIDs = array_unique(ArrayUtil::toIntegerArray(array_merge(self::getFirstParameters($message, 'attach'), self::getTextParameters($message, 'attach'))));
@@ -39,7 +39,7 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
 	}
 	
 	/**
-	 * @see	\wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler::loadObjects()
+	 * @inheritDoc
 	 */
 	public function loadObjects(array $objectIDs) {
 		$attachmentList = new AttachmentList();

@@ -14,12 +14,12 @@ use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
  */
 class MySQLDatabase extends Database {
 	/**
-	 * @see	\wcf\system\database\Database::$editorClassName
+	 * @inheritDoc
 	 */
 	protected $editorClassName = 'wcf\system\database\editor\MySQLDatabaseEditor';
 	
 	/**
-	 * @see	\wcf\system\database\Database::connect()
+	 * @inheritDoc
 	 */
 	public function connect() {
 		if (!$this->port) $this->port = 3306; // mysql default port
@@ -49,14 +49,14 @@ class MySQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\Database::isSupported()
+	 * @inheritDoc
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO') && extension_loaded('pdo_mysql'));
 	}
 	
 	/**
-	 * @see	\wcf\system\database\PDODatabase::setAttributes()
+	 * @inheritDoc
 	 */
 	protected function setAttributes() {
 		parent::setAttributes();

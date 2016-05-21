@@ -40,7 +40,7 @@ class RequestHandler extends SingletonFactory {
 	protected $isACPRequest = false;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->isACPRequest = class_exists('wcf\system\WCFACP', false);

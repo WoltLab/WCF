@@ -15,7 +15,7 @@ use wcf\util\ArrayUtil;
  */
 abstract class AbstractFeedPage extends AbstractAuthedPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'rssFeed';
 	
@@ -26,7 +26,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	public $application = 'wcf';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$useTemplate
+	 * @inheritDoc
 	 */
 	public $useTemplate = false;
 	
@@ -49,7 +49,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	public $title = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -61,7 +61,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -79,7 +79,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		parent::show();

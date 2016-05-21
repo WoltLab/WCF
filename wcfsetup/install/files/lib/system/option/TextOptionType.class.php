@@ -32,7 +32,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	protected $inputClass = 'long';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign([
@@ -45,7 +45,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		WCF::getTPL()->assign([
@@ -59,7 +59,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
+	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
@@ -76,7 +76,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		$newValue = $this->getContent($option, $newValue);
@@ -90,7 +90,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		return $this->getContent($option, $newValue);
@@ -115,7 +115,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		$value = StringUtil::trim($value);
@@ -128,7 +128,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(User $user, Option $option, $value) {
 		$value = StringUtil::trim($value);
@@ -141,14 +141,14 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 * @inheritDoc
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 * @inheritDoc
 	 */
 	public function hideLabelInSearch() {
 		return true;

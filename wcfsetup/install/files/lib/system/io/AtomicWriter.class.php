@@ -60,7 +60,7 @@ class AtomicWriter extends File {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\AtomicWriter::close()
+	 * @inheritDoc
 	 */
 	public function __destruct() {
 		$this->close();
@@ -109,7 +109,7 @@ class AtomicWriter extends File {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\File::__call($function, $arguments)
+	 * @inheritDoc
 	 */
 	public function __call($function, $arguments) {
 		if ($this->isFlushed) {

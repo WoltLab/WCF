@@ -36,7 +36,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 	public $data = [];
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -56,7 +56,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public final function execute() {
 		parent::execute();

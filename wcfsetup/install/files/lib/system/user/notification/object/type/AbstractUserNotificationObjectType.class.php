@@ -32,7 +32,7 @@ class AbstractUserNotificationObjectType extends AbstractObjectTypeProcessor imp
 	protected static $objectListClassName = '';
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\IUserNotificationObjectType::getObjectsByIDs()
+	 * @inheritDoc
 	 */
 	public function getObjectsByIDs(array $objectIDs) {
 		$indexName = call_user_func([static::$objectClassName, 'getDatabaseTableIndexName']);

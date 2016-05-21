@@ -16,7 +16,7 @@ namespace wcf\system\option\user\group;
  */
 class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupOptionType {
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		if ($groupValue == -1 || $defaultValue == $groupValue) {
@@ -31,7 +31,7 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		if ($value1 == $value2) {

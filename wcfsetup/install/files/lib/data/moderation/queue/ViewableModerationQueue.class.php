@@ -128,7 +128,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	}
 	
 	/**
-	 * @see	\wcf\data\moderation\queue\ViewableModerationQueue::getTitle()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getTitle();

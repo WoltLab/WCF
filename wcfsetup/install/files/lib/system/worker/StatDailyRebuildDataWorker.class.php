@@ -17,7 +17,7 @@ use wcf\util\DateUtil;
  */
 class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 30;
 	
@@ -28,12 +28,12 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	protected $startDate = 0;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::countObjects()
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		$this->getStartDate();
@@ -42,7 +42,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		EventHandler::getInstance()->fireAction($this, 'execute');

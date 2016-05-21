@@ -29,12 +29,12 @@ use wcf\system\WCF;
  */
 class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'acp_menu_item';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	
@@ -51,7 +51,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	protected $controller = null;
 	
 	/**
-	 * @see	\wcf\system\menu\ITreeMenuItem::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		// external link

@@ -53,7 +53,7 @@ class GroupedAttachmentList extends AttachmentList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();

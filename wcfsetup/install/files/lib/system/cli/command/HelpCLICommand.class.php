@@ -34,7 +34,7 @@ class HelpCLICommand implements IArgumentedCLICommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		$this->argv->setArguments($parameters);
@@ -60,14 +60,14 @@ class HelpCLICommand implements IArgumentedCLICommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
+	 * @inheritDoc
 	 */
 	public function getUsage() {
 		return str_replace($_SERVER['argv'][0].' [ options ]', 'help [ options ] <command>', $this->argv->getUsageMessage());
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		return true;

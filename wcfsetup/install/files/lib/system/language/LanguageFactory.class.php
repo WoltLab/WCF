@@ -38,7 +38,7 @@ class LanguageFactory extends SingletonFactory {
 	protected $scriptingCompiler = null;
 	
 	/**
-	 * @see	SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->loadCache();

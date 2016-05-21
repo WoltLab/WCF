@@ -19,22 +19,22 @@ use wcf\system\WCF;
  */
 class SignatureEditForm extends MessageForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
+	 * @inheritDoc
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_USER_SIGNATURE'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'signatureEdit';
 	
@@ -45,32 +45,32 @@ class SignatureEditForm extends MessageForm {
 	public $signatureCache = null;
 	
 	/**
-	 * @see	\wcf\form\MessageForm::$allowedBBCodesPermission
+	 * @inheritDoc
 	 */
 	public $allowedBBCodesPermission = 'user.signature.allowedBBCodes';
 	
 	/**
-	 * @see	\wcf\form\MessageForm::$permissionCanUseSmilies
+	 * @inheritDoc
 	 */
 	public $permissionCanUseSmilies = 'user.signature.canUseSmilies';
 	
 	/**
-	 * @see	\wcf\form\MessageForm::$permissionCanUseHtml
+	 * @inheritDoc
 	 */
 	public $permissionCanUseHtml = 'user.signature.canUseHtml';
 	
 	/**
-	 * @see	\wcf\form\MessageForm::$permissionCanUseBBCodes
+	 * @inheritDoc
 	 */
 	public $permissionCanUseBBCodes = 'user.signature.canUseBBCodes';
 	
 	/**
-	 * @see	\wcf\form\MessageForm::$showSignatureSetting
+	 * @inheritDoc
 	 */
 	public $showSignatureSetting = false;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -80,7 +80,7 @@ class SignatureEditForm extends MessageForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if (WCF::getUser()->disableSignature) throw new PermissionDeniedException();
@@ -93,7 +93,7 @@ class SignatureEditForm extends MessageForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -111,7 +111,7 @@ class SignatureEditForm extends MessageForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -122,7 +122,7 @@ class SignatureEditForm extends MessageForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab
@@ -132,7 +132,7 @@ class SignatureEditForm extends MessageForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();

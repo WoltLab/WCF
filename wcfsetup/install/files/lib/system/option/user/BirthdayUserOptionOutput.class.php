@@ -16,7 +16,7 @@ use wcf\data\user\UserProfile;
  */
 class BirthdayUserOptionOutput extends DateUserOptionOutput {
 	/**
-	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		$profile = new UserProfile($user);

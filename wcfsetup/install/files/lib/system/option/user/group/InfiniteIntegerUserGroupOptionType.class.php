@@ -17,7 +17,7 @@ namespace wcf\system\option\user\group;
  */
 class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType {
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		if ($defaultValue == -1) {
@@ -32,7 +32,7 @@ class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		if ($value1 == $value2) {

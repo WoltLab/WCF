@@ -20,7 +20,7 @@ use wcf\system\WCFACP;
  */
 class PackageInstallationConfirmPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
 	
@@ -56,7 +56,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	public $installingImportedStyle = false;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -81,7 +81,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -93,7 +93,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -108,7 +108,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check master password

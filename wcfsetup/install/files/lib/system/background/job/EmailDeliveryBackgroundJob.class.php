@@ -63,7 +63,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	}
 	
 	/**
-	 * @see	\wcf\system\background\job\AbstractJob::perform();
+	 * @inheritDoc
 	 */
 	public function perform() {
 		if (self::$transport === null) {

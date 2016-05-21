@@ -22,7 +22,7 @@ use wcf\system\WCF;
  */
 class LangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IPrefilterTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

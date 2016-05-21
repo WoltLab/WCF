@@ -32,7 +32,7 @@ class StyleHandler extends SingletonFactory {
 	protected $style = null;
 	
 	/**
-	 * @see	\wcf\system\exception\SystemException::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// load cache

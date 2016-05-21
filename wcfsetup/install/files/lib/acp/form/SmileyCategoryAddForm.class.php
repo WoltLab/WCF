@@ -13,22 +13,22 @@ namespace wcf\acp\form;
  */
 class SmileyCategoryAddForm extends AbstractCategoryAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley.category.add';
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractCategoryAddForm::$objectTypeName
+	 * @inheritDoc
 	 */
 	public $objectTypeName = 'com.woltlab.wcf.bbcode.smiley';
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractCategoryAddForm::$pageTitle
+	 * @inheritDoc
 	 */
 	public $pageTitle = 'wcf.acp.smiley.category.add';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_SMILEY'];
 }

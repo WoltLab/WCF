@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class StyleExportForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style';
 	
@@ -56,7 +56,7 @@ class StyleExportForm extends AbstractForm {
 	public $exportTemplates = false;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.style.canManageStyle'];
 	
@@ -79,7 +79,7 @@ class StyleExportForm extends AbstractForm {
 	public $styleID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -95,7 +95,7 @@ class StyleExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -111,7 +111,7 @@ class StyleExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -133,7 +133,7 @@ class StyleExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -162,7 +162,7 @@ class StyleExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

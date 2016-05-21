@@ -15,7 +15,7 @@ use wcf\system\background\BackgroundQueueHandler;
  */
 class BackgroundQueuePerformAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

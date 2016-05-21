@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class TemplatesFileHandler extends ACPTemplatesFileHandler {
 	/**
-	 * @see	\wcf\system\package\ACPTemplatesFileHandler::$supportsTemplateGroups
+	 * @inheritDoc
 	 */
 	protected $supportsTemplateGroups = true;
 	
 	/**
-	 * @see	\wcf\system\package\ACPTemplatesFileHandler::$tableName
+	 * @inheritDoc
 	 */
 	protected $tableName = 'template';
 	
 	/**
-	 * @see	\wcf\system\setup\IFileHandler::logFiles()
+	 * @inheritDoc
 	 */
 	public function logFiles(array $files) {
 		$packageID = $this->packageInstallation->getPackageID();

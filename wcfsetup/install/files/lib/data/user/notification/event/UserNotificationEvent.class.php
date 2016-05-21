@@ -29,17 +29,17 @@ class UserNotificationEvent extends ProcessibleDatabaseObject {
 	use TDatabaseObjectPermissions;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_notification_event';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'eventID';
 	
 	/**
-	 * @see	\wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 * @inheritDoc
 	 */
 	protected static $processorInterface = 'wcf\system\user\notification\event\IUserNotificationEvent';
 }

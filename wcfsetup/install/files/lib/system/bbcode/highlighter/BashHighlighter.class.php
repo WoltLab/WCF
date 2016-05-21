@@ -13,39 +13,39 @@ namespace wcf\system\bbcode\highlighter;
  */
 class BashHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
 	protected $separators = [';', '='];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @inheritDoc
 	 */
 	protected $quotes = ['"', "'", '`'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
 	protected $singleLineComment = ['#'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
+	 * @inheritDoc
 	 */
 	protected $commentStart = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
+	 * @inheritDoc
 	 */
 	protected $commentEnd = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
 	protected $operators = ['||', '&&', '&', '|', '<<=', '>>=', '<<', '+=', '-=', '*=', '/=', '%=',
 					'-gt', '-lt', '-n', '-a', '-o',
 					'+', '-', '*', '/', '%', '<', '?', ':', '==', '!=', '=', '!', '>', '2>', '>>'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
 	protected $keywords1 = [
 		'true',
@@ -53,7 +53,7 @@ class BashHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
 	protected $keywords2 = [
 		'if',
@@ -71,7 +71,7 @@ class BashHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
 	protected $keywords3 = [
 		'echo',
@@ -86,7 +86,7 @@ class BashHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords4
+	 * @inheritDoc
 	 */
 	protected $keywords4 = [
 		'$?'

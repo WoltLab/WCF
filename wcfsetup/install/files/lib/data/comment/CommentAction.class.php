@@ -36,7 +36,7 @@ use wcf\util\UserUtil;
  */
 class CommentAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComments', 'getGuestDialog'];
 	

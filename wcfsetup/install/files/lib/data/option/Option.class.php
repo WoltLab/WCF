@@ -38,17 +38,17 @@ class Option extends DatabaseObject {
 	use TDatabaseObjectPermissions;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'option';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::__get()
+	 * @inheritDoc
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -64,7 +64,7 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::handleData()
+	 * @inheritDoc
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
@@ -183,7 +183,7 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'option_table';

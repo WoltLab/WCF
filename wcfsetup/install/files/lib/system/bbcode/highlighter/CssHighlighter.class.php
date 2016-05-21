@@ -27,7 +27,7 @@ class CssHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightNumbers()
+	 * @inheritDoc
 	 */
 	protected function highlightNumbers($string) {
 		$string = preg_replace('!(?<='.$this->separatorsRegEx.')(-?\d*\.?\d+(?:px|pt|em|%|ex|in|cm|mm|pc)?)(?='.$this->separatorsRegEx.')!i', '<span class="hlNumbers">\\0</span>', $string);
@@ -39,7 +39,7 @@ class CssHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightKeywords()
+	 * @inheritDoc
 	 */
 	protected function highlightKeywords($string) {
 		$string = parent::highlightKeywords($string);
@@ -49,7 +49,7 @@ class CssHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @inheritDoc
 	 */
 	public function highlight($string) {
 		$string = str_replace('span', '053a0024219422ca9215c0a3ed0578ee76cff477', $string); // fix to not highlight the spans of the highlighter
@@ -66,17 +66,17 @@ class CssHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
 	protected $singleLineComment = ['//'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
 	protected $separators = ['(', ')', '{', '}', ';', '[', ']', ':', ',', '.'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
 	protected $keywords1 = [
 		'azimuth',
@@ -227,7 +227,7 @@ class CssHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
 	protected $keywords2 = [
 		'left-side',
@@ -472,7 +472,7 @@ class CssHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
 	protected $keywords3 = [
 		'active',
@@ -505,7 +505,7 @@ class CssHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords4
+	 * @inheritDoc
 	 */
 	protected $keywords4 = [
 		'abbr',
@@ -624,7 +624,7 @@ class CssHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords5
+	 * @inheritDoc
 	 */
 	public $keywords5 = [
 		// modifying

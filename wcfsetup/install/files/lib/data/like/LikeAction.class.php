@@ -26,12 +26,12 @@ use wcf\system\WCF;
  */
 class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getGroupedUserList', 'getLikeDetails', 'load'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\like\LikeEditor';
 	
@@ -127,14 +127,14 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\like\LikeAction::updateLike()
+	 * @inheritDoc
 	 */
 	public function like() {
 		return $this->updateLike(Like::LIKE);
 	}
 	
 	/**
-	 * @see	\wcf\data\like\LikeAction::validateLike()
+	 * @inheritDoc
 	 */
 	public function validateDislike() {
 		if (!LIKE_ENABLE_DISLIKE) {
@@ -145,7 +145,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\like\LikeAction::updateLike()
+	 * @inheritDoc
 	 */
 	public function dislike() {
 		return $this->updateLike(Like::DISLIKE);
@@ -210,7 +210,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->validateObjectParameters();
@@ -219,7 +219,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		// fetch number of pages

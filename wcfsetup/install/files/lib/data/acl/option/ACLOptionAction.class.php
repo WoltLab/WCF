@@ -15,12 +15,12 @@ use wcf\system\acl\ACLHandler;
  */
 class ACLOptionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\acl\option\ACLOptionEditor';
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['loadAll'];
 	

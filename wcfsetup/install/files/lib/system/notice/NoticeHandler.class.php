@@ -22,7 +22,7 @@ class NoticeHandler extends SingletonFactory {
 	protected $notices = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFacetory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->notices = NoticeCacheBuilder::getInstance()->getData();

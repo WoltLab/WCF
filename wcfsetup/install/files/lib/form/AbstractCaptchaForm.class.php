@@ -34,7 +34,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	public $useCaptcha = true;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -46,7 +46,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		if (!WCF::getUser()->userID && $this->useCaptcha && $this->captchaObjectTypeName) {
@@ -64,7 +64,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -75,7 +75,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -86,7 +86,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();

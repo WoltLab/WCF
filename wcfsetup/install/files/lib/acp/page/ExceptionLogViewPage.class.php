@@ -21,17 +21,17 @@ use wcf\util\StringUtil;
  */
 class ExceptionLogViewPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.exception';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = 10;
 	
@@ -60,7 +60,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	public $exceptions = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -70,7 +70,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		AbstractPage::readData();
@@ -181,7 +181,7 @@ Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})', Regex::DOT_ALL);
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::countItems()
+	 * @inheritDoc
 	 */
 	public function countItems() {
 		// call countItems event
@@ -207,7 +207,7 @@ Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})', Regex::DOT_ALL);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

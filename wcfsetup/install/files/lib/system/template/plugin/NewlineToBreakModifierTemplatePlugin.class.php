@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  */
 class NewlineToBreakModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return nl2br(StringUtil::encodeHTML($tagArgs[0]));

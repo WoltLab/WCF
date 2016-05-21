@@ -30,7 +30,7 @@ class ACPSearchHandler extends SingletonFactory {
 	protected $cache = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->cache = ACPSearchProviderCacheBuilder::getInstance()->getData();

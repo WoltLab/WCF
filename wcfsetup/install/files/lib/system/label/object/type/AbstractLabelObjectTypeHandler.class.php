@@ -26,21 +26,21 @@ abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implement
 	public $objectTypeID = 0;
 	
 	/**
-	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::setObjectTypeID()
+	 * @inheritDoc
 	 */
 	public function setObjectTypeID($objectTypeID) {
 		$this->objectTypeID = $objectTypeID;
 	}
 	
 	/**
-	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::getObjectTypeID()
+	 * @inheritDoc
 	 */
 	public function getObjectTypeID() {
 		return $this->objectTypeID;
 	}
 	
 	/**
-	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::getContainer()
+	 * @inheritDoc
 	 */
 	public function getContainer() {
 		return $this->container;

@@ -25,7 +25,7 @@ class LanguageEditForm extends LanguageAddForm {
 	public $languageID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -38,7 +38,7 @@ class LanguageEditForm extends LanguageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\LanguageAddForm::validateLanguageCode()
+	 * @inheritDoc
 	 */
 	protected function validateLanguageCode() {
 		if ($this->language->languageCode != mb_strtolower($this->languageCode)) {
@@ -47,12 +47,12 @@ class LanguageEditForm extends LanguageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\LanguageAddForm::validateSource()
+	 * @inheritDoc
 	 */
 	protected function validateSource() {}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -71,7 +71,7 @@ class LanguageEditForm extends LanguageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -84,7 +84,7 @@ class LanguageEditForm extends LanguageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

@@ -18,7 +18,7 @@ use wcf\util\JSON;
  */
 class WorkerProxyAction extends AJAXInvokeAction {
 	/**
-	 * @see	\wcf\system\event\listener\SessionAccessLogListener::execute()
+	 * @inheritDoc
 	 */
 	const DO_NOT_LOG = true;
 	
@@ -43,7 +43,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	public static $allowInvoke = [];
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		AbstractSecureAction::readParameters();
@@ -69,7 +69,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		AbstractSecureAction::execute();

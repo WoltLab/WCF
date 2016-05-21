@@ -21,14 +21,14 @@ class DefaultAvatar implements IUserAvatar {
 	public $size = 150;
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL($size = null) {
 		return WCF::getPath().'images/avatars/avatar-default.svg';
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getImageTag()
+	 * @inheritDoc
 	 */
 	public function getImageTag($size = null) {
 		if ($size === null) $size = $this->size;
@@ -37,28 +37,28 @@ class DefaultAvatar implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getWidth()
+	 * @inheritDoc
 	 */
 	public function getWidth() {
 		return $this->size;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getHeight()
+	 * @inheritDoc
 	 */
 	public function getHeight() {
 		return $this->size;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::canCrop()
+	 * @inheritDoc
 	 */
 	public function canCrop() {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getCropImageTag()
+	 * @inheritDoc
 	 */
 	public function getCropImageTag($size = null) {
 		return '';

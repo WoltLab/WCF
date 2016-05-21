@@ -13,12 +13,12 @@ namespace wcf\system\cache\builder;
  */
 class UserOptionCacheBuilder extends OptionCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$optionClassName
+	 * @inheritDoc
 	 */
 	protected $optionClassName = 'wcf\data\user\option\UserOption';
 	
 	/**
-	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$tableName
+	 * @inheritDoc
 	 */
 	protected $tableName = 'user_option';
 }

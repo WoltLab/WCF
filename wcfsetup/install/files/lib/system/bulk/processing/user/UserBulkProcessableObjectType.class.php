@@ -15,7 +15,7 @@ use wcf\system\bulk\processing\AbstractBulkProcessableObjectType;
  */
 class UserBulkProcessableObjectType extends AbstractBulkProcessableObjectType {
 	/**
-	 * @see	\wcf\system\bulk\processing\AbstractBulkProcessableObjectType::$templateName
+	 * @inheritDoc
 	 */
 	protected $templateName = 'userConditions';
 }

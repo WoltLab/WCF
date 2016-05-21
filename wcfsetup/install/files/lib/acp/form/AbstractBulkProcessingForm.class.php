@@ -57,12 +57,12 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	public $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\page\Abstractpage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'bulkProcessing';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -79,7 +79,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		// read bulk processable object type
@@ -133,7 +133,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -150,7 +150,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		$this->objectList = $this->actions[$this->action]->getProcessor()->getObjectList();
@@ -189,7 +189,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();

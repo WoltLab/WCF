@@ -105,7 +105,7 @@ class OptionHandler implements IOptionHandler {
 	public $didInit = false;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($supportI18n, $languageItemPattern = '', $categoryName = '') {
 		$this->categoryName = $categoryName;
@@ -117,7 +117,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::readUserInput()
+	 * @inheritDoc
 	 */
 	public function readUserInput(array &$source) {
 		if (isset($source['values']) && is_array($source['values'])) $this->rawValues = $source['values'];
@@ -134,7 +134,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$errors = [];
@@ -152,7 +152,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::getOptionTree()
+	 * @inheritDoc
 	 */
 	public function getOptionTree($parentCategoryName = '', $level = 0) {
 		$tree = [];
@@ -190,7 +190,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::getCategoryOptions()
+	 * @inheritDoc
 	 */
 	public function getCategoryOptions($categoryName = '', $inherit = true) {
 		$children = [];
@@ -219,7 +219,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		foreach ($this->options as $option) {
@@ -233,7 +233,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::save()
+	 * @inheritDoc
 	 */
 	public function save($categoryName = null, $optionPrefix = null) {
 		$saveOptions = [];
@@ -311,7 +311,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	protected function getFormElement($type, Option $option) {
 		return $this->getTypeObject($type)->getFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));

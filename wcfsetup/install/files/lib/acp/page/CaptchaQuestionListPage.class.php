@@ -14,27 +14,27 @@ use wcf\page\MultipleLinkPage;
  */
 class CaptchaQuestionListPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.captcha.question.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.captcha.canManageCaptchaQuestion'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\captcha\question\CaptchaQuestionList';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sortField
+	 * @inheritDoc
 	 */
 	public $sortField = 'questionID';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sortOrder
+	 * @inheritDoc
 	 */
 	public $sortOrder = 'ASC';
 }

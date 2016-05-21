@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserGroupOptionType {
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get selected group
@@ -38,7 +38,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		// get all groups
@@ -57,7 +57,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = [];
@@ -67,7 +67,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		$defaultValue = empty($defaultValue) ? [] : explode(',', StringUtil::unifyNewlines($defaultValue));
@@ -77,7 +77,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		$value1 = ($value1) ? explode(',', $value1) : [];

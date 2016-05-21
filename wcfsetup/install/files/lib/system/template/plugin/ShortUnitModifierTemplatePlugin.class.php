@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  */
 class ShortUnitModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$number = $tagArgs[0];

@@ -26,7 +26,7 @@ use wcf\util\StringUtil;
  */
 class UserProfileAction extends UserAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getUserProfile', 'getDetailedActivityPointList'];
 	

@@ -13,14 +13,14 @@ namespace wcf\system\cli\command;
  */
 class ExitCLICommand implements ICLICommand {
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		exit;
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		// everyone may access this command

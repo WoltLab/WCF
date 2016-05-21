@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.captcha';
 	
@@ -36,7 +36,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	public $captchaQuestionID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -50,7 +50,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -64,7 +64,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -77,7 +77,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();

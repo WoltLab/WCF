@@ -88,7 +88,7 @@ abstract class AbstractExporter implements IExporter {
 	protected $selectedData = [];
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::setData()
+	 * @inheritDoc
 	 */
 	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath, $additionalData) {
 		$this->databaseHost = $databaseHost;
@@ -101,7 +101,7 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::init()
+	 * @inheritDoc
 	 */
 	public function init() {
 		$host = $this->databaseHost;
@@ -116,21 +116,21 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::validateDatabaseAccess()
+	 * @inheritDoc
 	 */
 	public function validateDatabaseAccess() {
 		$this->init();
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::getDefaultDatabasePrefix()
+	 * @inheritDoc
 	 */
 	public function getDefaultDatabasePrefix() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::countLoops()
+	 * @inheritDoc
 	 */
 	public function countLoops($objectType) {
 		if (!isset($this->methods[$objectType]) || !method_exists($this, 'count'.$this->methods[$objectType])) {
@@ -143,7 +143,7 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::exportData()
+	 * @inheritDoc
 	 */
 	public function exportData($objectType, $loopCount = 0) {
 		if (!isset($this->methods[$objectType]) || !method_exists($this, 'export'.$this->methods[$objectType])) {
@@ -155,7 +155,7 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::validateSelectedData()
+	 * @inheritDoc
 	 */
 	public function validateSelectedData(array $selectedData) {
 		$this->selectedData = $selectedData;

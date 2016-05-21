@@ -25,12 +25,12 @@ use wcf\util\StringUtil;
  */
 class GoogleAuthAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['GOOGLE_PUBLIC_KEY', 'GOOGLE_PRIVATE_KEY'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

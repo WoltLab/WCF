@@ -13,19 +13,19 @@ namespace wcf\system\bbcode\highlighter;
  */
 class CHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
 	protected $separators = ['(', ')', '{', '}', '[', ']', ';', '.', ','];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
 	protected $operators = ['=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
 		'&&', '||', '++', '--', '+', '-', '*', '/', '&', '|', '^', '%', '<<', '>>', '>>>', '+=', '-=', '*=',
 		'/=', '&=', '|=', '^=', '%=', '<<=', '>>=', '>>>='];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
 	protected $keywords1 = [
 		'and',
@@ -74,7 +74,7 @@ class CHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
 	protected $keywords2 = [
 		'auto',
@@ -110,7 +110,7 @@ class CHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
 	protected $keywords3 = [
 		'#include',

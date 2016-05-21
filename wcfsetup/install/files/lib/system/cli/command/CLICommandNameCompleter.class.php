@@ -27,7 +27,7 @@ class CLICommandNameCompleter implements Completer {
 	}
 	
 	/**
-	 * @see	\phpline\console\completer\Completer::complete()
+	 * @inheritDoc
 	 */
 	public function complete($buffer, $cursor, array &$candidates) {
 		if ($buffer === null) {

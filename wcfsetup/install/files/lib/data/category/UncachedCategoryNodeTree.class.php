@@ -26,7 +26,7 @@ class UncachedCategoryNodeTree extends CategoryNodeTree {
 	protected $categoryStructureCache = [];
 	
 	/**
-	 * @see	\wcf\data\category\CategoryNodeTree::buildTree()
+	 * @inheritDoc
 	 */
 	protected function buildTree() {
 		$categoryList = new CategoryList();
@@ -46,14 +46,14 @@ class UncachedCategoryNodeTree extends CategoryNodeTree {
 	}
 	
 	/**
-	 * @see	\wcf\data\category\CategoryNodeTree::getCategory()
+	 * @inheritDoc
 	 */
 	protected function getCategory($categoryID) {
 		return $this->categoryCache[$categoryID];
 	}
 	
 	/**
-	 * @see	\wcf\data\category\CategoryNodeTree::getChildCategories()
+	 * @inheritDoc
 	 */
 	protected function getChildCategories(CategoryNode $parentNode) {
 		$categories = [];

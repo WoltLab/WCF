@@ -15,12 +15,12 @@ use wcf\system\request\LinkHandler;
  */
 class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
+	 * @inheritDoc
 	 */
 	protected $stackable = true;
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		$count = count($this->getAuthors());
@@ -35,7 +35,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
+	 * @inheritDoc
 	 */
 	public function getMessage() {
 		$authors = $this->getAuthors();
@@ -60,7 +60,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
+	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
 		$user = new User($this->userNotificationObject->objectID);
@@ -92,14 +92,14 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('User', ['id' => $this->userNotificationObject->objectID], '#wall');
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 * @inheritDoc
 	 */
 	public function getEventHash() {
 		return sha1($this->eventID . '-' . $this->notification->userID);

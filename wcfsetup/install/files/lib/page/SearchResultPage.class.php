@@ -22,7 +22,7 @@ use wcf\system\WCF;
  */
 class SearchResultPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = SEARCH_RESULTS_PER_PAGE;
 	
@@ -69,7 +69,7 @@ class SearchResultPage extends MultipleLinkPage {
 	public $resultListApplication = 'wcf';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -89,7 +89,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -151,7 +151,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -173,7 +173,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::countItems()
+	 * @inheritDoc
 	 */
 	public function countItems() {
 		// call countItems event
@@ -183,12 +183,12 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() { }
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readObjects()
+	 * @inheritDoc
 	 */
 	protected function readObjects() { }
 }

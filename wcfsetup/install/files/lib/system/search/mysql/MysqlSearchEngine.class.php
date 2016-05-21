@@ -26,12 +26,12 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	protected $ftMinWordLen = null;
 	
 	/**
-	 * @see	\wcf\system\search\AbstractSearchEngine::$specialCharacters
+	 * @inheritDoc
 	 */
 	protected $specialCharacters = ['(', ')', '@', '+', '-', '"', '<', '>', '~', '*'];
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::search()
+	 * @inheritDoc
 	 */
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000) {
 		// build search query
@@ -95,7 +95,7 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::getInnerJoin()
+	 * @inheritDoc
 	 */
 	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000) {
 		$fulltextCondition = null;
@@ -127,7 +127,7 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\AbstractSearchEngine::getFulltextMinimumWordLength()
+	 * @inheritDoc
 	 */
 	protected function getFulltextMinimumWordLength() {
 		if ($this->ftMinWordLen === null) {

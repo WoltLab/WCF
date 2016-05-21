@@ -71,7 +71,7 @@ class ACPSearchResult {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\acp\ACPSearchResult::getTitle()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getTitle();

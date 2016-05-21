@@ -14,7 +14,7 @@ use wcf\data\object\type\AbstractObjectTypeProcessor;
  */
 abstract class AbstractDeletedContentProvider extends AbstractObjectTypeProcessor implements IDeletedContentProvider {
 	/**
-	 * @see	\wcf\system\moderation\IDeletedContentProvider::getApplication()
+	 * @inheritDoc
 	 */
 	public function getApplication() {
 		$classParts = explode('\\', get_called_class());

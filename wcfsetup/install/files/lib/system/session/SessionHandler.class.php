@@ -166,7 +166,7 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->isACP = (class_exists(WCFACP::class, false) || !PACKAGE_ID);

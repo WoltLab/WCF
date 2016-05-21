@@ -33,7 +33,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	public $subscription = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->subscriptionID = intval($_REQUEST['id']);
@@ -54,7 +54,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -76,7 +76,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -102,7 +102,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -151,7 +151,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

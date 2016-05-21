@@ -14,14 +14,14 @@ use wcf\system\SingletonFactory;
  */
 abstract class AbstractPollHandler extends SingletonFactory implements IPollHandler {
 	/**
-	 * @see	\wcf\system\poll\IPollHandler::canStartPublicPoll()
+	 * @inheritDoc
 	 */
 	public function canStartPublicPoll() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\poll\IPollHandler::canVote()
+	 * @inheritDoc
 	 */
 	public function canVote() {
 		return true;

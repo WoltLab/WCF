@@ -282,14 +282,14 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->objects);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$objectID = $this->indexToObject[$this->index];
@@ -307,28 +307,28 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->indexToObject[$this->index]);
 	}
 	
 	/**
-	 * @see	\SeekableIterator::seek()
+	 * @inheritDoc
 	 */
 	public function seek($index) {
 		$this->index = $index;
@@ -339,7 +339,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITraversableObject::seekTo()
+	 * @inheritDoc
 	 */
 	public function seekTo($objectID) {
 		$this->index = array_search($objectID, $this->indexToObject);
@@ -350,7 +350,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITraversableObject::search()
+	 * @inheritDoc
 	 */
 	public function search($objectID) {
 		try {

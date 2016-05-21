@@ -34,7 +34,7 @@ class BBCodeHandler extends SingletonFactory {
 	protected $sourceBBCodes = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {

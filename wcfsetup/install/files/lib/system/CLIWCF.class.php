@@ -93,7 +93,7 @@ class CLIWCF extends WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::destruct()
+	 * @inheritDoc
 	 */
 	public static function destruct() {
 		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
@@ -105,7 +105,7 @@ class CLIWCF extends WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::handleException()
+	 * @inheritDoc
 	 */
 	public static final function handleCLIException(\Exception $e) {
 		die($e->getMessage()."\n".$e->getTraceAsString());

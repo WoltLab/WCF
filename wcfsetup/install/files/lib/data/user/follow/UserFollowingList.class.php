@@ -13,12 +13,12 @@ namespace wcf\data\user\follow;
  */
 class UserFollowingList extends UserFollowerList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$useQualifiedShorthand
+	 * @inheritDoc
 	 */
 	public $useQualifiedShorthand = false;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		UserFollowList::__construct();

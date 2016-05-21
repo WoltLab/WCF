@@ -23,7 +23,7 @@ use wcf\util\HeaderUtil;
  */
 class NotificationConfirmAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
@@ -40,7 +40,7 @@ class NotificationConfirmAction extends AbstractAction {
 	public $notificationID = 0;
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -58,7 +58,7 @@ class NotificationConfirmAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

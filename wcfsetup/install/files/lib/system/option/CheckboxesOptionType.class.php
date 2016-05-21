@@ -13,12 +13,12 @@ namespace wcf\system\option;
  */
 class CheckboxesOptionType extends MultiSelectOptionType {
 	/**
-	 * @see	\wcf\wcf\system\option\MultiSelectOptionType::$formElementTemplate
+	 * @inheritDoc
 	 */
 	protected $formElementTemplate = 'checkboxesOptionType';
 	
 	/**
-	 * @see	\wcf\wcf\system\option\MultiSelectOptionType::$formElementTemplate
+	 * @inheritDoc
 	 */
 	protected $searchableFormElementTemplate = 'checkboxesSearchableOptionType';
 }

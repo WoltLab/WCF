@@ -31,7 +31,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	public $assignmentID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -43,7 +43,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -60,7 +60,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -73,7 +73,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();

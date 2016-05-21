@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 1;
 	
@@ -28,7 +28,7 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	public $objectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker
+	 * @inheritDoc
 	 */
 	public function __construct(array $parameters) {
 		parent::__construct($parameters);
@@ -37,21 +37,21 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(['admin.user.canEditActivityPoints']);
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::countObjects()
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		$this->count = count($this->objectTypes);
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		$i = 0;
@@ -72,7 +72,7 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProceedURL()
+	 * @inheritDoc
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('UserActivityPointOption');

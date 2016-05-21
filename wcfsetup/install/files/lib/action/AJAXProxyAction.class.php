@@ -41,7 +41,7 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	protected $parameters = [];
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -52,7 +52,7 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	protected function invoke() {
 		if (!is_subclass_of($this->className, 'wcf\data\IDatabaseObjectAction')) {
@@ -76,7 +76,7 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\AJAXInvokeAction::sendResponse()
+	 * @inheritDoc
 	 */
 	protected function sendResponse() {
 		// add benchmark and debug data

@@ -14,7 +14,7 @@ use wcf\data\core\object\CoreObjectList;
  */
 class CoreObjectCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$data = [];

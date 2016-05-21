@@ -59,7 +59,7 @@ class BBCodeParser extends SingletonFactory {
 	protected $sourceCodeRegEx = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get bbcodes

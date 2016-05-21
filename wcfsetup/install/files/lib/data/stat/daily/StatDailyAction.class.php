@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class StatDailyAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\stat\daily\StatDailyEditor';
 	

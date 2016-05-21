@@ -37,7 +37,7 @@ class StyleCompiler extends SingletonFactory {
 	public static $supportedOptionType = ['boolean', 'integer'];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		require_once(WCF_DIR.'lib/system/style/scssphp/scss.inc.php');

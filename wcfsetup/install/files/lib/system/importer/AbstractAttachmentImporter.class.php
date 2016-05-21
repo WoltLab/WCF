@@ -16,7 +16,7 @@ use wcf\system\exception\SystemException;
  */
 class AbstractAttachmentImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\attachment\Attachment';
 	
@@ -27,7 +27,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		// check file location

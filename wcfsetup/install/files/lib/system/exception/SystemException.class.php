@@ -53,7 +53,7 @@ class SystemException extends LoggedException {
 	}
 	
 	/**
-	 * @see	\wcf\system\exception\IPrintableException::show()
+	 * @inheritDoc
 	 */
 	public function show() { }
 }

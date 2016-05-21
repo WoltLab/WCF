@@ -159,7 +159,7 @@ class PackageValidationException extends SystemException {
 	}
 	
 	/**
-	 * @see	\wcf\system\exception\LoggedException::logError()
+	 * @inheritDoc
 	 */
 	protected function logError() {
 		// do not log errors

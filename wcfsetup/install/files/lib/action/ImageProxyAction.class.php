@@ -27,7 +27,7 @@ class ImageProxyAction extends AbstractAction {
 	public $key = '';
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -36,7 +36,7 @@ class ImageProxyAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

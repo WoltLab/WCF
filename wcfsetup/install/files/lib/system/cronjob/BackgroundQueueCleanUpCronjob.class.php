@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 	/**
-	 * @see	\wcf\system\cronjob\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);

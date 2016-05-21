@@ -26,7 +26,7 @@ class MailWorker extends AbstractWorker {
 	protected $conditions = null;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 50;
 	
@@ -37,7 +37,7 @@ class MailWorker extends AbstractWorker {
 	protected $mailData = null;
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(['admin.user.canMailUser']);
@@ -55,7 +55,7 @@ class MailWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::countObjects()
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		$this->conditions = new PreparedStatementConditionBuilder();
@@ -81,7 +81,7 @@ class MailWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProgress()
+	 * @inheritDoc
 	 */
 	public function getProgress() {
 		$progress = parent::getProgress();
@@ -101,7 +101,7 @@ class MailWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		// get users
@@ -140,7 +140,7 @@ class MailWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProceedURL()
+	 * @inheritDoc
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('UserList');

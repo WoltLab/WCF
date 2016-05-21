@@ -157,7 +157,7 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * @see	\wcf\system\mail\MailSender::sendMail()
+	 * @inheritDoc
 	 */
 	public function sendMail(Mail $mail) {
 		$this->recipients = [];

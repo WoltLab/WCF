@@ -37,7 +37,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	protected $searchIndexManager = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get available object types
@@ -101,56 +101,56 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::add()
+	 * @inheritDoc
 	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		$this->getSearchIndexManager()->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::update()
+	 * @inheritDoc
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		$this->getSearchIndexManager()->update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::delete()
+	 * @inheritDoc
 	 */
 	public function delete($objectType, array $objectIDs) {
 		$this->getSearchIndexManager()->delete($objectType, $objectIDs);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::reset()
+	 * @inheritDoc
 	 */
 	public function reset($objectType) {
 		$this->getSearchIndexManager()->reset($objectType);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::createSearchIndices()
+	 * @inheritDoc
 	 */
 	public function createSearchIndices() {
 		$this->getSearchIndexManager()->createSearchIndices();
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::supportsBulkInsert()
+	 * @inheritDoc
 	 */
 	public function supportsBulkInsert() {
 		return $this->getSearchIndexManager()->supportsBulkInsert();
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::beginBulkOperation()
+	 * @inheritDoc
 	 */
 	public function beginBulkOperation() {
 		$this->getSearchIndexManager()->beginBulkOperation();
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::commitBulkOperation()
+	 * @inheritDoc
 	 */
 	public function commitBulkOperation() {
 		$this->getSearchIndexManager()->commitBulkOperation();

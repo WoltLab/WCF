@@ -51,7 +51,7 @@ class NotificationDisableAction extends AbstractAction {
 	public $token = '';
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -78,7 +78,7 @@ class NotificationDisableAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

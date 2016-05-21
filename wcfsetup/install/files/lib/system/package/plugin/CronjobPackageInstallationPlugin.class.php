@@ -17,12 +17,12 @@ use wcf\util\CronjobUtil;
  */
 class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\cronjob\CronjobEditor';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
+	 * @inheritDoc
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		if ($element->tagName == 'description') {
@@ -38,7 +38,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -68,7 +68,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		return [
@@ -88,14 +88,14 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
+	 * @inheritDoc
 	 */
 	protected function validateImport(array $data) {
 		CronjobUtil::validate($data['startMinute'], $data['startHour'], $data['startDom'], $data['startMonth'], $data['startDow']);
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
 		// if a cronjob is updated without a name given, keep the old automatically
@@ -120,7 +120,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		if (!$data['cronjobName']) return null;
@@ -141,7 +141,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareCreate()
+	 * @inheritDoc
 	 */
 	protected function prepareCreate(array &$data) {
 		parent::prepareCreate($data);

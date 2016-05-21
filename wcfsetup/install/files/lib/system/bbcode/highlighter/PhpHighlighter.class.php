@@ -16,7 +16,7 @@ class PhpHighlighter extends Highlighter {
 	public static $colorToClass = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
@@ -30,7 +30,7 @@ class PhpHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @inheritDoc
 	 */
 	public function highlight($code) {
 		// add starting php tag

@@ -17,7 +17,7 @@ use wcf\util\FileUtil;
  */
 class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -70,7 +70,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function hasUninstall() {
 		// scripts can't be uninstalled
@@ -78,7 +78,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// does nothing

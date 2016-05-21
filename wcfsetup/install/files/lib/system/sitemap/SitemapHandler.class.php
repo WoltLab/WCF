@@ -23,7 +23,7 @@ class SitemapHandler extends SingletonFactory {
 	protected $cache = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->cache = SitemapCacheBuilder::getInstance()->getData();

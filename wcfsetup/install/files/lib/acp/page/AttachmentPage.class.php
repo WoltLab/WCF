@@ -16,12 +16,12 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class AttachmentPage extends \wcf\page\AttachmentPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.attachment.canManageAttachment'];
 	
 	/**
-	 * @see	\wcf\page\IPage::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		AbstractPage::checkPermissions();

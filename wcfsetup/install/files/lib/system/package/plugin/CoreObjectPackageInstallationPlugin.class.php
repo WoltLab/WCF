@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\core\object\CoreObjectEditor';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -36,7 +36,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		return [
@@ -45,7 +45,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -64,7 +64,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @inheritDoc
 	 */
 	protected function cleanup() {
 		CoreObjectCacheBuilder::getInstance()->reset();

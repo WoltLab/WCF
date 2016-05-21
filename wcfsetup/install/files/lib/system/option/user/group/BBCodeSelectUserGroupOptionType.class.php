@@ -25,7 +25,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	protected $bbCodes = null;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) {
@@ -36,7 +36,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		if ($this->bbCodes === null) {
@@ -71,7 +71,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	}
 	
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		if ($this->bbCodes === null) {
@@ -104,7 +104,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) {
@@ -123,7 +123,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		// handle special case where no allowed BBCodes have been set

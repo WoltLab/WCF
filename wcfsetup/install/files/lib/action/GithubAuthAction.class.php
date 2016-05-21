@@ -25,12 +25,12 @@ use wcf\util\StringUtil;
  */
 class GithubAuthAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

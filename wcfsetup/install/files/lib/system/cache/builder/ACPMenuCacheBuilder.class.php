@@ -30,7 +30,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	protected $categoryStructure = [];
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$data = [];

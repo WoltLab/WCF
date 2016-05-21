@@ -105,14 +105,14 @@ class ImportCLICommand implements ICLICommand {
 	public $userMergeMode = 0;
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		return WCF::getSession()->getPermission('admin.management.canImportData');
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		CLIWCF::getReader()->setHistoryEnabled(false);

@@ -16,7 +16,7 @@ use wcf\system\option\IntegerOptionType;
  */
 class InverseIntegerUserGroupOptionType extends IntegerOptionType implements IUserGroupOptionType {
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		if ($defaultValue < $groupValue) {
@@ -27,7 +27,7 @@ class InverseIntegerUserGroupOptionType extends IntegerOptionType implements IUs
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		if ($value1 == $value2) {

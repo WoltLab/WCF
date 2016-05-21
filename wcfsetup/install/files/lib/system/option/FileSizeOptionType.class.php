@@ -16,12 +16,12 @@ use wcf\util\FileUtil;
  */
 class FileSizeOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\TextOptionType::$inputClass
+	 * @inheritDoc
 	 */
 	protected $inputClass = 'short textRight';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		$number = str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
@@ -63,7 +63,7 @@ class FileSizeOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		$value = FileUtil::formatFilesize($value);
@@ -71,7 +71,7 @@ class FileSizeOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		if ($value1 == $value2) {

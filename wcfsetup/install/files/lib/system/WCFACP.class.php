@@ -179,7 +179,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::initSession()
+	 * @inheritDoc
 	 */
 	protected function initSession() {
 		self::$sessionObj = SessionHandler::getInstance();
@@ -192,7 +192,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::initTPL()
+	 * @inheritDoc
 	 */
 	protected function initTPL() {
 		self::$tplObj = ACPTemplateEngine::getInstance();
@@ -201,7 +201,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::assignDefaultTemplateVariables()
+	 * @inheritDoc
 	 */
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();

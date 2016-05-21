@@ -20,22 +20,22 @@ use wcf\util\DateUtil;
  */
 class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
 	 */
 	public function create() {
 		$this->parameters['data']['subscriptionID'] = $this->parameters['subscription']->subscriptionID;
@@ -63,7 +63,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateCreate()
+	 * @inheritDoc
 	 */
 	public function validateCreate() {
 		parent::validateCreate();
@@ -112,7 +112,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$this->revoke();

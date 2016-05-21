@@ -30,14 +30,14 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	protected $objectList = null;
 	
 	/**
-	 * @see	\wcf\system\worker\IRebuildDataWorker::getObjectList()
+	 * @inheritDoc
 	 */
 	public function getObjectList() {
 		return $this->objectList;
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getLoopCount()
+	 * @inheritDoc
 	 */
 	public function setLoopCount($loopCount) {
 		parent::setLoopCount($loopCount);
@@ -46,14 +46,14 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(['admin.management.canRebuildData']);
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::countObjects()
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		if ($this->count === null) {
@@ -66,7 +66,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		$this->objectList->readObjects();
@@ -77,7 +77,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProceedURL()
+	 * @inheritDoc
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('RebuildData');
@@ -101,7 +101,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::finalize()
+	 * @inheritDoc
 	 */
 	public function finalize() {
 		SearchIndexManager::getInstance()->commitBulkOperation();

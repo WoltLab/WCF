@@ -14,7 +14,7 @@ use wcf\data\user\UserList;
  */
 class UserNotificationEventRecipientList extends UserList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		$this->sqlJoins = "LEFT JOIN wcf".WCF_N."_user user_table ON (user_table.userID = event_to_user.userID)";
@@ -24,14 +24,14 @@ class UserNotificationEventRecipientList extends UserList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::getDatabaseTableName()
+	 * @inheritDoc
 	 */
 	public function getDatabaseTableName() {
 		return 'wcf'.WCF_N.'_user_notification_event_to_user';
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::getDatabaseTableAlias()
+	 * @inheritDoc
 	 */
 	public function getDatabaseTableAlias() {
 		return 'event_to_user';

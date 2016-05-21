@@ -44,7 +44,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		$this->argv->setArguments($parameters);
@@ -461,14 +461,14 @@ class PackageCLICommand implements IArgumentedCLICommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
+	 * @inheritDoc
 	 */
 	public function getUsage() {
 		return str_replace($_SERVER['argv'][0].' [ options ]', 'package [ options ] <install|uninstall> <package>', $this->argv->getUsageMessage());
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		return CLIWCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') || CLIWCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage');

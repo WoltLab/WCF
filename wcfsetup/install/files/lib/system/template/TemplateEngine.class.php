@@ -106,7 +106,7 @@ class TemplateEngine extends SingletonFactory {
 	protected $environment = 'user';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->templatePaths = ['wcf' => WCF_DIR.'templates/'];

@@ -15,17 +15,17 @@ use wcf\system\exception\UserInputException;
  */
 class DateOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\TextOptionType::$inputType
+	 * @inheritDoc
 	 */
 	protected $inputType = 'date';
 	
 	/**
-	 * @see	\wcf\system\option\TextOptionType::$inputClass
+	 * @inheritDoc
 	 */
 	protected $inputClass = '';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (empty($newValue)) return;
@@ -40,7 +40,7 @@ class DateOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		if ($value1 == $value2) {

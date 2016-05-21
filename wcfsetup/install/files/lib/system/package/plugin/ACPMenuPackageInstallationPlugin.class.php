@@ -13,12 +13,12 @@ namespace wcf\system\package\plugin;
  */
 class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\acp\menu\item\ACPMenuItemEditor';
 	
 	/**
-	 * @see \wcf\system\package\plugin\AbstractMenuPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		$returnValue = parent::prepareImport($data);

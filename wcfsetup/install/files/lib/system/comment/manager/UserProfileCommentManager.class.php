@@ -22,37 +22,37 @@ use wcf\system\WCF;
  */
 class UserProfileCommentManager extends AbstractCommentManager implements IViewableLikeProvider {
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionAdd
+	 * @inheritDoc
 	 */
 	protected $permissionAdd = 'user.profileComment.canAddComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionCanModerate
+	 * @inheritDoc
 	 */
 	protected $permissionCanModerate = 'mod.profileComment.canModerateComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionDelete
+	 * @inheritDoc
 	 */
 	protected $permissionDelete = 'user.profileComment.canDeleteComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionEdit
+	 * @inheritDoc
 	 */
 	protected $permissionEdit = 'user.profileComment.canEditComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionModDelete
+	 * @inheritDoc
 	 */
 	protected $permissionModDelete = 'mod.profileComment.canDeleteComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionModEdit
+	 * @inheritDoc
 	 */
 	protected $permissionModEdit = 'mod.profileComment.canEditComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::isAccessible()
+	 * @inheritDoc
 	 */
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		// check object id
@@ -81,14 +81,14 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink($objectTypeID, $objectID) {
 		return LinkHandler::getInstance()->getLink('User', ['id' => $objectID]);
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle($objectTypeID, $objectID, $isResponse = false) {
 		if ($isResponse) return WCF::getLanguage()->get('wcf.user.profile.content.wall.commentResponse');
@@ -97,14 +97,14 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::updateCounter()
+	 * @inheritDoc
 	 */
 	public function updateCounter($objectID, $value) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteComment()
+	 * @inheritDoc
 	 */
 	public function canDeleteComment(Comment $comment) {
 		if ($comment->objectID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')) {
@@ -115,7 +115,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteResponse()
+	 * @inheritDoc
 	 */
 	public function canDeleteResponse(CommentResponse $response) {
 		if ($response->getComment()->objectID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')) {
@@ -126,7 +126,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	}
 	
 	/**
-	 * @see	\wcf\system\like\IViewableLikeProvider::prepare()
+	 * @inheritDoc
 	 */
 	public function prepare(array $likes) {
 		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {

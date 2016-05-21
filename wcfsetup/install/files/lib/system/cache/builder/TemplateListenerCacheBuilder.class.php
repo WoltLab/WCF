@@ -15,7 +15,7 @@ use wcf\data\template\listener\TemplateListenerList;
  */
 class TemplateListenerCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		// get templates for current package id

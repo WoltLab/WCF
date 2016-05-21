@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'user_option';
 	
@@ -30,7 +30,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'isdisabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata'];
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
+	 * @inheritDoc
 	 */
 	protected function saveCategory($category, $categoryXML = null) {
 		// use for create and update
@@ -61,7 +61,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @inheritDoc
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
@@ -144,7 +144,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// get optionsIDs from package

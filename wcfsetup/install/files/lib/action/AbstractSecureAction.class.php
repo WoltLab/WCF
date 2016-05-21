@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractSecureAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();

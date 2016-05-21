@@ -28,7 +28,7 @@ class PaymentMethodHandler extends SingletonFactory {
 	protected $objectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$availablePaymentMethods = explode(',', AVAILABLE_PAYMENT_METHODS);

@@ -19,7 +19,7 @@ abstract class AbstractImporter implements IImporter {
 	protected $className = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::getClassName()
+	 * @inheritDoc
 	 */
 	public function getClassName() {
 		return $this->className;

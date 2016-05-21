@@ -39,7 +39,7 @@ class GravatarDownloadAction extends AbstractAction {
 	public $size = 150;
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -59,7 +59,7 @@ class GravatarDownloadAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

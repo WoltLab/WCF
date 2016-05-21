@@ -48,7 +48,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\stat\IStatDailyHandler::getFormattedCounter()
+	 * @inheritDoc
 	 */
 	public function getFormattedCounter($counter) {
 		return $counter;

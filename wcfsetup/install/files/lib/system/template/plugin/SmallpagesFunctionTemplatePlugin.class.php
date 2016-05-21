@@ -23,31 +23,31 @@ use wcf\system\template\TemplateEngine;
  */
 class SmallpagesFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::SHOW_LINKS
+	 * @inheritDoc
 	 */
 	const SHOW_LINKS = 7;
 	
 	/**
-	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::$cssClassName
+	 * @inheritDoc
 	 */
 	protected $cssClassName = 'pagination small';
 	
 	/**
-	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::makePreviousLink()
+	 * @inheritDoc
 	 */
 	protected function makePreviousLink($link, $pageNo) {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::makeNextLink()
+	 * @inheritDoc
 	 */
 	protected function makeNextLink($link, $pageNo, $pages) {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$tagArgs['page'] = 0;

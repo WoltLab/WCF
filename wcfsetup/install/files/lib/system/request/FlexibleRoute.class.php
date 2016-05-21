@@ -118,7 +118,7 @@ class FlexibleRoute implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::buildLink()
+	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
 		$application = (isset($components['application'])) ? $components['application'] : null;
@@ -241,7 +241,7 @@ class FlexibleRoute implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::canHandle()
+	 * @inheritDoc
 	 */
 	public function canHandle(array $components) {
 		if (!empty($this->requireComponents)) {
@@ -260,21 +260,21 @@ class FlexibleRoute implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::getRouteData()
+	 * @inheritDoc
 	 */
 	public function getRouteData() {
 		return $this->routeData;
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::isACP()
+	 * @inheritDoc
 	 */
 	public function isACP() {
 		return $this->isACP;
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::matches()
+	 * @inheritDoc
 	 */
 	public function matches($requestURL) {
 		if (preg_match($this->pattern, $requestURL, $matches)) {

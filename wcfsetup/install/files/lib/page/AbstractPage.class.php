@@ -92,12 +92,12 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	public $useTemplate = true;
 	
 	/**
-	 * @see	\wcf\page\IPage::__run()
+	 * @inheritDoc
 	 */
 	public final function __construct() { }
 	
 	/**
-	 * @see	\wcf\page\IPage::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		// call default methods
@@ -106,7 +106,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -117,7 +117,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		// call readData event
@@ -125,7 +125,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		// call assignVariables event
@@ -139,7 +139,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::checkModules()
+	 * @inheritDoc
 	 */
 	public function checkModules() {
 		// call checkModules event
@@ -154,7 +154,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		// call checkPermissions event
@@ -177,7 +177,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check if active user is logged in
@@ -326,42 +326,42 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\ITrackablePage::isTracked()
+	 * @inheritDoc
 	 */
 	public function isTracked() {
 		return $this->enableTracking;
 	}
 	
 	/**
-	 * @see	\wcf\page\ITrackablePage::getController()
+	 * @inheritDoc
 	 */
 	public function getController() {
 		return get_class($this);
 	}
 	
 	/**
-	 * @see	\wcf\page\ITrackablePage::getParentObjectType()
+	 * @inheritDoc
 	 */
 	public function getParentObjectType() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\page\ITrackablePage::getParentObjectID()
+	 * @inheritDoc
 	 */
 	public function getParentObjectID() {
 		return 0;
 	}
 	
 	/**
-	 * @see	\wcf\page\ITrackablePage::getObjectType()
+	 * @inheritDoc
 	 */
 	public function getObjectType() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\page\ITrackablePage::getObjectID()
+	 * @inheritDoc
 	 */
 	public function getObjectID() {
 		return 0;

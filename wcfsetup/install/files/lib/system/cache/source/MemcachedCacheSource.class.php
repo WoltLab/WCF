@@ -107,7 +107,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flush()
+	 * @inheritDoc
 	 */
 	public function flush($cacheName, $useWildcard) {
 		if ($useWildcard) {
@@ -119,7 +119,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
+	 * @inheritDoc
 	 */
 	public function flushAll() {
 		// increment flush counter to nuke all data
@@ -128,7 +128,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::get()
+	 * @inheritDoc
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$value = $this->memcached->get($this->getCacheName($cacheName));
@@ -144,7 +144,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::set()
+	 * @inheritDoc
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		$this->memcached->set($this->getCacheName($cacheName), $value, $this->getTTL($maxLifetime));

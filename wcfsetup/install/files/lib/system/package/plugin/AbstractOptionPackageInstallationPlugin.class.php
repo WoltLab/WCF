@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		AbstractPackageInstallationPlugin::install();
@@ -36,7 +36,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::deleteItems()
+	 * @inheritDoc
 	 */
 	protected function deleteItems(\DOMXPath $xpath) {
 		// delete options
@@ -172,7 +172,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
+	 * @inheritDoc
 	 */
 	public function hasUninstall() {
 		$hasUninstallOptions = parent::hasUninstall();
@@ -186,7 +186,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// delete options
@@ -270,17 +270,17 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	abstract protected function saveOption($option, $categoryName, $existingOptionID = 0);
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) { }
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) { }
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) { }
 }

@@ -14,7 +14,7 @@ use wcf\data\object\type\AbstractObjectTypeProcessor;
  */
 abstract class AbstractTaggable extends AbstractObjectTypeProcessor implements ITaggable {
 	/**
-	 * @see	\wcf\system\tagging\ITaggable::getApplication()
+	 * @inheritDoc
 	 */
 	public function getApplication() {
 		$classParts = explode('\\', get_called_class());

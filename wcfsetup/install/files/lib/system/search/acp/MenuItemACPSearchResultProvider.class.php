@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider implements IACPSearchResultProvider {
 	/**
-	 * @see	\wcf\system\search\acp\IACPSearchResultProvider::search()
+	 * @inheritDoc
 	 */
 	public function search($query) {
 		$results = [];

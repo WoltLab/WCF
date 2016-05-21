@@ -18,12 +18,12 @@ use wcf\system\WCF;
  */
 class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.bbcode';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
@@ -40,7 +40,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	public $mediaProvider = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -53,7 +53,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -75,7 +75,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -88,7 +88,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

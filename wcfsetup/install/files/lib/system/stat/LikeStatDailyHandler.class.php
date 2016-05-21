@@ -17,7 +17,7 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler {
 	protected $likeValue = Like::LIKE;
 	
 	/**
-	 * @see	\wcf\system\stat\IStatDailyHandler::getData()
+	 * @inheritDoc
 	 */
 	public function getData($date) {
 		$sql = "SELECT	COUNT(*)

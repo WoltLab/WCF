@@ -16,7 +16,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
  */
 class ModerationQueueCommentManager extends AbstractCommentManager {
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::isAccessible()
+	 * @inheritDoc
 	 */
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		$entry = new ModerationQueue($objectID);
@@ -24,7 +24,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink($objectTypeID, $objectID) {
 		$entry = new ViewableModerationQueue(new ModerationQueue($objectID));
@@ -32,14 +32,14 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle($objectTypeID, $objectID, $isResponse = false) {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::updateCounter()
+	 * @inheritDoc
 	 */
 	public function updateCounter($objectID, $value) {
 		$entry = new ModerationQueue($objectID);
@@ -53,7 +53,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canAdd()
+	 * @inheritDoc
 	 */
 	public function canAdd($objectID) {
 		if (!$this->isAccessible($objectID, true)) {
@@ -64,28 +64,28 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::canEdit()
+	 * @inheritDoc
 	 */
 	protected function canEdit($isOwner) {
 		return $isOwner;
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::canDelete()
+	 * @inheritDoc
 	 */
 	protected function canDelete($isOwner) {
 		return $isOwner;
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::supportsLike()
+	 * @inheritDoc
 	 */
 	public function supportsLike() {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::supportsReport()
+	 * @inheritDoc
 	 */
 	public function supportsReport() {
 		return false;

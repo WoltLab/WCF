@@ -21,7 +21,7 @@ class PackageCache extends SingletonFactory {
 	protected $packages = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->packages = PackageCacheBuilder::getInstance()->getData();

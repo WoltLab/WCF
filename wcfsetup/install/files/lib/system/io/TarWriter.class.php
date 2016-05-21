@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  */
 class TarWriter extends Tar {
 	/**
-	 * @see	\wcf\system\io\Tar::$mode
+	 * @inheritDoc
 	 */
 	protected $mode = 'wb+';
 	

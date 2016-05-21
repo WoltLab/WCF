@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandler {
 	/**
-	 * @see	\wcf\system\stat\AbstractStatDailyHandler::getCounter()
+	 * @inheritDoc
 	 */
 	protected function getCounter($date, $tableName, $dateColumnName) {
 		$sql = "SELECT	CEIL(SUM(filesize) / 1000)
@@ -26,7 +26,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 	}
 	
 	/**
-	 * @see	\wcf\system\stat\AbstractStatDailyHandler::getTotal()
+	 * @inheritDoc
 	 */
 	protected function getTotal($date, $tableName, $dateColumnName) {
 		$sql = "SELECT	CEIL(SUM(filesize) / 1000)
@@ -38,7 +38,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 	}
 	
 	/**
-	 * @see	\wcf\system\stat\IStatDailyHandler::getFormattedCounter()
+	 * @inheritDoc
 	 */
 	public function getFormattedCounter($counter) {
 		return round($counter / 1000, 2); // return mb

@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class SmileyCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$data = ['smilies' => []];

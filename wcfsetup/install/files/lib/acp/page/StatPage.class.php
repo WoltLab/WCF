@@ -17,12 +17,12 @@ use wcf\util\DateUtil;
  */
 class StatPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.stat.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.management.canViewLog'];
 	
@@ -45,7 +45,7 @@ class StatPage extends AbstractPage {
 	public $availableObjectTypes = [];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -69,7 +69,7 @@ class StatPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

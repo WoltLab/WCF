@@ -24,12 +24,12 @@ use wcf\util\StringUtil;
  */
 class TwitterAuthAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['TWITTER_PUBLIC_KEY', 'TWITTER_PRIVATE_KEY'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

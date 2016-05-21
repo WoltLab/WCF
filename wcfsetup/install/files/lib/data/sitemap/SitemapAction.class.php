@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class SitemapAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getSitemap'];
 	

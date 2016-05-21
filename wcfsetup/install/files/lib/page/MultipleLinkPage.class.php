@@ -77,22 +77,22 @@ abstract class MultipleLinkPage extends AbstractPage {
 	public $sortOrder = '';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
+	 * @inheritDoc
 	 */
 	public $sqlLimit = 0;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOffset
+	 * @inheritDoc
 	 */
 	public $sqlOffset = '';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -102,7 +102,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -212,7 +212,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

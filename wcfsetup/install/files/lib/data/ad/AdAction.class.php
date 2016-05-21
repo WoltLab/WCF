@@ -19,22 +19,22 @@ use wcf\system\WCF;
  */
 class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.ad.canManageAd'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = ['admin.ad.canManageAd'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
 	 */
 	public function create() {
 		$showOrder = 0;
@@ -51,7 +51,7 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	}
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.ad', $this->objectIDs);
@@ -60,7 +60,7 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
 		foreach ($this->objects as $ad) {
@@ -71,14 +71,14 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
+	 * @inheritDoc
 	 */
 	public function validateUpdatePosition() {
 		WCF::getSession()->checkPermissions($this->permissionsUpdate);
@@ -97,7 +97,7 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();
@@ -108,7 +108,7 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::updatePosition()
+	 * @inheritDoc
 	 */
 	public function updatePosition() {
 		$sql = "UPDATE	wcf".WCF_N."_ad

@@ -18,7 +18,7 @@ use wcf\util\XML;
  */
 class RefreshSearchRobotsCronjob implements ICronjob {
 	/**
-	 * @see	\wcf\system\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		$filename = FileUtil::downloadFileFromHttp('http://assets.woltlab.com/spiderlist/typhoon/list.xml', 'spiders');

@@ -18,17 +18,17 @@ use wcf\system\WCF;
  */
 class UserClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$actionClassActions
+	 * @inheritDoc
 	 */
 	protected $actionClassActions = ['delete'];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
+	 * @inheritDoc
 	 */
 	protected $supportedActions = ['assignToGroup', 'ban', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword'];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		$item = parent::execute($objects, $action);
@@ -72,14 +72,14 @@ class UserClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getClassName()
+	 * @inheritDoc
 	 */
 	public function getClassName() {
 		return 'wcf\data\user\UserAction';
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 * @inheritDoc
 	 */
 	public function getTypeName() {
 		return 'com.woltlab.wcf.user';

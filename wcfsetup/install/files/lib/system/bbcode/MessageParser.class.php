@@ -36,7 +36,7 @@ class MessageParser extends BBCodeParser {
 	public $message = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
@@ -203,7 +203,7 @@ class MessageParser extends BBCodeParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\BBCodeParser::isValidTagAttribute()
+	 * @inheritDoc
 	 */
 	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {
 		if (!parent::isValidTagAttribute($tagAttributes, $definedTagAttribute)) {

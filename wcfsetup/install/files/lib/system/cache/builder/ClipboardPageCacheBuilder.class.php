@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class ClipboardPageCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$sql = "SELECT	pageClassName, actionID

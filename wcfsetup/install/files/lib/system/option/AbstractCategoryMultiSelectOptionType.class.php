@@ -30,7 +30,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	public $nodeTreeClassname = 'wcf\data\category\CategoryNodeTree';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		$categoryTree = new $this->nodeTreeClassname($this->objectType);
@@ -46,7 +46,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = [];
@@ -60,7 +60,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = [];

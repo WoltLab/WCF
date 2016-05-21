@@ -399,49 +399,49 @@ class PackageValidationArchive implements \RecursiveIterator {
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->position = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->children[$this->position]);
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		$this->position++;
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		return $this->children[$this->position];
 	}
 	
 	/**
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->position;
 	}
 	
 	/**
-	 * @see	\RecursiveIterator::getChildren()
+	 * @inheritDoc
 	 */
 	public function getChildren() {
 		return $this->children[$this->position];
 	}
 	
 	/**
-	 * @see	\RecursiveIterator::hasChildren()
+	 * @inheritDoc
 	 */
 	public function hasChildren() {
 		return count($this->children) > 0;

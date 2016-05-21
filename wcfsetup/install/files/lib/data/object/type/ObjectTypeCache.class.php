@@ -46,7 +46,7 @@ class ObjectTypeCache extends SingletonFactory {
 	protected $groupedObjectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get definition cache

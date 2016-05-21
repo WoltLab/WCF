@@ -22,35 +22,35 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType {
 	protected $cachedObjects = [];
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxSize()
+	 * @inheritDoc
 	 */
 	public function getMaxSize() {
 		return WCF::getSession()->getPermission('user.attachment.maxSize');
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getAllowedExtensions()
+	 * @inheritDoc
 	 */
 	public function getAllowedExtensions() {
 		return ArrayUtil::trim(explode("\n", WCF::getSession()->getPermission('user.attachment.allowedExtensions')));
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxCount()
+	 * @inheritDoc
 	 */
 	public function getMaxCount() {
 		return WCF::getSession()->getPermission('user.attachment.maxCount');
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::canViewPreview()
+	 * @inheritDoc
 	 */
 	public function canViewPreview($objectID) {
 		return $this->canDownload($objectID);
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getObject()
+	 * @inheritDoc
 	 */
 	public function getObject($objectID) {
 		if (isset($this->cachedObjects[$objectID])) return $this->cachedObjects[$objectID];
@@ -59,7 +59,7 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType {
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::setCachedObjects()
+	 * @inheritDoc
 	 */
 	public function setCachedObjects(array $objects) {
 		foreach ($objects as $id => $object) {
@@ -68,12 +68,12 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType {
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getObject()
+	 * @inheritDoc
 	 */
 	public function cacheObjects(array $objectIDs) {}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::setPermissions()
+	 * @inheritDoc
 	 */
 	public function setPermissions(array $attachments) {
 		foreach ($attachments as $attachment) {

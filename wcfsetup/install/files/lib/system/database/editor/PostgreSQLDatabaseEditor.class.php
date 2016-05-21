@@ -15,7 +15,7 @@ use wcf\util\ArrayUtil;
  */
 class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::getTableNames()
+	 * @inheritDoc
 	 */
 	public function getTableNames() {
 		$existingTables = [];
@@ -32,7 +32,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::getColumns()
+	 * @inheritDoc
 	 */
 	public function getColumns($tableName) {
 		$columns = [];
@@ -63,7 +63,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::getIndices()
+	 * @inheritDoc
 	 */
 	public function getIndices($tableName) {
 		$indices = [];
@@ -115,7 +115,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::createTable()
+	 * @inheritDoc
 	 */
 	public function createTable($tableName, $columns, $indices = []) {
 		$columnDefinition = $indexDefinition = '';
@@ -152,7 +152,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropTable()
+	 * @inheritDoc
 	 */
 	public function dropTable($tableName) {
 		$sql = "DROP TABLE IF EXISTS ".$tableName." CASCADE";
@@ -161,7 +161,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::addColumn()
+	 * @inheritDoc
 	 */
 	public function addColumn($tableName, $columnName, $columnData) {
 		$sql = "ALTER TABLE ".$tableName." ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
@@ -170,7 +170,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::alterColumn()
+	 * @inheritDoc
 	 */
 	public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		// change column name if necessary
@@ -220,7 +220,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropColumn()
+	 * @inheritDoc
 	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE ".$tableName." DROP COLUMN ".$columnName." CASCADE";
@@ -229,7 +229,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @inheritDoc
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
 		$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
@@ -283,7 +283,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @inheritDoc
 	 */
 	public function addForeignKey($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE ".$tableName." ADD";
@@ -310,7 +310,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropIndex()
+	 * @inheritDoc
 	 */
 	public function dropIndex($tableName, $indexName) {
 		$sql = "DROP INDEX IF EXISTS ".$tableName."_".$indexName."_key CASCADE";
@@ -319,7 +319,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropForeignKey()
+	 * @inheritDoc
 	 */
 	public function dropForeignKey($tableName, $indexName) {
 		// TODO: Could it be, that this method is not required because Postgre is clever enough to delete references anyway?

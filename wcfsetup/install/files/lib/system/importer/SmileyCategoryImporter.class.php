@@ -14,7 +14,7 @@ use wcf\data\object\type\ObjectTypeCache;
  */
 class SmileyCategoryImporter extends AbstractCategoryImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractCommentImporter::$objectTypeName
+	 * @inheritDoc
 	 */
 	protected $objectTypeName = 'com.woltlab.wcf.smiley.category';
 	

@@ -22,7 +22,7 @@ class DateUserOptionOutput implements IUserOptionOutput {
 	protected $dateFormat = DateUtil::DATE_FORMAT;
 	
 	/**
-	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		if (empty($value) || $value == '0000-00-00') return '';

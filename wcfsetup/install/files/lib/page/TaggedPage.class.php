@@ -26,12 +26,12 @@ class TaggedPage extends MultipleLinkPage {
 	public $availableObjectTypes = [];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_TAGGING'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['user.tag.canViewTag'];
 	
@@ -60,7 +60,7 @@ class TaggedPage extends MultipleLinkPage {
 	public $tagCloud = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -99,14 +99,14 @@ class TaggedPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readParameters()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		$this->objectList = $this->objectType->getProcessor()->getObjectList($this->tag);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -115,7 +115,7 @@ class TaggedPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

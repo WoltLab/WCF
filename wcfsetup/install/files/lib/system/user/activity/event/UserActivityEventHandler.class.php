@@ -27,7 +27,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	protected $objectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// load object types

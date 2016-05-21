@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class TextareaI18nOptionType extends TextareaOptionType {
 	/**
-	 * @see	\wcf\system\option\AbstractOptionType::$supportI18n
+	 * @inheritDoc
 	 */
 	protected $supportI18n = true;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
@@ -35,7 +35,7 @@ class TextareaI18nOptionType extends TextareaOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!I18nHandler::getInstance()->validateValue($option->optionName, $option->requireI18n, true)) {

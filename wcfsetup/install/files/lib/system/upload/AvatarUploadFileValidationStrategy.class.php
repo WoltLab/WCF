@@ -15,7 +15,7 @@ use wcf\system\exception\SystemException;
  */
 class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStrategy {
 	/**
-	 * @see	\wcf\system\upload\IUploadFileValidationStrategy::validate()
+	 * @inheritDoc
 	 */
 	public function validate(UploadFile $uploadFile) {
 		if (!parent::validate($uploadFile)) return false;

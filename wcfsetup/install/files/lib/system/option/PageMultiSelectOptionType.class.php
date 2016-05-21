@@ -15,7 +15,7 @@ use wcf\system\page\PageManager;
  */
 class PageMultiSelectOptionType extends MultiSelectOptionType {
 	/**
-	 * @see	\wcf\system\option\RadioButtonOptionType::getSelectOptions()
+	 * @inheritDoc
 	 */
 	protected function getSelectOptions(Option $option) {
 		return PageManager::getInstance()->getSelection($option->application);

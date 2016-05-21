@@ -13,7 +13,7 @@ namespace wcf\system\form\element;
  */
 class PasswordInputFormElement extends AbstractNamedFormElement {
 	/**
-	 * @see	\wcf\system\form\IFormElement::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML($formName) {
 		return <<<HTML

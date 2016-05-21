@@ -51,7 +51,7 @@ class ClipboardHandler extends SingletonFactory {
 	protected $pageObjectID = 0;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->cache = [

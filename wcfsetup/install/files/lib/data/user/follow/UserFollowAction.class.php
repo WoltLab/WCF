@@ -25,7 +25,7 @@ use wcf\system\WCF;
  */
 class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getGroupedUserList'];
 	
@@ -95,7 +95,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	\wcf\data\user\follow\UserFollowAction::validateFollow()
+	 * @inheritDoc
 	 */
 	public function validateUnfollow() {
 		$this->validateFollow();
@@ -127,7 +127,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		// read objects
@@ -148,7 +148,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$returnValues = parent::delete();
@@ -168,7 +168,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readInteger('pageNo');
@@ -181,7 +181,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		// resolve page count

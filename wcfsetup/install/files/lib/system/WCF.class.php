@@ -687,7 +687,7 @@ class WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::__callStatic()
+	 * @inheritDoc
 	 */
 	public final function __call($name, array $arguments) {
 		// bug fix to avoid php crash, see http://bugs.php.net/bug.php?id=55020

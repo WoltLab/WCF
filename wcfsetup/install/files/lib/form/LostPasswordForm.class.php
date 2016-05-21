@@ -24,7 +24,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
+	 * @inheritDoc
 	 */
 	public $enableTracking = true;
 	
@@ -47,12 +47,12 @@ class LostPasswordForm extends AbstractCaptchaForm {
 	public $user;
 	
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
+	 * @inheritDoc
 	 */
 	public $useCaptcha = LOST_PASSWORD_USE_CAPTCHA;
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -62,7 +62,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -96,7 +96,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -128,7 +128,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

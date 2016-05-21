@@ -13,12 +13,12 @@ namespace wcf\system\bbcode\highlighter;
  */
 class JavaHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
 	protected $separators = ["(", ")", "{", "}", "[", "]", ";", ".", ",", "<", ">"];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
 	protected $keywords2 = [
 		'package',
@@ -75,7 +75,7 @@ class JavaHighlighter extends Highlighter {
 	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
 	protected $keywords3 = [
 		'Boolean',

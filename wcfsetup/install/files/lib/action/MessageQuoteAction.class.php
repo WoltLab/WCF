@@ -39,7 +39,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	public $objectTypes = [];
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		AbstractSecureAction::readParameters();
@@ -60,7 +60,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		AbstractAction::execute();

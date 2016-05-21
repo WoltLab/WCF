@@ -35,7 +35,7 @@ use wcf\util\UserRegistrationUtil;
  */
 class RegisterForm extends UserAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
+	 * @inheritDoc
 	 */
 	public $enableTracking = true;
 	
@@ -46,7 +46,7 @@ class RegisterForm extends UserAddForm {
 	public $isExternalAuthentication = false;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = [];
 	
@@ -58,17 +58,17 @@ class RegisterForm extends UserAddForm {
 	public $message = '';
 	
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$captchaObjectType
+	 * @inheritDoc
 	 */
 	public $captchaObjectType = null;
 	
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
+	 * @inheritDoc
 	 */
 	public $captchaObjectTypeName = CAPTCHA_TYPE;
 	
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
+	 * @inheritDoc
 	 */
 	public $useCaptcha = REGISTER_USE_CAPTCHA;
 	
@@ -85,7 +85,7 @@ class RegisterForm extends UserAddForm {
 	public static $minRegistrationTime = 10;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -112,7 +112,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -148,7 +148,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		// validate captcha first
@@ -163,7 +163,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		if ($this->useCaptcha && $this->captchaObjectTypeName) {
@@ -218,7 +218,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -231,7 +231,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		AbstractForm::show();
@@ -252,7 +252,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validateUsername()
+	 * @inheritDoc
 	 */
 	protected function validateUsername($username) {
 		parent::validateUsername($username);
@@ -264,7 +264,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validatePassword()
+	 * @inheritDoc
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (!$this->isExternalAuthentication) {
@@ -278,7 +278,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validateEmail()
+	 * @inheritDoc
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		parent::validateEmail($email, $confirmEmail);
@@ -289,7 +289,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();

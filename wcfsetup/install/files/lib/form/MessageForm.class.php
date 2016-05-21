@@ -167,7 +167,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public $tmpHash = '';
 	
 	/**
-	 * @see	\wcf\form\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -196,7 +196,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -217,7 +217,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		// subject
@@ -300,7 +300,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -329,7 +329,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		// get attachments
@@ -364,7 +364,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables();
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

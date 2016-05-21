@@ -28,7 +28,7 @@ class RecaptchaHandler implements ICaptchaHandler {
 	public $response = '';
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement() {
 		if (WCF::getSession()->getVar('recaptchaDone')) return '';
@@ -48,14 +48,14 @@ class RecaptchaHandler implements ICaptchaHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::isAvailable()
+	 * @inheritDoc
 	 */
 	public function isAvailable() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
@@ -70,14 +70,14 @@ class RecaptchaHandler implements ICaptchaHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		WCF::getSession()->unregister('recaptchaDone');
 	}
 	
 	/**
-	 * @see	\wcf\system\captcha\ICaptchaHandler::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if (WCF::getSession()->getVar('recaptchaDone')) return;

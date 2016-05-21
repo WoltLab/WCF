@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\clipboard\action\ClipboardActionEditor';
 	
@@ -25,12 +25,12 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	protected $pages = [];
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @inheritDoc
 	 */
 	public $tagName = 'action';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -48,7 +48,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
+	 * @inheritDoc
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
@@ -67,7 +67,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		$showOrder = (isset($data['elements']['showorder'])) ? intval($data['elements']['showorder']) : null;
@@ -82,7 +82,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -103,7 +103,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
 		// extract pages
@@ -118,7 +118,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::postImport()
+	 * @inheritDoc
 	 */
 	protected function postImport() {
 		// clear pages

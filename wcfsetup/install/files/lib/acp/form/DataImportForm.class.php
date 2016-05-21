@@ -28,12 +28,12 @@ class DataImportForm extends AbstractForm {
 	public $additionalData = [];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.maintenance.import';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.management.canImportData'];
 	
@@ -128,7 +128,7 @@ class DataImportForm extends AbstractForm {
 	public $userMergeMode = UserImporter::MERGE_MODE_EMAIL;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -174,7 +174,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -192,7 +192,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::submit()
+	 * @inheritDoc
 	 */
 	public function submit() {
 		if (!isset($_POST['sourceSelection'])) {
@@ -201,7 +201,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -238,7 +238,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -263,7 +263,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -293,7 +293,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

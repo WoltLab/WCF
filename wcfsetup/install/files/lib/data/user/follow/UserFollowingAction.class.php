@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class UserFollowingAction extends UserFollowAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\user\follow\UserFollowEditor';
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readInteger('pageNo');
@@ -35,7 +35,7 @@ class UserFollowingAction extends UserFollowAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		// resolve page count

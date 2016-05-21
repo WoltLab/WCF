@@ -59,7 +59,7 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	protected $permissionModEdit = '';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canAdd()
+	 * @inheritDoc
 	 */
 	public function canAdd($objectID) {
 		if (!$this->isAccessible($objectID, true)) {
@@ -70,35 +70,35 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canEditComment()
+	 * @inheritDoc
 	 */
 	public function canEditComment(Comment $comment) {
 		return $this->canEdit(($comment->userID == WCF::getUser()->userID));
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canEditResponse()
+	 * @inheritDoc
 	 */
 	public function canEditResponse(CommentResponse $response) {
 		return $this->canEdit(($response->userID == WCF::getUser()->userID));
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteComment()
+	 * @inheritDoc
 	 */
 	public function canDeleteComment(Comment $comment) {
 		return $this->canDelete(($comment->userID == WCF::getUser()->userID));
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteResponse()
+	 * @inheritDoc
 	 */
 	public function canDeleteResponse(CommentResponse $response) {
 		return $this->canDelete(($response->userID == WCF::getUser()->userID));
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canModerate()
+	 * @inheritDoc
 	 */
 	public function canModerate($objectTypeID, $objectID) {
 		return (WCF::getSession()->getPermission($this->permissionCanModerate) ? true : false);
@@ -155,21 +155,21 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getCommentsPerPage()
+	 * @inheritDoc
 	 */
 	public function getCommentsPerPage() {
 		return $this->commentsPerPage;
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::supportsLike()
+	 * @inheritDoc
 	 */
 	public function supportsLike() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::supportsReport()
+	 * @inheritDoc
 	 */
 	public function supportsReport() {
 		return true;

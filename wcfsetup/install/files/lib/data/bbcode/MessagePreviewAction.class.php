@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  */
 class MessagePreviewAction extends BBCodeAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getMessagePreview'];
 		

@@ -19,27 +19,27 @@ use wcf\system\WCF;
  */
 class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getSearchResultList'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\tag\TagEditor';
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.content.tag.canManageTag'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = ['admin.content.tag.canManageTag'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['delete', 'update'];
 	
@@ -50,7 +50,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	public $tagEditor = null;
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
+	 * @inheritDoc
 	 */
 	public function validateGetSearchResultList() {
 		$this->readString('searchString', false, 'data');
@@ -61,7 +61,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::getSearchResultList()
+	 * @inheritDoc
 	 */
 	public function getSearchResultList() {
 		$excludedSearchValues = [];
@@ -93,7 +93,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$returnValue = parent::delete();

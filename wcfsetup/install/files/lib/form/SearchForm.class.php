@@ -70,12 +70,12 @@ class SearchForm extends AbstractCaptchaForm {
 	public $results = [];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$sortField
+	 * @inheritDoc
 	 */
 	public $sortField = SEARCH_DEFAULT_SORT_FIELD;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$sortOrder
+	 * @inheritDoc
 	 */
 	public $sortOrder = SEARCH_DEFAULT_SORT_ORDER;
 	
@@ -92,7 +92,7 @@ class SearchForm extends AbstractCaptchaForm {
 	public $username = '';
 	
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
+	 * @inheritDoc
 	 */
 	public $useCaptcha = SEARCH_USE_CAPTCHA;
 	
@@ -145,7 +145,7 @@ class SearchForm extends AbstractCaptchaForm {
 	public $submit = false;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -236,7 +236,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -249,7 +249,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -309,7 +309,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::submit()
+	 * @inheritDoc
 	 */
 	public function submit() {
 		try {
@@ -321,7 +321,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -395,7 +395,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -418,7 +418,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		if (empty($_POST) && $this->submit) {

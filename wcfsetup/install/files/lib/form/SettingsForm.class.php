@@ -26,12 +26,12 @@ use wcf\util\ArrayUtil;
  */
 class SettingsForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
+	 * @inheritDoc
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
@@ -42,7 +42,7 @@ class SettingsForm extends AbstractForm {
 	public $optionHandler = null;
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::$errorType
+	 * @inheritDoc
 	 */
 	public $errorType = [];
 	
@@ -89,7 +89,7 @@ class SettingsForm extends AbstractForm {
 	public $styleID = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -114,7 +114,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -130,7 +130,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -168,7 +168,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -187,7 +187,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -217,7 +217,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\Page::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -240,7 +240,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\Page::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab

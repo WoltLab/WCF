@@ -44,7 +44,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		$this->argv->setArguments($parameters);
@@ -178,14 +178,14 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
+	 * @inheritDoc
 	 */
 	public function getUsage() {
 		return str_replace($_SERVER['argv'][0].' [ options ]', 'worker [ options ] <worker>', $this->argv->getUsageMessage());
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		// TODO: Check access

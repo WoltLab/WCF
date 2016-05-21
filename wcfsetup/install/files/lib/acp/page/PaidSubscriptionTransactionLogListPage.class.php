@@ -17,37 +17,37 @@ use wcf\util\StringUtil;
  */
 class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription.transactionLog.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'logTime';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortOrder
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['logID', 'subscriptionUserID', 'userID', 'subscriptionID', 'paymentMethodObjectTypeID', 'logTime', 'transactionID', 'logMessage'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogList';
 	
@@ -70,7 +70,7 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	public $subscriptionID = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -102,7 +102,7 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

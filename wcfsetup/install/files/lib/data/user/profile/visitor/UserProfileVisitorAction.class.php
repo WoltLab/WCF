@@ -20,7 +20,7 @@ use wcf\system\WCF;
  */
 class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getGroupedUserList'];
 	
@@ -31,7 +31,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 	public $userProfile = null;
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readInteger('pageNo');
@@ -44,7 +44,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		// resolve page count

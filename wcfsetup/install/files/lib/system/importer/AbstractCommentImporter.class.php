@@ -14,7 +14,7 @@ use wcf\data\comment\CommentEditor;
  */
 class AbstractCommentImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\comment\Comment';
 	
@@ -31,7 +31,7 @@ class AbstractCommentImporter extends AbstractImporter {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);

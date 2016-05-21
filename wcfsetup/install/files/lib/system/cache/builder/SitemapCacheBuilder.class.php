@@ -14,7 +14,7 @@ use wcf\data\sitemap\SitemapList;
  */
 class SitemapCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$sitemapList = new SitemapList();

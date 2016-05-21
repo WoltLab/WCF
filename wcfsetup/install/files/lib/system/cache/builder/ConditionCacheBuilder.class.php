@@ -16,7 +16,7 @@ use wcf\system\exception\SystemException;
  */
 class ConditionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		if (!isset($parameters['definitionID'])) {

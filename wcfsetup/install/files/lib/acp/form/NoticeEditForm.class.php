@@ -21,7 +21,7 @@ use wcf\system\WCF;
  */
 class NoticeEditForm extends NoticeAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.notice';
 	
@@ -44,7 +44,7 @@ class NoticeEditForm extends NoticeAddForm {
 	public $resetIsDismissed = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -59,7 +59,7 @@ class NoticeEditForm extends NoticeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -103,7 +103,7 @@ class NoticeEditForm extends NoticeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -112,7 +112,7 @@ class NoticeEditForm extends NoticeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -125,7 +125,7 @@ class NoticeEditForm extends NoticeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();

@@ -23,12 +23,12 @@ use wcf\system\WCF;
  */
 class PaidSubscriptionUser extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'paid_subscription_user';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'subscriptionUserID';
 	

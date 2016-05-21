@@ -15,7 +15,7 @@ use wcf\system\package\PackageUpdateDispatcher;
  */
 class GetUpdateInfoCronjob implements ICronjob {
 	/**
-	 * @see	\wcf\system\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();

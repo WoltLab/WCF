@@ -20,7 +20,7 @@ use wcf\system\WCF;
  */
 class UserImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\user\User';
 	
@@ -57,7 +57,7 @@ class UserImporter extends AbstractImporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		// whether to perform a merge

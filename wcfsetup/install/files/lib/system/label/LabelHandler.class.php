@@ -32,7 +32,7 @@ class LabelHandler extends SingletonFactory {
 	protected $labelGroups = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->cache = [

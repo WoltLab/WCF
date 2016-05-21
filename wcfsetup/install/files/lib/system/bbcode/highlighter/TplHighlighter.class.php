@@ -14,7 +14,7 @@ use wcf\system\Regex;
  */
 class TplHighlighter extends HtmlHighlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightComments()
+	 * @inheritDoc
 	 */
 	protected function highlightComments($string) {
 		$string = parent::highlightComments($string);

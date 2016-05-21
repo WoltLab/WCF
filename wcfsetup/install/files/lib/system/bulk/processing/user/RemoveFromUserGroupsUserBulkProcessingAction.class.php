@@ -16,19 +16,19 @@ use wcf\system\WCF;
  */
 class RemoveFromUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUserBulkProcessingAction {
 	/**
-	 * @see	\wcf\system\bulk\processing\user\AbstractUserGroupsUserBulkProcessingAction::$inputName
+	 * @inheritDoc
 	 */
 	public $inputName = 'removeFromUserGroupIDs';
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\user\AbstractUserGroupsUserBulkProcessingAction::executeUserAction()
+	 * @inheritDoc
 	 */
 	protected function executeUserAction(UserEditor $user) {
 		$user->removeFromGroups($this->userGroupIDs);
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getObjectList()
+	 * @inheritDoc
 	 */
 	public function getObjectList() {
 		$userList = parent::getObjectList();

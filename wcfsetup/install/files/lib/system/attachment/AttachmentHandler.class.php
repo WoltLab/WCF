@@ -97,7 +97,7 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->getAttachmentList());
@@ -158,14 +158,14 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxSize()
+	 * @inheritDoc
 	 */
 	public function getMaxSize() {
 		return $this->processor->getMaxSize();
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getAllowedExtensions()
+	 * @inheritDoc
 	 */
 	public function getAllowedExtensions() {
 		return $this->processor->getAllowedExtensions();
@@ -198,7 +198,7 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxCount()
+	 * @inheritDoc
 	 */
 	public function getMaxCount() {
 		return $this->processor->getMaxCount();

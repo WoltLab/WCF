@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
 	public $className = 'wcf\data\acl\option\ACLOptionEditor';
 	
@@ -26,17 +26,17 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	protected $optionTypeIDs = [];
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'acl_option';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @inheritDoc
 	 */	
 	public $tagName = 'option';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::importCategories()
+	 * @inheritDoc
 	 */
 	protected function importCategories(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
@@ -54,7 +54,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
+	 * @inheritDoc
 	 */
 	protected function saveCategory($category) {
 		$objectTypeID = $this->getObjectTypeID($category['objecttype']);
@@ -165,7 +165,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @inheritDoc
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		/* Does nothing */

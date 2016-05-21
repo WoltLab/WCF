@@ -28,7 +28,7 @@ class BBCodeCache extends SingletonFactory {
 	protected $highlighters = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get bbcode cache

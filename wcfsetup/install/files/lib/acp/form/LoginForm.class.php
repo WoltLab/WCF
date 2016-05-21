@@ -53,7 +53,7 @@ class LoginForm extends AbstractCaptchaForm {
 	public $url = null;
 	
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
+	 * @inheritDoc
 	 */
 	public $useCaptcha = false;
 	
@@ -69,7 +69,7 @@ class LoginForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -109,7 +109,7 @@ class LoginForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -142,7 +142,7 @@ class LoginForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::submit()
+	 * @inheritDoc
 	 */
 	public function submit() {
 		parent::submit();
@@ -170,7 +170,7 @@ class LoginForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -192,7 +192,7 @@ class LoginForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -219,7 +219,7 @@ class LoginForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -234,7 +234,7 @@ class LoginForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

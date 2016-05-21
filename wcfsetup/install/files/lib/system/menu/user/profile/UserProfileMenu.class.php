@@ -29,7 +29,7 @@ class UserProfileMenu extends SingletonFactory {
 	public $menuItems = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get menu items from cache

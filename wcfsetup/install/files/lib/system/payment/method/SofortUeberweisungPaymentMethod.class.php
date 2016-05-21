@@ -13,7 +13,7 @@ namespace wcf\system\payment\method;
  */
 class SofortUeberweisungPaymentMethod extends AbstractPaymentMethod {
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
+	 * @inheritDoc
 	 */
 	public function getSupportedCurrencies() {
 		return [
@@ -22,7 +22,7 @@ class SofortUeberweisungPaymentMethod extends AbstractPaymentMethod {
 	}
 	
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::getPurchaseButton()
+	 * @inheritDoc
 	 */
 	public function getPurchaseButton($cost, $currency, $name, $token, $returnURL, $cancelReturnURL, $isRecurring = false, $subscriptionLength = 0, $subscriptionLengthUnit = '') {
 		// @todo

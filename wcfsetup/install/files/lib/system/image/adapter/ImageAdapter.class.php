@@ -45,14 +45,14 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::load()
+	 * @inheritDoc
 	 */
 	public function load($image, $type = 0) {
 		$this->adapter->load($image, $type);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::loadFile()
+	 * @inheritDoc
 	 */
 	public function loadFile($file) {
 		if (!file_exists($file) || !is_readable($file)) {
@@ -63,14 +63,14 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 * @inheritDoc
 	 */
 	public function createEmptyImage($width, $height) {
 		$this->adapter->createEmptyImage($width, $height);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::createThumbnail()
+	 * @inheritDoc
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		if ($maxWidth > $this->getWidth() && $maxHeight > $this->getHeight()) {
@@ -84,7 +84,7 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::clip()
+	 * @inheritDoc
 	 */
 	public function clip($originX, $originY, $width, $height) {
 		// validate if coordinates and size are within bounds
@@ -102,7 +102,7 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
+	 * @inheritDoc
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight) {
 		// use origin dimensions if target dimensions are both zero
@@ -115,7 +115,7 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawRectangle()
+	 * @inheritDoc
 	 */
 	public function drawRectangle($startX, $startY, $endX, $endY) {
 		if (!$this->adapter->hasColor()) {
@@ -126,7 +126,7 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
+	 * @inheritDoc
 	 */
 	public function drawText($text, $x, $y, $font, $size, $opacity = 1.0) {
 		if (!$this->adapter->hasColor()) {
@@ -142,7 +142,7 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
+	 * @inheritDoc
 	 */
 	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0) {
 		if (!$this->adapter->hasColor()) {
@@ -168,14 +168,14 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::textFitsImage()
+	 * @inheritDoc
 	 */
 	public function textFitsImage($text, $margin, $font, $size) {
 		return $this->adapter->textFitsImage($text, $margin, $font, $size);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::adjustFontSize()
+	 * @inheritDoc
 	 */
 	public function adjustFontSize($text, $margin, $font, $size) {
 		// adjust font size
@@ -187,28 +187,28 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::setColor()
+	 * @inheritDoc
 	 */
 	public function setColor($red, $green, $blue) {
 		$this->adapter->setColor($red, $green, $blue);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::hasColor()
+	 * @inheritDoc
 	 */
 	public function hasColor() {
 		return $this->adapter->hasColor();
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 * @inheritDoc
 	 */
 	public function setTransparentColor($red, $green, $blue) {
 		$this->adapter->setTransparentColor($red, $green, $blue);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::writeImage()
+	 * @inheritDoc
 	 */
 	public function writeImage($image, $filename = null) {
 		if ($filename === null) {
@@ -220,35 +220,35 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @inheritDoc
 	 */
 	public function getImage() {
 		return $this->adapter->getImage();
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getWidth()
+	 * @inheritDoc
 	 */
 	public function getWidth() {
 		return $this->adapter->getWidth();
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getHeight()
+	 * @inheritDoc
 	 */
 	public function getHeight() {
 		return $this->adapter->getHeight();
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getType()
+	 * @inheritDoc
 	 */
 	public function getType() {
 		return $this->adapter->getType();
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
+	 * @inheritDoc
 	 */
 	public function rotate($degrees) {
 		if ($degrees > 360.0 || $degrees < 0.0) {
@@ -259,7 +259,7 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 * @inheritDoc
 	 */
 	public function overlayImage($file, $x, $y, $opacity) {
 		// validate file
@@ -276,7 +276,7 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 * @inheritDoc
 	 */
 	public function overlayImageRelative($file, $position, $margin, $opacity) {
 		// validate file
@@ -353,7 +353,7 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::isSupported()
+	 * @inheritDoc
 	 */
 	public static function isSupported() {
 		return false;

@@ -20,7 +20,7 @@ use wcf\system\WCF;
  */
 class ModerationReportForm extends AbstractModerationForm {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -32,7 +32,7 @@ class ModerationReportForm extends AbstractModerationForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

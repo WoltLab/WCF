@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class PaidSubscriptionListPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
@@ -39,7 +39,7 @@ class PaidSubscriptionListPage extends AbstractPage {
 	public $userSubscriptionList = [];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -69,7 +69,7 @@ class PaidSubscriptionListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -81,7 +81,7 @@ class PaidSubscriptionListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\Page::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab

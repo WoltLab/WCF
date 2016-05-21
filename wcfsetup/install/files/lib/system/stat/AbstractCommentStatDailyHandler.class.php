@@ -22,7 +22,7 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 	protected $objectType = '';
 	
 	/**
-	 * @see	\wcf\system\stat\IStatDailyHandler::getData()
+	 * @inheritDoc
 	 */
 	public function getData($date) {
 		$objectTypeID = CommentHandler::getInstance()->getObjectTypeID($this->objectType);

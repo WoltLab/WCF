@@ -14,37 +14,37 @@ use wcf\page\SortablePage;
  */
 class UserRankListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.rank.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.user.rank.canManageRank'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_USER_RANK'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\user\rank\UserRankList';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'rankTitle';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$validSortFields
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['rankID', 'groupID', 'requiredPoints', 'rankTitle', 'rankImage', 'requiredGender'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::show()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();

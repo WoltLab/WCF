@@ -14,7 +14,7 @@ use wcf\data\poll\PollEditor;
  */
 class AbstractPollImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\poll\Poll';
 	
@@ -31,7 +31,7 @@ class AbstractPollImporter extends AbstractImporter {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		$poll = PollEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));

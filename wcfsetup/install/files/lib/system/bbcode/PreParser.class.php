@@ -47,7 +47,7 @@ class PreParser extends SingletonFactory {
 	public $text = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$sourceCodeTags = [];

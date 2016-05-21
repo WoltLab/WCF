@@ -14,27 +14,27 @@ use wcf\page\SortablePage;
  */
 class NoticeListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.notice.list';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'showOrder';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.notice.canManageNotice'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $objectListClassName = 'wcf\data\notice\NoticeList';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['noticeID', 'noticeName', 'showOrder'];
 }

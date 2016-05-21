@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
 	protected $className = 'wcf\data\package\installation\queue\PackageInstallationQueueEditor';
 	
@@ -36,7 +36,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	protected $package = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['cancelInstallation', 'prepareQueue'];
 	

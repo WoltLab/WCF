@@ -27,7 +27,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	public $confirmMasterPassword = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		AbstractForm::readParameters();
@@ -42,7 +42,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -51,7 +51,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		AbstractForm::validate();
@@ -93,7 +93,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		// write master password file
@@ -110,7 +110,7 @@ define('MASTER_PASSWORD', '".PasswordUtil::getDoubleSaltedHash($this->masterPass
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

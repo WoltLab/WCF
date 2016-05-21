@@ -31,7 +31,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	public $listClassName = '';
 	
 	/**
-	 * @see	\wcf\data\object\type\IObjectTypeProvider::getObjectByID()
+	 * @inheritDoc
 	 */
 	public function getObjectByID($objectID) {
 		$object = new $this->className($objectID);
@@ -43,7 +43,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	}
 	
 	/**
-	 * @see	\wcf\data\object\type\IObjectTypeProvider::getObjectsByIDs()
+	 * @inheritDoc
 	 */
 	public function getObjectsByIDs(array $objectIDs) {
 		$tableAlias = call_user_func([$this->className, 'getDatabaseTableAlias']);

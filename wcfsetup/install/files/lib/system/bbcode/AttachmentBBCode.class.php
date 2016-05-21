@@ -31,7 +31,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	protected static $objectID = 0;
 	
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		// get attachment id

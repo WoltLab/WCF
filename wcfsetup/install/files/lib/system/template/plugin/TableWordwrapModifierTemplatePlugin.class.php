@@ -17,7 +17,7 @@ use wcf\system\template\TemplateEngine;
  */
 class TableWordwrapModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// values

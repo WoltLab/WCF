@@ -14,12 +14,12 @@ use wcf\system\request\LinkHandler;
  */
 class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
+	 * @inheritDoc
 	 */
 	protected $stackable = true;
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		$count = count($this->getAuthors());
@@ -31,7 +31,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
+	 * @inheritDoc
 	 */
 	public function getMessage() {
 		$authors = array_values($this->getAuthors());
@@ -50,7 +50,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
+	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
 		$authors = array_values($this->getAuthors());
@@ -70,14 +70,14 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('User', ['object' => $this->author]);
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 * @inheritDoc
 	 */
 	public function getEventHash() {
 		return sha1($this->eventID . '-' . $this->userNotificationObject->followUserID);

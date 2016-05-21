@@ -60,14 +60,14 @@ class AttachmentMimePart extends AbstractMimePart {
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContentType()
+	 * @inheritDoc
 	 */
 	public function getContentType() {
 		return $this->mimeType;
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContentTransferEncoding()
+	 * @inheritDoc
 	 */
 	public function getContentTransferEncoding() {
 		return 'base64';
@@ -85,7 +85,7 @@ class AttachmentMimePart extends AbstractMimePart {
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContent()
+	 * @inheritDoc
 	 */
 	public function getContent() {
 		return $this->content;

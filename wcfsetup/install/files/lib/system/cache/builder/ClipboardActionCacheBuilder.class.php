@@ -14,7 +14,7 @@ use wcf\data\clipboard\action\ClipboardActionList;
  */
 class ClipboardActionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$actionList = new ClipboardActionList();

@@ -36,7 +36,7 @@ class SmileyCache extends SingletonFactory {
 	protected $visibleCategories = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get smiley cache
