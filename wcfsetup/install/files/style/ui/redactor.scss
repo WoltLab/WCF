@@ -384,3 +384,72 @@
 .text-right {
 	text-align: right;
 }
+
+/* text color */
+.woltlab-color-000000 { color: #000000 !important; }
+.woltlab-color-000080 { color: #000080 !important; }
+.woltlab-color-0000CD { color: #0000CD !important; }
+.woltlab-color-0000FF { color: #0000FF !important; }
+.woltlab-color-006400 { color: #006400 !important; }
+.woltlab-color-008000 { color: #008000 !important; }
+.woltlab-color-008080 { color: #008080 !important; }
+.woltlab-color-00FF00 { color: #00FF00 !important; }
+.woltlab-color-00FFFF { color: #00FFFF !important; }
+.woltlab-color-2F4F4F { color: #2F4F4F !important; }
+.woltlab-color-40E0D0 { color: #40E0D0 !important; }
+.woltlab-color-4B0082 { color: #4B0082 !important; }
+.woltlab-color-696969 { color: #696969 !important; }
+.woltlab-color-800000 { color: #800000 !important; }
+.woltlab-color-800080 { color: #800080 !important; }
+.woltlab-color-808080 { color: #808080 !important; }
+.woltlab-color-8B4513 { color: #8B4513 !important; }
+.woltlab-color-A52A2A { color: #A52A2A !important; }
+.woltlab-color-A9A9A9 { color: #A9A9A9 !important; }
+.woltlab-color-ADD8E6 { color: #ADD8E6 !important; }
+.woltlab-color-AFEEEE { color: #AFEEEE !important; }
+.woltlab-color-B22222 { color: #B22222 !important; }
+.woltlab-color-D3D3D3 { color: #D3D3D3 !important; }
+.woltlab-color-DAA520 { color: #DAA520 !important; }
+.woltlab-color-DDA0DD { color: #DDA0DD !important; }
+.woltlab-color-E6E6FA { color: #E6E6FA !important; }
+.woltlab-color-EE82EE { color: #EE82EE !important; }
+.woltlab-color-F0F8FF { color: #F0F8FF !important; }
+.woltlab-color-F0FFF0 { color: #F0FFF0 !important; }
+.woltlab-color-F0FFFF { color: #F0FFFF !important; }
+.woltlab-color-FAEBD7 { color: #FAEBD7 !important; }
+.woltlab-color-FF0000 { color: #FF0000 !important; }
+.woltlab-color-FF8C00 { color: #FF8C00 !important; }
+.woltlab-color-FFA07A { color: #FFA07A !important; }
+.woltlab-color-FFA500 { color: #FFA500 !important; }
+.woltlab-color-FFD700 { color: #FFD700 !important; }
+.woltlab-color-FFF0F5 { color: #FFF0F5 !important; }
+.woltlab-color-FFFF00 { color: #FFFF00 !important; }
+.woltlab-color-FFFFE0 { color: #FFFFE0 !important; }
+.woltlab-color-FFFFFF { color: #FFFFFF !important; }
+
+/* text color selection */
+.redactor-dropdown-box-woltlabColor {
+	> ul {
+		display: flex !important;
+		flex-wrap: wrap;
+		width: 272px;
+		
+		> li:first-child {
+			flex: 0 0 100%;
+		}
+	}
+	
+	.woltlab-color-selection {
+		flex: 0 0 30px;
+		margin: 2px;
+		overflow: hidden;
+		
+		> a {
+			background-color: currentColor !important;
+			color: inherit !important;
+			display: block;
+			height: 30px;
+			width: 30px;
+		}
+	}
+}
