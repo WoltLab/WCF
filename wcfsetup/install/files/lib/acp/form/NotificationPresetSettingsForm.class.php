@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	form.acp
+ * @subpackage	acp.form
  * @category	Community Framework
  */
 class NotificationPresetSettingsForm extends AbstractForm {

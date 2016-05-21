@@ -9,7 +9,7 @@ use wcf\page\SortablePage;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	acp.form
+ * @subpackage	acp.page
  * @category	Community Framework
  */
 class UserRankListPage extends SortablePage {
