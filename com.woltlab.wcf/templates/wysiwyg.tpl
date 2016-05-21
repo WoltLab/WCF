@@ -27,7 +27,7 @@
 		var config = {
 			buttons: buttons,
 			minHeight: 200,
-			plugins: ['WoltLabButton', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote'],
+			plugins: ['alignment', 'source', 'table', 'WoltLabButton', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote'],
 			toolbarFixed: false,
 			woltlab: {
 				autosave: autosave
@@ -48,7 +48,11 @@
 	});
 		
 	head.load([
+		{* Imperavi *}
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/redactor.js?v={@LAST_UPDATE_TIME}',
+		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/alignment.js?v={@LAST_UPDATE_TIME}',
+		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/source.js?v={@LAST_UPDATE_TIME}',
+		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/table.js?v={@LAST_UPDATE_TIME}',
 		
 		{* WoltLab *}
 		'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
