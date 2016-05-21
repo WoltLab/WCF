@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user;
-use wcf\data\IGroupedUserListAction;
 use wcf\data\user\option\UserOption;
+use wcf\data\IGroupedUserListAction;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\UserBirthdayCache;

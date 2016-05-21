@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\user\notification\object\type;
-use wcf\data\DatabaseObjectList;
 use wcf\data\object\type\AbstractObjectTypeProcessor;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Provides a default implementation of IUserNotificationObjectType.
