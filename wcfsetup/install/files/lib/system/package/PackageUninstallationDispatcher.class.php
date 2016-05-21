@@ -34,6 +34,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 */
 	protected $didExecuteUninstallScript = false;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Creates a new instance of PackageUninstallationDispatcher.
 	 * 
@@ -43,7 +44,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		$this->queue = $queue;
 		$this->nodeBuilder = new PackageUninstallationNodeBuilder($this);
 		
-		$this->action = $this->queue->installationType;
+		$this->action = $this->queue->action;
 	}
 	
 	/**

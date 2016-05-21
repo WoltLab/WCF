@@ -98,6 +98,7 @@ class WCFSetup extends WCF {
 		//'PostgreSQLDatabase' => ['class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0']	// PostgreSQL 8.2.0+
 	];
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Calls all init functions of the WCFSetup class and starts the setup process.
 	 */

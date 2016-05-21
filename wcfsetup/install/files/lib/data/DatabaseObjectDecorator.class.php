@@ -25,6 +25,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	 */
 	protected $object = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Creates a new DatabaseObjectDecorator object.
 	 * 

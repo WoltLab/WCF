@@ -20,6 +20,7 @@ class GZipFile extends File {
 	 */
 	protected static $gzopen64 = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a gzip file.
 	 * 

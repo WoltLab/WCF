@@ -34,6 +34,7 @@ class Template extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'templateID';
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * @inheritDoc
 	 */

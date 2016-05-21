@@ -759,6 +759,7 @@ class ZipFile extends File {
 	 */
 	protected static $gzopen64 = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a new zipped file.
 	 *
