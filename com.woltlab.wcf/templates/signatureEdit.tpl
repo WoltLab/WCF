@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.signature.edit{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.signature.edit{/lang}{/capture}
-
 {include file='userMenuSidebar'}
 
 {include file='header'}

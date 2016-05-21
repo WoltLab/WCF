@@ -1,7 +1,14 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{if $pageTitle|isset}{@$pageTitle} - {/if}{PAGE_TITLE|language}</title>
+	{if !$pageTitle|isset}
+		{assign var='pageTitle' value=''}
+		{if !$__wcf->isLandingPage() && $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
+			{capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
+		{/if}
+	{/if}
+	
+	<title>{if $pageTitle}{@$pageTitle} - {/if}{PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
 	
@@ -91,25 +98,36 @@
 				
 				{if !$contentHeader|empty}
 					{@$contentHeader}
-				{elseif !$contentTitle|empty}
-					<header class="contentHeader">
-						<div class="contentHeaderTitle">
-							<h1 class="contentTitle">{@$contentTitle}</h1>
-							{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
-						</div>
-						
-						{hascontent}
-							<nav class="contentHeaderNavigation">
-								<ul>
-									{content}
-										{if !$contentHeaderNavigation|empty}{@$contentHeaderNavigation}{/if}
-										
-										{event name='contentHeaderNavigation'}
-									{/content}
-								</ul>
-							</nav>
-						{/hascontent}
-					</header>
+				{else}
+					{if $contentTitle|empty}
+						{if $__wcf->isLandingPage()}
+							{capture assign='contentTitle'}{PAGE_TITLE|language}{/capture}
+							{capture assign='contentDescription'}{PAGE_DESCRIPTION|language}{/capture}
+						{elseif $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
+							{capture assign='contentTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
+						{/if}	
+					{/if}
+				
+					{if !$contentTitle|empty}
+						<header class="contentHeader">
+							<div class="contentHeaderTitle">
+								<h1 class="contentTitle">{@$contentTitle}</h1>
+								{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
+							</div>
+							
+							{hascontent}
+								<nav class="contentHeaderNavigation">
+									<ul>
+										{content}
+											{if !$contentHeaderNavigation|empty}{@$contentHeaderNavigation}{/if}
+											
+											{event name='contentHeaderNavigation'}
+										{/content}
+									</ul>
+								</nav>
+							{/hascontent}
+						</header>
+					{/if}
 				{/if}
 				
 				{include file='userNotice'}

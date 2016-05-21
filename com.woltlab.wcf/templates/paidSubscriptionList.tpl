@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.menu.settings.paidSubscription{/lang} - {lang}wcf.user.menu.settings{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.menu.settings.paidSubscription{/lang}{/capture}
-
 {capture assign='headContent'}
 	{if PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}
 		<script data-relocate="true">

@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.newPassword{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.newPassword{/lang}{/capture}
-
 {include file='header'}
 
 {include file='formError'}

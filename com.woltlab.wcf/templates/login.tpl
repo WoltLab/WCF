@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.login{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.login{/lang}{/capture}
-
 {include file='header' __disableLoginLink=true __disableAds=true}
 
 {if !$errorField|empty && $errorField == 'cookie'}

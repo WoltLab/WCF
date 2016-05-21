@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.search{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.search{/lang}{/capture}
-
 {include file='header'}
 
 {if $errorField == 'search'}

@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.following{/lang} - {lang}wcf.user.usercp{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.following{/lang} <span class="badge">{#$items}</span>{/capture}
-
 {include file='userMenuSidebar'}
 
 {include file='header'}

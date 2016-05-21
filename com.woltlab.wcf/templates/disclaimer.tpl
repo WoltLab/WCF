@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.register.disclaimer{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.register.disclaimer{/lang}{/capture}
-
 {include file='header' __disableAds=true}
 
 {include file='formError'}

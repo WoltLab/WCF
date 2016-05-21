@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.usersOnline{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.usersOnline{/lang}{/capture}
-
 {capture assign='headContent'}
 	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}" />
 	

@@ -1,9 +1,7 @@
-{capture assign='pageTitle'}{lang}wcf.search.results{/lang}{/capture}
-
 {capture assign='contentHeader'}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
+			<h1 class="contentTitle">{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{$__wcf->getActivePage()->getTitle()}</a>{else}{$__wcf->getActivePage()->getTitle()}{/if}</h1>
 			<p class="contentHeaderDescription">{lang}wcf.search.results.description{/lang}</p>
 		</div>
 		

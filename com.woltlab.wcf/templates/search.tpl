@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.search.title{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.search.title{/lang}{/capture}
-
 {include file='header'}
 
 {include file='formError'}

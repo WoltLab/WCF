@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.newActivationCode{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.newActivationCode{/lang}{/capture}
-
 {include file='header'}
 
 {include file='formError'}

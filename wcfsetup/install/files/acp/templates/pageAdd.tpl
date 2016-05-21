@@ -48,296 +48,320 @@
 {/if}
 
 <form method="post" action="{if $action == 'add'}{link controller='PageAdd'}{/link}{else}{link controller='PageEdit' id=$pageID}{/link}{/if}">
-	<div class="section">
-		<dl{if $errorField == 'name'} class="formError"{/if}>
-			<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
-			<dd>
-				<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long" />
-				{if $errorField == 'name'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.page.name.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
+	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="pageTabMenuContainer">
+		<nav class="tabMenu">
+			<ul>
+				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.acp.page.general{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.page.contents{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('boxes')}">{lang}wcf.acp.page.boxes{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acp.page.acl{/lang}</a></li>
+				
+				{event name='tabMenuTabs'}
+			</ul>
+		</nav>
 		
-		<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
-			<dt><label for="parentPageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
-			<dd>
-				<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
-					<option value="0">{lang}wcf.acp.page.parentPageID.noParentPage{/lang}</option>
-					
-					{foreach from=$pageNodeList item=pageNode}
-						<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
-					{/foreach}
-				</select>
-				{if $errorField == 'parentPageID'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.page.parentPageID.error.{@$errorType}{/lang}
+		<div id="general" class="tabMenuContent">
+			<div class="section">
+				<dl{if $errorField == 'name'} class="formError"{/if}>
+					<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
+					<dd>
+						<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long" />
+						{if $errorField == 'name'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.page.name.error.{@$errorType}{/lang}
+								{/if}
+							</small>
 						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}>
-			<dt><label for="applicationPackageID">{lang}wcf.acp.page.applicationPackageID{/lang}</label></dt>
-			<dd>
-				<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
-					{foreach from=$availableApplications item=availableApplication}
-						<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
-					{/foreach}
-				</select>
-				{if $errorField == 'applicationPackageID'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.page.applicationPackageID.error.{@$errorType}{/lang}
+					</dd>
+				</dl>
+				
+				<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
+					<dt><label for="parentPageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
+					<dd>
+						<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
+							<option value="0">{lang}wcf.acp.page.parentPageID.noParentPage{/lang}</option>
+							
+							{foreach from=$pageNodeList item=pageNode}
+								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+							{/foreach}
+						</select>
+						{if $errorField == 'parentPageID'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.page.parentPageID.error.{@$errorType}{/lang}
+								{/if}
+							</small>
 						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		{if !$isMultilingual}
-			<dl{if $errorField == 'customURL'} class="formError"{/if}>
-				<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>
-				<dd>
-					<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long" />
-					{if $errorField == 'customURL'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.page.customURL.error.{@$errorType}{/lang}
+					</dd>
+				</dl>
+				
+				<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}>
+					<dt><label for="applicationPackageID">{lang}wcf.acp.page.applicationPackageID{/lang}</label></dt>
+					<dd>
+						<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
+							{foreach from=$availableApplications item=availableApplication}
+								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
+							{/foreach}
+						</select>
+						{if $errorField == 'applicationPackageID'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.page.applicationPackageID.error.{@$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+					</dd>
+				</dl>
+				
+				{if !$isMultilingual}
+					<dl{if $errorField == 'customURL'} class="formError"{/if}>
+						<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>
+						<dd>
+							<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long" />
+							{if $errorField == 'customURL'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.customURL.error.{@$errorType}{/lang}
+									{/if}
+								</small>
 							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-		{/if}
-		
-		{if $action != 'edit' || !$page->requireObjectID}
-			<dl>
-				<dt></dt>
-				<dd>
-					<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1" {if $isLandingPage}checked="checked" {/if}{if $action == 'edit' && $page->isLandingPage}disabled="disabled" {/if}/> {lang}wcf.acp.page.isLandingPage{/lang}</label>
-				</dd>
-			</dl>
-		{/if}
-		
-		<dl>
-			<dt></dt>
-			<dd>
-				<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1" {if $isDisabled}checked="checked" {/if}/> {lang}wcf.acp.page.isDisabled{/lang}</label>
-			</dd>
-		</dl>
-		
-		<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
-			<dt>{lang}wcf.acp.page.boxIDs{/lang}</dt>
-			<dd>
-				<ul class="scrollableCheckboxList">
-					{foreach from=$availableBoxes item=availableBox}
-						<li>
-							<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked="checked"{/if} /> {$availableBox->name}</label>
-						</li>
-					{/foreach}
-				</ul>
-				{if $errorField == 'boxIDs'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.page.boxIDs.error.{@$errorType}{/lang}
-						{/if}
-					</small>
+						</dd>
+					</dl>
+				{else}
+					{foreach from=$availableLanguages item=availableLanguage}
+						<dl{if $errorField == 'customURL'} class="formError"{/if}>
+							<dt><label for="customURL{@$availableLanguage->languageID}">{lang}wcf.acp.page.customURL{/lang} ({$availableLanguage->languageName})</label></dt>
+							<dd>
+								<input type="text" id="customURL{@$availableLanguage->languageID}" name="customURL[{@$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long" />
+								{if $errorField == 'customURL'}
+									<small class="innerError">
+										{if $errorType == 'empty'}
+											{lang}wcf.global.form.error.empty{/lang}
+										{else}
+											{lang}wcf.acp.page.customURL.error.{@$errorType}{/lang}
+										{/if}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+					{/foreach}	
 				{/if}
-			</dd>
-		</dl>
-		
-		{event name='dataFields'}
-	</div>
-	
-	{if $action == 'add' || !$page->controller}
-		{if !$isMultilingual}
-			<section class="section">
-				<h2 class="sectionTitle">content</h2>
-			
-				<dl{if $errorField == 'title'} class="formError"{/if}>
-					<dt><label for="title">{lang}wcf.acp.page.title{/lang}</label></dt>
-					<dd>
-						<input type="text" id="title" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" />
-						{if $errorField == 'title'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.page.title.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
 				
-				<dl{if $errorField == 'content'} class="formError"{/if}>
-					<dt><label for="content0">{lang}wcf.acp.page.content{/lang}</label></dt>
-					<dd>
-						{include file='__pageAddContent' languageID=0}
-						
-						{if $errorField == 'content'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.page.content.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
+				{if $action != 'edit' || !$page->requireObjectID}
+					<dl>
+						<dt></dt>
+						<dd>
+							<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1" {if $isLandingPage}checked="checked" {/if}{if $action == 'edit' && $page->isLandingPage}disabled="disabled" {/if}/> {lang}wcf.acp.page.isLandingPage{/lang}</label>
+						</dd>
+					</dl>
+				{/if}
 				
-				<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
-					<dt><label for="metaKeywords">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
-					<dd>
-						<textarea name="metaKeywords[0]" id="metaKeywords">{if !$metaKeywords[0]|empty}{$metaKeywords[0]}{/if}</textarea>
-						{if $errorField == 'metaKeywords'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
+				{if $action != 'edit' || $page->pageType != 'system'}
+					<dl>
+						<dt></dt>
+						<dd>
+							<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1" {if $isDisabled}checked="checked" {/if}/> {lang}wcf.acp.page.isDisabled{/lang}</label>
+						</dd>
+					</dl>
+				{/if}
 				
-				<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
-					<dt><label for="metaDescription">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
-					<dd>
-						<textarea name="metaDescription[0]" id="metaDescription">{if !$metaDescription[0]|empty}{$metaDescription[0]}{/if}</textarea>
-						{if $errorField == 'metaDescription'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-			</section>
-		{else}
-			<div class="section tabMenuContainer">
-				<nav class="tabMenu">
-					<ul>
-						{foreach from=$availableLanguages item=availableLanguage}
-							{assign var='containerID' value='language'|concat:$availableLanguage->languageID}
-							<li><a href="{@$__wcf->getAnchor($containerID)}">{$availableLanguage->languageName}</a></li>
-						{/foreach}
-					</ul>
-				</nav>
-				
-				{foreach from=$availableLanguages item=availableLanguage}
-					<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
-						<div class="section">
-							<dl{if $errorField == 'customURL'} class="formError"{/if}>
-								<dt><label for="customURL{@$availableLanguage->languageID}">{lang}wcf.acp.page.customURL{/lang}</label></dt>
-								<dd>
-									<input type="text" id="customURL{@$availableLanguage->languageID}" name="customURL[{@$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long" />
-									{if $errorField == 'customURL'}
-										<small class="innerError">
-											{if $errorType == 'empty'}
-												{lang}wcf.global.form.error.empty{/lang}
-											{else}
-												{lang}wcf.acp.page.customURL.error.{@$errorType}{/lang}
-											{/if}
-										</small>
-									{/if}
-								</dd>
-							</dl>
-						
-							<dl{if $errorField == 'title'} class="formError"{/if}>
-								<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.page.title{/lang}</label></dt>
-								<dd>
-									<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" />
-									{if $errorField == 'title'}
-										<small class="innerError">
-											{if $errorType == 'empty'}
-												{lang}wcf.global.form.error.empty{/lang}
-											{else}
-												{lang}wcf.acp.page.title.error.{@$errorType}{/lang}
-											{/if}
-										</small>
-									{/if}
-								</dd>
-							</dl>
-							
-							<dl{if $errorField == 'content'} class="formError"{/if}>
-								<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.page.content{/lang}</label></dt>
-								<dd>
-									{include file='__pageAddContent' languageID=$availableLanguage->languageID}
-									
-									{if $errorField == 'content'}
-										<small class="innerError">
-											{if $errorType == 'empty'}
-												{lang}wcf.global.form.error.empty{/lang}
-											{else}
-												{lang}wcf.acp.page.content.error.{@$errorType}{/lang}
-											{/if}
-										</small>
-									{/if}
-								</dd>
-							</dl>
-							
-							<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
-								<dt><label for="metaKeywords{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
-								<dd>
-									<textarea name="metaKeywords[{@$availableLanguage->languageID}]" id="metaKeywords{@$availableLanguage->languageID}">{if !$metaKeywords[$availableLanguage->languageID]|empty}{$metaKeywords[$availableLanguage->languageID]}{/if}</textarea>
-									{if $errorField == 'metaKeywords'}
-										<small class="innerError">
-											{if $errorType == 'empty'}
-												{lang}wcf.global.form.error.empty{/lang}
-											{else}
-												{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
-											{/if}
-										</small>
-									{/if}
-								</dd>
-							</dl>
-							
-							<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
-								<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
-								<dd>
-									<textarea name="metaDescription[{@$availableLanguage->languageID}]" id="metaDescription{@$availableLanguage->languageID}">{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}</textarea>
-									{if $errorField == 'metaDescription'}
-										<small class="innerError">
-											{if $errorType == 'empty'}
-												{lang}wcf.global.form.error.empty{/lang}
-											{else}
-												{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
-											{/if}
-										</small>
-									{/if}
-								</dd>
-							</dl>
-						</div>
-					</div>
-				{/foreach}
+				{event name='dataFields'}
 			</div>
-		{/if}
-	{/if}
-	
-	{event name='sections'}
+		</div>
+		
+		<div id="contents" class="tabMenuContent">
+			{if !$isMultilingual && $pageType != 'system'}
+				<div class="section">
+					<dl{if $errorField == 'title'} class="formError"{/if}>
+						<dt><label for="title">{lang}wcf.acp.page.title{/lang}</label></dt>
+						<dd>
+							<input type="text" id="title" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" />
+							{if $errorField == 'title'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.title.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
+					<dl{if $errorField == 'content'} class="formError"{/if}>
+						<dt><label for="content0">{lang}wcf.acp.page.content{/lang}</label></dt>
+						<dd>
+							{include file='__pageAddContent' languageID=0}
+							
+							{if $errorField == 'content'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.content.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
+					<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
+						<dt><label for="metaKeywords">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
+						<dd>
+							<textarea name="metaKeywords[0]" id="metaKeywords">{if !$metaKeywords[0]|empty}{$metaKeywords[0]}{/if}</textarea>
+							{if $errorField == 'metaKeywords'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
+					<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
+						<dt><label for="metaDescription">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
+						<dd>
+							<textarea name="metaDescription[0]" id="metaDescription">{if !$metaDescription[0]|empty}{$metaDescription[0]}{/if}</textarea>
+							{if $errorField == 'metaDescription'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+				</div>
+			{else}
+				<div class="tabMenuContainer">
+					<nav class="menu">
+						<ul>
+							{foreach from=$availableLanguages item=availableLanguage}
+								{assign var='containerID' value='language'|concat:$availableLanguage->languageID}
+								<li><a href="{@$__wcf->getAnchor($containerID)}">{$availableLanguage->languageName}</a></li>
+							{/foreach}
+						</ul>
+					</nav>
+					
+					{foreach from=$availableLanguages item=availableLanguage}
+						<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
+							<div class="section">
+								<dl{if $errorField == 'title'} class="formError"{/if}>
+									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.page.title{/lang}</label></dt>
+									<dd>
+										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" />
+										{if $errorField == 'title'}
+											<small class="innerError">
+												{if $errorType == 'empty'}
+													{lang}wcf.global.form.error.empty{/lang}
+												{else}
+													{lang}wcf.acp.page.title.error.{@$errorType}{/lang}
+												{/if}
+											</small>
+										{/if}
+									</dd>
+								</dl>
+								
+								{if $pageType != 'system'}
+									<dl{if $errorField == 'content'} class="formError"{/if}>
+										<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.page.content{/lang}</label></dt>
+										<dd>
+											{include file='__pageAddContent' languageID=$availableLanguage->languageID}
+											
+											{if $errorField == 'content'}
+												<small class="innerError">
+													{if $errorType == 'empty'}
+														{lang}wcf.global.form.error.empty{/lang}
+													{else}
+														{lang}wcf.acp.page.content.error.{@$errorType}{/lang}
+													{/if}
+												</small>
+											{/if}
+										</dd>
+									</dl>
+									
+									<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
+										<dt><label for="metaKeywords{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
+										<dd>
+											<textarea name="metaKeywords[{@$availableLanguage->languageID}]" id="metaKeywords{@$availableLanguage->languageID}">{if !$metaKeywords[$availableLanguage->languageID]|empty}{$metaKeywords[$availableLanguage->languageID]}{/if}</textarea>
+											{if $errorField == 'metaKeywords'}
+												<small class="innerError">
+													{if $errorType == 'empty'}
+														{lang}wcf.global.form.error.empty{/lang}
+													{else}
+														{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
+													{/if}
+												</small>
+											{/if}
+										</dd>
+									</dl>
+									
+									<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
+										<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
+										<dd>
+											<textarea name="metaDescription[{@$availableLanguage->languageID}]" id="metaDescription{@$availableLanguage->languageID}">{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}</textarea>
+											{if $errorField == 'metaDescription'}
+												<small class="innerError">
+													{if $errorType == 'empty'}
+														{lang}wcf.global.form.error.empty{/lang}
+													{else}
+														{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
+													{/if}
+												</small>
+											{/if}
+										</dd>
+									</dl>
+								{/if}
+							</div>
+						</div>
+					{/foreach}
+				</div>
+			{/if}
+		</div>
+		
+		<div id="boxes" class="tabMenuContent">
+			<div class="section">
+				<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
+					<dt>{lang}wcf.acp.page.boxIDs{/lang}</dt>
+					<dd>
+						<ul class="scrollableCheckboxList">
+							{foreach from=$availableBoxes item=availableBox}
+								<li>
+									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked="checked"{/if} /> {$availableBox->name}</label>
+								</li>
+							{/foreach}
+						</ul>
+						{if $errorField == 'boxIDs'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.page.boxIDs.error.{@$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+					</dd>
+				</dl>
+			</div>
+		</div>
+		
+		<div id="acl" class="tabMenuContent">
+		</div>
+	</div>	
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">

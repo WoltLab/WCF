@@ -108,10 +108,22 @@ class PageEditForm extends PageAddForm {
 		];
 		
 		if ($this->pageType == 'system') {
+			$content = [];
+			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+				$content[$language->languageID] = [
+					'customURL' => '',
+					'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
+					'content' => '',
+					'metaDescription' => '',
+					'metaKeywords' => ''
+				];
+			}
+			
 			$data['controllerCustomURL'] = (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : '');
 			$this->objectAction = new PageAction([$this->page], 'update', [
 				'data' => array_merge($this->additionalFields, $data),
-				'boxToPage' => $this->getBoxToPage()
+				'boxToPage' => $this->getBoxToPage(),
+				'content' => $content
 			]);
 			$this->objectAction->executeAction();
 		}

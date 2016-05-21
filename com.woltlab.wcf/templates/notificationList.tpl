@@ -1,9 +1,7 @@
-{capture assign='pageTitle'}{lang}wcf.user.notification.notifications{/lang} - {lang}wcf.user.usercp{/lang}{/capture}
-
 {capture assign='contentHeader'}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{lang}wcf.user.notification.notifications{/lang} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
+			<h1 class="contentTitle">{$__wcf->getActivePage()->getTitle()} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
 		</div>
 		
 		{hascontent}

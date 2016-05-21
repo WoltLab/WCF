@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.emailActivation{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.emailActivation{/lang}{/capture}
-
 {include file='header'}
 
 {include file='formError'}

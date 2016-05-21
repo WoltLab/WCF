@@ -1,9 +1,9 @@
-{capture assign='pageTitle'}{lang}wcf.moderation.report{/lang}: {$queue->getTitle()}{/capture}
+{capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}: {$queue->getTitle()}{/capture}
 
 {capture assign='contentHeader'}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{lang}wcf.moderation.report{/lang}</h1>
+			<h1 class="contentTitle">{$__wcf->getActivePage()->getTitle()}</h1>
 			
 			{if $queue->lastChangeTime}
 				<dl class="plain inlineDataList">

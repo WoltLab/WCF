@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.registerActivation{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.registerActivation{/lang}{/capture}
-
 {include file='header'}
 
 {if $__wcf->user->userID && $__wcf->user->activationCode}<p class="info">{lang}wcf.user.registerActivation.info{/lang}</p>{/if}

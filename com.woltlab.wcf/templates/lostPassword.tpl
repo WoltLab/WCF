@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.lostPassword{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.lostPassword{/lang}{/capture}
-
 {include file='header'}
 
 <p class="info">{lang}wcf.user.lostPassword.description{/lang}</p>

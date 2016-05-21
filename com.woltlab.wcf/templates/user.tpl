@@ -1,5 +1,7 @@
 {capture assign='pageTitle'}{$user->username} - {lang}wcf.user.members{/lang}{/capture}
 
+{assign var='contentHeader' value=' '}{* necessary to hide default content header in heade.tpl *}
+
 {capture assign='headContent'}
 	<link rel="canonical" href="{link controller='User' object=$user}{/link}" />
 	

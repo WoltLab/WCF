@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.objectType.{@$objectType}{/lang}{/capture}
+{capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
 
 {capture assign='sidebarLeft'}
 	<section class="box">
@@ -16,21 +16,7 @@
 	</section>
 {/capture}
 
-{capture assign='contentHeader'}
-	<header class="contentHeader">
-		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}</h1>
-		</div>
-		
-		{hascontent}
-			<nav class="contentHeaderNavigation">
-				<ul>
-					{content}{event name='contentHeaderNavigation'}{/content}
-				</ul>
-			</nav>
-		{/hascontent}
-	</header>
-{/capture}
+{capture assign='contentTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
 
 {include file='header'}
 

@@ -9,6 +9,13 @@
 			<name language="en"><![CDATA[Members]]></name>
 			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_members_list</options>
+			
+			<content language="en">
+				<title>Members</title>
+			</content>
+			<content language="de">
+				<title>Mitglieder</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.RecentActivityList">
 			<pageType>system</pageType>
@@ -16,15 +23,29 @@
 			<name language="de"><![CDATA[Letzte Aktivitäten]]></name>
 			<name language="en"><![CDATA[Recent Activities]]></name>
 			<parent>com.woltlab.wcf.MembersList</parent>
+			
+			<content language="en">
+				<title>Recent Activities</title>
+			</content>
+			<content language="de">
+				<title>Letzte Aktivitäten</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.UsersOnlineList">
 			<pageType>system</pageType>
 			<controller>wcf\page\UsersOnlineListPage</controller>
-			<name language="de"><![CDATA[Benutzer Online]]></name>
+			<name language="de"><![CDATA[Benutzer online]]></name>
 			<name language="en"><![CDATA[Users Online]]></name>
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<permissions>user.profile.canViewUsersOnlineList</permissions>
 			<options>module_users_online</options>
+			
+			<content language="en">
+				<title>Users Online</title>
+			</content>
+			<content language="de">
+				<title>Benutzer online</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Team">
 			<pageType>system</pageType>
@@ -34,6 +55,13 @@
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_team_page</options>
+			
+			<content language="en">
+				<title>Team</title>
+			</content>
+			<content language="de">
+				<title>Team</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.UserSearch">
 			<pageType>system</pageType>
@@ -43,6 +71,13 @@
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_members_list</options>
+			
+			<content language="en">
+				<title>Search Users</title>
+			</content>
+			<content language="de">
+				<title>Benutzer suchen</title>
+			</content>
 		</page>
 		
 		<page identifier="com.woltlab.wcf.AccountManagement">
@@ -50,90 +85,195 @@
 			<controller>wcf\form\AccountManagementForm</controller>
 			<name language="de"><![CDATA[Benutzerkonto-Verwaltung]]></name>
 			<name language="en"><![CDATA[Account Management]]></name>
+			
+			<content language="en">
+				<title>Account Management</title>
+			</content>
+			<content language="de">
+				<title>Benutzerkonto-Verwaltung</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.AvatarEdit">
 			<pageType>system</pageType>
 			<controller>wcf\form\AvatarEditForm</controller>
 			<name language="de"><![CDATA[Avatar-Verwaltung]]></name>
 			<name language="en"><![CDATA[Avatar Management]]></name>
+			
+			<content language="en">
+				<title>Avatar Management</title>
+			</content>
+			<content language="de">
+				<title>Avatar-Verwaltung</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Disclaimer">
 			<pageType>system</pageType>
 			<controller>wcf\form\DisclaimerForm</controller>
 			<name language="de"><![CDATA[Disclaimer]]></name>
 			<name language="en"><![CDATA[Disclaimer]]></name>
+			
+			<content language="en">
+				<title>Disclaimer</title>
+			</content>
+			<content language="de">
+				<title>Disclaimer</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.EmailActivation">
 			<pageType>system</pageType>
 			<controller>wcf\form\EmailActivationForm</controller>
 			<name language="de"><![CDATA[Aktivierung neuer E-Mail-Adresse]]></name>
 			<name language="en"><![CDATA[New Email Address Verification]]></name>
+			
+			<content language="en">
+				<title>New Email Address Verification</title>
+			</content>
+			<content language="de">
+				<title>Aktivierung neuer E-Mail-Adresse</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.EmailNewActivationCode">
 			<pageType>system</pageType>
 			<controller>wcf\form\EmailNewActivationCodeForm</controller>
 			<name language="de"><![CDATA[E-Mail-Aktivierungscode-Anforderung]]></name>
 			<name language="en"><![CDATA[New Email Activation Code Request]]></name>
+			
+			<content language="en">
+				<title>New Email Activation Code Request</title>
+			</content>
+			<content language="de">
+				<title>E-Mail-Aktivierungscode-Anforderung</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Login">
 			<pageType>system</pageType>
 			<controller>wcf\form\LoginForm</controller>
 			<name language="de"><![CDATA[Anmeldung]]></name>
 			<name language="en"><![CDATA[Login]]></name>
+			
+			<content language="en">
+				<title>Login</title>
+			</content>
+			<content language="de">
+				<title>Anmeldung</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.LostPassword">
 			<pageType>system</pageType>
 			<controller>wcf\form\LostPasswordForm</controller>
 			<name language="de"><![CDATA[Kennwort vergessen]]></name>
 			<name language="en"><![CDATA[Lost Password]]></name>
+			
+			<content language="en">
+				<title>Lost Password</title>
+			</content>
+			<content language="de">
+				<title>Kennwort vergessen</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Mail">
 			<pageType>system</pageType>
 			<controller>wcf\form\MailForm</controller>
 			<name language="de"><![CDATA[E-Mail-Formular]]></name>
 			<name language="en"><![CDATA[Mail Form]]></name>
+			
+			<content language="en">
+				<title>Mail Form</title>
+			</content>
+			<content language="de">
+				<title>E-Mail-Formular</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.NewPassword">
 			<pageType>system</pageType>
 			<controller>wcf\form\NewPasswordForm</controller>
 			<name language="de"><![CDATA[Neues Kennwort]]></name>
 			<name language="en"><![CDATA[New Password Request]]></name>
+			
+			<content language="en">
+				<title>New Password Request</title>
+			</content>
+			<content language="de">
+				<title>Neues Kennwort</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.NotificationSettings">
 			<pageType>system</pageType>
 			<controller>wcf\form\NotificationSettingsForm</controller>
 			<name language="de"><![CDATA[Benachrichtigungseinstellungen]]></name>
 			<name language="en"><![CDATA[Notification Settings]]></name>
+			
+			<content language="en">
+				<title>Notification Settings</title>
+			</content>
+			<content language="de">
+				<title>Benachrichtigungseinstellungen</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.RegisterActivation">
 			<pageType>system</pageType>
 			<controller>wcf\form\RegisterActivationForm</controller>
 			<name language="de"><![CDATA[Registrierung abschließen]]></name>
 			<name language="en"><![CDATA[Complete Registration]]></name>
+			
+			<content language="en">
+				<title>Complete Registration</title>
+			</content>
+			<content language="de">
+				<title>Registrierung abschließen</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Register">
 			<pageType>system</pageType>
 			<controller>wcf\form\RegisterForm</controller>
 			<name language="de"><![CDATA[Registrierung]]></name>
 			<name language="en"><![CDATA[Registration]]></name>
+			
+			<content language="en">
+				<title>Registration</title>
+			</content>
+			<content language="de">
+				<title>Registrierung</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.RegisterNewActivationCode">
 			<pageType>system</pageType>
 			<controller>wcf\form\RegisterNewActivationCodeForm</controller>
 			<name language="de"><![CDATA[Aktivierungscode-Anforderung]]></name>
 			<name language="en"><![CDATA[New Activation Code Request]]></name>
+			
+			<content language="en">
+				<title>New Activation Code Request</title>
+			</content>
+			<content language="de">
+				<title>Aktivierungscode-Anforderung</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Search">
 			<pageType>system</pageType>
 			<controller>wcf\form\SearchForm</controller>
 			<name language="de"><![CDATA[Suche]]></name>
 			<name language="en"><![CDATA[Search]]></name>
+			
+			<content language="en">
+				<title>Search</title>
+			</content>
+			<content language="de">
+				<title>Suche</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Settings">
 			<pageType>system</pageType>
 			<controller>wcf\form\SettingsForm</controller>
 			<name language="de"><![CDATA[Einstellungen]]></name>
 			<name language="en"><![CDATA[Settings]]></name>
+			
+			<content language="en">
+				<title>Settings</title>
+			</content>
+			<content language="de">
+				<title>Einstellungen</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.SignatureEdit">
 			<pageType>system</pageType>
@@ -141,6 +281,13 @@
 			<name language="de"><![CDATA[Signatur-Verwaltung]]></name>
 			<name language="en"><![CDATA[Signature Management]]></name>
 			<options>module_user_signature</options>
+			
+			<content language="en">
+				<title>Settings</title>
+			</content>
+			<content language="de">
+				<title>Einstellungen</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.DeletedContentList">
 			<pageType>system</pageType>
@@ -148,26 +295,54 @@
 			<name language="de"><![CDATA[Gelöschte Inhalte]]></name>
 			<name language="en"><![CDATA[Deleted Content]]></name>
 			<permissions>mod.general.canUseModeration</permissions>
+			
+			<content language="en">
+				<title>Deleted Content</title>
+			</content>
+			<content language="de">
+				<title>Gelöschte Inhalte</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.EditHistory">
 			<pageType>system</pageType>
 			<controller>wcf\page\EditHistoryPage</controller>
-			<name language="de"><![CDATA[TODO]]></name>
-			<name language="en"><![CDATA[TODO]]></name>
+			<name language="de"><![CDATA[Edit History TODO]]></name>
+			<name language="en"><![CDATA[Edit History]]></name>
 			<options>module_edit_history</options>
 			<requireObjectID>1</requireObjectID>
+			
+			<content language="en">
+				<title>Edit History</title>
+			</content>
+			<content language="de">
+				<title>Edit History TODO</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Following">
 			<pageType>system</pageType>
 			<controller>wcf\page\FollowingPage</controller>
 			<name language="de"><![CDATA[Benutzer, denen Sie folgen]]></name>
 			<name language="en"><![CDATA[Followed Users]]></name>
+			
+			<content language="en">
+				<title>Followed Users</title>
+			</content>
+			<content language="de">
+				<title>Benutzer, denen Sie folgen</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.IgnoredUsers">
 			<pageType>system</pageType>
 			<controller>wcf\page\IgnoredUsersPage</controller>
 			<name language="de"><![CDATA[Blockierte Benutzer]]></name>
 			<name language="en"><![CDATA[Blocked Users]]></name>
+			
+			<content language="en">
+				<title>Blocked Users</title>
+			</content>
+			<content language="de">
+				<title>Blockierte Benutzer</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.ModerationList">
 			<pageType>system</pageType>
@@ -175,6 +350,13 @@
 			<name language="de"><![CDATA[Moderation]]></name>
 			<name language="en"><![CDATA[Moderation]]></name>
 			<permissions>mod.general.canUseModeration</permissions>
+			
+			<content language="en">
+				<title>Moderation</title>
+			</content>
+			<content language="de">
+				<title>Moderation</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.ModerationActivation">
 			<pageType>system</pageType>
@@ -184,6 +366,13 @@
 			<parent>com.woltlab.wcf.ModerationList</parent>
 			<permissions>mod.general.canUseModeration</permissions>
 			<requireObjectID>1</requireObjectID>
+			
+			<content language="en">
+				<title>Content Approval</title>
+			</content>
+			<content language="de">
+				<title>Inhaltsfreischaltung</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.ModerationReport">
 			<pageType>system</pageType>
@@ -193,12 +382,26 @@
 			<parent>com.woltlab.wcf.ModerationList</parent>
 			<permissions>mod.general.canUseModeration</permissions>
 			<requireObjectID>1</requireObjectID>
+			
+			<content language="en">
+				<title>Content Report</title>
+			</content>
+			<content language="de">
+				<title>Inhaltsmeldung</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.NotificationList">
 			<pageType>system</pageType>
 			<controller>wcf\page\NotificationListPage</controller>
 			<name language="de"><![CDATA[Benachrichtigungen]]></name>
 			<name language="en"><![CDATA[Notifications]]></name>
+			
+			<content language="en">
+				<title>Notifications</title>
+			</content>
+			<content language="de">
+				<title>Benachrichtigungen</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.PaidSubscriptionList">
 			<pageType>system</pageType>
@@ -206,6 +409,13 @@
 			<name language="de"><![CDATA[Bezahlte Mitgliedschaften]]></name>
 			<name language="en"><![CDATA[Paid Subscriptions]]></name>
 			<options>module_paid_subscription</options>
+			
+			<content language="en">
+				<title>Paid Subscriptions</title>
+			</content>
+			<content language="de">
+				<title>Bezahlte Mitgliedschaften</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.SearchResult">
 			<pageType>system</pageType>
@@ -214,6 +424,13 @@
 			<name language="en"><![CDATA[Search Results]]></name>
 			<parent>com.woltlab.wcf.Search</parent>
 			<requireObjectID>1</requireObjectID>
+			
+			<content language="en">
+				<title>Search Results</title>
+			</content>
+			<content language="de">
+				<title>Suchergebnisse</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Tagged">
 			<pageType>system</pageType>
@@ -222,6 +439,13 @@
 			<name language="en"><![CDATA[Content With Particular Tag]]></name>
 			<permissions>user.tag.canViewTag</permissions>
 			<requireObjectID>1</requireObjectID>
+			
+			<content language="en">
+				<title>Content With Particular Tag</title>
+			</content>
+			<content language="de">
+				<title>Inhalte mit bestimmtem Tag</title>
+			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.User">
 			<pageType>system</pageType>

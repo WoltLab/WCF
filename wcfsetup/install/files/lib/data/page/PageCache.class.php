@@ -82,7 +82,7 @@ class PageCache extends SingletonFactory {
 	public function getPageTitle($pageID, $languageID = null) {
 		if (isset($this->cache['pageTitles'][$pageID])) {
 			$page = $this->getPage($pageID);
-			if ($page->isMultilingual) {
+			if ($page->isMultilingual || $page->pageType == 'system') {
 				if ($languageID !== null && isset($this->cache['pageTitles'][$pageID][$languageID])) {
 					return $this->cache['pageTitles'][$pageID][$languageID];
 				}

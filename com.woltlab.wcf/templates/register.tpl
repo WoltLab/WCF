@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.register{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.register{/lang}{/capture}
-
 {capture assign='headContent'}
 	<style type="text/css">	
 		#fieldset1 {

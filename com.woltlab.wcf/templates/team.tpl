@@ -1,7 +1,3 @@
-{capture assign='pageTitle'}{lang}wcf.user.team{/lang}{/capture}
-
-{capture assign='contentTitle'}{lang}wcf.user.team{/lang}{/capture}
-
 {capture assign='headContent'}
 	<link rel="canonical" href="{link controller='Team'}{/link}" />
 {/capture}
