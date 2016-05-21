@@ -59,7 +59,6 @@
 						{else}
 							<small class="innerError">{lang}wcf.acp.group.assignment.groupID.error.{@$errorType}{/lang}</small>
 						{/if}
-						
 					{/if}
 				</dd>
 			</dl>
