@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\package\PackageCache;
+use wcf\data\page\Page;
 use wcf\data\page\PageEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -250,25 +251,26 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		$content = $data['content'];
 		unset($data['content']);
 		
+		/** @var Page $page */
 		if (!empty($row)) {
 			// allow only updating of controller, everything else would overwrite user modifications
 			if (!empty($data['controller'])) {
-				$object = parent::import($row, ['controller' => $data['controller']]);
+				$page = parent::import($row, ['controller' => $data['controller']]);
 			}
 			else {
 				$baseClass = call_user_func([$this->className, 'getBaseClass']);
-				$object = new $baseClass(null, $row);
+				$page = new $baseClass(null, $row);
 			}
 		}
 		else {
 			// import
-			$object = parent::import($row, $data);
+			$page = parent::import($row, $data);
 		}
 		
 		// store content for later import
-		$this->content[$object->pageID] = $content;
+		$this->content[$page->pageID] = $content;
 		
-		return $object;
+		return $page;
 	}
 	
 	/**

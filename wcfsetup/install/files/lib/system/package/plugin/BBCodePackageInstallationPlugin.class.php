@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\bbcode\attribute\BBCodeAttributeEditor;
+use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeEditor;
 use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -148,11 +149,13 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		$attributes = $data['attributes'];
 		unset($data['attributes']);
 		
-		// import or update action
-		$object = parent::import($row, $data);
+		/** @var BBCode $bbcode */
+		$bbcode = parent::import($row, $data);
 		
 		// store attributes for later import
-		$this->attributes[$object->bbcodeID] = $attributes;
+		$this->attributes[$bbcode->bbcodeID] = $attributes;
+		
+		return $bbcode;
 	}
 	
 	/**

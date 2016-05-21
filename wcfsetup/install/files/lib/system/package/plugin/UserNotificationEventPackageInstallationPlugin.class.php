@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\event\UserNotificationEventEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -91,13 +92,14 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
-		$result = parent::import($row, $data);
+		/** @var UserNotificationEvent $event */
+		$event = parent::import($row, $data);
 		
 		if (empty($row) && $data['preset']) {
-			$this->presetEventIDs[$result->eventID] = $data['presetMailNotificationType'];
+			$this->presetEventIDs[$event->eventID] = $data['presetMailNotificationType'];
 		}
 		
-		return $result;
+		return $event;
 	}
 	
 	/**

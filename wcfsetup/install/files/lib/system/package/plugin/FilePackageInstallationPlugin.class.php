@@ -101,6 +101,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		}
 		
 		foreach ($files as $application => $filenames) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$this->installation->deleteFiles(Application::getDirectory($application), $filenames);
 			
 			// delete log entries

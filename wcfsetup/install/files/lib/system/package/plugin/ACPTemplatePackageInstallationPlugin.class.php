@@ -73,6 +73,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 		}
 		
 		foreach ($templates as $application => $templateNames) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$this->installation->deleteFiles(Application::getDirectory($application), $templateNames, false, $this->installation->getPackage()->isApplication);
 			
 			// delete log entries

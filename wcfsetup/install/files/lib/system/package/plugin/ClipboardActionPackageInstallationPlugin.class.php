@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\clipboard\action\ClipboardActionEditor;
 use wcf\system\WCF;
 
@@ -111,11 +112,13 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$pages = $data['pages'];
 		unset($data['pages']);
 		
-		// import or update action
-		$object = parent::import($row, $data);
+		/** @var ClipboardAction $action */
+		$action = parent::import($row, $data);
 		
 		// store pages for later import
-		$this->pages[$object->actionID] = $pages;
+		$this->pages[$action->actionID] = $pages;
+		
+		return $action;
 	}
 	
 	/**

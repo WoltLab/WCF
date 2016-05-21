@@ -104,6 +104,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			unset($data['cronjobName']);
 		}
 		
+		/** @var Cronjob $cronjob */
 		$cronjob = parent::import($row, $data);
 		
 		// update cronjob name

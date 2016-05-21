@@ -33,7 +33,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 */	
+	 */
 	public $tagName = 'option';
 	
 	/**
@@ -41,6 +41,8 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 */
 	protected function importCategories(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
+		
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$data = ['categoryName' => $element->getAttribute('name')];
 				
@@ -95,6 +97,8 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 */
 	protected function importOptions(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');
+		
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$data = [];
 			$children = $xpath->query('child::*', $element);

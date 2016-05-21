@@ -95,6 +95,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			unset($data['listenerName']);
 		}
 		
+		/** @var EventListener $eventListener */
 		$eventListener = parent::import($row, $data);
 		
 		// update event listener name

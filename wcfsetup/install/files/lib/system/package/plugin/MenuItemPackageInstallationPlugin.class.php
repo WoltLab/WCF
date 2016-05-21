@@ -99,6 +99,8 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				WHERE	identifier = ?";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$data['elements']['parent']]);
+			
+			/** @var MenuItem|null $parent */
 			$parent = $statement->fetchObject(MenuItem::class);
 			if ($parent === null) {
 				throw new SystemException("Unable to find parent menu item '" . $data['elements']['parent'] . "' for menu item '" . $data['attributes']['identifier'] . "'");
