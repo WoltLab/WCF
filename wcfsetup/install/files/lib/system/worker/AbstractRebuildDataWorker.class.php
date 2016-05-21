@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\DatabaseObjectList;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
@@ -91,8 +92,8 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 			throw new SystemException('DatabaseObjectList class name not specified.');
 		}
 		
-		if (!is_subclass_of($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
-			throw new SystemException("'".$this->objectListClassName."' does not extend 'wcf\data\DatabaseObjectList'");
+		if (!is_subclass_of($this->objectListClassName, DatabaseObjectList::class)) {
+			throw new SystemException("'".$this->objectListClassName."' does not extend '".DatabaseObjectList::class."'");
 		}
 		
 		$this->objectList = new $this->objectListClassName();

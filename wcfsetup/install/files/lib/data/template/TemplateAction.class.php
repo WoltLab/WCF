@@ -17,7 +17,7 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\template\TemplateEditor';
+	protected $className = TemplateEditor::class;
 	
 	/**
 	 * @inheritDoc

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\bbcode\BBCodeList;
 use wcf\page\SortablePage;
 
 /**
@@ -31,7 +32,7 @@ class BBCodeListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\bbcode\BBCodeList';
+	public $objectListClassName = BBCodeList::class;
 	
 	/**
 	 * @inheritDoc

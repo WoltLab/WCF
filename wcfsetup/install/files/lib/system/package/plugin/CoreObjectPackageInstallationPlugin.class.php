@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\core\object\CoreObjectEditor;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\WCF;
 
@@ -17,7 +18,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\core\object\CoreObjectEditor';
+	public $className = CoreObjectEditor::class;
 	
 	/**
 	 * @inheritDoc

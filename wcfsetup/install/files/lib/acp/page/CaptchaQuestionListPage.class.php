@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\captcha\question\CaptchaQuestionList;
 use wcf\page\MultipleLinkPage;
 
 /**
@@ -26,7 +27,7 @@ class CaptchaQuestionListPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\captcha\question\CaptchaQuestionList';
+	public $objectListClassName = CaptchaQuestionList::class;
 	
 	/**
 	 * @inheritDoc

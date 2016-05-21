@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\database;
 use wcf\system\benchmark\Benchmark;
+use wcf\system\database\editor\DatabaseEditor;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\exception\DatabaseTransactionException;
@@ -22,13 +23,13 @@ abstract class Database {
 	 * name of the class used for prepared statements
 	 * @var	string
 	 */
-	protected $preparedStatementClassName = 'wcf\system\database\statement\PreparedStatement';
+	protected $preparedStatementClassName = PreparedStatement::class;
 	
 	/**
 	 * name of the database editor class
 	 * @var	string
 	 */
-	protected $editorClassName = 'wcf\system\database\editor\DatabaseEditor';
+	protected $editorClassName = DatabaseEditor::class;
 	
 	/**
 	 * sql server hostname

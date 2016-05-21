@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\tag\TagList;
 use wcf\page\SortablePage;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\WCF;
@@ -44,7 +45,7 @@ class TagListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\tag\TagList';
+	public $objectListClassName = TagList::class;
 	
 	/**
 	 * search-query

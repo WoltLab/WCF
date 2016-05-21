@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database;
+use wcf\system\database\editor\MySQLDatabaseEditor;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 
 /**
@@ -16,7 +17,7 @@ class MySQLDatabase extends Database {
 	/**
 	 * @inheritDoc
 	 */
-	protected $editorClassName = 'wcf\system\database\editor\MySQLDatabaseEditor';
+	protected $editorClassName = MySQLDatabaseEditor::class;
 	
 	/**
 	 * @inheritDoc

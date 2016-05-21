@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\user\follow\UserFollowingList;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
 
@@ -22,7 +23,7 @@ class FollowingPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\follow\UserFollowingList';
+	public $objectListClassName = UserFollowingList::class;
 	
 	/**
 	 * @inheritDoc

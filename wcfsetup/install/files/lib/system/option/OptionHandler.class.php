@@ -3,6 +3,7 @@ namespace wcf\system\option;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -30,7 +31,7 @@ class OptionHandler implements IOptionHandler {
 	 * cache class name
 	 * @var	string
 	 */
-	protected $cacheClass = 'wcf\system\cache\builder\OptionCacheBuilder';
+	protected $cacheClass = OptionCacheBuilder::class;
 	
 	/**
 	 * list of all option categories
@@ -378,8 +379,8 @@ class OptionHandler implements IOptionHandler {
 			return null;
 		}
 		
-		if (!is_subclass_of($className, 'wcf\system\option\IOptionType')) {
-			throw new SystemException("'".$className."' does not implement 'wcf\system\option\IOptionType'");
+		if (!is_subclass_of($className, IOptionType::class)) {
+			throw new SystemException("'".$className."' does not implement '".IOptionType::class."'");
 		}
 		
 		return $className;

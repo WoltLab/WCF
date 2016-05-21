@@ -463,7 +463,7 @@ class PackageInstallationDispatcher {
 				WHERE	languageCategory = ?";
 			$statement2 = WCF::getDB()->prepareStatement($sql);
 			$statement2->execute(['wcf.acp.package']);
-			$languageCategory = $statement2->fetchObject('wcf\data\language\category\LanguageCategory');
+			$languageCategory = $statement2->fetchObject(LanguageCategory::class);
 		}
 		else {
 			$languageCategory = LanguageFactory::getInstance()->getCategory('wcf.acp.package');
@@ -570,7 +570,7 @@ class PackageInstallationDispatcher {
 		$plugin = new $className($this, $nodeData);
 		
 		if (!($plugin instanceof IPackageInstallationPlugin)) {
-			throw new SystemException("'".$className."' does not implement 'wcf\\system\\package\\plugin\\IPackageInstallationPlugin'");
+			throw new SystemException("'".$className."' does not implement '".IPackageInstallationPlugin::class."'");
 		}
 		
 		// execute PIP

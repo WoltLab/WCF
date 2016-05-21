@@ -17,7 +17,7 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\language\LanguageEditor';
+	protected $className = LanguageEditor::class;
 	
 	/**
 	 * @inheritDoc

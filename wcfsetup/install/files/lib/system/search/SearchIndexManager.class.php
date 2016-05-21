@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\exception\SystemException;
+use wcf\system\search\mysql\MysqlSearchIndexManager;
 use wcf\system\SingletonFactory;
 
 /**
@@ -91,7 +92,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 			
 			// fallback to MySQL
 			if (empty($className)) {
-				$className = 'wcf\system\search\mysql\MysqlSearchIndexManager';
+				$className = MysqlSearchIndexManager::class;
 			}
 			
 			$this->searchIndexManager = call_user_func([$className, 'getInstance']);

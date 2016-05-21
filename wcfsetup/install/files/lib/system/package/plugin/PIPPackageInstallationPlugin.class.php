@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\package\installation\plugin\PackageInstallationPluginEditor;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +17,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\package\installation\plugin\PackageInstallationPluginEditor';
+	public $className = PackageInstallationPluginEditor::class;
 	
 	/**
 	 * @inheritDoc

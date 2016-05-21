@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\acp\session\log\ACPSessionLogList;
 use wcf\page\SortablePage;
 
 /**
@@ -46,7 +47,7 @@ class ACPSessionLogListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\acp\session\log\ACPSessionLogList';
+	public $objectListClassName = ACPSessionLogList::class;
 	
 	/**
 	 * @inheritDoc

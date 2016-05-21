@@ -5,6 +5,7 @@ use wcf\data\option\Option;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\User;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\ISearchableConditionUserOption;
 use wcf\system\option\OptionHandler;
@@ -25,7 +26,7 @@ class UserOptionHandler extends OptionHandler {
 	/**
 	 * @inheritDoc
 	 */
-	protected $cacheClass = 'wcf\system\cache\builder\UserOptionCacheBuilder';
+	protected $cacheClass = UserOptionCacheBuilder::class;
 	
 	/**
 	 * true if within registration process

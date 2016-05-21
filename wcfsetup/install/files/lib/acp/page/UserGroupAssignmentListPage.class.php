@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\group\assignment\UserGroupAssignmentList;
 use wcf\page\MultipleLinkPage;
 
 /**
@@ -26,5 +27,5 @@ class UserGroupAssignmentListPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\group\assignment\UserGroupAssignmentList';
+	public $objectListClassName = UserGroupAssignmentList::class;
 }

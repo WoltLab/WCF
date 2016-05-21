@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\user\ignore\ViewableUserIgnoreList;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
 
@@ -22,7 +23,7 @@ class IgnoredUsersPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\ignore\ViewableUserIgnoreList';
+	public $objectListClassName = ViewableUserIgnoreList::class;
 	
 	/**
 	 * @inheritDoc

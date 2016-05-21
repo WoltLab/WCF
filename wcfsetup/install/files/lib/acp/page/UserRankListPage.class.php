@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\rank\UserRankList;
 use wcf\page\SortablePage;
 
 /**
@@ -31,7 +32,7 @@ class UserRankListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\rank\UserRankList';
+	public $objectListClassName = UserRankList::class;
 	
 	/**
 	 * @inheritDoc

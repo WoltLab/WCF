@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\LabelGroupEditor;
 use wcf\system\WCF;
 
@@ -17,7 +18,7 @@ class LabelGroupImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\label\group\LabelGroup';
+	protected $className = LabelGroup::class;
 	
 	/**
 	 * @inheritDoc

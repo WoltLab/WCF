@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\user\object\watch\UserObjectWatch;
 use wcf\data\user\object\watch\UserObjectWatchEditor;
 use wcf\system\database\DatabaseException;
 
@@ -17,7 +18,7 @@ class AbstractWatchedObjectImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\object\watch';
+	protected $className = UserObjectWatch::class;
 	
 	/**
 	 * object type id for watched objects

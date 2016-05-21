@@ -8,6 +8,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\database\util\SQLParser;
+use wcf\system\database\MySQLDatabase;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\io\File;
@@ -93,7 +94,7 @@ class WCFSetup extends WCF {
 	 * @var	string[][]
 	 */
 	protected static $dbClasses = [
-		'MySQLDatabase' => ['class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17']//,		// MySQL 5.1.17+
+		'MySQLDatabase' => ['class' => MySQLDatabase::class, 'minversion' => '5.1.17']//,		// MySQL 5.1.17+
 		//'PostgreSQLDatabase' => ['class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0']	// PostgreSQL 8.2.0+
 	];
 	
@@ -709,7 +710,7 @@ class WCFSetup extends WCF {
 					}
 				}
 				// check innodb support
-				if ($dbClass == 'wcf\system\database\MySQLDatabase') {
+				if ($dbClass == MySQLDatabase::class) {
 					$sql = "SHOW ENGINES";
 					$statement = $db->prepareStatement($sql);
 					$statement->execute();

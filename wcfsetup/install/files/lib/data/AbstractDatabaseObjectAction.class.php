@@ -214,7 +214,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Resets cache of database object.
 	 */
 	protected function resetCache() {
-		if (is_subclass_of($this->className, 'wcf\data\IEditableCachedObject')) {
+		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
 			call_user_func([$this->className, 'resetCache']);
 		}
 	}

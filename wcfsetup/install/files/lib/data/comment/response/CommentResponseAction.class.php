@@ -31,7 +31,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\comment\response\CommentResponseEditor';
+	protected $className = CommentResponseEditor::class;
 	
 	/**
 	 * comment object

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\user\notification\event\UserNotificationEventEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -17,7 +18,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\notification\event\UserNotificationEventEditor';
+	public $className = UserNotificationEventEditor::class;
 	
 	/**
 	 * @inheritDoc

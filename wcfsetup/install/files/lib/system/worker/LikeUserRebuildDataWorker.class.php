@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\like\object\LikeObjectList;
 use wcf\data\like\Like;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -18,7 +19,7 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @inheritDoc
 	 */
-	protected $objectListClassName = 'wcf\data\like\object\LikeObjectList';
+	protected $objectListClassName = LikeObjectList::class;
 	
 	/**
 	 * @inheritDoc

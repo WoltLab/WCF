@@ -3,6 +3,7 @@ namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
 use wcf\action\AJAXInvokeAction;
 use wcf\system\exception\SystemException;
+use wcf\system\worker\IWorker;
 use wcf\system\WCF;
 use wcf\util\JSON;
 
@@ -63,8 +64,8 @@ class WorkerProxyAction extends AJAXInvokeAction {
 			throw new SystemException("class name cannot be empty.");
 		}
 		
-		if (!is_subclass_of($this->className, 'wcf\system\worker\IWorker')) {
-			throw new SystemException("'".$this->className."' does not implement 'wcf\system\worker\IWorker'");
+		if (!is_subclass_of($this->className, IWorker::class)) {
+			throw new SystemException("'".$this->className."' does not implement '".IWorker::class."'");
 		}
 	}
 	

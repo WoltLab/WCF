@@ -168,7 +168,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 		
 		// decorate category if necessary
 		$decoratorClassName = call_user_func([$this->nodeClassName, 'getBaseClass']);
-		if ($decoratorClassName != 'wcf\data\category\Category') {
+		if ($decoratorClassName != Category::class) {
 			$category = new $decoratorClassName($category);
 		}
 		

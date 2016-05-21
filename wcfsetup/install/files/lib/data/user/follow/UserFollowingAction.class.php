@@ -19,7 +19,7 @@ class UserFollowingAction extends UserFollowAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\follow\UserFollowEditor';
+	protected $className = UserFollowEditor::class;
 	
 	/**
 	 * @inheritDoc

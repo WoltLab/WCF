@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\search\acp;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\User;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -31,7 +32,7 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$query.'%']);
 		
-		while ($user = $statement->fetchObject('wcf\data\user\User')) {
+		while ($user = $statement->fetchObject(User::class)) {
 			if (UserGroup::isAccessibleGroup($user->getGroupIDs())) {
 				$results[] = new ACPSearchResult($user->username, LinkHandler::getInstance()->getLink('UserEdit', [
 					'object' => $user

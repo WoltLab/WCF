@@ -22,7 +22,7 @@ class UserImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\User';
+	protected $className = User::class;
 	
 	/**
 	 * ids of default notification events

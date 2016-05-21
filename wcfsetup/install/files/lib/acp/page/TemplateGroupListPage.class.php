@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\template\group\TemplateGroupList;
 use wcf\page\SortablePage;
 
 /**
@@ -31,7 +32,7 @@ class TemplateGroupListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\template\group\TemplateGroupList';
+	public $objectListClassName = TemplateGroupList::class;
 	
 	/**
 	 * @inheritDoc

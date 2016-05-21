@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\system\language\LanguageFactory;
+use wcf\system\option\user\UserOptionHandler;
 
 /**
  * This class provides default implementations for a list of dynamic user options.
@@ -17,7 +18,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $optionHandlerClassName = 'wcf\system\option\user\UserOptionHandler';
+	public $optionHandlerClassName = UserOptionHandler::class;
 	
 	/**
 	 * @inheritDoc

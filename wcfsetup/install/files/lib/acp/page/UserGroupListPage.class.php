@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\group\UserGroupList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 
@@ -37,7 +38,7 @@ class UserGroupListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\group\UserGroupList';
+	public $objectListClassName = UserGroupList::class;
 	
 	/**
 	 * indicates if a group has just been deleted

@@ -18,7 +18,7 @@ class EditHistoryEntryAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\edit\history\entry\EditHistoryEntryEditor';
+	protected $className = EditHistoryEntryEditor::class;
 	
 	/**
 	 * Checks permissions to revert.

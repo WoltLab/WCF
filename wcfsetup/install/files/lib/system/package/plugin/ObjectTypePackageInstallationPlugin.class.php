@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\object\type\ObjectTypeEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -17,7 +18,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\object\type\ObjectTypeEditor';
+	public $className = ObjectTypeEditor::class;
 	
 	/**
 	 * @inheritDoc

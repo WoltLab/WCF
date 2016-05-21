@@ -17,7 +17,7 @@ class UserGroupImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\group\UserGroup';
+	protected $className = UserGroup::class;
 	
 	/**
 	 * @inheritDoc

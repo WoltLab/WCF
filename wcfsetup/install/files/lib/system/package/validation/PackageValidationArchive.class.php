@@ -129,7 +129,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 								WHERE	package = ?";
 							$statement = WCF::getDB()->prepareStatement($sql);
 							$statement->execute([$requirement['name']]);
-							$package = $statement->fetchObject('wcf\data\package\Package');
+							$package = $statement->fetchObject(Package::class);
 							
 							throw new PackageValidationException(PackageValidationException::MISSING_REQUIREMENT, [
 								'package' => $package,

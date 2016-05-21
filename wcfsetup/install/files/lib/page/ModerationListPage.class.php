@@ -1,6 +1,7 @@
 <?php
 namespace wcf\page;
 use wcf\data\moderation\queue\ModerationQueue;
+use wcf\data\moderation\queue\ViewableModerationQueueList;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
@@ -57,7 +58,7 @@ class ModerationListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\moderation\queue\ViewableModerationQueueList';
+	public $objectListClassName = ViewableModerationQueueList::class;
 	
 	/**
 	 * status bit

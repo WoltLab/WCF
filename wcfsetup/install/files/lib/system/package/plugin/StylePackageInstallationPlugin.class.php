@@ -19,7 +19,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\style\StyleEditor';
+	public $className = StyleEditor::class;
 	
 	/**
 	 * @inheritDoc

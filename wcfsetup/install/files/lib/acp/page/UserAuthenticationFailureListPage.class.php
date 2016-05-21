@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\authentication\failure\UserAuthenticationFailureList;
 use wcf\page\SortablePage;
 
 /**
@@ -46,5 +47,5 @@ class UserAuthenticationFailureListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\authentication\failure\UserAuthenticationFailureList';
+	public $objectListClassName = UserAuthenticationFailureList::class;
 }

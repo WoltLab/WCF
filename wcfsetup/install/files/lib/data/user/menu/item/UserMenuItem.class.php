@@ -2,6 +2,7 @@
 namespace wcf\data\user\menu\item;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\menu\user\DefaultUserMenuItemProvider;
+use wcf\system\menu\user\IUserMenuItemProvider;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\request\LinkHandler;
 use wcf\system\Regex;
@@ -43,7 +44,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $processorInterface = 'wcf\system\menu\user\IUserMenuItemProvider';
+	protected static $processorInterface = IUserMenuItemProvider::class;
 	
 	/**
 	 * application abbreviation

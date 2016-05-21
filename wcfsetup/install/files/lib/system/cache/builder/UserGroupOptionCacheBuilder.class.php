@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\user\group\option\UserGroupOption;
 
 /**
  * Caches user group options and categories
@@ -15,7 +16,7 @@ class UserGroupOptionCacheBuilder extends OptionCacheBuilder {
 	/**
 	 * @inheritDoc
 	 */
-	protected $optionClassName = 'wcf\data\user\group\option\UserGroupOption';
+	protected $optionClassName = UserGroupOption::class;
 	
 	/**
 	 * @inheritDoc

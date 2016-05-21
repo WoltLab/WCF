@@ -20,7 +20,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\smiley\SmileyEditor';
+	protected $className = SmileyEditor::class;
 	
 	/**
 	 * @inheritDoc

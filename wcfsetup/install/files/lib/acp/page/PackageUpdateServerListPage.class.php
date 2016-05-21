@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\page\SortablePage;
 
 /**
@@ -36,7 +37,7 @@ class PackageUpdateServerListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\package\update\server\PackageUpdateServerList';
+	public $objectListClassName = PackageUpdateServerList::class;
 	
 	/**
 	 * @inheritDoc

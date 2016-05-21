@@ -22,7 +22,7 @@ use Zend\Console\Getopt as ArgvParser;
 use Zend\Loader\StandardAutoloader as ZendLoader;
 
 // set exception handler
-set_exception_handler(['wcf\system\CLIWCF', 'handleCLIException']);
+set_exception_handler([CLIWCF::class, 'handleCLIException']);
 
 /**
  * Extends WCF class with functions for CLI.
@@ -83,7 +83,7 @@ class CLIWCF extends WCF {
 		$this->initApplications();
 		
 		// the destructor registered in core.functions.php will only call the destructor of the parent class
-		register_shutdown_function(['wcf\system\CLIWCF', 'destruct']);
+		register_shutdown_function([self::class, 'destruct']);
 		
 		$this->initArgv();
 		$this->initPHPLine();

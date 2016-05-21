@@ -184,7 +184,7 @@ class PackageInstallationScheduler {
 				if (isset($installedPackages[$row['package']])) {
 					// package already installed -> check version
 					// sort multiple instances by version number
-					uasort($installedPackages[$row['package']], ['wcf\data\package\Package', 'compareVersion']);
+					uasort($installedPackages[$row['package']], [Package::class, 'compareVersion']);
 					
 					foreach ($installedPackages[$row['package']] as $packageID => $packageVersion) {
 						if (empty($row['minversion']) || Package::compareVersion($row['minversion'], $packageVersion, '<=')) {
@@ -481,7 +481,7 @@ class PackageInstallationScheduler {
 			
 			if (count($packageVersions) > 1) {
 				// sort by version number
-				usort($packageVersions, ['wcf\data\package\Package', 'compareVersion']);
+				usort($packageVersions, [Package::class, 'compareVersion']);
 				
 				// get highest version
 				$version = array_pop($packageVersions);
@@ -511,7 +511,7 @@ class PackageInstallationScheduler {
 		}
 		
 		// sort by version number
-		uksort($fromversions, ['wcf\data\package\Package', 'compareVersion']);
+		uksort($fromversions, [Package::class, 'compareVersion']);
 		
 		// find shortest update thread
 		$updateThread = $this->findShortestUpdateThread($package->package, $fromversions, $packageVersion, $version);

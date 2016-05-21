@@ -16,5 +16,5 @@ class PollOptionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\poll\option\PollOptionEditor';
+	protected $className = PollOptionEditor::class;
 }

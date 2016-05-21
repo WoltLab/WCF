@@ -16,5 +16,5 @@ class SearchAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\search\SearchEditor';
+	protected $className = SearchEditor::class;
 }

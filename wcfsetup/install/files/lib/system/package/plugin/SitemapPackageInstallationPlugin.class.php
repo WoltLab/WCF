@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\sitemap\SitemapEditor;
 use wcf\system\cache\builder\SitemapCacheBuilder;
 use wcf\system\WCF;
 
@@ -17,7 +18,7 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\sitemap\SitemapEditor';
+	public $className = SitemapEditor::class;
 	
 	/**
 	 * @inheritDoc

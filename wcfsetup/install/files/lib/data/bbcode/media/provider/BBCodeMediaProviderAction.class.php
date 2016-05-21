@@ -16,7 +16,7 @@ class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\bbcode\media\provider\BBCodeMediaProviderEditor';
+	protected $className = BBCodeMediaProviderEditor::class;
 	
 	/**
 	 * @inheritDoc

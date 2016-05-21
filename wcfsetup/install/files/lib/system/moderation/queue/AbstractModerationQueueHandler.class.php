@@ -4,6 +4,7 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\moderation\queue\activation\IModerationQueueActivationHandler;
@@ -49,7 +50,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	 * @inheritDoc
 	 */
 	public function identifyOrphans(array $queues) {
-		if (empty($this->className) || !class_exists($this->className) || !is_subclass_of($this->className, 'wcf\data\DatabaseObject')) {
+		if (empty($this->className) || !class_exists($this->className) || !is_subclass_of($this->className, DatabaseObject::class)) {
 			throw new SystemException("DatabaseObject class name '" . $this->className . "' is missing or invalid");
 		}
 		

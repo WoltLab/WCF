@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\option\category\OptionCategory;
+use wcf\data\option\Option;
 use wcf\system\WCF;
 
 /**
@@ -18,7 +19,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 	 * option class name
 	 * @var	string
 	 */
-	protected $optionClassName = 'wcf\data\option\Option';
+	protected $optionClassName = Option::class;
 	
 	/**
 	 * database table name

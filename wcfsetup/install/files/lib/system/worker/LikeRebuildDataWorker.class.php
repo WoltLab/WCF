@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\like\Like;
+use wcf\data\like\LikeList;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
 
@@ -18,7 +19,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @inheritDoc
 	 */
-	protected $objectListClassName = 'wcf\data\like\LikeList';
+	protected $objectListClassName = LikeList::class;
 	
 	/**
 	 * @inheritDoc

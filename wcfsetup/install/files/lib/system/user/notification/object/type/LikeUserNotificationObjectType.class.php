@@ -1,5 +1,8 @@
 <?php
 namespace wcf\system\user\notification\object\type;
+use wcf\data\like\Like;
+use wcf\data\like\LikeList;
+use wcf\system\user\notification\object\LikeUserNotificationObject;
 
 /**
  * User notification object type implementation for likes.
@@ -15,15 +18,15 @@ class LikeUserNotificationObjectType extends AbstractUserNotificationObjectType 
 	/**
 	 * @inheritDoc
 	 */
-	protected static $decoratorClassName = 'wcf\system\user\notification\object\LikeUserNotificationObject';
+	protected static $decoratorClassName = LikeUserNotificationObject::class;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected static $objectClassName = 'wcf\data\like\Like';
+	protected static $objectClassName = Like::class;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected static $objectListClassName = 'wcf\data\like\LikeList';
+	protected static $objectListClassName = LikeList::class;
 }

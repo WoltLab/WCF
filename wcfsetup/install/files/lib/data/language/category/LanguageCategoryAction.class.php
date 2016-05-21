@@ -16,7 +16,7 @@ class LanguageCategoryAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\language\category\LanguageCategoryEditor';
+	protected $className = LanguageCategoryEditor::class;
 	
 	/**
 	 * @inheritDoc

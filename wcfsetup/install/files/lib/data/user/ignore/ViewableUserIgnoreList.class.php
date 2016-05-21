@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\user\ignore;
+use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 
 /**
  * Represents a list of ignored users.
@@ -15,17 +17,17 @@ class ViewableUserIgnoreList extends UserIgnoreList {
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\ignore\UserIgnore';
+	public $className = UserIgnore::class;
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'wcf\data\user\UserProfile';
+	public $decoratorClassName = UserProfile::class;
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $objectClassName = 'wcf\data\user\User';
+	public $objectClassName = User::class;
 	
 	/**
 	 * @inheritDoc

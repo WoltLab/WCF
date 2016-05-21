@@ -1,5 +1,8 @@
 <?php
 namespace wcf\system\user\notification\object\type;
+use wcf\data\user\follow\UserFollow;
+use wcf\data\user\follow\UserFollowList;
+use wcf\system\user\notification\object\UserFollowUserNotificationObject;
 
 /**
  * Represents a following user as a notification object type.
@@ -15,15 +18,15 @@ class UserFollowUserNotificationObjectType extends AbstractUserNotificationObjec
 	/**
 	 * @inheritDoc
 	 */
-	protected static $decoratorClassName = 'wcf\system\user\notification\object\UserFollowUserNotificationObject';
+	protected static $decoratorClassName = UserFollowUserNotificationObject::class;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected static $objectClassName = 'wcf\data\user\follow\UserFollow';
+	protected static $objectClassName = UserFollow::class;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected static $objectListClassName = 'wcf\data\user\follow\UserFollowList';
+	protected static $objectListClassName = UserFollowList::class;
 }

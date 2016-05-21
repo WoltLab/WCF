@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\event\listener\EventListener;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 
@@ -36,7 +37,7 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 			ORDER BY	niceValue ASC, listenerClassName ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($eventListener = $statement->fetchObject('wcf\data\event\listener\EventListener')) {
+		while ($eventListener = $statement->fetchObject(EventListener::class)) {
 			$eventNames = $eventListener->getEventNames();
 			
 			if (!$eventListener->inherit) {

@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\image;
 use wcf\system\exception\SystemException;
+use wcf\system\image\adapter\GDImageAdapter;
 use wcf\system\image\adapter\ImageAdapter;
+use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\SingletonFactory;
 
 /**
@@ -20,8 +22,8 @@ class ImageHandler extends SingletonFactory {
 	 * @var	string[]
 	 */
 	protected $imageAdapters = [
-		'gd' => 'wcf\system\image\adapter\GDImageAdapter',
-		'imagick' => 'wcf\system\image\adapter\ImagickImageAdapter'
+		'gd' => GDImageAdapter::class,
+		'imagick' => ImagickImageAdapter::class
 	];
 	
 	/**

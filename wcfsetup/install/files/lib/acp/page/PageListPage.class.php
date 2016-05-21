@@ -2,6 +2,7 @@
 namespace wcf\acp\page;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
+use wcf\data\page\PageList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -26,7 +27,7 @@ class PageListPage extends SortablePage {
 	/**
 	 * @inheritdoc
 	 */
-	public $objectListClassName = 'wcf\data\page\PageList';
+	public $objectListClassName = PageList::class;
 	
 	/**
 	 * @inheritdoc

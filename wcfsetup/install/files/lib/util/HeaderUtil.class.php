@@ -81,7 +81,7 @@ final class HeaderUtil {
 			@header('X-Frame-Options: SAMEORIGIN');
 		}
 		
-		ob_start(['wcf\util\HeaderUtil', 'parseOutput']);
+		ob_start([self::class, 'parseOutput']);
 	}
 	
 	/**
@@ -120,7 +120,7 @@ final class HeaderUtil {
 		// 3rd party plugins may differ the actual output before it is sent to the browser
 		// please be aware, that $eventObj is not available here due to this being a static
 		// class. Use HeaderUtil::$output to modify it.
-		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction('wcf\util\HeaderUtil', 'parseOutput');
+		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction(self::class, 'parseOutput');
 		
 		// gzip compression
 		if (self::$enableGzipCompression) {

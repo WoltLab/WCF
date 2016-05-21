@@ -16,5 +16,5 @@ class EventListenerAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\event\listener\EventListenerEditor';
+	protected $className = EventListenerEditor::class;
 }

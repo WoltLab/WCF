@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data;
 use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
 
 /**
  * Abstract class for all processible data holder classes.
@@ -41,12 +42,12 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 					throw new SystemException("'".$this->className."' does not implement '".static::$processorInterface."'");
 				}
 				
-				if (is_subclass_of($this->className, 'wcf\system\SingletonFactory')) {
+				if (is_subclass_of($this->className, SingletonFactory::class)) {
 					$this->processor = call_user_func([$this->className, 'getInstance']);
 				}
 				else {
-					if (!is_subclass_of($this->className, 'wcf\data\IDatabaseObjectProcessor')) {
-						throw new SystemException("'".$this->className."' does not implement 'wcf\data\IDatabaseObjectProcessor'");
+					if (!is_subclass_of($this->className, IDatabaseObjectProcessor::class)) {
+						throw new SystemException("'".$this->className."' does not implement '".IDatabaseObjectProcessor::class."'");
 					}
 					
 					$this->processor = new $this->className($this);

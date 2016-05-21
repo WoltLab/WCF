@@ -16,5 +16,5 @@ class PackageUpdateVersionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\package\update\version\PackageUpdateVersionEditor';
+	protected $className = PackageUpdateVersionEditor::class;
 }

@@ -20,7 +20,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\language\item\LanguageItemEditor';
+	protected $className = LanguageItemEditor::class;
 	
 	/**
 	 * @inheritDoc

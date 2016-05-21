@@ -26,7 +26,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\tag\TagEditor';
+	protected $className = TagEditor::class;
 	
 	/**
 	 * @inheritDoc

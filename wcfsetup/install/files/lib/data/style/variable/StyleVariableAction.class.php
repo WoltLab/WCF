@@ -16,5 +16,5 @@ class StyleVariableAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\style\variable\StyleVariableEditor';
+	protected $className = StyleVariableEditor::class;
 }

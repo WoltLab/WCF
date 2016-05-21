@@ -20,7 +20,7 @@ class StatDailyAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\stat\daily\StatDailyEditor';
+	protected $className = StatDailyEditor::class;
 	
 	/**
 	 * Validates the getData action.

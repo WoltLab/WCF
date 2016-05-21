@@ -4,6 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
+use wcf\system\sitemap\ISitemapProvider;
 
 /**
  * Represents a sitemap entry.
@@ -56,8 +57,8 @@ class Sitemap extends DatabaseObject {
 				throw new SystemException("Unable to find class '".$this->className."' for sitemap '".$this->sitemapName."'");
 			}
 			
-			if (!is_subclass_of($this->className, 'wcf\system\sitemap\ISitemapProvider')) {
-				throw new SystemException("'".$this->className."' does not implement 'wcf\system\sitemap\ISitemapProvider'");
+			if (!is_subclass_of($this->className, ISitemapProvider::class)) {
+				throw new SystemException("'".$this->className."' does not implement '".ISitemapProvider::class."'");
 			}
 			
 			$this->sitemapObj = new $this->className();

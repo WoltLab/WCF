@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
+use wcf\data\user\UserContentAction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -44,7 +45,7 @@ class UserContentClipboardAction extends AbstractClipboardAction {
 	 * @inheritDoc
 	 */
 	public function getClassName() {
-		return 'wcf\data\user\UserContentAction';
+		return UserContentAction::class;
 	}
 	
 	/**

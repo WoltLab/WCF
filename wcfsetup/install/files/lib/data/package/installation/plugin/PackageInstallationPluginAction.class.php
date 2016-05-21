@@ -16,5 +16,5 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\package\installation\plugin\PackageInstallationPluginEditor';
+	protected $className = PackageInstallationPluginEditor::class;
 }

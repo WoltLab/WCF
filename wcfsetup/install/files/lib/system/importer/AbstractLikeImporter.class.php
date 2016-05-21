@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\like\Like;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +17,7 @@ class AbstractLikeImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\like\Like';
+	protected $className = Like::class;
 	
 	/**
 	 * object type id for likes

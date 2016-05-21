@@ -173,8 +173,8 @@ class CronjobScheduler extends SingletonFactory {
 		}
 		
 		// verify class signature
-		if (!(is_subclass_of($className, 'wcf\system\cronjob\ICronjob'))) {
-			throw new SystemException("'".$className."' does not implement 'wcf\system\cronjob\ICronjob'");
+		if (!(is_subclass_of($className, ICronjob::class))) {
+			throw new SystemException("'".$className."' does not implement '".ICronjob::class."'");
 		}
 		
 		// execute cronjob

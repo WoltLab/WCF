@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\label\object;
+use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\system\exception\SystemException;
 use wcf\system\label\LabelHandler;
@@ -65,7 +66,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 			$data[$groupID] = $this->labelGroups[$groupID];
 		}
 		
-		uasort($data, ['\wcf\data\label\group\LabelGroup', 'sortLabelGroups']);
+		uasort($data, [LabelGroup::class, 'sortLabelGroups']);
 		
 		return $data;
 	}

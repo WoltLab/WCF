@@ -14,6 +14,7 @@ use wcf\system\box\BoxHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\database\MySQLDatabase;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\ErrorException;
@@ -299,7 +300,7 @@ class WCF {
 		// get configuration
 		$dbHost = $dbUser = $dbPassword = $dbName = '';
 		$dbPort = 0;
-		$dbClass = 'wcf\system\database\MySQLDatabase';
+		$dbClass = MySQLDatabase::class;
 		require(WCF_DIR.'config.inc.php');
 		
 		// create database connection
@@ -528,7 +529,7 @@ class WCF {
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
 		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
-		if (class_exists($className) && is_subclass_of($className, 'wcf\system\application\IApplication')) {
+		if (class_exists($className) && is_subclass_of($className, IApplication::class)) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
 			
@@ -556,7 +557,7 @@ class WCF {
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
+			throw new SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement '".IApplication::class."'.");
 		}
 		
 		// register template path in ACP
@@ -719,8 +720,8 @@ class WCF {
 		}
 		
 		if (class_exists($objectName)) {
-			if (!(is_subclass_of($objectName, 'wcf\system\SingletonFactory'))) {
-				throw new SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
+			if (!(is_subclass_of($objectName, SingletonFactory::class))) {
+				throw new SystemException("class '".$objectName."' does not implement the interface '".SingletonFactory::class."'");
 			}
 			
 			self::$coreObject[$className] = call_user_func([$objectName, 'getInstance']);

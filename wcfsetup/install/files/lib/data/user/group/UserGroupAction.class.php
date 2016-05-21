@@ -21,7 +21,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\group\UserGroupEditor';
+	public $className = UserGroupEditor::class;
 	
 	/**
 	 * editor object for the copied user group

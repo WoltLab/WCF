@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogList;
 use wcf\page\SortablePage;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\WCF;
@@ -49,7 +50,7 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogList';
+	public $objectListClassName = PaidSubscriptionTransactionLogList::class;
 	
 	/**
 	 * transaction id

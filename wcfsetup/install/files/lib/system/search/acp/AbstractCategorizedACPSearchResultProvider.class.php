@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\search\acp;
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\system\exception\SystemException;
 
 /**
@@ -89,7 +90,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 */
 	protected function loadCategories() {
 		// validate list class name
-		if (empty($this->listClassName) || !is_subclass_of($this->listClassName, 'wcf\data\DatabaseObjectList')) {
+		if (empty($this->listClassName) || !is_subclass_of($this->listClassName, DatabaseObjectList::class)) {
 			throw new SystemException("Given class '".$this->listClassName."' is empty or invalid");
 		}
 		

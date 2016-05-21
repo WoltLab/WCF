@@ -2,6 +2,7 @@
 namespace wcf\system\worker;
 use wcf\data\like\Like;
 use wcf\data\user\UserEditor;
+use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\activity\point\UserActivityPointHandler;
@@ -21,7 +22,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @inheritDoc
 	 */
-	protected $objectListClassName = 'wcf\data\user\UserList';
+	protected $objectListClassName = UserList::class;
 	
 	/**
 	 * @inheritDoc

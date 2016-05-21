@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\acl\option\ACLOptionEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -17,7 +18,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\acl\option\ACLOptionEditor';
+	public $className = ACLOptionEditor::class;
 	
 	/**
 	 * list of loaded acl object type ids sorted by their option type name

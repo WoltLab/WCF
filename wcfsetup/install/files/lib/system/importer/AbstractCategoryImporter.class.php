@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\category\Category;
 use wcf\data\category\CategoryEditor;
 
 /**
@@ -16,7 +17,7 @@ class AbstractCategoryImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\category\Category';
+	protected $className = Category::class;
 	
 	/**
 	 * object type id for categories

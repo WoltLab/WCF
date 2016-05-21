@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\label;
+use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\LabelCacheBuilder;
@@ -305,7 +306,7 @@ class LabelHandler extends SingletonFactory {
 			$data[$groupID] = $this->labelGroups['groups'][$groupID];
 		}
 		
-		uasort($data, ['\wcf\data\label\group\LabelGroup', 'sortLabelGroups']);
+		uasort($data, [LabelGroup::class, 'sortLabelGroups']);
 		
 		return $data;
 	}

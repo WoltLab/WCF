@@ -67,11 +67,11 @@ class UserProfileMenuItem extends DatabaseObject {
 			}
 			
 			if (!is_subclass_of($this->className, SingletonFactory::class)) {
-				throw new SystemException("'".$this->className."' does not extend 'wcf\system\SingletonFactory'");
+				throw new SystemException("'".$this->className."' does not extend '".SingletonFactory::class."'");
 			}
 			
 			if (!is_subclass_of($this->className, IUserProfileMenuContent::class)) {
-				throw new SystemException("'".$this->className."' does not implement 'wcf\system\menu\user\profile\content\IUserProfileMenuContent'");
+				throw new SystemException("'".$this->className."' does not implement '".IUserProfileMenuContent::class."'");
 			}
 			
 			$this->contentManager = call_user_func([$this->className, 'getInstance']);

@@ -25,7 +25,7 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\session\SessionEditor';
+	protected $className = SessionEditor::class;
 	
 	/**
 	 * list of data values returned upon a keep alive request

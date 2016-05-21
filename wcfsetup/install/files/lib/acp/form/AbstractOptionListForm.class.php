@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\OptionHandler;
 
 /**
  * This class provides default implementations for a list of options.
@@ -46,7 +47,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 * option handler class name
 	 * @var	string
 	 */
-	public $optionHandlerClassName = 'wcf\system\option\OptionHandler';
+	public $optionHandlerClassName = OptionHandler::class;
 	
 	/**
 	 * true if option supports i18n

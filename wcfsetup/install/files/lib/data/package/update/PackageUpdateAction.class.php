@@ -3,6 +3,7 @@ namespace wcf\data\package\update;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\update\server\PackageUpdateServer;
+use wcf\data\package\update\version\PackageUpdateVersion;
 use wcf\data\package\Package;
 use wcf\data\search\Search;
 use wcf\data\search\SearchEditor;
@@ -30,7 +31,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\package\update\PackageUpdateEditor';
+	protected $className = PackageUpdateEditor::class;
 	
 	/**
 	 * @inheritDoc
@@ -227,8 +228,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 					continue;
 				}
 				
-				uasort($versionTypes['accessible'], ['wcf\data\package\Package', 'compareVersion']);
-				uasort($versionTypes['existing'], ['wcf\data\package\Package', 'compareVersion']);
+				uasort($versionTypes['accessible'], [Package::class, 'compareVersion']);
+				uasort($versionTypes['existing'], [Package::class, 'compareVersion']);
 				
 				$accessibleVersion = array_slice($versionTypes['accessible'], -1, 1, true);
 				$existingVersion = array_slice($versionTypes['existing'], -1, 1, true);
@@ -249,8 +250,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 				continue;
 			}
 			
-			uksort($accessible, ['wcf\data\package\Package', 'compareVersion']);
-			uksort($existing, ['wcf\data\package\Package', 'compareVersion']);
+			uksort($accessible, [Package::class, 'compareVersion']);
+			uksort($existing, [Package::class, 'compareVersion']);
 			
 			$accessible = array_pop($accessible);
 			$existing = array_pop($existing);
@@ -327,7 +328,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
 		$statement->execute($conditions->getParameters());
 		$packageUpdates = $packageVersionIDs = [];
-		while ($packageUpdate = $statement->fetchObject('wcf\data\package\update\PackageUpdate')) {
+		while ($packageUpdate = $statement->fetchObject(PackageUpdate::class)) {
 			$packageUpdates[$packageUpdate->packageUpdateID] = new ViewablePackageUpdate($packageUpdate);
 			
 			// collect package version ids
@@ -346,7 +347,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		$updateVersions = [];
-		while ($updateVersion = $statement->fetchObject('wcf\data\package\update\version\PackageUpdateVersion')) {
+		while ($updateVersion = $statement->fetchObject(PackageUpdateVersion::class)) {
 			$updateVersions[$updateVersion->packageUpdateVersionID] = $updateVersion;
 		}
 		

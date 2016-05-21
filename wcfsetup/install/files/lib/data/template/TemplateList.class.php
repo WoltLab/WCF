@@ -18,7 +18,7 @@ class TemplateList extends DatabaseObjectList {
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\template\Template';
+	public $className = Template::class;
 	
 	/**
 	 * Creates a new TemplateList object.

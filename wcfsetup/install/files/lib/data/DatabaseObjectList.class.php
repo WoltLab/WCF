@@ -121,8 +121,8 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		
 		if (!empty($this->decoratorClassName)) {
 			// validate decorator class name
-			if (!is_subclass_of($this->decoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
-				throw new SystemException("'".$this->decoratorClassName."' should extend 'wcf\data\DatabaseObjectDecorator'");
+			if (!is_subclass_of($this->decoratorClassName, DatabaseObjectDecorator::class)) {
+				throw new SystemException("'".$this->decoratorClassName."' should extend '".DatabaseObjectDecorator::class."'");
 			}
 			
 			$objectClassName = $this->objectClassName ?: $this->className;

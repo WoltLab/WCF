@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\label\group\LabelGroupList;
 use wcf\page\SortablePage;
 
 /**
@@ -36,5 +37,5 @@ class LabelGroupListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\label\group\LabelGroupList';
+	public $objectListClassName = LabelGroupList::class;
 }

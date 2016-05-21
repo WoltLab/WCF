@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\attachment\AttachmentAction;
+use wcf\data\attachment\AttachmentList;
 use wcf\system\exception\SystemException;
 
 /**
@@ -17,7 +18,7 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @inheritDoc
 	 */
-	protected $objectListClassName = 'wcf\data\attachment\AttachmentList';
+	protected $objectListClassName = AttachmentList::class;
 	
 	/**
 	 * @inheritDoc

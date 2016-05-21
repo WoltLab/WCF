@@ -722,7 +722,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		// sort by version number
-		usort($versions, ['wcf\data\package\Package', 'compareVersion']);
+		usort($versions, [Package::class, 'compareVersion']);
 		
 		// take newest (last)
 		return array_pop($versions);

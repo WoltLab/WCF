@@ -3,6 +3,7 @@ namespace wcf\data\user\notification\event;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
+use wcf\system\user\notification\event\IUserNotificationEvent;
 
 /**
  * Represents a user notification event.
@@ -41,5 +42,5 @@ class UserNotificationEvent extends ProcessibleDatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $processorInterface = 'wcf\system\user\notification\event\IUserNotificationEvent';
+	protected static $processorInterface = IUserNotificationEvent::class;
 }

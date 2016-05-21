@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\user\follow\UserFollow;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +17,7 @@ class UserFollowerImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\follow\UserFollow';
+	protected $className = UserFollow::class;
 	
 	/**
 	 * @inheritDoc

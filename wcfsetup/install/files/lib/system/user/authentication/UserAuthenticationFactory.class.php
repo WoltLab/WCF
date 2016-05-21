@@ -19,7 +19,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 	 * user authentication class name
 	 * @var	string
 	 */
-	public $className = 'wcf\system\user\authentication\DefaultUserAuthentication';
+	public $className = DefaultUserAuthentication::class;
 	
 	/**
 	 * user authentication instance
@@ -34,8 +34,8 @@ class UserAuthenticationFactory extends SingletonFactory {
 		// call loadInstance event
 		EventHandler::getInstance()->fireAction($this, 'init');
 		
-		if (!is_subclass_of($this->className, 'wcf\system\user\authentication\IUserAuthentication')) {
-			throw new SystemException("'" . $this->className . "' does not implement 'wcf\system\user\authentication\IUserAuthentication'");
+		if (!is_subclass_of($this->className, IUserAuthentication::class)) {
+			throw new SystemException("'" . $this->className . "' does not implement '".IUserAuthentication::class."'");
 		}
 		
 		$this->userAuthentication = call_user_func([$this->className, 'getInstance']);

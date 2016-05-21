@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
@@ -559,7 +560,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				WHERE	languageCategory = ?";
 			$statement2 = WCF::getDB()->prepareStatement($sql);
 			$statement2->execute(['wcf.style']);
-			$languageCategory = $statement2->fetchObject('wcf\data\language\category\LanguageCategory');
+			$languageCategory = $statement2->fetchObject(LanguageCategory::class);
 		}
 		else {
 			$languageCategory = LanguageFactory::getInstance()->getCategory('wcf.style');

@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\data\option\category\OptionCategoryList;
+use wcf\data\option\Option;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -19,7 +21,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 	/**
 	 * @inheritDoc
 	 */
-	protected $listClassName = 'wcf\data\option\category\OptionCategoryList';
+	protected $listClassName = OptionCategoryList::class;
 	
 	/**
 	 * @inheritDoc
@@ -63,7 +65,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		
 		$optionCategories = OptionCacheBuilder::getInstance()->getData([], 'categories');
 		
-		while ($option = $statement->fetchObject('wcf\data\option\Option')) {
+		while ($option = $statement->fetchObject(Option::class)) {
 			// category is not accessible
 			if (!$this->isValid($option->categoryName)) {
 				continue;

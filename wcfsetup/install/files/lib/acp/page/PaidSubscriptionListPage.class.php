@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\paid\subscription\PaidSubscriptionList;
 use wcf\page\SortablePage;
 
 /**
@@ -41,5 +42,5 @@ class PaidSubscriptionListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\paid\subscription\PaidSubscriptionList';
+	public $objectListClassName = PaidSubscriptionList::class;
 }

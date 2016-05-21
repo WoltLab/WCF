@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\smiley\category;
+use wcf\data\category\CategoryEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
@@ -18,7 +19,7 @@ class SmileyCategoryAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\category\CategoryEditor';
+	protected $className = CategoryEditor::class;
 	
 	/**
 	 * @inheritDoc

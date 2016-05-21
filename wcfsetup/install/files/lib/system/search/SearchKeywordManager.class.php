@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search;
+use wcf\data\search\keyword\SearchKeyword;
 use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -29,7 +30,7 @@ class SearchKeywordManager extends SingletonFactory {
 			WHERE	keyword = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$keyword]);
-		if (($object = $statement->fetchObject('wcf\data\search\keyword\SearchKeyword')) !== null) {
+		if (($object = $statement->fetchObject(SearchKeyword::class)) !== null) {
 			$action = new SearchKeywordAction([$object], 'update', ['data' => [
 				'searches' => $object->searches + 1,
 				'lastSearchTime' => TIME_NOW

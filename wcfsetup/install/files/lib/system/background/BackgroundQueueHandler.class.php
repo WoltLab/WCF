@@ -57,7 +57,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 		if (!is_array($jobs)) $jobs = [$jobs];
 		foreach ($jobs as $job) {
 			if (!($job instanceof AbstractBackgroundJob)) {
-				throw new SystemException('$jobs contains an item that does not extend \wcf\system\background\job\AbstractBackgroundJob.');
+				throw new SystemException('$jobs contains an item that does not extend \''.AbstractBackgroundJob::class.'\'.');
 			}
 		}
 		

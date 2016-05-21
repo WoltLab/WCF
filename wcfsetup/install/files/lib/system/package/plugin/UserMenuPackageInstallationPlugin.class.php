@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\user\menu\item\UserMenuItemEditor;
 
 /**
  * Installs, updates and deletes user menu items.
@@ -15,7 +16,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\menu\item\UserMenuItemEditor';
+	public $className = UserMenuItemEditor::class;
 	
 	/**
 	 * @inheritDoc

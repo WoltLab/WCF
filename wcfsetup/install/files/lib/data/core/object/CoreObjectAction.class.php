@@ -16,5 +16,5 @@ class CoreObjectAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\core\object\CoreObjectEditor';
+	protected $className = CoreObjectEditor::class;
 }

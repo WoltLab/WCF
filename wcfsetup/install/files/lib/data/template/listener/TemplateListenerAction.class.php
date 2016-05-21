@@ -16,5 +16,5 @@ class TemplateListenerAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\template\listener\TemplateListenerEditor';
+	protected $className = TemplateListenerEditor::class;
 }

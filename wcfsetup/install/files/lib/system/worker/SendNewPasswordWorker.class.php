@@ -41,7 +41,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	 */
 	public function execute() {
 		$userList = new UserList();
-		$userList->decoratorClassName = 'wcf\data\user\UserEditor';
+		$userList->decoratorClassName = UserEditor::class;
 		$userList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->parameters['userIDs']]);
 		$userList->sqlLimit = $this->limit;
 		$userList->sqlOffset = $this->limit * $this->loopCount;

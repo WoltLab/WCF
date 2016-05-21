@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\cronjob\log\CronjobLogList;
 use wcf\page\SortablePage;
 
 /**
@@ -46,7 +47,7 @@ class CronjobLogListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\cronjob\log\CronjobLogList';
+	public $objectListClassName = CronjobLogList::class;
 	
 	/**
 	 * @inheritDoc

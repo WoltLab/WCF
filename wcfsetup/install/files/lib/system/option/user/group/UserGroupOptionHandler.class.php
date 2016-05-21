@@ -2,6 +2,7 @@
 namespace wcf\system\option\user\group;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
+use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\OptionHandler;
@@ -21,7 +22,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	/**
 	 * @inheritDoc
 	 */
-	protected $cacheClass = 'wcf\system\cache\builder\UserGroupOptionCacheBuilder';
+	protected $cacheClass = UserGroupOptionCacheBuilder::class;
 	
 	/**
 	 * user group object
@@ -83,8 +84,8 @@ class UserGroupOptionHandler extends OptionHandler {
 		if (!class_exists($className)) {
 			return null;
 		}
-		if (!is_subclass_of($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
-			throw new SystemException("'".$className."' does not implement 'wcf\system\option\user\group\IUserGroupOptionType'");
+		if (!is_subclass_of($className, IUserGroupOptionType::class)) {
+			throw new SystemException("'".$className."' does not implement '".IUserGroupOptionType::class."'");
 		}
 		
 		return $className;

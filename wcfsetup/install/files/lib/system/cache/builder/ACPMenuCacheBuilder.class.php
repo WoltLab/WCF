@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\acp\form\OptionForm;
 use wcf\data\acp\menu\item\ACPMenuItem;
 use wcf\data\acp\menu\item\ACPMenuItemList;
 use wcf\data\option\category\OptionCategory;
@@ -49,7 +50,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 			$data['wcf.acp.menu.link.option.category'][] = new ACPMenuItem(null, [
 				'menuItem' => 'wcf.acp.option.category.'.$optionCategory->categoryName,
 				'parentMenuItem' => 'wcf.acp.menu.link.option.category',
-				'menuItemController' => 'wcf\acp\form\OptionForm',
+				'menuItemController' => OptionForm::class,
 				'permissions' => $optionCategory->permissions,
 				'optionCategoryID' => $optionCategory->categoryID,
 				'options' => $optionCategory->options

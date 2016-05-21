@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\rank\UserRank;
 use wcf\data\user\rank\UserRankEditor;
 
 /**
@@ -17,7 +18,7 @@ class UserRankImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\rank\UserRank';
+	protected $className = UserRank::class;
 	
 	/**
 	 * @inheritDoc

@@ -21,7 +21,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\package\installation\queue\PackageInstallationQueueEditor';
+	protected $className = PackageInstallationQueueEditor::class;
 	
 	/**
 	 * queue of the canceled installation

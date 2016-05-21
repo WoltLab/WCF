@@ -16,5 +16,5 @@ class ACPSessionLogAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\acp\session\log\ACPSessionLogEditor';
+	protected $className = ACPSessionLogEditor::class;
 }

@@ -23,7 +23,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\package\PackageEditor';
+	protected $className = PackageEditor::class;
 	
 	/**
 	 * @inheritDoc

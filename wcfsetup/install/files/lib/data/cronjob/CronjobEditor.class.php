@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\cronjob;
+use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageList;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
@@ -84,7 +85,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 				WHERE	languageCategory = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(['wcf.acp.cronjob']);
-			$languageCategory = $statement->fetchObject('wcf\data\language\category\LanguageCategory');
+			$languageCategory = $statement->fetchObject(LanguageCategory::class);
 			
 			$languages = new LanguageList();
 			$languages->readObjects();

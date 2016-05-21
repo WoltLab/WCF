@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\box\Box;
+use wcf\data\box\BoxList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -25,7 +26,7 @@ class BoxListPage extends SortablePage {
 	/**
 	 * @inheritdoc
 	 */
-	public $objectListClassName = 'wcf\data\box\BoxList';
+	public $objectListClassName = BoxList::class;
 	
 	/**
 	 * @inheritdoc

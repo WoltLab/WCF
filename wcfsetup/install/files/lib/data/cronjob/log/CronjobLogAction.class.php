@@ -17,7 +17,7 @@ class CronjobLogAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\cronjob\log\CronjobLogEditor';
+	protected $className = CronjobLogEditor::class;
 	
 	/**
 	 * @inheritDoc

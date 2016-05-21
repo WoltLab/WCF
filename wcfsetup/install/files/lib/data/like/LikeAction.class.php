@@ -33,7 +33,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\like\LikeEditor';
+	protected $className = LikeEditor::class;
 	
 	/**
 	 * likeable object

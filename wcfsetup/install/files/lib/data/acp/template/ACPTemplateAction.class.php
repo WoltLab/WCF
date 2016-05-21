@@ -16,7 +16,7 @@ class ACPTemplateAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\acp\template\ACPTemplateEditor';
+	protected $className = ACPTemplateEditor::class;
 	
 	/**
 	 * @inheritDoc

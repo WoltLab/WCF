@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\poll\Poll;
 use wcf\data\poll\PollEditor;
 
 /**
@@ -16,7 +17,7 @@ class AbstractPollImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\poll\Poll';
+	protected $className = Poll::class;
 	
 	/**
 	 * object type id for poll

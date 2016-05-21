@@ -16,7 +16,7 @@ class TemplateGroupAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\template\group\TemplateGroupEditor';
+	protected $className = TemplateGroupEditor::class;
 	
 	/**
 	 * @inheritDoc

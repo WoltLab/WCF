@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\acp\search\provider\ACPSearchProviderEditor;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\WCF;
 
@@ -17,7 +18,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\acp\search\provider\ACPSearchProviderEditor';
+	public $className = ACPSearchProviderEditor::class;
 	
 	/**
 	 * @inheritDoc

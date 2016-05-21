@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\style\StyleList;
 use wcf\page\MultipleLinkPage;
 
 /**
@@ -26,7 +27,7 @@ class StyleListPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\style\StyleList';
+	public $objectListClassName = StyleList::class;
 	
 	/**
 	 * @inheritDoc

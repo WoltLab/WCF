@@ -18,7 +18,7 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\group\option\UserGroupOptionEditor';
+	protected $className = UserGroupOptionEditor::class;
 	
 	/**
 	 * Updates option values for given option id.

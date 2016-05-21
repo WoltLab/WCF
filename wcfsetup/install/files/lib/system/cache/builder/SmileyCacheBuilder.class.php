@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\smiley\Smiley;
 use wcf\system\WCF;
 
 /**
@@ -25,7 +26,7 @@ class SmileyCacheBuilder extends AbstractCacheBuilder {
 			ORDER BY	showOrder";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($object = $statement->fetchObject('wcf\data\smiley\Smiley')) {
+		while ($object = $statement->fetchObject(Smiley::class)) {
 			$object->smileyCodes = $object->getAliases();
 			$object->smileyCodes[] = $object->smileyCode;
 			

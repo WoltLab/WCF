@@ -421,11 +421,11 @@ class PollManager extends SingletonFactory {
 		
 		// validates against object type's class
 		$className = $this->cache[$objectType]->className;
-		if (!is_subclass_of($className, 'wcf\system\poll\IPollHandler')) {
-			throw new SystemException("'".$className."' does not implement 'wcf\system\poll\IPollHandler'");
+		if (!is_subclass_of($className, IPollHandler::class)) {
+			throw new SystemException("'".$className."' does not implement '".IPollHandler::class."'");
 		}
-		else if (!is_subclass_of($className, 'wcf\system\SingletonFactory')) {
-			throw new SystemException("'".$className."' does not extend 'wcf\system\SingletonFactory'");
+		else if (!is_subclass_of($className, SingletonFactory::class)) {
+			throw new SystemException("'".$className."' does not extend '".SingletonFactory::class."'");
 		}
 		
 		$object = call_user_func([$className, 'getInstance']);

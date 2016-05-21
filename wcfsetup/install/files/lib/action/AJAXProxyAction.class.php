@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use wcf\data\IDatabaseObjectAction;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -55,8 +56,8 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	 * @inheritDoc
 	 */
 	protected function invoke() {
-		if (!is_subclass_of($this->className, 'wcf\data\IDatabaseObjectAction')) {
-			throw new SystemException("'".$this->className."' does not implement 'wcf\data\IDatabaseObjectAction'");
+		if (!is_subclass_of($this->className, IDatabaseObjectAction::class)) {
+			throw new SystemException("'".$this->className."' does not implement '".IDatabaseObjectAction::class."'");
 		}
 		
 		if (!empty($this->interfaceName)) {

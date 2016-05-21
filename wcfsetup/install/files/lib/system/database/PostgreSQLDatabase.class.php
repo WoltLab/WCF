@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database;
+use wcf\system\database\editor\PostgreSQLDatabaseEditor;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 use wcf\util\StringStack;
 
@@ -17,7 +18,7 @@ class PostgreSQLDatabase extends Database {
 	/**
 	 * @inheritDoc
 	 */
-	protected $editorClassName = 'wcf\system\database\editor\PostgreSQLDatabaseEditor';
+	protected $editorClassName = PostgreSQLDatabaseEditor::class;
 	
 	/**
 	 * @inheritDoc

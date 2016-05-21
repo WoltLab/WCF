@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\comment\Comment;
 use wcf\data\comment\CommentEditor;
 
 /**
@@ -16,7 +17,7 @@ class AbstractCommentImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\comment\Comment';
+	protected $className = Comment::class;
 	
 	/**
 	 * object type id for comments

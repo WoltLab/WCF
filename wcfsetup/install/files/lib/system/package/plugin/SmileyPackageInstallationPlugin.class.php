@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\smiley\SmileyEditor;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +17,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\smiley\SmileyEditor';
+	public $className = SmileyEditor::class;
 	
 	/**
 	 * @inheritDoc

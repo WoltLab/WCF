@@ -3,6 +3,7 @@ namespace wcf\system\application;
 use wcf\data\package\PackageCache;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Abstract implementation of a community framework application.
@@ -98,6 +99,6 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	 * @inheritDoc
 	 */
 	public static function __callStatic($method, array $arguments) {
-		return call_user_func_array(['wcf\system\WCF', $method], $arguments);
+		return call_user_func_array([WCF::class, $method], $arguments);
 	}
 }

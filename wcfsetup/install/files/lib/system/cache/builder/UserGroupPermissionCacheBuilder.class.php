@@ -97,8 +97,8 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 			if (!class_exists($className)) {
 				throw new SystemException("unable to find class '".$className."'");
 			}
-			if (!is_subclass_of($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
-				throw new SystemException("'".$className."' does not implement 'wcf\system\option\user\group\IUserGroupOptionType'");
+			if (!is_subclass_of($className, IUserGroupOptionType::class)) {
+				throw new SystemException("'".$className."' does not implement '".IUserGroupOptionType::class."'");
 			}
 			
 			// create instance

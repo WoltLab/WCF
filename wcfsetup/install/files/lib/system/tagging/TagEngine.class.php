@@ -175,7 +175,7 @@ class TagEngine extends SingletonFactory {
 		$statement->execute($conditions->getParameters());
 		
 		$tags = [];
-		while ($tag = $statement->fetchObject('wcf\data\tag\Tag')) {
+		while ($tag = $statement->fetchObject(Tag::class)) {
 			if (!isset($tags[$tag->objectID])) {
 				$tags[$tag->objectID] = [];
 			}

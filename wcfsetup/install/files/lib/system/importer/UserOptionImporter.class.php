@@ -2,6 +2,7 @@
 namespace wcf\system\importer;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\data\user\option\category\UserOptionCategoryList;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionAction;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\system\language\LanguageFactory;
@@ -22,7 +23,7 @@ class UserOptionImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\option\UserOption';
+	protected $className = UserOption::class;
 	
 	/**
 	 * language category id

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\page\SortablePage;
 
 /**
@@ -31,7 +32,7 @@ class UserOptionCategoryListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\option\category\UserOptionCategoryList';
+	public $objectListClassName = UserOptionCategoryList::class;
 	
 	/**
 	 * @inheritDoc

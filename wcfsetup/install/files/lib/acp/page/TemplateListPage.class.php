@@ -2,6 +2,7 @@
 namespace wcf\acp\page;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
+use wcf\data\template\TemplateList;
 use wcf\page\SortablePage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
@@ -31,7 +32,7 @@ class TemplateListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\template\TemplateList';
+	public $objectListClassName = TemplateList::class;
 	
 	/**
 	 * @inheritDoc

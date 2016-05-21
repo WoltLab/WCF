@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyEditor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -18,11 +19,10 @@ class SmileyImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\smiley\Smiley';
+	protected $className = Smiley::class;
 	
 	/**
 	 * known smiley codes
-	 * 
 	 * @var	string[]
 	 */
 	public $knownCodes = [];

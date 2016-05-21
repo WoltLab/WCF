@@ -3,6 +3,7 @@ namespace wcf\acp\page;
 use wcf\data\category\Category;
 use wcf\data\smiley\category\SmileyCategory;
 use wcf\data\smiley\SmileyCache;
+use wcf\data\smiley\SmileyList;
 use wcf\page\MultipleLinkPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
@@ -36,7 +37,7 @@ class SmileyListPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\smiley\SmileyList';
+	public $objectListClassName = SmileyList::class;
 	
 	/**
 	 * @inheritDoc

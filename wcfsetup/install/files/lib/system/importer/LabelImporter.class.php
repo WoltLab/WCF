@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\label\Label;
 use wcf\data\label\LabelEditor;
 
 /**
@@ -16,7 +17,7 @@ class LabelImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\label\Label';
+	protected $className = Label::class;
 	
 	/**
 	 * @inheritDoc

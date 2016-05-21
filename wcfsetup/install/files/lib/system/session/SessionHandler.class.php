@@ -6,6 +6,7 @@ use wcf\data\acp\session\virtual\ACPSessionVirtualEditor;
 use wcf\data\session\virtual\SessionVirtual;
 use wcf\data\session\virtual\SessionVirtualAction;
 use wcf\data\session\virtual\SessionVirtualEditor;
+use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\page\ITrackablePage;
@@ -493,7 +494,7 @@ class SessionHandler extends SingletonFactory {
 	 */
 	protected function create() {
 		$spiderID = null;
-		if ($this->sessionEditorClassName == 'wcf\data\session\SessionEditor') {
+		if ($this->sessionEditorClassName == SessionEditor::class) {
 			// get spider information
 			$spiderID = $this->getSpiderID(UserUtil::getUserAgent());
 			if ($spiderID !== null) {

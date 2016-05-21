@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\option;
+use wcf\data\category\CategoryNodeTree;
 use wcf\data\option\Option;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\UserInputException;
@@ -27,7 +28,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	 * node tree class
 	 * @var	string
 	 */
-	public $nodeTreeClassname = 'wcf\data\category\CategoryNodeTree';
+	public $nodeTreeClassname = CategoryNodeTree::class;
 	
 	/**
 	 * @inheritDoc

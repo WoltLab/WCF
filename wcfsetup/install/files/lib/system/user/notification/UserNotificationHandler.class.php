@@ -374,7 +374,7 @@ class UserNotificationHandler extends SingletonFactory {
 		$statement->execute($conditions->getParameters());
 		
 		$notifications = [];
-		while ($notification = $statement->fetchObject('\wcf\data\user\notification\UserNotification')) {
+		while ($notification = $statement->fetchObject(UserNotification::class)) {
 			$notifications[$notification->notificationID] = $notification;
 		}
 		

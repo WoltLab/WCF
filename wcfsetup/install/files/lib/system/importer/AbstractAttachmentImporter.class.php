@@ -18,7 +18,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\attachment\Attachment';
+	protected $className = Attachment::class;
 	
 	/**
 	 * object type id for attachments

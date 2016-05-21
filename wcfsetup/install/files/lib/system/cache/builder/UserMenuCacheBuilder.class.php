@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\user\menu\item\UserMenuItem;
+use wcf\form\SettingsForm;
 use wcf\system\WCF;
 
 /**
@@ -38,7 +39,7 @@ class UserMenuCacheBuilder extends AbstractCacheBuilder {
 				'packageID' => $row['packageID'],
 				'menuItem' => 'wcf.user.option.category.'.$row['categoryName'],
 				'parentMenuItem' => 'wcf.user.menu.settings',
-				'menuItemController' => 'wcf\form\SettingsForm',
+				'menuItemController' => SettingsForm::class,
 				'menuItemLink' => ($categoryShortName != 'general' ? 'category='.$categoryShortName : ''),
 				'permissions' => $row['permissions'],
 				'options' => $row['options']

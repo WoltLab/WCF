@@ -16,5 +16,5 @@ class BBCodeAttributeAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\bbcode\attribute\BBCodeAttributeEditor';
+	protected $className = BBCodeAttributeEditor::class;
 }

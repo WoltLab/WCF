@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\ad\AdList;
 use wcf\page\MultipleLinkPage;
 
 /**
@@ -31,7 +32,7 @@ class AdListPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\ad\AdList';
+	public $objectListClassName = AdList::class;
 	
 	/**
 	 * @inheritDoc

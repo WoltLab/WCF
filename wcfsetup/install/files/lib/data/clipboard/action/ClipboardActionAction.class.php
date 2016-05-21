@@ -16,5 +16,5 @@ class ClipboardActionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\clipboard\action\ClipboardActionEditor';
+	protected $className = ClipboardActionEditor::class;
 }

@@ -18,7 +18,7 @@ class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAc
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\option\UserOptionEditor';
+	protected $className = UserOptionEditor::class;
 	
 	/**
 	 * @inheritDoc

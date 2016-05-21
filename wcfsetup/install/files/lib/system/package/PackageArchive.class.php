@@ -679,7 +679,7 @@ class PackageArchive {
 			
 			// sort multiple packages by version number
 			foreach ($existingPackages as $packageName => $instances) {
-				uksort($instances, ['wcf\data\package\Package', 'compareVersion']);
+				uksort($instances, [Package::class, 'compareVersion']);
 				
 				// get package with highest version number (get last package)
 				$existingPackages[$packageName] = array_pop($instances);

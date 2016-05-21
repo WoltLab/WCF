@@ -2,6 +2,7 @@
 namespace wcf\page;
 use wcf\data\search\Search;
 use wcf\data\user\User;
+use wcf\data\user\UserProfileList;
 use wcf\system\database\PostgreSQLDatabase;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
@@ -64,7 +65,7 @@ class MembersListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\UserProfileList';
+	public $objectListClassName = UserProfileList::class;
 	
 	/**
 	 * letter

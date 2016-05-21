@@ -23,7 +23,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\cronjob\CronjobEditor';
+	protected $className = CronjobEditor::class;
 	
 	/**
 	 * @inheritDoc

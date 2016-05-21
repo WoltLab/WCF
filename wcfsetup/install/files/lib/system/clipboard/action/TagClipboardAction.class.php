@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
+use wcf\data\tag\TagAction;
 use wcf\system\WCF;
 
 /**
@@ -57,7 +58,7 @@ class TagClipboardAction extends AbstractClipboardAction {
 	 * @inheritDoc
 	 */
 	public function getClassName() {
-		return 'wcf\data\tag\TagAction';
+		return TagAction::class;
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\acp\session\access\log\ACPSessionAccessLogList;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\page\SortablePage;
 use wcf\system\exception\IllegalLinkException;
@@ -56,7 +57,7 @@ class ACPSessionLogPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\acp\session\access\log\ACPSessionAccessLogList';
+	public $objectListClassName = ACPSessionAccessLogList::class;
 	
 	/**
 	 * @inheritDoc

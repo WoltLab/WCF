@@ -35,7 +35,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	/**
 	 * @inheritdoc
 	 */
-	protected $className = 'wcf\data\style\StyleEditor';
+	protected $className = StyleEditor::class;
 	
 	/**
 	 * @inheritdoc

@@ -22,7 +22,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\bbcode\BBCodeEditor';
+	protected $className = BBCodeEditor::class;
 	
 	/**
 	 * @inheritDoc

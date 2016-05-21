@@ -17,7 +17,7 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\package\update\server\PackageUpdateServerEditor';
+	protected $className = PackageUpdateServerEditor::class;
 	
 	/**
 	 * @inheritDoc

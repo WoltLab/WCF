@@ -16,5 +16,5 @@ class ObjectTypeDefinitionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\object\type\definition\ObjectTypeDefinitionEditor';
+	protected $className = ObjectTypeDefinitionEditor::class;
 }

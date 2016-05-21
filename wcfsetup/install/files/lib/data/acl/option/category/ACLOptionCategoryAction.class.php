@@ -16,5 +16,5 @@ class ACLOptionCategoryAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\acl\option\category\ACLOptionCategoryEditor';
+	protected $className = ACLOptionCategoryEditor::class;
 }

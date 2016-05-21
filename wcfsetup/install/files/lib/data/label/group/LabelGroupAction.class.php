@@ -17,7 +17,7 @@ class LabelGroupAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\label\group\LabelGroupEditor';
+	protected $className = LabelGroupEditor::class;
 	
 	/**
 	 * @inheritDoc

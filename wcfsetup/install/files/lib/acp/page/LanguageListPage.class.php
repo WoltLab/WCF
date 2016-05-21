@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\language\LanguageList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 
@@ -32,7 +33,7 @@ class LanguageListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\language\LanguageList';
+	public $objectListClassName = LanguageList::class;
 	
 	/**
 	 * @inheritDoc

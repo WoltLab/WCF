@@ -4,6 +4,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IAttachmentMessageQuickReplyAction;
 use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
+use wcf\data\IVisitableObjectAction;
 use wcf\system\bbcode\PreParser;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -135,8 +136,8 @@ class QuickReplyManager extends SingletonFactory {
 		
 		$this->container = new $containerClassName($parameters['objectID']);
 		if (!empty($containerDecoratorClassName)) {
-			if (!is_subclass_of($containerDecoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
-				throw new SystemException("'".$containerDecoratorClassName."' does not extend 'wcf\data\DatabaseObjectDecorator'");
+			if (!is_subclass_of($containerDecoratorClassName, DatabaseObjectDecorator::class)) {
+				throw new SystemException("'".$containerDecoratorClassName."' does not extend '".DatabaseObjectDecorator::class."'");
 			}
 			
 			$this->container = new $containerDecoratorClassName($this->container);
@@ -234,7 +235,7 @@ class QuickReplyManager extends SingletonFactory {
 			}
 			
 			// update visit time (messages shouldn't occur as new upon next visit)
-			if (is_subclass_of($containerActionClassName, 'wcf\data\IVisitableObjectAction')) {
+			if (is_subclass_of($containerActionClassName, IVisitableObjectAction::class)) {
 				$containerAction = new $containerActionClassName([($this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container)], 'markAsRead');
 				$containerAction->executeAction();
 			}

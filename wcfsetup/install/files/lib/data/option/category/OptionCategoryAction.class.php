@@ -16,7 +16,7 @@ class OptionCategoryAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\option\category\OptionCategoryEditor';
+	protected $className = OptionCategoryEditor::class;
 	
 	/**
 	 * @inheritDoc

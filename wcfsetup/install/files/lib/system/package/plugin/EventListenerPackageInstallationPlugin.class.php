@@ -19,7 +19,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\event\listener\EventListenerEditor';
+	public $className = EventListenerEditor::class;
 	
 	/**
 	 * @inheritDoc

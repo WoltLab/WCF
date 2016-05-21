@@ -16,5 +16,5 @@ class UserGroupOptionCategoryAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\group\option\category\UserGroupOptionCategoryEditor';
+	protected $className = UserGroupOptionCategoryEditor::class;
 }

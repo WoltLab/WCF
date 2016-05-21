@@ -34,7 +34,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
 	 * @inheritDoc
 	 */
-	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User') {
+	public function loginManually($username, $password, $userClassname = User::class) {
 		$user = $this->getUserByLogin($username);
 		$userSession = (get_class($user) == $userClassname ? $user : new $userClassname(null, null, $user));
 		
@@ -53,7 +53,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
 	 * @inheritDoc
 	 */
-	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User') {
+	public function loginAutomatically($persistent = false, $userClassname = User::class) {
 		if (!$persistent) return null;
 		
 		$user = null;
@@ -87,7 +87,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	 * @param	string		$userClassname
 	 * @return	\wcf\data\user\User
 	 */
-	protected function getUserAutomatically($userID, $password, $userClassname = 'wcf\data\user\User') {
+	protected function getUserAutomatically($userID, $password, $userClassname = User::class) {
 		$user = new $userClassname($userID);
 		if (!$user->userID || !$this->checkCookiePassword($user, $password)) {
 			$user = null;

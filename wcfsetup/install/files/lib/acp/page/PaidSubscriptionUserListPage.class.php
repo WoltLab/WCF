@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\page\SortablePage;
 
 /**
@@ -41,7 +42,7 @@ class PaidSubscriptionUserListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\paid\subscription\user\PaidSubscriptionUserList';
+	public $objectListClassName = PaidSubscriptionUserList::class;
 	
 	/**
 	 * Initializes DatabaseObjectList instance.

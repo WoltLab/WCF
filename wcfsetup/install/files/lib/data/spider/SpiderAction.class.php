@@ -16,5 +16,5 @@ class SpiderAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\spider\SpiderEditor';
+	protected $className = SpiderEditor::class;
 }

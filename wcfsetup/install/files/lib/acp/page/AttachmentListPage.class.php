@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\attachment\AdministrativeAttachmentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\page\SortablePage;
@@ -45,7 +46,7 @@ class AttachmentListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\attachment\AdministrativeAttachmentList';
+	public $objectListClassName = AdministrativeAttachmentList::class;
 	
 	/**
 	 * username

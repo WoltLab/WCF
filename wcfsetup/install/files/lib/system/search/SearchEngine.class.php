@@ -3,6 +3,7 @@ namespace wcf\system\search;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\search\mysql\MysqlSearchEngine;
 use wcf\system\SingletonFactory;
 
 /**
@@ -84,12 +85,12 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 					$className = '';
 				}
 			}
-				
+			
 			// fallback to MySQL
 			if (empty($className)) {
-				$className = 'wcf\system\search\mysql\MysqlSearchEngine';
+				$className = MysqlSearchEngine::class;
 			}
-				
+			
 			$this->searchEngine = call_user_func([$className, 'getInstance']);
 		}
 		

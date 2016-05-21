@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\notice\NoticeList;
 use wcf\page\SortablePage;
 
 /**
@@ -31,7 +32,7 @@ class NoticeListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\notice\NoticeList';
+	public $objectListClassName = NoticeList::class;
 	
 	/**
 	 * @inheritDoc

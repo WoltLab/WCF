@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\user\profile\menu\item\UserProfileMenuItemEditor;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +17,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\profile\menu\item\UserProfileMenuItemEditor';
+	public $className = UserProfileMenuItemEditor::class;
 	
 	/**
 	 * @inheritDoc

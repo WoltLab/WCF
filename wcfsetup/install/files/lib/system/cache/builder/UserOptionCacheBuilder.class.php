@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\user\option\UserOption;
 
 /**
  * Caches user options and categories
@@ -15,7 +16,7 @@ class UserOptionCacheBuilder extends OptionCacheBuilder {
 	/**
 	 * @inheritDoc
 	 */
-	protected $optionClassName = 'wcf\data\user\option\UserOption';
+	protected $optionClassName = UserOption::class;
 	
 	/**
 	 * @inheritDoc

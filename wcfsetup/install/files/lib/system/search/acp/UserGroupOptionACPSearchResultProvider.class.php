@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\data\user\group\option\category\UserGroupOptionCategoryList;
+use wcf\data\user\group\option\UserGroupOption;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -19,7 +21,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 	/**
 	 * @inheritDoc
 	 */
-	protected $listClassName = 'wcf\data\user\group\option\category\UserGroupOptionCategoryList';
+	protected $listClassName = UserGroupOptionCategoryList::class;
 	
 	/**
 	 * @inheritDoc
@@ -65,7 +67,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 		
 		$optionCategories = UserGroupOptionCacheBuilder::getInstance()->getData([], 'categories');
 		
-		while ($userGroupOption = $statement->fetchObject('wcf\data\user\group\option\UserGroupOption')) {
+		while ($userGroupOption = $statement->fetchObject(UserGroupOption::class)) {
 			// category is not accessible
 			if (!$this->isValid($userGroupOption->categoryName)) {
 				continue;

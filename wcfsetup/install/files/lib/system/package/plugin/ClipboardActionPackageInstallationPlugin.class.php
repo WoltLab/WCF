@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\clipboard\action\ClipboardActionEditor;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +17,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\clipboard\action\ClipboardActionEditor';
+	public $className = ClipboardActionEditor::class;
 	
 	/**
 	 * list of pages per action id

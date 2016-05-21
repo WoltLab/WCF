@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\acp\menu\item\ACPMenuItemEditor;
 
 /**
  * Installs, updates and deletes ACP menu items.
@@ -15,7 +16,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\acp\menu\item\ACPMenuItemEditor';
+	public $className = ACPMenuItemEditor::class;
 	
 	/**
 	 * @inheritDoc

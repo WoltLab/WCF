@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\template\listener\TemplateListenerEditor;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\WCF;
 
@@ -17,7 +18,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\template\listener\TemplateListenerEditor';
+	public $className = TemplateListenerEditor::class;
 	
 	/**
 	 * @inheritDoc

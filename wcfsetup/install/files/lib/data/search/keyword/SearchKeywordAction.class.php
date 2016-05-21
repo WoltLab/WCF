@@ -18,7 +18,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\search\keyword\SearchKeywordEditor';
+	protected $className = SearchKeywordEditor::class;
 	
 	/**
 	 * @inheritDoc

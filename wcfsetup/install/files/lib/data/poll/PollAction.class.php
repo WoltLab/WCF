@@ -29,7 +29,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\poll\PollEditor';
+	protected $className = PollEditor::class;
 	
 	/**
 	 * poll object

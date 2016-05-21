@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\menu\MenuList;
 use wcf\page\SortablePage;
 
 /**
@@ -22,7 +23,7 @@ class MenuListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\menu\MenuList';
+	public $objectListClassName = MenuList::class;
 	
 	/**
 	 * @inheritDoc

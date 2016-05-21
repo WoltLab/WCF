@@ -44,7 +44,7 @@ interface IUserAuthentication {
 	 * @param	string		$userClassname		class name of user class
 	 * @return	\wcf\data\user\User
 	 */
-	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User');
+	public function loginManually($username, $password, $userClassname = User::class);
 	
 	/**
 	 * Does a user login automatically.
@@ -53,5 +53,5 @@ interface IUserAuthentication {
 	 * @param	string		$userClassname		class name of user class
 	 * @return	\wcf\data\user\User
 	 */
-	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User');
+	public function loginAutomatically($persistent = false, $userClassname = User::class);
 }

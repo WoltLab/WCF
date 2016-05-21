@@ -2,6 +2,7 @@
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\UserAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -75,7 +76,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	 * @inheritDoc
 	 */
 	public function getClassName() {
-		return 'wcf\data\user\UserAction';
+		return UserAction::class;
 	}
 	
 	/**

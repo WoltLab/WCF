@@ -142,7 +142,7 @@ class SearchResultPage extends MultipleLinkPage {
 			$objectType = SearchEngine::getInstance()->getObjectType($type);
 			if (($message = $objectType->getObject($objectID)) !== null) {
 				if (!($message instanceof ISearchResultObject)) {
-					throw new SystemException("'".get_class($message)."' does not implement 'wcf\data\search\ISearchResultObject'");
+					throw new SystemException("'".get_class($message)."' does not implement '".ISearchResultObject::class."'");
 				}
 				
 				$this->messages[] = $message;

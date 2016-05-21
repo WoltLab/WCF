@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\element;
+use wcf\util\StringUtil;
 
 /**
  * Provides a checkbox form element.
@@ -26,7 +27,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 			parent::setValue($value);
 		}
 		else {
-			$this->value = array_map(['wcf\util\StringUtil', 'trim'], $value);
+			$this->value = array_map([StringUtil::class, 'trim'], $value);
 		}
 	}
 	

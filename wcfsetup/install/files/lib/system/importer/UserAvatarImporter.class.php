@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\system\exception\SystemException;
@@ -20,7 +21,7 @@ class UserAvatarImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\avatar\UserAvatar';
+	protected $className = UserAvatar::class;
 	
 	/**
 	 * @inheritDoc

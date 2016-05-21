@@ -113,10 +113,10 @@ class EventHandler extends SingletonFactory {
 									if (!class_exists($eventListener->listenerClassName)) {
 										throw new SystemException("Unable to find class '".$eventListener->listenerClassName."'");
 									}
-									if (!is_subclass_of($eventListener->listenerClassName, 'wcf\system\event\listener\IParameterizedEventListener')) {
+									if (!is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
 										// legacy event listeners
-										if (!is_subclass_of($eventListener->listenerClassName, 'wcf\system\event\IEventListener')) {
-											throw new SystemException("'".$eventListener->listenerClassName."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
+										if (!is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
+											throw new SystemException("'".$eventListener->listenerClassName."' does not implement '".IParameterizedEventListener::class."'");
 										}
 									}
 									
@@ -200,10 +200,10 @@ class EventHandler extends SingletonFactory {
 						if (!class_exists($eventListener->listenerClassName)) {
 							throw new SystemException("Unable to find class '".$eventListener->listenerClassName."'");
 						}
-						if (!is_subclass_of($eventListener->listenerClassName, 'wcf\system\event\listener\IParameterizedEventListener')) {
+						if (!is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
 							// legacy event listeners
-							if (!is_subclass_of($eventListener->listenerClassName, 'wcf\system\event\IEventListener')) {
-								throw new SystemException("'".$eventListener->listenerClassName."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
+							if (!is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
+								throw new SystemException("'".$eventListener->listenerClassName."' does not implement '".IParameterizedEventListener::class."'");
 							}
 						}
 						

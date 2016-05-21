@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\object\type\definition\ObjectTypeDefinitionEditor;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +17,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\object\type\definition\ObjectTypeDefinitionEditor';
+	public $className = ObjectTypeDefinitionEditor::class;
 	
 	/**
 	 * @inheritDoc

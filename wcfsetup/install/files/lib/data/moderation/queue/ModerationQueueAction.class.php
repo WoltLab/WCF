@@ -26,7 +26,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\moderation\queue\ModerationQueueEditor';
+	protected $className = ModerationQueueEditor::class;
 	
 	/**
 	 * moderation queue editor object
