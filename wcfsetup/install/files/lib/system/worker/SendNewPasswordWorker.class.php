@@ -47,6 +47,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 		$userList->sqlOffset = $this->limit * $this->loopCount;
 		$userList->readObjects();
 		
+		/** @var UserEditor $userEditor */
 		foreach ($userList as $userEditor) {
 			$this->sendNewPassword($userEditor);
 		}

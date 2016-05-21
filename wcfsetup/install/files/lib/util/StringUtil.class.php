@@ -151,7 +151,7 @@ final class StringUtil {
 	/**
 	 * Formats a numeric.
 	 * 
-	 * @param	numeric		$numeric
+	 * @param	number		$numeric
 	 * @return	string
 	 */
 	public static function formatNumeric($numeric) {
