@@ -170,7 +170,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 		}
 		
 		if (!isset($this->userGroups[$this->groupID])) {
-			throw new UserInputException('groupID', 'notValid');
+			throw new UserInputException('groupID', 'noValidSelection');
 		}
 		
 		$hasData = false;

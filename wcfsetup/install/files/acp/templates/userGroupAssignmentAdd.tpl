@@ -54,7 +54,12 @@
 				<dd>
 					{htmlOptions name='groupID' options=$userGroups selected=$groupID}
 					{if $errorField == 'groupID'}
-						<small class="innerError">{lang}wcf.acp.group.assignment.groupID.error.{@$errorType}{/lang}</small>
+						{if $errorType == 'noValidSelection'}
+							<small class="innerError">{lang}wcf.global.form.error.noValidSelection{/lang}</small>
+						{else}
+							<small class="innerError">{lang}wcf.acp.group.assignment.groupID.error.{@$errorType}{/lang}</small>
+						{/if}
+						
 					{/if}
 				</dd>
 			</dl>
