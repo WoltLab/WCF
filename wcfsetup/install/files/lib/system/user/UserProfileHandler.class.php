@@ -49,6 +49,7 @@ class UserProfileHandler extends SingletonFactory {
 	 * @return	mixed
 	 */
 	public function __get($name) {
+		/** @noinspection PhpVariableVariableInspection */
 		return $this->userProfile->$name;
 	}
 	

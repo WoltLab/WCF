@@ -37,6 +37,7 @@ trait TLegacyUserPropertyAccess {
 		
 		// in case any code should rely on directly accessing user properties,
 		// refer them to the user profile object
+		/** @noinspection PhpVariableVariableInspection */
 		return $this->getUserProfile()->$name;
 	}
 }
