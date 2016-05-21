@@ -20,6 +20,7 @@ use wcf\system\exception\AJAXException;
 use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -721,7 +722,7 @@ class WCF {
 		
 		if (class_exists($objectName)) {
 			if (!(is_subclass_of($objectName, SingletonFactory::class))) {
-				throw new SystemException("class '".$objectName."' does not implement the interface '".SingletonFactory::class."'");
+				throw new ParentClassException($objectName, SingletonFactory::class);
 			}
 			
 			self::$coreObject[$className] = call_user_func([$objectName, 'getInstance']);

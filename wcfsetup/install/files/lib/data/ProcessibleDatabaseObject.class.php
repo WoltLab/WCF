@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
@@ -39,7 +40,7 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 					throw new SystemException("Unable to find class '".$this->className."'");
 				}
 				if (!is_subclass_of($this->className, static::$processorInterface)) {
-					throw new SystemException("'".$this->className."' does not implement '".static::$processorInterface."'");
+					throw new ImplementationException($this->className, static::$processorInterface);
 				}
 				
 				if (is_subclass_of($this->className, SingletonFactory::class)) {
@@ -47,7 +48,7 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 				}
 				else {
 					if (!is_subclass_of($this->className, IDatabaseObjectProcessor::class)) {
-						throw new SystemException("'".$this->className."' does not implement '".IDatabaseObjectProcessor::class."'");
+						throw new ImplementationException($this->className, IDatabaseObjectProcessor::class);
 					}
 					
 					$this->processor = new $this->className($this);

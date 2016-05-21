@@ -5,7 +5,7 @@ use wcf\data\search\Search;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\ImplementationException;
 use wcf\system\page\PageLocationManager;
 use wcf\system\search\SearchEngine;
 use wcf\system\WCF;
@@ -142,7 +142,7 @@ class SearchResultPage extends MultipleLinkPage {
 			$objectType = SearchEngine::getInstance()->getObjectType($type);
 			if (($message = $objectType->getObject($objectID)) !== null) {
 				if (!($message instanceof ISearchResultObject)) {
-					throw new SystemException("'".get_class($message)."' does not implement '".ISearchResultObject::class."'");
+					throw new ImplementationException(get_class($message), ISearchResultObject::class);
 				}
 				
 				$this->messages[] = $message;

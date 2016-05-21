@@ -4,6 +4,7 @@ use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\system\cache\builder\CronjobCacheBuilder;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -174,7 +175,7 @@ class CronjobScheduler extends SingletonFactory {
 		
 		// verify class signature
 		if (!(is_subclass_of($className, ICronjob::class))) {
-			throw new SystemException("'".$className."' does not implement '".ICronjob::class."'");
+			throw new ImplementationException($className, ICronjob::class);
 		}
 		
 		// execute cronjob

@@ -5,6 +5,7 @@ use wcf\data\option\Option;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
@@ -380,7 +381,7 @@ class OptionHandler implements IOptionHandler {
 		}
 		
 		if (!is_subclass_of($className, IOptionType::class)) {
-			throw new SystemException("'".$className."' does not implement '".IOptionType::class."'");
+			throw new ImplementationException($className, IOptionType::class);
 		}
 		
 		return $className;

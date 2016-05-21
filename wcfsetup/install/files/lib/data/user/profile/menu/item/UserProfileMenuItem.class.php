@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\user\profile\menu\item;
+use wcf\system\exception\ImplementationException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\menu\user\profile\content\IUserProfileMenuContent;
 use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
@@ -67,11 +69,11 @@ class UserProfileMenuItem extends DatabaseObject {
 			}
 			
 			if (!is_subclass_of($this->className, SingletonFactory::class)) {
-				throw new SystemException("'".$this->className."' does not extend '".SingletonFactory::class."'");
+				throw new ParentClassException($this->className, SingletonFactory::class);
 			}
 			
 			if (!is_subclass_of($this->className, IUserProfileMenuContent::class)) {
-				throw new SystemException("'".$this->className."' does not implement '".IUserProfileMenuContent::class."'");
+				throw new ImplementationException($this->className, IUserProfileMenuContent::class);
 			}
 			
 			$this->contentManager = call_user_func([$this->className, 'getInstance']);

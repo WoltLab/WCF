@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\html\input\node;
-use wcf\system\bbcode\HtmlBBCodeParser;
-use wcf\system\exception\SystemException;
 use wcf\system\html\metacode\converter\IMetacodeConverter;
 use wcf\system\html\metacode\converter\SimpleMetacodeConverter;
 use wcf\system\html\node\AbstractHtmlNode;

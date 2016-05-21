@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\user\authentication;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -35,7 +35,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 		EventHandler::getInstance()->fireAction($this, 'init');
 		
 		if (!is_subclass_of($this->className, IUserAuthentication::class)) {
-			throw new SystemException("'" . $this->className . "' does not implement '".IUserAuthentication::class."'");
+			throw new ImplementationException($this->className, IUserAuthentication::class);
 		}
 		
 		$this->userAuthentication = call_user_func([$this->className, 'getInstance']);

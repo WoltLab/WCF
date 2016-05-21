@@ -3,6 +3,7 @@ namespace wcf\system\search\acp;
 use wcf\data\acp\search\provider\ACPSearchProvider;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
@@ -52,7 +53,7 @@ class ACPSearchHandler extends SingletonFactory {
 		foreach ($this->cache as $acpSearchProvider) {
 			$className = $acpSearchProvider->className;
 			if (!is_subclass_of($className, IACPSearchResultProvider::class)) {
-				throw new SystemException("'".$className."' does not implement '".IACPSearchResultProvider::class."'");
+				throw new ImplementationException($className, IACPSearchResultProvider::class);
 			}
 			
 			$provider = new $className();

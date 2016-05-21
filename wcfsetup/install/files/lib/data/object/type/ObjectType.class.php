@@ -4,6 +4,7 @@ use wcf\data\object\type\definition\ObjectTypeDefinition;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
@@ -87,7 +88,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 					throw new SystemException("Unable to find class '".$this->className."'");
 				}
 				if (($definitionInterface = ObjectTypeCache::getInstance()->getDefinition($this->definitionID)->interfaceName) && !is_subclass_of($this->className, $definitionInterface)) {
-					throw new SystemException("'".$this->className."' does not implement '".$definitionInterface."'");
+					throw new ImplementationException($this->className, $definitionInterface);
 				}
 				
 				if (is_subclass_of($this->className, SingletonFactory::class)) {

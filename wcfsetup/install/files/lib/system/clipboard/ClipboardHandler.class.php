@@ -6,6 +6,7 @@ use wcf\system\cache\builder\ClipboardActionCacheBuilder;
 use wcf\system\cache\builder\ClipboardPageCacheBuilder;
 use wcf\system\clipboard\action\IClipboardAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -325,7 +326,7 @@ class ClipboardHandler extends SingletonFactory {
 			if (!isset($actions[$actionClassName])) {
 				// validate class
 				if (!is_subclass_of($actionClassName, IClipboardAction::class)) {
-					throw new SystemException("'".$actionClassName."' does not implement '".IClipboardAction::class."'");
+					throw new ImplementationException($actionClassName, IClipboardAction::class);
 				}
 				
 				$actions[$actionClassName] = [

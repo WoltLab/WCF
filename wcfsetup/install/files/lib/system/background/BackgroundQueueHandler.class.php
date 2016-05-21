@@ -2,6 +2,7 @@
 namespace wcf\system\background;
 use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
@@ -57,7 +58,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 		if (!is_array($jobs)) $jobs = [$jobs];
 		foreach ($jobs as $job) {
 			if (!($job instanceof AbstractBackgroundJob)) {
-				throw new SystemException('$jobs contains an item that does not extend \''.AbstractBackgroundJob::class.'\'.');
+				throw new ParentClassException(get_class($job), AbstractBackgroundJob::class);
 			}
 		}
 		

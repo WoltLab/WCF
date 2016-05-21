@@ -3,7 +3,7 @@ namespace wcf\system\option\user\group;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\OptionHandler;
 use wcf\system\WCF;
@@ -85,7 +85,7 @@ class UserGroupOptionHandler extends OptionHandler {
 			return null;
 		}
 		if (!is_subclass_of($className, IUserGroupOptionType::class)) {
-			throw new SystemException("'".$className."' does not implement '".IUserGroupOptionType::class."'");
+			throw new ImplementationException($className, IUserGroupOptionType::class);
 		}
 		
 		return $className;

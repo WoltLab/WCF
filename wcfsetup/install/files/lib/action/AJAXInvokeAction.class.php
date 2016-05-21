@@ -2,8 +2,10 @@
 namespace wcf\action;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -123,10 +125,10 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	protected function invoke() {
 		// check for interface and inheritance of SingletonFactory
 		if (!is_subclass_of($this->className, IAJAXInvokeAction::class)) {
-			throw new SystemException("'".$this->className."' does not implement '".IAJAXInvokeAction::class."'");
+			throw new ImplementationException($this->className, IAJAXInvokeAction::class);
 		}
 		else if (!is_subclass_of($this->className, SingletonFactory::class)) {
-			throw new SystemException("'".$this->className."' does not extend '".SingletonFactory::class."'");
+			throw new ParentClassException($this->className, SingletonFactory::class);
 		}
 		
 		// validate action name

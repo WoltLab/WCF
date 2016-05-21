@@ -7,6 +7,8 @@ use wcf\data\poll\Poll;
 use wcf\data\poll\PollAction;
 use wcf\data\poll\PollList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\ImplementationException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
@@ -422,10 +424,10 @@ class PollManager extends SingletonFactory {
 		// validates against object type's class
 		$className = $this->cache[$objectType]->className;
 		if (!is_subclass_of($className, IPollHandler::class)) {
-			throw new SystemException("'".$className."' does not implement '".IPollHandler::class."'");
+			throw new ImplementationException($className, IPollHandler::class);
 		}
 		else if (!is_subclass_of($className, SingletonFactory::class)) {
-			throw new SystemException("'".$className."' does not extend '".SingletonFactory::class."'");
+			throw new ParentClassException($className, SingletonFactory::class);
 		}
 		
 		$object = call_user_func([$className, 'getInstance']);

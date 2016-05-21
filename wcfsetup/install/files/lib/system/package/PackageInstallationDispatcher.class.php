@@ -16,6 +16,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\form\container\GroupFormElementContainer;
 use wcf\system\form\container\MultipleSelectionFormElementContainer;
@@ -570,7 +571,7 @@ class PackageInstallationDispatcher {
 		$plugin = new $className($this, $nodeData);
 		
 		if (!($plugin instanceof IPackageInstallationPlugin)) {
-			throw new SystemException("'".$className."' does not implement '".IPackageInstallationPlugin::class."'");
+			throw new ImplementationException($className, IPackageInstallationPlugin::class);
 		}
 		
 		// execute PIP

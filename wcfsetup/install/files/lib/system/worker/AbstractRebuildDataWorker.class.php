@@ -2,6 +2,7 @@
 namespace wcf\system\worker;
 use wcf\data\DatabaseObjectList;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
@@ -93,7 +94,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 		}
 		
 		if (!is_subclass_of($this->objectListClassName, DatabaseObjectList::class)) {
-			throw new SystemException("'".$this->objectListClassName."' does not extend '".DatabaseObjectList::class."'");
+			throw new ParentClassException($this->objectListClassName, DatabaseObjectList::class);
 		}
 		
 		$this->objectList = new $this->objectListClassName();

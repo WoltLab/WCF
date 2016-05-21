@@ -3,6 +3,8 @@ namespace wcf\system\upload;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IFile;
 use wcf\data\IThumbnailFile;
+use wcf\system\exception\ImplementationException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\image\ImageHandler;
 use wcf\system\WCF;
@@ -69,13 +71,13 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		$this->data = $data;
 		
 		if (!is_subclass_of($this->actionClassName, AbstractDatabaseObjectAction::class)) {
-			throw new SystemException("'".$this->actionClassName."' does not extend '".AbstractDatabaseObjectAction::class."'");
+			throw new ParentClassException($this->actionClassName, AbstractDatabaseObjectAction::class);
 		}
 		
 		$this->editorClassName = (new $this->actionClassName([], ''))->getClassName();
 		$baseClass = call_user_func([$this->editorClassName, 'getBaseClass']);
 		if (!is_subclass_of($baseClass, IFile::class)) {
-			throw new SystemException("'".$this->editorClassName."' does not implement '".IFile::class."'");
+			throw new ImplementationException($baseClass, IFile::class);
 		}
 		if (is_subclass_of($baseClass, IThumbnailFile::class)) {
 			$this->options['thumbnailSizes'] = call_user_func([$baseClass, 'getThumbnailSizes']);

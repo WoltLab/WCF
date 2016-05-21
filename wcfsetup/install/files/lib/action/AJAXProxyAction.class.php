@@ -1,7 +1,7 @@
 <?php
 namespace wcf\action;
 use wcf\data\IDatabaseObjectAction;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\ImplementationException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -57,12 +57,12 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	 */
 	protected function invoke() {
 		if (!is_subclass_of($this->className, IDatabaseObjectAction::class)) {
-			throw new SystemException("'".$this->className."' does not implement '".IDatabaseObjectAction::class."'");
+			throw new ImplementationException($this->className, IDatabaseObjectAction::class);
 		}
 		
 		if (!empty($this->interfaceName)) {
 			if (!is_subclass_of($this->className, $this->interfaceName)) {
-				throw new SystemException("'".$this->className."' does not implement '".$this->interfaceName."'");
+				throw new ImplementationException($this->className, $this->interfaceName);
 			}
 		}
 		

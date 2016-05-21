@@ -4,6 +4,7 @@ use wcf\data\event\listener\EventListener;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\event\IEventListener as ILegacyEventListener;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
@@ -116,7 +117,7 @@ class EventHandler extends SingletonFactory {
 									if (!is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
 										// legacy event listeners
 										if (!is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
-											throw new SystemException("'".$eventListener->listenerClassName."' does not implement '".IParameterizedEventListener::class."'");
+											throw new ImplementationException($eventListener->listenerClassName, IParameterizedEventListener::class);
 										}
 									}
 									
@@ -203,7 +204,7 @@ class EventHandler extends SingletonFactory {
 						if (!is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
 							// legacy event listeners
 							if (!is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
-								throw new SystemException("'".$eventListener->listenerClassName."' does not implement '".IParameterizedEventListener::class."'");
+								throw new ImplementationException($eventListener->listenerClassName, IParameterizedEventListener::class);
 							}
 						}
 						

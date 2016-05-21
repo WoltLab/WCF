@@ -7,6 +7,7 @@ use wcf\data\IMessageQuickReplyAction;
 use wcf\data\IVisitableObjectAction;
 use wcf\system\bbcode\PreParser;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
@@ -137,7 +138,7 @@ class QuickReplyManager extends SingletonFactory {
 		$this->container = new $containerClassName($parameters['objectID']);
 		if (!empty($containerDecoratorClassName)) {
 			if (!is_subclass_of($containerDecoratorClassName, DatabaseObjectDecorator::class)) {
-				throw new SystemException("'".$containerDecoratorClassName."' does not extend '".DatabaseObjectDecorator::class."'");
+				throw new ParentClassException($containerDecoratorClassName, DatabaseObjectDecorator::class);
 			}
 			
 			$this->container = new $containerDecoratorClassName($this->container);

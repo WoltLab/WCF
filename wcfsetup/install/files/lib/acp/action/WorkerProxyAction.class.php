@@ -2,6 +2,7 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
 use wcf\action\AJAXInvokeAction;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\worker\IWorker;
 use wcf\system\WCF;
@@ -65,7 +66,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 		}
 		
 		if (!is_subclass_of($this->className, IWorker::class)) {
-			throw new SystemException("'".$this->className."' does not implement '".IWorker::class."'");
+			throw new ImplementationException($this->className, IWorker::class);
 		}
 	}
 	

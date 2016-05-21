@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data;
 use wcf\data\category\AbstractDecoratedCategory;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -62,7 +63,7 @@ trait TMultiCategoryObject {
 			
 			$className = static::getCategoryClassName();
 			if (!is_subclass_of($className, AbstractDecoratedCategory::class)) {
-				throw new SystemException("'".$className."' does not extend '".AbstractDecoratedCategory::class."'.");
+				throw new ParentClassException($className, AbstractDecoratedCategory::class);
 			}
 			
 			if (!empty($this->categoryIDs)) {
