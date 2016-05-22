@@ -34,7 +34,7 @@
 
 #### CMS
 
-* User online location is handled via the `wcf\data\page\Page` objects. Static locations only need a language item `wcf.page.onlineLocation.{$page->identifier}`, more complex locations can use the online location-related methods of `wcf\system\page\handler\IMenuPageHandler`. For CMS pages, their title is used.
+* User online location is handled via the `wcf\data\page\Page` objects. Complex locations can use the online location-related methods of `wcf\system\page\handler\IMenuPageHandler`.
 
 #### New Traits
 
@@ -59,9 +59,15 @@
 * `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
 * `wcf\system\event\listener\PreParserAtUserListener` removed.
 * `wcf\action\AJAXProxyAction::getData()` removed.
+* `wcf\system\page\PageManager` removed.
+* `wcf\system\option\PageMultiSelectOptionType` removed.
+* `wcf\system\option\PageSelectOptionType` removed.
+* `wcf\system\user\online\location\UserLocation` removed.
 * Version system removed.
 * Support for query string based sessions in Frontend removed.
 * Language server system removed.
+* Object type definition `com.woltlab.wcf.user.online.location` removed.
+* Object type definition `com.woltlab.wcf.page` removed.
 
 #### Documentation
 

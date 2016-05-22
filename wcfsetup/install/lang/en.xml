@@ -2545,9 +2545,6 @@ Errors are:
 		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Requested Page]]></item>
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our use of cookies. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">More details</a>]]></item>
-		<item name="wcf.page.category.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
-		<item name="wcf.page.category.com.woltlab.wcf.other"><![CDATA[Other Pages]]></item>
-		<item name="wcf.page.category.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.page.comments"><![CDATA[Comments]]></item>
 		
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
