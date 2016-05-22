@@ -219,5 +219,10 @@ final class ArrayUtil {
 		return ((count(call_user_func_array($function, $params1)) === 0) && (count(call_user_func_array($function, $params2)) === 0));
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of ArrayUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

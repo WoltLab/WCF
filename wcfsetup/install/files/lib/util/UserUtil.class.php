@@ -270,5 +270,10 @@ final class UserUtil {
 		return mb_substr(FileUtil::unifyDirSeparator($REQUEST_URI), 0, 255);
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of UserUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

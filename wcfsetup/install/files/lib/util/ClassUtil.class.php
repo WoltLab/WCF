@@ -53,5 +53,10 @@ final class ClassUtil {
 		return is_subclass_of($className, $targetClass);
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of ClassUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

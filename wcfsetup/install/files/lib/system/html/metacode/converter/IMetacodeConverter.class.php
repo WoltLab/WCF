@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\html\metacode\converter;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 interface IMetacodeConverter {
 	/**
 	 * Converts a known metacode into the HTML representation normally used by the WYSIWYG

@@ -43,5 +43,10 @@ final class MathUtil {
 		];
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of MathUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

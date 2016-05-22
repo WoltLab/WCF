@@ -699,5 +699,10 @@ final class PasswordUtil {
 		return false;
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of PasswordUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

@@ -13,9 +13,11 @@ namespace wcf\util;
  */
 final class UserRegistrationUtil {
 	/**
-	 * Disables creation of objects of this class.
+	 * Forbid creation of StringUtil objects.
 	 */
-	private function __construct() { }
+	private function __construct() {
+		// does nothing
+	}
 	
 	/**
 	 * Returns true if the given name is a valid username.

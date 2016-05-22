@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\html\node;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 interface IHtmlNode {
 	public function getTagName();
 	

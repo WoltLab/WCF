@@ -62,5 +62,10 @@ final class ImageUtil {
 		}
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of ImageUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

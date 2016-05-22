@@ -113,7 +113,9 @@ final class DirectoryUtil {
 	/**
 	 * @see	\wcf\util\DirectoryUtil::getInstance()
 	 */
-	private final function __clone() {}
+	private final function __clone() {
+		// does nothing
+	}
 	
 	/**
 	 * Returns a sorted list of files.

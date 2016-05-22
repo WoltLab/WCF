@@ -51,5 +51,10 @@ final class JSON {
 		return json_last_error();
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of JSON objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

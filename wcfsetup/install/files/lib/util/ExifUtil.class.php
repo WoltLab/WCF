@@ -68,7 +68,12 @@ final class ExifUtil {
 	 */
 	const ORIENTATION_270_ROTATE = 8;
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of ExifUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 	
 	/**
 	 * Returns the exif data of the image at the given location or an empty

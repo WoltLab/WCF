@@ -132,5 +132,10 @@ final class StyleUtil {
 		StyleCompiler::getInstance()->compileACP();
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of StyleUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

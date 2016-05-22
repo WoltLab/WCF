@@ -138,5 +138,10 @@ final class CryptoUtil {
 		}
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of CryptoUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

@@ -719,5 +719,10 @@ final class StringUtil {
 		return $result;
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of StringUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

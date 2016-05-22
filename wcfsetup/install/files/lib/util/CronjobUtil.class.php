@@ -574,5 +574,10 @@ final class CronjobUtil {
 		}
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of CronjobUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }
