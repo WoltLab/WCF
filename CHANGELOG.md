@@ -111,6 +111,7 @@
 * Added basic grid layout classes
 * Renamed `.pageNavigation` to `.pagination`
 * Renamed `.navigation`/`.navigationIcons` to `.pageNavigation`/`.pageNavigationIcons`
+* Added CSS classes to style font sizes in tag cloud (`tagWeight1` - `tagWeight7`)
 
 #### Deprecated Code
 

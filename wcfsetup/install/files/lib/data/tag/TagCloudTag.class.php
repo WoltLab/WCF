@@ -22,26 +22,45 @@ class TagCloudTag extends DatabaseObjectDecorator {
 	protected static $baseClass = Tag::class;
 	
 	/**
-	 * size of the tag in a weighted list
-	 * @var	double
+	 * weight of the tag in a weighted list
+	 * @var	integer
 	 */
-	protected $size = 0.0;
+	protected $weight = 1;
 	
+	/**
+	 * Sets the weight of the tag.
+	 *
+	 * @param	double		$weight
+	 * @deprecated  2.2
+	 */
+	public function setWeight($weight) {
+		$this->weight = $weight;
+	}
+	
+	/**
+	 * Returns the weight of the tag.
+	 *
+	 * @return	integer
+	 */
+	public function getWeight() {
+		return $this->weight;
+	}
+		
 	/**
 	 * Sets the size of the tag.
 	 * 
 	 * @param	double		$size
+	 * @deprecated  2.2
 	 */
-	public function setSize($size) {
-		$this->size = $size;
-	}
+	public function setSize($size) {}
 	
 	/**
 	 * Returns the size of the tag.
 	 * 
 	 * @return	double
+	 * @deprecated  2.2
 	 */
 	public function getSize() {
-		return $this->size;
+		return (($this->weight - 1) / 6) * 85 + 85;
 	}
 }

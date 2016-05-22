@@ -18,12 +18,14 @@ class TagCloud {
 	/**
 	 * max font size
 	 * @var	integer
+	 * @deprecated 2.2
 	 */
 	const MAX_FONT_SIZE = 170;
 	
 	/**
 	 * min font size
 	 * @var	integer
+	 * @deprecated 2.2
 	 */
 	const MIN_FONT_SIZE = 85;
 	
@@ -91,7 +93,7 @@ class TagCloud {
 		
 		// assign sizes
 		foreach ($tags as $tag) {
-			$tag->setSize($this->calculateSize($tag->counter));
+			$tag->setWeight($this->calculateWeight($tag->counter));
 		}
 		
 		// sort alphabetically
@@ -101,18 +103,14 @@ class TagCloud {
 		return $tags;
 	}
 	
-	/**
-	 * Returns the size of a tag with given number of uses for a weighted list.
-	 * 
-	 * @param	integer		$counter
-	 * @return	double
-	 */
-	private function calculateSize($counter) {
+	private function calculateWeight($counter) {
 		if ($this->maxCounter == $this->minCounter) {
-			return 100;
+			return 2;
 		}
 		else {
-			return (self::MAX_FONT_SIZE - self::MIN_FONT_SIZE) / ($this->maxCounter - $this->minCounter) * $counter + self::MIN_FONT_SIZE - ((self::MAX_FONT_SIZE - self::MIN_FONT_SIZE) / ($this->maxCounter - $this->minCounter)) * $this->minCounter;
+			$weight = round(log($counter) / log($this->maxCounter) * 7);
+			if ($weight < 1) $weight = 1;
+			return $weight;
 		}
 	}
 }
