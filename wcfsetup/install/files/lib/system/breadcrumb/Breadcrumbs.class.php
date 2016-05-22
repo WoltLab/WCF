@@ -30,11 +30,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * @inheritDoc
 	 */
-	protected function init() {
-		// add main breadcrumbs entry
-		// TODO: there is no longer a global landing page, what should be displayed instead?
-		//$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink()));
-	}
+	protected function init() {}
 	
 	/**
 	 * Adds a breadcrumb (insertion order is crucial!).
