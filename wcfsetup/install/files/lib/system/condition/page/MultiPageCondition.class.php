@@ -5,6 +5,7 @@ use wcf\data\page\PageCache;
 use wcf\data\page\PageNode;
 use wcf\data\page\PageNodeTree;
 use wcf\system\condition\AbstractMultiSelectCondition;
+use wcf\system\condition\AbstractSingleFieldCondition;
 use wcf\system\condition\IContentCondition;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
@@ -18,14 +19,9 @@ use wcf\system\request\RequestHandler;
  * @package	com.woltlab.wcf
  * @subpackage	system.condition.page
  * @category	Community Framework
- * @deprecated	since 2.2
+ * @since	2.2
  */
 class MultiPageCondition extends AbstractMultiSelectCondition implements IContentCondition {
-	/**
-	 * @inheritDoc
-	 */
-	protected $description = 'wcf.global.multiSelect';
-	
 	/**
 	 * @inheritDoc
 	 */
@@ -42,14 +38,29 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
 	protected function getFieldElement() {
 		$pageNodes = (new PageNodeTree())->getNodeList();
 		
-		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple="multiple" size="10">';
+		$fieldElement = '<ul class="scrollableCheckboxList">';
 		/** @var PageNode $pageNode */
 		foreach ($pageNodes as $pageNode) {
-			$fieldElement .= '<option value="'.$pageNode->pageID.'">'.($pageNode->getDepth() > 1 ? str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $pageNode->getDepth() - 1) : '').$pageNode->name.'</option>';
+			$fieldElement .= '<li';
+			if ($pageNode->getDepth() > 1) {
+				$fieldElement .= ' style="padding-left: '.($pageNode->getDepth()*20-20).'px"';
+			}
+			$fieldElement .= '><label><input type="checkbox" name="'.$this->fieldName.'[]" value="'.$pageNode->pageID.'"';
+			if (in_array($pageNode->pageID, $this->fieldValue)) {
+				$fieldElement .= ' checked="checked"';
+			}
+			$fieldElement .= ' />'.$pageNode->name.'</label></li>';
 		}
-		$fieldElement .= "</select>";
+		$fieldElement .= "</ul>";
 		
 		return $fieldElement;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHTML() {
+		return AbstractSingleFieldCondition::getHTML();
 	}
 	
 	/**

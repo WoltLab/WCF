@@ -30,6 +30,15 @@ class PageCache extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns all available pages.
+	 * 
+	 * @return	Page[]
+	 */
+	public function getPages() {
+		return $this->cache['pages'];
+	}
+	
+	/**
 	 * Returns a page by page id or null.
 	 * 
 	 * @param	integer		$pageID		page id

@@ -46,6 +46,7 @@
 * Overhauled style editor
 * Added replacements for WCF.Like, WCF.User.List and $.ui.wcfPages
 * Added update support for styles
+* `\wcf\system\condition\MultiPageControllerCondition` has been replaced by `wcf\system\condition\page\MultiPageCondition`
 
 #### CMS
 
@@ -110,6 +111,11 @@
 * Renamed `.pageNavigation` to `.pagination`
 * Renamed `.navigation`/`.navigationIcons` to `.pageNavigation`/`.pageNavigationIcons`
 
+#### Deprecated Code
+
+* Object type definition `com.woltlab.wcf.user.online.location` deprecated.
+* Object type definition `com.woltlab.wcf.page` deprecated.
+
 #### Removed Code
 
 * `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
@@ -122,8 +128,6 @@
 * Version system removed.
 * Support for query string based sessions in Frontend removed.
 * Language server system removed.
-* Object type definition `com.woltlab.wcf.user.online.location` deprecated.
-* Object type definition `com.woltlab.wcf.page` deprecated.
 * Deprecated methods in `wcf\util\StringUtil` removed.
 * Option `message_sidebar_enable_message_group_starter_icon` removed.
 * Option `module_privacy_policy_page` removed.

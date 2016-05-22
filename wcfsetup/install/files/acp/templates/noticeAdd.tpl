@@ -3,8 +3,6 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		WCF.TabMenu.init();
-		
 		$('input[name=cssClassName]').change(function() {
 			var $val = $('input[name=cssClassName]:checked').val();
 			if (!$val || $val === 'custom') {
@@ -195,8 +193,8 @@
 		</header>
 	
 		{include file='userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
-	</section>	
-		
+	</section>
+	
 	{event name='conditionContainers'}
 	
 	<div class="formSubmit">
