@@ -243,6 +243,9 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php ucfirst() function with multibyte support.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function firstCharToUpperCase($string) {
 		return mb_strtoupper(mb_substr($string, 0, 1)).mb_substr($string, 1);
@@ -250,6 +253,9 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php lcfirst() function with multibyte support.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function firstCharToLowerCase($string) {
 		return mb_strtolower(mb_substr($string, 0, 1)).mb_substr($string, 1);
@@ -257,6 +263,9 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_convert_case() function.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function wordsToUpperCase($string) {
 		return mb_convert_case($string, MB_CASE_TITLE);
