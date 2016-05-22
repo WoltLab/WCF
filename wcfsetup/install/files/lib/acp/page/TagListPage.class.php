@@ -15,6 +15,8 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	TagList		$objectList
  */
 class TagListPage extends SortablePage {
 	/**

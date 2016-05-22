@@ -13,6 +13,8 @@ use wcf\page\SortablePage;
  * @subpackage	acp.page
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @property	MenuList	$objectList
  */
 class MenuListPage extends SortablePage {
 	/**

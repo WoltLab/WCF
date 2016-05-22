@@ -18,6 +18,8 @@ use wcf\util\HeaderUtil;
  * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
+ * 
+ * @property	UsersOnlineList		$objectList
  */
 class UsersOnlineListPage extends SortablePage {
 	/**

@@ -12,6 +12,8 @@ use wcf\page\MultipleLinkPage;
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	UserGroupAssignmentList		$objectList
  */
 class UserGroupAssignmentListPage extends MultipleLinkPage {
 	/**

@@ -15,6 +15,8 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	ACPSessionAccessLogList		$objectList
  */
 class ACPSessionLogPage extends SortablePage {
 	/**

@@ -13,6 +13,8 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
+ * 
+ * @property	UserFollowingList	$objectList
  */
 class FollowingPage extends MultipleLinkPage {
 	/**

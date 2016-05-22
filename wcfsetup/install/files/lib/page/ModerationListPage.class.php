@@ -15,6 +15,8 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
+ * 
+ * @property	ViewableModerationQueueList	$objectList
  */
 class ModerationListPage extends SortablePage {
 	/**

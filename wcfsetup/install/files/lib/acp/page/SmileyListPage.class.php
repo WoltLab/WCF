@@ -17,6 +17,8 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	SmileyList	$objectList
  */
 class SmileyListPage extends MultipleLinkPage {
 	/**

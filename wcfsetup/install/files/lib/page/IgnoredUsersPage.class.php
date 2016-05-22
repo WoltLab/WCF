@@ -13,6 +13,8 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
+ * 
+ * @property	ViewableUserIgnoreList	$objectList
  */
 class IgnoredUsersPage extends MultipleLinkPage {
 	/**

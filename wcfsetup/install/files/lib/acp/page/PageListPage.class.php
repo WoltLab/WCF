@@ -17,6 +17,8 @@ use wcf\util\StringUtil;
  * @subpackage	acp.page
  * @category	Community Framework
  * @since	2.2
+ *
+ * @property	PageList	$objectList
  */
 class PageListPage extends SortablePage {
 	/**

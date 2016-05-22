@@ -13,6 +13,8 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	PackageList	$objectList
  */
 class PackageListPage extends SortablePage {
 	/**

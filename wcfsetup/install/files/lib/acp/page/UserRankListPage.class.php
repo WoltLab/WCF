@@ -12,6 +12,8 @@ use wcf\page\SortablePage;
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	UserRankList	$objectList
  */
 class UserRankListPage extends SortablePage {
 	/**

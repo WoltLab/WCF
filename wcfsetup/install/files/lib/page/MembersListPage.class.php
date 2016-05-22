@@ -19,6 +19,8 @@ use wcf\util\HeaderUtil;
  * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
+ * 
+ * @property	UserProfileList		$objectList
  */
 class MembersListPage extends SortablePage {
 	/**
