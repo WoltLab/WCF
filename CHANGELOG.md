@@ -138,4 +138,12 @@
 
 #### Documentation
 
+* Added missing and fixed existing PHPDoc comments.
 * `@property-read` tags for database table columns of classes extending `wcf\data\DatabaseObject`.
+* `@method` tags for classes extending `wcf\data\AbstractDatabaseObjectAction` to specify return types.
+* `@mixin` tag for classes extending `wcf\data\DatabaseObjectDecorator` for autocompletion/recognition of properties and methods of the decorated object.
+* `@method` tag for classes extending `wcf\data\DatabaseObjectEditor` to specify return type.
+* `@method` and `@property` tags for classes extending `wcf\data\DatabaseObjectList` to specify (return) types.
+* `@property` tag for classes extending `wcf\page\MultipleLinkPage` to specify type.
+* `@mixin` tag for classes extending `wcf\system\database\statement\PreparedStatement` for autocompletion/recognition of properties and methods of the decorated `\PDOStatement` object.
+* `@method` tags for `wcf\system\io\File` and `wcf\system\io\GZipFile` for autocompletion/recognition of methods called via `__call()`.
