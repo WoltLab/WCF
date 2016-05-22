@@ -7,7 +7,7 @@
 			<xs:maxLength value="255" />
 		</xs:restriction>
 	</xs:simpleType>
-
+	
 	<!-- string type with a minimum length of 0 and a maximum length of 255 signs -->
 	<xs:simpleType name="woltlab_varchar_nullable">
 		<xs:restriction base="xs:string">
@@ -15,7 +15,7 @@
 			<xs:maxLength value="255" />
 		</xs:restriction>
 	</xs:simpleType>
-
+	
 	<!-- boolean type which only accepts '0' or '1' -->
 	<xs:simpleType name="woltlab_boolean">
 		<xs:restriction base="xs:integer">
@@ -23,7 +23,7 @@
 			<xs:maxInclusive value="1" />
 		</xs:restriction>
 	</xs:simpleType>
-
+	
 	<!-- user/admin environment type which only accepts 'user' or 'admin' -->
 	<xs:simpleType name="woltlab_environment">
 		<xs:restriction base="xs:string">

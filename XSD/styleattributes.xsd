@@ -1,61 +1,60 @@
 <?xml version="1.0"?>
 <!-- The file "styleattributes.xsd" is used for xml-files which installs, updates or deletes style attributes.  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
-        
-        <!-- include types -->
-        <xs:include schemaLocation="types.xsd" />
-        
-        <!-- Represents the data-node. -->
-        <xs:element name="data">
-                <xs:complexType>
-                        <xs:all>
-                                <xs:element name="import" type="import" minOccurs="0" />
-                                <xs:element name="delete" type="delete" minOccurs="0" />
-                        </xs:all>
-                </xs:complexType>
-        </xs:element>
-        
-         <!-- Represents the import-node. -->
-        <xs:complexType name="import">
-                <xs:sequence>
-                        <xs:element name="attribute" type="styleattribute" maxOccurs="unbounded" />
-                </xs:sequence>
-        </xs:complexType>
-        
-         <!-- Represents the delete-node. -->
-        <xs:complexType name="delete">
-                <xs:sequence>
-                        <xs:element name="attribute" type="styleattribute" maxOccurs="unbounded" />
-                </xs:sequence>
-        </xs:complexType>
-        
-         <!-- Represents a styleattribute, which will be installed, updated or deleted. -->
-         <xs:complexType name="styleattribute">
-                <xs:all>
-                        <xs:element name="selector" minOccurs="0">
-                                <xs:simpleType>
-                                        <xs:restriction base="xs:string">
-                                                <xs:minLength value="0" />
-                                                <xs:maxLength value="200" />
-                                        </xs:restriction>
-                                </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="name" minOccurs="0">
-                                <xs:simpleType>
-                                        <xs:restriction base="xs:string">
-                                                <xs:minLength value="0" />
-                                                <xs:maxLength value="50" />
-                                        </xs:restriction>
-                                </xs:simpleType>
-                        </xs:element>
-                         <xs:element name="value" minOccurs="1">
-                                <xs:simpleType>
-                                        <xs:restriction base="xs:string">
-                                                <xs:minLength value="0" />
-                                                <xs:maxLength value="50" />
-                                        </xs:restriction>
-                                </xs:simpleType>
-                        </xs:element>
-                </xs:all>
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- Represents the data-node. -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="import" type="import" minOccurs="0" />
+				<xs:element name="delete" type="delete" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Represents the import-node. -->
+	<xs:complexType name="import">
+		<xs:sequence>
+			<xs:element name="attribute" type="styleattribute" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Represents the delete-node. -->
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="attribute" type="styleattribute" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Represents a styleattribute, which will be installed, updated or deleted. -->
+	<xs:complexType name="styleattribute">
+		<xs:all>
+			<xs:element name="selector" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0" />
+						<xs:maxLength value="200" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="name" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0" />
+						<xs:maxLength value="50" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="value" minOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0" />
+						<xs:maxLength value="50" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:all>
 	</xs:complexType>
 </xs:schema>
