@@ -11,5 +11,9 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.modification.log
  * @category	Community Framework
+ * 
+ * @method	ModificationLog			create()
+ * @method	ModificationLogEditor[]		getObjects()
+ * @method	ModificationLogEditor		getSingleObject()
  */
 class ModificationLogAction extends AbstractDatabaseObjectAction { }

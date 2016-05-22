@@ -16,6 +16,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.tag
  * @category	Community Framework
+ * 
+ * @method	Tag		create()
+ * @method	TagEditor[]	getObjects()
+ * @method	TagEditor	getSingleObject()
  */
 class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**

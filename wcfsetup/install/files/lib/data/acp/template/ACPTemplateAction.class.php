@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.template
  * @category	Community Framework
+ * 
+ * @method	ACPTemplate		create()
+ * @method	ACPTemplateEditor[]	getObjects()
+ * @method	ACPTemplateEditor	getSingleObject()
  */
 class ACPTemplateAction extends AbstractDatabaseObjectAction {
 	/**

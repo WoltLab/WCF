@@ -11,5 +11,9 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.condition
  * @category	Community Framework
+ * 
+ * @method	Condition		create()
+ * @method	ConditionEditor[]	getObjects()
+ * @method	ConditionEditor		getSingleObject()
  */
 class ConditionAction extends AbstractDatabaseObjectAction { }

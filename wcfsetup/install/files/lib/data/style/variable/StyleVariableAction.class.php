@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.style.variable
  * @category	Community Framework
+ * 
+ * @method	StyleVariable		create()
+ * @method	StyleVariableEditor[]	getObjects()
+ * @method	StyleVariableEditor	getSingleObject()
  */
 class StyleVariableAction extends AbstractDatabaseObjectAction {
 	/**

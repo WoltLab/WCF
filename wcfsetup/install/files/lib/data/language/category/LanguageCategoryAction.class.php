@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.language.category
  * @category	Community Framework
+ * 
+ * @method	LanguageCategory		create()
+ * @method	LanguageCategoryEditor[]	getObjects()
+ * @method	LanguageCategoryEditor		getSingleObject()
  */
 class LanguageCategoryAction extends AbstractDatabaseObjectAction {
 	/**

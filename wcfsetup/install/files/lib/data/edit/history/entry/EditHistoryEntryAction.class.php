@@ -13,6 +13,10 @@ use wcf\system\exception\IllegalLinkException;
  * @package	com.woltlab.wcf
  * @subpackage	data.edit.history.entry
  * @category	Community Framework
+ * 
+ * @method	EditHistoryEntry		create()
+ * @method	EditHistoryEntryEditor[]	getObjects()
+ * @method	EditHistoryEntryEditor		getSingleObject()
  */
 class EditHistoryEntryAction extends AbstractDatabaseObjectAction {
 	/**

@@ -16,6 +16,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.queue
  * @category	Community Framework
+ * 
+ * @method	PackageInstallationQueue		create()
+ * @method	PackageInstallationQueueEditor[]	getObjects()
+ * @method	PackageInstallationQueueEditor		getSingleObject()
  */
 class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	/**

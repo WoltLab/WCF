@@ -13,6 +13,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.option
  * @category	Community Framework
+ * 
+ * @method	UserGroupOption			create()
+ * @method	UserGroupOptionEditor[]		getObjects()
+ * @method	UserGroupOptionEditor		getSingleObject()
  */
 class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 	/**

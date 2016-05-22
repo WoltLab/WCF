@@ -22,6 +22,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.follow
  * @category	Community Framework
+ * 
+ * @method	UserFollow		create()
+ * @method	UserFollowEditor[]	getObjects()
+ * @method	UserFollowEditor	getSingleObject()
  */
 class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**

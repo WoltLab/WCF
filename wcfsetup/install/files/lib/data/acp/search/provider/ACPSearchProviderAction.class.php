@@ -13,6 +13,10 @@ use wcf\system\search\acp\ACPSearchHandler;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.search.provider
  * @category	Community Framework
+ * 
+ * @method	ACPSearchProvider		create()
+ * @method	ACPSearchProviderEditor[]	getObjects()
+ * @method	ACPSearchProviderEditor		getSingleObject()
  */
 class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**

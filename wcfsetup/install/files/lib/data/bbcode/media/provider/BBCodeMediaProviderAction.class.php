@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider
  * @category	Community Framework
+ * 
+ * @method	BBCodeMediaProvider		create()
+ * @method	BBCodeMediaProviderEditor[]	getObjects()
+ * @method	BBCodeMediaProviderEditor	getSingleObject()
  */
 class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction {
 	/**

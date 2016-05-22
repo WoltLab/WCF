@@ -20,6 +20,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.category
  * @category	Community Framework
+ * 
+ * @method	Category		create()
+ * @method	CategoryEditor[]	getObjects()
+ * @method	CategoryEditor		getSingleObject()
  */
 class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction, IToggleContainerAction {
 	/**

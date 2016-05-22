@@ -11,6 +11,9 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.authentication.failure
  * @category	Community Framework
+ * 
+ * @method	UserAuthenticationFailure		create()
+ * @method	UserAuthenticationFailureEditor[]	getObjects()
+ * @method	UserAuthenticationFailureEditor		getSingleObject()
  */
-class UserAuthenticationFailureAction extends AbstractDatabaseObjectAction {
-}
+class UserAuthenticationFailureAction extends AbstractDatabaseObjectAction { }

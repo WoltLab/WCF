@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.plugin
  * @category	Community Framework
+ * 
+ * @method	PackageInstallationPlugin		create()
+ * @method	PackageInstallationPluginEditor[]	getObjects()
+ * @method	PackageInstallationPluginEditor		getSingleObject()
  */
 class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 	/**

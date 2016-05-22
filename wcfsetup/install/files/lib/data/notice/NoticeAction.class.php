@@ -17,6 +17,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.notice
  * @category	Community Framework
+ * 
+ * @method	NoticeEditor[]		getObjects()
+ * @method	NoticeEditor		getSingleObject()
  */
 class NoticeAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
 	/**
@@ -41,6 +44,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	
 	/**
 	 * @inheritDoc
+	 * @return	Notice
 	 */
 	public function create() {
 		$showOrder = 0;
@@ -49,6 +53,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 			unset($this->parameters['data']['showOrder']);
 		}
 		
+		/** @var Notice $notice */
 		$notice = parent::create();
 		$noticeEditor = new NoticeEditor($notice);
 		$noticeEditor->setShowOrder($showOrder);

@@ -18,6 +18,10 @@ use wcf\util\DateUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.cronjob
  * @category	Community Framework
+ * 
+ * @method	Cronjob			create()
+ * @method	CronjobEditor[]		getObjects()
+ * @method	CronjobEditor		getSingleObject()
  */
 class CronjobAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**

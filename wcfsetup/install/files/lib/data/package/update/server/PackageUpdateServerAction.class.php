@@ -12,6 +12,10 @@ use wcf\data\IToggleAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update.server
  * @category	Community Framework
+ * 
+ * @method	PackageUpdateServer		create()
+ * @method	PackageUpdateServerEditor[]	getObjects()
+ * @method	PackageUpdateServerEditor	getSingleObject()
  */
 class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**

@@ -14,6 +14,10 @@ use wcf\system\menu\user\profile\UserProfileMenu;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.profile.menu.item
  * @category	Community Framework
+ * 
+ * @method	UserProfileMenuItem		create()
+ * @method	UserProfileMenuItemEditor[]	getObjects()
+ * @method	UserProfileMenuItemEditor	getSingleObject()
  */
 class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	/**

@@ -18,6 +18,10 @@ use wcf\system\WCF;
  * @subpackage	data.menu.item
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	MenuItem		create()
+ * @method	MenuItemEditor[]	getObjects()
+ * @method	MenuItemEditor		getSingleObject()
  */
 class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
 	/**

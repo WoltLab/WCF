@@ -23,6 +23,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.like
  * @category	Community Framework
+ * 
+ * @method	Like		create()
+ * @method	LikeEditor[]	getObjects()
+ * @method	LikeEditor	getSingleObject()
  */
 class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**

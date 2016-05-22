@@ -18,6 +18,9 @@ use wcf\system\WCF;
  * @subpackage	data.page
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	PageEditor[]	getObjects()
+ * @method	PageEditor	getSingleObject()
  */
 class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, IToggleAction {
 	/**
@@ -52,8 +55,10 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	
 	/**
 	 * @inheritDoc
+	 * @return	Page
 	 */
 	public function create() {
+		/** @var Page $page */
 		$page = parent::create();
 		
 		// save page content

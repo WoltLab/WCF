@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update.version
  * @category	Community Framework
+ * 
+ * @method	PackageUpdateVersion		create()
+ * @method	PackageUpdateVersionEditor[]	getObjects()
+ * @method	PackageUpdateVersionEditor	getSingleObject()
  */
 class PackageUpdateVersionAction extends AbstractDatabaseObjectAction {
 	/**

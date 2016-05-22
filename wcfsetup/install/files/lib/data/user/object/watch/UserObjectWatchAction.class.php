@@ -15,6 +15,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.object.watch
  * @category	Community Framework
+ * 
+ * @method	UserObjectWatch			create()
+ * @method	UserObjectWatchEditor[]		getObjects()
+ * @method	UserObjectWatchEditor		getSingleObject()
  */
 class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 	/**

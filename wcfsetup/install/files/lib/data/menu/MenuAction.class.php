@@ -15,6 +15,9 @@ use wcf\system\exception\PermissionDeniedException;
  * @subpackage	data.menu
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	MenuEditor[]	getObjects()
+ * @method	MenuEditor	getSingleObject()
  */
 class MenuAction extends AbstractDatabaseObjectAction {
 	/**
@@ -44,9 +47,10 @@ class MenuAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @inheritdoc
+	 * @return	Menu
 	 */
 	public function create() {
-		// create menu
+		/** @var Menu $menu */
 		$menu = parent::create();
 		
 		// create box

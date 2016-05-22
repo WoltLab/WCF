@@ -25,6 +25,10 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.attachment
  * @category	Community Framework
+ * 
+ * @method	Attachment		create()
+ * @method	AttachmentEditor[]	getObjects()
+ * @method	AttachmentEditor	getSingleObject()
  */
 class AttachmentAction extends AbstractDatabaseObjectAction implements ISortableAction, IUploadAction {
 	/**

@@ -17,6 +17,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode
  * @category	Community Framework
+ * 
+ * @method	BBCodeEditor[]	getObjects()
+ * @method	BBCodeEditor	getSingleObject()
  */
 class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
@@ -41,8 +44,10 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	
 	/**
 	 * @inheritDoc
+	 * @return	BBCode
 	 */
 	public function create() {
+		/** @var BBCode $bbCode */
 		$bbCode = parent::create();
 		
 		// add bbcode to BBCodeSelect user group options

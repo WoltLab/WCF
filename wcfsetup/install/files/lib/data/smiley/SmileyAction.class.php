@@ -15,6 +15,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.smiley
  * @category	Community Framework
+ * 
+ * @method	SmileyEditor[]	getObjects()
+ * @method	SmileyEditor	getSingleObject()
  */
 class SmileyAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
@@ -39,8 +42,10 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	
 	/**
 	 * @inheritDoc
+	 * @return	Smiley
 	 */
 	public function create() {
+		/** @var Smiley $smiley */
 		$smiley = parent::create();
 		
 		if (!empty($this->parameters['fileLocation'])) {

@@ -11,5 +11,9 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription.transaction.log
  * @category	Community Framework
+ * 
+ * @method	PaidSubscriptionTransactionLog		create()
+ * @method	PaidSubscriptionTransactionLogEditor[]	getObjects()
+ * @method	PaidSubscriptionTransactionLogEditor	getSingleObject()
  */
 class PaidSubscriptionTransactionLogAction extends AbstractDatabaseObjectAction {}

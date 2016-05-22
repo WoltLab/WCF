@@ -15,6 +15,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.session
  * @category	Community Framework
+ * 
+ * @method	Session			create()
+ * @method	SessionEditor[]		getObjects()
+ * @method	SessionEditor		getSingleObject()
  */
 class SessionAction extends AbstractDatabaseObjectAction {
 	/**

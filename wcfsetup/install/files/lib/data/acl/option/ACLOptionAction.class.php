@@ -12,6 +12,10 @@ use wcf\system\acl\ACLHandler;
  * @package	com.woltlab.wcf
  * @subpackage	data.acl.option
  * @category	Community Framework
+ * 
+ * @method	ACLOption		create()
+ * @method	ACLOptionEditor[]	getObjects()
+ * @method	ACLOptionEditor		getSingleObject()
  */
 class ACLOptionAction extends AbstractDatabaseObjectAction {
 	/**

@@ -13,6 +13,10 @@ use wcf\system\exception\PermissionDeniedException;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option
  * @category	Community Framework
+ * 
+ * @method	UserOption		create()
+ * @method	UserOptionEditor[]	getObjects()
+ * @method	UserOptionEditor	getSingleObject()
  */
 class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**

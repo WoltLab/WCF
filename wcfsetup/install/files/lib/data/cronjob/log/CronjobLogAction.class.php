@@ -12,6 +12,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.menu.item
  * @category	Community Framework
+ * 
+ * @method	CronjobLog		create()
+ * @method	CronjobLogEditor[]	getObjects()
+ * @method	CronjobLogEditor	getSingleObject()
  */
 class CronjobLogAction extends AbstractDatabaseObjectAction {
 	/**

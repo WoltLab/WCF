@@ -21,6 +21,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
  * @category	Community Framework
+ * 
+ * @method	ModerationQueueEditor[]		getObjects()
+ * @method	ModerationQueueEditor		getSingleObject()
  */
 class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
@@ -42,6 +45,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @inheritDoc
+	 * @return	ModerationQueue
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['lastChangeTime'])) {

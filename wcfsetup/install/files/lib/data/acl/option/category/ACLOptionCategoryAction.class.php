@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.acl.option.category
  * @category	Community Framework
+ * 
+ * @method	ACLOptionCategory		create()
+ * @method	ACLOptionCategoryEditor[]	getObjects()
+ * @method	ACLOptionCategoryEditor		getSingleObject()
  */
 class ACLOptionCategoryAction extends AbstractDatabaseObjectAction {
 	/**

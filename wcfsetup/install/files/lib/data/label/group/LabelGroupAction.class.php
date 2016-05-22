@@ -12,6 +12,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.label.group
  * @category	Community Framework
+ * 
+ * @method	LabelGroup		create()
+ * @method	LabelGroupEditor[]	getObjects()
+ * @method	LabelGroupEditor	getSingleObject()
  */
 class LabelGroupAction extends AbstractDatabaseObjectAction {
 	/**

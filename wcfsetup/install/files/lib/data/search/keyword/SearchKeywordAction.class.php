@@ -13,6 +13,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.search.keyword
  * @category	Community Framework
+ * 
+ * @method	SearchKeyword		create()
+ * @method	SearchKeywordEditor[]	getObjects()
+ * @method	SearchKeywordEditor	getSingleObject()
  */
 class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**

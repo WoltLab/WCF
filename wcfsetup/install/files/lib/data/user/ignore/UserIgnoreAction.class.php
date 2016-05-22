@@ -19,6 +19,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.ignore
  * @category	Community Framework
+ * 
+ * @method	UserIgnore		create()
+ * @method	UserIgnoreEditor[]	getObjects()
+ * @method	UserIgnoreEditor	getSingleObject()
  */
 class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	/**

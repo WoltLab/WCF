@@ -17,6 +17,10 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.application
  * @category	Community Framework
+ * 
+ * @method	Application		create()
+ * @method	ApplicationEditor[]	getObjects()
+ * @method	ApplicationEditor	getSingleObject()
  */
 class ApplicationAction extends AbstractDatabaseObjectAction {
 	/**

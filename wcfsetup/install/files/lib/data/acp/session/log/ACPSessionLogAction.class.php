@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.log
  * @category	Community Framework
+ * 
+ * @method	ACPSessionLog		create()
+ * @method	ACPSessionLogEditor[]	getObjects()
+ * @method	ACPSessionLogEditor	getSingleObject()
  */
 class ACPSessionLogAction extends AbstractDatabaseObjectAction {
 	/**

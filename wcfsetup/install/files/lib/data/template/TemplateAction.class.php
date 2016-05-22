@@ -12,6 +12,9 @@ use wcf\system\language\LanguageFactory;
  * @package	com.woltlab.wcf
  * @subpackage	data.template
  * @category	Community Framework
+ * 
+ * @method	TemplateEditor[]	getObjects()
+ * @method	TemplateEditor		getSingleObject()
  */
 class TemplateAction extends AbstractDatabaseObjectAction {
 	/**
@@ -41,8 +44,10 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @inheritDoc
+	 * @return	Template
 	 */
 	public function create() {
+		/** @var Template $template */
 		$template = parent::create();
 		
 		if (isset($this->parameters['source'])) {

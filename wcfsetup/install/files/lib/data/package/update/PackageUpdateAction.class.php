@@ -26,6 +26,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update
  * @category	Community Framework
+ * 
+ * @method	PackageUpdate		create()
+ * @method	PackageUpdateEditor[]	getObjects()
+ * @method	PackageUpdateEditor	getSingleObject()
  */
 class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	/**

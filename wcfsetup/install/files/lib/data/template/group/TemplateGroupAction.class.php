@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.template.group
  * @category	Community Framework
+ * 
+ * @method	TemplateGroup		create()
+ * @method	TemplateGroupEditor[]	getObjects()
+ * @method	TemplateGroupEditor	getSingleObject()
  */
 class TemplateGroupAction extends AbstractDatabaseObjectAction {
 	/**

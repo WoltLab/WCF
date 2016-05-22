@@ -12,6 +12,10 @@ use wcf\data\IToggleAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.captcha.question
  * @category	Community Framework
+ * 
+ * @method	CaptchaQuestion			create()
+ * @method	CaptchaQuestionEditor[]		getObjects()
+ * @method	CaptchaQuestionEditor		getSingleObject()
  */
 class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**

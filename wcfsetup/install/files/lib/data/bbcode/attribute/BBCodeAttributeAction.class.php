@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.attribute
  * @category	Community Framework
+ * 
+ * @method	BBCodeAttribute			create()
+ * @method	BBCodeAttributeEditor[]		getObjects()
+ * @method	BBCodeAttributeEditor		getSingleObject()
  */
 class BBCodeAttributeAction extends AbstractDatabaseObjectAction {
 	/**

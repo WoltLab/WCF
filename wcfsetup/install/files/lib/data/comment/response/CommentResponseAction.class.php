@@ -21,6 +21,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ * 
+ * @method	CommentResponse			create()
+ * @method	CommentResponseEditor[]		getObjects()
+ * @method	CommentResponseEditor		getSingleObject()
  */
 class CommentResponseAction extends AbstractDatabaseObjectAction {
 	/**

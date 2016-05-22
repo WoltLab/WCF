@@ -18,6 +18,9 @@ use wcf\system\WCF;
  * @subpackage	data.box
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	BoxEditor[]	getObjects()
+ * @method	BoxEditor	getSingleObject()
  */
 class BoxAction extends AbstractDatabaseObjectAction {
 	/**
@@ -53,8 +56,10 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @inheritDoc
+	 * @return	Box
 	 */
 	public function create() {
+		/** @var Box $box */
 		$box = parent::create();
 	
 		// save box content

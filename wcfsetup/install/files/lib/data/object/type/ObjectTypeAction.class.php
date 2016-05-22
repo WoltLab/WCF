@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.object.type
  * @category	Community Framework
+ * 
+ * @method	ObjectType		create()
+ * @method	ObjectTypeEditor[]	getObjects()
+ * @method	ObjectTypeEditor	getSingleObject()
  */
 class ObjectTypeAction extends AbstractDatabaseObjectAction {
 	/**

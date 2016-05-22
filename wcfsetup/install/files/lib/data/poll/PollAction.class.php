@@ -19,6 +19,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.poll
  * @category	Community Framework
+ * 
+ * @method	PollEditor[]	getObjects()
+ * @method	PollEditor	getSingleObject()
  */
 class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
@@ -39,11 +42,12 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	
 	/**
 	 * @inheritDoc
+	 * @return	Poll
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['time'])) $this->parameters['data']['time'] = TIME_NOW;
 		
-		// create poll
+		/** @var Poll $poll */
 		$poll = parent::create();
 		
 		// create options

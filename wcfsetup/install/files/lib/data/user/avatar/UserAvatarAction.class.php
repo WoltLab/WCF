@@ -25,6 +25,10 @@ use wcf\util\HTTPRequest;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.avatar
  * @category	Community Framework
+ * 
+ * @method	UserAvatar		create()
+ * @method	UserAvatarEditor[]	getObjects()
+ * @method	UserAvatarEditor	getSingleObject()
  */
 class UserAvatarAction extends AbstractDatabaseObjectAction {
 	/**

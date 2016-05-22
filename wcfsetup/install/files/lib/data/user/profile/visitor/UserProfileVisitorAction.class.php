@@ -17,6 +17,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.profile.visitor
  * @category	Community Framework
+ * 
+ * @method	UserProfileVisitor		create()
+ * @method	UserProfileVisitorEditor[]	getObjects()
+ * @method	UserProfileVisitorEditor	getSingleObject()
  */
 class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**

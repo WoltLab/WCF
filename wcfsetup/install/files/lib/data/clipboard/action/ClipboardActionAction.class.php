@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.clipboard.action
  * @category	Community Framework
+ * 
+ * @method	ClipboardAction			create()
+ * @method	ClipboardActionEditor[]		getObjects()
+ * @method	ClipboardActionEditor		getSingleObject()
  */
 class ClipboardActionAction extends AbstractDatabaseObjectAction {
 	/**

@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.template.listener
  * @category	Community Framework
+ * 
+ * @method	TemplateListener		create()
+ * @method	TemplateListenerEditor[]	getObjects()
+ * @method	TemplateListenerEditor		getSingleObject()
  */
 class TemplateListenerAction extends AbstractDatabaseObjectAction {
 	/**

@@ -12,12 +12,17 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.notification.event
  * @category	Community Framework
+ * 
+ * @method	UserNotificationEventEditor[]	getObjects()
+ * @method	UserNotificationEventEditor	getSingleObject()
  */
 class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
+	 * @return	UserNotificationEvent
 	 */
 	public function create() {
+		/** @var UserNotificationEvent $event */
 		$event = parent::create();
 		
 		if ($event->preset) {

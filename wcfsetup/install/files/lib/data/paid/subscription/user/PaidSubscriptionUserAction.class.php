@@ -17,6 +17,9 @@ use wcf\util\DateUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription.user
  * @category	Community Framework
+ * 
+ * @method	PaidSubscriptionUserEditor[]	getObjects()
+ * @method	PaidSubscriptionUserEditor	getSingleObject()
  */
 class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 	/**
@@ -36,6 +39,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @inheritDoc
+	 * @return	PaidSubscriptionUser
 	 */
 	public function create() {
 		$this->parameters['data']['subscriptionID'] = $this->parameters['subscription']->subscriptionID;
@@ -53,6 +57,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 		}
 		if (!isset($this->parameters['data']['isActive'])) $this->parameters['data']['isActive'] = 1;
 		
+		/** @var PaidSubscriptionUser $subscriptionUser */
 		$subscriptionUser = parent::create();
 		
 		// update group memberships

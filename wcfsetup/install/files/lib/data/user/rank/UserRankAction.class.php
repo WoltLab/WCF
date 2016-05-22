@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.rank
  * @category	Community Framework
+ * 
+ * @method	UserRank		create()
+ * @method	UserRankEditor[]	getObjects()
+ * @method	UserRankEditor		getSingleObject()
  */
 class UserRankAction extends AbstractDatabaseObjectAction {
 	/**

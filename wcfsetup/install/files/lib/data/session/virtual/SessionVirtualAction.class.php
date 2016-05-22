@@ -12,6 +12,10 @@ use wcf\data\acp\session\virtual\ACPSessionVirtualAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.session.virtual
  * @category	Community Framework
+ * 
+ * @method	SessionVirtual		create()
+ * @method	SessionVirtualEditor[]	getObjects()
+ * @method	SessionVirtualEditor	getSingleObject()
  */
 class SessionVirtualAction extends ACPSessionVirtualAction {
 	/**

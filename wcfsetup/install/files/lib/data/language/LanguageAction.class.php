@@ -12,6 +12,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.language
  * @category	Community Framework
+ * 
+ * @method	Language		create()
+ * @method	LanguageEditor[]	getObjects()
+ * @method	LanguageEditor		getSingleObject()
  */
 class LanguageAction extends AbstractDatabaseObjectAction {
 	/**

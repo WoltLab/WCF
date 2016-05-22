@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.spider
  * @category	Community Framework
+ * 
+ * @method	Spider		create()
+ * @method	SpiderEditor[]	getObjects()
+ * @method	SpiderEditor	getSingleObject()
  */
 class SpiderAction extends AbstractDatabaseObjectAction {
 	/**

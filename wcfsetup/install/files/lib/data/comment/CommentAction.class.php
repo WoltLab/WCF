@@ -33,6 +33,10 @@ use wcf\util\UserUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
+ * 
+ * @method	Comment			create()
+ * @method	CommentEditor[]		getObjects()
+ * @method	CommentEditor		getSingleObject()
  */
 class CommentAction extends AbstractDatabaseObjectAction {
 	/**

@@ -17,6 +17,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.label
  * @category	Community Framework
+ * 
+ * @method	LabelEditor[]	getObjects()
+ * @method	LabelEditor	getSingleObject()
  */
 class LabelAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
@@ -46,6 +49,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
 	
 	/**
 	 * @inheritDoc
+	 * @return	Label
 	 */
 	public function create() {
 		$showOrder = 0;
@@ -54,6 +58,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
 			unset($this->parameters['data']['showOrder']);
 		}
 		
+		/** @var Label $label */
 		$label = parent::create();
 		
 		(new LabelEditor($label))->setShowOrder($label->groupID, $showOrder);

@@ -25,6 +25,9 @@ use wcf\util\FileUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.style
  * @category	Community Framework
+ * 
+ * @method	StyleEditor[]	getObjects()
+ * @method	StyleEditor	getSingleObject()
  */
 class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction {
 	/**
@@ -66,8 +69,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	
 	/**
 	 * @inheritdoc
+	 * @return	Style
 	 */
 	public function create() {
+		/** @var Style $style */
 		$style = parent::create();
 		
 		// add variables

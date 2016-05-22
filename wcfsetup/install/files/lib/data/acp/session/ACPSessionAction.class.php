@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session
  * @category	Community Framework
+ * 
+ * @method	ACPSession		create()
+ * @method	ACPSessionEditor[]	getObjects()
+ * @method	ACPSessionEditor	getSingleObject()
  */
 class ACPSessionAction extends AbstractDatabaseObjectAction {
 	/**

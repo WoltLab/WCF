@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.search
  * @category	Community Framework
+ * 
+ * @method	Search		create()
+ * @method	SearchEditor[]	getObjects()
+ * @method	SearchEditor	getSingleObject()
  */
 class SearchAction extends AbstractDatabaseObjectAction {
 	/**

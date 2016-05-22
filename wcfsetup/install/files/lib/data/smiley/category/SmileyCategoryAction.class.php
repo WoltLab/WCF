@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\smiley\category;
+use wcf\data\category\Category;
 use wcf\data\category\CategoryEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;
@@ -14,6 +15,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.smiley.category
  * @category	Community Framework
+ * 
+ * @method	Category		create()
+ * @method	CategoryEditor[]	getObjects()
+ * @method	CategoryEditor		getSingleObject()
  */
 class SmileyCategoryAction extends AbstractDatabaseObjectAction {
 	/**

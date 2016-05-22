@@ -25,6 +25,9 @@ use wcf\util\UserRegistrationUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
+ * 
+ * @method	UserEditor[]	getObjects()
+ * @method	UserEditor	getSingleObject()
  */
 class UserAction extends AbstractDatabaseObjectAction implements IClipboardAction, ISearchAction {
 	/**
@@ -246,8 +249,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * Creates a new user.
-	 * 
+	 * @inheritDoc
 	 * @return	User
 	 */
 	public function create() {
@@ -255,6 +257,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->parameters['data']['socialNetworkPrivacySettings'] = '';
 		}
 		
+		/** @var User $user */
 		$user = parent::create();
 		$userEditor = new UserEditor($user);
 		

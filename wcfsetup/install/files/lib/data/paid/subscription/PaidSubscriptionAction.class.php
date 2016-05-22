@@ -12,6 +12,9 @@ use wcf\data\IToggleAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription
  * @category	Community Framework
+ * 
+ * @method	PaidSubscriptionEditor[]	getObjects()
+ * @method	PaidSubscriptionEditor		getSingleObject()
  */
 class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
@@ -31,6 +34,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 	
 	/**
 	 * @inheritDoc
+	 * @return	PaidSubscription
 	 */
 	public function create() {
 		$showOrder = 0;
@@ -39,6 +43,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 			unset($this->parameters['data']['showOrder']);
 		}
 		
+		/** @var PaidSubscription $subscription */
 		$subscription = parent::create();
 		$editor = new PaidSubscriptionEditor($subscription);
 		$editor->setShowOrder($showOrder);

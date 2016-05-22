@@ -16,6 +16,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
  * @category	Community Framework
+ * 
+ * @method	UserGroupEditor[]	getObjects()
+ * @method	UserGroupEditor		getSingleObject()
  */
 class UserGroupAction extends AbstractDatabaseObjectAction {
 	/**
@@ -51,8 +54,10 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @inheritDoc
+	 * @return	UserGroup
 	 */
 	public function create() {
+		/** @var UserGroup $group */
 		$group = parent::create();
 		
 		if (isset($this->parameters['options'])) {

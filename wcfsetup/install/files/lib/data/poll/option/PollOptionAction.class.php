@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.poll.option
  * @category	Community Framework
+ * 
+ * @method	PollOption		create()
+ * @method	PollOptionEditor[]	getObjects()
+ * @method	PollOptionEditor	getSingleObject()
  */
 class PollOptionAction extends AbstractDatabaseObjectAction {
 	/**

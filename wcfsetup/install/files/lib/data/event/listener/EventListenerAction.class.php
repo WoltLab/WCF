@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.event.listener
  * @category	Community Framework
+ * 
+ * @method	EventListener		create()
+ * @method	EventListenerEditor[]	getObjects()
+ * @method	EventListenerEditor	getSingleObject()
  */
 class EventListenerAction extends AbstractDatabaseObjectAction {
 	/**

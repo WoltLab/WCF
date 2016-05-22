@@ -25,6 +25,10 @@ use wcf\util\FileUtil;
  * @subpackage	data.media
  * @category	Community Framework
  * @since	2.2
+ * 
+ * @method	Media		create()
+ * @method	MediaEditor[]	getObjects()
+ * @method	MediaEditor	getSingleObject()
  */
 class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction, IUploadAction {
 	/**

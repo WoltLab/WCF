@@ -18,6 +18,10 @@ use wcf\util\JSON;
  * @package	com.woltlab.wcf
  * @subpackage	data.package
  * @category	Community Framework
+ * 
+ * @method	Package			create()
+ * @method	PackageEditor[]		getObjects()
+ * @method	PackageEditor		getSingleObject()
  */
 class PackageAction extends AbstractDatabaseObjectAction {
 	/**

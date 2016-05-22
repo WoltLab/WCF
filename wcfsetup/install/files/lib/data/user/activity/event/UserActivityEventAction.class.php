@@ -15,6 +15,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.activity.event
  * @category	Community Framework
+ * 
+ * @method	UserActivityEvent		create()
+ * @method	UserActivityEventEditor[]	getObjects()
+ * @method	UserActivityEventEditor		getSingleObject()
  */
 class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	/**

@@ -13,6 +13,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.sitemap
  * @category	Community Framework
+ * 
+ * @method	Sitemap			create()
+ * @method	SitemapEditor[]		getObjects()
+ * @method	SitemapEditor		getSingleObject()
  */
 class SitemapAction extends AbstractDatabaseObjectAction {
 	/**

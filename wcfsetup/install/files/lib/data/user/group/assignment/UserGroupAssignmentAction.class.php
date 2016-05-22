@@ -13,6 +13,10 @@ use wcf\system\condition\ConditionHandler;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.assignment
  * @category	Community Framework
+ * 
+ * @method	UserGroupAssignment		create()
+ * @method	UserGroupAssignmentEditor[]	getObjects()
+ * @method	UserGroupAssignmentEditor	getSingleObject()
  */
 class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**

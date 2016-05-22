@@ -15,6 +15,10 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.stat.daily
  * @category	Community Framework
+ * 
+ * @method	StatDaily		create()
+ * @method	StatDailyEditor[]	getObjects()
+ * @method	StatDailyEditor		getSingleObject()
  */
 class StatDailyAction extends AbstractDatabaseObjectAction {
 	/**

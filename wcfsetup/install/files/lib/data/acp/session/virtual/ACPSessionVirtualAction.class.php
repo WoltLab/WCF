@@ -12,6 +12,9 @@ use wcf\util\UserUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.virtual
  * @category	Community Framework
+ * 
+ * @method	ACPSessionVirtualEditor[]	getObjects()
+ * @method	ACPSessionVirtualEditor		getSingleObject()
  */
 class ACPSessionVirtualAction extends AbstractDatabaseObjectAction {
 	/**
@@ -23,7 +26,7 @@ class ACPSessionVirtualAction extends AbstractDatabaseObjectAction {
 	 * Attention: This method does not always return a new object, in case a matching virtual session
 	 * already exists, the existing session will be returned rather than a new session being created.
 	 * 
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @return	ACPSessionVirtual
 	 */
 	public function create() {
 		// try to find an existing virtual session

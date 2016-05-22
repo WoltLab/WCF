@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.
  * @category	Community Framework
+ * 
+ * @method	Option		create()
+ * @method	OptionEditor[]	getObjects()
+ * @method	OptionEditor	getSingleObject()
  */
 class OptionAction extends AbstractDatabaseObjectAction {
 	/**

@@ -11,6 +11,10 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.menu.item
  * @category	Community Framework
+ * 
+ * @method	ACPMenuItem		create()
+ * @method	ACPMenuItemEditor[]	getObjects()
+ * @method	ACPMenuItemEditor	getSingleObject()
  */
 class ACPMenuItemAction extends AbstractDatabaseObjectAction {
 	/**

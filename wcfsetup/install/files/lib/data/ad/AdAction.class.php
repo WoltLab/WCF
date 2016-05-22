@@ -16,6 +16,9 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @subpackage	data.ad
  * @category	Community Framework
+ * 
+ * @method	AdEditor[]	getObjects()
+ * @method	AdEditor	getSingleObject()
  */
 class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
 	/**
@@ -35,6 +38,7 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	
 	/**
 	 * @inheritDoc
+	 * @return	Ad
 	 */
 	public function create() {
 		$showOrder = 0;
@@ -43,6 +47,7 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 			unset($this->parameters['data']['showOrder']);
 		}
 		
+		/** @var Ad $ad */
 		$ad = parent::create();
 		$adEditor = new AdEditor($ad);
 		$adEditor->setShowOrder($showOrder);
