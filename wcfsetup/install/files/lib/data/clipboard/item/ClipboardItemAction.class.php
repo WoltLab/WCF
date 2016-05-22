@@ -24,6 +24,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	 */
 	public $objectTypeID = 0;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * This is a heavily modified constructor which behaves differently from other DBOActions,
 	 * primarily because this class just masquerades as a regular DBOAction.

@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\html\metacode\converter;
 
+/**
+ * TOOD documentation
+ * @since	2.2
+ */
 class ColorMetacodeConverter extends AbstractMetacodeConverter {
 	/**
 	 * @inheritDoc

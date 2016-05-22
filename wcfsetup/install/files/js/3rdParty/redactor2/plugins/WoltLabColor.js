@@ -30,6 +30,15 @@ $.Redactor.prototype.WoltLabColor = function() {
 			
 			var button = this.button.add('woltlabColor', 'Color');
 			this.button.addDropdown(button, dropdown);
+			
+			// add styling
+			button.data('dropdown').find('a').each(function(index, link) {
+				if (link.className.match(/redactor-dropdown-color_([A-F0-9]{6})/)) {
+					link.parentNode.classList.add('woltlab-color-' + RegExp.$1);
+					link.parentNode.classList.add('woltlab-color-selection');
+				}
+			});
+			
 		},
 		
 		setColor: function(key) {
@@ -38,7 +47,7 @@ $.Redactor.prototype.WoltLabColor = function() {
 			require(['WoltLab/WCF/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.selection.save();
 				
-				UiRedactorFormat.format(this.$editor[0], 'woltlab-color', 'woltlab-color' + key);
+				UiRedactorFormat.format(this.$editor[0], 'woltlab-color', 'woltlab-color-' + key);
 				
 				this.selection.restore();
 			}).bind(this));

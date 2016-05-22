@@ -36,7 +36,7 @@ use wcf\util\StringUtil;
 class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * list of available object types
-	 * @var	array
+	 * @var	IUserNotificationEvent[][]
 	 */
 	protected $availableObjectTypes = [];
 	
@@ -460,6 +460,8 @@ class UserNotificationHandler extends SingletonFactory {
 			}
 			
 			$className = $eventObjects[$notification->eventID]->className;
+			
+			/** @var IUserNotificationEvent $class */
 			$class = new $className($eventObjects[$notification->eventID]);
 			$class->setObject(
 				$notification,
@@ -589,7 +591,7 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of available events.
 	 * 
-	 * @return	IUserNotificationEvent[]
+	 * @return	IUserNotificationEvent[][]
 	 */
 	public function getAvailableEvents() {
 		return $this->availableEvents;

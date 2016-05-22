@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\user\option\UserOption;
 use wcf\data\IGroupedUserListAction;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
@@ -47,16 +48,17 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 		$users = [];
 		$userOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');
 		if (isset($userOptions['birthday'])) {
+			/** @var UserOption $birthdayUserOption */
 			$birthdayUserOption = $userOptions['birthday'];
 			
 			$userIDs = UserBirthdayCache::getInstance()->getBirthdays($month, $day);
 			$userList = new UserProfileList();
 			$userList->setObjectIDs($userIDs);
 			$userList->readObjects();
-				
+			
 			foreach ($userList->getObjects() as $user) {
 				$birthdayUserOption->setUser($user->getDecoratedObject());
-					
+				
 				if (!$user->isProtected() && $birthdayUserOption->isVisible() && $user->getAge($year) >= 0) {
 					$users[] = $user;
 				}

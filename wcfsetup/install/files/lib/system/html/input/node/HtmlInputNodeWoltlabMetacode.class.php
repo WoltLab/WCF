@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\html\input\node;
 use wcf\system\html\metacode\converter\IMetacodeConverter;
-use wcf\system\html\metacode\converter\SimpleMetacodeConverter;
 use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\HtmlNodeProcessor;
 use wcf\util\DOMUtil;

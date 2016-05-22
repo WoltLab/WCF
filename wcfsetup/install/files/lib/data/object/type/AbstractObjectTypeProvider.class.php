@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\object\type;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Abstract implementation of an object type provider.
@@ -49,6 +50,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 		$tableAlias = call_user_func([$this->className, 'getDatabaseTableAlias']);
 		$tableIndex = call_user_func([$this->className, 'getDatabaseTableIndexName']);
 		
+		/** @var DatabaseObjectList $objectList */
 		$objectList = new $this->listClassName();
 		if ($this->decoratorClassName) {
 			$objectList->decoratorClassName = $this->decoratorClassName;

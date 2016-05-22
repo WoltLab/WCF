@@ -23,6 +23,7 @@ trait TLegacyUserPropertyAccess {
 	 * @return	mixed
 	 */
 	public function __get($name) {
+		/** @noinspection PhpUndefinedClassInspection */
 		$value = parent::__get($name);
 		if ($value !== null) {
 			return $value;
@@ -36,6 +37,7 @@ trait TLegacyUserPropertyAccess {
 		
 		// in case any code should rely on directly accessing user properties,
 		// refer them to the user profile object
+		/** @noinspection PhpVariableVariableInspection */
 		return $this->getUserProfile()->$name;
 	}
 }

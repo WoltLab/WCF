@@ -68,6 +68,7 @@
 * Language server system removed.
 * Object type definition `com.woltlab.wcf.user.online.location` removed.
 * Object type definition `com.woltlab.wcf.page` removed.
+* Deprecated methods in `wcf\util\StringUtil` removed.
 
 #### Documentation
 

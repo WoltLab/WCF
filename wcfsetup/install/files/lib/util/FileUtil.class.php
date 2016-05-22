@@ -696,5 +696,10 @@ final class FileUtil {
 		return 'fa-file-o';
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of FileUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

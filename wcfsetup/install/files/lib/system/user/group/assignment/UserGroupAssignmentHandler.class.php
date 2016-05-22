@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\group\assignment;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\User;
@@ -21,7 +22,7 @@ use wcf\system\SingletonFactory;
 class UserGroupAssignmentHandler extends SingletonFactory {
 	/**
 	 * list of grouped user group assignment condition object types
-	 * @var	array
+	 * @var	ObjectType[][]
 	 */
 	protected $groupedObjectTypes = [];
 	
@@ -41,6 +42,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 		$userList->setObjectIDs($userIDs);
 		$userList->readObjects();
 		
+		/** @var UserGroupAssignment[] $assignments */
 		$assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
 		foreach ($userList as $user) {
 			$groupIDs = $user->getGroupIDs();

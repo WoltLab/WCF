@@ -19,7 +19,7 @@ use wcf\system\SingletonFactory;
 class SmileyCache extends SingletonFactory {
 	/**
 	 * cached smilies
-	 * @var	array
+	 * @var	Smiley[][]
 	 */
 	protected $cachedSmilies = [];
 	
@@ -60,7 +60,7 @@ class SmileyCache extends SingletonFactory {
 	/**
 	 * Returns all smilies.
 	 * 
-	 * @return	array
+	 * @return	Smiley[][]
 	 */
 	public function getSmilies() {
 		return $this->cachedSmilies;

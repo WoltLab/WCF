@@ -333,10 +333,12 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 						if (isset($this->parameters[$type])) {
 							if (is_array($this->parameters[$type])) {
 								if (isset($this->parameters[$type][$language->languageID])) {
+									/** @noinspection PhpVariableVariableInspection */
 									$$type = $this->parameters[$type][$language->languageID];
 								}
 							}
 							else {
+								/** @noinspection PhpVariableVariableInspection */
 								$$type = $this->parameters[$type];
 							}
 						}

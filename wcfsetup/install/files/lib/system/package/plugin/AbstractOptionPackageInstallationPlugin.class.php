@@ -42,6 +42,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		// delete options
 		$elements = $xpath->query('/ns:data/ns:delete/ns:option');
 		$options = [];
+		
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$options[] = $element->getAttribute('name');
 		}
@@ -63,6 +65,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		// delete categories
 		$elements = $xpath->query('/ns:data/ns:delete/ns:optioncategory');
 		$categories = [];
+		
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$categories[] = $element->getAttribute('name');
 		}
@@ -103,6 +107,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	protected function importCategories(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
+		
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$data = [];
 			
@@ -152,6 +158,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	protected function importOptions(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');
+		
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$data = [];
 			$children = $xpath->query('child::*', $element);

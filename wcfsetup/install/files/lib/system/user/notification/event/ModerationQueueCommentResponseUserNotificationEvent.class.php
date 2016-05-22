@@ -76,7 +76,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			]);
 		}
 		
-		$comment = CommentRuntimeCache::getInstance()->getComment($this->userNotificationObject->commentID);
+		$comment = CommentRuntimeCache::getInstance()->getObject($this->userNotificationObject->commentID);
 		if ($comment->userID) {
 			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}

@@ -11,6 +11,9 @@ use wcf\system\exception\SystemException;
  * @package	com.woltlab.wcf
  * @subpackage	system.io
  * @category	Community Framework
+ * 
+ * @method	resource	open($filename, $mode, $use_include_path = 0)
+ * @method	boolean		rewind($zp)
  */
 class GZipFile extends File {
 	/**
@@ -20,6 +23,7 @@ class GZipFile extends File {
 	 */
 	protected static $gzopen64 = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a gzip file.
 	 * 
@@ -88,7 +92,7 @@ class GZipFile extends File {
 		}
 		
 		if ($this->seek($eof) == -1) $eof--;
-				
+		
 		$this->rewind();
 		return $eof - $correction;
 	}

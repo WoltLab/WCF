@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\object\type;
 use wcf\data\object\type\AbstractObjectTypeProcessor;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Provides a default implementation of IUserNotificationObjectType.
@@ -37,9 +38,10 @@ class AbstractUserNotificationObjectType extends AbstractObjectTypeProcessor imp
 	public function getObjectsByIDs(array $objectIDs) {
 		$indexName = call_user_func([static::$objectClassName, 'getDatabaseTableIndexName']);
 		
+		/** @var DatabaseObjectList $objectList */
 		$objectList = new static::$objectListClassName();
 		$objectList->setObjectIDs($objectIDs);
-		$objectList->sqLimit = 0;
+		$objectList->sqlLimit = 0;
 		$objectList->decoratorClassName = static::$decoratorClassName;
 		$objectList->readObjects();
 		$objects = $objectList->getObjects();

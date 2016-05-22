@@ -174,5 +174,10 @@ final class HeaderUtil {
 		WCF::getTPL()->display('redirect');
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of HeaderUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

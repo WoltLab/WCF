@@ -33,6 +33,8 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 		if (!empty($spiders)) {
 			$existingSpiders = SpiderCacheBuilder::getInstance()->getData();
 			$statementParameters = [];
+			
+			/** @var \DOMElement $spider */
 			foreach ($spiders as $spider) {
 				$identifier = mb_strtolower($spider->getAttribute('ident'));
 				$name = $xpath->query('ns:name', $spider)->item(0);

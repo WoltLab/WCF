@@ -440,6 +440,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function isAccessible($name) {
+		/** @noinspection PhpVariableVariableInspection */
 		switch ($this->$name) {
 			case self::ACCESS_EVERYONE:
 				return true;

@@ -32,6 +32,7 @@ $neededFilesPattern = [
 	'!^install/packages/.*!'];
 	
 // define needed functions and classes
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * WCF::handleException() calls the show method on exceptions that implement this interface.
  *
@@ -45,6 +46,7 @@ interface IPrintableException {
 // define needed classes
 // needed are:
 // SystemException, PrintableException, BasicFileUtil, Tar, File, ZipFile
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * A SystemException is thrown when an unexpected error occurs.
  *
@@ -227,6 +229,7 @@ function handleError($errorNo, $message, $filename, $lineNo) {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * BasicFileUtil contains file-related functions.
  *
@@ -370,6 +373,7 @@ class BasicFileUtil {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * Opens tar or tar.gz archives.
  *
@@ -687,6 +691,7 @@ class Tar {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * The File class handles all file operations.
  *
@@ -746,6 +751,7 @@ class File {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * The File class handles all file operations on a zipped file.
  *
@@ -759,6 +765,7 @@ class ZipFile extends File {
 	 */
 	protected static $gzopen64 = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a new zipped file.
 	 *

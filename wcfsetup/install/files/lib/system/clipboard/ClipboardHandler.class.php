@@ -247,6 +247,7 @@ class ClipboardHandler extends SingletonFactory {
 			// validate object ids against loaded items (check for zombie object ids)
 			$indexName = $objectList->getDatabaseTableIndexName();
 			foreach ($this->markedItems[$objectType] as $object) {
+				/** @noinspection PhpVariableVariableInspection */
 				$index = array_search($object->$indexName, $objectData['objectIDs']);
 				unset($objectData['objectIDs'][$index]);
 			}

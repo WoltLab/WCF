@@ -458,5 +458,10 @@ final class DOMUtil {
 		return self::getParentBefore($node, $ancestor);
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of DOMUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

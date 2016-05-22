@@ -20,6 +20,7 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
 	 */
 	protected $parameters = [];
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * @inheritDoc
 	 */

@@ -109,5 +109,10 @@ final class EmailGrammar {
 		return $header;
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of EmailGrammer objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

@@ -13,6 +13,7 @@ namespace wcf\system\database\exception;
  * @since	2.2
  */
 class DatabaseException extends \wcf\system\database\DatabaseException {
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * @inheritDoc
 	 */

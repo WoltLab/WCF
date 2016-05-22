@@ -47,6 +47,7 @@ class CLIWCF extends WCF {
 	 */
 	protected static $argvParser = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Calls all init functions of the WCF class.
 	 */

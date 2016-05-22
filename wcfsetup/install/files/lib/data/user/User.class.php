@@ -107,6 +107,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 */
 	protected static $userOptions = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * @inheritDoc
 	 */

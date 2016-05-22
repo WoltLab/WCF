@@ -151,7 +151,7 @@ final class StringUtil {
 	/**
 	 * Formats a numeric.
 	 * 
-	 * @param	numeric		$numeric
+	 * @param	number		$numeric
 	 * @return	string
 	 */
 	public static function formatNumeric($numeric) {
@@ -242,91 +242,6 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Sorts an array of strings and maintain index association.
-	 * 
-	 * @param	array		$strings
-	 * @return	boolean
-	 * 
-	 * @deprecated
-	 */
-	public static function sort(array &$strings) {
-		return asort($strings, SORT_LOCALE_STRING);
-	}
-	
-	/**
-	 * Alias to php mb_strlen() function.
-	 * 
-	 * @deprecated use mb_strlen() instead
-	 */
-	public static function length($string) {
-		return mb_strlen($string);
-	}
-	
-	/**
-	 * Alias to php mb_strpos() function.
-	 * 
-	 * @deprecated use mb_strpos() instead
-	 */
-	public static function indexOf($hayStack, $needle, $offset = 0) {
-		return mb_strpos($hayStack, $needle, $offset);
-	}
-	
-	/**
-	 * Alias to php mb_stripos() function.
-	 * 
-	 * @deprecated use mb_stripos() instead
-	 */
-	public static function indexOfIgnoreCase($hayStack, $needle, $offset = 0) {
-		return mb_stripos($hayStack, $needle, $offset);
-	}
-	
-	/**
-	 * Alias to php mb_strrpos() function.
-	 * 
-	 * @deprecated use mb_strrpos() instead
-	 */
-	public static function lastIndexOf($hayStack, $needle) {
-		return mb_strrpos($hayStack, $needle);
-	}
-	
-	/**
-	 * Alias to php mb_substr() function.
-	 * 
-	 * @deprecated use mb_substr() instead
-	 */
-	public static function substring($string, $start, $length = null) {
-		if ($length !== null) return mb_substr($string, $start, $length);
-		return mb_substr($string, $start);
-	}
-	
-	/**
-	 * Alias to php mb_strtolower() function.
-	 * 
-	 * @deprecated use mb_strtolower() instead
-	 */
-	public static function toLowerCase($string) {
-		return mb_strtolower($string);
-	}
-	
-	/**
-	 * Alias to php mb_strtoupper() function.
-	 * 
-	 * @deprecated use mb_strtoupper() instead
-	 */
-	public static function toUpperCase($string) {
-		return mb_strtoupper($string);
-	}
-	
-	/**
-	 * Alias to php substr_count() function.
-	 * 
-	 * @deprecated use mb_substr_count() instead
-	 */
-	public static function countSubstring($hayStack, $needle) {
-		return mb_substr_count($hayStack, $needle);
-	}
-	
-	/**
 	 * Alias to php ucfirst() function with multibyte support.
 	 */
 	public static function firstCharToUpperCase($string) {
@@ -345,15 +260,6 @@ final class StringUtil {
 	 */
 	public static function wordsToUpperCase($string) {
 		return mb_convert_case($string, MB_CASE_TITLE);
-	}
-	
-	/**
-	 * Alias to php str_replace() function.
-	 * 
-	 * @deprecated please use str_replace() instead
-	 */
-	public static function replace($search, $replace, $subject, &$count = null) {
-		return str_replace($search, $replace, $subject, $count);
 	}
 	
 	/**
@@ -813,5 +719,10 @@ final class StringUtil {
 		return $result;
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of StringUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

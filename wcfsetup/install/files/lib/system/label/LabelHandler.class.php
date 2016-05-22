@@ -28,7 +28,7 @@ class LabelHandler extends SingletonFactory {
 	
 	/**
 	 * list of label groups
-	 * @var	ViewableLabelGroup[]
+	 * @var	mixed[][]
 	 */
 	protected $labelGroups = null;
 	

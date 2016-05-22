@@ -79,5 +79,10 @@ final class StringStack {
 		return [];
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of StringStack objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

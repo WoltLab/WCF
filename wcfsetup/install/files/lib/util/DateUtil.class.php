@@ -481,5 +481,10 @@ final class DateUtil {
 		return ($date->format('W') == 53 ? 53 : 52);
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of DateUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

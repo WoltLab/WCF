@@ -43,6 +43,7 @@ class RemoteFile extends File {
 	 */
 	private static $hasSSLSupport = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a new connection to a remote host.
 	 * 

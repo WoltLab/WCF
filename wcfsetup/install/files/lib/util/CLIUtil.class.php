@@ -97,5 +97,10 @@ final class CLIUtil {
 		return DateUtil::format(DateUtil::getDateTimeByTimestamp($timestamp), DateUtil::DATE_FORMAT);
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of CLIUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }
