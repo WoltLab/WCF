@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\request;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\page\PageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
@@ -123,7 +124,7 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
-				return '';// TODO: PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
+				return PageCache::getInstance()->getLandingPage()->getLink();
 			}
 		}
 		
