@@ -297,7 +297,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.configuration"><![CDATA[Configuration]]></item>
 		<item name="wcf.acp.group.option.category.admin.customization"><![CDATA[Customization]]></item>
 		<item name="wcf.acp.group.option.category.admin.management"><![CDATA[Management]]></item>
-		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Page Menu]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[General Permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Styles]]></item>
