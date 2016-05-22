@@ -15,8 +15,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='BoxAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.box.add{/lang}</span></a></li>
-			<li><a href="{link controller='BoxAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.box.addMultilingual{/lang}</span></a></li>
+			<li><a href="#" class="button jsButtonBoxAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.box.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -149,8 +148,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='BoxAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.box.add{/lang}</span></a></li>
-				<li><a href="{link controller='BoxAdd'}isMultilingual=1{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.box.addMultilingual{/lang}</span></a></li>
+				<li><a href="#" class="button jsButtonBoxAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.box.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>
@@ -159,5 +157,7 @@
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
+
+{include file='boxAddDialog'}
 
 {include file='footer'}

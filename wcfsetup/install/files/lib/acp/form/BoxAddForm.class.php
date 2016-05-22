@@ -12,11 +12,14 @@ use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\page\handler\ILookupPageHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -172,8 +175,8 @@ class BoxAddForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
-		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
+		
+		$this->readBoxType();
 		
 		$this->pageNodeList = (new PageNodeTree())->getNodeList();
 		
@@ -185,6 +188,27 @@ class BoxAddForm extends AbstractForm {
 					$this->pageHandlers[$pageNode->pageID] = $pageNode->requireObjectID;
 				}
 			}
+		}
+	}
+	
+	/**
+	 * Reads basic page parameters controlling type and i18n.
+	 *
+	 * @throws	IllegalLinkException
+	 */
+	protected function readBoxType() {
+		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
+		if (!empty($_REQUEST['boxType'])) $this->boxType = $_REQUEST['boxType'];
+		
+		// work-around to force adding boxes via dialog overlay
+		if (empty($_POST) && $this->boxType == '') {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('BoxList', ['showBoxAddDialog' => 1]));
+			exit;
+		}
+		
+		// validate box type
+		if (!in_array($this->boxType, Box::$availableBoxTypes)) {
+			throw new IllegalLinkException();
 		}
 	}
 	
@@ -247,11 +271,7 @@ class BoxAddForm extends AbstractForm {
 		// validate name
 		$this->validateName();
 		
-		// validate box type
-		if (!in_array($this->boxType, Box::$availableBoxTypes)) {
-			throw new UserInputException('boxType');
-		}
-		
+		// validate controller
 		if ($this->boxType === 'system') {
 			$this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
 			if ($this->boxController === null || $this->boxController->getDefinition()->definitionName != 'com.woltlab.wcf.boxController') {

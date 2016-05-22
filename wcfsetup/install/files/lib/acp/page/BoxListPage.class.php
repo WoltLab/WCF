@@ -67,13 +67,19 @@ class BoxListPage extends SortablePage {
 	 * box type
 	 * @var string
 	 */
-	public $boxType = '';
+	public $boxType = 'static';
 	
 	/**
 	 * box position
 	 * @var string
 	 */
 	public $position = '';
+	
+	/**
+	 * display 'Add Box' dialog on load
+	 * @var integer
+	 */
+	public $showBoxAddDialog = 0;
 	
 	/**
 	 * @inheritdoc
@@ -86,6 +92,7 @@ class BoxListPage extends SortablePage {
 		if (!empty($_REQUEST['content'])) $this->content = StringUtil::trim($_REQUEST['content']);
 		if (!empty($_REQUEST['boxType'])) $this->boxType = $_REQUEST['boxType'];
 		if (!empty($_REQUEST['position'])) $this->position = $_REQUEST['position'];
+		if (!empty($_REQUEST['showBoxAddDialog'])) $this->showBoxAddDialog = 1;
 	}
 	
 	/**
@@ -129,7 +136,8 @@ class BoxListPage extends SortablePage {
 			'content' => $this->content,
 			'boxType' => $this->boxType,
 			'position' => $this->position,
-			'availablePositions' => Box::$availablePositions
+			'availablePositions' => Box::$availablePositions,
+			'showBoxAddDialog' => $this->showBoxAddDialog
 		]);
 	}
 }

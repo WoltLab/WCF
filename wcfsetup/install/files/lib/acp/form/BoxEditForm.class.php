@@ -59,6 +59,13 @@ class BoxEditForm extends BoxAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function readBoxType() {
+		// not required for editing
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function validateName() {
 		if (mb_strtolower($this->name) != mb_strtolower($this->box->name)) {
 			parent::validateName();
