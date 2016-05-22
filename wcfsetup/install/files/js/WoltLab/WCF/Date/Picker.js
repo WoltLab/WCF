@@ -116,8 +116,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				// check if the date input has one of the following classes set otherwise default to 'short'
 				var hasClass = false, knownClasses = ['tiny', 'short', 'medium', 'long'];
-				for (var i = 0; i < 4; i++) {
-					if (element.classList.contains(knownClasses[i])) {
+				for (var j = 0; j < 4; j++) {
+					if (element.classList.contains(knownClasses[j])) {
 						hasClass = true;
 					}
 				}
