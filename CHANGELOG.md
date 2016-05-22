@@ -47,6 +47,7 @@
 * Added replacements for WCF.Like, WCF.User.List and $.ui.wcfPages
 * Added update support for styles
 * `\wcf\system\condition\MultiPageControllerCondition` has been replaced by `wcf\system\condition\page\MultiPageCondition`
+* Added special CSS class to cookie policy notice (`cookiePolicyNotice`)
 
 #### CMS
 

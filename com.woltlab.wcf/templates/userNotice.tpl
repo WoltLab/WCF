@@ -7,7 +7,7 @@
 	{/if}
 	
 	{if MODULE_COOKIE_POLICY_PAGE && $__wcf->session->isFirstVisit() && !$__wcf->user->userID}
-		<p class="info">{lang}wcf.page.cookiePolicy.info{/lang}</p>
+		<p class="info cookiePolicyNotice">{lang}wcf.page.cookiePolicy.info{/lang}</p>
 	{/if}
 	
 	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
