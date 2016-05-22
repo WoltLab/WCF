@@ -3,6 +3,7 @@ namespace wcf\system\breadcrumb;
 use wcf\data\page\PageCache;
 use wcf\system\page\PageLocationManager;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Manages breadcrumbs.
@@ -102,7 +103,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 		if ($addLandingPage) {
 			array_unshift($locations, [
 				'link' => $landingPage->getLink(),
-				'title' => $landingPage->getTitle()
+				'title' => WCF::getLanguage()->get(PAGE_TITLE)
 			]);
 		}
 		
