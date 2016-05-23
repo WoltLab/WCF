@@ -433,7 +433,6 @@ RedactorPlugins.wbbcode = function() {
 			
 			// drop <br>, they are pointless because the editor already adds a newline after them
 			html = html.replace(/<br>/g, '');
-			html = html.replace(/&nbsp;/gi, " ");
 			
 			// [quote]
 			html = html.replace(/<blockquote([^>]+)>\n?<header[^>]*?>[\s\S]*?<\/header>/gi, function(match, attributes, innerContent) {
@@ -1504,6 +1503,9 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
+			
+			// double-encode the ampersand, otherwise Redactor removes it
+			data = data.replace(/&amp;nbsp;/g, '&amp;amp;nbsp;');
 			
 			return data;
 		},
