@@ -234,7 +234,7 @@ RedactorPlugins.wbbcode = function() {
 				this.wutil.restoreSelection();
 				
 				var $selection = window.getSelection();
-				if (!$selection.rangeCount) {
+				if (!$selection.rangeCount || !this.utils.isRedactorParent($selection.getRangeAt(0).startContainer)) {
 					// ensures that we always have a valid selection
 					this.focus.setEnd();
 				}
@@ -263,19 +263,19 @@ RedactorPlugins.wbbcode = function() {
 					}
 					
 					return false;
-				}
+				};
 				
 				var $lastNode = $smiley;
 				
 				// add spaces as paddings
-				var $parent = $smiley.parentElement;
+				var $parent = $smiley.parentElement, $node;
 				if (!$isSpace($smiley.previousSibling)) {
-					var $node = document.createTextNode('\u00A0');
+					$node = document.createTextNode('\u00A0');
 					$parent.insertBefore($node, $smiley);
 				}
 				
 				if (!$isSpace($smiley.nextSibling)) {
-					var $node = document.createTextNode('\u00A0');
+					$node = document.createTextNode('\u00A0');
 					if ($parent.lastChild === $smiley) {
 						$parent.appendChild($node);
 					}
@@ -287,7 +287,7 @@ RedactorPlugins.wbbcode = function() {
 				}
 				
 				// force caret after the inserted smiley
-				var $range = document.createRange();
+				$range = document.createRange();
 				$range.selectNode($lastNode);
 				$range.collapse(false);
 				
