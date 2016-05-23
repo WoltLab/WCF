@@ -51,6 +51,7 @@
 * Improved confirmation messages (`<span class="confirmationObject">...</span>`)
 * Added users online list pagination
 * Added support for embedded youtube playlists
+* Scaled embedded youtube videos to maximum width
 
 #### CMS
 

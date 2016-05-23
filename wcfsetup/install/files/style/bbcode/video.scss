@@ -1,0 +1,12 @@
+/* scale embedded videos to maximum width */
+.videoContainer {
+	overflow: hidden;
+	padding-bottom: 56.25%; /* 9 / 16 */
+	position: relative;
+	
+	iframe {
+		height: 100%;
+		position: absolute;
+		width: 100%;
+	}
+}
