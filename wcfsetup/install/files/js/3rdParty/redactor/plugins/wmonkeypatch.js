@@ -1164,6 +1164,26 @@ RedactorPlugins.wmonkeypatch = function() {
 				if (!$link.hasClass('redactorQuoteEdit')) {
 					$mpShowTooltip.call(this, e);
 				}
+				
+				// remove pipe ("|") separators
+				$('.redactor-link-tooltip').each(function(index, tooltip) {
+					var textNodes = [], i, length, node;
+					for (i = 0, length = tooltip.childNodes.length; i < length; i++) {
+						node = tooltip.childNodes[i];
+						
+						if (node.nodeType === Node.TEXT_NODE) {
+							textNodes.push(node);
+						}
+					}
+					
+					for (i = 0, length = textNodes.length; i < length; i++) {
+						node = textNodes[i];
+						
+						if (node.textContent.trim() === '|') {
+							node.parentNode.removeChild(node);
+						}
+					}
+				});
 			}).bind(this);
 		},
 		
