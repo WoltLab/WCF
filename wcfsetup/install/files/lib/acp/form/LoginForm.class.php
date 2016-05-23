@@ -150,10 +150,13 @@ class LoginForm extends AbstractCaptchaForm {
 		// save authentication failure
 		if (ENABLE_USER_AUTHENTICATION_FAILURE) {
 			if ($this->errorField == 'username' || $this->errorField == 'password') {
+				$user = User::getUserByUsername($this->username);
+				if (!$user->userID) $user = User::getUserByEmail($this->username);
+					
 				$action = new UserAuthenticationFailureAction([], 'create', [
 					'data' => [
 						'environment' => (RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user'),
-						'userID' => ($this->user !== null ? $this->user->userID : null),
+						'userID' => ($user->userID ?: null),
 						'username' => $this->username,
 						'time' => TIME_NOW,
 						'ipAddress' => UserUtil::getIpAddress(),
