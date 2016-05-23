@@ -757,7 +757,11 @@ RedactorPlugins.wutil = function() {
 				}
 				else {
 					// walk tree up until we find a direct children of the editor and place the caret afterwards
-					var $insertAfter = $($startContainer).parentsUntil(this.$editor[0]).last();
+					var $insertAfter = $startContainer;
+					if ($insertAfter !== this.$editor[0]) {
+						$startContainer = $($startContainer).parentsUntil(this.$editor[0]).last();
+					}
+					
 					if ($insertAfter[0] === document.body.parentElement) {
 						// work-around if selection never has been within the editor before
 						this.wutil.selectionEndOfEditor();
