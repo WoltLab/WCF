@@ -76,7 +76,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * @param	string		$message
 	 */
 	public function setMessage($type, $objectID, $message) {
-		WCF::getSession()->register('quickReply-'.$type.'-'.$objectID, $message);
+		WCF::getSession()->register('quickReply-'.$type.'-'.$objectID, MessageUtil::stripCrap($message));
 	}
 	
 	/**
