@@ -54,6 +54,11 @@ class AbstractAttachmentImporter extends AbstractImporter {
 			if (!$attachment->attachmentID) $data['attachmentID'] = $oldID;
 		}
 		
+		// set default last download time
+		if (empty($data['lastDownloadTime']) && !empty($data['downloads'])) {
+			$data['lastDownloadTime'] = TIME_NOW;
+		}
+		
 		// save attachment
 		$attachment = AttachmentEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
