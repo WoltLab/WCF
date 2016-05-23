@@ -2043,16 +2043,18 @@ RedactorPlugins.wbbcode = function() {
 			var $tooltip = $('<span class="redactor-link-tooltip" />');
 			
 			// edit link
-			$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.edit') + '</a>').click($.proxy(function(e) {
+			$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.edit') + '</a>').on('click touchstart', $.proxy(function(e) {
 				e.preventDefault();
+				e.stopPropagation();
 				
 				this.wbbcode._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'), false);
 				$('.redactor-link-tooltip').remove();
 			}, this)).appendTo($tooltip);
 			
 			// delete link
-			$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.delete') + '</a>').click(function(event) {
-				event.preventDefault();
+			$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.delete') + '</a>').on('click touchstart', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
 				
 				var $quote = $header.parent();
 				var $parent = $quote.parent();
