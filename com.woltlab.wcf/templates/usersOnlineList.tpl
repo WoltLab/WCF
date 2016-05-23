@@ -1,8 +1,10 @@
+{capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
+
 {capture assign='headContent'}
 	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}" />
 	
 	{if USERS_ONLINE_PAGE_REFRESH > 0}
-		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}" />
+		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}" />
 	{/if}
 {/capture}
 
@@ -67,6 +69,14 @@
 {/capture}
 
 {include file='header'}
+
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{pages print=true assign=pagesLinks controller='UsersOnlineList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+		{/content}
+	</div>
+{/hascontent}
 
 {assign var=usersOnlineList value=''}
 {assign var=usersOnline value=0}
@@ -183,7 +193,7 @@
 	<section class="section sectionContainerList">
 		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.guests{/lang} <span class="badge">{#$guestsOnline}</span></h2>
 		
-		<ol class="containerList">
+		<ol class="containerList userList">
 			{@$guestsOnlineList}
 		</ol>
 	</section>
@@ -193,13 +203,19 @@
 	<section class="section sectionContainerList">
 		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.robots{/lang} <span class="badge">{#$robotsOnline}</span></h2>
 		
-		<ol class="containerList">
+		<ol class="containerList userList">
 			{@$robotsOnlineList}
 		</ol>
 	</section>
 {/if}
 
 <footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
+	
 	{hascontent}
 		<nav class="contentFooterNavigation">
 			<ul>
