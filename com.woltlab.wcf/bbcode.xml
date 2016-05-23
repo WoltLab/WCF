@@ -127,7 +127,7 @@
 		</bbcode>
 		<bbcode name="url">
 			<classname><![CDATA[wcf\system\bbcode\URLBBCode]]></classname>
-			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
+			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font,attach</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
