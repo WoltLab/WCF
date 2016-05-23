@@ -4,7 +4,7 @@ $.Redactor.prototype.WoltLabQuote = function() {
 	return {
 		init: function() {
 			// TODO: this should be somewhere else
-			var button = this.button.add('woltlabQuote', 'Quote');
+			var button = this.button.add('woltlabQuote', '');
 			this.button.addCallback(button, this.WoltLabQuote.insert);
 			
 			require(['WoltLab/WCF/Ui/Redactor/Quote'], (function(UiRedactorQuote) {

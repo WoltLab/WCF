@@ -220,10 +220,10 @@
 			
 			@include wcfFontSmall;
 			
-			&.redactor-button-disabled,
-			&.redactor-button-disabled:before,
-			&.redactor-button-disabled > i:before {
-				color: $wcfButtonDisabledText;
+			&.redactor-button-disabled {
+				background-color: transparent !important;
+				color: $wcfButtonDisabledText !important;
+				cursor: default;
 			}
 			
 			&:hover,
@@ -231,6 +231,11 @@
 			&.dropact {
 				background-color: $wcfHeaderMenuBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
+			}
+			
+			.icon {
+				color: inherit;
+				cursor: inherit !important;
 			}
 		}
 	}
@@ -253,22 +258,6 @@
 		top: -5px;
 		transform: translateX(-50%);
 	}
-}
-
-.re-bold {
-	font-weight: 600;
-}
-
-.re-italic {
-	font-style: italic;
-}
-
-.re-underline {
-	text-decoration: underline !important;
-}
-
-.re-deleted {
-	text-decoration: line-through !important;
 }
 
 #redactor-image-box {
@@ -436,6 +425,7 @@
 		
 		> li:first-child {
 			flex: 0 0 100%;
+			margin-bottom: 10px;
 		}
 	}
 	

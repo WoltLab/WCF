@@ -28,7 +28,7 @@ $.Redactor.prototype.WoltLabColor = function() {
 				};
 			}
 			
-			var button = this.button.add('woltlabColor', 'Color');
+			var button = this.button.add('woltlabColor', '');
 			this.button.addDropdown(button, dropdown);
 			
 			// add styling

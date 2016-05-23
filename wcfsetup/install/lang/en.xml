@@ -1766,21 +1766,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	</category>
 	
 	<category name="wcf.bbcode">
-		<item name="wcf.bbcode.button.code"><![CDATA[Code]]></item>
-		<item name="wcf.bbcode.button.fontColor"><![CDATA[Font Color]]></item>
-		<item name="wcf.bbcode.button.fontFamily"><![CDATA[Font Family]]></item>
-		<item name="wcf.bbcode.button.fontSize"><![CDATA[Font Size]]></item>
-		<item name="wcf.bbcode.button.image"><![CDATA[Image]]></item>
-		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
-		<item name="wcf.bbcode.button.quote"><![CDATA[Quote]]></item>
-		<item name="wcf.bbcode.button.redo"><![CDATA[Redo]]></item>
-		<item name="wcf.bbcode.button.showAll"><![CDATA[Display All]]></item>
-		<item name="wcf.bbcode.button.spoiler"><![CDATA[Spoiler]]></item>
-		<item name="wcf.bbcode.button.subscript"><![CDATA[Subscript]]></item>
-		<item name="wcf.bbcode.button.superscript"><![CDATA[Superscript]]></item>
-		<item name="wcf.bbcode.button.toggleBBCode"><![CDATA[BBCode]]></item>
-		<item name="wcf.bbcode.button.toggleHTML"><![CDATA[WYSIWYG]]></item>
-		<item name="wcf.bbcode.button.undo"><![CDATA[Undo]]></item>
 		<item name="wcf.bbcode.code"><![CDATA[Source Code]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
 		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck Source Code]]></item>
@@ -2131,6 +2116,23 @@ Errors are:
 		<item name="wcf.edit.button.goToContent"><![CDATA[Go to Related Content]]></item>
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Current version{else}Version{/if} as of {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Current version{else}Version{/if} as of {@$new->time|plainTime} ({$new->username})]]></item>
+	</category>
+	
+	<category name="wcf.editor">
+		<item name="wcf.editor.button.alignment"><![CDATA[Alignment]]></item>
+		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
+		<item name="wcf.editor.button.color"><![CDATA[Font Color]]></item>
+		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
+		<item name="wcf.editor.button.italic"><![CDATA[Italic]]></item>
+		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
+		<item name="wcf.editor.button.lists"><![CDATA[List]]></item>
+		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.quote"><![CDATA[Quote]]></item>
+		<item name="wcf.editor.button.strikethrough"><![CDATA[Strikethrough]]></item>
+		<item name="wcf.editor.button.subscript"><![CDATA[Subscript]]></item>
+		<item name="wcf.editor.button.superscript"><![CDATA[Superscript]]></item>
+		<item name="wcf.editor.button.table"><![CDATA[Table]]></item>
+		<item name="wcf.editor.button.underline"><![CDATA[Underline]]></item>
 	</category>
 	
 	<category name="wcf.global">

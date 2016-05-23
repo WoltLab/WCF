@@ -9,7 +9,8 @@
 </style>
 <script data-relocate="true">
 (function() {
-	var buttons = ['format', 'wcfSeparator', 'bold', 'italic', 'underline', 'deleted', 'wcfSeparator', 'lists', 'image', 'link'];
+	var buttons = [], buttonOptions = [];
+	{include file='wysiwygToolbar'}
 	
 	var elementId = '{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}';
 	var callbackIdentifier = 'Redactor2_' + elementId;
@@ -27,10 +28,11 @@
 		var config = {
 			buttons: buttons,
 			minHeight: 200,
-			plugins: ['alignment', 'source', 'table', 'WoltLabButton', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote'],
+			plugins: ['alignment', 'source', 'table', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote'],
 			toolbarFixed: false,
 			woltlab: {
-				autosave: autosave
+				autosave: autosave,
+				buttons: buttonOptions
 			}
 		};
 		
@@ -43,6 +45,10 @@
 		{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 			config.plugins.push('WoltLabMedia');
 		{/if}
+		
+		// load the button plugin last to ensure all buttons have been initialized
+		// already and we can safely add all icons
+		config.plugins.push('WoltLabButton');
 		
 		$(element).redactor(config);
 	});
