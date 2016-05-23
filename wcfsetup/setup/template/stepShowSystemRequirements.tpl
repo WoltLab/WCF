@@ -40,6 +40,23 @@
 			</dd>
 		</dl>
 	</fieldset>
+	
+	<fieldset>
+		<legend>{lang}wcf.global.systemRequirements.gdLib{/lang}</legend>
+		<dl>
+			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 2.0.0</dt>
+			<dd>
+				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.gdLib.result}red{else}green{/if}">
+					{if !$system.gdLib.result}
+						{lang}wcf.global.systemRequirements.gdLib.notFound{/lang}
+					{else}
+						{$system.gdLib.value}
+					{/if}
+				</span>
+				{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
+			</dd>
+		</dl>
+	</fieldset>
 </div>
 
 <header class="boxHeadline boxSubHeadline">
@@ -57,22 +74,11 @@
 			</dd>
 		</dl>
 	</fieldset>
-	
-	<fieldset>
-		<legend>{lang}wcf.global.systemRequirements.gdLib{/lang}</legend>
-		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} 2.0.0</dt>
-			<dd>
-				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.gdLib.result}yellow{else}green{/if}">{$system.gdLib.value}</span>
-				{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
-			</dd>
-		</dl>
-	</fieldset>
 </div>
 
 <form method="post" action="install.php">
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.memoryLimit.result} disabled="disabled"{/if} accesskey="s"/>
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.memoryLimit.result || !$system.gdLib.result} disabled="disabled"{/if} accesskey="s"/>
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />
