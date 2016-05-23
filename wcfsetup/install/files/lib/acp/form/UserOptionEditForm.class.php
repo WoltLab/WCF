@@ -51,6 +51,11 @@ class UserOptionEditForm extends UserOptionAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function setDefaultOutputClass() {}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function save() {
 		AbstractForm::save();
 		

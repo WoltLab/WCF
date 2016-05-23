@@ -215,6 +215,25 @@ class UserOptionAddForm extends AbstractForm {
 	}
 	
 	/**
+	 * Sets the default output class.
+	 */
+	protected function setDefaultOutputClass() {
+		if (empty($this->outputClass)) {
+			if (in_array($this->optionType, self::$optionTypesUsingSelectOptions)) {
+				$this->outputClass = 'wcf\system\option\user\SelectOptionsUserOptionOutput';
+			}
+			
+			if ($this->optionType == 'date') {
+				$this->outputClass = 'wcf\system\option\user\DateUserOptionOutput';
+			}
+			
+			if ($this->optionType == 'URL') {
+				$this->outputClass = 'wcf\system\option\user\URLUserOptionOutput';
+			}
+		}
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function validate() {
