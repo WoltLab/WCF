@@ -18,7 +18,7 @@
 	{assign var=encodedLetter value=$letter|rawurlencode}
 	<section class="jsOnly box">
 		<form method="post" action="{link controller='UserSearch'}{/link}">
-			<h2 class="boxTitle">{lang}wcf.user.search{/lang}</h2>
+			<h2 class="boxTitle"><a href="{link controller='UserSearch'}{/link}">{lang}wcf.user.search{/lang}</a></h2>
 			
 			<div class="boxContent">
 				<dl>
