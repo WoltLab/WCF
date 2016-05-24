@@ -14,7 +14,7 @@
 			{/if}
 		</div>
 		
-		<dl class="plain dataList">
+		<dl class="plain dataList containerContent small">
 			{include file='userInformationStatistics' user=$__wcf->user}
 		</dl>
 	</div>

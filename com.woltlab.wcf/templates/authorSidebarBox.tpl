@@ -16,7 +16,7 @@
 			</div>
 			
 			{if $userProfile->userID}
-				<dl class="plain dataList">
+				<dl class="plain dataList containerContent small">
 					{include file='userInformationStatistics' user=$userProfile}
 				</dl>
 			{/if}
