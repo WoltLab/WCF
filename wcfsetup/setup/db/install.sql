@@ -485,6 +485,7 @@ CREATE TABLE wcf1_language (
 	countryCode VARCHAR(10) NOT NULL DEFAULT '',
 	isDefault TINYINT(1) NOT NULL DEFAULT 0,
 	hasContent TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY languageCode (languageCode)
 );
 

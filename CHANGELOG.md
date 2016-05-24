@@ -53,6 +53,7 @@
 * Added support for embedded youtube playlists
 * Scaled embedded youtube videos to maximum width
 * `\wcf\form\AbstractCaptchaForm`: added parameter to force captcha usage for registered users.
+* Added global disable switch for languages.
 
 #### CMS
 

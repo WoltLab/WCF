@@ -31,6 +31,7 @@ class LanguageCacheBuilder extends AbstractCacheBuilder {
 		
 		// get languages
 		$languageList = new LanguageList();
+		$languageList->getConditionBuilder()->add('language.isDisabled = ?', [0]);
 		$languageList->readObjects();
 		$data['languages'] = $languageList->getObjects();
 		foreach ($languageList->getObjects() as $language) {
