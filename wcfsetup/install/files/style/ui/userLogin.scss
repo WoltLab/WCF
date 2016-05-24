@@ -70,7 +70,13 @@
 		column-gap: 40px;
 		
 		> .section {
+			/* Sections should never be split, but Firefox, IE and Edge don't seem
+			   to care about this despite advertising the support for it. We can work
+			   around this by using `overflow: hidden` which magically does the job,
+			   but doesn't affect Chrome which properly breaks anyway. */
+			
 			margin-top: 0;
+			overflow: hidden; /* Fix for Firefox, IE and Edge */
 			
 			-webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
 			page-break-inside: avoid; /* Firefox */
