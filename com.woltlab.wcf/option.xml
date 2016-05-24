@@ -915,14 +915,14 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 			<option name="attachment_thumbnail_height">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[210]]></defaultvalue>
+				<defaultvalue><![CDATA[198]]></defaultvalue>
 				<minvalue>96</minvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="attachment_thumbnail_width">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[280]]></defaultvalue>
+				<defaultvalue><![CDATA[352]]></defaultvalue>
 				<minvalue>96</minvalue>
 				<suffix>pixel</suffix>
 			</option>

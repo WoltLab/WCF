@@ -92,6 +92,7 @@
 * Overhauled user login
 * Overhauled exception view
 * Redesigned ACP login
+* Redesigned list of attached images in messages
 
 * Introduced sticky page header
 * Replaced LESS with SCSS
