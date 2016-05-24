@@ -17,7 +17,7 @@
 			{hascontent}
 				<dl class="plain inlineDataList userFields">
 					{content}
-						{if $user->isAccessible('canViewProfile')}
+						{if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile') && $user->isAccessible('canViewProfile')}
 							{if $user->occupation}
 								<dt>{lang}wcf.user.option.occupation{/lang}</dt>
 								<dd>{$user->occupation}</dd>
