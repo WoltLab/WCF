@@ -729,6 +729,39 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Shortens numbers larger than 1000 by using unit prefixes.
+	 * 
+	 * @param       integer         $number
+	 * @return      string
+	 */
+	public static function getShortUnit($number) {
+		$unitPrefix = '';
+		
+		if ($number >= 1000000) {
+			$number /= 1000000;
+			if ($number > 10) {
+				$number = floor($number);
+			}
+			else {
+				$number = round($number, 1);
+			}
+			$unitPrefix = 'M';
+		}
+		else if ($number >= 1000) {
+			$number /= 1000;
+			if ($number > 10) {
+				$number = floor($number);
+			}
+			else {
+				$number = round($number, 1);
+			}
+			$unitPrefix = 'k';
+		}
+		
+		return self::formatNumeric($number) . $unitPrefix;
+	}
+	
+	/**
 	 * Forbid creation of StringUtil objects.
 	 */
 	private function __construct() {
