@@ -52,6 +52,7 @@
 * Added users online list pagination
 * Added support for embedded youtube playlists
 * Scaled embedded youtube videos to maximum width
+* `\wcf\form\AbstractCaptchaForm`: added parameter to force captcha usage for registered users.
 
 #### CMS
 

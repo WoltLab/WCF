@@ -28,10 +28,16 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	public $captchaObjectTypeName = CAPTCHA_TYPE;
 	
 	/**
-	 * true if recaptcha is used
+	 * true if captcha is used
 	 * @var	boolean
 	 */
 	public $useCaptcha = true;
+	
+	/**
+	 * true to force captcha usage
+	 * @var	boolean
+	 */
+	public $forceCaptcha = false;
 	
 	/**
 	 * @inheritDoc
@@ -49,7 +55,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function readData() {
-		if (!WCF::getUser()->userID && $this->useCaptcha && $this->captchaObjectTypeName) {
+		if ((!WCF::getUser()->userID || $this->forceCaptcha) && $this->useCaptcha && $this->captchaObjectTypeName) {
 			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
 			if ($this->captchaObjectType === null) {
 				throw new SystemException("Unknown captcha object type with name '".$this->captchaObjectTypeName."'");
