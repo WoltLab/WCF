@@ -172,9 +172,6 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 */
 	public function getTitle() {
 		$title = PageCache::getInstance()->getPageTitle($this->pageID);
-		if (empty($title)) {
-			$title = $this->getGenericTitle();
-		}
 		
 		return $title;
 	}
@@ -298,15 +295,6 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 		}
 		
 		return '';
-	}
-	
-	/**
-	 * Returns the value of a generic phrase based upon a page's identifier.
-	 * 
-	 * @return	string  generic title
-	 */
-	protected function getGenericTitle() {
-		return WCF::getLanguage()->get('wcf.page.' . $this->identifier);
 	}
 	
 	/**
