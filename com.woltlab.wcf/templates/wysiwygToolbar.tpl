@@ -12,7 +12,8 @@ buttonOptions = {
 	underline: { icon: 'fa-underline', title: '{lang}wcf.editor.button.underline{/lang}' },
 	woltlabColor: { icon: 'fa-paint-brush', title: '{lang}wcf.editor.button.color{/lang}' },
 	woltlabMedia: { icon: 'fa-file-o', title: '{lang}wcf.editor.button.media{/lang}' },
-	woltlabQuote: { icon: 'fa-comment', title: '{lang}wcf.editor.button.quote{/lang}' }
+	woltlabQuote: { icon: 'fa-comment', title: '{lang}wcf.editor.button.quote{/lang}' },
+	woltlabSize: { icon: 'fa-text-height', title: '{lang}wcf.editor.button.size{/lang}' }
 };
 	
 buttons = [];
@@ -34,10 +35,10 @@ buttons.push('alignment');
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}
 	buttons.push('fontfamily');
 {/if}
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}
-	buttons.push('fontsize');
-{/if}
 *}
+{if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}
+	buttons.push('woltlabSize');
+{/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}
 	buttons.push('woltlabColor');
 {/if}

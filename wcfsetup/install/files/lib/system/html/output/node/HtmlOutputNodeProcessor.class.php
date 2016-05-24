@@ -13,5 +13,7 @@ class HtmlOutputNodeProcessor extends HtmlNodeProcessor {
 		// TODO: this should be dynamic to some extent
 		$this->invokeHtmlNode(new HtmlOutputNodeBlockquote());
 		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabMention());
+		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabColor());
+		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabSize());
 	}
 }

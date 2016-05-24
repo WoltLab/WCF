@@ -2118,6 +2118,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.lists"><![CDATA[Liste]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Zitat]]></item>
+		<item name="wcf.editor.button.size"><![CDATA[Schriftgröße]]></item>
 		<item name="wcf.editor.button.strikethrough"><![CDATA[Durchgestrichen]]></item>
 		<item name="wcf.editor.button.subscript"><![CDATA[Tiefgestellt]]></item>
 		<item name="wcf.editor.button.superscript"><![CDATA[Hochgestellt]]></item>

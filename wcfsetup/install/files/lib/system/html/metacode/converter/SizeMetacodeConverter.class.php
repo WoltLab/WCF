@@ -5,13 +5,15 @@ namespace wcf\system\html\metacode\converter;
  * TOOD documentation
  * @since	2.2
  */
-class ColorMetacodeConverter extends AbstractMetacodeConverter {
+class SizeMetacodeConverter extends AbstractMetacodeConverter {
+	protected $sizes = [8, 10, 12, 14, 18, 24, 36];
+	
 	/**
 	 * @inheritDoc
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
-		$element = $fragment->ownerDocument->createElement('woltlab-color');
-		$element->setAttribute('class', 'woltlab-color-' . strtoupper(substr($attributes[0], 1)));
+		$element = $fragment->ownerDocument->createElement('woltlab-size');
+		$element->setAttribute('class', 'woltlab-size-' . $attributes[0]);
 		$element->appendChild($fragment);
 		
 		return $element;
@@ -25,8 +27,8 @@ class ColorMetacodeConverter extends AbstractMetacodeConverter {
 			return false;
 		}
 		
-		// validates if code is a valid (short) HEX color code
-		if (!preg_match('~^#[A-F0-9]{3}(?:[A-F0-9]{3})?$~i', $attributes[0])) {
+		// validates if size is allowed
+		if (!in_array($attributes[0], $this->sizes)) {
 			return false;
 		}
 		

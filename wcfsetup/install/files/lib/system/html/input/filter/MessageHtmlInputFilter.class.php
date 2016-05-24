@@ -34,6 +34,9 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		$definition->addAttribute('blockquote', 'data-quote-title', 'Text');
 		$definition->addAttribute('blockquote', 'data-quote-url', 'URI');
 		
+		$definition->addElement('woltlab-color', 'Inline', 'Inline', '', ['class' => 'Text']);
+		$definition->addElement('woltlab-size', 'Inline', 'Inline', '', ['class' => 'Text']);
+		
 		$definition->addElement('woltlab-mention', 'Inline', 'Inline', '', [
 			'data-user-id' => 'Number',
 			'data-username' => 'Text'

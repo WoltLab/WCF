@@ -2128,6 +2128,7 @@ Errors are:
 		<item name="wcf.editor.button.lists"><![CDATA[List]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Quote]]></item>
+		<item name="wcf.editor.button.size"><![CDATA[Font Size]]></item>
 		<item name="wcf.editor.button.strikethrough"><![CDATA[Strikethrough]]></item>
 		<item name="wcf.editor.button.subscript"><![CDATA[Subscript]]></item>
 		<item name="wcf.editor.button.superscript"><![CDATA[Superscript]]></item>

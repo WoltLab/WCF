@@ -8,6 +8,8 @@ namespace wcf\system\html\node;
 abstract class AbstractHtmlNode implements IHtmlNode {
 	protected $tagName = '';
 	
+	const PLACEHOLDER = '<!-- META_CODE_INNER_CONTENT -->';
+	
 	public function getTagName() {
 		return $this->tagName;
 	}
