@@ -932,7 +932,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve registrations]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Registrations are approved through an email confirmation]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required for registrations]]></item>
-		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Height of Images in Signatures]]></item>
+		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height in Signatures]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of unavailable user titles for members, one title per line.]]></item>
