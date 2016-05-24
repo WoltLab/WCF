@@ -990,7 +990,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members list]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
 		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Piwik”.]]></item>
-		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Display profile visitors]]></item>
+		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Display user’s profile visitors in profile sidebar]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[URL Replacements]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[You may replace parts of the title within the URL. You could use it to replace special characters or to expand abbreviations. (One replacement per line)<br />
 Examples:<br />
