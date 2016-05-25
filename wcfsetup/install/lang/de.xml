@@ -27,7 +27,7 @@
 		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Legen Sie den Zeitpunkt fest, zu dem die Werbung angezeigt werden soll.]]></item>
 		<item name="wcf.acp.ad.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit die Werbung angezeigt wird.]]></item>
-		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Wollen Sie die Werbung <span class="confirmationObject">{$ad->adName}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Wollen Sie die Werbung „{$ad->adName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Werbung bearbeiten]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Werbung deaktivieren]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Werbung]]></item>
@@ -83,7 +83,7 @@
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button-Beschriftung]]></item>
 		<item name="wcf.acp.bbcode.className"><![CDATA[Klassen-Name]]></item>
 		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Diese Klasse wurde nicht gefunden.]]></item>
-		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Wollen Sie den BBCode <span class="confirmationObject">[{$bbcode->bbcodeTag}]</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Wollen Sie den BBCode „[{$bbcode->bbcodeTag}]“ wirklich löschen?]]></item>
 		<item name="wcf.acp.bbcode.edit"><![CDATA[BBCode bearbeiten]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Schließendes HTML-Tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Öffnendes HTML-Tag]]></item>
@@ -94,7 +94,7 @@
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
 		
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Wollen Sie den Medienanbieter <span class="confirmationObject">{$mediaProvider->title}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Wollen Sie den Medienanbieter „{$mediaProvider->title}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Medienanbieter bearbeiten]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML-Code]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Geben Sie hier den HTML-Code für das Medium an. Variablen im Format <code>{$variable}</code> werden durch die entsprechend benannte Untergruppe des regulären Ausdrucks ersetzt.<br />
@@ -143,7 +143,7 @@
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Antworten]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Geben Sie pro Zeile eine mögliche Antwort ein. Antworten, die mit „~“ beginnen und enden, werden als reguläre Ausdrücke interpretiert.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.regexNotValid"><![CDATA[Der reguläre Ausdruck „{$invalidRegex}“ ist ungültig.]]></item>
-		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Wollen Sie die Frage <span class="confirmationObject">{$question->question|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Wollen Sie die Frage „{$question->question|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Captcha-Frage bearbeiten]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Frage deaktivieren]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
@@ -178,7 +178,7 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegebenen Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Wollen Sie den Cronjob <span class="confirmationObject">{$cronjob->description|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Wollen Sie den Cronjob „{$cronjob->description|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Wollen Sie alle Protokoll-Einträge wirklich löschen?]]></item>
@@ -257,7 +257,7 @@
 	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie die Benutzergruppe <span class="confirmationObject">{$group->groupName|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie diese Benutzergruppe „{$group->groupName|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Benutzergruppe bearbeiten]]></item>
 		<item name="wcf.acp.group.option.editingOption"><![CDATA[Benutzergruppeneinstellung bearbeiten]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Sie sind Mitglied dieser Benutzergruppe! Änderungen an den Zugriffsrechten dieser Benutzergruppe können dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
@@ -409,7 +409,7 @@
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatische Zuordnungen auflisten]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Benutzer müssen die folgenden Bedingungen erfüllen um automatisch der Benutzergruppe hinzugefügt zu werden]]></item>
-		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Wollen Sie die automatische Benutzergruppen-Zuordnung <span class="confirmationObject">{$assignment->title}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Wollen Sie die automatische Benutzergruppen-Zuordnung „{$assignment->title}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Automatische Benutzergruppen-Zuordnung bearbeiten]]></item>
 		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[Sie haben keine Bedingungen ausgewählt.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatische Benutzergruppen-Zuordnungen]]></item>
@@ -422,7 +422,7 @@
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Kann Inhalte melden]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Kann Captcha-Fragen verwalten]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Benutzergruppe kopieren]]></item>
-		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Wollen Sie die Benutzergruppe <span class="confirmationObject">{$group->groupName|language}</span> wirklich kopieren?]]></item>
+		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Wollen Sie diese Benutzergruppe wirklich kopieren?]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Objekt-Berechtigungen kopieren]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[Berechtigungen, die für bestimmte Objekte wie Labelgruppen gesetzt wurden, werden auch für die neue Benutzergruppe übernommen.]]></item>
 		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Mitglieder kopieren]]></item>
@@ -468,14 +468,14 @@
 		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.label.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
-		<item name="wcf.acp.label.delete.sure"><![CDATA[Wollen Sie das Label <span class="confirmationObject">{$label}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Wollen Sie das Label „{$label}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Bevor Sie ein Label hinzufügen können, müssen Sie eine <a href="{link controller='LabelGroupAdd'}{/link}">Labelgruppe hinzufügen</a>.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Labelgruppe]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Verfügbarkeit]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Wollen Sie die Labelgruppe <span class="confirmationObject">{$group->groupName|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Wollen Sie die Labelgruppe „{$group->groupName|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
 		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
@@ -500,7 +500,7 @@
 		<item name="wcf.acp.language.countryCode"><![CDATA[Ländercode]]></item>
 		<item name="wcf.acp.language.countryCode.description"><![CDATA[Geben Sie hier den passenden Ländercode nach <strong>ISO 3166-1</strong> an. Weitere Informationen zu Ländercodes finden Sie unter <a href="http://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste" class="externalURL">http://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Veränderte Variablen]]></item>
-		<item name="wcf.acp.language.delete.sure"><![CDATA[Wollen Sie die Sprache <span class="confirmationObject">{$language->languageName}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.language.delete.sure"><![CDATA[Wollen Sie die Sprache „{$language->languageName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Sprache bearbeiten]]></item>
 		<item name="wcf.acp.language.export"><![CDATA[Sprache exportieren]]></item>
 		<item name="wcf.acp.language.export.allPackages"><![CDATA[Alle Pakete]]></item>
@@ -665,7 +665,7 @@
 		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Legen Sie den Zeitpunkt fest, zu dem der Hinweis angezeigt werden soll.]]></item>
 		<item name="wcf.acp.notice.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
-		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Wollen Sie den Hinweis <span class="confirmationObject">{$notice->noticeName}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Wollen Sie den Hinweis „{$notice->noticeName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Hinweis bearbeiten]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Beispieltext für einen Hinweis]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Hinweis deaktivieren]]></item>
@@ -1109,7 +1109,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[„{$packageName}“ wird aktualisiert …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Aktualisierung abgeschlossen]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installierte Version]]></item>
-		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Wollen Sie das Paket <span class="confirmationObject">{@$package->getName()}</span> wirklich installieren?]]></item>
+		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich installieren?]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[Dieses Paket kann aufgrund der folgenden bereits installierten Pakete nicht installiert werden:]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[„{$excludedPackage}“ ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (ausgeschlossene Version: {$excludedPackage->excludedPackageVersion}, installierte Version: {$excludedPackage->packageVersion}){/if}]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[Die folgenden bereits installierten Pakete schließen eine Installation dieses Pakets aus:]]></item>
@@ -1232,10 +1232,10 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.transactionLog.transactionDetails"><![CDATA[Details]]></item>
 		<item name="wcf.acp.paidSubscription.excludedSubscriptions"><![CDATA[Andere Mitgliedschaften ausschließen]]></item>
 		<item name="wcf.acp.paidSubscription.excludedSubscriptions.description"><![CDATA[Sie können den Erwerb anderer bezahlter Mitgliedschaften für Käufer dieser Mitgliedschaft ausschließen.]]></item>
-		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[Wollen Sie die Mitgliedschaft <span class="confirmationObject">{$subscriptionUser->title|language}</span> für den Benutzer <span class="confirmationObject">{$subscriptionUser->username}</span> wirklich entfernen?]]></item>
+		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[Wollen Sie die Mitgliedschaft „{$subscriptionUser->title|language}“ für den Benutzer „{$subscriptionUser->username}“ wirklich entfernen?]]></item>
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Mitgliedschaft manuell zuweisen]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Es muss mindestens ein Zahlungsanbieter in den Optionen unter „Zahlungsoptionen“ ausgewählt sein, um bezahlte Mitgliedschaften erstellen zu können.]]></item>
-		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Wollen Sie die bezahlte Mitgliedschaft <span class="confirmationObject">{$subscription->title|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Wollen Sie die bezahlte Mitgliedschaft „{$subscription->title|language}“ wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.pluginStore">
@@ -1255,7 +1255,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.update"><![CDATA[Neuere Version verfügbar]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Paket-Server nicht installiert]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[Aktuellste Version bereits installiert]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Möchten Sie das Produkt <span class="confirmationObject">{$product[packageName]}</span> wirklich installieren?]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Möchten Sie das Produkt „{$product[packageName]}“ wirklich installieren?]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) ist deaktiviert und steht weder für Neuinstallation noch Updates zur Verfügung.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ ist bei Ihnen nicht eingetragen. Wenn Sie die unten stehenden Pakete installieren möchten, müssen Sie diesen zuvor <a href="{link controller='PackageUpdateServerAdd'}{/link}">hinzufügen</a>.<br />Die Adresse des Servers lautet: „http://store.woltlab.com/{$wcfMajorRelease}/“]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) wurde noch nicht abgefragt, bitte lassen Sie zuerst nach Updates suchen, um den Server abzufragen.]]></item>
@@ -1328,7 +1328,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server-Daten]]></item>
-		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Wollen Sie den Server <span class="confirmationObject">{$updateServer->serverURL}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Wollen Sie den Server „{$updateServer->serverURL}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
@@ -1358,7 +1358,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smileys]]></item>
-		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Wollen Sie das Smiley <span class="confirmationObject">{$smiley->smileyTitle|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Wollen Sie das Smiley „{$smiley->smileyTitle|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Smiley bearbeiten]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Titel]]></item>
@@ -1423,8 +1423,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.colors.userPanel"><![CDATA[Benutzerleiste]]></item>
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Stil kopieren]]></item>
-		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Wollen Sie den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich duplizieren?]]></item>
-		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Wollen Sie den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Wollen Sie den Stil „{$style->styleName}“ wirklich duplizieren?]]></item>
+		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Wollen Sie den Stil „{$style->styleName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
 		<item name="wcf.acp.style.exportImages"><![CDATA[Grafiken exportieren ({$style->imagePath})]]></item>
@@ -1483,7 +1483,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Tag hinzufügen]]></item>
 		<item name="wcf.acp.tag.edit"><![CDATA[Tag bearbeiten]]></item>
-		<item name="wcf.acp.tag.delete.sure"><![CDATA[Wollen Sie den Tag <span class="confirmationObject">{$tag}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.tag.delete.sure"><![CDATA[Wollen Sie den Tag „{$tag}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Die gewählte Sprache ist ungültig]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Sprache]]></item>
 		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
@@ -1520,11 +1520,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[Sie haben einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[Das angegebene Verzeichnis wird bereits von einer anderen Templategruppe verwendet.]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroupID.error.notValid"><![CDATA[Die ausgewählte übergeordnete Templategruppe ist ungültig.]]></item>
-		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Wollen Sie die Templategruppe <span class="confirmationObject">{$templateGroup->templateGroupName}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Wollen Sie die Templategruppe „{$templateGroup->templateGroupName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template-Quelltext]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einem anderen Template verwendet.]]></item>
 		<item name="wcf.acp.template.name.error.notValid"><![CDATA[Sie haben einen ungültigen Namen eingegeben.]]></item>
-		<item name="wcf.acp.template.delete.sure"><![CDATA[Wollen Sie das Template <span class="confirmationObject">{$template->templateName}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.template.delete.sure"><![CDATA[Wollen Sie das Template „{$template->templateName}“ wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.user">
@@ -1542,7 +1542,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.ban.expires.description"><![CDATA[Der Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.ban.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.acp.user.ban.sure"><![CDATA[Wollen Sie den/die Benutzer wirklich sperren?]]></item>
-		<item name="wcf.acp.user.delete.sure"><![CDATA[Wollen Sie Benutzer <span class="confirmationObject">{$user->username}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.user.delete.sure"><![CDATA[Wollen Sie Benutzer „{$user->username}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Sie bearbeiten Ihr eigenes Benutzerkonto. Änderungen an den Mitgliedschaften in Benutzergruppen können womöglich dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
@@ -1596,7 +1596,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.option.access"><![CDATA[Zugriff]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Benutzerprofilfeld hinzufügen]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Wollen Sie die Benutzerprofilfeld-Kategorie <span class="confirmationObject">{lang}wcf.user.option.category.{$category->categoryName}{/lang}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Wollen Sie die Benutzerprofilfeld-Kategorie „{lang}wcf.user.option.category.{$category->categoryName}{/lang}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Benutzerprofilfeld-Kategorie bearbeiten]]></item>
 		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Felder]]></item>
@@ -1604,7 +1604,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Standardwert]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
-		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Wollen Sie das Benutzerprofilfeld <span class="confirmationObject">{lang}wcf.user.option.{$option->optionName}{/lang}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Wollen Sie das Benutzerprofilfeld „{lang}wcf.user.option.{$option->optionName}{/lang}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Benutzerprofilfeld bearbeiten]]></item>
 		<item name="wcf.acp.user.option.editable"><![CDATA[Wer darf den Inhalt verändern?]]></item>
@@ -1651,7 +1651,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[Sie können aus den vorgegebenen Darstellungen wählen oder eine eigene Darstellung durch Angabe einer <abbr title="Cascading Style Sheets">CSS</abbr>-Klasse nutzen.]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Aktuelle Ranggrafik]]></item>
-		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Wollen Sie den Benutzerrang <span class="confirmationObject">{$userRank->rankTitle|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Wollen Sie den Benutzerrang „{$userRank->rankTitle|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Benutzerrang bearbeiten]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[Benutzerränge]]></item>
@@ -2100,7 +2100,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.edit.reason"><![CDATA[Änderungsgrund]]></item>
 		<item name="wcf.edit.currentVersion"><![CDATA[Aktuell]]></item>
 		<item name="wcf.edit.revert"><![CDATA[Wiederherstellen]]></item>
-		<item name="wcf.edit.revert.sure"><![CDATA[Möchten Sie die Version von <span class="confirmationObject">{$edit->username}</span> vom <span class="confirmationObject">{$edit->time|plainTime}</span> wirklich wiederherstellen?]]></item>
+		<item name="wcf.edit.revert.sure"><![CDATA[Möchten Sie die Version von {$edit->username} vom {$edit->time|plainTime} wirklich wiederherstellen?]]></item>
 		<item name="wcf.edit.reverted"><![CDATA[Wiederhergestellt auf Version von {$edit->username} vom {$edit->time|plainTime}]]></item>
 		<item name="wcf.edit.button.compare"><![CDATA[Vergleichen]]></item>
 		<item name="wcf.edit.button.goToContent"><![CDATA[Zum Inhalt gehen]]></item>
