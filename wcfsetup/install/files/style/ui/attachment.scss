@@ -1,5 +1,4 @@
 /* attachment list in messages */
-.attachmentThumbnailList,
 .attachmentFileList {
 	> ul > li:not(:last-child) {
 		margin-right: 10px;
@@ -7,37 +6,105 @@
 }
 
 /* attachment in messages */
+.attachmentThumbnailList > ul {
+	margin-bottom: -15px;
+	margin-right: -15px;
+}
+
 .attachmentThumbnail {
 	border-radius: 3px;
-	min-height: #{$wcf_option_attachment_thumbnail_height}px;
-	min-width: #{$wcf_option_attachment_thumbnail_width}px;
-	overflow: hidden;
+	box-shadow: 0 0 1px #aaa;
+	background: #fff;
+	margin-bottom: 15px !important;
+	margin-right: 15px !important;
 	position: relative;
 	
-	&:hover > div > small {
-		height: 1.5em;
+	@include screen-xs {
+		width: 100%;
 	}
 	
-	> a {
-		display: block;
-		min-height: #{$wcf_option_attachment_thumbnail_height}px;
-		min-width: #{$wcf_option_attachment_thumbnail_width}px;
+	.attachmentThumbnailContainer {
+		position: relative;
 	}
 	
-	> div {
-		background-color: rgba(0, 0, 0, .6);
+	.attachmentThumbnailImage {
+		align-items: center;
+		border-radius: 3px 3px 0 0;
+		background-color: #333;
+		display: flex;
+		justify-content: center;
+		overflow: hidden;
+		text-align: center;
+		
+		@include screen-sm-up {
+			height: #{$wcf_option_attachment_thumbnail_height}px;
+			width: #{$wcf_option_attachment_thumbnail_width}px;
+		}
+		
+		@include screen-xs {
+			max-height: #{$wcf_option_attachment_thumbnail_height}px;
+			min-height: 100px;
+		}
+		
+		img {
+			backface-visibility: hidden;
+			border-radius: 3px 3px 0 0;
+			max-width: 100%;
+			opacity: .85;
+			transform: translate3d(0,0,0);
+			transition: .2s ease opacity;
+		}
+		
+		.attachmentThumbnailImageScalable {
+			@include screen-xs {
+				width: 100%;
+			}
+		}
+	}
+	
+	&:hover {
+		.attachmentThumbnailImage {
+			img {
+				opacity: 1;
+			}	
+		}
+	}
+	
+	.attachmentThumbnailData {
+		backface-visibility: hidden;
+		background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .7) 100%);
+		border-radius: 3px 3px 0 0;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		transform: translate3d(0,0,0);
+		width: 100%;
+	}
+	
+	.attachmentFilename {
+		color: #fff;
 		bottom: 0;
-		color: rgb(255, 255, 255);
-		left: 0;
+		overflow: hidden;
 		padding: 10px;
 		position: absolute;
-		right: 0;
+		text-overflow: ellipsis;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, .8);
+		width: 100%;
+		white-space: nowrap;
+    	
+		@include wcfFontHeadline;
+	}
+	
+	.attachmentMetaData {
+		color: $wcfContentDimmedText;
+		padding: 10px;
 		
-		> small {
-			display: block;
-			height: 0;
-			overflow: hidden;
-			transition: height .12s linear;
+		li:not(:last-child) {
+			margin-right: 10px;
+		}
+		
+		.icon {
+			color: inherit;
 		}
 	}
 }

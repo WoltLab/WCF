@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 use wcf\system\WCF;
 
 /**
@@ -17,7 +18,7 @@ use wcf\system\WCF;
  * @method	LanguageEditor[]	getObjects()
  * @method	LanguageEditor		getSingleObject()
  */
-class LanguageAction extends AbstractDatabaseObjectAction {
+class LanguageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
 	 * @inheritDoc
 	 */
@@ -63,5 +64,28 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	 */
 	public function setAsDefault() {
 		$this->languageEditor->setAsDefault();
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function validateToggle() {
+		parent::validateUpdate();
+		
+		foreach ($this->objects as $language) {
+			if ($language->isDefault) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function toggle() {
+		foreach ($this->objects as $language) {
+			$isDisabled = ($language->isDisabled) ? 0 : 1;
+			$language->update(['isDisabled' => $isDisabled]);
+		}
 	}
 }

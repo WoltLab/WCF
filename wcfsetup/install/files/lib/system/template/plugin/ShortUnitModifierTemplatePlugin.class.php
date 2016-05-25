@@ -21,30 +21,6 @@ class ShortUnitModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		$number = $tagArgs[0];
-		$unitPrefix = '';
-		
-		if ($number >= 1000000) {
-			$number /= 1000000;
-			if ($number > 10) {
-				$number = floor($number);
-			}
-			else {
-				$number = round($number, 1);
-			}
-			$unitPrefix = 'M';
-		}
-		else if ($number >= 1000) {
-			$number /= 1000;
-			if ($number > 10) {
-				$number = floor($number);
-			}
-			else {
-				$number = round($number, 1);
-			}
-			$unitPrefix = 'k';
-		}
-		
-		return StringUtil::formatNumeric($number) . $unitPrefix;
+		return StringUtil::getShortUnit($tagArgs[0]);
 	}
 }

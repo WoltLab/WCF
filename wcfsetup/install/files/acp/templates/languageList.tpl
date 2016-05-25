@@ -13,6 +13,7 @@
 				window.location.reload();
 			}
 		});
+		new WCF.Action.Toggle('wcf\\data\\language\\LanguageAction', $('.jsLanguageRow'));
 	});
 	//]]>
 </script>
@@ -60,12 +61,15 @@
 							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}" title="{lang}wcf.acp.language.export{/lang}" class="jsTooltip"><span class="icon icon16 fa-download"></span></a>
 							
 							{if !$language->isDefault}
-								<span class="icon icon16 fa-check-square-o jsSetAsDefaultButton jsTooltip pointer" title="{lang}wcf.acp.language.setAsDefault{/lang}" title="{lang}wcf.acp.language.setAsDefault{/lang}" data-object-id="{@$language->languageID}"></span>
+								<span class="icon icon16 fa-{if !$language->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $language->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$language->languageID}"></span>
+								<span class="icon icon16 fa-check-circle jsSetAsDefaultButton jsTooltip pointer" title="{lang}wcf.acp.language.setAsDefault{/lang}" title="{lang}wcf.acp.language.setAsDefault{/lang}" data-object-id="{@$language->languageID}"></span>
 							{else}
-								<span class="icon icon16 fa-check-square-o disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
+								<span class="icon icon16 fa-{if !$language->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $language->isDisabled}enable{else}disable{/if}{/lang}"></span>
+								<span class="icon icon16 fa-check-circle disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
 							{/if}
 							
 							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							
 							{if !$language->isDefault}
 								<span class="icon icon16 fa-times jsTooltip jsDeleteButton pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$language->languageID}" data-confirm-message="{lang}wcf.acp.language.delete.sure{/lang}"></span>
 							{else}

@@ -9,15 +9,41 @@
 						{if $attachment->showAsImage() && !$attachment->isEmbedded()}
 							<li class="attachmentThumbnail" data-attachment-id="{@$attachment->attachmentID}">
 								{if $attachment->hasThumbnail()}
-									<a href="{link controller='Attachment' object=$attachment}{/link}"{if $attachment->canDownload()} class="jsImageViewer" title="{$attachment->filename}"{/if}><img src="{link controller='Attachment' object=$attachment}thumbnail=1{/link}" alt="" style="{if $attachment->thumbnailHeight < ATTACHMENT_THUMBNAIL_HEIGHT}margin-top: {@ATTACHMENT_THUMBNAIL_HEIGHT/2-$attachment->thumbnailHeight/2}px; {/if}{if $attachment->thumbnailWidth < ATTACHMENT_THUMBNAIL_WIDTH}margin-left: {@ATTACHMENT_THUMBNAIL_WIDTH/2-$attachment->thumbnailWidth/2}px{/if}" /></a>
-								{else}
-									<img src="{link controller='Attachment' object=$attachment}{/link}" alt="" style="margin-top: {@ATTACHMENT_THUMBNAIL_HEIGHT/2-$attachment->height/2}px; margin-left: {@ATTACHMENT_THUMBNAIL_WIDTH/2-$attachment->width/2}px" />
+									<a href="{link controller='Attachment' object=$attachment}{/link}"{if $attachment->canDownload()} class="jsImageViewer" title="{$attachment->filename}"{/if}>
 								{/if}
 								
-								<div title="{lang}wcf.attachment.image.info{/lang}">
-									<p>{$attachment->filename}</p>
-									<small>{lang}wcf.attachment.image.info{/lang}</small>
+								<div class="attachmentThumbnailContainer">		
+									<span class="attachmentThumbnailImage">
+										{if $attachment->hasThumbnail()}
+											<img src="{link controller='Attachment' object=$attachment}thumbnail=1{/link}" alt="" {if $attachment->thumbnailWidth >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->thumbnailHeight >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}/>
+										{else}
+											<img src="{link controller='Attachment' object=$attachment}{/link}" alt="" {if $attachment->width >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->height >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}/>
+										{/if}
+									</span>
+								
+									<span class="attachmentThumbnailData">
+										<span class="attachmentFilename">{$attachment->filename}</span>
+									</span>
 								</div>
+										
+								<ul class="attachmentMetaData inlineList">
+									<li>
+										<span class="icon icon16 fa-file-text-o"></span>
+										{@$attachment->filesize|filesize}
+									</li>
+									<li>
+										<span class="icon icon16 fa-expand"></span>
+										{#$attachment->width}×{#$attachment->height}
+									</li>
+									<li>
+										<span class="icon icon16 fa-eye"></span>
+										{#$attachment->downloads}
+									</li>
+								</ul>		
+										
+								{if $attachment->hasThumbnail()}
+									</a>
+								{/if}
 							</li>
 						{/if}
 					{/foreach}
