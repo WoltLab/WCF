@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\request;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\page\PageCache;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
