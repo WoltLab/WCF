@@ -9,14 +9,13 @@ use wcf\data\session\virtual\SessionVirtualEditor;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\page\ITrackablePage;
 use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\DatabaseException;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\request\RequestHandler;
+use wcf\system\page\PageLocationManager;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -49,6 +48,12 @@ class SessionHandler extends SingletonFactory {
 	 * @var	boolean
 	 */
 	protected $doNotUpdate = false;
+	
+	/**
+	 * disables page tracking
+	 * @var	boolean
+	 */
+	protected $disableTracking = false;
 	
 	/**
 	 * various environment variables
@@ -290,6 +295,13 @@ class SessionHandler extends SingletonFactory {
 	 */
 	public function disableUpdate() {
 		$this->doNotUpdate = true;
+	}
+	
+	/**
+	 * Disables page tracking.
+	 */
+	public function disableTracking() {
+		$this->disableTracking = true;
 	}
 	
 	/**
@@ -852,12 +864,22 @@ class SessionHandler extends SingletonFactory {
 			'requestMethod' => $this->requestMethod,
 			'lastActivityTime' => TIME_NOW
 		];
-		if (!class_exists('wcf\system\CLIWCF', false) && PACKAGE_ID && RequestHandler::getInstance()->getActiveRequest() && RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof ITrackablePage && RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->isTracked()) {
-			$data['controller'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getController();
-			$data['parentObjectType'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getParentObjectType();
-			$data['parentObjectID'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getParentObjectID();
-			$data['objectType'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getObjectType();
-			$data['objectID'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getObjectID();
+		if (!class_exists('wcf\system\CLIWCF', false) && !$this->isACP && !$this->disableTracking) {
+			$pageLocations = PageLocationManager::getInstance()->getLocations();
+			if (isset($pageLocations[0])) {
+				$data['pageID'] = $pageLocations[0]['pageID'];
+				$data['pageObjectID'] = ($pageLocations[0]['pageObjectID'] ?: null);
+				$data['parentPageID'] = null;
+				$data['parentPageObjectID'] = null;
+				
+				for ($i = 1; $i < count($pageLocations); $i++) {
+					if (!empty($pageLocations[$i]['useAsParentLocation'])) {
+						$data['parentPageID'] = $pageLocations[$i]['pageID'];
+						$data['parentPageObjectID'] = ($pageLocations[$i]['pageObjectID'] ?: null);
+						break;
+					}
+				}
+			}
 		}
 		
 		// update session

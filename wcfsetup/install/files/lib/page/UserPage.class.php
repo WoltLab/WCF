@@ -30,11 +30,6 @@ use wcf\system\WCF;
  */
 class UserPage extends AbstractPage {
 	/**
-	 * @inheritDoc
-	 */
-	public $enableTracking = true;
-	
-	/**
 	 * edit profile on page load
 	 * @var	boolean
 	 */
@@ -199,19 +194,5 @@ class UserPage extends AbstractPage {
 		}
 		
 		parent::show();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getObjectType() {
-		return 'com.woltlab.wcf.user';
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getObjectID() {
-		return $this->userID;
 	}
 }

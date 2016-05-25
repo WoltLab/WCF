@@ -54,6 +54,7 @@
 * Scaled embedded youtube videos to maximum width
 * `\wcf\form\AbstractCaptchaForm`: added parameter to force captcha usage for registered users.
 * Added global disable switch for languages.
+* Overhauled page tracking in sessions / user online locations
 
 #### CMS
 
@@ -144,6 +145,7 @@
 * Option `message_sidebar_enable_rank` removed.
 * Option `message_sidebar_enable_avatar` removed.
 * Removed obsolete `$activeMenuItem` in frontend forms/pages
+* Obsolete interface `wcf\page\ITrackablePage` deprecated.
 
 #### Documentation
 

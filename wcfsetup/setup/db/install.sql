@@ -69,12 +69,7 @@ CREATE TABLE wcf1_acp_session (
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
-	requestMethod VARCHAR(7) NOT NULL DEFAULT '',
-	controller VARCHAR(255) NOT NULL DEFAULT '',
-	parentObjectType VARCHAR(255) NOT NULL DEFAULT '',
-	parentObjectID INT(10) NOT NULL DEFAULT 0,
-	objectType VARCHAR(255) NOT NULL DEFAULT '',
-	objectID INT(10) NOT NULL DEFAULT 0
+	requestMethod VARCHAR(7) NOT NULL DEFAULT ''	
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
@@ -1043,13 +1038,14 @@ CREATE TABLE wcf1_session (
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(7) NOT NULL DEFAULT '',
-	controller VARCHAR(255) NOT NULL DEFAULT '',
-	parentObjectType VARCHAR(255) NOT NULL DEFAULT '',
-	parentObjectID INT(10) NOT NULL DEFAULT 0,
-	objectType VARCHAR(255) NOT NULL DEFAULT '',
-	objectID INT(10) NOT NULL DEFAULT 0,
+	pageID INT(10),
+	pageObjectID INT(10),
+	parentPageID INT(10),
+	parentPageObjectID INT(10),
 	spiderID INT(10),
 	KEY packageID (lastActivityTime, spiderID),
+	KEY pageID (pageID, pageObjectID),
+	KEY parentPageID (parentPageID, parentPageObjectID),
 	UNIQUE KEY uniqueUserID (userID)
 );
 
@@ -1759,6 +1755,8 @@ ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) O
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
+ALTER TABLE wcf1_session ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
+ALTER TABLE wcf1_session ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
 

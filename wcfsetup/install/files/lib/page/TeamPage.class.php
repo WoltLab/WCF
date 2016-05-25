@@ -30,11 +30,6 @@ class TeamPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $enableTracking = true;
-	
-	/**
-	 * @inheritDoc
-	 */
 	public $itemsPerPage = 1000;
 	
 	/**

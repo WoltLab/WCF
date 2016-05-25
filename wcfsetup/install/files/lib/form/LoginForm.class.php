@@ -19,11 +19,6 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
 	
 	/**
-	 * @inheritDoc
-	 */
-	public $enableTracking = true;
-	
-	/**
 	 * true enables the usage of cookies to save login credentials
 	 * @var	boolean
 	 */

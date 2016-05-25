@@ -62,42 +62,27 @@ class UserOnline extends UserProfile {
 	 */
 	public function setLocation($location = null) {
 		if ($location === null) {
-			if ($this->controller) {
-				if ($this->controller === CmsPage::class) {
-					// create location based on cms page title
-					if ($this->objectType) {
-						$page = PageCache::getInstance()->getPageByIdentifier($this->objectType);
-						if ($page !== null) {
-							// TODO: check if active user may access the page
-							$pageContent = $page->getPageContentByLanguage(WCF::getLanguage()->languageID);
-							if (isset($pageContent['title'])) {
-								$this->location = $pageContent['title'];
-								
-								return false;
-							}
-						}
+			if ($this->pageID) {
+				$page = PageCache::getInstance()->getPage($this->pageID);
+				if ($page !== null) {
+					if ($page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
+						// refer to page handler
+						$this->location = $page->getHandler()->getOnlineLocation($page, $this);
+						return true;
 					}
-				}
-				else {
-					$page = PageCache::getInstance()->getPageByController($this->controller);
-					if ($page !== null) {
-						if ($page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
-							// refer to page handler
-							$this->location = $page->getHandler()->getOnlineLocation($page, $this);
-							
-							return true;
-						}
-						else {
-							// check if static language item exists
-							$languageItem = 'wcf.page.onlineLocation.' . $page->identifier;
-							$languageItemValue = WCF::getLanguage()->get($languageItem);
-							
-							if ($languageItemValue !== $languageItem) {
-								$this->location = $languageItemValue;
-								
-								return true;
+					else {
+						// TODO: check if active user may access the page
+						$title = $page->getTitle();
+						if (!empty($title)) {
+							if ($page->pageType != 'system') {
+								$this->location = '<a href="' . StringUtil::encodeHTML($page->getLink()) . '">' . StringUtil::encodeHTML($title) . '</a>';
+							}
+							else {
+								$this->location = StringUtil::encodeHTML($title);
 							}
 						}
+						
+						return ($this->location != '');	
 					}
 				}
 			}

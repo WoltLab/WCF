@@ -35,11 +35,6 @@ use wcf\util\UserRegistrationUtil;
  */
 class RegisterForm extends UserAddForm {
 	/**
-	 * @inheritDoc
-	 */
-	public $enableTracking = true;
-	
-	/**
 	 * true if external authentication is used
 	 * @var	boolean
 	 */

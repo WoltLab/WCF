@@ -25,11 +25,6 @@ class NewPasswordForm extends AbstractForm {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
 	
 	/**
-	 * @inheritDoc
-	 */
-	public $enableTracking = true;
-	
-	/**
 	 * user id
 	 * @var	integer
 	 */

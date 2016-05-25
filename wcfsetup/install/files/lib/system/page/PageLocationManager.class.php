@@ -69,9 +69,10 @@ class PageLocationManager extends SingletonFactory {
 	 * @param	string			$identifier		internal page identifier
 	 * @param	integer			$pageObjectID		page object id
 	 * @param	ITitledLinkObject	$locationObject		optional label for breadcrumbs usage
+	 * @param       boolean                 $useAsParentLocation
 	 * @throws	SystemException
 	 */
-	public function addParentLocation($identifier, $pageObjectID = 0, ITitledLinkObject $locationObject = null) {
+	public function addParentLocation($identifier, $pageObjectID = 0, ITitledLinkObject $locationObject = null, $useAsParentLocation = false) {
 		$page = PageCache::getInstance()->getPageByIdentifier($identifier);
 		if ($page === null) {
 			throw new SystemException("Unknown page identifier '".$identifier."'.");
@@ -98,7 +99,8 @@ class PageLocationManager extends SingletonFactory {
 			'link' => $link,
 			'pageID' => $page->pageID,
 			'pageObjectID' => $pageObjectID,
-			'title' => $title
+			'title' => $title,
+			'useAsParentLocation' => $useAsParentLocation,
 		];
 	}
 	

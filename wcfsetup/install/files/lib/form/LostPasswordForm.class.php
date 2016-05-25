@@ -24,11 +24,6 @@ class LostPasswordForm extends AbstractCaptchaForm {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
 	
 	/**
-	 * @inheritDoc
-	 */
-	public $enableTracking = true;
-	
-	/**
 	 * username
 	 * @var	string
 	 */

@@ -24,7 +24,7 @@ use wcf\util\StringUtil;
  * @subpackage	page
  * @category	Community Framework
  */
-abstract class AbstractPage implements IPage, ITrackablePage {
+abstract class AbstractPage implements IPage {
 	/**
 	 * name of the active menu item
 	 * @var	string
@@ -42,12 +42,6 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	 * @var	string
 	 */
 	public $canonicalURL = '';
-	
-	/**
-	 * enables the tracking of this page
-	 * @var	boolean
-	 */
-	public $enableTracking = false;
 	
 	/**
 	 * is true if canonical URL will be enforced even if POST data is represent
@@ -323,47 +317,5 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 				ACPMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
 			}
 		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function isTracked() {
-		return $this->enableTracking;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getController() {
-		return get_class($this);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getParentObjectType() {
-		return '';
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getParentObjectID() {
-		return 0;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getObjectType() {
-		return '';
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getObjectID() {
-		return 0;
 	}
 }

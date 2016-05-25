@@ -24,11 +24,6 @@ class CmsPage extends AbstractPage {
 	public $content;
 	
 	/**
-	 * @inheritDoc
-	 */
-	public $enableTracking = true;
-	
-	/**
 	 * @var	integer
 	 */
 	public $languageID;
@@ -90,12 +85,5 @@ class CmsPage extends AbstractPage {
 			'page' => $this->page,
 			'pageID' => $this->pageID
 		]);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getObjectType() {
-		return $this->page ? $this->page->identifier : '';
 	}
 }

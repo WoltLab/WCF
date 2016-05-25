@@ -43,7 +43,7 @@ class UserProfileList extends UserList {
 		}
 		
 		// get current location
-		$this->sqlSelects .= ", session.controller, session.objectID AS locationObjectID, session.lastActivityTime AS sessionLastActivityTime";
+		$this->sqlSelects .= ", session.pageID, session.pageObjectID, session.lastActivityTime AS sessionLastActivityTime";
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_session session ON (session.userID = user_table.userID)";
 	}
 	

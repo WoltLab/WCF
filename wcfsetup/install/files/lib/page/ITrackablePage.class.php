@@ -10,6 +10,7 @@ namespace wcf\page;
  * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
+ * @deprecated  2.2
  */
 interface ITrackablePage {
 	/**

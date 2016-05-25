@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\exception;
+use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
@@ -17,6 +18,8 @@ class NamedUserException extends UserException {
 	 * Shows a styled page with the given error message.
 	 */
 	public function show() {
+		SessionHandler::getInstance()->disableTracking();
+		
 		WCF::getTPL()->assign([
 			'name' => get_class($this),
 			'file' => $this->getFile(),

@@ -42,11 +42,6 @@ class MembersListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $enableTracking = true;
-	
-	/**
-	 * @inheritDoc
-	 */
 	public $itemsPerPage = MEMBERS_LIST_USERS_PER_PAGE;
 	
 	/**

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\exception;
+use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
@@ -25,6 +26,8 @@ class PermissionDeniedException extends UserException {
 	 * Prints a permission denied exception.
 	 */
 	public function show() {
+		SessionHandler::getInstance()->disableTracking();
+		
 		@header('HTTP/1.0 403 Forbidden');
 		
 		WCF::getTPL()->assign([

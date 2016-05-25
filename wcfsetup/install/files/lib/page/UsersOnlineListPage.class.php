@@ -30,11 +30,6 @@ class UsersOnlineListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $enableTracking = true;
-	
-	/**
-	 * @inheritDoc
-	 */
 	public $itemsPerPage = 100;
 	
 	/**
@@ -113,7 +108,7 @@ class UsersOnlineListPage extends SortablePage {
 		// cache all necessary data for showing locations
 		foreach ($this->objectList as $userOnline) {
 			if ($userOnline->controller) {
-				$page = PageCache::getInstance()->getPageByController($userOnline->controller);
+				$page = PageCache::getInstance()->getPage($userOnline->pageID);
 				if ($page !== null && $page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
 					$page->getHandler()->prepareOnlineLocation($page, $userOnline);
 				}

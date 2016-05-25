@@ -21,11 +21,6 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $enableTracking = true;
-	
-	/**
-	 * @inheritDoc
-	 */
 	public $loginRequired = true;
 	
 	/**

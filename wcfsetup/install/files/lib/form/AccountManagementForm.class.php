@@ -26,11 +26,6 @@ class AccountManagementForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $enableTracking = true;
-	
-	/**
-	 * @inheritDoc
-	 */
 	public $loginRequired = true;
 	
 	/**

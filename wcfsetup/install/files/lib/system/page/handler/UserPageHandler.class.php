@@ -23,11 +23,11 @@ class UserPageHandler extends AbstractMenuPageHandler implements IOnlineLocation
 	 * @inheritDoc
 	 */
 	public function getOnlineLocation(Page $page, UserOnline $user) {
-		if ($user->objectID === null) {
+		if ($user->pageObjectID === null) {
 			return '';
 		}
 		
-		$visitedUser = UserRuntimeCache::getInstance()->getObject($user->objectID);
+		$visitedUser = UserRuntimeCache::getInstance()->getObject($user->pageObjectID);
 		if ($visitedUser === null) {
 			return '';
 		}
@@ -39,8 +39,8 @@ class UserPageHandler extends AbstractMenuPageHandler implements IOnlineLocation
 	 * @inheritDoc
 	 */
 	public function prepareOnlineLocation(Page $page, UserOnline $user) {
-		if ($user->objectID !== null) {
-			UserRuntimeCache::getInstance()->cacheObjectID($user->objectID);
+		if ($user->pageObjectID !== null) {
+			UserRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
 		}
 	}
 }
