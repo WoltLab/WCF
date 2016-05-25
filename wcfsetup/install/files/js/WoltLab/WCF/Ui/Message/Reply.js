@@ -76,7 +76,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 			var parameters = DomUtil.getDataAttributes(this._container, 'data-', true, true);
 			parameters.data = { message: this._getEditor().code.get() };
 			
-			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_text', parameters);
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_text', parameters.data);
 			
 			Ajax.api(this, {
 				parameters: parameters

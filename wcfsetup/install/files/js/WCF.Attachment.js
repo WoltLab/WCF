@@ -84,9 +84,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		if (this._wysiwygContainerID) {
-			WCF.System.Event.addListener('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._wysiwygContainerID, $.proxy(this._submitInline, this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._wysiwygContainerID, $.proxy(this._submitInline, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.messageOptionsInline', 'prepareExtended_' + this._wysiwygContainerID, $.proxy(this._prepareExtended, this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'reset', $.proxy(this._reset, this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset', $.proxy(this._reset, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'upload_' + this._wysiwygContainerID, $.proxy(this._editorUpload, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'getImageAttachments_' + this._wysiwygContainerID, $.proxy(this._getImageAttachments, this));
 		}
