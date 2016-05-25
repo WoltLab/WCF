@@ -295,10 +295,10 @@
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
-				<title>Settings</title>
+				<title>Signature Management</title>
 			</content>
 			<content language="de">
-				<title>Einstellungen</title>
+				<title>Signatur-Verwaltung</title>
 			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.EditHistory">
