@@ -466,7 +466,9 @@ class WCFSetup extends WCF {
 		
 		// domain
 		$domainName = '';
-		if (!empty($_SERVER['SERVER_NAME'])) $domainName = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'];
+		$proto = 'http';
+		if (!empty($_SERVER['HTTPS'])) $proto = 'https';
+		if (!empty($_SERVER['SERVER_NAME'])) $domainName = $proto . '://' . $_SERVER['SERVER_NAME'];
 		// port
 		if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) $domainName .= ':' . $_SERVER['SERVER_PORT'];
 		// script url
