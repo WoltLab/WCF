@@ -72,6 +72,7 @@ select {
 }
 
 .selectDropdown {
+	max-width: 100%;
 	position: relative;
 	
 	// force inline-block to mimic the <select> display and make both its dimensions
