@@ -140,6 +140,7 @@
 * Language server system removed.
 * Deprecated methods in `wcf\util\StringUtil` removed.
 * Option `message_sidebar_enable_message_group_starter_icon` removed.
+* Option `module_dashboard_page` removed.
 * Option `module_privacy_policy_page` removed.
 * Option `show_clock` removed.
 * Option `message_sidebar_enable_rank` removed.
