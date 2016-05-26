@@ -46,6 +46,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 				confirm: null,
 				legacyCallback: null,
 				message: '',
+				messageIsHtml: false,
 				parameters: {},
 				template: ''
 			}, options);
@@ -63,8 +64,9 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 				this._createDialog();
 			}
 			
-			_content.innerHTML = (typeof options.template === 'string') ? options.template.trim() : '';
-			_text.textContent = _options.message;
+			_content.innerHTML = (typeof _options.template === 'string') ? _options.template.trim() : '';
+			if (_options.messageIsHtml) _text.innerHTML = _options.message;
+			else _text.textContent = _options.message;
 			
 			_active = true;
 			

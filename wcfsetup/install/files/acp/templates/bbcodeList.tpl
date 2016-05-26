@@ -49,7 +49,7 @@
 							<span class="icon icon16 fa-{if !$bbcode->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $bbcode->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$bbcode->bbcodeID}"></span>
 							<a href="{link controller='BBCodeEdit' object=$bbcode}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $bbcode->canDelete()}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$bbcode->bbcodeID}" data-confirm-message="{lang}wcf.acp.bbcode.delete.sure{/lang}"></span>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$bbcode->bbcodeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.bbcode.delete.sure{/lang}"></span>
 							{else}
 								<span class="icon icon16 fa-times disabled"></span>
 							{/if}

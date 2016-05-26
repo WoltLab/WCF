@@ -200,7 +200,7 @@ WCF.Message.EditHistory = Class.extend({
 				if (action === 'cancel') return;
 				
 				self._sendRequest($target);
-			});
+			}, undefined, undefined, true);
 		}
 		else {
 			this._sendRequest($target);

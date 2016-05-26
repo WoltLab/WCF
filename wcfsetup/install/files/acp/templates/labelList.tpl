@@ -123,7 +123,7 @@
 					<tr class="jsLabelRow{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1} sortableNode" data-object-id="{@$label->labelID}{/if}">
 						<td class="columnIcon">
 							<a href="{link controller='LabelEdit' object=$label}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$label->labelID}" data-confirm-message="{lang}wcf.acp.label.delete.sure{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$label->labelID}" data-confirm-message-html="{lang __encode=true}wcf.acp.label.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>

@@ -29,7 +29,7 @@ WCF.ACP.Style.CopyStyle = Class.extend({
 		
 		var self = this;
 		$('.jsCopyStyle').click(function() {
-			WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.style.copyStyle.confirmMessage'), $.proxy(self._copy, self));
+			WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.style.copyStyle.confirmMessage'), $.proxy(self._copy, self), undefined, undefined, true);
 		});
 	},
 	
@@ -363,7 +363,7 @@ WCF.ACP.Style.List = Class.extend({
 				if (action === 'confirm') {
 					self._click('delete', styleID);
 				}
-			});
+			}, undefined, undefined, true);
 		}
 		else {
 			// invoke action directly

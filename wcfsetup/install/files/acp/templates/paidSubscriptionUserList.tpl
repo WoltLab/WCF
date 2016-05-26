@@ -46,7 +46,7 @@
 				{foreach from=$objects item=subscriptionUser}
 					<tr class="jsPaidSubscriptionUserRow">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$subscriptionUser->subscriptionUserID}" data-confirm-message="{lang}wcf.acp.paidSubscription.user.delete.confirmMessage{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$subscriptionUser->subscriptionUserID}" data-confirm-message-html="{lang __encode=true}wcf.acp.paidSubscription.user.delete.confirmMessage{/lang}"></span>
 							
 							{event name='itemButtons'}
 						</td>

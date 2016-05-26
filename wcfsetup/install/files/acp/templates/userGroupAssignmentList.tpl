@@ -60,7 +60,7 @@
 						<td class="columnIcon">
 							<span class="icon icon16 fa-{if !$assignment->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $assignment->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$assignment->assignmentID}"></span>
 							<a href="{link controller='UserGroupAssignmentEdit' object=$assignment}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$assignment->assignmentID}" data-confirm-message="{lang}wcf.acp.group.assignment.delete.confirmMessage{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$assignment->assignmentID}" data-confirm-message-html="{lang __encode=true}wcf.acp.group.assignment.delete.confirmMessage{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>

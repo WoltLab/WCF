@@ -751,7 +751,7 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 				self._packageID = $element.data('objectID');
 				self.prepareInstallation();
 			}
-		});
+		}, undefined, undefined, true);
 	},
 	
 	/**
@@ -1070,7 +1070,7 @@ WCF.ACP.Package.Search = Class.extend({
 				this._selectedPackageVersion = $button.data('packageVersion');
 				this._prepareInstallation();
 			}
-		}, this));
+		}, this), undefined, undefined, true);
 	},
 	
 	/**
@@ -1193,7 +1193,7 @@ WCF.ACP.Package.Server.Installation = Class.extend({
 				this._selectedPackageVersion = $button.data('packageVersion');
 				this._prepareInstallation();
 			}
-		}, this));
+		}, this), undefined, undefined, true);
 	},
 	
 	/**
@@ -2173,7 +2173,7 @@ WCF.ACP.User.Group.Copy = Class.extend({
 					}
 				});
 			}
-		}, this), '', $template);
+		}, this), '', $template, true);
 	}
 });
 

@@ -24,7 +24,10 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 		$compiler->pushTag('lang');
 		
 		$tagArgs = $compiler->makeArgString($tagArgs);
-		return "<?php \$this->tagStack[] = array('lang', array($tagArgs)); ob_start(); ?>";
+		return "<?php
+			\$this->tagStack[] = array('lang', array($tagArgs));
+			ob_start();
+			?>";
 	}
 	
 	/**
@@ -32,6 +35,38 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('lang');
-		return "<?php echo (!empty(\$this->tagStack[count(\$this->tagStack) - 1][1]['__literal']) ? wcf\system\WCF::getLanguage()->get(ob_get_clean(), \$this->tagStack[count(\$this->tagStack) - 1][1], (isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional']) ? \$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'] : false)) : wcf\system\WCF::getLanguage()->getDynamicVariable(ob_get_clean(), \$this->tagStack[count(\$this->tagStack) - 1][1], (isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional']) ? \$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'] : false))); array_pop(\$this->tagStack); ?>";
+		return "<?php
+			\$__langCompilerTemplatePluginOutput = (
+				!empty(\$this->tagStack[count(\$this->tagStack) - 1][1]['__literal'])
+				?
+				wcf\system\WCF::getLanguage()->get(
+					ob_get_clean(),
+					\$this->tagStack[count(\$this->tagStack) - 1][1],
+					(
+						isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'])
+						?
+						\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional']
+						:
+						false
+					)
+				)
+				:
+				wcf\system\WCF::getLanguage()->getDynamicVariable(
+					ob_get_clean(),
+					\$this->tagStack[count(\$this->tagStack) - 1][1],
+					(
+						isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'])
+						?
+						\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional']
+						:
+						false
+					)
+				)
+			);
+			
+			if (!empty(\$this->tagStack[count(\$this->tagStack) - 1][1]['__encode'])) \$__langCompilerTemplatePluginOutput = wcf\util\StringUtil::encodeHTML(\$__langCompilerTemplatePluginOutput);
+			echo \$__langCompilerTemplatePluginOutput;
+			
+			array_pop(\$this->tagStack); ?>";
 	}
 }

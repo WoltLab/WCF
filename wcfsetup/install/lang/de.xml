@@ -1145,7 +1145,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket „{@$package->getName()}“ aktualisieren]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
-		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
+		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket <span class="confirmationObject">{@$package->getName()}</span> wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Deinstallation abgeschlossen]]></item>
 		<item name="wcf.acp.package.uninstallation.step.uninstall"><![CDATA[Paket „{$queue->packageName}“ wird deinstalliert …]]></item>
 		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Deinstallation]]></item>

@@ -1704,8 +1704,8 @@ WCF.Action.Delete = Class.extend({
 		var $target = $(event.currentTarget);
 		event.preventDefault();
 		
-		if ($target.data('confirmMessage')) {
-			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
+		if ($target.data('confirmMessageHtml') || $target.data('confirmMessage')) {
+			WCF.System.Confirmation.show($target.data('confirmMessageHtml') ? $target.data('confirmMessageHtml') : $target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target }, undefined, $target.data('confirmMessageHtml') ? true : false);
 		}
 		else {
 			WCF.LoadingOverlayHandler.updateIcon($target);
@@ -1914,8 +1914,8 @@ WCF.Action.Toggle = Class.extend({
 		var $target = $(event.currentTarget);
 		event.preventDefault();
 		
-		if ($target.data('confirmMessage')) {
-			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
+		if ($target.data('confirmMessageHtml') || $target.data('confirmMessage')) {
+			WCF.System.Confirmation.show($target.data('confirmMessageHtml') ? $target.data('confirmMessageHtml') : $target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target }, undefined, $target.data('confirmMessageHtml') ? true : false);
 		}
 		else {
 			WCF.LoadingOverlayHandler.updateIcon($target);
@@ -5304,14 +5304,21 @@ WCF.System.Confirmation = {
 	 * @param	object		callback
 	 * @param	object		parameters
 	 * @param	jQuery		template
+	 * @param       boolean         messageIsHtml
 	 */
-	show: function(message, callback, parameters, template) {
+	show: function(message, callback, parameters, template, messageIsHtml) {
+		if (typeof template === 'object') {
+			var $wrapper = $('<div />');
+			$wrapper.append(template);
+			template = $wrapper.html();
+		}
 		require(['Ui/Confirmation'], function(UiConfirmation) {
 			UiConfirmation.show({
 				legacyCallback: callback,
 				message: message,
 				parameters: parameters,
-				template: (typeof template === 'object' ? template.html() : '')
+				template: (template || ''),
+				messageIsHtml: (messageIsHtml === true)
 			});
 		});
 	}
