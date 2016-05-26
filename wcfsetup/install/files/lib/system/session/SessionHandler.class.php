@@ -887,7 +887,7 @@ class SessionHandler extends SingletonFactory {
 				$data['parentPageID'] = null;
 				$data['parentPageObjectID'] = null;
 				
-				for ($i = 1; $i < count($pageLocations); $i++) {
+				for ($i = 1, $length = count($pageLocations); $i < $length; $i++) {
 					if (!empty($pageLocations[$i]['useAsParentLocation'])) {
 						$data['parentPageID'] = $pageLocations[$i]['pageID'];
 						$data['parentPageObjectID'] = ($pageLocations[$i]['pageObjectID'] ?: null);
