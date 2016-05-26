@@ -13,6 +13,7 @@ use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
+use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
@@ -466,9 +467,7 @@ class WCFSetup extends WCF {
 		
 		// domain
 		$domainName = '';
-		$proto = 'http';
-		if (!empty($_SERVER['HTTPS'])) $proto = 'https';
-		if (!empty($_SERVER['SERVER_NAME'])) $domainName = $proto . '://' . $_SERVER['SERVER_NAME'];
+		if (!empty($_SERVER['SERVER_NAME'])) $domainName = RouteHandler::getProtocol() . $_SERVER['SERVER_NAME'];
 		// port
 		if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) $domainName .= ':' . $_SERVER['SERVER_PORT'];
 		// script url
