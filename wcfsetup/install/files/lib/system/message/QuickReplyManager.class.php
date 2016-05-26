@@ -10,6 +10,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -145,8 +146,13 @@ class QuickReplyManager extends SingletonFactory {
 		}
 		$object->validateContainer($this->container);
 		
+		$parameters['htmlInputProcessor'] = $object->getHtmlInputProcessor($parameters['data']['message']);
+		unset($parameters['data']['message']);
+		
+		$parameters['htmlInputProcessor']->validate();
+		
 		// validate message
-		$object->validateMessage($this->container, $parameters['data']['message']);
+		$object->validateMessage($this->container, $parameters['htmlInputProcessor']);
 		
 		// check for message quote ids
 		$parameters['removeQuoteIDs'] = (isset($parameters['removeQuoteIDs']) && is_array($parameters['removeQuoteIDs'])) ? ArrayUtil::trim($parameters['removeQuoteIDs']) : [];
@@ -158,12 +164,6 @@ class QuickReplyManager extends SingletonFactory {
 			unset($parameters['data']['tmpHash']);
 		}
 		
-		// message settings
-		$parameters['data'] = array_merge($parameters['data'], MessageFormSettingsHandler::getSettings($parameters));
-		
-		$parameters['data']['enableHtml'] = 0;
-		$parameters['data']['showSignature'] = (WCF::getUser()->userID ? WCF::getUser()->showSignature : 0);
-		
 		EventHandler::getInstance()->fireAction($this, 'validateParameters', $parameters);
 	}
 	
@@ -171,7 +171,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * Creates a new message and returns the parsed template.
 	 * 
 	 * @param	\wcf\data\IMessageQuickReplyAction	$object
-	 * @param	mixed[][]				$parameters
+	 * @param	array   				$parameters
 	 * @param	string					$containerActionClassName
 	 * @param	string					$sortOrder
 	 * @param	string					$templateName
@@ -189,10 +189,10 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data']['username'] = WCF::getUser()->username;
 		
 		// pre-parse message text
-		if ($parameters['data']['preParse']) {
+		/*if ($parameters['data']['preParse']) {
 			$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
 		}
-		unset($parameters['data']['preParse']);
+		unset($parameters['data']['preParse']);*/
 		
 		$parameters['data'] = array_merge($additionalFields, $parameters['data']);
 		
@@ -206,9 +206,7 @@ class QuickReplyManager extends SingletonFactory {
 		EventHandler::getInstance()->fireAction($this, 'createdMessage', $eventParameters);
 		
 		if ($message instanceof IMessage && !$message->isVisible()) {
-			return [
-				'isVisible' => false
-			];
+			return ['isVisible' => false];
 		}
 		
 		// resolve the page no
@@ -248,9 +246,7 @@ class QuickReplyManager extends SingletonFactory {
 		}
 		else {
 			// redirect
-			return [
-				'url' => $object->getRedirectUrl($this->container, $message)
-			];
+			return ['url' => $object->getRedirectUrl($this->container, $message)];
 		}
 	}
 	

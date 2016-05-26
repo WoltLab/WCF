@@ -166,11 +166,11 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 * @param	{Element}	parentEl	future containing element
 		 */
 		prepend: function(el, parentEl) {
-			if (parentEl.childElementCount === 0) {
+			if (parentEl.childNodes.length === 0) {
 				parentEl.appendChild(el);
 			}
 			else {
-				parentEl.insertBefore(el, parentEl.children[0]);
+				parentEl.insertBefore(el, parentEl.childNodes[0]);
 			}
 		},
 		

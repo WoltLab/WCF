@@ -417,7 +417,12 @@ final class DOMUtil {
 		$cloneNode = self::getParentBefore($node, $ancestor);
 		
 		if ($splitBefore) {
-			if (self::isFirstNode($node, $cloneNode)) {
+			if ($cloneNode === null) {
+				// target node is already a direct descendant of the ancestor
+				// node, no need to split anything
+				return $node;
+			}
+			else if (self::isFirstNode($node, $cloneNode)) {
 				// target node is at the very start, we can safely move the
 				// entire parent node around
 				return $cloneNode;
@@ -436,7 +441,12 @@ final class DOMUtil {
 			}
 		}
 		else {
-			if (self::isLastNode($node, $cloneNode)) {
+			if ($cloneNode === null) {
+				// target node is already a direct descendant of the ancestor
+				// node, no need to split anything
+				return $node;
+			}
+			else if (self::isLastNode($node, $cloneNode)) {
 				// target node is at the very end, we can safely move the
 				// entire parent node around
 				return $cloneNode;
