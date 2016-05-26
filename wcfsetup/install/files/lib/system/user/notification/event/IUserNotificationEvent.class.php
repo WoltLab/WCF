@@ -164,5 +164,5 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * 
 	 * @return	IUserNotificationObject
 	 */
-	public function getUserNoticationObject();
+	public function getUserNotificationObject();
 }

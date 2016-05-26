@@ -237,7 +237,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	/**
 	 * @inheritDoc
 	 */
-	public function getUserNoticationObject() {
+	public function getUserNotificationObject() {
 		return $this->userNotificationObject;
 	}
 }
