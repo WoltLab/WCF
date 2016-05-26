@@ -4,6 +4,8 @@ use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
+use wcf\system\html\input\node\IHtmlInputNodeProcessor;
+use wcf\system\html\node\IHtmlNodeProcessor;
 use wcf\util\StringUtil;
 
 /**
@@ -11,13 +13,15 @@ use wcf\util\StringUtil;
  * @since	2.2
  */
 class HtmlInputProcessor {
+	protected $embeddedContent = [];
+	
 	/**
 	 * @var	IHtmlInputFilter
 	 */
 	protected $htmlInputFilter;
 	
 	/**
-	 * @var	HtmlInputNodeProcessor
+	 * @var	IHtmlInputNodeProcessor
 	 */
 	protected $htmlInputNodeProcessor;
 	
@@ -34,16 +38,19 @@ class HtmlInputProcessor {
 		// pre-parse HTML
 		$this->getHtmlInputNodeProcessor()->load($html);
 		$this->getHtmlInputNodeProcessor()->process();
-		
+		$this->embeddedContent = $this->getHtmlInputNodeProcessor()->getEmbeddedContent();
+	}
+	
+	public function validate() {
+		// TODO
+	}
+	
+	public function getHtml() {
 		return $this->getHtmlInputNodeProcessor()->getHtml();
 	}
 	
-	public function setHtmlInputFilter(IHtmlInputFilter $htmlInputFilter) {
-		$this->htmlInputFilter = $htmlInputFilter;
-	}
-	
 	/**
-	 * @return	IHtmlInputFilter|MessageHtmlInputFilter
+	 * @return	IHtmlInputFilter
 	 */
 	public function getHtmlInputFilter() {
 		if ($this->htmlInputFilter === null) {
@@ -53,12 +60,12 @@ class HtmlInputProcessor {
 		return $this->htmlInputFilter;
 	}
 	
-	public function setHtmlInputNodeProcessor(HtmlInputNodeProcessor $htmlInputNodeProcessor) {
-		$this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
+	public function setHtmlInputFilter(IHtmlInputFilter $htmlInputFilter) {
+		$this->htmlInputFilter = $htmlInputFilter;
 	}
 	
 	/**
-	 * @return	HtmlInputNodeProcessor
+	 * @return IHtmlInputNodeProcessor
 	 */
 	public function getHtmlInputNodeProcessor() {
 		if ($this->htmlInputNodeProcessor === null) {
@@ -66,5 +73,13 @@ class HtmlInputProcessor {
 		}
 		
 		return $this->htmlInputNodeProcessor;
+	}
+	
+	public function setHtmlInputNodeProcessor(IHtmlNodeProcessor $htmlInputNodeProcessor) {
+		$this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
+	}
+	
+	public function getEmbeddedContent() {
+		return $this->embeddedContent;
 	}
 }

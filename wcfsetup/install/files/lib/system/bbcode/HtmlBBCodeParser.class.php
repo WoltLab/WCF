@@ -256,6 +256,15 @@ class HtmlBBCodeParser extends BBCodeParser {
 		
 		$attributes = '';
 		if (!empty($tag['attributes'])) {
+			// strip outer quote tags
+			$tag['attributes'] = array_map(function($attribute) {
+				if (preg_match('~^([\'"])(?P<content>.*)(\1)$~', $attribute, $matches)) {
+					return $matches['content'];
+				}
+				
+				return $attribute;
+			}, $tag['attributes']);
+			
 			// uses base64 encoding to avoid an "escape" nightmare
 			$attributes = ' data-attributes="' . base64_encode(JSON::encode($tag['attributes'])) . '"';
 		}

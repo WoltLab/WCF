@@ -7,7 +7,7 @@ use wcf\util\JSON;
  * TOOD documentation
  * @since	2.2
  */
-class HtmlNodeProcessor {
+class HtmlNodeProcessor implements IHtmlNodeProcessor {
 	/**
 	 * @var	\DOMDocument
 	 */
