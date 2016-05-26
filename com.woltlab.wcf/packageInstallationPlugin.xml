@@ -20,7 +20,6 @@
 		<pip name="template">wcf\system\package\plugin\TemplatePackageInstallationPlugin</pip>
 		<pip name="userGroupOption">wcf\system\package\plugin\UserGroupOptionPackageInstallationPlugin</pip>
 		<pip name="userOption">wcf\system\package\plugin\UserOptionPackageInstallationPlugin</pip>
-		<pip name="sitemap">wcf\system\package\plugin\SitemapPackageInstallationPlugin</pip>
 		<pip name="acpSearchProvider">wcf\system\package\plugin\ACPSearchProviderPackageInstallationPlugin</pip>
 		<pip name="style">wcf\system\package\plugin\StylePackageInstallationPlugin</pip>
 		<pip name="bbcode">wcf\system\package\plugin\BBCodePackageInstallationPlugin</pip>

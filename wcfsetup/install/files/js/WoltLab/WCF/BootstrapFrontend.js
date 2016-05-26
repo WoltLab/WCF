@@ -8,11 +8,11 @@
  */
 define(
 	[
-	 	'Ajax',                           'WoltLab/WCF/Bootstrap',      'WoltLab/WCF/Controller/Sitemap', 'WoltLab/WCF/Controller/Style/Changer',
+	 	'Ajax',                           'WoltLab/WCF/Bootstrap',      'WoltLab/WCF/Controller/Style/Changer',
 	 	'WoltLab/WCF/Controller/Popover', 'WoltLab/WCF/Ui/User/Ignore'
 	],
 	function(
-		Ajax,                              Bootstrap,                    ControllerSitemap,                ControllerStyleChanger,
+		Ajax,                              Bootstrap,                    ControllerStyleChanger,
 		ControllerPopover,                 UiUserIgnore
 	)
 {
@@ -31,8 +31,6 @@ define(
 		 */
 		setup: function(options) {
 			Bootstrap.setup();
-			
-			ControllerSitemap.setup();
 			
 			if (options.styleChanger) {
 				//ControllerStyleChanger.setup();

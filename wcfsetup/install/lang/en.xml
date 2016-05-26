@@ -2540,10 +2540,8 @@ Errors are:
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Page {#$pageNo}]]></item>
 		<item name="wcf.page.offline"><![CDATA[Page is currently in maintenance mode{if OFFLINE_MESSAGE != ''}:{else}.{/if}]]></item>
-		<item name="wcf.page.sitemap"><![CDATA[Sitemap]]></item>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
-		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Requested Page]]></item>
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our use of cookies. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">More details</a>]]></item>

@@ -56,6 +56,7 @@
 * Added global disable switch for languages.
 * Overhauled page tracking in sessions / user online locations
 * Overhauled language import form
+* Removed sitemap function/overlay
 
 #### CMS
 
@@ -148,6 +149,7 @@
 * Option `message_sidebar_enable_avatar` removed.
 * Removed obsolete `$activeMenuItem` in frontend forms/pages
 * Obsolete interface `wcf\page\ITrackablePage` deprecated.
+* PIP `wcf\system\package\plugin\SitemapPackageInstallationPlugin` removed.
 
 #### Documentation
 

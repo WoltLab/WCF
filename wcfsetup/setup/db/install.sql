@@ -1060,18 +1060,6 @@ CREATE TABLE wcf1_session_virtual (
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
 );
 
-DROP TABLE IF EXISTS wcf1_sitemap;
-CREATE TABLE wcf1_sitemap (
-	sitemapID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	packageID INT(10) NOT NULL,
-	sitemapName VARCHAR(80) NOT NULL DEFAULT '',
-	className VARCHAR(255) NOT NULL DEFAULT '',
-	showOrder INT(10) NOT NULL DEFAULT 0,
-	permissions TEXT NULL,
-	options TEXT NULL,
-	UNIQUE KEY sitemapName (packageID, sitemapName)
-);
-
 DROP TABLE IF EXISTS wcf1_smiley;
 CREATE TABLE wcf1_smiley (
 	smileyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1759,8 +1747,6 @@ ALTER TABLE wcf1_session ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE wcf1_sitemap ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_smiley ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_smiley ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;

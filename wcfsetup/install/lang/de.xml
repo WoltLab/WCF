@@ -2503,10 +2503,8 @@ Fehler sind beispielsweise:
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
 		<item name="wcf.page.offline"><![CDATA[Die Seite befindet sich zurzeit {if OFFLINE_MESSAGE != ''}aus folgenden Gründen im Wartungsmodus:{else}im Wartungsmodus.{/if}]]></item>
-		<item name="wcf.page.sitemap"><![CDATA[Schnellnavigation]]></item>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
-		<item name="wcf.page.sitemap.userAccount"><![CDATA[Benutzerkonto]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Website nutzen zu können, muss JavaScript aktiviert sein.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Aufgerufene Seite]]></item>
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">Weitere Informationen</a>]]></item>
