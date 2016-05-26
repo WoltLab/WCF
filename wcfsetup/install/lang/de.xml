@@ -833,9 +833,9 @@
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten anzeigen]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Aktiviert die Anzeige aktueller WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public-API-Key]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen API-Key für die Nutzung der reCAPTCHA-Funktion können Sie auf der Website von <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
-		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private-API-Key]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Websiteschlüssel]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen Websiteschlüssel für die Nutzung der reCAPTCHA-Funktion können Sie auf der Website von <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
+		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Geheimer Schlüssel]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Vorschaugrafiken von hochgeladenen Bilder erzeugen]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
