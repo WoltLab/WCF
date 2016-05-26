@@ -19,6 +19,10 @@ use wcf\util\UserUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.user.online
  * @category	Community Framework
+ *
+ * @property-read	integer|null	$pageID
+ * @property-read	integer|null	$pageObjectID
+ * @property-read	integer|null	$parentPageObjectID
  */
 class UserOnline extends UserProfile {
 	/**

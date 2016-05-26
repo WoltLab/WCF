@@ -16,6 +16,8 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.event
  * @category	Community Framework
+ * 
+ * @mixin	UserNotificationEvent
  */
 interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
@@ -99,10 +101,10 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets the object for the event.
 	 * 
-	 * @param	\wcf\data\user\notification\UserNotification			$notification
-	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$object
-	 * @param	\wcf\data\user\UserProfile					$author
-	 * @param	mixed[]								$additionalData
+	 * @param	UserNotification		$notification
+	 * @param	IUserNotificationObject		$object
+	 * @param	UserProfile			$author
+	 * @param	array				$additionalData
 	 */
 	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = []);
 	
@@ -153,7 +155,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the underlying notification object.
 	 * 
-	 * @return	\wcf\data\user\notification\UserNotification
+	 * @return	UserNotification
 	 */
 	public function getNotification();
 	

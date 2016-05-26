@@ -35,6 +35,21 @@ use wcf\util\UserUtil;
  * @package	com.woltlab.wcf
  * @subpackage	system.session
  * @category	Community Framework
+ * 
+ * @property-read	string		$sessionID
+ * @property-read	integer|null	$userID
+ * @property-read	string		$ipAddress
+ * @property-read	string		$userAgent
+ * @property-read	integer		$lastActivityTime
+ * @property-read	string		$requestURI
+ * @property-read	string		$requestMethod
+ * @property-read	string		$controller
+ * @property-read	string		$parentObjectType
+ * @property-read	integer		$parentObjectID
+ * @property-read	string		$objectType
+ * @property-read	integer		$objectID
+ * @property-read	string		$sessionVariables
+ * @property-read	string		$spiderID
  */
 class SessionHandler extends SingletonFactory {
 	/**

@@ -57,6 +57,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	
 	/**
 	 * @inheritDoc
+	 * @return	ViewableLabelGroup[]
 	 */
 	public function getLabelGroups(array $parameters = []) {
 		$groupIDs = $this->getLabelGroupIDs($parameters);
