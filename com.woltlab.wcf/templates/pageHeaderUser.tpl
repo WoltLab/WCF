@@ -106,7 +106,7 @@
 								{implode from=$__wcf->getLanguage()->getLanguages() item=__language}
 									'{@$__language->languageID}': {
 										iconPath: '{@$__language->getIconPath()|encodeJS}',
-										languageName: '{$__language}'
+										languageName: '{@$__language|encodeJS}'
 									}
 								{/implode}
 							};

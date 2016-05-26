@@ -27,8 +27,8 @@
 								var $languages = {
 									{implode from=$availableLanguages item=language}
 										'{@$language->languageID}': {
-											iconPath: '{@$language->getIconPath()}',
-											languageName: '{$language}'
+											iconPath: '{@$language->getIconPath()|encodeJS}',
+											languageName: '{@$language|encodeJS}'
 										}
 									{/implode}
 								};
