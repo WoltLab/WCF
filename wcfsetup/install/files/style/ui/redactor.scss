@@ -211,6 +211,21 @@
 		flex: 0 0 auto;
 		margin-bottom: 1px;
 		
+		&.redactor-toolbar-separator {
+			margin-left: 11px;
+			position: relative;
+			
+			&::before {
+				bottom: 7px;
+				border-left: 1px solid $wcfHeaderMenuLink;
+				content: "";
+				left: -6px;
+				opacity: .6;
+				position: absolute;
+				top: 7px;
+			}
+		}
+		
 		> a {
 			color: $wcfHeaderMenuLink;
 			display: block;

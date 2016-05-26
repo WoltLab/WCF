@@ -20,28 +20,28 @@ buttons = [];
 
 buttons.push('html');
 
+buttons.push('wcfSeparator');
+
 buttons.push('bold');
 buttons.push('italic');
 buttons.push('underline');
-
 buttons.push('deleted');
+
+buttons.push('wcfSeparator');
+
 buttons.push('subscript');
 buttons.push('superscript');
-
-buttons.push('lists');
-buttons.push('alignment');
-
-{*
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}
-	buttons.push('fontfamily');
-{/if}
-*}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}
 	buttons.push('woltlabSize');
 {/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}
 	buttons.push('woltlabColor');
 {/if}
+
+buttons.push('wcfSeparator');
+
+buttons.push('lists');
+buttons.push('alignment');
 
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}
 	buttons.push('link');
@@ -54,6 +54,8 @@ buttons.push('alignment');
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('table')}
 	buttons.push('table');
 {/if}
+
+buttons.push('wcfSeparator');
 
 buttons.push('woltlabMedia');
 buttons.push('woltlabQuote');

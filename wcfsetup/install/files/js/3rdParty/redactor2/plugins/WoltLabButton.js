@@ -8,6 +8,11 @@ $.Redactor.prototype.WoltLabButton = function() {
 			for (var i = 0, length = this.opts.buttons.length; i < length; i++) {
 				buttonName = this.opts.buttons[i];
 				
+				if (buttonName === 'wcfSeparator') {
+					// seperators will be inserted in the next step
+					continue;
+				}
+				
 				//noinspection JSUnresolvedVariable
 				buttonData = this.opts.woltlab.buttons[buttonName];
 				
@@ -38,11 +43,23 @@ $.Redactor.prototype.WoltLabButton = function() {
 				toolbarOrder.push(buttonName);
 			}
 			
+			var addSeparator = false;
 			for (i = 0, length = this.opts.buttons.length; i < length; i++) {
 				buttonName = this.opts.buttons[i];
 				
-				toolbar.appendChild(toolbarButtons[buttonName]);
+				if (buttonName === 'wcfSeparator') {
+					addSeparator = true;
+					continue;
+				}
+				
+				listItem = toolbarButtons[buttonName];
+				toolbar.appendChild(listItem);
 				toolbarOrder.splice(toolbarOrder.indexOf(buttonName), 1);
+				
+				if (addSeparator) {
+					listItem.classList.add('redactor-toolbar-separator');
+					addSeparator = false;
+				}
 			}
 			
 			// add remaining elements
