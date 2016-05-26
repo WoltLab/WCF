@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\data\language\Language;
+use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\UserProfile;
 use wcf\data\IDatabaseObjectProcessor;
@@ -155,4 +156,11 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @return	\wcf\data\user\notification\UserNotification
 	 */
 	public function getNotification();
+	
+	/**
+	 * Returns the underlying user notification object.
+	 * 
+	 * @return	IUserNotificationObject
+	 */
+	public function getUserNoticationObject();
 }
