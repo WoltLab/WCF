@@ -27,7 +27,7 @@
 		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the ad is displayed.]]></item>
 		<item name="wcf.acp.ad.conditions.user"><![CDATA[Active user]]></item>
 		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the ad.]]></item>
-		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Do you really want to delete the ad “{$ad->adName}”?]]></item>
+		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Do you really want to delete the ad <span class="confirmationObject">{$ad->adName}</span>?]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Edit Ad]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Disable Ad]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Ads]]></item>
@@ -83,7 +83,7 @@
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
 		<item name="wcf.acp.bbcode.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
-		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Do you really want to delete the BBCode “[{$bbcode->bbcodeTag}]”?]]></item>
+		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Do you really want to delete the BBCode <span class="confirmationObject">[{$bbcode->bbcodeTag}]</span>?]]></item>
 		<item name="wcf.acp.bbcode.edit"><![CDATA[Edit BBCode]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
@@ -94,7 +94,7 @@
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
 		
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Do you really want to delete the media provider “{$mediaProvider->title}”?]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Do you really want to delete the media provider <span class="confirmationObject">{$mediaProvider->title}</span>?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Edit Media Provider]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML Code]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Enter the media’s HTML code. Variables are recognized as {$variable} and will be replaced with the regular expression’s matching named group.<br />
@@ -142,7 +142,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Answers]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Enter one possible answer per line. Answers beginning and ending with “~” will be interpreted as regular expressions.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.regexNotValid"><![CDATA[The regular expression “{$invalidRegex}” is not valid.]]></item>
-		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question “{$question->question|language}”?]]></item>
+		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question <span class="confirmationObject">{$question->question|language}</span>?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
@@ -177,7 +177,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Run Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Invalid time format.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Do you really want to delete the cronjob “{$cronjob->description|language}”?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Do you really want to delete the cronjob <span class="confirmationObject">{$cronjob->description|language}</span>?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Cronjob Log]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Clear Protocol]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Do you really want to clear the cronjob log?]]></item>
@@ -256,7 +256,7 @@ Examples for medium ID detection:
 	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group “{$group->groupName|language}”?]]></item>
+		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group <span class="confirmationObject">{$group->groupName|language}</span>?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
 		<item name="wcf.acp.group.option.editingOption"><![CDATA[Edit User Group Option]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Heads up! You’re a member of this user group, changes may cause yourself being locked out from the Administration Control Panel.]]></item>
@@ -408,7 +408,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Users need to fulfill the following conditions to be automatically added to the user group]]></item>
-		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Do you really want to delete the automatic user group assignment “{$assignment->title}”?]]></item>
+		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Do you really want to delete the automatic user group assignment <span class="confirmationObject">{$assignment->title}</span>?]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Edit User Group Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[You have not chosen any condition.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
@@ -421,7 +421,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Can report content]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Can manage captcha questions]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Copy User Group]]></item>
-		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Do you really want to copy this user group?]]></item>
+		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Do you really want to copy the user group <span class="confirmationObject">{$group->groupName|language}</span>?]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Copy Object Permissions]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[Permissions set for certain objects like for label groups will also be set for the new user group.]]></item>
 		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Copy Members]]></item>
@@ -467,13 +467,13 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS Class Name]]></item>
 		<item name="wcf.acp.label.cssClassName.error.notValid"><![CDATA[Chosen CSS class name is invalid.]]></item>
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
-		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the label “{$label}”?]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the label <span class="confirmationObject">{$label}</span>?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Edit Label]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Please <a href="{link controller='LabelGroupAdd'}{/link}">add a label group</a> prior to creating labels.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Label Group]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Add Label Group]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName|language}”?]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group <span class="confirmationObject">{$group->groupName|language}</span>?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
 		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Chosen label group is invalid.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
@@ -498,7 +498,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.language.countryCode"><![CDATA[ISO Country-Code]]></item>
 		<item name="wcf.acp.language.countryCode.description"><![CDATA[Please enter the <strong>ISO 3166-1</strong> country code, you can lookup the country code at <a href="http://en.wikipedia.org/wiki/ISO_3166-1" class="externalURL">http://en.wikipedia.org/wiki/ISO_3166-1</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Custom Phrases]]></item>
-		<item name="wcf.acp.language.delete.sure"><![CDATA[Do you really want to delete the language “{$language->languageName}”?]]></item>
+		<item name="wcf.acp.language.delete.sure"><![CDATA[Do you really want to delete the language <span class="confirmationObject">{$language->languageName}</span>?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Edit Language]]></item>
 		<item name="wcf.acp.language.export"><![CDATA[Export Language]]></item>
 		<item name="wcf.acp.language.export.allPackages"><![CDATA[All Packages]]></item>
@@ -662,7 +662,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the notice is displayed.]]></item>
 		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active User]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the notice.]]></item>
-		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete the notice “{$notice->noticeName}”?]]></item>
+		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete the notice <span class="confirmationObject">{$notice->noticeName}</span>?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notice]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable Notice]]></item>
@@ -1115,7 +1115,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Update completed]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installed Version]]></item>
-		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Do you really want to install the package “{@$package->getName()}”?]]></item>
+		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Do you really want to install the package <span class="confirmationObject">{@$package->getName()}</span>?]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package can’t be installed because of the following already installed packages:]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following, already installed packages prohibit installing this package:]]></item>
@@ -1238,10 +1238,10 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.transactionLog.transactionDetails"><![CDATA[Details]]></item>
 		<item name="wcf.acp.paidSubscription.excludedSubscriptions"><![CDATA[Excluded Subscriptions]]></item>
 		<item name="wcf.acp.paidSubscription.excludedSubscriptions.description"><![CDATA[Prevents purchasing of other subscriptions for buyers of this subscription.]]></item>
-		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[Do you really want to terminate the subscription “{$subscriptionUser->title|language}” for the user “{$subscriptionUser->username}”?]]></item>
+		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[Do you really want to terminate the subscription <span class="confirmationObject">{$subscriptionUser->title|language}</span> for the user <span class="confirmationObject">{$subscriptionUser->username}</span>?]]></item>
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Manually Add Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the option “Supported Payment Methods”.]]></item>
-		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Do you really want to delete the paid subscription “{$subscription->title|language}”?]]></item>
+		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Do you really want to delete the paid subscription <span class="confirmationObject">{$subscription->title|language}</span>?]]></item>
 	</category>
 	
 	<category name="wcf.acp.pluginStore">
@@ -1261,7 +1261,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Update-Server not installed]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[You already have the most recent version installed]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.requireUpdate"><![CDATA[Update-Server must be updated]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Do you really want to install the product “{$product[packageName]}”?]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Do you really want to install the product <span class="confirmationObject">{$product[packageName]}</span>?]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[The Update-Server for “{$wcfMajorRelease}” (“http://store.woltlab.com/{$wcfMajorRelease}/”) is disabled and cannot be used for new installs or updates.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The Update-Server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br />The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The Update-Server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
@@ -1334,7 +1334,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server Data]]></item>
-		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete the server “{$updateServer->serverURL}”?]]></item>
+		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete the server <span class="confirmationObject">{$updateServer->serverURL}</span>?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit Server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error Message]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Servers]]></item>
@@ -1364,7 +1364,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smilies]]></item>
-		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley “{$smiley->smileyTitle|language}”?]]></item>
+		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley <span class="confirmationObject">{$smiley->smileyTitle|language}</span>?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Edit Smiley]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
@@ -1429,8 +1429,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.colors.userPanel"><![CDATA[User Panel]]></item>
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Duplicate Style]]></item>
-		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Do you really want to duplicate the style “{$style->styleName}”?]]></item>
-		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Do you really want to delete the style “{$style->styleName}”?]]></item>
+		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Do you really want to duplicate the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
+		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Do you really want to delete the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Edit Style]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Export as package]]></item>
 		<item name="wcf.acp.style.exportImages"><![CDATA[Export images ({$style->imagePath})]]></item>
@@ -1489,7 +1489,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
 		<item name="wcf.acp.tag.edit"><![CDATA[Edit Tag]]></item>
-		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag “{$tag}”?]]></item>
+		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag <span class="confirmationObject">{$tag}</span>?]]></item>
 		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
@@ -1526,11 +1526,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[The specified directory is invalid.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by an other template group.]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroupID.error.notValid"><![CDATA[The specified Parent Template Group is invalid.]]></item>
-		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group “{$templateGroup->templateGroupName}”?]]></item>
+		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group <span class="confirmationObject">{$templateGroup->templateGroupName}</span>?]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template]]></item>
 		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid]]></item>
-		<item name="wcf.acp.template.delete.sure"><![CDATA[Do you really want to delete the template “{$template->templateName}”?]]></item>
+		<item name="wcf.acp.template.delete.sure"><![CDATA[Do you really want to delete the template <span class="confirmationObject">{$template->templateName}</span>?]]></item>
 	</category>
 	
 	<category name="wcf.acp.user">
@@ -1548,7 +1548,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.ban"><![CDATA[Ban]]></item>
 		<item name="wcf.acp.user.unban"><![CDATA[Unban]]></item>
 		<item name="wcf.acp.user.ban.sure"><![CDATA[Do you really want to ban this user?]]></item>
-		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user “{$user->username}”?]]></item>
+		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user <span class="confirmationObject">{$user->username}</span>?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Heads up! You’re editing your own user account and changes might result in yourself being locked out from the Administration Control Panel.]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export email addresses]]></item>
@@ -1602,7 +1602,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
-		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Do you really want to delete the category “{lang}wcf.user.option.category.{$category->categoryName}{/lang}”?]]></item>
+		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Do you really want to delete the category <span class="confirmationObject">{lang}wcf.user.option.category.{$category->categoryName}{/lang}</span>?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
@@ -1610,7 +1610,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Value will be used as preset on first time editing.]]></item>
-		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
+		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field <span class="confirmationObject">{lang}wcf.user.option.{$option->optionName}{/lang}</span>?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
 		<item name="wcf.acp.user.option.editable"><![CDATA[Editable by]]></item>
@@ -1657,7 +1657,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.error.notValid"><![CDATA[Chosen CSS class name is invalid.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Current Rank Image]]></item>
-		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank “{$userRank->rankTitle|language}”?]]></item>
+		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank <span class="confirmationObject">{$userRank->rankTitle|language}</span>?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Edit User Rank]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Rank Image]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[User Ranks]]></item>
@@ -2110,7 +2110,7 @@ Errors are:
 		<item name="wcf.edit.reason"><![CDATA[Edit Reason]]></item>
 		<item name="wcf.edit.currentVersion"><![CDATA[Current]]></item>
 		<item name="wcf.edit.revert"><![CDATA[Revert]]></item>
-		<item name="wcf.edit.revert.sure"><![CDATA[Do you really want to revert to the version at {$edit->time|plainTime}, created by {$edit->username}?]]></item>
+		<item name="wcf.edit.revert.sure"><![CDATA[Do you really want to revert to the version at <span class="confirmationObject">{$edit->time|plainTime}</span>, created by <span class="confirmationObject">{$edit->username}</span>?]]></item>
 		<item name="wcf.edit.reverted"><![CDATA[Reverted to the version at {$edit->time|plainTime}, created by {$edit->username}]]></item>
 		<item name="wcf.edit.button.compare"><![CDATA[Compare]]></item>
 		<item name="wcf.edit.button.goToContent"><![CDATA[Go to Related Content]]></item>

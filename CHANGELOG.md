@@ -48,6 +48,7 @@
 * Added update support for styles
 * `\wcf\system\condition\MultiPageControllerCondition` has been replaced by `wcf\system\condition\page\MultiPageCondition`
 * Added special CSS class to cookie policy notice (`cookiePolicyNotice`)
+* Improved confirmation messages (`<span class="confirmationObject">...</span>`)
 * Added users online list pagination
 * Added support for embedded youtube playlists
 * Scaled embedded youtube videos to maximum width
