@@ -212,6 +212,8 @@ class UserOptionAddForm extends AbstractForm {
 		if ($this->optionType == 'float') {
 			$this->defaultValue = floatval($this->defaultValue);
 		}
+
+		$this->setDefaultOutputClass();
 	}
 	
 	/**
