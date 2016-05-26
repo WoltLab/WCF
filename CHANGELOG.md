@@ -55,6 +55,7 @@
 * `\wcf\form\AbstractCaptchaForm`: added parameter to force captcha usage for registered users.
 * Added global disable switch for languages.
 * Overhauled page tracking in sessions / user online locations
+* Overhauled language import form
 
 #### CMS
 

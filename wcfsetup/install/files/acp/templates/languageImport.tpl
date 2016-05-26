@@ -22,11 +22,11 @@
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageImport'}{/link}">
 	<div class="section">
-		<dl{if $errorField == 'languageFile'} class="formError"{/if}>
-			<dt><label for="languageFile">{lang}wcf.acp.language.import.source.file{/lang}</label></dt>
+		<dl{if $errorField == 'languageUpload'} class="formError"{/if}>
+			<dt><label for="languageUpload">{lang}wcf.acp.language.import.source.upload{/lang}</label></dt>
 			<dd>
-				<input type="text" id="languageFile" name="languageFile" value="{$languageFile}" class="long" />
-				{if $errorField == 'languageFile'}
+				<input type="file" id="languageUpload" name="languageUpload" />
+				{if $errorField == 'languageUpload'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
@@ -35,19 +35,27 @@
 						{/if}
 					</small>
 				{/if}
-				<small>{lang}wcf.acp.language.import.source.file.description{/lang}</small>
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'languageUpload'} class="formError"{/if}>
-			<dt><label for="languageUpload">{lang}wcf.acp.language.import.source.upload{/lang}</label></dt>
+		<dl{if $errorField == 'sourceLanguageID'} class="formError"{/if}>
+			<dt><label for="sourceLanguageID">{lang}wcf.acp.language.add.source{/lang}</label></dt>
 			<dd>
-				<input type="file" id="languageUpload" name="languageUpload" />
-				{if $errorField == 'languageUpload'}
+				<select id="sourceLanguageID" name="sourceLanguageID">
+					{foreach from=$languages item=language}
+						<option value="{@$language->languageID}"{if $language->languageID == $sourceLanguageID} selected="selected"{/if}>{$language->languageName} ({$language->languageCode})</option>
+					{/foreach}
+				</select>
+				{if $errorField == 'sourceLanguageID'}
 					<small class="innerError">
-						{lang}wcf.acp.language.import.error{/lang} {$errorType}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.language.add.source.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
+				<small>{lang}wcf.acp.language.add.source.description{/lang}</small>
 			</dd>
 		</dl>
 		

@@ -367,11 +367,12 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Imports language items from an XML file into a new or a current language.
 	 * Updates the relevant language files automatically.
 	 * 
-	 * @param	XML	$xml
+	 * @param	XML	        $xml
 	 * @param	integer		$packageID
+	 * @param       Language        $source
 	 * @return	LanguageEditor
 	 */
-	public static function importFromXML(XML $xml, $packageID) {
+	public static function importFromXML(XML $xml, $packageID, Language $source = null) {
 		$languageCode = self::readLanguageCodeFromXML($xml);
 		
 		// try to find an existing language with the given language code
@@ -386,6 +387,11 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				'languageCode' => $languageCode,
 				'languageName' => $languageName
 			]);
+			
+			if ($source) {
+				$sourceEditor = new LanguageEditor($source);
+				$sourceEditor->copy($language);
+			}
 		}
 		
 		// import xml
