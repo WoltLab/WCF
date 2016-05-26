@@ -9,7 +9,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 				buttonName = this.opts.buttons[i];
 				
 				if (buttonName === 'wcfSeparator') {
-					// seperators will be inserted in the next step
+					// separators will be inserted in the next step
 					continue;
 				}
 				
