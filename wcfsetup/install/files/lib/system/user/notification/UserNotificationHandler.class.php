@@ -322,11 +322,11 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		$notifications = [];
 		if ($notificationCount > 0) {
-			$notifications = $this->fetchNotifications(5, 0, 0);
+			$notifications = $this->fetchNotifications(10, 0, 0);
 		}
 		
 		$count = count($notifications);
-		$limit = 5 - $count;
+		$limit = 10 - $count;
 		
 		if ($limit) {
 			$notifications = array_merge($notifications, $this->fetchNotifications($limit, 0, 1));
