@@ -26,7 +26,9 @@ $.Redactor.prototype.WoltLabButton = function() {
 				
 				// set icon
 				this.button.setIcon(button, '<span class="icon icon16 ' + buttonData.icon + '"></span>');
-				
+				if (!button[0]) {
+					console.debug(buttonName);
+				}
 				// set title
 				//noinspection JSUnresolvedVariable
 				elAttr(button[0], 'title', buttonData.title);

@@ -31,7 +31,7 @@ require(['WoltLab/WCF/Ui/Redactor/Metacode'], function(UiRedactorMetacode) {
 			var config = {
 				buttons: buttons,
 				minHeight: 200,
-				plugins: ['alignment', 'source', 'table', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote', 'WoltLabSize'],
+				plugins: ['alignment', 'source', 'table', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote', 'WoltLabSize', 'WoltLabSmiley'],
 				toolbarFixed: false,
 				woltlab: {
 					autosave: autosave,
@@ -72,7 +72,8 @@ require(['WoltLab/WCF/Ui/Redactor/Metacode'], function(UiRedactorMetacode) {
 			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMedia.js?v={@LAST_UPDATE_TIME}',{/if}
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabQuote.js?v={@LAST_UPDATE_TIME}',
-			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSize.js?v={@LAST_UPDATE_TIME}'
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSize.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSmiley.js?v={@LAST_UPDATE_TIME}'
 			
 			], function() {
 				WCF.System.Dependency.Manager.invoke(callbackIdentifier);

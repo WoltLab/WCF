@@ -684,30 +684,20 @@ WCF.Message.SmileyCategories = Class.extend({
  */
 WCF.Message.Smilies = Class.extend({
 	/**
-	 * redactor element
-	 * @var	$.Redactor
-	 */
-	_redactor: null,
-	
-	/**
-	 * wysiwyg container id
+	 * wysiwyg editor id
 	 * @var	string
 	 */
-	_wysiwygSelector: '',
+	_editorId: '',
 	
 	/**
 	 * Initializes the smiley handler.
 	 * 
-	 * @param	{string}	wysiwygSelector
+	 * @param	{string}	editorId
 	 */
-	init: function(wysiwygSelector) {
-		this._wysiwygSelector = wysiwygSelector;
+	init: function(editorId) {
+		this._editorId = editorId;
 		
-		WCF.System.Dependency.Manager.register('Redactor_' + this._wysiwygSelector, $.proxy(function() {
-			this._redactor = $('#' + this._wysiwygSelector).redactor('core.getObject');
-			
-			$('.messageTabMenu[data-wysiwyg-container-id=' + this._wysiwygSelector + ']').on('click', '.jsSmiley', $.proxy(this._smileyClick, this));
-		}, this));
+		$('.messageTabMenu[data-wysiwyg-container-id=' + this._editorId + ']').on('click', '.jsSmiley', this._smileyClick.bind(this));
 	},
 	
 	/**
@@ -718,12 +708,12 @@ WCF.Message.Smilies = Class.extend({
 	_smileyClick: function(event) {
 		event.preventDefault();
 		
-		var $target = $(event.currentTarget);
-		var $smileyCode = $target.data('smileyCode');
-		var $smileyPath = $target.data('smileyPath');
-		
-		// register smiley
-		this._redactor.wbbcode.insertSmiley($smileyCode, $smileyPath, true);
+		require(['EventHandler'], (function(EventHandler) {
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'insertSmiley_' + this._editorId, {
+				code: elData(event.currentTarget, 'smiley-code'),
+				path: elData(event.currentTarget, 'smiley-path')
+			});
+		}).bind(this));
 	}
 });
 
