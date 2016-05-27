@@ -4,11 +4,11 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 	return {
 		init: function() {
 			require(['EventHandler'], (function(EventHandler) {
-				EventHandler.add('com.woltlab.wcf.redactor2', 'insertSmiley_' + this.$element[0].id, this.WoltLabSmiley._insertSmiley.bind(this))
+				EventHandler.add('com.woltlab.wcf.redactor2', 'insertSmiley_' + this.$element[0].id, this.WoltLabSmiley._insert.bind(this))
 			}).bind(this));
 		},
 		
-		_insertSmiley: function(data) {
+		_insert: function(data) {
 			this.insert.html('<img src="' + data.path + '" class="smiley" alt="' + data.code + '">');
 		}
 	}

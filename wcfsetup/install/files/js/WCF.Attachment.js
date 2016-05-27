@@ -48,15 +48,15 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	_parentObjectID: 0,
 	
 	/**
-	 * container if of WYSIWYG editor
+	 * editor id
 	 * @var	string
 	 */
-	_wysiwygContainerID: '',
+	_editorId: '',
 	
 	/**
 	 * @see	WCF.Upload.init()
 	 */
-	init: function(buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, wysiwygContainerID) {
+	init: function(buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, editorId) {
 		this._super(buttonSelector, fileListSelector, 'wcf\\data\\attachment\\AttachmentAction', { multiple: true, maxUploads: maxUploads });
 		
 		this._autoInsert = [ ];
@@ -64,7 +64,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._objectID = parseInt(objectID);
 		this._tmpHash = tmpHash;
 		this._parentObjectID = parseInt(parentObjectID);
-		this._wysiwygContainerID = wysiwygContainerID;
+		this._editorId = editorId;
 		
 		this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
 		this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
@@ -72,7 +72,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._fileListSelector.find('.jsButtonAttachmentInsertFull').click($.proxy(this._insert, this));
 		
 		//WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
-		WCF.System.Event.addListener('com.woltlab.wcf.action.delete', 'attachment_' + this._wysiwygContainerID, $.proxy(this._removeLimitError, this));
+		WCF.System.Event.addListener('com.woltlab.wcf.action.delete', 'attachment_' + this._editorId, $.proxy(this._removeLimitError, this));
 		
 		this._makeSortable();
 		
@@ -83,12 +83,13 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			this._insertAllButton.show();
 		}
 		
-		if (this._wysiwygContainerID) {
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._wysiwygContainerID, $.proxy(this._submitInline, this));
-			WCF.System.Event.addListener('com.woltlab.wcf.messageOptionsInline', 'prepareExtended_' + this._wysiwygContainerID, $.proxy(this._prepareExtended, this));
+		if (this._editorId) {
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, $.proxy(this._submitInline, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset', $.proxy(this._reset, this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'upload_' + this._wysiwygContainerID, $.proxy(this._editorUpload, this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'getImageAttachments_' + this._wysiwygContainerID, $.proxy(this._getImageAttachments, this));
+			
+			// TODO
+			//WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'upload_' + this._editorId, $.proxy(this._editorUpload, this));
+			//WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'getImageAttachments_' + this._editorId, $.proxy(this._getImageAttachments, this));
 		}
 	},
 	
@@ -138,17 +139,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 */
 	_submitInline: function(data) {
 		if (this._tmpHash) {
-			data.tmpHash = this._tmpHash;
-		}
-	},
-	
-	/**
-	 * Adds parameters send to the server before jumping to extended form.
-	 * 
-	 * @param	object		data
-	 */
-	_prepareExtended: function(data) {
-		if (!this._objectID && this._tmpHash && this._fileListSelector.children('li:not(.uploadFailed)').length) {
 			data.tmpHash = this._tmpHash;
 		}
 	},
@@ -208,8 +198,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			}).bind(this), 250);
 		}
 		
-		if (this._wysiwygContainerID) {
-			$('#' + this._wysiwygContainerID).redactor('wbbcode.removeAttachment', data.button.data('objectID'));
+		if (this._editorId) {
+			$('#' + this._editorId).redactor('wbbcode.removeAttachment', data.button.data('objectID'));
 		}
 	},
 	
@@ -283,7 +273,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see	WCF.Upload._success()
 	 */
 	_success: function(uploadID, data) {
+		var attachmentData;
 		for (var $i in this._uploadMatrix[uploadID]) {
+			if (!this._uploadMatrix[uploadID].hasOwnProperty($i)) {
+				continue;
+			}
+			
 			// get li
 			var $li = this._uploadMatrix[uploadID][$i];
 			
@@ -294,12 +289,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			var $filename = $li.data('filename');
 			var $internalFileID = $li.data('internalFileID');
 			if (data.returnValues && data.returnValues.attachments[$internalFileID]) {
+				attachmentData = data.returnValues.attachments[$internalFileID];
+				
 				// show thumbnail
-				if (data.returnValues.attachments[$internalFileID].tinyURL) {
-					$li.children('.fa-spinner').replaceWith($('<img src="' + data.returnValues.attachments[$internalFileID]['tinyURL'] + '" alt="" class="attachmentTinyThumbnail" />'));
+				if (attachmentData.tinyURL) {
+					$li.children('.fa-spinner').replaceWith($('<img src="' + attachmentData.tinyURL + '" alt="" class="attachmentTinyThumbnail" />'));
 					
-					$li.data('height', data.returnValues.attachments[$internalFileID].height);
-					$li.data('width', data.returnValues.attachments[$internalFileID].width);
+					$li.data('height', attachmentData.height);
+					$li.data('width', attachmentData.width);
 				}
 				// show file icon
 				else {
@@ -308,33 +305,33 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// update attachment link
 				var $link = $('<a href=""></a>');
-				$link.text($filename).attr('href', data.returnValues.attachments[$internalFileID]['url']);
+				$link.text($filename).attr('href', attachmentData.url);
 				
-				if (data.returnValues.attachments[$internalFileID]['isImage'] != 0) {
+				if (attachmentData.isImage != 0) {
 					$link.addClass('jsImageViewer').attr('title', $filename);
 				}
 				$li.find('p').empty().append($link);
 				
 				// update file size
-				$li.find('small').append(data.returnValues.attachments[$internalFileID]['formattedFilesize']);
+				$li.find('small').append(attachmentData.formattedFilesize);
 				
 				// init buttons
 				var $buttonList = $li.find('ul').addClass('buttonGroup');
-				var $deleteButton = $('<li><span class="button small jsDeleteButton" data-object-id="'+data.returnValues.attachments[$internalFileID]['attachmentID']+'" data-confirm-message="'+WCF.Language.get('wcf.attachment.delete.sure')+'" data-event-name="attachment_' + this._wysiwygContainerID + '">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
+				var $deleteButton = $('<li><span class="button small jsDeleteButton" data-object-id="'+attachmentData.attachmentID+'" data-confirm-message="'+WCF.Language.get('wcf.attachment.delete.sure')+'" data-event-name="attachment_' + this._editorId + '">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
 				$buttonList.append($deleteButton);
 				
-				$li.data('objectID', data.returnValues.attachments[$internalFileID].attachmentID);
+				$li.data('objectID', attachmentData.attachmentID);
 				
-				if (this._wysiwygContainerID) {
-					if (data.returnValues.attachments[$internalFileID].tinyURL) {
-						var $insertThumbnail = $('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + data.returnValues.attachments[$internalFileID].attachmentID + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
-						var $insertOriginal = $('<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="' + data.returnValues.attachments[$internalFileID].attachmentID + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</span></li>').appendTo($buttonList);
+				if (this._editorId) {
+					if (attachmentData.tinyURL) {
+						var $insertThumbnail = $('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
+						var $insertOriginal = $('<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</span></li>').appendTo($buttonList);
 						
 						$insertThumbnail.children('span.button').click($.proxy(this._insert, this));
 						$insertOriginal.children('span.button').click($.proxy(this._insert, this));
 					}
 					else {
-						var $insertPlain = $('<li><span class="button small jsButtonAttachmentInsertPlain" data-object-id="' + data.returnValues.attachments[$internalFileID].attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</span></li>');
+						var $insertPlain = $('<li><span class="button small jsButtonAttachmentInsertPlain" data-object-id="' + attachmentData.attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</span></li>');
 						$insertPlain.appendTo($buttonList).children('span.button').click($.proxy(this._insert, this));
 					}
 				}
@@ -364,7 +361,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				this._autoInsert.splice(this._autoInsert.indexOf(uploadID), 1);
 				
 				if (!$li.hasClass('uploadFailed')) {
-					WCF.System.Event.fireEvent('com.woltlab.wcf.attachment', 'autoInsert_' + this._wysiwygContainerID, {
+					WCF.System.Event.fireEvent('com.woltlab.wcf.attachment', 'autoInsert_' + this._editorId, {
 						attachment: '[attach=' + data.returnValues.attachments[$internalFileID].attachmentID + '][/attach]',
 						uploadID: uploadID
 					});
@@ -387,25 +384,20 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
 	 * Inserts an attachment into WYSIWYG editor contents.
 	 * 
-	 * @param	object		event
-	 * @param	integer		attachmentID
+	 * @param	{Event}	        event
 	 */
-	_insert: function(event, attachmentID) {
-		var $attachmentID = (event === null) ? attachmentID : $(event.currentTarget).data('objectID');
-		var $insertFull = (event !== null) ? $(event.currentTarget).hasClass('jsButtonAttachmentInsertFull') : false;
-		
-		if ($.browser.redactor) {
-			$('#' + this._wysiwygContainerID).redactor('wbbcode.insertAttachment', $attachmentID, $insertFull);
-		}
+	_insert: function(event) {
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId, {
+			attachmentId: elData(event.currentTarget, 'object-id'),
+			url: elData(event.currentTarget, 'url')
+		});
 	},
 	
 	/**
 	 * Inserts all attachments at once.
 	 */
 	_insertAll: function() {
-		this._fileListSelector.children('li:not(.uploadFailed)').each($.proxy(function(index, attachment) {
-			this._insert(null, $(attachment).data('objectID'));
-		}, this));
+		this._fileListSelector.children('li:not(.uploadFailed)').find('.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain').trigger('click');
 	},
 	
 	/**

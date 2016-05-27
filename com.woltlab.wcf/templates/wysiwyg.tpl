@@ -31,7 +31,7 @@ require(['WoltLab/WCF/Ui/Redactor/Metacode'], function(UiRedactorMetacode) {
 			var config = {
 				buttons: buttons,
 				minHeight: 200,
-				plugins: ['alignment', 'source', 'table', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote', 'WoltLabSize', 'WoltLabSmiley'],
+				plugins: ['alignment', 'source', 'table', 'WoltLabAttachment', 'WoltLabColor', 'WoltLabDropdown', 'WoltLabEvent', 'WoltLabLink', 'WoltLabQuote', 'WoltLabSize', 'WoltLabSmiley'],
 				toolbarFixed: false,
 				woltlab: {
 					autosave: autosave,
@@ -64,6 +64,7 @@ require(['WoltLab/WCF/Ui/Redactor/Metacode'], function(UiRedactorMetacode) {
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/table.js?v={@LAST_UPDATE_TIME}',
 			
 			{* WoltLab *}
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAttachment.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabColor.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}', 
