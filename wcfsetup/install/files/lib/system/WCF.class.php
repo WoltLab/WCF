@@ -686,9 +686,9 @@ class WCF {
 				}
 				else {
 					// If File doesn´t exists with .class.php try to find it without .class
-					$classPathwithoutClass = self::$autoloadDirectories[$applicationPrefix] . implode('/', $namespaces) . '.php';
-					if (file_exists($classPathwithoutClass)) {
-						require_once($classPathwithoutClass);
+					$classPathWithoutClass = self::$autoloadDirectories[$applicationPrefix] . implode('/', $namespaces) . '.php';
+					if (file_exists($classPathWithoutClass)) {
+						require_once($classPathWithoutClass);
 					}
 				}
 
