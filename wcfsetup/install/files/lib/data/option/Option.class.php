@@ -10,28 +10,45 @@ use wcf\util\StringUtil;
  * Represents an option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.option
  * @category	Community Framework
+ *
+ * @property-read	integer		$optionID
+ * @property-read	integer		$packageID
+ * @property-read	string		$optionName
+ * @property-read	string		$categoryName
+ * @property-read	string		$optionType
+ * @property-read	string		$optionValue
+ * @property-read	string		$validationPattern
+ * @property-read	string		$selectOptions
+ * @property-read	string		$enableOptions
+ * @property-read	integer		$showOrder
+ * @property-read	integer		$hidden
+ * @property-read	string		$permissions
+ * @property-read	string		$options
+ * @property-read	integer		$supportI18n
+ * @property-read	integer		$requireI18n
+ * @property-read	array		$additionalData
  */
 class Option extends DatabaseObject {
 	use TDatabaseObjectOptions;
 	use TDatabaseObjectPermissions;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'option';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::__get()
+	 * @inheritDoc
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -47,19 +64,19 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::handleData()
+	 * @inheritDoc
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
 		
 		// unserialize additional data
-		$this->data['additionalData'] = (empty($data['additionalData']) ? array() : @unserialize($data['additionalData']));
+		$this->data['additionalData'] = (empty($data['additionalData']) ? [] : @unserialize($data['additionalData']));
 	}
 	
 	/**
 	 * Returns a list of options.
 	 * 
-	 * @return	array<\wcf\data\option\Option>
+	 * @return	Option[]
 	 */
 	public static function getOptions() {
 		$sql = "SELECT	*
@@ -67,7 +84,7 @@ class Option extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
-		$options = array();
+		$options = [];
 		while ($row = $statement->fetchArray()) {
 			$option = new Option(null, $row);
 			$options[$option->getConstantName()] = $option;
@@ -100,10 +117,10 @@ class Option extends DatabaseObject {
 			}
 		}
 		
-		return array(
+		return [
 			'disableOptions' => $disableOptions,
 			'enableOptions' => $enableOptions
-		);
+		];
 	}
 	
 	/**
@@ -112,7 +129,7 @@ class Option extends DatabaseObject {
 	 * @return	array
 	 */
 	public function parseSelectOptions() {
-		$result = array();
+		$result = [];
 		$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->selectOptions)));
 		foreach ($options as $option) {
 			$key = $value = $option;
@@ -134,7 +151,7 @@ class Option extends DatabaseObject {
 	 * @return	array
 	 */
 	public function parseMultipleEnableOptions() {
-		$result = array();
+		$result = [];
 		if (!empty($this->enableOptions)) {
 			$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->enableOptions)));
 			$key = -1;
@@ -166,7 +183,7 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'option_table';

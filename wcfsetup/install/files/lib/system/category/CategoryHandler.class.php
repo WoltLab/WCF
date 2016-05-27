@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\category;
+use wcf\data\category\Category;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\CategoryCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -9,7 +11,7 @@ use wcf\system\SingletonFactory;
  * Handles the categories.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -18,37 +20,37 @@ use wcf\system\SingletonFactory;
 class CategoryHandler extends SingletonFactory {
 	/**
 	 * cached categories
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
-	protected $categories = array();
+	protected $categories = [];
 	
 	/**
 	 * category ids grouped by the object type they belong to
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
-	protected $objectTypeCategoryIDs = array();
+	protected $objectTypeCategoryIDs = [];
 	
 	/**
 	 * mapes the names of the category object types to the object type ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $objectTypeIDs = array();
+	protected $objectTypeIDs = [];
 	
 	/**
 	 * list of category object types
-	 * @var	array<\wcf\data\object\type>
+	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * Returns all category objects with the given object type. If no object
 	 * type is given, all categories grouped by object type are returned.
 	 * 
 	 * @param	string		$objectType
-	 * @return	array<mixed>
+	 * @return	mixed[]
 	 */
 	public function getCategories($objectType = null) {
-		$categories = array();
+		$categories = [];
 		if ($objectType === null) {
 			foreach ($this->objectTypes as $objectType) {
 				$categories[$objectType->objectType] = $this->getCategories($objectType->objectType);
@@ -84,14 +86,15 @@ class CategoryHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$categoryID
 	 * @param	integer		$objectTypeID
-	 * @return	array<\wcf\data\category\Category>
+	 * @return	Category[]
+	 * @throws	SystemException
 	 */
 	public function getChildCategories($categoryID, $objectTypeID = null) {
 		if (!$categoryID && $objectTypeID === null) {
 			throw new SystemException("Missing object type id");
 		}
 		
-		$categories = array();
+		$categories = [];
 		foreach ($this->categories as $category) {
 			if ($category->parentCategoryID == $categoryID && ($categoryID || $category->objectTypeID == $objectTypeID)) {
 				$categories[$category->categoryID] = $category;
@@ -132,14 +135,14 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Returns all category object types.
 	 * 
-	 * @return	array<\wcf\data\object\type\ObjectType>
+	 * @return	ObjectType[]
 	 */
 	public function getObjectTypes() {
 		return $this->objectTypes;
 	}
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.category');
@@ -147,8 +150,8 @@ class CategoryHandler extends SingletonFactory {
 			$this->objectTypeIDs[$objectType->objectTypeID] = $objectType->objectType;
 		}
 		
-		$this->categories = CategoryCacheBuilder::getInstance()->getData(array(), 'categories');
-		$this->objectTypeCategoryIDs = CategoryCacheBuilder::getInstance()->getData(array(), 'objectTypeCategoryIDs');
+		$this->categories = CategoryCacheBuilder::getInstance()->getData([], 'categories');
+		$this->objectTypeCategoryIDs = CategoryCacheBuilder::getInstance()->getData([], 'objectTypeCategoryIDs');
 	}
 	
 	/**

@@ -1,11 +1,13 @@
 <?php
 namespace wcf\system\label\object;
+use wcf\data\label\group\ViewableLabelGroup;
+use wcf\data\label\Label;
 
 /**
  * Every label object handler has to implement this interface.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.label.object
@@ -16,23 +18,24 @@ interface ILabelObjectHandler {
 	 * Returns a list of label group ids.
 	 * 
 	 * @param	array		$parameters
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
-	public function getLabelGroupIDs(array $parameters = array());
+	public function getLabelGroupIDs(array $parameters = []);
 	
 	/**
 	 * Returns a list of label groups.
 	 * 
 	 * @param	array		$parameters
-	 * @return	array<\wcf\data\label\group\ViewableLabelGroup>
+	 * @return	ViewableLabelGroup[]
 	 */
-	public function getLabelGroups(array $parameters = array());
+	public function getLabelGroups(array $parameters = []);
 	
 	/**
 	 * Returns true, if all given label ids are valid and accessible.
 	 * 
-	 * @param	array<integer>		$labelIDs
-	 * @param	array			$optionName
+	 * @param	integer[]	$labelIDs
+	 * @param	string		$optionName
+	 * @param	boolean		$legacyReturnValue
 	 * @return	mixed
 	 */
 	public function validateLabelIDs(array $labelIDs, $optionName = '', $legacyReturnValue = true);
@@ -40,7 +43,7 @@ interface ILabelObjectHandler {
 	/**
 	 * Assigns labels to an object.
 	 * 
-	 * @param	array<integer>		$labelIDs
+	 * @param	integer[]		$labelIDs
 	 * @param	integer			$objectID
 	 * @param	boolean			$validatePermissions
 	 * @see		\wcf\system\label\LabelHandler::setLabels()
@@ -59,9 +62,9 @@ interface ILabelObjectHandler {
 	/**
 	 * Returns a list of assigned labels.
 	 * 
-	 * @param	array<integer>		$objectIDs
+	 * @param	integer[]		$objectIDs
 	 * @param	boolean			$validatePermissions
-	 * @return	array<array>
+	 * @return	Label[]
 	 */
 	public function getAssignedLabels(array $objectIDs, $validatePermissions = true);
 }

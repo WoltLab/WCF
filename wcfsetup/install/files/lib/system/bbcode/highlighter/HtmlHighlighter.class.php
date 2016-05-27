@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * Highlights syntax of (x)html documents including style and script blocks.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode.highlighter
@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  */
 class HtmlHighlighter extends XmlHighlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheComments()
+	 * @inheritDoc
 	 */
 	protected function cacheComments($string) {
 		// cache inline scripts and inline css
@@ -52,7 +52,7 @@ class HtmlHighlighter extends XmlHighlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightComments()
+	 * @inheritDoc
 	 */
 	protected function highlightComments($string) {
 		$string = parent::highlightComments($string);

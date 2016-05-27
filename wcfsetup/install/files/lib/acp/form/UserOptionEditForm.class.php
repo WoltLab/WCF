@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the user option edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class UserOptionEditForm extends UserOptionAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option';
 	
@@ -36,7 +36,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	public $userOption = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,12 @@ class UserOptionEditForm extends UserOptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
+	 */
+	protected function setDefaultOutputClass() {}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -57,7 +62,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 		I18nHandler::getInstance()->save('optionName', 'wcf.user.option.'.$this->userOption->optionName, 'wcf.user.option');
 		I18nHandler::getInstance()->save('optionDescription', 'wcf.user.option.'.$this->userOption->optionName.'.description', 'wcf.user.option');
 		
-		$this->objectAction = new UserOptionAction(array($this->userOption), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserOptionAction([$this->userOption], 'update', ['data' => array_merge($this->additionalFields, [
 			'categoryName' => $this->categoryName,
 			'optionType' => $this->optionType,
 			'defaultValue' => $this->defaultValue,
@@ -70,7 +75,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 			'searchable' => $this->searchable,
 			'editable' => $this->editable,
 			'visible' => $this->visible
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -78,7 +83,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -103,17 +108,17 @@ class UserOptionEditForm extends UserOptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'optionID' => $this->optionID,
 			'userOption' => $this->userOption
-		));
+		]);
 	}
 }

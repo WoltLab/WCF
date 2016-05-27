@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the user activation form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -41,7 +41,7 @@ class RegisterActivationForm extends AbstractForm {
 	public $user = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -55,7 +55,7 @@ class RegisterActivationForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -68,7 +68,7 @@ class RegisterActivationForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		EventHandler::getInstance()->fireAction($this, 'validate');
@@ -90,13 +90,13 @@ class RegisterActivationForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// enable user
-		$this->objectAction = new UserAction(array($this->user), 'enable', array('skipNotification' => true));
+		$this->objectAction = new UserAction([$this->user], 'enable', ['skipNotification' => true]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -106,19 +106,19 @@ class RegisterActivationForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'username' => $this->username,
 			'activationCode' => $this->activationCode
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		if (REGISTER_ACTIVATION_METHOD != 1) {

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\attachment\AdministrativeAttachmentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\page\SortablePage;
@@ -10,42 +11,44 @@ use wcf\util\StringUtil;
  * Shows a list of attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	AdministrativeAttachmentList	$objectList
  */
 class AttachmentListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.attachment.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.attachment.canManageAttachment');
+	public $neededPermissions = ['admin.attachment.canManageAttachment'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'uploadTime';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortOrder
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('attachmentID', 'filename', 'filesize', 'downloads', 'uploadTime', 'lastDownloadTime');
+	public $validSortFields = ['attachmentID', 'filename', 'filesize', 'downloads', 'uploadTime', 'lastDownloadTime'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\attachment\AdministrativeAttachmentList';
+	public $objectListClassName = AdministrativeAttachmentList::class;
 	
 	/**
 	 * username
@@ -67,18 +70,18 @@ class AttachmentListPage extends SortablePage {
 	
 	/**
 	 * available file types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $availableFileTypes = array();
+	public $availableFileTypes = [];
 	
 	/**
 	 * attachment stats
 	 * @var	array
 	 */
-	public $stats = array();
+	public $stats = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -89,19 +92,19 @@ class AttachmentListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$objectTypeIDs = array();
+		$objectTypeIDs = [];
 		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.attachment.objectType') as $objectType) {
 			if (!$objectType->private) {
 				$objectTypeIDs[] = $objectType->objectTypeID;
 			}
 		}
 		
-		if (!empty($objectTypeIDs)) $this->objectList->getConditionBuilder()->add('attachment.objectTypeID IN (?)', array($objectTypeIDs));
+		if (!empty($objectTypeIDs)) $this->objectList->getConditionBuilder()->add('attachment.objectTypeID IN (?)', [$objectTypeIDs]);
 		else $this->objectList->getConditionBuilder()->add('1 = 0');
 		$this->objectList->getConditionBuilder()->add("attachment.tmpHash = ''");
 		
@@ -113,29 +116,29 @@ class AttachmentListPage extends SortablePage {
 		if (!empty($this->username)) {
 			$user = User::getUserByUsername($this->username);
 			if ($user->userID) {
-				$this->objectList->getConditionBuilder()->add('attachment.userID = ?', array($user->userID));
+				$this->objectList->getConditionBuilder()->add('attachment.userID = ?', [$user->userID]);
 			}
 		}
 		if (!empty($this->filename)) {
-			$this->objectList->getConditionBuilder()->add('attachment.filename LIKE ?', array($this->filename.'%'));
+			$this->objectList->getConditionBuilder()->add('attachment.filename LIKE ?', [$this->filename.'%']);
 		}
 		if (!empty($this->fileType)) {
-			$this->objectList->getConditionBuilder()->add('attachment.fileType LIKE ?', array($this->fileType));
+			$this->objectList->getConditionBuilder()->add('attachment.fileType LIKE ?', [$this->fileType]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'stats' => $this->stats,
 			'username' => $this->username,
 			'filename' => $this->filename,
 			'fileType' => $this->fileType,
 			'availableFileTypes' => $this->availableFileTypes
-		));
+		]);
 	}
 }

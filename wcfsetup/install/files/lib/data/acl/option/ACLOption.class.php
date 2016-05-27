@@ -6,20 +6,26 @@ use wcf\data\DatabaseObject;
  * Represents an acl option.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acl.option
  * @category	Community Framework
+ *
+ * @property-read	integer		$optionID
+ * @property-read	integer		$packageID
+ * @property-read	integer		$objectTypeID
+ * @property-read	string		$optionName
+ * @property-read	string		$categoryName
  */
 class ACLOption extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'acl_option';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
@@ -31,7 +37,7 @@ class ACLOption extends DatabaseObject {
 	 */
 	public static function getOptions($objectTypeID) {
 		$optionList = new ACLOptionList();
-		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", array($objectTypeID));
+		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", [$objectTypeID]);
 		$optionList->readObjects();
 		
 		return $optionList;

@@ -10,11 +10,12 @@ use wcf\system\WCF;
  * Clipboard API handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.clipboard.item
  * @category	Community Framework
+ * @since	2.2
  */
 class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
@@ -23,13 +24,14 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	 */
 	public $objectTypeID = 0;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * This is a heavily modified constructor which behaves differently from other DBOActions,
 	 * primarily because this class just masquerades as a regular DBOAction.
 	 * 
-	 * @see	\wcf\data\AbstractDatabaseObjectAction
+	 * @inheritDoc
 	 */
-	public function __construct(array $objects, $action, array $parameters = array()) {
+	public function __construct(array $objects, $action, array $parameters = []) {
 		$this->action = $action;
 		$this->parameters = $parameters;
 		
@@ -51,7 +53,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Sets an item as marked.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function mark() {
 		ClipboardHandler::getInstance()->mark($this->parameters['objectIDs'], $this->objectTypeID);
@@ -69,7 +71,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Unsets an item as marked.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function unmark() {
 		ClipboardHandler::getInstance()->unmark($this->parameters['objectIDs'], $this->objectTypeID);
@@ -87,7 +89,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the list of marked items.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function getMarkedItems() {
 		return $this->getEditorItems();
@@ -103,12 +105,12 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Unmarks all items of a type.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function unmarkAll() {
 		ClipboardHandler::getInstance()->unmarkAll($this->objectTypeID);
 		
-		return [ 'objectType' => $this->parameters['objectType'] ];
+		return ['objectType' => $this->parameters['objectType']];
 	}
 	
 	/**
@@ -136,7 +138,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns a list of clipboard editor items grouped by type name.
 	 *
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	protected function getEditorItems() {
 		$data = ClipboardHandler::getInstance()->getEditorItems($this->parameters['pageClassName'], $this->parameters['pageObjectID']);
@@ -157,7 +159,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 					'actionName' => $item->getName(),
 					'internalData' => $item->getInternalData(),
 					'parameters' => $item->getParameters(),
-					'label' => WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.' . $item->getName(), [ 'count' => $item->getCount() ]),
+					'label' => WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.' . $item->getName(), ['count' => $item->getCount()]),
 					'url' => $item->getURL()
 				];
 			}

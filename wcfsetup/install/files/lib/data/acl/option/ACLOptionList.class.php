@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of acl options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acl.option
  * @category	Community Framework
+ * 
+ * @method	ACLOption		current()
+ * @method	ACLOption[]		getObjects()
+ * @method	ACLOption|null		search($objectID)
+ * @property	ACLOption[]		$objects
  */
 class ACLOptionList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\acl\option\ACLOption';
+	public $className = ACLOption::class;
 }

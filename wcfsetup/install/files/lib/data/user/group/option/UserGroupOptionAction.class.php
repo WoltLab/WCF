@@ -8,17 +8,21 @@ use wcf\system\WCF;
  * Executes user group option-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.option
  * @category	Community Framework
+ * 
+ * @method	UserGroupOption			create()
+ * @method	UserGroupOptionEditor[]		getObjects()
+ * @method	UserGroupOptionEditor		getSingleObject()
  */
 class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\group\option\UserGroupOptionEditor';
+	protected $className = UserGroupOptionEditor::class;
 	
 	/**
 	 * Updates option values for given option id.
@@ -30,9 +34,9 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_group_option_value
 			WHERE		optionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$option->optionID
-		));
+		]);
 		
 		if (!empty($this->parameters['values'])) {
 			$sql = "INSERT INTO	wcf".WCF_N."_user_group_option_value
@@ -42,11 +46,11 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 			
 			WCF::getDB()->beginTransaction();
 			foreach ($this->parameters['values'] as $groupID => $optionValue) {
-				$statement->execute(array(
+				$statement->execute([
 					$option->optionID,
 					$groupID,
 					$optionValue
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}

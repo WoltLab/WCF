@@ -8,20 +8,25 @@ use wcf\util\StringUtil;
  * Represents a template group. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template.group
  * @category	Community Framework
+ *
+ * @property-read	integer		$templateGroupID
+ * @property-read	integer|null	$parentTemplateGroupID
+ * @property-read	string		$templateGroupName
+ * @property-read	string		$templateGroupFolderName
  */
 class TemplateGroup extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'template_group';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'templateGroupID';
 	
@@ -31,13 +36,13 @@ class TemplateGroup extends DatabaseObject {
 	/**
 	 * Creates a select list of all template groups.
 	 * 
-	 * @param	array<integer>	$ignore		Array of template group ids that should be excluded with all of their children
+	 * @param	integer[]	$ignore		Array of template group ids that should be excluded with all of their children
 	 * @param	integer		$initialDepth	Specifies the initial indentation depth of the list
 	 * @return	array
 	 */
-	public static function getSelectList($ignore = array(), $initialDepth = 0) {
+	public static function getSelectList($ignore = [], $initialDepth = 0) {
 		if (self::$templateGroupStructure === null) {
-			self::$templateGroupStructure = array();
+			self::$templateGroupStructure = [];
 			
 			$sql = "SELECT		templateGroupID, templateGroupName, parentTemplateGroupID
 				FROM		wcf".WCF_N."_template_group
@@ -49,7 +54,7 @@ class TemplateGroup extends DatabaseObject {
 			}
 		}
 		
-		self::$selectList = array();
+		self::$selectList = [];
 		self::makeSelectList(0, $initialDepth, $ignore);
 		
 		return self::$selectList;
@@ -62,7 +67,7 @@ class TemplateGroup extends DatabaseObject {
 	 * @param	integer		$depth			current list depth
 	 * @param	array		$ignore			list of template group ids to ignore in result
 	 */
-	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = array()) {
+	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = []) {
 		if (!isset(self::$templateGroupStructure[$parentID ?: 0])) return;
 		
 		foreach (self::$templateGroupStructure[$parentID ?: 0] as $templateGroup) {

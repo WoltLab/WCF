@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * 	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
@@ -28,6 +28,12 @@ use wcf\util\StringUtil;
  */
 class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	const SHOW_LINKS = 11;
+	
+	/**
+	 * CSS class name for <nav> element
+	 * @var	string
+	 */
+	protected $cssClassName = 'pagination';
 	
 	/**
 	 * Inserts the page number into the link.
@@ -54,47 +60,48 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected function makeLink($link, $pageNo, $activePage, $pages) {
 		// first page
 		if ($activePage != $pageNo) {
-			return '<li class="button"><a href="'.$this->insertPageNumber($link, $pageNo).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', array('pageNo' => $pageNo)).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
+			return '<li><a href="'.$this->insertPageNumber($link, $pageNo).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', ['pageNo' => $pageNo]).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
 		}
 		else {
-			return '<li class="button active"><span>'.StringUtil::formatInteger($pageNo).'</span><span class="invisible">'.WCF::getLanguage()->getDynamicVariable('wcf.page.pagePosition', array('pageNo' => $pageNo, 'pages' => $pages)).'</span></li>'."\n";
+			return '<li class="active"><span>'.StringUtil::formatInteger($pageNo).'</span><span class="invisible">'.WCF::getLanguage()->getDynamicVariable('wcf.page.pagePosition', ['pageNo' => $pageNo, 'pages' => $pages]).'</span></li>'."\n";
 		}
 	}
 	
 	/**
 	 * Generates HTML code for 'previous' link.
 	 * 
-	 * @param	type		$link
-	 * @param	type		$pageNo
+	 * @param	string		$link
+	 * @param	integer		$pageNo
 	 * @return	string
 	 */
 	protected function makePreviousLink($link, $pageNo) {
 		if ($pageNo > 1) {
-			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo - 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous').'" class="jsTooltip"><span class="icon icon16 icon-double-angle-left"></span></a></li>'."\n";
+			return '<li class="skip"><a href="'.$this->insertPageNumber($link, $pageNo - 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous').'" class="icon icon16 fa-chevron-left jsTooltip"></a></li>'."\n";
 		}
 		else {
-			return '<li class="skip disabled"><span class="icon icon16 icon-double-angle-left disabled"></span></li>'."\n";
+			return '<li class="skip disabled"><span class="icon icon16 fa-chevron-left"></span></li>'."\n";
 		}
 	}
 	
 	/**
 	 * Generates HTML code for 'next' link.
 	 * 
-	 * @param	type		$link
-	 * @param	type		$pageNo
+	 * @param	string		$link
+	 * @param	integer		$pageNo
+	 * @param	integer		$pages
 	 * @return	string
 	 */
 	protected function makeNextLink($link, $pageNo, $pages) {
 		if ($pageNo && $pageNo < $pages) {
-			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="jsTooltip"><span class="icon icon16 icon-double-angle-right"></span></a></li>'."\n";
+			return '<li class="skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="icon icon16 fa-chevron-right jsTooltip"></a></li>'."\n";
 		}
 		else {
-			return '<li class="skip disabled"><span class="icon icon16 icon-double-angle-right disabled"></span></li>'."\n";
+			return '<li class="skip disabled"><span class="icon icon16 fa-chevron-right"></span></li>'."\n";
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// needed params: controller, link, page, pages
@@ -110,7 +117,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		
 		if ($tagArgs['pages'] > 1) {
 			// create and encode route link
-			$parameters = array();
+			$parameters = [];
 			if (isset($tagArgs['id'])) $parameters['id'] = $tagArgs['id'];
 			if (isset($tagArgs['title'])) $parameters['title'] = $tagArgs['title'];
 			if (isset($tagArgs['object'])) $parameters['object'] = $tagArgs['object'];
@@ -125,7 +132,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			// open div and ul
-			$html .= "<nav class=\"pageNavigation\" data-link=\"".$link."\" data-pages=\"".$tagArgs['pages']."\">\n<ul>\n";
+			$html .= "<nav class=\"".$this->cssClassName."\" data-link=\"".$link."\" data-pages=\"".$tagArgs['pages']."\">\n<ul>\n";
 			
 			// previous page
 			$html .= $this->makePreviousLink($link, $tagArgs['page']);
@@ -176,7 +183,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($link, 2, $tagArgs['page'], $tagArgs['pages']);
 				}
 				else {
-					$html .= '<li class="button jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
+					$html .= '<li class="jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
 				}
 			}
 			
@@ -191,7 +198,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($link, $tagArgs['pages'] - 1, $tagArgs['page'], $tagArgs['pages']);
 				}
 				else {
-					$html .= '<li class="button jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
+					$html .= '<li class="jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
 				}
 			}
 			

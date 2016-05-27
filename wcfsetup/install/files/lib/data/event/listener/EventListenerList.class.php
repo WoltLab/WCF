@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of event listener.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.event.listener
  * @category	Community Framework
+ *
+ * @method	EventListener		current()
+ * @method	EventListener[]		getObjects()
+ * @method	EventListener|null	search($objectID)
+ * @property	EventListener[]		$objects
  */
 class EventListenerList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\event\listener\EventListener';
+	public $className = EventListener::class;
 }

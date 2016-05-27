@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Abstract implementation of a package installation plugin for menu items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."
@@ -23,15 +23,15 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		// adjust show order
@@ -40,7 +40,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		$showOrder = $this->getShowOrder($showOrder, $parent, 'parentMenuItem');
 		
 		// merge values and default values
-		return array(
+		return [
 			'menuItem' => $data['attributes']['name'],
 			'menuItemController' => isset($data['elements']['controller']) ? $data['elements']['controller'] : '',
 			'menuItemLink' => (isset($data['elements']['link'])) ? $data['elements']['link'] : '',
@@ -48,45 +48,44 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			'parentMenuItem' => (isset($data['elements']['parent'])) ? $data['elements']['parent'] : '',
 			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : '',
 			'showOrder' => $showOrder
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
+	 * @inheritDoc
 	 */
 	protected function validateImport(array $data) {
 		if (empty($data['parentMenuItem'])) {
 			return;
 		}
 		
-		$sql = "SELECT	COUNT(menuItemID) AS count
+		$sql = "SELECT	COUNT(menuItemID)
 			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	menuItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($data['parentMenuItem']));
-		$row = $statement->fetchArray();
+		$statement->execute([$data['parentMenuItem']]);
 		
-		if (!$row['count']) {
+		if (!$statement->fetchSingleColumn()) {
 			throw new SystemException("Unable to find parent 'menu item' with name '".$data['parentMenuItem']."' for 'menu item' with name '".$data['menuItem']."'.");
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	menuItem = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['menuItem'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

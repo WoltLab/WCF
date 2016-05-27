@@ -10,31 +10,44 @@ use wcf\system\WCF;
  * Represents a paid subscription.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription
  * @category	Community Framework
+ *
+ * @property-read	integer		$subscriptionID
+ * @property-read	string		$title
+ * @property-read	string		$description
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$showOrder
+ * @property-read	double		$cost
+ * @property-read	string		$currency
+ * @property-read	integer		$subscriptionLength
+ * @property-read	string		$subscriptionLengthUnit
+ * @property-read	integer		$isRecurring
+ * @property-read	string		$groupIDs
+ * @property-read	string		$excludedSubscriptionIDs
  */
 class PaidSubscription extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'paid_subscription';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'subscriptionID';
 	
 	/**
 	 * Returns list of purchase buttons.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getPurchaseButtons() {
 		$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.payment.type', 'com.woltlab.wcf.payment.type.paidSubscription');
-		$buttons = array();
+		$buttons = [];
 		foreach (PaymentMethodHandler::getInstance()->getPaymentMethods() as $paymentMethod) {
 			// check if payment method supports recurring payments
 			if ($this->isRecurring && !$paymentMethod->supportsRecurringPayments()) continue;

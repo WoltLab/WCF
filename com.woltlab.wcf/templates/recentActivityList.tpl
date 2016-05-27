@@ -1,75 +1,40 @@
-{include file='documentHeader'}
-
-<head>
-	<title>{lang}wcf.user.recentActivity{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
+{capture assign='headContent'}
 	<link rel="canonical" href="{link controller='RecentActivityList'}{/link}" />
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.user.recentActivity.more': '{lang}wcf.user.recentActivity.more{/lang}',
-				'wcf.user.recentActivity.noMoreEntries': '{lang}wcf.user.recentActivity.noMoreEntries{/lang}'
-			});
-			
-			new WCF.User.RecentActivityLoader(null);
-		});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-
-{capture assign='sidebar'}
-	{@$__boxSidebar}
 {/capture}
 
-{include file='header' sidebarOrientation='right'}
-
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.recentActivity{/lang}</h1>
-</header>
-
-{include file='userNotice'}
-
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{include file='header'}
 
 {if $eventList|count}
-	<div class="container marginTop">
+	<div class="section sectionContainerList">
 		<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}">
 			{include file='recentActivityListItem'}
 		</ul>
 	</div>
 	
-	<div class="contentNavigation">
+	<footer class="contentFooter">
 		{hascontent}
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
-					{content}
-						{event name='contentNavigationButtonsBottom'}
-					{/content}
+					{content}{event name='contentFooterNavigation'}{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.user.recentActivity.noEntries{/lang}</p>
 {/if}
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.user.recentActivity.more': '{lang}wcf.user.recentActivity.more{/lang}',
+			'wcf.user.recentActivity.noMoreEntries': '{lang}wcf.user.recentActivity.noMoreEntries{/lang}'
+		});
+		
+		new WCF.User.RecentActivityLoader(null);
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

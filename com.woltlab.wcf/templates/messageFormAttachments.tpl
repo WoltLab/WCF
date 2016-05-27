@@ -1,11 +1,11 @@
-<div class="jsOnly formAttachmentContent container containerPadding" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
+<div class="jsOnly formAttachmentContent messageTabMenuContent" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	<ul class="formAttachmentList clearfix"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if}>
 		{foreach from=$attachmentHandler->getAttachmentList() item=$attachment}
 			<li class="box64" data-object-id="{@$attachment->attachmentID}" data-height="{@$attachment->height}" data-width="{@$attachment->width}">
 				{if $attachment->tinyThumbnailType}
 					<img src="{link controller='Attachment' object=$attachment}tiny=1{/link}" alt="" class="attachmentTinyThumbnail" />
 				{else}
-					<span class="icon icon48 icon-paper-clip"></span>
+					<span class="icon icon48 fa-paperclip"></span>
 				{/if}
 				
 				<div>

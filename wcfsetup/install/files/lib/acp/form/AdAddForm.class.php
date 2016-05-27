@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\ad\AdAction;
 use wcf\form\AbstractForm;
@@ -13,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the form to create a new ad notice.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -21,19 +22,19 @@ use wcf\util\StringUtil;
  */
 class AdAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.ad.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.ad.canManageAd');
+	public $neededPermissions = ['admin.ad.canManageAd'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_WCF_AD');
+	public $neededModules = ['MODULE_WCF_AD'];
 	
 	/**
 	 * html code of the ad
@@ -51,7 +52,7 @@ class AdAddForm extends AbstractForm {
 	 * grouped ad condition object types
 	 * @var	array
 	 */
-	public $groupedConditionObjectTypes = array();
+	public $groupedConditionObjectTypes = [];
 	
 	/**
 	 * 1 if the ad is disabled
@@ -61,15 +62,15 @@ class AdAddForm extends AbstractForm {
 	
 	/**
 	 * list of available location object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
-	public $locationObjectTypes = array();
+	public $locationObjectTypes = [];
 	
 	/**
 	 * list of available locations
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $locations = array();
+	public $locations = [];
 	
 	/**
 	 * id of the selected location's object type
@@ -84,12 +85,12 @@ class AdAddForm extends AbstractForm {
 	public $showOrder = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'ad' => $this->ad,
 			'adName' => $this->adName,
@@ -99,11 +100,11 @@ class AdAddForm extends AbstractForm {
 			'groupedConditionObjectTypes' => $this->groupedConditionObjectTypes,
 			'objectTypeID' => $this->objectTypeID,
 			'showOrder' => $this->showOrder
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.ad');
@@ -111,12 +112,12 @@ class AdAddForm extends AbstractForm {
 			if (!$objectType->conditionobject) continue;
 			
 			if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject])) {
-				$this->groupedConditionObjectTypes[$objectType->conditionobject] = array();
+				$this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
 			}
 			
 			if ($objectType->conditiongroup) {
 				if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
-					$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = array();
+					$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
 				}
 				
 				$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
@@ -135,7 +136,7 @@ class AdAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -161,24 +162,24 @@ class AdAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new AdAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new AdAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'ad' => $this->ad,
 				'adName' => $this->adName,
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectTypeID,
 				'showOrder' => $this->showOrder
-			))
-		));
+			])
+		]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
 			foreach ($groupedObjectTypes as $objectTypes) {
 				if (is_array($objectTypes)) {
@@ -209,7 +210,7 @@ class AdAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();

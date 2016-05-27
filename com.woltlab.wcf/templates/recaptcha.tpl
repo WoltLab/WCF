@@ -3,9 +3,11 @@
 {else}
 	{* No explicit keys were set, use legacy V1 API and WoltLab's OEM keys *}
 	{if RECAPTCHA_PUBLICKEY === '' || RECAPTCHA_PRIVATEKEY === ''}
-	<fieldset>
-		<legend><label for="recaptcha_response_field">{lang}wcf.recaptcha.title{/lang}</label></legend>
-		<small>{lang}wcf.recaptcha.description{/lang}</small>
+	<section class="section">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
+			<small class="sectionDescription">{lang}wcf.recaptcha.description{/lang}</small>
+		</header>
 		
 		<dl class="wide reCaptcha{if $errorField|isset && $errorField == 'recaptchaString'} formError{/if}">
 			{if !$ajaxCaptcha|isset || !$ajaxCaptcha}
@@ -22,8 +24,8 @@
 				<label for="recaptcha_response_field">reCAPTCHA</label>
 			</dt>
 			<dd class="jsOnly">
-				<div id="recaptcha_image" class="framed"></div>
-				<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" class="medium marginTop" />
+				<div id="recaptcha_image"></div>
+				<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" class="medium" />
 				{if (($errorType|isset && $errorType|is_array && $errorType[recaptchaString]|isset) || ($errorField|isset && $errorField == 'recaptchaString'))}
 					{if $errorType|is_array && $errorType[recaptchaString]|isset}
 						{assign var='__errorType' value=$errorType[recaptchaString]}
@@ -44,10 +46,10 @@
 			
 			<dd class="jsOnly">
 				<ul class="buttonList smallButtons">
-					<li><a href="javascript:Recaptcha.reload()" class="button small"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.recaptcha.reload{/lang}</span></a></li>
-					<li class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')" class="button small"><span class="icon icon16 icon-volume-up"></span> <span>{lang}wcf.recaptcha.audio{/lang}</span></a></li>
-					<li class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')" class="button small"><span class="icon icon16 icon-eye-open"></span> <span>{lang}wcf.recaptcha.image{/lang}</span></a></li>
-					<li><a href="javascript:Recaptcha.showhelp()" class="button small"><span class="icon icon16 icon-question-sign"></span> <span>{lang}wcf.recaptcha.help{/lang}</span></a></li>
+					<li><a href="javascript:Recaptcha.reload()" class="button small"><span class="icon icon16 fa-repeat"></span> <span>{lang}wcf.recaptcha.reload{/lang}</span></a></li>
+					<li class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')" class="button small"><span class="icon icon16 fa-volume-up"></span> <span>{lang}wcf.recaptcha.audio{/lang}</span></a></li>
+					<li class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')" class="button small"><span class="icon icon16 fa-eye"></span> <span>{lang}wcf.recaptcha.image{/lang}</span></a></li>
+					<li><a href="javascript:Recaptcha.showhelp()" class="button small"><span class="icon icon16 fa-question"></span> <span>{lang}wcf.recaptcha.help{/lang}</span></a></li>
 					{event name='buttons'}
 				</ul>
 			</dd>
@@ -95,23 +97,23 @@
 				</script>
 			{/if}
 		</dl>
-	</fieldset>
+	</section>
 	{else}
-	<fieldset>
-		<legend>{lang}wcf.recaptcha.title{/lang}</legend>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
 		{assign var="recaptchaBucketID" value=true|microtime|sha1}
 		<dl class="{if $errorField|isset && $errorField == 'recaptchaString'}formError{/if}">
 			<dt></dt>
 			<dd>
 				<div id="recaptchaBucket{$recaptchaBucketID}"></div>
 				<noscript>
-					<div style="width: 302px; height: 352px;">
-						<div style="width: 302px; height: 352px; position: relative;">
-							<div style="width: 302px; height: 352px; position: absolute;">
-								<iframe src="https://www.google.com/recaptcha/api/fallback?k={RECAPTCHA_PUBLICKEY|encodeJS}" frameborder="0" scrolling="no" style="width: 302px; height:352px; border-style: none;"></iframe>
+					<div style="width: 302px; height: 473px;">
+						<div style="width: 302px; height: 422px; position: relative;">
+							<div style="width: 302px; height: 422px; position: relative;">
+								<iframe src="https://www.google.com/recaptcha/api/fallback?k={RECAPTCHA_PUBLICKEY|encodeJS}" frameborder="0" scrolling="no" style="width: 302px; height:422px; border-style: none;"></iframe>
 							</div>
-							<div style="width: 250px; height: 80px; position: absolute; border-style: none; bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
-								<textarea name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 80px; border: 1px solid #c1c1c1; margin: 0px; padding: 0px; resize: none;"></textarea>
+							<div style="width: 300px; height: 60px; position: relative; border-style: none; bottom: 12px; left: 0; margin: 0px; padding: 0px; right: 25px; background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
+								<textarea name="g-recaptcha-response" class="g-recaptcha-response" style="width: 290px; height: 50px; border: 1px solid #c1c1c1; margin: 5px; padding: 0px; resize: none;"></textarea>
 							</div>
 						</div>
 					</div>
@@ -173,6 +175,6 @@
 		if (!window.grecaptcha) $.getScript('https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback');
 		//]]>
 		</script>
-	</fieldset>
+	</section>
 	{/if}
 {/if}

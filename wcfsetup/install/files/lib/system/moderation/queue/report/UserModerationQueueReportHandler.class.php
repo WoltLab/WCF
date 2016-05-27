@@ -3,8 +3,8 @@ namespace wcf\system\moderation\queue\report;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\user\User;
-use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\exception\SystemException;
 use wcf\system\moderation\queue\AbstractModerationQueueHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * An implementation of IModerationQueueReportHandler for user profiles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.moderation.queue
@@ -22,37 +22,31 @@ use wcf\system\WCF;
  */
 class UserModerationQueueReportHandler extends AbstractModerationQueueHandler implements IModerationQueueReportHandler {
 	/**
-	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueHandler::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\User';
+	protected $className = User::class;
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueHandler::$definitionName
+	 * @inheritDoc
 	 */
 	protected $definitionName = 'com.woltlab.wcf.moderation.report';
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueHandler::$objectType
+	 * @inheritDoc
 	 */
 	protected $objectType = 'com.woltlab.wcf.user';
 	
 	/**
-	 * list of users
-	 * @var	array<\wcf\data\user\User>
-	 */
-	protected static $users = array();
-	
-	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::assignQueues()
+	 * @inheritDoc
 	 */
 	public function assignQueues(array $queues) {
-		$assignments = array();
+		$assignments = [];
 		foreach ($queues as $queue) {
 			$assignUser = false;
 			if (WCF::getSession()->getPermission('mod.general.canUseModeration')) {
 				$assignUser = true;
 			}
-				
+			
 			$assignments[$queue->queueID] = $assignUser;
 		}
 		
@@ -60,7 +54,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::canReport()
+	 * @inheritDoc
 	 */
 	public function canReport($objectID) {
 		if (!$this->isValid($objectID)) {
@@ -71,25 +65,26 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::getContainerID()
+	 * @inheritDoc
 	 */
 	public function getContainerID($objectID) {
 		return 0;
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedContent()
+	 * @inheritDoc
 	 */
 	public function getReportedContent(ViewableModerationQueue $queue) {
-		WCF::getTPL()->assign(array(
+		/** @noinspection PhpParamsInspection */
+		WCF::getTPL()->assign([
 			'user' => new UserProfile($queue->getAffectedObject())
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('moderationUser');
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedObject()
+	 * @inheritDoc
 	 */
 	public function getReportedObject($objectID) {
 		if ($this->isValid($objectID)) {
@@ -100,7 +95,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::isValid()
+	 * @inheritDoc
 	 */
 	public function isValid($objectID) {
 		if ($this->getUser($objectID) === null) {
@@ -114,36 +109,24 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 	 * Returns a user object by user id or null if user id is invalid.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\user\User
+	 * @return	User|null
 	 */
 	protected function getUser($objectID) {
-		if (!array_key_exists($objectID, self::$users)) {
-			self::$users[$objectID] = new User($objectID);
-			if (!self::$users[$objectID]->userID) {
-				self::$users[$objectID] = null;
-			}
-		}
-		
-		return self::$users[$objectID];
+		return UserRuntimeCache::getInstance()->getObject($objectID);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::populate()
+	 * @inheritDoc
 	 */
 	public function populate(array $queues) {
-		$objectIDs = array();
+		$objectIDs = [];
 		foreach ($queues as $object) {
 			$objectIDs[] = $object->objectID;
 		}
 		
-		// fetch users
-		$userList = new UserList();
-		$userList->setObjectIDs($objectIDs);
-		$userList->readObjects();
-		$users = $userList->getObjects();
-		
+		$users = UserRuntimeCache::getInstance()->getObjects($objectIDs);
 		foreach ($queues as $object) {
-			if (isset($users[$object->objectID])) {
+			if ($users[$object->objectID] !== null) {
 				$object->setAffectedObject($users[$object->objectID]);
 			}
 			else {
@@ -153,14 +136,14 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::canRemoveContent()
+	 * @inheritDoc
 	 */
 	public function canRemoveContent(ModerationQueue $queue) {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::removeContent()
+	 * @inheritDoc
 	 */
 	public function removeContent(ModerationQueue $queue, $message) {
 		throw new SystemException("it's not allowed to delete users using the moderation");

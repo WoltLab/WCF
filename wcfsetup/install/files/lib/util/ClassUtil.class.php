@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Provides methods for class interactions.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -34,6 +34,9 @@ final class ClassUtil {
 	 * @param	string		$className
 	 * @param	string		$targetClass
 	 * @return	boolean
+	 * @throws	SystemException
+	 * 
+	 * @deprecated	use is_subclass_of() instead
 	 */
 	public static function isInstanceOf($className, $targetClass) {
 		// validate parameters
@@ -47,15 +50,13 @@ final class ClassUtil {
 			throw new SystemException("Cannot determine class inheritance, reference class '".$targetClass."' does not exist");
 		}
 		
-		// check for simple inheritance
-		if (class_exists($targetClass)) {
-			return is_subclass_of($className, $targetClass);
-		}
-		
-		// check for interface
-		$reflectionClass = new \ReflectionClass($className);
-		return $reflectionClass->implementsInterface($targetClass);
+		return is_subclass_of($className, $targetClass);
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of ClassUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

@@ -1,11 +1,14 @@
 <?php
 namespace wcf\system\user\notification\object\type;
+use wcf\data\comment\response\CommentResponse;
+use wcf\data\comment\response\CommentResponseList;
+use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
  * Represents a comment response notification object type.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.object.type
@@ -13,17 +16,17 @@ namespace wcf\system\user\notification\object\type;
  */
 class UserProfileCommentResponseUserNotificationObjectType extends AbstractUserNotificationObjectType {
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$decoratorClassName
+	 * @inheritDoc
 	 */
-	protected static $decoratorClassName = 'wcf\system\user\notification\object\CommentResponseUserNotificationObject';
+	protected static $decoratorClassName = CommentResponseUserNotificationObject::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectClassName
+	 * @inheritDoc
 	 */
-	protected static $objectClassName = 'wcf\data\comment\response\CommentResponse';
+	protected static $objectClassName = CommentResponse::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectListClassName
+	 * @inheritDoc
 	 */
-	protected static $objectListClassName = 'wcf\data\comment\response\CommentResponseList';
+	protected static $objectListClassName = CommentResponseList::class;
 }

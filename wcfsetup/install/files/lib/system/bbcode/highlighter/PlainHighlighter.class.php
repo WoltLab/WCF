@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  */
 class PlainHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @inheritDoc
 	 */
 	public function highlight($code) {
 		return StringUtil::encodeHTML($code);

@@ -7,19 +7,20 @@ use wcf\data\DatabaseObject;
  * this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
  * @category	Community Framework
+ * @since	2.2
  */
 interface IObjectCondition extends ICondition {
 	/**
 	 * Returns true if the given object fulfills the condition specified by
 	 * the given condition data returned by \wcf\system\condition\ICondition::getData().
 	 * 
-	 * @param	\wcf\data\DatabaseObject	$object
-	 * @param	array				$conditionData
+	 * @param	DatabaseObject	$object
+	 * @param	array		$conditionData
 	 * @return	boolean
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData);

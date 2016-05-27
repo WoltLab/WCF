@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Highlights syntax of source code.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode.highlighter
@@ -26,75 +26,75 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * comment end delimiter
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $commentEnd = array("*/");
+	protected $commentEnd = ["*/"];
 	
 	/**
 	 * comment start delimiter
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $commentStart = array("/*");
+	protected $commentStart = ["/*"];
 	
 	/**
 	 * escape sequence
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $escapeSequence = array("\\");
+	protected $escapeSequence = ["\\"];
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $keywords1 = array();
+	protected $keywords1 = [];
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $keywords2 = array();
+	protected $keywords2 = [];
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $keywords3 = array();
+	protected $keywords3 = [];
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $keywords4 = array();
+	protected $keywords4 = [];
 	
 	/**
 	 * categorized keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $keywords5 = array();
+	protected $keywords5 = [];
 	
 	/**
 	 * list of arithmetic operators
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $operators = array();
+	protected $operators = [];
 	
 	/**
 	 * list of quote marks
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $quotes = array("'", '"');
+	protected $quotes = ["'", '"'];
 	
 	/**
 	 * list of separator sequences
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $separators = array();
+	protected $separators = [];
 	
 	/**
 	 * inline comment sequence
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $singleLineComment = array("//");
+	protected $singleLineComment = ["//"];
 	
 	/**
 	 * regular expression to extract comments
@@ -110,12 +110,12 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * regular expression to find string separators
-	 * @var	\wcf\system\Regex
+	 * @var	string
 	 */
 	public $separatorsRegEx = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->buildRegularExpressions();
@@ -172,7 +172,7 @@ abstract class Highlighter extends SingletonFactory {
 		$quotesRegEx = '';
 		foreach ($this->quotes as $quote) {
 			if ($quotesRegEx !== '') $quotesRegEx .= '|';
-			if (!is_array($quote)) $quote = array($quote, $quote);
+			if (!is_array($quote)) $quote = [$quote, $quote];
 			list($opening, $closing) = $quote;
 			
 			$opening = preg_quote($opening);
@@ -225,6 +225,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Caches comments.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function cacheComments($string) {
 		if ($this->cacheCommentsRegEx !== null) {
@@ -248,6 +251,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Caches quotes.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function cacheQuotes($string) {
 		if ($this->quotesRegEx !== null) {
@@ -261,6 +267,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights operators.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightOperators($string) {
 		if (!empty($this->operators)) {
@@ -272,6 +281,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights keywords.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightKeywords($string) {
 		$_this = $this;
@@ -300,6 +312,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights numbers.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightNumbers($string) {
 		$string = preg_replace('!(?<='.$this->separatorsRegEx.')(-?\d+)(?='.$this->separatorsRegEx.')!i', '<span class="hlNumbers">\\0</span>', $string);
@@ -309,6 +324,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights quotes.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightQuotes($string) {
 		return StringStack::reinsertStrings($string, 'highlighterQuotes');
@@ -316,6 +334,9 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * Highlights comments.
+	 *
+	 * @param	string		$string
+	 * @return	string
 	 */
 	protected function highlightComments($string) {
 		return StringStack::reinsertStrings($string, 'highlighterComments');

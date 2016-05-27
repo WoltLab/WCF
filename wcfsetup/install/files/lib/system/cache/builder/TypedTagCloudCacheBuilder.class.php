@@ -5,7 +5,7 @@ namespace wcf\system\cache\builder;
  * Caches the typed tag cloud.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -13,7 +13,7 @@ namespace wcf\system\cache\builder;
  */
 class TypedTagCloudCacheBuilder extends TagCloudCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$this->objectTypeIDs = $parameters['objectTypeIDs'];

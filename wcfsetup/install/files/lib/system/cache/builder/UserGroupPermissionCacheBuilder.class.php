@@ -1,16 +1,17 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
+use wcf\system\option\user\group\IUserGroupOptionType;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
  * Caches the merged user group options for a certain user group combination.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -19,19 +20,19 @@ use wcf\util\StringUtil;
 class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of used group option type objects
-	 * @var	array<\wcf\system\option\group\IGroupOptionType>
+	 * @var	IUserGroupOptionType[]
 	 */
 	protected $typeObjects = [];
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$data = [];
 		
 		// get option values
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("option_value.groupID IN (?)", [ $parameters ]);
+		$conditions->add("option_value.groupID IN (?)", [$parameters]);
 		
 		$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue
 			FROM		wcf".WCF_N."_user_group_option_value option_value
@@ -42,7 +43,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
 			if (!isset($data[$row['optionName']])) {
-				$data[$row['optionName']] = [ 'type' => $row['optionType'], 'values' => [] ];
+				$data[$row['optionName']] = ['type' => $row['optionType'], 'values' => []];
 			}
 			
 			$data[$row['optionName']]['values'][] = $row['optionValue'];
@@ -85,8 +86,9 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Returns an object of the requested group option type.
 	 * 
-	 * @param	string			$type
+	 * @param	string		$type
 	 * @return	\wcf\system\option\user\group\IUserGroupOptionType
+	 * @throws	SystemException
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
@@ -96,8 +98,8 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 			if (!class_exists($className)) {
 				throw new SystemException("unable to find class '".$className."'");
 			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
-				throw new SystemException("'".$className."' does not implement 'wcf\system\option\user\group\IUserGroupOptionType'");
+			if (!is_subclass_of($className, IUserGroupOptionType::class)) {
+				throw new ImplementationException($className, IUserGroupOptionType::class);
 			}
 			
 			// create instance

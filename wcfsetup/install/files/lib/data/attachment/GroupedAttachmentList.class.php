@@ -6,7 +6,7 @@ use wcf\data\object\type\ObjectTypeCache;
  * Represents a grouped list of attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.attachment
@@ -17,7 +17,7 @@ class GroupedAttachmentList extends AttachmentList {
 	 * grouped objects
 	 * @var	array
 	 */
-	public $groupedObjects = array();
+	public $groupedObjects = [];
 	
 	/**
 	 * object type
@@ -44,16 +44,16 @@ class GroupedAttachmentList extends AttachmentList {
 		parent::__construct();
 		
 		$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType);
-		$this->getConditionBuilder()->add('attachment.objectTypeID = ?', array($this->objectType->objectTypeID));
+		$this->getConditionBuilder()->add('attachment.objectTypeID = ?', [$this->objectType->objectTypeID]);
 		
-		$this->getConditionBuilder()->add('(SELECT embeddedObjectID FROM wcf'.WCF_N.'_message_embedded_object WHERE messageObjectTypeID = ? AND messageID = attachment.objectID AND embeddedObjectTypeID = ? AND embeddedObjectID = attachment.attachmentID) IS NULL', array(
+		$this->getConditionBuilder()->add('(SELECT embeddedObjectID FROM wcf'.WCF_N.'_message_embedded_object WHERE messageObjectTypeID = ? AND messageID = attachment.objectID AND embeddedObjectTypeID = ? AND embeddedObjectID = attachment.attachmentID) IS NULL', [
 			ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $objectType),
 			ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', 'com.woltlab.wcf.attachment')
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
@@ -61,7 +61,7 @@ class GroupedAttachmentList extends AttachmentList {
 		// group by object id
 		foreach ($this->objects as $attachmentID => $attachment) {
 			if (!isset($this->groupedObjects[$attachment->objectID])) {
-				$this->groupedObjects[$attachment->objectID] = array();
+				$this->groupedObjects[$attachment->objectID] = [];
 			}
 			
 			$this->groupedObjects[$attachment->objectID][$attachmentID] = $attachment;
@@ -71,7 +71,7 @@ class GroupedAttachmentList extends AttachmentList {
 	/**
 	 * Sets the permissions for attachment access.
 	 * 
-	 * @param	array<boolean>		$permissions
+	 * @param	boolean[]	$permissions
 	 */
 	public function setPermissions(array $permissions) {
 		foreach ($this->objects as $attachment) {
@@ -82,13 +82,14 @@ class GroupedAttachmentList extends AttachmentList {
 	/**
 	 * Returns the objects of the list.
 	 * 
-	 * @return	array<\wcf\data\DatabaseObject>
+	 * @param	integer		$objectID
+	 * @return	Attachment[]
 	 */
 	public function getGroupedObjects($objectID) {
 		if (isset($this->groupedObjects[$objectID])) {
 			return $this->groupedObjects[$objectID];
 		}
 		
-		return array();
+		return [];
 	}
 }

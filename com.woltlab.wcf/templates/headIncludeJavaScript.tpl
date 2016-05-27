@@ -15,6 +15,7 @@
 {js application='wcf' file='require.config' bundle='WCF.Core' core='true'}
 {js application='wcf' file='require.linearExecution' bundle='WCF.Core' core='true'}
 {js application='wcf' file='wcf.globalHelper' bundle='WCF.Core' core='true'}
+{js application='wcf' file='closest' bundle='WCF.Core' core='true'}
 <script>
 requirejs.config({
 	baseUrl: '{@$__wcf->getPath()}js'
@@ -28,10 +29,10 @@ requirejs.config({
 			'__months': [ '{lang}wcf.date.month.january{/lang}', '{lang}wcf.date.month.february{/lang}', '{lang}wcf.date.month.march{/lang}', '{lang}wcf.date.month.april{/lang}', '{lang}wcf.date.month.may{/lang}', '{lang}wcf.date.month.june{/lang}', '{lang}wcf.date.month.july{/lang}', '{lang}wcf.date.month.august{/lang}', '{lang}wcf.date.month.september{/lang}', '{lang}wcf.date.month.october{/lang}', '{lang}wcf.date.month.november{/lang}', '{lang}wcf.date.month.december{/lang}' ], 
 			'__monthsShort': [ '{lang}wcf.date.month.short.jan{/lang}', '{lang}wcf.date.month.short.feb{/lang}', '{lang}wcf.date.month.short.mar{/lang}', '{lang}wcf.date.month.short.apr{/lang}', '{lang}wcf.date.month.short.may{/lang}', '{lang}wcf.date.month.short.jun{/lang}', '{lang}wcf.date.month.short.jul{/lang}', '{lang}wcf.date.month.short.aug{/lang}', '{lang}wcf.date.month.short.sep{/lang}', '{lang}wcf.date.month.short.oct{/lang}', '{lang}wcf.date.month.short.nov{/lang}', '{lang}wcf.date.month.short.dec{/lang}' ],
 			'wcf.clipboard.item.unmarkAll': '{lang}wcf.clipboard.item.unmarkAll{/lang}',
-			'wcf.date.relative.now': '{lang}wcf.date.relative.now{/lang}',
-			'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
-			'wcf.date.relative.hours': '{capture assign=relativeHours}{lang}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
-			'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
+			'wcf.date.relative.now': '{lang __literal=true}wcf.date.relative.now{/lang}',
+			'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang __literal=true}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
+			'wcf.date.relative.hours': '{capture assign=relativeHours}{lang __literal=true}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
+			'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang __literal=true}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
 			'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
 			'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
 			'wcf.date.shortDateTimeFormat': '{lang}wcf.date.shortDateTimeFormat{/lang}',
@@ -65,15 +66,17 @@ requirejs.config({
 			'wcf.global.form.error.greaterThan': '{lang __literal=true}wcf.global.form.error.greaterThan{/lang}',
 			'wcf.global.form.error.lessThan': '{lang __literal=true}wcf.global.form.error.lessThan{/lang}',
 			'wcf.global.form.input.maxItems': '{lang}wcf.global.form.input.maxItems{/lang}',
+			'wcf.global.form.error.multilingual': '{lang}wcf.global.form.error.multilingual{/lang}',
 			'wcf.global.language.noSelection': '{lang}wcf.global.language.noSelection{/lang}',
 			'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 			'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
 			'wcf.global.page.jumpTo.description': '{lang}wcf.global.page.jumpTo.description{/lang}',
-			'wcf.global.page.pageNavigation': '{lang}wcf.global.page.pageNavigation{/lang}',
+			'wcf.global.page.pagination': '{lang}wcf.global.page.pagination{/lang}',
 			'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 			'wcf.global.pageDirection': '{lang}wcf.global.pageDirection{/lang}',
 			'wcf.global.reason': '{lang}wcf.global.reason{/lang}',
+			'wcf.global.scrollUp': '{lang}wcf.global.scrollUp{/lang}',
 			'wcf.global.sidebar.hideLeftSidebar': '{lang}wcf.global.sidebar.hideLeftSidebar{/lang}',
 			'wcf.global.sidebar.hideRightSidebar': '{lang}wcf.global.sidebar.hideRightSidebar{/lang}',
 			'wcf.global.sidebar.showLeftSidebar': '{lang}wcf.global.sidebar.showLeftSidebar{/lang}',
@@ -83,10 +86,8 @@ requirejs.config({
 			'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
 			'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 			'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
-			'wcf.page.sitemap': '{lang}wcf.page.sitemap{/lang}',
 			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}',
 			'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}',
-			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}',
 			'wcf.user.panel.markAllAsRead': '{lang}wcf.user.panel.markAllAsRead{/lang}',
 			'wcf.user.panel.markAsRead': '{lang}wcf.user.panel.markAsRead{/lang}',
 			'wcf.user.panel.settings': '{lang}wcf.user.panel.settings{/lang}',
@@ -103,7 +104,10 @@ requirejs.config({
 		});
 		
 		BootstrapFrontend.setup({
-			backgroundQueueUrl: '{link controller="BackgroundQueuePerform"}{/link}',
+			backgroundQueue: {
+				url: '{link controller="BackgroundQueuePerform"}{/link}',
+				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
+			},
 			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
 		});
 	});
@@ -176,7 +180,7 @@ requirejs.config({
 	$(function() {
 		new WCF.Effect.SmoothScroll();
 		
-		WCF.System.PageNavigation.init('.pageNavigation');
+		WCF.System.PageNavigation.init('.pagination');
 		WCF.User.Profile.ActivityPointList.init();
 		
 		{event name='javascriptInit'}

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\like\Like;
+use wcf\data\like\LikeList;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
 
@@ -8,7 +9,7 @@ use wcf\system\WCF;
  * Worker implementation for updating likes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.worker
@@ -16,17 +17,17 @@ use wcf\system\WCF;
  */
 class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::$objectListClassName
+	 * @inheritDoc
 	 */
-	protected $objectListClassName = 'wcf\data\like\LikeList';
+	protected $objectListClassName = LikeList::class;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 1000;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::initObjectList
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -35,7 +36,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -53,8 +54,8 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 			$statement->execute();
 		}
 		
-		$itemsToUser = array();
-		$likeObjectData = array();
+		$itemsToUser = [];
+		$likeObjectData = [];
 		foreach ($this->objectList as $like) {
 			if ($like->objectUserID && $like->likeValue == Like::LIKE) {
 				if (!isset($itemsToUser[$like->objectUserID])) {
@@ -65,15 +66,15 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 			}
 			
 			if (!isset($likeObjectData[$like->objectTypeID])) {
-				$likeObjectData[$like->objectTypeID] = array();
+				$likeObjectData[$like->objectTypeID] = [];
 			}
 			if (!isset($likeObjectData[$like->objectTypeID][$like->objectID])) {
-				$likeObjectData[$like->objectTypeID][$like->objectID] = array(
+				$likeObjectData[$like->objectTypeID][$like->objectID] = [
 					'likes' => 0,
 					'dislikes' => 0,
 					'cumulativeLikes' => 0,
 					'objectUserID' => $like->objectUserID
-				);
+				];
 			}
 			
 			if ($like->likeValue == Like::LIKE) {
@@ -99,14 +100,14 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		WCF::getDB()->beginTransaction();
 		foreach ($likeObjectData as $objectTypeID => $objects) {
 			foreach ($objects as $objectID => $data) {
-				$statement->execute(array(
+				$statement->execute([
 					$objectTypeID,
 					$objectID,
 					$data['objectUserID'],
 					$data['likes'],
 					$data['dislikes'],
 					$data['cumulativeLikes']
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();

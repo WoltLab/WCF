@@ -5,7 +5,7 @@ namespace wcf\system\stat;
  * Stat handler implementation for user profile comments.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.stat
@@ -13,7 +13,7 @@ namespace wcf\system\stat;
  */
 class UserProfileCommentStatDailyHandler extends AbstractCommentStatDailyHandler {
 	/**
-	 * @see	\wcf\system\stat\AbstractCommentStatDailyHandler::$objectType
+	 * @inheritDoc
 	 */
 	protected $objectType = 'com.woltlab.wcf.user.profileComment';
 }

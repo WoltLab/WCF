@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Removes moderation queue entries if they're done and older than 30 days.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class ModerationQueueCronjob extends AbstractCronjob {
 	/**
-	 * @see	\wcf\system\cronjob\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
@@ -28,18 +28,15 @@ class ModerationQueueCronjob extends AbstractCronjob {
 			WHERE	status = ?
 				AND lastChangeTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			ModerationQueue::STATUS_DONE,
 			(TIME_NOW - (86400 * 30))
-		));
-		$queueIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$queueIDs[] = $row['queueID'];
-		}
+		]);
+		$queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($queueIDs)) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("queueID IN (?)", array($queueIDs));
+			$conditions->add("queueID IN (?)", [$queueIDs]);
 			
 			$sql = "DELETE FROM	wcf".WCF_N."_moderation_queue
 				".$conditions;

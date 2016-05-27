@@ -9,15 +9,16 @@ use wcf\system\WCF;
  * Bulk processing action implementation for deleting users.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing.user
  * @category	Community Framework
+ * @since	2.2
  */
 class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::executeAction()
+	 * @inheritDoc
 	 */
 	public function executeAction(DatabaseObjectList $objectList) {
 		if (!($objectList instanceof UserList)) return;
@@ -31,13 +32,13 @@ class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getObjectList()
+	 * @inheritDoc
 	 */
 	public function getObjectList() {
 		$userList = parent::getObjectList();
 		
 		// deny self deletion
-		$userList->getConditionBuilder()->add('user_table.userID <> ?', array(WCF::getUser()->userID));
+		$userList->getConditionBuilder()->add('user_table.userID <> ?', [WCF::getUser()->userID]);
 		
 		return $userList;
 	}

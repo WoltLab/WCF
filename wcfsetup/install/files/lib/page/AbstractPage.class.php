@@ -4,7 +4,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\acp\ACPMenu;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -19,13 +18,13 @@ use wcf\util\StringUtil;
  *	- show
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
  */
-abstract class AbstractPage implements IPage, ITrackablePage {
+abstract class AbstractPage implements IPage {
 	/**
 	 * name of the active menu item
 	 * @var	string
@@ -45,10 +44,10 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	public $canonicalURL = '';
 	
 	/**
-	 * enables the tracking of this page
+	 * is true if canonical URL will be enforced even if POST data is represent
 	 * @var	boolean
 	 */
-	public $enableTracking = false;
+	public $forceCanonicalURL = false;
 	
 	/**
 	 * indicates if you need to be logged in to access this page
@@ -58,15 +57,15 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	
 	/**
 	 * needed modules to view this page
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $neededModules = array();
+	public $neededModules = [];
 	
 	/**
 	 * needed permissions to view this page
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $neededPermissions = array();
+	public $neededPermissions = [];
 	
 	/**
 	 * name of the template for the called page
@@ -87,12 +86,12 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	public $useTemplate = true;
 	
 	/**
-	 * @see	\wcf\page\IPage::__run()
+	 * @inheritDoc
 	 */
 	public final function __construct() { }
 	
 	/**
-	 * @see	\wcf\page\IPage::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		// call default methods
@@ -101,7 +100,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -112,7 +111,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		// call readData event
@@ -120,21 +119,21 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		// call assignVariables event
 		EventHandler::getInstance()->fireAction($this, 'assignVariables');
 		
 		// assign parameters
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => $this->action,
 			'templateName' => $this->templateName
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::checkModules()
+	 * @inheritDoc
 	 */
 	public function checkModules() {
 		// call checkModules event
@@ -149,7 +148,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		// call checkPermissions event
@@ -172,7 +171,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check if active user is logged in
@@ -181,7 +180,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		}
 		
 		// check if current request URL matches the canonical URL
-		if ($this->canonicalURL && empty($_POST)) {
+		if ($this->canonicalURL && (empty($_POST) || $this->forceCanonicalURL)) {
 			$canoncialURL = parse_url(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
 			
 			// use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
@@ -223,6 +222,8 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			
 			if ($redirect) {
 				$redirectURL = $this->canonicalURL;
+				// TODO
+				/*
 				if (!empty($requestURL['query'])) {
 					$queryString = $requestURL['query'];
 					parse_str($requestURL['query'], $rQueryString);
@@ -251,6 +252,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 						$redirectURL .= (mb_strpos($redirectURL, '?') === false ? '?' : '&') . http_build_query($rQueryString, '', '&');
 					}
 				}
+				*/
 				
 				// force a permanent redirect as recommended by Google
 				// https://support.google.com/webmasters/answer/6033086?hl=en#a_note_about_redirects
@@ -314,51 +316,6 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			if (RequestHandler::getInstance()->isACPRequest()) {
 				ACPMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
 			}
-			else {
-				PageMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
-			}
 		}
-	}
-	
-	/**
-	 * @see	\wcf\page\ITrackablePage::isTracked()
-	 */
-	public function isTracked() {
-		return $this->enableTracking;
-	}
-	
-	/**
-	 * @see	\wcf\page\ITrackablePage::getController()
-	 */
-	public function getController() {
-		return get_class($this);
-	}
-	
-	/**
-	 * @see	\wcf\page\ITrackablePage::getParentObjectType()
-	 */
-	public function getParentObjectType() {
-		return '';
-	}
-	
-	/**
-	 * @see	\wcf\page\ITrackablePage::getParentObjectID()
-	 */
-	public function getParentObjectID() {
-		return 0;
-	}
-	
-	/**
-	 * @see	\wcf\page\ITrackablePage::getObjectType()
-	 */
-	public function getObjectType() {
-		return '';
-	}
-	
-	/**
-	 * @see	\wcf\page\ITrackablePage::getObjectID()
-	 */
-	public function getObjectID() {
-		return 0;
 	}
 }

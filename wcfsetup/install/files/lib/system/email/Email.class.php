@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email;
+use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\EmailDeliveryBackgroundJob;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\email\mime\AbstractMimePart;
@@ -14,11 +15,12 @@ use wcf\util\StringUtil;
  * Represents a RFC 5322 message using the Mime format as defined in RFC 2045.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.email
  * @category	Community Framework
+ * @since	2.2
  */
 class Email {
 	/**
@@ -37,7 +39,7 @@ class Email {
 	 * Recipients of this email.
 	 * @var	array
 	 */
-	protected $recipients = [ ];
+	protected $recipients = [];
 	
 	/**
 	 * Message-Id header
@@ -47,15 +49,15 @@ class Email {
 	
 	/**
 	 * References header
-	 * @var	array<\wcf\system\email\Mailbox>
+	 * @var	Mailbox[]
 	 */
-	protected $references = [ ];
+	protected $references = [];
 	
 	/**
 	 * In-Reply-To header
-	 * @var	array<\wcf\system\email\Mailbox>
+	 * @var	Mailbox[]
 	 */
-	protected $inReplyTo = [ ];
+	protected $inReplyTo = [];
 	
 	/**
 	 * Date header
@@ -73,19 +75,19 @@ class Email {
 	 * User specified X-* headers
 	 * @var	array
 	 */
-	protected $extraHeaders = [ ];
+	protected $extraHeaders = [];
 	
 	/**
 	 * Text parts of this email
 	 * @var	array
 	 */
-	protected $text = [ ];
+	protected $text = [];
 	
 	/**
 	 * Attachments of this email
 	 * @var	array
 	 */
-	protected $attachments = [ ];
+	protected $attachments = [];
 	
 	/**
 	 * Boundary between the 'Text' parts of this email
@@ -176,7 +178,8 @@ class Email {
 	/**
 	 * Sets the part left of the at sign (@) in the email's 'Message-Id'.
 	 * 
-	 * @param	string	$messageID
+	 * @param	string		$messageID
+	 * @throws	SystemException
 	 */
 	public function setMessageID($messageID = null) {
 		if ($messageID === null) {
@@ -188,7 +191,7 @@ class Email {
 			throw new SystemException("The given message id '".$messageID."' is invalid. Note: You must not specify the part right of the at sign (@).");
 		}
 		if (strlen($messageID) > 50) {
-			throw new SystemException("The given message id '".$message."' is not allowed. The maximum allowed length is 50 bytes.");
+			throw new SystemException("The given message id '".$messageID."' is not allowed. The maximum allowed length is 50 bytes.");
 		}
 		
 		$this->messageID = $messageID;
@@ -211,7 +214,8 @@ class Email {
 	/**
 	 * Adds a message id to the email's 'In-Reply-To'.
 	 * 
-	 * @param	string	$messageID
+	 * @param	string		$messageID
+	 * @throws	SystemException
 	 */
 	public function addInReplyTo($messageID) {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('msg-id').'$)', $messageID)) {
@@ -233,7 +237,7 @@ class Email {
 	/**
 	 * Returns the email's 'In-Reply-To' message ids.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getInReplyTo() {
 		return $this->inReplyTo;
@@ -242,7 +246,8 @@ class Email {
 	/**
 	 * Adds a message id to the email's 'References'.
 	 * 
-	 * @param	string	$messageID
+	 * @param	string		$messageID
+	 * @throws	SystemException
 	 */
 	public function addReferences($messageID) {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('msg-id').'$)', $messageID)) {
@@ -264,7 +269,7 @@ class Email {
 	/**
 	 * Returns the email's 'References' message ids.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getReferences() {
 		return $this->references;
@@ -296,7 +301,7 @@ class Email {
 	/**
 	 * Sets the email's 'Reply-To'.
 	 * 
-	 * @param	\wcf\system\email\Mailbox	$sender
+	 * @param	Mailbox		$replyTo
 	 */
 	public function setReplyTo(Mailbox $replyTo = null) {
 		$this->replyTo = $replyTo;
@@ -319,8 +324,9 @@ class Email {
 	/**
 	 * Adds a recipient to this email.
 	 * 
-	 * @param	\wcf\system\email\Mailbox	$recipient
-	 * @param	string				$type		One of 'to', 'cc', 'bcc'
+	 * @param	Mailbox		$recipient
+	 * @param	string		$type		One of 'to', 'cc', 'bcc'
+	 * @throws	SystemException
 	 */
 	public function addRecipient(Mailbox $recipient, $type = 'to') {
 		switch ($type) {
@@ -332,7 +338,7 @@ class Email {
 				throw new SystemException("The given type '".$type."' is invalid. Must be one of 'to', 'cc', 'bcc'.");
 		}
 		
-		$this->recipients[$recipient->getAddress()] = [ $type, $recipient ];
+		$this->recipients[$recipient->getAddress()] = [$type, $recipient];
 	}
 	
 	/**
@@ -356,8 +362,9 @@ class Email {
 	/**
 	 * Adds a custom X-* header to the email.
 	 * 
-	 * @param	string	$header
-	 * @param	string	$value
+	 * @param	string		$header
+	 * @param	string		$value
+	 * @throws	SystemException
 	 */
 	public function addHeader($header, $value) {
 		$header = mb_strtolower($header);
@@ -365,7 +372,7 @@ class Email {
 			throw new SystemException("The header '".$header."' may not be set. You may only set user defined headers (starting with 'X-').");
 		}
 		
-		$this->extraHeaders[] = [ $header, EmailGrammar::encodeQuotedPrintableHeader($value) ];
+		$this->extraHeaders[] = [$header, EmailGrammar::encodeQuotedPrintableHeader($value)];
 	}
 	
 	/**
@@ -374,18 +381,19 @@ class Email {
 	 * The given priority determines the ordering within the Email. A higher priority
 	 * mime part will be further down the email (see RFC 2046, 5.1.4).
 	 * 
-	 * @param	\wcf\system\email\mime\AbstractMimePart	$part
-	 * @param	integer					$priority
+	 * @param	AbstractMimePart	$part
+	 * @param	integer			$priority
+	 * @throws	SystemException
 	 */
 	public function addMimePart(AbstractMimePart $part, $priority = 1000) {
 		foreach ($part->getAdditionalHeaders() as $header) {
 			$header[0] = mb_strtolower($header[0]);
 			if ($header[0] == 'content-type' || $header[0] == 'content-transfer-encoding') {
-				throw new SystemException("The header '".$header."' may not be set. Use the proper methods.");
+				throw new SystemException("The header '".$header[0]."' may not be set. Use the proper methods.");
 			}
 			
 			if (!StringUtil::startsWith($header[0], 'x-') && !StringUtil::startsWith($header[0], 'content-')) {
-				throw new SystemException("The header '".$header."' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
+				throw new SystemException("The header '".$header[0]."' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
 			}
 		}
 		
@@ -394,21 +402,21 @@ class Email {
 			case 'quoted-printable':
 			break;
 			default:
-				throw new SystemException("The Content-Transfer-Encoding '".$header."' may not be set. You may only use 'quoted-printable' or 'base64'.");
+				throw new SystemException("The Content-Transfer-Encoding '".$part->getContentTransferEncoding()."' may not be set. You may only use 'quoted-printable' or 'base64'.");
 		}
 		
 		if ($part instanceof TextMimePart) {
-			$this->text[] = [ $priority, $part ];
+			$this->text[] = [$priority, $part];
 		}
 		else {
-			$this->attachments[] = [ $priority, $part ];
+			$this->attachments[] = [$priority, $part];
 		}
 	}
 	
 	/**
 	 * Returns the text mime parts of this email.
 	 * 
-	 * @return	array<\wcf\system\email\mime\TextMimePart>
+	 * @return	array
 	 */
 	public function getText() {
 		return $this->text;
@@ -417,7 +425,7 @@ class Email {
 	/**
 	 * Returns the attachments (i.e. the mime parts that are not a TextMimePart) of this email.
 	 * 
-	 * @return	array<\wcf\system\email\mime\AbstractMimePart>
+	 * @return	array
 	 */
 	public function getAttachments() {
 		return $this->attachments;
@@ -429,60 +437,61 @@ class Email {
 	 *       headers will fail.
 	 * 
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function getHeaders() {
-		$headers = [ ];
-		$to = [ ];
-		$cc = [ ];
+		$headers = [];
+		$to = [];
+		$cc = [];
 		foreach ($this->getRecipients() as $recipient) {
 			if ($recipient[0] == 'to') $to[] = $recipient[1];
 			else if ($recipient[0] == 'cc') $cc[] = $recipient[1];
 		}
-		$headers[] = [ 'from', (string) $this->getSender() ];
+		$headers[] = ['from', (string) $this->getSender()];
 		if ($this->getReplyTo()->getAddress() !== $this->getSender()->getAddress()) {
-			$headers[] = [ 'reply-to', (string) $this->getReplyTo() ];
+			$headers[] = ['reply-to', (string) $this->getReplyTo()];
 		}
 		
 		if ($to) {
-			$headers[] = [ 'to', implode(",\r\n   ", $to) ];
+			$headers[] = ['to', implode(",\r\n   ", $to)];
 		}
 		else {
 			throw new SystemException("Cannot generate message headers, you must specify a recipient.");
 		}
 		
 		if ($cc) {
-			$headers[] = [ 'cc', implode(",\r\n   ", $cc) ];
+			$headers[] = ['cc', implode(",\r\n   ", $cc)];
 		}
 		if ($this->getSubject()) {
-			$headers[] = [ 'subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject()) ];
+			$headers[] = ['subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject())];
 		}
 		else {
 			throw new SystemException("Cannot generate message headers, you must specify a subject.");
 		}
 		
-		$headers[] = [ 'date', $this->getDate()->format(\DateTime::RFC2822) ];
-		$headers[] = [ 'message-id', $this->getMessageID() ];
+		$headers[] = ['date', $this->getDate()->format(\DateTime::RFC2822)];
+		$headers[] = ['message-id', $this->getMessageID()];
 		if ($this->getReferences()) {
-			$headers[] = [ 'references', implode(' ', $this->getReferences()) ];
+			$headers[] = ['references', implode(' ', $this->getReferences())];
 		}
 		if ($this->getInReplyTo()) {
-			$headers[] = [ 'in-reply-to', implode(' ', $this->getInReplyTo()) ];
+			$headers[] = ['in-reply-to', implode(' ', $this->getInReplyTo())];
 		}
-		$headers[] = [ 'mime-version', '1.0' ];
+		$headers[] = ['mime-version', '1.0'];
 		
 		if (!$this->text) {
 			throw new SystemException("Cannot generate message headers, you must specify at least one 'Text' part.");
 		}
 		if ($this->attachments) {
-			$headers[] = [ 'content-type', "multipart/mixed;\r\n   boundary=\"".$this->mimeBoundary."\"" ];
+			$headers[] = ['content-type', "multipart/mixed;\r\n   boundary=\"".$this->mimeBoundary."\""];
 		}
 		else {
 			if (count($this->text) > 1) {
-				$headers[] = [ 'content-type', "multipart/alternative;\r\n   boundary=\"".$this->textBoundary."\"" ];
+				$headers[] = ['content-type', "multipart/alternative;\r\n   boundary=\"".$this->textBoundary."\""];
 			}
 			else {
-				$headers[] = [ 'content-type', $this->text[0][1]->getContentType() ];
-				$headers[] = [ 'content-transfer-encoding', $this->text[0][1]->getContentTransferEncoding() ];
+				$headers[] = ['content-type', $this->text[0][1]->getContentType()];
+				$headers[] = ['content-transfer-encoding', $this->text[0][1]->getContentTransferEncoding()];
 				$headers = array_merge($headers, $this->text[0][1]->getAdditionalHeaders());
 			}
 		}
@@ -512,7 +521,7 @@ class Email {
 		$body = "";
 		
 		if (count($this->text) > 1 || $this->attachments) {
-			$body .= StringUtil::wordWrap("This is a MIME encoded email. As you are seeing this your user agent does not support these.");
+			$body .= StringUtil::wordwrap("This is a MIME encoded email. As you are seeing this your user agent does not support these.");
 			$body .= "\r\n\r\n";
 		}
 		
@@ -587,10 +596,10 @@ class Email {
 	/**
 	 * Returns needed AbstractBackgroundJobs to deliver this email to every recipient.
 	 * 
-	 * @return	array<\wcf\system\background\job\AbstractBackgroundJob>
+	 * @return	AbstractBackgroundJob[]
 	 */
 	public function getJobs() {
-		$jobs = [ ];
+		$jobs = [];
 		
 		// ensure every header is filled in
 		$this->getHeaders();
@@ -606,7 +615,7 @@ class Email {
 				if ($mimePart[1] instanceof IRecipientAwareMimePart) $mimePart[1]->setRecipient($recipient[1]);
 			}
 			
-			$data = [ 'mail' => $mail, 'recipient' => $recipient, 'skip' => false ];
+			$data = ['mail' => $mail, 'recipient' => $recipient, 'skip' => false];
 			EventHandler::getInstance()->fireAction($this, 'getJobs', $data);
 			
 			// an event decided that this email should be skipped
@@ -628,6 +637,7 @@ class Email {
 	public function send() {
 		$jobs = $this->getJobs();
 		BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
+		BackgroundQueueHandler::getInstance()->forceCheck();
 	}
 	
 	/**

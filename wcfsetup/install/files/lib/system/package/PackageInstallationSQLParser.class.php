@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Extends SQLParser by testing and logging functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -38,37 +38,37 @@ class PackageInstallationSQLParser extends SQLParser {
 	 * list of existing database tables
 	 * @var	array
 	 */
-	protected $existingTables = array();
+	protected $existingTables = [];
 	
 	/**
 	 * list of logged tables
 	 * @var	array
 	 */
-	protected $knownTables = array();
+	protected $knownTables = [];
 	
 	/**
 	 * list of conflicted database tables
 	 * @var	array
 	 */
-	protected $conflicts = array();
+	protected $conflicts = [];
 	
 	/**
 	 * list of created/deleted tables
 	 * @var	array
 	 */
-	protected $tableLog = array();
+	protected $tableLog = [];
 	
 	/**
 	 * list of created/deleted columns
 	 * @var	array
 	 */
-	protected $columnLog = array();
+	protected $columnLog = [];
 	
 	/**
 	 * list of created/deleted indices
 	 * @var	array
 	 */
-	protected $indexLog = array();
+	protected $indexLog = [];
 	
 	/**
 	 * Creates a new PackageInstallationSQLParser object.
@@ -90,7 +90,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	 * @return	array		conflicts
 	 */
 	public function test() {
-		$this->conflicts = array();
+		$this->conflicts = [];
 		
 		// get all existing tables from database
 		$this->existingTables = WCF::getDB()->getEditor()->getTableNames();
@@ -120,17 +120,17 @@ class PackageInstallationSQLParser extends SQLParser {
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_sql_log
 				WHERE		sqlTable = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($logEntry['tableName']));
+			$statement->execute([$logEntry['tableName']]);
 			
 			if ($logEntry['action'] == 'insert') {
 				$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
 							(packageID, sqlTable)
 					VALUES		(?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$logEntry['packageID'],
 					$logEntry['tableName']
-				));
+				]);
 			}
 		}
 		
@@ -147,17 +147,17 @@ class PackageInstallationSQLParser extends SQLParser {
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($this->columnLog as $logEntry) {
-				$deleteStatement->execute(array(
+				$deleteStatement->execute([
 					$logEntry['tableName'],
 					$logEntry['columnName']
-				));
+				]);
 				
 				if ($logEntry['action'] == 'insert') {
-					$insertStatement->execute(array(
+					$insertStatement->execute([
 						$logEntry['packageID'],
 						$logEntry['tableName'],
 						$logEntry['columnName']
-					));
+					]);
 				}
 			}
 		}
@@ -175,17 +175,17 @@ class PackageInstallationSQLParser extends SQLParser {
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($this->indexLog as $logEntry) {
-				$deleteStatement->execute(array(
+				$deleteStatement->execute([
 					$logEntry['tableName'],
 					$logEntry['indexName']
-				));
+				]);
 				
 				if ($logEntry['action'] == 'insert') {
-					$insertStatement->execute(array(
+					$insertStatement->execute([
 						$logEntry['packageID'],
 						$logEntry['tableName'],
 						$logEntry['indexName']
-					));
+					]);
 				}
 			}
 		}
@@ -219,10 +219,10 @@ class PackageInstallationSQLParser extends SQLParser {
 			WHERE	sqlTable = ?
 				AND sqlColumn = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$tableName,
 			$columnName
-		));
+		]);
 		$row = $statement->fetchArray();
 		if (!empty($row['packageID'])) return $row['packageID'];
 		else if (isset($this->knownTables[$tableName])) return $this->knownTables[$tableName];
@@ -242,10 +242,10 @@ class PackageInstallationSQLParser extends SQLParser {
 			WHERE	sqlTable = ?
 				AND sqlIndex = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$tableName,
 			$indexName
-		));
+		]);
 		$row = $statement->fetchArray();
 		if (!empty($row['packageID'])) return $row['packageID'];
 		else if (isset($this->knownTables[$tableName])) return $this->knownTables[$tableName];
@@ -253,23 +253,23 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeCreateTableStatement()
+	 * @inheritDoc
 	 */
-	protected function executeCreateTableStatement($tableName, $columns, $indices = array()) {
+	protected function executeCreateTableStatement($tableName, $columns, $indices = []) {
 		if ($this->test) {
 			if (in_array($tableName, $this->existingTables)) {
 				if (isset($this->knownTables[$tableName]) && $this->knownTables[$tableName] != $this->package->packageID) {
 					throw new SystemException("Cannot recreate table '".$tableName."'. A package can only overwrite own tables.");
 				}
 				else {
-					if (!isset($this->conflicts['CREATE TABLE'])) $this->conflicts['CREATE TABLE'] = array();
+					if (!isset($this->conflicts['CREATE TABLE'])) $this->conflicts['CREATE TABLE'] = [];
 					$this->conflicts['CREATE TABLE'][] = $tableName;
 				}
 			}
 		}
 		else {
 			// log
-			$this->tableLog[] = array('tableName' => $tableName, 'packageID' => $this->package->packageID, 'action' => 'insert');
+			$this->tableLog[] = ['tableName' => $tableName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
 			
 			// execute
 			parent::executeCreateTableStatement($tableName, $columns, $indices);
@@ -277,7 +277,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeAddColumnStatement()
+	 * @inheritDoc
 	 */
 	protected function executeAddColumnStatement($tableName, $columnName, $columnData) {
 		if ($this->test) {
@@ -287,7 +287,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		}
 		else {
 			// log
-			$this->columnLog[] = array('tableName' => $tableName, 'columnName' => $columnName, 'packageID' => $this->package->packageID, 'action' => 'insert');
+			$this->columnLog[] = ['tableName' => $tableName, 'columnName' => $columnName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
 			
 			// execute
 			parent::executeAddColumnStatement($tableName, $columnName, $columnData);
@@ -295,7 +295,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeAddColumnStatement()
+	 * @inheritDoc
 	 */
 	protected function executeAlterColumnStatement($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		if ($this->test) {
@@ -308,8 +308,8 @@ class PackageInstallationSQLParser extends SQLParser {
 		else {
 			// log
 			if ($oldColumnName != $newColumnName) {
-				$this->columnLog[] = array('tableName' => $tableName, 'columnName' => $oldColumnName, 'packageID' => $this->package->packageID, 'action' => 'delete');
-				$this->columnLog[] = array('tableName' => $tableName, 'columnName' => $newColumnName, 'packageID' => $this->package->packageID, 'action' => 'insert');
+				$this->columnLog[] = ['tableName' => $tableName, 'columnName' => $oldColumnName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
+				$this->columnLog[] = ['tableName' => $tableName, 'columnName' => $newColumnName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
 			}
 			
 			// execute
@@ -318,12 +318,12 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeAddIndexStatement()
+	 * @inheritDoc
 	 */
 	protected function executeAddIndexStatement($tableName, $indexName, $indexData) {
 		if (!$this->test) {
 			// log
-			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert');
+			$this->indexLog[] = ['tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
 			
 			// execute
 			parent::executeAddIndexStatement($tableName, $indexName, $indexData);
@@ -331,12 +331,12 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeAddForeignKeyStatement()
+	 * @inheritDoc
 	 */
 	protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData) {
 		if (!$this->test) {
 			// log
-			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert');
+			$this->indexLog[] = ['tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
 			
 			// execute
 			parent::executeAddForeignKeyStatement($tableName, $indexName, $indexData);
@@ -344,7 +344,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeDropColumnStatement()
+	 * @inheritDoc
 	 */
 	protected function executeDropColumnStatement($tableName, $columnName) {
 		if ($this->test) {
@@ -356,7 +356,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		}
 		else {
 			// log
-			$this->columnLog[] = array('tableName' => $tableName, 'columnName' => $columnName, 'packageID' => $this->package->packageID, 'action' => 'delete');
+			$this->columnLog[] = ['tableName' => $tableName, 'columnName' => $columnName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
 			
 			// execute
 			parent::executeDropColumnStatement($tableName, $columnName);
@@ -364,7 +364,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeDropIndexStatement()
+	 * @inheritDoc
 	 */
 	protected function executeDropIndexStatement($tableName, $indexName) {
 		if ($this->test) {
@@ -376,7 +376,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		}
 		else {
 			// log
-			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'delete');
+			$this->indexLog[] = ['tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
 			
 			// execute
 			parent::executeDropIndexStatement($tableName, $indexName);
@@ -384,7 +384,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeDropForeignKeyStatement()
+	 * @inheritDoc
 	 */
 	protected function executeDropForeignKeyStatement($tableName, $indexName) {
 		if ($this->test) {
@@ -396,7 +396,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		}
 		else {
 			// log
-			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'delete');
+			$this->indexLog[] = ['tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
 			
 			// execute
 			parent::executeDropForeignKeyStatement($tableName, $indexName);
@@ -404,7 +404,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeDropTableStatement()
+	 * @inheritDoc
 	 */
 	protected function executeDropTableStatement($tableName) {
 		if ($this->test) {
@@ -416,7 +416,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		}
 		else {
 			// log
-			$this->tableLog[] = array('tableName' => $tableName, 'packageID' => $this->package->packageID, 'action' => 'delete');
+			$this->tableLog[] = ['tableName' => $tableName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
 			
 			// execute
 			parent::executeDropTableStatement($tableName);
@@ -424,7 +424,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\util\SQLParser::executeStandardStatement()
+	 * @inheritDoc
 	 */
 	protected function executeStandardStatement($query) {
 		if (!$this->test) {

@@ -8,20 +8,23 @@ use wcf\system\cache\builder\PackageCacheBuilder;
  * Provides functions to edit packages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package
  * @category	Community Framework
+ * 
+ * @method	Package		getDecoratedObject()
+ * @mixin	Package
  */
 class PackageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\package\Package';
+	protected static $baseClass = Package::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		PackageCacheBuilder::getInstance()->reset();

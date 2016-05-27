@@ -7,14 +7,13 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
  * Shows the exception log.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -22,17 +21,17 @@ use wcf\util\StringUtil;
  */
 class ExceptionLogViewPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.exception';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = 10;
 	
@@ -50,18 +49,18 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	
 	/**
 	 * available logfiles
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $logFiles = array();
+	public $logFiles = [];
 	
 	/**
 	 * exceptions shown
 	 * @var	array
 	 */
-	public $exceptions = array();
+	public $exceptions = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -71,7 +70,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		AbstractPage::readData();
@@ -120,7 +119,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		try {
 			$this->exceptions = call_user_func_array('array_merge', array_map(
 				function($v) {
-					return array($v[0] => $v[1]);
+					return [$v[0] => $v[1]];
 				},
 				array_chunk($contents, 2)
 			));
@@ -134,18 +133,24 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		$exceptionRegex = new Regex('(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})
-Message: (?P<message>.*?)
-File: (?P<file>.*?) \((?P<line>\d+)\)
-PHP version: (?P<phpVersion>.*?)
-WCF version: (?P<wcfVersion>.*?)
-Request URI: (?P<requestURI>.*?)
-Referrer: (?P<referrer>.*?)
-User-Agent: (?P<userAgent>.*?)
-Information: (?P<information>.*?)
-Stacktrace: 
-(?P<stacktrace>.*)', Regex::DOT_ALL);
-		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
+		// TODO: This needs to be adapted for WCF 2.2
+		$exceptionRegex = new Regex('(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\s*
+Message: (?P<message>.*?)\s*
+PHP version: (?P<phpVersion>.*?)\s*
+WCF version: (?P<wcfVersion>.*?)\s*
+Request URI: (?P<requestURI>.*?)\s*
+Referrer: (?P<referrer>.*?)\s*
+User Agent: (?P<userAgent>.*?)\s*
+Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>\d+)\s*
+(?<chain>======
+.*)', Regex::DOT_ALL);
+		$chainRegex = new Regex('======
+Error Class: (?P<class>.*?)\s*
+Error Message: (?P<message>.*?)\s*
+Error Code: (?P<code>\d+)\s*
+File: (?P<file>.*?) \((?P<line>\d+)\)\s*
+Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*
+Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})', Regex::DOT_ALL);
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
 			if ($i < $this->startIndex || $i > $this->endIndex) {
@@ -157,15 +162,25 @@ Stacktrace:
 				unset($this->exceptions[$key]);
 				continue;
 			}
+			$matches = $exceptionRegex->getMatches();
+			$chainRegex->match($matches['chain'], true, Regex::ORDER_MATCH_BY_SET);
 			
-			$this->exceptions[$key] = $exceptionRegex->getMatches();
-			$this->exceptions[$key]['stacktrace'] = explode("\n", $stackTraceFormatter->replace(StringUtil::encodeHTML($this->exceptions[$key]['stacktrace']), '<strong>\\1</strong>'));
-			$this->exceptions[$key]['information'] = JSON::decode($this->exceptions[$key]['information']);
+			$chainMatches = array_map(function ($item) {
+				if ($item['information'] === '-') $item['information'] = null;
+				else $item['information'] = @unserialize(base64_decode($item['information']));
+				
+				$item['stack'] = @unserialize(base64_decode($item['stack']));
+				
+				return $item;
+			}, $chainRegex->getMatches());
+			
+			$matches['chain'] = $chainMatches;
+			$this->exceptions[$key] = $matches;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::countItems()
+	 * @inheritDoc
 	 */
 	public function countItems() {
 		// call countItems event
@@ -191,16 +206,16 @@ Stacktrace:
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'exceptionID' => $this->exceptionID,
 			'logFiles' => array_flip(array_map('basename', $this->logFiles)),
 			'logFile' => $this->logFile,
 			'exceptions' => $this->exceptions
-		));
+		]);
 	}
 }

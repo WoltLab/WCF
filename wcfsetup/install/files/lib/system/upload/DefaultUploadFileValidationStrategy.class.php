@@ -5,7 +5,7 @@ namespace wcf\system\upload;
  * Default implementation of a file validation strategy for uploaded files.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.upload
@@ -20,9 +20,9 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	
 	/**
 	 * allowed file extensions
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $fileExtensions = array();
+	protected $fileExtensions = [];
 	
 	/**
 	 * regex for validation of allowed file extension
@@ -34,7 +34,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	 * Creates a new DefaultUploadFileValidationStrategy object.
 	 * 
 	 * @param	integer		$maxFilesize
-	 * @param	array<string>	$fileExtensions
+	 * @param	string[]	$fileExtensions
 	 */
 	public function __construct($maxFilesize, array $fileExtensions) {
 		$this->maxFilesize = $maxFilesize;
@@ -43,7 +43,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	}
 	
 	/**
-	 * @see	\wcf\system\upload\IUploadFileValidationStrategy::validate()
+	 * @inheritDoc
 	 */
 	public function validate(UploadFile $uploadFile) {
 		if ($uploadFile->getErrorCode() != 0) {

@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Option type implementation for select lists.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -17,36 +17,36 @@ class SelectOptionType extends RadioButtonOptionType {
 	protected $allowEmptyValue = false;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		$options = $this->parseEnableOptions($option);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value,
 			'allowEmptyValue' => ($this->allowEmptyValue || $option->allowEmptyValue)
-		));
+		]);
 		return WCF::getTPL()->fetch('selectOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$options = $this->parseEnableOptions($option);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'searchOption' => ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('selectSearchableOptionType');
 	}
 	
@@ -78,14 +78,14 @@ class SelectOptionType extends RadioButtonOptionType {
 			}
 		}
 		
-		return array(
+		return [
 			'disableOptions' => $disableOptions,
 			'enableOptions' => $enableOptions
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 * @inheritDoc
 	 */
 	public function hideLabelInSearch() {
 		return true;

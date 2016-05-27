@@ -18,22 +18,26 @@ use wcf\system\WCF;
  * Executes like-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.like
  * @category	Community Framework
+ * 
+ * @method	Like		create()
+ * @method	LikeEditor[]	getObjects()
+ * @method	LikeEditor	getSingleObject()
  */
 class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getGroupedUserList', 'getLikeDetails', 'load');
+	protected $allowGuestAccess = ['getGroupedUserList', 'getLikeDetails', 'load'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\like\LikeEditor';
+	protected $className = LikeEditor::class;
 	
 	/**
 	 * likeable object
@@ -63,7 +67,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	/**
 	 * Returns like details.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getLikeDetails() {
 		$sql = "SELECT		userID, likeValue
@@ -72,19 +76,19 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 					AND objectTypeID = ?
 			ORDER BY	time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->parameters['data']['objectID'],
 			$this->objectType->objectTypeID
-		));
-		$data = array(
-			Like::LIKE => array(),
-			Like::DISLIKE => array()
-		);
+		]);
+		$data = [
+			Like::LIKE => [],
+			Like::DISLIKE => []
+		];
 		while ($row = $statement->fetchArray()) {
 			$data[$row['likeValue']][] = $row['userID'];
 		}
 		
-		$values = array();
+		$values = [];
 		if (!empty($data[Like::LIKE])) {
 			$values[Like::LIKE] = new GroupedUserList(WCF::getLanguage()->get('wcf.like.details.like'));
 			$values[Like::LIKE]->addUserIDs($data[Like::LIKE]);
@@ -97,14 +101,14 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		// load user profiles
 		GroupedUserList::loadUsers();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'groupedUsers' => $values
-		));
+		]);
 		
-		return array(
+		return [
 			'containerID' => $this->parameters['data']['containerID'],
 			'template' => WCF::getTPL()->fetch('groupedUserList')
-		);
+		];
 	}
 	
 	/**
@@ -127,14 +131,14 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\like\LikeAction::updateLike()
+	 * @inheritDoc
 	 */
 	public function like() {
 		return $this->updateLike(Like::LIKE);
 	}
 	
 	/**
-	 * @see	\wcf\data\like\LikeAction::validateLike()
+	 * @inheritDoc
 	 */
 	public function validateDislike() {
 		if (!LIKE_ENABLE_DISLIKE) {
@@ -145,7 +149,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\like\LikeAction::updateLike()
+	 * @inheritDoc
 	 */
 	public function dislike() {
 		return $this->updateLike(Like::DISLIKE);
@@ -155,6 +159,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	 * Sets like/dislike for an object, executing this method again with the same parameters
 	 * will revert the status (removing like/dislike).
 	 * 
+	 * @param	integer		$likeValue
 	 * @return	array
 	 */
 	protected function updateLike($likeValue) {
@@ -166,12 +171,12 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 				UserActivityEventHandler::getInstance()->fireEvent($this->objectType->objectType.'.recentActivityEvent', $this->parameters['data']['objectID'], $this->likeableObject->getLanguageID());
 			}
 			else {
-				UserActivityEventHandler::getInstance()->removeEvents($this->objectType->objectType.'.recentActivityEvent', array($this->parameters['data']['objectID']));
+				UserActivityEventHandler::getInstance()->removeEvents($this->objectType->objectType.'.recentActivityEvent', [$this->parameters['data']['objectID']]);
 			}
 		}
 		
 		// get stats
-		return array(
+		return [
 			'likes' => ($likeData['data']['likes'] === null) ? 0 : $likeData['data']['likes'],
 			'dislikes' => ($likeData['data']['dislikes'] === null) ? 0 : $likeData['data']['dislikes'],
 			'cumulativeLikes' => ($likeData['data']['cumulativeLikes'] === null) ? 0 : $likeData['data']['cumulativeLikes'],
@@ -181,7 +186,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			'newValue' => $likeData['newValue'],
 			'oldValue' => $likeData['oldValue'],
 			'users' => $likeData['users']
-		);
+		];
 	}
 	
 	/**
@@ -210,7 +215,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->validateObjectParameters();
@@ -219,7 +224,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		// fetch number of pages
@@ -228,10 +233,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			WHERE	objectID = ?
 				AND objectTypeID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->parameters['data']['objectID'],
 			$this->objectType->objectTypeID
-		));
+		]);
 		$pageCount = ceil($statement->fetchColumn() / 20);
 		
 		$sql = "SELECT		userID, likeValue
@@ -240,19 +245,19 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 					AND objectTypeID = ?
 			ORDER BY	likeValue DESC, time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
-		$statement->execute(array(
+		$statement->execute([
 			$this->parameters['data']['objectID'],
 			$this->objectType->objectTypeID
-		));
-		$data = array(
-			Like::LIKE => array(),
-			Like::DISLIKE => array()
-		);
+		]);
+		$data = [
+			Like::LIKE => [],
+			Like::DISLIKE => []
+		];
 		while ($row = $statement->fetchArray()) {
 			$data[$row['likeValue']][] = $row['userID'];
 		}
 		
-		$values = array();
+		$values = [];
 		if (!empty($data[Like::LIKE])) {
 			$values[Like::LIKE] = new GroupedUserList(WCF::getLanguage()->get('wcf.like.details.like'));
 			$values[Like::LIKE]->addUserIDs($data[Like::LIKE]);
@@ -265,15 +270,15 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		// load user profiles
 		GroupedUserList::loadUsers();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'groupedUsers' => $values
-		));
+		]);
 		
-		return array(
+		return [
 			'containerID' => $this->parameters['data']['containerID'],
 			'pageCount' => $pageCount,
 			'template' => WCF::getTPL()->fetch('groupedUserList')
-		);
+		];
 	}
 	
 	/**
@@ -294,29 +299,29 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	public function load() {
 		$likeList = new ViewableLikeList();
 		if ($this->parameters['lastLikeTime']) {
-			$likeList->getConditionBuilder()->add("like_table.time < ?", array($this->parameters['lastLikeTime']));
+			$likeList->getConditionBuilder()->add("like_table.time < ?", [$this->parameters['lastLikeTime']]);
 		}
 		if ($this->parameters['likeType'] == 'received') {
-			$likeList->getConditionBuilder()->add("like_table.objectUserID = ?", array($this->parameters['userID']));
+			$likeList->getConditionBuilder()->add("like_table.objectUserID = ?", [$this->parameters['userID']]);
 		}
 		else {
-			$likeList->getConditionBuilder()->add("like_table.userID = ?", array($this->parameters['userID']));
+			$likeList->getConditionBuilder()->add("like_table.userID = ?", [$this->parameters['userID']]);
 		}
-		$likeList->getConditionBuilder()->add("like_table.likeValue = ?", array($this->parameters['likeValue']));
+		$likeList->getConditionBuilder()->add("like_table.likeValue = ?", [$this->parameters['likeValue']]);
 		$likeList->readObjects();
 		if (!count($likeList)) {
-			return array();
+			return [];
 		}
 		
 		// parse template
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'likeList' => $likeList
-		));
+		]);
 		
-		return array(
+		return [
 			'lastLikeTime' => $likeList->getLastLikeTime(),
 			'template' => WCF::getTPL()->fetch('userProfileLikeItem')
-		);
+		];
 	}
 	
 	/**
@@ -336,10 +341,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			WHERE	objectTypeID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$sourceObjectType->objectTypeID,
 			$this->parameters['sourceObjectID']
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		// no (dis-)likes at all
@@ -363,38 +368,38 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			WHERE		objectTypeID = ?
 					AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$sourceObjectType->objectTypeID,
 			$this->parameters['sourceObjectID']
-		));
+		]);
 		
 		//
 		// step 3) update owner
 		//
 		
 		if ($newLikeObject->objectUserID) {
-			$sql = "SELECT	COUNT(*) AS count
+			$sql = "SELECT	COUNT(*)
 				FROM	wcf".WCF_N."_like
 				WHERE	objectTypeID = ?
 					AND objectID = ?
 					AND likeValue = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$targetObjectType->objectTypeID,
 				$this->parameters['targetObjectID'],
 				Like::LIKE
-			));
-			$row = $statement->fetchArray();
+			]);
+			$count = $statement->fetchSingleColumn();
 			
-			if ($row['count']) {
+			if ($count) {
 				// update received likes
 				$userEditor = new UserEditor(new User($newLikeObject->objectUserID));
-				$userEditor->updateCounters(array(
-					'likesReceived' => $row['count']
-				));
+				$userEditor->updateCounters([
+					'likesReceived' => $count
+				]);
 				
 				// add activity points
-				UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($newLikeObject->objectUserID => $row['count']));
+				UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$newLikeObject->objectUserID => $count]);
 			}
 		}
 	}

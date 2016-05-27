@@ -17,7 +17,7 @@ use wcf\system\template\TemplateEngine;
  * 	{htmlOptions object=$databaseObjectList selected=$foo}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
@@ -26,12 +26,12 @@ use wcf\system\template\TemplateEngine;
 class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePlugin {
 	/**
 	 * selected values
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $selected = array();
+	protected $selected = [];
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (isset($tagArgs['object']) && ($tagArgs['object'] instanceof DatabaseObjectList)) {
@@ -44,7 +44,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 						$tagArgs['options'] = array_combine($tagArgs['values'], $tagArgs['output']);
 					}
 					else {
-						$tagArgs['options'] = array();
+						$tagArgs['options'] = [];
 					}
 				}
 				else {
@@ -52,7 +52,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 				}
 			}
 			else {
-				$tagArgs['options'] = array();
+				$tagArgs['options'] = [];
 			}
 		}
 		
@@ -68,10 +68,10 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 		}
 		
 		// get selected values
-		$this->selected = array();
+		$this->selected = [];
 		if (isset($tagArgs['selected'])) {
 			$this->selected = $tagArgs['selected'];
-			if (!is_array($this->selected)) $this->selected = array($this->selected);
+			if (!is_array($this->selected)) $this->selected = [$this->selected];
 		}
 		
 		// create option list

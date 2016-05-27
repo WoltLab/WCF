@@ -11,17 +11,20 @@ use wcf\system\WCF;
  * Executes user group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
  * @category	Community Framework
+ * 
+ * @method	UserGroupEditor[]	getObjects()
+ * @method	UserGroupEditor		getSingleObject()
  */
 class UserGroupAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\group\UserGroupEditor';
+	public $className = UserGroupEditor::class;
 	
 	/**
 	 * editor object for the copied user group
@@ -30,29 +33,31 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	public $groupEditor = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.user.canAddGroup');
+	protected $permissionsCreate = ['admin.user.canAddGroup'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.user.canDeleteGroup');
+	protected $permissionsDelete = ['admin.user.canDeleteGroup'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.user.canEditGroup');
+	protected $permissionsUpdate = ['admin.user.canEditGroup'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('copy', 'create', 'delete', 'update');
+	protected $requireACP = ['copy', 'create', 'delete', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	UserGroup
 	 */
 	public function create() {
+		/** @var UserGroup $group */
 		$group = parent::create();
 		
 		if (isset($this->parameters['options'])) {
@@ -64,14 +69,14 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			$object->update($this->parameters['data']);
 			$object->updateGroupOptions($this->parameters['options']);
 		}
@@ -81,10 +86,10 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	 * Validates the 'copy' action.
 	 */
 	public function validateCopy() {
-		WCF::getSession()->checkPermissions(array(
+		WCF::getSession()->checkPermissions([
 			'admin.user.canAddGroup',
 			'admin.user.canEditGroup'
-		));
+		]);
 		
 		$this->readBoolean('copyACLOptions');
 		$this->readBoolean('copyMembers');
@@ -106,7 +111,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 				FROM	wcf".WCF_N."_user_group_option_value
 				WHERE	groupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->groupEditor->groupID));
+			$statement->execute([$this->groupEditor->groupID]);
 		}
 		else {
 			$sql = "SELECT	optionID, defaultValue AS optionValue
@@ -115,21 +120,21 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 			$statement->execute();
 		}
 		
-		$optionValues = array();
+		$optionValues = [];
 		while ($row = $statement->fetchArray()) {
 			$optionValues[$row['optionID']] = $row['optionValue'];
 		}
 		
-		$groupAction = new UserGroupAction(array(), 'create', array(
-			'data' => array(
+		$groupAction = new UserGroupAction([], 'create', [
+			'data' => [
 				'groupName' => $this->groupEditor->groupName,
 				'groupDescription' => $this->groupEditor->groupDescription,
 				'priority' => $this->groupEditor->priority,
 				'userOnlineMarking' => $this->groupEditor->userOnlineMarking,
 				'showOnTeamPage' => $this->groupEditor->showOnTeamPage
-			),
+			],
 			'options' => $optionValues
-		));
+		]);
 		$returnValues = $groupAction->executeAction();
 		$group = $returnValues['returnValues'];
 		$groupEditor = new UserGroupEditor($group);
@@ -146,7 +151,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 				FROM		wcf".WCF_N."_language_item
 				WHERE		languageItem = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->groupEditor->groupName));
+			$statement->execute([$this->groupEditor->groupName]);
 		}
 		else {
 			$groupName .= ' (2)';
@@ -164,13 +169,13 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 				FROM		wcf".WCF_N."_language_item
 				WHERE		languageItem = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->groupEditor->groupDescription));
+			$statement->execute([$this->groupEditor->groupDescription]);
 		}
 		
-		$groupEditor->update(array(
+		$groupEditor->update([
 			'groupDescription' => $groupDescription,
 			'groupName' => $groupName
-		));
+		]);
 		
 		// copy members
 		if ($this->parameters['copyMembers']) {
@@ -180,7 +185,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 				FROM		wcf".WCF_N."_user_to_group
 				WHERE		groupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->groupEditor->groupID));
+			$statement->execute([$this->groupEditor->groupID]);
 		}
 		
 		// copy acl options
@@ -191,7 +196,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 				FROM		wcf".WCF_N."_acl_option_to_group
 				WHERE		groupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->groupEditor->groupID));
+			$statement->execute([$this->groupEditor->groupID]);
 			
 			// it is likely that applications or plugins use caches
 			// for acl option values like for the labels which have
@@ -206,10 +211,10 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		
 		UserGroupEditor::resetCache();
 		
-		return array(
-			'redirectURL' => LinkHandler::getInstance()->getLink('UserGroupEdit', array(
+		return [
+			'redirectURL' => LinkHandler::getInstance()->getLink('UserGroupEdit', [
 				'id' => $group->groupID
-			))
-		);
+			])
+		];
 	}
 }

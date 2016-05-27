@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\form\AbstractForm;
 use wcf\system\cache\builder\LanguageCacheBuilder;
@@ -13,7 +14,7 @@ use wcf\util\ArrayUtil;
  * Shows the language multilingualism form.
  * 
  * @author	Jean-Marc Licht
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -21,14 +22,14 @@ use wcf\util\ArrayUtil;
  */
 class LanguageMultilingualismForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.multilingualism';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * indicates if multilingualism is enabled
@@ -38,18 +39,18 @@ class LanguageMultilingualismForm extends AbstractForm {
 	
 	/**
 	 * ids of selected available languages
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $languageIDs = array();
+	public $languageIDs = [];
 	
 	/**
 	 * list of available content languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
-	public $languages = array();
+	public $languages = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -58,7 +59,7 @@ class LanguageMultilingualismForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -68,7 +69,7 @@ class LanguageMultilingualismForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -94,13 +95,13 @@ class LanguageMultilingualismForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save
-		LanguageEditor::enableMultilingualism(($this->enable == 1 ? $this->languageIDs : array()));
+		LanguageEditor::enableMultilingualism(($this->enable == 1 ? $this->languageIDs : []));
 		
 		// clear cache
 		LanguageCacheBuilder::getInstance()->reset();
@@ -111,7 +112,7 @@ class LanguageMultilingualismForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -138,21 +139,21 @@ class LanguageMultilingualismForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'defaultLanguageID' => LanguageFactory::getInstance()->getDefaultLanguageID(),
 			'enable' => $this->enable,
 			'languageIDs' => $this->languageIDs,
 			'languages' => $this->languages
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check master password

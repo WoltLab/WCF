@@ -17,7 +17,7 @@ use wcf\util\ArrayUtil;
  * Shows the paid subscription add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -25,22 +25,22 @@ use wcf\util\ArrayUtil;
  */
 class PaidSubscriptionAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'paidSubscriptionAdd';
 	
@@ -106,36 +106,36 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * list of group ids
-	 * @var	array<intewer>
+	 * @var	integer[]
 	 */
-	public $groupIDs = array();
+	public $groupIDs = [];
 	
 	/**
 	 * list of excluded subscriptions
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $excludedSubscriptionIDs = array();
+	public $excludedSubscriptionIDs = [];
 	
 	/**
 	 * available user groups
 	 * @var	array
 	 */
-	public $availableUserGroups = array();
+	public $availableUserGroups = [];
 	
 	/**
 	 * list of available currencies
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $availableCurrencies = array();
+	public $availableCurrencies = [];
 	
 	/**
 	 * list of available subscriptions
 	 * @var	array
 	 */
-	public $availableSubscriptions = array();
+	public $availableSubscriptions = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -144,7 +144,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('title');
 		
 		// get available user groups
-		$this->availableUserGroups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
+		$this->availableUserGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 		
 		if (!count(PaymentMethodHandler::getInstance()->getPaymentMethods())) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.acp.paidSubscription.error.noPaymentMethods'));
@@ -169,7 +169,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -186,15 +186,17 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		if (isset($_POST['cost'])) $this->cost = floatval($_POST['cost']);
 		if (isset($_POST['currency'])) $this->currency = $_POST['currency'];
 		if (!empty($_POST['subscriptionLengthPermanent'])) $this->subscriptionLengthPermanent = 1;
-		if (isset($_POST['subscriptionLength'])) $this->subscriptionLength = intval($_POST['subscriptionLength']);
-		if (isset($_POST['subscriptionLengthUnit'])) $this->subscriptionLengthUnit = $_POST['subscriptionLengthUnit'];
+		if (!$this->subscriptionLengthPermanent) {
+			if (isset($_POST['subscriptionLength'])) $this->subscriptionLength = intval($_POST['subscriptionLength']);
+			if (isset($_POST['subscriptionLengthUnit'])) $this->subscriptionLengthUnit = $_POST['subscriptionLengthUnit'];
+		}
 		if (!empty($_POST['isRecurring'])) $this->isRecurring = 1;
 		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
 		if (isset($_POST['excludedSubscriptionIDs']) && is_array($_POST['excludedSubscriptionIDs'])) $this->excludedSubscriptionIDs = ArrayUtil::toIntegerArray($_POST['excludedSubscriptionIDs']);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -249,13 +251,13 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save subscription
-		$this->objectAction = new PaidSubscriptionAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PaidSubscriptionAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'description' => $this->description,
 			'isDisabled' => $this->isDisabled,	
@@ -267,7 +269,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 			'isRecurring' => $this->isRecurring,
 			'groupIDs' => implode(',', $this->groupIDs),
 			'excludedSubscriptionIDs' => implode(',', $this->excludedSubscriptionIDs)
-		))));
+		])]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		// save i18n values
@@ -279,13 +281,13 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		$this->title = $this->description = '';
 		$this->isDisabled = $this->showOrder = $this->cost = $this->subscriptionLength = $this->isRecurring = 0;
 		$this->currency = 'EUR';
-		$this->groupIDs = array();
+		$this->groupIDs = [];
 		I18nHandler::getInstance()->reset();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
@@ -300,21 +302,21 @@ class PaidSubscriptionAddForm extends AbstractForm {
 			
 			// update database
 			$editor = new PaidSubscriptionEditor($subscription);
-			$editor->update(array(
+			$editor->update([
 				$columnName => 'wcf.paidSubscription.subscription'.$subscription->subscriptionID.($columnName == 'description' ? '.description' : '')
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'isDisabled' => $this->isDisabled,
 			'showOrder' => $this->showOrder,
@@ -328,6 +330,6 @@ class PaidSubscriptionAddForm extends AbstractForm {
 			'availableCurrencies' => $this->availableCurrencies,
 			'availableUserGroups' => $this->availableUserGroups,
 			'availableSubscriptions' => $this->availableSubscriptions
-		));
+		]);
 	}
 }

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\util\StringUtil;
 
@@ -8,7 +9,7 @@ use wcf\util\StringUtil;
  * all search engines to preserve compatibility in case of interface changes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.search
@@ -19,16 +20,16 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
 	 * class name for preferred condition builder
 	 * @var	string
 	 */
-	protected $conditionBuilderClassName = 'wcf\system\database\util\PreparedStatementConditionBuilder';
+	protected $conditionBuilderClassName = PreparedStatementConditionBuilder::class;
 	
 	/**
 	 * list of engine-specific special characters
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $specialCharacters = array();
+	protected $specialCharacters = [];
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::getConditionBuilderClassName()
+	 * @inheritDoc
 	 */
 	public function getConditionBuilderClassName() {
 		return $this->conditionBuilderClassName;
@@ -44,6 +45,7 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
 	 * @see	http://dev.mysql.com/doc/refman/5.5/en/fulltext-boolean.html
 	 * 
 	 * @param	string		$query
+	 * @return	string
 	 */
 	protected function parseSearchQuery($query) {
 		$query = StringUtil::trim($query);
@@ -52,7 +54,7 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
 		$inQuotes = false;
 		$previousChar = $tmp = '';
 		$controlCharacterOrSpace = false;
-		$chars = array('+', '-', '*');
+		$chars = ['+', '-', '*'];
 		$ftMinWordLen = $this->getFulltextMinimumWordLength();
 		for ($i = 0, $length = mb_strlen($query); $i < $length; $i++) {
 			$char = mb_substr($query, $i, 1);
@@ -131,7 +133,7 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
 	abstract protected function getFulltextMinimumWordLength();
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::removeSpecialCharacters()
+	 * @inheritDoc
 	 */
 	public function removeSpecialCharacters($string) {
 		if (!empty($this->specialCharacters)) {

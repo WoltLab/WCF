@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * This includes the call of the default event listeners for an action: readParameters and execute.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -25,23 +25,23 @@ abstract class AbstractAction implements IAction {
 	
 	/**
 	 * needed modules to execute this action
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $neededModules = array();
+	public $neededModules = [];
 	
 	/**
 	 * needed permissions to execute this action
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $neededPermissions = array();
+	public $neededPermissions = [];
 	
 	/**
-	 * @see	\wcf\form\IAction::__run()
+	 * @inheritDoc
 	 */
 	public final function __construct() { }
 	
 	/**
-	 * @see	\wcf\action\IAction::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		// call default methods
@@ -50,7 +50,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -58,7 +58,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::checkModules()
+	 * @inheritDoc
 	 */
 	public function checkModules() {
 		// call checkModules event
@@ -73,7 +73,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		// call checkPermissions event
@@ -86,7 +86,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		// check if active user is logged in

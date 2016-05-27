@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\cli\command;
 use phpline\internal\Log;
+use wcf\system\worker\IWorker;
 use wcf\system\CLIWCF;
 use wcf\system\Regex;
-use wcf\util\ClassUtil;
 use wcf\util\CLIUtil;
 use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
@@ -16,7 +16,7 @@ use Zend\ProgressBar\ProgressBar;
  * Executes cronjobs.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -33,19 +33,19 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 	 * Initializes the argument parser.
 	 */
 	public function __construct() {
-		$this->argv = new ArgvParser(array(
+		$this->argv = new ArgvParser([
 			'l|list' => CLIWCF::getLanguage()->get('wcf.cli.worker.list'),
 			'setParameter=s' => CLIWCF::getLanguage()->get('wcf.cli.worker.setParameter')
-		));
-		$this->argv->setOptions(array(
+		]);
+		$this->argv->setOptions([
 			ArgvParser::CONFIG_FREEFORM_FLAGS => true,
 			ArgvParser::CONFIG_PARSEALL => false,
 			ArgvParser::CONFIG_CUMULATIVE_PARAMETERS => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		$this->argv->setArguments($parameters);
@@ -78,7 +78,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			if (!$reflection->isInstantiable()) {
 				$invalid = true;
 			}
-			else if (!ClassUtil::isInstanceOf($class, 'wcf\system\worker\IWorker')) {
+			else if (!is_subclass_of($class, IWorker::class)) {
 				$invalid = true;
 			}
 		}
@@ -88,12 +88,12 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		
 		// parse parameters
 		$options = $this->argv->getOptions();
-		$parameters = array();
+		$parameters = [];
 		foreach ($options as $option) {
 			$value = $this->argv->getOption($option);
 			if ($option === 'setParameter') {
 				if (!is_array($value)) {
-					$value = array($value);
+					$value = [$value];
 				}
 				
 				foreach ($value as $parameter) {
@@ -111,9 +111,9 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		$worker->getProgress(); // make sure objects are counted
 		
 		// initialize progressbar
-		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
+		$progressbar = new ProgressBar(new ConsoleProgressBar([
 			'width' => CLIWCF::getTerminal()->getWidth()
-		)));
+		]));
 		$progress = 0;
 		for ($i = 0; $progress < 100; $i++) {
 			$worker->setLoopCount($i);
@@ -121,6 +121,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			
 			// execute worker
 			$worker->execute();
+			$worker->finalize();
 			
 			// update progress
 			$progress = $worker->getProgress();
@@ -140,12 +141,12 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		$directory = DirectoryUtil::getInstance(WCF_DIR.'lib/system/worker/');
 		$workerList = $directory->getFiles(SORT_ASC, new Regex('Worker\.class\.php$'));
 		
-		$table = array(
-			array(
+		$table = [
+			[
 				'Class',
 				'Description'
-			)
-		);
+			]
+		];
 		foreach ($workerList as $worker) {
 			$class = 'wcf\system\worker\\'.basename($worker, '.class.php');
 			if (!class_exists($class) && !interface_exists($class)) {
@@ -155,12 +156,13 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			$reflection = new \ReflectionClass($class);
 			if (!$reflection->isInstantiable()) continue;
 			
-			if (!ClassUtil::isInstanceOf($class, 'wcf\system\worker\IWorker')) {
+			if (!is_subclass_of($class, IWorker::class)) {
 				Log::info('Invalid worker file: ', $worker);
 				continue;
 			}
 			
 			$docComment = explode("\n", StringUtil::unifyNewlines($reflection->getDocComment()));
+			$comment = '';
 			foreach ($docComment as $commentLine) {
 				if (Regex::compile('[a-z]', Regex::CASE_INSENSITIVE)->match($commentLine)) {
 					$comment = Regex::compile('^[^a-z]+', Regex::CASE_INSENSITIVE)->replace($commentLine, '');
@@ -168,24 +170,24 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 				}
 			}
 			
-			$table[] = array(
+			$table[] = [
 				basename($worker, '.class.php'),
 				$comment
-			);
+			];
 		}
 		
 		return $table;
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
+	 * @inheritDoc
 	 */
 	public function getUsage() {
 		return str_replace($_SERVER['argv'][0].' [ options ]', 'worker [ options ] <worker>', $this->argv->getUsageMessage());
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		// TODO: Check access

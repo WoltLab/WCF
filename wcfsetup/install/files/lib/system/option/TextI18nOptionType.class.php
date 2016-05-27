@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Option type implementation for textual input fields with i18n support.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -17,26 +17,26 @@ use wcf\system\WCF;
  */
 class TextI18nOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\AbstractOptionType::$supportI18n
+	 * @inheritDoc
 	 */
 	protected $supportI18n = true;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'inputType' => $this->inputType,
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textI18nOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!I18nHandler::getInstance()->validateValue($option->optionName, $option->requireI18n, true)) {

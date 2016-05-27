@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * 	{htmlCheckboxes name="x" output=$outputArray values=$valueArray}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
@@ -28,7 +28,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected $disableEncoding = false;
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get options
@@ -58,10 +58,10 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		
 		// get selected values
 		if (isset($tagArgs['selected'])) {
-			if (!is_array($tagArgs['selected'])) $tagArgs['selected'] = array($tagArgs['selected']);
+			if (!is_array($tagArgs['selected'])) $tagArgs['selected'] = [$tagArgs['selected']];
 		}
 		else {
-			$tagArgs['selected'] = array();
+			$tagArgs['selected'] = [];
 		}
 		if (!isset($tagArgs['separator'])) {
 			$tagArgs['separator'] = '';
@@ -80,6 +80,9 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * Executes StringUtil::encodeHTML on the given text if disableEncoding is false.
 	 * @see	\wcf\util\StringUtil::encodeHTML()
+	 * 
+	 * @param	string		$text
+	 * @return	string
 	 */
 	protected function encodeHTML($text) {
 		if (!$this->disableEncoding) {

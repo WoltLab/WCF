@@ -15,28 +15,33 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider
  * @category	Community Framework
+ *
+ * @property-read	integer		$providerID
+ * @property-read	string		$title
+ * @property-read	string		$regex
+ * @property-read	string		$html
  */
 class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'bbcode_media_provider';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'providerID';
 	
 	/**
 	 * cached providers
-	 * @var	array<\wcf\data\bbcode\media\MediaProvider>
+	 * @var	BBCodeMediaProvider[]
 	 */
 	protected static $cache = null;
 	
 	/**
 	 * Loads the provider cache.
 	 * 
-	 * @return	array<\wcf\data\bbcode\media\MediaProvider>
+	 * @return	BBCodeMediaProvider[]
 	 */
 	public static function getCache() {
 		if (self::$cache === null) {
@@ -102,7 +107,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->title;

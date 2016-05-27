@@ -1,50 +1,31 @@
-{include file='documentHeader'}
-
-<head>
-	<title>{lang}wcf.user.notification.notifications{/lang} - {lang}wcf.user.usercp{/lang} - {PAGE_TITLE|language}</title>
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}',
-				'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}'
-			});
-			
-			new WCF.Notification.List();
-		});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentHeader'}
+	<header class="contentHeader">
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">{$__wcf->getActivePage()->getTitle()} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
+		</div>
+		
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul>
+					{content}
+						{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<li class="jsOnly"><a class="button jsMarkAllAsConfirmed"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.user.notification.markAllAsConfirmed{/lang}</span></a></li>{/if}
+						{event name='contentHeaderNavigation'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</header>
+{/capture}
 
 {include file='userMenuSidebar'}
 
-{include file='header' sidebarOrientation='left'}
+{include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.notification.notifications{/lang} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
-</header>
-
-{include file='userNotice'}
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}
-	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<li class="jsOnly"><a class="button jsMarkAllAsConfirmed"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.user.notification.markAllAsConfirmed{/lang}</span></a></li>{/if}
-					
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}{/content}
+	</div>
+{/hascontent}
 
 {if $notifications[notifications]}
 	{assign var=lastPeriod value=''}
@@ -53,21 +34,19 @@
 		{if $notification[event]->getPeriod() != $lastPeriod}
 			{if $lastPeriod}
 					</ul>
-				</div>
+				</section>
 			{/if}
 			{assign var=lastPeriod value=$notification[event]->getPeriod()}
 			
-			<header class="boxHeadline boxSubHeadline">
-				<h2>{$lastPeriod}</h2>
-			</header>
+			<section class="section sectionContainerList">
+				<h2 class="sectionTitle">{$lastPeriod}</h2>
 			
-			<div class="container marginTop">
 				<ul class="containerList userNotificationItemList">
 		{/if}
 				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}" data-link="{if $notification[event]->isConfirmed()}{$notification[event]->getLink()}{else}{link controller='NotificationConfirm' id=$notification[notificationID]}{/link}{/if}" data-link-replace-all="{if $notification[event]->isConfirmed()}false{else}true{/if}" data-object-id="{@$notification[notificationID]}" data-is-read="{if $notification[event]->isConfirmed()}true{else}false{/if}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
 					<div class="box32">
 						{if $notification[authors] < 2}
-							<div class="framed jsTooltip" title="{$notification[event]->getAuthor()->username}">
+							<div class="jsTooltip" title="{$notification[event]->getAuthor()->username}">
 								{@$notification[event]->getAuthor()->getAvatar()->getImageTag(32)}
 							</div>
 							
@@ -79,7 +58,7 @@
 								<p><small>{@$notification[time]|time}</small></p>
 							</div>
 						{else}
-							<div class="framed">
+							<div>
 								<span class="icon icon32 fa-users"></span>
 							</div>
 							
@@ -90,10 +69,10 @@
 								</p>
 								<p><small>{@$notification[time]|time}</small></p>
 								
-								<ul class="marginTopTiny">
+								<ul>
 									{foreach from=$notification[event]->getAuthors() item=author}
 										{if $author->userID}
-											<li style="display: inline-block" class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}" class="framed">{@$author->getAvatar()->getImageTag(24)}</a></li>
+											<li style="display: inline-block" class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}">{@$author->getAvatar()->getImageTag(24)}</a></li>
 										{/if}
 									{/foreach}
 								</ul>
@@ -103,26 +82,38 @@
 				</li>
 	{/foreach}
 		</ul>
-	</div>
+	</section>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
-					{content}
-						{event name='contentNavigationButtonsBottom'}
-					{/content}
+					{content}{event name='contentFooterNavigation'}{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.user.notification.noNotifications{/lang}</p>
 {/if}
 
-{include file='footer'}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}',
+			'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}'
+		});
+		
+		new WCF.Notification.List();
+	});
+	//]]>
+</script>
 
-</body>
-</html>
+{include file='footer'}

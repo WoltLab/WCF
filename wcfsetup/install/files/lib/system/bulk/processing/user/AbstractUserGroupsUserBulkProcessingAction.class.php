@@ -15,18 +15,19 @@ use wcf\util\ArrayUtil;
  * user groups.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing.user
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**
 	 * list of available user groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
-	public $availableUserGroups = [ ];
+	public $availableUserGroups = [];
 	
 	/**
 	 * name of the inputs used to store the selected user group ids
@@ -36,17 +37,17 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	
 	/**
 	 * ids of selected user groups
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $userGroupIDs = [ ];
+	public $userGroupIDs = [];
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
 		
-		$this->availableUserGroups = UserGroup::getAccessibleGroups([ ], [ UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS ]);
+		$this->availableUserGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 		
 		uasort($this->availableUserGroups, function(UserGroup $groupA, UserGroup $groupB) {
 			return strcmp($groupA->getName(), $groupB->getName());
@@ -54,7 +55,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::executeAction()
+	 * @inheritDoc
 	 */
 	public function executeAction(DatabaseObjectList $objectList) {
 		if (!($objectList instanceof UserList)) return;
@@ -81,7 +82,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	abstract protected function executeUserAction(UserEditor $user);
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		return WCF::getTPL()->fetch('userGroupListUserBulkProcessing', 'wcf', [
@@ -92,28 +93,28 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::isAvailable()
+	 * @inheritDoc
 	 */
 	public function isAvailable() {
 		return !empty($this->availableUserGroups);
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST[$this->inputName])) $this->userGroupIDs = ArrayUtil::toIntegerArray($_POST[$this->inputName]);
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
-		$this->userGroupIDs = [ ];
+		$this->userGroupIDs = [];
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if (empty($this->userGroupIDs)) {

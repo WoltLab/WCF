@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
@@ -11,18 +12,19 @@ use wcf\system\WCF;
  * Abstract implementation of a form for bulk processing objects of a certain type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractBulkProcessingForm extends AbstractForm {
 	/**
 	 * object action object type types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
-	public $actions = array();
+	public $actions = [];
 	
 	/**
 	 * number of objects affected by bulk processing
@@ -32,9 +34,9 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	
 	/**
 	 * object condition object type types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
-	public $conditions = array();
+	public $conditions = [];
 	
 	/**
 	 * list with bulk processed objects
@@ -55,12 +57,12 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	public $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\page\Abstractpage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'bulkProcessing';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -77,7 +79,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		// read bulk processable object type
@@ -98,7 +100,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 		foreach ($conditionObjectTypes as $objectType) {
 			if ($objectType->conditiongroup) {
 				if (!isset($this->conditions[$objectType->conditiongroup])) {
-					$this->conditions[$objectType->conditiongroup] = [ ];
+					$this->conditions[$objectType->conditiongroup] = [];
 				}
 				
 				$this->conditions[$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
@@ -131,7 +133,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -148,7 +150,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		$this->objectList = $this->actions[$this->action]->getProcessor()->getObjectList();
@@ -187,7 +189,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();

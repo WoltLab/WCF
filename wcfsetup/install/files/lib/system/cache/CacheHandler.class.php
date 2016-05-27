@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Manages transparent cache access.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache
@@ -105,7 +105,7 @@ class CacheHandler extends SingletonFactory {
 	 * @param	array						$parameters
 	 * @return	string
 	 */
-	protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = array()) {
+	protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = []) {
 		$className = explode('\\', get_class($cacheBuilder));
 		$application = array_shift($className);
 		$cacheName = str_replace('CacheBuilder', '', array_pop($className));

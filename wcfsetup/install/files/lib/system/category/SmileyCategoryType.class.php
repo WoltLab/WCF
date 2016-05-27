@@ -2,14 +2,13 @@
 namespace wcf\system\category;
 use wcf\data\category\CategoryEditor;
 use wcf\system\cache\builder\SmileyCacheBuilder;
-use wcf\system\category\AbstractCategoryType;
 use wcf\system\WCF;
 
 /**
  * Category implementation for smilies.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -17,43 +16,43 @@ use wcf\system\WCF;
  */
 class SmileyCategoryType extends AbstractCategoryType {
 	/**
-	 * @see	\wcf\system\category\AbstractCategoryType::$langVarPrefix
+	 * @inheritDoc
 	 */
 	protected $langVarPrefix = 'wcf.acp.smiley.category';
 	
 	/**
-	 * @see	\wcf\system\category\AbstractCategoryType::$forceDescription
+	 * @inheritDoc
 	 */
 	protected $hasDescription = false;
 	
 	/**
-	 * @see	\wcf\system\category\AbstractCategoryType::$maximumNestingLevel
+	 * @inheritDoc
 	 */
 	protected $maximumNestingLevel = 0;
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::afterDeletion()
+	 * @inheritDoc
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor) {
 		SmileyCacheBuilder::getInstance()->reset();
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canAddCategory()
+	 * @inheritDoc
 	 */
 	public function canAddCategory() {
 		return $this->canEditCategory();
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canDeleteCategory()
+	 * @inheritDoc
 	 */
 	public function canDeleteCategory() {
 		return $this->canEditCategory();
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canEditCategory()
+	 * @inheritDoc
 	 */
 	public function canEditCategory() {
 		return WCF::getSession()->getPermission('admin.content.smiley.canManageSmiley');

@@ -2,11 +2,11 @@
  * Simple tab menu implementation with a straight-forward logic.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/TabMenu/Simple
  */
-define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dictionary, DomTraverse, DomUtil, EventHandler) {
+define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dictionary, EventHandler, DomTraverse, DomUtil) {
 	"use strict";
 	
 	/**
@@ -17,8 +17,9 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		this._container = container;
 		this._containers = new Dictionary();
 		this._isLegacy = null;
+		this._store = null;
 		this._tabs = new Dictionary();
-	};
+	}
 	
 	TabMenuSimple.prototype = {
 		/**
@@ -49,25 +50,25 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			
 			// get children
 			var tabs = elByTag('li', nav);
-			if (tabs.length === null) {
+			if (tabs.length === 0) {
 				return false;
 			}
 			
-			var container, containers = DomTraverse.childrenByTag(this._container, 'DIV'), name;
-			for (var i = 0, length = containers.length; i < length; i++) {
+			var container, containers = DomTraverse.childrenByTag(this._container, 'DIV'), name, i, length;
+			for (i = 0, length = containers.length; i < length; i++) {
 				container = containers[i];
-				name = elAttr(container, 'data-name');
+				name = elData(container, 'name');
 				
 				if (!name) {
 					name = DomUtil.identify(container);
 				}
 				
-				elAttr(container, 'data-name', name);
+				elData(container, 'name', name);
 				this._containers.set(name, container);
 			}
 			
 			var containerId = this._container.id, tab;
-			for (var i = 0, length = tabs.length; i < length; i++) {
+			for (i = 0, length = tabs.length; i < length; i++) {
 				tab = tabs[i];
 				name = this._getTabName(tab);
 				
@@ -100,7 +101,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			}
 			
 			if (this._isLegacy) {
-				elAttr(this._container, 'data-is-legacy', true);
+				elData(this._container, 'is-legacy', true);
 				
 				this._tabs.forEach(function(tab, name) {
 					elAttr(tab, 'aria-controls', name);
@@ -121,7 +122,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 			
 			// bind listeners
 			this._tabs.forEach((function(tab) {
-				if (!oldTabs || oldTabs.get(elAttr(tab, 'data-name')) !== tab) {
+				if (!oldTabs || oldTabs.get(elData(tab, 'name')) !== tab) {
 					tab.children[0].addEventListener('click', this._onClick.bind(this));
 				}
 			}).bind(this));
@@ -139,7 +140,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				}
 				
 				if (!selectTab) {
-					var preselect = elAttr(this._container, 'data-preselect');
+					var preselect = elData(this._container, 'preselect') || elData(this._container, 'active');
 					if (preselect === "true" || !preselect) preselect = true;
 					
 					if (preselect === true) {
@@ -161,6 +162,17 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 					
 					this.select(null, selectTab, true);
 				}
+				
+				var store = elData(this._container, 'store');
+				if (store) {
+					var input = elCreate('input');
+					input.type = 'hidden';
+					input.name = store;
+					
+					this._container.appendChild(input);
+					
+					this._store = input;
+				}
 			}
 			
 			return returnValue;
@@ -169,7 +181,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		/**
 		 * Selects a tab.
 		 * 
-		 * @param	{?(string|integer)}	name		tab name or sequence no
+		 * @param	{?(string|int)}         name		tab name or sequence no
 		 * @param	{Element=}		tab		tab element
 		 * @param	{boolean=}		disableEvent	suppress event handling
 		 */
@@ -196,14 +208,19 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				}
 			}
 			
-			name = name || elAttr(tab, 'data-name');
+			name = name || elData(tab, 'name');
 			
 			// unmark active tab
-			var oldTab = elBySel('#' + this._container.id + ' > nav > ul > li.active');
+			var oldTab = this.getActiveTab();
 			var oldContent = null;
 			if (oldTab) {
+				if (elData(oldTab, 'name') === name) {
+					// same tab
+					return;
+				}
+				
 				oldTab.classList.remove('active');
-				oldContent = this._containers.get(elAttr(oldTab, 'data-name'));
+				oldContent = this._containers.get(elData(oldTab, 'name'));
 				oldContent.classList.remove('active');
 				oldContent.classList.add('hidden');
 				
@@ -223,12 +240,16 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 				newContent.classList.remove('hidden');
 			}
 			
+			if (this._store) {
+				this._store.value = name;
+			}
+			
 			if (!disableEvent) {
 				EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this._container.id, 'select', {
 					active: tab,
 					activeName: name,
 					previous: oldTab,
-					previousName: oldTab ? elAttr(oldTab, 'data-name') : null
+					previousName: oldTab ? elData(oldTab, 'name') : null
 				});
 				
 				var jQuery = (this._isLegacy && typeof window.jQuery === 'function') ? window.jQuery : null;
@@ -283,7 +304,7 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 		 * @return	{string}	tab name
 		 */
 		_getTabName: function(tab) {
-			var name = elAttr(tab, 'data-name');
+			var name = elData(tab, 'name');
 			
 			// handle legacy tab menus
 			if (!name) {
@@ -296,13 +317,22 @@ define(['Dictionary', 'Dom/Traverse', 'Dom/Util', 'EventHandler'], function(Dict
 						}
 						else {
 							this._isLegacy = true;
-							elAttr(tab, 'data-name', name);
+							elData(tab, 'name', name);
 						}
 					}
 				}
 			}
 			
 			return name;
+		},
+		
+		/**
+		 * Returns the currently active tab.
+		 *
+		 * @return	{Element}	active tab
+		 */
+		getActiveTab: function() {
+			return elBySel('#' + this._container.id + ' > nav > ul > li.active');
 		},
 		
 		/**

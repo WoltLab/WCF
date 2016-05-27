@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Recursively validates the package archive and it's delivered requirements.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.validation
@@ -19,9 +19,9 @@ use wcf\system\WCF;
 class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * list of excluded packages grouped by package
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected static $excludedPackages = array();
+	protected static $excludedPackages = [];
 	
 	/**
 	 * package archive object
@@ -31,9 +31,9 @@ class PackageValidationArchive implements \RecursiveIterator {
 	
 	/**
 	 * list of direct requirements delivered by this package
-	 * @var	array<\wcf\system\package\validation\PackageValidationArchive>
+	 * @var	PackageValidationArchive[]
 	 */
-	protected $children = array();
+	protected $children = [];
 	
 	/**
 	 * nesting depth
@@ -83,6 +83,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * mode will toggle between different checks. 
 	 * 
 	 * @param	integer		$validationMode
+	 * @param	string		$requiredVersion
 	 * @return	boolean
 	 */
 	public function validate($validationMode, $requiredVersion = '') {
@@ -108,11 +109,11 @@ class PackageValidationArchive implements \RecursiveIterator {
 				PackageValidationManager::getInstance()->addVirtualPackage($package, $this->archive->getPackageInfo('version'));
 				
 				// cache excluded packages
-				self::$excludedPackages[$package] = array();
+				self::$excludedPackages[$package] = [];
 				$excludedPackages = $this->archive->getExcludedPackages();
 				for ($i = 0, $count = count($excludedPackages); $i < $count; $i++) {
 					if (!isset(self::$excludedPackages[$package][$excludedPackages[$i]['name']])) {
-						self::$excludedPackages[$package][$excludedPackages[$i]['name']] = array();
+						self::$excludedPackages[$package][$excludedPackages[$i]['name']] = [];
 					}
 					
 					self::$excludedPackages[$package][$excludedPackages[$i]['name']][] = $excludedPackages[$i]['version'];
@@ -128,14 +129,14 @@ class PackageValidationArchive implements \RecursiveIterator {
 								FROM	wcf".WCF_N."_package
 								WHERE	package = ?";
 							$statement = WCF::getDB()->prepareStatement($sql);
-							$statement->execute(array($requirement['name']));
-							$package = $statement->fetchObject('wcf\data\package\Package');
+							$statement->execute([$requirement['name']]);
+							$package = $statement->fetchObject(Package::class);
 							
-							throw new PackageValidationException(PackageValidationException::MISSING_REQUIREMENT, array(
+							throw new PackageValidationException(PackageValidationException::MISSING_REQUIREMENT, [
 								'package' => $package,
 								'packageName' => $requirement['name'],
 								'packageVersion' => $requirement['minversion']
-							));
+							]);
 						}
 						
 						$archive = $this->archive->extractTar($requirement['file']);
@@ -185,24 +186,25 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * 
 	 * @param	string		$requiredVersion
 	 * @param	integer		$validationMode
+	 * @throws	PackageValidationException
 	 */
 	protected function validateInstructions($requiredVersion, $validationMode) {
 		$package = $this->getPackage();
 		
 		// delivered package does not provide the minimum required version
 		if (Package::compareVersion($requiredVersion, $this->archive->getPackageInfo('version'), '>')) {
-			throw new PackageValidationException(PackageValidationException::INSUFFICIENT_VERSION, array(
+			throw new PackageValidationException(PackageValidationException::INSUFFICIENT_VERSION, [
 				'packageName' => $package->packageName,
 				'packageVersion' => $package->packageVersion,
 				'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
-			));
+			]);
 		}
 		
 		// package is not installed yet
 		if ($package === null) {
 			$instructions = $this->archive->getInstallInstructions();
 			if (empty($instructions)) {
-				throw new PackageValidationException(PackageValidationException::NO_INSTALL_PATH, array('packageName' => $this->archive->getPackageInfo('name')));
+				throw new PackageValidationException(PackageValidationException::NO_INSTALL_PATH, ['packageName' => $this->archive->getPackageInfo('name')]);
 			}
 			
 			if ($validationMode == PackageValidationManager::VALIDATION_RECURSIVE) {
@@ -212,11 +214,11 @@ class PackageValidationArchive implements \RecursiveIterator {
 		else {
 			// package is already installed, check update path
 			if (!$this->archive->isValidUpdate($package)) {
-				throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, array(
+				throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, [
 					'packageName' => $package->packageName,
 					'packageVersion' => $package->packageVersion,
 					'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
-				));
+				]);
 			}
 			
 			if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
@@ -229,17 +231,18 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * Validates install or update instructions against the corresponding PIP, unknown PIPs will be silently ignored.
 	 * 
 	 * @param	string		$type
-	 * @param	array<array>	$instructions
+	 * @param	mixed[][]	$instructions
+	 * @throws	PackageValidationException
 	 */
 	protected function validatePackageInstallationPlugins($type, array $instructions) {
 		for ($i = 0, $length = count($instructions); $i < $length; $i++) {
 			$instruction = $instructions[$i];
 			if (!PackageValidationManager::getInstance()->validatePackageInstallationPluginInstruction($this->archive, $instruction['pip'], $instruction['value'])) {
-				throw new PackageValidationException(PackageValidationException::MISSING_INSTRUCTION_FILE, array(
+				throw new PackageValidationException(PackageValidationException::MISSING_INSTRUCTION_FILE, [
 					'pip' => $instruction['pip'],
 					'type' => $type,
 					'value' => $instruction['value']
-				));
+				]);
 			}
 		}
 	}
@@ -248,6 +251,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * Validates if an installed package excludes the current package and vice versa.
 	 * 
 	 * @param	string		$package
+	 * @throws	PackageValidationException
 	 */
 	protected function validateExclusion($package) {
 		$packageVersion = $this->archive->getPackageInfo('version');
@@ -259,8 +263,8 @@ class PackageValidationArchive implements \RecursiveIterator {
 			ON		(package.packageID = package_exclusion.packageID)
 			WHERE		excludedPackage = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->getArchive()->getPackageInfo('name')));
-		$excludingPackages = array();
+		$statement->execute([$this->getArchive()->getPackageInfo('name')]);
+		$excludingPackages = [];
 		while ($row = $statement->fetchArray()) {
 			$excludingPackage = $row['package'];
 			
@@ -288,25 +292,25 @@ class PackageValidationArchive implements \RecursiveIterator {
 		}
 		
 		if (!empty($excludingPackages)) {
-			throw new PackageValidationException(PackageValidationException::EXCLUDING_PACKAGES, array('packages' => $excludingPackages));
+			throw new PackageValidationException(PackageValidationException::EXCLUDING_PACKAGES, ['packages' => $excludingPackages]);
 		}
 		
 		// excluded packages: current -> installed
 		if (!empty(self::$excludedPackages[$package])) {
 			// get installed packages
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("package IN (?)", array(array_keys(self::$excludedPackages[$package])));
+			$conditions->add("package IN (?)", [array_keys(self::$excludedPackages[$package])]);
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_package
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			$packages = array();
+			$packages = [];
 			while ($row = $statement->fetchArray()) {
 				$packages[$row['package']] = new Package(null, $row);
 			}
 			
-			$excludedPackages = array();
+			$excludedPackages = [];
 			foreach ($packages as $excludedPackage => $packageObj) {
 				$version = PackageValidationManager::getInstance()->getVirtualPackage($excludedPackage);
 				if ($version === null) {
@@ -323,7 +327,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 			}
 			
 			if (!empty($excludedPackages)) {
-				throw new PackageValidationException(PackageValidationException::EXCLUDED_PACKAGES, array('packages' => $excludedPackages));
+				throw new PackageValidationException(PackageValidationException::EXCLUDED_PACKAGES, ['packages' => $excludedPackages]);
 			}
 		}
 	}
@@ -389,56 +393,56 @@ class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * Sets the children of this package validation archive.
 	 * 
-	 * @param	array<\wcf\system\package\validation\PackageValidationArchive>		$children
+	 * @param	PackageValidationArchive[]	$children
 	 */
 	public function setChildren(array $children) {
 		$this->children = $children;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->position = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->children[$this->position]);
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		$this->position++;
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		return $this->children[$this->position];
 	}
 	
 	/**
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->position;
 	}
 	
 	/**
-	 * @see	\RecursiveIterator::getChildren()
+	 * @inheritDoc
 	 */
 	public function getChildren() {
 		return $this->children[$this->position];
 	}
 	
 	/**
-	 * @see	\RecursiveIterator::hasChildren()
+	 * @inheritDoc
 	 */
 	public function hasChildren() {
 		return count($this->children) > 0;

@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Handles facebook auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -25,12 +25,12 @@ use wcf\util\StringUtil;
  */
 class FacebookAuthAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('FACEBOOK_PUBLIC_KEY', 'FACEBOOK_PRIVATE_KEY');
+	public $neededModules = ['FACEBOOK_PUBLIC_KEY', 'FACEBOOK_PRIVATE_KEY'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -82,7 +82,7 @@ class FacebookAuthAction extends AbstractAction {
 			$userData = JSON::decode($content);
 			
 			// check whether a user is connected to this facebook account
-			$user = $this->getUser($userData['id']);
+			$user = User::getUserByAuthData('facebook:'.$userData['id']);
 			
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
@@ -94,7 +94,7 @@ class FacebookAuthAction extends AbstractAction {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
 						$password = StringUtil::getRandomID();
 						$userEditor = new UserEditor($user);
-						$userEditor->update(array('password' => $password));
+						$userEditor->update(['password' => $password]);
 						
 						// reload user to retrieve salt
 						$user = new User($user->userID);
@@ -147,27 +147,5 @@ class FacebookAuthAction extends AbstractAction {
 		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email,user_about_me,user_birthday,user_location,user_website");
 		$this->executed();
 		exit;
-	}
-	
-	/**
-	 * Fetches the User with the given userID.
-	 * 
-	 * @param	integer			$userID
-	 * @return	\wcf\data\user\User
-	 */
-	public function getUser($userID) {
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user
-			WHERE	authData = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('facebook:'.$userID));
-		$row = $statement->fetchArray();
-		
-		if ($row === false) {
-			$row = array('userID' => 0);
-		}
-		
-		$user = new User($row['userID']);
-		return $user;
 	}
 }

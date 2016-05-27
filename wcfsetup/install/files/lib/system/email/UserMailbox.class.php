@@ -6,11 +6,12 @@ use wcf\data\user\User;
  * Represents mailbox belonging to a specific registered user.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.email
  * @category	Community Framework
+ * @since	2.2
  */
 class UserMailbox extends Mailbox {
 	/**
@@ -25,7 +26,7 @@ class UserMailbox extends Mailbox {
 	 * @param	\wcf\data\user\User $user	User object belonging to this Mailbox
 	 */
 	public function __construct(User $user) {
-		parent::__construct($user->email, $user->username);
+		parent::__construct($user->email, $user->username, $user->getLanguage());
 		
 		$this->user = $user;
 	}

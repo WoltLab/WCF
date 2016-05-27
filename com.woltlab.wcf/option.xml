@@ -42,6 +42,9 @@
 					<parent>general</parent>
 					<showorder>3</showorder>
 				</category>
+					<category name="general.system.error">
+						<parent>general.system</parent>
+					</category>
 					<category name="general.system.cookie">
 						<parent>general.system</parent>
 					</category>
@@ -162,6 +165,10 @@
 					<category name="security.general.authentication">
 						<parent>security.general</parent>
 					</category>
+					<category name="security.general.secrets">
+						<parent>security.general</parent>
+						<showorder>15</showorder>
+					</category>
 				<category name="security.blacklist">
 					<parent>security</parent>
 				</category>
@@ -204,6 +211,9 @@
 					<category name="message.general.edit">
 						<parent>message.general</parent>
 					</category>
+					<category name="message.general.image">
+						<parent>message.general</parent>
+					</category>
 				
 				<category name="message.attachment">
 					<parent>message</parent>
@@ -224,16 +234,20 @@
 				<category name="dashboard.content">
 					<parent>dashboard</parent>
 				</category>
-					<category name="dashboard.content.recentActivities">
-						<parent>dashboard.content</parent>
-					</category>
 				
 				<category name="dashboard.sidebar">
 					<parent>dashboard</parent>
 				</category>
-					<category name="dashboard.sidebar.recentActivities">
-						<parent>dashboard.sidebar</parent>
-					</category>
+			
+			<!-- cms -->
+			<category name="cms"></category>
+			<category name="cms.media">
+				<parent>cms</parent>
+			</category>
+			<category name="cms.media.thumbnail">
+				<parent>cms.media</parent>
+			</category>
+			<!-- /cms -->
 		</categories>
 		
 		<options>
@@ -296,12 +310,6 @@
 				<hidden>1</hidden>
 			</option>
 			
-			<option name="module_privacy_policy_page">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			
 			<option name="module_cookie_policy_page">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
@@ -347,11 +355,6 @@
 			</option>
 			<option name="module_team_page">
 				<categoryname>module.user</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="module_dashboard_page">
-				<categoryname>module.display</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -410,11 +413,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="show_clock">
-				<categoryname>general.page</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="external_link_rel_nofollow">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
@@ -431,19 +429,14 @@
 			</option>
 			
 			<option name="url_legacy_mode">
-				<categoryname>general.page.seo</categoryname>
+				<categoryname>hidden</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>!url_controller_replacement</enableoptions>
 			</option>
 			<option name="url_omit_index_php">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="url_controller_replacement">
-				<categoryname>general.page.seo</categoryname>
-				<optiontype>urlControllerReplacement</optiontype>
 			</option>
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>
@@ -489,11 +482,22 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /general.system.search -->
 			
+			<!-- general.system.error -->
+			<option name="exception_privacy">
+				<categoryname>general.system.error</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue><![CDATA[mysql]]></defaultvalue>
+				<selectoptions><![CDATA[public:wcf.acp.option.exception_privacy.public
+reduced:wcf.acp.option.exception_privacy.reduced
+private:wcf.acp.option.exception_privacy.private]]></selectoptions>
+			</option>
+			<!-- /general.system.error-->
+			
 			<!-- general.system.cookie -->
 			<option name="cookie_prefix">
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue>wcf21_</defaultvalue>
+				<defaultvalue>wcf22_</defaultvalue>
 				<validationpattern>.+</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
@@ -606,6 +610,16 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<suffix>days</suffix>
 			</option>
 			<!-- /security.general.authentication -->
+			
+			<!-- security.general.secrets -->
+			<option name="signature_secret">
+				<categoryname>security.general.secrets</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+				<allowempty>0</allowempty>
+				<validationpattern>^.{15,}$</validationpattern>
+			</option>
+			<!-- /security.general.secrets -->
 			
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
@@ -794,9 +808,9 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
 debug:wcf.acp.option.mail_send_method.debug]]></selectoptions>
-				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password
-smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_user,mail_smtp_password
-debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
+				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
+smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
@@ -901,14 +915,14 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 			<option name="attachment_thumbnail_height">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[210]]></defaultvalue>
+				<defaultvalue><![CDATA[198]]></defaultvalue>
 				<minvalue>96</minvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="attachment_thumbnail_width">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[280]]></defaultvalue>
+				<defaultvalue><![CDATA[352]]></defaultvalue>
 				<minvalue>96</minvalue>
 				<suffix>pixel</suffix>
 			</option>
@@ -970,6 +984,22 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /message.general.share -->
+			
+			<!-- message.general.image -->
+			<option name="module_image_proxy">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions><![CDATA[image_proxy_secret]]></enableoptions>
+			</option>
+			<option name="image_proxy_expiration">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>14</defaultvalue>
+				<maxvalue>30</maxvalue>
+				<minvalue>7</minvalue>
+			</option>
+			<!-- /message.general.image -->
 			
 			<!-- message.censorship -->
 			<option name="enable_censorship">
@@ -1301,24 +1331,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			</option>
 			<!-- /user.cleanup -->
 			
-			<!-- dashboard -->
-			<option name="recent_activity_items">
-				<categoryname>dashboard.content.recentActivities</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>10</defaultvalue>
-				<minvalue>5</minvalue>
-				<maxvalue>100</maxvalue>
-			</option>
-			
-			<option name="recent_activity_sidebar_items">
-				<categoryname>dashboard.sidebar.recentActivities</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>5</defaultvalue>
-				<minvalue>5</minvalue>
-				<maxvalue>50</maxvalue>
-			</option>
-			<!-- /dashboard -->
-			
 			<option name="like_allow_for_own_content">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1345,22 +1357,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="message_sidebar_enable_rank">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<options>module_user_rank</options>
-			</option>
-			<option name="message_sidebar_enable_avatar">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="message_sidebar_enable_message_group_starter_icon">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="message_sidebar_enable_likes_received">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1382,6 +1378,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>useroptions</optiontype>
 				<defaultvalue></defaultvalue>
+				<issortable>1</issortable>
 			</option>
 			
 			<!-- message.general -->
@@ -1429,6 +1426,70 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<maxvalue>100</maxvalue>
 			</option>
 			<!-- /message.general.poll -->
+			
+			<!-- cms.media.thumnail -->
+			<option name="media_small_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>280</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>145</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>400</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_small_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>210</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>145</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>300</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_small_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="media_medium_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>560</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>400</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>900</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_medium_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>420</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>300</minvalue> <!-- TODO: temporary value -->
+				<maxvalue>700</maxvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_medium_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="media_large_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1200</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>900</minvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_large_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>900</defaultvalue> <!-- TODO: temporary value -->
+				<minvalue>700</minvalue> <!-- TODO: temporary value -->
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_large_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- cms.media.thumnail -->
 		</options>
 	</import>
 	
@@ -1438,5 +1499,10 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 		<option name="enable_pluginstore_widget" />
 		<option name="mail_use_formatted_address" />
 		<option name="mail_debug_logfile_path" />
+		<option name="recent_activity_items" />
+		<option name="recent_activity_sidebar_items" />
+		
+		<optioncategory name="dashboard.content.recentActivities" />
+		<optioncategory name="dashboard.sidebar.recentActivities" />
 	</delete>
 </data>

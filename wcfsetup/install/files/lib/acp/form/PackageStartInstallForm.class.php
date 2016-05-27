@@ -4,22 +4,19 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\package\validation\PackageValidationManager;
-use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Shows the package install and update form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -27,25 +24,19 @@ use wcf\util\StringUtil;
  */
 class PackageStartInstallForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
 	
 	/**
 	 * updated package object
-	 * @var	\wcf\system\package\Package
+	 * @var	\wcf\data\package\Package
 	 */
 	public $package = null;
 	
 	/**
-	 * url to the package to download
-	 * @var	string
-	 */
-	public $downloadPackage = '';
-	
-	/**
 	 * data of the uploaded package
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $uploadPackage = '';
 	
@@ -68,7 +59,7 @@ class PackageStartInstallForm extends AbstractForm {
 	public $stylePackageImportLocation = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -80,19 +71,18 @@ class PackageStartInstallForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
 		if (!$this->stylePackageImportLocation) {
-			if (isset($_POST['downloadPackage'])) $this->downloadPackage = StringUtil::trim($_POST['downloadPackage']);
 			if (isset($_FILES['uploadPackage'])) $this->uploadPackage = $_FILES['uploadPackage'];
 		}
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -110,9 +100,6 @@ class PackageStartInstallForm extends AbstractForm {
 		else if (!empty($this->uploadPackage['name'])) {
 			$this->validateUploadPackage();
 		}
-		else if (!empty($this->downloadPackage)) {
-			$this->validateDownloadPackage();
-		}
 		else {
 			throw new UserInputException('uploadPackage');
 		}
@@ -122,6 +109,7 @@ class PackageStartInstallForm extends AbstractForm {
 	 * Validates the upload package input.
 	 * 
 	 * @param	string		$filename
+	 * @throws	UserInputException
 	 */
 	protected function validateUploadPackage($filename = '') {
 		$this->activeTabMenuItem = 'upload';
@@ -157,47 +145,7 @@ class PackageStartInstallForm extends AbstractForm {
 	}
 	
 	/**
-	 * Validates the download package input.
-	 */
-	protected function validateDownloadPackage() {
-		$this->activeTabMenuItem = 'upload';
-		
-		if (FileUtil::isURL($this->downloadPackage)) {
-			// download package
-			$this->archive = new PackageArchive($this->downloadPackage, $this->package);
-			
-			try {
-				$this->downloadPackage = $this->archive->downloadArchive();
-			}
-			catch (SystemException $e) {
-				throw new UserInputException('downloadPackage', 'downloadFailed');
-			}
-		}
-		else {
-			// probably local path
-			if (!file_exists($this->downloadPackage)) {
-				throw new UserInputException('downloadPackage', 'downloadFailed');
-			}
-		}
-		
-		if (!PackageValidationManager::getInstance()->validate($this->downloadPackage, false)) {
-			$exception = PackageValidationManager::getInstance()->getException();
-			if ($exception instanceof PackageValidationException) {
-				switch ($exception->getCode()) {
-					case PackageValidationException::INVALID_PACKAGE_NAME:
-					case PackageValidationException::MISSING_PACKAGE_XML:
-						throw new UserInputException('downloadPackage', 'noValidPackage');
-					break;
-				}
-			}
-		}
-		
-		$this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
-		
-	}
-	
-	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -208,7 +156,7 @@ class PackageStartInstallForm extends AbstractForm {
 		// obey foreign key
 		$packageID = ($this->package) ? $this->package->packageID : null;
 		
-		$archive = $this->downloadPackage;
+		$archive = null;
 		if ($this->stylePackageImportLocation) {
 			$archive = $this->stylePackageImportLocation;
 		}
@@ -218,7 +166,7 @@ class PackageStartInstallForm extends AbstractForm {
 		
 		// insert queue
 		$isApplication = PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getPackageInfo('isApplication');
-		$this->queue = PackageInstallationQueueEditor::create(array(
+		$this->queue = PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
 			'package' => PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getPackageInfo('name'),
@@ -227,7 +175,7 @@ class PackageStartInstallForm extends AbstractForm {
 			'archive' => $archive,
 			'action' => ($this->package != null ? 'update' : 'install'),
 			'isApplication' => (!$isApplication ? '0' : '1')
-		));
+		]);
 		
 		$this->saved();
 		
@@ -236,22 +184,22 @@ class PackageStartInstallForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'package' => $this->package,
 			'installingImportedStyle' => $this->stylePackageImportLocation != ''
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
-		if (!WCF::getSession()->getPermission('admin.system.package.canInstallPackage') && !WCF::getSession()->getPermission('admin.system.package.canUpdatePackage')) {
+		if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && !WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')) {
 			throw new PermissionDeniedException();
 		}
 		

@@ -6,20 +6,25 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of users.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
+ *
+ * @method	User		current()
+ * @method	User[]		getObjects()
+ * @method	User|null	search($objectID)
+ * @property	User[]		$objects
  */
 class UserList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\User';
+	public $className = User::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();

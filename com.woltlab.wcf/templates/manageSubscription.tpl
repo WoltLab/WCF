@@ -1,4 +1,4 @@
-<fieldset>
+<div class="section">
 	<dl class="wide">
 		<dd>
 			<label><input type="radio" name="subscribe" value="1"{if $userObjectWatch} checked="checked"{/if} /> {lang}wcf.user.objectWatch.subscribe.{@$objectType->objectType}{/lang}</label>
@@ -13,7 +13,7 @@
 	</dl>
 	
 	{event name='fields'}
-</fieldset>
+</div>
 
 <div class="formSubmit">
 	<button class="jsButtonSave buttonPrimary">{lang}wcf.global.button.save{/lang}</button>

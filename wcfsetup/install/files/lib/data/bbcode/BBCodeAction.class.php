@@ -12,37 +12,42 @@ use wcf\system\WCF;
  * Executes bbcode-related actions.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode
  * @category	Community Framework
+ * 
+ * @method	BBCodeEditor[]	getObjects()
+ * @method	BBCodeEditor	getSingleObject()
  */
 class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\bbcode\BBCodeEditor';
+	protected $className = BBCodeEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.bbcode.canManageBBCode');
+	protected $permissionsDelete = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.bbcode.canManageBBCode');
+	protected $permissionsUpdate = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('delete', 'toggle', 'update');
+	protected $requireACP = ['delete', 'toggle', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	BBCode
 	 */
 	public function create() {
+		/** @var BBCode $bbCode */
 		$bbCode = parent::create();
 		
 		// add bbcode to BBCodeSelect user group options
@@ -50,18 +55,14 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 			FROM	wcf".WCF_N."_user_group_option
 			WHERE	optionType = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('BBCodeSelect'));
-		
-		$optionIDs = array();
-		while ($optionID = $statement->fetchColumn()) {
-			$optionIDs[] = $optionID;
-		}
+		$statement->execute(['BBCodeSelect']);
+		$optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($optionIDs)) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add("optionID IN (?)", array($optionIDs));
-			$conditionBuilder->add("groupID IN (?)", array(UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE))));
-			$conditionBuilder->add("optionValue <> ?", array('all'));
+			$conditionBuilder->add("optionID IN (?)", [$optionIDs]);
+			$conditionBuilder->add("groupID IN (?)", [UserGroup::getGroupIDsByType([UserGroup::EVERYONE])]);
+			$conditionBuilder->add("optionValue <> ?", ['all']);
 			
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_user_group_option_value
@@ -84,11 +85,11 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 					$row['optionValue'] = $bbCode->bbcodeTag;
 				}
 				
-				$updateStatement->execute(array(
+				$updateStatement->execute([
 					$row['optionValue'],
 					$row['optionID'],
 					$row['groupID']
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 			
@@ -100,12 +101,12 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $bbcode) {
+		foreach ($this->getObjects() as $bbcode) {
 			if (!$bbcode->canDelete()) {
 				throw new PermissionDeniedException();
 			}
@@ -113,20 +114,20 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $bbcode) {
-			$bbcode->update(array(
+		foreach ($this->getObjects() as $bbcode) {
+			$bbcode->update([
 				'isDisabled' => $bbcode->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 }

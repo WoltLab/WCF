@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes user group options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -18,23 +18,23 @@ use wcf\system\WCF;
 class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
 	 * list of group ids by type
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
 	protected $groupIDs = null;
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'user_group_option';
 	
 	/**
 	 * list of names of tags which aren't considered as additional data
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'moddefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata', 'usersonly');
+	public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'moddefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata', 'usersonly'];
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @inheritDoc
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
@@ -58,7 +58,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['usersonly'])) $usersOnly = $option['usersonly'];
 		
 		// collect additional tags and their values
-		$additionalData = array();
+		$additionalData = [];
 		foreach ($option as $tag => $value) {
 			if (!in_array($tag, self::$reservedTags)) $additionalData[$tag] = $value;
 		}
@@ -69,13 +69,13 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			WHERE	optionName = ?
 			AND	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$optionName,
 			$this->installation->getPackageID()
-		));
+		]);
 		$row = $statement->fetchArray();
 		
-		$data = array(
+		$data = [
 			'categoryName' => $categoryName,
 			'optionType' => $optionType,
 			'defaultValue' => (isset($option['userdefaultvalue']) ? $userDefaultValue : $defaultValue),
@@ -86,7 +86,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			'options' => $options,
 			'usersOnly' => $usersOnly,
 			'additionalData' => serialize($additionalData)
-		);
+		];
 		
 		if (!empty($row['optionID'])) {
 			$groupOption = new UserGroupOption(null, $row);
@@ -102,7 +102,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$optionID = $groupOptionEditor->optionID;
 			
 			$this->getGroupIDs();
-			$values = array();
+			$values = [];
 			foreach ($this->groupIDs['all'] as $groupID) {
 				$values[$groupID] = $defaultValue;
 			}
@@ -129,11 +129,11 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$statement = WCF::getDB()->prepareStatement($sql);
 			WCF::getDB()->beginTransaction();
 			foreach ($values as $groupID => $value) {
-				$statement->execute(array(
+				$statement->execute([
 					$groupID,
 					$optionID,
 					$value
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -142,16 +142,16 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	/**
 	 * Returns a list of group ids by type.
 	 * 
-	 * @return	array<array>
+	 * @return	integer[][]
 	 */
 	protected function getGroupIDs() {
 		if ($this->groupIDs === null) {
-			$this->groupIDs = array(
-				'admin' => array(),
-				'mod' => array(),
-				'all' => array(),
-				'registered' => array()
-			);
+			$this->groupIDs = [
+				'admin' => [],
+				'mod' => [],
+				'all' => [],
+				'registered' => []
+			];
 			
 			$sql = "SELECT	groupID, groupType
 				FROM	wcf".WCF_N."_user_group";

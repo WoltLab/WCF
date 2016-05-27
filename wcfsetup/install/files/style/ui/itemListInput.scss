@@ -1,0 +1,44 @@
+.inputItemList {
+	@include input;
+	
+	display: flex;
+	flex-wrap: wrap;
+	padding-bottom: 0;
+	padding-top: 5px;
+	
+	> .item,
+	> .input {
+		flex: 0 0 auto;
+		margin-bottom: 5px;
+		
+		&:not(:last-child) {
+			margin-right: 5px;
+		}
+	}
+	
+	> .item {
+		background-color: $wcfButtonBackground;
+		border: 1px solid $wcfButtonBorder;
+		color: $wcfButtonText;
+		cursor: default;
+		padding: 0 5px;
+		
+		.icon {
+			color: inherit;
+		}
+		
+		&.active,
+		&:hover {
+			background-color: $wcfButtonBackgroundActive;
+			border-color: $wcfButtonBorderActive;
+			color: $wcfButtonTextActive;
+		}
+		
+	}
+	
+	> .input > input {
+		background-color: transparent !important;
+		border-width: 0 !important;
+		padding: 0 !important;
+	}
+}

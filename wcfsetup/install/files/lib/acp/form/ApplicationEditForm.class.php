@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Shows the application edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -25,7 +25,7 @@ use wcf\util\StringUtil;
  */
 class ApplicationEditForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
@@ -54,9 +54,9 @@ class ApplicationEditForm extends AbstractForm {
 	public $domainPath = '';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canManageApplication');
+	public $neededPermissions = ['admin.configuration.canManageApplication'];
 	
 	/**
 	 * application package id
@@ -65,12 +65,12 @@ class ApplicationEditForm extends AbstractForm {
 	public $packageID = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'applicationEdit';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -83,7 +83,7 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -94,7 +94,7 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -107,7 +107,7 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -149,11 +149,11 @@ class ApplicationEditForm extends AbstractForm {
 				AND domainPath = ?
 				AND packageID <> ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute(array(
+		$statement->execute([
 			$this->domainName,
 			$this->domainPath,
 			$this->application->packageID
-		));
+		]);
 		$row = $statement->fetchArray();
 		if ($row) {
 			WCF::getTPL()->assign('conflictApplication', PackageCache::getInstance()->getPackage($row['packageID']));
@@ -162,17 +162,17 @@ class ApplicationEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save application
-		$this->objectAction = new ApplicationAction(array($this->application->getDecoratedObject()), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new ApplicationAction([$this->application->getDecoratedObject()], 'update', ['data' => array_merge($this->additionalFields, [
 			'cookieDomain' => $this->cookieDomain,
 			'domainName' => $this->domainName,
 			'domainPath' => $this->domainPath
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		$this->saved();
@@ -181,23 +181,23 @@ class ApplicationEditForm extends AbstractForm {
 		ApplicationHandler::rebuild();
 		
 		// show success.
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'application' => $this->application,
 			'cookieDomain' => $this->cookieDomain,
 			'domainName' => $this->domainName,
 			'domainPath' => $this->domainPath,
 			'packageID' => $this->packageID
-		));
+		]);
 	}
 }

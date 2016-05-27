@@ -1,7 +1,5 @@
-<fieldset>
-	<legend class="invisible">{lang}wcf.user.author{/lang}</legend>
-	
-	<div class="box96 framed">
+<div class="box">
+	<div class="boxContent box96">
 		{@$userProfile->getAvatar()->getImageTag(96)}
 		
 		<div>
@@ -18,8 +16,10 @@
 			</div>
 			
 			{if $userProfile->userID}
-				{include file='userInformationStatistics' user=$userProfile __userStatsClassname='dataList'}
+				<dl class="plain dataList containerContent small">
+					{include file='userInformationStatistics' user=$userProfile}
+				</dl>
 			{/if}
 		</div>
 	</div>
-</fieldset>
+</div>

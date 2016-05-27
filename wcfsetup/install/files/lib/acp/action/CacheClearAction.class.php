@@ -11,7 +11,7 @@ use wcf\util\HeaderUtil;
  * Clears the cache.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action
@@ -19,12 +19,12 @@ use wcf\util\HeaderUtil;
  */
 class CacheClearAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

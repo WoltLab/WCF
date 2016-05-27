@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.attachment
  * @category	Community Framework
+ *
+ * @method	Attachment		current()
+ * @method	Attachment[]		getObjects()
+ * @method	Attachment|null		search($objectID)
+ * @property	Attachment[]		$objects
  */
 class AttachmentList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\attachment\Attachment';
+	public $className = Attachment::class;
 }

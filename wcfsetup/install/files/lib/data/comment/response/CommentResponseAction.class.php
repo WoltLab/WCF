@@ -16,22 +16,26 @@ use wcf\system\WCF;
  * Executes comment response-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ * 
+ * @method	CommentResponse			create()
+ * @method	CommentResponseEditor[]		getObjects()
+ * @method	CommentResponseEditor		getSingleObject()
  */
 class CommentResponseAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('loadResponses');
+	protected $allowGuestAccess = ['loadResponses'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\comment\response\CommentResponseEditor';
+	protected $className = CommentResponseEditor::class;
 	
 	/**
 	 * comment object
@@ -46,7 +50,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	public $commentManager = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		if (empty($this->objects)) {
@@ -60,8 +64,8 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		$ignoreCounters = !empty($this->parameters['ignoreCounters']);
 		
 		// read object type ids for comments
-		$commentIDs = array();
-		foreach ($this->objects as $response) {
+		$commentIDs = [];
+		foreach ($this->getObjects() as $response) {
 			$commentIDs[] = $response->commentID;
 		}
 		
@@ -71,14 +75,14 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		$comments = $commentList->getObjects();
 		
 		// update counters
-		$processors = $responseIDs = $updateComments = array();
-		foreach ($this->objects as $response) {
+		$processors = $responseIDs = $updateComments = [];
+		foreach ($this->getObjects() as $response) {
 			$objectTypeID = $comments[$response->commentID]->objectTypeID;
 			
 			if (!isset($processors[$objectTypeID])) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
 				$processors[$objectTypeID] = $objectType->getProcessor();
-				$responseIDs[$objectTypeID] = array();
+				$responseIDs[$objectTypeID] = [];
 			}
 			$responseIDs[$objectTypeID][] = $response->responseID;
 			
@@ -101,14 +105,14 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			foreach ($comments as $comment) {
 				$commentEditor = new CommentEditor($comment);
 				$commentEditor->updateResponseIDs();
-				$commentEditor->updateCounters(array(
+				$commentEditor->updateCounters([
 					'responses' => -1 * $updateComments[$comment->commentID]
-				));
+				]);
 			}
 		}
 		
-		$likeObjectIDs = array();
-		$notificationObjectTypes = array();
+		$likeObjectIDs = [];
+		$notificationObjectTypes = [];
 		foreach ($responseIDs as $objectTypeID => $objectIDs) {
 			// remove activity events
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
@@ -163,7 +167,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	public function loadResponses() {
 		// get response list
 		$responseList = new StructuredCommentResponseList($this->commentManager, $this->comment);
-		$responseList->getConditionBuilder()->add("comment_response.time > ?", array($this->parameters['data']['lastResponseTime']));
+		$responseList->getConditionBuilder()->add("comment_response.time > ?", [$this->parameters['data']['lastResponseTime']]);
 		if (!$this->parameters['data']['loadAllResponses']) $responseList->sqlLimit = 50;
 		$responseList->readObjects();
 		
@@ -176,16 +180,16 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			$lastResponseTime = max($lastResponseTime, $response->time);
 		}
 		
-		WCF::getTPL()->assign(array(
-			'likeData' => (MODULE_LIKE ? $responseList->getLikeData() : array()),
+		WCF::getTPL()->assign([
+			'likeData' => (MODULE_LIKE ? $responseList->getLikeData() : []),
 			'responseList' => $responseList,
 			'commentManager' => $this->commentManager
-		));
+		]);
 		
-		return array(
+		return [
 			'commentID' => $this->comment->commentID,
 			'lastResponseTime' => $lastResponseTime,
 			'template' => WCF::getTPL()->fetch('commentResponseList')
-		);
+		];
 	}
 }

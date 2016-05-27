@@ -5,11 +5,12 @@ namespace wcf\system\request;
  * Default interface for route implementations.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
+ * @deprecated 2.2:2.3 will be replaced with \wcf\system\request\route\IRequestRoute
  */
 interface IRoute {
 	/**

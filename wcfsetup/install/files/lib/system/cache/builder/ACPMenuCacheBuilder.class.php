@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\acp\form\OptionForm;
 use wcf\data\acp\menu\item\ACPMenuItem;
 use wcf\data\acp\menu\item\ACPMenuItemList;
 use wcf\data\option\category\OptionCategory;
@@ -10,7 +11,7 @@ use wcf\data\option\OptionList;
  * Caches the ACP menu items.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -19,21 +20,21 @@ use wcf\data\option\OptionList;
 class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of option categories which directly contain options
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $categoriesWithOptions = array();
+	protected $categoriesWithOptions = [];
 	
 	/**
 	 * list of option categories grouped by the name of their parent category
-	 * @var	array<\wcf\data\option\category\OptionCategory>
+	 * @var	OptionCategory[]
 	 */
-	protected $categoryStructure = array();
+	protected $categoryStructure = [];
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
-		$data = array();
+		$data = [];
 		
 		// get "real" menu items
 		$menuItemList = new ACPMenuItemList();
@@ -44,16 +45,16 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// get menu items for top option categories
-		$data['wcf.acp.menu.link.option.category'] = array();
+		$data['wcf.acp.menu.link.option.category'] = [];
 		foreach ($this->getTopOptionCategories() as $optionCategory) {
-			$data['wcf.acp.menu.link.option.category'][] = new ACPMenuItem(null, array(
+			$data['wcf.acp.menu.link.option.category'][] = new ACPMenuItem(null, [
 				'menuItem' => 'wcf.acp.option.category.'.$optionCategory->categoryName,
 				'parentMenuItem' => 'wcf.acp.menu.link.option.category',
-				'menuItemController' => 'wcf\acp\form\OptionForm',
+				'menuItemController' => OptionForm::class,
 				'permissions' => $optionCategory->permissions,
 				'optionCategoryID' => $optionCategory->categoryID,
 				'options' => $optionCategory->options
-			));
+			]);
 		}
 		
 		return $data;
@@ -62,7 +63,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Returns the list with top option categories which contain options.
 	 * 
-	 * @return	array<\wcf\data\option\category\OptionCategory>
+	 * @return	OptionCategory[]
 	 */
 	protected function getTopOptionCategories() {
 		$optionCategoryList = new OptionCategoryList();
@@ -70,10 +71,10 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 		$optionCategories = $optionCategoryList->getObjects();
 		
 		// build category structure
-		$this->categoryStructure = array();
+		$this->categoryStructure = [];
 		foreach ($optionCategories as $optionCategory) {
 			if (!isset($this->categoryStructure[$optionCategory->parentCategoryName])) {
-				$this->categoryStructure[$optionCategory->parentCategoryName] = array();
+				$this->categoryStructure[$optionCategory->parentCategoryName] = [];
 			}
 			
 			$this->categoryStructure[$optionCategory->parentCategoryName][] = $optionCategory;
@@ -90,7 +91,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// collect top categories which contain options
-		$topCategories = array();
+		$topCategories = [];
 		foreach ($this->categoryStructure[""] as $topCategory) {
 			if ($this->containsOptions($topCategory)) {
 				$topCategories[$topCategory->categoryID] = $topCategory;
@@ -104,6 +105,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	 * Returns true if the given category or one of its child categories contains
 	 * options.
 	 * 
+	 * @param	OptionCategory		$topCategory
 	 * @return	boolean
 	 */
 	protected function containsOptions(OptionCategory $topCategory) {

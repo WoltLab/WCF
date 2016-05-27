@@ -1,41 +1,19 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
-<head>
-	<title>{lang}wcf.user.usersOnline{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
+{capture assign='headContent'}
 	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}" />
 	
-	<script data-relocate="true">
-		//<![CDATA[
-			$(function() {
-				WCF.Language.addObject({
-					'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
-					'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
-					'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
-					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
-				});
-				
-				new WCF.User.Action.Follow($('.userList > li'));
-				new WCF.User.Action.Ignore($('.userList > li'));
-			});
-		//]]>
-	</script>
-	
 	{if USERS_ONLINE_PAGE_REFRESH > 0}
-		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}" />
+		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}" />
 	{/if}
-</head>
+{/capture}
 
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-
-{capture assign='sidebar'}
-	<div>
+{capture assign='sidebarRight'}
+	<section class="box">
 		<form method="post" action="{link controller='UsersOnlineList'}{/link}">
-			<fieldset>
-				<legend><label for="sortField">{lang}wcf.user.members.sort{/lang}</label></legend>
+			<h2 class="boxTitle">{lang}wcf.user.members.sort{/lang}</h2>
 				
+			<div class="boxContent">
 				<dl>
 					<dt></dt>
 					<dd>
@@ -55,39 +33,50 @@
 						</select>
 					</dd>
 				</dl>
-			</fieldset>
 			
-			<div class="formSubmit">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				{@SID_INPUT_TAG}
+				<div class="formSubmit">
+					<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+					{@SID_INPUT_TAG}
+				</div>
 			</div>
 		</form>
-	</div>
+	</section>
 	
-	<fieldset>
-		<legend>{lang}wcf.user.usersOnline{/lang}</legend>
+	<section class="box">
+		<h2 class="boxTitle">{lang}wcf.user.usersOnline{/lang}</h2>
 		
-		<p><small>{lang usersOnlineList=$objects}wcf.user.usersOnline.detail{/lang}</small></p>
-		{if USERS_ONLINE_RECORD}<p><small>{lang}wcf.user.usersOnline.record{/lang}</small></p>{/if}
+		<div class="boxContent">
+			<p>{lang usersOnlineList=$objects}wcf.user.usersOnline.detail{/lang}</p>
+			{if USERS_ONLINE_RECORD}<p>{lang}wcf.user.usersOnline.record{/lang}</p>{/if}
+		</div>
 		
 		{if USERS_ONLINE_ENABLE_LEGEND && $objects->getUsersOnlineMarkings()|count}
-			<div class="marginTopSmall">
-				<p><small>{lang}wcf.user.usersOnline.marking.legend{/lang}:</small></p>
-				<ul class="dataList">
-					{foreach from=$objects->getUsersOnlineMarkings() item=usersOnlineMarking}
-						<li><small>{@$usersOnlineMarking}</small></li>
-					{/foreach}
-				</ul>
+			<div class="boxContent">
+				<dl class="plain inlineDataList usersOnlineLegend">
+					<dt>{lang}wcf.user.usersOnline.marking.legend{/lang}</dt>
+					<dd>
+						<ul class="inlineList commaSeparated">
+							{foreach from=$objects->getUsersOnlineMarkings() item=usersOnlineMarking}
+								<li>{@$usersOnlineMarking}</li>
+							{/foreach}
+						</ul>
+					</dd>
+				
+				</dl>
 			</div>
 		{/if}
-	</fieldset>
-	
-	{@$__boxSidebar}
+	</section>
 {/capture}
 
-{include file='header' sidebarOrientation='right'}
+{include file='header'}
 
-{include file='userNotice'}
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{pages print=true assign=pagesLinks controller='UsersOnlineList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+		{/content}
+	</div>
+{/hascontent}
 
 {assign var=usersOnlineList value=''}
 {assign var=usersOnline value=0}
@@ -98,13 +87,13 @@
 {foreach from=$objects item=user}
 	{capture assign=locationData}
 		<p>
-			{if $user->getLocation()}{@$user->getLocation()}{else}{lang}wcf.user.usersOnline.location.unknown{/lang}{/if} <small>- {@$user->lastActivityTime|time}</small>
+			{if $user->getLocation()}{@$user->getLocation()}{else}{lang}wcf.user.usersOnline.location.unknown{/lang}{/if} <small class="separatorLeft">{@$user->lastActivityTime|time}</small>
 		</p>
 	{/capture}
 	
 	{capture assign=sessionData}
 		{if $__wcf->session->getPermission('admin.user.canViewIpAddress')}
-			<dl class="plain inlineDataList">
+			<dl class="plain inlineDataList small">
 				<dt>{lang}wcf.user.usersOnline.ipAddress{/lang}</dt>
 				<dd title="{$user->getFormattedIPAddress()}">{$user->getFormattedIPAddress()|truncate:30}</dd>
 				
@@ -121,19 +110,20 @@
 		{capture append=usersOnlineList}
 			<li>
 				<div class="box48">
-					<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" class="framed">{@$user->getAvatar()->getImageTag(48)}</a>
+					<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(48)}</a>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
-							<h3><a href="{link controller='User' object=$user}{/link}">{@$user->getFormattedUsername()}</a>{if MODULE_USER_RANK}
-								{if $user->getUserTitle()}
-									<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+							<h3><a href="{link controller='User' object=$user}{/link}" class="username">{@$user->getFormattedUsername()}</a>
+								{if MODULE_USER_RANK}
+									{if $user->getUserTitle()}
+										<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+									{/if}
+									{if $user->getRank() && $user->getRank()->rankImage}
+										<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+									{/if}
 								{/if}
-								{if $user->getRank() && $user->getRank()->rankImage}
-									<span class="userRankImage">{@$user->getRank()->getImage()}</span>
-								{/if}
-							{/if}</h3>
-							
+							</h3>
 							{@$locationData}
 						</div>
 						
@@ -151,7 +141,7 @@
 		{capture append=robotsOnlineList}
 			<li>
 				<div class="box48">
-					<p class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="icon48" /></p>
+					<div><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="userAvatarImage icon48" /></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
@@ -171,7 +161,7 @@
 		{capture append=guestsOnlineList}
 			<li>
 				<div class="box48">
-					<p class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon48" /></p>
+					<div><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon48" /></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
@@ -189,67 +179,66 @@
 	{/if}
 {/foreach}
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
-
 {if $usersOnline}
-	<header class="boxHeadline">
-		<h1>{lang}wcf.user.usersOnline{/lang} <span class="badge">{#$usersOnline}</span></h1>
-	</header>
-	
-	<div class="container marginTop">
+	<section class="section sectionContainerList">
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.users{/lang} <span class="badge">{#$usersOnline}</span></h2>
+		
 		<ol class="containerList userList">
 			{@$usersOnlineList}
 		</ol>
-	</div>
+	</section>
 {/if}
 
 {if $guestsOnline && USERS_ONLINE_SHOW_GUESTS}
-	<header class="boxHeadline">
-		<h1>{lang}wcf.user.usersOnline.guests{/lang} <span class="badge">{#$guestsOnline}</span></h1>
-	</header>
-	
-	<div class="container marginTop">
-		<ol class="containerList">
+	<section class="section sectionContainerList">
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.guests{/lang} <span class="badge">{#$guestsOnline}</span></h2>
+		
+		<ol class="containerList userList">
 			{@$guestsOnlineList}
 		</ol>
-	</div>
+	</section>
 {/if}
 
 {if $robotsOnline && USERS_ONLINE_SHOW_ROBOTS}
-	<header class="boxHeadline">
-		<h1>{lang}wcf.user.usersOnline.robots{/lang} <span class="badge">{#$robotsOnline}</span></h1>
-	</header>
-	
-	<div class="container marginTop">
-		<ol class="containerList">
+	<section class="section sectionContainerList">
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.robots{/lang} <span class="badge">{#$robotsOnline}</span></h2>
+		
+		<ol class="containerList userList">
 			{@$robotsOnlineList}
 		</ol>
-	</div>
+	</section>
 {/if}
 
-<div class="contentNavigation">
+<footer class="contentFooter">
 	{hascontent}
-		<nav>
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
+	
+	{hascontent}
+		<nav class="contentFooterNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsBottom'}
-				{/content}
+				{content}{event name='contentFooterNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</footer>
+
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
+			'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
+			'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
+			'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
+		});
+		
+		new WCF.User.Action.Follow($('.userList > li'));
+		new WCF.User.Action.Ignore($('.userList > li'));
+	});
+	//]]>
+</script>
 
 {include file='footer'}
-
-</body>
-</html>

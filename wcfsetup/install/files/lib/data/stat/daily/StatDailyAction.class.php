@@ -10,23 +10,27 @@ use wcf\system\WCF;
  * Executes statistic-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.stat.daily
  * @category	Community Framework
+ * 
+ * @method	StatDaily		create()
+ * @method	StatDailyEditor[]	getObjects()
+ * @method	StatDailyEditor		getSingleObject()
  */
 class StatDailyAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\stat\daily\StatDailyEditor';
+	protected $className = StatDailyEditor::class;
 	
 	/**
 	 * Validates the getData action.
 	 */
 	public function validateGetData() {
-		WCF::getSession()->checkPermissions(array('admin.system.canViewLog'));
+		WCF::getSession()->checkPermissions(['admin.management.canViewLog']);
 		
 		// validate start date
 		if (empty($this->parameters['startDate']) || !preg_match('/^\d{4}\-\d{2}\-\d{2}$/', $this->parameters['startDate'])) {
@@ -57,10 +61,10 @@ class StatDailyAction extends AbstractDatabaseObjectAction {
 	 * Returns the stat data.
 	 */
 	public function getData() {
-		$data = array();
+		$data = [];
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('objectTypeID IN (?)', array($this->parameters['objectTypeIDs']));
-		$conditionBuilder->add('date BETWEEN ? AND ?', array($this->parameters['startDate'], $this->parameters['endDate']));
+		$conditionBuilder->add('objectTypeID IN (?)', [$this->parameters['objectTypeIDs']]);
+		$conditionBuilder->add('date BETWEEN ? AND ?', [$this->parameters['startDate'], $this->parameters['endDate']]);
 		
 		$limit = 0;
 		if ($this->parameters['dateGrouping'] == 'yearly') {
@@ -102,13 +106,13 @@ class StatDailyAction extends AbstractDatabaseObjectAction {
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($row['objectTypeID']);
 			
 			if (!isset($data[$row['objectTypeID']])) {
-				$data[$row['objectTypeID']] = array(
+				$data[$row['objectTypeID']] = [
 					'label' => WCF::getLanguage()->get('wcf.acp.stat.'.$objectType->objectType),
-					'data' => array()
-				);
+					'data' => []
+				];
 			}
 			
-			$data[$row['objectTypeID']]['data'][] = array(strtotime($row['date'] . ' UTC'), $objectType->getProcessor()->getFormattedCounter($value));
+			$data[$row['objectTypeID']]['data'][] = [strtotime($row['date'] . ' UTC'), $objectType->getProcessor()->getFormattedCounter($value)];
 		}
 		
 		return $data;

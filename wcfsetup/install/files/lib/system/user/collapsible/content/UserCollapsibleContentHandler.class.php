@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Provides methods for handling collapsible containers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.collapsible.content
@@ -20,24 +20,24 @@ use wcf\system\WCF;
 class UserCollapsibleContentHandler extends SingletonFactory {
 	/**
 	 * object type cache
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $cache = null;
 	
 	/**
 	 * list of collapsed object ids per object type id
-	 * @var	array<array>
+	 * @var	integer[][]
 	 */
-	protected $collapsedContent = array();
+	protected $collapsedContent = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
-		$this->cache = array(
-			'objectTypes' => array(),
-			'objectTypeIDs' => array()
-		);
+		$this->cache = [
+			'objectTypes' => [],
+			'objectTypeIDs' => []
+		];
 		
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.collapsibleContent');
 		foreach ($objectTypes as $objectType) {
@@ -52,6 +52,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * @param	string		$objectType
 	 * @param	string		$objectID
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public function isCollapsed($objectType, $objectID) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -81,11 +82,11 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * Returns a list of object ids being collapsed by current user.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getCollapsedContent($objectTypeID) {
 		if (!isset($this->collapsedContent[$objectTypeID])) {
-			$this->collapsedContent[$objectTypeID] = array();
+			$this->collapsedContent[$objectTypeID] = [];
 			
 			if (WCF::getUser()->userID) {
 				$data = UserStorageHandler::getInstance()->getField('collapsedContent-'.$objectTypeID);
@@ -97,13 +98,11 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 						WHERE	objectTypeID = ?
 							AND userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(
+					$statement->execute([
 						$objectTypeID,
 						WCF::getUser()->userID
-					));
-					while ($row = $statement->fetchArray()) {
-						$this->collapsedContent[$objectTypeID][] = $row['objectID'];
-					}
+					]);
+					$this->collapsedContent[$objectTypeID] = $statement->fetchAll(\PDO::FETCH_COLUMN);
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'collapsedContent-'.$objectTypeID, serialize($this->collapsedContent[$objectTypeID]));
@@ -139,11 +138,11 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 					AND objectID = ?
 					AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$objectTypeID,
 				$objectID,
 				WCF::getUser()->userID
-			));
+			]);
 			$row = $statement->fetchArray();
 			
 			if (!$row) {
@@ -151,24 +150,24 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 							(objectTypeID, objectID, userID)
 					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$objectTypeID,
 					$objectID,
 					WCF::getUser()->userID
-				));
+				]);
 			}
 			
 			// reset storage
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID);
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'collapsedContent-'.$objectTypeID);
 		}
 		else {
 			$collapsedContent = WCF::getSession()->getVar('collapsedContent');
 			if ($collapsedContent === null || !is_array($collapsedContent)) {
-				$collapsedContent = array();
+				$collapsedContent = [];
 			}
 			
 			if (!in_array($objectID, $collapsedContent)) {
-				$collapsedContent[$objectTypeID] = array();
+				$collapsedContent[$objectTypeID] = [];
 			}
 			
 			$collapsedContent[$objectTypeID][] = $objectID;
@@ -189,19 +188,19 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 						AND objectID = ?
 						AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$objectTypeID,
 				$objectID,
 				WCF::getUser()->userID
-			));
+			]);
 			
 			// reset storage
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID);
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'collapsedContent-'.$objectTypeID);
 		}
 		else {
 			$collapsedContent = WCF::getSession()->getVar('collapsedContent');
 			if ($collapsedContent === null || !is_array($collapsedContent)) {
-				$collapsedContent = array();
+				$collapsedContent = [];
 			}
 			
 			if (isset($collapsedContent[$objectTypeID])) {
@@ -227,18 +226,18 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 				WHERE		objectTypeID = ?
 						AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$objectTypeID,
 				WCF::getUser()->userID
-			));
+			]);
 			
 			// reset storage
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID);
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'collapsedContent-'.$objectTypeID);
 		}
 		else {
 			$collapsedContent = WCF::getSession()->getVar('collapsedContent');
 			if ($collapsedContent === null || !is_array($collapsedContent)) {
-				$collapsedContent = array();
+				$collapsedContent = [];
 			}
 			
 			if (isset($collapsedContent[$objectTypeID])) {
@@ -255,6 +254,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
+	 * @throws	SystemException
 	 */
 	public function resetAll($objectType, $objectID = null) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -263,9 +263,9 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('objectTypeID = ?', array($objectTypeID));
+		$conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
 		if ($objectID) {
-			$conditionBuilder->add('objectID = ?', array($objectID));
+			$conditionBuilder->add('objectID = ?', [$objectID]);
 		}
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_collapsible_content

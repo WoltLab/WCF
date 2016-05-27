@@ -12,7 +12,7 @@ use wcf\util\StyleUtil;
  * Installs, updates and deletes files.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -20,12 +20,12 @@ use wcf\util\StyleUtil;
  */
 class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'package_installation_file_log';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -63,11 +63,11 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 						(packageID, filename, application)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->getPackageID(),
 				'config.inc.php',
 				Package::getAbbreviation($this->installation->getPackage()->package)
-			));
+			]);
 			
 			// load application
 			WCF::loadRuntimeApplication($this->installation->getPackageID());
@@ -81,7 +81,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// fetch files from log
@@ -89,18 +89,19 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			FROM	wcf".WCF_N."_package_installation_file_log
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		
-		$files = array();
+		$files = [];
 		while ($row = $statement->fetchArray()) {
 			if (!isset($files[$row['application']])) {
-				$files[$row['application']] = array();
+				$files[$row['application']] = [];
 			}
 			
 			$files[$row['application']][] = $row['filename'];
 		}
 		
 		foreach ($files as $application => $filenames) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$this->installation->deleteFiles(Application::getDirectory($application), $filenames);
 			
 			// delete log entries
@@ -109,14 +110,14 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @inheritDoc
 	 */
 	public static function getDefaultFilename() {
 		return 'files.tar';
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 * @inheritDoc
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
 		if (!$instruction) {

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Shows a list of purchased plugin store items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -19,41 +20,41 @@ use wcf\system\WCF;
  */
 class PluginStorePurchasedItemsPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');
+	public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
 	
 	/**
 	 * list of purchased products grouped by WCF major release
 	 * @var	array<array>
 	 */
-	public $products = array();
+	public $products = [];
 	
 	/**
 	 * list of product data grouped by WCF major release
 	 * @var	array<array>
 	 */
-	public $productData = array();
+	public $productData = [];
 	
 	/**
 	 * list of installed update servers (Plugin-Store only)
-	 * @var	array<\wcf\data\package\update\server\PackageUpdateServer>
+	 * @var	PackageUpdateServer[]
 	 */
-	public $updateServers = array();
+	public $updateServers = [];
 	
 	/**
 	 * list of supported WCF major releases (Plugin-Store)
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $wcfMajorReleases = array();
+	public $wcfMajorReleases = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -70,7 +71,7 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -86,24 +87,24 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 		foreach ($this->products as $packageUpdateID => $product) {
 			$wcfMajorRelease = $product['wcfMajorRelease'];
 			if (!isset($this->productData[$wcfMajorRelease])) {
-				$this->productData[$wcfMajorRelease] = array();
+				$this->productData[$wcfMajorRelease] = [];
 			}
 			
 			$languageCode = WCF::getLanguage()->languageCode;
 			$packageName = (isset($product['packageName'][$languageCode])) ? $product['packageName'][$languageCode] : $product['packageName']['en'];
 			
-			$this->productData[$wcfMajorRelease][$packageUpdateID] = array(
+			$this->productData[$wcfMajorRelease][$packageUpdateID] = [
 				'author' => $product['author'],
 				'authorURL' => $product['authorURL'],
 				'package' => $product['package'],
 				'packageName' => $packageName,
 				'pluginStoreURL' => $product['pluginStoreURL'],
-				'version' => array(
+				'version' => [
 					'available' => $product['lastVersion'],
 					'installed' => ''
-				),
+				],
 				'status' => (isset($this->updateServers[$wcfMajorRelease]) ? 'install' : 'unavailable')
-			);
+			];
 			
 			$package = PackageCache::getInstance()->getPackageByIdentifier($product['package']);
 			if ($package !== null) {
@@ -124,15 +125,15 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'productData' => $this->productData,
 			'updateServers' => $this->updateServers,
 			'wcfMajorReleases' => $this->wcfMajorReleases
-		));
+		]);
 	}
 }

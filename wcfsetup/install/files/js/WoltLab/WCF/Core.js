@@ -28,7 +28,7 @@ define([], function() {
 		
 		var newObj = {};
 		for (var key in obj) {
-			if (obj.hasOwnProperty(key) && typeof obj[key] !== 'undefined') {
+			if (objOwns(obj, key) && typeof obj[key] !== 'undefined') {
 				newObj[key] = _clone(obj[key]);
 			}
 		}
@@ -93,7 +93,7 @@ define([], function() {
 				if (!obj) continue;
 				
 				for (var key in obj) {
-					if (obj.hasOwnProperty(key)) {
+					if (objOwns(obj, key)) {
 						if (!Array.isArray(obj[key]) && typeof obj[key] === 'object') {
 							if (this.isPlainObject(obj[key])) {
 								// object literals have the prototype of Object which in return has no parent prototype
@@ -111,6 +111,51 @@ define([], function() {
 			}
 			
 			return newObj;
+		},
+		
+		/**
+		 * Inherits the prototype methods from one constructor to another
+		 * constructor.
+		 * 
+		 * Usage:
+		 * 
+		 * function MyDerivedClass() {}
+		 * Core.inherit(MyDerivedClass, TheAwesomeBaseClass, {
+		 *      // regular prototype for `MyDerivedClass`
+		 *      
+		 *      overwrittenMethodFromBaseClass: function(foo, bar) {
+		 *              // do stuff
+		 *              
+		 *              // invoke parent
+		 *              MyDerivedClass._super.prototype.overwrittenMethodFromBaseClass.call(this, foo, bar);
+		 *      }
+		 * });
+		 * 
+		 * @see	https://github.com/nodejs/node/blob/7d14dd9b5e78faabb95d454a79faa513d0bbc2a5/lib/util.js#L697-L735
+		 * @param	{function}	constructor		inheriting constructor function
+		 * @param	{function}	superConstructor	inherited constructor function
+		 * @param	{object=}	propertiesObject	additional prototype properties
+		 */
+		inherit: function(constructor, superConstructor, propertiesObject) {
+			if (constructor === undefined || constructor === null) {
+				throw new TypeError("The constructor must not be undefined or null.");
+			}
+			if (superConstructor === undefined || superConstructor === null) {
+				throw new TypeError("The super constructor must not be undefined or null.");
+			}
+			if (superConstructor.prototype === undefined) {
+				throw new TypeError("The super constructor must have a prototype.");
+			}
+			
+			constructor._super = superConstructor;
+			constructor.prototype = Core.extend(Object.create(superConstructor.prototype, {
+				constructor: {
+					configurable: true,
+					enumerable: false,
+					value: constructor,
+					writable: true,
+				}
+			}), propertiesObject || {});
 		},
 		
 		/**
@@ -161,7 +206,7 @@ define([], function() {
 			var parameters = [];
 			
 			for (var key in obj) {
-				if (obj.hasOwnProperty(key)) {
+				if (objOwns(obj, key)) {
 					var parameterKey = (prefix) ? prefix + '[' + key + ']' : key;
 					var value = obj[key];
 					

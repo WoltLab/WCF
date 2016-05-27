@@ -8,7 +8,7 @@ use wcf\system\exception\SystemException;
  * Imports attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer
@@ -16,9 +16,9 @@ use wcf\system\exception\SystemException;
  */
 class AbstractAttachmentImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\attachment\Attachment';
+	protected $className = Attachment::class;
 	
 	/**
 	 * object type id for attachments
@@ -27,9 +27,9 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// check file location
 		if (!@file_exists($additionalData['fileLocation'])) return 0;
 		
@@ -54,8 +54,13 @@ class AbstractAttachmentImporter extends AbstractImporter {
 			if (!$attachment->attachmentID) $data['attachmentID'] = $oldID;
 		}
 		
+		// set default last download time
+		if (empty($data['lastDownloadTime']) && !empty($data['downloads'])) {
+			$data['lastDownloadTime'] = TIME_NOW;
+		}
+		
 		// save attachment
-		$attachment = AttachmentEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+		$attachment = AttachmentEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
 		// check attachment directory
 		// and create subdirectory if necessary
@@ -69,7 +74,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 			if (!copy($additionalData['fileLocation'], $attachment->getLocation())) {
 				throw new SystemException();
 			}
-				
+			
 			return $attachment->attachmentID;
 		}
 		catch (SystemException $e) {
@@ -81,6 +86,14 @@ class AbstractAttachmentImporter extends AbstractImporter {
 		return 0;
 	}
 	
+	/**
+	 * Replaces old attachment BBCodes with BBCodes with the new attachment id.
+	 * 
+	 * @param	string		$message
+	 * @param	integer		$oldID
+	 * @param	integer		$newID
+	 * @return	string|boolean
+	 */
 	protected function fixEmbeddedAttachments($message, $oldID, $newID) {
 		if (mb_strripos($message, '[attach]'.$oldID.'[/attach]') !== false || mb_strripos($message, '[attach='.$oldID.']') !== false || mb_strripos($message, '[attach='.$oldID.',') !== false) {
 			$message = str_ireplace('[attach]'.$oldID.'[/attach]', '[attach]'.$newID.'[/attach]', $message);

@@ -1,0 +1,469 @@
+.redactor-box {
+	position: relative;
+	
+	&:not(:first-child) {
+		margin-top: 20px;
+	}
+	
+	& + .messageTabMenu {
+		padding: 0;
+	}
+	
+	& + .innerError,
+	> .innerError {
+		border-radius: 0;
+		box-shadow: none;
+		display: block;
+		margin-top: -1px;
+	}
+	
+	> .innerError {
+		margin: -1px;
+	}
+	
+	> .redactorAutosaveNotice {
+		background-color: $wcfContentBackground;
+		border: 1px solid $wcfContentBorderInner;
+		border-width: 1px 0 0 1px;
+		bottom: 0;
+		opacity: 0;
+		padding: $wcfGapSmall;
+		position: absolute;
+		right: 0;
+		transition: visibility 0s linear .3s, opacity .3s linear;
+		visibility: hidden;
+		
+		&.open {
+			opacity: 1;
+			visibility: visible;
+			transition-delay: 0s;
+		}
+		
+		&.redactorAutosaveNoticeIcons > span.fa-check {
+			margin-right: $wcfGapSmall;
+		}
+		
+		> span.redactorAutosaveMessage {
+			padding: 0 $wcfGapSmall;
+		}
+	}
+}
+
+.redactor-editor {
+	border: 1px solid $wcfContentBorderInner;
+	border-top-width: 0;
+	max-height: 500px;
+	padding: 10px;
+	position: relative;
+	outline: none;
+	overflow: auto;
+	
+	& + textarea {
+		border-width: 0;
+		box-shadow: none;
+		outline: none;
+		padding: 10px;
+		resize: vertical;
+		
+		&:focus {
+			box-shadow: none;
+		}
+	}
+	
+	// enforce styles used in messages
+	@extend .htmlContent;
+	
+	// remove margin top for the first paragraph in the editor to avoid a weird looking offset a the top
+	> p:first-child {
+		margin-top: 0;
+	}
+	
+	img {
+		// TODO: the border was required for 'Old Redactor', check if it is still a thing
+		border: 1px solid transparent;
+		max-width: 100%;
+	}
+	
+	// TODO: this is somewhat out of sync
+	table {
+		border-collapse: collapse;
+		//font-size: 14px; TODO
+		line-height: 1.6em;
+		
+		td {
+			border: 1px solid #ddd;
+			padding: 5px;
+			vertical-align: top;
+		}
+	}
+	
+	.quoteBox {
+		position: relative;
+		
+		&::before {
+			content: attr(data-quote-header);
+			cursor: pointer;
+			display: block;
+			font-style: normal;
+			margin-bottom: 20px;
+			padding-right: 25px;
+			
+			@include wcfFontHeadline;
+		}
+		
+		&::after {
+			content: $fa-var-pencil;
+			cursor: pointer;
+			font-family: FontAwesome;
+			position: absolute;
+			right: 24px;
+			top: 10px;
+			
+			@include wcfFontHeadline;
+		}
+	}
+	
+	.TODO_codeBox {
+		overflow: hidden;
+		position: relative;
+		
+		.redactorEditCodeBox {
+			background-color: rgba(255, 255, 255, .8);
+			bottom: 0;
+			left: 0;
+			opacity: 0;
+			position: absolute;
+			right: 0;
+			text-align: center;
+			top: 0;
+			transition: opacity .12s linear;
+			z-index: 200;
+			
+			> div {
+				cursor: pointer;
+				left: 50%;
+				padding: 1em 3em;
+				position: absolute;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+		
+		&:hover .redactorEditCodeBox {
+			opacity: 1;
+		}
+		
+		ol {
+			margin-bottom: 0;
+			margin-top: 0;
+		}
+	}
+	
+	&.TODO_msie .quoteBox {
+		/* resets 'hasLayout' causing IE to display resize handle and wonky editing behavior */
+		min-height: 0;
+	}
+}
+
+.redactor-dropdown {
+	> .dropdownMenu {
+		display: block;
+		visibility: visible;
+		
+		/* we cannot influence the actual dropdown position as set by Redactor,
+		   forces a gap while keeping the inline top-attribute unaffected */
+		transform: translateY(3px);
+		
+		> li:hover {
+			background-color: transparent !important;
+		}
+		
+		a:hover {
+			background-color: $wcfDropdownBackgroundActive;
+		}
+	}
+	
+	.redactor-dropdown-link-inactive {
+		cursor: default;
+		opacity: .6;
+		
+		&:hover {
+			background-color: transparent !important;
+			color: $wcfDropdownText !important;
+		}
+	}
+}
+
+/* disable auto zoom in mobile safari */
+@include screen-sm-down {
+	.redactor-editor + textarea {
+		font-size: 16px;
+		max-height: 500px;
+	}
+}
+
+.redactor-toolbar {
+	background-color: $wcfHeaderBackground;
+	display: flex;
+	flex-wrap: wrap;
+	
+	> li {
+		flex: 0 0 auto;
+		margin-bottom: 1px;
+		
+		&.redactor-toolbar-separator {
+			margin-left: 11px;
+			position: relative;
+			
+			&::before {
+				bottom: 7px;
+				border-left: 1px solid $wcfHeaderMenuLink;
+				content: "";
+				left: -6px;
+				opacity: .6;
+				position: absolute;
+				top: 7px;
+			}
+		}
+		
+		> a {
+			color: $wcfHeaderMenuLink;
+			display: block;
+			outline: none;
+			padding: 10px;
+			text-align: center;
+			
+			@include wcfFontSmall;
+			
+			&.redactor-button-disabled {
+				background-color: transparent !important;
+				color: $wcfButtonDisabledText !important;
+				cursor: default;
+			}
+			
+			&:hover,
+			&.redactor-act,
+			&.dropact {
+				background-color: $wcfHeaderMenuBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
+			}
+			
+			.icon {
+				color: inherit;
+				cursor: inherit !important;
+			}
+		}
+	}
+}
+
+.redactor-toolbar-tooltip {
+	@extend .balloonTooltip;
+	
+	opacity: 1;
+	visibility: visible;
+	
+	&:before {
+		// TODO: border-color: $wcfTooltipBackgroundColor transparent;
+		border-style: solid;
+		border-width: 0 5px 5px;
+		content: "";
+		display: block;
+		left: 50%;
+		position: absolute;
+		top: -5px;
+		transform: translateX(-50%);
+	}
+}
+
+#redactor-image-box {
+	border: 1px dashed rgba(0, 0, 0, .5);
+	display: inline-block;
+	line-height: 0;
+	max-width: 100%;
+	position: relative;
+	
+	> img {
+		border-width: 0;
+		opacity: .5;
+	}
+}
+
+#redactor-image-editter {
+	@extend .balloonTooltip;
+	
+	cursor: pointer;
+	left: 50%;
+	// TODO: line-height: $wcfSmallFontSize;
+	margin-top: -13px;
+	opacity: 1;
+	top: 50%;
+	visibility: visible;
+	z-index: 5;
+}
+
+#redactor-image-resizer {
+	background-color: rgba(0, 0, 0, 1);
+	border: 1px solid rgba(255, 255, 255, 1);
+	bottom: -4px;
+	cursor: nw-resize;
+	height: 8px;
+	line-height: 1;
+	position: absolute;
+	right: -5px;
+	width: 8px;
+	z-index: 10;
+}
+
+.redactorAttachmentContainer {
+	background-color: rgba(255, 255, 255, 1);
+	border: 1px solid rgba(238, 238, 238, 1);
+	border-top-width: 0;
+	padding: 7px 14px 7px;
+}
+
+.redactor-dropdown-box-fontcolor {
+	width: 200px;
+	
+	> li.redactorColorPallet {
+		padding: 0 4px;
+		
+		&:hover {
+			background-color: $wcfDropdownBackground !important;
+		}
+		
+		> a {
+			border: 2px solid rgba(255, 255, 255, 1);
+			border-bottom-width: 0;
+			display: inline-block;
+			font-size: 0; // TODO
+			height: 20px;
+			padding: 0;
+			margin: 0;
+			width: 20px;
+		}
+	}
+}
+
+.redactorDropArea {
+	background-color: rgba(255, 255, 204, 1);
+	border: 5px dashed rgba(255, 204, 0);
+	box-sizing: border-box;
+	font-size: 1.4rem; // TODO
+	position: absolute;
+	text-align: center;
+	vertical-align: middle;
+	z-index: 360;
+	
+	&.active {
+		background-color: #CEF6CE;
+		border-color: #04B404;
+	}
+}
+
+.redactor-link-tooltip {
+	// TODO: background-color: $wcfTooltipBackgroundColor;
+	border-radius: 6px;
+	// TODO: color: $wcfTooltipColor;
+	// TODO: font-size: $wcfSmallFontSize;
+	padding: 5px 10px 7px;
+	position: absolute;
+	z-index: 800;
+	
+	@include boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	
+	> a {
+		// TODO: color: $wcfTooltipColor;
+	}
+}
+
+.redactor-voice-label {
+	display: none;
+}
+
+/* alignment plugin */
+.text-center {
+	text-align: center;
+}
+
+.text-right {
+	text-align: right;
+}
+
+/* text color */
+.woltlab-color-000000 { color: #000000 !important; }
+.woltlab-color-000080 { color: #000080 !important; }
+.woltlab-color-0000CD { color: #0000CD !important; }
+.woltlab-color-0000FF { color: #0000FF !important; }
+.woltlab-color-006400 { color: #006400 !important; }
+.woltlab-color-008000 { color: #008000 !important; }
+.woltlab-color-008080 { color: #008080 !important; }
+.woltlab-color-00FF00 { color: #00FF00 !important; }
+.woltlab-color-00FFFF { color: #00FFFF !important; }
+.woltlab-color-2F4F4F { color: #2F4F4F !important; }
+.woltlab-color-40E0D0 { color: #40E0D0 !important; }
+.woltlab-color-4B0082 { color: #4B0082 !important; }
+.woltlab-color-696969 { color: #696969 !important; }
+.woltlab-color-800000 { color: #800000 !important; }
+.woltlab-color-800080 { color: #800080 !important; }
+.woltlab-color-808080 { color: #808080 !important; }
+.woltlab-color-8B4513 { color: #8B4513 !important; }
+.woltlab-color-A52A2A { color: #A52A2A !important; }
+.woltlab-color-A9A9A9 { color: #A9A9A9 !important; }
+.woltlab-color-ADD8E6 { color: #ADD8E6 !important; }
+.woltlab-color-AFEEEE { color: #AFEEEE !important; }
+.woltlab-color-B22222 { color: #B22222 !important; }
+.woltlab-color-D3D3D3 { color: #D3D3D3 !important; }
+.woltlab-color-DAA520 { color: #DAA520 !important; }
+.woltlab-color-DDA0DD { color: #DDA0DD !important; }
+.woltlab-color-E6E6FA { color: #E6E6FA !important; }
+.woltlab-color-EE82EE { color: #EE82EE !important; }
+.woltlab-color-F0F8FF { color: #F0F8FF !important; }
+.woltlab-color-F0FFF0 { color: #F0FFF0 !important; }
+.woltlab-color-F0FFFF { color: #F0FFFF !important; }
+.woltlab-color-FAEBD7 { color: #FAEBD7 !important; }
+.woltlab-color-FF0000 { color: #FF0000 !important; }
+.woltlab-color-FF8C00 { color: #FF8C00 !important; }
+.woltlab-color-FFA07A { color: #FFA07A !important; }
+.woltlab-color-FFA500 { color: #FFA500 !important; }
+.woltlab-color-FFD700 { color: #FFD700 !important; }
+.woltlab-color-FFF0F5 { color: #FFF0F5 !important; }
+.woltlab-color-FFFF00 { color: #FFFF00 !important; }
+.woltlab-color-FFFFE0 { color: #FFFFE0 !important; }
+.woltlab-color-FFFFFF { color: #FFFFFF !important; }
+
+/* text color selection */
+.redactor-dropdown-box-woltlabColor {
+	> ul {
+		display: flex !important;
+		flex-wrap: wrap;
+		width: 272px;
+		
+		> li:first-child {
+			flex: 0 0 100%;
+			margin-bottom: 10px;
+		}
+	}
+	
+	.woltlab-color-selection {
+		flex: 0 0 30px;
+		margin: 2px;
+		overflow: hidden;
+		
+		> a {
+			background-color: currentColor !important;
+			color: inherit !important;
+			display: block;
+			height: 30px;
+			width: 30px;
+		}
+	}
+}
+
+/* font size */
+.woltlab-size-8 { font-size: 8px; }
+.woltlab-size-10 { font-size: 10px; }
+.woltlab-size-12 { font-size: 12px; }
+.woltlab-size-14 { font-size: 14px; }
+.woltlab-size-18 { font-size: 18px; }
+.woltlab-size-24 { font-size: 24px; }
+.woltlab-size-36 { font-size: 36px; }

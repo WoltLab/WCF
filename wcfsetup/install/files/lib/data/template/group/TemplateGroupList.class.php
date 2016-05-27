@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of template groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template.group
  * @category	Community Framework
+ *
+ * @method	TemplateGroup		current()
+ * @method	TemplateGroup[]		getObjects()
+ * @method	TemplateGroup|null	search($objectID)
+ * @property	TemplateGroup[]		$objects
  */
 class TemplateGroupList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\template\group\TemplateGroup';
+	public $className = TemplateGroup::class;
 }

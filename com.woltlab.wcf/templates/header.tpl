@@ -1,93 +1,147 @@
+{include file='documentHeader'}
+
+<head>
+	{if !$pageTitle|isset}
+		{assign var='pageTitle' value=''}
+		{if !$__wcf->isLandingPage() && $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
+			{capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
+		{/if}
+	{/if}
+	
+	<title>{if $pageTitle}{@$pageTitle} - {/if}{PAGE_TITLE|language}</title>
+	
+	{include file='headInclude'}
+	
+	{if !$headContent|empty}
+		{@$headContent}
+	{/if}
+</head>
+
+<body id="tpl_{$templateNameApplication}_{$templateName}" data-template="{$templateName}" data-application="{$templateNameApplication}"{if $__wcf->getActivePage() != null} data-page-id="{@$__wcf->getActivePage()->pageID}" data-page-identifier="{$__wcf->getActivePage()->identifier}"{/if}>
+
 <a id="top"></a>
 
-{event name='beforePageHeader'}
-
-<header id="pageHeader" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
-	<div>
-		<nav id="topMenu" class="userPanel">
-			<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
-				{hascontent}
-					<ul class="userPanelItems">
-						{content}
-							{include file='userPanel'}
-							{event name='topMenu'}
-						{/content}
-					</ul>
-				{/hascontent}
-				
-				{include file='searchArea'}
+<div id="pageContainer" class="pageContainer">
+	{event name='beforePageHeader'}
+	
+	{include file='pageHeader'}
+	
+	{event name='afterPageHeader'}
+	
+	{hascontent}
+		<div class="boxesHeaderBoxes">
+			<div class="layoutBoundary">
+				<div class="boxContainer">
+					{content}
+						{foreach from=$__wcf->getBoxHandler()->getBoxes('headerBoxes') item=box}
+							{@$box->render()}
+						{/foreach}
+					{/content}
+				</div>	
 			</div>
-		</nav>
-		
-		<div id="logo" class="logo">
-			{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.logo')}{/if}
-			
-			<a href="{link}{/link}">
-				{if $__wcf->getStyleHandler()->getStyle()->getPageLogo()}
-					<img src="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}" alt="" />
-				{/if}
-				{event name='headerLogo'}
-			</a>
 		</div>
-		
-		{event name='headerContents'}
-		
-		{include file='mainMenu'}
-		
-		{event name='afterMainMenu'}
-		
-		<nav class="navigation navigationHeader">
-			{include file='mainMenuSubMenu'}
-			
-			<ul class="navigationIcons">
-				<li id="toBottomLink"><a href="{$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
-				<li id="sitemap" class="jsOnly"><a href="#" title="{lang}wcf.page.sitemap{/lang}" class="jsTooltip"><span class="icon icon16 icon-sitemap"></span> <span class="invisible">{lang}wcf.page.sitemap{/lang}</span></a></li>
-				{if $headerNavigation|isset}{@$headerNavigation}{/if}
-				{event name='navigationIcons'}
-			</ul>
-		</nav>
-	</div>
-</header>
-
-{event name='afterPageHeader'}
-
-<div id="main" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
-	<div>
-		<div>
-			{capture assign='__sidebar'}
-				{if $sidebar|isset}
-					<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>
-						<div>
+	{/hascontent}
+	
+	{include file='pageNavbarTop'}
+	
+	{hascontent}
+		<div class="boxesTop">
+			<div class="boxContainer">
+				{content}
+					{if !$boxesTop|empty}
+						{@$boxesTop}
+					{/if}
+				
+					{foreach from=$__wcf->getBoxHandler()->getBoxes('top') item=box}
+						{@$box->render()}
+					{/foreach}
+				{/content}
+			</div>	
+		</div>
+	{/hascontent}
+	
+	<section id="main" class="main" role="main">
+		<div class="layoutBoundary">
+			{hascontent}
+				<aside class="sidebar boxesSidebarLeft">
+					<div class="boxContainer">
+						{content}
 							{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}{/if}
 							
-							{event name='sidebarBoxesTop'}
+							{event name='boxesSidebarLeftTop'}
 							
-							{@$sidebar}
+							{* WCF2.1 Fallback *}
+							{if !$sidebar|empty}
+								{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
+									{@$sidebar}
+								{/if}	
+							{/if}
 							
-							{event name='sidebarBoxesBottom'}
+							{if !$sidebarLeft|empty}
+								{@$sidebarLeft}
+							{/if}
 							
+							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarLeft') item=box}
+								{@$box->render()}
+							{/foreach}
+				
+							{event name='boxesSidebarLeftBottom'}
+				
 							{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}{/if}
-						</div>
-					</aside>
-					
-					{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
-						<script data-relocate="true">
-							require(['WoltLab/WCF/UI/Collapsible/Sidebar'], function(UICollapsibleSidebar) {
-								UICollapsibleSidebar.setup();
-							});
-						</script>
-					{/if}
-				{/if}
-			{/capture}
+						{/content}
+					</div>	
+				</aside>
+			{/hascontent}
 			
-			{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
-				{@$__sidebar}
-			{/if}
-			
-			<section id="content" class="content">
+			<div id="content" class="content">
 				{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}
 				
-				{event name='contents'}
+				{if !$contentHeader|empty}
+					{@$contentHeader}
+				{else}
+					{if $contentTitle|empty}
+						{if $__wcf->isLandingPage()}
+							{capture assign='contentTitle'}{PAGE_TITLE|language}{/capture}
+							{capture assign='contentDescription'}{PAGE_DESCRIPTION|language}{/capture}
+						{elseif $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
+							{capture assign='contentTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
+						{/if}	
+					{/if}
 				
-				{if $skipBreadcrumbs|empty}{include file='breadcrumbs'}{/if}
-			
+					{if !$contentTitle|empty}
+						<header class="contentHeader">
+							<div class="contentHeaderTitle">
+								<h1 class="contentTitle">{@$contentTitle}</h1>
+								{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
+							</div>
+							
+							{hascontent}
+								<nav class="contentHeaderNavigation">
+									<ul>
+										{content}
+											{if !$contentHeaderNavigation|empty}{@$contentHeaderNavigation}{/if}
+											
+											{event name='contentHeaderNavigation'}
+										{/content}
+									</ul>
+								</nav>
+							{/hascontent}
+						</header>
+					{/if}
+				{/if}
+				
+				{include file='userNotice'}
+				
+				{hascontent}
+					<div class="boxesContentTop">
+						<div class="boxContainer">
+							{content}
+								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentTop') item=box}
+									{@$box->render()}
+								{/foreach}
+							{/content}
+						</div>	
+					</div>
+				{/hascontent}
+				
+				{event name='contents'}

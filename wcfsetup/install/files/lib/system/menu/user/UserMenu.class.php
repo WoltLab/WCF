@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\menu\user;
+use wcf\data\user\menu\item\UserMenuItem;
 use wcf\system\cache\builder\UserMenuCacheBuilder;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
@@ -8,7 +9,7 @@ use wcf\system\menu\TreeMenu;
  * Builds the user menu.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.menu.user
@@ -16,7 +17,7 @@ use wcf\system\menu\TreeMenu;
  */
 class UserMenu extends TreeMenu {
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::loadCache()
+	 * @inheritDoc
 	 */
 	protected function loadCache() {
 		parent::loadCache();
@@ -25,9 +26,11 @@ class UserMenu extends TreeMenu {
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\TreeMenu::checkMenuItem()
+	 * @inheritDoc
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {
+		/** @var UserMenuItem $item */
+		
 		if (!parent::checkMenuItem($item)) return false;
 		
 		return $item->getProcessor()->isVisible();

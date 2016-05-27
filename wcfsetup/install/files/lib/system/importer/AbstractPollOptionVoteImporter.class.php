@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Imports poll votes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer
@@ -26,9 +26,9 @@ class AbstractPollOptionVoteImporter extends AbstractImporter {
 	protected $pollObjectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
 		
@@ -42,7 +42,7 @@ class AbstractPollOptionVoteImporter extends AbstractImporter {
 						(pollID, optionID, userID)
 			VALUES			(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($data['pollID'], $data['optionID'], $data['userID']));
+		$statement->execute([$data['pollID'], $data['optionID'], $data['userID']]);
 		
 		return 1;
 	}

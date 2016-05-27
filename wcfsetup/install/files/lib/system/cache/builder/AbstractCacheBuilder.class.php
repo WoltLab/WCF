@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Default implementation for cache builders.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -17,9 +17,9 @@ use wcf\system\SingletonFactory;
 abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBuilder {
 	/**
 	 * list of cache resources by index
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
-	protected $cache = array();
+	protected $cache = [];
 	
 	/**
 	 * maximum cache lifetime in seconds, '0' equals infinite
@@ -28,9 +28,9 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	protected $maxLifetime = 0;
 	
 	/**
-	 * @see	\wcf\system\cache\builder\ICacheBuilder::getData()
+	 * @inheritDoc
 	 */
-	public function getData(array $parameters = array(), $arrayIndex = '') {
+	public function getData(array $parameters = [], $arrayIndex = '') {
 		$index = CacheHandler::getInstance()->getCacheIndex($parameters);
 		
 		if (!isset($this->cache[$index])) {
@@ -45,7 +45,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 		}
 		
 		if (!empty($arrayIndex)) {
-			if (!isset($this->cache[$index][$arrayIndex])) {
+			if (!array_key_exists($arrayIndex, $this->cache[$index])) {
 				throw new SystemException("array index '".$arrayIndex."' does not exist in cache resource");
 			}
 			
@@ -56,16 +56,16 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\builder\ICacheBuilder::getMaxLifetime()
+	 * @inheritDoc
 	 */
 	public function getMaxLifetime() {
 		return $this->maxLifetime;
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\builder\ICacheBuilder::reset()
+	 * @inheritDoc
 	 */
-	public function reset(array $parameters = array()) {
+	public function reset(array $parameters = []) {
 		CacheHandler::getInstance()->flush($this, $parameters);
 	}
 	

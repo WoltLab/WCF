@@ -9,20 +9,22 @@ use wcf\system\WCF;
  * Requeues stuck queue items.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
  * @category	Community Framework
+ * @since	2.2
  */
 class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 	/**
-	 * @see	\wcf\system\cronjob\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
 		WCF::getDB()->beginTransaction();
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		$commited = false;
 		try {
 			$sql = "SELECT		jobID, job
@@ -37,7 +39,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 				TIME_NOW - 600 // running longer than 10 minutes
 			]);
 			
-			$jobIDs = [ ];
+			$jobIDs = [];
 			while ($row = $statement->fetchArray()) {
 				$jobIDs[] = $row['jobID'];
 				
@@ -54,7 +56,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 				}
 				catch (\Exception $e) {
 					// job is completely broken: log
-					if ($e instanceof LoggedException) $e->getExceptionID();
+					\wcf\functions\exception\logThrowable($e);
 				}
 			}
 			
@@ -66,7 +68,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 			
 			// delete jobs
 			$condition = new PreparedStatementConditionBuilder();
-			$condition->add('jobID IN (?)', [ $jobIDs ]);
+			$condition->add('jobID IN (?)', [$jobIDs]);
 			$sql = "DELETE FROM	wcf".WCF_N."_background_job ".$condition;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($condition->getParameters());
@@ -75,7 +77,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 			$commited = true;
 		}
 		finally {
-			if (!$commited) WCF::getDB()->rollbackTransaction();
+			if (!$commited) WCF::getDB()->rollBackTransaction();
 		}
 	}
 }

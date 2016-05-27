@@ -8,52 +8,57 @@ use wcf\data\DatabaseObjectDecorator;
  * Provides a default implementation for like objects.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.like.object
  * @category	Community Framework
+ *
+ * @method	LikeObject	getDecoratedObject()
+ * @mixin	LikeObject
  */
 abstract class AbstractLikeObject extends DatabaseObjectDecorator implements ILikeObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\like\object\LikeObject';
+	protected static $baseClass = LikeObject::class;
 	
 	/**
 	 * object type
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	protected $objectType = null;
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::updateLikeCounter()
+	 * @inheritDoc
 	 */
-	public function updateLikeCounter($cumulativeLikes) { }
+	public function updateLikeCounter($cumulativeLikes) {
+		// individual implementations can override this method to update like counter
+	}
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::getObjectType()
+	 * @inheritDoc
 	 */
 	public function getObjectType() {
 		return $this->objectType;
 	}
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::setObjectType()
+	 * @inheritDoc
 	 */
 	public function setObjectType(ObjectType $objectType) {
 		$this->objectType = $objectType;
 	}
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::sendNotification()
+	 * @inheritDoc
 	 */
 	public function sendNotification(Like $like) {
 		// individual implementations can override this method to provide notifications
 	}
 	
 	/**
-	 * @see	\wcf\data\like\object\ILikeObject::getLanguageID()
+	 * @inheritDoc
 	 */
 	public function getLanguageID() {
 		return null;

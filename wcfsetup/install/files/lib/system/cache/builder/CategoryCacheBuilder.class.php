@@ -6,7 +6,7 @@ use wcf\data\category\CategoryList;
  * Caches the categories for the active application.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -14,7 +14,7 @@ use wcf\data\category\CategoryList;
  */
 class CategoryCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$list = new CategoryList();
@@ -23,13 +23,13 @@ class CategoryCacheBuilder extends AbstractCacheBuilder {
 		$list->sqlOrderBy = "category.showOrder ASC";
 		$list->readObjects();
 		
-		$data = array(
+		$data = [
 			'categories' => $list->getObjects(),
-			'objectTypeCategoryIDs' => array()
-		);
+			'objectTypeCategoryIDs' => []
+		];
 		foreach ($list as $category) {
 			if (!isset($data['objectTypeCategoryIDs'][$category->objectType])) {
-				$data['objectTypeCategoryIDs'][$category->objectType] = array();
+				$data['objectTypeCategoryIDs'][$category->objectType] = [];
 			}
 			
 			$data['objectTypeCategoryIDs'][$category->objectType][] = $category->categoryID;

@@ -1,12 +1,13 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\smiley\Smiley;
 use wcf\system\WCF;
 
 /**
  * Caches the smilies.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -14,10 +15,10 @@ use wcf\system\WCF;
  */
 class SmileyCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
-		$data = array('smilies' => array());
+		$data = ['smilies' => []];
 		
 		// get smilies
 		$sql = "SELECT		*
@@ -25,7 +26,9 @@ class SmileyCacheBuilder extends AbstractCacheBuilder {
 			ORDER BY	showOrder";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($object = $statement->fetchObject('wcf\data\smiley\Smiley')) {
+		
+		/** @var Smiley $object */
+		while ($object = $statement->fetchObject(Smiley::class)) {
 			$object->smileyCodes = $object->getAliases();
 			$object->smileyCodes[] = $object->smileyCode;
 			

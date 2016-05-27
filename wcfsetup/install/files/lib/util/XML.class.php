@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Reads and validates xml documents.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -50,6 +50,7 @@ class XML {
 	 * Loads a xml file for processing.
 	 * 
 	 * @param	string		$path
+	 * @throws	SystemException
 	 */
 	public function load($path) {
 		$this->path = $path;
@@ -110,7 +111,7 @@ class XML {
 	 */
 	protected function getSchema() {
 		// determine schema by looking for xsi:schemaLocation
-		$this->schema = $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceURI('xsi'), 'schemaLocation');
+		$this->schema = $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceUri('xsi'), 'schemaLocation');
 		
 		// no valid schema found or it's lacking a valid namespace
 		if (strpos($this->schema, ' ') === false) {
@@ -148,18 +149,18 @@ class XML {
 	 * Reads errors from libxml since be bypassed built-in error handler.
 	 * 
 	 * @see		\wcf\util\XML::__construct()
-	 * @return	array<array>
+	 * @return	string[][]
 	 */
 	protected function pollErrors() {
-		$errors = array();
+		$errors = [];
 		$errorList = libxml_get_errors();
 		
 		foreach ($errorList as $error) {
-			$errors[] = array(
+			$errors[] = [
 				'message' => $error->message,
 				'line' => $error->line,
 				'file' => $this->path
-			);
+			];
 		}
 		
 		libxml_clear_errors();
@@ -172,8 +173,9 @@ class XML {
 	 * 
 	 * @param	string		$message
 	 * @param	array		$errors
+	 * @throws	SystemException
 	 */
-	protected function throwException($message, array $errors = array()) {
+	protected function throwException($message, array $errors = []) {
 		if (!empty($errors)) {
 			$description = '<b>LibXML output:</b><pre>';
 			foreach ($errors as $error) {

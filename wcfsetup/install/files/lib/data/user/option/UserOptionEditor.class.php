@@ -9,22 +9,25 @@ use wcf\system\WCF;
  * Provides functions to edit user options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option
  * @category	Community Framework
+ * 
+ * @method	UserOption	getDecoratedObject()
+ * @mixin	UserOption
  */
 class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\option\UserOption';
+	protected static $baseClass = UserOption::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		$userOption = parent::create($parameters);
 		
 		// alter the table "wcf".WCF_N."_user_option_value" with this new option
@@ -35,16 +38,16 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 			$sql = "UPDATE	wcf".WCF_N."_user_option_value
 				SET	userOption".$userOption->optionID." = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($parameters['defaultValue']));
+			$statement->execute([$parameters['defaultValue']]);
 		}
 		
 		return $userOption;
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::update()
+	 * @inheritDoc
 	 */
-	public function update(array $parameters = array()) {
+	public function update(array $parameters = []) {
 		parent::update($parameters);
 		
 		// alter the table "wcf".WCF_N."_user_option_value" with this new option
@@ -59,21 +62,21 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_option
 			WHERE		optionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->optionID));
+		$statement->execute([$this->optionID]);
 		
 		WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$this->optionID);
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		$returnValue = parent::deleteAll($objectIDs);
 		
 		foreach ($objectIDs as $objectID) {
@@ -102,7 +105,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 			SET	isDisabled = ?
 			WHERE	optionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($value, $this->optionID));
+		$statement->execute([$value, $this->optionID]);
 	}
 	
 	/**
@@ -112,12 +115,12 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	 * @return	array		column definition
 	 */
 	public static function getColumnDefinition($optionType) {
-		$column = array(
+		$column = [
 			'autoIncrement' => false,
 			'key' => false,
 			'notNull' => false,
 			'type' => 'text'
-		);
+		];
 		
 		switch ($optionType) {
 			case 'boolean':
@@ -157,7 +160,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		UserOptionCacheBuilder::getInstance()->reset();

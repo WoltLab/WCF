@@ -1,5 +1,7 @@
 <?php
 namespace wcf\form;
+use wcf\data\language\Language;
+use wcf\data\style\Style;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
@@ -16,7 +18,7 @@ use wcf\util\ArrayUtil;
  * Shows the dynamic options edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -24,12 +26,7 @@ use wcf\util\ArrayUtil;
  */
 class SettingsForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
-	 */
-	public $enableTracking = true;
-	
-	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
@@ -40,9 +37,9 @@ class SettingsForm extends AbstractForm {
 	public $optionHandler = null;
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::$errorType
+	 * @inheritDoc
 	 */
-	public $errorType = array();
+	public $errorType = [];
 	
 	/**
 	 * option category
@@ -52,27 +49,27 @@ class SettingsForm extends AbstractForm {
 	
 	/**
 	 * list of available content languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
-	public $availableContentLanguages = array();
+	public $availableContentLanguages = [];
 	
 	/**
 	 * list of available languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
-	public $availableLanguages = array();
+	public $availableLanguages = [];
 	
 	/**
 	 * list of available styles
-	 * @var	array<\wcf\data\style\Style>
+	 * @var	Style[]
 	 */
-	public $availableStyles = array();
+	public $availableStyles = [];
 	
 	/**
 	 * list of content language ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $contentLanguageIDs = array();
+	public $contentLanguageIDs = [];
 	
 	/**
 	 * language id
@@ -87,7 +84,7 @@ class SettingsForm extends AbstractForm {
 	public $styleID = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -112,7 +109,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -128,7 +125,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -166,7 +163,7 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -185,29 +182,29 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		$saveOptions = $this->optionHandler->save();
-		$parameters = array('options' => $saveOptions);
+		$parameters = ['options' => $saveOptions];
 		// static options
 		if ($this->category == 'general') {
-			$parameters['data'] = array_merge($this->additionalFields, array(
+			$parameters['data'] = array_merge($this->additionalFields, [
 				'languageID' => $this->languageID,
 				'styleID' => $this->styleID
-			));
+			]);
 			$parameters['languageIDs'] = $this->contentLanguageIDs;
 		}
 		
-		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', $parameters);
+		$this->objectAction = new UserAction([WCF::getUser()], 'update', $parameters);
 		$this->objectAction->executeAction();
 		
 		// static options
 		if ($this->category == 'general') {
 			// reset user language ids cache
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'languageIDs');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'languageIDs');
 		}
 		$this->saved();
 		
@@ -215,30 +212,30 @@ class SettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\Page::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'optionTree' => $this->optionHandler->getOptionTree(),
 			'category' => $this->category
-		));
+		]);
 		// static options
 		if ($this->category == 'general') {
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'availableContentLanguages' => $this->availableContentLanguages,
 				'availableLanguages' => $this->availableLanguages,
 				'availableStyles' => $this->availableStyles,
 				'contentLanguageIDs' => $this->contentLanguageIDs,
 				'languageID' => $this->languageID,
 				'styleID' => $this->styleID
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\Page::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab

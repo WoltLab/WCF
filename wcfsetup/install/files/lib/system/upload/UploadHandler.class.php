@@ -6,7 +6,7 @@ use wcf\util\FileUtil;
  * Handles file uploads.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.upload
@@ -15,31 +15,31 @@ use wcf\util\FileUtil;
 class UploadHandler {
 	/**
 	 * list of uploaded files
-	 * @var	array<\wcf\system\upload\UploadFile>
+	 * @var	UploadFile[]
 	 */
-	protected $files = array();
+	protected $files = [];
 	
 	/**
 	 * list of validation errors.
 	 * @var	array
 	 */
-	protected $erroneousFiles = array();
+	protected $erroneousFiles = [];
 	
 	/**
 	 * Creates a new UploadHandler object.
 	 * 
-	 * @param	array<mixed>	$rawFileData
+	 * @param	mixed[]		$rawFileData
 	 */
 	protected function __construct(array $rawFileData) {
 		if (is_array($rawFileData['name'])) {
 			// iOS work-around
-			$newRawFileData = array(
-				'name' => array(),
-				'type' => array(),
-				'tmp_name' => array(),
-				'error' => array(),
-				'size' => array()
-			);
+			$newRawFileData = [
+				'name' => [],
+				'type' => [],
+				'tmp_name' => [],
+				'error' => [],
+				'size' => []
+			];
 			$i = 0;
 			foreach (array_keys($rawFileData['name']) as $internalFileID) {
 				$newRawFileData['name'][$i] = '__wcf_' . $internalFileID . '_' . $rawFileData['name'][$internalFileID]; // __wcf_X_filename.ext
@@ -65,7 +65,7 @@ class UploadHandler {
 	/**
 	 * Returns the list of uploaded files.
 	 * 
-	 * @return	array<\wcf\system\upload\UploadFile>
+	 * @return	UploadFile[]
 	 */
 	public function getFiles() {
 		return $this->files;
@@ -74,8 +74,7 @@ class UploadHandler {
 	/**
 	 * Validates the uploaded files. Returns true on success, otherwise false.
 	 * 
-	 * @param	integer		$maxFilesize
-	 * @param	array<string>	$fileExtensions
+	 * @param	IUploadFileValidationStrategy	$validationStrategy
 	 * @return	boolean
 	 */
 	public function validateFiles(IUploadFileValidationStrategy $validationStrategy) {
@@ -93,7 +92,7 @@ class UploadHandler {
 	/**
 	 * Returns a list of erroneous files.
 	 * 
-	 * @return	array<\wcf\system\upload\UploadFile>
+	 * @return	UploadFile[]
 	 */
 	public function getErroneousFiles() {
 		return $this->erroneousFiles;

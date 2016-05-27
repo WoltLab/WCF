@@ -23,6 +23,7 @@ final class Callback {
 	 * Creates new instance of Callback.
 	 * 
 	 * @param	callback	$callback
+	 * @throws	SystemException
 	 */
 	public function __construct($callback) {
 		if (!is_callable($callback)) {

@@ -8,7 +8,7 @@ use wcf\system\exception\SystemException;
  * Caches the conditions for a certain condition object type definition.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -16,7 +16,7 @@ use wcf\system\exception\SystemException;
  */
 class ConditionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		if (!isset($parameters['definitionID'])) {
@@ -30,22 +30,22 @@ class ConditionCacheBuilder extends AbstractCacheBuilder {
 		
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes($definition->definitionName);
 		if (empty($objectTypes)) {
-			return array();
+			return [];
 		}
 		
-		$objectTypeIDs = array();
+		$objectTypeIDs = [];
 		foreach ($objectTypes as $objectType) {
 			$objectTypeIDs[] = $objectType->objectTypeID;
 		}
 		
 		$conditionList = new ConditionList();
-		$conditionList->getConditionBuilder()->add('condition_table.objectTypeID IN (?)', array($objectTypeIDs));
+		$conditionList->getConditionBuilder()->add('condition_table.objectTypeID IN (?)', [$objectTypeIDs]);
 		$conditionList->readObjects();
 		
-		$groupedConditions = array();
+		$groupedConditions = [];
 		foreach ($conditionList as $condition) {
 			if (!isset($groupedConditions[$condition->objectID])) {
-				$groupedConditions[$condition->objectID] = array();
+				$groupedConditions[$condition->objectID] = [];
 			}
 			
 			$groupedConditions[$condition->objectID][$condition->conditionID] = $condition;

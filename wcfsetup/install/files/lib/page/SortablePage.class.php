@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Handles the sorting parameters automatically.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -29,12 +29,12 @@ abstract class SortablePage extends MultipleLinkPage {
 	
 	/**
 	 * list of valid sort fields
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $validSortFields = array();
+	public $validSortFields = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -45,7 +45,7 @@ abstract class SortablePage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->validateSortOrder();
@@ -84,15 +84,15 @@ abstract class SortablePage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		// assign sorting parameters
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'sortField' => $this->sortField,
 			'sortOrder' => $this->sortOrder
-		));
+		]);
 	}
 }

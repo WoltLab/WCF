@@ -16,17 +16,20 @@ use wcf\system\WCF;
  * Executes moderation queue-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
  * @category	Community Framework
+ * 
+ * @method	ModerationQueueEditor[]		getObjects()
+ * @method	ModerationQueueEditor		getSingleObject()
  */
 class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\moderation\queue\ModerationQueueEditor';
+	protected $className = ModerationQueueEditor::class;
 	
 	/**
 	 * moderation queue editor object
@@ -41,7 +44,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	public $user = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	ModerationQueue
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['lastChangeTime'])) {
@@ -52,7 +56,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		if (!isset($this->parameters['data']['lastChangeTime'])) {
@@ -70,13 +74,13 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		$queueIDs = array();
-		foreach ($this->objects as $queue) {
+		$queueIDs = [];
+		foreach ($this->getObjects() as $queue) {
 			$queueIDs[] = $queue->queueID;
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("queueID IN (?)", array($queueIDs));
+		$conditions->add("queueID IN (?)", [$queueIDs]);
 		
 		$sql = "UPDATE	wcf".WCF_N."_moderation_queue
 			SET	status = ".ModerationQueue::STATUS_DONE."
@@ -92,22 +96,20 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to fetch a list of outstanding queues.
 	 */
 	public function validateGetOutstandingQueues() {
-		WCF::getSession()->checkPermissions(array('mod.general.canUseModeration'));
+		WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
 	}
 	
 	/**
 	 * Returns a list of outstanding queues.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getOutstandingQueues() {
-		$objectTypeIDs = ModerationQueueManager::getInstance()->getObjectTypeIDs(array_keys(ModerationQueueManager::getInstance()->getDefinitions()));
-		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("moderation_queue_to_user.userID = ?", array(WCF::getUser()->userID));
-		$conditions->add("moderation_queue_to_user.isAffected = ?", array(1));
-		$conditions->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
-		$conditions->add("moderation_queue.time > ?", array(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')));
+		$conditions->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
+		$conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
+		$conditions->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+		$conditions->add("moderation_queue.time > ?", [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]);
 		$conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
 		
 		$sql = "SELECT		moderation_queue.queueID
@@ -120,15 +122,12 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			ORDER BY	moderation_queue.lastChangeTime DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute($conditions->getParameters());
-		$queueIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$queueIDs[] = $row['queueID'];
-		}
+		$queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
-		$queues = array();
+		$queues = [];
 		if (!empty($queueIDs)) {
 			$queueList = new ViewableModerationQueueList();
-			$queueList->getConditionBuilder()->add("moderation_queue.queueID IN (?)", array($queueIDs));
+			$queueList->getConditionBuilder()->add("moderation_queue.queueID IN (?)", [$queueIDs]);
 			$queueList->sqlOrderBy = "moderation_queue.lastChangeTime DESC";
 			$queueList->loadUserProfiles = true;
 			$queueList->readObjects();
@@ -143,8 +142,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		if ($count < 5) {
 			// load more entries to fill up list
 			$queueList = new ViewableModerationQueueList();
-			$queueList->getConditionBuilder()->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
-			if (!empty($queueIDs)) $queueList->getConditionBuilder()->add("moderation_queue.queueID NOT IN (?)", array($queueIDs));
+			$queueList->getConditionBuilder()->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+			if (!empty($queueIDs)) $queueList->getConditionBuilder()->add("moderation_queue.queueID NOT IN (?)", [$queueIDs]);
 			$queueList->sqlOrderBy = "moderation_queue.lastChangeTime DESC";
 			$queueList->sqlLimit = 5 - $count;
 			$queueList->loadUserProfiles = true;
@@ -155,7 +154,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			
 			// check if stored count is out of sync
 			if ($count < $totalCount) {
-				UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'outstandingModerationCount');
+				UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'outstandingModerationCount');
 				
 				// check for orphaned queues
 				$queueCount = ModerationQueueManager::getInstance()->getUnreadModerationCount();
@@ -165,14 +164,14 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'queues' => $queues
-		));
+		]);
 		
-		return array(
+		return [
 			'template' => WCF::getTPL()->fetch('moderationQueueList'),
 			'totalCount' => $totalCount
-		);
+		];
 	}
 	
 	/**
@@ -190,19 +189,19 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the user assign form.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getAssignUserForm() {
 		$assignedUser = ($this->moderationQueueEditor->assignedUserID) ? new User($this->moderationQueueEditor->assignedUserID) : null;
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'assignedUser' => $assignedUser,
 			'queue' => $this->moderationQueueEditor
-		));
+		]);
 		
-		return array(
+		return [
 			'template' => WCF::getTPL()->fetch('moderationQueueAssignUser')
-		);
+		];
 	}
 	
 	/**
@@ -244,10 +243,10 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the data for the newly assigned user.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function assignUser() {
-		$data = array('assignedUserID' => ($this->parameters['assignedUserID'] ?: null));
+		$data = ['assignedUserID' => ($this->parameters['assignedUserID'] ?: null)];
 		if ($this->user->userID) {
 			if ($this->moderationQueueEditor->status == ModerationQueue::STATUS_OUTSTANDING) {
 				$data['status'] = ModerationQueue::STATUS_PROCESSING;
@@ -264,7 +263,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		$username = ($this->user->userID) ? $this->user->username : WCF::getLanguage()->get('wcf.moderation.assignedUser.nobody');
 		$link = '';
 		if ($this->user->userID) {
-			$link = LinkHandler::getInstance()->getLink('User', array('object' => $this->user));
+			$link = LinkHandler::getInstance()->getLink('User', ['object' => $this->user]);
 		}
 		
 		$newStatus = '';
@@ -272,12 +271,12 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$newStatus = ($data['status'] == ModerationQueue::STATUS_OUTSTANDING) ? 'outstanding' : 'processing';
 		}
 		
-		return array(
+		return [
 			'link' => $link,
 			'newStatus' => $newStatus,
 			'userID' => $this->user->userID,
 			'username' => $username
-		);
+		];
 	}
 	
 	/**
@@ -292,32 +291,32 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $queue) {
+		foreach ($this->getObjects() as $queue) {
 			VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.moderation.queue', $queue->queueID, $this->parameters['visitTime']);
 		}
 		
 		// reset storage
-		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'unreadModerationCount');
+		UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadModerationCount');
 		
 		if (count($this->objects) == 1) {
 			$queue = reset($this->objects);
 			
-			return array(
+			return [
 				'markAsRead' => $queue->queueID,
 				'totalCount' => ModerationQueueManager::getInstance()->getUnreadModerationCount(true)
-			);
+			];
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IVisitableObjectAction::validateMarkAsRead()
+	 * @inheritDoc
 	 */
 	public function validateMarkAsRead() {
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $queue) {
+		foreach ($this->getObjects() as $queue) {
 			if (!$queue->canEdit()) {
 				throw new PermissionDeniedException();
 			}
@@ -331,11 +330,11 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		VisitTracker::getInstance()->trackTypeVisit('com.woltlab.wcf.moderation.queue');
 		
 		// reset storage
-		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'unreadModerationCount');
+		UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadModerationCount');
 		
-		return array(
+		return [
 			'markAllAsRead' => true
-		);
+		];
 	}
 	
 	/**

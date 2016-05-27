@@ -6,35 +6,39 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes option category-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.option.category
  * @category	Community Framework
+ * 
+ * @method	OptionCategory		create()
+ * @method	OptionCategoryEditor[]	getObjects()
+ * @method	OptionCategoryEditor	getSingleObject()
  */
 class OptionCategoryAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\option\category\OptionCategoryEditor';
+	protected $className = OptionCategoryEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.system.canEditOption');
+	protected $permissionsCreate = ['admin.configuration.canEditOption'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.system.canEditOption');
+	protected $permissionsDelete = ['admin.configuration.canEditOption'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.system.canEditOption');
+	protected $permissionsUpdate = ['admin.configuration.canEditOption'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 }

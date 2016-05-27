@@ -5,7 +5,7 @@ namespace wcf\system\bbcode\highlighter;
  * Highlights syntax of brainfuck.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode.highlighter
@@ -13,7 +13,7 @@ namespace wcf\system\bbcode\highlighter;
  */
 class BrainfuckHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @inheritDoc
 	 */
 	public function highlight($string) {
 		$string = preg_replace('/[^-\\+\\.,\\[\\]\\>\\<]+/', '||span class="hlComments"||\\0||/span||', $string);
@@ -22,7 +22,7 @@ class BrainfuckHighlighter extends Highlighter {
 		$string = preg_replace('/[\\.,]+/', '<span class="hlKeywords2">\\0</span>', $string);
 		$string = preg_replace('/[\\[\\]]+/', '<span class="hlKeywords3">\\0</span>', $string);
 		
-		$string = str_replace(array('||span class="hlComments"||', '||/span||'), array('<span class="hlComments">', '</span>'), $string);
+		$string = str_replace(['||span class="hlComments"||', '||/span||'], ['<span class="hlComments">', '</span>'], $string);
 		return $string;
 	}
 }

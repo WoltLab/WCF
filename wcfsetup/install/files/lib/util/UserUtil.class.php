@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Contains user-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -51,13 +51,13 @@ final class UserUtil {
 	 * @return	boolean
 	 */
 	public static function isAvailableUsername($name) {
-		$sql = "SELECT	COUNT(username) AS count
+		$sql = "SELECT	COUNT(username)
 			FROM	wcf".WCF_N."_user
 			WHERE	username = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($name));
-		$row = $statement->fetchArray();
-		return $row['count'] == 0;
+		$statement->execute([$name]);
+		
+		return $statement->fetchSingleColumn() == 0;
 	}
 	
 	/**
@@ -90,13 +90,13 @@ final class UserUtil {
 	 * @return	boolean
 	 */
 	public static function isAvailableEmail($email) {
-		$sql = "SELECT	COUNT(email) AS count
+		$sql = "SELECT	COUNT(email)
 			FROM	wcf".WCF_N."_user
 			WHERE	email = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($email));
-		$row = $statement->fetchArray();
-		return $row['count'] == 0;
+		$statement->execute([$email]);
+		
+		return $statement->fetchSingleColumn() == 0;
 	}
 	
 	/**
@@ -205,12 +205,12 @@ final class UserUtil {
 		if (substr($ip, 0, 7) == '::ffff:') {
 			$ip = substr($ip, 7);
 			if (preg_match('~^([a-f0-9]{1,4}):([a-f0-9]{1,4})$~', $ip, $matches)) {
-				$ip = array(
+				$ip = [
 					base_convert($matches[1], 16, 10),
 					base_convert($matches[2], 16, 10)
-				);
+				];
 				
-				$ipParts = array();
+				$ipParts = [];
 				$tmp = $ip[0] % 256;
 				$ipParts[] = ($ip[0] - $tmp) / 256;
 				$ipParts[] = $tmp;
@@ -270,5 +270,10 @@ final class UserUtil {
 		return mb_substr(FileUtil::unifyDirSeparator($REQUEST_URI), 0, 255);
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of UserUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

@@ -13,7 +13,7 @@
 			'wcf.acp.pluginStore.purchasedItems.noResults': '{lang}wcf.acp.pluginStore.purchasedItems.noResults{/lang}'
 		});
 		
-		{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage')}
+		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
 			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'), {if PACKAGE_ID > 1}'{link controller='PackageList' forceWCF=true encode=false}packageID={literal}{packageID}{/literal}{/link}'{else}null{/if});
 			{if $packageID}
 				new WCF.PeriodicalExecuter(function(pe) {
@@ -21,47 +21,49 @@
 					$('.jsUninstallButton[data-object-id={@$packageID}]').trigger('click');
 				}, 250);
 			{/if}
+			
+			new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
 		{/if}
 		
-		{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
+		{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 			new WCF.ACP.Package.Update.Search();
 		{/if}
 		
-		{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') && $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
+		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 			new WCF.ACP.PluginStore.PurchasedItems.Search();
 		{/if}
 	});
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.package.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.package.list{/lang}</h1>
+	</div>
 	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
-					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
-					{event name='contentNavigationButtonsTop'}
+					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -80,9 +82,9 @@
 					<tr class="jsPackageRow">
 						<td class="columnIcon">
 							{if $package->canUninstall()}
-								<span class="icon icon16 icon-remove pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
+								<span class="icon icon16 fa-times pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
 							{else}
-								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
+								<span class="icon icon16 fa-times disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -102,32 +104,28 @@
 		</table>
 		
 	</div>
-			
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<script data-relocate="true">
-				//<![CDATA[
-				$(function() {
-					new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
-				});
-				//]]>
-			</script>
-			
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
 					{content}
-						{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
+							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						
-						{event name='contentNavigationButtonsBottom'}
+						{event name='contentFooterNavigation'}
 					{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {/if}
 
 {include file='footer'}

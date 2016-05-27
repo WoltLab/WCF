@@ -9,7 +9,7 @@ use wcf\system\acl\ACLHandler;
  * Caches labels and groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -17,13 +17,13 @@ use wcf\system\acl\ACLHandler;
  */
 class LabelCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
-		$data = array(
-			'options' => array(),
-			'groups' => array()
-		);
+		$data = [
+			'options' => [],
+			'groups' => []
+		];
 		
 		// get label groups
 		$groupList = new LabelGroupList();
@@ -41,6 +41,7 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		$data['options'] = $permissions['options']->getObjects();
 		
 		// assign permissions for each label group
+		/** @var ViewableLabelGroup $group */
 		foreach ($data['groups'] as $groupID => $group) {
 			// group permissions
 			if (isset($permissions['group'][$groupID])) {
@@ -56,7 +57,6 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		if (count($groupList)) {
 			// get labels
 			$labelList = new LabelList();
-			$labelList->sqlOrderBy = 'label';
 			$labelList->readObjects();
 			foreach ($labelList as $label) {
 				$data['groups'][$label->groupID]->addLabel($label);

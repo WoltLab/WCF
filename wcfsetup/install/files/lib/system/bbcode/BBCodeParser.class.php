@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
+use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
 
@@ -8,7 +9,7 @@ use wcf\system\SingletonFactory;
  * Parses bbcode tags in text.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
@@ -17,9 +18,9 @@ use wcf\system\SingletonFactory;
 class BBCodeParser extends SingletonFactory {
 	/**
 	 * list of bbcodes
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
-	protected $bbcodes = array();
+	protected $bbcodes = [];
 	
 	/**
 	 * output type
@@ -43,13 +44,13 @@ class BBCodeParser extends SingletonFactory {
 	 * tag array
 	 * @var	array
 	 */
-	protected $tagArray = array();
+	protected $tagArray = [];
 	
 	/**
 	 * text array
 	 * @var	array
 	 */
-	protected $textArray = array();
+	protected $textArray = [];
 	
 	/**
 	 * regular expression for source code tags
@@ -58,14 +59,14 @@ class BBCodeParser extends SingletonFactory {
 	protected $sourceCodeRegEx = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get bbcodes
 		$this->bbcodes = BBCodeCache::getInstance()->getBBCodes();
 		
 		// handle source codes
-		$sourceCodeTags = array();
+		$sourceCodeTags = [];
 		foreach ($this->bbcodes as $bbcode) {
 			if ($bbcode->isSourceCode) $sourceCodeTags[] = $bbcode->bbcodeTag;
 		}
@@ -120,9 +121,9 @@ class BBCodeParser extends SingletonFactory {
 	 */
 	public function buildXMLStructure() {
 		// stack for open tags
-		$openTagStack = $openTagDataStack = array();
-		$newTagArray = array();
-		$newTextArray = array();
+		$openTagStack = $openTagDataStack = [];
+		$newTagArray = [];
+		$newTextArray = [];
 		
 		$i = -1;
 		foreach ($this->tagArray as $i => $tag) {
@@ -130,7 +131,7 @@ class BBCodeParser extends SingletonFactory {
 				// closing tag
 				if (in_array($tag['name'], $openTagStack) && $this->isAllowed($openTagStack, $tag['name'], true)) {
 					// close unclosed tags
-					$tmpOpenTags = array();
+					$tmpOpenTags = [];
 					while (($previousTag = end($openTagStack)) != $tag['name']) {
 						$nextIndex = count($newTagArray);
 						$newTagArray[$nextIndex] = $this->buildTag('[/'.$previousTag.']');
@@ -217,7 +218,7 @@ class BBCodeParser extends SingletonFactory {
 		}
 		
 		foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-			if (!$this->isValidTagAttribute((isset($tag['attributes']) ? $tag['attributes'] : array()), $attribute)) {
+			if (!$this->isValidTagAttribute((isset($tag['attributes']) ? $tag['attributes'] : []), $attribute)) {
 				return false;
 			}
 		}
@@ -228,14 +229,14 @@ class BBCodeParser extends SingletonFactory {
 	/**
 	 * Validates an attributes of a tag.
 	 * 
-	 * @param	array					$tagAttributes
-	 * @param	\wcf\data\bbcode\BBCodeAttribute		$definedTagAttribute
+	 * @param	array			$tagAttributes
+	 * @param	BBCodeAttribute		$definedTagAttribute
 	 * @return	boolean
 	 */
 	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {
 		if ($definedTagAttribute->validationPattern && isset($tagAttributes[$definedTagAttribute->attributeNo])) {
 			// validate attribute
-			if (!preg_match('~'.$definedTagAttribute->validationPattern.'~i', $tagAttributes[$definedTagAttribute->attributeNo])) {
+			if (!preg_match('~'.str_replace('~', '\~', $definedTagAttribute->validationPattern).'~i', $tagAttributes[$definedTagAttribute->attributeNo])) {
 				return false;
 			}
 		}
@@ -329,7 +330,7 @@ class BBCodeParser extends SingletonFactory {
 			
 			$arguments = explode('^', $this->bbcodes[$openTag]->allowedChildren);
 			if (!empty($arguments[1])) $tags = explode(',', $arguments[1]);
-			else $tags = array();
+			else $tags = [];
 			
 			if ($arguments[0] == 'none' && !in_array($tag, $tags)) return false;
 			if ($arguments[0] == 'all' && in_array($tag, $tags)) return false;
@@ -349,7 +350,7 @@ class BBCodeParser extends SingletonFactory {
 		$buffer =& $this->parsedText;
 		
 		// stack of buffered tags
-		$bufferedTagStack = array();
+		$bufferedTagStack = [];
 		
 		// loop through the tags
 		$i = -1;
@@ -473,7 +474,7 @@ class BBCodeParser extends SingletonFactory {
 	 * @return	array		bbcode tag data
 	 */
 	protected function buildTag($string) {
-		$tag = array('name' => '', 'closing' => false, 'source' => $string);
+		$tag = ['name' => '', 'closing' => false, 'source' => $string];
 		
 		if (mb_substr($string, 1, 1) == '/') {
 			// closing tag
@@ -522,20 +523,20 @@ class BBCodeParser extends SingletonFactory {
 	 * BBCodes and returns a list of used disallowed BBCodes.
 	 * 
 	 * @param	string			$text
-	 * @param	array<string>		$allowedBBCodes
-	 * @return	array<string>
+	 * @param	string[]		$allowedBBCodes
+	 * @return	string[]
 	 */
 	public function validateBBCodes($text, array $allowedBBCodes) {
 		// if all BBCodes are allowed, return directly
 		if (in_array('all', $allowedBBCodes)) {
-			return array();
+			return [];
 		}
 		
 		$this->setText($text);
 		$this->buildTagArray(false);
 		$this->buildXMLStructure();
 		
-		$usedDisallowedBBCodes = array();
+		$usedDisallowedBBCodes = [];
 		foreach ($this->tagArray as $tag) {
 			if (!in_array($tag['name'], $allowedBBCodes) && !isset($usedDisallowedBBCodes[$tag['name']])) {
 				$usedDisallowedBBCodes[$tag['name']] = $tag['name'];

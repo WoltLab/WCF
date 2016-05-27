@@ -7,20 +7,26 @@ use wcf\data\DatabaseObject;
  * Represents a poll option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.poll.poll
  * @category	Community Framework
+ * 
+ * @property-read	integer		$optionID
+ * @property-read	integer		$pollID
+ * @property-read	string		$optionValue
+ * @property-read	integer		$votes
+ * @property-read	integer		$showOrder
  */
 class PollOption extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'poll_option';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	

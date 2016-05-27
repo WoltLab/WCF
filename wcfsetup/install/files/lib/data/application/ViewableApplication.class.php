@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\application;
+use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\DatabaseObjectDecorator;
 
@@ -7,28 +8,31 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a viewable application.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.application
  * @category	Community Framework
+ * 
+ * @method	Application		getDecoratedObject()
+ * @mixin	Application
  */
 class ViewableApplication extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\application\Application';
+	protected static $baseClass = Application::class;
 	
 	/**
 	 * package object
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
 	protected $package = null;
 	
 	/**
 	 * Returns package object.
 	 * 
-	 * @return	\wcf\data\package\Package
+	 * @return	Package
 	 */
 	public function getPackage() {
 		if ($this->package === null) {

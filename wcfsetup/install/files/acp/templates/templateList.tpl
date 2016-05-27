@@ -20,77 +20,85 @@
 	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.template.list{/lang}</h1>
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.template.list{/lang}</h1>
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
 
 <form method="post" action="{link controller='TemplateList'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			{if $availableTemplateGroups|count}
+				<dl class="col-xs-12 col-md-4">
+					<dt></dt>
+					<dd>
+						<select name="templateGroupID" id="templateGroupID">
+							<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
+							{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
+						</select>
+					</dd>
+				</dl>
+			{/if}
 			
-			<dl>
-				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
+			{if $availableApplications|count > 1}
+				<dl class="col-xs-12 col-md-4">
+					<dt></dt>
+					<dd>
+						<select name="application" id="application">
+							<option value="">{lang}wcf.acp.template.application{/lang}</option>
+							{foreach from=$availableApplications key=abbreviation item=availableApplication}
+								<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
+							{/foreach}
+						</select>
+					</dd>
+				</dl>
+			{/if}
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
 				<dd>
-					<select name="templateGroupID" id="templateGroupID">
-						<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-						{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
-					</select>
+					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" placeholder="{lang}wcf.global.name{/lang}" class="long" />
 				</dd>
 			</dl>
 			
-			<dl>
-				<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
-				<dd>
-					<select name="application" id="application">
-						<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
-						{foreach from=$availableApplications key=abbreviation item=availableApplication}
-							<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
-						{/foreach}
-					</select>
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="searchTemplateName">{lang}wcf.global.name{/lang}</label></dt>
-				<dd>
-					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" class="long" />
-				</dd>
-			</dl>
-		</fieldset>
-	</div>
-	
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SECURITY_TOKEN_INPUT_TAG}
-	</div>
+			{event name='filterFields'}
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
+	</section>
 </form>
 
-<div class="contentNavigation">
-	{assign var='linkParameters' value=''}
-	{if $templateGroupID}{capture append=linkParameters}&templateGroupID={@$templateGroupID}{/capture}{/if}
-	{if $searchTemplateName}{capture append=linkParameters}&searchTemplateName={@$searchTemplateName|rawurlencode}{/capture}{/if}
-	{if $application}{capture append=linkParameters}&application={$application}{/capture}{/if}
-	
-	{pages print=true assign=pagesLinks controller="TemplateList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
-	
-	<nav>
-		<ul>
-			<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $templateGroupID}{capture append=linkParameters}&templateGroupID={@$templateGroupID}{/capture}{/if}
+			{if $searchTemplateName}{capture append=linkParameters}&searchTemplateName={@$searchTemplateName|rawurlencode}{/capture}{/if}
+			{if $application}{capture append=linkParameters}&application={$application}{/capture}{/if}
 			
-			{event name='contentNavigationButtonsTop'}
-		</ul>
-	</nav>
-</div>
+			{pages print=true assign=pagesLinks controller="TemplateList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}	
+		{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
-	<div id="templateTableContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.template.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div id="templateTableContainer" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -106,16 +114,16 @@
 				{foreach from=$objects item=template}
 					<tr class="jsTemplateRow">
 						<td class="columnIcon">
-							<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip"><span class="icon icon16 icon-copy"></span></a>
+							<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip"><span class="icon icon16 fa-files-o"></span></a>
 							
 							{if $template->templateGroupID}
-								<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip"><span class="icon icon16 icon-exchange"></span></a>
-								<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$template->templateID}" data-confirm-message="{lang}wcf.acp.template.delete.sure{/lang}"></span>
+								<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip"><span class="icon icon16 fa-exchange"></span></a>
+								<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$template->templateID}" data-confirm-message-html="{lang __encode=true}wcf.acp.template.delete.sure{/lang}"></span>
 							{else}
-								<span class="icon icon16 icon-exchange disabled" title="{lang}wcf.acp.template.diff{/lang}"></span>
-								<span class="icon icon16 icon-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
-								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="icon icon16 fa-exchange disabled" title="{lang}wcf.acp.template.diff{/lang}"></span>
+								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -131,17 +139,21 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+				<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 				
-				{event name='contentNavigationButtonsBottom'}
+				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

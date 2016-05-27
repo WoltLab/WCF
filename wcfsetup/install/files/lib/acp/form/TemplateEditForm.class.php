@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Shows the form for adding new templates.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class TemplateEditForm extends TemplateAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template';
 	
@@ -35,7 +35,7 @@ class TemplateEditForm extends TemplateAddForm {
 	public $template = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\TemplateAddForm::validateName()
+	 * @inheritDoc
 	 */
 	protected function validateName() {
 		if ($this->tplName != $this->template->templateName) {
@@ -58,7 +58,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\TemplateAddForm::validateName()
+	 * @inheritDoc
 	 */
 	protected function validateGroup() {
 		if ($this->templateGroupID != $this->template->templateGroupID) {
@@ -67,27 +67,27 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new TemplateAction(array($this->template), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TemplateAction([$this->template], 'update', ['data' => array_merge($this->additionalFields, [
 			'templateName' => $this->tplName,
 			'templateGroupID' => $this->templateGroupID,
 			'lastModificationTime' => TIME_NOW
-		)), 'source' => $this->templateSource));
+		]), 'source' => $this->templateSource]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -100,15 +100,15 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'templateID' => $this->templateID,
 			'template' => $this->template
-		));
+		]);
 	}
 }

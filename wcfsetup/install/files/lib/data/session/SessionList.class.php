@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of sessions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.session
  * @category	Community Framework
+ *
+ * @method	Session		current()
+ * @method	Session[]	getObjects()
+ * @method	Session|null	search($objectID)
+ * @property	Session[]	$objects
  */
 class SessionList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\session\Session';
+	public $className = Session::class;
 }

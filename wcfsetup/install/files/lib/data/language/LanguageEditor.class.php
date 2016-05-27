@@ -22,20 +22,23 @@ use wcf\util\XML;
  * Provides functions to edit languages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language
  * @category	Community Framework
+ *
+ * @method	Language	getDecoratedObject()
+ * @mixin	Language
  */
 class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\language\Language';
+	protected static $baseClass = Language::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		parent::delete();
@@ -46,21 +49,21 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Updates the language files for the given category.
 	 * 
-	 * @param	\wcf\data\language\category\LanguageCategory	$languageCategory
+	 * @param	LanguageCategory	$languageCategory
 	 */
 	public function updateCategory(LanguageCategory $languageCategory) {
-		$this->writeLanguageFiles(array($languageCategory->languageCategoryID));
+		$this->writeLanguageFiles([$languageCategory->languageCategoryID]);
 	}
 	
 	/**
 	 * Write the languages files.
 	 * 
-	 * @param	array<integer>		$languageCategoryIDs
+	 * @param	integer[]		$languageCategoryIDs
 	 */
 	protected function writeLanguageFiles(array $languageCategoryIDs) {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("languageID = ?", array($this->languageID));
-		$conditions->add("languageCategoryID IN (?)", array($languageCategoryIDs));
+		$conditions->add("languageID = ?", [$this->languageID]);
+		$conditions->add("languageCategoryID IN (?)", [$languageCategoryIDs]);
 		
 		// get language items
 		$sql = "SELECT	languageItem, languageItemValue, languageCustomItemValue,
@@ -69,11 +72,11 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$items = array();
+		$items = [];
 		while ($row = $statement->fetchArray()) {
 			$languageCategoryID = $row['languageCategoryID'];
 			if (!isset($items[$languageCategoryID])) {
-				$items[$languageCategoryID] = array();
+				$items[$languageCategoryID] = [];
 			}
 			
 			$items[$languageCategoryID][$row['languageItem']] = ($row['languageUseCustomValue']) ? $row['languageCustomItemValue'] : $row['languageItemValue'];
@@ -111,10 +114,13 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Exports this language.
+	 * 
+	 * @param	integer[]	$packageIDArray
+	 * @param	boolean		$exportCustomValues
 	 */
-	public function export($packageIDArray = array(), $exportCustomValues = false) {
+	public function export($packageIDArray = [], $exportCustomValues = false) {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("language_item.languageID = ?", array($this->languageID));
+		$conditions->add("language_item.languageID = ?", [$this->languageID]);
 		
 		// bom
 		echo "\xEF\xBB\xBF";
@@ -123,9 +129,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd\" languagecode=\"".$this->languageCode."\" languagename=\"".$this->languageName."\" countrycode=\"".$this->countryCode."\">\n";
 		
 		// get items
-		$items = array();
+		$items = [];
 		if (!empty($packageIDArray)) {
-			$conditions->add("language_item.packageID IN (?)", array($packageIDArray));
+			$conditions->add("language_item.packageID IN (?)", [$packageIDArray]);
 		}
 		
 		$sql = "SELECT		languageItem, " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ", languageCategory
@@ -166,14 +172,14 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Imports language items from an XML file into this language.
 	 * Updates the relevant language files automatically.
 	 * 
-	 * @param	\wcf\util\XML	$xml
+	 * @param	XML		$xml
 	 * @param	integer		$packageID
 	 * @param	boolean		$updateFiles
 	 * @param	boolean		$updateExistingItems
 	 */
 	public function updateFromXML(XML $xml, $packageID, $updateFiles = true, $updateExistingItems = true) {
 		$xpath = $xml->xpath();
-		$usedCategories = array();
+		$usedCategories = [];
 		
 		// fetch categories
 		$categories = $xpath->query('/ns:language/ns:category');
@@ -185,7 +191,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// select existing categories
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("languageCategory IN (?)", array(array_keys($usedCategories)));
+		$conditions->add("languageCategory IN (?)", [array_keys($usedCategories)]);
 		
 		$sql = "SELECT	languageCategoryID, languageCategory
 			FROM	wcf".WCF_N."_language_category
@@ -200,14 +206,14 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		foreach ($usedCategories as $categoryName => $categoryID) {
 			if ($categoryID) continue;
 			
-			$category = LanguageCategoryEditor::create(array(
+			$category = LanguageCategoryEditor::create([
 				'languageCategory' => $categoryName
-			));
+			]);
 			$usedCategories[$categoryName] = $category->languageCategoryID;
 		}
 		
 		// loop through categories to import items
-		$itemData = array();
+		$itemData = [];
 		foreach ($categories as $category) {
 			$categoryName = $category->getAttribute('name');
 			$categoryID = $usedCategories[$categoryName];
@@ -303,8 +309,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific language code.
 	 * 
-	 * @param	\wcf\util\XML	$xml
+	 * @param	XML		$xml
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function readLanguageCodeFromXML(XML $xml) {
 		$rootNode = $xml->xpath()->query('/ns:language')->item(0);
@@ -321,8 +328,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific language name.
 	 * 
-	 * @param	\wcf\util\XML	$xml
+	 * @param	XML		$xml
 	 * @return	string		language name
+	 * @throws	SystemException
 	 */
 	public static function readLanguageNameFromXML(XML $xml) {
 		$rootNode = $xml->xpath()->query('/ns:language')->item(0);
@@ -339,8 +347,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific country code.
 	 * 
-	 * @param	\wcf\util\XML	$xml
+	 * @param	XML		$xml
 	 * @return	string		country code
+	 * @throws	SystemException
 	 */
 	public static function readCountryCodeFromXML(XML $xml) {
 		$rootNode = $xml->xpath()->query('/ns:language')->item(0);
@@ -358,11 +367,12 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Imports language items from an XML file into a new or a current language.
 	 * Updates the relevant language files automatically.
 	 * 
-	 * @param	\wcf\util\XML	$xml
+	 * @param	XML	        $xml
 	 * @param	integer		$packageID
-	 * @return	\wcf\data\language\LanguageEditor
+	 * @param       Language        $source
+	 * @return	LanguageEditor
 	 */
-	public static function importFromXML(XML $xml, $packageID) {
+	public static function importFromXML(XML $xml, $packageID, Language $source = null) {
 		$languageCode = self::readLanguageCodeFromXML($xml);
 		
 		// try to find an existing language with the given language code
@@ -372,11 +382,16 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		if ($language === null) {
 			$countryCode = self::readCountryCodeFromXML($xml);
 			$languageName = self::readLanguageNameFromXML($xml);
-			$language = self::create(array(
+			$language = self::create([
 				'countryCode' => $countryCode,
 				'languageCode' => $languageCode,
 				'languageName' => $languageName
-			));
+			]);
+			
+			if ($source) {
+				$sourceEditor = new LanguageEditor($source);
+				$sourceEditor->copy($language);
+			}
 		}
 		
 		// import xml
@@ -400,35 +415,35 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			FROM		wcf".WCF_N."_language_item
 			WHERE		languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$destination->languageID,
 			$this->languageID
-		));
+		]);
 	}
 	
 	/**
 	 * Updates the language items of a language category.
 	 * 
-	 * @param	array						$items
-	 * @param	\wcf\data\language\category\LanguageCategory	$category
-	 * @param	integer						$packageID
-	 * @param	array						$useCustom
+	 * @param	array			$items
+	 * @param	LanguageCategory	$category
+	 * @param	integer			$packageID
+	 * @param	array			$useCustom
 	 */
-	public function updateItems(array $items, LanguageCategory $category, $packageID = PACKAGE_ID, array $useCustom = array()) {
+	public function updateItems(array $items, LanguageCategory $category, $packageID = PACKAGE_ID, array $useCustom = []) {
 		if (empty($items)) return;
 		
 		// find existing language items
 		$languageItemList = new LanguageItemList();
-		$languageItemList->getConditionBuilder()->add("language_item.languageItem IN (?)", array(array_keys($items)));
-		$languageItemList->getConditionBuilder()->add("languageID = ?", array($this->languageID));
+		$languageItemList->getConditionBuilder()->add("language_item.languageItem IN (?)", [array_keys($items)]);
+		$languageItemList->getConditionBuilder()->add("languageID = ?", [$this->languageID]);
 		$languageItemList->readObjects();
 		
 		foreach ($languageItemList->getObjects() as $languageItem) {
 			$languageItemEditor = new LanguageItemEditor($languageItem);
-			$languageItemEditor->update(array(
+			$languageItemEditor->update([
 				'languageCustomItemValue' => $items[$languageItem->languageItem],
 				'languageUseCustomValue' => (isset($useCustom[$languageItem->languageItem])) ? 1 : 0
-			));
+			]);
 			
 			// remove updated items, leaving items to be created within
 			unset($items[$languageItem->languageItem]);
@@ -443,19 +458,19 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($items as $itemName => $itemValue) {
-				$statement->execute(array(
+				$statement->execute([
 					$this->languageID,
 					$itemName,
 					$itemValue,
 					0,
 					$category->languageCategoryID,
 					$packageID
-				));
+				]);
 			}
 		}
 		
 		// update the relevant language files
-		self::deleteLanguageFiles($this->languageID, $category->languageCategory, $packageID);
+		self::deleteLanguageFiles($this->languageID, $category->languageCategory);
 		
 		// delete relevant template compilations
 		$this->deleteCompiledTemplates();
@@ -469,14 +484,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		$sql = "UPDATE	wcf".WCF_N."_language
 			SET	isDefault = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			0
-		));
+		$statement->execute([0]);
 		
 		// set current language as default language
-		$this->update(array(
-			'isDefault' => 1
-		));
+		$this->update(['isDefault' => 1]);
 		
 		$this->clearCache();
 	}
@@ -489,120 +500,19 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	}
 	
 	/**
-	 * Searches in language items.
-	 * 
-	 * @param	string		$search		search query
-	 * @param	string		$replace
-	 * @param	integer		$languageID
-	 * @param	boolean		$useRegex
-	 * @param	boolean		$caseSensitive
-	 * @param	boolean		$searchVariableName
-	 * @return	array
-	 */
-	public static function search($search, $replace = null, $languageID = null, $useRegex = 0, $searchVariableName = 0) {
-		$results = array();
-		
-		// build condition
-		$conditionBuilder = new PreparedStatementConditionBuilder();
-		
-		// search field
-		$statementParameters = array();
-		if ($searchVariableName) $searchCondition = 'languageItem ';
-		else $searchCondition = 'languageItemValue ';
-		
-		// regex
-		if ($useRegex) {
-			$searchCondition .= "REGEXP ?";
-			$statementParameters[] = $search;
-		}
-		else {
-			$searchCondition .= "LIKE ?";
-			$statementParameters[] = '%'.$search.'%';
-		}
-		
-		if (!$searchVariableName) {
-			$searchCondition .= ' OR languageCustomItemValue ';
-			// regex
-			if ($useRegex) {
-				$searchCondition .= "REGEXP ?";
-				$statementParameters[] = $search;
-			}
-			else {
-				$searchCondition .= "LIKE ?";
-				$statementParameters[] = '%'.$search.'%';
-			}
-		}
-		
-		$conditionBuilder->add($searchCondition, $statementParameters);
-		if ($languageID !== null) $conditionBuilder->add("languageID = ?", array($languageID));
-		
-		// search
-		$updatedItems = array();
-		$sql = "SELECT		*
-			FROM		wcf".WCF_N."_language_item
-			".$conditionBuilder;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditionBuilder->getParameters());
-		
-		while ($row = $statement->fetchArray()) {
-			if ($replace !== null) {
-				// search and replace
-				$matches = 0;
-				if ($useRegex) {
-					$newValue = preg_replace('~'.$search.'~s', $replace, ($row['languageCustomItemValue'] ?: $row['languageItemValue']), -1, $matches);
-				}
-				else {
-					$newValue = StringUtil::replaceIgnoreCase($search, $replace, ($row['languageCustomItemValue'] ?: $row['languageItemValue']), $matches);
-				}
-				
-				if ($matches > 0) {
-					// update value
-					if (!isset($updatedItems[$row['languageID']])) $updatedItems[$row['languageID']] = array();
-					if (!isset($updatedItems[$row['languageID']][$row['languageCategoryID']])) $updatedItems[$row['languageID']][$row['languageCategoryID']] = array();
-					$updatedItems[$row['languageID']][$row['languageCategoryID']][$row['languageItem']] = $newValue;
-					
-					// save matches
-					$row['matches'] = $matches;
-				}
-			}
-			
-			$results[] = $row;
-		}
-		
-		// save updates
-		if (!empty($updatedItems)) {
-			foreach ($updatedItems as $languageID => $categories) {
-				$language = new LanguageEditor($languageID);
-				
-				foreach ($categories as $categoryID => $items) {
-					$useCustom = array();
-					foreach (array_keys($items) as $item) {
-						$useCustom[$item] = 1;
-					}
-					
-					$category = new LanguageCategory($categoryID);
-					$language->updateItems($items, $category, PACKAGE_ID, $useCustom);
-				}
-			}
-		}
-		
-		return $results;
-	}
-	
-	/**
 	 * Enables the multilingualism feature for given languages.
 	 * 
 	 * @param	array		$languageIDs
 	 */
-	public static function enableMultilingualism(array $languageIDs = array()) {
+	public static function enableMultilingualism(array $languageIDs = []) {
 		$sql = "UPDATE	wcf".WCF_N."_language
 			SET	hasContent = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(0));
+		$statement->execute([0]);
 		
 		if (!empty($languageIDs)) {
 			$sql = '';
-			$statementParameters = array();
+			$statementParameters = [];
 			foreach ($languageIDs as $languageID) {
 				if (!empty($sql)) $sql .= ',';
 				$sql .= '?';
@@ -619,7 +529,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		LanguageFactory::getInstance()->clearCache();

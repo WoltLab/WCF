@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Shows the smiley add form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -24,24 +24,24 @@ use wcf\util\StringUtil;
  */
 class SmileyAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'smileyAdd';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
+	public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_SMILEY');
+	public $neededModules = ['MODULE_SMILEY'];
 	
 	/**
 	 * primary smiley code
@@ -89,7 +89,7 @@ class SmileyAddForm extends AbstractForm {
 	 * data of the uploaded smiley file
 	 * @var	array()
 	 */
-	public $fileUpload = array();
+	public $fileUpload = [];
 	
 	/**
 	 * temporary name of the uploaded smiley file
@@ -98,14 +98,14 @@ class SmileyAddForm extends AbstractForm {
 	public $uploadedFilename = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'smileyTitle' => $this->smileyTitle,
 			'showOrder' => $this->showOrder,
@@ -115,11 +115,11 @@ class SmileyAddForm extends AbstractForm {
 			'smileyPath' => $this->smileyPath,
 			'categoryNodeList' => $this->categoryNodeTree->getIterator(),
 			'uploadedFilename' => $this->uploadedFilename
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -128,7 +128,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -137,7 +137,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -156,13 +156,13 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new SmileyAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new SmileyAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'smileyTitle' => $this->smileyTitle,
 				'smileyCode' => $this->smileyCode,
 				'aliases' => $this->aliases,
@@ -170,9 +170,9 @@ class SmileyAddForm extends AbstractForm {
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null,
 				'packageID' => 1
-			)),
+			]),
 			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/'.$this->uploadedFilename : ''
-		));
+		]);
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		$smileyEditor = new SmileyEditor($returnValues['returnValues']);
@@ -182,9 +182,9 @@ class SmileyAddForm extends AbstractForm {
 			I18nHandler::getInstance()->save('smileyTitle', 'wcf.smiley.title'.$smileyID, 'wcf.smiley', 1);
 			
 			// update title
-			$smileyEditor->update(array(
+			$smileyEditor->update([
 				'smileyTitle' => 'wcf.smiley.title'.$smileyID
-			));
+			]);
 		}
 		
 		// reset values
@@ -204,7 +204,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -265,7 +265,7 @@ class SmileyAddForm extends AbstractForm {
 		// validate smiley code and aliases against existing smilies
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		if (isset($this->smiley)) {
-			$conditionBuilder->add('smileyID <> ?', array($this->smiley->smileyID));
+			$conditionBuilder->add('smileyID <> ?', [$this->smiley->smileyID]);
 		}
 		$sql = "SELECT	smileyCode, aliases
 			FROM	wcf".WCF_N."_smiley
@@ -275,7 +275,7 @@ class SmileyAddForm extends AbstractForm {
 		
 		$aliases = explode("\n", $this->aliases);
 		while ($row = $statement->fetchArray()) {
-			$known = array();
+			$known = [];
 			if (!empty($row['aliases'])) {
 				$known = explode("\n", $row['aliases']);
 			}

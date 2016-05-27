@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of ACP templates.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.template
  * @category	Community Framework
+ *
+ * @method	ACPTemplate		current()
+ * @method	ACPTemplate[]		getObjects()
+ * @method	ACPTemplate|null	search($objectID)
+ * @property	ACPTemplate[]		$objects
  */
 class ACPTemplateList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\acp\template\ACPTemplate';
+	public $className = ACPTemplate::class;
 }

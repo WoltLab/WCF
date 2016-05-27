@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Shows the tag edit form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -20,14 +20,14 @@ use wcf\system\WCF;
  */
 class TagEditForm extends TagAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.tag';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.tag.canManageTag');
+	public $neededPermissions = ['admin.content.tag.canManageTag'];
 	
 	/**
 	 * tag id
@@ -42,7 +42,7 @@ class TagEditForm extends TagAddForm {
 	public $tagObj = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -55,15 +55,15 @@ class TagEditForm extends TagAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
 		// update tag
-		$this->objectAction = new TagAction(array($this->tagID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TagAction([$this->tagID], 'update', ['data' => array_merge($this->additionalFields, [
 			'name' => $this->name
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		if ($this->tagObj->synonymFor === null) {
@@ -72,10 +72,10 @@ class TagEditForm extends TagAddForm {
 				SET	synonymFor = ?
 				WHERE	synonymFor = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				null,
 				$this->tagID
-			));
+			]);
 			
 			$editor = new TagEditor($this->tagObj);
 			foreach ($this->synonyms as $synonym) {
@@ -84,11 +84,11 @@ class TagEditForm extends TagAddForm {
 				// find existing tag
 				$synonymObj = Tag::getTag($synonym, $this->tagObj->languageID);
 				if ($synonymObj === null) {
-					$synonymAction = new TagAction(array(), 'create', array('data' => array(
+					$synonymAction = new TagAction([], 'create', ['data' => [
 						'name' => $synonym,
 						'languageID' => $this->tagObj->languageID,
 						'synonymFor' => $this->tagID
-					)));
+					]]);
 					$synonymAction->executeAction();
 				}
 				else {
@@ -100,13 +100,13 @@ class TagEditForm extends TagAddForm {
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->languageID = $this->tagObj->languageID;
@@ -119,24 +119,24 @@ class TagEditForm extends TagAddForm {
 		}
 		
 		$synonymList = new TagList();
-		$synonymList->getConditionBuilder()->add('synonymFor = ?', array($this->tagObj->tagID));
+		$synonymList->getConditionBuilder()->add('synonymFor = ?', [$this->tagObj->tagID]);
 		$synonymList->readObjects();
-		$this->synonyms = array();
+		$this->synonyms = [];
 		foreach ($synonymList as $synonym) {
 			$this->synonyms[] = $synonym->name;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'tagObj' => $this->tagObj,
 			'action' => 'edit',
 			'synonym' => (($this->tagObj !== null && $this->tagObj->synonymFor) ? new Tag($this->tagObj->synonymFor) : null)
-		));
+		]);
 	}
 }

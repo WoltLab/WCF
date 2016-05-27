@@ -7,7 +7,7 @@ use wcf\system\SingletonFactory;
  * Manages the package cache.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package
@@ -16,12 +16,12 @@ use wcf\system\SingletonFactory;
 class PackageCache extends SingletonFactory {
 	/**
 	 * list of cached packages
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
-	protected $packages = array();
+	protected $packages = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->packages = PackageCacheBuilder::getInstance()->getData();
@@ -58,7 +58,7 @@ class PackageCache extends SingletonFactory {
 	/**
 	 * Returns all packages.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getPackages() {
 		return $this->packages;

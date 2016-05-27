@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Shows a list of language items.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 class LanguageItemListPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.item.list';
 	
@@ -30,9 +30,9 @@ class LanguageItemListPage extends AbstractPage {
 	public $count = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * language item list
@@ -74,13 +74,13 @@ class LanguageItemListPage extends AbstractPage {
 	 * available languages
 	 * @var	array
 	 */
-	public $availableLanguages = array();
+	public $availableLanguages = [];
 	
 	/**
 	 * available language categories
 	 * @var	array
 	 */
-	public $availableLanguageCategories = array();
+	public $availableLanguageCategories = [];
 	
 	/**
 	 * current page no
@@ -89,7 +89,7 @@ class LanguageItemListPage extends AbstractPage {
 	public $pageNo = 1;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -103,7 +103,7 @@ class LanguageItemListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -126,10 +126,10 @@ class LanguageItemListPage extends AbstractPage {
 		
 		// get items
 		$this->languageItemList = new LanguageItemList();
-		$this->languageItemList->getConditionBuilder()->add('languageID = ?', array($this->languageID));
-		if ($this->languageCategoryID) $this->languageItemList->getConditionBuilder()->add('languageCategoryID = ?', array($this->languageCategoryID));
-		if ($this->languageItem) $this->languageItemList->getConditionBuilder()->add('languageItem LIKE ?', array('%'.$this->languageItem.'%'));
-		if ($this->languageItemValue) $this->languageItemList->getConditionBuilder()->add('((languageUseCustomValue = 0 AND languageItemValue LIKE ?) OR languageCustomItemValue LIKE ?)', array('%'.$this->languageItemValue.'%', '%'.$this->languageItemValue.'%'));
+		$this->languageItemList->getConditionBuilder()->add('languageID = ?', [$this->languageID]);
+		if ($this->languageCategoryID) $this->languageItemList->getConditionBuilder()->add('languageCategoryID = ?', [$this->languageCategoryID]);
+		if ($this->languageItem) $this->languageItemList->getConditionBuilder()->add('languageItem LIKE ?', ['%'.$this->languageItem.'%']);
+		if ($this->languageItemValue) $this->languageItemList->getConditionBuilder()->add('((languageUseCustomValue = 0 AND languageItemValue LIKE ?) OR languageCustomItemValue LIKE ?)', ['%'.$this->languageItemValue.'%', '%'.$this->languageItemValue.'%']);
 		if ($this->hasCustomValue) $this->languageItemList->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
 		$this->languageItemList->sqlLimit = 100;
 		
@@ -147,12 +147,12 @@ class LanguageItemListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'objects' => $this->languageItemList,
 			'count' => $this->count,
 			'pageNo' => $this->pageNo,
@@ -163,6 +163,6 @@ class LanguageItemListPage extends AbstractPage {
 			'hasCustomValue' => $this->hasCustomValue,
 			'availableLanguages' => $this->availableLanguages,
 			'availableLanguageCategories' => $this->availableLanguageCategories
-		));
+		]);
 	}
 }

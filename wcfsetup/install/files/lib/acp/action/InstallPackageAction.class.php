@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractDialogAction;
+use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
@@ -13,7 +14,7 @@ use wcf\util\StringUtil;
  * Handles an AJAX-based package installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action
@@ -45,12 +46,12 @@ class InstallPackageAction extends AbstractDialogAction {
 	public $queueID = 0;
 	
 	/**
-	 * @see	\wcf\action\AbstractDialogAction::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'packageInstallationStep';
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -74,14 +75,14 @@ class InstallPackageAction extends AbstractDialogAction {
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $step->getNode());
 		
 		if ($step->hasDocument()) {
-			$this->data = array(
+			$this->data = [
 				'currentAction' => $this->getCurrentAction($queueID),
 				'innerTemplate' => $step->getTemplate(),
 				'node' => $step->getNode(),
 				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
 				'step' => 'install',
 				'queueID' => $queueID
-			);
+			];
 		}
 		else {
 			if ($step->getNode() == '') {
@@ -115,34 +116,34 @@ class InstallPackageAction extends AbstractDialogAction {
 					FROM	wcf".WCF_N."_application
 					WHERE	packageID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($packageID));
-				$application = $statement->fetchObject('wcf\data\application\Application');
+				$statement->execute([$packageID]);
+				$application = $statement->fetchObject(Application::class);
 				
 				// build redirect location
-				$location = $application->getPageURL() . 'acp/index.php?package-list/' . SID_ARG_2ND_NOT_ENCODED;
+				$location = $application->getPageURL() . 'acp/index.php?package-list/';
 				
 				WCF::resetZendOpcache();
 				
 				// show success
-				$this->data = array(
+				$this->data = [
 					'currentAction' => $this->getCurrentAction(null),
 					'progress' => 100,
 					'redirectLocation' => $location,
 					'step' => 'success'
-				);
+				];
 				return;
 			}
 			
 			WCF::resetZendOpcache();
 			
 			// continue with next node
-			$this->data = array(
+			$this->data = [
 				'currentAction' => $this->getCurrentAction($queueID),
 				'step' => 'install',
 				'node' => $step->getNode(),
 				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
 				'queueID' => $queueID
-			);
+			];
 		}
 	}
 	
@@ -161,19 +162,19 @@ class InstallPackageAction extends AbstractDialogAction {
 		$nextNode = $this->installation->nodeBuilder->getNextNode();
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $nextNode);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'installationType' => $this->queue->action,
 			'packageName' => $this->installation->queue->packageName
-		));
+		]);
 		
-		$this->data = array(
+		$this->data = [
 			'template' => WCF::getTPL()->fetch($this->templateName),
 			'step' => 'install',
 			'node' => $nextNode,
 			'currentAction' => $this->getCurrentAction($queueID),
 			'progress' => 0,
 			'queueID' => $queueID
-		);
+		];
 	}
 	
 	/**
@@ -182,14 +183,14 @@ class InstallPackageAction extends AbstractDialogAction {
 	 * @return	array
 	 */
 	protected function stepRollback() {
-		$this->data = array(
+		$this->data = [
 			'packageID' => $this->queue->packageID,
 			'step' => 'rollback'
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\action\AbstractDialogAction\AbstractDialogAction::validateStep()
+	 * @inheritDoc
 	 */
 	protected function validateStep() {
 		switch ($this->step) {
@@ -220,7 +221,7 @@ class InstallPackageAction extends AbstractDialogAction {
 			// build package name
 			$packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
 			$installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
-			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.'.$installationType, array('packageName' => $packageName));
+			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.'.$installationType, ['packageName' => $packageName]);
 		}
 		
 		return $currentAction;

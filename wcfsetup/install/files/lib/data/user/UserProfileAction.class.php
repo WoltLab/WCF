@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\bbcode\MessageParser;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -17,7 +18,7 @@ use wcf\util\StringUtil;
  * Executes user profile-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
@@ -25,9 +26,9 @@ use wcf\util\StringUtil;
  */
 class UserProfileAction extends UserAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getUserProfile', 'getDetailedActivityPointList');
+	protected $allowGuestAccess = ['getUserProfile', 'getDetailedActivityPointList'];
 	
 	/**
 	 * user profile object
@@ -48,9 +49,9 @@ class UserProfileAction extends UserAction {
 		if (isset($this->parameters['options']['enableBBCodes']) && WCF::getSession()->getPermission('user.signature.canUseBBCodes')) {
 			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($this->parameters['data']['message'], explode(',', WCF::getSession()->getPermission('user.signature.allowedBBCodes')));
 			if (!empty($disallowedBBCodes)) {
-				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', array(
+				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
 					'disallowedBBCodes' => $disallowedBBCodes
-				)));
+				]));
 			}
 		}
 	}
@@ -75,9 +76,9 @@ class UserProfileAction extends UserAction {
 		$message = StringUtil::trim($this->parameters['data']['message']);
 		$preview = MessageParser::getInstance()->parse($message, $enableSmilies, $enableHtml, $enableBBCodes, false);
 		
-		return array(
+		return [
 			'message' => $preview
-		);
+		];
 	}
 	
 	/**
@@ -99,7 +100,7 @@ class UserProfileAction extends UserAction {
 		
 		if ($userID) {
 			$userProfileList = new UserProfileList();
-			$userProfileList->getConditionBuilder()->add("user_table.userID = ?", array($userID));
+			$userProfileList->getConditionBuilder()->add("user_table.userID = ?", [$userID]);
 			$userProfileList->readObjects();
 			$userProfiles = $userProfileList->getObjects();
 			
@@ -114,10 +115,10 @@ class UserProfileAction extends UserAction {
 			WCF::getTPL()->assign('unknownUser', true);
 		}
 		
-		return array(
+		return [
 			'template' => WCF::getTPL()->fetch('userProfilePreview'),
 			'userID' => $userID
-		);
+		];
 	}
 	
 	/**
@@ -127,7 +128,7 @@ class UserProfileAction extends UserAction {
 		if (count($this->objectIDs) != 1) {
 			throw new UserInputException('objectIDs');
 		}
-		$this->userProfile = UserProfile::getUserProfile(reset($this->objectIDs));
+		$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject(reset($this->objectIDs));
 		
 		if ($this->userProfile === null) {
 			throw new UserInputException('objectIDs');
@@ -140,14 +141,14 @@ class UserProfileAction extends UserAction {
 	 * @return	array
 	 */
 	public function getDetailedActivityPointList() {
-		$activityPointObjectTypes = array();
+		$activityPointObjectTypes = [];
 		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.user.activityPointEvent') as $objectType) {
 			$activityPointObjectTypes[$objectType->objectTypeID] = $objectType;
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('userID = ?', array($this->userProfile->userID));
-		$conditionBuilder->add('objectTypeID IN (?)', array(array_keys($activityPointObjectTypes)));
+		$conditionBuilder->add('userID = ?', [$this->userProfile->userID]);
+		$conditionBuilder->add('objectTypeID IN (?)', [array_keys($activityPointObjectTypes)]);
 		
 		$sql = "SELECT	objectTypeID, activityPoints
 			FROM	wcf".WCF_N."_user_activity_point
@@ -158,15 +159,15 @@ class UserProfileAction extends UserAction {
 			$activityPointObjectTypes[$row['objectTypeID']]->activityPoints = $row['activityPoints'];
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'activityPointObjectTypes' => $activityPointObjectTypes,
 			'user' => $this->userProfile
-		));
+		]);
 		
-		return array(
+		return [
 			'template' => WCF::getTPL()->fetch('detailedActivityPointList'),
 			'userID' => $this->userProfile->userID
-		);
+		];
 	}
 	
 	/**
@@ -175,7 +176,7 @@ class UserProfileAction extends UserAction {
 	public function validateBeginEdit() {
 		if (!empty($this->objectIDs) && count($this->objectIDs) == 1) {
 			$userID = reset($this->objectIDs);
-			$this->userProfile = UserProfile::getUserProfile($userID);
+			$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
 		}
 		
 		if ($this->userProfile === null || !$this->userProfile->userID) {
@@ -199,15 +200,15 @@ class UserProfileAction extends UserAction {
 	 */
 	public function beginEdit() {
 		$optionTree = $this->getOptionHandler($this->userProfile->getDecoratedObject())->getOptionTree();
-		WCF::getTPL()->assign(array(
-			'errorType' => array(),
+		WCF::getTPL()->assign([
+			'errorType' => [],
 			'optionTree' => $optionTree,
 			'__userTitle' => $this->userProfile->userTitle
-		));
+		]);
 		
-		return array(
+		return [
 			'template' => WCF::getTPL()->fetch('userProfileAboutEditable')
-		);
+		];
 	}
 	
 	/**
@@ -217,7 +218,7 @@ class UserProfileAction extends UserAction {
 		$this->validateBeginEdit();
 		
 		if (!isset($this->parameters['values']) || !is_array($this->parameters['values'])) {
-			$this->parameters['values'] = array();
+			$this->parameters['values'] = [];
 		}
 		
 		if (isset($this->parameters['values']['__userTitle']) && !WCF::getSession()->getPermission('user.profile.canEditUserTitle')) {
@@ -260,23 +261,23 @@ class UserProfileAction extends UserAction {
 		// validation was successful
 		if (empty($errors)) {
 			$saveOptions = $optionHandler->save();
-			$data = array(
+			$data = [
 				'options' => $saveOptions
-			);
+			];
 			
 			// save user title
 			if ($userTitle !== null) {
-				$data['data'] = array(
+				$data['data'] = [
 					'userTitle' => $userTitle
-				);
+				];
 			}
 			
-			$userAction = new UserAction(array($this->userProfile->userID), 'update', $data);
+			$userAction = new UserAction([$this->userProfile->userID], 'update', $data);
 			$userAction->executeAction();
 			
 			// check if the user will be automatically added to new
 			// user groups because of the changed user options
-			UserGroupAssignmentHandler::getInstance()->checkUsers(array($this->userProfile->userID));
+			UserGroupAssignmentHandler::getInstance()->checkUsers([$this->userProfile->userID]);
 			
 			// return parsed template
 			$user = new User($this->userProfile->userID);
@@ -285,28 +286,28 @@ class UserProfileAction extends UserAction {
 			$optionHandler = $this->getOptionHandler($user, false);
 			
 			$options = $optionHandler->getOptionTree();
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'options' => $options,
 				'userID' => $this->userProfile->userID
-			));
+			]);
 			
-			return array(
+			return [
 				'success' => true,
 				'template' => WCF::getTPL()->fetch('userProfileAbout')
-			);
+			];
 		}
 		else {
 			// validation failed
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'errorType' => $errors,
 				'optionTree' => $optionHandler->getOptionTree(),
 				'__userTitle' => ($userTitle !== null ? $userTitle : $this->userProfile->userTitle)
-			));
+			]);
 			
-			return array(
+			return [
 				'success' => false,
 				'template' => WCF::getTPL()->fetch('userProfileAboutEditable')
-			);
+			];
 		}
 	}
 	
@@ -318,13 +319,13 @@ class UserProfileAction extends UserAction {
 			$this->readObjects();
 		}
 		
-		$resetUserIDs = array();
-		foreach ($this->objects as $user) {
+		$resetUserIDs = [];
+		foreach ($this->getObjects() as $user) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('user_rank.groupID IN (?)', array($user->getGroupIDs()));
-			$conditionBuilder->add('user_rank.requiredPoints <= ?', array($user->activityPoints));
-			if ($user->gender) $conditionBuilder->add('user_rank.requiredGender IN (?)', array(array(0, $user->gender)));
-			else $conditionBuilder->add('user_rank.requiredGender = ?', array(0));
+			$conditionBuilder->add('user_rank.groupID IN (?)', [$user->getGroupIDs()]);
+			$conditionBuilder->add('user_rank.requiredPoints <= ?', [$user->activityPoints]);
+			if ($user->gender) $conditionBuilder->add('user_rank.requiredGender IN (?)', [[0, $user->gender]]);
+			else $conditionBuilder->add('user_rank.requiredGender = ?', [0]);
 			
 			$sql = "SELECT		user_rank.rankID
 				FROM		wcf".WCF_N."_user_rank user_rank
@@ -337,13 +338,13 @@ class UserProfileAction extends UserAction {
 			$row = $statement->fetchArray();
 			if ($row === false) {
 				if ($user->rankID) {
-					$user->update(array('rankID' => null));
+					$user->update(['rankID' => null]);
 					$resetUserIDs[] = $user->userID;
 				}
 			}
 			else {
 				if ($row['rankID'] != $user->rankID) {
-					$user->update(array('rankID' => $row['rankID']));
+					$user->update(['rankID' => $row['rankID']]);
 					$resetUserIDs[] = $user->userID;
 				}
 			}
@@ -362,10 +363,10 @@ class UserProfileAction extends UserAction {
 			$this->readObjects();
 		}
 		
-		$userToGroup = array();
-		foreach ($this->objects as $user) {
+		$userToGroup = [];
+		foreach ($this->getObjects() as $user) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('groupID IN (?)', array($user->getGroupIDs()));
+			$conditionBuilder->add('groupID IN (?)', [$user->getGroupIDs()]);
 			
 			$sql = "SELECT		groupID
 				FROM		wcf".WCF_N."_user_group
@@ -387,10 +388,10 @@ class UserProfileAction extends UserAction {
 			
 			WCF::getDB()->beginTransaction();
 			foreach ($userToGroup as $userID => $groupID) {
-				$statement->execute(array(
+				$statement->execute([
 					$groupID,
 					$userID
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}

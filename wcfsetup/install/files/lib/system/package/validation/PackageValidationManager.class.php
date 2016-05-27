@@ -9,7 +9,7 @@ use wcf\system\SingletonFactory;
  * Manages recursive validation of package archives.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.validation
@@ -18,9 +18,9 @@ use wcf\system\SingletonFactory;
 class PackageValidationManager extends SingletonFactory {
 	/**
 	 * list of known package installation plugins
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $packageInstallationPlugins = array();
+	protected $packageInstallationPlugins = [];
 	
 	/**
 	 * package validation archive object
@@ -30,9 +30,9 @@ class PackageValidationManager extends SingletonFactory {
 	
 	/**
 	 * virtual package list containing package => packageVersion
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $virtualPackageList = array();
+	protected $virtualPackageList = [];
 	
 	/**
 	 * validation will only check if the primary package looks like it can be installed or updated
@@ -53,7 +53,7 @@ class PackageValidationManager extends SingletonFactory {
 	const VALIDATION_EXCLUSION = 2;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$pipList = new PackageInstallationPluginList();
@@ -74,7 +74,7 @@ class PackageValidationManager extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function validate($archive, $deepInspection) {
-		$this->virtualPackageList = array();
+		$this->virtualPackageList = [];
 		$this->packageValidationArchive = new PackageValidationArchive($archive);
 		
 		if ($deepInspection) {
@@ -138,7 +138,7 @@ class PackageValidationManager extends SingletonFactory {
 	 */
 	public function getPackageValidationArchiveList() {
 		$packageValidationArchive = new PackageValidationArchive('');
-		$packageValidationArchive->setChildren(array($this->packageValidationArchive));
+		$packageValidationArchive->setChildren([$this->packageValidationArchive]);
 		
 		return new \RecursiveIteratorIterator($packageValidationArchive, \RecursiveIteratorIterator::SELF_FIRST);
 	}
@@ -178,14 +178,14 @@ class PackageValidationManager extends SingletonFactory {
 	 * 
 	 * Please be aware that unknown PIPs will silently ignored and cause no error.
 	 * 
-	 * @param	\wcf\data\package\PackageArchive	$archive
-	 * @param	string					$pip
-	 * @param	string					$instruction
+	 * @param	PackageArchive		$archive
+	 * @param	string			$pip
+	 * @param	string			$instruction
 	 * @return	boolean
 	 */
 	public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction) {
 		if (isset($this->packageInstallationPlugins[$pip])) {
-			return call_user_func(array($this->packageInstallationPlugins[$pip], 'isValid'), $archive, $instruction);
+			return call_user_func([$this->packageInstallationPlugins[$pip], 'isValid'], $archive, $instruction);
 		}
 		
 		return true;

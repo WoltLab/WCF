@@ -1,14 +1,16 @@
 <?php
 namespace wcf\system\image;
 use wcf\system\exception\SystemException;
+use wcf\system\image\adapter\GDImageAdapter;
 use wcf\system\image\adapter\ImageAdapter;
+use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\SingletonFactory;
 
 /**
  * Handler for all available image adapters.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.image
@@ -17,12 +19,12 @@ use wcf\system\SingletonFactory;
 class ImageHandler extends SingletonFactory {
 	/**
 	 * list of valid image adapters.
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $imageAdapters = array(
-		'gd' => 'wcf\system\image\adapter\GDImageAdapter',
-		'imagick' => 'wcf\system\image\adapter\ImagickImageAdapter'
-	);
+	protected $imageAdapters = [
+		'gd' => GDImageAdapter::class,
+		'imagick' => ImagickImageAdapter::class
+	];
 	
 	/**
 	 * image adapter class name
@@ -31,7 +33,7 @@ class ImageHandler extends SingletonFactory {
 	protected $adapterClassName = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		if (!isset($this->imageAdapters[IMAGE_ADAPTER_TYPE])) {
@@ -39,7 +41,7 @@ class ImageHandler extends SingletonFactory {
 		}
 		
 		$imageAdapter = $this->imageAdapters[IMAGE_ADAPTER_TYPE];
-		$isSupported = call_user_func(array($imageAdapter, 'isSupported'));
+		$isSupported = call_user_func([$imageAdapter, 'isSupported']);
 		
 		// fallback to GD if image adapter is not available
 		if (!$isSupported) {

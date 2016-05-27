@@ -126,13 +126,14 @@ final class Regex {
 	 * last matches
 	 * @var	array
 	 */
-	private $matches = array();
+	private $matches = [];
 	
 	/**
 	 * Creates a regex.
 	 * 
 	 * @param	string		$regex
 	 * @param	integer		$modifier
+	 * @throws	SystemException
 	 */
 	public function __construct($regex, $modifier = self::MODIFIER_NONE) {
 		// escape delimiter
@@ -155,14 +156,14 @@ final class Regex {
 	}
 	
 	/**
-	 * @see	Regex::__construct()
+	 * @inheritDoc
 	 */
 	public static function compile($regex, $modifier = self::MODIFIER_NONE) {
 		return new self($regex, $modifier);
 	}
 	
 	/**
-	 * @see	Regex::match()
+	 * @inheritDoc
 	 */
 	public function __invoke($string) {
 		return $this->match($string);
@@ -228,7 +229,7 @@ final class Regex {
 	 * 
 	 * @param	string		$string
 	 * @param	integer		$flags
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function split($string, $flags = self::FLAGS_DEFAULT) {
 		$splitFlags = 0;
@@ -245,6 +246,8 @@ final class Regex {
 	 * 
 	 * @param	mixed		$result
 	 * @param	string		$method
+	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	private function checkResult($result, $method = '') {
 		if ($result === false || $result === null) {

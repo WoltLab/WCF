@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Shows the form to edit an existing notice.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -21,7 +21,7 @@ use wcf\system\WCF;
  */
 class NoticeEditForm extends NoticeAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.notice';
 	
@@ -44,22 +44,22 @@ class NoticeEditForm extends NoticeAddForm {
 	public $resetIsDismissed = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'notice' => $this->notice,
 			'resetIsDismissed' => $this->resetIsDismissed
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -80,7 +80,7 @@ class NoticeEditForm extends NoticeAddForm {
 			$this->showOrder = $this->notice->showOrder;
 			
 			$conditions = $this->notice->getConditions();
-			$conditionsByObjectTypeID = array();
+			$conditionsByObjectTypeID = [];
 			foreach ($conditions as $condition) {
 				$conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
 			}
@@ -103,7 +103,7 @@ class NoticeEditForm extends NoticeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -112,7 +112,7 @@ class NoticeEditForm extends NoticeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -125,13 +125,13 @@ class NoticeEditForm extends NoticeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new NoticeAction(array($this->notice), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new NoticeAction([$this->notice], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 				'isDisabled' => $this->isDisabled,
 				'isDismissible' => $this->isDismissible,
@@ -139,8 +139,8 @@ class NoticeEditForm extends NoticeAddForm {
 				'noticeName' => $this->noticeName,
 				'noticeUseHtml' => $this->noticeUseHtml,
 				'showOrder' => $this->showOrder
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		if (I18nHandler::getInstance()->isPlainValue('notice')) {
@@ -153,7 +153,7 @@ class NoticeEditForm extends NoticeAddForm {
 		}
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
 			foreach ($groupedObjectTypes as $objectTypes) {
 				if (is_array($objectTypes)) {
@@ -171,9 +171,9 @@ class NoticeEditForm extends NoticeAddForm {
 			$sql = "DELETE FROM	wcf".WCF_N."_notice_dismissed
 				WHERE		noticeID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->notice->noticeID
-			));
+			]);
 			
 			$this->resetIsDismissed = 0;
 			

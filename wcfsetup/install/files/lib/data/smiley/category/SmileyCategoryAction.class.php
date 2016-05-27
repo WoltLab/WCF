@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\smiley\category;
+use wcf\data\category\Category;
+use wcf\data\category\CategoryEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
@@ -8,22 +10,26 @@ use wcf\system\WCF;
  * Executes smiley category-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.smiley.category
  * @category	Community Framework
+ * 
+ * @method	Category		create()
+ * @method	CategoryEditor[]	getObjects()
+ * @method	CategoryEditor		getSingleObject()
  */
 class SmileyCategoryAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\category\CategoryEditor';
+	protected $className = CategoryEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getSmilies');
+	protected $allowGuestAccess = ['getSmilies'];
 	
 	/**
 	 * active smiley category
@@ -48,13 +54,13 @@ class SmileyCategoryAction extends AbstractDatabaseObjectAction {
 	public function getSmilies() {
 		$this->smileyCategory->loadSmilies();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'smilies' => $this->smileyCategory
-		));
+		]);
 		
-		return array(
+		return [
 			'smileyCategoryID' => $this->smileyCategory->categoryID,
 			'template' => WCF::getTPL()->fetch('__messageFormSmilies')
-		);
+		];
 	}
 }

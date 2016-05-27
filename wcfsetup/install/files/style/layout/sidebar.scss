@@ -1,0 +1,95 @@
+/* legacy styling for sidebars (deprecated) */
+.sidebar {
+	fieldset {
+		margin-top: 0;
+		
+		> legend {
+			float: left;
+			width: 100%;
+			
+			& + * {
+				clear: left;
+			}
+		}
+	}
+	
+	.boxContainer {
+		> div,
+		> fieldset,
+		> section:not(.box) {
+			background-color: $wcfSidebarBackground;
+			
+			@include screen-md-up {
+				padding: 20px;
+			}
+			
+			@include screen-sm-down {
+				padding: 20px 10px;
+			}
+			
+			&:not(:first-child) {
+				margin-top: 30px;
+			}
+		}
+		
+		section:not(.box) > h1,
+		fieldset > legend {
+			color: $wcfSidebarHeadlineText;
+			border-bottom-width: 0;
+			margin-bottom: 15px;
+			padding: 0;
+			
+			@include wcfFontHeadline;
+			
+			> a {
+				color: $wcfSidebarHeadlineLink;
+				
+				> .icon {
+					color: $wcfSidebarHeadlineLink;
+				}
+				
+				&:hover {
+					color: $wcfSidebarHeadlineLinkActive;
+					
+					> .icon {
+						color: $wcfSidebarHeadlineLinkActive;
+					}
+				}
+			}
+		}
+	}
+	
+	.formSubmit:not(:first-child) {
+		margin-top: 20px;
+	}
+	
+	.boxContainer {
+		> div,
+		> fieldset,
+		> section {
+			.boxContent {
+				@include clearfix;
+			}
+			
+			.button.more {
+				float: right;
+				margin-top: 15px;
+			}
+		}
+	}
+	
+	.boxTitle {
+		.badge {
+			float: right;
+			top: 2px;
+		}
+	}
+	
+	.sidebarBoxList {
+		> li {
+			&:not(:last-child) {
+				margin-bottom: 10px;
+			}
+		}
+	}
+}

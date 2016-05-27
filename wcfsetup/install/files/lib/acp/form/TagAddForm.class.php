@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the tag add form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -22,25 +22,25 @@ use wcf\util\StringUtil;
  */
 class TagAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.tag.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.tag.canManageTag');
+	public $neededPermissions = ['admin.content.tag.canManageTag'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_TAGGING');
+	public $neededModules = ['MODULE_TAGGING'];
 	
 	/**
 	 * list of available languages
 	 * @var	array
 	 */
-	public $availableLanguages = array();
+	public $availableLanguages = [];
 	
 	/**
 	 * name value
@@ -56,12 +56,12 @@ class TagAddForm extends AbstractForm {
 	
 	/**
 	 * synonyms
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $synonyms = array();
+	public $synonyms = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -70,7 +70,7 @@ class TagAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -83,7 +83,7 @@ class TagAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -120,7 +120,7 @@ class TagAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -142,16 +142,16 @@ class TagAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save tag
-		$this->objectAction = new TagAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TagAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'name' => $this->name,
 			'languageID' => $this->languageID
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		$editor = new TagEditor($returnValues['returnValues']);
@@ -162,11 +162,11 @@ class TagAddForm extends AbstractForm {
 			// find existing tag
 			$synonymObj = Tag::getTag($synonym, $this->languageID);
 			if ($synonymObj === null) {
-				$synonymAction = new TagAction(array(), 'create', array('data' => array(
+				$synonymAction = new TagAction([], 'create', ['data' => [
 					'name' => $synonym,
 					'languageID' => $this->languageID,
 					'synonymFor' => $editor->tagID
-				)));
+				]]);
 				$synonymAction->executeAction();
 			}
 			else {
@@ -178,26 +178,26 @@ class TagAddForm extends AbstractForm {
 		
 		// reset values
 		$this->name = '';
-		$this->synonyms = array();
+		$this->synonyms = [];
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'availableLanguages' => $this->availableLanguages,
 			'name' => $this->name,
 			'languageID' => $this->languageID,
 			'synonyms' => $this->synonyms
-		));
+		]);
 	}
 }

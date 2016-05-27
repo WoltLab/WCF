@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Shows the label group edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -20,14 +20,14 @@ use wcf\system\WCF;
  */
 class LabelGroupEditForm extends LabelGroupAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.label';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.label.canManageLabel');
+	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * group id
@@ -42,7 +42,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	public $group = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -55,7 +55,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -70,12 +70,12 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		}
 		
 		// update label
-		$this->objectAction = new LabelGroupAction(array($this->groupID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new LabelGroupAction([$this->groupID], 'update', ['data' => array_merge($this->additionalFields, [
 			'forceSelection' => ($this->forceSelection ? 1 : 0),
 			'groupName' => $this->groupName,
 			'groupDescription' => $this->groupDescription,
 			'showOrder' => $this->showOrder
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		// update acl
@@ -92,13 +92,13 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -114,22 +114,22 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'groupID' => $this->groupID,
 			'labelGroup' => $this->group
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\LabelGroupAddForm::setObjectTypeRelations()
+	 * @inheritDoc
 	 */
 	protected function setObjectTypeRelations($data = null) {
 		if (empty($_POST)) {
@@ -138,12 +138,12 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 				FROM	wcf".WCF_N."_label_group_to_object
 				WHERE	groupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->groupID));
+			$statement->execute([$this->groupID]);
 			
-			$data = array();
+			$data = [];
 			while ($row = $statement->fetchArray()) {
 				if (!isset($data[$row['objectTypeID']])) {
-					$data[$row['objectTypeID']] = array();
+					$data[$row['objectTypeID']] = [];
 				}
 				
 				// prevent NULL values which confuse isset()

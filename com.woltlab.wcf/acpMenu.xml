@@ -1,596 +1,664 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpMenu.xsd">
 	<import>
-		<acpmenuitem name="wcf.acp.menu.link.system">
+		<!-- configuration -->
+		<acpmenuitem name="wcf.acp.menu.link.configuration">
 			<showorder>1</showorder>
+			<icon>fa-wrench</icon>
 		</acpmenuitem>
 		
-		<!-- options -->
-		<acpmenuitem name="wcf.acp.menu.link.option">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>1</showorder>
-			<permissions>admin.system.canEditOption</permissions>
-		</acpmenuitem>
+			<!-- option -->
+			<acpmenuitem name="wcf.acp.menu.link.option">
+				<parent>wcf.acp.menu.link.configuration</parent>
+				<showorder>1</showorder>
+				<permissions>admin.configuration.canEditOption</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.option.category">
+				<parent>wcf.acp.menu.link.option</parent>
+				<showorder>1</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.option.management">
+				<parent>wcf.acp.menu.link.option</parent>
+				<showorder>2</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.activityPoint">
+				<parent>wcf.acp.menu.link.option</parent>
+				<controller><![CDATA[wcf\acp\form\UserActivityPointOptionForm]]></controller>
+				<permissions>admin.user.canEditActivityPoints</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.notificationPresetSettings">
+				<parent>wcf.acp.menu.link.option</parent>
+				<controller><![CDATA[wcf\acp\form\NotificationPresetSettingsForm]]></controller>
+				<permissions>admin.user.canEditUser</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.userOptionDefaults">
+				<controller><![CDATA[wcf\acp\form\UserOptionSetDefaultsForm]]></controller>
+				<parent>wcf.acp.menu.link.option</parent>
+				<permissions>admin.user.canManageUserOption</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
+				<parent>wcf.acp.menu.link.option</parent>
+				<controller><![CDATA[wcf\acp\page\CaptchaQuestionListPage]]></controller>
+				<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
+				<parent>wcf.acp.menu.link.captcha.question.list</parent>
+				<controller><![CDATA[wcf\acp\form\CaptchaQuestionAddForm]]></controller>
+				<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /option -->
+			
+			<!-- package -->
+			<acpmenuitem name="wcf.acp.menu.link.package">
+				<parent>wcf.acp.menu.link.configuration</parent>
+				<showorder>2</showorder>
+				<permissions>admin.configuration.package.canInstallPackage,admin.configuration.package.canUpdatePackage,admin.configuration.package.canUninstallPackage,admin.configuration.package.canEditServer</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.application.management">
+				<controller><![CDATA[wcf\acp\page\ApplicationManagementPage]]></controller>
+				<parent>wcf.acp.menu.link.package</parent>
+				<permissions>admin.configuration.canManageApplication</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.package.list">
+				<controller><![CDATA[wcf\acp\page\PackageListPage]]></controller>
+				<parent>wcf.acp.menu.link.package</parent>
+				<permissions>admin.configuration.package.canUpdatePackage,admin.configuration.package.canUninstallPackage</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.package.install">
+				<controller><![CDATA[wcf\acp\form\PackageStartInstallForm]]></controller>
+				<parent>wcf.acp.menu.link.package.list</parent>
+				<permissions>admin.configuration.package.canInstallPackage</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.package.server.list">
+				<controller><![CDATA[wcf\acp\page\PackageUpdateServerListPage]]></controller>
+				<parent>wcf.acp.menu.link.package</parent>
+				<permissions>admin.configuration.package.canEditServer</permissions>
+			</acpmenuitem>
+			<!-- /package -->
 		
-		<acpmenuitem name="wcf.acp.menu.link.option.category">
-			<parent>wcf.acp.menu.link.option</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
+		<!-- /configuration -->
 		
-		<acpmenuitem name="wcf.acp.menu.link.option.management">
-			<parent>wcf.acp.menu.link.option</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.option.importAndExport">
-			<parent>wcf.acp.menu.link.option.management</parent>
-			<controller><![CDATA[wcf\acp\form\OptionImportForm]]></controller>
-		</acpmenuitem>
-		<!-- /options -->
-		
-		<!-- packages -->
-		<acpmenuitem name="wcf.acp.menu.link.package">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>2</showorder>
-			<permissions>admin.system.package.canInstallPackage,admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage,admin.system.package.canEditServer</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.application.management">
-			<controller><![CDATA[wcf\acp\page\ApplicationManagementPage]]></controller>
-			<parent>wcf.acp.menu.link.package</parent>
-			<permissions>admin.system.canManageApplication</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.package.list">
-			<controller><![CDATA[wcf\acp\page\PackageListPage]]></controller>
-			<parent>wcf.acp.menu.link.package</parent>
-			<permissions>admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.package.install">
-			<controller><![CDATA[wcf\acp\form\PackageStartInstallForm]]></controller>
-			<parent>wcf.acp.menu.link.package</parent>
-			<permissions>admin.system.package.canInstallPackage</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.package.server.list">
-			<controller><![CDATA[wcf\acp\page\PackageUpdateServerListPage]]></controller>
-			<parent>wcf.acp.menu.link.package</parent>
-			<permissions>admin.system.package.canEditServer</permissions>
-		</acpmenuitem>
-		<!-- /packages -->
-		
-		<!-- cronjobs -->
-		<acpmenuitem name="wcf.acp.menu.link.cronjob">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
-			<controller><![CDATA[wcf\acp\page\CronjobListPage]]></controller>
-			<parent>wcf.acp.menu.link.cronjob</parent>
-			<permissions>admin.system.canManageCronjob</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
-			<controller><![CDATA[wcf\acp\form\CronjobAddForm]]></controller>
-			<parent>wcf.acp.menu.link.cronjob</parent>
-			<permissions>admin.system.canManageCronjob</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<!-- /cronjobs -->
-		
-		<acpmenuitem name="wcf.acp.menu.link.captcha">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>4</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
-			<parent>wcf.acp.menu.link.captcha</parent>
-			<controller><![CDATA[wcf\acp\page\CaptchaQuestionListPage]]></controller>
-			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
-			<parent>wcf.acp.menu.link.captcha</parent>
-			<controller><![CDATA[wcf\acp\form\CaptchaQuestionAddForm]]></controller>
-			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
-		</acpmenuitem>
-		
-		<!-- maintenance -->
-		<acpmenuitem name="wcf.acp.menu.link.maintenance">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>5</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.maintenance.cache">
-			<controller><![CDATA[wcf\acp\page\CacheListPage]]></controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.system.canManageApplication</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.maintenance.rebuildData">
-			<controller><![CDATA[wcf\acp\page\RebuildDataPage]]></controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.system.canRebuildData</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.maintenance.import">
-			<controller><![CDATA[wcf\acp\form\DataImportForm]]></controller>
-			<parent>wcf.acp.menu.link.maintenance</parent>
-			<permissions>admin.system.canImportData</permissions>
-		</acpmenuitem>
-		<!-- /maintenance -->
-		
-		<!-- log -->
-		<acpmenuitem name="wcf.acp.menu.link.log">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>6</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.session">
-			<controller><![CDATA[wcf\acp\page\ACPSessionLogListPage]]></controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.system.canViewLog</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.cronjob">
-			<controller><![CDATA[wcf\acp\page\CronjobLogListPage]]></controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.system.canManageCronjob</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.exception">
-			<controller><![CDATA[wcf\acp\page\ExceptionLogViewPage]]></controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.system.canViewLog</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.stat">
-			<controller><![CDATA[wcf\acp\page\StatPage]]></controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.system.canViewLog</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.authentication.failure">
-			<controller><![CDATA[wcf\acp\page\UserAuthenticationFailureListPage]]></controller>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.system.canViewLog</permissions>
-			<options>enable_user_authentication_failure</options>
-		</acpmenuitem>
-		<!-- /log -->
-		
+		<!-- user -->
 		<acpmenuitem name="wcf.acp.menu.link.user">
 			<showorder>2</showorder>
+			<icon>fa-users</icon>
 		</acpmenuitem>
 		
-		<!-- users -->
-		<acpmenuitem name="wcf.acp.menu.link.user.management">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
+			<!-- management -->
+			<acpmenuitem name="wcf.acp.menu.link.user.management">
+				<parent>wcf.acp.menu.link.user</parent>
+				<showorder>1</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.user.list">
+				<controller><![CDATA[wcf\acp\page\UserListPage]]></controller>
+				<parent>wcf.acp.menu.link.user.management</parent>
+				<permissions>admin.user.canSearchUser</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.user.search">
+				<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
+				<parent>wcf.acp.menu.link.user.list</parent>
+				<permissions>admin.user.canSearchUser</permissions>
+				<icon>fa-search</icon>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.user.add">
+				<controller><![CDATA[wcf\acp\form\UserAddForm]]></controller>
+				<parent>wcf.acp.menu.link.user.list</parent>
+				<permissions>admin.user.canAddUser</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.user.bulkProcessing">
+				<controller><![CDATA[wcf\acp\form\UserBulkProcessingForm]]></controller>
+				<parent>wcf.acp.menu.link.user.management</parent>
+				<permissions>admin.user.canEditUser,admin.user.canDeleteUser,admin.user.canMailUser</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.user.mail">
+				<controller><![CDATA[wcf\acp\form\UserMailForm]]></controller>
+				<link><![CDATA[action=all]]></link>
+				<parent>wcf.acp.menu.link.user.management</parent>
+				<permissions>admin.user.canMailUser</permissions>
+			</acpmenuitem>
+			<!-- /management -->
+			
+			<!-- group -->
+			<acpmenuitem name="wcf.acp.menu.link.group">
+				<parent>wcf.acp.menu.link.user</parent>
+				<showorder>2</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.group.list">
+				<controller><![CDATA[wcf\acp\page\UserGroupListPage]]></controller>
+				<parent>wcf.acp.menu.link.group</parent>
+				<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.group.add">
+				<controller><![CDATA[wcf\acp\form\UserGroupAddForm]]></controller>
+				<parent>wcf.acp.menu.link.group.list</parent>
+				<permissions>admin.user.canAddGroup</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.group.mail">
+				<controller><![CDATA[wcf\acp\form\UserMailForm]]></controller>
+				<link><![CDATA[action=group]]></link>
+				<parent>wcf.acp.menu.link.group</parent>
+				<permissions>admin.user.canMailUser</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.group.assignment">
+				<controller><![CDATA[wcf\acp\page\UserGroupAssignmentListPage]]></controller>
+				<parent>wcf.acp.menu.link.group</parent>
+				<permissions>admin.user.canManageGroupAssignment</permissions>
+			</acpmenuitem>
+			<!-- /group -->
+			
+			<!-- rank -->
+			<acpmenuitem name="wcf.acp.menu.link.user.rank">
+				<parent>wcf.acp.menu.link.user</parent>
+				<options>module_user_rank</options>
+				<showorder>3</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.user.rank.list">
+				<parent>wcf.acp.menu.link.user.rank</parent>
+				<controller><![CDATA[wcf\acp\page\UserRankListPage]]></controller>
+				<permissions>admin.user.rank.canManageRank</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.user.rank.add">
+				<parent>wcf.acp.menu.link.user.rank.list</parent>
+				<controller><![CDATA[wcf\acp\form\UserRankAddForm]]></controller>
+				<permissions>admin.user.rank.canManageRank</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /rank -->
+			
+			<!-- option -->
+			<acpmenuitem name="wcf.acp.menu.link.user.option">
+				<parent>wcf.acp.menu.link.user</parent>
+				<showorder>4</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.user.option.list">
+				<controller><![CDATA[wcf\acp\page\UserOptionListPage]]></controller>
+				<parent>wcf.acp.menu.link.user.option</parent>
+				<permissions>admin.user.canManageUserOption</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.user.option.add">
+				<controller><![CDATA[wcf\acp\form\UserOptionAddForm]]></controller>
+				<parent>wcf.acp.menu.link.user.option.list</parent>
+				<permissions>admin.user.canManageUserOption</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.user.option.category.list">
+				<controller><![CDATA[wcf\acp\page\UserOptionCategoryListPage]]></controller>
+				<parent>wcf.acp.menu.link.user.option</parent>
+				<permissions>admin.user.canManageUserOption</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.user.option.category.add">
+				<controller><![CDATA[wcf\acp\form\UserOptionCategoryAddForm]]></controller>
+				<parent>wcf.acp.menu.link.user.option.category.list</parent>
+				<permissions>admin.user.canManageUserOption</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /option -->
+			
+			<!-- notice -->
+			<acpmenuitem name="wcf.acp.menu.link.notice">
+				<parent>wcf.acp.menu.link.user</parent>
+				<showorder>5</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.notice.list">
+				<controller><![CDATA[wcf\acp\page\NoticeListPage]]></controller>
+				<parent>wcf.acp.menu.link.notice</parent>
+				<permissions>admin.notice.canManageNotice</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.notice.add">
+				<controller><![CDATA[wcf\acp\form\NoticeAddForm]]></controller>
+				<parent>wcf.acp.menu.link.notice.list</parent>
+				<permissions>admin.notice.canManageNotice</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /notice -->
+			
+			<!-- paid subscription -->
+			<acpmenuitem name="wcf.acp.menu.link.paidSubscription">
+				<parent>wcf.acp.menu.link.user</parent>
+				<showorder>6</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.paidSubscription.list">
+				<controller><![CDATA[wcf\acp\page\PaidSubscriptionListPage]]></controller>
+				<parent>wcf.acp.menu.link.paidSubscription</parent>
+				<permissions>admin.paidSubscription.canManageSubscription</permissions>
+				<options>module_paid_subscription</options>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.paidSubscription.user.list">
+				<controller><![CDATA[wcf\acp\page\PaidSubscriptionUserListPage]]></controller>
+				<parent>wcf.acp.menu.link.paidSubscription</parent>
+				<permissions>admin.paidSubscription.canManageSubscription</permissions>
+				<options>module_paid_subscription</options>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.paidSubscription.transactionLog.list">
+				<controller><![CDATA[wcf\acp\page\PaidSubscriptionTransactionLogListPage]]></controller>
+				<parent>wcf.acp.menu.link.paidSubscription</parent>
+				<permissions>admin.paidSubscription.canManageSubscription</permissions>
+				<options>module_paid_subscription</options>
+			</acpmenuitem>
+			<!-- /paid subscription -->
 		
-		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canSearchUser</permissions>
-		</acpmenuitem>
+		<!-- /user -->
 		
-		<acpmenuitem name="wcf.acp.menu.link.user.list">
-			<controller><![CDATA[wcf\acp\page\UserListPage]]></controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canSearchUser</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.add">
-			<controller><![CDATA[wcf\acp\form\UserAddForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canAddUser</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.bulkProcessing">
-			<controller><![CDATA[wcf\acp\form\UserBulkProcessingForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canEditUser,admin.user.canDeleteUser,admin.user.canMailUser</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.mail">
-			<controller><![CDATA[wcf\acp\form\UserMailForm]]></controller>
-			<link><![CDATA[action=all]]></link>
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<permissions>admin.user.canMailUser</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.activityPoint">
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<controller><![CDATA[wcf\acp\form\UserActivityPointOptionForm]]></controller>
-			<permissions>admin.user.canEditActivityPoints</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.notificationPresetSettings">
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<controller><![CDATA[wcf\acp\form\NotificationPresetSettingsForm]]></controller>
-			<permissions>admin.user.canEditUser</permissions>
-		</acpmenuitem>
-		<!-- /users -->
-		
-		<!-- user groups -->
-		<acpmenuitem name="wcf.acp.menu.link.group">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.group.list">
-			<controller><![CDATA[wcf\acp\page\UserGroupListPage]]></controller>
-			<parent>wcf.acp.menu.link.group</parent>
-			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.group.add">
-			<controller><![CDATA[wcf\acp\form\UserGroupAddForm]]></controller>
-			<parent>wcf.acp.menu.link.group</parent>
-			<permissions>admin.user.canAddGroup</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.group.mail">
-			<controller><![CDATA[wcf\acp\form\UserMailForm]]></controller>
-			<link><![CDATA[action=group]]></link>
-			<parent>wcf.acp.menu.link.group</parent>
-			<permissions>admin.user.canMailUser</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.group.assignment">
-			<controller><![CDATA[wcf\acp\page\UserGroupAssignmentListPage]]></controller>
-			<parent>wcf.acp.menu.link.group</parent>
-			<permissions>admin.user.canManageGroupAssignment</permissions>
-		</acpmenuitem>
-		<!-- user groups -->
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.rank">
-			<parent>wcf.acp.menu.link.user</parent>
-			<options>module_user_rank</options>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.rank.list">
-			<parent>wcf.acp.menu.link.user.rank</parent>
-			<controller><![CDATA[wcf\acp\page\UserRankListPage]]></controller>
-			<permissions>admin.user.rank.canManageRank</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.rank.add">
-			<parent>wcf.acp.menu.link.user.rank</parent>
-			<controller><![CDATA[wcf\acp\form\UserRankAddForm]]></controller>
-			<permissions>admin.user.rank.canManageRank</permissions>
-		</acpmenuitem>
-		
-		<!-- user options -->
-		<acpmenuitem name="wcf.acp.menu.link.user.option">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>4</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.option.list">
-			<controller><![CDATA[wcf\acp\page\UserOptionListPage]]></controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.option.add">
-			<controller><![CDATA[wcf\acp\form\UserOptionAddForm]]></controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.option.category.list">
-			<controller><![CDATA[wcf\acp\page\UserOptionCategoryListPage]]></controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.user.option.category.add">
-			<controller><![CDATA[wcf\acp\form\UserOptionCategoryAddForm]]></controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.option.setDefaults">
-			<controller><![CDATA[wcf\acp\form\UserOptionSetDefaultsForm]]></controller>
-			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOption</permissions>
-		</acpmenuitem>
-		<!-- /user options -->
-		
-		<acpmenuitem name="wcf.acp.menu.link.notice">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>5</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.notice.list">
-			<controller><![CDATA[wcf\acp\page\NoticeListPage]]></controller>
-			<parent>wcf.acp.menu.link.notice</parent>
-			<permissions>admin.notice.canManageNotice</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.notice.add">
-			<controller><![CDATA[wcf\acp\form\NoticeAddForm]]></controller>
-			<parent>wcf.acp.menu.link.notice</parent>
-			<permissions>admin.notice.canManageNotice</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription">
-			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>6</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.list">
-			<controller><![CDATA[wcf\acp\page\PaidSubscriptionListPage]]></controller>
-			<parent>wcf.acp.menu.link.paidSubscription</parent>
-			<permissions>admin.paidSubscription.canManageSubscription</permissions>
-			<options>module_paid_subscription</options>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.user.list">
-			<controller><![CDATA[wcf\acp\page\PaidSubscriptionUserListPage]]></controller>
-			<parent>wcf.acp.menu.link.paidSubscription</parent>
-			<permissions>admin.paidSubscription.canManageSubscription</permissions>
-			<options>module_paid_subscription</options>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.transactionLog.list">
-			<controller><![CDATA[wcf\acp\page\PaidSubscriptionTransactionLogListPage]]></controller>
-			<parent>wcf.acp.menu.link.paidSubscription</parent>
-			<permissions>admin.paidSubscription.canManageSubscription</permissions>
-			<options>module_paid_subscription</options>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.display">
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.dashboard">
-			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.dashboard.list">
-			<parent>wcf.acp.menu.link.dashboard</parent>
-			<controller><![CDATA[wcf\acp\page\DashboardListPage]]></controller>
-			<permissions>admin.content.dashboard.canEditDashboard</permissions>
-		</acpmenuitem>
-		
-		<!-- style -->
-		<acpmenuitem name="wcf.acp.menu.link.style">
-			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.style.list">
-			<controller><![CDATA[wcf\acp\page\StyleListPage]]></controller>
-			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canManageStyle</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.style.add">
-			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
-			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canManageStyle</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.style.import">
-			<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
-			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canManageStyle</permissions>
-		</acpmenuitem>
-		<!-- /style -->
-		
-		<!-- page menu -->
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
-			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
-			<controller><![CDATA[wcf\acp\page\PageMenuItemListPage]]></controller>
-			<parent>wcf.acp.menu.link.pageMenu</parent>
-			<permissions>admin.display.canManagePageMenu</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
-			<controller><![CDATA[wcf\acp\form\PageMenuItemAddForm]]></controller>
-			<parent>wcf.acp.menu.link.pageMenu</parent>
-			<permissions>admin.display.canManagePageMenu</permissions>
-		</acpmenuitem>
-		<!-- /page menu -->
-		
-		<!-- template -->
-		<acpmenuitem name="wcf.acp.menu.link.template">
-			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>4</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.template.list">
-			<controller><![CDATA[wcf\acp\page\TemplateListPage]]></controller>
-			<parent>wcf.acp.menu.link.template</parent>
-			<permissions>admin.template.canManageTemplate</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.template.add">
-			<controller><![CDATA[wcf\acp\form\TemplateAddForm]]></controller>
-			<parent>wcf.acp.menu.link.template</parent>
-			<permissions>admin.template.canManageTemplate</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.template.group.list">
-			<controller><![CDATA[wcf\acp\page\TemplateGroupListPage]]></controller>
-			<parent>wcf.acp.menu.link.template</parent>
-			<permissions>admin.template.canManageTemplate</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.template.group.add">
-			<controller><![CDATA[wcf\acp\form\TemplateGroupAddForm]]></controller>
-			<parent>wcf.acp.menu.link.template</parent>
-			<permissions>admin.template.canManageTemplate</permissions>
-		</acpmenuitem>
-		<!-- /template -->
-		
-		<!-- language -->
-		<acpmenuitem name="wcf.acp.menu.link.language">
-			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>5</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.language.list">
-			<parent>wcf.acp.menu.link.language</parent>
-			<controller><![CDATA[wcf\acp\page\LanguageListPage]]></controller>
-			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.language.import">
-			<parent>wcf.acp.menu.link.language</parent>
-			<controller><![CDATA[wcf\acp\form\LanguageImportForm]]></controller>
-			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.language.item.list">
-			<parent>wcf.acp.menu.link.language</parent>
-			<controller><![CDATA[wcf\acp\form\LanguageItemList]]></controller>
-			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.language.multilingualism">
-			<parent>wcf.acp.menu.link.language</parent>
-			<controller><![CDATA[wcf\acp\form\LanguageMultilingualismForm]]></controller>
-			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>
-		
-		<!-- <acpmenuitem name="wcf.acp.menu.link.language.server">
-			<parent>wcf.acp.menu.link.language</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.language.server.list">
-			<controller><![CDATA[wcf\acp\page\LanguageServerListPage]]></controller>
-			<parent>wcf.acp.menu.link.language.server</parent>
-			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>-->
-		<!-- /language -->
-		
-		<acpmenuitem name="wcf.acp.menu.link.ad">
-			<parent>wcf.acp.menu.link.display</parent>
-			<!-- do NOT use 'module_ad', the ACP checkbox is incorrectly recognized by adblockers -->
-			<options>module_wcf_ad</options>
-			<showorder>6</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.ad.list">
-			<controller><![CDATA[wcf\acp\page\AdListPage]]></controller>
-			<parent>wcf.acp.menu.link.ad</parent>
-			<permissions>admin.ad.canManageAd</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.ad.add">
-			<controller><![CDATA[wcf\acp\form\AdAddForm]]></controller>
-			<parent>wcf.acp.menu.link.ad</parent>
-			<permissions>admin.ad.canManageAd</permissions>
-		</acpmenuitem>
-		
+		<!-- content -->
 		<acpmenuitem name="wcf.acp.menu.link.content">
-			<showorder>4</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.smiley">
-			<parent>wcf.acp.menu.link.content</parent>
-			<options>module_smiley</options>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.smiley.list">
-			<controller><![CDATA[wcf\acp\page\SmileyListPage]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.smiley.add">
-			<controller><![CDATA[wcf\acp\form\SmileyAddForm]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.smiley.category.list">
-			<controller><![CDATA[wcf\acp\page\SmileyCategoryListPage]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.smiley.category.add">
-			<controller><![CDATA[wcf\acp\form\SmileyCategoryAddForm]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.label">
-			<parent>wcf.acp.menu.link.content</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.label.list">
-			<controller><![CDATA[wcf\acp\page\LabelListPage]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
-			<permissions>admin.content.label.canManageLabel</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.label.add">
-			<controller><![CDATA[wcf\acp\form\LabelAddForm]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
-			<permissions>admin.content.label.canManageLabel</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.label.group.list">
-			<controller><![CDATA[wcf\acp\page\LabelGroupListPage]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
-			<permissions>admin.content.label.canManageLabel</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.label.group.add">
-			<controller><![CDATA[wcf\acp\form\LabelGroupAddForm]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
-			<permissions>admin.content.label.canManageLabel</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.bbcode">
-			<parent>wcf.acp.menu.link.content</parent>
 			<showorder>3</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.bbcode.list">
-			<controller><![CDATA[wcf\acp\page\BBCodeListPage]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
-			<permissions>admin.content.bbcode.canManageBBCode</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.bbcode.add">
-			<controller><![CDATA[wcf\acp\form\BBCodeAddForm]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
-			<permissions>admin.content.bbcode.canManageBBCode</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.list">
-			<controller><![CDATA[wcf\acp\page\BBCodeMediaProviderListPage]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
-			<permissions>admin.content.bbcode.canManageBBCode</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.add">
-			<controller><![CDATA[wcf\acp\form\BBCodeMediaProviderAddForm]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
-			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			<icon>fa-file-text</icon>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.tag">
-			<parent>wcf.acp.menu.link.content</parent>
-			<options>module_tagging</options>
+			<!-- cms -->
+			<acpmenuitem name="wcf.acp.menu.link.cms">
+				<parent>wcf.acp.menu.link.content</parent>
+				<showorder>1</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.cms.page.list">
+				<controller><![CDATA[wcf\acp\page\PageListPage]]></controller>
+				<parent>wcf.acp.menu.link.cms</parent>
+				<permissions>admin.content.cms.canManagePage</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.cms.page.add">
+				<controller><![CDATA[wcf\acp\form\PageAddForm]]></controller>
+				<parent>wcf.acp.menu.link.cms.page.list</parent>
+				<permissions>admin.content.cms.canManagePage</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.cms.menu.list">
+				<controller><![CDATA[wcf\acp\page\MenuListPage]]></controller>
+				<parent>wcf.acp.menu.link.cms</parent>
+				<permissions>admin.content.cms.canManageMenu</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.cms.menu.add">
+				<controller><![CDATA[wcf\acp\form\MenuAddForm]]></controller>
+				<parent>wcf.acp.menu.link.cms.menu.list</parent>
+				<permissions>admin.content.cms.canManageMenu</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.cms.box.list">
+				<controller><![CDATA[wcf\acp\page\BoxListPage]]></controller>
+				<parent>wcf.acp.menu.link.cms</parent>
+				<permissions>admin.content.cms.canManageBox</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.cms.box.add">
+				<controller><![CDATA[wcf\acp\form\BoxAddForm]]></controller>
+				<parent>wcf.acp.menu.link.cms.box.list</parent>
+				<permissions>admin.content.cms.canManageBox</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.cms.media.list">
+				<controller><![CDATA[wcf\acp\page\MediaListPage]]></controller>
+				<parent>wcf.acp.menu.link.cms</parent>
+				<permissions>admin.content.cms.canManageMedia</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.cms.media.add">
+				<controller><![CDATA[wcf\acp\form\MediaAddForm]]></controller>
+				<parent>wcf.acp.menu.link.cms.media.list</parent>
+				<permissions>admin.content.cms.canManageMedia</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /cms -->
+			
+			<!-- label -->
+			<acpmenuitem name="wcf.acp.menu.link.label">
+				<parent>wcf.acp.menu.link.content</parent>
+				<showorder>2</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.label.list">
+				<controller><![CDATA[wcf\acp\page\LabelListPage]]></controller>
+				<parent>wcf.acp.menu.link.label</parent>
+				<permissions>admin.content.label.canManageLabel</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.label.add">
+				<controller><![CDATA[wcf\acp\form\LabelAddForm]]></controller>
+				<parent>wcf.acp.menu.link.label.list</parent>
+				<permissions>admin.content.label.canManageLabel</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.label.group.list">
+				<controller><![CDATA[wcf\acp\page\LabelGroupListPage]]></controller>
+				<parent>wcf.acp.menu.link.label</parent>
+				<permissions>admin.content.label.canManageLabel</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.label.group.add">
+				<controller><![CDATA[wcf\acp\form\LabelGroupAddForm]]></controller>
+				<parent>wcf.acp.menu.link.label.group.list</parent>
+				<permissions>admin.content.label.canManageLabel</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /label -->
+			
+			<!-- bbcode -->
+			<acpmenuitem name="wcf.acp.menu.link.bbcode">
+				<parent>wcf.acp.menu.link.content</parent>
+				<showorder>3</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.bbcode.list">
+				<controller><![CDATA[wcf\acp\page\BBCodeListPage]]></controller>
+				<parent>wcf.acp.menu.link.bbcode</parent>
+				<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.bbcode.add">
+				<controller><![CDATA[wcf\acp\form\BBCodeAddForm]]></controller>
+				<parent>wcf.acp.menu.link.bbcode.list</parent>
+				<permissions>admin.content.bbcode.canManageBBCode</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.list">
+				<controller><![CDATA[wcf\acp\page\BBCodeMediaProviderListPage]]></controller>
+				<parent>wcf.acp.menu.link.bbcode</parent>
+				<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.add">
+				<controller><![CDATA[wcf\acp\form\BBCodeMediaProviderAddForm]]></controller>
+				<parent>wcf.acp.menu.link.bbcode.mediaProvider.list</parent>
+				<permissions>admin.content.bbcode.canManageBBCode</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /bbcode -->
+			
+			<!-- tag -->
+			<acpmenuitem name="wcf.acp.menu.link.tag">
+				<parent>wcf.acp.menu.link.content</parent>
+				<options>module_tagging</options>
+				<showorder>4</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.tag.list">
+				<controller><![CDATA[wcf\acp\page\TagListPage]]></controller>
+				<parent>wcf.acp.menu.link.tag</parent>
+				<permissions>admin.content.tag.canManageTag</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.tag.add">
+				<controller><![CDATA[wcf\acp\form\TagAddForm]]></controller>
+				<parent>wcf.acp.menu.link.tag.list</parent>
+				<permissions>admin.content.tag.canManageTag</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /tag -->
+			
+			<!-- attachment -->
+			<acpmenuitem name="wcf.acp.menu.link.attachment">
+				<parent>wcf.acp.menu.link.content</parent>
+				<showorder>5</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.attachment.list">
+				<controller><![CDATA[wcf\acp\page\AttachmentListPage]]></controller>
+				<parent>wcf.acp.menu.link.attachment</parent>
+				<permissions>admin.attachment.canManageAttachment</permissions>
+			</acpmenuitem>
+			<!-- /attachment -->
+		
+		<!-- /content -->
+		
+		<!-- application -->
+		<acpmenuitem name="wcf.acp.menu.link.application">
 			<showorder>4</showorder>
+			<icon>fa-comments</icon>
 		</acpmenuitem>
+		<!-- /application -->
 		
-		<acpmenuitem name="wcf.acp.menu.link.tag.list">
-			<controller><![CDATA[wcf\acp\page\TagListPage]]></controller>
-			<parent>wcf.acp.menu.link.tag</parent>
-			<permissions>admin.content.tag.canManageTag</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.tag.add">
-			<controller><![CDATA[wcf\acp\form\TagAddForm]]></controller>
-			<parent>wcf.acp.menu.link.tag</parent>
-			<permissions>admin.content.tag.canManageTag</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.attachment">
-			<parent>wcf.acp.menu.link.content</parent>
+		<!-- customization -->
+		<acpmenuitem name="wcf.acp.menu.link.customization">
 			<showorder>5</showorder>
+			<icon>fa-desktop</icon>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
-			<controller><![CDATA[wcf\acp\page\AttachmentListPage]]></controller>
-			<parent>wcf.acp.menu.link.attachment</parent>
-			<permissions>admin.attachment.canManageAttachment</permissions>
+			<!-- style -->
+			<acpmenuitem name="wcf.acp.menu.link.style">
+				<parent>wcf.acp.menu.link.customization</parent>
+				<showorder>1</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.style.list">
+				<controller><![CDATA[wcf\acp\page\StyleListPage]]></controller>
+				<parent>wcf.acp.menu.link.style</parent>
+				<permissions>admin.style.canManageStyle</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.style.import">
+				<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
+				<parent>wcf.acp.menu.link.style.list</parent>
+				<permissions>admin.style.canManageStyle</permissions>
+				<icon>fa-upload</icon>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.style.add">
+				<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
+				<parent>wcf.acp.menu.link.style.list</parent>
+				<permissions>admin.style.canManageStyle</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /style -->
+			
+			<!-- template -->
+			<acpmenuitem name="wcf.acp.menu.link.template">
+				<parent>wcf.acp.menu.link.customization</parent>
+				<showorder>2</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.template.list">
+				<controller><![CDATA[wcf\acp\page\TemplateListPage]]></controller>
+				<parent>wcf.acp.menu.link.template</parent>
+				<permissions>admin.template.canManageTemplate</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.template.add">
+				<controller><![CDATA[wcf\acp\form\TemplateAddForm]]></controller>
+				<parent>wcf.acp.menu.link.template.list</parent>
+				<permissions>admin.template.canManageTemplate</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.template.group.list">
+				<controller><![CDATA[wcf\acp\page\TemplateGroupListPage]]></controller>
+				<parent>wcf.acp.menu.link.template</parent>
+				<permissions>admin.template.canManageTemplate</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.template.group.add">
+				<controller><![CDATA[wcf\acp\form\TemplateGroupAddForm]]></controller>
+				<parent>wcf.acp.menu.link.template.group.list</parent>
+				<permissions>admin.template.canManageTemplate</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /template -->
+			
+			<!-- language -->
+			<acpmenuitem name="wcf.acp.menu.link.language">
+				<parent>wcf.acp.menu.link.customization</parent>
+				<showorder>3</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.language.list">
+				<parent>wcf.acp.menu.link.language</parent>
+				<controller><![CDATA[wcf\acp\page\LanguageListPage]]></controller>
+				<permissions>admin.language.canManageLanguage</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.language.import">
+				<parent>wcf.acp.menu.link.language.list</parent>
+				<controller><![CDATA[wcf\acp\form\LanguageImportForm]]></controller>
+				<permissions>admin.language.canManageLanguage</permissions>
+				<icon>fa-upload</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.language.item.list">
+				<parent>wcf.acp.menu.link.language</parent>
+				<controller><![CDATA[wcf\acp\form\LanguageItemList]]></controller>
+				<permissions>admin.language.canManageLanguage</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.language.multilingualism">
+				<parent>wcf.acp.menu.link.language</parent>
+				<controller><![CDATA[wcf\acp\form\LanguageMultilingualismForm]]></controller>
+				<permissions>admin.language.canManageLanguage</permissions>
+			</acpmenuitem>
+			<!-- /language -->
+			
+			<!-- smiley -->
+			<acpmenuitem name="wcf.acp.menu.link.smiley">
+				<parent>wcf.acp.menu.link.customization</parent>
+				<options>module_smiley</options>
+				<showorder>4</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.smiley.list">
+				<controller><![CDATA[wcf\acp\page\SmileyListPage]]></controller>
+				<parent>wcf.acp.menu.link.smiley</parent>
+				<permissions>admin.content.smiley.canManageSmiley</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.smiley.add">
+				<controller><![CDATA[wcf\acp\form\SmileyAddForm]]></controller>
+				<parent>wcf.acp.menu.link.smiley.list</parent>
+				<permissions>admin.content.smiley.canManageSmiley</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.smiley.category.list">
+				<controller><![CDATA[wcf\acp\page\SmileyCategoryListPage]]></controller>
+				<parent>wcf.acp.menu.link.smiley</parent>
+				<permissions>admin.content.smiley.canManageSmiley</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.smiley.category.add">
+				<controller><![CDATA[wcf\acp\form\SmileyCategoryAddForm]]></controller>
+				<parent>wcf.acp.menu.link.smiley.category.list</parent>
+				<permissions>admin.content.smiley.canManageSmiley</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /smiley -->
+			
+			<!-- ad -->
+			<acpmenuitem name="wcf.acp.menu.link.ad">
+				<parent>wcf.acp.menu.link.customization</parent>
+				<!-- do NOT use 'module_ad', the ACP checkbox is incorrectly recognized by adblockers -->
+				<options>module_wcf_ad</options>
+				<showorder>5</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.ad.list">
+				<controller><![CDATA[wcf\acp\page\AdListPage]]></controller>
+				<parent>wcf.acp.menu.link.ad</parent>
+				<permissions>admin.ad.canManageAd</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.ad.add">
+				<controller><![CDATA[wcf\acp\form\AdAddForm]]></controller>
+				<parent>wcf.acp.menu.link.ad.list</parent>
+				<permissions>admin.ad.canManageAd</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /ad -->
+		
+		<!-- /customization -->
+		
+		<!-- management -->
+		<acpmenuitem name="wcf.acp.menu.link.management">
+			<showorder>6</showorder>
+			<icon>fa-cog</icon>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.community">
-			<showorder>5</showorder>
-		</acpmenuitem>
+			<!-- maintenance -->
+			<acpmenuitem name="wcf.acp.menu.link.maintenance">
+				<parent>wcf.acp.menu.link.management</parent>
+				<showorder>1</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
+				<controller><![CDATA[wcf\acp\page\CronjobListPage]]></controller>
+				<parent>wcf.acp.menu.link.maintenance</parent>
+				<permissions>admin.management.canManageCronjob</permissions>
+				<showorder>1</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
+				<controller><![CDATA[wcf\acp\form\CronjobAddForm]]></controller>
+				<parent>wcf.acp.menu.link.cronjob.list</parent>
+				<permissions>admin.management.canManageCronjob</permissions>
+				<showorder>2</showorder>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.maintenance.cache">
+				<controller><![CDATA[wcf\acp\page\CacheListPage]]></controller>
+				<parent>wcf.acp.menu.link.maintenance</parent>
+				<permissions>admin.configuration.canManageApplication</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.maintenance.rebuildData">
+				<controller><![CDATA[wcf\acp\page\RebuildDataPage]]></controller>
+				<parent>wcf.acp.menu.link.maintenance</parent>
+				<permissions>admin.management.canRebuildData</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.maintenance.import">
+				<controller><![CDATA[wcf\acp\form\DataImportForm]]></controller>
+				<parent>wcf.acp.menu.link.maintenance</parent>
+				<permissions>admin.management.canImportData</permissions>
+			</acpmenuitem>
+			<!-- /maintenance -->
+		
+			<!-- stat -->
+			<acpmenuitem name="wcf.acp.menu.link.stat">
+				<parent>wcf.acp.menu.link.management</parent>
+				<showorder>2</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.stat.list">
+				<controller><![CDATA[wcf\acp\page\StatPage]]></controller>
+				<parent>wcf.acp.menu.link.stat</parent>
+				<permissions>admin.management.canViewLog</permissions>
+			</acpmenuitem>
+			<!-- /stat -->
+			
+			<!-- log -->
+			<acpmenuitem name="wcf.acp.menu.link.log">
+				<parent>wcf.acp.menu.link.management</parent>
+				<showorder>3</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.log.session">
+				<controller><![CDATA[wcf\acp\page\ACPSessionLogListPage]]></controller>
+				<parent>wcf.acp.menu.link.log</parent>
+				<permissions>admin.management.canViewLog</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.log.cronjob">
+				<controller><![CDATA[wcf\acp\page\CronjobLogListPage]]></controller>
+				<parent>wcf.acp.menu.link.log</parent>
+				<permissions>admin.management.canManageCronjob</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.log.exception">
+				<controller><![CDATA[wcf\acp\page\ExceptionLogViewPage]]></controller>
+				<parent>wcf.acp.menu.link.log</parent>
+				<permissions>admin.management.canViewLog</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.log.authentication.failure">
+				<controller><![CDATA[wcf\acp\page\UserAuthenticationFailureListPage]]></controller>
+				<parent>wcf.acp.menu.link.log</parent>
+				<permissions>admin.management.canViewLog</permissions>
+				<options>enable_user_authentication_failure</options>
+			</acpmenuitem>
+			<!-- /log -->
+		
+		<!-- /management -->
 	</import>
 </data>

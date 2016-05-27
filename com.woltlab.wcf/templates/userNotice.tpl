@@ -1,4 +1,4 @@
-<div class="userNotice">
+{capture assign='__userNotice'}
 	{if OFFLINE && $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 		<div class="warning">
 			<p><strong>{lang}wcf.page.offline{/lang}</strong></p>
@@ -7,16 +7,12 @@
 	{/if}
 	
 	{if MODULE_COOKIE_POLICY_PAGE && $__wcf->session->isFirstVisit() && !$__wcf->user->userID}
-		<p class="info">{lang}wcf.page.cookiePolicy.info{/lang}</p>
+		<p class="info cookiePolicyNotice">{lang}wcf.page.cookiePolicy.info{/lang}</p>
 	{/if}
 	
-	{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
+	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
 		<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
 	{/if}
-	
-	<noscript>
-		<p class="warning">{lang}wcf.page.javascriptDisabled{/lang}</p>
-	</noscript>
 	
 	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1 && $templateName != 'registerActivation'}
 		<p class="warning">{lang}wcf.user.register.needActivation{/lang}</p>
@@ -30,7 +26,7 @@
 						<span class="icon icon16 fa-times pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}"></span>
 					{/if}
 					
-					{if $notice->noticeUseHtml}{@$notice->notice|language}{else}{@$notice->notice|language|htmlspecialchars|nl2br}{/if}
+					{@$notice}
 				</p>
 			{/foreach}
 		{/content}
@@ -43,4 +39,10 @@
 	{/hascontent}
 	
 	{event name='userNotice'}
-</div>
+{/capture}
+
+{if $__userNotice|trim}
+	<div class="userNotice">
+		{@$__userNotice}
+	</div>
+{/if}

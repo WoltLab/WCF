@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractDialogAction;
+use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
@@ -13,7 +14,7 @@ use wcf\util\StringUtil;
  * Handles an AJAX-based package uninstallation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action
@@ -27,12 +28,12 @@ class UninstallPackageAction extends InstallPackageAction {
 	protected $packageID = 0;
 	
 	/**
-	 * @see	\wcf\action\AbstractDialogAction::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'packageUninstallationStep';
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		AbstractDialogAction::readParameters();
@@ -67,13 +68,13 @@ class UninstallPackageAction extends InstallPackageAction {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 			
 		// create queue
-		$queue = PackageInstallationQueueEditor::create(array(
+		$queue = PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
 			'packageName' => $package->getName(),
 			'packageID' => $package->packageID,
 			'action' => 'uninstall'
-		));
+		]);
 		
 		// initialize uninstallation
 		$this->installation = new PackageUninstallationDispatcher($queue);
@@ -81,25 +82,24 @@ class UninstallPackageAction extends InstallPackageAction {
 		$this->installation->nodeBuilder->purgeNodes();
 		$this->installation->nodeBuilder->buildNodes();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'queue' => $queue
-		));
+		]);
 		
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($queue->processNo, $this->installation->nodeBuilder->getNextNode());
-		$this->data = array(
+		$this->data = [
 			'template' => WCF::getTPL()->fetch($this->templateName),
 			'step' => 'uninstall',
 			'node' => $this->installation->nodeBuilder->getNextNode(),
 			'currentAction' => $this->getCurrentAction($queueID),
 			'progress' => 0,
 			'queueID' => $queueID
-		);
+		];
 	}
 	
 	/**
 	 * Uninstalls node components and returns next node.
 	 * 
-	 * @param	string		$node
 	 * @return	string
 	 */
 	public function stepUninstall() {
@@ -132,34 +132,34 @@ class UninstallPackageAction extends InstallPackageAction {
 				FROM	wcf".WCF_N."_application
 				WHERE	packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageID));
-			$application = $statement->fetchObject('wcf\data\application\Application');
+			$statement->execute([$packageID]);
+			$application = $statement->fetchObject(Application::class);
 			
 			// build redirect location
-			$location = $application->getPageURL() . 'acp/index.php?package-list/' . SID_ARG_2ND_NOT_ENCODED;
+			$location = $application->getPageURL() . 'acp/index.php?package-list/';
 			
 			// show success
-			$this->data = array(
+			$this->data = [
 				'currentAction' => WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.success'),
 				'progress' => 100,
 				'redirectLocation' => $location,
 				'step' => 'success'
-			);
+			];
 			return;
 		}
 		
 		// continue with next node
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $this->installation->nodeBuilder->getNextNode($this->node));
-		$this->data = array(
+		$this->data = [
 			'step' => 'uninstall',
 			'node' => $node,
 			'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
 			'queueID' => $queueID
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\action\AbstractDialogAction::validateStep()
+	 * @inheritDoc
 	 */
 	protected function validateStep() {
 		switch ($this->step) {
@@ -175,7 +175,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	}
 	
 	/**
-	 * @see	\wcf\acp\action\InstallPackageAction::getCurrentAction()
+	 * @inheritDoc
 	 */
 	protected function getCurrentAction($queueID) {
 		if ($queueID === null) {
@@ -186,7 +186,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			// build package name
 			$packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
 			$installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
-			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.step.'.$installationType, array('packageName' => $packageName));
+			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.step.'.$installationType, ['packageName' => $packageName]);
 		}
 		
 		return $currentAction;

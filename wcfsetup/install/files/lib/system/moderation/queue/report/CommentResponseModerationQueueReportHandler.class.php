@@ -2,12 +2,12 @@
 namespace wcf\system\moderation\queue\report;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseAction;
-use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\ViewableCommentResponse;
 use wcf\data\comment\Comment;
-use wcf\data\comment\CommentList;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\system\cache\runtime\CommentResponseRuntimeCache;
+use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * An implementation of IModerationQueueReportHandler for comment responses.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.moderation.queue
@@ -24,35 +24,29 @@ use wcf\system\WCF;
  */
 class CommentResponseModerationQueueReportHandler extends CommentCommentModerationQueueReportHandler {
 	/**
-	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueHandler::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\comment\response\CommentResponse';
+	protected $className = CommentResponse::class;
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueHandler::$objectType
+	 * @inheritDoc
 	 */
 	protected $objectType = 'com.woltlab.wcf.comment.response';
 	
 	/**
-	 * list of comment responses
-	 * @var	array<\wcf\data\comment\response\CommentResponse>
-	 */
-	protected static $responses = array();
-	
-	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::assignQueues()
+	 * @inheritDoc
 	 */
 	public function assignQueues(array $queues) {
-		$assignments = array();
+		$assignments = [];
 		
 		// read comments and responses
-		$responseIDs = array();
+		$responseIDs = [];
 		foreach ($queues as $queue) {
 			$responseIDs[] = $queue->objectID;
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("comment_response.responseID IN (?)", array($responseIDs));
+		$conditions->add("comment_response.responseID IN (?)", [$responseIDs]);
 		
 		$sql = "SELECT		comment_response.responseID, comment.commentID, comment.objectTypeID, comment.objectID
 			FROM		wcf".WCF_N."_comment_response comment_response
@@ -61,13 +55,13 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$comments = $responses = array();
+		$comments = $responses = [];
 		while ($row = $statement->fetchArray()) {
 			$comments[$row['commentID']] = new Comment(null, $row);
 			$responses[$row['responseID']] = new CommentResponse(null, $row);
 		}
 		
-		$orphanedQueueIDs = array();
+		$orphanedQueueIDs = [];
 		foreach ($queues as $queue) {
 			$assignUser = false;
 			
@@ -89,7 +83,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::canReport()
+	 * @inheritDoc
 	 */
 	public function canReport($objectID) {
 		if (!$this->isValid($objectID)) {
@@ -106,32 +100,32 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::getContainerID()
+	 * @inheritDoc
 	 */
 	public function getContainerID($objectID) {
 		return 0;
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedContent()
+	 * @inheritDoc
 	 */
 	public function getReportedContent(ViewableModerationQueue $queue) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'message' => ViewableCommentResponse::getResponse($queue->objectID)
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('moderationComment');
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedObject()
+	 * @inheritDoc
 	 */
 	public function getReportedObject($objectID) {
 		return $this->getResponse($objectID);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::isValid()
+	 * @inheritDoc
 	 */
 	public function isValid($objectID) {
 		if ($this->getResponse($objectID) === null) {
@@ -145,49 +139,37 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	 * Returns a comment response object by response id or null if response id is invalid.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\comment\response\CommentResponse
+	 * @return	CommentResponse|null
 	 */
 	protected function getResponse($objectID) {
-		if (!array_key_exists($objectID, self::$responses)) {
-			self::$responses[$objectID] = new CommentResponse($objectID);
-			if (!self::$responses[$objectID]->responseID) {
-				self::$responses[$objectID] = null;
-			}
-		}
-		
-		return self::$responses[$objectID];
+		return CommentResponseRuntimeCache::getInstance()->getObject($objectID);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::populate()
+	 * @inheritDoc
 	 */
 	public function populate(array $queues) {
-		$objectIDs = array();
+		$objectIDs = [];
 		foreach ($queues as $object) {
 			$objectIDs[] = $object->objectID;
 		}
 		
-		// fetch responses
-		$responseList = new CommentResponseList();
-		$responseList->setObjectIDs($objectIDs);
-		$responseList->readObjects();
-		$responses = $responseList->getObjects();
+		$responses = CommentResponseRuntimeCache::getInstance()->getObjects($objectIDs);
 		
-		// fetch comments
-		$commentIDs = array();
+		$commentIDs = [];
 		foreach ($responses as $response) {
-			$commentIDs[] = $response->commentID;
+			if ($response !== null) {
+				$commentIDs[] = $response->commentID;
+			}
 		}
 		
+		$comments = [];
 		if (!empty($commentIDs)) {
-			$commentList = new CommentList();
-			$commentList->setObjectIDs($commentIDs);
-			$commentList->readObjects();
-			$comments = $commentList->getObjects();
+			$comments = CommentRuntimeCache::getInstance()->getObjects($commentIDs);
 		}
 		
 		foreach ($queues as $object) {
-			if (isset($responses[$object->objectID])) {
+			if ($responses[$object->objectID] !== null) {
 				$response = $responses[$object->objectID];
 				$response->setComment($comments[$response->commentID]);
 				
@@ -200,11 +182,11 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::removeContent()
+	 * @inheritDoc
 	 */
 	public function removeContent(ModerationQueue $queue, $message) {
 		if ($this->isValid($queue->objectID)) {
-			$responseAction = new CommentResponseAction(array($this->getResponse($queue->objectID)), 'delete');
+			$responseAction = new CommentResponseAction([$this->getResponse($queue->objectID)], 'delete');
 			$responseAction->executeAction();
 		}
 	}

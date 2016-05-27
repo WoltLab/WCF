@@ -2,6 +2,7 @@
 namespace wcf\acp\page;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
+use wcf\data\template\TemplateList;
 use wcf\page\SortablePage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
@@ -11,42 +12,44 @@ use wcf\util\StringUtil;
  * Shows a list of templates.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	TemplateList	$objectList
  */
 class TemplateListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.template.canManageTemplate');
+	public $neededPermissions = ['admin.template.canManageTemplate'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\template\TemplateList';
+	public $objectListClassName = TemplateList::class;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = 100;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'templateName';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('templateID', 'templateName', 'lastModificationTime');
+	public $validSortFields = ['templateID', 'templateName', 'lastModificationTime'];
 	
 	/**
 	 * template group id
@@ -70,16 +73,16 @@ class TemplateListPage extends SortablePage {
 	 * available template groups
 	 * @var	array
 	 */
-	public $availableTemplateGroups = array();
+	public $availableTemplateGroups = [];
 	
 	/**
 	 * available applications
 	 * @var	array
 	 */
-	public $availableApplications = array();
+	public $availableApplications = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -90,26 +93,26 @@ class TemplateListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		if ($this->templateGroupID) $this->objectList->getConditionBuilder()->add('template.templateGroupID = ?', array($this->templateGroupID));
+		if ($this->templateGroupID) $this->objectList->getConditionBuilder()->add('template.templateGroupID = ?', [$this->templateGroupID]);
 		else $this->objectList->getConditionBuilder()->add('template.templateGroupID IS NULL');
 		
-		if ($this->searchTemplateName) $this->objectList->getConditionBuilder()->add('templateName LIKE ?', array('%'.$this->searchTemplateName.'%'));
-		if ($this->application) $this->objectList->getConditionBuilder()->add('application = ?', array($this->application));
+		if ($this->searchTemplateName) $this->objectList->getConditionBuilder()->add('templateName LIKE ?', ['%'.$this->searchTemplateName.'%']);
+		if ($this->application) $this->objectList->getConditionBuilder()->add('application = ?', [$this->application]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
 		
 		// get template groups
-		$this->availableTemplateGroups = TemplateGroup::getSelectList(array(), 1);
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([], 1);
 		
 		// get applications
 		$applications = ApplicationHandler::getInstance()->getApplications();
@@ -129,17 +132,17 @@ class TemplateListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'templateGroupID' => $this->templateGroupID,
 			'searchTemplateName' => $this->searchTemplateName,
 			'application' => $this->application,
 			'availableTemplateGroups' => $this->availableTemplateGroups,
 			'availableApplications' => $this->availableApplications
-		));
+		]);
 	}
 }

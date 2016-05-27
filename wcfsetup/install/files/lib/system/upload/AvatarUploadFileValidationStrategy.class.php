@@ -7,7 +7,7 @@ use wcf\system\exception\SystemException;
  * Validation strategy for avatar uploads.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.upload
@@ -15,7 +15,7 @@ use wcf\system\exception\SystemException;
  */
 class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStrategy {
 	/**
-	 * @see	\wcf\system\upload\IUploadFileValidationStrategy::validate()
+	 * @inheritDoc
 	 */
 	public function validate(UploadFile $uploadFile) {
 		if (!parent::validate($uploadFile)) return false;

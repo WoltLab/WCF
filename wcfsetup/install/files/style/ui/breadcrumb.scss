@@ -1,0 +1,36 @@
+.breadcrumbs {
+	flex: 1;
+	
+	> ul {
+		display: flex;
+		
+		> li {
+			flex: 0 auto;
+			
+			@include wcfFontSmall;
+			
+			&:not(:last-child) {
+				margin-right: 10px;
+				
+				&:after {
+					color: $wcfNavigationText;
+					content: "/";
+				}
+				
+				> a {
+					margin-right: 10px;
+				}
+			}
+			
+			> a {
+				color: $wcfNavigationLink;
+				text-decoration: none;
+				
+				&:hover {
+					color: $wcfNavigationLinkActive;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}

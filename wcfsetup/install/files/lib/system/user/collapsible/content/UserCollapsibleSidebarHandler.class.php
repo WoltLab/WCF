@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * Provides methods for handling collapsible sidebars.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.collapsible.content
@@ -18,9 +18,9 @@ use wcf\util\StringUtil;
 class UserCollapsibleSidebarHandler extends SingletonFactory implements IAJAXInvokeAction {
 	/**
 	 * list of methods allowed for remote invoke
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public static $allowInvoke = array('toggle');
+	public static $allowInvoke = ['toggle'];
 	
 	/**
 	 * Toggles a sidebar.

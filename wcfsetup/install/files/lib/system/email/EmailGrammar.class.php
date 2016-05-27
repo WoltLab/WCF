@@ -6,11 +6,12 @@ namespace wcf\system\email;
  * for dealing with these RFCs.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.email
  * @category	Community Framework
+ * @since	2.2
  */
 final class EmailGrammar {
 	/**
@@ -108,5 +109,10 @@ final class EmailGrammar {
 		return $header;
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of EmailGrammer objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

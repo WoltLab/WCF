@@ -8,11 +8,12 @@ use wcf\system\email\Mailbox;
  * Delivers the given email to the given mailbox.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.background.job
  * @category	Community Framework
+ * @since	2.2
  */
 class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	/**
@@ -62,7 +63,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	}
 	
 	/**
-	 * @see	\wcf\system\background\job\AbstractJob::perform();
+	 * @inheritDoc
 	 */
 	public function perform() {
 		if (self::$transport === null) {
@@ -75,7 +76,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 		}
 		catch (PermanentFailure $e) {
 			// no need for retrying. Eat Exception and log the error.
-			$e->getExceptionID();
+			\wcf\functions\exception\logThrowable($e);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
@@ -29,24 +30,28 @@ use wcf\util\XMLWriter;
  * Provides functions to edit, import, export and delete a style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style
  * @category	Community Framework
+ * 
+ * @method	Style	getDecoratedObject()
+ * @mixin	Style
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
+	const EXCLUDE_WCF_VERSION = '2.2.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\style\Style';
+	protected static $baseClass = Style::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::update()
+	 * @inheritDoc
 	 */
-	public function update(array $parameters = array()) {
+	public function update(array $parameters = []) {
 		$variables = null;
 		if (isset($parameters['variables'])) {
 			$variables = $parameters['variables'];
@@ -68,7 +73,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		parent::delete();
@@ -77,7 +82,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
 			WHERE		styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->styleID));
+		$statement->execute([$this->styleID]);
 		
 		// delete style files
 		$files = @glob(WCF_DIR.'style/style-'.$this->styleID.'*.css');
@@ -96,7 +101,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$sql = "DELETE FROM	wcf".WCF_N."_language_item
 			WHERE		languageItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('wcf.style.styleDescription'.$this->styleID));
+		$statement->execute(['wcf.style.styleDescription'.$this->styleID]);
 	}
 	
 	/**
@@ -108,13 +113,13 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			SET	isDefault = ?
 			WHERE	isDefault = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(0, 1));
+		$statement->execute([0, 1]);
 		
 		// set new default
-		$this->update(array(
+		$this->update([
 			'isDefault' => 1,
 			'isDisabled' => 0
-		));
+		]);
 		
 		self::resetCache();
 	}
@@ -122,8 +127,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Reads the data of a style exchange format file.
 	 * 
-	 * @param	\wcf\system\io\Tar	$tar
+	 * @param	Tar	$tar
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public static function readStyleData(Tar $tar) {
 		// search style.xml
@@ -137,11 +143,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xml->loadXML(self::INFO_FILE, $tar->extractToString($index));
 		$xpath = $xml->xpath();
 		
-		$data = array(
-			'name' => '', 'description' => array(), 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
+		$data = [
+			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
 			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => ''
-		);
+		];
 		
 		$categories = $xpath->query('/ns:style/*');
 		foreach ($categories as $category) {
@@ -244,10 +250,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// open variables.xml
 		$xml = new XML();
 		$xml->loadXML($filename, $content);
-		$xpath = $xml->xpath();
 		$variables = $xml->xpath()->query('/ns:variables/ns:variable');
 		
-		$data = array();
+		$data = [];
 		foreach ($variables as $variable) {
 			$data[$variable->getAttribute('name')] = $variable->nodeValue;
 		}
@@ -350,37 +355,35 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
 				if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.mb_substr(StringUtil::getRandomID(), 0, 8);
 				$originalTemplateGroupFolderName = $templateGroupFolderName;
-					
+				
 				// get unique template group name
 				$i = 1;
 				while (true) {
-					$sql = "SELECT	COUNT(*) AS count
+					$sql = "SELECT	COUNT(*)
 						FROM	wcf".WCF_N."_template_group
 						WHERE	templateGroupName = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$templateGroupName]);
-					$row = $statement->fetchArray();
-					if (!$row['count']) break;
+					if (!$statement->fetchSingleColumn()) break;
 					$templateGroupName = $originalTemplateGroupName . '_' . $i;
 					$i++;
 				}
-					
+				
 				// get unique folder name
 				$i = 1;
 				while (true) {
-					$sql = "SELECT	COUNT(*) AS count
+					$sql = "SELECT	COUNT(*)
 						FROM	wcf".WCF_N."_template_group
 						WHERE	templateGroupFolderName = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([
 						FileUtil::addTrailingSlash($templateGroupFolderName)
 					]);
-					$row = $statement->fetchArray();
-					if (!$row['count']) break;
+					if (!$statement->fetchSingleColumn()) break;
 					$templateGroupFolderName = $originalTemplateGroupFolderName . '_' . $i;
 					$i++;
 				}
-					
+				
 				$templateGroupAction = new TemplateGroupAction([], 'create', [
 					'data' => [
 						'templateGroupName' => $templateGroupName,
@@ -420,9 +423,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						WHERE	templateGroupID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([$style->templateGroupID]);
-					while ($row = $statement->fetchArray()) {
-						$knownTemplates[] = $row['templateName'];
-					}
+					$knownTemplates = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				}
 				
 				// copy templates
@@ -485,7 +486,20 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					FileUtil::makeWritable($filename);
 			
 					if (file_exists($filename)) {
-						$style->update(['image' => 'stylePreview-'.$style->styleID.$fileExtension]);
+						try {
+							if (($imageData = getimagesize($filename)) !== false) {
+								switch ($imageData[2]) {
+									case IMG_PNG:
+									case IMG_JPEG:
+									case IMG_JPG:
+									case IMG_GIF:
+										$style->update(['image' => 'stylePreview-'.$style->styleID.$fileExtension]);
+								}
+							}
+						}
+						catch (SystemException $e) {
+							// broken image
+						}
 					}
 				}
 			}
@@ -505,11 +519,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			$variables = $style->getVariables();
 			
-			$individualLess = Style::splitLessVariables($variables['individualLess']);
-			$variables['individualLess'] = Style::joinLessVariables($styleData['variables']['individualLess'], $individualLess['custom']);
+			$individualScss = Style::splitLessVariables($variables['individualScss']);
+			$variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'], $individualScss['custom']);
 			
-			$overrideLess = Style::splitLessVariables($variables['overrideLess']);
-			$variables['overrideLess'] = Style::joinLessVariables($styleData['variables']['overrideLess'], $overrideLess['custom']);
+			$overrideScss = Style::splitLessVariables($variables['overrideScss']);
+			$variables['overrideScss'] = Style::joinLessVariables($styleData['variables']['overrideScss'], $overrideScss['custom']);
 			
 			$styleData['variables'] = $variables;
 			
@@ -524,8 +538,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Saves localized style descriptions.
 	 * 
-	 * @param	\wcf\data\style\StyleEditor	$styleEditor
-	 * @param	array<string>			$descriptions
+	 * @param	StyleEditor	$styleEditor
+	 * @param	string[]	$descriptions
 	 */
 	protected static function saveLocalizedDescriptions(StyleEditor $styleEditor, array $descriptions) {
 		// localize package information
@@ -544,8 +558,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				FROM	wcf".WCF_N."_language_category
 				WHERE	languageCategory = ?";
 			$statement2 = WCF::getDB()->prepareStatement($sql);
-			$statement2->execute(array('wcf.style'));
-			$languageCategory = $statement2->fetchObject('wcf\data\language\category\LanguageCategory');
+			$statement2->execute(['wcf.style']);
+			$languageCategory = $statement2->fetchObject(LanguageCategory::class);
 		}
 		else {
 			$languageCategory = LanguageFactory::getInstance()->getCategory('wcf.style');
@@ -553,19 +567,19 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		foreach ($languageList as $language) {
 			if (isset($descriptions[$language->languageCode])) {
-				$statement->execute(array(
+				$statement->execute([
 					$language->languageID,
 					'wcf.style.styleDescription'.$styleEditor->styleID,
 					$descriptions[$language->languageCode],
 					$languageCategory->languageCategoryID,
 					$styleEditor->packageID
-				));
+				]);
 			}
 		}
 		
-		$styleEditor->update(array(
+		$styleEditor->update([
 			'styleDescription' => 'wcf.style.styleDescription'.$styleEditor->styleID
-		));
+		]);
 	}
 	
 	/**
@@ -617,8 +631,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			ON		(language.languageID = language_item.languageID)
 			WHERE		language_item.languageItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->styleDescription));
-		$styleDescriptions = array();
+		$statement->execute([$this->styleDescription]);
+		$styleDescriptions = [];
 		while ($row = $statement->fetchArray()) {
 			$styleDescriptions[$row['languageCode']] = $row['languageItemValue'];
 		}
@@ -633,7 +647,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// style description
 		foreach ($styleDescriptions as $languageCode => $value) {
-			$xml->writeElement('description', $value, array('language' => $languageCode));
+			$xml->writeElement('description', $value, ['language' => $languageCode]);
 		}
 		
 		$xml->writeElement('date', $this->styleDate);
@@ -653,7 +667,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xml->startElement('files');
 		$xml->writeElement('variables', 'variables.xml');
 		if ($templates) $xml->writeElement('templates', 'templates.tar');
-		if ($images) $xml->writeElement('images', 'images.tar', array('path' => $this->imagePath));
+		if ($images) $xml->writeElement('images', 'images.tar', ['path' => $this->imagePath]);
 		$xml->endElement();
 		
 		// append style info file to style tar
@@ -670,9 +684,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			ON		(variable.variableID = value.variableID)
 			WHERE		value.styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->styleID));
+		$statement->execute([$this->styleID]);
 		while ($row = $statement->fetchArray()) {
-			$xml->writeElement('variable', $row['variableValue'], array('name' => $row['variableName']));
+			$xml->writeElement('variable', $row['variableValue'], ['name' => $row['variableName']]);
 		}
 		
 		// append variable list to style tar
@@ -695,7 +709,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				ON		(package.packageID = template.packageID)
 				WHERE		template.templateGroupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->templateGroupID));
+			$statement->execute([$this->templateGroupID]);
 			while ($row = $statement->fetchArray()) {
 				$packageDir = 'com.woltlab.wcf';
 				$package = null;
@@ -764,14 +778,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(dirname($styleTarName)));
 			
 			// create package.xml
-			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/package.xsd', array('name' => $packageName));
+			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/package.xsd', ['name' => $packageName]);
 			
 			$xml->startElement('packageinformation');
 			$xml->writeElement('packagename', $this->styleName);
 			
 			// description
 			foreach ($styleDescriptions as $languageCode => $value) {
-				$xml->writeElement('packagedescription', $value, array('language' => $languageCode));
+				$xml->writeElement('packagedescription', $value, ['language' => $languageCode]);
 			}
 			
 			$xml->writeElement('version', $this->styleVersion);
@@ -784,11 +798,15 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$xml->endElement();
 			
 			$xml->startElement('requiredpackages');
-			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', array('minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion));
+			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', ['minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion]);
 			$xml->endElement();
 			
-			$xml->startElement('instructions', array('type' => 'install'));
-			$xml->writeElement('instruction', basename($styleTarName), array('type' => 'style'));
+			$xml->startElement('excludedpackages');
+			$xml->writeElement('excludedpackage', 'com.woltlab.wcf', ['version' => self::EXCLUDE_WCF_VERSION]);
+			$xml->endElement();
+			
+			$xml->startElement('instructions', ['type' => 'install']);
+			$xml->writeElement('instruction', basename($styleTarName), ['type' => 'style']);
 			$xml->endElement();
 			
 			// append package info file to package tar
@@ -805,14 +823,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Sets the variables of a style.
 	 * 
-	 * @param	array<string>		$variables
+	 * @param	string[]		$variables
 	 */
-	public function setVariables(array $variables = array()) {
+	public function setVariables(array $variables = []) {
 		// delete old variables
 		$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
 			WHERE		styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->styleID));
+		$statement->execute([$this->styleID]);
 		
 		// insert new variables
 		if (!empty($variables)) {
@@ -820,7 +838,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				FROM	wcf".WCF_N."_style_variable";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
-			$styleVariables = array();
+			$styleVariables = [];
 			while ($row = $statement->fetchArray()) {
 				$variableName = $row['variableName'];
 				
@@ -840,11 +858,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				
 				WCF::getDB()->beginTransaction();
 				foreach ($styleVariables as $variableID => $variableValue) {
-					$statement->execute(array(
+					$statement->execute([
 						$this->styleID,
 						$variableID,
 						$variableValue
-					));
+					]);
 				}
 				WCF::getDB()->commitTransaction();
 			}
@@ -861,9 +879,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		$variables = null;
 		if (isset($parameters['variables'])) {
 			$variables = $parameters['variables'];
@@ -879,7 +897,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			FROM	wcf".WCF_N."_style
 			WHERE	isDefault = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(1));
+		$statement->execute([1]);
 		$row = $statement->fetchArray();
 		
 		// no default style exists
@@ -905,7 +923,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		StyleCacheBuilder::getInstance()->reset();

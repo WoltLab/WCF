@@ -1,4 +1,4 @@
-{capture assign='sidebar'}
+{capture assign='sidebarLeft'}
 	{assign var=__userMenuActiveItems value=$__wcf->getUserMenu()->getActiveMenuItems()}
 	
 	<script data-relocate="true">
@@ -10,19 +10,21 @@
 			}
 		});
 		//]]>
-	</script> 
+	</script>
 	
-	{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
-		<fieldset>
-			<legend>{lang}{$menuCategory->menuItem}{/lang}</legend>
+	<section class="box">
+		{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
+			<h2 class="boxTitle">{lang}{$menuCategory->menuItem}{/lang}</h2>
 			
-			<nav>
-				<ul>
+			<nav class="boxContent">
+				<ol class="boxMenu">
 					{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
-						<li{if $menuItem->menuItem|in_array:$__userMenuActiveItems} class="active"{/if}><a href="{$menuItem->getProcessor()->getLink()}">{@$menuItem}</a></li>
+						<li{if $menuItem->menuItem|in_array:$__userMenuActiveItems} class="active"{/if}>
+							<a href="{$menuItem->getProcessor()->getLink()}" class="boxMenuLink"><span class="boxMenuLinkTitle">{@$menuItem}</span></a>
+						</li>
 					{/foreach}
-				</ul>
+				</ol>
 			</nav>
-		</fieldset>
-	{/foreach}
+		{/foreach}
+	</section>
 {/capture}

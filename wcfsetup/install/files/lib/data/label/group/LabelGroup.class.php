@@ -8,25 +8,31 @@ use wcf\system\WCF;
  * Represents a label group.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.label.group
  * @category	Community Framework
+ *
+ * @property-read	integer		$groupID
+ * @property-read	string		$groupName
+ * @property-read	string		$groupDescription
+ * @property-read	integer		$forceSelection
+ * @property-read	integer		$showOrder
  */
 class LabelGroup extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'label_group';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'groupID';
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->groupName);

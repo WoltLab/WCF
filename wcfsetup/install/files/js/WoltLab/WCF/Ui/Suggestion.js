@@ -154,7 +154,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 				item = item.currentTarget.parentNode;
 			}
 			
-			this._options.callbackSelect(this._element.id, { objectId: item.children[0].getAttribute('data-object-id'), value: item.textContent });
+			this._options.callbackSelect(this._element.id, { objectId: elData(item.children[0], 'object-id'), value: item.textContent });
 			
 			if (isEvent) {
 				this._element.focus();
@@ -162,7 +162,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 		},
 		
 		/**
-		 * Performs a search for the input value unless it is below the treshold.
+		 * Performs a search for the input value unless it is below the threshold.
 		 * 
 		 * @param	{object}		event		event object
 		 */
@@ -223,7 +223,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 					
 					anchor = elCreate('a');
 					anchor.textContent = item.label;
-					elAttr(anchor, 'data-object-id', item.objectID);
+					elData(anchor, 'object-id', item.objectID);
 					anchor.addEventListener('click', this._select.bind(this));
 					
 					listItem = elCreate('li');

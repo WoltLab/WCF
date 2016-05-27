@@ -10,20 +10,33 @@ use wcf\system\WCF;
  * Represents a poll.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.poll
  * @category	Community Framework
+ *
+ * @property-read	integer		$pollID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	string		$question
+ * @property-read	integer		$time
+ * @property-read	integer		$endTime
+ * @property-read	integer		$isChangeable
+ * @property-read	integer		$isPublic
+ * @property-read	integer		$sortByVotes
+ * @property-read	integer		$resultsRequireVote
+ * @property-read	integer		$maxVotes
+ * @property-read	integer		$votes
  */
 class Poll extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'poll';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'pollID';
 	
@@ -35,9 +48,9 @@ class Poll extends DatabaseObject {
 	
 	/**
 	 * list of poll options
-	 * @var	array<\wcf\data\poll\option\PollOption>
+	 * @var	PollOption[]
 	 */
-	protected $options = array();
+	protected $options = [];
 	
 	/**
 	 * related object
@@ -64,7 +77,7 @@ class Poll extends DatabaseObject {
 	 * Returns a list of poll options.
 	 * 
 	 * @param	boolean		$isResultDisplay
-	 * @return	array<\wcf\data\poll\option\PollOption>
+	 * @return	PollOption[]
 	 */
 	public function getOptions($isResultDisplay = false) {
 		$this->loadOptions();
@@ -107,7 +120,7 @@ class Poll extends DatabaseObject {
 			return;
 		}
 		
-		$optionList = PollManager::getInstance()->getPollOptions(array($this->pollID));
+		$optionList = PollManager::getInstance()->getPollOptions([$this->pollID]);
 		foreach ($optionList as $option) {
 			$this->options[$option->optionID] = $option;
 			

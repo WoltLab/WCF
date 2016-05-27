@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the form for adding new user option categories.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -19,14 +19,14 @@ use wcf\system\WCF;
  */
 class UserOptionCategoryAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option.category.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOption');
+	public $neededPermissions = ['admin.user.canManageUserOption'];
 	
 	/**
 	 * category name
@@ -41,7 +41,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	public $showOrder = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -50,7 +50,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -62,7 +62,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -73,17 +73,17 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new UserOptionCategoryAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserOptionCategoryAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'parentCategoryName' => 'profile',
 			'categoryName' => $this->categoryName,
 			'showOrder' => $this->showOrder
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		// update name
@@ -91,9 +91,9 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		$categoryID = $returnValues['returnValues']->categoryID;
 		I18nHandler::getInstance()->save('categoryName', 'wcf.user.option.category.category'.$categoryID, 'wcf.user.option');
 		$categoryEditor = new UserOptionCategoryEditor($returnValues['returnValues']);
-		$categoryEditor->update(array(
+		$categoryEditor->update([
 			'categoryName' => 'category'.$categoryID
-		));
+		]);
 		$this->saved();
 		
 		// reset values
@@ -103,23 +103,23 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		I18nHandler::getInstance()->reset();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'categoryName' => $this->categoryName,
 			'showOrder' => $this->showOrder
-		));
+		]);
 	}
 }

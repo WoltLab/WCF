@@ -1,0 +1,182 @@
+.pageHeader > div {
+	/* huge performance increase when scrolling */
+	will-change: transform;
+}
+
+@include screen-lg {
+	.pageHeaderContainer.stickyPageHeader {
+		z-index: 300;
+	}
+	
+	.pageHeader.sticky {
+		> div {
+			background-color: $wcfHeaderMenuBackground;
+			box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+			left: 0;
+			position: fixed;
+			top: 0;
+			right: 0;
+			z-index: 301;
+		}
+		
+		
+		.layoutBoundary {
+			flex-wrap: nowrap;
+			min-height: 50px;
+			
+			// remove padding, the vertical alignment is done using `align-items`
+			padding-bottom: 0;
+			padding-top: 0;
+		}
+		
+		.pageHeaderContainerLeft,
+		.pageHeaderContainerRight {
+			align-items: center;
+			flex-direction: row;
+			justify-content: flex-start;
+		}
+		
+		.pageHeaderContainerRight {
+			min-width: 200px;
+			position: relative;
+		}
+		
+		.pageHeaderLogo {
+			display: none;
+			flex: 0 0 auto;
+			margin-bottom: 0;
+			order: 1;
+			
+			> a > .pageHeaderLogoLarge {
+				display: none;
+			}
+			
+			> a > .pageHeaderLogoSmall {
+				display: block;
+			}
+		}
+		
+		.mainMenu {
+			flex: 1 1 auto;
+			margin-right: 20px;
+			order: 2;
+			
+			.boxMenu {
+				> li > a {
+					align-items: center;
+					display: flex;
+					
+					> span {
+						flex: 0 0 auto;
+					}
+					
+					> .boxMenuLinkOutstandingItems {
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+		
+		.userPanel {
+			flex: 0 0 auto;
+			order: 4;
+		}
+		
+		.pageHeaderSearch {
+			align-self: stretch;
+			flex: 0 0 50px;
+			margin-bottom: 0;
+			margin-left: 10px;
+			order: 3;
+			
+			.pageHeaderSearchInput {
+				border-radius: 0 0 2px 2px;
+				height: 100%;
+				width: 100%;
+			}
+			
+			.pageHeaderSearchLabel {
+				background-color: $wcfHeaderSearchBoxBackground;
+				bottom: 0;
+				cursor: pointer;
+				display: block;
+				position: absolute;
+				top: 0;
+				width: 50px;
+				
+				&:hover {
+					background-color: $wcfHeaderSearchBoxBackgroundActive;
+				}
+				
+				&::before {
+					content: $fa-var-search;
+					display: block;
+					font-family: FontAwesome;
+					font-size: 28px;
+					line-height: 32px;
+					position: absolute;
+					right: 11px;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
+		}
+		
+		&:not(.searchBarOpen) {
+			.pageHeaderSearchInputContainer {
+				display: none;
+			}
+		}
+		
+		&.searchBarOpen {
+			.pageHeaderSearchInputContainer {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+				position: absolute;
+				top: 50px !important;
+				z-index: 100; 
+			}
+			
+			.pageHeaderSearchLabel {
+				background-color: $wcfHeaderSearchBoxBackgroundActive;
+				width: 50px;
+			}
+		}
+	}
+}
+
+@include screen-xs {
+	.pageHeaderContainer {
+		height: 50px;
+		z-index: 300;
+	}
+}
+
+// force sticky header on tablets, there is no difference when scrolled
+// all the way up and it might flicker when scrolling due to the inconsistent
+// scroll event being fired
+@include screen-sm-md {
+	.pageHeaderContainer {
+		height: 50px;
+		z-index: 300;
+		
+		// touch browser allow to scroll past the page top before they bounce back,
+		// but in that case the original background color is visible
+		background-color: transparent;
+	}
+	
+	.pageHeader {
+		flex-wrap: nowrap;
+		
+		> div {
+			background-color: $wcfHeaderBackground;
+			box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+			left: 0;
+			max-width: 100vw;
+			position: fixed;
+			top: 0;
+			right: 0;
+			z-index: 301;
+		}
+	}
+}

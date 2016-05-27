@@ -12,7 +12,7 @@ use wcf\util\DateUtil;
  * Option type implementation for birthday input fields.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -20,12 +20,12 @@ use wcf\util\DateUtil;
  */
 class BirthdayOptionType extends DateOptionType {
 	/**
-	 * @see	\wcf\system\option\TextOptionType::$inputClass
+	 * @inheritDoc
 	 */
 	protected $inputClass = 'birthday';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		parent::validate($option, $newValue);
@@ -33,20 +33,20 @@ class BirthdayOptionType extends DateOptionType {
 		if (empty($newValue)) return;
 		
 		$timestamp = @strtotime($newValue);
-		if ($timestamp > TIME_NOW) {
+		if ($timestamp > TIME_NOW || $timestamp < -2147483647) {
 			throw new UserInputException($option->optionName, 'validationFailed');
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		return $newValue;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		if ($value == '0000-00-00') $value = '';
@@ -55,23 +55,23 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$ageFrom = $ageTo = '';
 		if (!empty($value['ageFrom'])) $ageFrom = intval($value['ageFrom']);
 		if (!empty($value['ageTo'])) $ageTo = intval($value['ageTo']);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'valueAgeFrom' => $ageFrom,
 			'valueAgeTo' => $ageTo
-		));
+		]);
 		return WCF::getTPL()->fetch('birthdaySearchableOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
+	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (empty($value['ageFrom']) && empty($value['ageTo'])) return false;
@@ -84,23 +84,23 @@ class BirthdayOptionType extends DateOptionType {
 		$dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.($ageTo + 1).'Y'))->add(new \DateInterval('P1D'));
 		$dateTo = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.$ageFrom.'Y'));
 		
-		$conditions->add('option_value.userOption'.User::getUserOptionID('birthdayShowYear').' = ?', array(1));
+		$conditions->add('option_value.userOption'.User::getUserOptionID('birthdayShowYear').' = ?', [1]);
 		
 		if ($ageFrom && $ageTo) {
-			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array($dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')));
+			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', [$dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')]);
 		}
 		else if ($ageFrom) {
-			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array('1893-01-01', $dateTo->format('Y-m-d')));
+			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', ['1893-01-01', $dateTo->format('Y-m-d')]);
 		}
 		else {
-			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array($dateFrom->format('Y-m-d'), DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d')));
+			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', [$dateFrom->format('Y-m-d'), DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d')]);
 		}
 		
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		$ageFrom = intval($value['ageFrom']);
@@ -111,21 +111,21 @@ class BirthdayOptionType extends DateOptionType {
 		$dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.($ageTo + 1).'Y'))->add(new \DateInterval('P1D'));
 		$dateTo = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.$ageFrom.'Y'));
 		
-		$userList->getConditionBuilder()->add('user_option_value.userOption'.User::getUserOptionID('birthdayShowYear').' = ?', array(1));
+		$userList->getConditionBuilder()->add('user_option_value.userOption'.User::getUserOptionID('birthdayShowYear').' = ?', [1]);
 		
 		if ($ageFrom && $ageTo) {
-			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array($dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')));
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', [$dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')]);
 		}
 		else if ($ageFrom) {
-			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array('1893-01-01', $dateTo->format('Y-m-d')));
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', ['1893-01-01', $dateTo->format('Y-m-d')]);
 		}
 		else {
-			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array($dateFrom->format('Y-m-d'), DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d')));
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', [$dateFrom->format('Y-m-d'), DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d')]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(User $user, Option $option, $value) {
 		if (!$user->birthdayShowYear || !$user->birthday) return false;
@@ -147,7 +147,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 * @inheritDoc
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		if (!$newValue['ageFrom'] && !$newValue['ageTo']) return null;
@@ -156,7 +156,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 * @inheritDoc
 	 */
 	public function hideLabelInSearch() {
 		return false;

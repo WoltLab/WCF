@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\SystemException;
@@ -13,7 +14,7 @@ use wcf\util\XML;
  * Shows the language import form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -21,14 +22,14 @@ use wcf\util\XML;
  */
 class LanguageImportForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.import';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * file name
@@ -37,55 +38,60 @@ class LanguageImportForm extends AbstractForm {
 	public $filename = '';
 	
 	/**
-	 * import field
-	 * @var	string
-	 */
-	public $importField = 'languageFile';
-	
-	/**
 	 * language object
-	 * @var	\wcf\data\language\Language
+	 * @var	Language
 	 */
-	public $language = null;
-	
-	/**
-	 * import language file
-	 * @var	string
-	 */
-	public $languageFile = '';
+	public $language;
 	
 	/**
 	 * list of available languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
-	public $languages = array();
+	public $languages = [];
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * source language object
+	 * @var	Language
+	 */
+	public $sourceLanguage;
+	
+	/**
+	 * source language id
+	 * @var	integer
+	 */
+	public $sourceLanguageID = 0;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		// import
-		if (isset($_POST['languageFile']) && !empty($_POST['languageFile'])) {
-			$this->languageFile = $_POST['languageFile'];
-			$this->filename = $_POST['languageFile'];
-		}
 		if (isset($_FILES['languageUpload']) && !empty($_FILES['languageUpload']['tmp_name'])) {
-			$this->importField = 'languageUpload';
 			$this->filename = $_FILES['languageUpload']['tmp_name'];
 		}
+		if (isset($_POST['sourceLanguageID'])) $this->sourceLanguageID = intval($_POST['sourceLanguageID']);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
 		
 		// check file
 		if (!file_exists($this->filename)) {
-			throw new UserInputException('languageFile');
+			throw new UserInputException('languageUpload');
+		}
+		
+		if (empty($this->sourceLanguageID)) {
+			throw new UserInputException('sourceLanguageID');
+		}
+		
+		// get language
+		$this->sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->sourceLanguageID);
+		if (!$this->sourceLanguage->languageID) {
+			throw new UserInputException('sourceLanguageID');
 		}
 		
 		// try to import
@@ -95,15 +101,15 @@ class LanguageImportForm extends AbstractForm {
 			$xml->load($this->filename);
 			
 			// import xml document
-			$this->language = LanguageEditor::importFromXML($xml, -1);
+			$this->language = LanguageEditor::importFromXML($xml, -1, $this->sourceLanguage);
 		}
 		catch (SystemException $e) {
-			throw new UserInputException($this->importField, $e->getMessage());
+			throw new UserInputException('languageUpload', $e->getMessage());
 		}
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -117,19 +123,28 @@ class LanguageImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
+	 */
+	public function readData() {
+		parent::readData();
+		
+		$this->languages = LanguageFactory::getInstance()->getLanguages();
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'languages' => $this->languages,
-			'languageFile' => $this->languageFile
-		));
+			'sourceLanguageID' => $this->sourceLanguageID
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check master password

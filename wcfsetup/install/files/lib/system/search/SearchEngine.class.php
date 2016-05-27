@@ -3,13 +3,14 @@ namespace wcf\system\search;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\search\mysql\MysqlSearchEngine;
 use wcf\system\SingletonFactory;
 
 /**
  * SearchEngine searches for given query in the selected object types.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.search
@@ -24,9 +25,9 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	
 	/**
 	 * list of available object types
-	 * @var	array
+	 * @var	ISearchableObjectType[]
 	 */
-	protected $availableObjectTypes = array();
+	protected $availableObjectTypes = [];
 	
 	/**
 	 * search engine object
@@ -35,7 +36,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	protected $searchEngine = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get available object types
@@ -50,7 +51,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	/**
 	 * Returns a list of available object types.
 	 * 
-	 * @return	array
+	 * @return	ISearchableObjectType[]
 	 */
 	public function getAvailableObjectTypes() {
 		return $this->availableObjectTypes;
@@ -60,7 +61,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	 * Returns the object type with the given name.
 	 * 
 	 * @param	string		$objectTypeName
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ISearchableObjectType|null
 	 */
 	public function getObjectType($objectTypeName) {
 		if (isset($this->availableObjectTypes[$objectTypeName])) {
@@ -84,27 +85,27 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 					$className = '';
 				}
 			}
-				
+			
 			// fallback to MySQL
 			if (empty($className)) {
-				$className = 'wcf\system\search\mysql\MysqlSearchEngine';
+				$className = MysqlSearchEngine::class;
 			}
-				
-			$this->searchEngine = call_user_func(array($className, 'getInstance'));
+			
+			$this->searchEngine = call_user_func([$className, 'getInstance']);
 		}
 		
 		return $this->searchEngine;
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::search()
+	 * @inheritDoc
 	 */
-	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
+	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000) {
 		return $this->getSearchEngine()->search($q, $objectTypes, $subjectOnly, $searchIndexCondition, $additionalConditions, $orderBy, $limit);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::getInnerJoin()
+	 * @inheritDoc
 	 */
 	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000) {
 		$conditionBuilderClassName = $this->getConditionBuilderClassName();
@@ -116,14 +117,14 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::getConditionBuilderClassName()
+	 * @inheritDoc
 	 */
 	public function getConditionBuilderClassName() {
 		return $this->getSearchEngine()->getConditionBuilderClassName();
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchEngine::removeSpecialCharacters()
+	 * @inheritDoc
 	 */
 	public function removeSpecialCharacters($string) {
 		return $this->getSearchEngine()->removeSpecialCharacters($string);

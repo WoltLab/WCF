@@ -1,0 +1,39 @@
+.pagination > ul {
+	display: inline-flex;
+	
+	> li {
+		display: flex;
+		flex: 0 0 auto;
+		
+		> .invisible {
+			display: none;
+		}
+		
+		> a,
+		> span {
+			color: $wcfContentText;
+			padding: 1px 8px;
+		}
+		
+		&.disabled > span {
+			color: $wcfContentDimmedText;
+		}
+		
+		&.active > a,
+		&.active > span,
+		> a:hover {
+			background-color: $wcfButtonBackgroundActive;
+			color: $wcfButtonTextActive;
+		}
+		
+		> .icon {
+			height: auto;
+			line-height: inherit;
+			width: auto;
+		}
+		
+		&:not(:last-child) {
+			margin-right: 1px;
+		}
+	}
+}

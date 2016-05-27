@@ -9,20 +9,25 @@ use wcf\util\ArrayUtil;
  * Represents a tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.tag
  * @category	Community Framework
+ * 
+ * @property-read	integer		$tagID
+ * @property-read	integer		$languageID
+ * @property-read	string		$name
+ * @property-read	integer|null	$synonymFor
  */
 class Tag extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'tag';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'tagID';
 	
@@ -39,7 +44,7 @@ class Tag extends DatabaseObject implements IRouteController {
 			WHERE	languageID = ?
 				AND name = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($languageID, $name));
+		$statement->execute([$languageID, $name]);
 		$row = $statement->fetchArray();
 		if ($row !== false) return new Tag(null, $row);
 		
@@ -51,7 +56,7 @@ class Tag extends DatabaseObject implements IRouteController {
 	 * 
 	 * @param	string		$tags
 	 * @param	string		$separators
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function splitString($tags, $separators = ',;') {
 		return array_unique(ArrayUtil::trim(preg_split('/['.preg_quote($separators).']/', $tags)));
@@ -60,7 +65,7 @@ class Tag extends DatabaseObject implements IRouteController {
 	/**
 	 * Takes a list of tags and builds a comma separated string from it.
 	 * 
-	 * @param	array<mixed>	$tags
+	 * @param	mixed[]		$tags
 	 * @param	string		$separator
 	 * @return	string
 	 */
@@ -70,7 +75,7 @@ class Tag extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->name;

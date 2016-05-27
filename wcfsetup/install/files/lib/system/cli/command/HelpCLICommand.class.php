@@ -1,9 +1,6 @@
 <?php
 namespace wcf\system\cli\command;
 use wcf\system\CLIWCF;
-use wcf\util\CLIUtil;
-use wcf\util\DirectoryUtil;
-use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 
@@ -11,7 +8,7 @@ use Zend\Console\Getopt as ArgvParser;
  * Shows command usage.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -28,16 +25,16 @@ class HelpCLICommand implements IArgumentedCLICommand {
 	 * Initializes the argument parser.
 	 */
 	public function __construct() {
-		$this->argv = new ArgvParser(array());
-		$this->argv->setOptions(array(
+		$this->argv = new ArgvParser([]);
+		$this->argv->setOptions([
 			ArgvParser::CONFIG_FREEFORM_FLAGS => true,
 			ArgvParser::CONFIG_PARSEALL => false,
 			ArgvParser::CONFIG_CUMULATIVE_PARAMETERS => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		$this->argv->setArguments($parameters);
@@ -51,26 +48,26 @@ class HelpCLICommand implements IArgumentedCLICommand {
 		$commands = CLICommandHandler::getCommands();
 		
 		if (!isset($commands[$args[0]])) {
-			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', array('command' => $args[0])), $this->getUsage());
+			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', ['command' => $args[0]]), $this->getUsage());
 		}
 		
 		$command = $commands[$args[0]];
 		if (!($command instanceof IArgumentedCLICommand)) {
-			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.help.noArguments', array('command' => $args[0])), $this->getUsage());
+			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.help.noArguments', ['command' => $args[0]]), $this->getUsage());
 		}
 		
 		CLIWCF::getReader()->println($command->getUsage());
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
+	 * @inheritDoc
 	 */
 	public function getUsage() {
 		return str_replace($_SERVER['argv'][0].' [ options ]', 'help [ options ] <command>', $this->argv->getUsageMessage());
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		return true;

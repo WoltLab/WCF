@@ -14,7 +14,7 @@ define(['Dictionary'], function(Dictionary) {
 	 */
 	function CallbackList() {
 		this._dictionary = new Dictionary();
-	};
+	}
 	CallbackList.prototype = {
 		/**
 		 * Adds a callback for given identifier.

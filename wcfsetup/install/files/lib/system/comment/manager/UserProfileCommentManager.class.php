@@ -5,7 +5,7 @@ use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentList;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * User profile comment manager implementation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.comment.manager
@@ -22,41 +22,41 @@ use wcf\system\WCF;
  */
 class UserProfileCommentManager extends AbstractCommentManager implements IViewableLikeProvider {
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionAdd
+	 * @inheritDoc
 	 */
 	protected $permissionAdd = 'user.profileComment.canAddComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionCanModerate
+	 * @inheritDoc
 	 */
 	protected $permissionCanModerate = 'mod.profileComment.canModerateComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionDelete
+	 * @inheritDoc
 	 */
 	protected $permissionDelete = 'user.profileComment.canDeleteComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionEdit
+	 * @inheritDoc
 	 */
 	protected $permissionEdit = 'user.profileComment.canEditComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionModDelete
+	 * @inheritDoc
 	 */
 	protected $permissionModDelete = 'mod.profileComment.canDeleteComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionModEdit
+	 * @inheritDoc
 	 */
 	protected $permissionModEdit = 'mod.profileComment.canEditComment';
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::isAccessible()
+	 * @inheritDoc
 	 */
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		// check object id
-		$userProfile = UserProfile::getUserProfile($objectID);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
 		if ($userProfile === null) {
 			return false;
 		}
@@ -81,14 +81,14 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink($objectTypeID, $objectID) {
-		return LinkHandler::getInstance()->getLink('User', array('id' => $objectID));
+		return LinkHandler::getInstance()->getLink('User', ['id' => $objectID]);
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle($objectTypeID, $objectID, $isResponse = false) {
 		if ($isResponse) return WCF::getLanguage()->get('wcf.user.profile.content.wall.commentResponse');
@@ -97,14 +97,14 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::updateCounter()
+	 * @inheritDoc
 	 */
 	public function updateCounter($objectID, $value) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteComment()
+	 * @inheritDoc
 	 */
 	public function canDeleteComment(Comment $comment) {
 		if ($comment->objectID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')) {
@@ -115,7 +115,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteResponse()
+	 * @inheritDoc
 	 */
 	public function canDeleteResponse(CommentResponse $response) {
 		if ($response->getComment()->objectID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')) {
@@ -126,7 +126,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	}
 	
 	/**
-	 * @see	\wcf\system\like\IViewableLikeProvider::prepare()
+	 * @inheritDoc
 	 */
 	public function prepare(array $likes) {
 		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
@@ -135,7 +135,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		
 		$commentLikeObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
 		
-		$commentIDs = $responseIDs = array();
+		$commentIDs = $responseIDs = [];
 		foreach ($likes as $like) {
 			if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
 				$commentIDs[] = $like->objectID;
@@ -146,7 +146,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		}
 		
 		// fetch response
-		$userIDs = $responses = array();
+		$userIDs = $responses = [];
 		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
 			$responseList->setObjectIDs($responseIDs);
@@ -168,7 +168,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		$comments = $commentList->getObjects();
 		
 		// fetch users
-		$users = array();
+		$users = [];
 		foreach ($comments as $comment) {
 			$userIDs[] = $comment->objectID;
 			if ($comment->userID) {
@@ -176,7 +176,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 			}
 		}
 		if (!empty($userIDs)) {
-			$users = UserProfile::getUserProfiles(array_unique($userIDs));
+			$users = UserProfileRuntimeCache::getInstance()->getObjects(array_unique($userIDs));
 		}
 		
 		// set message
@@ -190,11 +190,11 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 						$like->setIsAccessible();
 						
 						// short output
-						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment', array(
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment', [
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'user' => $users[$comment->objectID],
 							'like' => $like
-						));
+						]);
 						$like->setTitle($text);
 						
 						// output
@@ -212,12 +212,12 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 						$like->setIsAccessible();
 						
 						// short output
-						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment.response', array(
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment.response', [
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'user' => $users[$comment->objectID],
 							'like' => $like
-						));
+						]);
 						$like->setTitle($text);
 						
 						// output

@@ -3,7 +3,6 @@ namespace wcf\system\template;
 use wcf\system\exception\SystemException;
 use wcf\system\template\plugin\ICompilerTemplatePlugin;
 use wcf\system\template\plugin\IPrefilterTemplatePlugin;
-use wcf\system\WCF;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
 
@@ -11,7 +10,7 @@ use wcf\util\StringUtil;
  * Compiles template sources into valid PHP code.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template
@@ -20,26 +19,26 @@ use wcf\util\StringUtil;
 class TemplateScriptingCompiler {
 	/**
 	 * template engine object
-	 * @var	\wcf\system\template\TemplateEngine
+	 * @var	TemplateEngine
 	 */
 	protected $template;
 	
 	/**
 	 * PHP functions that can be used in the modifier syntax and are unknown
 	 * to PHP's function_exists function
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $unknownPHPFunctions = array('isset', 'unset', 'empty');
+	protected $unknownPHPFunctions = ['isset', 'unset', 'empty'];
 	
 	/**
 	 * PHP functions that can not be used in the modifier syntax
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $disabledPHPFunctions = array(
+	protected $disabledPHPFunctions = [
 		'system', 'exec', 'passthru', 'shell_exec', // command line execution
 		'include', 'require', 'include_once', 'require_once', // includes
 		'eval', 'virtual', 'call_user_func_array', 'call_user_func', 'assert' // code execution
-	);
+	];
 	
 	/**
 	 * pattern to match variable operators like -> or .
@@ -121,27 +120,27 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * list of automatically loaded tenplate plugins
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $autoloadPlugins = array();
+	protected $autoloadPlugins = [];
 	
 	/**
 	 * stack with template tags data
 	 * @var	array
 	 */
-	protected $tagStack = array();
+	protected $tagStack = [];
 	
 	/**
 	 * list of loaded compiler plugin objects
-	 * @var	array<\wcf\system\template\ICompilerTemplatePlugin>
+	 * @var	ICompilerTemplatePlugin[]
 	 */
-	protected $compilerPlugins = array();
+	protected $compilerPlugins = [];
 	
 	/**
 	 * stack used to compile the capture tag
 	 * @var	array
 	 */
-	protected $captureStack = array();
+	protected $captureStack = [];
 	
 	/**
 	 * left delimiter of template syntax
@@ -169,14 +168,14 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * list of static includes per template
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $staticIncludes = array();
+	protected $staticIncludes = [];
 	
 	/**
 	 * Creates a new TemplateScriptingCompiler object.
 	 * 
-	 * @param	\wcf\system\templateTemplateEngine	$template
+	 * @param	TemplateEngine		$template
 	 */
 	public function __construct(TemplateEngine $template) {
 		$this->template = $template;
@@ -197,22 +196,24 @@ class TemplateScriptingCompiler {
 	 * @param	array		$metaData
 	 * @param	boolean		$isolated
 	 * @return	string
+	 * @throws	SystemException
 	 */
-	public function compileString($identifier, $sourceContent, array $metaData = array(), $isolated = false) {
+	public function compileString($identifier, $sourceContent, array $metaData = [], $isolated = false) {
+		$previousData = [];
 		if ($isolated) {
-			$previousData = array(
+			$previousData = [
 				'autoloadPlugins' => $this->autoloadPlugins,
 				'currentIdentifier' => $this->currentIdentifier,
 				'currentLineNo' => $this->currentLineNo,
 				'tagStack' => $this->tagStack
-			);
+			];
 		}
 		else {
-			$this->staticIncludes = array();
+			$this->staticIncludes = [];
 		}
 		
 		// reset vars
-		$this->autoloadPlugins = $this->tagStack = array();
+		$this->autoloadPlugins = $this->tagStack = [];
 		$this->currentIdentifier = $identifier;
 		$this->currentLineNo = 1;
 		
@@ -229,7 +230,7 @@ class TemplateScriptingCompiler {
 		$sourceContent = $this->removeComments($sourceContent);
 		
 		// match all template tags
-		$matches = array();
+		$matches = [];
 		preg_match_all("~".$this->ldq."(.*?)".$this->rdq."~s", $sourceContent, $matches);
 		$templateTags = $matches[1];
 		
@@ -237,7 +238,7 @@ class TemplateScriptingCompiler {
 		$textBlocks = preg_split("~".$this->ldq.".*?".$this->rdq."~s", $sourceContent);
 		
 		// compile the template tags into php-code
-		$compiledTags = array();
+		$compiledTags = [];
 		for ($i = 0, $j = count($templateTags); $i < $j; $i++) {
 			$this->currentLineNo += mb_substr_count($textBlocks[$i], "\n");
 			$compiledTags[] = $this->compileTag($templateTags[$i], $identifier, $metaData);
@@ -287,12 +288,12 @@ class TemplateScriptingCompiler {
 			$this->tagStack = $previousData['tagStack'];
 		}
 		
-		return array(
-			'meta' => array(
+		return [
+			'meta' => [
 				'include' => $this->staticIncludes
-			),
+			],
 			'template' => $compiledAutoloadPlugins.$compiledContent
-		);
+		];
 	}
 	
 	/**
@@ -301,6 +302,8 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tag
 	 * @param	string		$identifier
 	 * @param	array		$metaData
+	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileTag($tag, $identifier, array &$metaData) {
 		if (preg_match('~^'.$this->outputPattern.'~s', $tag)) {
@@ -308,7 +311,7 @@ class TemplateScriptingCompiler {
 			return $this->compileOutputTag($tag);
 		}
 		
-		$match = array();
+		$match = [];
 		// replace 'else if' with 'elseif'
 		$tag = preg_replace('~^else\s+if(?=\s)~i', 'elseif', $tag);
 		
@@ -455,6 +458,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tagCommand
 	 * @param	string		$tagArgs
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	protected function compileBlockPlugin($tagCommand, $tagArgs) {
 		// check wheater this is the start ({block}) or the
@@ -502,6 +506,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tagCommand
 	 * @param	string		$tagArgs
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	protected function compileCompilerPlugin($tagCommand, $tagArgs) {
 		// check wheater this is the start ({block}) or the
@@ -566,7 +571,7 @@ class TemplateScriptingCompiler {
 				}
 			}
 			
-			$this->captureStack[] = array('name' => $args['name'], 'variable' => $args['assign'], 'append' => $append);
+			$this->captureStack[] = ['name' => $args['name'], 'variable' => $args['assign'], 'append' => $append];
 			return '<?php ob_start(); ?>';
 		}
 		else {
@@ -584,6 +589,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$sectionTag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileSectionTag($sectionTag) {
 		$args = $this->parseTagArgs($sectionTag, 'section');
@@ -658,6 +664,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$foreachTag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileForeachTag($foreachTag) {
 		$args = $this->parseTagArgs($foreachTag, 'foreach');
@@ -707,6 +714,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$identifier
 	 * @param	array		$metaData
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileIncludeTag($includeTag, $identifier, array $metaData) {
 		$args = $this->parseTagArgs($includeTag, 'include');
@@ -769,7 +777,7 @@ class TemplateScriptingCompiler {
 		if ($staticInclude) {
 			$phpCode = '';
 			if (!isset($this->staticIncludes[$application])) {
-				$this->staticIncludes[$application] = array();
+				$this->staticIncludes[$application] = [];
 			}
 			
 			if (!in_array($templateName, $this->staticIncludes[$application])) {
@@ -777,7 +785,6 @@ class TemplateScriptingCompiler {
 			}
 			
 			// pass remaining tag args as variables
-			$variables = array();
 			if (!empty($args)) {
 				foreach ($args as $variable => $value) {
 					if (substr($value, 0, 1) == "'") {
@@ -799,13 +806,12 @@ class TemplateScriptingCompiler {
 			if (!empty($phpCode)) $phpCode = "<?php\n".$phpCode."\n?>";
 			
 			$sourceFilename = $this->template->getSourceFilename($templateName, $application);
-			$metaDataFilename = $this->template->getMetaDataFilename($templateName);
 			
-			$data = $this->compileString($templateName, file_get_contents($sourceFilename), array(
+			$data = $this->compileString($templateName, file_get_contents($sourceFilename), [
 				'application' => $application,
 				'data' => null,
 				'filename' => ''
-			), true);
+			], true);
 			
 			return $phpCode . $data['template'];
 		}
@@ -847,6 +853,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tagArgs
 	 * @param	string		$tag
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function parseTagArgs($tagArgs, $tag) {
 		// replace strings
@@ -858,10 +865,10 @@ class TemplateScriptingCompiler {
 		}
 		
 		// parse tag arguments
-		$matches = array();
+		$matches = [];
 		// find all variables
 		preg_match_all('~\s+(\w+)\s*=\s*([^=]*)(?=\s|$)~s', $tagArgs, $matches);
-		$args = array();
+		$args = [];
 		for ($i = 0, $j = count($matches[1]); $i < $j; $i++) {
 			$name = $matches[1][$i];
 			$string = $this->compileVariableTag($matches[2][$i], false);
@@ -930,10 +937,11 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tagArgs
 	 * @param	boolean		$elseif		true, if this tag is an else tag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileIfTag($tagArgs, $elseif = false) {
 		$tagArgs = $this->replaceQuotes($tagArgs);
-		$tagArgs = str_replace(array(' ', "\n"), '', $tagArgs);
+		$tagArgs = str_replace([' ', "\n"], '', $tagArgs);
 		
 		// split tags
 		preg_match_all('~('.$this->conditionOperatorPattern.')~', $tagArgs, $matches);
@@ -993,7 +1001,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$tag
 	 */
 	public function pushTag($tag) {
-		$this->tagStack[] = array($tag, $this->currentLineNo);
+		$this->tagStack[] = [$tag, $this->currentLineNo];
 	}
 	
 	/**
@@ -1003,7 +1011,7 @@ class TemplateScriptingCompiler {
 	 * @return	string		$tag
 	 */
 	public function popTag($tag) {
-		list($openTag, $lineNo) = array_pop($this->tagStack);
+		list($openTag, ) = array_pop($this->tagStack);
 		if ($tag == $openTag) {
 			return $openTag;
 		}
@@ -1023,6 +1031,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$tag
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function compileOutputTag($tag) {
 		$encodeHTML = false;
@@ -1115,7 +1124,9 @@ class TemplateScriptingCompiler {
 	 * Compiles a variable tag and returns the compiled PHP code.
 	 * 
 	 * @param	string		$tag
+	 * @param	boolean		$replaceQuotes
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function compileVariableTag($tag, $replaceQuotes = true) {
 		// replace all quotes with unique hash values
@@ -1130,7 +1141,7 @@ class TemplateScriptingCompiler {
 		$values = preg_split('~(?:'.$this->variableOperatorPattern.')~', $compiledTag);
 		
 		// parse tags
-		$statusStack = array(0 => 'start');
+		$statusStack = [0 => 'start'];
 		$result = '';
 		$modifierData = null;
 		for ($i = 0, $j = count($values); $i < $j; $i++) {
@@ -1324,8 +1335,8 @@ class TemplateScriptingCompiler {
 							}
 						}
 						
-						$statusStack = array(0 => 'modifier');
-						$modifierData = array('name' => '', 'parameter' => array(0 => $result));
+						$statusStack = [0 => 'modifier'];
+						$modifierData = ['name' => '', 'parameter' => [0 => $result]];
 						$result = '';
 					break;
 					
@@ -1414,7 +1425,7 @@ class TemplateScriptingCompiler {
 	/**
 	 * Returns the instance of the template engine class.
 	 * 
-	 * @return	\wcf\system\templateTemplateEngine
+	 * @return	TemplateEngine
 	 */
 	public function getTemplate() {
 		return $this->template;
@@ -1462,6 +1473,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$templateName
 	 * @param	string		$string
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function applyPrefilters($templateName, $string) {
 		foreach ($this->template->getPrefilters() as $prefilter) {
@@ -1491,7 +1503,7 @@ class TemplateScriptingCompiler {
 	 * @return	string
 	 */
 	public function replaceLiterals($string) {
-		return preg_replace_callback("~".$this->ldq."literal".$this->rdq."(.*?)".$this->ldq."/literal".$this->rdq."~s", array($this, 'replaceLiteralsCallback'), $string);
+		return preg_replace_callback("~".$this->ldq."literal".$this->rdq."(.*?)".$this->ldq."/literal".$this->rdq."~s", [$this, 'replaceLiteralsCallback'], $string);
 	}
 	
 	/**
@@ -1506,6 +1518,9 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Callback function used in replaceLiterals()
+	 * 
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private function replaceLiteralsCallback($matches) {
 		return StringStack::pushToStringStack($matches[1], 'literal');
@@ -1528,14 +1543,17 @@ class TemplateScriptingCompiler {
 	 * @return	string
 	 */
 	public function replaceQuotes($string) {
-		$string = preg_replace_callback('~\'([^\'\\\\]+|\\\\.)*\'~', array($this, 'replaceSingleQuotesCallback'), $string);
-		$string = preg_replace_callback('~"([^"\\\\]+|\\\\.)*"~', array($this, 'replaceDoubleQuotesCallback'), $string);
+		$string = preg_replace_callback('~\'([^\'\\\\]+|\\\\.)*\'~', [$this, 'replaceSingleQuotesCallback'], $string);
+		$string = preg_replace_callback('~"([^"\\\\]+|\\\\.)*"~', [$this, 'replaceDoubleQuotesCallback'], $string);
 		
 		return $string;
 	}
 	
 	/**
 	 * Callback function used in replaceQuotes()
+	 *
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private function replaceSingleQuotesCallback($matches) {
 		return StringStack::pushToStringStack($matches[0], 'singleQuote');
@@ -1543,6 +1561,9 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Callback function used in replaceQuotes()
+	 *
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private function replaceDoubleQuotesCallback($matches) {
 		// parse unescaped simple vars in double quotes
@@ -1571,11 +1592,14 @@ class TemplateScriptingCompiler {
 	 * @return	string
 	 */
 	public function replaceConstants($string) {
-		return preg_replace_callback('~(?<=^|'.$this->variableOperatorPattern.')(?i)((?:\-?\d+(?:\.\d+)?)|true|false|null)(?=$|'.$this->variableOperatorPattern.')~', array($this, 'replaceConstantsCallback'), $string);
+		return preg_replace_callback('~(?<=^|'.$this->variableOperatorPattern.')(?i)((?:\-?\d+(?:\.\d+)?)|true|false|null)(?=$|'.$this->variableOperatorPattern.')~', [$this, 'replaceConstantsCallback'], $string);
 	}
 	
 	/**
 	 * Callback function used in replaceConstants()
+	 *
+	 * @param	string[]	$matches
+	 * @return	string
 	 */
 	private function replaceConstantsCallback($matches) {
 		return StringStack::pushToStringStack($matches[1], 'constants');

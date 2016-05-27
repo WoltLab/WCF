@@ -10,17 +10,20 @@ use wcf\system\WCF;
  * Provides functions to edit categories.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
  * @category	Community Framework
+ *
+ * @method	Category	getDecoratedObject()
+ * @mixin	Category
  */
 class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\category\Category';
+	protected static $baseClass = Category::class;
 	
 	/**
 	 * Prepares the update of the show order of this category and return the
@@ -43,11 +46,11 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					AND parentCategoryID = ?
 					AND objectTypeID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->showOrder,
 				$this->parentCategoryID,
 				$this->objectTypeID
-			));
+			]);
 			
 			return static::getShowOrder($this->objectTypeID, $parentCategoryID, $showOrder);
 		}
@@ -60,12 +63,12 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 						AND parentCategoryID = ?
 						AND objectTypeID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$showOrder,
 					$this->showOrder,
 					$this->parentCategoryID,
 					$this->objectTypeID
-				));
+				]);
 			}
 			else if ($showOrder > $this->showOrder) {
 				$sql = "SELECT	MAX(showOrder) AS showOrder
@@ -73,10 +76,10 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					WHERE	objectTypeID = ?
 						AND parentCategoryID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$this->objectTypeID,
 					$this->parentCategoryID
-				));
+				]);
 				$row = $statement->fetchArray();
 				$maxShowOrder = 0;
 				if (!empty($row)) {
@@ -93,11 +96,11 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 						AND showOrder > ?
 						AND objectTypeID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$showOrder,
 					$this->showOrder,
 					$this->objectTypeID
-				));
+				]);
 			}
 			
 			return $showOrder;
@@ -105,9 +108,9 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		// default values
 		$parameters['time'] = (isset($parameters['time'])) ? $parameters['time'] : TIME_NOW;
 		$parameters['parentCategoryID'] = (isset($parameters['parentCategoryID'])) ? $parameters['parentCategoryID'] : 0;
@@ -118,16 +121,16 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// handle additionalData
 		if (!isset($parameters['additionalData'])) {
-			$parameters['additionalData'] = serialize(array());
+			$parameters['additionalData'] = serialize([]);
 		}
 		
 		return parent::create($parameters);
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		// update positions
 		$sql = "UPDATE	".static::getDatabaseTableName()."
 			SET	showOrder = showOrder - 1
@@ -137,7 +140,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		foreach ($objectIDs as $categoryID) {
 			$category = CategoryHandler::getInstance()->getCategory($categoryID);
-			$statement->execute(array($category->parentCategoryID, $category->showOrder));
+			$statement->execute([$category->parentCategoryID, $category->showOrder]);
 		}
 		
 		return parent::deleteAll($objectIDs);
@@ -162,10 +165,10 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			WHERE	objectTypeID = ?
 				AND parentCategoryID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$parentCategoryID
-		));
+		]);
 		$row = $statement->fetchArray();
 		$maxShowOrder = 0;
 		if (!empty($row)) {
@@ -179,11 +182,11 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					AND showOrder >= ?
 					AND parentCategoryID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$objectTypeID,
 				$showOrder,
 				$parentCategoryID
-			));
+			]);
 			
 			return $showOrder;
 		}
@@ -192,7 +195,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		CategoryCacheBuilder::getInstance()->reset();

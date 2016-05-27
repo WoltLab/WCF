@@ -11,17 +11,21 @@ use wcf\system\WCF;
  * Executes package installation queue-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.queue
  * @category	Community Framework
+ * 
+ * @method	PackageInstallationQueue		create()
+ * @method	PackageInstallationQueueEditor[]	getObjects()
+ * @method	PackageInstallationQueueEditor		getSingleObject()
  */
 class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\package\installation\queue\PackageInstallationQueueEditor';
+	protected $className = PackageInstallationQueueEditor::class;
 	
 	/**
 	 * queue of the canceled installation
@@ -36,9 +40,9 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	protected $package = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('cancelInstallation', 'prepareQueue');
+	protected $requireACP = ['cancelInstallation', 'prepareQueue'];
 	
 	/**
 	 * Validates the 'prepareQueue' action:
@@ -51,7 +55,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 			throw new UserInputException('packageID');
 		}
 		
-		if (!isset($this->parameters['action']) || !in_array($this->parameters['action'], array('install', 'update', 'uninstall', 'rollback'))) {
+		if (!isset($this->parameters['action']) || !in_array($this->parameters['action'], ['install', 'update', 'uninstall', 'rollback'])) {
 			throw new UserInputException('action');
 		}
 	}
@@ -59,12 +63,12 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Prepares a new package installation queue.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function prepareQueue() {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		
-		$queue = PackageInstallationQueueEditor::create(array(
+		$queue = PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
 			'package' => $this->package->package,
@@ -72,11 +76,11 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 			'packageID' => $this->package->packageID,
 			'action' => $this->parameters['action'],
 			'installationType' => 'other'
-		));
+		]);
 		
-		return array(
+		return [
 			'queueID' => $queue->queueID
-		);
+		];
 	}
 	
 	/**
@@ -84,7 +88,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateCancelInstallation() {
 		// check permissions
-		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
 		
 		// validate queue
 		$this->queue = $this->getSingleObject();
@@ -105,8 +109,8 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 		
 		$this->queue->delete();
 		
-		return array(
+		return [
 			'url' => LinkHandler::getInstance()->getLink('PackageList')
-		);
+		];
 	}
 }

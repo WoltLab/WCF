@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of user groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
  * @category	Community Framework
+ *
+ * @method	UserGroup		current()
+ * @method	UserGroup[]		getObjects()
+ * @method	UserGroup|null		search($objectID)
+ * @property	UserGroup[]		$objects
  */
 class UserGroupList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\group\UserGroup';
+	public $className = UserGroup::class;
 }

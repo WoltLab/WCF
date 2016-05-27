@@ -6,7 +6,7 @@ use wcf\data\template\listener\TemplateListenerList;
  * Caches template listener information.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -15,18 +15,18 @@ use wcf\data\template\listener\TemplateListenerList;
  */
 class TemplateListenerCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		// get templates for current package id
 		$templateListenerList = new TemplateListenerList();
-		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", array($parameters['environment']));
+		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", [$parameters['environment']]);
 		$templateListenerList->sqlOrderBy = "template_listener.listenerID ASC";
 		$templateListenerList->readObjects();
 		
-		$data = array();
+		$data = [];
 		foreach ($templateListenerList->getObjects() as $templateListener) {
-			$data[$templateListener->templateName] = array();
+			$data[$templateListener->templateName] = [];
 		}
 		
 		return $data;

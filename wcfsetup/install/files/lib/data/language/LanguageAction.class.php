@@ -1,38 +1,44 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
  * Executes language-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language
  * @category	Community Framework
+ * 
+ * @method	Language		create()
+ * @method	LanguageEditor[]	getObjects()
+ * @method	LanguageEditor		getSingleObject()
  */
-class LanguageAction extends AbstractDatabaseObjectAction {
+class LanguageAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\language\LanguageEditor';
+	protected $className = LanguageEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.language.canManageLanguage');
+	protected $permissionsCreate = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.language.canManageLanguage');
+	protected $permissionsDelete = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.language.canManageLanguage');
+	protected $permissionsUpdate = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * language editor object
@@ -41,9 +47,9 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	protected $languageEditor = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'setAsDefault', 'update');
+	protected $requireACP = ['create', 'delete', 'setAsDefault', 'update'];
 	
 	/**
 	 * Validates permission to set a language as default.
@@ -59,5 +65,28 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	 */
 	public function setAsDefault() {
 		$this->languageEditor->setAsDefault();
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function validateToggle() {
+		parent::validateUpdate();
+		
+		foreach ($this->getObjects() as $language) {
+			if ($language->isDefault) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function toggle() {
+		foreach ($this->getObjects() as $language) {
+			$isDisabled = ($language->isDisabled) ? 0 : 1;
+			$language->update(['isDisabled' => $isDisabled]);
+		}
 	}
 }

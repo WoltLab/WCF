@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Formats messages for search result output.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.search
@@ -30,7 +30,7 @@ class SearchResultTextParser extends SingletonFactory {
 	protected $searchQuery = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		if (isset($_GET['highlight'])) {
@@ -84,7 +84,7 @@ class SearchResultTextParser extends SingletonFactory {
 							$shiftEndBy += $shiftStartBy;
 							$shiftStartBy = 0;
 						}
-							
+						
 						// shift abstract start
 						if ($start - $shiftStartBy < 0) {
 							$shiftEndBy += $shiftStartBy - $start;
@@ -97,7 +97,6 @@ class SearchResultTextParser extends SingletonFactory {
 						// shift abstract end
 						if ($end + $shiftEndBy > mb_strlen($text) - 1) {
 							$shiftStartBy = $end + $shiftEndBy - mb_strlen($text) - 1;
-							$shiftEndBy = 0;
 							if ($shiftStartBy > $start) {
 								$start = 0;
 							}
@@ -117,14 +116,14 @@ class SearchResultTextParser extends SingletonFactory {
 					}
 				}
 				else {
-					$matches = array();
+					$matches = [];
 					$shiftLength = static::MAX_LENGTH;
 					// find first match of each keyword
 					foreach ($this->searchQuery as $keyword) {
 						$start = mb_strripos($text, $keyword);
 						if ($start !== false) {
 							$shiftLength -= mb_strlen($keyword);
-							$matches[$keyword] = array('start' => $start, 'end' => $start + mb_strlen($keyword));
+							$matches[$keyword] = ['start' => $start, 'end' => $start + mb_strlen($keyword)];
 						}
 					}
 					

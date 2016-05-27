@@ -1,48 +1,30 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.moderation.deletedContent.objectType.{@$objectType}{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-
-{capture assign='sidebar'}
-	<fieldset>
-		<legend>{lang}wcf.moderation.deletedContent.objectTypes{/lang}</legend>
+{capture assign='sidebarLeft'}
+	<section class="box">
+		<h2 class="boxTitle">{lang}wcf.moderation.deletedContent.objectTypes{/lang}</h2>
 		
-		<nav>
-			<ul>
-				{foreach from=$availableObjectTypes item=availableObjectType}
-					<li{if $objectType == $availableObjectType->objectType} class="active"{/if}><a href="{link controller='DeletedContentList'}objectType={@$availableObjectType->objectType}{/link}">{lang}wcf.moderation.deletedContent.objectType.{@$availableObjectType->objectType}{/lang}</a></li>
-				{/foreach}
-			</ul>
-		</nav>
-	</fieldset>
+		<div class="boxContent">
+			<nav>
+				<ul class="boxMenu">
+					{foreach from=$availableObjectTypes item=availableObjectType}
+						<li{if $objectType == $availableObjectType->objectType} class="active"{/if}><a class="boxMenuLink" href="{link controller='DeletedContentList'}objectType={@$availableObjectType->objectType}{/link}">{lang}wcf.moderation.deletedContent.objectType.{@$availableObjectType->objectType}{/lang}</a></li>
+					{/foreach}
+				</ul>
+			</nav>
+		</div>
+	</section>
 {/capture}
 
-{include file='header' sidebarOrientation='left'}
+{capture assign='contentTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}</h1>
-</header>
+{include file='header'}
 
-{include file='userNotice'}
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='DeletedContentList' link="objectType=$objectType&pageNo=%d"}
-	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='DeletedContentList' link="objectType=$objectType&pageNo=%d"}{/content}
+	</div>
+{/hascontent}
 
 {if $items}
 	{include file=$resultListTemplateName application=$resultListApplication}
@@ -50,23 +32,20 @@
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	{@$pagesLinks}
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
 	
 	{hascontent}
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsBottom'}
-				{/content}
+				{content}{event name='contentFooterNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-	
-	<nav class="jsClipboardEditor" data-types="[ '{@$objectType}' ]"></nav>
-</div>
+</footer>
 
 {include file='footer'}
-
-</body>
-</html>

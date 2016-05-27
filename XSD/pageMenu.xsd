@@ -42,6 +42,9 @@
 					<xs:element name="options" type="xs:string" minOccurs="0" />
 					<xs:element name="permissions" type="xs:string" minOccurs="0" />
 					<xs:element name="showorder" type="xs:unsignedInt" minOccurs="0" />
+					<xs:element name="controller" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="parent" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="position" minOccurs="0">
 						<xs:simpleType>
 							<xs:restriction base="xs:string">

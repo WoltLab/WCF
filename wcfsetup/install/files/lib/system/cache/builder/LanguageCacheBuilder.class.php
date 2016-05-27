@@ -8,7 +8,7 @@ use wcf\data\DatabaseObject;
  * Caches languages and the id of the default language. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -16,21 +16,22 @@ use wcf\data\DatabaseObject;
  */
 class LanguageCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
-		$data = array(
-			'codes' => array(),
-			'countryCodes' => array(),
-			'languages' => array(),
+		$data = [
+			'codes' => [],
+			'countryCodes' => [],
+			'languages' => [],
 			'default' => 0,
-			'categories' => array(),
-			'categoryIDs' => array(),
+			'categories' => [],
+			'categoryIDs' => [],
 			'multilingualismEnabled' => false
-		);
+		];
 		
 		// get languages
 		$languageList = new LanguageList();
+		$languageList->getConditionBuilder()->add('language.isDisabled = ?', [0]);
 		$languageList->readObjects();
 		$data['languages'] = $languageList->getObjects();
 		foreach ($languageList->getObjects() as $language) {

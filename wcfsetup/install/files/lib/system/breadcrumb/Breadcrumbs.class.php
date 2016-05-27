@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\breadcrumb;
-use wcf\system\menu\page\PageMenu;
+use wcf\data\page\PageCache;
+use wcf\system\page\PageLocationManager;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -8,7 +9,7 @@ use wcf\system\WCF;
  * Manages breadcrumbs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.breadcrumb
@@ -17,9 +18,9 @@ use wcf\system\WCF;
 class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * list of breadcrumbs
-	 * @var	array<\wcf\system\breadcrumb\Breadcrumb>
+	 * @var	Breadcrumb[]
 	 */
-	protected $items = array();
+	protected $items = null;
 	
 	/**
 	 * Current iterator-index
@@ -27,46 +28,43 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	protected $index = 0;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
-	protected function init() {
-		// add main breadcrumbs entry
-		$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink()));
-	}
+	protected function init() {}
 	
 	/**
 	 * Adds a breadcrumb (insertion order is crucial!).
 	 * 
-	 * @param	\wcf\system\breadcrumb\Breadcrumb	$item
+	 * @param	Breadcrumb	$item
+	 * @deprecated  2.2
 	 */
 	public function add(Breadcrumb $item) {
-		$this->items[] = $item;
+		throw new \BadMethodCallException("Breadcrumbs::add() is no longer supported, please use " . PageLocationManager::class . " instead.");
 	}
 	
 	/**
 	 * Returns the list of breadcrumbs.
 	 * 
-	 * @return	array<\wcf\system\breadcrumb\Breadcrumb>
+	 * @return	Breadcrumb[]
 	 */
 	public function get() {
+		if ($this->items === null) {
+			$this->loadBreadcrumbs();
+		}
+		
 		return $this->items;
 	}
 	
 	/**
 	 * Replaces a breadcrumb, returns true if replacement was successful.
 	 * 
-	 * @param	\wcf\system\breadcrumb\Breadcrumb	$item
-	 * @param	integer					$index
+	 * @param	Breadcrumb	$item
+	 * @param	integer		$index
 	 * @return	boolean
+	 * @deprecated  2.2
 	 */
 	public function replace(Breadcrumb $item, $index) {
-		if (isset($this->items[$index])) {
-			$this->items[$index] = $item;
-			
-			return true;
-		}
-		
-		return false;
+		throw new \BadMethodCallException("Breadcrumbs::replace() is no longer supported, please use " . PageLocationManager::class . " instead.");
 	}
 	
 	/**
@@ -74,54 +72,86 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * 
 	 * @param	integer		$index
 	 * @return	boolean
+	 * @deprecated  2.2
 	 */
 	public function remove($index) {
-		if (isset($this->items[$index])) {
-			unset($this->items[$index]);
-			
-			return true;
+		throw new \BadMethodCallException("Breadcrumbs::remove() is no longer supported, please use " . PageLocationManager::class . " instead.");
+	}
+	
+	protected function loadBreadcrumbs() {
+		$this->items = [];
+		$locations = PageLocationManager::getInstance()->getLocations();
+		
+		// locations are provided starting with the current location followed
+		// by all relevant ancestors, but breadcrumbs appear in the reverse order
+		$locations = array_reverse($locations);
+		
+		// add the landing page as first location, unless it is already included
+		$landingPage = PageCache::getInstance()->getLandingPage();
+		$addLandingPage = true;
+		for ($i = 0, $length = count($locations); $i < $length; $i++) {
+			if ($locations[$i]['pageID'] == $landingPage->pageID) {
+				$addLandingPage = false;
+				break;
+			}
 		}
 		
-		return false;
+		if ($addLandingPage) {
+			array_unshift($locations, [
+				'link' => $landingPage->getLink(),
+				'title' => WCF::getLanguage()->get(PAGE_TITLE)
+			]);
+		}
+		
+		// ignore the last location as it represents the current page
+		array_pop($locations);
+		
+		for ($i = 0, $length = count($locations); $i < $length; $i++) {
+			$this->items[] = new Breadcrumb($locations[$i]['title'], $locations[$i]['link']);
+		}
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
+		if ($this->items === null) {
+			$this->loadBreadcrumbs();
+		}
+		
 		return count($this->items);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		return $this->items[$this->index];
 	}
 	
 	/**
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->items[$this->index]);
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		$this->index++;

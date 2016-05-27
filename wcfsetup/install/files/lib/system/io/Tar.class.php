@@ -15,7 +15,7 @@ use wcf\util\FileUtil;
  * }
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -32,7 +32,7 @@ class Tar implements IArchive {
 	 * content of the tar file
 	 * @var	array
 	 */
-	protected $contentList = array();
+	protected $contentList = [];
 	
 	/**
 	 * indicates if tar file is opened
@@ -75,6 +75,7 @@ class Tar implements IArchive {
 	 * archiveName must be tarball or gzipped tarball
 	 * 
 	 * @param	string		$archiveName
+	 * @throws	SystemException
 	 */
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {
@@ -126,7 +127,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getContentList()
+	 * @inheritDoc
 	 */
 	public function getContentList() {
 		if (!$this->read) {
@@ -137,7 +138,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getFileInfo()
+	 * @inheritDoc
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -151,7 +152,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getIndexByFilename()
+	 * @inheritDoc
 	 */
 	public function getIndexByFilename($filename) {
 		foreach ($this->contentList as $index => $file) {
@@ -163,7 +164,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extractToString()
+	 * @inheritDoc
 	 */
 	public function extractToString($index) {
 		if (!$this->read) {
@@ -195,7 +196,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extract()
+	 * @inheritDoc
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
@@ -244,7 +245,7 @@ class Tar implements IArchive {
 	 * This does not get the entire to memory but only parts of it.
 	 */
 	protected function readContent() {
-		$this->contentList = array();
+		$this->contentList = [];
 		$this->read = true;
 		$i = 0;
 		
@@ -292,7 +293,7 @@ class Tar implements IArchive {
 			return false;
 		}
 		
-		$header = array();
+		$header = [];
 		$checksum = 0;
 		// First part of the header
 		for ($i = 0; $i < 148; $i++) {
@@ -314,14 +315,14 @@ class Tar implements IArchive {
 		$data = unpack($format, $binaryData);
 		
 		// Extract the properties
-		$header['checksum'] = octDec(trim($data['checksum']));
+		$header['checksum'] = octdec(trim($data['checksum']));
 		if ($header['checksum'] == $checksum) {
 			$header['filename'] = trim($data['filename']);
-			$header['mode'] = octDec(trim($data['mode']));
-			$header['uid'] = octDec(trim($data['uid']));
-			$header['gid'] = octDec(trim($data['gid']));
-			$header['size'] = octDec(trim($data['size']));
-			$header['mtime'] = octDec(trim($data['mtime']));
+			$header['mode'] = octdec(trim($data['mode']));
+			$header['uid'] = octdec(trim($data['uid']));
+			$header['gid'] = octdec(trim($data['gid']));
+			$header['size'] = octdec(trim($data['size']));
+			$header['mtime'] = octdec(trim($data['mtime']));
 			$header['prefix'] = trim($data['prefix']);
 			if ($header['prefix']) {
 				$header['filename'] = $header['prefix'].'/'.$header['filename'];

@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Caches user notification events.
  * 
  * @author	Marcell Werk, Oliver Kliebisch
- * @copyright	2001-2015 WoltLab GmbH, Oliver Kliebisch
+ * @copyright	2001-2016 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -15,10 +15,10 @@ use wcf\system\WCF;
  */
 class UserNotificationEventCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
-		$data = array();
+		$data = [];
 		
 		// get events
 		$sql = "SELECT		event.*, object_type.objectType
@@ -29,7 +29,7 @@ class UserNotificationEventCacheBuilder extends AbstractCacheBuilder {
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			if (!isset($data[$row['objectType']])) {
-				$data[$row['objectType']] = array();
+				$data[$row['objectType']] = [];
 			}
 			
 			if (!isset($data[$row['objectType']][$row['eventName']])) {

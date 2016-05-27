@@ -1,6 +1,8 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryList;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionAction;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\form\AbstractForm;
@@ -13,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the user option add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -21,14 +23,14 @@ use wcf\util\StringUtil;
  */
 class UserOptionAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOption');
+	public $neededPermissions = ['admin.user.canManageUserOption'];
 	
 	/**
 	 * option name
@@ -116,15 +118,27 @@ class UserOptionAddForm extends AbstractForm {
 	
 	/**
 	 * available option categories
-	 * @var	array<\wcf\data\user\option\UserOptionCategory>
+	 * @var	UserOptionCategory[]
 	 */
-	public $availableCategories = array();
-	
+	public $availableCategories = [];
+
+	/**
+	 * valid editability bits for UserOptions
+	 * @var	int[]
+	 */
+	public $validEditableBits = [
+		UserOption::EDITABILITY_NONE,
+		UserOption::EDITABILITY_OWNER,
+		UserOption::EDITABILITY_ADMINISTRATOR,
+		UserOption::EDITABILITY_ALL,
+		UserOption::EDITABILITY_OWNER_DURING_REGISTRATION_AND_ADMINISTRATOR
+	];
+
 	/**
 	 * available option types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public static $availableOptionTypes = array(
+	public static $availableOptionTypes = [
 		'aboutMe',
 		'birthday',
 		'boolean',
@@ -140,21 +154,21 @@ class UserOptionAddForm extends AbstractForm {
 		'textarea',
 		'message',
 		'URL'
-	);
+	];
 	
 	/**
 	 * list of option type that require select options
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public static $optionTypesUsingSelectOptions = array(
+	public static $optionTypesUsingSelectOptions = [
 		'checkboxes',
 		'multiSelect',
 		'radioButton',
 		'select'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -164,13 +178,13 @@ class UserOptionAddForm extends AbstractForm {
 		
 		// get available categories
 		$categoryList = new UserOptionCategoryList();
-		$categoryList->getConditionBuilder()->add('parentCategoryName = ?', array('profile'));
+		$categoryList->getConditionBuilder()->add('parentCategoryName = ?', ['profile']);
 		$categoryList->readObjects();
 		$this->availableCategories = $categoryList->getObjects();
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -198,10 +212,31 @@ class UserOptionAddForm extends AbstractForm {
 		if ($this->optionType == 'float') {
 			$this->defaultValue = floatval($this->defaultValue);
 		}
+
+		$this->setDefaultOutputClass();
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * Sets the default output class.
+	 */
+	protected function setDefaultOutputClass() {
+		if (empty($this->outputClass)) {
+			if (in_array($this->optionType, self::$optionTypesUsingSelectOptions)) {
+				$this->outputClass = 'wcf\system\option\user\SelectOptionsUserOptionOutput';
+			}
+			
+			if ($this->optionType == 'date') {
+				$this->outputClass = 'wcf\system\option\user\DateUserOptionOutput';
+			}
+			
+			if ($this->optionType == 'URL') {
+				$this->outputClass = 'wcf\system\option\user\URLUserOptionOutput';
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -219,7 +254,7 @@ class UserOptionAddForm extends AbstractForm {
 			FROM	wcf".WCF_N."_user_option_category
 			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->categoryName));
+		$statement->execute([$this->categoryName]);
 		if ($statement->fetchArray() === false) {
 			throw new UserInputException('categoryName');
 		}
@@ -238,18 +273,18 @@ class UserOptionAddForm extends AbstractForm {
 			throw new UserInputException('outputClass', 'doesNotExist');
 		}
 		
-		if ($this->editable < 1 || $this->editable > 3) {
-			$this->editable = 3;
+		if (!in_array($this->editable, $this->validEditableBits)) {
+			$this->editable = UserOption::EDITABILITY_ALL;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new UserOptionAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserOptionAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'optionName' => StringUtil::getRandomID(),
 			'categoryName' => $this->categoryName,
 			'optionType' => $this->optionType,
@@ -264,8 +299,8 @@ class UserOptionAddForm extends AbstractForm {
 			'editable' => $this->editable,
 			'visible' => $this->visible,
 			'packageID' => 1,
-			'additionalData' => ($this->optionType == 'select' ? serialize(array('allowEmptyValue' => true)) : '')
-		))));
+			'additionalData' => ($this->optionType == 'select' ? serialize(['allowEmptyValue' => true]) : '')
+		])]);
 		$this->objectAction->executeAction();
 		
 		$returnValues = $this->objectAction->getReturnValues();
@@ -275,9 +310,9 @@ class UserOptionAddForm extends AbstractForm {
 		I18nHandler::getInstance()->save('optionName', 'wcf.user.option.option'.$userOption->optionID, 'wcf.user.option');
 		I18nHandler::getInstance()->save('optionDescription', 'wcf.user.option.option'.$userOption->optionID.'.description', 'wcf.user.option');
 		$editor = new UserOptionEditor($userOption);
-		$editor->update(array(
+		$editor->update([
 			'optionName' => 'option'.$userOption->optionID
-		));
+		]);
 		$this->saved();
 		
 		// reset values
@@ -294,21 +329,20 @@ class UserOptionAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'optionName' => $this->optionName,
 			'optionDescription' => $this->optionDescription,
 			'categoryName' => $this->categoryName,
 			'optionType' => $this->optionType,
 			'defaultValue' => $this->defaultValue,
 			'validationPattern' => $this->validationPattern,
-			'optionType' => $this->optionType,
 			'selectOptions' => $this->selectOptions,
 			'required' => $this->required,
 			'askDuringRegistration' => $this->askDuringRegistration,
@@ -320,6 +354,6 @@ class UserOptionAddForm extends AbstractForm {
 			'action' => 'add',
 			'availableCategories' => $this->availableCategories,
 			'availableOptionTypes' => self::$availableOptionTypes
-		));
+		]);
 	}
 }

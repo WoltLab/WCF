@@ -4,16 +4,16 @@ use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\system\cache\builder\CronjobCacheBuilder;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Provides functions to execute cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
@@ -22,18 +22,18 @@ use wcf\util\ClassUtil;
 class CronjobScheduler extends SingletonFactory {
 	/**
 	 * cached times of the next and after next cronjob execution
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $cache = array();
+	protected $cache = [];
 	
 	/**
 	 * list of editors for outstanding cronjobs
-	 * @var	array<\wcf\data\cronjob\CronjobEditor>
+	 * @var	CronjobEditor[]
 	 */
-	protected $cronjobEditors = array();
+	protected $cronjobEditors = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->loadCache();
@@ -56,15 +56,15 @@ class CronjobScheduler extends SingletonFactory {
 		
 		foreach ($this->cronjobEditors as $cronjobEditor) {
 			// mark cronjob as being executed
-			$cronjobEditor->update(array(
+			$cronjobEditor->update([
 				'state' => Cronjob::EXECUTING
-			));
+			]);
 			
 			// create log entry
-			$log = CronjobLogEditor::create(array(
+			$log = CronjobLogEditor::create([
 				'cronjobID' => $cronjobEditor->cronjobID,
 				'execTime' => TIME_NOW
-			));
+			]);
 			$logEditor = new CronjobLogEditor($log);
 			
 			// check if all required options are set for cronjob to be executed
@@ -88,13 +88,13 @@ class CronjobScheduler extends SingletonFactory {
 			$afterNextExec = $cronjobEditor->getNextExec(($nextExec + 120));
 			
 			// mark cronjob as done
-			$cronjobEditor->update(array(
+			$cronjobEditor->update([
 				'lastExec' => TIME_NOW,
 				'afterNextExec' => $afterNextExec,
 				'failCount' => 0,
 				'nextExec' => $nextExec,
 				'state' => Cronjob::READY
-			));
+			]);
 		}
 	}
 	
@@ -117,20 +117,20 @@ class CronjobScheduler extends SingletonFactory {
 				AND cronjob.isDisabled = ?
 				AND cronjob.failCount < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			TIME_NOW,
 			TIME_NOW,
 			0,
 			Cronjob::MAX_FAIL_COUNT
-		));
+		]);
 		while ($row = $statement->fetchArray()) {
 			$cronjob = new Cronjob(null, $row);
 			$cronjobEditor = new CronjobEditor($cronjob);
 			$executeCronjob = true;
 			
-			$data = array(
+			$data = [
 				'state' => Cronjob::PENDING
-			);
+			];
 			
 			// reset cronjob if it got stuck before and afterNextExec is in the past
 			if ($cronjobEditor->afterNextExec <= TIME_NOW) {
@@ -163,8 +163,9 @@ class CronjobScheduler extends SingletonFactory {
 	/**
 	 * Executes a cronjob.
 	 * 
-	 * @param	\wcf\data\cronjob\CronjobEditor		$cronjobEditor
-	 * @param	\wcf\data\cronjob\log\CronjobLogEditor	$logEditor
+	 * @param	CronjobEditor		$cronjobEditor
+	 * @param	CronjobLogEditor	$logEditor
+	 * @throws	SystemException
 	 */
 	protected function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor) {
 		$className = $cronjobEditor->className;
@@ -173,8 +174,8 @@ class CronjobScheduler extends SingletonFactory {
 		}
 		
 		// verify class signature
-		if (!(ClassUtil::isInstanceOf($className, 'wcf\system\cronjob\ICronjob'))) {
-			throw new SystemException("'".$className."' does not implement 'wcf\system\cronjob\ICronjob'");
+		if (!(is_subclass_of($className, ICronjob::class))) {
+			throw new ImplementationException($className, ICronjob::class);
 		}
 		
 		// execute cronjob
@@ -187,28 +188,28 @@ class CronjobScheduler extends SingletonFactory {
 	/**
 	 * Logs cronjob exec success or failure.
 	 * 
-	 * @param	\wcf\data\cronjob\CronjobEditor		$logEditor
-	 * @param	\wcf\system\exception\SystemException	$exception
+	 * @param	CronjobLogEditor	$logEditor
+	 * @param	SystemException		$exception
 	 */
 	protected function logResult(CronjobLogEditor $logEditor, SystemException $exception = null) {
 		if ($exception !== null) {
-			$errString = implode("\n", array(
+			$errString = implode("\n", [
 				$exception->getMessage(),
 				$exception->getCode(),
 				$exception->getFile(),
 				$exception->getLine(),
 				$exception->getTraceAsString()
-			));
+			]);
 			
-			$logEditor->update(array(
+			$logEditor->update([
 				'success' => 0,
 				'error' => $errString
-			));
+			]);
 		}
 		else {
-			$logEditor->update(array(
+			$logEditor->update([
 				'success' => 1
-			));
+			]);
 		}
 	}
 	

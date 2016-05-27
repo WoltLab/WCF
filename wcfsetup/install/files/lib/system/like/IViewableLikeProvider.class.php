@@ -1,11 +1,12 @@
 <?php
 namespace wcf\system\like;
+use wcf\data\like\ViewableLike;
 
 /**
  * Default interface for viewable like providers.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.like
@@ -15,7 +16,7 @@ interface IViewableLikeProvider {
 	/**
 	 * Prepares a list of likes for output.
 	 * 
-	 * @param	array<\wcf\data\like\ViewableLike>	$likes
+	 * @param	ViewableLike[]		$likes
 	 */
 	public function prepare(array $likes);
 }

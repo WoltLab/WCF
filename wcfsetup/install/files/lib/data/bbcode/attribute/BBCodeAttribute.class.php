@@ -7,20 +7,28 @@ use wcf\data\DatabaseObject;
  * Represents a bbcode attribute.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.attribute
  * @category	Community Framework
+ *
+ * @property-read	integer		$attributeID
+ * @property-read	integer		$bbcodeID
+ * @property-read	integer		$attributeNo
+ * @property-read	string		$attributeHtml
+ * @property-read	string		$validationPattern
+ * @property-read	integer		$required
+ * @property-read	integer		$useText
  */
 class BBCodeAttribute extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'bbcode_attribute';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'attributeID';
 	
@@ -28,12 +36,12 @@ class BBCodeAttribute extends DatabaseObject {
 	 * Reads attributes by assigned bbcode.
 	 * 
 	 * @param	\wcf\data\bbcode\BBCode		$bbcode
-	 * @return	array<\wcf\data\bbcode\attribute\BBCodeAttribute>
+	 * @return	BBCodeAttribute[]
 	 */
 	public static function getAttributesByBBCode(BBCode $bbcode) {
 		$attributeList = new BBCodeAttributeList();
 		$attributeList->sqlOrderBy = "bbcode_attribute.attributeNo ASC";
-		$attributeList->getConditionBuilder()->add('bbcode_attribute.bbcodeID = ?', array($bbcode->bbcodeID));
+		$attributeList->getConditionBuilder()->add('bbcode_attribute.bbcodeID = ?', [$bbcode->bbcodeID]);
 		$attributeList->readObjects();
 		return $attributeList->getObjects();
 	}

@@ -17,69 +17,6 @@ WCF.ACP = { };
 WCF.ACP.Application = { };
 
 /**
- * Provides the ability to set an application as primary.
- * 
- * @param	integer		packageID
- */
-WCF.ACP.Application.SetAsPrimary = Class.extend({
-	/**
-	 * application package id
-	 * @var	integer
-	 */
-	_packageID: 0,
-	
-	/**
-	 * Initializes the WCF.ACP.Application.SetAsPrimary class.
-	 * 
-	 * @param	integer		packageID
-	 */
-	init: function(packageID) {
-		this._packageID = packageID;
-		
-		$('#setAsPrimary').click($.proxy(this._click, this));
-	},
-	
-	/**
-	 * Shows a confirmation dialog to set current application as primary.
-	 */
-	_click: function() {
-		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.application.setAsPrimary.confirmMessage'), $.proxy(function(action) {
-			if (action === 'confirm') {
-				this._setAsPrimary();
-			}
-		}, this));
-	},
-	
-	/**
-	 * Sets an application as primary.
-	 */
-	_setAsPrimary: function() {
-		new WCF.Action.Proxy({
-			autoSend: true,
-			data: {
-				actionName: 'setAsPrimary',
-				className: 'wcf\\data\\application\\ApplicationAction',
-				objectIDs: [ this._packageID ]
-			},
-			success: $.proxy(function(data, textStatus, jqXHR) {
-				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
-				$notification.show();
-				
-				// remove button
-				$('#setAsPrimary').parent().remove();
-				
-				// insert icon
-				$headline = $('.boxHeadline > h1');
-				$headline.html($headline.html() + ' ');
-				$('<span class="icon icon16 icon-ok-sign jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($headline);
-				
-				WCF.DOMNodeInsertedHandler.execute();
-			}, this)
-		});
-	}
-});
-
-/**
  * Namespace for ACP cronjob management.
  */
 WCF.ACP.Cronjob = { };
@@ -420,7 +357,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			failure: $.proxy(this._failure, this),
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
-			url: 'index.php?' + $actionName + '/&t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php?' + $actionName + '/&t=' + SECURITY_TOKEN
 		});
 	},
 	
@@ -437,7 +374,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	_failure: function() {
 		if (this._dialog !== null) {
 			$('#packageInstallationProgress').removeAttr('value');
-			this._setIcon('remove');
+			this._setIcon('times');
 		}
 		
 		if (!this._allowRollback) {
@@ -549,7 +486,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		// handle success
 		if (data.step === 'success') {
-			this._setIcon('ok');
+			this._setIcon('check');
 			
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
@@ -665,18 +602,14 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	function	callback
 	 */
 	_purgeTemplateContent: function(callback) {
-		if ($('#packageInstallationInnerContent').children().length > 1) {
-			$('#packageInstallationInnerContentContainer').wcfBlindOut('vertical', $.proxy(function() {
-				$('#packageInstallationInnerContent').empty();
-				this._shouldRender = true;
-				
-				// execute callback
-				callback();
-			}, this));
+		if ($('#packageInstallationInnerContent').children().length) {
+			$('#packageInstallationInnerContentContainer').hide();
+			$('#packageInstallationInnerContent').empty();
+			
+			this._shouldRender = true;
 		}
-		else {
-			callback();
-		}
+		
+		callback();
 	},
 	
 	/**
@@ -705,7 +638,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	string		iconName
 	 */
 	_setIcon: function(iconName) {
-		this._dialog.find('.jsPackageInstallationStatus').removeClass('icon-ok icon-question icon-remove icon-spinner').addClass('icon-' + iconName);
+		this._dialog.find('.jsPackageInstallationStatus').removeClass('fa-check fa-question fa-times fa-spinner').addClass('fa-' + iconName);
 	}
 });
 
@@ -818,7 +751,7 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 				self._packageID = $element.data('objectID');
 				self.prepareInstallation();
 			}
-		});
+		}, undefined, undefined, true);
 	},
 	
 	/**
@@ -1137,7 +1070,7 @@ WCF.ACP.Package.Search = Class.extend({
 				this._selectedPackageVersion = $button.data('packageVersion');
 				this._prepareInstallation();
 			}
-		}, this));
+		}, this), undefined, undefined, true);
 	},
 	
 	/**
@@ -1174,7 +1107,7 @@ WCF.ACP.Package.Search = Class.extend({
 	_setupPagination: function() {
 		// remove previous instances
 		this._content = { 1: this._packageSearchResultList.html() };
-		this._packageSearchResultContainer.find('.pageNavigation').wcfPages('destroy').remove();
+		this._packageSearchResultContainer.find('.pagination').wcfPages('destroy').remove();
 		
 		if (this._pageCount > 1) {
 			// TODO: Fix ui.wcfPages to properly synchronize multiple instances without triggering events
@@ -1260,7 +1193,7 @@ WCF.ACP.Package.Server.Installation = Class.extend({
 				this._selectedPackageVersion = $button.data('packageVersion');
 				this._prepareInstallation();
 			}
-		}, this));
+		}, this), undefined, undefined, true);
 	},
 	
 	/**
@@ -1559,8 +1492,8 @@ WCF.ACP.Package.Update.Search = Class.extend({
 			$('.jsButtonPackageUpdate').click($.proxy(this._click, this));
 		}
 		else {
-			var $button = $('<li><a class="button"><span class="icon icon16 icon-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
-			$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul'));
+			var $button = $('<li><a class="button"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
+			$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pagination) > ul'));
 		}
 	},
 	
@@ -1642,7 +1575,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 		});
 		
 		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search') + '</span></a></li>');
-		$button.prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul')).click($.proxy(this._click, this));
+		$button.prependTo($('.contentNavigation:eq(0) > nav:not(.pagination) > ul')).click($.proxy(this._click, this));
 	},
 	
 	/**
@@ -1805,7 +1738,7 @@ WCF.ACP.Worker = Class.extend({
 			},
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
-			url: 'index.php?worker-proxy/&t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php?worker-proxy/&t=' + SECURITY_TOKEN
 		});
 		this._title = title;
 	},
@@ -1947,10 +1880,10 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	 */
 	init: function() {
 		this._className = 'wcf\\data\\acp\\search\\provider\\ACPSearchProviderAction';
-		this._super('#search input[name=q]');
+		this._super('#pageHeaderSearch input[name=q]');
 		
 		// disable form submitting
-		$('#search > form').on('submit', function(event) {
+		$('#pageHeaderSearch > form').on('submit', function(event) {
 			event.preventDefault();
 		});
 	},
@@ -2003,6 +1936,12 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		}
 		
 		window.location = this._list.find('li.dropdownNavigationItem > a').attr('href');
+	},
+	
+	_success: function(data) {
+		this._super(data);
+		
+		this._list.addClass('acpSearchDropdown');
 	}
 });
 
@@ -2099,7 +2038,7 @@ WCF.ACP.User.BanHandler = {
 		if (this._dialog === null) {
 			// create dialog
 			this._dialog = $('<div />').hide().appendTo(document.body);
-			this._dialog.append($('<fieldset><dl><dt><label for="userBanReason">' + WCF.Language.get('wcf.acp.user.banReason') + '</label></dt><dd><textarea id="userBanReason" cols="40" rows="3" /><small>' + WCF.Language.get('wcf.acp.user.banReason.description') + '</small></dd></dl><dl><dt></dt><dd><label for="userBanNeverExpires"><input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked="checked" /> ' + WCF.Language.get('wcf.acp.user.ban.neverExpires') + '</label></dd></dl><dl id="userBanExpiresSettings" style="display: none;"><dt><label for="userBanExpires">' + WCF.Language.get('wcf.acp.user.ban.expires') + '</label></dt><dd><input type="date" name="userBanExpires" id="userBanExpires" class="medium" min="' + new Date(TIME_NOW * 1000).toISOString() + '" data-ignore-timezone="true" /><small>' + WCF.Language.get('wcf.acp.user.ban.expires.description') + '</small></dd></dl></fieldset>'));
+			this._dialog.append($('<div class="section"><dl><dt><label for="userBanReason">' + WCF.Language.get('wcf.acp.user.banReason') + '</label></dt><dd><textarea id="userBanReason" cols="40" rows="3" /><small>' + WCF.Language.get('wcf.acp.user.banReason.description') + '</small></dd></dl><dl><dt></dt><dd><label for="userBanNeverExpires"><input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked="checked" /> ' + WCF.Language.get('wcf.acp.user.ban.neverExpires') + '</label></dd></dl><dl id="userBanExpiresSettings" style="display: none;"><dt><label for="userBanExpires">' + WCF.Language.get('wcf.acp.user.ban.expires') + '</label></dt><dd><input type="date" name="userBanExpires" id="userBanExpires" class="medium" min="' + new Date(TIME_NOW * 1000).toISOString() + '" data-ignore-timezone="true" /><small>' + WCF.Language.get('wcf.acp.user.ban.expires.description') + '</small></dd></dl></div>'));
 			this._dialog.append($('<div class="formSubmit"><button class="buttonPrimary" accesskey="s">' + WCF.Language.get('wcf.global.button.submit') + '</button></div>'));
 			
 			this._dialog.find('#userBanNeverExpires').change(function() {
@@ -2161,10 +2100,10 @@ WCF.ACP.User.BanHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'unban') {
-					$button.data('banned', false).data('tooltip', $button.data('banMessage')).removeClass('icon-lock').addClass('icon-unlock');
+					$button.data('banned', false).data('tooltip', $button.data('banMessage')).removeClass('fa-lock').addClass('fa-unlock');
 				}
 				else {
-					$button.data('banned', true).data('tooltip', $button.data('unbanMessage')).removeClass('icon-unlock').addClass('icon-lock');
+					$button.data('banned', true).data('tooltip', $button.data('unbanMessage')).removeClass('fa-unlock').addClass('fa-lock');
 				}
 			}
 		});
@@ -2210,10 +2149,10 @@ WCF.ACP.User.Group.Copy = Class.extend({
 	 * Handles clicking on a 'copy user group' button.
 	 */
 	_click: function() {
-		var $template = $('<div />');
-		$template.append($('<dl class="wide marginTop"><dt /><dd><label><input type="checkbox" id="copyMembers" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyMembers') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyMembers.description') + '</small></dd></dl>'));
-		$template.append($('<dl class="wide marginTopSmall"><dt /><dd><label><input type="checkbox" id="copyUserGroupOptions" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyUserGroupOptions') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyUserGroupOptions.description') + '</small></dd></dl>'));
-		$template.append($('<dl class="wide marginTopSmall"><dt /><dd><label><input type="checkbox" id="copyACLOptions" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyACLOptions') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyACLOptions.description') + '</small></dd></dl>'));
+		var $template = $('<div class="section" />');
+		$template.append($('<dl class="wide"><dt /><dd><label><input type="checkbox" id="copyMembers" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyMembers') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyMembers.description') + '</small></dd></dl>'));
+		$template.append($('<dl class="wide"><dt /><dd><label><input type="checkbox" id="copyUserGroupOptions" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyUserGroupOptions') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyUserGroupOptions.description') + '</small></dd></dl>'));
+		$template.append($('<dl class="wide"><dt /><dd><label><input type="checkbox" id="copyACLOptions" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyACLOptions') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyACLOptions.description') + '</small></dd></dl>'));
 		
 		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.group.copy.confirmMessage'), $.proxy(function(action) {
 			if (action === 'confirm') {
@@ -2234,7 +2173,7 @@ WCF.ACP.User.Group.Copy = Class.extend({
 					}
 				});
 			}
-		}, this), '', $template);
+		}, this), '', $template, true);
 	}
 });
 
@@ -2331,10 +2270,10 @@ WCF.ACP.User.EnableHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'disable') {
-					$button.data('enabled', false).data('tooltip', $button.data('enableMessage')).removeClass('icon-check').addClass('icon-check-empty');
+					$button.data('enabled', false).data('tooltip', $button.data('enableMessage')).removeClass('fa-check-square-o').addClass('fa-square-o');
 				}
 				else {
-					$button.data('enabled', true).data('tooltip', $button.data('disableMessage')).removeClass('icon-check-empty').addClass('icon-check');
+					$button.data('enabled', true).data('tooltip', $button.data('disableMessage')).removeClass('fa-square-o').addClass('fa-check-square-o');
 				}
 			}
 		});
@@ -2454,7 +2393,7 @@ WCF.ACP.Import.Manager = Class.extend({
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
-			url: 'index.php?worker-proxy/&t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php?worker-proxy/&t=' + SECURITY_TOKEN
 		});
 		this._redirectURL = redirectURL;
 		
@@ -2467,7 +2406,7 @@ WCF.ACP.Import.Manager = Class.extend({
 	_invoke: function() {
 		this._index++;
 		if (this._index >= this._objectTypes.length) {
-			this._dialog.find('.icon-spinner').removeClass('icon-spinner').addClass('icon-ok');
+			this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check');
 			this._dialog.find('h1').text(WCF.Language.get('wcf.acp.dataImport.completed'));
 			
 			var $form = $('<div class="formSubmit" />').appendTo(this._dialog.find('#workerContainer'));
@@ -2481,7 +2420,7 @@ WCF.ACP.Import.Manager = Class.extend({
 					success: $.proxy(function() {
 						window.location = this._redirectURL;
 					}, this),
-					url: 'index.php?cache-clear/&t=' + SECURITY_TOKEN + SID_ARG_2ND
+					url: 'index.php?cache-clear/&t=' + SECURITY_TOKEN
 				});
 			}, this)).appendTo($form);
 			

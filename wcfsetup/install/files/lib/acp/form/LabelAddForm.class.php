@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the label add form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -23,14 +23,14 @@ use wcf\util\StringUtil;
  */
 class LabelAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.label.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.label.canManageLabel');
+	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * label group id
@@ -64,9 +64,9 @@ class LabelAddForm extends AbstractForm {
 	
 	/**
 	 * list of pre-defined css class names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $availableCssClassNames = array(
+	public $availableCssClassNames = [
 		'yellow',
 		'orange',
 		'brown',
@@ -79,10 +79,16 @@ class LabelAddForm extends AbstractForm {
 		
 		'none', /* not a real value */
 		'custom' /* not a real value */
-	);
+	];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * show order
+	 * @var	integer
+	 */
+	public $showOrder = 0;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -91,7 +97,7 @@ class LabelAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -102,10 +108,11 @@ class LabelAddForm extends AbstractForm {
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['customCssClassName'])) $this->customCssClassName = StringUtil::trim($_POST['customCssClassName']);
 		if (isset($_POST['groupID'])) $this->groupID = intval($_POST['groupID']);
+		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -141,20 +148,23 @@ class LabelAddForm extends AbstractForm {
 				throw new UserInputException('cssClassName', 'notValid');
 			}
 		}
+		
+		if ($this->showOrder < 0) $this->showOrder = 0;
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new LabelAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new LabelAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'label' => $this->label,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
-			'groupID' => $this->groupID
-		))));
+			'groupID' => $this->groupID,
+			'showOrder' => $this->showOrder
+		])]);
 		$this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('label')) {
@@ -164,9 +174,9 @@ class LabelAddForm extends AbstractForm {
 			
 			// update group name
 			$labelEditor = new LabelEditor($returnValues['returnValues']);
-			$labelEditor->update(array(
+			$labelEditor->update([
 				'label' => 'wcf.acp.label.label'.$labelID
-			));
+			]);
 		}
 		
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');
@@ -178,43 +188,41 @@ class LabelAddForm extends AbstractForm {
 		
 		// reset values
 		$this->label = $this->cssClassName = $this->customCssClassName = '';
-		$this->groupID = 0;
+		$this->groupID = $this->showOrder = 0;
 		
 		I18nHandler::getInstance()->reset();
 		
 		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->labelGroupList = new LabelGroupList();
-		$this->labelGroupList->sqlOrderBy = 'label_group.groupName';
 		$this->labelGroupList->readObjects();
 		
 		parent::readData();
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'availableCssClassNames' => $this->availableCssClassNames,
 			'cssClassName' => $this->cssClassName,
 			'customCssClassName' => $this->customCssClassName,
 			'groupID' => $this->groupID,
 			'label' => $this->label,
-			'labelGroupList' => $this->labelGroupList
-		));
+			'labelGroupList' => $this->labelGroupList,
+			'showOrder' => $this->showOrder
+		]);
 	}
 }

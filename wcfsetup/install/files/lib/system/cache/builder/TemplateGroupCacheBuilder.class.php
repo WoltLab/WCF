@@ -6,7 +6,7 @@ use wcf\data\template\group\TemplateGroupList;
  * Caches template groups.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -14,7 +14,7 @@ use wcf\data\template\group\TemplateGroupList;
  */
 class TemplateGroupCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$templateGroupList = new TemplateGroupList();

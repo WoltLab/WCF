@@ -1,9 +1,5 @@
 {include file='header' pageTitle='wcf.acp.captcha.question.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.captcha.question.list{/lang}</h1>
-</header>
-
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
@@ -12,12 +8,12 @@
 		
 		var options = { };
 		{if $pages > 1}
-			options.refreshPage = true;
-			{if $pages == $pageNo}
-				options.updatePageNumber = -1;
-			{/if}
+		options.refreshPage = true;
+		{if $pages == $pageNo}
+		options.updatePageNumber = -1;
+		{/if}
 		{else}
-			options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
+		options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
 		{/if}
 		
 		new WCF.Table.EmptyTableHandler($('#captchaQuestionTabelContainer'), 'jsQuestionRow', options);
@@ -25,24 +21,28 @@
 	//]]>
 </script>
 
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="CaptchaQuestionList" link="pageNo=%d"}
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.captcha.question.list{/lang}</h1>
+	</div>
 	
-	<nav>
+	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
+			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsTop'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
 
 {hascontent}
-	<div id="captchaQuestionTabelContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.captcha.question.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="CaptchaQuestionList" link="pageNo=%d"}{/content}
+	</div>
+{/hascontent}
+
+{hascontent}
+	<div id="captchaQuestionTabelContainer" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -58,9 +58,9 @@
 					{foreach from=$objects item='question'}
 						<tr class="jsQuestionRow">
 							<td class="columnIcon">
-								<span class="icon icon16 icon-check{if $question->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $question->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$question->questionID}"></span>
-								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$question->questionID}" data-confirm-message="{lang}wcf.acp.captcha.question.delete.confirmMessage{/lang}"></span>
+								<span class="icon icon16 fa-{if !$question->isDisabled}-check{/if}-square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $question->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$question->questionID}"></span>
+								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$question->questionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.captcha.question.delete.confirmMessage{/lang}"></span>
 								
 								{event name='rowButtons'}
 							</td>
@@ -78,17 +78,21 @@
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/hascontent}
 
-<div class="contentNavigation">
-	{@$pagesLinks}
+<footer class="contentFooter">
+	{hascontent}
+		<div class="paginationBottom">
+			{content}{@$pagesLinks}{/content}
+		</div>
+	{/hascontent}
 	
-	<nav>
+	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
+			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsBottom'}
+			{event name='contentFooterNavigation'}
 		</ul>
 	</nav>
-</div>
+</footer>
 
 {include file='footer'}
  

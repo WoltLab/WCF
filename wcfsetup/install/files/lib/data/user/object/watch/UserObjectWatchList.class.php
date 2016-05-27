@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of watched objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.object.watch
  * @category	Community Framework
+ *
+ * @method	UserObjectWatch		current()
+ * @method	UserObjectWatch[]	getObjects()
+ * @method	UserObjectWatch|null	search($objectID)
+ * @property	UserObjectWatch[]	$objects
  */
 class UserObjectWatchList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\object\watch\UserObjectWatch';
+	public $className = UserObjectWatch::class;
 }

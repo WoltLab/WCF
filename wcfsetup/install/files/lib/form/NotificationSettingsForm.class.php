@@ -3,6 +3,7 @@ namespace wcf\form;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\UserMenu;
+use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
@@ -10,7 +11,7 @@ use wcf\system\WCF;
  * Shows the notification settings form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -18,30 +19,30 @@ use wcf\system\WCF;
  */
 class NotificationSettingsForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
 	/**
 	 * list of notification events
-	 * @var	array<array>
+	 * @var	IUserNotificationEvent[]
 	 */
 	public $events = null;
 	
 	/**
 	 * list of settings by event
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
-	public $settings = array();
+	public $settings = [];
 	
 	/**
 	 * list of valid options for the mail notification type.
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected static $validMailNotificationTypes = array('none', 'instant', 'daily');
+	protected static $validMailNotificationTypes = ['none', 'instant', 'daily'];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -63,7 +64,7 @@ class NotificationSettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -72,13 +73,13 @@ class NotificationSettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
 		
 		// valid event ids
-		$validEventIDs = array();
+		$validEventIDs = [];
 		foreach ($this->events as $events) {
 			foreach ($events as $event) {
 				$validEventIDs[] = $event->eventID;
@@ -109,7 +110,7 @@ class NotificationSettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -117,14 +118,14 @@ class NotificationSettingsForm extends AbstractForm {
 		// default values
 		if (empty($_POST)) {
 			// get user settings
-			$eventIDs = array();
+			$eventIDs = [];
 			foreach ($this->events as $events) {
 				foreach ($events as $event) {
 					$eventIDs[] = $event->eventID;
-					$this->settings[$event->eventID] = array(
+					$this->settings[$event->eventID] = [
 						'enabled' => false,
 						'mailNotificationType' => 'none'
-					);
+					];
 				}
 			}
 			
@@ -133,7 +134,7 @@ class NotificationSettingsForm extends AbstractForm {
 				FROM	wcf".WCF_N."_user_notification_event_to_user
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(WCF::getUser()->userID));
+			$statement->execute([WCF::getUser()->userID]);
 			while ($row = $statement->fetchArray()) {
 				$this->settings[$row['eventID']]['enabled'] = true;
 				$this->settings[$row['eventID']]['mailNotificationType'] = $row['mailNotificationType'];
@@ -142,18 +143,18 @@ class NotificationSettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$groupedEvents = array();
+		$groupedEvents = [];
 		foreach ($this->events as $objectType => $events) {
 			$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType', $objectType);
 			$category = ($objectTypeObj->category ?: $objectType);
 			
 			if (!isset($groupedEvents[$category])) {
-				$groupedEvents[$category] = array();
+				$groupedEvents[$category] = [];
 			}
 			
 			foreach ($events as $event) $groupedEvents[$category][] = $event;
@@ -161,14 +162,14 @@ class NotificationSettingsForm extends AbstractForm {
 		
 		ksort($groupedEvents);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'events' => $groupedEvents,
 			'settings' => $this->settings
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab
@@ -178,7 +179,7 @@ class NotificationSettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -199,18 +200,18 @@ class NotificationSettingsForm extends AbstractForm {
 					AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		WCF::getDB()->beginTransaction();
-		$newSettings = array();
+		$newSettings = [];
 		foreach ($this->settings as $eventID => $setting) {
-			$statement->execute(array(
+			$statement->execute([
 				$eventID,
 				WCF::getUser()->userID
-			));
+			]);
 			
 			if ($setting['enabled']) {
-				$newSettings[] = array(
+				$newSettings[] = [
 					'eventID' => $eventID,
 					'mailNotificationType' => $setting['mailNotificationType']
-				);
+				];
 			}
 		}
 		
@@ -220,11 +221,11 @@ class NotificationSettingsForm extends AbstractForm {
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($newSettings as $newSetting) {
-				$statement->execute(array(
+				$statement->execute([
 					$newSetting['eventID'],
 					WCF::getUser()->userID,
 					$newSetting['mailNotificationType']
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();

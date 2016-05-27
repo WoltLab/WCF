@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * Finds censored words.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.message.censorship
@@ -16,9 +16,9 @@ use wcf\util\StringUtil;
 class Censorship extends SingletonFactory {
 	/**
 	 * censored words
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $censoredWords = array();
+	protected $censoredWords = [];
 	
 	/**
 	 * word delimiters
@@ -28,18 +28,18 @@ class Censorship extends SingletonFactory {
 	
 	/**
 	 * list of words
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $words = array();
+	protected $words = [];
 	
 	/**
 	 * list of matches
 	 * @var	array
 	 */
-	protected $matches = array();
+	protected $matches = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get words which should be censored
@@ -52,7 +52,7 @@ class Censorship extends SingletonFactory {
 				continue;
 			}
 			
-			$displayedCensoredWord = str_replace(array('~', '*'), '', $censoredWord);
+			$displayedCensoredWord = str_replace(['~', '*'], '', $censoredWord);
 			
 			// check if censored word contains at least one delimiter
 			if (preg_match('!'.$this->delimiters.'+!', $displayedCensoredWord)) {
@@ -75,7 +75,7 @@ class Censorship extends SingletonFactory {
 	 */
 	public function test($text) {
 		// reset values
-		$this->matches = $this->words = array();
+		$this->matches = $this->words = [];
 		
 		// string to lower case
 		$text = mb_strtolower($text);
@@ -175,7 +175,7 @@ class Censorship extends SingletonFactory {
 				return true;
 			}
 			else if (mb_strpos($search, $this->words[$index]) === (mb_strlen($search) - mb_strlen($this->words[$index]))) {
-				return $this->lookBehind($index - 1, 0, (mb_strlen($search) - mb_strlen($this->words[$index])));
+				return $this->lookBehind($index - 1, mb_substr($search, 0, (mb_strlen($search) - mb_strlen($this->words[$index]))));
 			}
 		}
 		

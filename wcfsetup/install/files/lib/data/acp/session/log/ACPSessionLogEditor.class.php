@@ -6,15 +6,18 @@ use wcf\data\DatabaseObjectEditor;
  * Provides functions to edit ACP session logs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.log
  * @category	Community Framework
+ * 
+ * @method	ACPSessionLog	getDecoratedObject()
+ * @mixin	ACPSessionLog
  */
 class ACPSessionLogEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\acp\session\log\ACPSessionLog';
+	protected static $baseClass = ACPSessionLog::class;
 }

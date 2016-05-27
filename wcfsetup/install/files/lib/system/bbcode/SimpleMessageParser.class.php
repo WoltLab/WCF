@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
@@ -9,7 +10,7 @@ use wcf\util\StringUtil;
  * Parses urls and smilies in simple messages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
@@ -24,21 +25,21 @@ class SimpleMessageParser extends SingletonFactory {
 	
 	/**
 	 * list of smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
-	protected $smilies = array();
+	protected $smilies = [];
 	
 	/**
 	 * cached URLs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $cachedURLs = array();
+	protected $cachedURLs = [];
 	
 	/**
 	 * cached e-mails
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $cachedEmails = array();
+	protected $cachedEmails = [];
 	
 	/**
 	 * currently parsed message
@@ -47,7 +48,7 @@ class SimpleMessageParser extends SingletonFactory {
 	public $message = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
@@ -79,7 +80,7 @@ class SimpleMessageParser extends SingletonFactory {
 	 */
 	public function parse($message, $parseURLs = true, $parseSmilies = true) {
 		$this->message = $message;
-		$this->cachedURLs = $this->cachedEmails = array();
+		$this->cachedURLs = $this->cachedEmails = [];
 		
 		// call event
 		EventHandler::getInstance()->fireAction($this, 'beforeParsing');
@@ -106,8 +107,8 @@ class SimpleMessageParser extends SingletonFactory {
 		}
 		
 		// replace bad html tags (script etc.)
-		$badSearch = array('/(javascript):/i', '/(about):/i', '/(vbscript):/i');
-		$badReplace = array('$1<b></b>:', '$1<b></b>:', '$1<b></b>:');
+		$badSearch = ['/(javascript):/i', '/(about):/i', '/(vbscript):/i'];
+		$badReplace = ['$1<b></b>:', '$1<b></b>:', '$1<b></b>:'];
 		$this->message = preg_replace($badSearch, $badReplace, $this->message);
 		
 		// call event
@@ -152,11 +153,11 @@ class SimpleMessageParser extends SingletonFactory {
 			~ix';
 		
 		// parse urls
-		$text = preg_replace_callback($urlPattern, array($this, 'cacheURLsCallback'), $text);
+		$text = preg_replace_callback($urlPattern, [$this, 'cacheURLsCallback'], $text);
 		
 		// parse emails
 		if (mb_strpos($text, '@') !== false) {
-			$text = preg_replace_callback($emailPattern, array($this, 'cacheEmailsCallback'), $text);
+			$text = preg_replace_callback($emailPattern, [$this, 'cacheEmailsCallback'], $text);
 		}
 		
 		return $text;

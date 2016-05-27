@@ -1,11 +1,15 @@
 <?php
 namespace wcf\form;
+use wcf\data\language\Language;
+use wcf\data\smiley\category\SmileyCategory;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\bbcode\PreParser;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\WCF;
@@ -17,7 +21,7 @@ use wcf\util\StringUtil;
  * MessageForm is an abstract form implementation for a message with optional captcha suppport.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -32,9 +36,9 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * attachment handler
-	 * @var	\wcf\system\attachment\AttachmentHandler
+	 * @var	AttachmentHandler
 	 */
-	public $attachmentHandler = null;
+	public $attachmentHandler;
 	
 	/**
 	 * object id for attachments
@@ -56,27 +60,15 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * list of available content languages
-	 * @var	array<\wcf\data\language\Language>
+	 * @var	Language[]
 	 */
-	public $availableContentLanguages = array();
+	public $availableContentLanguages = [];
 	
 	/**
 	 * list of default smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
-	public $defaultSmilies = array();
-	
-	/**
-	 * enables bbcodes
-	 * @var	boolean
-	 */
-	public $enableBBCodes = 1;
-	
-	/**
-	 * enables html
-	 * @var	boolean
-	 */
-	public $enableHtml = 0;
+	public $defaultSmilies = [];
 	
 	/**
 	 * enables multilingualism
@@ -85,16 +77,15 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public $enableMultilingualism = false;
 	
 	/**
-	 * enables smilies
-	 * @var	boolean
+	 * @var HtmlInputProcessor
 	 */
-	public $enableSmilies = 1;
+	public $htmlInputProcessor;
 	
 	/**
 	 * content language id
 	 * @var	integer
 	 */
-	public $languageID = null;
+	public $languageID;
 	
 	/**
 	 * maximum text length
@@ -103,46 +94,10 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public $maxTextLength = 0;
 	
 	/**
-	 * pre parses the message
-	 * @var	boolean
-	 */
-	public $preParse = 1;
-	
-	/**
-	 * required permission to use BBCodes
-	 * @var	boolean
-	 */
-	public $permissionCanUseBBCodes = 'user.message.canUseBBCodes';
-	
-	/**
-	 * required permission to use HTML
-	 * @var	boolean
-	 */
-	public $permissionCanUseHtml = 'user.message.canUseHtml';
-	
-	/**
-	 * required permission to use smilies
-	 * @var	boolean
-	 */
-	public $permissionCanUseSmilies = 'user.message.canUseSmilies';
-	
-	/**
-	 * shows the signature
-	 * @var	boolean
-	 */
-	public $showSignature = 0;
-	
-	/**
-	 * enables the 'showSignature' setting
-	 * @var	boolean
-	 */
-	public $showSignatureSetting = 1;
-	
-	/**
 	 * list of smiley categories
-	 * @var	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @var	SmileyCategory[]
 	 */
-	public $smileyCategories = array();
+	public $smileyCategories = [];
 	
 	/**
 	 * message subject
@@ -163,7 +118,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public $tmpHash = '';
 	
 	/**
-	 * @see	\wcf\form\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -192,28 +147,20 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['subject'])) $this->subject = StringUtil::trim($_POST['subject']);
+		if (isset($_POST['subject'])) $this->subject = StringUtil::trim(MessageUtil::stripCrap($_POST['subject']));
 		if (isset($_POST['text'])) $this->text = StringUtil::trim(MessageUtil::stripCrap($_POST['text']));
-		
-		// settings
-		$this->enableSmilies = $this->enableHtml = $this->enableBBCodes = $this->preParse = $this->showSignature = 0;
-		if (isset($_POST['preParse'])) $this->preParse = intval($_POST['preParse']);
-		if (isset($_POST['enableSmilies']) && WCF::getSession()->getPermission($this->permissionCanUseSmilies)) $this->enableSmilies = intval($_POST['enableSmilies']);
-		if (isset($_POST['enableHtml']) && WCF::getSession()->getPermission($this->permissionCanUseHtml)) $this->enableHtml = intval($_POST['enableHtml']);
-		if (isset($_POST['enableBBCodes']) && WCF::getSession()->getPermission($this->permissionCanUseBBCodes)) $this->enableBBCodes = intval($_POST['enableBBCodes']);
-		if (isset($_POST['showSignature'])) $this->showSignature = intval($_POST['showSignature']);
 		
 		// multilingualism
 		if (isset($_POST['languageID'])) $this->languageID = intval($_POST['languageID']);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		// subject
@@ -263,13 +210,19 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			throw new UserInputException('text', 'tooLong');
 		}
 		
-		if ($this->enableBBCodes && $this->allowedBBCodesPermission) {
+		$this->htmlInputProcessor = new HtmlInputProcessor();
+		$this->htmlInputProcessor->process($this->text);
+		
+		// TODO: add checks for disallowed bbcodes and stuff
+		$this->htmlInputProcessor->validate();
+		
+		/*if ($this->enableBBCodes && $this->allowedBBCodesPermission) {
 			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($this->text, ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission))));
 			if (!empty($disallowedBBCodes)) {
 				WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
 				throw new UserInputException('text', 'disallowedBBCodes');
 			}
-		}
+		}*/
 		
 		// search for censored words
 		if (ENABLE_CENSORSHIP) {
@@ -296,12 +249,15 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
+		$this->text = $this->htmlInputProcessor->getHtml();
+		
 		// parse URLs
+		/* TODO
 		if ($this->preParse == 1) {
 			// BBCodes are enabled
 			if ($this->enableBBCodes) {
@@ -317,10 +273,11 @@ abstract class MessageForm extends AbstractCaptchaForm {
 				$this->text = PreParser::getInstance()->parse($this->text, array());
 			}
 		}
+		*/
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		// get attachments
@@ -329,11 +286,6 @@ abstract class MessageForm extends AbstractCaptchaForm {
 		}
 		
 		if (empty($_POST)) {
-			$this->enableBBCodes = (ENABLE_BBCODES_DEFAULT_VALUE && WCF::getSession()->getPermission($this->permissionCanUseBBCodes)) ? 1 : 0;
-			$this->enableHtml = (ENABLE_HTML_DEFAULT_VALUE && WCF::getSession()->getPermission($this->permissionCanUseHtml)) ? 1 : 0;
-			$this->enableSmilies = (ENABLE_SMILIES_DEFAULT_VALUE && WCF::getSession()->getPermission($this->permissionCanUseSmilies)) ? 1 : 0;
-			$this->preParse = PRE_PARSE_DEFAULT_VALUE;
-			$this->showSignature = SHOW_SIGNATURE_DEFAULT_VALUE;
 			$this->languageID = WCF::getLanguage()->languageID;
 		}
 		
@@ -349,40 +301,31 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			}
 		}
 		
-		if ($this->enableBBCodes && $this->allowedBBCodesPermission) {
+		if ($this->allowedBBCodesPermission) {
 			BBCodeHandler::getInstance()->setAllowedBBCodes(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission)));
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables();
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'attachmentHandler' => $this->attachmentHandler,
 			'attachmentObjectID' => $this->attachmentObjectID,
 			'attachmentObjectType' => $this->attachmentObjectType,
 			'attachmentParentObjectID' => $this->attachmentParentObjectID,
 			'availableContentLanguages' => $this->availableContentLanguages,
 			'defaultSmilies' => $this->defaultSmilies,
-			'enableBBCodes' => $this->enableBBCodes,
-			'enableHtml' => $this->enableHtml,
-			'enableSmilies' => $this->enableSmilies,
 			'languageID' => ($this->languageID ?: 0),
 			'maxTextLength' => $this->maxTextLength,
-			'permissionCanUseBBCodes' => $this->permissionCanUseBBCodes,
-			'permissionCanUseHtml' => $this->permissionCanUseHtml,
-			'permissionCanUseSmilies' => $this->permissionCanUseSmilies,
-			'preParse' => $this->preParse,
-			'showSignature' => $this->showSignature,
-			'showSignatureSetting' => $this->showSignatureSetting,
 			'smileyCategories' => $this->smileyCategories,
 			'subject' => $this->subject,
 			'text' => $this->text,
 			'tmpHash' => $this->tmpHash
-		));
+		]);
 		
 		if ($this->allowedBBCodesPermission) {
 			WCF::getTPL()->assign('allowedBBCodes', explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($this->allowedBBCodesPermission))));

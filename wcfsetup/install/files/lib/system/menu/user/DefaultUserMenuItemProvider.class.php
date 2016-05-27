@@ -1,32 +1,36 @@
 <?php
 namespace wcf\system\menu\user;
+use wcf\data\user\menu\item\UserMenuItem;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
  * Default implementations of a user menu item provider.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.menu.user
  * @category	Community Framework
+ * 
+ * @method	UserMenuItem	getDecoratedObject()
+ * @mixin	UserMenuItem
  */
 class DefaultUserMenuItemProvider extends DatabaseObjectDecorator implements IUserMenuItemProvider {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\menu\item\UserMenuItem';
+	protected static $baseClass = UserMenuItem::class;
 	
 	/**
-	 * @see	\wcf\system\menu\page\IUserMenuItemProvider::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\page\IUserMenuItemProvider::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		// explicit call to satisfy our interface

@@ -7,51 +7,55 @@ use wcf\data\IToggleAction;
  * Executes package update server-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update.server
  * @category	Community Framework
+ * 
+ * @method	PackageUpdateServer		create()
+ * @method	PackageUpdateServerEditor[]	getObjects()
+ * @method	PackageUpdateServerEditor	getSingleObject()
  */
 class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\package\update\server\PackageUpdateServerEditor';
+	protected $className = PackageUpdateServerEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.system.package.canEditServer');
+	protected $permissionsCreate = ['admin.configuration.package.canEditServer'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.system.package.canEditServer');
+	protected $permissionsDelete = ['admin.configuration.package.canEditServer'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.system.package.canEditServer');
+	protected $permissionsUpdate = ['admin.configuration.package.canEditServer'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $server) {
-			$server->update(array('isDisabled' => ($server->isDisabled) ? 0 : 1));
+		foreach ($this->getObjects() as $server) {
+			$server->update(['isDisabled' => ($server->isDisabled) ? 0 : 1]);
 		}
 	}
 }

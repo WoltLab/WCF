@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyEditor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -8,7 +9,7 @@ use wcf\util\StringUtil;
  * Imports smilies.
  * 
  * @author	Tim Duesterhus, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer
@@ -16,16 +17,15 @@ use wcf\util\StringUtil;
  */
 class SmileyImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\smiley\Smiley';
+	protected $className = Smiley::class;
 	
 	/**
 	 * known smiley codes
-	 * 
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $knownCodes = array();
+	public $knownCodes = [];
 	
 	/**
 	 * Reads out known smiley codes.
@@ -37,7 +37,7 @@ class SmileyImporter extends AbstractImporter {
 		$statement->execute();
 		
 		while ($row = $statement->fetchArray()) {
-			$known = array();
+			$known = [];
 			if (!empty($row['aliases'])) {
 				$known = explode("\n", $row['aliases']);
 			}
@@ -50,9 +50,9 @@ class SmileyImporter extends AbstractImporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// copy smiley
 		$data['smileyPath'] = 'images/smilies/'.basename($additionalData['fileLocation']);
 		if (!@copy($additionalData['fileLocation'], WCF_DIR.$data['smileyPath'])) return 0;
@@ -64,7 +64,7 @@ class SmileyImporter extends AbstractImporter {
 		if (!isset($data['aliases'])) $data['aliases'] = '';
 		
 		// check aliases
-		$aliases = array();
+		$aliases = [];
 		if (!empty($data['aliases'])) {
 			$aliases = explode("\n", StringUtil::unifyNewlines($data['aliases']));
 			foreach ($aliases as $key => $alias) {

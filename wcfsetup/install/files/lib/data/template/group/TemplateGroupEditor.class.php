@@ -12,22 +12,25 @@ use wcf\util\DirectoryUtil;
  * Provides functions to edit template groups.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template.group
  * @category	Community Framework
+ * 
+ * @method	TemplateGroup	getDecoratedObject()
+ * @mixin	TemplateGroup
  */
 class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\template\group\TemplateGroup';
+	protected static $baseClass = TemplateGroup::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::update()
+	 * @inheritDoc
 	 */
-	public function update(array $parameters = array()) {
+	public function update(array $parameters = []) {
 		parent::update($parameters);
 		
 		if (isset($parameters['templateGroupFolderName']) && ($parameters['templateGroupFolderName'] != $this->templateGroupFolderName)) {
@@ -39,7 +42,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
 				WHERE	templateGroupID = ?
 					AND application <> ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->templateGroupID, 'wcf'));
+			$statement->execute([$this->templateGroupID, 'wcf']);
 			while ($row = $statement->fetchArray()) {
 				$application = ApplicationHandler::getInstance()->getApplication($row['application']);
 				$package = PackageCache::getInstance()->getPackage($application->packageID);
@@ -50,9 +53,9 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		$list = new TemplateGroupList();
 		$list->setObjectIDs($objectIDs);
 		$list->readObjects();
@@ -78,7 +81,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
 			WHERE	templateGroupID = ?
 				AND application <> ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->templateGroupID, 'wcf'));
+		$statement->execute([$this->templateGroupID, 'wcf']);
 		while ($row = $statement->fetchArray()) {
 			$application = ApplicationHandler::getInstance()->getApplication($row['application']);
 			$package = PackageCache::getInstance()->getPackage($application->packageID);
@@ -90,7 +93,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		TemplateGroupCacheBuilder::getInstance()->reset();

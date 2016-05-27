@@ -6,7 +6,7 @@ use wcf\system\Regex;
  * Parses the [table] bbcode tag.
  * 
  * @author	Tim Duesterhus, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
@@ -14,7 +14,7 @@ use wcf\system\Regex;
  */
 class TableBBCode extends AbstractBBCode {
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		if ($parser->getOutputType() == 'text/html') {
@@ -25,7 +25,7 @@ class TableBBCode extends AbstractBBCode {
 			if ($regex->match($parsedContent, true)) {
 				$matches = $regex->getMatches();
 				
-				$openTags = array();
+				$openTags = [];
 				$openTDs = 0;
 				$firstRowTDs = 0;
 				

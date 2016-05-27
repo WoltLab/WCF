@@ -8,7 +8,7 @@ use wcf\data\user\UserProfile;
  * User option output implementation for the output of a user's birthday.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user
@@ -16,7 +16,7 @@ use wcf\data\user\UserProfile;
  */
 class BirthdayUserOptionOutput extends DateUserOptionOutput {
 	/**
-	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		$profile = new UserProfile($user);

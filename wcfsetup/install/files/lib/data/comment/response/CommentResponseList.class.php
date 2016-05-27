@@ -6,20 +6,25 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of comment responses.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
+ *
+ * @method	CommentResponse		current()
+ * @method	CommentResponse[]	getObjects()
+ * @method	CommentResponse|null	search($objectID)
+ * @property	CommentResponse[]	$objects
  */
 class CommentResponseList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\comment\response\CommentResponse';
+	public $className = CommentResponse::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'comment_response.time ASC';
 }

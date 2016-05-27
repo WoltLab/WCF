@@ -8,7 +8,7 @@ use wcf\util\FileUtil;
  * Basic implementation of IExporter.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exporter
@@ -19,7 +19,7 @@ abstract class AbstractExporter implements IExporter {
 	 * additional data
 	 * @var	array
 	 */
-	public $additionalData = array();
+	public $additionalData = [];
 	
 	/**
 	 * database host name
@@ -67,13 +67,13 @@ abstract class AbstractExporter implements IExporter {
 	 * object type => method names
 	 * @var	array
 	 */
-	protected $methods = array();
+	protected $methods = [];
 	
 	/**
 	 * limits for items per run
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $limits = array();
+	protected $limits = [];
 	
 	/**
 	 * default limit for items per run
@@ -85,10 +85,10 @@ abstract class AbstractExporter implements IExporter {
 	 * selected import data
 	 * @var	array
 	 */
-	protected $selectedData = array();
+	protected $selectedData = [];
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::setData()
+	 * @inheritDoc
 	 */
 	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath, $additionalData) {
 		$this->databaseHost = $databaseHost;
@@ -101,7 +101,7 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::init()
+	 * @inheritDoc
 	 */
 	public function init() {
 		$host = $this->databaseHost;
@@ -116,34 +116,34 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::validateDatabaseAccess()
+	 * @inheritDoc
 	 */
 	public function validateDatabaseAccess() {
 		$this->init();
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::getDefaultDatabasePrefix()
+	 * @inheritDoc
 	 */
 	public function getDefaultDatabasePrefix() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::countLoops()
+	 * @inheritDoc
 	 */
 	public function countLoops($objectType) {
 		if (!isset($this->methods[$objectType]) || !method_exists($this, 'count'.$this->methods[$objectType])) {
 			throw new SystemException("unknown object type '".$objectType."' given");
 		}
 		
-		$count = call_user_func(array($this, 'count'.$this->methods[$objectType]));
+		$count = call_user_func([$this, 'count'.$this->methods[$objectType]]);
 		$limit = (isset($this->limits[$objectType]) ? $this->limits[$objectType] : $this->defaultLimit);
 		return ceil($count / $limit);
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::exportData()
+	 * @inheritDoc
 	 */
 	public function exportData($objectType, $loopCount = 0) {
 		if (!isset($this->methods[$objectType]) || !method_exists($this, 'export'.$this->methods[$objectType])) {
@@ -151,11 +151,11 @@ abstract class AbstractExporter implements IExporter {
 		}
 		
 		$limit = (isset($this->limits[$objectType]) ? $this->limits[$objectType] : $this->defaultLimit);
-		call_user_func(array($this, 'export'.$this->methods[$objectType]), $loopCount * $limit, $limit);
+		call_user_func([$this, 'export'.$this->methods[$objectType]], $loopCount * $limit, $limit);
 	}
 	
 	/**
-	 * @see	\wcf\system\exporter\IExporter::validateSelectedData()
+	 * @inheritDoc
 	 */
 	public function validateSelectedData(array $selectedData) {
 		$this->selectedData = $selectedData;

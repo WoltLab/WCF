@@ -8,7 +8,7 @@ use wcf\system\application\ApplicationHandler;
  * Represents a list of templates.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template
@@ -16,9 +16,9 @@ use wcf\system\application\ApplicationHandler;
  */
 class TemplateList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\template\Template';
+	public $className = Template::class;
 	
 	/**
 	 * Creates a new TemplateList object.
@@ -32,7 +32,7 @@ class TemplateList extends DatabaseObjectList {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();

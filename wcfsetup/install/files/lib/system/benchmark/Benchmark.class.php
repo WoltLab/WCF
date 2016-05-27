@@ -7,7 +7,7 @@ use wcf\util\FileUtil;
  * Provides functions to do a benchmark.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.benchmark
@@ -27,7 +27,7 @@ class Benchmark extends SingletonFactory {
 	 * benchmark items
 	 * @var	array
 	 */
-	protected $items = array();
+	protected $items = [];
 	
 	/**
 	 * number of executed sql queries

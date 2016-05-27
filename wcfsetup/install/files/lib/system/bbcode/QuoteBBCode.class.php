@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Parses the [quote] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  */
 class QuoteBBCode extends AbstractBBCode {
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		if ($parser->getOutputType() == 'text/html') {
@@ -39,17 +39,17 @@ class QuoteBBCode extends AbstractBBCode {
 				}
 			}
 			
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'content' => $content,
 				'quoteLink' => $quoteLink,
 				'quoteAuthor' => $quoteAuthor,
 				'quoteAuthorObject' => $quoteAuthorObject,
 				'isExternalQuoteLink' => $externalQuoteLink
-			));
+			]);
 			return WCF::getTPL()->fetch('quoteBBCodeTag');
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
-			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.text', array('content' => $content, 'cite' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '')))."\n";
+			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.text', ['content' => $content, 'cite' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '')])."\n";
 		}
 	}
 }

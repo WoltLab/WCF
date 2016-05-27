@@ -23,7 +23,7 @@ use Zend\ProgressBar\ProgressBar;
  * Executes package installation.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -40,11 +40,11 @@ class PackageCLICommand implements IArgumentedCLICommand {
 	 * Initializes the argument parser.
 	 */
 	public function __construct() {
-		$this->argv = new ArgvParser(array());
+		$this->argv = new ArgvParser([]);
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		$this->argv->setArguments($parameters);
@@ -88,13 +88,13 @@ class PackageCLICommand implements IArgumentedCLICommand {
 				$file = $archive->downloadArchive();
 			}
 			catch (SystemException $e) {
-				$this->error('notFound', array('file' => $file));
+				$this->error('notFound', ['file' => $file]);
 			}
 		}
 		else {
 			// probably local path
 			if (!file_exists($file)) {
-				$this->error('notFound', array('file' => $file));
+				$this->error('notFound', ['file' => $file]);
 			}
 			
 			$archive = new PackageArchive($file, null);
@@ -113,7 +113,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$errors = PackageInstallationDispatcher::validatePHPRequirements($archive->getPhpRequirements());
 		if (!empty($errors)) {
 			// TODO: Nice output
-			$this->error('phpRequirements', array('errors' => $errors));
+			$this->error('phpRequirements', ['errors' => $errors]);
 		}
 		
 		// try to find existing package
@@ -121,7 +121,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			FROM	wcf".WCF_N."_package
 			WHERE	package = ?";
 		$statement = CLIWCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($archive->getPackageInfo('name')));
+		$statement->execute([$archive->getPackageInfo('name')]);
 		$row = $statement->fetchArray();
 		$package = null;
 		if ($row !== false) {
@@ -130,7 +130,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		
 		// check update or install support
 		if ($package !== null) {
-			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+			CLIWCF::getSession()->checkPermissions(['admin.configuration.package.canUpdatePackage']);
 			
 			$archive->setPackage($package);
 			if (!$archive->isValidUpdate()) {
@@ -138,7 +138,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			}
 		}
 		else {
-			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+			CLIWCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
 			
 			if (!$archive->isValidInstall()) {
 				$this->error('noValidInstall');
@@ -150,7 +150,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			else if ($archive->isAlreadyInstalled()) {
 				$this->error('uniqueAlreadyInstalled');
 			}
-			else if ($archive->getPackageInfo('isApplication') && $this->archive->hasUniqueAbbreviation()) {
+			else if ($archive->getPackageInfo('isApplication') && $archive->hasUniqueAbbreviation()) {
 				$this->error('noUniqueAbbrevation');
 			}
 		}
@@ -159,7 +159,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		
 		// insert queue
-		$queue = PackageInstallationQueueEditor::create(array(
+		PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => CLIWCF::getUser()->userID,
 			'package' => $archive->getPackageInfo('name'),
@@ -167,15 +167,15 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			'packageID' => ($package !== null) ? $package->packageID : null,
 			'archive' => $file,
 			'action' => ($package !== null ? 'update' : 'install')
-		));
+		]);
 		
 		// PackageInstallationDispatcher::openQueue()
 		$parentQueueID = 0;
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID = ?", array(CLIWCF::getUser()->userID));
-		$conditions->add("parentQueueID = ?", array($parentQueueID));
-		if ($processNo != 0) $conditions->add("processNo = ?", array($processNo));
-		$conditions->add("done = ?", array(0));
+		$conditions->add("userID = ?", [CLIWCF::getUser()->userID]);
+		$conditions->add("parentQueueID = ?", [$parentQueueID]);
+		if ($processNo != 0) $conditions->add("processNo = ?", [$processNo]);
+		$conditions->add("done = ?", [0]);
 		
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_package_installation_queue
@@ -250,11 +250,11 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$excludingPackages = $packageInstallationDispatcher->getArchive()->getConflictedExcludingPackages();
 		$excludedPackages = $packageInstallationDispatcher->getArchive()->getConflictedExcludedPackages();
 		if (!($missingPackages == 0 && count($excludingPackages) == 0 && count($excludedPackages) == 0)) {
-			$this->error('missingPackagesOrExclude', array(
+			$this->error('missingPackagesOrExclude', [
 				'requirements' => $requirements,
 				'excludingPackages' => $excludingPackages,
 				'excludedPackages' => $excludedPackages
-			));
+			]);
 			return;
 		}
 		
@@ -264,15 +264,15 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$node = '';
 		
 		// initialize progressbar
-		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
+		$progressbar = new ProgressBar(new ConsoleProgressBar([
 			'width' => CLIWCF::getTerminal()->getWidth(),
-			'elements' => array(
+			'elements' => [
 				ConsoleProgressBar::ELEMENT_PERCENT,
 				ConsoleProgressBar::ELEMENT_BAR,
 				ConsoleProgressBar::ELEMENT_TEXT
-			),
+			],
 			'textWidth' => min(floor(CLIWCF::getTerminal()->getWidth() / 2), 50)
-		)));
+		]));
 		
 		// InstallPackageAction::readParameters()
 		$finished = false;
@@ -286,6 +286,8 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			}
 			$installation = new PackageInstallationDispatcher($queue);
 			
+			$progress = 0;
+			$currentAction = '';
 			switch ($step) {
 				case 'prepare':
 					// InstallPackageAction::stepPrepare()
@@ -309,9 +311,8 @@ class PackageCLICommand implements IArgumentedCLICommand {
 					// InstallPackageAction::stepInstall()
 					$step_ = $installation->install($node);
 					$queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo, $step_->getNode());
-						
+					
 					if ($step_->hasDocument()) {
-						$innerTemplate = $step_->getTemplate();
 						$progress = $installation->nodeBuilder->calculateProgress($node);
 						$node = $step_->getNode();
 						$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
@@ -370,13 +371,13 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		
 		// create queue
-		$queue = PackageInstallationQueueEditor::create(array(
+		$queue = PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => CLIWCF::getUser()->userID,
 			'packageName' => $package->getName(),
 			'packageID' => $package->packageID,
 			'action' => 'uninstall'
-		));
+		]);
 		
 		// initialize uninstallation
 		$installation = new PackageUninstallationDispatcher($queue);
@@ -384,9 +385,9 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$installation->nodeBuilder->purgeNodes();
 		$installation->nodeBuilder->buildNodes();
 		
-		CLIWCF::getTPL()->assign(array(
+		CLIWCF::getTPL()->assign([
 			'queue' => $queue
-		));
+		]);
 		
 		$queueID = $installation->nodeBuilder->getQueueByNode($queue->processNo, $installation->nodeBuilder->getNextNode());
 		$step = 'uninstall';
@@ -395,15 +396,15 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$progress = 0;
 		
 		// initialize progressbar
-		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
+		$progressbar = new ProgressBar(new ConsoleProgressBar([
 			'width' => CLIWCF::getTerminal()->getWidth(),
-			'elements' => array(
+			'elements' => [
 				ConsoleProgressBar::ELEMENT_PERCENT,
 				ConsoleProgressBar::ELEMENT_BAR,
 				ConsoleProgressBar::ELEMENT_TEXT
-			),
+			],
 			'textWidth' => min(floor(CLIWCF::getTerminal()->getWidth() / 2), 50)
-		)));
+		]));
 		
 		// InstallPackageAction::readParameters()
 		$finished = false;
@@ -449,7 +450,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 	 * @param	string	$name
 	 * @param	array	$parameters
 	 */
-	public function error($name, array $parameters = array()) {
+	public function error($name, array $parameters = []) {
 		Log::error('package.'.$name.':'.JSON::encode($parameters));
 		
 		if ($parameters) {
@@ -461,16 +462,16 @@ class PackageCLICommand implements IArgumentedCLICommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
+	 * @inheritDoc
 	 */
 	public function getUsage() {
 		return str_replace($_SERVER['argv'][0].' [ options ]', 'package [ options ] <install|uninstall> <package>', $this->argv->getUsageMessage());
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
-		return CLIWCF::getSession()->getPermission('admin.system.package.canInstallPackage') || CLIWCF::getSession()->getPermission('admin.system.package.canUpdatePackage');
+		return CLIWCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') || CLIWCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage');
 	}
 }

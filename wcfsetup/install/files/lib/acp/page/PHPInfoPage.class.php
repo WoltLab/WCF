@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Shows phpinfo() output.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class PHPInfoPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'phpInfo';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.package.canInstallPackage', 'admin.system.package.canUpdatePackage');
+	public $neededPermissions = ['admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage'];
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -46,10 +46,10 @@ class PHPInfoPage extends AbstractPage {
 		$info = preg_replace('%<img([^>]*)>%s', '<img style="float:right" \\1>', $info, 1);
 		
 		// fix tables
-		$info = preg_replace('%<h2>(.*?)</h2>\s*<table( border="0" cellpadding="3" width="600")?>%', '<div class="tabularBox tabularBoxTitle marginTop"><header><h2>\\1</h2></header><table class="table" style="table-layout:fixed;">', $info);
-		$info = preg_replace('%<table( border="0" cellpadding="3" width="600")?>%', '<div class="tabularBox marginTop"><table class="table" style="table-layout:fixed;">', $info);
+		$info = preg_replace('%<h2>(.*?)</h2>\s*<table( border="0" cellpadding="3" width="600")?>%', '<section class="section tabularBox"><h2 class="sectionTitle">\\1</h2><table class="table" style="table-layout:fixed;">', $info);
+		$info = preg_replace('%<table( border="0" cellpadding="3" width="600")?>%', '<section class="section tabularBox"><table class="table" style="table-layout:fixed;">', $info);
 		$info = preg_replace('%<tr><td class="e">(\w+ )<\/td><\/tr>%', '<tr><td class="e">\\1</td><td></td></tr>', $info);
-		$info = str_replace('</table>', '</table></div>', $info);
+		$info = str_replace('</table>', '</table></section>', $info);
 		
 		// fix display of disable_functions & disable_classes
 		$info = preg_replace_callback('%<td class="e">disable_(?P<t>functions|classes)</td><td class="v">(?P<l>.*?)</td><td class="v">(?P<m>.*?)</td>%s', function ($match) {
@@ -60,8 +60,8 @@ class PHPInfoPage extends AbstractPage {
 			return $ret;
 		}, $info);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'phpInfo' => $info
-		));
+		]);
 	}
 }

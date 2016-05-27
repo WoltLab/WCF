@@ -11,22 +11,25 @@ use wcf\util\FileUtil;
  * Provides functions to edit templates.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template
  * @category	Community Framework
+ * 
+ * @method	Template	getDecoratedObject()
+ * @mixin	Template
  */
 class TemplateEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\template\Template';
+	protected static $baseClass = Template::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		// obtain default values
 		if (!isset($parameters['packageID'])) $parameters['packageID'] = PACKAGE_ID;
 		if (!isset($parameters['lastModificationTime'])) $parameters['lastModificationTime'] = TIME_NOW;
@@ -71,7 +74,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 				FROM	wcf".WCF_N."_template_group
 				WHERE	templateGroupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($templateGroupID));
+			$statement->execute([$templateGroupID]);
 			$row = $statement->fetchArray();
 			$this->object->data['templateGroupFolderName'] = $row['templateGroupFolderName'];
 		}
@@ -96,7 +99,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 		$sql = "DELETE FROM	wcf".WCF_N."_template
 			WHERE		templateID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->templateID));
+		$statement->execute([$this->templateID]);
 	}
 	
 	/**
@@ -111,9 +114,9 @@ class TemplateEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		$list = new TemplateList();
 		$list->setObjectIDs($objectIDs);
 		$list->readObjects();

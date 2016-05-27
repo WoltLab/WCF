@@ -5,7 +5,7 @@ namespace wcf\util;
  * Replaces quoted strings in a text.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -20,9 +20,9 @@ final class StringStack {
 	
 	/**
 	 * local string stack
-	 * @var	array<string>
+	 * @var	string[][]
 	 */
-	protected static $stringStack = array();
+	protected static $stringStack = [];
 	
 	/**
 	 * Replaces a string with an unique hash value.
@@ -30,13 +30,14 @@ final class StringStack {
 	 * @param	string		$string
 	 * @param	string		$type
 	 * @return	string		$hash
+	 * @param	string		$delimiter
 	 */
 	public static function pushToStringStack($string, $type = 'default', $delimiter = '@@') {
 		self::$i++;
 		$hash = $delimiter.StringUtil::getHash(self::$i.uniqid(microtime()).$string).$delimiter;
 		
 		if (!isset(self::$stringStack[$type])) {
-			self::$stringStack[$type] = array();
+			self::$stringStack[$type] = [];
 		}
 		
 		self::$stringStack[$type][$hash] = $string;
@@ -75,8 +76,13 @@ final class StringStack {
 			return self::$stringStack[$type];
 		}
 		
-		return array();
+		return [];
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of StringStack objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

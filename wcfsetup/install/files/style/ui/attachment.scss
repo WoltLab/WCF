@@ -1,0 +1,148 @@
+/* attachment list in messages */
+.attachmentFileList {
+	> ul > li:not(:last-child) {
+		margin-right: 10px;
+	}
+}
+
+/* attachment in messages */
+.attachmentThumbnailList > ul {
+	margin-bottom: -15px;
+	margin-right: -15px;
+}
+
+.attachmentThumbnail {
+	border-radius: 3px;
+	box-shadow: 0 0 1px #aaa;
+	background: #fff;
+	margin-bottom: 15px !important;
+	margin-right: 15px !important;
+	position: relative;
+	
+	@include screen-xs {
+		width: 100%;
+	}
+	
+	.attachmentThumbnailContainer {
+		position: relative;
+	}
+	
+	.attachmentThumbnailImage {
+		align-items: center;
+		border-radius: 3px 3px 0 0;
+		background-color: #333;
+		display: flex;
+		justify-content: center;
+		overflow: hidden;
+		text-align: center;
+		
+		@include screen-sm-up {
+			height: #{$wcf_option_attachment_thumbnail_height}px;
+			width: #{$wcf_option_attachment_thumbnail_width}px;
+		}
+		
+		@include screen-xs {
+			max-height: #{$wcf_option_attachment_thumbnail_height}px;
+			min-height: 100px;
+		}
+		
+		img {
+			backface-visibility: hidden;
+			border-radius: 3px 3px 0 0;
+			max-width: 100%;
+			opacity: .85;
+			transform: translate3d(0,0,0);
+			transition: .2s ease opacity;
+		}
+		
+		.attachmentThumbnailImageScalable {
+			@include screen-xs {
+				width: 100%;
+			}
+		}
+	}
+	
+	&:hover {
+		.attachmentThumbnailImage {
+			img {
+				opacity: 1;
+			}	
+		}
+	}
+	
+	.attachmentThumbnailData {
+		backface-visibility: hidden;
+		background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .7) 100%);
+		border-radius: 3px 3px 0 0;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		transform: translate3d(0,0,0);
+		width: 100%;
+	}
+	
+	.attachmentFilename {
+		color: #fff;
+		bottom: 0;
+		overflow: hidden;
+		padding: 10px;
+		position: absolute;
+		text-overflow: ellipsis;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, .8);
+		width: 100%;
+		white-space: nowrap;
+    	
+		@include wcfFontHeadline;
+	}
+	
+	.attachmentMetaData {
+		color: $wcfContentDimmedText;
+		padding: 10px;
+		
+		li:not(:last-child) {
+			margin-right: 10px;
+		}
+		
+		.icon {
+			color: inherit;
+		}
+	}
+}
+
+/* attachments tab in editor */
+.formAttachmentContent {
+	> .formAttachmentList {
+		display: flex;
+		flex-wrap: wrap;
+		margin-right: -20px;
+		
+		> .box64 {
+			display: flex !important; /* jquery-ui sortable sometimes sets display:block */
+			flex: 0 0 calc(50% - 20px);
+			max-width: calc(50% - 20px); /* IE fix */
+			margin-right: 20px;
+			
+			> .attachmentTinyThumbnail {
+				max-height: 64px;
+				max-width: 64px;
+			}
+		}
+	}
+	
+	> dl > dd > div {
+		align-items: center;
+		display: flex;
+		
+		> .button {
+			flex: 0 0 auto;
+			
+			&:not(:first-child) {
+				margin-left: 10px;
+			}
+		}
+		
+		& + small {
+			margin-top: 10px !important;
+		}
+	}
+}

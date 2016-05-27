@@ -1,0 +1,137 @@
+.containerList > li {
+	position: relative;
+	transition: background-color .2s;
+	
+	@include screen-md-down {
+		padding: 10px 0;
+	}
+	
+	@include screen-lg {
+		padding: 20px;
+	}
+	
+	&:not(:last-child) {
+		border-bottom: 1px solid $wcfContentBorderInner;
+	}
+	
+	&:first-child {
+		border-top: 1px solid $wcfContentBorder;
+	}
+	
+	&:last-child {
+		border-bottom: 1px solid $wcfContentBorder;
+	}
+	
+	&:hover {
+		background-color: $wcfTabularBoxBackgroundActive;
+	}
+		
+	&.showMore {
+		text-align: center;
+		
+		&:hover {
+			background-color: transparent;
+		}
+	}
+	
+	.containerHeadline {
+		position: relative;
+		
+		> .containerContentType {
+			color: $wcfContentDimmedText;
+			position: absolute;
+			top: 5px;
+			right: 0;
+		}
+	}
+	
+	.buttonGroupNavigation {
+		opacity: 0;
+		position: absolute;
+		right: 20px;
+		top: 18px;
+		transition: opacity .12s;
+		
+		> ul {
+			background-color: $wcfContentBackground;
+			border: 1px solid rgba(0, 0, 0, .15);
+			border-radius: 6px;
+			
+			> li {
+				margin-right: 0;
+				
+				&:not(:last-child) {
+					border-right: 1px solid rgba(0, 0, 0, .15);
+				}
+				
+				> a {
+					display: inline-block;
+					padding: 3px 5px;
+					
+					> .icon {
+						color: rgba(0, 0, 0, .5);
+					}
+				}
+				
+				&.active,
+				&:hover {
+					> a {
+						> .icon {
+							color: $wcfContentText;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	&:hover .buttonGroupNavigation {
+		opacity: 1;
+	}
+}
+
+.containerBoxList {
+	@include screen-sm-down {
+		&.doubleColumned,
+		&.tripleColumned {
+			> li + li {
+				margin-top: 10px;
+			}
+		}
+	}
+	
+	@include screen-md-up {
+		&.doubleColumned,
+		&.tripleColumned {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: -15px;
+			
+			> li {
+				overflow: hidden;
+				padding-right: 15px;
+				margin-bottom: 15px;
+				
+				.containerBoxContent {
+					overflow: hidden;
+					
+					h3 {
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+				}
+			}
+		}
+		
+		&.doubleColumned > li {
+			flex: 0 0 50%;
+		}
+		
+		&.tripleColumned > li {
+			flex: 0 0 calc(100% / 3);
+			/* work-around for IE10 */
+			width: calc(100% / 3);
+		}
+	}
+}

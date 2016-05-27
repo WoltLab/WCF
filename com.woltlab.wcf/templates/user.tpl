@@ -1,45 +1,50 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{$user->username} - {lang}wcf.user.members{/lang}{/capture}
 
-<head>
-	<title>{$user->username} - {lang}wcf.user.members{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
+{assign var='contentHeader' value=' '}{* necessary to hide default content header in heade.tpl *}
+
+{capture assign='headContent'}
 	<link rel="canonical" href="{link controller='User' object=$user}{/link}" />
 	
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
-				WCF.Language.addObject({
-					'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}',
+		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
+			require(['Language', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Ignore', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Follow'], function(Language, UiUserProfileMenuItemIgnore, UiUserProfileMenuItemFollow) {
+				Language.addObject({
 					'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
 					'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
 					'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
 					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
 				});
 				
-				{if !$user->getPermission('user.profile.cannotBeIgnored')}
-					new WCF.User.Profile.IgnoreUser({@$user->userID}, {if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}true{else}false{/if});
+				{if !$user->isIgnoredUser($__wcf->user->userID)}
+					new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
 				{/if}
 				
-				new WCF.User.Profile.Follow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
+				{if !$user->getPermission('user.profile.cannotBeIgnored')}
+					new UiUserProfileMenuItemIgnore({@$user->userID}, {if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}true{else}false{/if});
+				{/if}
+			});
+		{/if}
+		
+		//<![CDATA[
+		$(function() {
+			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
+				WCF.Language.addObject({
+					'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}'
+				});
 			{/if}
 			
 			new WCF.User.Profile.TabMenu({@$user->userID});
 			
-			WCF.TabMenu.init();
-			
 			{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
 				WCF.Language.addObject({
-					'wcf.user.editProfile': '{lang}wcf.user.editProfile{/lang}',
+					'wcf.user.editProfile': '{lang}wcf.user.editProfile{/lang}'
 				});
 				
 				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
 			{/if}
 			
-			{if $followingCount > 10}
+			{if $followingCount > 7}
 				var $followingList = null;
 				$('#followingAll').click(function() {
 					if ($followingList === null) {
@@ -49,7 +54,7 @@
 					$followingList.open();
 				});
 			{/if}
-			{if $followerCount > 10}
+			{if $followerCount > 7}
 				var $followerList = null;
 				$('#followerAll').click(function() {
 					if ($followerList === null) {
@@ -59,7 +64,7 @@
 					$followerList.open();
 				});
 			{/if}
-			{if $visitorCount > 10}
+			{if $visitorCount > 7}
 				var $visitorList = null;
 				$('#visitorAll').click(function() {
 					if ($visitorList === null) {
@@ -130,107 +135,16 @@
 			}
 		</style>
 	</noscript>
-</head>
+{/capture}
 
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{include file='userHeader' assign='boxesTop'}
 
-{include file='userSidebar' assign='sidebar'}
+{include file='userSidebar' assign='sidebarRight'}
 
-{include file='header' sidebarOrientation='left'}
-
-<header class="boxHeadline userHeadline"
-	{if $isAccessible}
-		data-object-id="{@$user->userID}"
-		{if $__wcf->session->getPermission('admin.user.canBanUser')}
-			data-banned="{@$user->banned}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
-			data-disable-avatar="{@$user->disableAvatar}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
-			data-disable-signature="{@$user->disableSignature}"
-		{/if}
-	{/if}
->
-	<span class="framed invisible">{@$user->getAvatar()->getImageTag(48)}</span>
-	
-	<h1>{$user->username}{if $user->banned} <span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}{if MODULE_USER_RANK}
-		{if $user->getUserTitle()}
-			<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
-		{/if}
-		{if $user->getRank() && $user->getRank()->rankImage}
-			<span class="userRankImage">{@$user->getRank()->getImage()}</span>
-		{/if}
-	{/if}</h1>
-	
-	<ul class="dataList">
-		{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
-		{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
-		{if $user->isVisibleOption('location') && $user->location}<li>{lang}wcf.user.membersList.location{/lang}</li>{/if}
-		{if $user->getOldUsername()}<li>{lang}wcf.user.profile.oldUsername{/lang}</li>{/if}
-		<li>{lang}wcf.user.membersList.registrationDate{/lang}</li>
-		{event name='userDataRow1'}
-	</ul>
-	{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
-		<dl class="plain inlineDataList">
-			<dt>{lang}wcf.user.usersOnline.lastActivity{/lang}</dt>
-			<dd>{@$user->getLastActivityTime()|time}{if $user->getCurrentLocation()}, {@$user->getCurrentLocation()}{/if}</dd>
-			{event name='userDataRow2'}
-		</dl>
-	{/if}
-	<nav class="jsMobileNavigation buttonGroupNavigation">
-		<ul id="profileButtonContainer" class="buttonGroup">
-			{hascontent}
-				<li class="dropdown">
-					<a href="#" class="button dropdownToggle jsTooltip" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon16 icon-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
-					<ul class="dropdownMenu">
-						{content}
-							{event name='quickSearchItems'}
-						{/content}
-					</ul>
-				</li>
-			{/hascontent}
-			
-			{if $__wcf->session->getPermission('user.profile.canReportContent')}
-				<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a href="#" title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
-			{/if}
-			
-			{if $user->userID != $__wcf->user->userID}
-				{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-					<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
-				{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
-					<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
-				{/if}
-			{/if}
-			
-			{event name='buttons'}
-			
-			{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
-				<li class="dropdown">
-					<a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="button jsTooltip jsUserInlineEditor" title="{lang}wcf.user.moderate{/lang}"><span class="icon icon16 fa-wrench"></span> <span class="invisible">{lang}wcf.user.moderate{/lang}</span></a>
-					<ul class="dropdownMenu"></ul>
-				</li>
-			{/if}
-		</ul>
-	</nav>
-</header>
-
-{include file='userNotice'}
+{include file='header'}
 
 {if !$user->isProtected()}
-	<div class="contentNavigation">
-		{hascontent}
-			<nav>
-				<ul>
-					{content}
-						{event name='contentNavigationButtons'}
-					{/content}
-				</ul>
-			</nav>
-		{/hascontent}
-	</div>
-	
-	<section id="profileContent" class="marginTop tabMenuContainer" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
+	<div id="profileContent" class="section tabMenuContainer userProfileContent" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
@@ -243,19 +157,16 @@
 		
 		{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
 			{if $menuItem->getContentManager()->isVisible($userID)}
-				<div id="{$menuItem->getIdentifier()}" class="container tabMenuContent" data-menu-item="{$menuItem->menuItem}">
+				<div id="{$menuItem->getIdentifier()}" class="tabMenuContent" data-menu-item="{$menuItem->menuItem}">
 					{if $menuItem === $__wcf->getUserProfileMenu()->getActiveMenuItem()}
 						{@$profileContent}
 					{/if}
 				</div>
 			{/if}
 		{/foreach}
-	</section>
+	</div>
 {else}
 	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
 {/if}
 
 {include file='footer'}
-
-</body>
-</html>

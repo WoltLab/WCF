@@ -110,7 +110,7 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 						continue;
 					}
 					
-					item.style.removeProperty('display'); 
+					elShow(item);
 				}
 				
 				if (dropdown.parentNode !== null) {
@@ -131,7 +131,7 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 					}
 					
 					hiddenItems.push(item);
-					item.style.setProperty('display', 'none');
+					elHide(item);
 					
 					if (list.scrollWidth < availableWidth) {
 						break;
@@ -176,7 +176,7 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 					item.addEventListener('click', (function(event) {
 						event.preventDefault();
 						
-						Core.triggerEvent(hiddenItem.querySelector('a'), 'click');
+						Core.triggerEvent(elBySel('a', hiddenItem), 'click');
 						
 						// force a rebuild to guarantee the active item being visible
 						setTimeout(function() {
@@ -191,7 +191,7 @@ define(['Core', 'Dictionary', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 
 				dropdownMenu.appendChild(fragment);
 			}
 			else if (dropdown !== undefined && dropdown.parentNode !== null) {
-				dropdown.parentNode.removeChild(dropdown);
+				elRemove(dropdown);
 			}
 		}
 	};

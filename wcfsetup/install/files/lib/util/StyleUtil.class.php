@@ -6,7 +6,7 @@ use wcf\system\style\StyleCompiler;
  * Contains Style-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -132,5 +132,10 @@ final class StyleUtil {
 		StyleCompiler::getInstance()->compileACP();
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of StyleUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

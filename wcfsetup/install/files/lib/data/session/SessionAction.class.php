@@ -10,28 +10,32 @@ use wcf\system\WCF;
  * Executes session-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.session
  * @category	Community Framework
+ * 
+ * @method	Session			create()
+ * @method	SessionEditor[]		getObjects()
+ * @method	SessionEditor		getSingleObject()
  */
 class SessionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('keepAlive');
+	protected $allowGuestAccess = ['keepAlive'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\session\SessionEditor';
+	protected $className = SessionEditor::class;
 	
 	/**
 	 * list of data values returned upon a keep alive request
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
-	public $keepAliveData = array();
+	public $keepAliveData = [];
 	
 	/**
 	 * Validates the 'keepAlive' action.
@@ -44,7 +48,7 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	 * Updates session's last activity time to prevent it from expiring. In addition this method
 	 * will return updated counters for notifications and 3rd party components.
 	 * 
-	 * @return	array<mixed>
+	 * @return	mixed[]
 	 */
 	public function keepAlive() {
 		// ignore sessions created by this request
@@ -56,9 +60,9 @@ class SessionAction extends AbstractDatabaseObjectAction {
 		SessionHandler::getInstance()->keepAlive();
 		
 		// update notification counts
-		$this->keepAliveData = array(
+		$this->keepAliveData = [
 			'userNotificationCount' => UserNotificationHandler::getInstance()->getNotificationCount(true)
-		);
+		];
 		
 		// notify 3rd party components
 		EventHandler::getInstance()->fireAction($this, 'keepAlive');

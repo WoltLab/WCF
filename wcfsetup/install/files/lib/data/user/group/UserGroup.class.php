@@ -2,6 +2,7 @@
 namespace wcf\data\user\group;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\cache\builder\UserGroupCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -11,13 +12,21 @@ use wcf\system\WCF;
  * Represents a user group.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
  * @category	Community Framework
+ *
+ * @property-read	integer		$groupID
+ * @property-read	string		$groupName
+ * @property-read	string		$groupDescription
+ * @property-read	integer		$groupType
+ * @property-read	integer		$priority
+ * @property-read	string		$userOnlineMarking
+ * @property-read	integer		$showOnTeamPage
  */
-class UserGroup extends DatabaseObject {
+class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * group type everyone user group
 	 * @var	integer
@@ -43,43 +52,43 @@ class UserGroup extends DatabaseObject {
 	const OTHER = 4;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_group';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'groupID';
 	
 	/**
 	 * group cache
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
 	protected static $cache = null;
 	
 	/**
 	 * list of accessible groups for active user
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected static $accessibleGroups = null;
 	
 	/**
 	 * group options of this group
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $groupOptions = null;
 	
 	/**
 	 * Returns group ids by given type.
 	 * 
-	 * @param	array<integer>		$types
-	 * @return	array<integer>
+	 * @param	integer[]		$types
+	 * @return	integer[]
 	 */
 	public static function getGroupIDsByType(array $types) {
 		self::getCache();
 		
-		$groupIDs = array();
+		$groupIDs = [];
 		foreach ($types as $type) {
 			if (isset(self::$cache['types'][$type])) {
 				$groupIDs = array_merge($groupIDs, self::$cache['types'][$type]);
@@ -93,14 +102,14 @@ class UserGroup extends DatabaseObject {
 	/**
 	 * Returns groups by given type. Returns all groups if no types given.
 	 * 
-	 * @param	array<integer>		$types
-	 * @param	array<integer>		$invalidGroupTypes
-	 * @return	array<\wcf\data\user\group\UserGroup>
+	 * @param	integer[]	$types
+	 * @param	integer[]	$invalidGroupTypes
+	 * @return	UserGroup[]
 	 */
-	public static function getGroupsByType(array $types = array(), array $invalidGroupTypes = array()) {
+	public static function getGroupsByType(array $types = [], array $invalidGroupTypes = []) {
 		self::getCache();
 		
-		$groups = array();
+		$groups = [];
 		foreach (self::$cache['groups'] as $group) {
 			if ((empty($types) || in_array($group->groupType, $types)) && !in_array($group->groupType, $invalidGroupTypes)) {
 				$groups[$group->groupID] = $group;
@@ -114,14 +123,15 @@ class UserGroup extends DatabaseObject {
 	 * Returns unique group by given type. Only works for the default user groups.
 	 * 
 	 * @param	integer		$type
-	 * @return	\wcf\data\user\group\UserGroup
+	 * @return	UserGroup
+	 * @throws	SystemException
 	 */
 	public static function getGroupByType($type) {
 		if ($type != self::EVERYONE && $type != self::GUESTS && $type != self::USERS) {
 			throw new SystemException('invalid value for type argument');
 		}
 		
-		$groups = self::getGroupsByType(array($type));
+		$groups = self::getGroupsByType([$type]);
 		return array_shift($groups);
 	}
 	
@@ -160,6 +170,7 @@ class UserGroup extends DatabaseObject {
 	 * Returns true if this is the 'Everyone' group.
 	 * 
 	 * @return	boolean
+	 * @since	2.2
 	 */
 	public function isEveryone() {
 		return $this->groupType == self::EVERYONE;
@@ -171,7 +182,7 @@ class UserGroup extends DatabaseObject {
 	 * @param	array		$groupIDs
 	 * @return	boolean
 	 */
-	public static function isAccessibleGroup(array $groupIDs = array()) {
+	public static function isAccessibleGroup(array $groupIDs = []) {
 		if (self::$accessibleGroups === null) {
 			self::$accessibleGroups = explode(',', WCF::getSession()->getPermission('admin.user.accessibleGroups'));
 		}
@@ -190,15 +201,15 @@ class UserGroup extends DatabaseObject {
 	/**
 	 * Returns a list of accessible groups.
 	 * 
-	 * @param	array<integer>		$groupTypes
-	 * @param	array<integer>		$invalidGroupTypes
-	 * @return	array<\wcf\data\user\group\UserGroup>
+	 * @param	integer[]		$groupTypes
+	 * @param	integer[]		$invalidGroupTypes
+	 * @return	UserGroup[]
 	 */
-	public static function getAccessibleGroups(array $groupTypes = array(), array $invalidGroupTypes = array()) {
+	public static function getAccessibleGroups(array $groupTypes = [], array $invalidGroupTypes = []) {
 		$groups = self::getGroupsByType($groupTypes, $invalidGroupTypes);
 		
 		foreach ($groups as $key => $value) {
-			if (!self::isAccessibleGroup(array($key))) {
+			if (!self::isAccessibleGroup([$key])) {
 				unset($groups[$key]);
 			}
 		}
@@ -250,11 +261,11 @@ class UserGroup extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isAccessible() {
-		return self::isAccessibleGroup(array($this->groupID));
+		return self::isAccessibleGroup([$this->groupID]);
 	}
 	
 	/**
-	 * @see	\wcf\data\user\group\UserGroup::getName()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getName();
@@ -326,7 +337,7 @@ class UserGroup extends DatabaseObject {
 	public function getGroupOption($name) {
 		if ($this->groupOptions === null) {
 			// get all options and filter options with low priority
-			$this->groupOptions = $groupOptionIDs = array();
+			$this->groupOptions = $groupOptionIDs = [];
 			
 			$sql = "SELECT		optionName, optionID
 				FROM		wcf".WCF_N."_user_group_option";
@@ -339,8 +350,8 @@ class UserGroup extends DatabaseObject {
 			
 			if (!empty($groupOptionIDs)) {
 				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("option_value.groupID = ?", array($this->groupID));
-				$conditions->add("option_value.optionID IN (?)", array($groupOptionIDs));
+				$conditions->add("option_value.groupID = ?", [$this->groupID]);
+				$conditions->add("option_value.optionID IN (?)", [$groupOptionIDs]);
 				
 				$sql = "SELECT		group_option.optionName, option_value.optionValue
 					FROM		wcf".WCF_N."_user_group_option_value option_value
@@ -360,5 +371,12 @@ class UserGroup extends DatabaseObject {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->groupName);
 	}
 }

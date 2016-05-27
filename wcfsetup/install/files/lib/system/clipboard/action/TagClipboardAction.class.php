@@ -1,31 +1,33 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
+use wcf\data\tag\TagAction;
 use wcf\system\WCF;
 
 /**
  * Clipboard action implementation for tags.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard.action
  * @category	Community Framework
+ * @since	2.2
  */
 class TagClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$actionClassActions
+	 * @inheritDoc
 	 */
-	protected $actionClassActions = array('delete');
+	protected $actionClassActions = ['delete'];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
+	 * @inheritDoc
 	 */
-	protected $supportedActions = array('delete', 'setAsSynonyms');
+	protected $supportedActions = ['delete', 'setAsSynonyms'];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		$item = parent::execute($objects, $action);
@@ -53,14 +55,14 @@ class TagClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getClassName()
+	 * @inheritDoc
 	 */
 	public function getClassName() {
-		return 'wcf\data\tag\TagAction';
+		return TagAction::class;
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 * @inheritDoc
 	 */
 	public function getTypeName() {
 		return 'com.woltlab.wcf.tag';
@@ -69,11 +71,11 @@ class TagClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the tags which can be deleted.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	protected function validateDelete() {
 		if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {
-			return [ ];
+			return [];
 		}
 		
 		return array_keys($this->objects);
@@ -82,15 +84,15 @@ class TagClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the tags which can be set as synonyms.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	protected function validateSetAsSynonyms() {
 		if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {
-			return [ ];
+			return [];
 		}
 		
 		if (count($this->objects) < 2) {
-			return [ ];
+			return [];
 		}
 		
 		return array_keys($this->objects);

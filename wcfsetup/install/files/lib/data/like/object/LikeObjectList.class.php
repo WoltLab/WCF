@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of like objects.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.like.object
  * @category	Community Framework
+ *
+ * @method	LikeObject		current()
+ * @method	LikeObject[]		getObjects()
+ * @method	LikeObject|null		search($objectID)
+ * @property	LikeObject[]		$objects
  */
 class LikeObjectList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\like\object\LikeObject';
+	public $className = LikeObject::class;
 }

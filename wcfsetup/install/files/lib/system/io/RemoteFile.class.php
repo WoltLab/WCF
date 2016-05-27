@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * The RemoteFile class opens a connection to a remote host as a file.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -43,6 +43,7 @@ class RemoteFile extends File {
 	 */
 	private static $hasSSLSupport = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a new connection to a remote host.
 	 * 
@@ -50,8 +51,9 @@ class RemoteFile extends File {
 	 * @param	integer		$port
 	 * @param	integer		$timeout
 	 * @param	array		$options
+	 * @throws	SystemException
 	 */
-	public function __construct($host, $port, $timeout = 30, $options = array()) {
+	public function __construct($host, $port, $timeout = 30, $options = []) {
 		$this->host = $host;
 		$this->port = $port;
 		

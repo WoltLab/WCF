@@ -4,13 +4,12 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Abstract class for a list of database objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
@@ -37,13 +36,13 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * result objects
-	 * @var	array<\wcf\data\DatabaseObject>
+	 * @var	DatabaseObject[]
 	 */
-	public $objects = array();
+	public $objects = [];
 	
 	/**
 	 * ids of result objects
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $objectIDs = null;
 	
@@ -103,7 +102,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $indexToObject = null;
 	
@@ -122,13 +121,13 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		
 		if (!empty($this->decoratorClassName)) {
 			// validate decorator class name
-			if (!ClassUtil::isInstanceOf($this->decoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
-				throw new SystemException("'".$this->decoratorClassName."' should extend 'wcf\data\DatabaseObjectDecorator'");
+			if (!is_subclass_of($this->decoratorClassName, DatabaseObjectDecorator::class)) {
+				throw new SystemException("'".$this->decoratorClassName."' should extend '".DatabaseObjectDecorator::class."'");
 			}
 			
 			$objectClassName = $this->objectClassName ?: $this->className;
-			$baseClassName = call_user_func(array($this->decoratorClassName, 'getBaseClass'));
-			if ($objectClassName != $baseClassName && !ClassUtil::isInstanceOf($baseClassName, $objectClassName)) {
+			$baseClassName = call_user_func([$this->decoratorClassName, 'getBaseClass']);
+			if ($objectClassName != $baseClassName && !is_subclass_of($baseClassName, $objectClassName)) {
 				throw new SystemException("'".$this->decoratorClassName."' can't decorate objects of class '".$objectClassName."'");
 			}
 		}
@@ -144,21 +143,21 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @return	integer
 	 */
 	public function countObjects() {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 			".$this->sqlConditionJoins."
 			".$this->getConditionBuilder();
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->getConditionBuilder()->getParameters());
-		$row = $statement->fetchArray();
-		return $row['count'];
+		
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**
 	 * Reads the object ids from database.
 	 */
 	public function readObjectIDs() {
-		$this->objectIDs = array();
+		$this->objectIDs = [];
 		$sql = "SELECT	".$this->getDatabaseTableAlias().".".$this->getDatabaseTableIndexName()." AS objectID
 			FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 				".$this->sqlConditionJoins."
@@ -166,9 +165,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 				".(!empty($this->sqlOrderBy) ? "ORDER BY ".$this->sqlOrderBy : '');
 		$statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
 		$statement->execute($this->getConditionBuilder()->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$this->objectIDs[] = $row['objectID'];
-		}
+		$this->objectIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 	}
 	
 	/**
@@ -210,7 +207,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		}
 		
 		// use table index as array index
-		$objects = array();
+		$objects = [];
 		foreach ($this->objects as $object) {
 			$objectID = $object->getObjectID();
 			$objects[$objectID] = $object;
@@ -224,7 +221,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Returns the object ids of the list.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getObjectIDs() {
 		return $this->objectIDs;
@@ -233,7 +230,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Sets the object ids.
 	 * 
-	 * @param	array<integer>		$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function setObjectIDs(array $objectIDs) {
 		$this->objectIDs = array_merge($objectIDs);
@@ -242,7 +239,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Returns the objects of the list.
 	 * 
-	 * @return	array<\wcf\data\DatabaseObject>
+	 * @return	DatabaseObject[]
 	 */
 	public function getObjects() {
 		return $this->objects;
@@ -263,7 +260,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @return	string
 	 */
 	public function getDatabaseTableName() {
-		return call_user_func(array($this->className, 'getDatabaseTableName'));
+		return call_user_func([$this->className, 'getDatabaseTableName']);
 	}
 	
 	/**
@@ -272,7 +269,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @return	string
 	 */
 	public function getDatabaseTableIndexName() {
-		return call_user_func(array($this->className, 'getDatabaseTableIndexName'));
+		return call_user_func([$this->className, 'getDatabaseTableIndexName']);
 	}
 	
 	/**
@@ -281,18 +278,18 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @return	string
 	 */
 	public function getDatabaseTableAlias() {
-		return call_user_func(array($this->className, 'getDatabaseTableAlias'));
+		return call_user_func([$this->className, 'getDatabaseTableAlias']);
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->objects);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$objectID = $this->indexToObject[$this->index];
@@ -301,7 +298,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * CAUTION: This methods does not return the current iterator index,
-	 * rather than the object key which maps to that index.
+	 * but the object key which maps to that index.
 	 * 
 	 * @see	\Iterator::key()
 	 */
@@ -310,28 +307,28 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->indexToObject[$this->index]);
 	}
 	
 	/**
-	 * @see	\SeekableIterator::seek()
+	 * @inheritDoc
 	 */
 	public function seek($index) {
 		$this->index = $index;
@@ -342,7 +339,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITraversableObject::seekTo()
+	 * @inheritDoc
 	 */
 	public function seekTo($objectID) {
 		$this->index = array_search($objectID, $this->indexToObject);
@@ -353,7 +350,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITraversableObject::search()
+	 * @inheritDoc
 	 */
 	public function search($objectID) {
 		try {

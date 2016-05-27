@@ -1,0 +1,112 @@
+.loginForm > form {
+	.userLoginButtons {
+		margin-top: 20px;
+		text-align: center;
+	}
+	
+	.thirdPartyLogin {
+		flex: 0 0 100%;
+		
+		& + .thirdPartyLogin {
+			margin-top: 10px;
+		}
+		
+		.thirdPartyLoginButton {
+			display: flex;
+			border-width: 0;
+			color: rgba(255, 255, 255, 1);
+			
+			> .icon {
+				flex: 0 0 24px;
+			}
+			
+			> span:not(.icon) {
+				flex: 1 1 auto;
+				margin-left: 5px;
+			}
+			
+			/* branding */
+			&.googleLoginButton {
+				background-color: rgb(221, 75, 57);
+				
+				&:hover {
+					background-color: rgb(202, 53, 35);
+				}
+			}
+			
+			&.facebookLoginButton {
+				background-color: rgb(59, 89, 152);
+				
+				&:hover {
+					background-color: rgb(48, 72, 123);
+				}
+			}
+			
+			&.twitterLoginButton {
+				background-color: rgb(85, 172, 238);
+				
+				&:hover {
+					background-color: rgb(48, 154, 234);
+				}
+			}
+			
+			&.githubLoginButton {
+				background-color: rgb(68, 68, 68);
+				
+				&:hover {
+					background-color: rgb(48, 48, 48);
+				}
+			}
+		}
+	}
+	
+	@include screen-md-up {
+		-webkit-column-count: 2;
+		-moz-column-count: 2;
+		column-count: 2;
+		
+		-webkit-column-gap: 40px;
+		-moz-column-gap: 40px;
+		column-gap: 40px;
+		
+		> .section {
+			/* Sections should never be split, but Firefox, IE and Edge don't seem
+			   to care about this despite advertising the support for it. We can work
+			   around this by using `overflow: hidden` which magically does the job,
+			   but doesn't affect Chrome which properly breaks anyway. */
+			
+			margin-top: 0;
+			overflow: hidden; /* Fix for Firefox, IE and Edge */
+			
+			-webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+			page-break-inside: avoid; /* Firefox */
+			break-inside: avoid; /* IE 10+ */
+			
+			&.loginFormLogin {
+				-webkit-column-break-after: always;
+				page-break-after: always;
+				break-after: always;
+			}
+			
+			&.loginFormRegister {
+				margin-top: 0;
+				
+				& + .loginFormThirdPartyLogin {
+					margin-top: 30px;
+				}
+			}
+		}
+	}
+}
+
+@include screen-md-up {
+	/* full page login: missing margin due to different DOM */
+	.contentHeader ~ .loginForm {
+		margin-top: 30px;
+	}
+	
+	/* force columns to be 300px wide in login overlay */
+	.dialogContent .loginForm .section {
+		width: 300px;
+	}
+}

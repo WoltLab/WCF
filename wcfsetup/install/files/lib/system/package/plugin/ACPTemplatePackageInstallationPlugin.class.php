@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes ACP templates.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -18,12 +18,12 @@ use wcf\system\WCF;
  */
 class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'acp_template';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -53,7 +53,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// fetch ACP templates from log
@@ -61,18 +61,19 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 			FROM	wcf".WCF_N."_acp_template
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		
-		$templates = array();
+		$templates = [];
 		while ($row = $statement->fetchArray()) {
 			if (!isset($templates[$row['application']])) {
-				$templates[$row['application']] = array();
+				$templates[$row['application']] = [];
 			}
 			
 			$templates[$row['application']][] = 'acp/templates/'.$row['templateName'].'.tpl';
 		}
 		
 		foreach ($templates as $application => $templateNames) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$this->installation->deleteFiles(Application::getDirectory($application), $templateNames, false, $this->installation->getPackage()->isApplication);
 			
 			// delete log entries
@@ -82,13 +83,14 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	
 	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	2.2
 	 */
 	public static function getDefaultFilename() {
 		return 'acptemplates.tar';
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 * @inheritDoc
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
 		if (!$instruction) {

@@ -6,11 +6,12 @@ namespace wcf\system\email\mime;
  * The content type usually is either text/plain or text/html.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.email.mime
  * @category	Community Framework
+ * @since	2.2
  */
 class TextMimePart extends AbstractMimePart {
 	/**
@@ -37,21 +38,21 @@ class TextMimePart extends AbstractMimePart {
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContentType()
+	 * @inheritDoc
 	 */
 	public function getContentType() {
 		return $this->mimeType."; charset=UTF-8";
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContentTransferEncoding()
+	 * @inheritDoc
 	 */
 	public function getContentTransferEncoding() {
 		return 'quoted-printable';
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContent()
+	 * @inheritDoc
 	 */
 	public function getContent() {
 		return $this->content;

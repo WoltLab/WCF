@@ -12,6 +12,11 @@
 			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
 			<listclassname><![CDATA[wcf\data\tag\TagList]]></listclassname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+			<listclassname><![CDATA[wcf\data\media\ViewableMediaList]]></listclassname>
+		</type>
 		<!-- /clipboard items -->
 		
 		<type>
@@ -39,111 +44,9 @@
 		</type>
 		
 		<type>
-			<name>com.woltlab.wcf.user.DashboardPage</name>
-			<definitionname>com.woltlab.wcf.user.dashboardContainer</definitionname>
-			<allowcontent>1</allowcontent>
-			<allowsidebar>1</allowsidebar>
-		</type>
-		
-		<type>
-			<name>com.woltlab.wcf.user.MembersListPage</name>
-			<definitionname>com.woltlab.wcf.user.dashboardContainer</definitionname>
-			<allowcontent>0</allowcontent>
-			<allowsidebar>1</allowsidebar>
-		</type>
-		
-		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\UserModerationQueueReportHandler</classname>
-		</type>
-		
-		<!-- user online locations -->
-		<type>
-			<name>com.woltlab.wcf.user.UserPage</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<classname><![CDATA[wcf\system\user\online\location\UserLocation]]></classname>
-			<controller><![CDATA[wcf\page\UserPage]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.UserPage</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.UsersOnlineListPage</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\page\UsersOnlineListPage]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.UsersOnlineListPage</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.MembersListPage</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\page\MembersListPage]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.MembersListPage</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.TeamPage</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\page\TeamPage]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.TeamPage</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.DashboardPage</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\page\DashboardPage]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.DashboardPage</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.RecentActivityListPage</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\page\RecentActivityListPage]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.RecentActivityListPage</languagevariable>
-		</type>
-		
-		<type>
-			<name>com.woltlab.wcf.user.RegisterForm</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\form\RegisterForm]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.RegisterForm</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.LostPasswordForm</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\form\LostPasswordForm]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.LostPasswordForm</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.NewPasswordForm</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\form\NewPasswordForm]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.LostPasswordForm</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.LoginForm</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\form\LoginForm]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.LoginForm</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.AccountManagementForm</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\form\AccountManagementForm]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.AccountManagementForm</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.AvatarEditForm</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\form\AvatarEditForm]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.AvatarEditForm</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.SettingsForm</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\form\SettingsForm]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.SettingsForm</languagevariable>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.SignatureEditForm</name>
-			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller><![CDATA[wcf\form\SignatureEditForm]]></controller>
-			<languagevariable>wcf.user.usersOnline.location.SignatureEditForm</languagevariable>
 		</type>
 		
 		<!-- moderation type -->
@@ -235,6 +138,24 @@
 			<name>com.woltlab.wcf.moderation.queue</name>
 			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
 			<classname><![CDATA[wcf\system\comment\manager\ModerationQueueCommentManager]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.moderation.queue.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname><![CDATA[wcf\system\user\notification\object\type\ModerationQueueCommentUserNotificationObjectType]]></classname>
+			<category>com.woltlab.wcf.moderation</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.moderation.queue.response.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname><![CDATA[wcf\system\user\notification\object\type\ModerationQueueCommentResponseUserNotificationObjectType]]></classname>
+			<category>com.woltlab.wcf.moderation</category>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.page</name>
+			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
+			<classname><![CDATA[wcf\system\comment\manager\PageCommentManager]]></classname>
 		</type>
 		<!-- /comments -->
 		
@@ -332,6 +253,12 @@
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname><![CDATA[wcf\system\worker\LikeUserRebuildDataWorker]]></classname>
 			<nicevalue>-90</nicevalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.poll</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\PollRebuildDataWorker]]></classname>
+			<nicevalue>60</nicevalue>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user</name>
@@ -466,226 +393,11 @@
 		</type>
 		<!-- /user group assignment conditions -->
 		
-		<!-- pages -->
-		<type>
-			<name>com.woltlab.wcf.AccountManagementForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\AccountManagementForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.AvatarEditForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\AvatarEditForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.DisclaimerForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\DisclaimerForm]]></classname>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.EmailActivationForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\EmailActivationForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.EmailNewActivationCodeForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\EmailNewActivationCodeForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.LoginForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\LoginForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.LostPasswordForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\LostPasswordForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.MailForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\MailForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.ModerationActivationForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\ModerationActivationForm]]></classname>
-			<categoryname>com.woltlab.wcf.moderation</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.ModerationReportForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\ModerationReportForm]]></classname>
-			<categoryname>com.woltlab.wcf.moderation</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.NewPasswordForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\NewPasswordForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.NotificationSettingsForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\NotificationSettingsForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.RegisterActivationForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\RegisterActivationForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.RegisterForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\RegisterForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.RegisterNewActivationCodeForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\RegisterNewActivationCodeForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.SearchForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\SearchForm]]></classname>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.SettingsForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\SettingsForm]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.SignatureEditForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\SignatureEditForm]]></classname>
-			<options>module_user_signature</options>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.UserSearchForm</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\form\UserSearchForm]]></classname>
-			<options>module_members_list</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.DashboardPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\DashboardPage]]></classname>
-			<options>module_dashboard_page</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.DeletedContentListPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\DeletedContentListPage]]></classname>
-			<categoryname>com.woltlab.wcf.moderation</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.FollowingPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\FollowingPage]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.IgnoredUsersPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\IgnoredUsersPage]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.MembersListPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\MembersListPage]]></classname>
-			<options>module_members_list</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.ModerationListPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\ModerationListPage]]></classname>
-			<categoryname>com.woltlab.wcf.moderation</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.NotificationListPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\NotificationListPage]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.PrivacyPolicyPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\PrivacyPolicyPage]]></classname>
-			<options>module_privacy_policy_page</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.PaidSubscriptionListPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\PaidSubscriptionListPage]]></classname>
-			<options>module_paid_subscription</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.RecentActivityListPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\RecentActivityListPage]]></classname>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.SearchResultPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\SearchResultPage]]></classname>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.TaggedPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\TaggedPage]]></classname>
-			<options>module_tagging</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.TeamPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\TeamPage]]></classname>
-			<options>module_team_page</options>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.UserPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\UserPage]]></classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.UsersOnlineListPage</name>
-			<definitionname>com.woltlab.wcf.page</definitionname>
-			<classname><![CDATA[wcf\page\UsersOnlineListPage]]></classname>
-			<categoryname>com.woltlab.wcf.other</categoryname>
-		</type>
-		<!-- /pages -->
-		
 		<!-- notice conditions -->
 		<type>
-			<name>com.woltlab.wcf.page.controller</name>
+			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<classname><![CDATA[wcf\system\condition\page\MultiPageCondition]]></classname>
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		
@@ -842,9 +554,9 @@
 		
 		<!-- ad conditions -->
 		<type>
-			<name>com.woltlab.wcf.page.controller</name>
+			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<classname><![CDATA[wcf\system\condition\page\MultiPageCondition]]></classname>
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		
@@ -1195,5 +907,83 @@
 			<conditiongroup>userOptions</conditiongroup>
 		</type>
 		<!-- /user search conditions -->
+		
+		<!-- box controllers -->
+		<type>
+			<name>com.woltlab.wcf.recentActivityList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\RecentActivityListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.paidSubscriptions</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\PaidSubscriptionsBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.registerButton</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\RegisterButtonBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.signedInAs</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\SignedInAsBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.statistics</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\StatisticsBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\userListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userOnlineList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\UserOnlineListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.staffOnlineList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\StaffOnlineListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.todaysBirthdays</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\TodaysBirthdaysBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.todaysFollowingBirthdays</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\TodaysFollowingBirthdaysBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.followingsOnline</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\FollowingsOnlineBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.pageCommentList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\PageCommentListBoxController</classname>
+		</type>
+		<!-- /box controllers -->
+		
+		<!-- deprecated -->
+		<type>
+			<name>com.woltlab.wcf.page.controller</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.page</conditionobject>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page.controller</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.page</conditionobject>
+		</type>
+		<!-- /deprecated -->
 	</import>
 </data>

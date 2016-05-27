@@ -2,17 +2,17 @@
 namespace wcf\system\database;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\exception\SystemException;
-use wcf\util\StringUtil;
 
 /**
  * DatabaseException is a specific SystemException for database errors.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database
  * @category	Community Framework
+ * @deprecated	2.2 - Use \wcf\system\database\exception\DatabaseException
  */
 class DatabaseException extends SystemException {
 	/**
@@ -127,29 +127,5 @@ class DatabaseException extends SystemException {
 	 */
 	public function getDBType() {
 		return $this->DBType;
-	}
-	
-	/**
-	 * Prints the error page.
-	 */
-	public function show() {
-		$this->information .= '<b>sql type:</b> ' . StringUtil::encodeHTML($this->getDBType()) . '<br />';
-		$this->information .= '<b>sql error:</b> ' . StringUtil::encodeHTML($this->getErrorDesc()) . '<br />';
-		$this->information .= '<b>sql error number:</b> ' . StringUtil::encodeHTML($this->getErrorNumber()) . '<br />';
-		$this->information .= '<b>sql version:</b> ' . StringUtil::encodeHTML($this->getSQLVersion()) . '<br />';
-		if ($this->preparedStatement !== null) {
-			$this->information .= '<b>sql query:</b> ' . StringUtil::encodeHTML($this->preparedStatement->getSQLQuery()) . '<br />';
-			$parameters = $this->preparedStatement->getSQLParameters();
-			if (!empty($parameters)) {
-				foreach ($parameters as $index => $parameter) {
-					$this->information .= '<b>sql query parameter ' . $index . ':</b>' . StringUtil::encodeHTML($parameter) . '<br />';
-				}
-			}
-		}
-		else if ($this->sqlQuery !== null) {
-			$this->information .= '<b>sql query:</b> ' . StringUtil::encodeHTML($this->sqlQuery) . '<br />';
-		}
-		
-		parent::show();
 	}
 }

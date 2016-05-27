@@ -1,39 +1,43 @@
 <?php
 namespace wcf\system\user\notification\object;
+use wcf\data\comment\Comment;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
  * Notification object for comments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.object
  * @category	Community Framework
+ * 
+ * @method	Comment		getDecoratedObject()
+ * @mixin	Comment
  */
 class CommentUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\comment\Comment';
+	protected static $baseClass = Comment::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL() {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getAuthorID()
+	 * @inheritDoc
 	 */
 	public function getAuthorID() {
 		return $this->userID;

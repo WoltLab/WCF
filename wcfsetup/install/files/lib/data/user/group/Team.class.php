@@ -7,28 +7,31 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a team user group.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
  * @category	Community Framework
+ * 
+ * @method	UserGroup	getDecoratedObject()
+ * @mixin	UserGroup
  */
 class Team extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\group\UserGroup';
+	protected static $baseClass = UserGroup::class;
 	
 	/**
 	 * list of user group members
-	 * @var	array<\wcf\data\user\UserProfile>
+	 * @var	UserProfile[]
 	 */
-	protected $members = array();
+	protected $members = [];
 	
 	/**
 	 * Adds a new member.
 	 * 
-	 * @param	\wcf\data\user\UserProfile	$user
+	 * @param	UserProfile	$user
 	 */
 	public function addMember(UserProfile $user) {
 		$this->members[] = $user;
@@ -37,7 +40,7 @@ class Team extends DatabaseObjectDecorator {
 	/**
 	 * Returns the list of user group members
 	 * 
-	 * @return	array<\wcf\data\user\UserProfile>
+	 * @return	UserProfile[]
 	 */
 	public function getMembers() {
 		return $this->members;

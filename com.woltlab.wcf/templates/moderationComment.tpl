@@ -1,29 +1,44 @@
-<article class="message messageReduced">
-	<div>
-		<section class="messageContent">
-			<div>
-				<header class="messageHeader">
-					<div class="box32">
-						<a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}" class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(32)}</a>
-						
-						<div class="messageHeadline">
-							<h1><a href="{@$message->getLink()}">{$message->getTitle()}</a></h1>
-							<p>
-								<span class="username"><a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}">{$message->getUsername()}</a></span>
-								{@$message->getTime()|time}
-							</p>
-						</div>
-					</div>
-				</header>
+<article class="message">
+	<section class="messageContent">
+		<header class="messageHeader">
+			<div class="box32 messageHeaderWrapper">
+				{if $message->userID}
+					<a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}" class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(32)}</a>
+				{else}
+					<span class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(32)}</span>
+				{/if}
 				
-				<div class="messageBody">
-					<div>
-						<div class="messageText">
-							{@$message->getFormattedMessage()}
-						</div>
-					</div>
+				<div class="messageHeaderBox">
+					<h2 class="messageTitle">
+						<a href="{@$message->getLink()}">{$message->getTitle()}</a>
+					</h2>
+					
+					<ul class="messageHeaderMetaData">
+						<li>
+							{if $message->userID}
+								<a href="{link controller='User' object=$message->getUserProfile()->getDecoratedObject()}{/link}" class="username">{$message->getUsername()}</a>
+							{else}
+								{$message->getUsername()}
+							{/if}
+						</li>
+						<li><span class="messagePublicationTime">{@$message->getTime()|time}</span></li>
+						
+						{event name='messageHeaderMetaData'}
+					</ul>
 				</div>
 			</div>
-		</section>
-	</div>
+			
+			{event name='messageHeader'}
+		</header>
+		
+		<div class="messageBody">
+			{event name='beforeMessageText'}
+			
+			<div class="messageText">
+				{@$message->getFormattedMessage()}
+			</div>
+			
+			{event name='afterMessageText'}
+		</div>
+	</section>
 </article>

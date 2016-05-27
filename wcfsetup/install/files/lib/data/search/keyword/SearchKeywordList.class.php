@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of keywords.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.search.keyword
  * @category	Community Framework
+ *
+ * @method	SearchKeyword		current()
+ * @method	SearchKeyword[]		getObjects()
+ * @method	SearchKeyword|null	search($objectID)
+ * @property	SearchKeyword[]		$objects
  */
 class SearchKeywordList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\search\keyword\SearchKeyword';
+	public $className = SearchKeyword::class;
 }

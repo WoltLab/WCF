@@ -8,25 +8,35 @@ use wcf\util\UserUtil;
  * Represents a session log entry.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	data.log
+ * @subpackage	data.acp.session.log
  * @category	Community Framework
+ *
+ * @property-read	integer		$sessionLogID
+ * @property-read	string		$sessionID
+ * @property-read	integer|null	$userID
+ * @property-read	string		$ipAddress
+ * @property-read	string		$hostname
+ * @property-read	string		$userAgent
+ * @property-read	integer		$time
+ * @property-read	integer		$lastActivityTime
  */
 class ACPSessionLog extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'acp_session_log';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'sessionLogID';
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
-	 * @see	\wcf\data\DatabaseObject::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($id, array $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
@@ -38,7 +48,7 @@ class ACPSessionLog extends DatabaseObject {
 				ON		(user_table.userID = acp_session_log.userID)
 				WHERE		acp_session_log.sessionLogID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($id));
+			$statement->execute([$id]);
 			$row = $statement->fetchArray();
 		}
 		else if ($object !== null) {

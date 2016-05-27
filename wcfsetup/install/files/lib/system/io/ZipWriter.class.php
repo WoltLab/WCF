@@ -7,15 +7,15 @@ use wcf\util\StringUtil;
  * Creates a Zip file archive.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
  * @category	Community Framework
  */
 class ZipWriter {
-	protected $headers = array();
-	protected $data = array();
+	protected $headers = [];
+	protected $data = [];
 	protected $endOfData = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 	protected $lastOffset = 0;
 	protected $zipComment = '';
@@ -24,6 +24,7 @@ class ZipWriter {
 	 * Adds a folder to the Zip archive.
 	 * 
 	 * @param	string		$name		dirname
+	 * @param	integer		$date
 	 */
 	public function addDir($name, $date = TIME_NOW) {
 		// replace backward slashes with forward slashes in the dirname

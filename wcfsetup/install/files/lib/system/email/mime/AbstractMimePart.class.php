@@ -5,11 +5,12 @@ namespace wcf\system\email\mime;
  * Represents a RFC 2045 / 2046 mime part of an email.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.email.mime
  * @category	Community Framework
+ * @since	2.2
  */
 abstract class AbstractMimePart {
 	/**
@@ -23,7 +24,7 @@ abstract class AbstractMimePart {
 	 * Returns the transfer encoding to use. Must either be
 	 * 'quoted-printable' or 'base64'.
 	 * 
-	 * @return	Either 'quoted-printable' or 'base64'
+	 * @return	string		either 'quoted-printable' or 'base64'
 	 */
 	abstract public function getContentTransferEncoding();
 	
@@ -37,7 +38,7 @@ abstract class AbstractMimePart {
 	 * @return	array
 	 */
 	public function getAdditionalHeaders() {
-		return [ ];
+		return [];
 	}
 	
 	/**

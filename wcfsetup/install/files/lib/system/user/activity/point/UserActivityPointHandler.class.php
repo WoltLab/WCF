@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\activity\point;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * Handles the user activity point events
  * 
  * @author	Tim Duesterhus, Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.activity.point
@@ -21,18 +22,18 @@ use wcf\system\WCF;
 class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * list of user activity point object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * maps the user activity point object type ids to their object type names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $objectTypeNames = array();
+	protected $objectTypeNames = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.user.activityPointEvent');
@@ -45,12 +46,13 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Adds a new user activity point event.
 	 * 
-	 * @param	string			$objectType
-	 * @param	integer			$objectID
-	 * @param	integer			$userID
-	 * @param	array<mixed>		$additionalData
+	 * @param	string		$objectType
+	 * @param	integer		$objectID
+	 * @param	integer		$userID
+	 * @param	mixed[]		$additionalData
+	 * @throws	SystemException
 	 */
-	public function fireEvent($objectType, $objectID, $userID = null, array $additionalData = array()) {
+	public function fireEvent($objectType, $objectID, $userID = null, array $additionalData = []) {
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
 		if ($objectTypeObj === null) {
 			throw new SystemException("Object type '".$objectType."' is not valid for object type definition 'com.woltlab.wcf.user.activityPointEvent'");
@@ -67,27 +69,27 @@ class UserActivityPointHandler extends SingletonFactory {
 			UPDATE			activityPoints = activityPoints + VALUES(activityPoints),
 						items = items + 1";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$userID,
 			$objectTypeObj->objectTypeID,
 			$objectTypeObj->points
-		));
+		]);
 		
 		$sql = "UPDATE	wcf".WCF_N."_user
 			SET	activityPoints = activityPoints + ?
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeObj->points,
 			$userID
-		));
+		]);
 		
 		// update user ranks
-		$this->updateUserRanks(array($userID));
+		$this->updateUserRanks([$userID]);
 		
 		// check if the user will be automatically added to new user groups
 		// because of the new activity points
-		UserGroupAssignmentHandler::getInstance()->checkUsers(array($userID));
+		UserGroupAssignmentHandler::getInstance()->checkUsers([$userID]);
 	}
 	
 	/**
@@ -98,9 +100,10 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * 	userID => countOfItems
 	 * )
 	 * 
-	 * @param	string			$objectType
-	 * @param	array<integer>		$itemsToUser
-	 * @param	boolean			$updateUsers
+	 * @param	string		$objectType
+	 * @param	integer[]	$itemsToUser
+	 * @param	boolean		$updateUsers
+	 * @throws	SystemException
 	 */
 	public function fireEvents($objectType, array $itemsToUser, $updateUsers = true) {
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
@@ -114,7 +117,7 @@ class UserActivityPointHandler extends SingletonFactory {
 		
 		// update user_activity_point
 		$values = '';
-		$parameters = $userIDs = array();
+		$parameters = $userIDs = [];
 		foreach ($itemsToUser as $userID => $items) {
 			if (!empty($values)) $values .= ',';
 			$values .= '(?, ?, ?, ?)';
@@ -149,7 +152,8 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * Removes activity point events.
 	 * 
 	 * @param	string			$objectType
-	 * @param	array<integer>		$userToItems
+	 * @param	integer[]		$userToItems
+	 * @throws	SystemException
 	 */
 	public function removeEvents($objectType, array $userToItems) {
 		if (empty($userToItems)) return;
@@ -168,12 +172,12 @@ class UserActivityPointHandler extends SingletonFactory {
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($userToItems as $userID => $items) {
-			$statement->execute(array(
+			$statement->execute([
 				($items * $objectTypeObj->points),
 				$items,
 				$objectTypeObj->objectTypeID,
 				$userID
-			));
+			]);
 		}
 		
 		// update total activity points per user
@@ -184,12 +188,12 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Updates total activity points and ranks for given user ids.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]		$userIDs
 	 */
 	public function updateUsers(array $userIDs) {
 		$userIDs = array_unique($userIDs);
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($userIDs));
+		$conditions->add("userID IN (?)", [$userIDs]);
 		
 		$sql = "UPDATE	wcf".WCF_N."_user user_table
 			SET	activityPoints = COALESCE((
@@ -210,6 +214,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * Resets activity points and items for a given object type.
 	 * 
 	 * @param	string		$objectType
+	 * @throws	SystemException
 	 */
 	public function reset($objectType) {
 		// get and validate object type
@@ -223,7 +228,7 @@ class UserActivityPointHandler extends SingletonFactory {
 				items = 0
 			WHERE	objectTypeID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectTypeObj->objectTypeID));
+		$statement->execute([$objectTypeObj->objectTypeID]);
 	}
 	
 	/**
@@ -259,7 +264,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Updates the user ranks for the given users.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]		$userIDs
 	 */
 	protected function updateUserRanks(array $userIDs) {
 		$action = new UserProfileAction($userIDs, 'updateUserRank');

@@ -6,20 +6,25 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of label groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.label.group
  * @category	Community Framework
+ *
+ * @method	LabelGroup		current()
+ * @method	LabelGroup[]		getObjects()
+ * @method	LabelGroup|null		search($objectID)
+ * @property	LabelGroup[]		$objects
  */
 class LabelGroupList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\label\group\LabelGroup';
+	public $className = LabelGroup::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'label_group.showOrder ASC, label_group.groupID';
 }

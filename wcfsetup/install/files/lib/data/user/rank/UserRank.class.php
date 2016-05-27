@@ -8,20 +8,29 @@ use wcf\util\StringUtil;
  * Represents a user rank.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.rank
  * @category	Community Framework
+ *
+ * @property-read	integer		$rankID
+ * @property-read	integer		$groupID
+ * @property-read	integer		$requiredPoints
+ * @property-read	string		$rankTitle
+ * @property-read	string		$cssClassName
+ * @property-read	string		$rankImage
+ * @property-read	integer		$repeatImage
+ * @property-read	integer		$requiredGender
  */
 class UserRank extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_rank';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'rankID';
 	

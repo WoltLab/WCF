@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\ad;
+use wcf\data\condition\Condition;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\system\condition\ConditionHandler;
@@ -10,27 +11,34 @@ use wcf\system\WCF;
  * Represents an ad.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.ad
  * @category	Community Framework
+ *
+ * @property-read	integer		$adID
+ * @property-read	integer		$objectTypeID
+ * @property-read	string		$adName
+ * @property-read	string		$ad
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$showOrder
  */
 class Ad extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'adID';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'ad';
 	
 	/**
 	 * Returns the conditions of the ad.
 	 * 
-	 * @return	array<\wcf\data\condition\Condition>
+	 * @return	Condition[]
 	 */
 	public function getConditions() {
 		return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.ad', $this->adID);
@@ -53,7 +61,7 @@ class Ad extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->adName;

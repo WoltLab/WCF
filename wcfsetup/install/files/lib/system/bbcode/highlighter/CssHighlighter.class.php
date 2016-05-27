@@ -5,7 +5,7 @@ namespace wcf\system\bbcode\highlighter;
  * Highlights syntax of cascading style sheets.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode.highlighter
@@ -14,9 +14,9 @@ namespace wcf\system\bbcode\highlighter;
 class CssHighlighter extends Highlighter {
 	/**
 	 * temporary string replacement map for properties that can also be tags
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public static $duplicates = array(
+	public static $duplicates = [
 		'table:' => 't@@able:',
 		'caption:' => 'c@@aption:',
 		'menu:' => 'm@@enu:',
@@ -24,10 +24,10 @@ class CssHighlighter extends Highlighter {
 		'sub:' => 's@@ub:',
 		'pre:' => 'p@@re:',
 		'small:' => 's@@mall:'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightNumbers()
+	 * @inheritDoc
 	 */
 	protected function highlightNumbers($string) {
 		$string = preg_replace('!(?<='.$this->separatorsRegEx.')(-?\d*\.?\d+(?:px|pt|em|%|ex|in|cm|mm|pc)?)(?='.$this->separatorsRegEx.')!i', '<span class="hlNumbers">\\0</span>', $string);
@@ -39,7 +39,7 @@ class CssHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightKeywords()
+	 * @inheritDoc
 	 */
 	protected function highlightKeywords($string) {
 		$string = parent::highlightKeywords($string);
@@ -49,36 +49,36 @@ class CssHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @inheritDoc
 	 */
 	public function highlight($string) {
 		$string = str_replace('span', '053a0024219422ca9215c0a3ed0578ee76cff477', $string); // fix to not highlight the spans of the highlighter
 		$string = str_replace(':link', ':li@@nk', $string); // fix to highlight pseudo-class different than tag
-		$string = str_replace(array('right:', 'left:'), array('r@@ight:', 'l@@eft:'), $string); // fix to highlight properties different than values
+		$string = str_replace(['right:', 'left:'], ['r@@ight:', 'l@@eft:'], $string); // fix to highlight properties different than values
 		$string = strtr($string, self::$duplicates); // fix to highlight properties different than tags
 		
 		$string = parent::highlight($string);
 		
 		$string = strtr($string, array_flip(self::$duplicates)); // fix to highlight properties different than tags
-		$string = str_replace(array('r@@ight', 'l@@eft'), array('right', 'left'), $string); // fix to highlight properties different than values
+		$string = str_replace(['r@@ight', 'l@@eft'], ['right', 'left'], $string); // fix to highlight properties different than values
 		$string = str_replace('li@@nk', 'link', $string); // fix to highlight pseudo-class different than tag
 		return str_replace('053a0024219422ca9215c0a3ed0578ee76cff477', 'span', $string); // fix to not highlight the spans of the highlighter
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
-	protected $singleLineComment = array('//');
+	protected $singleLineComment = ['//'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
-	protected $separators = array('(', ')', '{', '}', ';', '[', ']', ':', ',', '.');
+	protected $separators = ['(', ')', '{', '}', ';', '[', ']', ':', ',', '.'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		'azimuth',
 		'background',
 		'background-attachment',
@@ -224,12 +224,12 @@ class CssHighlighter extends Highlighter {
 		'!important',
 		'@import',
 		'@media'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'left-side',
 		'far-left',
 		'left',
@@ -469,12 +469,12 @@ class CssHighlighter extends Highlighter {
 		'hsla',
 		'rgb',
 		'rgba'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
-	protected $keywords3 = array(
+	protected $keywords3 = [
 		'active',
 		'after',
 		'before',
@@ -502,12 +502,12 @@ class CssHighlighter extends Highlighter {
 		'root',
 		'target',
 		'visited'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords4
+	 * @inheritDoc
 	 */
-	protected $keywords4 = array(
+	protected $keywords4 = [
 		'abbr',
 		'acronym',
 		'address',
@@ -621,12 +621,12 @@ class CssHighlighter extends Highlighter {
 		'var',
 		'video',
 		'wbr'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords5
+	 * @inheritDoc
 	 */
-	public $keywords5 = array(
+	public $keywords5 = [
 		// modifying
 		'darken',
 		'lighten',
@@ -663,5 +663,5 @@ class CssHighlighter extends Highlighter {
 		'true',
 		// others
 		'&'
-	);
+	];
 }

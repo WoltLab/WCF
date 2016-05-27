@@ -1,25 +1,28 @@
 <?php
 namespace wcf\data\user\activity\event;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileCache;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 
 /**
  * Provides methods for viewable user activity events.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.activity.event
  * @category	Community Framework
+ * 
+ * @method	UserActivityEvent	getDecoratedObject()
+ * @mixin	UserActivityEvent
  */
 class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	public static $baseClass = 'wcf\data\user\activity\event\UserActivityEvent';
+	public static $baseClass = UserActivityEvent::class;
 	
 	/**
 	 * event text
@@ -47,7 +50,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	
 	/**
 	 * user profile
-	 * @var	\wcf\data\user\UserProfile
+	 * @var	UserProfile
 	 */
 	protected $userProfile = null;
 	
@@ -86,7 +89,8 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
 	 * Sets user profile.
 	 * 
-	 * @param	\wcf\data\user\UserProfile	$userProfile
+	 * @param	UserProfile	$userProfile
+	 * @deprecated	since 2.2
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;
@@ -95,11 +99,11 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
 	 * Returns user profile.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getUserProfile() {
 		if ($this->userProfile === null) {
-			$this->userProfile = UserProfileCache::getInstance()->getUserProfile($this->userID);
+			$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
 		}
 		
 		return $this->userProfile;

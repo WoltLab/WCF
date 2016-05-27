@@ -2,16 +2,17 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
 use wcf\action\AJAXInvokeAction;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
+use wcf\system\worker\IWorker;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 use wcf\util\JSON;
 
 /**
  * Handles worker actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action
@@ -19,7 +20,7 @@ use wcf\util\JSON;
  */
 class WorkerProxyAction extends AJAXInvokeAction {
 	/**
-	 * @see	\wcf\system\event\listener\SessionAccessLogListener::execute()
+	 * @inheritDoc
 	 */
 	const DO_NOT_LOG = true;
 	
@@ -33,7 +34,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	 * parameters for worker action
 	 * @var	array
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * worker object
@@ -41,10 +42,10 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	 */
 	protected $worker = null;
 	
-	public static $allowInvoke = array();
+	public static $allowInvoke = [];
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		AbstractSecureAction::readParameters();
@@ -64,13 +65,13 @@ class WorkerProxyAction extends AJAXInvokeAction {
 			throw new SystemException("class name cannot be empty.");
 		}
 		
-		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\worker\IWorker')) {
-			throw new SystemException("'".$this->className."' does not implement 'wcf\system\worker\IWorker'");
+		if (!is_subclass_of($this->className, IWorker::class)) {
+			throw new ImplementationException($this->className, IWorker::class);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		AbstractSecureAction::execute();
@@ -109,13 +110,13 @@ class WorkerProxyAction extends AJAXInvokeAction {
 		if ($parameters === null) $parameters = $this->parameters;
 		
 		// build return values
-		$returnValues = array(
+		$returnValues = [
 			'className' => $this->className,
 			'loopCount' => ($this->loopCount + 1),
 			'parameters' => $parameters,
 			'proceedURL' => $proceedURL,
 			'progress' => $progress
-		);
+		];
 		
 		// include template on startup
 		if ($this->loopCount == -1) {

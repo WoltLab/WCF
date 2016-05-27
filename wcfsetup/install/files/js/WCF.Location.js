@@ -123,7 +123,7 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 		// fix maps in mobile sidebars by refreshing the map when displaying
 		// the map
 		if (this._mapContainer.parents('.sidebar').length) {
-			enquire.register('screen and (max-width: 800px)', {
+			enquire.register('(max-width: 767px)', {
 				setup: $.proxy(this._addSidebarMapListener, this),
 				deferSetup: true
 			});
@@ -459,8 +459,7 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 		
 		this._markerClusterer = new MarkerClusterer(this._map, this._markers, {
 			maxZoom: 17,
-			// replace default value for https support
-			imagePath: '//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m'
+			imagePath: WCF.Location.GoogleMaps.Settings.get('markerClustererImagePath') + 'm'
 		});
 		
 		this._markerSpiderfier = new OverlappingMarkerSpiderfier(this._map, {
@@ -646,7 +645,7 @@ WCF.Location.GoogleMaps.SuggestionMap = WCF.Location.GoogleMaps.LargeMap.extend(
 	addMarker: function(latitude, longitude, title, icon, information) {
 		var $infoWindow = $(information);
 		var $useLocation = $('<a class="googleMapsUseLocationSuggestionLink" />').text(WCF.Language.get('wcf.map.useLocationSuggestion')).click(this._suggestionSelectionCallback);
-		$infoWindow.append($('<p class="marginTopTiny" />').append($useLocation));
+		$infoWindow.append($('<p />').append($useLocation));
 		
 		var $marker = this._super(latitude, longitude, title, '//mt.google.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png', $infoWindow.get(0));
 		

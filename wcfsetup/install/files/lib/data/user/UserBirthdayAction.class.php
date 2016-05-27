@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\user;
-use wcf\data\user\UserProfileAction;
-use wcf\data\user\UserProfileList;
+use wcf\data\user\option\UserOption;
 use wcf\data\IGroupedUserListAction;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
@@ -12,7 +11,7 @@ use wcf\system\WCF;
  * Shows a list of user birthdays.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
@@ -20,12 +19,12 @@ use wcf\system\WCF;
  */
 class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getGroupedUserList');
+	protected $allowGuestAccess = ['getGroupedUserList'];
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readString('date');
@@ -36,7 +35,7 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		$year = $month = $day = 0;
@@ -46,32 +45,33 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 		if (isset($value[2])) $day = intval($value[2]);
 		
 		// get users
-		$users = array();
-		$userOptions = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+		$users = [];
+		$userOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');
 		if (isset($userOptions['birthday'])) {
+			/** @var UserOption $birthdayUserOption */
 			$birthdayUserOption = $userOptions['birthday'];
 			
 			$userIDs = UserBirthdayCache::getInstance()->getBirthdays($month, $day);
 			$userList = new UserProfileList();
 			$userList->setObjectIDs($userIDs);
 			$userList->readObjects();
-				
+			
 			foreach ($userList->getObjects() as $user) {
 				$birthdayUserOption->setUser($user->getDecoratedObject());
-					
+				
 				if (!$user->isProtected() && $birthdayUserOption->isVisible() && $user->getAge($year) >= 0) {
 					$users[] = $user;
 				}
 			}
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'users' => $users,
 			'year' => $year
-		));
-		return array(
+		]);
+		return [
 			'pageCount' => 1,
 			'template' => WCF::getTPL()->fetch('userBirthdayList')
-		);
+		];
 	}
 }

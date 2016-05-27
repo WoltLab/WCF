@@ -6,7 +6,7 @@ use wcf\system\category\CategoryHandler;
  * Represents an uncached tree of category nodes.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
@@ -15,26 +15,27 @@ use wcf\system\category\CategoryHandler;
 class UncachedCategoryNodeTree extends CategoryNodeTree {
 	/**
 	 * locally cached categories
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
-	protected $categoryCache = array();
+	protected $categoryCache = [];
 	
 	/**
 	 * locally cached category ids grouped by the id of their parent category
 	 * @var	array
 	 */
-	protected $categoryStructureCache = array();
+	protected $categoryStructureCache = [];
 	
 	/**
-	 * @see	\wcf\data\category\CategoryNodeTree::buildTree()
+	 * @inheritDoc
 	 */
 	protected function buildTree() {
 		$categoryList = new CategoryList();
-		$categoryList->getConditionBuilder()->add('category.objectTypeID = ?', array(CategoryHandler::getInstance()->getObjectTypeByName($this->objectType)->objectTypeID));
+		$categoryList->getConditionBuilder()->add('category.objectTypeID = ?', [CategoryHandler::getInstance()->getObjectTypeByName($this->objectType)->objectTypeID]);
+		$categoryList->sqlOrderBy = "category.showOrder ASC";
 		$categoryList->readObjects();
 		foreach ($categoryList as $category) {
 			if (!isset($this->categoryStructureCache[$category->parentCategoryID])) {
-				$this->categoryStructureCache[$category->parentCategoryID] = array();
+				$this->categoryStructureCache[$category->parentCategoryID] = [];
 			}
 			
 			$this->categoryStructureCache[$category->parentCategoryID][] = $category->categoryID;
@@ -45,17 +46,17 @@ class UncachedCategoryNodeTree extends CategoryNodeTree {
 	}
 	
 	/**
-	 * @see	\wcf\data\category\CategoryNodeTree::getCategory()
+	 * @inheritDoc
 	 */
 	protected function getCategory($categoryID) {
 		return $this->categoryCache[$categoryID];
 	}
 	
 	/**
-	 * @see	\wcf\data\category\CategoryNodeTree::getChildCategories()
+	 * @inheritDoc
 	 */
 	protected function getChildCategories(CategoryNode $parentNode) {
-		$categories = array();
+		$categories = [];
 		if (isset($this->categoryStructureCache[$parentNode->categoryID])) {
 			foreach ($this->categoryStructureCache[$parentNode->categoryID] as $categoryID) {
 				$categories[$categoryID] = $this->getCategory($categoryID);

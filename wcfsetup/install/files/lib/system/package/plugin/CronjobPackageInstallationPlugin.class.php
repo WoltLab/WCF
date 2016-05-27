@@ -9,7 +9,7 @@ use wcf\util\CronjobUtil;
  * Installs, updates and deletes cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
@@ -17,17 +17,17 @@ use wcf\util\CronjobUtil;
  */
 class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\cronjob\CronjobEditor';
+	public $className = CronjobEditor::class;
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
+	 * @inheritDoc
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		if ($element->tagName == 'description') {
 			if (!isset($elements['description'])) {
-				$elements['description'] = array();
+				$elements['description'] = [];
 			}
 			
 			$elements['description'][$element->getAttribute('language')] = $element->nodeValue;
@@ -38,7 +38,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -53,25 +53,25 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		
 		foreach ($items as $item) {
 			if (!isset($item['attributes']['name'])) {
-				$legacyStatement->execute(array(
+				$legacyStatement->execute([
 					$item['elements']['classname'],
 					$this->installation->getPackageID()
-				));
+				]);
 			}
 			else {
-				$statement->execute(array(
+				$statement->execute([
 					$item['attributes']['name'],
 					$this->installation->getPackageID()
-				));
+				]);
 			}
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		return [
 			'canBeDisabled' => (isset($data['elements']['canbedisabled'])) ? intval($data['elements']['canbedisabled']) : 1,
 			'canBeEdited' => (isset($data['elements']['canbeedited'])) ? intval($data['elements']['canbeedited']) : 1,
 			'className' => (isset($data['elements']['classname'])) ? $data['elements']['classname'] : '',
@@ -84,18 +84,18 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			'startHour' => $data['elements']['starthour'],
 			'startMinute' => $data['elements']['startminute'],
 			'startMonth' => $data['elements']['startmonth']
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
+	 * @inheritDoc
 	 */
 	protected function validateImport(array $data) {
 		CronjobUtil::validate($data['startMinute'], $data['startHour'], $data['startDom'], $data['startMonth'], $data['startDow']);
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
 		// if a cronjob is updated without a name given, keep the old automatically
@@ -104,23 +104,24 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			unset($data['cronjobName']);
 		}
 		
+		/** @var Cronjob $cronjob */
 		$cronjob = parent::import($row, $data);
 		
-		// update event listener name
+		// update cronjob name
 		if (!$cronjob->cronjobName) {
 			$cronjobEditor = new CronjobEditor($cronjob);
-			$cronjobEditor->update(array(
+			$cronjobEditor->update([
 				'cronjobName' => Cronjob::AUTOMATIC_NAME_PREFIX.$cronjob->cronjobID
-			));
+			]);
 			
-			$cronjob = new Cronjob($cronjob->listenerID);
+			$cronjob = new Cronjob($cronjob->cronjobID);
 		}
 		
 		return $cronjob;
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		if (!$data['cronjobName']) return null;
@@ -129,19 +130,19 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	packageID = ?
 				AND cronjobName = ?";
-		$parameters = array(
+		$parameters = [
 			$this->installation->getPackageID(),
 			$data['cronjobName']
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareCreate()
+	 * @inheritDoc
 	 */
 	protected function prepareCreate(array &$data) {
 		parent::prepareCreate($data);

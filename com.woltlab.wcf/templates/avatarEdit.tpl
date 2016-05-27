@@ -1,22 +1,6 @@
-{include file='documentHeader'}
-
-<head>
-	<title>{lang}wcf.user.avatar.edit{/lang} - {lang}wcf.user.usercp{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-
 {include file='userMenuSidebar'}
 
-{include file='header' sidebarOrientation='left'}
-
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.avatar.edit{/lang}</h1>
-</header>
-
-{include file='userNotice'}
+{include file='header'}
 
 {if $__wcf->user->disableAvatar}
 	<p class="error">{lang}wcf.user.avatar.error.disabled{/lang}</p>
@@ -28,80 +12,64 @@
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
-
 <form method="post" action="{link controller='AvatarEdit'}{/link}" id="avatarForm">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.user.avatar{/lang}</legend>
-				
-			<dl>
-				<dt></dt>
+	<div class="section avatarEdit">
+		<dl class="avatarType">
+			<dt></dt>
+			<dd>
+				<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.none{/lang}</label>
+				<small>{lang}wcf.user.avatar.type.none.description{/lang}</small>
+			</dd>
+		</dl>
+		
+		{if $__wcf->getSession()->getPermission('user.profile.avatar.canUploadAvatar')}
+			<dl class="avatarType jsOnly{if $errorField == 'custom'} formError{/if}" id="avatarUpload">
+				<dt>
+					{if $avatarType == 'custom'}
+						{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
+							{@$__wcf->getUserProfileHandler()->getAvatar()->getCropImageTag(96)}
+						{else}
+							{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
+						{/if}
+					{else}
+						<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 96px; height: 96px" />
+					{/if}
+				</dt>
 				<dd>
-					<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.none{/lang}</label>
-					<small>{lang}wcf.user.avatar.type.none.description{/lang}</small>
+					<label><input type="radio" name="avatarType" value="custom" {if $avatarType == 'custom'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.custom{/lang}</label>
+					<small>{lang}wcf.user.avatar.type.custom.description{/lang}</small>
+					
+					{* placeholder for upload button: *}
+					<div class="avatarUploadButtonContainer"></div>
+					
+					{if $errorField == 'custom'}
+						<small class="innerError">
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+						</small>
+					{/if}
 				</dd>
 			</dl>
-			
-			{if $__wcf->getSession()->getPermission('user.profile.avatar.canUploadAvatar')}
-				<dl class="jsOnly{if $errorField == 'custom'} formError{/if}" id="avatarUpload">
-					<dt class="framed">
-						{if $avatarType == 'custom'}
-							{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
-								{@$__wcf->getUserProfileHandler()->getAvatar()->getCropImageTag(96)}
-							{else}
-								{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
-							{/if}
-						{else}
-							<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon96" />
-						{/if}
-					</dt>
-					<dd>
-						<label><input type="radio" name="avatarType" value="custom" {if $avatarType == 'custom'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.custom{/lang}</label>
-						<small>{lang}wcf.user.avatar.type.custom.description{/lang}</small>
-						
-						{* placeholder for upload button: *}
-						<div></div>
-						
-						{if $errorField == 'custom'}
-							<small class="innerError">
-								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-			{/if}
-			
-			{if MODULE_GRAVATAR}
-				<dl{if $errorField == 'gravatar'} class="formError"{/if}>
-					<dt class="framed"><img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="icon96" /></dt>
-					<dd>
-						<label><input type="radio" name="avatarType" value="gravatar" {if $avatarType == 'gravatar'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
-						{if $errorField == 'gravatar'}
-							<small class="innerError">
-								{if $errorType == 'notFound'}{lang}wcf.user.avatar.type.gravatar.error.notFound{/lang}{/if}
-							</small>
-						{/if}
-						<small>{lang}wcf.user.avatar.type.gravatar.description{/lang}</small>
-					</dd>
-				</dl>
-			{/if}
-			
-			{event name='avatarFields'}
-		</fieldset>
+		{/if}
 		
-		{event name='fieldsets'}
+		{if MODULE_GRAVATAR}
+			<dl class="avatarType{if $errorField == 'gravatar'} formError{/if}">
+				<dt><img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96" /></dt>
+				<dd>
+					<label><input type="radio" name="avatarType" value="gravatar" {if $avatarType == 'gravatar'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
+					{if $errorField == 'gravatar'}
+						<small class="innerError">
+							{if $errorType == 'notFound'}{lang}wcf.user.avatar.type.gravatar.error.notFound{/lang}{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.user.avatar.type.gravatar.description{/lang}</small>
+				</dd>
+			</dl>
+		{/if}
+		
+		{event name='avatarFields'}
 	</div>
+		
+	{event name='sections'}
 	
 	{if !$__wcf->user->disableAvatar}
 		<div class="formSubmit">
@@ -110,8 +78,6 @@
 		</div>
 	{/if}
 </form>
-
-{include file='footer'}
 
 {if $__wcf->getSession()->getPermission('user.profile.avatar.canUploadAvatar')}
 	<script data-relocate="true">
@@ -139,5 +105,4 @@
 	</script>
 {/if}
 
-</body>
-</html>
+{include file='footer'}

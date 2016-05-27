@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Writes XML documents.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -37,9 +37,10 @@ class XMLWriter {
 	 * @param	string		$rootElement
 	 * @param	string		$namespace
 	 * @param	string		$schemaLocation
-	 * @param	array<string>	$attributes
+	 * @param	string[]	$attributes
+	 * @throws	SystemException
 	 */
-	public function beginDocument($rootElement, $namespace, $schemaLocation, array $attributes = array()) {
+	public function beginDocument($rootElement, $namespace, $schemaLocation, array $attributes = []) {
 		if ($this->activeDocument) {
 			throw new SystemException("Could not begin a new document unless the previous is finished");
 		}
@@ -53,11 +54,11 @@ class XMLWriter {
 		
 		$this->xml->startDocument('1.0', 'UTF-8');
 		$this->startElement($rootElement);
-		$attributes = array_merge($attributes, array(
+		$attributes = array_merge($attributes, [
 			'xmlns' => $namespace,
 			'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
 			'xsi:schemaLocation' => $namespace . ' ' . $schemaLocation
-		));
+		]);
 		$this->writeAttributes($attributes);
 		
 		$this->activeDocument = true;
@@ -93,9 +94,9 @@ class XMLWriter {
 	 * Begins a new element.
 	 * 
 	 * @param	string		$element
-	 * @param	array<string>	$attributes
+	 * @param	string[]	$attributes
 	 */
-	public function startElement($element, array $attributes = array()) {
+	public function startElement($element, array $attributes = []) {
 		$this->xml->startElement($element);
 		$this->openElements++;
 		
@@ -119,9 +120,9 @@ class XMLWriter {
 	 * 
 	 * @param	string		$element
 	 * @param	string		$cdata
-	 * @param	array<string>	$attributes
+	 * @param	string[]	$attributes
 	 */
-	public function writeElement($element, $cdata, array $attributes = array()) {
+	public function writeElement($element, $cdata, array $attributes = []) {
 		$this->startElement($element);
 		
 		// write attributes
@@ -130,7 +131,7 @@ class XMLWriter {
 		}
 		
 		// content
-		$this->xml->writeCData(StringUtil::escapeCDATA($cdata));
+		$this->xml->writeCdata(StringUtil::escapeCDATA($cdata));
 		
 		$this->endElement();
 	}
@@ -142,13 +143,13 @@ class XMLWriter {
 	 * @param	string		$value
 	 */
 	public function writeAttribute($attribute, $value) {
-		$this->writeAttributes(array($attribute => $value));
+		$this->writeAttributes([$attribute => $value]);
 	}
 	
 	/**
 	 * Writes a list of attributes to last opened element.
 	 * 
-	 * @param	array<string>		$attributes
+	 * @param	string[]		$attributes
 	 */
 	public function writeAttributes(array $attributes) {
 		foreach ($attributes as $attribute => $value) {

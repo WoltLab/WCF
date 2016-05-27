@@ -9,17 +9,21 @@ use wcf\system\menu\user\profile\UserProfileMenu;
  * Executes user profile menu item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.profile.menu.item
  * @category	Community Framework
+ * 
+ * @method	UserProfileMenuItem		create()
+ * @method	UserProfileMenuItemEditor[]	getObjects()
+ * @method	UserProfileMenuItemEditor	getSingleObject()
  */
 class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getContent');
+	protected $allowGuestAccess = ['getContent'];
 	
 	/**
 	 * menu item
@@ -50,9 +54,9 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	public function getContent() {
 		$contentManager = $this->menuItem->getContentManager();
 		
-		return array(
+		return [
 			'containerID' => $this->parameters['data']['containerID'],
 			'template' => $contentManager->getContent($this->parameters['data']['userID'])
-		);
+		];
 	}
 }

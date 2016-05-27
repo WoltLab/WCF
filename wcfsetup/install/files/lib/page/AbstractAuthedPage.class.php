@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * A missing token will be ignored, an invalid token results in a throw of a IllegalLinkException.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  */
 abstract class AbstractAuthedPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -34,7 +34,7 @@ abstract class AbstractAuthedPage extends AbstractPage {
 	 */
 	protected function checkAccessToken() {
 		if (isset($_REQUEST['at'])) {
-			list($userID, $token) = explode('-', StringUtil::trim($_REQUEST['at']));
+			list($userID, $token) = array_pad(explode('-', StringUtil::trim($_REQUEST['at']), 2), 2, null);
 			
 			if (WCF::getUser()->userID) {
 				if ($userID == WCF::getUser()->userID && PasswordUtil::secureCompare(WCF::getUser()->accessToken, $token)) {

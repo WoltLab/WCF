@@ -5,7 +5,7 @@ namespace wcf\system\message\quote;
  * Default interface for quote handlers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.message.quote
@@ -24,9 +24,9 @@ interface IMessageQuoteHandler {
 	/**
 	 * Renders a list of quotes for insertation.
 	 * 
-	 * @param	array<array>	$data
+	 * @param	mixed[][]	$data
 	 * @param	boolean		$render
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function renderQuotes(array $data, $render = true);
 }

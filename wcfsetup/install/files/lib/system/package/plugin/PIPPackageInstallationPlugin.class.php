@@ -1,12 +1,13 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\package\installation\plugin\PackageInstallationPluginEditor;
 use wcf\system\WCF;
 
 /**
  * Installs, updates and deletes package installation plugins.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -14,17 +15,17 @@ use wcf\system\WCF;
  */
 class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\package\installation\plugin\PackageInstallationPluginEditor';
+	public $className = PackageInstallationPluginEditor::class;
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @inheritDoc
 	 */
 	public $tagName = 'pip';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -32,47 +33,48 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		return [
 			'className' => $data['nodeValue'],
 			'pluginName' => $data['attributes']['name'],
 			'priority' => ($this->installation->getPackage()->package == 'com.woltlab.wcf' ? 1 : 0)
-		);
+		];
 	}
 	
 	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	2.2
 	 */
 	public static function getDefaultFilename() {
 		return 'packageInstallationPlugin.xml';
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	pluginName = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['pluginName'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 }

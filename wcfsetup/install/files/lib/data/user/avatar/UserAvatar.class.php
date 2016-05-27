@@ -8,26 +8,36 @@ use wcf\system\WCF;
  * Represents a user's avatar.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.avatar
  * @category	Community Framework
+ *
+ * @property-read	integer		$avatarID
+ * @property-read	string		$avatarName
+ * @property-read	string		$avatarExtension
+ * @property-read	integer		$width
+ * @property-read	integer		$height
+ * @property-read	integer|null	$userID
+ * @property-read	string		$fileHash
+ * @property-read	integer		$cropX
+ * @property-read	integer		$cropY
  */
 class UserAvatar extends DatabaseObject implements IUserAvatar {
 	/**
 	 * needed avatar thumbnail sizes
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public static $avatarThumbnailSizes = array(32, 96, 128);
+	public static $avatarThumbnailSizes = [32, 96, 128];
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_avatar';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'avatarID';
 	
@@ -81,7 +91,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL($size = null) {
 		if ($size !== null && $size !== 'resized') {
@@ -92,7 +102,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getImageTag()
+	 * @inheritDoc
 	 */
 	public function getImageTag($size = null) {
 		$width = $this->width;
@@ -140,7 +150,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getCropImageTag()
+	 * @inheritDoc
 	 */
 	public function getCropImageTag($size = null) {
 		$imageTag = $this->getImageTag($size);
@@ -152,21 +162,21 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getWidth()
+	 * @inheritDoc
 	 */
 	public function getWidth() {
 		return $this->width;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getHeight()
+	 * @inheritDoc
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::canCrop()
+	 * @inheritDoc
 	 */
 	public function canCrop() {
 		return $this->width != $this->height && $this->width > self::$maxThumbnailSize && $this->height > self::$maxThumbnailSize;

@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\option;
+use wcf\data\category\CategoryNodeTree;
 use wcf\data\option\Option;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\UserInputException;
-use wcf\system\option\AbstractOptionType;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
@@ -11,7 +11,7 @@ use wcf\util\ArrayUtil;
  * Option type implementation for multi select lists.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -28,29 +28,30 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	 * node tree class
 	 * @var	string
 	 */
-	public $nodeTreeClassname = 'wcf\data\category\CategoryNodeTree';
+	public $nodeTreeClassname = CategoryNodeTree::class;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
+		/** @var CategoryNodeTree $categoryTree */
 		$categoryTree = new $this->nodeTreeClassname($this->objectType);
 		$categoryList = $categoryTree->getIterator();
 		$categoryList->setMaxDepth(0);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'categoryList' => $categoryList,
 			'option' => $option,
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
-		));
+		]);
 		return WCF::getTPL()->fetch('categoryMultiSelectOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		$newValue = ArrayUtil::toIntegerArray($newValue);
 		
 		foreach ($newValue as $categoryID) {
@@ -61,10 +62,10 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		return implode("\n", ArrayUtil::toIntegerArray($newValue));
 	}
 }

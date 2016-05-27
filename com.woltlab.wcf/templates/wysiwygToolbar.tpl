@@ -1,73 +1,61 @@
-$buttons.push('html');
+buttonOptions = {
+	alignment: { icon: 'fa-align-left', title: '{lang}wcf.editor.button.alignment{/lang}' },
+	bold: { icon: 'fa-bold', title: '{lang}wcf.editor.button.bold{/lang}' },
+	deleted: { icon: 'fa-strikethrough', title: '{lang}wcf.editor.button.strikethrough{/lang}' },
+	html: { icon: 'fa-code', title: '{lang}wcf.editor.button.html{/lang}' },
+	italic: { icon: 'fa-italic', title: '{lang}wcf.editor.button.italic{/lang}' },
+	link: { icon: 'fa-link', title: '{lang}wcf.editor.button.link{/lang}' },
+	lists: { icon: 'fa-list', title: '{lang}wcf.editor.button.lists{/lang}' },
+	subscript: { icon: 'fa-subscript', title: '{lang}wcf.editor.button.subscript{/lang}' },
+	superscript: { icon: 'fa-superscript', title: '{lang}wcf.editor.button.superscript{/lang}' },
+	table: { icon: 'fa-table', title: '{lang}wcf.editor.button.table{/lang}' },
+	underline: { icon: 'fa-underline', title: '{lang}wcf.editor.button.underline{/lang}' },
+	woltlabColor: { icon: 'fa-paint-brush', title: '{lang}wcf.editor.button.color{/lang}' },
+	woltlabMedia: { icon: 'fa-file-o', title: '{lang}wcf.editor.button.media{/lang}' },
+	woltlabQuote: { icon: 'fa-comment', title: '{lang}wcf.editor.button.quote{/lang}' },
+	woltlabSize: { icon: 'fa-text-height', title: '{lang}wcf.editor.button.size{/lang}' }
+};
+	
+buttons = [];
 
-$buttons.push('separator');
+buttons.push('html');
 
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('b')}
-	$buttons.push('bold');
-{/if}
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('i')}
-	$buttons.push('italic');
-{/if}
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('u')}
-	$buttons.push('underline');
-{/if}
+buttons.push('wcfSeparator');
 
-if ($buttons.length) {
-	$buttons.push('separator');
-}
+buttons.push('bold');
+buttons.push('italic');
+buttons.push('underline');
+buttons.push('deleted');
 
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('s')}
-	$buttons.push('deleted');
-{/if}
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('sub')}
-	$buttons.push('subscript');
-{/if}
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('sup')}
-	$buttons.push('superscript');
-{/if}
+buttons.push('wcfSeparator');
 
-if ($buttons.length && $buttons[$buttons.length -1] != 'separator') {
-	$buttons.push('separator');
-}
-
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('list')}
-	$buttons.push('orderedlist');
-	$buttons.push('unorderedlist');
-	$buttons.push('outdent');
-	$buttons.push('indent');
-{/if}
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('align')}
-	$buttons.push('alignment');
-{/if}
-
-if ($buttons.length && $buttons[$buttons.length -1] != 'separator') {
-	$buttons.push('separator');
-}
-
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}
-	$buttons.push('fontfamily');
-{/if}
+buttons.push('subscript');
+buttons.push('superscript');
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}
-	$buttons.push('fontsize');
+	buttons.push('woltlabSize');
 {/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}
-	$buttons.push('fontcolor');
+	buttons.push('woltlabColor');
 {/if}
 
-if ($buttons.length && $buttons[$buttons.length -1] != 'separator') {
-	$buttons.push('separator');
-}
+buttons.push('wcfSeparator');
+
+buttons.push('lists');
+buttons.push('alignment');
 
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}
-	$buttons.push('link');
+	buttons.push('link');
 {/if}
+{*
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}
-	$buttons.push('image');
+	buttons.push('image');
 {/if}
+*}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('table')}
-	$buttons.push('table');
+	buttons.push('table');
 {/if}
 
-if ($buttons.length && $buttons[$buttons.length -1] != 'separator') {
-	$buttons.push('separator');
-}
+buttons.push('wcfSeparator');
+
+buttons.push('woltlabMedia');
+buttons.push('woltlabQuote');

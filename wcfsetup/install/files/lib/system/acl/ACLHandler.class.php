@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * Handles ACL permissions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.acl
@@ -35,13 +35,13 @@ class ACLHandler extends SingletonFactory {
 	 * list of available object types
 	 * @var	array
 	 */
-	protected $availableObjectTypes = array();
+	protected $availableObjectTypes = [];
 	
 	/**
 	 * list of acl option categories sorted by their object type id and name
-	 * @var	array<array>
+	 * @var	ACLOptionCategory[][]
 	 */
-	protected $categories = array();
+	protected $categories = [];
 	
 	/**
 	 * Assignes the acl values to the template.
@@ -50,23 +50,24 @@ class ACLHandler extends SingletonFactory {
 	 */
 	public function assignVariables($objectTypeID) {
 		if (WCF::getTPL()->get('aclValues') === null) {
-			WCF::getTPL()->assign('aclValues', array());
+			WCF::getTPL()->assign('aclValues', []);
 		}
 		
 		if (!$this->assignVariablesDisabled && isset($_POST['aclValues'])) {
 			$values = $_POST['aclValues'];
 			
-			$data = $this->getPermissions($objectTypeID, array(), null, true);
+			$data = $this->getPermissions($objectTypeID, [], null, true);
 			
+			$users = [];
 			foreach ($values as $type => $optionData) {
 				if ($type === 'user') {
 					$users = User::getUsers(array_keys($optionData));
 				}
 				
-				$values[$type] = array(
-					'label' => array(),
-					'option' => array()
-				);
+				$values[$type] = [
+					'label' => [],
+					'option' => []
+				];
 				
 				foreach ($optionData as $typeID => $optionValues) {
 					foreach ($optionValues as $optionID => $optionValue) {
@@ -93,9 +94,9 @@ class ACLHandler extends SingletonFactory {
 			$values['options'] = $data['options'];
 			$values['categories'] = $data['categories'];
 			
-			WCF::getTPL()->append('aclValues', array(
+			WCF::getTPL()->append('aclValues', [
 				$objectTypeID => $values
-			));
+			]);
 		}
 	}
 	
@@ -114,7 +115,7 @@ class ACLHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.acl');
@@ -126,6 +127,7 @@ class ACLHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {
@@ -176,8 +178,8 @@ class ACLHandler extends SingletonFactory {
 		
 		// remove previous values
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("optionID IN (?)", array(array_keys($options)));
-		$conditions->add("objectID = ?", array($objectID));
+		$conditions->add("optionID IN (?)", [array_keys($options)]);
+		$conditions->add("objectID = ?", [$objectID]);
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_acl_option_to_".$type."
 			".$conditions;
@@ -203,12 +205,12 @@ class ACLHandler extends SingletonFactory {
 					continue;
 				}
 				
-				$statement->execute(array(
+				$statement->execute([
 					$optionID,
 					$objectID,
 					$typeID,
 					$optionValue
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();
@@ -226,11 +228,11 @@ class ACLHandler extends SingletonFactory {
 	public function getPermissions($objectTypeID, array $objectIDs, $categoryName = '', $settingsView = false) {
 		$optionList = $this->getOptions($objectTypeID, $categoryName);
 		
-		$data = array(
+		$data = [
 			'options' => $optionList,
-			'group' => array(),
-			'user' => array()
-		);
+			'group' => [],
+			'user' => []
+		];
 		
 		if (!empty($objectIDs)) {
 			$this->getValues($optionList, 'group', $objectIDs, $data, $settingsView);
@@ -241,17 +243,17 @@ class ACLHandler extends SingletonFactory {
 		if ($settingsView) {
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
 			
-			$data['options'] = array();
-			$data['categories'] = array();
+			$data['options'] = [];
+			$data['categories'] = [];
 			
 			if (count($optionList)) {
-				$categoryNames = array();
+				$categoryNames = [];
 				foreach ($optionList as $option) {
-					$data['options'][$option->optionID] = array(
+					$data['options'][$option->optionID] = [
 						'categoryName' => $option->categoryName,
 						'label' => WCF::getLanguage()->get('wcf.acl.option.'.$objectType->objectType.'.'.$option->optionName),
 						'optionName' => $option->optionName
-					);
+					];
 					
 					if (!in_array($option->categoryName, $categoryNames)) {
 						$categoryNames[] = $option->categoryName;
@@ -260,8 +262,8 @@ class ACLHandler extends SingletonFactory {
 				
 				// load categories
 				$categoryList = new ACLOptionCategoryList();
-				$categoryList->getConditionBuilder()->add("acl_option_category.categoryName IN (?)", array($categoryNames));
-				$categoryList->getConditionBuilder()->add("acl_option_category.objectTypeID = ?", array($objectTypeID));
+				$categoryList->getConditionBuilder()->add("acl_option_category.categoryName IN (?)", [$categoryNames]);
+				$categoryList->getConditionBuilder()->add("acl_option_category.objectTypeID = ?", [$objectTypeID]);
 				$categoryList->readObjects();
 				
 				foreach ($categoryList as $category) {
@@ -283,8 +285,8 @@ class ACLHandler extends SingletonFactory {
 	 * @param	boolean					$settingsView
 	 */
 	protected function getValues(ACLOptionList $optionList, $type, array $objectIDs, array &$data, $settingsView) {
-		$data[$type] = array();
-		$optionsIDs = array();
+		$data[$type] = [];
+		$optionsIDs = [];
 		foreach ($optionList as $option) {
 			$optionsIDs[] = $option->optionID;
 		}
@@ -296,8 +298,8 @@ class ACLHandler extends SingletonFactory {
 		
 		$columnID = $type.'ID';
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("optionID IN (?)", array($optionsIDs));
-		$conditions->add("objectID IN (?)", array($objectIDs));
+		$conditions->add("optionID IN (?)", [$optionsIDs]);
+		$conditions->add("objectID IN (?)", [$objectIDs]);
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_acl_option_to_".$type."
 			".$conditions;
@@ -305,11 +307,11 @@ class ACLHandler extends SingletonFactory {
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
 			if (!isset($data[$type][$row['objectID']])) {
-				$data[$type][$row['objectID']] = array();
+				$data[$type][$row['objectID']] = [];
 			}
 			
 			if (!isset($data[$type][$row['objectID']][$row[$columnID]])) {
-				$data[$type][$row['objectID']][$row[$columnID]] = array();
+				$data[$type][$row['objectID']][$row[$columnID]] = [];
 			}
 			
 			$data[$type][$row['objectID']][$row[$columnID]][$row['optionID']] = $row['optionValue'];
@@ -319,21 +321,21 @@ class ACLHandler extends SingletonFactory {
 		if ($settingsView) {
 			$objectID = current($objectIDs);
 			if (!isset($data[$type][$objectID])) {
-				$data[$type][$objectID] = array();
+				$data[$type][$objectID] = [];
 			}
 			
 			// build JS-compilant structure
-			$data[$type] = array(
-				'label' => array(),
+			$data[$type] = [
+				'label' => [],
 				'option' => $data[$type][$objectID]
-			);
+			];
 			
 			// load labels
 			if (!empty($data[$type]['option'])) {
 				$conditions = new PreparedStatementConditionBuilder();
 				
 				if ($type == 'group') {
-					$conditions->add("groupID IN (?)", array(array_keys($data[$type]['option'])));
+					$conditions->add("groupID IN (?)", [array_keys($data[$type]['option'])]);
 					$sql = "SELECT	groupID, groupName
 						FROM	wcf".WCF_N."_user_group
 						".$conditions;
@@ -345,7 +347,7 @@ class ACLHandler extends SingletonFactory {
 					}
 				}
 				else {
-					$conditions->add("userID IN (?)", array(array_keys($data[$type]['option'])));
+					$conditions->add("userID IN (?)", [array_keys($data[$type]['option'])]);
 					$sql = "SELECT	userID, username
 						FROM	wcf".WCF_N."_user
 						".$conditions;
@@ -372,13 +374,13 @@ class ACLHandler extends SingletonFactory {
 		if (!empty($categoryName)) {
 			if (StringUtil::endsWith($categoryName, '.*')) {
 				$categoryName = mb_substr($categoryName, 0, -1) . '%';
-				$optionList->getConditionBuilder()->add("acl_option.categoryName LIKE ?", array($categoryName));
+				$optionList->getConditionBuilder()->add("acl_option.categoryName LIKE ?", [$categoryName]);
 			}
 			else {
-				$optionList->getConditionBuilder()->add("acl_option.categoryName = ?", array($categoryName));
+				$optionList->getConditionBuilder()->add("acl_option.categoryName = ?", [$categoryName]);
 			}
 		}
-		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", array($objectTypeID));
+		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", [$objectTypeID]);
 		$optionList->readObjects();
 		
 		return $optionList;
@@ -388,7 +390,7 @@ class ACLHandler extends SingletonFactory {
 	 * Removes ACL values from database.
 	 * 
 	 * @param	integer						$objectTypeID
-	 * @param	array<integer>					$objectIDs
+	 * @param	integer[]					$objectIDs
 	 * @param	\wcf\data\acl\option\category\ACLOptionCategory	$category
 	 */
 	public function removeValues($objectTypeID, array $objectIDs, ACLOptionCategory $category = null) {
@@ -396,11 +398,11 @@ class ACLHandler extends SingletonFactory {
 		$options = $optionList->getObjects();
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("optionID IN (?)", array(array_keys($options)));
-		$conditions->add("objectID IN (?)", array($objectIDs));
+		$conditions->add("optionID IN (?)", [array_keys($options)]);
+		$conditions->add("objectID IN (?)", [$objectIDs]);
 		
 		WCF::getDB()->beginTransaction();
-		foreach (array('group', 'user') as $type) {
+		foreach (['group', 'user'] as $type) {
 			$sql = "DELETE FROM	wcf".WCF_N."_acl_option_to_".$type."
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);

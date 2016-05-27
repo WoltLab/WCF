@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Shows the application management page.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class ApplicationManagementPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.application.management';
 	
@@ -27,12 +27,12 @@ class ApplicationManagementPage extends AbstractPage {
 	public $applicationList = null;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canManageApplication');
+	public $neededPermissions = ['admin.configuration.canManageApplication'];
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -42,13 +42,13 @@ class ApplicationManagementPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'applicationList' => $this->applicationList
-		));
+		]);
 	}
 }

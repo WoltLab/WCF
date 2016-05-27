@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Abstract implementation of a package installation plugin.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -38,7 +38,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * install/update instructions
 	 * @var	array
 	 */
-	public $instruction = array();
+	public $instruction = [];
 	
 	/**
 	 * Creates a new AbstractPackageInstallationPlugin object.
@@ -46,7 +46,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * @param	\wcf\system\package\PackageInstallationDispatcher	$installation
 	 * @param	array							$instruction
 	 */
-	public function __construct(PackageInstallationDispatcher $installation, $instruction = array()) {
+	public function __construct(PackageInstallationDispatcher $installation, $instruction = []) {
 		$this->installation = $installation;
 		$this->instruction = $instruction;
 		
@@ -55,7 +55,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		// call 'install' event
@@ -63,33 +63,33 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		// call 'update' event
 		EventHandler::getInstance()->fireAction($this, 'update');
 		
-		return $this->install();
+		$this->install();
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
+	 * @inheritDoc
 	 */
 	public function hasUninstall() {
 		// call 'hasUninstall' event
 		EventHandler::getInstance()->fireAction($this, 'hasUninstall');
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
-		$installationCount = $statement->fetchArray();
-		return $installationCount['count'];
+		$statement->execute([$this->installation->getPackageID()]);
+		
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// call 'uninstall' event
@@ -98,18 +98,19 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 		$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 	}
 	
 	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	2.2
 	 */
 	public static function getDefaultFilename() {
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 * @inheritDoc
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
 		return true;

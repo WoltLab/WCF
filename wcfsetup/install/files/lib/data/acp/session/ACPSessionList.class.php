@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of ACP sessions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session
  * @category	Community Framework
+ *
+ * @method	ACPSession		current()
+ * @method	ACPSession[]		getObjects()
+ * @method	ACPSession|null		search($objectID)
+ * @property	ACPSession[]		$objects
  */
 class ACPSessionList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\acp\session\ACPSession';
+	public $className = ACPSession::class;
 }

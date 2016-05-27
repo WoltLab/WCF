@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the smiley edit form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -19,14 +19,14 @@ use wcf\system\WCF;
  */
 class SmileyEditForm extends SmileyAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
+	public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
 	 * smiley id
@@ -41,7 +41,7 @@ class SmileyEditForm extends SmileyAddForm {
 	public $smiley = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -54,7 +54,7 @@ class SmileyEditForm extends SmileyAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -69,17 +69,17 @@ class SmileyEditForm extends SmileyAddForm {
 		}
 		
 		// update bbcode
-		$this->objectAction = new SmileyAction(array($this->smileyID), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new SmileyAction([$this->smileyID], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'smileyTitle' => $this->smileyTitle,
 				'smileyCode' => $this->smileyCode,
 				'aliases' => $this->aliases,
 				'smileyPath' => $this->smileyPath,
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null
-			)),
+			]),
 			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/'.$this->uploadedFilename : ''
-		));
+		]);
 		$this->objectAction->executeAction();
 		
 		$this->uploadedFilename = '';
@@ -87,13 +87,13 @@ class SmileyEditForm extends SmileyAddForm {
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -111,16 +111,16 @@ class SmileyEditForm extends SmileyAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'smiley' => $this->smiley,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

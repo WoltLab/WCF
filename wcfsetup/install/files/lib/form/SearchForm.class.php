@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * Shows the search form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -29,9 +29,9 @@ use wcf\util\StringUtil;
 class SearchForm extends AbstractCaptchaForm {
 	/**
 	 * list of additional conditions
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $additionalConditions = array();
+	public $additionalConditions = [];
 	
 	/**
 	 * end date
@@ -67,15 +67,15 @@ class SearchForm extends AbstractCaptchaForm {
 	 * list of search results
 	 * @var	array
 	 */
-	public $results = array();
+	public $results = [];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$sortField
+	 * @inheritDoc
 	 */
 	public $sortField = SEARCH_DEFAULT_SORT_FIELD;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$sortOrder
+	 * @inheritDoc
 	 */
 	public $sortOrder = SEARCH_DEFAULT_SORT_ORDER;
 	
@@ -92,7 +92,7 @@ class SearchForm extends AbstractCaptchaForm {
 	public $username = '';
 	
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
+	 * @inheritDoc
 	 */
 	public $useCaptcha = SEARCH_USE_CAPTCHA;
 	
@@ -100,7 +100,7 @@ class SearchForm extends AbstractCaptchaForm {
 	 * parameters used for previous search
 	 * @var	array
 	 */
-	public $searchData = array();
+	public $searchData = [];
 	
 	/**
 	 * search id
@@ -122,9 +122,9 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * selected object types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $selectedObjectTypes = array();
+	public $selectedObjectTypes = [];
 	
 	/**
 	 * start date
@@ -145,7 +145,7 @@ class SearchForm extends AbstractCaptchaForm {
 	public $submit = false;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -156,10 +156,19 @@ class SearchForm extends AbstractCaptchaForm {
 		if (isset($_REQUEST['types']) && is_array($_REQUEST['types'])) {
 			$this->selectedObjectTypes = $_REQUEST['types'];
 			
-			// validate given values
-			foreach ($this->selectedObjectTypes as $objectTypeName) {
-				if (SearchEngine::getInstance()->getObjectType($objectTypeName) === null) {
-					throw new IllegalLinkException();
+			// handle special selection to search in all areas
+			if (isset($this->selectedObjectTypes[0]) && $this->selectedObjectTypes[0] === 'everywhere') {
+				$this->selectedObjectTypes = [];
+				foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $typeName => $typeObject) {
+					$this->selectedObjectTypes[] = $typeName;
+				}
+			}
+			else {
+				// validate given values
+				foreach ($this->selectedObjectTypes as $objectTypeName) {
+					if (SearchEngine::getInstance()->getObjectType($objectTypeName) === null) {
+						throw new IllegalLinkException();
+					}
 				}
 			}
 		}
@@ -207,7 +216,10 @@ class SearchForm extends AbstractCaptchaForm {
 			case 'subject':
 			case 'time':
 			case 'username': break;
+			
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'relevance': if (!$this->submit || !empty($this->query)) break;
+			
 			default: 
 				if (!$this->submit || !empty($this->query)) $this->sortField = 'relevance';
 				else $this->sortField = 'time';
@@ -224,7 +236,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -237,7 +249,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -251,11 +263,11 @@ class SearchForm extends AbstractCaptchaForm {
 		}
 		
 		// build search hash
-		$this->searchHash = StringUtil::getHash(serialize(array($this->query, $this->selectedObjectTypes, !$this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions, $this->sortField.' '.$this->sortOrder, PACKAGE_ID)));
+		$this->searchHash = StringUtil::getHash(serialize([$this->query, $this->selectedObjectTypes, !$this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions, $this->sortField.' '.$this->sortOrder, PACKAGE_ID]));
 		
 		// check search hash
 		if (!empty($this->query)) {
-			$parameters = array($this->searchHash, 'messages', TIME_NOW - 1800);
+			$parameters = [$this->searchHash, 'messages', TIME_NOW - 1800];
 			if (WCF::getUser()->userID) $parameters[] = WCF::getUser()->userID;
 			
 			$sql = "SELECT	searchID
@@ -268,7 +280,7 @@ class SearchForm extends AbstractCaptchaForm {
 			$statement->execute($parameters);
 			$row = $statement->fetchArray();
 			if ($row !== false) {
-				HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', array('id' => $row['searchID']), 'highlight='.urlencode($this->query)));
+				HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', ['id' => $row['searchID']], 'highlight='.urlencode($this->query)));
 				exit;
 			}
 		}
@@ -292,12 +304,12 @@ class SearchForm extends AbstractCaptchaForm {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.search.error.user.noMatches'));
 		}
 		else {
-			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.search.error.noMatches', array('query' => $this->query)));
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.search.error.noMatches', ['query' => $this->query]));
 		}
 	}
 	
 	/**
-	 * @see wcf\form\IForm::submit()
+	 * @inheritDoc
 	 */
 	public function submit() {
 		try {
@@ -309,13 +321,13 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// get additional data
-		$additionalData = array();
+		$additionalData = [];
 		foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $objectTypeName => $objectType) {
 			if (($data = $objectType->getAdditionalData()) !== null) {
 				$additionalData[$objectTypeName] = $data;
@@ -323,7 +335,7 @@ class SearchForm extends AbstractCaptchaForm {
 		}
 		
 		// save result in database
-		$this->searchData = array(
+		$this->searchData = [
 			'packageID' => PACKAGE_ID,
 			'query' => $this->query,
 			'results' => $this->results,
@@ -338,24 +350,24 @@ class SearchForm extends AbstractCaptchaForm {
 			'userID' => $this->userID,
 			'selectedObjectTypes' => $this->selectedObjectTypes,
 			'alterable' => (!$this->userID ? 1 : 0)
-		);
+		];
 		if ($this->modifySearchID) {
-			$this->objectAction = new SearchAction(array($this->modifySearchID), 'update', array('data' => array(
+			$this->objectAction = new SearchAction([$this->modifySearchID], 'update', ['data' => [
 				'searchData' => serialize($this->searchData),
 				'searchTime' => TIME_NOW,
 				'searchType' => 'messages',
 				'searchHash' => $this->searchHash
-			)));
+			]]);
 			$this->objectAction->executeAction();
 		}
 		else {
-			$this->objectAction = new SearchAction(array(), 'create', array('data' => array(
+			$this->objectAction = new SearchAction([], 'create', ['data' => [
 				'userID' => (WCF::getUser()->userID ?: null),
 				'searchData' => serialize($this->searchData),
 				'searchTime' => TIME_NOW,
 				'searchType' => 'messages',
 				'searchHash' => $this->searchHash
-			)));
+			]]);
 			$resultValues = $this->objectAction->executeAction();
 			$this->searchID = $resultValues['returnValues']->searchID;
 		}
@@ -375,15 +387,15 @@ class SearchForm extends AbstractCaptchaForm {
 		}
 		
 		// forward to result page
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', array(
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', [
 			'id' => $this->searchID,
 			'application' => $application
-		), 'highlight='.urlencode($this->query)));
+		], 'highlight='.urlencode($this->query)));
 		exit;
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -391,7 +403,7 @@ class SearchForm extends AbstractCaptchaForm {
 		// init form
 		foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $objectType) $objectType->show($this);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'query' => $this->query,
 			'subjectOnly' => $this->subjectOnly,
 			'username' => $this->username,
@@ -402,11 +414,11 @@ class SearchForm extends AbstractCaptchaForm {
 			'sortOrder' => $this->sortOrder,
 			'selectedObjectTypes' => $this->selectedObjectTypes,
 			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes()
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		if (empty($_POST) && $this->submit) {
@@ -432,25 +444,25 @@ class SearchForm extends AbstractCaptchaForm {
 		
 		// user ids
 		if (!empty($userIDs)) {
-			$this->searchIndexCondition->add('userID IN (?)', array($userIDs));
+			$this->searchIndexCondition->add('userID IN (?)', [$userIDs]);
 		}
 		
 		// dates
 		$startDate = @strtotime($this->startDate);
 		$endDate = @strtotime($this->endDate);
 		if ($startDate && $endDate) {
-			$this->searchIndexCondition->add('time BETWEEN ? AND ?', array($startDate, $endDate));
+			$this->searchIndexCondition->add('time BETWEEN ? AND ?', [$startDate, $endDate]);
 		}
 		else if ($startDate) {
-			$this->searchIndexCondition->add('time > ?', array($startDate));
+			$this->searchIndexCondition->add('time > ?', [$startDate]);
 		}
 		else if ($endDate) {
-			$this->searchIndexCondition->add('time < ?', array($endDate));
+			$this->searchIndexCondition->add('time < ?', [$endDate]);
 		}
 		
 		// language
 		if (!empty($this->query) && LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-			$this->searchIndexCondition->add('(languageID IN (?) OR languageID = 0)', array(WCF::getUser()->getLanguageIDs()));
+			$this->searchIndexCondition->add('(languageID IN (?) OR languageID = 0)', [WCF::getUser()->getLanguageIDs()]);
 		}
 		
 		foreach ($this->selectedObjectTypes as $key => $objectTypeName) {
@@ -483,10 +495,10 @@ class SearchForm extends AbstractCaptchaForm {
 	/**
 	 * Returns user ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getUserIDs() {
-		$userIDs = array();
+		$userIDs = [];
 		
 		// username
 		if (!empty($this->username)) {
@@ -494,10 +506,8 @@ class SearchForm extends AbstractCaptchaForm {
 				FROM	wcf".WCF_N."_user
 				WHERE	username ".($this->nameExactly ? "= ?" : "LIKE ?");
 			$statement = WCF::getDB()->prepareStatement($sql, 100);
-			$statement->execute(array($this->username.(!$this->nameExactly ? '%' : '')));
-			while ($row = $statement->fetchArray()) {
-				$userIDs[] = $row['userID'];
-			}
+			$statement->execute([$this->username.(!$this->nameExactly ? '%' : '')]);
+			$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
 			if (empty($userIDs)) {
 				$this->throwNoMatchesException();

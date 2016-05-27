@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/box.xsd">
+	<import>
+		<box identifier="com.woltlab.wcf.RecentActivity">
+			<name language="de">Letzte Aktivitäten</name>
+			<name language="en">Recent Activities</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.recentActivityList</objectType>
+			<position>contentBottom</position>
+			<showHeader>0</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			<limit>10</limit>
+			
+			<content language="de">
+				<title>Letzte Aktivitäten</title>
+			</content>
+			<content language="en">
+				<title>Recent Activities</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.RecentActivitySidebar">
+			<name language="de">Letzte Aktivitäten (Sidebar)</name>
+			<name language="en">Recent Activities (Sidebar)</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.recentActivityList</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			<limit>10</limit>
+			
+			<content language="de">
+				<title>Letzte Aktivitäten</title>
+			</content>
+			<content language="en">
+				<title>Recent Activities</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.PaidSubscriptions">
+			<name language="de">Bezahlte Mitgliedschaften</name>
+			<name language="en">Paid Subscriptions</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.paidSubscriptions</objectType>
+			<position>contentBottom</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Bezahlte Mitgliedschaften</title>
+			</content>
+			<content language="en">
+				<title>Paid Subscriptions</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.PaidSubscriptionsSidebar">
+			<name language="de">Bezahlte Mitgliedschaften (Sidebar)</name>
+			<name language="en">Paid Subscriptions (Sidebar)</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.paidSubscriptions</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Bezahlte Mitgliedschaften</title>
+			</content>
+			<content language="en">
+				<title>Paid Subscriptions</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.RegisterButton">
+			<name language="de">Registrierungs-Button</name>
+			<name language="en">Register Button</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.registerButton</objectType>
+			<position>sidebarRight</position>
+			<showHeader>0</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<!--<cssClassName></cssClassName> todo -->
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			
+			<content language="de">
+				<title>Registrierung</title>
+			</content>
+			<content language="en">
+				<title>Registration</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.SignedInAs">
+			<name language="de">Angemeldet als</name>
+			<name language="en">Signed In As</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.signedInAs</objectType>
+			<position>sidebarRight</position>
+			<showHeader>0</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			
+			<!-- TODO: content title -->
+		</box>
+		
+		<box identifier="com.woltlab.wcf.Statistics">
+			<name language="de">Statistiken</name>
+			<name language="en">Statistics</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.statistics</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			
+			<content language="de">
+				<title>Statistiken</title>
+			</content>
+			<content language="en">
+				<title>Statistics</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.NewestMembers">
+			<name language="de">Neueste Mitglieder</name>
+			<name language="en">Newest Members</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.userList</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<sortField>registrationDate</sortField>
+			<sortOrder>DESC</sortOrder>
+			
+			<content language="de">
+				<title>Neueste Mitglieder</title>
+			</content>
+			<content language="en">
+				<title>Newest Members</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.MostActiveMembers">
+			<name language="de">Aktivste Mitglieder</name>
+			<name language="en">Most Active Members</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.userList</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<sortField>activityPoints</sortField>
+			<sortOrder>DESC</sortOrder>
+			
+			<content language="de">
+				<title>Aktivste Mitglieder</title>
+			</content>
+			<content language="en">
+				<title>Most Active Members</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.MostLikedMembers">
+			<name language="de">Mitglieder mit den meisten Likes</name>
+			<name language="en">Most Liked Members</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.userList</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<sortField>likesReceived</sortField>
+			<sortOrder>DESC</sortOrder>
+			
+			<content language="de">
+				<title>Mitglieder mit den meisten Likes</title>
+			</content>
+			<content language="en">
+				<title>Most Liked Members</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.TodaysBirthdays">
+			<name language="de">Heutige Geburtstage</name>
+			<name language="en">Today’s Birthdays</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.todaysBirthdays</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Heutige Geburtstage</title>
+			</content>
+			<content language="en">
+				<title>Today’s Birthdays</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.TodaysFollowingBirthdays">
+			<name language="de">Heutige Geburtstage von Nutzern, denen der Nutzer folgt</name>
+			<name language="en">Today’s Birthdays of Users the User Follows</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.todaysFollowingBirthdays</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<!-- TODO: content title -->
+		</box>
+		
+		<box identifier="com.woltlab.wcf.UsersOnline">
+			<name language="de">Benutzer online</name>
+			<name language="en">Users Online</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.userOnlineList</objectType>
+			<position>footerBoxes</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Benutzer online</title>
+			</content>
+			<content language="en">
+				<title>Users Online</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.UsersOnlineSidebar">
+			<name language="de">Benutzer online (Sidebar)</name>
+			<name language="en">Users Online (Sidebar)</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.userOnlineList</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Benutzer online</title>
+			</content>
+			<content language="en">
+				<title>Users Online</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.StaffOnline">
+			<name language="de">Team-Mitglieder online</name>
+			<name language="en">Staff-Members Online</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.staffOnlineList</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Team-Mitglieder online</title>
+			</content>
+			<content language="en">
+				<title>Staff-Members Online</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.FollowingsOnline">
+			<name language="de">Benutzer online, denen der Nutzer folgt</name>
+			<name language="en">Users Online the User Follows</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.followingsOnline</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<limit>10</limit>
+			
+			<!-- TODO: content title -->
+		</box>
+		
+		<box identifier="com.woltlab.wcf.PageComments">
+			<name language="de">Seiten-Kommentare</name>
+			<name language="en">Page Comments</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.pageCommentList</objectType>
+			<position>contentBottom</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Kommentare</title>
+			</content>
+			<content language="en">
+				<title>Comments</title>
+			</content>
+		</box>
+	</import>
+</data>

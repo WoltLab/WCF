@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Condition implementation for the state (banned, enabled) of a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -21,7 +21,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	use TObjectListUserCondition;
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
+	 * @inheritDoc
 	 */
 	protected $label = 'wcf.user.condition.state';
 	
@@ -50,27 +50,29 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	protected $userIsNotBanned = 0;
 	
 	/**
-	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
+	 * @inheritDoc
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
-		if (!($objectList instanceof UserList)) return;
+		if (!($objectList instanceof UserList)) {
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+		}
 		
 		if (isset($conditionData['userIsBanned'])) {
-			$userList->getConditionBuilder()->add('user_table.banned = ?', array($conditionData['userIsBanned']));
+			$objectList->getConditionBuilder()->add('user_table.banned = ?', [$conditionData['userIsBanned']]);
 		}
 		
 		if ($conditionData['userIsEnabled']) {
 			if ($conditionData['userIsEnabled']) {
-				$userList->getConditionBuilder()->add('user_table.activationCode = ?', array(0));
+				$objectList->getConditionBuilder()->add('user_table.activationCode = ?', [0]);
 			}
 			else {
-				$userList->getConditionBuilder()->add('user_table.activationCode <> ?', array(0));
+				$objectList->getConditionBuilder()->add('user_table.activationCode <> ?', [0]);
 			}
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
 		if ($condition->userIsBanned !== null && $user->banned != $condition->userIsBanned) {
@@ -90,10 +92,10 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
-		$data = array();
+		$data = [];
 		
 		if ($this->userIsBanned) {
 			$data['userIsBanned'] = 1;
@@ -122,6 +124,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	 * @return	string
 	 */
 	protected function getCheckedAttribute($propertyName) {
+		/** @noinspection PhpVariableVariableInspection */
 		if ($this->$propertyName) {
 			return ' checked="checked"';
 		}
@@ -130,7 +133,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getFieldElement()
+	 * @inheritDoc
 	 */
 	protected function getFieldElement() {
 		$userIsNotBanned = WCF::getLanguage()->get('wcf.user.condition.state.isNotBanned');
@@ -147,7 +150,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['userIsBanned'])) $this->userIsBanned = 1;
@@ -157,7 +160,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->userIsBanned = 0;
@@ -167,7 +170,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		if ($condition->userIsBanned !== null) {
@@ -181,7 +184,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if ($this->userIsBanned && $this->userIsNotBanned) {
@@ -198,7 +201,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;

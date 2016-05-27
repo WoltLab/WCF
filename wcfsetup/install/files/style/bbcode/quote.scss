@@ -1,0 +1,45 @@
+.quoteBox {
+	border: 1px solid $wcfContentBorderInner;
+	font-style: italic;
+	margin: 20px 0;
+	padding: 10px 20px;
+	
+	&:first-child {
+		margin-top: 0;
+	}
+	
+	.quoteBox {
+		> .quoteBoxHeader > .quoteBoxIcon {
+			display: none;
+		}
+	}
+}
+
+.quoteBoxHeader {
+	align-items: center;
+	display: flex;
+	font-style: normal;
+	margin-bottom: 20px;
+	
+	.quoteBoxIcon {
+		flex: 0 0 auto;
+		
+		> a {
+			display: block;
+			font-size: 0;
+			margin-right: 5px;
+		}
+		
+		> .icon {
+			margin-right: 7px;
+			position: relative;
+			top: 2px;
+		}
+	}
+	
+	.quoteBoxTitle {
+		flex: 1 auto;
+		
+		@include wcfFontHeadline;
+	}
+}

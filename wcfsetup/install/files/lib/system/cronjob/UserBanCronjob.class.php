@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Unbans users and enables disabled avatars and disabled signatures.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class UserBanCronjob extends AbstractCronjob {
 	/**
-	 * @see	\wcf\system\cronjob\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
@@ -28,13 +28,13 @@ class UserBanCronjob extends AbstractCronjob {
 				AND banExpires <> ?
 				AND banExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			0,
 			1,
 			0,
 			TIME_NOW
-		));
+		]);
 		
 		// enable avatars
 		$sql = "UPDATE	wcf".WCF_N."_user
@@ -44,13 +44,13 @@ class UserBanCronjob extends AbstractCronjob {
 				AND disableAvatarExpires <> ?
 				AND disableAvatarExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			0,
 			1,
 			0,
 			TIME_NOW
-		));
+		]);
 		
 		// enable signatures
 		$sql = "UPDATE	wcf".WCF_N."_user
@@ -60,12 +60,12 @@ class UserBanCronjob extends AbstractCronjob {
 				AND disableSignatureExpires <> ?
 				AND disableSignatureExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			0,
 			1,
 			0,
 			TIME_NOW
-		));
+		]);
 	}
 }

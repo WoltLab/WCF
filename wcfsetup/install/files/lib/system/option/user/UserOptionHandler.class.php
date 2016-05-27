@@ -2,8 +2,10 @@
 namespace wcf\system\option\user;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\User;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\ISearchableConditionUserOption;
 use wcf\system\option\OptionHandler;
@@ -13,8 +15,8 @@ use wcf\util\MessageUtil;
 /**
  * Handles user options.
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @author	Alexander Ebert, Joshua Ruesweg
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user
@@ -22,9 +24,9 @@ use wcf\util\MessageUtil;
  */
 class UserOptionHandler extends OptionHandler {
 	/**
-	 * @see	\wcf\system\option\OptionHandler::$cacheClass
+	 * @inheritDoc
 	 */
-	protected $cacheClass = 'wcf\system\cache\builder\UserOptionCacheBuilder';
+	protected $cacheClass = UserOptionCacheBuilder::class;
 	
 	/**
 	 * true if within registration process
@@ -64,6 +66,8 @@ class UserOptionHandler extends OptionHandler {
 	
 	/**
 	 * Shows empty options.
+	 * 
+	 * @param	boolean		$show
 	 */
 	public function showEmptyOptions($show = true) {
 		$this->removeEmptyOptions = !$show;
@@ -104,7 +108,7 @@ class UserOptionHandler extends OptionHandler {
 	 * @param	\wcf\data\user\User	$user
 	 */
 	public function setUser(User $user) {
-		$this->optionValues = array();
+		$this->optionValues = [];
 		$this->user = $user;
 		
 		$this->init();
@@ -118,11 +122,15 @@ class UserOptionHandler extends OptionHandler {
 	 * Resets the option values.
 	 */
 	public function resetOptionValues() {
-		$this->optionValues = array();
+		$this->optionValues = [];
 	}
 	
 	/**
 	 * Enables the condition mode.
+	 * 
+	 * If condition mode is enabled, only options whose type implements ISearchableConditionUserOption
+	 * are considered. Furthermore, the visibility setting of the option is disregarded to ensure that
+	 * during automatic cronjob execution (always done as a guest), the conditions are properly set. 
 	 * 
 	 * @param	boolean		$enable
 	 */
@@ -153,7 +161,7 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::getOption()
+	 * @inheritDoc
 	 */
 	public function getOption($optionName) {
 		$optionData = parent::getOption($optionName);
@@ -173,7 +181,7 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	protected function getFormElement($type, Option $option) {
 		if ($this->searchMode) return $this->getTypeObject($type)->getSearchFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));
@@ -182,12 +190,12 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::validateOption()
+	 * @inheritDoc
 	 */
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);
 		
-		if ($option->required && empty($this->optionValues[$option->optionName])) {
+		if ($option->required && $option->optionType != 'boolean' && empty($this->optionValues[$option->optionName])) {
 			throw new UserInputException($option->optionName);
 		}
 		
@@ -205,7 +213,7 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::checkCategory()
+	 * @inheritDoc
 	 */
 	protected function checkCategory(OptionCategory $category) {
 		if ($category->categoryName == 'hidden') {
@@ -216,7 +224,7 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::checkVisibility()
+	 * @inheritDoc
 	 */
 	protected function checkVisibility(Option $option) {
 		if ($option->isDisabled) {
@@ -224,7 +232,7 @@ class UserOptionHandler extends OptionHandler {
 		}
 		
 		// in registration
-		if ($this->inRegistration && !$option->askDuringRegistration && !$option->required && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
+		if ($this->inRegistration && !$option->askDuringRegistration && !$option->required && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
 			return false;
 		}
 		
@@ -242,15 +250,17 @@ class UserOptionHandler extends OptionHandler {
 		}
 		
 		if ($this->editMode) {
-			return $option->isEditable();
+			return $option->isEditable($this->inRegistration);
 		}
-		else {
+		else if (!$this->conditionMode) {
 			return $option->isVisible();
 		}
+		
+		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::save()
+	 * @inheritDoc
 	 */
 	public function save($categoryName = null, $optionPrefix = null) {
 		$options = parent::save($categoryName, $optionPrefix);
@@ -258,7 +268,7 @@ class UserOptionHandler extends OptionHandler {
 		// remove options which are not asked during registration
 		if ($this->inRegistration && !empty($options)) {
 			foreach ($this->options as $option) {
-				if (!$option->askDuringRegistration && array_key_exists($option->optionID, $options)) {
+				if (array_key_exists($option->optionID, $options) && !$option->askDuringRegistration && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) && !$option->required && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
 					unset($options[$option->optionID]);
 				}
 			}
@@ -268,7 +278,7 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		foreach ($this->options as $option) {
@@ -277,7 +287,7 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::readUserInput()
+	 * @inheritDoc
 	 */
 	public function readUserInput(array &$source) {
 		parent::readUserInput($source);

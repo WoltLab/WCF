@@ -7,20 +7,25 @@ use wcf\system\WCF;
  * Represents a user profile visitor.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.profile.visitor
  * @category	Community Framework
+ *
+ * @property-read	integer		$visitorID
+ * @property-read	integer|null	$ownerID
+ * @property-read	integer|null	$userID
+ * @property-read	integer		$time
  */
 class UserProfileVisitor extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_profile_visitor';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'visitorID';
 	
@@ -37,7 +42,7 @@ class UserProfileVisitor extends DatabaseObject {
 			WHERE	ownerID = ?
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($ownerID, $userID));
+		$statement->execute([$ownerID, $userID]);
 		if ($row = $statement->fetchArray()) {
 			return new UserProfileVisitor(null, $row);
 		}

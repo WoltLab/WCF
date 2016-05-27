@@ -40,6 +40,7 @@
 				<xs:all>
 					<xs:element name="parent" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="link" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="controller" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="showorder" type="xs:unsignedInt" minOccurs="0" />
 					<xs:element name="permissions" type="xs:string" minOccurs="0" />
 					<xs:element name="options" type="xs:string" minOccurs="0" />

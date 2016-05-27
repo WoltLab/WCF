@@ -3,10 +3,10 @@ namespace wcf\system;
 use wcf\system\exception\SystemException;
 
 /**
- * Basis class for singleton classes.
- * 
+ * Base class for singleton factories.
+ *
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -15,9 +15,9 @@ use wcf\system\exception\SystemException;
 abstract class SingletonFactory {
 	/**
 	 * list of singletons
-	 * @var	array<SingletonFactory>
+	 * @var	SingletonFactory[]
 	 */
-	protected static $__singletonObjects = array();
+	protected static $__singletonObjects = [];
 	
 	/**
 	 * Singletons do not support a public constructor. Override init() if
@@ -46,8 +46,9 @@ abstract class SingletonFactory {
 	
 	/**
 	 * Returns an unique instance of current child class.
-	 * 
-	 * @return	\wcf\system\SingletonFactory
+	 *
+	 * @return	static
+	 * @throws	SystemException
 	 */
 	public static final function getInstance() {
 		$className = get_called_class();
@@ -64,7 +65,7 @@ abstract class SingletonFactory {
 	
 	/**
 	 * Returns whether this singleton is already initialized.
-	 * 
+	 *
 	 * @return	boolean
 	 */
 	public static final function isInitialized() {

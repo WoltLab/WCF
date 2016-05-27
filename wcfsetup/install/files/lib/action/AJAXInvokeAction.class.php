@@ -2,15 +2,17 @@
 namespace wcf\action;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\InvalidSecurityTokenException;
-use wcf\system\exception\LoggedException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
+use wcf\system\IAJAXInvokeAction;
+use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -18,7 +20,7 @@ use wcf\util\StringUtil;
  * Default implementation for AJAX-based method calls.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -33,7 +35,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	
 	/**
 	 * action object
-	 * @var	\wcf\system\SingletonFactory
+	 * @var	SingletonFactory
 	 */
 	public $actionObject = null;
 	
@@ -56,7 +58,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	protected $response = null;
 	
 	/**
-	 * @see	\wcf\action\IAction::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		try {
@@ -70,10 +72,18 @@ class AJAXInvokeAction extends AbstractSecureAction {
 				$this->throwException($e);
 			}
 		}
+		catch (\Throwable $e) {
+			if ($e instanceof AJAXException) {
+				throw $e;
+			}
+			else {
+				$this->throwException($e);
+			}
+		}
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -86,7 +96,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -96,6 +106,9 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			$this->invoke();
 		}
 		catch (\Exception $e) {
+			$this->throwException($e);
+		}
+		catch (\Throwable $e) {
 			$this->throwException($e);
 		}
 		$this->executed();
@@ -111,11 +124,11 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 */
 	protected function invoke() {
 		// check for interface and inheritance of SingletonFactory
-		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\IAJAXInvokeAction')) {
-			throw new SystemException("'".$this->className."' does not implement 'wcf\system\IAJAXInvokeAction'");
+		if (!is_subclass_of($this->className, IAJAXInvokeAction::class)) {
+			throw new ImplementationException($this->className, IAJAXInvokeAction::class);
 		}
-		else if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
-			throw new SystemException("'".$this->className."' does not extend 'wcf\system\SingletonFactory'");
+		else if (!is_subclass_of($this->className, SingletonFactory::class)) {
+			throw new ParentClassException($this->className, SingletonFactory::class);
 		}
 		
 		// validate action name
@@ -129,7 +142,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new PermissionDeniedException();
 		}
 		
-		$this->actionObject = call_user_func(array($this->className, 'getInstance'));
+		$this->actionObject = call_user_func([$this->className, 'getInstance']);
 		
 		// check for validate method
 		$validateMethod = 'validate'.ucfirst($this->actionName);
@@ -152,9 +165,12 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	/**
 	 * Throws an previously catched exception while maintaing the propriate stacktrace.
 	 * 
-	 * @param	\Exception	$e
+	 * @param	\Exception|\Throwable	$e
+	 * @throws	AJAXException
+	 * @throws	\Exception
+	 * @throws	\Throwable
 	 */
-	protected function throwException(\Exception $e) {
+	protected function throwException($e) {
 		if ($this->inDebugMode) {
 			throw $e;
 		}
@@ -165,32 +181,29 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		else if ($e instanceof PermissionDeniedException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 		}
-		else if ($e instanceof SystemException) {
-			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString(), array(), $e->getExceptionID());
-		}
 		else if ($e instanceof IllegalLinkException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.illegalLink'), AJAXException::ILLEGAL_LINK, $e->getTraceAsString());
 		}
 		else if ($e instanceof UserInputException) {
 			// repackage as ValidationActionException
 			$exception = new ValidateActionException($e->getField(), $e->getType(), $e->getVariables());
-			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
+			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
 				'errorMessage' => $exception->getMessage(),
 				'errorType' => $e->getType(),
 				'fieldName' => $exception->getFieldName(),
-			));
+			]);
 		}
 		else if ($e instanceof ValidateActionException) {
-			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
 				'errorMessage' => $e->getMessage(),
 				'fieldName' => $e->getFieldName()
-			));
+			]);
 		}
 		else if ($e instanceof NamedUserException) {
 			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
 		}
 		else {
-			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), array(), ($e instanceof LoggedException ? $e->getExceptionID() : ''));
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), [], \wcf\functions\exception\logThrowable($e));
 		}
 	}
 	
@@ -227,9 +240,8 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * )
 	 * 
 	 * @param	array		$data
-	 * @param	string		$className
-	 * @param	string		$actionName
-	 * @return	\wcf\action\AJAXInvokeAction
+	 * @return	AJAXInvokeAction
+	 * @throws	SystemException
 	 */
 	public static function debugCall(array $data) {
 		// validate $data array

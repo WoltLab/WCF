@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cli\command;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\DatabaseException;
 use wcf\system\importer\ImportHandler;
@@ -12,7 +13,7 @@ use wcf\util\StringUtil;
  * Imports data.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -63,9 +64,9 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * list of available exporters
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
-	protected $exporters = array();
+	protected $exporters = [];
 	
 	/**
 	 * file system path
@@ -75,9 +76,9 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * list of available importers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $importers = array();
+	public $importers = [];
 	
 	/**
 	 * indicates if the imported will be quit
@@ -87,15 +88,15 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * selected data types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $selectedData = array();
+	public $selectedData = [];
 	
 	/**
 	 * list of supported data types
 	 * @var	array
 	 */
-	protected $supportedData = array();
+	protected $supportedData = [];
 	
 	/**
 	 * user merge mode
@@ -104,14 +105,14 @@ class ImportCLICommand implements ICLICommand {
 	public $userMergeMode = 0;
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
-		return WCF::getSession()->getPermission('admin.system.canImportData');
+		return WCF::getSession()->getPermission('admin.management.canImportData');
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		CLIWCF::getReader()->setHistoryEnabled(false);
@@ -172,8 +173,8 @@ class ImportCLICommand implements ICLICommand {
 		
 		// step 7) save import data
 		$queue = $this->exporter->getQueue();
-		WCF::getSession()->register('importData', array(
-			'additionalData' => array(),
+		WCF::getSession()->register('importData', [
+			'additionalData' => [],
 			'dbHost' => $this->dbHost,
 			'dbName' => $this->dbName,
 			'dbPassword' => $this->dbPassword,
@@ -182,7 +183,7 @@ class ImportCLICommand implements ICLICommand {
 			'exporterName' => $this->exporterName,
 			'fileSystemPath' => $this->fileSystemPath,
 			'userMergeMode' => $this->userMergeMode
-		));
+		]);
 		
 		// step 8) import data
 		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.started'));
@@ -190,10 +191,10 @@ class ImportCLICommand implements ICLICommand {
 		foreach ($queue as $objectType) {
 			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.data.'.$objectType));
 			$workerCommand = CLICommandHandler::getCommand('worker');
-			$workerCommand->execute(array(
+			$workerCommand->execute([
 				'--objectType='.$objectType,
 				'ImportWorker'
-			));
+			]);
 		}
 		
 		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.completed'));
@@ -218,15 +219,15 @@ class ImportCLICommand implements ICLICommand {
 			$this->dbPrefix = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.prefix').'> ');
 			if ($this->dbPrefix === null) exit;
 			
-			$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, '', array());
+			$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, '', []);
 			
 			try {
 				$this->exporter->validateDatabaseAccess();
 			}
 			catch (DatabaseException $e) {
-				$errorMessage = WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.configure.database.error', array(
+				$errorMessage = WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.configure.database.error', [
 					'exception' => $e
-				));
+				]);
 				$errorMessageLines = explode('<br />', $errorMessage);
 				foreach ($errorMessageLines as &$line) {
 					$line = StringUtil::stripHTML($line);
@@ -248,18 +249,19 @@ class ImportCLICommand implements ICLICommand {
 	 */
 	protected function readExporter() {
 		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.selectExporter'));
-		$exporterSelection = array();
+		$exporterSelection = [];
 		$exporterIndex = 1;
 		foreach ($this->exporters as $objectType) {
 			CLIWCF::getReader()->println($exporterIndex.') '.WCF::getLanguage()->get('wcf.acp.dataImport.exporter.'.$objectType->objectType));
 			$exporterSelection[$exporterIndex++] = $objectType->objectType;
 		}
-		CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', array(
+		CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', [
 			'minSelection' => 1,
 			'maxSelection' => $exporterIndex - 1
-		)));
+		]));
 		
 		while (true) {
+			/** @var string|null $exporterIndex */
 			$exporterIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.exporter').'> ');
 			if ($exporterIndex === null) exit;
 			
@@ -297,7 +299,7 @@ class ImportCLICommand implements ICLICommand {
 		while (true) {
 			$this->fileSystemPath = CLIWCF::getReader()->readLine('> ');
 			if ($this->fileSystemPath === null) exit;
-			$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath, array());
+			$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath, []);
 			
 			if (!$this->exporter->validateFileAccess()) {
 				CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.fileSystem.path.error'));
@@ -313,13 +315,13 @@ class ImportCLICommand implements ICLICommand {
 	 */
 	protected function readSelectedData() {
 		$printPrimaryTypes = true;
-		$selectedData = array();
-		$supportedDataSelection = array(
-			'' => array()
-		);
+		$selectedData = [];
+		$supportedDataSelection = [
+			'' => []
+		];
 		
 		$i = 1;
-		$availablePrimaryDataTypes = array();
+		$availablePrimaryDataTypes = [];
 		foreach ($this->supportedData as $objectType => $subData) {
 			$availablePrimaryDataTypes[$i++] = $objectType;
 		}
@@ -341,14 +343,15 @@ class ImportCLICommand implements ICLICommand {
 						$supportedDataIndex++;
 					}
 				}
-				CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', array(
+				CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', [
 					'minSelection' => $minSupportedDataIndex,
 					'maxSelection' => $supportedDataIndex - 1
-				)));
+				]));
 				$printPrimaryTypes = false;
 			}
 			
 			// read index of selected primary import data type
+			/** @var string|null $selectedObjectTypeIndex */
 			$selectedObjectTypeIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.data').'> ');
 			if ($selectedObjectTypeIndex === null) exit;
 			
@@ -366,7 +369,7 @@ class ImportCLICommand implements ICLICommand {
 			// validate selected primary import data type
 			if (isset($supportedDataSelection[''][$selectedObjectTypeIndex])) {
 				$selectedObjectType = $supportedDataSelection[''][$selectedObjectTypeIndex];
-				$selectedData[$selectedObjectType] = array();
+				$selectedData[$selectedObjectType] = [];
 				unset($supportedDataSelection[''][$selectedObjectTypeIndex]);
 			}
 			else if (isset($availablePrimaryDataTypes[$selectedObjectTypeIndex])) {
@@ -384,16 +387,16 @@ class ImportCLICommand implements ICLICommand {
 				CLIWCF::getReader()->println('  '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.data.description'));
 				CLIWCF::getReader()->println('  0) '.WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.selectAll'));
 				
-				$supportedDataSelection[$selectedObjectType] = array();
+				$supportedDataSelection[$selectedObjectType] = [];
 				$supportedDataIndex = 1;
 				foreach ($this->supportedData[$selectedObjectType] as $objectType) {
 					CLIWCF::getReader()->println('  '.$supportedDataIndex.') '.WCF::getLanguage()->get('wcf.acp.dataImport.data.'.$objectType));
 					$supportedDataSelection[$selectedObjectType][$supportedDataIndex++] = $objectType;
 				}
-				CLIWCF::getReader()->println('  '.WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', array(
+				CLIWCF::getReader()->println('  '.WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', [
 					'minSelection' => 0,
 					'maxSelection' => $supportedDataIndex - 1
-				)));
+					]));
 				
 				while (true) {
 					// read index of selected secondary import data type
@@ -461,10 +464,10 @@ class ImportCLICommand implements ICLICommand {
 		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode'));
 		CLIWCF::getReader()->println('1) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.4').' (*)');
 		CLIWCF::getReader()->println('2) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.5'));
-		CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', array(
+		CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', [
 			'minSelection' => 1,
 			'maxSelection' => 2
-		)));
+		]));
 		
 		while (true) {
 			$this->userMergeMode = CLIWCF::getReader()->readLine('> ');

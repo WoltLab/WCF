@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * RecaptchaForm is an abstract form implementation for the use of reCAPTCHA.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -36,7 +36,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	public $useCaptcha = true;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -47,7 +47,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -64,7 +64,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -91,7 +91,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -100,7 +100,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -111,13 +111,13 @@ abstract class RecaptchaForm extends AbstractForm {
 		}
 		else {
 			// V2
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'recaptchaLegacyMode' => true
-			));
+			]);
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'useCaptcha' => $this->useCaptcha
-		));
+		]);
 	}
 }

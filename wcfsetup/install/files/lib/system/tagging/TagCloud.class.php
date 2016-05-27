@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\tagging;
+use wcf\data\tag\TagCloudTag;
 use wcf\system\cache\builder\TagCloudCacheBuilder;
 use wcf\system\language\LanguageFactory;
 
@@ -7,7 +8,7 @@ use wcf\system\language\LanguageFactory;
  * This class holds a list of tags that can be used for creating a tag cloud.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.tagging
@@ -17,20 +18,22 @@ class TagCloud {
 	/**
 	 * max font size
 	 * @var	integer
+	 * @deprecated 2.2
 	 */
 	const MAX_FONT_SIZE = 170;
 	
 	/**
 	 * min font size
 	 * @var	integer
+	 * @deprecated 2.2
 	 */
 	const MIN_FONT_SIZE = 85;
 	
 	/**
 	 * list of tags
-	 * @var	array<\wcf\data\tag\TagCloudTag>
+	 * @var	TagCloudTag[]
 	 */
-	protected $tags = array();
+	protected $tags = [];
 	
 	/**
 	 * max value of tag counter
@@ -46,16 +49,16 @@ class TagCloud {
 	
 	/**
 	 * active language ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $languageIDs = array();
+	protected $languageIDs = [];
 	
 	/**
 	 * Contructs a new TagCloud object.
 	 * 
-	 * @param	array<integer>	$languageIDs
+	 * @param	integer[]	$languageIDs
 	 */
-	public function __construct(array $languageIDs = array()) {
+	public function __construct(array $languageIDs = []) {
 		$this->languageIDs = $languageIDs;
 		if (empty($this->languageIDs)) {
 			$this->languageIDs = array_keys(LanguageFactory::getInstance()->getLanguages());
@@ -75,8 +78,8 @@ class TagCloud {
 	/**
 	 * Gets a list of weighted tags.
 	 * 
-	 * @param	integer				$slice
-	 * @return	array<\wcf\data\tag\TagCloudTag>	the tags to get
+	 * @param	integer		$slice
+	 * @return	TagCloudTag[]	the tags to get
 	 */
 	public function getTags($slice = 50) {
 		// slice list
@@ -90,7 +93,7 @@ class TagCloud {
 		
 		// assign sizes
 		foreach ($tags as $tag) {
-			$tag->setSize($this->calculateSize($tag->counter));
+			$tag->setWeight($this->calculateWeight($tag->counter));
 		}
 		
 		// sort alphabetically
@@ -100,18 +103,14 @@ class TagCloud {
 		return $tags;
 	}
 	
-	/**
-	 * Returns the size of a tag with given number of uses for a weighted list.
-	 * 
-	 * @param	integer		$counter
-	 * @return	double
-	 */
-	private function calculateSize($counter) {
+	private function calculateWeight($counter) {
 		if ($this->maxCounter == $this->minCounter) {
-			return 100;
+			return 2;
 		}
 		else {
-			return (self::MAX_FONT_SIZE - self::MIN_FONT_SIZE) / ($this->maxCounter - $this->minCounter) * $counter + self::MIN_FONT_SIZE - ((self::MAX_FONT_SIZE - self::MIN_FONT_SIZE) / ($this->maxCounter - $this->minCounter)) * $this->minCounter;
+			$weight = round(log($counter) / log($this->maxCounter) * 7);
+			if ($weight < 1) $weight = 1;
+			return $weight;
 		}
 	}
 }

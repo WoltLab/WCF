@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Option type implementation for message.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  */
 class MessageOptionType extends TextareaOptionType {
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		$newValue = StringUtil::trim($newValue);
@@ -31,10 +31,9 @@ class MessageOptionType extends TextareaOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		$allowedBBCodes = array();
 		if ($option->allowedbbcodepermission) {
 			$allowedBBCodes = explode(',', WCF::getSession()->getPermission($option->allowedbbcodepermission));
 		}
@@ -43,17 +42,17 @@ class MessageOptionType extends TextareaOptionType {
 		}
 		BBCodeHandler::getInstance()->setAllowedBBCodes($allowedBBCodes);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'defaultSmilies' => SmileyCache::getInstance()->getCategorySmilies(),
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('messageOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		parent::validate($option, $newValue);

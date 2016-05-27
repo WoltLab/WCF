@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of cronjob log entries.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.menu.item
  * @category	Community Framework
+ *
+ * @method	CronjobLog		current()
+ * @method	CronjobLog[]		getObjects()
+ * @method	CronjobLog|null		search($objectID)
+ * @property	CronjobLog[]		$objects
  */
 class CronjobLogList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\cronjob\log\CronjobLog';
+	public $className = CronjobLog::class;
 }

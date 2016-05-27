@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of statistic entries.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.stat.daily
  * @category	Community Framework
+ *
+ * @method	StatDaily		current()
+ * @method	StatDaily[]		getObjects()
+ * @method	StatDaily|null		search($objectID)
+ * @property	StatDaily[]		$objects
  */
 class StatDailyList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\stat\daily\StatDaily';
+	public $className = StatDaily::class;
 }

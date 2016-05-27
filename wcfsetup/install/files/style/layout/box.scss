@@ -1,0 +1,547 @@
+/* default styling for all boxes */ 
+.box {
+	box-sizing: border-box;
+}
+
+.boxImage {
+	img {
+		max-width: 100%;
+	}
+}
+
+.boxTitle {
+	@include wcfFontHeadline;
+	
+	& + .boxContent {
+		margin-top: 20px;
+	}
+	
+	.badge {
+		top: -2px;
+	}
+}
+
+.boxContent {
+	& + .boxContent {
+		margin-top: 20px;
+	}
+}
+
+.boxContent {
+	& + .boxTitle {
+		margin-top: 30px;
+	}
+}
+
+.boxContentSeparator {
+	background: $wcfContentBorderInner;
+	border: 0;
+	height: 1px;
+	margin: 30px auto;
+	width: 60%;
+}
+
+/* styling for boxes in <hero> position */
+.boxesHero {
+	.box {
+		padding: 40px;
+		text-align: center;
+	}
+	
+	.boxTitle {
+		@include wcfFontTitle;
+	}
+	
+	.boxWithImage {
+		display: flex;
+		flex-wrap: wrap;
+		
+		.boxImage,
+		.boxTitle,
+		.boxContent {
+			flex: 0 0 100%;
+		}
+		
+		.boxImage {
+			order: 3;
+			margin-top: 40px;
+		}
+	}
+}
+
+/* styling for boxes in <headerBoxes> position */
+.boxesHeaderBoxes {
+	background-color: $wcfFooterBoxBackground;
+	color: $wcfFooterBoxText;
+	
+	a {
+		color: $wcfFooterBoxLink;
+		
+		&:hover {
+			color: $wcfFooterBoxLinkActive;
+			text-decoration: underline;
+			
+			.icon {
+				color: $wcfFooterBoxLinkActive;
+			}
+		}
+	}
+	
+	.icon {
+		color: inherit;
+	}
+	
+	.boxContainer {
+		margin-left: -10px;
+		margin-right: -10px;
+		
+		@include screen-sm-down {
+			padding: 20px 0;
+		}
+		
+		@include screen-md-up {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: -20px;
+			padding: 40px 0;
+		}
+	}
+	
+	.box {
+		overflow: hidden;
+		padding-left: 10px;
+		padding-right: 10px;
+		
+		@include screen-sm-down {
+			& + .box {
+				margin-top: 20px;
+			}
+		}
+		
+		@include screen-md-up {
+			flex: 0 0 25%;
+			margin-bottom: 20px;
+			
+			&.boxFullWidth {
+				flex-basis: 100%;
+			}
+			
+			/* one item */
+			&:first-child:nth-last-child(1) {
+				flex-basis: 100%;
+			}
+			
+			/* two items */
+			&:first-child:nth-last-child(2),
+			&:first-child:nth-last-child(2) ~ .box {
+				flex-basis: 50%;
+			}
+			
+			/* three items */
+			&:first-child:nth-last-child(3),
+			&:first-child:nth-last-child(3) ~ .box {
+				flex-basis: 33.3333%;
+			}
+		}
+	}
+	
+	.boxImage {
+		margin-bottom: 10px;
+		text-align: center;
+	}
+}
+
+/* styling for boxes in <top>/<bottom> position */
+.boxesTop,
+.boxesBottom {
+	flex: 0 0 auto;
+	
+	.box {
+		margin-bottom: 40px;
+		margin-top: 40px;
+	}
+	
+	.boxTitle {
+		color: $wcfContentHeadlineText;
+		
+		@include wcfFontSection;
+		
+		a {
+			color: $wcfContentHeadlineLink;
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive;
+			}
+		}
+	}
+	
+	.boxWithImage {
+		@include clearfix;
+		
+		.boxTitle,
+		.boxContent {
+			margin-left: calc(20% + 30px);
+		}
+	}
+	
+	.boxImage {
+		float: left;
+		width: 20%;
+	}
+}
+
+.boxesTop {
+	border-bottom: 1px solid $wcfContentBorderInner;
+}	
+	
+.boxesBottom {
+	border-top: 1px solid $wcfContentBorderInner;
+}
+
+/* styling for boxes in <sidebarLeft>/<sidebarRight> position */
+.boxesSidebarLeft,
+.boxesSidebarRight {
+	color: $wcfSidebarText;
+	
+	a {
+		color: $wcfSidebarLink;
+		
+		> .icon {
+			color: $wcfSidebarLink;
+		}
+		
+		&:hover {
+			color: $wcfSidebarLinkActive;
+			
+			> .icon {
+				color: $wcfSidebarLinkActive;
+			}
+		}
+	}
+	
+	small,
+	.dimmed {
+		color: $wcfSidebarDimmedText;
+		
+		a {
+			color: $wcfSidebarDimmedLink;
+			
+			&:hover {
+				color: $wcfSidebarDimmedLinkActive;
+			}
+		}
+	}
+	
+	.boxTitle {
+		color: $wcfSidebarHeadlineLink;
+		
+		&:hover {
+			color: $wcfSidebarHeadlineLinkActive;
+		}
+	}
+	
+	.box {
+		&:not(.boxBorderless) {
+			background-color: $wcfSidebarBackground;
+			
+			@include screen-md-down {
+				padding: 20px 10px;
+				
+				.boxMenu {
+					margin-left: -10px;
+					margin-right: -10px;
+				}
+			}
+			
+			@include screen-lg {
+				padding: 20px;
+				
+				.boxMenu {
+					margin-left: -20px;
+					margin-right: -20px;
+				}
+			}
+		}
+		
+		&:not(:first-child) {
+			margin-top: 30px;
+		}
+		
+		&.boxAlternative {
+			background-color: transparent;
+			border: 1px solid $wcfContentBorderInner;
+		}
+		
+		&.boxError {
+			background-color: $wcfStatusErrorBackground;
+			color: $wcfStatusErrorText;
+		}
+		
+		&.boxInfo {
+			background-color: $wcfStatusInfoBackground;
+			color: $wcfStatusInfoText;
+		}
+		
+		&.boxSuccess {
+			background-color: $wcfStatusSuccessBackground;
+			color: $wcfStatusSuccessText;
+		}
+		
+		&.boxWarning {
+			background-color: $wcfStatusWarningBackground;
+			color: $wcfStatusWarningText;
+		}
+		
+		.boxMenu {
+			.boxMenuLink {
+				display: block;
+				padding: 5px 20px;
+				
+				.badge {
+					float: right;
+				}
+			}
+			
+			li.active > .boxMenuLink {
+				background-color: $wcfContentBackground;
+			}
+			
+			.boxMenuDepth1 .boxMenuLink {
+				padding-left: 40px;
+			}
+			
+			.boxMenuDepth2 .boxMenuLink {
+				padding-left: 60px;
+			}
+		}
+	}
+	
+	.boxWithImage {
+		@include clearfix;
+		
+		.boxTitle,
+		.boxContent {
+			margin-left: calc(20% + 10px);
+		}
+	}
+	
+	.boxImage {
+		float: left;
+		width: 20%;
+	}
+}
+
+/* styling for boxes in <contentTop>/<contentBottom> position */
+.boxesContentTop,
+.boxesContentBottom {
+	.box {
+		&:not(:first-child) {
+			margin-top: 40px;
+		}
+	}
+	
+	.boxWithImage {
+		@include clearfix;
+		
+		.boxTitle,
+		.boxContent {
+			margin-left: calc(20% + 20px);
+		}
+	}
+	
+	.boxTitle {
+		color: $wcfContentHeadlineText;
+		
+		@include wcfFontSection;
+				
+		a {
+			color: $wcfContentHeadlineLink;
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive;
+			}
+		}
+	}
+	
+	.boxImage {
+		float: left;
+		width: 20%;
+	}
+}
+
+.boxesContentTop:not(:first-child) {
+	margin-top: 40px;
+}
+
+.boxesContentBottom {
+	margin-top: 40px;
+}
+
+/* styling for boxes in <footerBoxes> position */
+.boxesFooterBoxes {
+	background-color: $wcfFooterBoxBackground;
+	color: $wcfFooterBoxText;
+	flex: 0 0 auto;
+	z-index: 40;
+	
+	a {
+		color: $wcfFooterBoxLink;
+		
+		&:hover {
+			color: $wcfFooterBoxLinkActive;
+			text-decoration: underline;
+		}
+	}
+	
+	.icon {
+		color: $wcfFooterBoxText;
+	}
+	
+	.boxContainer {
+		margin-left: -10px;
+		margin-right: -10px;
+		
+		@include screen-sm-down {
+			padding: 20px 0;
+		}
+		
+		@include screen-md-up {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: -40px;
+			padding: 40px 0;
+		}
+	}
+	
+	.box {
+		overflow: hidden;
+		padding-left: 10px;
+		padding-right: 10px;
+		
+		@include screen-sm-down {
+			& + .box {
+				margin-top: 40px;
+			}
+		}
+		
+		@include screen-md-up {
+			flex: 0 0 50%;
+			margin-bottom: 40px;
+			
+			&.boxFullWidth {
+				flex-basis: 100%;
+			}
+		}
+	}
+	
+	.boxTitle {
+		color: $wcfFooterBoxHeadlineText;
+		
+		a {
+			color: $wcfFooterBoxHeadlineLink;
+			
+			&:hover {
+				color: $wcfFooterBoxHeadlineLinkActive;
+			}
+		}
+	}
+	
+	.boxImage {
+		margin-bottom: 10px;
+		text-align: center;
+	}
+}
+
+/* styling for boxes in <footer> position */
+.boxesFooter {
+	background-color: $wcfFooterBackground;
+	color: $wcfFooterText;
+	flex: 0 0 auto;
+	
+	@include screen-md-up {
+		padding: 40px 0;
+	}
+	
+	@include screen-sm-down {
+		padding: 20px 0;
+	}
+	
+	.icon {
+		color: $wcfFooterText;
+	}
+	
+	a {
+		color: $wcfFooterLink;
+		
+		&:hover {
+			color: $wcfFooterLinkActive;
+			text-decoration: underline;
+		}
+	}
+	
+	.box {
+		&:not(:first-child) {
+			margin-top: 20px;
+		}
+	}
+	
+	.boxWithImage {
+		@include clearfix;
+		
+		.boxTitle,
+		.boxContent {
+			margin-left: calc(20% + 30px);
+		}
+	}
+	
+	.boxImage {
+		float: left;
+		width: 20%;
+	}
+	
+	.boxMenu {
+		display: inline-flex;
+		margin-left: -10px;
+		margin-right: -10px;
+		
+		> li {
+			flex: 0 0 auto;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
+	
+	.footerLinks {
+		&:not(:first-child) {
+			margin-top: 40px;
+		}
+		
+		.boxMenu {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: -20px;
+			
+			.boxMenuLink {
+				display: inline-block;
+			}
+			
+			> li {
+				flex: 0 0 25%;
+				margin-bottom: 20px;
+				
+				> .boxMenuLink {
+					@include wcfFontHeadline;
+					
+					margin-bottom: 10px;
+				}
+				
+				> ol {
+					a {
+						// use text color instead
+						color: $wcfFooterText;
+					}
+				}
+			}
+		}
+	}
+}

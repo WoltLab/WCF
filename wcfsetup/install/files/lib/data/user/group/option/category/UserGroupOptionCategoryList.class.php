@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of user group option categories.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.option.category
  * @category	Community Framework
+ *
+ * @method	UserGroupOptionCategory		current()
+ * @method	UserGroupOptionCategory[]	getObjects()
+ * @method	UserGroupOptionCategory|null	search($objectID)
+ * @property	UserGroupOptionCategory[]	$objects
  */
 class UserGroupOptionCategoryList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\group\option\category\UserGroupOptionCategory';
+	public $className = UserGroupOptionCategory::class;
 }

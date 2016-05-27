@@ -6,7 +6,7 @@ use wcf\data\user\User;
  * Every user authentication has to implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.authentication
@@ -44,7 +44,7 @@ interface IUserAuthentication {
 	 * @param	string		$userClassname		class name of user class
 	 * @return	\wcf\data\user\User
 	 */
-	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User');
+	public function loginManually($username, $password, $userClassname = User::class);
 	
 	/**
 	 * Does a user login automatically.
@@ -53,5 +53,5 @@ interface IUserAuthentication {
 	 * @param	string		$userClassname		class name of user class
 	 * @return	\wcf\data\user\User
 	 */
-	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User');
+	public function loginAutomatically($persistent = false, $userClassname = User::class);
 }

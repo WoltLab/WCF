@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Handles google auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -25,30 +25,30 @@ use wcf\util\StringUtil;
  */
 class GoogleAuthAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('GOOGLE_PUBLIC_KEY', 'GOOGLE_PRIVATE_KEY');
+	public $neededModules = ['GOOGLE_PUBLIC_KEY', 'GOOGLE_PRIVATE_KEY'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
 		
-		$callbackURL = LinkHandler::getInstance()->getLink('GoogleAuth', array(
+		$callbackURL = LinkHandler::getInstance()->getLink('GoogleAuth', [
 			'appendSession' => false
-		));
+		]);
 		// user accepted the connection
 		if (isset($_GET['code'])) {
 			try {
 				// fetch access_token
-				$request = new HTTPRequest('https://accounts.google.com/o/oauth2/token', array(), array(
+				$request = new HTTPRequest('https://accounts.google.com/o/oauth2/token', [], [
 					'code' => $_GET['code'],
 					'client_id' => StringUtil::trim(GOOGLE_PUBLIC_KEY),
 					'client_secret' => StringUtil::trim(GOOGLE_PRIVATE_KEY),
 					'redirect_uri' => $callbackURL,
 					'grant_type' => 'authorization_code'
-				));
+				]);
 				$request->execute();
 				$reply = $request->getReply();
 				
@@ -84,7 +84,7 @@ class GoogleAuthAction extends AbstractAction {
 			$userData = JSON::decode($content);
 			
 			// check whether a user is connected to this google account
-			$user = $this->getUser($userData['id']);
+			$user = User::getUserByAuthData('google:'.$userData['id']);
 			
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
@@ -96,7 +96,7 @@ class GoogleAuthAction extends AbstractAction {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
 						$password = StringUtil::getRandomID();
 						$userEditor = new UserEditor($user);
-						$userEditor->update(array('password' => $password));
+						$userEditor->update(['password' => $password]);
 						
 						// reload user to retrieve salt
 						$user = new User($user->userID);
@@ -153,27 +153,5 @@ class GoogleAuthAction extends AbstractAction {
 		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=profile+email&response_type=code");
 		$this->executed();
 		exit;
-	}
-	
-	/**
-	 * Fetches the User with the given userID.
-	 * 
-	 * @param	integer			$userID
-	 * @return	\wcf\data\user\User
-	 */
-	public function getUser($userID) {
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user
-			WHERE	authData = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('google:'.$userID));
-		$row = $statement->fetchArray();
-		
-		if ($row === false) {
-			$row = array('userID' => 0);
-		}
-		
-		$user = new User($row['userID']);
-		return $user;
 	}
 }

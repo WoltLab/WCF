@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Shows the group edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -21,14 +21,14 @@ use wcf\system\WCF;
  */
 class UserGroupEditForm extends UserGroupAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canEditGroup');
+	public $neededPermissions = ['admin.user.canEditGroup'];
 	
 	/**
 	 * id of the edited user group
@@ -38,12 +38,12 @@ class UserGroupEditForm extends UserGroupAddForm {
 	
 	/**
 	 * user group editor object
-	 * @var	\wcf\data\user\group\UserGroupEditor
+	 * @var	UserGroupEditor
 	 */
 	public $group = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -65,7 +65,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 * @inheritDoc
 	 */
 	protected function initOptionHandler() {
 		// does nothing, we call OptionHandler::init() after we set the
@@ -73,7 +73,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		if (empty($_POST)) {
@@ -84,44 +84,25 @@ class UserGroupEditForm extends UserGroupAddForm {
 			$this->priority = $this->group->priority;
 			$this->userOnlineMarking = $this->group->userOnlineMarking;
 			$this->showOnTeamPage = $this->group->showOnTeamPage;
-			$options = $this->optionHandler->getCategoryOptions();
-			
-			// get default values
-			if ($this->group->groupType != UserGroup::EVERYONE) {
-				$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
-				foreach ($options as $option) {
-					$value = $defaultGroup->getGroupOption($option['object']->optionName);
-					if ($value !== null) {
-						$this->optionValues[$option['object']->optionName] = $value;
-					}
-				}
-			}
-			
-			foreach ($options as $option) {
-				$value = $this->group->getGroupOption($option['object']->optionName);
-				if ($value !== null) {
-					$this->optionValues[$option['object']->optionName] = $value;
-				}
-			}
 		}
 		
 		parent::readData();
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'groupID' => $this->group->groupID,
 			'group' => $this->group,
 			'action' => 'edit',
 			'availableUserGroups' => UserGroup::getAccessibleGroups()
-		));
+		]);
 		
 		// add warning when the initiator is in the group
 		if ($this->group->isMember()) {
@@ -130,7 +111,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -159,17 +140,16 @@ class UserGroupEditForm extends UserGroupAddForm {
 			I18nHandler::getInstance()->save('groupDescription', $this->groupDescription, 'wcf.acp.group', 1);
 		}
 		
-		$data = array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserGroupAction([$this->groupID], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'groupName' => $this->groupName,
 				'groupDescription' => $this->groupDescription,
 				'priority' => $this->priority,
 				'userOnlineMarking' => $this->userOnlineMarking,
 				'showOnTeamPage' => $this->showOnTeamPage
-			)),
+			]),
 			'options' => $optionValues
-		);
-		$this->objectAction = new UserGroupAction(array($this->groupID), 'update', $data);
+		]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		

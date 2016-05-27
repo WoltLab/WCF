@@ -3,18 +3,19 @@ namespace wcf\system\option;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
-use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
  * Handles options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -23,7 +24,7 @@ use wcf\util\StringUtil;
 class OptionHandler implements IOptionHandler {
 	/**
 	 * list of application abbreviations
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $abbreviations = null;
 	
@@ -31,17 +32,17 @@ class OptionHandler implements IOptionHandler {
 	 * cache class name
 	 * @var	string
 	 */
-	protected $cacheClass = 'wcf\system\cache\builder\OptionCacheBuilder';
+	protected $cacheClass = OptionCacheBuilder::class;
 	
 	/**
 	 * list of all option categories
-	 * @var	array<\wcf\data\option\category\OptionCategory>
+	 * @var	OptionCategory[]
 	 */
 	public $cachedCategories = null;
 	
 	/**
 	 * list of all options
-	 * @var	array<\wcf\data\option\Option>
+	 * @var	Option[]
 	 */
 	public $cachedOptions = null;
 	
@@ -65,15 +66,15 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * options of the active category
-	 * @var	array<Option>
+	 * @var	Option[]
 	 */
-	public $options = array();
+	public $options = [];
 	
 	/**
 	 * type object cache
-	 * @var	array<\wcf\system\option\IOptionType>
+	 * @var	IOptionType[]
 	 */
-	public $typeObjects = array();
+	public $typeObjects = [];
 	
 	/**
 	 * language item pattern
@@ -83,15 +84,15 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * option values
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
-	public $optionValues = array();
+	public $optionValues = [];
 	
 	/**
 	 * raw option values
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
-	public $rawValues = array();
+	public $rawValues = [];
 	
 	/**
 	 * true, if options support i18n
@@ -106,7 +107,7 @@ class OptionHandler implements IOptionHandler {
 	public $didInit = false;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($supportI18n, $languageItemPattern = '', $categoryName = '') {
 		$this->categoryName = $categoryName;
@@ -118,7 +119,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::readUserInput()
+	 * @inheritDoc
 	 */
 	public function readUserInput(array &$source) {
 		if (isset($source['values']) && is_array($source['values'])) $this->rawValues = $source['values'];
@@ -135,10 +136,10 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
-		$errors = array();
+		$errors = [];
 		
 		foreach ($this->options as $option) {
 			try {
@@ -153,20 +154,20 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::getOptionTree()
+	 * @inheritDoc
 	 */
 	public function getOptionTree($parentCategoryName = '', $level = 0) {
-		$tree = array();
+		$tree = [];
 		
 		if (isset($this->cachedCategoryStructure[$parentCategoryName])) {
 			// get super categories
 			foreach ($this->cachedCategoryStructure[$parentCategoryName] as $superCategoryName) {
 				$superCategoryObject = $this->cachedCategories[$superCategoryName];
-				$superCategory = array(
+				$superCategory = [
 					'object' => $superCategoryObject,
-					'categories' => array(),
-					'options' => array()
-				);
+					'categories' => [],
+					'options' => []
+				];
 				
 				if ($this->checkCategory($superCategoryObject)) {
 					if ($level <= 1) {
@@ -191,10 +192,10 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::getCategoryOptions()
+	 * @inheritDoc
 	 */
 	public function getCategoryOptions($categoryName = '', $inherit = true) {
-		$children = array();
+		$children = [];
 		
 		// get sub categories
 		if ($inherit && isset($this->cachedCategoryStructure[$categoryName])) {
@@ -220,7 +221,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		foreach ($this->options as $option) {
@@ -234,10 +235,10 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::save()
+	 * @inheritDoc
 	 */
 	public function save($categoryName = null, $optionPrefix = null) {
-		$saveOptions = array();
+		$saveOptions = [];
 		
 		if ($this->supportI18n && ($categoryName === null || $optionPrefix === null)) {
 			throw new SystemException("category name or option prefix missing");
@@ -276,18 +277,19 @@ class OptionHandler implements IOptionHandler {
 		// get form element html
 		$html = $this->getFormElement($option->optionType, $option);
 		
-		return array(
+		return [
 			'object' => $option,
 			'html' => $html,
 			'cssClassName' => $this->getTypeObject($option->optionType)->getCSSClassName(),
 			'hideLabelInSearch' => $this->getTypeObject($option->optionType)->hideLabelInSearch()
-		);
+		];
 	}
 	
 	/**
 	 * Validates an option.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
+	 * @param	Option		$option
+	 * @throws	UserInputException
 	 */
 	protected function validateOption(Option $option) {
 		// get type object
@@ -301,7 +303,7 @@ class OptionHandler implements IOptionHandler {
 		
 		// validate with pattern
 		if ($option->validationPattern) {
-			if (!preg_match('~'.$option->validationPattern.'~', $this->optionValues[$option->optionName])) {
+			if (!preg_match('~'.str_replace('~', '\~', $option->validationPattern).'~', $this->optionValues[$option->optionName])) {
 				throw new UserInputException($option->optionName, 'validationFailed');
 			}
 		}
@@ -311,7 +313,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	protected function getFormElement($type, Option $option) {
 		return $this->getTypeObject($type)->getFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));
@@ -321,7 +323,8 @@ class OptionHandler implements IOptionHandler {
 	 * Returns an object of the requested option type.
 	 * 
 	 * @param	string			$type
-	 * @return	\wcf\system\option\IOptionType
+	 * @return	IOptionType
+	 * @throws	SystemException
 	 */
 	public function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
@@ -342,6 +345,7 @@ class OptionHandler implements IOptionHandler {
 	 * 
 	 * @param	string		$optionType
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function getClassName($optionType) {
 		$optionType = StringUtil::firstCharToUpperCase($optionType);
@@ -354,7 +358,7 @@ class OptionHandler implements IOptionHandler {
 		}
 		else {
 			if ($this->abbreviations === null) {
-				$this->abbreviations = array();
+				$this->abbreviations = [];
 				
 				$applications = ApplicationHandler::getInstance()->getApplications();
 				foreach ($applications as $application) {
@@ -376,8 +380,8 @@ class OptionHandler implements IOptionHandler {
 			return null;
 		}
 		
-		if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
-			throw new SystemException("'".$className."' does not implement 'wcf\system\option\IOptionType'");
+		if (!is_subclass_of($className, IOptionType::class)) {
+			throw new ImplementationException($className, IOptionType::class);
 		}
 		
 		return $className;
@@ -387,13 +391,13 @@ class OptionHandler implements IOptionHandler {
 	 * Gets all options and option categories from cache.
 	 */
 	protected function readCache() {
-		$cache = call_user_func(array($this->cacheClass, 'getInstance'));
+		$cache = call_user_func([$this->cacheClass, 'getInstance']);
 		
 		// get cache contents
-		$this->cachedCategories = $cache->getData(array(), 'categories');
-		$this->cachedOptions = $cache->getData(array(), 'options');
-		$this->cachedCategoryStructure = $cache->getData(array(), 'categoryStructure');
-		$this->cachedOptionToCategories = $cache->getData(array(), 'optionToCategories');
+		$this->cachedCategories = $cache->getData([], 'categories');
+		$this->cachedOptions = $cache->getData([], 'options');
+		$this->cachedCategoryStructure = $cache->getData([], 'categoryStructure');
+		$this->cachedOptionToCategories = $cache->getData([], 'optionToCategories');
 		
 		// allow option manipulation
 		EventHandler::getInstance()->fireAction($this, 'afterReadCache');

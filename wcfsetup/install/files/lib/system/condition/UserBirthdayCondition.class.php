@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Condition implementation if it is the active user's birthday today.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -22,20 +22,18 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
 	protected $birthdayToday = 0;
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		if ($this->birthdayToday) {
-			return array(
-				'birthdayToday' => 1
-			);
+			return ['birthdayToday' => 1];
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		$label = WCF::getLanguage()->get('wcf.user.birthdayToday');
@@ -55,28 +53,28 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['birthdayToday'])) $this->birthdayToday = 1;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->birthdayToday = 0;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		$this->birthdayToday = $condition->birthdayToday;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;

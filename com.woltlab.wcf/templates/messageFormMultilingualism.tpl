@@ -13,19 +13,17 @@
 	</dl>
 	
 	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			var $languages = {
-				{implode from=$availableContentLanguages item=contentLanguage}
-					'{@$contentLanguage->languageID}': {
-						iconPath: '{@$contentLanguage->getIconPath()}',
-						languageName: '{$contentLanguage}'
+		require(['WoltLab/WCF/Language/Chooser'], function(LanguageChooser) {
+			var languages = {
+				{implode from=$availableContentLanguages item=__language}
+					'{@$__language->languageID}': {
+						iconPath: '{@$__language->getIconPath()|encodeJS}',
+						languageName: '{@$__language|encodeJS}'
 					}
 				{/implode}
 			};
 			
-			new WCF.Language.Chooser('languageIDContainer', 'languageID', {$languageID}, $languages);
+			LanguageChooser.init('languageIDContainer', 'languageID', {$languageID}, languages)
 		});
-		//]]>
 	</script>
 {/if}

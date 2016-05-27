@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
+use wcf\data\user\UserContentAction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -8,7 +9,7 @@ use wcf\system\WCF;
  * Prepares clipboard editor items for edit history entries.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard.action
@@ -16,12 +17,12 @@ use wcf\system\WCF;
  */
 class UserContentClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
+	 * @inheritDoc
 	 */
-	protected $supportedActions = array('revertContentChanges');
+	protected $supportedActions = ['revertContentChanges'];
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		$item = parent::execute($objects, $action);
@@ -41,14 +42,14 @@ class UserContentClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getClassName()
+	 * @inheritDoc
 	 */
 	public function getClassName() {
-		return 'wcf\data\user\UserContentAction';
+		return UserContentAction::class;
 	}
 	
 	/**
-	 * @see	\wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 * @inheritDoc
 	 */
 	public function getTypeName() {
 		return 'com.woltlab.wcf.user';
@@ -57,19 +58,19 @@ class UserContentClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users whose edits can be reverted.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	protected function validateRevertContentChanges() {
 		if (!MODULE_EDIT_HISTORY) {
-			return array();
+			return [];
 		}
 		
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.content.canBulkRevertContentChanges')) {
-			return array();
+			return [];
 		}
 		
-		$userIDs = array();
+		$userIDs = [];
 		foreach ($this->objects as $user) {
 			$userIDs[] = $user->userID;
 		}

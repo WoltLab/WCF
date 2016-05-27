@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * This includes the default event listener for a form: readFormParameters, validate, save.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -44,12 +44,12 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	
 	/**
 	 * additional fields
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
-	public $additionalFields = array();
+	public $additionalFields = [];
 	
 	/**
-	 * @see	\wcf\form\IForm::submit()
+	 * @inheritDoc
 	 */
 	public function submit() {
 		// call submit event
@@ -69,7 +69,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		// call readFormParameters event
@@ -79,7 +79,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		// call validate event
@@ -91,7 +91,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		// call save event
@@ -107,7 +107,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		if (!empty($_POST) || !empty($_FILES)) {
@@ -118,16 +118,16 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		// assign default variables
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'activeTabMenuItem' => $this->activeTabMenuItem,
 			'errorField' => $this->errorField,
 			'errorType' => $this->errorType
-		));
+		]);
 	}
 }

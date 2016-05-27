@@ -7,22 +7,26 @@ use wcf\system\acl\ACLHandler;
  * Executes acl option-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acl.option
  * @category	Community Framework
+ * 
+ * @method	ACLOption		create()
+ * @method	ACLOptionEditor[]	getObjects()
+ * @method	ACLOptionEditor		getSingleObject()
  */
 class ACLOptionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\acl\option\ACLOptionEditor';
+	protected $className = ACLOptionEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('loadAll');
+	protected $requireACP = ['loadAll'];
 	
 	/**
 	 * Validates parameters for ACL options.
@@ -39,7 +43,7 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function loadAll() {
-		$objectIDs = ($this->parameters['objectID']) ? array($this->parameters['objectID']) : array();
+		$objectIDs = ($this->parameters['objectID']) ? [$this->parameters['objectID']] : [];
 		$permissions = ACLHandler::getInstance()->getPermissions($this->parameters['objectTypeID'], $objectIDs, $this->parameters['categoryName'], true);
 		
 		return $permissions;

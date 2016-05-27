@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\acp\session\access\log\ACPSessionAccessLogList;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\page\SortablePage;
 use wcf\system\exception\IllegalLinkException;
@@ -9,37 +10,39 @@ use wcf\system\WCF;
  * Shows the details of a logged sessions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	ACPSessionAccessLogList		$objectList
  */
 class ACPSessionLogPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.session';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'acpSessionLog';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'time';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('sessionAccessLogID', 'ipAddress', 'time', 'requestURI', 'requestMethod', 'className');
+	public $validSortFields = ['sessionAccessLogID', 'ipAddress', 'time', 'requestURI', 'requestMethod', 'className'];
 	
 	/**
 	 * session log id
@@ -54,12 +57,12 @@ class ACPSessionLogPage extends SortablePage {
 	public $sessionLog = null;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\acp\session\access\log\ACPSessionAccessLogList';
+	public $objectListClassName = ACPSessionAccessLogList::class;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -73,16 +76,16 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add('sessionLogID = ?', array($this->sessionLogID));
+		$this->objectList->getConditionBuilder()->add('sessionLogID = ?', [$this->sessionLogID]);
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readObjects()
+	 * @inheritDoc
 	 */
 	protected function readObjects() {
 		$this->sqlOrderBy = 'acp_session_access_log.'.$this->sortField." ".$this->sortOrder;
@@ -91,14 +94,14 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'sessionLogID' => $this->sessionLogID,
 			'sessionLog' => $this->sessionLog
-		));
+		]);
 	}
 }

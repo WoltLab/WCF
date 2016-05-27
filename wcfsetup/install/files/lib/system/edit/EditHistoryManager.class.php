@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Manages the edit history.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.search
@@ -21,10 +21,10 @@ class EditHistoryManager extends SingletonFactory {
 	 * list of available object types
 	 * @var	array
 	 */
-	protected $availableObjectTypes = array();
+	protected $availableObjectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get available object types
@@ -36,6 +36,7 @@ class EditHistoryManager extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {
@@ -66,14 +67,14 @@ class EditHistoryManager extends SingletonFactory {
 					(objectTypeID, objectID, message, time, obsoletedAt, userID, username, editReason, obsoletedByUserID)
 			VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->getObjectTypeID($objectType), $objectID, $message, $time, TIME_NOW, $userID, $username, $editReason, $obsoletedByUserID));
+		$statement->execute([$this->getObjectTypeID($objectType), $objectID, $message, $time, TIME_NOW, $userID, $username, $editReason, $obsoletedByUserID]);
 	}
 	
 	/**
 	 * Deletes edit history entries.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function delete($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -84,7 +85,7 @@ class EditHistoryManager extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
-			$statement->execute(array($objectTypeID, $objectID));
+			$statement->execute([$objectTypeID, $objectID]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -92,7 +93,7 @@ class EditHistoryManager extends SingletonFactory {
 	/**
 	 * Performs mass reverting of edits by the given users in the given timeframe.
 	 * 
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$userIDs
 	 * @param	integer		$timeframe
 	 */
 	public function bulkRevert(array $userIDs, $timeframe = 86400) {
@@ -126,20 +127,17 @@ class EditHistoryManager extends SingletonFactory {
 			GROUP BY revertTo.objectTypeID, revertTo.objectID";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array_merge(
-			array(TIME_NOW - $timeframe),
+			[TIME_NOW - $timeframe],
 			$userIDs,
-			array(TIME_NOW - $timeframe),
+			[TIME_NOW - $timeframe],
 			$userIDs
 		));
 		
-		$entryIDs = array();
-		while ($entryID = $statement->fetchColumn()) {
-			$entryIDs[] = $entryID;
-		}
+		$entryIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		if (empty($entryIDs)) return;
 		
 		$list = new EditHistoryEntryList();
-		$list->getConditionBuilder()->add('entryID IN(?)', array($entryIDs));
+		$list->getConditionBuilder()->add('entryID IN(?)', [$entryIDs]);
 		$list->readObjects();
 		foreach ($list as $entry) {
 			$entry->getObject()->revertVersion($entry);

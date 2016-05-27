@@ -7,17 +7,20 @@ use wcf\system\WCF;
  * Provides functions to edit comments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
+ * 
+ * @method	Comment		getDecoratedObject()
+ * @mixin	Comment
  */
 class CommentEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\comment\Comment';
+	protected static $baseClass = Comment::class;
 	
 	/**
 	 * Updates response ids.
@@ -28,14 +31,9 @@ class CommentEditor extends DatabaseObjectEditor {
 			WHERE		commentID = ?
 			ORDER BY	time ASC, responseID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
-		$statement->execute(array($this->commentID));
-		$responseIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$responseIDs[] = $row['responseID'];
-		}
+		$statement->execute([$this->commentID]);
+		$responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
-		$this->update(array(
-			'responseIDs' => serialize($responseIDs)
-		));
+		$this->update(['responseIDs' => serialize($responseIDs)]);
 	}
 }

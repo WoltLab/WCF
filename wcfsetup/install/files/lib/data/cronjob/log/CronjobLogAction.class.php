@@ -7,28 +7,32 @@ use wcf\system\WCF;
  * Executes cronjob log-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.menu.item
  * @category	Community Framework
+ * 
+ * @method	CronjobLog		create()
+ * @method	CronjobLogEditor[]	getObjects()
+ * @method	CronjobLogEditor	getSingleObject()
  */
 class CronjobLogAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\cronjob\log\CronjobLogEditor';
+	protected $className = CronjobLogEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('clearAll');
+	protected $requireACP = ['clearAll'];
 	
 	/**
 	 * Validates the clear all action.
 	 */
 	public function validateClearAll() {
-		WCF::getSession()->checkPermissions(array('admin.system.canManageCronjob'));
+		WCF::getSession()->checkPermissions(['admin.management.canManageCronjob']);
 	}
 	
 	/**

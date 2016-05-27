@@ -15,7 +15,7 @@ use wcf\util\UserUtil;
  * Shows the user add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -23,14 +23,14 @@ use wcf\util\UserUtil;
  */
 class UserAddForm extends UserOptionListForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canAddUser');
+	public $neededPermissions = ['admin.user.canAddUser'];
 	
 	/**
 	 * username
@@ -64,9 +64,9 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * user group ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $groupIDs = array();
+	public $groupIDs = [];
 	
 	/**
 	 * language id
@@ -76,9 +76,9 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * visible languages
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $visibleLanguages = array();
+	public $visibleLanguages = [];
 	
 	/**
 	 * title of the user
@@ -129,7 +129,13 @@ class UserAddForm extends UserOptionListForm {
 	public $disableSignatureExpires = '';
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * tree of available user options
+	 * @var	array
+	 */
+	public $optionTree = [];
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -164,7 +170,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		// validate static user options
@@ -192,17 +198,17 @@ class UserAddForm extends UserOptionListForm {
 		// validate user groups
 		if (!empty($this->groupIDs)) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("groupID IN (?)", array($this->groupIDs));
-			$conditions->add("groupType NOT IN (?)", array(array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS)));
+			$conditions->add("groupID IN (?)", [$this->groupIDs]);
+			$conditions->add("groupType NOT IN (?)", [[UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]]);
 			
 			$sql = "SELECT	groupID
 				FROM	wcf".WCF_N."_user_group
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			$this->groupIDs = array();
+			$this->groupIDs = [];
 			while ($row = $statement->fetchArray()) {
-				if (UserGroup::isAccessibleGroup(array($row['groupID']))) {
+				if (UserGroup::isAccessibleGroup([$row['groupID']])) {
 					$this->groupIDs[] = $row['groupID'];
 				}
 			}
@@ -244,7 +250,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -252,8 +258,8 @@ class UserAddForm extends UserOptionListForm {
 		// create
 		$saveOptions = $this->optionHandler->save();
 		$this->additionalFields['languageID'] = $this->languageID;
-		$data = array(
-			'data' => array_merge($this->additionalFields, array(
+		$data = [
+			'data' => array_merge($this->additionalFields, [
 				'username' => $this->username,
 				'email' => $this->email,
 				'password' => $this->password,
@@ -262,11 +268,11 @@ class UserAddForm extends UserOptionListForm {
 				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
 				'signatureEnableSmilies' => $this->signatureEnableSmilies,
 				'signatureEnableHtml' => $this->signatureEnableHtml
-			)),
+			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions
-		);
+		];
 		
 		if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
 			$disableSignatureExpires = 0;
@@ -279,21 +285,21 @@ class UserAddForm extends UserOptionListForm {
 			$data['data']['disableSignatureExpires'] = $disableSignatureExpires;
 		}
 		
-		$this->objectAction = new UserAction(array(), 'create', $data);
+		$this->objectAction = new UserAction([], 'create', $data);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show empty add form
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 		
 		// reset values
 		$this->signatureEnableHtml = $this->disableSignature = 0;
 		$this->signatureEnableSmilies = $this->signatureEnableBBCodes = 1;
 		$this->username = $this->email = $this->confirmEmail = $this->password = $this->confirmPassword = $this->userTitle = '';
 		$this->signature = $this->disableSignatureReason = $this->disableSignatureExpires = '';
-		$this->groupIDs = array();
+		$this->groupIDs = [];
 		$this->languageID = $this->getDefaultFormLanguageID();
 		$this->optionHandler->resetOptionValues();
 	}
@@ -302,6 +308,7 @@ class UserAddForm extends UserOptionListForm {
 	 * Throws a UserInputException if the username is not unique or not valid.
 	 * 
 	 * @param	string		$username
+	 * @throws	UserInputException
 	 */
 	protected function validateUsername($username) {
 		if (empty($username)) {
@@ -324,9 +331,10 @@ class UserAddForm extends UserOptionListForm {
 	 * 
 	 * @param	string		$email
 	 * @param	string		$confirmEmail
+	 * @throws	UserInputException
 	 */
 	protected function validateEmail($email, $confirmEmail) {
-		if (empty($email)) {	
+		if (empty($email)) {
 			throw new UserInputException('email');
 		}
 		
@@ -351,6 +359,7 @@ class UserAddForm extends UserOptionListForm {
 	 * 
 	 * @param	string		$password
 	 * @param	string		$confirmPassword
+	 * @throws	UserInputException
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (empty($password)) {
@@ -364,7 +373,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -380,12 +389,12 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'username' => $this->username,
 			'email' => $this->email,
 			'confirmEmail' => $this->confirmEmail,
@@ -407,11 +416,11 @@ class UserAddForm extends UserOptionListForm {
 			'disableSignature' => $this->disableSignature,
 			'disableSignatureReason' => $this->disableSignatureReason,
 			'disableSignatureExpires' => $this->disableSignatureExpires
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// get the default language id

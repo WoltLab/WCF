@@ -2,14 +2,15 @@
 namespace wcf\data\user\avatar;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
 use wcf\system\upload\AvatarUploadFileValidationStrategy;
+use wcf\system\upload\UploadFile;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -19,11 +20,15 @@ use wcf\util\HTTPRequest;
  * Executes avatar-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.avatar
  * @category	Community Framework
+ * 
+ * @method	UserAvatar		create()
+ * @method	UserAvatarEditor[]	getObjects()
+ * @method	UserAvatarEditor	getSingleObject()
  */
 class UserAvatarAction extends AbstractDatabaseObjectAction {
 	/**
@@ -66,7 +71,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 * Handles uploaded attachments.
 	 */
 	public function upload() {
-		// save files
+		/** @var UploadFile[] $files */
 		$files = $this->parameters['__files']->getFiles();
 		$userID = (!empty($this->parameters['userID']) ? intval($this->parameters['userID']) : WCF::getUser()->userID);
 		$user = ($userID != WCF::getUser()->userID ? new User($userID) : WCF::getUser());
@@ -78,14 +83,14 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 				$fileLocation = $this->enforceDimensions($file->getLocation());
 				$imageData = getimagesize($fileLocation);
 				
-				$data = array(
+				$data = [
 					'avatarName' => $file->getFilename(),
 					'avatarExtension' => $file->getFileExtension(),
 					'width' => $imageData[0],
 					'height' => $imageData[1],
 					'userID' => $userID,
 					'fileHash' => sha1_file($fileLocation)
-				);
+				];
 				
 				// create avatar
 				$avatar = UserAvatarEditor::create($data);
@@ -94,7 +99,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 				// and create subdirectory if necessary
 				$dir = dirname($avatar->getLocation());
 				if (!@file_exists($dir)) {
-					FileUtil::makePath($dir, 0777);
+					FileUtil::makePath($dir);
 				}
 				
 				// move uploaded file
@@ -102,31 +107,31 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 					@unlink($fileLocation);
 					
 					// create thumbnails
-					$action = new UserAvatarAction(array($avatar), 'generateThumbnails');
+					$action = new UserAvatarAction([$avatar], 'generateThumbnails');
 					$action->executeAction();
 					
 					// delete old avatar
 					if ($user->avatarID) {
-						$action = new UserAvatarAction(array($user->avatarID), 'delete');
+						$action = new UserAvatarAction([$user->avatarID], 'delete');
 						$action->executeAction();
 					}
 					
 					// update user
 					$userEditor = new UserEditor($user);
-					$userEditor->update(array(
+					$userEditor->update([
 						'avatarID' => $avatar->avatarID,
 						'enableGravatar' => 0
-					));
+					]);
 					
 					// reset user storage
-					UserStorageHandler::getInstance()->reset(array($userID), 'avatar');
+					UserStorageHandler::getInstance()->reset([$userID], 'avatar');
 					
 					// return result
-					return array(
+					return [
 						'avatarID' => $avatar->avatarID,
 						'canCrop' => $avatar->canCrop(),
 						'url' => $avatar->getURL(96)
-					);
+					];
 				}
 				else {
 					// moving failed; delete avatar
@@ -140,7 +145,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$file->setValidationErrorType($e->getType());
 		}
 		
-		return array('errorType' => $file->getValidationErrorType());
+		return ['errorType' => $file->getValidationErrorType()];
 	}
 	
 	/**
@@ -151,7 +156,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $avatar) {
+		foreach ($this->getObjects() as $avatar) {
 			$adapter = ImageHandler::getInstance()->getAdapter();
 			$adapter->loadFile($avatar->getLocation());
 			
@@ -214,14 +219,14 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			return;
 		}
 		
-		$data = array(
+		$data = [
 			'avatarName' => $tmp['basename'],
 			'avatarExtension' => $tmp['extension'],
 			'width' => $imageData[0],
 			'height' => $imageData[1],
 			'userID' => $this->parameters['userEditor']->userID,
 			'fileHash' => sha1_file($filename)
-		);
+		];
 		
 		// create avatar
 		$avatar = UserAvatarEditor::create($data);
@@ -230,7 +235,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		// and create subdirectory if necessary
 		$dir = dirname($avatar->getLocation());
 		if (!@file_exists($dir)) {
-			FileUtil::makePath($dir, 0777);
+			FileUtil::makePath($dir);
 		}
 		
 		// move uploaded file
@@ -238,7 +243,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			@unlink($filename);
 			
 			// create thumbnails
-			$action = new UserAvatarAction(array($avatar), 'generateThumbnails');
+			$action = new UserAvatarAction([$avatar], 'generateThumbnails');
 			$action->executeAction();
 			
 			$avatarID = $avatar->avatarID;
@@ -253,20 +258,20 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		
 		// update user
 		if ($avatarID) {
-			$this->parameters['userEditor']->update(array(
+			$this->parameters['userEditor']->update([
 				'avatarID' => $avatarID,
 				'enableGravatar' => 0
-			));
+			]);
 			
 			// delete old avatar
 			if ($this->parameters['userEditor']->avatarID) {
-				$action = new UserAvatarAction(array($this->parameters['userEditor']->avatarID), 'delete');
+				$action = new UserAvatarAction([$this->parameters['userEditor']->avatarID], 'delete');
 				$action->executeAction();
 			}
 		}
 		
 		// reset user storage
-		UserStorageHandler::getInstance()->reset(array($this->parameters['userEditor']->userID), 'avatar');
+		UserStorageHandler::getInstance()->reset([$this->parameters['userEditor']->userID], 'avatar');
 	}
 	
 	/**
@@ -274,6 +279,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 * 
 	 * @param	string		$filename
 	 * @return	string
+	 * @throws	UserInputException
 	 */
 	protected function enforceDimensions($filename) {
 		$imageData = getimagesize($filename);
@@ -319,13 +325,13 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function getCropDialog() {
-		return array(
+		return [
 			'cropX' => $this->avatar->cropX,
 			'cropY' => $this->avatar->cropY,
-			'template' => WCF::getTPL()->fetch('avatarCropDialog', 'wcf', array(
+			'template' => WCF::getTPL()->fetch('avatarCropDialog', 'wcf', [
 				'avatar' => $this->avatar
-			))
-		);
+			])
+		];
 	}
 	
 	/**
@@ -339,7 +345,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			throw new PermissionDeniedException();
 		}
 		
-		if (!WCF::getSession()->getPermission('user.profile.avatar.canUploadAvatar') || UserProfile::getUserProfile($this->avatar->userID)->disableAvatar) {
+		if (!WCF::getSession()->getPermission('user.profile.avatar.canUploadAvatar') || UserProfileRuntimeCache::getInstance()->getObject($this->avatar->userID)->disableAvatar) {
 			throw new PermissionDeniedException();
 		}
 		
@@ -371,13 +377,13 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// update database entry
-		$this->avatar->update(array(
+		$this->avatar->update([
 			'cropX' => $this->parameters['cropX'],
 			'cropY' => $this->parameters['cropY']
-		));
+		]);
 		
-		return array(
+		return [
 			'url' => $this->avatar->getURL(96)
-		);
+		];
 	}
 }

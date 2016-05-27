@@ -12,7 +12,7 @@ use wcf\util\ArrayUtil;
  * Option type implementation for multiple select lists.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -32,35 +32,35 @@ class MultiSelectOptionType extends SelectOptionType {
 	protected $searchableFormElementTemplate = 'multiSelectSearchableOptionType';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
-		));
+		]);
 		return WCF::getTPL()->fetch($this->formElementTemplate);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
-		));
+		]);
 		return WCF::getTPL()->fetch($this->searchableFormElementTemplate);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		$options = $this->getSelectOptions($option);
 		foreach ($newValue as $value) {
 			if (!isset($options[$value])) {
@@ -70,15 +70,15 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		return implode("\n", $newValue);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
+	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
@@ -91,7 +91,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		if (!is_array($value) || empty($value)) return false;
@@ -101,7 +101,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(User $user, Option $option, $value) {
 		if (!is_array($value) || empty($value)) return false;
@@ -112,7 +112,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 * @inheritDoc
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;

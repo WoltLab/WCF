@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Handles styles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.style
@@ -23,7 +23,7 @@ class StyleHandler extends SingletonFactory {
 	 * style information cache
 	 * @var	array
 	 */
-	protected $cache = array();
+	protected $cache = [];
 	
 	/**
 	 * active style object
@@ -32,7 +32,7 @@ class StyleHandler extends SingletonFactory {
 	protected $style = null;
 	
 	/**
-	 * @see	\wcf\system\exception\SystemException::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// load cache
@@ -42,10 +42,10 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all for the current user available styles.
 	 * 
-	 * @return	array<\wcf\data\style\Style>
+	 * @return	Style[]
 	 */
 	public function getAvailableStyles() {
-		$styles = array();
+		$styles = [];
 		
 		foreach ($this->cache['styles'] as $styleID => $style) {
 			if (!$style->isDisabled || WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
@@ -59,7 +59,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all styles.
 	 * 
-	 * @return	array<\wcf\data\style\Style>
+	 * @return	Style[]
 	 */
 	public function getStyles() {
 		return $this->cache['styles'];
@@ -83,6 +83,7 @@ class StyleHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$styleID
 	 * @param	boolean		$ignorePermissions
+	 * @throws	SystemException
 	 */
 	public function changeStyle($styleID = 0, $ignorePermissions = false) {
 		// check permission
@@ -188,6 +189,7 @@ class StyleHandler extends SingletonFactory {
 	 * @param	string		$packageName	style package name
 	 * @param	boolean		$skipTainted	ignore tainted styles
 	 * @return	\wcf\data\style\StyleEditor
+	 * @since	2.2
 	 */
 	public function getStyleByName($packageName, $skipTainted = false) {
 		foreach ($this->cache['styles'] as $style) {

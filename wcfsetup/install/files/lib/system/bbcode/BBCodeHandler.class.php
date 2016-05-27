@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
 
@@ -7,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Handles BBCodes displayed as buttons within the WYSIWYG editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
@@ -16,24 +17,24 @@ use wcf\system\SingletonFactory;
 class BBCodeHandler extends SingletonFactory {
 	/**
 	 * list of BBCodes allowed for usage
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
-	protected $allowedBBCodes = array();
+	protected $allowedBBCodes = [];
 	
 	/**
 	 * list of BBCodes displayed as buttons
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
-	protected $buttonBBCodes = array();
+	protected $buttonBBCodes = [];
 	
 	/**
 	 * list of BBCodes which contain raw code (disabled BBCode parsing)
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
 	protected $sourceBBCodes = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
@@ -68,7 +69,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns all bbcodes.
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @return	BBCode[]
 	 */
 	public function getBBCodes() {
 		return BBCodeCache::getInstance()->getBBCodes();
@@ -77,10 +78,10 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @return	BBCode[]
 	 */
 	public function getButtonBBCodes() {
-		$buttons = array();
+		$buttons = [];
 		foreach ($this->buttonBBCodes as $bbcode) {
 			if ($this->isAvailableBBCode($bbcode->bbcodeTag)) {
 				$buttons[] = $bbcode;
@@ -93,7 +94,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Sets the allowed BBCodes.
 	 * 
-	 * @param	array<string>
+	 * @param	string[]	$bbCodes
 	 */
 	public function setAllowedBBCodes(array $bbCodes) {
 		$this->allowedBBCodes = $bbCodes;
@@ -102,15 +103,15 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of BBCodes which contain raw code (disabled BBCode parsing)
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @return	BBCode[]
 	 */
 	public function getSourceBBCodes() {
 		if (empty($this->allowedBBCodes)) {
-			return array();
+			return [];
 		}
 		
 		if ($this->sourceBBCodes === null) {
-			$this->sourceBBCodes = array();
+			$this->sourceBBCodes = [];
 			
 			foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
 				if (!$bbcode->isSourceCode) {
@@ -129,7 +130,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of known highlighters.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getHighlighters() {
 		return BBCodeCache::getInstance()->getHighlighters();

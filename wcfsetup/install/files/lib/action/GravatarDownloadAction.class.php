@@ -13,7 +13,7 @@ use wcf\util\HTTPRequest;
  * Downloads and caches gravatars.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -39,7 +39,7 @@ class GravatarDownloadAction extends AbstractAction {
 	public $size = 150;
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -59,7 +59,7 @@ class GravatarDownloadAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -106,9 +106,9 @@ class GravatarDownloadAction extends AbstractAction {
 				// update file extension
 				if ($fileExtension != $this->user->gravatarFileExtension) {
 					$editor = new UserEditor($this->user);
-					$editor->update(array(
+					$editor->update([
 						'gravatarFileExtension' => $fileExtension
-					));
+					]);
 				}
 				
 				@header('Content-Type: '.$mimeType);
@@ -118,9 +118,9 @@ class GravatarDownloadAction extends AbstractAction {
 			catch (SystemException $e) {
 				// disable gravatar
 				$editor = new UserEditor($this->user);
-				$editor->update(array(
+				$editor->update([
 					'enableGravatar' => 0
-				));
+				]);
 			}
 		}
 		

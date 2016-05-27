@@ -3,12 +3,10 @@ namespace wcf\page;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\SystemException;
-use wcf\system\menu\page\PageMenu;
-use wcf\system\request\LinkHandler;
+use wcf\system\exception\ImplementationException;
+use wcf\system\page\PageLocationManager;
 use wcf\system\search\SearchEngine;
 use wcf\system\WCF;
 
@@ -16,7 +14,7 @@ use wcf\system\WCF;
  * Shows the result of a search request.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
@@ -24,7 +22,7 @@ use wcf\system\WCF;
  */
 class SearchResultPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = SEARCH_RESULTS_PER_PAGE;
 	
@@ -50,7 +48,7 @@ class SearchResultPage extends MultipleLinkPage {
 	 * messages
 	 * @var	array
 	 */
-	public $messages = array();
+	public $messages = [];
 	
 	/**
 	 * search data
@@ -71,7 +69,7 @@ class SearchResultPage extends MultipleLinkPage {
 	public $resultListApplication = 'wcf';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -91,7 +89,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -105,27 +103,25 @@ class SearchResultPage extends MultipleLinkPage {
 		// set active menu item
 		if (isset($this->searchData['selectedObjectTypes']) && count($this->searchData['selectedObjectTypes']) == 1) {
 			$objectType = SearchEngine::getInstance()->getObjectType(reset($this->searchData['selectedObjectTypes']));
-			if (($activeMenuItem = $objectType->getActiveMenuItem())) {
-				PageMenu::getInstance()->setActiveMenuItem($activeMenuItem);
-			}
+			$objectType->setLocation();
 		}
 		
 		// add breadcrumbs
-		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.search.title'), LinkHandler::getInstance()->getLink('Search')));
+		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.Search');
 	}
 	
 	/**
 	 * Caches the message data.
 	 */
 	protected function cacheMessageData() {
-		$types = array();
+		$types = [];
 		
 		// group object id by object type
 		for ($i = $this->startIndex - 1; $i < $this->endIndex; $i++) {
 			$type = $this->searchData['results'][$i]['objectType'];
 			$objectID = $this->searchData['results'][$i]['objectID'];
 			
-			if (!isset($types[$type])) $types[$type] = array();
+			if (!isset($types[$type])) $types[$type] = [];
 			$types[$type][] = $objectID;
 		}
 		
@@ -146,7 +142,7 @@ class SearchResultPage extends MultipleLinkPage {
 			$objectType = SearchEngine::getInstance()->getObjectType($type);
 			if (($message = $objectType->getObject($objectID)) !== null) {
 				if (!($message instanceof ISearchResultObject)) {
-					throw new SystemException("'".get_class($message)."' does not implement 'wcf\data\search\ISearchResultObject'");
+					throw new ImplementationException(get_class($message), ISearchResultObject::class);
 				}
 				
 				$this->messages[] = $message;
@@ -155,12 +151,12 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'query' => $this->searchData['query'],
 			'objects' => $this->messages,
 			'searchData' => $this->searchData,
@@ -173,11 +169,11 @@ class SearchResultPage extends MultipleLinkPage {
 			'resultListTemplateName' => $this->resultListTemplateName,
 			'resultListApplication' => $this->resultListApplication,
 			'application' => ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID)
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::countItems()
+	 * @inheritDoc
 	 */
 	public function countItems() {
 		// call countItems event
@@ -187,12 +183,12 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() { }
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readObjects()
+	 * @inheritDoc
 	 */
 	protected function readObjects() { }
 }

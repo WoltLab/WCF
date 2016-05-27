@@ -5,7 +5,7 @@ namespace wcf\util;
  * Contains option-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -19,7 +19,7 @@ final class OptionUtil {
 	 * @return	array
 	 */
 	public static function parseSelectOptions($selectOptions) {
-		$result = array();
+		$result = [];
 		$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($selectOptions)));
 		foreach ($options as $option) {
 			$key = $value = $option;
@@ -42,7 +42,7 @@ final class OptionUtil {
 	 * @return	array
 	 */
 	public static function parseMultipleEnableOptions($enableOptions) {
-		$result = array();
+		$result = [];
 		if (!empty($enableOptions)) {
 			$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($enableOptions)));
 			$key = -1;
@@ -64,5 +64,10 @@ final class OptionUtil {
 		return $result;
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of OptionUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

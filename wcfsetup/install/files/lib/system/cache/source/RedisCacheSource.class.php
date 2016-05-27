@@ -2,18 +2,18 @@
 namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * RedisCacheSource is an implementation of CacheSource that uses a Redis server to store cached variables.
  * 
  * @author	Maximilian Mader
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.source
  * @category	Community Framework
+ * @since	2.2
  */
 class RedisCacheSource implements ICacheSource {
 	/**
@@ -63,7 +63,7 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flush()
+	 * @inheritDoc
 	 */
 	public function flush($cacheName, $useWildcard) {
 		$parts = explode('-', $cacheName, 2);
@@ -76,7 +76,7 @@ class RedisCacheSource implements ICacheSource {
 			}
 			else {
 				// delete the specified key from the hashset
-				$this->redis->hdel($this->getCacheName($parts[0]), $parts[1]);
+				$this->redis->hDel($this->getCacheName($parts[0]), $parts[1]);
 			}
 		}
 		else {
@@ -85,7 +85,7 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
+	 * @inheritDoc
 	 */
 	public function flushAll() {
 		// set flush key to current time if it does not exist yet (this prevents falling back to 0 if the key gets deleted)
@@ -96,13 +96,13 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::get()
+	 * @inheritDoc
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$parts = explode('-', $cacheName, 2);
 		
 		if (isset($parts[1])) {
-			$value = $this->redis->hget($this->getCacheName($parts[0]), $parts[1]);
+			$value = $this->redis->hGet($this->getCacheName($parts[0]), $parts[1]);
 		}
 		else {
 			$value = $this->redis->get($this->getCacheName($cacheName));
@@ -137,7 +137,7 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::set()
+	 * @inheritDoc
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		// split parameterized cache entry names into cache name and cache index
@@ -149,7 +149,7 @@ class RedisCacheSource implements ICacheSource {
 			
 			// save parameterized cache entries as field in a hashset
 			// saving in a hashset is safe as the smallest lifetime of its fields is set as TTL for the whole hashset
-			$this->redis->hset($key, $parts[1], serialize($value));
+			$this->redis->hSet($key, $parts[1], serialize($value));
 			
 			$keyTTL = $this->redis->ttl($key);
 			$newTTL = $this->getTTL($maxLifetime);

@@ -9,7 +9,7 @@ use wcf\util\OptionUtil;
  * User option output implementation for the output of select options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user
@@ -17,7 +17,7 @@ use wcf\util\OptionUtil;
  */
 class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		$result = self::getResult($option, $value);
@@ -51,7 +51,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 		// multiselect
 		if (mb_strpos($value, "\n") !== false) {
 			$values = explode("\n", $value);
-			$result = array();
+			$result = [];
 			foreach ($values as $value) {
 				if (isset($options[$value])) {
 					$result[] = $options[$value];

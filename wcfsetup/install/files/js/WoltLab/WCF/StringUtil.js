@@ -12,12 +12,12 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 	/**
 	 * @exports	WoltLab/WCF/StringUtil
 	 */
-	var StringUtil = {
+	return {
 		/**
 		 * Adds thousands separators to a given number.
 		 * 
 		 * @see		http://stackoverflow.com/a/6502556/782822
-		 * @param	{*}	number
+		 * @param	{?}	number
 		 * @return	{String}
 		 */
 		addThousandsSeparator: function(number) {
@@ -30,7 +30,7 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		/**
 		 * Escapes special HTML-characters within a string
 		 * 
-		 * @param	{*}	string
+		 * @param	{?}	string
 		 * @return	{String}
 		 */
 		escapeHTML: function (string) {
@@ -41,7 +41,7 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		 * Escapes a String to work with RegExp.
 		 * 
 		 * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/regexp.js#L25
-		 * @param	{*}	string
+		 * @param	{?}	string
 		 * @return	{String}
 		 */
 		escapeRegExp: function(string) {
@@ -51,7 +51,7 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		/**
 		 * Rounds number to given count of floating point digits, localizes decimal-point and inserts thousands separators.
 		 * 
-		 * @param	{*}		number
+		 * @param	{?}		number
 		 * @param	{int}		decimalPlaces	The number of decimal places to leave after rounding.
 		 * @return	{String}
 		 */
@@ -73,7 +73,7 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		/**
 		 * Makes a string's first character lowercase.
 		 * 
-		 * @param	{*}		string
+		 * @param	{?}		string
 		 * @return	{String}
 		 */
 		lcfirst: function(string) {
@@ -83,7 +83,7 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		/**
 		 * Makes a string's first character uppercase.
 		 * 
-		 * @param	{*}		string
+		 * @param	{?}		string
 		 * @return	{String}
 		 */
 		ucfirst: function(string) {
@@ -93,13 +93,11 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		/**
 		 * Unescapes special HTML-characters within a string.
 		 * 
-		 * @param	{*}		string
+		 * @param	{?}		string
 		 * @return	{String}
 		 */
 		unescapeHTML: function (string) {
 			return String(string).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 		}
 	};
-	
-	return StringUtil;
 });

@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * It supports POST, SSL, Basic Auth etc.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -24,19 +24,19 @@ final class HTTPRequest {
 	 * given options
 	 * @var	array
 	 */
-	private $options = array();
+	private $options = [];
 	
 	/**
 	 * given post parameters
 	 * @var	array
 	 */
-	private $postParameters = array();
+	private $postParameters = [];
 	
 	/**
 	 * given files
 	 * @var	array
 	 */
-	private $files = array();
+	private $files = [];
 	
 	/**
 	 * indicates if request will be made via SSL
@@ -94,15 +94,15 @@ final class HTTPRequest {
 	
 	/**
 	 * request headers
-	 * @var	array<string>
+	 * @var	string[][]
 	 */
-	private $headers = array();
+	private $headers = [];
 	
 	/**
 	 * legacy headers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	private $legacyHeaders = array();
+	private $legacyHeaders = [];
 	
 	/**
 	 * request body
@@ -112,9 +112,9 @@ final class HTTPRequest {
 	
 	/**
 	 * reply headers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	private $replyHeaders = array();
+	private $replyHeaders = [];
 	
 	/**
 	 * reply body
@@ -132,11 +132,11 @@ final class HTTPRequest {
 	 * Constructs a new instance of HTTPRequest.
 	 * 
 	 * @param	string		$url		URL to connect to
-	 * @param	array<string>	$options
+	 * @param	string[]	$options
 	 * @param	mixed		$postParameters	Parameters to send via POST
 	 * @param	array		$files		Files to attach to the request
 	 */
-	public function __construct($url, array $options = array(), $postParameters = array(), array $files = array()) {
+	public function __construct($url, array $options = [], $postParameters = [], array $files = []) {
 		$this->setURL($url);
 		
 		$this->postParameters = $postParameters;
@@ -219,22 +219,27 @@ final class HTTPRequest {
 	 */
 	private function setURL($url) {
 		$parsedUrl = $originUrl = parse_url($url);
-		if (PROXY_SERVER_HTTP) {
-			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
+		
+		$this->originUseSSL = $originUrl['scheme'] === 'https';
+		$this->originHost = $originUrl['host'];
+		$this->originPort = isset($originUrl['port']) ? $originUrl['port'] : ($this->originUseSSL ? 443 : 80);
+		
+		if (PROXY_SERVER_HTTP && !$this->originUseSSL) {
 			$this->path = $url;
+			$this->query = '';
 		}
 		else {
 			$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
+			$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
+		}
+		
+		if (PROXY_SERVER_HTTP) {
+			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
 		}
 		
 		$this->useSSL = $parsedUrl['scheme'] === 'https';
 		$this->host = $parsedUrl['host'];
 		$this->port = isset($parsedUrl['port']) ? $parsedUrl['port'] : ($this->useSSL ? 443 : 80);
-		$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
-		
-		$this->originUseSSL = $originUrl['scheme'] === 'https';
-		$this->originHost = $originUrl['host'];
-		$this->originPort = isset($originUrl['port']) ? $originUrl['port'] : ($this->originUseSSL ? 443 : 80);
 		
 		// update the 'Host:' header if URL has changed
 		if ($this->url != $url) {
@@ -249,11 +254,11 @@ final class HTTPRequest {
 	 */
 	public function execute() {
 		// connect
-		$remoteFile = new RemoteFile(($this->useSSL ? 'ssl://' : '').$this->host, $this->port, $this->options['timeout'], array(
-			'ssl' => array(
+		$remoteFile = new RemoteFile(($this->useSSL ? 'ssl://' : '').$this->host, $this->port, $this->options['timeout'], [
+			'ssl' => [
 				'peer_name' => $this->originHost
-			)
-		));
+			]
+		]);
 		
 		if ($this->originUseSSL && PROXY_SERVER_HTTP) {
 			if ($this->useSSL) throw new SystemException("Unable to proxy HTTPS when using TLS for proxy connection");
@@ -265,7 +270,7 @@ final class HTTPRequest {
 			$request .= "Host: ".$this->originHost.":".$this->originPort."\r\n";
 			$request .= "\r\n";
 			$remoteFile->puts($request);
-			$this->replyHeaders = array();
+			$this->replyHeaders = [];
 			while (!$remoteFile->eof()) {
 				$line = $remoteFile->gets();
 				if (rtrim($line) === '') {
@@ -295,7 +300,7 @@ final class HTTPRequest {
 		$remoteFile->puts($request);
 		
 		$inHeader = true;
-		$this->replyHeaders = array();
+		$this->replyHeaders = [];
 		$this->replyBody = '';
 		$chunkLength = 0;
 		$bodyLength = 0;
@@ -383,11 +388,11 @@ final class HTTPRequest {
 	 * Parses the reply headers.
 	 */
 	private function parseReplyHeaders() {
-		$headers = array();
+		$headers = [];
 		$lastKey = '';
 		foreach ($this->replyHeaders as $header) {
 			if (strpos($header, ':') === false) {
-				$headers[trim($header)] = array(trim($header));
+				$headers[trim($header)] = [trim($header)];
 				continue;
 			}
 			
@@ -401,13 +406,13 @@ final class HTTPRequest {
 				list($key, $value) = explode(':', $header, 2);
 				
 				$lastKey = $key;
-				if (!isset($headers[$key])) $headers[$key] = array();
+				if (!isset($headers[$key])) $headers[$key] = [];
 				$headers[$key][] = trim($value);
 			}
 		}
 		// 4.2 Field names are case-insensitive.
 		$this->replyHeaders = array_change_key_case($headers);
-		if (isset($this->replyHeaders['transfer-encoding'])) $this->replyHeaders['transfer-encoding'] = array(implode(',', $this->replyHeaders['transfer-encoding']));
+		if (isset($this->replyHeaders['transfer-encoding'])) $this->replyHeaders['transfer-encoding'] = [implode(',', $this->replyHeaders['transfer-encoding'])];
 		$this->legacyHeaders = array_map('end', $headers);
 		
 		// get status code
@@ -447,7 +452,7 @@ final class HTTPRequest {
 				// be retrieved using a GET method on that resource.
 				if ($this->statusCode == '303') {
 					$newRequest->options['method'] = 'GET';
-					$newRequest->postParameters = array();
+					$newRequest->postParameters = [];
 					$newRequest->addHeader('content-length', '');
 					$newRequest->addHeader('content-type', '');
 				}
@@ -532,19 +537,20 @@ final class HTTPRequest {
 	 * @return	array
 	 */
 	public function getReply() {
-		return array(
+		return [
 			'statusCode' => $this->statusCode, 
 			'headers' => $this->legacyHeaders,
 			'httpHeaders' => $this->replyHeaders,
 			'body' => $this->replyBody,
 			'url' => $this->url
-		);
+		];
 	}
 	
 	/**
 	 * Sets options and applies default values when an option is omitted.
 	 * 
 	 * @param	array		$options
+	 * @throws	SystemException
 	 */
 	private function setOptions(array $options) {
 		if (!isset($options['timeout'])) {
@@ -593,7 +599,7 @@ final class HTTPRequest {
 			$this->headers[$name][] = $value;
 		}
 		else {
-			$this->headers[$name] = array($value);
+			$this->headers[$name] = [$value];
 		}
 	}
 	
@@ -601,7 +607,7 @@ final class HTTPRequest {
 	 * Resets reply data when cloning.
 	 */
 	private function __clone() {
-		$this->replyHeaders = array();
+		$this->replyHeaders = [];
 		$this->replyBody = '';
 		$this->statusCode = 0;
 	}

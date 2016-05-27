@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the form for editing user option categories.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option';
 	
@@ -36,7 +36,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	public $category = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,16 +49,16 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
 		I18nHandler::getInstance()->save('categoryName', 'wcf.user.option.category.'.$this->category->categoryName, 'wcf.user.option');
 		
-		$this->objectAction = new UserOptionCategoryAction(array($this->category), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserOptionCategoryAction([$this->category], 'update', ['data' => array_merge($this->additionalFields, [
 			'showOrder' => $this->showOrder
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -66,7 +66,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -79,17 +79,17 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'categoryID' => $this->categoryID,
 			'category' => $this->category
-		));
+		]);
 	}
 }

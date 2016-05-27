@@ -29,7 +29,7 @@ WCF.ACP.Style.CopyStyle = Class.extend({
 		
 		var self = this;
 		$('.jsCopyStyle').click(function() {
-			WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.style.copyStyle.confirmMessage'), $.proxy(self._copy, self));
+			WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.style.copyStyle.confirmMessage'), $.proxy(self._copy, self), undefined, undefined, true);
 		});
 	},
 	
@@ -69,6 +69,7 @@ WCF.ACP.Style.CopyStyle = Class.extend({
  * 
  * @param	integer		styleID
  * @param	string		tmpHash
+ * @deprecated	use WoltLab/WCF/Acp/Ui/Style/Image/Upload
  */
 WCF.ACP.Style.ImageUpload = WCF.Upload.extend({
 	/**
@@ -362,7 +363,7 @@ WCF.ACP.Style.List = Class.extend({
 				if (action === 'confirm') {
 					self._click('delete', styleID);
 				}
-			});
+			}, undefined, undefined, true);
 		}
 		else {
 			// invoke action directly

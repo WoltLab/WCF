@@ -1,11 +1,12 @@
 <?php
 namespace wcf\system\attachment;
+use wcf\data\attachment\Attachment;
 
 /**
  * Any attachment object type should implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.attachment
@@ -56,7 +57,7 @@ interface IAttachmentObjectType {
 	/**
 	 * Returns the allowed file extensions.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getAllowedExtensions();
 	
@@ -78,14 +79,14 @@ interface IAttachmentObjectType {
 	/**
 	 * Caches the data of the given container objects.
 	 * 
-	 * @param	array<integer>		$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function cacheObjects(array $objectIDs);
 	
 	/**
 	 * Loads the permissions for given attachments.
 	 * 
-	 * @param	array<\wcf\data\attachment\Attachment>		$attachments
+	 * @param	Attachment[]	$attachments
 	 */
 	public function setPermissions(array $attachments);
 }

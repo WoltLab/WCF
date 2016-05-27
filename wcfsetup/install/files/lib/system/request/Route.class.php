@@ -2,7 +2,6 @@
 namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\menu\page\PageMenu;
 use wcf\system\WCF;
 
 /**
@@ -12,7 +11,7 @@ use wcf\system\WCF;
  * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -35,7 +34,7 @@ class Route implements IRoute {
 	 * schema component options
 	 * @var	array
 	 */
-	protected $parameterOptions = array();
+	protected $parameterOptions = [];
 	
 	/**
 	 * route name
@@ -47,7 +46,7 @@ class Route implements IRoute {
 	 * route schema data
 	 * @var	array
 	 */
-	protected $routeSchema = array();
+	protected $routeSchema = [];
 	
 	/**
 	 * parsed route data
@@ -57,13 +56,13 @@ class Route implements IRoute {
 	
 	/**
 	 * cached list of transformed controller names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected static $controllerNames = array();
+	protected static $controllerNames = [];
 	
 	/**
 	 * list of application abbreviation and default controller name
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $defaultControllers = null;
 	
@@ -83,6 +82,7 @@ class Route implements IRoute {
 	 * 
 	 * @param	string		$routeSchema
 	 * @param	string		$controller
+	 * @throws	SystemException
 	 */
 	public function setSchema($routeSchema, $controller = null) {
 		$schemaParts = $this->getParts($routeSchema);
@@ -99,7 +99,7 @@ class Route implements IRoute {
 				throw new SystemException("Placeholder expected, but invalid string '" . $part . "' given.");
 			}
 			
-			$part = str_replace(array('{', '}'), '', $part);
+			$part = str_replace(['{', '}'], '', $part);
 			if ($part == 'controller') {
 				if ($this->controller !== null) {
 					throw new SystemException('Controller may not be part of the scheme if a route controller is given.');
@@ -126,19 +126,19 @@ class Route implements IRoute {
 	 * @param	boolean		$isOptional
 	 */
 	public function setParameterOption($key, $default = null, $regexPattern = null, $isOptional = false) {
-		$this->parameterOptions[$key] = array(
+		$this->parameterOptions[$key] = [
 			'default' => $default,
 			'isOptional' => $isOptional,
 			'regexPattern' => $regexPattern
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::matches()
+	 * @inheritDoc
 	 */
 	public function matches($requestURL) {
 		$urlParts = $this->getParts($requestURL);
-		$data = array();
+		$data = [];
 		
 		// handle each route schema component
 		for ($i = 0, $size = count($this->routeSchema); $i < $size; $i++) {
@@ -199,7 +199,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::getRouteData()
+	 * @inheritDoc
 	 */
 	public function getRouteData() {
 		return $this->routeData;
@@ -224,7 +224,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::canHandle()
+	 * @inheritDoc
 	 */
 	public function canHandle(array $components) {
 		foreach ($this->routeSchema as $schemaPart) {
@@ -256,7 +256,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::buildLink()
+	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
 		$application = (isset($components['application'])) ? $components['application'] : null;
@@ -276,12 +276,15 @@ class Route implements IRoute {
 				$ignoreController = true;
 			}
 			else if (!RequestHandler::getInstance()->isACPRequest()) {
+				/* TODO:
 				$landingPage = PageMenu::getInstance()->getLandingPage();
 				if ($landingPage !== null && strcasecmp($landingPage->getController(), $components['controller']) == 0) {
 					$ignoreController = true;
-				}
+				}*/
 				
 				// check if this is the default controller of the requested application
+				/*
+				 * TODO: what exactly is the check for the primary application doing?
 				if (!URL_LEGACY_MODE && !$ignoreController && $application !== null) {
 					if (isset(self::$defaultControllers[$application]) && self::$defaultControllers[$application] == $components['controller']) {
 						// check if this is the primary application and the landing page originates to the same application
@@ -292,6 +295,7 @@ class Route implements IRoute {
 						}
 					}
 				}
+				*/
 			}
 			
 			// drops controller from route
@@ -347,7 +351,7 @@ class Route implements IRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::isACP()
+	 * @inheritDoc
 	 */
 	public function isACP() {
 		return $this->isACP;
@@ -376,7 +380,7 @@ class Route implements IRoute {
 	 */
 	protected static function loadDefaultControllers() {
 		if (self::$defaultControllers === null) {
-			self::$defaultControllers = array();
+			self::$defaultControllers = [];
 			
 			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 				$app = WCF::getApplicationObject($application);

@@ -3,12 +3,13 @@ namespace wcf\system\application;
 use wcf\data\package\PackageCache;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Abstract implementation of a community framework application.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.application
@@ -40,7 +41,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	protected $primaryController = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected final function init() {
 		if (empty($this->abbreviation)) {
@@ -65,14 +66,14 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	}
 	
 	/**
-	 * @see	\wcf\system\application\IApplication::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\application\IApplication::isActiveApplication()
+	 * @inheritDoc
 	 */
 	public function isActiveApplication() {
 		return $this->isActiveApplication;
@@ -88,16 +89,16 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	}
 	
 	/**
-	 * @see	\wcf\system\application\IApplication::getPrimaryController()
+	 * @inheritDoc
 	 */
 	public function getPrimaryController() {
 		return $this->primaryController;
 	}
 	
 	/**
-	 * @see	\wcf\system\application\IApplication::__callStatic()
+	 * @inheritDoc
 	 */
 	public static function __callStatic($method, array $arguments) {
-		return call_user_func_array(array('wcf\system\WCF', $method), $arguments);
+		return call_user_func_array([WCF::class, $method], $arguments);
 	}
 }

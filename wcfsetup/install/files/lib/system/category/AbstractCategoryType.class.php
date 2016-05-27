@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Abstract implementation of a category type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -55,12 +55,12 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	/**
 	 * name of the object types associated with categories of this type (the
 	 * key is the definition name and value the object type name)
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::afterDeletion()
+	 * @inheritDoc
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor) {
 		$categoryIDs = array_keys(CategoryHandler::getInstance()->getChildCategories($categoryEditor->categoryID));
@@ -68,52 +68,52 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 		if (!empty($categoryIDs)) {
 			// move child categories to parent category
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add("categoryID IN (?)", array($categoryIDs));
+			$conditionBuilder->add("categoryID IN (?)", [$categoryIDs]);
 			$sql = "UPDATE	wcf".WCF_N."_category
 				SET	parentCategoryID = ?
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array_merge(array($categoryEditor->parentCategoryID), $conditionBuilder->getParameters()));
+			$statement->execute(array_merge([$categoryEditor->parentCategoryID], $conditionBuilder->getParameters()));
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canAddCategory()
+	 * @inheritDoc
 	 */
 	public function canAddCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canAddCategory');
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canDeleteCategory()
+	 * @inheritDoc
 	 */
 	public function canDeleteCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canDeleteCategory');
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::canEditCategory()
+	 * @inheritDoc
 	 */
 	public function canEditCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canEditCategory');
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::changedParentCategories()
+	 * @inheritDoc
 	 */
 	public function changedParentCategories(array $categoryData) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::forceDescription()
+	 * @inheritDoc
 	 */
 	public function forceDescription() {
 		return $this->hasDescription() && $this->forceDescription;
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getApplication()
+	 * @inheritDoc
 	 */
 	public function getApplication() {
 		$classParts = explode('\\', get_called_class());
@@ -121,7 +121,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getObjectTypeName()
+	 * @inheritDoc
 	 */
 	public function getObjectTypeName($definitionName) {
 		if (isset($this->objectTypes[$definitionName])) {
@@ -132,21 +132,21 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getDescriptionLangVarCategory()
+	 * @inheritDoc
 	 */
 	public function getDescriptionLangVarCategory() {
 		return $this->i18nLangVarCategory;
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getI18nLangVarPrefix()
+	 * @inheritDoc
 	 */
 	public function getI18nLangVarPrefix() {
 		return $this->i18nLangVarCategory.'.category';
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getLanguageVariable()
+	 * @inheritDoc
 	 */
 	public function getLanguageVariable($name, $optional = false) {
 		if ($this->langVarPrefix) {
@@ -160,21 +160,21 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getMaximumNestingLevel()
+	 * @inheritDoc
 	 */
 	public function getMaximumNestingLevel() {
 		return $this->maximumNestingLevel;
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getTitleLangVarCategory()
+	 * @inheritDoc
 	 */
 	public function getTitleLangVarCategory() {
 		return $this->i18nLangVarCategory;
 	}
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::hasDescription()
+	 * @inheritDoc
 	 */
 	public function hasDescription() {
 		return $this->hasDescription;

@@ -9,20 +9,25 @@ use wcf\util\StringUtil;
  * Represents a captcha question.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.captcha.question
  * @category	Community Framework
+ *
+ * @property-read	integer		$questionID
+ * @property-read	string		$question
+ * @property-read	string		$answers
+ * @property-read	integer		$isDisabled
  */
 class CaptchaQuestion extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'captcha_question';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'questionID';
 	

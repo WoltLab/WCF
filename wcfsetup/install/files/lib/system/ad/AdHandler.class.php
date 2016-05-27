@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\ad;
+use wcf\data\ad\Ad;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\AdCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -10,7 +12,7 @@ use wcf\system\WCF;
  * Handles ads.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.ads
@@ -19,21 +21,22 @@ use wcf\system\WCF;
 class AdHandler extends SingletonFactory {
 	/**
 	 * list of ad objects grouped by ad location
-	 * @var	array
+	 * @var	Ad[][]
 	 */
-	protected $ads = array();
+	protected $ads = [];
 	
 	/**
 	 * list of ad location object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * Returns the ad output for the given ad location.
 	 * 
 	 * @param	string		$adLocation
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public function getAds($adLocation) {
 		if (!isset($this->objectTypes[$adLocation])) {
@@ -66,27 +69,28 @@ class AdHandler extends SingletonFactory {
 	/**
 	 * Returns all available ad location object types.
 	 * 
-	 * @return	array<\wcf\data\object\type\ObjectType>
+	 * @param	string|null	$categoryName
+	 * @return	ObjectType[]
 	 */
 	public function getLocationObjectTypes($categoryName = null) {
 		if ($categoryName === null) {
 			return $this->objectTypes;
 		}
 		
-		$objectTypes = array();
+		$objectTypes = [];
 		foreach ($this->objectTypes as $key => $objectType) {
 			if ($objectType->categoryname == $categoryName) {
 				$objectTypes[$key] = $objectType;
 			}
 		}
 		
-		return $objectType;
+		return $objectTypes;
 	}
 	
 	/**
 	 * Returns the list of available locations used to be used for selections.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getLocationSelection() {
 		$objectTypes = $this->objectTypes;
@@ -98,11 +102,11 @@ class AdHandler extends SingletonFactory {
 			}
 		}
 		
-		$selection = array();
+		$selection = [];
 		foreach ($objectTypes as $objectType) {
 			$categoryName = WCF::getLanguage()->get('wcf.acp.ad.location.category.'.$objectType->categoryname);
 			if (!isset($selection[$categoryName])) {
-				$selection[$categoryName] = array();
+				$selection[$categoryName] = [];
 			}
 			
 			$selection[$categoryName][$objectType->objectTypeID] = WCF::getLanguage()->get('wcf.acp.ad.location.'.$objectType->objectType);
@@ -118,15 +122,15 @@ class AdHandler extends SingletonFactory {
 		
 		ksort($selection);
 		
-		$selection = array_merge(array(
+		$selection = array_merge([
 			$globalCategory => $globalLocations
-		), $selection);
+		], $selection);
 		
 		return $selection;
 	}
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->ads = AdCacheBuilder::getInstance()->getData();

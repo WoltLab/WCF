@@ -4,16 +4,18 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\moderation\queue\activation\IModerationQueueActivationHandler;
+use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Default implementation for moderation queue handlers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.moderation.queue
@@ -45,18 +47,18 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	protected $requiredPermission = 'mod.general.canUseModeration';
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::identifyOrphans()
+	 * @inheritDoc
 	 */
 	public function identifyOrphans(array $queues) {
-		if (empty($this->className) || !class_exists($this->className) || !ClassUtil::isInstanceOf($this->className, 'wcf\data\DatabaseObject')) {
+		if (empty($this->className) || !class_exists($this->className) || !is_subclass_of($this->className, DatabaseObject::class)) {
 			throw new SystemException("DatabaseObject class name '" . $this->className . "' is missing or invalid");
 		}
 		
-		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
-		$tableName = call_user_func(array($this->className, 'getDatabaseTableName'));
+		$indexName = call_user_func([$this->className, 'getDatabaseTableIndexName']);
+		$tableName = call_user_func([$this->className, 'getDatabaseTableName']);
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add($indexName . " IN (?)", array(array_keys($queues)));
+		$conditions->add($indexName . " IN (?)", [array_keys($queues)]);
 		
 		$sql = "SELECT	" . $indexName . "
 			FROM	" . $tableName . "
@@ -71,7 +73,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::removeQueues()
+	 * @inheritDoc
 	 */
 	public function removeQueues(array $objectIDs) {
 		$objectTypeID = ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $this->objectType);
@@ -80,18 +82,15 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("objectTypeID = ?", array($objectTypeID));
-		$conditions->add("objectID IN (?)", array($objectIDs));
+		$conditions->add("objectTypeID = ?", [$objectTypeID]);
+		$conditions->add("objectID IN (?)", [$objectIDs]);
 		
 		$sql = "SELECT	queueID
 			FROM	wcf".WCF_N."_moderation_queue
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$queueIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$queueIDs[] = $row['queueID'];
-		}
+		$queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($queueIDs)) {
 			$queueAction = new ModerationQueueAction($queueIDs, 'delete');
@@ -100,17 +99,35 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::canRemoveContent()
+	 * @inheritDoc
 	 */
 	public function canRemoveContent(ModerationQueue $queue) {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::isAffectedUser()
+	 * @inheritDoc
 	 */
 	public function isAffectedUser(ModerationQueue $queue, $userID) {
 		$user = new UserProfile(new User($userID));
 		return $user->getPermission($this->requiredPermission);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	2.2
+	 */
+	public function getCommentNotificationLanguageItemPrefix() {
+		// this implementation exists to provide backwards compatibility;
+		// as there are no abstract implementations of the two interfaces,
+		// this is the best approach
+		if ($this instanceof IModerationQueueActivationHandler) {
+			return 'wcf.moderation.activation.notification';
+		}
+		else if ($this instanceof IModerationQueueReportHandler) {
+			return 'wcf.moderation.report.notification';
+		}
+		
+		return 'wcf.moderation.notification';
 	}
 }

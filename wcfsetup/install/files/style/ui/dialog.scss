@@ -1,0 +1,260 @@
+.dialogOverlay {
+	background-color: transparent;
+	bottom: 0;
+	left: 0;
+	opacity: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	transition: opacity .12s linear, visibility 0s linear .3s;
+	visibility: hidden;
+	will-change: opacity;
+	z-index: 399;
+	
+	@include screen-sm-up {
+		padding: 100px 0;
+	}
+	
+	&[aria-hidden=false] {
+		opacity: 1;
+		transition-delay: 0s;
+		visibility: visible;
+	}
+	
+	&::before {
+		background-color: rgba(0, 0, 0, .4);
+		bottom: 0;
+		content: "";
+		display: block;
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 100;
+	}
+}
+
+@keyframes wcfDialog {
+	0%   { visibility: visible; top: 8%; }
+	100% { visibility: visible; top: 10%; }
+}
+
+@keyframes wcfDialogOut {
+	0% { visibility: visible; top: 10%; }
+	100% { visibility: hidden; top: 12%; }
+}
+
+.dialogContainer {
+	z-index: 200;
+	
+	@include screen-xs {
+		left: 0 !important;
+		position: fixed;
+		right: 0 !important;
+		top: 0 !important;
+	}
+	
+	@include screen-sm-up {
+		animation: wcfDialogOut .3s;
+		animation-fill-mode: forwards;
+		box-shadow: 0 1px 15px 0 rgba(0, 0, 0, .3);
+		left: 50%;
+		max-height: 80%;
+		max-width: 80%;
+		min-width: 400px;
+		position: absolute;
+		transform: translateX(-50%);
+		
+		&[aria-hidden=false] {
+			animation: wcfDialog .3s;
+			animation-fill-mode: forwards;
+		}
+	}
+	
+	&[aria-hidden=false]  ~ .dialogContainer[aria-hidden=false] {
+		z-index: 50;
+	}
+	
+	> header {
+		background-color: $wcfHeaderBackground;
+		color: $wcfHeaderText;
+		display: flex;
+		padding: 10px 20px;
+		
+		> span {
+			flex: 1 auto;
+			
+			@include wcfFontHeadline;
+		}
+		
+		> .dialogCloseButton {
+			align-self: center;
+			flex: 0 0 auto;
+						
+			&:hover > .icon {
+				color: $wcfHeaderLinkActive;
+			}
+			
+			> .icon {
+				color: $wcfHeaderLink;
+			}
+		}
+	}
+	
+	> .dialogContent {
+		background-color: $wcfContentBackground;
+		overflow: auto;
+		
+		&:not(.dialogContentNoPadding) {
+			@include screen-sm-down {
+				padding: 10px;
+			}
+			
+			@include screen-md-up {
+				padding: 30px 20px 10px 20px;
+			}
+			
+			&::after {
+				content: "";
+				display: block;
+				height: 10px;
+			}
+			
+			&.dialogForm::after {
+				height: 17px;
+			}
+		}
+		
+		&:not(.dialogForm) {
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+		}
+		
+		dl:not(.plain) {
+			> dt {
+				float: none;
+				text-align: left;
+				width: auto !important;
+				
+				&:empty {
+					margin-bottom: 0;
+				}
+			}
+			
+			> dd {
+				margin-left: 0 !important;
+			}
+		}
+		
+		.dialogFormSubmit {
+			background-color: $wcfSidebarBackground;
+			border-top: 1px solid $wcfContentBorderInner;
+			bottom: 0;
+			left: 0;
+			padding: 10px;
+			position: absolute;
+			right: 0;
+		}
+		
+		.section {
+			margin-top: 30px;
+			
+			.sectionTitle {
+				@include wcfFontHeadline;
+			}
+		}
+		
+		> div {
+			> .section:first-child,
+			> fieldset:first-child {
+				margin-top: 0;
+			}
+			
+			> div,
+			> form {
+				> .section:first-child,
+				> fieldset:first-child {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+}
+
+/* static dialogs */
+.jsStaticDialogContent {
+	display: none;
+}
+
+/* package (un-)installation (todo: obsolete?) */
+#packageInstallationDialogContainer > .boxHeadline {
+	margin-top: 0;
+}
+
+.spinner {
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgb(204, 204, 204);
+	box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .2);
+	color: rgb(44, 62, 80);
+	left: 50%;
+	opacity: 0;
+	padding: 10px;
+	position: fixed;
+	text-align: center;
+	top: 200px;
+	transform: translateX(-50%);
+	transition: visibility 0s linear .12s, opacity .12s linear;
+	visibility: hidden;
+	z-index: 401;
+	
+	&.active {
+		opacity: 1;
+		visibility: visible;
+		
+		transition-delay: 0s;
+	}
+	
+	> span:not(.icon) {
+		display: block;
+		margin-top: 5px;
+	}
+}
+
+/* notification overlay */
+#systemNotification {
+	left: 0;
+	opacity: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	transform: translateY(-100%);
+	transition: visibility .12s linear .12s, transform .12s linear, opacity .12s linear;
+	visibility: hidden;
+	width: 100%;
+	z-index: 460;
+	
+	&.active {
+		opacity: 1;
+		transform: translateY(0%);
+		transition-delay: 0s;
+		visibility: visible;
+	}
+	
+	> p {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		border-top-width: 0;
+		cursor: pointer;
+		display: table;
+		margin: 0 auto;
+		max-width: 80%;
+		pointer-events: auto;
+		
+		//.userSelectNone;
+	}
+}
+
+/* highlight objects in confirmation messages */
+.confirmationObject {
+	font-weight: 600;
+}

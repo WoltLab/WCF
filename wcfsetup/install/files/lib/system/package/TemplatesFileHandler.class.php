@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * File handler implementation for the installation of template files.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class TemplatesFileHandler extends ACPTemplatesFileHandler {
 	/**
-	 * @see	\wcf\system\package\ACPTemplatesFileHandler::$supportsTemplateGroups
+	 * @inheritDoc
 	 */
 	protected $supportsTemplateGroups = true;
 	
 	/**
-	 * @see	\wcf\system\package\ACPTemplatesFileHandler::$tableName
+	 * @inheritDoc
 	 */
 	protected $tableName = 'template';
 	
 	/**
-	 * @see	\wcf\system\setup\IFileHandler::logFiles()
+	 * @inheritDoc
 	 */
 	public function logFiles(array $files) {
 		$packageID = $this->packageInstallation->getPackageID();
@@ -37,14 +37,14 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 		unset($file);
 		
 		// get existing templates
-		$existingTemplates = $updateTemplateIDs = array();
+		$existingTemplates = $updateTemplateIDs = [];
 		$sql = "SELECT	templateName, templateID
 			FROM	wcf".WCF_N."_template
 			WHERE	packageID = ?
 				AND application = ?
 				AND templateGroupID IS NULL";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID, $this->application));
+		$statement->execute([$packageID, $this->application]);
 		while ($row = $statement->fetchArray()) {
 			$existingTemplates[$row['templateName']] = $row['templateID'];
 		}
@@ -60,24 +60,24 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 				continue;
 			}
 			
-			$statement->execute(array(
+			$statement->execute([
 				$packageID,
 				$file,
 				TIME_NOW,
 				$this->application
-			));
+			]);
 		}
 		
 		if (!empty($updateTemplateIDs)) {
 			// update old templates
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('templateID IN (?)', array($updateTemplateIDs));
+			$conditionBuilder->add('templateID IN (?)', [$updateTemplateIDs]);
 			
 			$sql = "UPDATE	wcf".WCF_N."_template
 				SET	lastModificationTime = ?
 				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array_merge(array(TIME_NOW), $conditionBuilder->getParameters()));
+			$statement->execute(array_merge([TIME_NOW], $conditionBuilder->getParameters()));
 		}
 	}
 }

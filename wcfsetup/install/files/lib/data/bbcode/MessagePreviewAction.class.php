@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Provides a default message preview action.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.message
@@ -20,9 +20,9 @@ use wcf\util\StringUtil;
  */
 class MessagePreviewAction extends BBCodeAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getMessagePreview');
+	protected $allowGuestAccess = ['getMessagePreview'];
 		
 	/**
 	 * Validates parameters for message preview.
@@ -41,6 +41,7 @@ class MessagePreviewAction extends BBCodeAction {
 	 * Returns a rendered message preview.
 	 * 
 	 * @return	array
+	 * @throws	UserInputException
 	 */
 	public function getMessagePreview() {
 		// get options
@@ -60,9 +61,9 @@ class MessagePreviewAction extends BBCodeAction {
 		if ($enableBBCodes && $allowedBBCodesPermission) {
 			$disallowedBBCodes = MessageParser::getInstance()->validateBBCodes($this->parameters['data']['message'], ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($allowedBBCodesPermission))));
 			if (!empty($disallowedBBCodes)) {
-				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', array(
+				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
 					'disallowedBBCodes' => $disallowedBBCodes
-				)));
+				]));
 			}
 		}
 		
@@ -85,8 +86,8 @@ class MessagePreviewAction extends BBCodeAction {
 		// parse message
 		$preview = MessageParser::getInstance()->parse($message, $enableSmilies, $enableHtml, $enableBBCodes, false);
 		
-		return array(
+		return [
 			'message' => $preview
-		);
+		];
 	}
 }

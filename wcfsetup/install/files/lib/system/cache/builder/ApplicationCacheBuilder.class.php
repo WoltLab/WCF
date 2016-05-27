@@ -8,7 +8,7 @@ use wcf\data\package\PackageList;
  * Caches applications.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
@@ -16,42 +16,28 @@ use wcf\data\package\PackageList;
  */
 class ApplicationCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
-		$data = array(
-			'abbreviation' => array(),
-			'application' => array(),
-			'primary' => 0,
-			'wcf' => null
-		);
+		$data = [
+			'abbreviation' => [],
+			'application' => []
+		];
 		
 		// fetch applications
 		$applicationList = new ApplicationList();
 		$applicationList->readObjects();
-		$applications = $applicationList->getObjects();
 		
-		foreach ($applications as $application) {
+		foreach ($applicationList as $application) {
 			$data['application'][$application->packageID] = $application;
-			
-			// save primary application's package id
-			if ($application->isPrimary) {
-				$data['primary'] = $application->packageID;
-			}
 		}
 		
 		// fetch abbreviations
 		$packageList = new PackageList();
-		$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+		$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
 		$packageList->readObjects();
-		foreach ($packageList->getObjects() as $package) {
+		foreach ($packageList as $package) {
 			$data['abbreviation'][Package::getAbbreviation($package->package)] = $package->packageID;
-		}
-		
-		// assign wcf pseudo-application
-		if (PACKAGE_ID) {
-			$data['wcf'] = $data['application'][1];
-			unset($data['application'][1]);
 		}
 		
 		return $data;

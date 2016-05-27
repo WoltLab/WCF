@@ -1,11 +1,4 @@
-{include file="documentHeader"}
-<head>
-	<title>{lang}wcf.global.error.title{/lang} - {lang}{PAGE_TITLE}{/lang}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
+{capture assign='pageTitle'}{lang}wcf.global.error.title{/lang}{/capture}
 
 {include file='header' __disableAds=true}
 	
@@ -29,6 +22,3 @@
 {/if}
 
 {include file='footer' __disableAds=true}
-
-</body>
-</html>

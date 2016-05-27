@@ -1,103 +1,76 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}: {$queue->getTitle()}{/capture}
 
-<head>
-	<title>{lang}wcf.moderation.report{/lang}: {$queue->getTitle()} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.moderation.assignedUser': '{lang}wcf.moderation.assignedUser{/lang}',
-				'wcf.moderation.assignedUser.change': '{lang}wcf.moderation.assignedUser.change{/lang}',
-				'wcf.moderation.assignedUser.error.notAffected': '{lang}wcf.moderation.assignedUser.error.notAffected{/lang}',
-				'wcf.moderation.report.removeContent.confirmMessage': '{lang}wcf.moderation.report.removeContent.confirmMessage{/lang}',
-				'wcf.moderation.report.removeContent.reason': '{lang}wcf.moderation.report.removeContent.reason{/lang}',
-				'wcf.moderation.report.removeReport.confirmMessage': '{lang}wcf.moderation.report.removeReport.confirmMessage{/lang}',
-				'wcf.moderation.status.outstanding': '{lang}wcf.moderation.status.outstanding{/lang}',
-				'wcf.moderation.status.processing': '{lang}wcf.moderation.status.processing{/lang}',
-				'wcf.user.username.error.notFound': '{lang __literal=true}wcf.user.username.error.notFound{/lang}'
-			});
+{capture assign='contentHeader'}
+	<header class="contentHeader">
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">{$__wcf->getActivePage()->getTitle()}</h1>
 			
-			new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList' encode=false}{/link}');
-		});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+			{if $queue->lastChangeTime}
+				<dl class="plain inlineDataList">
+					<dt>{lang}wcf.moderation.lastChangeTime{/lang}</dt>
+					<dd>{@$queue->lastChangeTime|time}</dd>
+				</dl>
+			{/if}
+			
+			<dl class="plain inlineDataList" id="moderationAssignedUserContainer">
+				<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
+				<dd>
+					<span>
+						{if $queue->assignedUserID}
+							<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
+						{else}
+							{lang}wcf.moderation.assignedUser.nobody{/lang}
+						{/if}
+					</span>
+				</dd>
+			</dl>
+			
+			<dl class="plain inlineDataList" id="moderationStatusContainer">
+				<dt>{lang}wcf.moderation.status{/lang}</dt>
+				<dd>{$queue->getStatus()}</dd>
+			</dl>
+		</div>
+		
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul>
+					{content}
+					{if !$queue->isDone()}
+						{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
+						<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
+					{/if}
+					{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
+					{event name='contentHeaderNavigation'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</header>
+{/capture}
 
 {include file='header'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.moderation.report{/lang}: {$queue->getTitle()}</h1>
-	
-	{if $queue->lastChangeTime}
-		<dl class="plain inlineDataList">
-			<dt>{lang}wcf.moderation.lastChangeTime{/lang}</dt>
-			<dd>{@$queue->lastChangeTime|time}</dd>
-		</dl>
-	{/if}
-	
-	<dl class="plain inlineDataList" id="moderationAssignedUserContainer">
-		<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
-		<dd>
-			<span>
-				{if $queue->assignedUserID}
-					<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
-				{else}
-					{lang}wcf.moderation.assignedUser.nobody{/lang}
-				{/if}
-			</span>
-		</dd>
-	</dl>
-	
-	<dl class="plain inlineDataList" id="moderationStatusContainer">
-		<dt>{lang}wcf.moderation.status{/lang}</dt>
-		<dd>{$queue->getStatus()}</dd>
-	</dl>
-</header>
-
-{include file='userNotice'}
-
 {include file='formError'}
 
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.moderation.report.reportedContent{/lang}</h2>
-	<p>{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
-</header>
-
-<div class="marginTop">
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedContent{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
+	</header>
+	
 	{@$reportedContent}
-</div>
+</section>
 
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			{if !$queue->isDone()}
-				{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
-				<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
-			{/if}
-			{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
-
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.moderation.report.reportedBy{/lang}</h2>
-</header>
-
-<div class="container containerPadding marginTop">
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>
+	
 	<div class="box32">
 		{if $reportUser->userID}
-			<a href="{link controller='User' object=$reportUser}{/link}" title="{$reportUser->username}" class="framed">
+			<a href="{link controller='User' object=$reportUser}{/link}" title="{$reportUser->username}">
 				{@$reportUser->getAvatar()->getImageTag(32)}
 			</a>
 		{else}
-			<span class="framed">{@$reportUser->getAvatar()->getImageTag(32)}</span>
+			<span>{@$reportUser->getAvatar()->getImageTag(32)}</span>
 		{/if}
 		
 		<div>
@@ -109,29 +82,46 @@
 						{lang}wcf.user.guest{/lang}
 					{/if}
 					
-					<small> - {@$queue->time|time}</small>
+					<small class="separatorLeft">{@$queue->time|time}</small>
 				</h3>
 			</div>
 			
-			<div>{@$queue->getFormattedMessage()}</div>
+			<div class="containerContent">{@$queue->getFormattedMessage()}</div>
 		</div>
 	</div>
-</div>
-
-<header id="comments" class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
-	<p>{lang}wcf.moderation.comments.description{/lang}</p>
-</header>
+</section>
 
 {include file='__commentJavaScript' commentContainerID='moderationQueueCommentList'}
 
-<div class="container containerList marginTop moderationComments">
+<section id="comments" class="section sectionContainerList moderationComments">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
+		<p class="sectionDescription">{lang}wcf.moderation.comments.description{/lang}</p>
+	</header>
+	
 	<ul id="moderationQueueCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$queueID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{if $queue->comments}{@$commentList->countObjects()}{else}0{/if}" data-last-comment-time="{@$lastCommentTime}">
 		{include file='commentList'}
 	</ul>
-</div>
+</section>
+
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.moderation.assignedUser': '{lang}wcf.moderation.assignedUser{/lang}',
+			'wcf.moderation.assignedUser.change': '{lang}wcf.moderation.assignedUser.change{/lang}',
+			'wcf.moderation.assignedUser.error.notAffected': '{lang}wcf.moderation.assignedUser.error.notAffected{/lang}',
+			'wcf.moderation.report.removeContent.confirmMessage': '{lang}wcf.moderation.report.removeContent.confirmMessage{/lang}',
+			'wcf.moderation.report.removeContent.reason': '{lang}wcf.moderation.report.removeContent.reason{/lang}',
+			'wcf.moderation.report.removeReport.confirmMessage': '{lang}wcf.moderation.report.removeReport.confirmMessage{/lang}',
+			'wcf.moderation.status.outstanding': '{lang}wcf.moderation.status.outstanding{/lang}',
+			'wcf.moderation.status.processing': '{lang}wcf.moderation.status.processing{/lang}',
+			'wcf.user.username.error.notFound': '{lang __literal=true}wcf.user.username.error.notFound{/lang}'
+		});
+		
+		new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList' encode=false}{/link}');
+	});
+	//]]>
+</script>
 
 {include file='footer'}
-
-</body>
-</html>

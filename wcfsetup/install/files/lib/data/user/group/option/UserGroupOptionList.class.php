@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of user group options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.option
  * @category	Community Framework
+ *
+ * @method	UserGroupOption		current()
+ * @method	UserGroupOption[]	getObjects()
+ * @method	UserGroupOption|null	search($objectID)
+ * @property	UserGroupOption[]	$objects
  */
 class UserGroupOptionList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\group\option\UserGroupOption';
+	public $className = UserGroupOption::class;
 }

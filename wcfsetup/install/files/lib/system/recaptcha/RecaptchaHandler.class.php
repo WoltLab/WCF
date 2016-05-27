@@ -16,7 +16,7 @@ use wcf\util\UserUtil;
  * and released under the conditions of the GNU Lesser General Public License.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.recaptcha
@@ -25,12 +25,10 @@ use wcf\util\UserUtil;
 class RecaptchaHandler extends SingletonFactory {
 	/**
 	 * list of supported languages
-	 * @var	array<string>
+	 * @var	string[]
 	 * @see	http://code.google.com/intl/de-DE/apis/recaptcha/docs/customization.html#i18n
 	 */
-	protected $supportedLanguages = array(
-		'de', 'en', 'es', 'fr', 'nl', 'pt', 'ru', 'tr'
-	);
+	protected $supportedLanguages = ['de', 'en', 'es', 'fr', 'nl', 'pt', 'ru', 'tr'];
 	
 	/**
 	 * language code
@@ -62,7 +60,7 @@ class RecaptchaHandler extends SingletonFactory {
 	const ERROR_NOT_REACHABLE = 'recaptcha-not-reachable';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// set appropriate language code, fallback to EN if language code is not known to reCAPTCHA-API
@@ -81,6 +79,8 @@ class RecaptchaHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$challenge
 	 * @param	string		$response
+	 * @throws	SystemException
+	 * @throws	UserInputException
 	 */
 	public function validate($challenge, $response) {
 		// fail if challenge or response are empty to avoid sending api requests
@@ -122,14 +122,15 @@ class RecaptchaHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$challenge
 	 * @param	string		$response
+	 * @return	string
 	 */
 	protected function verify($challenge, $response) {
-		$request = new HTTPRequest('http://www.google.com/recaptcha/api/verify', array('timeout' => 10), array(
+		$request = new HTTPRequest('http://www.google.com/recaptcha/api/verify', ['timeout' => 10], [
 			'privatekey' => $this->privateKey,
 			'remoteip' => UserUtil::getIpAddress(),
 			'challenge' => $challenge,
 			'response' => $response
-		));
+		]);
 		
 		try {
 			$request->execute();
@@ -152,11 +153,11 @@ class RecaptchaHandler extends SingletonFactory {
 	 * Assigns template variables for reCAPTCHA.
 	 */
 	public function assignVariables() {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'recaptchaLanguageCode' => $this->languageCode,
 			'recaptchaPublicKey' => $this->publicKey,
 			'recaptchaUseSSL' => RouteHandler::secureConnection(), // @deprecated since 2.1
 			'recaptchaLegacyMode' => true
-		));
+		]);
 	}
 }

@@ -1,13 +1,14 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\attachment\AttachmentAction;
+use wcf\data\attachment\AttachmentList;
 use wcf\system\exception\SystemException;
 
 /**
  * Worker implementation for updating attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.worker
@@ -15,34 +16,34 @@ use wcf\system\exception\SystemException;
  */
 class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::$objectListClassName
+	 * @inheritDoc
 	 */
-	protected $objectListClassName = 'wcf\data\attachment\AttachmentList';
+	protected $objectListClassName = AttachmentList::class;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 10;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::initObjectList
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
 		$this->objectList->sqlOrderBy = 'attachment.attachmentID';
-		$this->objectList->getConditionBuilder()->add('attachment.isImage = ?', array(1));
+		$this->objectList->getConditionBuilder()->add('attachment.isImage = ?', [1]);
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
 		
 		foreach ($this->objectList as $attachment) {
 			try {
-				$action = new AttachmentAction(array($attachment), 'generateThumbnails');
+				$action = new AttachmentAction([$attachment], 'generateThumbnails');
 				$action->executeAction();
 			}
 			catch (SystemException $e) {}

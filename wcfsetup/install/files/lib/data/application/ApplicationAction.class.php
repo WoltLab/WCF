@@ -2,8 +2,6 @@
 namespace wcf\data\application;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -14,28 +12,27 @@ use wcf\util\StringUtil;
  * Executes application-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.application
  * @category	Community Framework
+ * 
+ * @method	Application		create()
+ * @method	ApplicationEditor[]	getObjects()
+ * @method	ApplicationEditor	getSingleObject()
  */
 class ApplicationAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\application\ApplicationEditor';
+	protected $className = ApplicationEditor::class;
 	
 	/**
 	 * application editor object
-	 * @var	\wcf\data\application\ApplicationEditor
+	 * @var	ApplicationEditor
 	 */
-	public $applicationEditor = null;
-	
-	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
-	 */
-	protected $requireACP = array('setAsPrimary');
+	public $applicationEditor;
 	
 	/**
 	 * Assigns a list of applications to a group and computes cookie domain and path.
@@ -52,16 +49,16 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		// calculate cookie path
-		$domains = array();
+		$domains = [];
 		$regex = new Regex(':[0-9]+');
-		foreach ($this->objects as $application) {
+		foreach ($this->getObjects() as $application) {
 			$domainName = $application->domainName;
 			if (StringUtil::endsWith($regex->replace($domainName, ''), $application->cookieDomain)) {
 				$domainName = $application->cookieDomain;
 			}
 			
 			if (!isset($domains[$domainName])) {
-				$domains[$domainName] = array();
+				$domains[$domainName] = [];
 			}
 			
 			$domains[$domainName][$application->packageID] = explode('/', FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($application->domainPath)));
@@ -94,11 +91,11 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 			$path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(implode('/', $path)));
 			
 			foreach (array_keys($data) as $packageID) {
-				$statement->execute(array(
+				$statement->execute([
 					$domainName,
 					$path,
 					$packageID
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();
@@ -108,27 +105,5 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		
 		// reset application cache
 		ApplicationCacheBuilder::getInstance()->reset();
-	}
-	
-	/**
-	 * Validates parameters to set an application as primary.
-	 */
-	public function validateSetAsPrimary() {
-		WCF::getSession()->checkPermissions(array('admin.system.canManageApplication'));
-		
-		$this->applicationEditor = $this->getSingleObject();
-		if (!$this->applicationEditor->packageID || $this->applicationEditor->packageID == 1) {
-			throw new UserInputException('objectIDs');
-		}
-		else if ($this->applicationEditor->isPrimary) {
-			throw new PermissionDeniedException();
-		}
-	}
-	
-	/**
-	 * Sets an application as primary.
-	 */
-	public function setAsPrimary() {
-		$this->applicationEditor->setAsPrimary();
 	}
 }

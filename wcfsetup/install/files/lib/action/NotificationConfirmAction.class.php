@@ -15,7 +15,7 @@ use wcf\util\HeaderUtil;
  * Marks target notification as confirmed and forwards to the notification URL.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -23,7 +23,7 @@ use wcf\util\HeaderUtil;
  */
 class NotificationConfirmAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
@@ -40,7 +40,7 @@ class NotificationConfirmAction extends AbstractAction {
 	public $notificationID = 0;
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -58,7 +58,7 @@ class NotificationConfirmAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -69,14 +69,14 @@ class NotificationConfirmAction extends AbstractAction {
 		
 		$event = new UserNotificationEvent($this->notification->eventID);
 		$objectType = ObjectTypeCache::getInstance()->getObjectType($event->objectTypeID);
-		$objects = $objectType->getProcessor()->getObjectsByIDs(array($this->notification->objectID));
+		$objects = $objectType->getProcessor()->getObjectsByIDs([$this->notification->objectID]);
 		
 		$userProfile = null;
 		if ($this->notification->authorID) {
 			$userProfile = new UserProfile(new User($this->notification->authorID));
 		}
 		else {
-			$userProfile = new UserProfile(new User(null, array('userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest'))));
+			$userProfile = new UserProfile(new User(null, ['userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest')]));
 		}
 		
 		$className = $event->className;

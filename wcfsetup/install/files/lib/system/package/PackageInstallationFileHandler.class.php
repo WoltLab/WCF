@@ -7,7 +7,7 @@ use wcf\system\setup\IFileHandler;
  * installation.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -16,20 +16,21 @@ use wcf\system\setup\IFileHandler;
 abstract class PackageInstallationFileHandler implements IFileHandler {
 	/**
 	 * abbrevation of the application the files belong to
-	 * @var	array<string>
+	 * @var	string
 	 */
 	protected $application = '';
 	
 	/**
 	 * active package installation dispatcher
-	 * @var	\wcf\system\package\PackageInstallationDispatcher
+	 * @var	PackageInstallationDispatcher
 	 */
 	protected $packageInstallation;
 	
 	/**
 	 * Creates a new PackageInstallationFileHandler object.
 	 * 
-	 * @param	\wcf\system\package\PackageInstallationDispatcher	$packageInstallation
+	 * @param	PackageInstallationDispatcher	$packageInstallation
+	 * @param	string		$application
 	 */
 	public function __construct(PackageInstallationDispatcher $packageInstallation, $application) {
 		$this->packageInstallation = $packageInstallation;

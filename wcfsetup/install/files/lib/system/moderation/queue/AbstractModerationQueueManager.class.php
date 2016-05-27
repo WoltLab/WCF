@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Default implementation for moderation queue managers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.moderation.queue
@@ -24,49 +24,49 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	protected $definitionName = '';
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::assignQueues()
+	 * @inheritDoc
 	 */
 	public function assignQueues($objectTypeID, array $queues) {
 		ModerationQueueManager::getInstance()->getProcessor($this->definitionName, null, $objectTypeID)->assignQueues($queues);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::isValid()
+	 * @inheritDoc
 	 */
 	public function isValid($objectType, $objectID = null) {
 		return ModerationQueueManager::getInstance()->isValid($this->definitionName, $objectType);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getObjectTypeID()
+	 * @inheritDoc
 	 */
 	public function getObjectTypeID($objectType) {
 		return ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $objectType);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getProcessor()
+	 * @inheritDoc
 	 */
 	public function getProcessor($objectType, $objectTypeID = null) {
 		return ModerationQueueManager::getInstance()->getProcessor($this->definitionName, $objectType, $objectTypeID);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::populate()
+	 * @inheritDoc
 	 */
 	public function populate($objectTypeID, array $objects) {
 		ModerationQueueManager::getInstance()->getProcessor($this->definitionName, null, $objectTypeID)->populate($objects);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::canRemoveContent()
+	 * @inheritDoc
 	 */
 	public function canRemoveContent(ModerationQueue $queue) {
 		return $this->getProcessor(null, $queue->objectTypeID)->canRemoveContent($queue);
 	}
 	
 	/**
-	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::removeContent()
+	 * @inheritDoc
 	 */
 	public function removeContent(ModerationQueue $queue, $message = '') {
 		$this->getProcessor(null, $queue->objectTypeID)->removeContent($queue, $message);
@@ -80,41 +80,41 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	 * @param	integer		$containerID
 	 * @param	array		$additionalData
 	 */
-	protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = array()) {
+	protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = []) {
 		$sql = "SELECT	queueID
 			FROM	wcf".WCF_N."_moderation_queue
 			WHERE	objectTypeID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$objectID
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		if ($row === false) {
-			$objectAction = new ModerationQueueAction(array(), 'create', array(
-				'data' => array(
+			$objectAction = new ModerationQueueAction([], 'create', [
+				'data' => [
 					'objectTypeID' => $objectTypeID,
 					'objectID' => $objectID,
 					'containerID' => $containerID,
 					'userID' => (WCF::getUser()->userID ?: null),
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
-				)
-			));
+				]
+			]);
 			$objectAction->executeAction();
 		}
 		else {
-			$objectAction = new ModerationQueueAction(array($row['queueID']), 'update', array(
-				'data' => array(
+			$objectAction = new ModerationQueueAction([$row['queueID']], 'update', [
+				'data' => [
 					'status' => ModerationQueue::STATUS_OUTSTANDING,
 					'containerID' => $containerID,
 					'userID' => (WCF::getUser()->userID ?: null),
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
-				)
-			));
+				]
+			]);
 			$objectAction->executeAction();
 		}
 		
@@ -125,12 +125,12 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	 * Marks a list of moderation queue entries as done.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	protected function removeEntries($objectTypeID, array $objectIDs) {
 		$queueList = new ModerationQueueList();
-		$queueList->getConditionBuilder()->add("moderation_queue.objectTypeID = ?", array($objectTypeID));
-		$queueList->getConditionBuilder()->add("moderation_queue.objectID IN (?)", array($objectIDs));
+		$queueList->getConditionBuilder()->add("moderation_queue.objectTypeID = ?", [$objectTypeID]);
+		$queueList->getConditionBuilder()->add("moderation_queue.objectID IN (?)", [$objectIDs]);
 		$queueList->readObjects();
 		
 		if (count($queueList)) {

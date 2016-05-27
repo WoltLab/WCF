@@ -7,7 +7,7 @@ use wcf\system\SingletonFactory;
  * Manages the user birthday cache.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user
@@ -16,15 +16,15 @@ use wcf\system\SingletonFactory;
 class UserBirthdayCache extends SingletonFactory {
 	/**
 	 * loaded months
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $monthsLoaded = array();
+	protected $monthsLoaded = [];
 	
 	/**
 	 * user birthdays
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $birthdays = array();
+	protected $birthdays = [];
 	
 	/**
 	 * Loads the birthday cache.
@@ -33,7 +33,7 @@ class UserBirthdayCache extends SingletonFactory {
 	 */
 	protected function loadMonth($month) {
 		if (!isset($this->monthsLoaded[$month])) {
-			$this->birthdays = array_merge($this->birthdays, UserBirthdayCacheBuilder::getInstance()->getData(array('month' => $month)));
+			$this->birthdays = array_merge($this->birthdays, UserBirthdayCacheBuilder::getInstance()->getData(['month' => $month]));
 			$this->monthsLoaded[$month] = true;
 		}
 	}
@@ -43,7 +43,7 @@ class UserBirthdayCache extends SingletonFactory {
 	 * 
 	 * @param	integer		$month
 	 * @param	integer		$day
-	 * @return	array<integer>	list of user ids
+	 * @return	integer[]	list of user ids
 	 */
 	public function getBirthdays($month, $day) {
 		$this->loadMonth($month);
@@ -51,6 +51,6 @@ class UserBirthdayCache extends SingletonFactory {
 		$index = ($month < 10 ? '0' : '') . $month . '-' . ($day < 10 ? '0' : '') . $day;
 		if (isset($this->birthdays[$index])) return $this->birthdays[$index];
 		
-		return array();
+		return [];
 	}
 }

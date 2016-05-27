@@ -10,7 +10,7 @@ use wcf\util\XML;
  * Refreshes list of search robots.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
@@ -18,7 +18,7 @@ use wcf\util\XML;
  */
 class RefreshSearchRobotsCronjob implements ICronjob {
 	/**
-	 * @see	\wcf\system\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		$filename = FileUtil::downloadFileFromHttp('http://assets.woltlab.com/spiderlist/typhoon/list.xml', 'spiders');
@@ -32,17 +32,19 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 		
 		if (!empty($spiders)) {
 			$existingSpiders = SpiderCacheBuilder::getInstance()->getData();
-			$statementParameters = array();
+			$statementParameters = [];
+			
+			/** @var \DOMElement $spider */
 			foreach ($spiders as $spider) {
 				$identifier = mb_strtolower($spider->getAttribute('ident'));
 				$name = $xpath->query('ns:name', $spider)->item(0);
 				$info = $xpath->query('ns:url', $spider)->item(0);
 				
-				$statementParameters[$identifier] = array(
+				$statementParameters[$identifier] = [
 					'spiderIdentifier' => $identifier,
 					'spiderName' => $name->nodeValue,
 					'spiderURL' => $info ? $info->nodeValue : ''
-				);
+				];
 			}
 			
 			if (!empty($statementParameters)) {
@@ -55,11 +57,11 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 				
 				WCF::getDB()->beginTransaction();
 				foreach ($statementParameters as $parameters) {
-					$statement->execute(array(
+					$statement->execute([
 						$parameters['spiderIdentifier'],
 						$parameters['spiderName'],
 						$parameters['spiderURL']
-					));
+					]);
 				}
 				WCF::getDB()->commitTransaction();
 			}
@@ -69,7 +71,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($existingSpiders as $spider) {
 				if (!isset($statementParameters[$spider->spiderIdentifier])) {
-					$statement->execute(array($spider->spiderIdentifier));
+					$statement->execute([$spider->spiderIdentifier]);
 				}
 			}
 			

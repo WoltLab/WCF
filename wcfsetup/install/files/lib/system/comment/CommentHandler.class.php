@@ -4,6 +4,7 @@ use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
 use wcf\data\comment\StructuredCommentList;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\NamedUserException;
@@ -20,7 +21,7 @@ use wcf\system\WCF;
  * Provides methods for comment object handling.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.comment
@@ -29,18 +30,18 @@ use wcf\system\WCF;
 class CommentHandler extends SingletonFactory {
 	/**
 	 * cached object types
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $cache = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
-		$this->cache = array(
-			'objectTypes' => array(),
-			'objectTypeIDs' => array()
-		);
+		$this->cache = [
+			'objectTypes' => [],
+			'objectTypeIDs' => []
+		];
 		
 		$cache = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.comment.commentableContent');
 		foreach ($cache as $objectType) {
@@ -67,7 +68,7 @@ class CommentHandler extends SingletonFactory {
 	 * Returns the object type for a given object type id.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->cache['objectTypes'][$objectTypeID])) {
@@ -81,7 +82,8 @@ class CommentHandler extends SingletonFactory {
 	 * Returns comment manager object for given object type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	\wcf\system\comment\manager\ICommentManager
+	 * @return	ICommentManager
+	 * @throws	SystemException
 	 */
 	public function getCommentManager($objectType) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -90,17 +92,16 @@ class CommentHandler extends SingletonFactory {
 		}
 		
 		return $this->getObjectType($objectTypeID)->getProcessor();
-		
 	}
 	
 	/**
 	 * Returns a comment list for a given object type and object id.
 	 * 
-	 * @param	\wcf\data\comment\manager\ICommentManager	$commentManager
-	 * @param	integer						$objectTypeID
-	 * @param	integer						$objectID
-	 * @param	boolean						$readObjects
-	 * @return	\wcf\data\comment\StructuredCommentList
+	 * @param	ICommentManager		$commentManager
+	 * @param	integer			$objectTypeID
+	 * @param	integer			$objectID
+	 * @param	boolean			$readObjects
+	 * @return	StructuredCommentList
 	 */
 	public function getCommentList(ICommentManager $commentManager, $objectTypeID, $objectID, $readObjects = true) {
 		$commentList = new StructuredCommentList($commentManager, $objectTypeID, $objectID);
@@ -115,7 +116,7 @@ class CommentHandler extends SingletonFactory {
 	 * Removes all comments for given objects.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function deleteObjects($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -123,8 +124,8 @@ class CommentHandler extends SingletonFactory {
 		
 		// get comment ids
 		$commentList = new CommentList();
-		$commentList->getConditionBuilder()->add('comment.objectTypeID = ?', array($objectTypeID));
-		$commentList->getConditionBuilder()->add('comment.objectID IN (?)', array($objectIDs));
+		$commentList->getConditionBuilder()->add('comment.objectTypeID = ?', [$objectTypeID]);
+		$commentList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
 		$commentList->readObjectIDs();
 		$commentIDs = $commentList->getObjectIDs();
 		
@@ -133,12 +134,12 @@ class CommentHandler extends SingletonFactory {
 		
 		// get response ids
 		$responseList = new CommentResponseList();
-		$responseList->getConditionBuilder()->add('comment_response.commentID IN (?)', array($commentIDs));
+		$responseList->getConditionBuilder()->add('comment_response.commentID IN (?)', [$commentIDs]);
 		$responseList->readObjectIDs();
 		$responseIDs = $responseList->getObjectIDs();
 		
 		// delete likes
-		$notificationObjectTypes = array();
+		$notificationObjectTypes = [];
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.like.notification')) {
 			$notificationObjectTypes[] = $objectTypeObj->objectType.'.like.notification';
 		}
@@ -156,7 +157,7 @@ class CommentHandler extends SingletonFactory {
 		
 		if (!empty($responseIDs)) {
 			// delete likes (for responses)
-			$notificationObjectTypes = array();
+			$notificationObjectTypes = [];
 			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.response.like.notification')) {
 				$notificationObjectTypes[] = $objectTypeObj->objectType.'.response.like.notification';
 			}
@@ -190,9 +191,9 @@ class CommentHandler extends SingletonFactory {
 			$lastCommentTime = WCF::getSession()->getVar('lastCommentTime');
 			
 			if ($lastCommentTime && $lastCommentTime + WCF::getSession()->getPermission('user.comment.floodControlTime') > TIME_NOW) {
-				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', array(
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', [
 					'lastCommentTime' => $lastCommentTime
-				)));
+				]));
 			}
 			
 			return;
@@ -205,12 +206,12 @@ class CommentHandler extends SingletonFactory {
 					AND time > ?
 			ORDER BY	time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute(array(
+		$statement->execute([
 			WCF::getUser()->userID,
 			(TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime'))
-		));
+		]);
 		if (($row = $statement->fetchArray()) !== false) {
-			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', array('lastCommentTime' => $row['time'])));
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', ['lastCommentTime' => $row['time']]));
 		}
 		else {
 			// check for comment response
@@ -220,12 +221,12 @@ class CommentHandler extends SingletonFactory {
 						AND time > ?
 				ORDER BY	time DESC";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
-			$statement->execute(array(
+			$statement->execute([
 				WCF::getUser()->userID,
 				(TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime'))
-			));
+			]);
 			if (($row = $statement->fetchArray()) !== false) {
-				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', array('lastCommentTime' => $row['time'])));
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', ['lastCommentTime' => $row['time']]));
 			}
 		}
 	}
@@ -234,13 +235,14 @@ class CommentHandler extends SingletonFactory {
 	 * Enforces the censorship.
 	 * 
 	 * @param	string		$text
+	 * @throws	UserInputException
 	 */
 	public static function enforceCensorship($text) {
 		// search for censored words
 		if (ENABLE_CENSORSHIP) {
 			$result = Censorship::getInstance()->test($text);
 			if ($result) {
-				throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.censoredWordsFound', array('censoredWords' => $result)));
+				throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.censoredWordsFound', ['censoredWords' => $result]));
 			}
 		}
 	}

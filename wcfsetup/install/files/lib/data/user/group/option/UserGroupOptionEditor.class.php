@@ -8,20 +8,23 @@ use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
  * Provides functions to edit usergroup options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group.option
  * @category	Community Framework
+ * 
+ * @method	UserGroupOption		getDecoratedObject()
+ * @mixin	UserGroupOption
  */
 class UserGroupOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\group\option\UserGroupOption';
+	protected static $baseClass = UserGroupOption::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 * @inheritDoc
 	 */
 	public static function resetCache() {
 		UserGroupOptionCacheBuilder::getInstance()->reset();

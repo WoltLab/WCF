@@ -7,25 +7,33 @@ use wcf\system\WCF;
  * Represents a user option category.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option.category
  * @category	Community Framework
+ *
+ * @property-read	integer		$categoryID
+ * @property-read	integer		$packageID
+ * @property-read	string		$categoryName
+ * @property-read	string		$parentCategoryName
+ * @property-read	integer		$showOrder
+ * @property-read	string		$permissions
+ * @property-read	string		$options
  */
 class UserOptionCategory extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_option_category';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'categoryID';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($categoryID, $row = null, UserOptionCategory $category = null) {
 		if ($categoryID !== null) {
@@ -34,7 +42,7 @@ class UserOptionCategory extends DatabaseObject {
 				FROM	wcf".WCF_N."_user_option_category option_category
 				WHERE	option_category.categoryID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($categoryID));
+			$statement->execute([$categoryID]);
 			$row = $statement->fetchArray();
 		}
 		
@@ -61,7 +69,7 @@ class UserOptionCategory extends DatabaseObject {
 			FROM	wcf".WCF_N."_user_option_category
 			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($categoryName));
+		$statement->execute([$categoryName]);
 		$row = $statement->fetchArray();
 		if ($row === false) return null;
 		

@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Shows the form for adding new templates.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -24,14 +24,14 @@ use wcf\util\StringUtil;
  */
 class TemplateAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.template.canManageTemplate');
+	public $neededPermissions = ['admin.template.canManageTemplate'];
 	
 	/**
 	 * template name
@@ -55,7 +55,7 @@ class TemplateAddForm extends AbstractForm {
 	 * available template groups
 	 * @var	array
 	 */
-	public $availableTemplateGroups = array();
+	public $availableTemplateGroups = [];
 	
 	/**
 	 * template's package id
@@ -82,7 +82,7 @@ class TemplateAddForm extends AbstractForm {
 	public $application = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -100,7 +100,7 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -116,7 +116,7 @@ class TemplateAddForm extends AbstractForm {
 				WHERE	templateName = ?
 					AND templateGroupID IS NULL";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->tplName));
+			$statement->execute([$this->tplName]);
 			$row = $statement->fetchArray();
 			if ($row !== false) {
 				$this->packageID = $row['packageID'];
@@ -125,7 +125,7 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -147,23 +147,23 @@ class TemplateAddForm extends AbstractForm {
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('templateName = ?', array($this->tplName));
-		$conditionBuilder->add('templateGroupID = ?', array($this->templateGroupID));
+		$conditionBuilder->add('templateName = ?', [$this->tplName]);
+		$conditionBuilder->add('templateGroupID = ?', [$this->templateGroupID]);
 		
 		if ($this->copiedTemplate !== null) {
-			$conditionBuilder->add('(packageID = ? OR application = ?)', array($this->packageID, $this->copiedTemplate->application));
+			$conditionBuilder->add('(packageID = ? OR application = ?)', [$this->packageID, $this->copiedTemplate->application]);
 		}
 		else {
-			$conditionBuilder->add('packageID = ?', array($this->packageID));
+			$conditionBuilder->add('packageID = ?', [$this->packageID]);
 		}
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_template
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
-		$row = $statement->fetchArray();
-		if ($row['count']) {
+		
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('tplName', 'notUnique');
 		}
 	}
@@ -183,7 +183,7 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -192,12 +192,12 @@ class TemplateAddForm extends AbstractForm {
 			$this->application = Package::getAbbreviation(PackageCache::getInstance()->getPackage($this->packageID)->package);
 		}
 		
-		$this->objectAction = new TemplateAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TemplateAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'application' => $this->application,
 			'templateName' => $this->tplName,
 			'packageID' => $this->packageID,
 			'templateGroupID' => $this->templateGroupID
-		)), 'source' => $this->templateSource));
+		]), 'source' => $this->templateSource]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -206,13 +206,13 @@ class TemplateAddForm extends AbstractForm {
 		$this->templateGroupID = 0;
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -226,18 +226,18 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'tplName' => $this->tplName,
 			'templateGroupID' => $this->templateGroupID,
 			'templateSource' => $this->templateSource,
 			'availableTemplateGroups' => $this->availableTemplateGroups,
 			'copy' => $this->copy
-		));
+		]);
 	}
 }

@@ -6,7 +6,7 @@ use wcf\data\object\type\ObjectTypeCache;
  * Imports user profile comments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer
@@ -14,7 +14,7 @@ use wcf\data\object\type\ObjectTypeCache;
  */
 class UserCommentImporter extends AbstractCommentImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractCommentImporter::$objectTypeName
+	 * @inheritDoc
 	 */
 	protected $objectTypeName = 'com.woltlab.wcf.user.comment';
 	
@@ -27,9 +27,9 @@ class UserCommentImporter extends AbstractCommentImporter {
 	}
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['objectID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectID']);
 		if (!$data['objectID']) return 0;
 		

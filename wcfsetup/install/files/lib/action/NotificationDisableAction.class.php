@@ -6,13 +6,14 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 
 /**
  * Allows a user to disable notifications by a direct link.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -50,7 +51,7 @@ class NotificationDisableAction extends AbstractAction {
 	public $token = '';
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -71,13 +72,13 @@ class NotificationDisableAction extends AbstractAction {
 		}
 		
 		if (isset($_REQUEST['token'])) $this->token = StringUtil::trim($_REQUEST['token']);
-		if (empty($this->token) || $this->token != $this->user->notificationMailToken) {
+		if (empty($this->token) || !PasswordUtil::secureCompare($this->user->notificationMailToken, $this->token)) {
 			throw new IllegalLinkException();
 		}
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -88,21 +89,21 @@ class NotificationDisableAction extends AbstractAction {
 				WHERE	userID = ?
 					AND eventID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				'none',
 				$this->userID,
 				$this->eventID
-			));
+			]);
 		}
 		else {
 			$sql = "UPDATE	wcf".WCF_N."_user_notification_event_to_user
 				SET	mailNotificationType = ?
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				'none',
 				$this->userID
-			));
+			]);
 		}
 		
 		$this->executed();

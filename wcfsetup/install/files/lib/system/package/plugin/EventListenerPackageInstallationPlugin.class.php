@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes event listeners.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -17,17 +17,17 @@ use wcf\system\WCF;
  */
 class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\event\listener\EventListenerEditor';
+	public $className = EventListenerEditor::class;
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @inheritDoc
 	 */
 	public $tagName = 'eventlistener';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -46,33 +46,33 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		
 		foreach ($items as $item) {
 			if (!isset($item['attributes']['name'])) {
-				$legacyStatement->execute(array(
+				$legacyStatement->execute([
 					$this->installation->getPackageID(),
 					(isset($item['elements']['environment']) ? $item['elements']['environment'] : 'user'),
 					$item['elements']['eventclassname'],
 					$item['elements']['eventname'],
 					(isset($item['elements']['inherit'])) ? $item['elements']['inherit'] : 0,
 					$item['elements']['listenerclassname']
-				));
+				]);
 			}
 			else {
-				$statement->execute(array(
+				$statement->execute([
 					$this->installation->getPackageID(),
 					$item['attributes']['name']
-				));
+				]);
 			}
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		$nice = (isset($data['elements']['nice'])) ? intval($data['elements']['nice']) : 0;
 		if ($nice < -128) $nice = -128;
 		else if ($nice > 127) $nice = 127;
 		
-		return array(
+		return [
 			'environment' => (isset($data['elements']['environment']) ? $data['elements']['environment'] : 'user'),
 			'eventClassName' => $data['elements']['eventclassname'],
 			'eventName' => $data['elements']['eventname'],
@@ -82,11 +82,11 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			'niceValue' => $nice,
 			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
 			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '')
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @inheritDoc
 	 */
 	protected function import(array $row, array $data) {
 		// if an event listener is updated without a name given, keep the
@@ -95,14 +95,15 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			unset($data['listenerName']);
 		}
 		
+		/** @var EventListener $eventListener */
 		$eventListener = parent::import($row, $data);
 		
 		// update event listener name
 		if (!$eventListener->listenerName) {
 			$eventListenerEditor = new EventListenerEditor($eventListener);
-			$eventListenerEditor->update(array(
+			$eventListenerEditor->update([
 				'listenerName' => EventListener::AUTOMATIC_NAME_PREFIX.$eventListener->listenerID
-			));
+			]);
 			
 			$eventListener = new EventListener($eventListener->listenerID);
 		}
@@ -111,7 +112,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		if (!$data['listenerName']) {
@@ -122,33 +123,33 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 					AND eventClassName = ?
 					AND eventName = ?
 					AND listenerClassName = ?";
-			$parameters = array(
+			$parameters = [
 				$this->installation->getPackageID(),
 				$data['environment'],
 				$data['eventClassName'],
 				$data['eventName'],
 				$data['listenerClassName']
-			);
+			];
 		}
 		else {
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_".$this->tableName."
 				WHERE	packageID = ?
 					AND listenerName = ?";
-			$parameters = array(
+			$parameters = [
 				$this->installation->getPackageID(),
 				$data['listenerName']
-			);
+			];
 		}
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		parent::uninstall();

@@ -12,35 +12,39 @@ use wcf\system\WCF;
  * Executes notice-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.notice
  * @category	Community Framework
+ * 
+ * @method	NoticeEditor[]		getObjects()
+ * @method	NoticeEditor		getSingleObject()
  */
 class NoticeAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('dismiss');
+	protected $allowGuestAccess = ['dismiss'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.notice.canManageNotice');
+	protected $permissionsDelete = ['admin.notice.canManageNotice'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.notice.canManageNotice');
+	protected $permissionsUpdate = ['admin.notice.canManageNotice'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	Notice
 	 */
 	public function create() {
 		$showOrder = 0;
@@ -49,6 +53,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 			unset($this->parameters['data']['showOrder']);
 		}
 		
+		/** @var Notice $notice */
 		$notice = parent::create();
 		$noticeEditor = new NoticeEditor($notice);
 		$noticeEditor->setShowOrder($showOrder);
@@ -57,7 +62,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.notice', $this->objectIDs);
@@ -68,20 +73,20 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	/**
 	 * Dismisses a certain notice.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function dismiss() {
 		if (WCF::getUser()->userID) {
-			$sql = "INSERT INTO	wcf".WCF_N."_notice_dismissed
-						(noticeID, userID)
-				VALUES		(?, ?)";
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_notice_dismissed
+							(noticeID, userID)
+				VALUES			(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				reset($this->objectIDs),
 				WCF::getUser()->userID
-			));
+			]);
 			
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'dismissedNotices');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'dismissedNotices');
 		}
 		else {
 			$dismissedNotices = WCF::getSession()->getVar('dismissedNotices');
@@ -90,27 +95,27 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 				$dismissedNotices[] = reset($this->objectIDs);
 			}
 			else {
-				$dismissedNotices = array(
+				$dismissedNotices = [
 					reset($this->objectIDs)
-				);
+				];
 			}
 			
 			WCF::getSession()->register('dismissedNotices', serialize($dismissedNotices));
 		}
 		
-		return array(
+		return [
 			'noticeID' => reset($this->objectIDs)
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $notice) {
-			$notice->update(array(
+		foreach ($this->getObjects() as $notice) {
+			$notice->update([
 				'isDisabled' => $notice->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	
@@ -122,14 +127,14 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
+	 * @inheritDoc
 	 */
 	public function validateUpdatePosition() {
 		WCF::getSession()->checkPermissions($this->permissionsUpdate);
@@ -148,7 +153,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();
@@ -159,7 +164,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::updatePosition()
+	 * @inheritDoc
 	 */
 	public function updatePosition() {
 		$sql = "UPDATE	wcf".WCF_N."_notice
@@ -170,10 +175,10 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 		$showOrder = $this->parameters['data']['offset'];
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'][0] as $noticeID) {
-			$statement->execute(array(
+			$statement->execute([
 				$showOrder++,
 				$noticeID
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

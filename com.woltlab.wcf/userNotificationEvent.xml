@@ -43,5 +43,20 @@
 			<preset>1</preset>
 			<options>module_like</options>
 		</event>
+		
+		<event>
+			<name>comment</name>
+			<objecttype>com.woltlab.wcf.moderation.queue.notification</objecttype>
+			<classname><![CDATA[wcf\system\user\notification\event\ModerationQueueCommentUserNotificationEvent]]></classname>
+			<preset>1</preset>
+			<permissions>mod.general.canUseModeration</permissions>
+		</event>
+		<event>
+			<name>commentResponse</name>
+			<objecttype>com.woltlab.wcf.moderation.queue.response.notification</objecttype>
+			<classname><![CDATA[wcf\system\user\notification\event\ModerationQueueCommentResponseUserNotificationEvent]]></classname>
+			<preset>1</preset>
+			<permissions>mod.general.canUseModeration</permissions>
+		</event>
 	</import>
 </data>

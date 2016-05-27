@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Abstract class for all data holder classes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
@@ -52,9 +52,9 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * Creates a new instance of the DatabaseObject class.
 	 * 
-	 * @param	mixed				$id
-	 * @param	array				$row
-	 * @param	\wcf\data\DatabaseObject		$object
+	 * @param	mixed			$id
+	 * @param	array			$row
+	 * @param	DatabaseObject		$object
 	 */
 	public function __construct($id, array $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
@@ -62,11 +62,11 @@ abstract class DatabaseObject implements IStorableObject {
 				FROM	".static::getDatabaseTableName()."
 				WHERE	".static::getDatabaseTableIndexName()." = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($id));
+			$statement->execute([$id]);
 			$row = $statement->fetchArray();
 			
 			// enforce data type 'array'
-			if ($row === false) $row = array();
+			if ($row === false) $row = [];
 		}
 		else if ($object !== null) {
 			$row = $object->data;
@@ -90,7 +90,7 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::__get()
+	 * @inheritDoc
 	 */
 	public function __get($name) {
 		if (isset($this->data[$name])) {
@@ -104,14 +104,14 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * Returns the id of the object.
 	 * 
-	 * @return	mixed
+	 * @return	integer
 	 */
 	public function getObjectID() {
 		return $this->data[static::getDatabaseTableIndexName()];
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::__isset()
+	 * @inheritDoc
 	 */
 	public function __isset($name) {
 		return isset($this->data[$name]);
@@ -126,7 +126,7 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableName()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableName() {
 		$classParts = explode('\\', get_called_class());
@@ -134,21 +134,21 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableAlias() {
 		return static::$databaseTableName;
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableIndexIsIdentity() {
 		return static::$databaseTableIndexIsIdentity;
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexName()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableIndexName() {
 		return static::$databaseTableIndexName;
@@ -157,14 +157,15 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * Sorts a list of database objects.
 	 * 
-	 * @param	array<\wcf\data\DatabaseObject>	$objects
-	 * @param	mixed				$sortBy
-	 * @param	string				$sortOrder
-	 * @return	boolean
+	 * @param	DatabaseObject[]	$objects
+	 * @param	mixed			$sortBy
+	 * @param	string			$sortOrder
+	 * @param	boolean			$maintainIndexAssociation
 	 */
 	public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true) {
-		$sortArray = $objects2 = array();
+		$sortArray = $objects2 = [];
 		foreach ($objects as $idx => $obj) {
+			/** @noinspection PhpVariableVariableInspection */
 			$sortArray[$idx] = $obj->$sortBy;
 			
 			// array_multisort will drop index association if key is not a string
@@ -174,10 +175,10 @@ abstract class DatabaseObject implements IStorableObject {
 		}
 		
 		if ($maintainIndexAssociation) {
-			$objects = array();
+			$objects = [];
 			array_multisort($sortArray, $sortOrder == 'ASC' ? SORT_ASC : SORT_DESC, $objects2);
 			
-			$objects = array();
+			$objects = [];
 			foreach ($objects2 as $idx => $obj) {
 				$objects[substr($idx, 0, -1)] = $obj;
 			}

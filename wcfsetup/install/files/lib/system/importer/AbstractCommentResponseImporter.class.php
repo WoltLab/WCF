@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseEditor;
 use wcf\system\WCF;
 
@@ -7,7 +8,7 @@ use wcf\system\WCF;
  * Imports comment responses.
  * 
  * @author	Tim Duesterhus, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer
@@ -15,9 +16,9 @@ use wcf\system\WCF;
  */
 class AbstractCommentResponseImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\comment\response\CommentResponse';
+	protected $className = CommentResponse::class;
 	
 	/**
 	 * object type name
@@ -26,9 +27,9 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
 		$data['commentID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['commentID']);
@@ -41,9 +42,8 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 			WHERE		commentID = ?
 			ORDER BY	time ASC, responseID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
-		$statement->execute(array($response->commentID));
-		$responseIDs = array();
-		while ($responseID = $statement->fetchColumn()) $responseIDs[] = $responseID;
+		$statement->execute([$response->commentID]);
+		$responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		// update parent comment
 		$sql = "UPDATE	wcf".WCF_N."_comment
@@ -51,10 +51,10 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 				responses = responses + 1
 			WHERE	commentID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			serialize($responseIDs),
 			$response->commentID
-		));
+		]);
 		
 		return $response->responseID;
 	}

@@ -13,7 +13,7 @@ use wcf\util\UserRegistrationUtil;
  * Shows the new email activation code form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -21,7 +21,7 @@ use wcf\util\UserRegistrationUtil;
  */
 class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -50,7 +50,7 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -59,20 +59,20 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 		$activationCode = UserRegistrationUtil::getActivationCode();
 		
 		// save user
-		$this->objectAction = new UserAction(array($this->user), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserAction([$this->user], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'reactivationCode' => $activationCode
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// send activation mail
-		$messageData = array(
+		$messageData = [
 			'username' => $this->user->username,
 			'userID' => $this->user->userID,
 			'activationCode' => $activationCode
-		);
-		$mail = new Mail(array($this->user->username => !empty($this->email) ? $this->email : $this->user->email), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
+		];
+		$mail = new Mail([$this->user->username => $this->user->newEmail], WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
 		$mail->send();
 		$this->saved();
 		

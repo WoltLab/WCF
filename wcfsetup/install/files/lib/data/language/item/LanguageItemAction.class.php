@@ -10,37 +10,41 @@ use wcf\system\WCF;
  * Executes language item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language.item
  * @category	Community Framework
+ * 
+ * @method	LanguageItem		create()
+ * @method	LanguageItemEditor[]	getObjects()
+ * @method	LanguageItemEditor	getSingleObject()
  */
 class LanguageItemAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\language\item\LanguageItemEditor';
+	protected $className = LanguageItemEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.language.canManageLanguage');
+	protected $permissionsCreate = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.language.canManageLanguage');
+	protected $permissionsDelete = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.language.canManageLanguage');
+	protected $permissionsUpdate = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'edit', 'prepareEdit', 'update');
+	protected $requireACP = ['create', 'delete', 'edit', 'prepareEdit', 'update'];
 	
 	/**
 	 * Validates parameters to prepare edit.
@@ -61,14 +65,14 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	 */
 	public function prepareEdit() {
 		$item = reset($this->objects);
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'item' => $item
-		));
+		]);
 		
-		return array(
+		return [
 			'languageItem' => $item->languageItem,
 			'template' => WCF::getTPL()->fetch('languageItemEditDialog')
-		);
+		];
 	}
 	
 	/**
@@ -96,15 +100,15 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		// save item
 		$editor = reset($this->objects);
 		if ($editor->languageItemOriginIsSystem) {
-			$updateData = array(
+			$updateData = [
 				'languageCustomItemValue' => !$this->parameters['languageUseCustomValue'] && empty($this->parameters['languageCustomItemValue']) ? null : $this->parameters['languageCustomItemValue'],
 				'languageUseCustomValue' => ($this->parameters['languageUseCustomValue'] ? 1 : 0)
-			);
+			];
 		}
 		else {
-			$updateData = array(
+			$updateData = [
 				'languageItemValue' => $this->parameters['languageItemValue']
-			);
+			];
 		}
 		$editor->update($updateData);
 		

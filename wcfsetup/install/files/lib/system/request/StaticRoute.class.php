@@ -5,11 +5,12 @@ namespace wcf\system\request;
  * Static route implementation to resolve HTTP requests, handling a single controller.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
+ * @deprecated  2.2:2.3 Consider using \wcf\system\request\route\StaticRequestRoute
  */
 class StaticRoute extends FlexibleRoute {
 	/**
@@ -46,7 +47,7 @@ class StaticRoute extends FlexibleRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::buildLink()
+	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
 		// static routes don't have these components
@@ -57,7 +58,7 @@ class StaticRoute extends FlexibleRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::canHandle()
+	 * @inheritDoc
 	 */
 	public function canHandle(array $components) {
 		if (isset($components['application']) && $components['application'] == $this->staticApplication) {
@@ -70,7 +71,7 @@ class StaticRoute extends FlexibleRoute {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRoute::matches()
+	 * @inheritDoc
 	 */
 	public function matches($requestURL) {
 		if (parent::matches($requestURL)) {

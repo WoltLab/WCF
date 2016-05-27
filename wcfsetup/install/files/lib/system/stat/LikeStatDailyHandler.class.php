@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Stat handler implementation for like stats.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.stat
@@ -17,7 +17,7 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler {
 	protected $likeValue = Like::LIKE;
 	
 	/**
-	 * @see	\wcf\system\stat\IStatDailyHandler::getData()
+	 * @inheritDoc
 	 */
 	public function getData($date) {
 		$sql = "SELECT	COUNT(*)
@@ -25,7 +25,7 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler {
 			WHERE	time BETWEEN ? AND ?
 				AND likeValue = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($date, $date + 86399, $this->likeValue));
+		$statement->execute([$date, $date + 86399, $this->likeValue]);
 		$counter = intval($statement->fetchColumn());
 		
 		$sql = "SELECT	COUNT(*)
@@ -33,12 +33,12 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler {
 			WHERE	time < ?
 				AND likeValue = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($date + 86400, $this->likeValue));
+		$statement->execute([$date + 86400, $this->likeValue]);
 		$total = intval($statement->fetchColumn());
 		
-		return array(
+		return [
 			'counter' => $counter,
 			'total' => $total
-		);
+		];
 	}
 }

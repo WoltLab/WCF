@@ -16,7 +16,7 @@ use wcf\util\UserUtil;
  * Shows the account management form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -24,12 +24,7 @@ use wcf\util\UserUtil;
  */
 class AccountManagementForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
-	 */
-	public $enableTracking = true;
-	
-	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
@@ -136,7 +131,7 @@ class AccountManagementForm extends AbstractForm {
 	public $googleDisconnect = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -145,7 +140,7 @@ class AccountManagementForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -172,7 +167,7 @@ class AccountManagementForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -255,7 +250,7 @@ class AccountManagementForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -268,12 +263,12 @@ class AccountManagementForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'password' => $this->password,
 			'email' => $this->email,
 			'confirmEmail' => $this->confirmEmail,
@@ -292,11 +287,11 @@ class AccountManagementForm extends AbstractForm {
 			'facebookDisconnect' => $this->facebookDisconnect,
 			'googleConnect' => $this->googleConnect,
 			'googleDisconnect' => $this->googleDisconnect
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab
@@ -306,13 +301,13 @@ class AccountManagementForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
-		$success = array();
-		$updateParameters = array();
+		$success = [];
+		$updateParameters = [];
 		
 		// quit
 		if (WCF::getSession()->getPermission('user.profile.canQuit')) {
@@ -353,13 +348,13 @@ class AccountManagementForm extends AbstractForm {
 				$updateParameters['reactivationCode'] = $activationCode;
 				$updateParameters['newEmail'] = $this->email;
 				
-				$messageData = array(
+				$messageData = [
 					'username' => WCF::getUser()->username,
 					'userID' => WCF::getUser()->userID,
 					'activationCode' => $activationCode
-				);
+				];
 				
-				$mail = new Mail(array(WCF::getUser()->username => $this->email), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
+				$mail = new Mail([WCF::getUser()->username => $this->email], WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
 				$mail->send();
 				$success[] = 'wcf.user.changeEmail.needReactivation';
 			}
@@ -375,8 +370,9 @@ class AccountManagementForm extends AbstractForm {
 		
 		// 3rdParty
 		if (GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== '') {
-			if ($this->githubConnect && WCF::getSession()->getVar('__githubToken')) {
-				$updateParameters['authData'] = 'github:'.WCF::getSession()->getVar('__githubToken');
+			if ($this->githubConnect && WCF::getSession()->getVar('__githubData')) {
+				$githubData = WCF::getSession()->getVar('__githubData');
+				$updateParameters['authData'] = 'github:'.$githubData['id'];
 				$success[] = 'wcf.user.3rdparty.github.connect.success';
 				
 				WCF::getSession()->unregister('__githubToken');
@@ -430,12 +426,12 @@ class AccountManagementForm extends AbstractForm {
 			$success[] = 'wcf.user.3rdparty.google.disconnect.success';
 		}
 		
-		$data = array();
+		$data = [];
 		if (!empty($updateParameters) || !empty($this->additionalFields)) {
 			$data['data'] = array_merge($this->additionalFields, $updateParameters);
 		}
 		
-		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', $data);
+		$this->objectAction = new UserAction([WCF::getUser()], 'update', $data);
 		$this->objectAction->executeAction();
 		
 		// update cookie
@@ -448,7 +444,7 @@ class AccountManagementForm extends AbstractForm {
 		
 		$this->saved();
 		
-		$success = array_merge($success, WCF::getTPL()->get('success') ?: array());
+		$success = array_merge($success, WCF::getTPL()->get('success') ?: []);
 		
 		// show success message
 		WCF::getTPL()->assign('success', $success);

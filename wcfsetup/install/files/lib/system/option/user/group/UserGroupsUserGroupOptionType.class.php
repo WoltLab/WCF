@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * User group option type implementation for a user group select list.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserGroupOptionType {
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get selected group
@@ -38,14 +38,14 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		// get all groups
 		$groups = UserGroup::getGroupsByType();
 		
 		// get new value
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		$selectedGroups = ArrayUtil::toIntegerArray($newValue);
 		
 		// check groups
@@ -57,31 +57,31 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
-		if (!is_array($newValue)) $newValue = array();
+		if (!is_array($newValue)) $newValue = [];
 		$newValue = ArrayUtil::toIntegerArray($newValue);
 		sort($newValue, SORT_NUMERIC);
 		return implode(',', $newValue);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
-		$defaultValue = empty($defaultValue) ? array() : explode(',', StringUtil::unifyNewlines($defaultValue));
-		$groupValue = empty($groupValue) ? array() : explode(',', StringUtil::unifyNewlines($groupValue));
+		$defaultValue = empty($defaultValue) ? [] : explode(',', StringUtil::unifyNewlines($defaultValue));
+		$groupValue = empty($groupValue) ? [] : explode(',', StringUtil::unifyNewlines($groupValue));
 		
 		return implode(',', array_unique(array_merge($defaultValue, $groupValue)));
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
-		$value1 = ($value1) ? explode(',', $value1) : array();
-		$value2 = ($value2) ? explode(',', $value2) : array();
+		$value1 = ($value1) ? explode(',', $value1) : [];
+		$value2 = ($value2) ? explode(',', $value2) : [];
 		
 		// check if value1 contains more elements than value2
 		$diff = array_diff($value1, $value2);

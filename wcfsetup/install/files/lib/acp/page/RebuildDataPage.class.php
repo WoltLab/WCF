@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Show the list of available rebuild data options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -16,20 +16,20 @@ use wcf\system\WCF;
  */
 class RebuildDataPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.maintenance.rebuildData';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canRebuildData');
+	public $neededPermissions = ['admin.management.canRebuildData'];
 	
 	/**
 	 * object types
 	 * @var	array
 	 */
-	public $objectTypes = array();
+	public $objectTypes = [];
 	
 	/**
 	 * display a warning if InnoDB uses a slow configuration
@@ -38,7 +38,7 @@ class RebuildDataPage extends AbstractPage {
 	public $showInnoDBWarning = false;
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -71,14 +71,14 @@ class RebuildDataPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'objectTypes' => $this->objectTypes,
 			'showInnoDBWarning' => $this->showInnoDBWarning
-		));
+		]);
 	}
 }

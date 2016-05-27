@@ -1,14 +1,13 @@
 <?php
 namespace wcf\system\mail;
 use wcf\system\io\File;
-use wcf\util\FileUtil;
 
 /**
  * DebugMailSender is a debug implementation of mailsender which writes emails in
  * a log file.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.mail

@@ -9,7 +9,7 @@ use wcf\util\HTTPRequest;
  * Credentials for update server are either missing or invalid.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -20,7 +20,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	 * package update version
 	 * @var	array
 	 */
-	protected $packageUpdateVersion = array();
+	protected $packageUpdateVersion = [];
 	
 	/**
 	 * HTTP request object
@@ -41,7 +41,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
 	 * @param	array							$packageUpdateVersion
 	 */
-	public function __construct(HTTPRequest $request, PackageUpdateServer $updateServer, array $packageUpdateVersion = array()) {
+	public function __construct(HTTPRequest $request, PackageUpdateServer $updateServer, array $packageUpdateVersion = []) {
 		$this->request = $request;
 		$this->updateServer = $updateServer;
 		$this->packageUpdateVersion = $packageUpdateVersion;
@@ -53,11 +53,11 @@ class PackageUpdateUnauthorizedException extends UserException {
 	 * @return	string
 	 */
 	public function getRenderedTemplate() {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'packageUpdateVersion' => $this->packageUpdateVersion,
 			'request' => $this->request,
 			'updateServer' => $this->updateServer
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('packageUpdateUnauthorized');
 	}

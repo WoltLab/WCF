@@ -1,35 +1,12 @@
-{include file='documentHeader'}
+{capture assign='pageTitle'}{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang} - {lang}wcf.user.menu.settings{/lang}{/capture}
 
-<head>
-	<title>{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang} - {lang}wcf.user.menu.settings{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		require(['Language', 'WoltLab/WCF/Controller/User/Notification/Settings'], function(Language, ControllerUserNotificationSettings) {
-			Language.addObject({
-				'wcf.user.notification.mailNotificationType.daily': '{lang}wcf.user.notification.mailNotificationType.daily{/lang}',
-				'wcf.user.notification.mailNotificationType.instant': '{lang}wcf.user.notification.mailNotificationType.instant{/lang}',
-				'wcf.user.notification.mailNotificationType.none': '{lang}wcf.user.notification.mailNotificationType.none{/lang}'
-			});
-			
-			ControllerUserNotificationSettings.setup();
-		});
-	</script>
-</head>
+{capture assign='contentTitle'}{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang}{/capture}
 
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='contentDescription'}{lang}wcf.user.notification.notifications.description{/lang}{/capture}
 
 {include file='userMenuSidebar'}
 
-{include file='header' sidebarOrientation='left'}
-
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang}</h1>
-	<p>{lang}wcf.user.notification.notifications.description{/lang}
-</header>
-
-{include file='userNotice'}
+{include file='header'}
 
 {include file='formError'}
 
@@ -37,23 +14,11 @@
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
-
 <form method="post" action="{link controller='NotificationSettings'}{/link}">
-	<div class="container containerPadding marginTop" id="notificationSettings">
+	<div id="notificationSettings">
 		{foreach from=$events key='eventCategory' item='eventList'}
-			<fieldset>
-				<legend>{lang}wcf.user.notification.{$eventCategory}{/lang}</legend>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.user.notification.{$eventCategory}{/lang}</h2>
 				
 				<dl>
 					{foreach from=$eventList item=event}
@@ -88,10 +53,10 @@
 						</dd>
 					{/foreach}
 				</dl>
-			</fieldset>
+			</section>
 		{/foreach}
 		
-		{event name='fieldsets'}
+		{event name='sections'}
 	</div>
 	
 	<div class="formSubmit">
@@ -100,7 +65,16 @@
 	</div>
 </form>
 
-{include file='footer'}
+<script data-relocate="true">
+	require(['Language', 'WoltLab/WCF/Controller/User/Notification/Settings'], function(Language, ControllerUserNotificationSettings) {
+		Language.addObject({
+			'wcf.user.notification.mailNotificationType.daily': '{lang}wcf.user.notification.mailNotificationType.daily{/lang}',
+			'wcf.user.notification.mailNotificationType.instant': '{lang}wcf.user.notification.mailNotificationType.instant{/lang}',
+			'wcf.user.notification.mailNotificationType.none': '{lang}wcf.user.notification.mailNotificationType.none{/lang}'
+		});
+		
+		ControllerUserNotificationSettings.setup();
+	});
+</script>
 
-</body>
-</html>
+{include file='footer'}

@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the new password form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -23,11 +23,6 @@ use wcf\util\StringUtil;
  */
 class NewPasswordForm extends AbstractForm {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
-	
-	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
-	 */
-	public $enableTracking = true;
 	
 	/**
 	 * user id
@@ -54,7 +49,7 @@ class NewPasswordForm extends AbstractForm {
 	public $newPassword = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -69,7 +64,7 @@ class NewPasswordForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -88,13 +83,13 @@ class NewPasswordForm extends AbstractForm {
 			throw new UserInputException('lostPasswordKey', 'notValid');
 		}
 		
-		if ($this->user->lostPasswordKey != $this->lostPasswordKey) {
+		if (!PasswordUtil::secureCompare($this->user->lostPasswordKey, $this->lostPasswordKey)) {
 			throw new UserInputException('lostPasswordKey', 'notValid');
 		}
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -103,21 +98,21 @@ class NewPasswordForm extends AbstractForm {
 		$this->newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 12 ? REGISTER_PASSWORD_MIN_LENGTH : 12));
 		
 		// update user
-		$this->objectAction = new UserAction(array($this->user), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserAction([$this->user], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'password' => $this->newPassword,
 				'lastLostPasswordRequestTime' => 0,
 				'lostPasswordKey' => ''
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// send mail
-		$mail = new Mail(array($this->user->username => $this->user->email), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail', array(
+		$mail = new Mail([$this->user->username => $this->user->email], WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail', [
 			'username' => $this->user->username,
 			'userID' => $this->user->userID,
 			'newPassword' => $this->newPassword
-		)));
+		]));
 		$mail->send();
 		$this->saved();
 		
@@ -127,19 +122,19 @@ class NewPasswordForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'userID' => $this->userID,
 			'lostPasswordKey' => $this->lostPasswordKey
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		AbstractPage::readData();

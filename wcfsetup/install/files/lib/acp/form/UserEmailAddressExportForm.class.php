@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\User;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -12,7 +13,7 @@ use wcf\util\StringUtil;
  * Shows the export user mail addresses form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -20,14 +21,14 @@ use wcf\util\StringUtil;
  */
 class UserEmailAddressExportForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canMailUser');
+	public $neededPermissions = ['admin.user.canMailUser'];
 	
 	/**
 	 * type of the file containg the exported email addresses
@@ -37,9 +38,9 @@ class UserEmailAddressExportForm extends AbstractForm {
 	
 	/**
 	 * ids of the users whose email addresses are exported
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $userIDs = array();
+	public $userIDs = [];
 	
 	/**
 	 * string used to separate email adresses
@@ -55,9 +56,9 @@ class UserEmailAddressExportForm extends AbstractForm {
 	
 	/**
 	 * users whose email addresses are exported
-	 * @var	array<\wcf\data\user\User>
+	 * @var	User[]
 	 */
-	public $users = array();
+	public $users = [];
 	
 	/**
 	 * clipboard item type id
@@ -66,7 +67,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	protected $objectTypeID = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -89,7 +90,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -100,7 +101,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -114,15 +115,15 @@ class UserEmailAddressExportForm extends AbstractForm {
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->userIDs));
+		$conditions->add("userID IN (?)", [$this->userIDs]);
 		
 		// count users
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$count = $statement->fetchArray();
+		$count = $statement->fetchSingleColumn();
 		
 		// get users
 		$sql = "SELECT		email
@@ -138,7 +139,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 				echo "<address><![CDATA[".StringUtil::escapeCDATA($row['email'])."]]></address>\n";
 			}
 			else {
-				echo $this->textSeparator . $row['email'] . $this->textSeparator . ($i < $count['count'] ? $this->separator : '');
+				echo $this->textSeparator . $row['email'] . $this->textSeparator . ($i < $count ? $this->separator : '');
 			}
 			$i++;
 		}
@@ -156,16 +157,16 @@ class UserEmailAddressExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'users' => $this->users,
 			'separator' => $this->separator,
 			'textSeparator' => $this->textSeparator,
 			'fileType' => $this->fileType
-		));
+		]);
 	}
 }

@@ -10,20 +10,31 @@ use wcf\system\WCF;
  * Represents an ACP menu item.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.menu.item
  * @category	Community Framework
+ *
+ * @property-read	integer		$menuItemID
+ * @property-read	integer		$packageID
+ * @property-read	string		$menuItem
+ * @property-read	string		$parentMenuItem
+ * @property-read	string		$menuItemController
+ * @property-read	string		$menuItemLink
+ * @property-read	integer		$showOrder
+ * @property-read	string		$permissions
+ * @property-read	string		$options
+ * @property-read	string		$icon
  */
 class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'acp_menu_item';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	
@@ -40,7 +51,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	protected $controller = null;
 	
 	/**
-	 * @see	\wcf\system\menu\ITreeMenuItem::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		// external link
@@ -50,9 +61,9 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 		
 		$this->parseController();
 		
-		$linkParameters = array(
+		$linkParameters = [
 			'application' => $this->application
-		);
+		];
 		
 		// links of top option category menu items need the id of the option
 		// category

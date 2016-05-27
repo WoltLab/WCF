@@ -7,7 +7,7 @@ use wcf\system\moderation\queue\ModerationQueueActivationManager;
  * Executes actions for reports.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
@@ -15,9 +15,9 @@ use wcf\system\moderation\queue\ModerationQueueActivationManager;
  */
 class ModerationQueueActivationAction extends ModerationQueueAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('enableContent', 'removeContent');
+	protected $allowGuestAccess = ['enableContent', 'removeContent'];
 	
 	/**
 	 * moderation queue editor object

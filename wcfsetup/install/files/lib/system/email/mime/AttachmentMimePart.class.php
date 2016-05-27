@@ -1,17 +1,19 @@
 <?php
 namespace wcf\system\email\mime;
 use wcf\system\email\EmailGrammar;
+use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
 
 /**
  * Represents an email attachment.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.email.mime
  * @category	Community Framework
+ * @since	2.2
  */
 class AttachmentMimePart extends AbstractMimePart {
 	/**
@@ -44,6 +46,7 @@ class AttachmentMimePart extends AbstractMimePart {
 	 * @param	string	$path		Path to read the file from.
 	 * @param	string	$filename	Filename to provide in the email or null to use the $path's basename.
 	 * @param	string	$mimeType	Mime type to provide in the email or null to guess the mime type.
+	 * @throws	SystemException
 	 */
 	public function __construct($path, $filename = null, $mimeType = null) {
 		if (!is_file($path) || !is_readable($path)) {
@@ -57,14 +60,14 @@ class AttachmentMimePart extends AbstractMimePart {
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContentType()
+	 * @inheritDoc
 	 */
 	public function getContentType() {
 		return $this->mimeType;
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContentTransferEncoding()
+	 * @inheritDoc
 	 */
 	public function getContentTransferEncoding() {
 		return 'base64';
@@ -77,12 +80,12 @@ class AttachmentMimePart extends AbstractMimePart {
 	 */
 	public function getAdditionalHeaders() {
 		return [ 
-			[ 'Content-Disposition', 'attachment; filename='.EmailGrammar::encodeHeader($this->filename) ]
+			['Content-Disposition', 'attachment; filename='.EmailGrammar::encodeHeader($this->filename)]
 		];
 	}
 	
 	/**
-	 * @see	\wcf\system\email\mime\AbstractMimePart::getContent()
+	 * @inheritDoc
 	 */
 	public function getContent() {
 		return $this->content;

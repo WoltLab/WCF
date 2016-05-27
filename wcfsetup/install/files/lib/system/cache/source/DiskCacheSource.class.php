@@ -12,7 +12,7 @@ use wcf\util\FileUtil;
  * DiskCacheSource is an implementation of CacheSource that stores the cache as simple files in the file system.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.source
@@ -26,7 +26,7 @@ class DiskCacheSource implements ICacheSource {
 	protected $directoryUtil = null;
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flush()
+	 * @inheritDoc
 	 */
 	public function flush($cacheName, $useWildcard) {
 		if ($useWildcard) {
@@ -38,7 +38,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
+	 * @inheritDoc
 	 */
 	public function flushAll() {
 		$this->getDirectoryUtil()->removePattern(new Regex('.*\.php$'));
@@ -47,7 +47,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::get()
+	 * @inheritDoc
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$filename = $this->getFilename($cacheName);
@@ -65,7 +65,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::set()
+	 * @inheritDoc
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		$writer = new AtomicWriter($this->getFilename($cacheName));
@@ -147,6 +147,7 @@ class DiskCacheSource implements ICacheSource {
 	 * @param	string		$cacheName
 	 * @param	string		$filename
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	protected function readCache($cacheName, $filename) {
 		// get file contents

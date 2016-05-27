@@ -6,11 +6,12 @@ use wcf\data\user\group\UserGroup;
  * Default trait for user group option types implementing IUserGroupGroupOptionType.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
  * @category	Community Framework
+ * @since	2.2
  */
 trait TUserGroupOptionType {
 	/**
@@ -20,14 +21,14 @@ trait TUserGroupOptionType {
 	protected $userGroup = null;
 	
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupGroupOptionType::setUserGroup()
+	 * @inheritDoc
 	 */
 	public function setUserGroup(UserGroup $group) {
 		$this->userGroup = $group;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupGroupOptionType::getUserGroup()
+	 * @inheritDoc
 	 */
 	public function getUserGroup() {
 		return $this->userGroup;

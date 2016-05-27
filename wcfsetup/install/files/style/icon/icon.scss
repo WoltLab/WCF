@@ -1,0 +1,206 @@
+/* do NOT reference fonts directly, always make use of 'getFont.php' */
+@font-face {
+	font-family: 'FontAwesome';
+	src: url('../font/getFont.php?type=eot&v=4.5.0');
+	src: url('../font/getFont.php?type=eot&v=4.5.0#iefix') format('embedded-opentype'),
+	url('../font/getFont.php?type=woff2&v=4.5.0') format('woff2'),
+	url('../font/getFont.php?type=woff&v=4.5.0') format('woff'),
+	url('../font/getFont.php?type=ttf&v=4.5.0') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.icon, .fa {
+	color: $wcfContentText;
+	display: inline-block;
+	font-family: FontAwesome;
+	font-weight: normal !important;
+	font-style: normal !important;
+	text-align: center;
+	
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	
+	&.disabled {
+		opacity: .3;
+	}
+	&:hover {
+		text-decoration: none;
+	}
+	
+	/* default icon colors */
+	&.green {
+		color: rgba(0, 153, 0, 1);
+	}
+	
+	&.red {
+		color: rgba(204, 0, 0, 1);
+	}
+	
+	&.black {
+		color: #333;
+	}
+	
+	&.brown {
+		color: #c63;
+	}
+	
+	&.orange {
+		color: #f90;
+	}
+	
+	&.yellow {
+		color: #ff0;
+	}
+	
+	&.blue {
+		color: #369;
+	}
+	
+	&.purple {
+		color: #c0f;
+	}
+	
+	&.pink {
+		color: #f0c;
+	}
+}
+
+// firefox cursor issue
+span.icon:not(.pointer):not(.disabled),
+span.fa:not(.pointer):not(.disabled) {
+	cursor: default;
+}
+
+a > span.icon:not(.pointer),
+a > span.fa:not(.pointer) {
+	cursor: pointer !important;
+}
+
+// icon sizes
+.icon16 {
+	font-size: 14px;
+	height: 16px;
+	line-height: 16px;
+	width: 16px;
+}
+
+.icon24 {
+	font-size: 18px;
+	height: 24px;
+	line-height: 24px;
+	width: 24px;
+}
+
+.icon32 {
+	font-size: 28px;
+	height: 32px;
+	line-height: 32px;
+	width: 32px;
+	vertical-align: -5px;
+}
+
+.icon48 {
+	font-size: 42px;
+	height: 48px;
+	line-height: 48px;
+	width: 48px;
+}
+
+.icon64 {
+	font-size: 56px;
+	height: 64px;
+	line-height: 64px;
+	width: 64px;
+}
+
+.icon96 {
+	font-size: 84px;
+	height: 96px;
+	line-height: 96px;
+	width: 96px;
+}
+
+.icon144 {
+	font-size: 130px; // TODO
+	height: 144px;
+	line-height: 144px;
+	width: 144px;
+}
+
+// spinner animation
+.fa-spinner {
+	animation: wcfSpinner .6s linear infinite;
+	// TODO: these colors shouldn't be hard-coded
+	border: 2px solid rgb(204, 204, 204);
+	border-top-color: rgb(79, 129, 189);
+	border-radius: 50%;
+	
+	&::before {
+		display: none;
+	}
+}
+
+@-webkit-keyframes wcfSpinner {
+	to { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes wcfSpinner {
+	to { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+	0% { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(359deg); }
+}
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(359deg); }
+}
+
+.fa-rotate-90:before {
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.fa-rotate-180:before {
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+.fa-rotate-270:before {
+	-webkit-transform: rotate(270deg);
+	transform: rotate(270deg);
+}
+
+.fa-flip-horizontal:before {
+	-webkit-transform: scale(-1, 1);
+	transform: scale(-1, 1);
+}
+
+.fa-flip-vertical:before {
+	-webkit-transform: scale(1, -1);
+	transform: scale(1, -1);
+}
+
+/* ringing animation for fa-bell */
+@keyframes fa-bell-ring {
+	0% { transform:rotate(-15deg) }
+	2% { transform:rotate(15deg) }
+	4% { transform:rotate(-18deg) }
+	6% { transform:rotate(18deg) }
+	8% { transform:rotate(-22deg) }
+	10% { transform:rotate(22deg) }
+	12% { transform:rotate(-18deg) }
+	14% { transform:rotate(18deg) }
+	16% { transform:rotate(-12deg) }
+	18% { transform:rotate(12deg) }
+	20%, 100% { transform:rotate(0deg) }
+}
+
+@import "variables";
+@import "icons";

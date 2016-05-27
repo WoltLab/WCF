@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the form to edit an ad notice.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class AdEditForm extends AdAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.ad';
 	
@@ -36,19 +36,19 @@ class AdEditForm extends AdAddForm {
 	public $adObject = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'adObject' => $this->adObject
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -61,7 +61,7 @@ class AdEditForm extends AdAddForm {
 			$this->showOrder = $this->adObject->showOrder;
 			
 			$conditions = $this->adObject->getConditions();
-			$conditionsByObjectTypeID = array();
+			$conditionsByObjectTypeID = [];
 			foreach ($conditions as $condition) {
 				$conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
 			}
@@ -84,7 +84,7 @@ class AdEditForm extends AdAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -97,24 +97,24 @@ class AdEditForm extends AdAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new AdAction(array($this->adObject), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new AdAction([$this->adObject], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'ad' => $this->ad,
 				'adName' => $this->adName,
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectTypeID,
 				'showOrder' => $this->showOrder
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
 			foreach ($groupedObjectTypes as $objectTypes) {
 				if (is_array($objectTypes)) {

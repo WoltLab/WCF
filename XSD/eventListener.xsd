@@ -56,6 +56,7 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="inherit" type="woltlab_boolean" minOccurs="0" />
+			<xs:element name="environment" type="woltlab_environment" minOccurs="0" />
 		</xs:all>
 	</xs:complexType>
 </xs:schema>

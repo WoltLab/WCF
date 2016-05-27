@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\application;
 use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\package\PackageList;
 use wcf\data\DatabaseObject;
 use wcf\system\application\ApplicationHandler;
@@ -12,13 +13,25 @@ use wcf\util\FileUtil;
  * Represents an application.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.application
  * @category	Community Framework
+ *
+ * @property-read	integer		$packageID
+ * @property-read	string		$domainName
+ * @property-read	string		$domainPath
+ * @property-read	string		$cookieDomain
+ * @property-read	string		$cookiePath
  */
 class Application extends DatabaseObject {
+	/**
+	 * related package object
+	 * @var	Package
+	 */
+	protected $package;
+	
 	/**
 	 * absolute page URL
 	 * @var	string
@@ -26,23 +39,23 @@ class Application extends DatabaseObject {
 	protected $pageURL = '';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'application';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'packageID';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexIsIdentity = false;
 	
 	/**
 	 * list of all available application directories
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected static $directories = null;
 	
@@ -53,6 +66,19 @@ class Application extends DatabaseObject {
 	 */
 	public function getAbbreviation() {
 		return ApplicationHandler::getInstance()->getAbbreviation($this->packageID);
+	}
+	
+	/**
+	 * Returns related package object.
+	 * 
+	 * @return	Package		related package object
+	 */
+	public function getPackage() {
+		if ($this->package === null) {
+			$this->package = PackageCache::getInstance()->getPackage($this->packageID);
+		}
+		
+		return $this->package;
 	}
 	
 	/**
@@ -73,14 +99,15 @@ class Application extends DatabaseObject {
 	 * 
 	 * @param	string		$abbreviation
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function getDirectory($abbreviation) {
 		if (static::$directories === null) {
-			static::$directories = array();
+			static::$directories = [];
 			
 			// read application directories
 			$packageList = new PackageList();
-			$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+			$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
 			$packageList->readObjects();
 			foreach ($packageList as $package) {
 				$abbr = Package::getAbbreviation($package->package);

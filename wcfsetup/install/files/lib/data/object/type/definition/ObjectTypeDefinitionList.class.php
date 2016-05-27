@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of object type definitions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.object.type.definition
  * @category	Community Framework
+ *
+ * @method	ObjectTypeDefinition		current()
+ * @method	ObjectTypeDefinition[]		getObjects()
+ * @method	ObjectTypeDefinition|null	search($objectID)
+ * @property	ObjectTypeDefinition[]		$objects
  */
 class ObjectTypeDefinitionList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\object\type\definition\ObjectTypeDefinition';
+	public $className = ObjectTypeDefinition::class;
 }

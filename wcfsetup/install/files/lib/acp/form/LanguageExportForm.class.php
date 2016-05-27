@@ -13,7 +13,7 @@ use wcf\util\ArrayUtil;
  * Shows the language export form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -21,14 +21,14 @@ use wcf\util\ArrayUtil;
  */
 class LanguageExportForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
 	 * language id
@@ -44,15 +44,15 @@ class LanguageExportForm extends AbstractForm {
 	
 	/**
 	 * selected packages
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $selectedPackages = array();
+	public $selectedPackages = [];
 	
 	/**
 	 * available packages
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $packages = array();
+	public $packages = [];
 	
 	/**
 	 * true to export custom variables
@@ -67,7 +67,7 @@ class LanguageExportForm extends AbstractForm {
 	public $packageNameLength = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -76,7 +76,7 @@ class LanguageExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -92,7 +92,7 @@ class LanguageExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -105,7 +105,7 @@ class LanguageExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -122,7 +122,7 @@ class LanguageExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -135,19 +135,19 @@ class LanguageExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'languageID' => $this->languageID,
 			'languages' => LanguageFactory::getInstance()->getLanguages(),
 			'selectedPackages' => $this->selectedPackages,
 			'packages' => $this->packages,
 			'selectAllPackages' => true,
 			'packageNameLength' => $this->packageNameLength
-		));
+		]);
 	}
 	
 	/**

@@ -6,7 +6,7 @@ use wcf\system\database\Database;
  * Abstract implementation of a database editor.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.editor
@@ -58,7 +58,7 @@ abstract class DatabaseEditor {
 	 * @param	array		$columns
 	 * @param	array		$indices
 	 */
-	abstract public function createTable($tableName, $columns, $indices = array());
+	abstract public function createTable($tableName, $columns, $indices = []);
 	
 	/**
 	 * Drops a database table.

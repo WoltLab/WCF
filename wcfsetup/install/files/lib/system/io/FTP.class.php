@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * The FTP class handles all ftp operations.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -23,8 +23,9 @@ class FTP {
 	 * Opens a new ftp connection to given host.
 	 * 
 	 * @param	string		$host
-	 * @param	string		$port
+	 * @param	integer		$port
 	 * @param	integer		$timeout
+	 * @throws	SystemException
 	 */
 	public function __construct($host = 'localhost', $port = 21, $timeout = 30) {
 		$this->resource = ftp_connect($host, $port, $timeout);
@@ -38,6 +39,8 @@ class FTP {
 	 * 
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		array_unshift($arguments, $this->resource);

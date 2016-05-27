@@ -1,8 +1,10 @@
 <?php
 namespace wcf\system\background;
+use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
-use wcf\system\exception\LoggedException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
+use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -10,13 +12,24 @@ use wcf\system\WCF;
  * Manages the background queue.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.background.job
  * @category	Community Framework
+ * @since	2.2
  */
 class BackgroundQueueHandler extends SingletonFactory {
+	/**
+	 * Forces checking whether a background queue item is due.
+	 * This means that the AJAX request to BackgroundQueuePerformAction is triggered.
+	 */
+	public function forceCheck() {
+		WCF::getTPL()->assign([
+			'forceBackgroundQueuePerform' => true
+		]);
+	}
+	
 	/**
 	 * Enqueues the given job(s) for execution in the specified number of
 	 * seconds. Defaults to "as soon as possible" (0 seconds).
@@ -26,7 +39,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * @see	\wcf\system\background\BackgroundQueueHandler::enqueueAt()
 	 */
 	public function enqueueIn($jobs, $time = 0) {
-		return self::enqueueAt($jobs, TIME_NOW + $time);
+		self::enqueueAt($jobs, TIME_NOW + $time);
 	}
 	
 	/**
@@ -36,15 +49,16 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * 
 	 * @param	mixed	$jobs	Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
 	 * @param	int	$time	Earliest time to consider the job for execution.
+	 * @throws	SystemException
 	 */
 	public function enqueueAt($jobs, $time) {
 		if ($time < TIME_NOW) {
 			throw new SystemException("You may not schedule a job in the past (".$time." is smaller than the current timestamp ".TIME_NOW.").");
 		}
-		if (!is_array($jobs)) $jobs = [ $jobs ];
+		if (!is_array($jobs)) $jobs = [$jobs];
 		foreach ($jobs as $job) {
 			if (!($job instanceof AbstractBackgroundJob)) {
-				throw new SystemException('$jobs contains an item that does not extend \wcf\system\background\job\AbstractBackgroundJob.');
+				throw new ParentClassException(get_class($job), AbstractBackgroundJob::class);
 			}
 		}
 		
@@ -74,8 +88,23 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * @param	\wcf\system\background\job\AbstractBackgroundJob	$job	The job to perform.
 	 */
 	public function performJob(AbstractBackgroundJob $job) {
+		$user = WCF::getUser();
+		
 		try {
+			SessionHandler::getInstance()->changeUser(new User(null), true);
 			$job->perform();
+		}
+		catch (\Throwable $e) {
+			// gotta catch 'em all
+			$job->fail();
+			
+			if ($job->getFailures() <= $job::MAX_FAILURES) {
+				$this->enqueueIn($job, $job->retryAfter());
+			}
+			else {
+				// job failed too often: log
+				\wcf\functions\exception\logThrowable($e);
+			}
 		}
 		catch (\Exception $e) {
 			// gotta catch 'em all
@@ -86,8 +115,11 @@ class BackgroundQueueHandler extends SingletonFactory {
 			}
 			else {
 				// job failed too often: log
-				if ($e instanceof LoggedException) $e->getExceptionID();
+				\wcf\functions\exception\logThrowable($e);
 			}
+		}
+		finally {
+			SessionHandler::getInstance()->changeUser($user, true);
 		}
 	}
 	
@@ -139,7 +171,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$commited = true;
 		}
 		finally {
-			if (!$commited) WCF::getDB()->rollbackTransaction();
+			if (!$commited) WCF::getDB()->rollBackTransaction();
 		}
 		
 		$job = null;
@@ -150,16 +182,39 @@ class BackgroundQueueHandler extends SingletonFactory {
 				$this->performJob($job);
 			}
 		}
+		catch (\Throwable $e) {
+			// job is completely broken: log
+			\wcf\functions\exception\logThrowable($e);
+		}
 		catch (\Exception $e) {
 			// job is completely broken: log
-			if ($e instanceof LoggedException) $e->getExceptionID();
+			\wcf\functions\exception\logThrowable($e);
 		}
 		finally {
 			// remove entry of processed job
 			$sql = "DELETE FROM	wcf".WCF_N."_background_job
 				WHERE		jobID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([ $row['jobID'] ]);
+			$statement->execute([$row['jobID']]);
 		}
+	}
+	
+	/**
+	 * Returns how many items are due.
+	 * Note: Do not rely on the return value being correct, some other process may
+	 * have modified the queue contents, before this method returns. Think of it as an
+	 * approximation to know whether you should spend some time to clear the queue.
+	 * 
+	 * @return	int
+	 */
+	public function getRunnableCount() {
+		$sql = "SELECT	COUNT(*)
+			FROM	wcf".WCF_N."_background_job
+			WHERE		status = ?
+				AND	time <= ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(['ready', TIME_NOW]);
+		
+		return $statement->fetchSingleColumn();
 	}
 }

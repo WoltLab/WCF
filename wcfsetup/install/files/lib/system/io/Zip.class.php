@@ -7,7 +7,7 @@ use wcf\util\FileUtil;
  * Reads zip files.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -21,7 +21,7 @@ class Zip extends File implements IArchive {
 	protected $centralDirectory = null;
 	
 	/**
-	 * @see	\wcf\system\io\File::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct($filename) {
 		parent::__construct($filename, 'rb');
@@ -30,7 +30,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getIndexByFilename()
+	 * @inheritDoc
 	 */
 	public function getIndexByFilename($filename) {
 		if (isset($this->centralDirectory['files'][$filename])) return $this->centralDirectory['files'][$filename]['offset'];
@@ -38,14 +38,14 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getContentList()
+	 * @inheritDoc
 	 */
 	public function getContentList() {
 		return $this->centralDirectory['files'];
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getFileInfo()
+	 * @inheritDoc
 	 */
 	public function getFileInfo($offset) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
@@ -73,7 +73,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extractToString()
+	 * @inheritDoc
 	 */
 	public function extractToString($offset) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
@@ -90,7 +90,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extract()
+	 * @inheritDoc
 	 */
 	public function extract($offset, $destination) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
@@ -159,19 +159,20 @@ class Zip extends File implements IArchive {
 	 * Reads the central directory and returns it.
 	 * 
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	protected function readCentralDirectory() {
 		$this->jumpToCentralDirectory();
 		
 		$offset = $this->tell();
-
+		
 		// check signature
 		if ($this->read(4) !== self::CENTRAL_DIRECTORY_SIGNATURE) {
 			throw new SystemException('Not in central directory');
 		}
 		$this->seek(-4, SEEK_CUR);
 		
-		$files = array();
+		$files = [];
 		while ($this->read(4) === self::CENTRAL_DIRECTORY_SIGNATURE) {
 			$data = unpack('vversion/vminVersion/vgeneralPurposeBit/vcompression/vmtime/vmdate', $this->read(12));
 			// calculate timestamp
@@ -212,7 +213,7 @@ class Zip extends File implements IArchive {
 		if ($eof['commentLength'] > 0) $eof['comment'] = $this->read($eof['commentLength']);
 		else $eof['comment'] = '';
 		
-		return array('files' => $files, 'eof' => $eof);
+		return ['files' => $files, 'eof' => $eof];
 	}
 	
 	/**
@@ -221,6 +222,7 @@ class Zip extends File implements IArchive {
 	 * 
 	 * @param	integer		$offset		where to start reading
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public function isFile($offset = null) {
 		if ($offset === null) $offset = $this->tell();
@@ -240,6 +242,7 @@ class Zip extends File implements IArchive {
 	 * 
 	 * @param	integer		$offset		where to start reading
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function readFile($offset = null) {
 		if ($offset === null) $offset = $this->tell();
@@ -253,7 +256,6 @@ class Zip extends File implements IArchive {
 		}
 		
 		// read headers
-		$header = array();
 		$header = unpack('vminVersion/vgeneralPurposeBit/vcompression/vmtime/vmdate', $this->read(10));
 		$second = ($header['mtime'] & ((1 << 5) - 1)) * 2;
 		$minute = ($header['mtime'] >> 5) & ((1 << 6) - 1);
@@ -290,11 +292,15 @@ class Zip extends File implements IArchive {
 			case 8:
 				$content = gzinflate($content);
 			break;
+			
 			case 12:
 				if (function_exists('bzdecompress')) $content = bzdecompress($content);
 				else throw new SystemException('The bzip2 extension is not available');
+			break;
+			
 			case 0:
 			break;
+			
 			default:
 				throw new SystemException('Compression '.$header['compression'].' is not supported');
 		}
@@ -312,7 +318,7 @@ class Zip extends File implements IArchive {
 			}
 		}
 		
-		return array('header' => $header, 'content' => $content);
+		return ['header' => $header, 'content' => $content];
 	}
 	
 	/**

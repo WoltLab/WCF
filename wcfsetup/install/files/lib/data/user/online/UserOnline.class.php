@@ -1,7 +1,10 @@
 <?php
 namespace wcf\data\user\online;
+use wcf\data\page\PageCache;
+use wcf\data\spider\Spider;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\SpiderCacheBuilder;
+use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -10,11 +13,15 @@ use wcf\util\UserUtil;
  * Represents a user who is online.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.online
  * @category	Community Framework
+ *
+ * @property-read	integer|null	$pageID
+ * @property-read	integer|null	$pageObjectID
+ * @property-read	integer|null	$parentPageObjectID
  */
 class UserOnline extends UserProfile {
 	/**
@@ -25,7 +32,7 @@ class UserOnline extends UserProfile {
 	
 	/**
 	 * spider object
-	 * @var	\wcf\data\spider\Spider
+	 * @var	Spider
 	 */
 	protected $spider = null;
 	
@@ -49,12 +56,46 @@ class UserOnline extends UserProfile {
 	}
 	
 	/**
-	 * Sets the location of the user.
+	 * Sets the location of the user. If no location is given, the method tries to
+	 * automatically determine the location.
+	 * Returns true if the location has been successfully set.
 	 * 
-	 * @param	string		$location
+	 * @param	string|null	$location
+	 * @return	boolean
 	 */
-	public function setLocation($location) {
+	public function setLocation($location = null) {
+		if ($location === null) {
+			if ($this->pageID) {
+				$page = PageCache::getInstance()->getPage($this->pageID);
+				if ($page !== null) {
+					if ($page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
+						// refer to page handler
+						$this->location = $page->getHandler()->getOnlineLocation($page, $this);
+						return true;
+					}
+					else {
+						// TODO: check if active user may access the page
+						$title = $page->getTitle();
+						if (!empty($title)) {
+							if ($page->pageType != 'system') {
+								$this->location = '<a href="' . StringUtil::encodeHTML($page->getLink()) . '">' . StringUtil::encodeHTML($title) . '</a>';
+							}
+							else {
+								$this->location = StringUtil::encodeHTML($title);
+							}
+						}
+						
+						return ($this->location != '');	
+					}
+				}
+			}
+			
+			$this->location = '';
+			return false;
+		}
+		
 		$this->location = $location;
+		return true;
 	}
 	
 	/**
@@ -175,6 +216,16 @@ class UserOnline extends UserProfile {
 			return 'Internet Explorer '.(isset($match[2]) ? $match[2] : $match[1]);
 		}
 		
+		// edge
+		if (preg_match('~edge/(\d{2}\.\d+)~i', $this->userAgent, $match)) {
+			return 'Microsoft Edge '.$match[1];
+		}
+		
+		// vivaldi
+		if (preg_match('~vivaldi/([\d\.]+)~i', $this->userAgent, $match)) {
+			return 'Vivaldi '.$match[1];
+		}
+		
 		// iron
 		if (preg_match('~iron/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Iron '.$match[1];
@@ -241,7 +292,7 @@ class UserOnline extends UserProfile {
 	/**
 	 * Returns the spider object
 	 * 
-	 * @return	\wcf\data\spider\Spider
+	 * @return	Spider
 	 */
 	public function getSpider() {
 		if (!$this->spiderID) return null;

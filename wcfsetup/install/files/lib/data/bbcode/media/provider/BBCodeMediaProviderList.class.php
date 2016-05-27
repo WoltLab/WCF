@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of BBCode media providers.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011-2013 Tim Duesterhus
+ * @copyright	2011-2016 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider
  * @category	Community Framework
+ *
+ * @method	BBCodeMediaProvider		current()
+ * @method	BBCodeMediaProvider[]		getObjects()
+ * @method	BBCodeMediaProvider|null	search($objectID)
+ * @property	BBCodeMediaProvider[]		$objects
  */
 class BBCodeMediaProviderList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\bbcode\media\provider\BBCodeMediaProvider';
+	public $className = BBCodeMediaProvider::class;
 }

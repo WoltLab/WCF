@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Provides functions to set the default values of user options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -17,14 +17,14 @@ use wcf\system\WCF;
  */
 class UserOptionSetDefaultsForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.option.setDefaults';
+	public $activeMenuItem = 'wcf.acp.menu.link.userOptionDefaults';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOption');
+	public $neededPermissions = ['admin.user.canManageUserOption'];
 	
 	/**
 	 * user option handler
@@ -39,7 +39,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	public $applyChangesToExistingUsers = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -60,7 +60,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -69,7 +69,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -87,7 +87,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 				WHERE	optionID IN (?".str_repeat(', ?', count($optionIDs) - 1).")";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($optionIDs);
-			$optionIDs = $optionValues = array();
+			$optionIDs = $optionValues = [];
 			while ($row = $statement->fetchArray()) {
 				if ($row['defaultValue'] != $saveOptions[$row['optionID']]) {
 					$optionIDs[] = $row['optionID'];
@@ -109,7 +109,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 			WHERE	optionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($saveOptions as $optionID => $value) {
-			$statement->execute(array($value, $optionID));
+			$statement->execute([$value, $optionID]);
 		}
 		
 		// reset cache
@@ -120,7 +120,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -131,14 +131,14 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'optionTree' => $this->optionHandler->getOptionTree(),
 			'applyChangesToExistingUsers' => $this->applyChangesToExistingUsers
-		));
+		]);
 	}
 }

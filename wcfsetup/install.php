@@ -19,7 +19,7 @@ set_exception_handler('handleException');
 set_error_handler('handleError', E_ALL);
 
 // define list of needed file
-$neededFilesPattern = array(
+$neededFilesPattern = [
 	'!^setup/.*!',
 	'!^install/files/acp/images/wcfLogo.*!',
 	'!^install/files/acp/style/setup/.*!',
@@ -29,9 +29,10 @@ $neededFilesPattern = array(
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
 	'!^install/lang/.*!',
-	'!^install/packages/.*!');
+	'!^install/packages/.*!'];
 	
 // define needed functions and classes
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * WCF::handleException() calls the show method on exceptions that implement this interface.
  *
@@ -45,6 +46,7 @@ interface IPrintableException {
 // define needed classes
 // needed are:
 // SystemException, PrintableException, BasicFileUtil, Tar, File, ZipFile
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * A SystemException is thrown when an unexpected error occurs.
  *
@@ -59,9 +61,9 @@ class SystemException extends \Exception implements IPrintableException {
 	/**
 	 * Creates a new SystemException.
 	 *
-	 * @param	message		string		error message
-	 * @param	code		integer		error code
-	 * @param	description	string		description of the error
+	 * @param	string		$message	error message
+	 * @param	integer		$code		error code
+	 * @param	string		$description	description of the error
 	 */
 	public function __construct($message = '', $code = 0, $description = '') {
 		parent::__construct($message, $code);
@@ -158,7 +160,7 @@ class SystemException extends \Exception implements IPrintableException {
 /**
  * Loads the required classes automatically.
  */
-function __autoload($className) {
+spl_autoload_register(function($className) {
 	$namespaces = explode('\\', $className);
 	if (count($namespaces) > 1) {
 		// remove 'wcf' component
@@ -170,10 +172,13 @@ function __autoload($className) {
 			require_once($classPath);
 		}
 	}
-}
+});
 
 /**
  * Escapes strings for execution in sql queries.
+ * 
+ * @param	string		$string
+ * @return	string
  */
 function escapeString($string) {
 	return \wcf\system\WCF::getDB()->escapeString($string);
@@ -182,15 +187,23 @@ function escapeString($string) {
 /**
  * Calls the show method on the given exception.
  *
- * @param	Exception	$e
+ * @param	mixed	$e
  */
-function handleException(\Exception $e) {
-	if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
-		$e->show();
-		exit;
+function handleException($e) {
+	try {
+		if (!($e instanceof \Exception)) throw $e;
+		
+		if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
+			$e->show();
+			exit;
+		}
 	}
-	
-	print $e;
+	catch (\Throwable $exception) {
+		die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+	}
+	catch (\Exception $exception) {
+		die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+	}
 }
 
 /**
@@ -200,6 +213,7 @@ function handleException(\Exception $e) {
  * @param	string		$message
  * @param	string		$filename
  * @param	integer		$lineNo
+ * @throws	SystemException
  */
 function handleError($errorNo, $message, $filename, $lineNo) {
 	if (error_reporting() != 0) {
@@ -215,6 +229,7 @@ function handleError($errorNo, $message, $filename, $lineNo) {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * BasicFileUtil contains file-related functions.
  *
@@ -232,6 +247,7 @@ class BasicFileUtil {
 	 * Tries to find the temp folder.
 	 *
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function getTempFolder() {
 		// use tmp folder in document root by default
@@ -299,6 +315,7 @@ class BasicFileUtil {
 	 * permissions and goes up until 0666 for files and 0777 for directories.
 	 *
 	 * @param	string		$filename
+	 * @throws	SystemException
 	 */
 	public static function makeWritable($filename) {
 		if (!file_exists($filename)) {
@@ -338,7 +355,6 @@ class BasicFileUtil {
 			}
 		}
 		
-		$startIndex = 0;
 		if (is_dir($filename)) {
 			if (self::$mode == 0644) {
 				@chmod($filename, 0755);
@@ -357,6 +373,7 @@ class BasicFileUtil {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * Opens tar or tar.gz archives.
  *
@@ -370,7 +387,7 @@ class BasicFileUtil {
  */
 class Tar {
 	protected $archiveName = '';
-	protected $contentList = array();
+	protected $contentList = [];
 	protected $opened = false;
 	protected $read = false;
 	protected $file = null;
@@ -382,6 +399,7 @@ class Tar {
 	 * archiveName must be tarball or gzipped tarball
 	 *
 	 * @param	string		$archiveName
+	 * @throws	SystemException
 	 */
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {
@@ -449,8 +467,9 @@ class Tar {
 	 * Returns an associative array with information
 	 * about a specific file in the archive.
 	 *
-	 * @param	mixed	$fileindex	index or name of the requested file
-	 * @return	array	$fileInfo
+	 * @param	mixed	$fileIndex	index or name of the requested file
+	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -522,7 +541,8 @@ class Tar {
 	 *
 	 * @param	mixed		$index		index or name of the requested file
 	 * @param	string		$destination
-	 * @return	boolean	$success
+	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
@@ -572,20 +592,38 @@ class Tar {
 	 * This does not get the entire to memory but only parts of it.
 	 */
 	protected function readContent() {
-		$this->contentList = array();
+		$this->contentList = [];
 		$this->read = true;
 		$i = 0;
 		
 		// Read the 512 bytes header
+		$longFilename = null;
 		while (strlen($binaryData = $this->file->read(512)) != 0) {
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {
 				continue;
 			}
-			$this->contentList[$i] = $header;
-			$this->contentList[$i]['index'] = $i;
-			$i++;
+			
+			// fixes a bug that files with long names aren't correctly
+			// extracted
+			if ($longFilename !== null) {
+				$header['filename'] = $longFilename;
+				$longFilename = null;
+			}
+			if ($header['typeflag'] == 'L') {
+				$format = 'Z'.$header['size'].'filename';
+				
+				$fileData = unpack($format, $this->file->read(512));
+				$longFilename = $fileData['filename'];
+				$header['size'] = 0;
+			}
+			// don't include the @LongLink file in the content list
+			else {
+				$this->contentList[$i] = $header;
+				$this->contentList[$i]['index'] = $i;
+				$i++;
+			}
 			
 			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
 		}
@@ -593,7 +631,7 @@ class Tar {
 	
 	/**
 	 * Unpacks file header for one file entry.
-	 *
+	 * 
 	 * @param	string		$binaryData
 	 * @return	array		$fileheader
 	 */
@@ -602,7 +640,7 @@ class Tar {
 			return false;
 		}
 		
-		$header = array();
+		$header = [];
 		$checksum = 0;
 		// First part of the header
 		for ($i = 0; $i < 148; $i++) {
@@ -618,26 +656,20 @@ class Tar {
 			$checksum += ord(substr($binaryData, $i, 1));
 		}
 		
-		// Extract the values
-		//$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $binaryData);
-		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-			$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
-		}
-		else {
-			$format = 'a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix';
-		}
+		// extract values
+		$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
 		
 		$data = unpack($format, $binaryData);
 		
 		// Extract the properties
-		$header['checksum'] = octDec(trim($data['checksum']));
+		$header['checksum'] = octdec(trim($data['checksum']));
 		if ($header['checksum'] == $checksum) {
 			$header['filename'] = trim($data['filename']);
-			$header['mode'] = octDec(trim($data['mode']));
-			$header['uid'] = octDec(trim($data['uid']));
-			$header['gid'] = octDec(trim($data['gid']));
-			$header['size'] = octDec(trim($data['size']));
-			$header['mtime'] = octDec(trim($data['mtime']));
+			$header['mode'] = octdec(trim($data['mode']));
+			$header['uid'] = octdec(trim($data['uid']));
+			$header['gid'] = octdec(trim($data['gid']));
+			$header['size'] = octdec(trim($data['size']));
+			$header['mtime'] = octdec(trim($data['mtime']));
 			$header['prefix'] = trim($data['prefix']);
 			if ($header['prefix']) {
 				$header['filename'] = $header['prefix'].'/'.$header['filename'];
@@ -659,6 +691,7 @@ class Tar {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * The File class handles all file operations.
  *
@@ -684,6 +717,7 @@ class File {
 	 *
 	 * @param	string		$filename
 	 * @param	string		$mode
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
@@ -699,6 +733,8 @@ class File {
 	 *
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {
@@ -715,6 +751,7 @@ class File {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * The File class handles all file operations on a zipped file.
  *
@@ -728,11 +765,13 @@ class ZipFile extends File {
 	 */
 	protected static $gzopen64 = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a new zipped file.
 	 *
 	 * @param	string		$filename
 	 * @param	string		$mode
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		if (self::$gzopen64 === null) {
@@ -754,6 +793,8 @@ class ZipFile extends File {
 	 *
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (self::$gzopen64 && function_exists('gz' . $function . '64')) {

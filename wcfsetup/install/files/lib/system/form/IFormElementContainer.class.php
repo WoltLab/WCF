@@ -5,7 +5,7 @@ namespace wcf\system\form;
  * Interface for form element containers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form
@@ -51,7 +51,7 @@ interface IFormElementContainer {
 	/**
 	 * Returns a list of child elements.
 	 * 
-	 * @return	array<\wcf\system\form\IFormElement>
+	 * @return	IFormElement[]
 	 */
 	public function getChildren();
 	

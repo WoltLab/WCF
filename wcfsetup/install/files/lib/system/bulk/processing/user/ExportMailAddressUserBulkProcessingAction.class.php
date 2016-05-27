@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\bulk\processing\user;
-use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
@@ -10,11 +9,12 @@ use wcf\util\StringUtil;
  * Bulk processing action implementation for exporting mail addresses of users.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bulk.processing.user
  * @category	Community Framework
+ * @since	2.2
  */
 class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**
@@ -36,7 +36,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	public $textSeparator = '"';
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::executeAction()
+	 * @inheritDoc
 	 */
 	public function executeAction(DatabaseObjectList $objectList) {
 		if (!($objectList instanceof UserList)) return;
@@ -68,7 +68,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		return WCF::getTPL()->fetch('exportMailAddressUserBulkProcessing', 'wcf', [
@@ -79,7 +79,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::getObjectList()
+	 * @inheritDoc
 	 */
 	public function getObjectList() {
 		$userList = parent::getObjectList();
@@ -90,7 +90,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['fileType']) && $_POST['fileType'] == 'xml') $this->fileType = $_POST['fileType'];
@@ -99,7 +99,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	}
 	
 	/**
-	 * @see	\wcf\system\bulk\processing\IBulkProcessingAction::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		exit;

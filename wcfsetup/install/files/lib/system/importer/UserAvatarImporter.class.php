@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\system\exception\SystemException;
@@ -10,7 +11,7 @@ use wcf\util\FileUtil;
  * Imports user avatars.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer
@@ -18,14 +19,14 @@ use wcf\util\FileUtil;
  */
 class UserAvatarImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\avatar\UserAvatar';
+	protected $className = UserAvatar::class;
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// check file location
 		if (!@file_exists($additionalData['fileLocation'])) return 0;
 		
@@ -54,7 +55,7 @@ class UserAvatarImporter extends AbstractImporter {
 		// and create subdirectory if necessary
 		$dir = dirname($avatar->getLocation());
 		if (!@file_exists($dir)) {
-			FileUtil::makePath($dir, 0777);
+			FileUtil::makePath($dir);
 		}
 		
 		// copy file
@@ -64,7 +65,7 @@ class UserAvatarImporter extends AbstractImporter {
 			}
 			
 			// create thumbnails
-			$action = new UserAvatarAction(array($avatar), 'generateThumbnails');
+			$action = new UserAvatarAction([$avatar], 'generateThumbnails');
 			$action->executeAction();
 			
 			// update owner
@@ -72,7 +73,7 @@ class UserAvatarImporter extends AbstractImporter {
 				SET	avatarID = ?
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($avatar->avatarID, $data['userID']));
+			$statement->execute([$avatar->avatarID, $data['userID']]);
 			
 			return $avatar->avatarID;
 		}

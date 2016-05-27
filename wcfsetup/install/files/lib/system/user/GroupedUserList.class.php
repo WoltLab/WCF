@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Provides a grouped list of users.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user
@@ -16,9 +16,9 @@ use wcf\system\WCF;
 class GroupedUserList implements \Countable, \Iterator {
 	/**
 	 * list of user profiles shared across all instances of GroupedUserList
-	 * @var	array<\wcf\data\user\UserProfile>
+	 * @var	UserProfile[]
 	 */
-	protected static $users = array();
+	protected static $users = [];
 	
 	/**
 	 * group name
@@ -40,9 +40,9 @@ class GroupedUserList implements \Countable, \Iterator {
 	
 	/**
 	 * list of user ids assigned for this group
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $userIDs = array();
+	protected $userIDs = [];
 	
 	/**
 	 * Creates a new grouped list of users.
@@ -74,7 +74,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\wcf\system\user\GroupedUserList::getGroupName()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getGroupName();
@@ -83,7 +83,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	/**
 	 * Adds a list of user ids to this group.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]		$userIDs
 	 */
 	public function addUserIDs(array $userIDs) {
 		foreach ($userIDs as $userID) {
@@ -103,7 +103,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	 * Loads user profiles for outstanding user ids.
 	 */
 	public static function loadUsers() {
-		$userIDs = array();
+		$userIDs = [];
 		foreach (self::$users as $userID => $user) {
 			if ($user === null) {
 				$userIDs[] = $userID;
@@ -120,14 +120,14 @@ class GroupedUserList implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->userIDs);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$userID = $this->userIDs[$this->index];
@@ -145,21 +145,21 @@ class GroupedUserList implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->userIDs[$this->index]);

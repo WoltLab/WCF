@@ -2,17 +2,17 @@
 namespace wcf\data\user;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
+use wcf\data\user\avatar\IUserAvatar;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\rank\UserRank;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\breadcrumb\IBreadcrumbProvider;
+use wcf\data\ITitledLinkObject;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\online\location\UserOnlineLocationHandler;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -23,51 +23,54 @@ use wcf\util\StringUtil;
  * Decorates the user object and provides functions to retrieve data for user profiles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
+ * 
+ * @method	User	getDecoratedObject()
+ * @mixin	User
  */
-class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider {
+class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\User';
+	protected static $baseClass = User::class;
 	
 	/**
 	 * cached list of user profiles
-	 * @var	array<\wcf\data\user\UserProfile>
+	 * @var	UserProfile[]
 	 */
-	protected static $userProfiles = array();
+	protected static $userProfiles = [];
 	
 	/**
 	 * list of ignored user ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $ignoredUserIDs = null;
 	
 	/**
 	 * list of follower user ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $followerUserIDs = null;
 	
 	/**
 	 * list of following user ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $followingUserIDs = null;
 	
 	/**
 	 * user avatar
-	 * @var	\wcf\data\user\avatar\IUserAvatar
+	 * @var	IUserAvatar
 	 */
 	protected $avatar = null;
 	
 	/**
 	 * user rank object
-	 * @var	\wcf\data\user\rank\UserRank
+	 * @var	UserRank
 	 */
 	protected $rank = null;
 	
@@ -79,7 +82,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	
 	/**
 	 * group data and permissions
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
 	protected $groupData = null;
 	
@@ -98,7 +101,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	const ACCESS_NOBODY = 3;
 	
 	/**
-	 * @see	\wcf\data\user\User::__toString()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getDecoratedObject()->__toString();
@@ -107,11 +110,11 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	/**
 	 * Returns a list of all user ids being followed by current user.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getFollowingUsers() {
 		if ($this->followingUserIDs === null) {
-			$this->followingUserIDs = array();
+			$this->followingUserIDs = [];
 			
 			if ($this->userID) {
 				// get ids
@@ -123,10 +126,8 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 						FROM	wcf".WCF_N."_user_follow
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($this->userID));
-					while ($row = $statement->fetchArray()) {
-						$this->followingUserIDs[] = $row['followUserID'];
-					}
+					$statement->execute([$this->userID]);
+					$this->followingUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update($this->userID, 'followingUserIDs', serialize($this->followingUserIDs));
@@ -143,11 +144,11 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	/**
 	 * Returns a list of user ids following current user.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getFollowers() {
 		if ($this->followerUserIDs === null) {
-			$this->followerUserIDs = array();
+			$this->followerUserIDs = [];
 			
 			if ($this->userID) {
 				// get ids
@@ -159,10 +160,8 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 						FROM	wcf".WCF_N."_user_follow
 						WHERE	followUserID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($this->userID));
-					while ($row = $statement->fetchArray()) {
-						$this->followerUserIDs[] = $row['userID'];
-					}
+					$statement->execute([$this->userID]);
+					$this->followerUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update($this->userID, 'followerUserIDs', serialize($this->followerUserIDs));
@@ -179,11 +178,11 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	/**
 	 * Returns a list of ignored user ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getIgnoredUsers() {
 		if ($this->ignoredUserIDs === null) {
-			$this->ignoredUserIDs = array();
+			$this->ignoredUserIDs = [];
 			
 			if ($this->userID) {
 				// get ids
@@ -195,10 +194,8 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 						FROM	wcf".WCF_N."_user_ignore
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($this->userID));
-					while ($row = $statement->fetchArray()) {
-						$this->ignoredUserIDs[] = $row['ignoreUserID'];
-					}
+					$statement->execute([$this->userID]);
+					$this->ignoredUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update($this->userID, 'ignoredUserIDs', serialize($this->ignoredUserIDs));
@@ -243,9 +240,9 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	}
 	
 	/**
-	 * Gets the user's avatar.
+	 * Returns the user's avatar.
 	 * 
-	 * @return	\wcf\data\user\avatar\IUserAvatar
+	 * @return	IUserAvatar
 	 */
 	public function getAvatar() {
 		if ($this->avatar === null) {
@@ -318,11 +315,10 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 */
 	public function getCurrentLocation() {
 		if ($this->currentLocation === null) {
-			$this->currentLocation = '';
-			$this->currentLocation = UserOnlineLocationHandler::getInstance()->getLocation(new UserOnline(new User(null, array(
-				'controller' => $this->controller,
-				'objectID' => $this->locationObjectID
-			))));
+			$userOnline = new UserOnline($this->getDecoratedObject());
+			$userOnline->setLocation();
+			
+			$this->currentLocation = $userOnline->getLocation();
 		}
 		
 		return $this->currentLocation;
@@ -341,22 +337,22 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * Returns a new user profile object.
 	 * 
 	 * @param	integer				$userID
-	 * @return	\wcf\data\user\UserProfile
-	 * @deprecated	use UserProfileCache::getUserProfile()
+	 * @return	UserProfile
+	 * @deprecated	since 2.2, use UserProfileRuntimeCache::getObject()
 	 */
 	public static function getUserProfile($userID) {
-		return UserProfileCache::getInstance()->getUserProfile($userID);
+		return UserProfileRuntimeCache::getInstance()->getObject($userID);
 	}
 	
 	/**
 	 * Returns a list of user profiles.
 	 * 
-	 * @param	array				$userIDs
-	 * @return	array<\wcf\data\user\UserProfile>
-	 * @deprecated	use UserProfileCache::getUserProfiles()
+	 * @param	integer[]		$userIDs
+	 * @return	UserProfile[]
+	 * @deprecated	since 2.2, use UserProfileRuntimeCache::getObjects()
 	 */
 	public static function getUserProfiles(array $userIDs) {
-		$users = UserProfileCache::getInstance()->getUserProfiles($userIDs);
+		$users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 		
 		// this method does not return null for non-existing user profiles
 		foreach ($users as $userID => $user) {
@@ -371,12 +367,11 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	/**
 	 * Returns the user profile of the user with the given name.
 	 * 
-	 * @param	string				$username
-	 * @return	\wcf\data\user\UserProfile
-	 * @todo	move to UserProfileCache?
+	 * @param	string		$username
+	 * @return	UserProfile
 	 */
 	public static function getUserProfileByUsername($username) {
-		$users = self::getUserProfilesByUsername(array($username));
+		$users = self::getUserProfilesByUsername([$username]);
 		
 		return $users[$username];
 	}
@@ -384,15 +379,14 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	/**
 	 * Returns the user profiles of the users with the given names.
 	 * 
-	 * @param	array<string>			$usernames
-	 * @return	array<\wcf\data\user\UserProfile>
-	 * @todo	move to UserProfileCache?
+	 * @param	string[]	$usernames
+	 * @return	UserProfile[]
 	 */
 	public static function getUserProfilesByUsername(array $usernames) {
-		$users = array();
+		$users = [];
 		
 		// save case sensitive usernames
-		$caseSensitiveUsernames = array();
+		$caseSensitiveUsernames = [];
 		foreach ($usernames as &$username) {
 			$tmp = mb_strtolower($username);
 			$caseSensitiveUsernames[$tmp] = $username;
@@ -401,7 +395,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		unset($username);
 		
 		// check cache
-		$userProfiles = UserProfileCache::getInstance()->getCachedUserProfiles();
+		$userProfiles = UserProfileRuntimeCache::getInstance()->getCachedObjects();
 		foreach ($usernames as $index => $username) {
 			foreach ($userProfiles as $user) {
 				if (mb_strtolower($user->username) === $username) {
@@ -413,7 +407,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		
 		if (!empty($usernames)) {
 			$userList = new UserProfileList();
-			$userList->getConditionBuilder()->add("user_table.username IN (?)", array($usernames));
+			$userList->getConditionBuilder()->add("user_table.username IN (?)", [$usernames]);
 			$userList->readObjects();
 			
 			foreach ($userList as $user) {
@@ -446,6 +440,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * @return	boolean
 	 */
 	public function isAccessible($name) {
+		/** @noinspection PhpVariableVariableInspection */
 		switch ($this->$name) {
 			case self::ACCESS_EVERYONE:
 				return true;
@@ -576,13 +571,13 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	/**
 	 * Returns the user rank.
 	 * 
-	 * @return	\wcf\data\user\rank\UserRank
+	 * @return	UserRank
 	 */
 	public function getRank() {
 		if ($this->rank === null) {
 			if (MODULE_USER_RANK && $this->rankID) {
 				if ($this->rankTitle) {
-					$this->rank = new UserRank(null, array(
+					$this->rank = new UserRank(null, [
 						'rankID' => $this->rankID,
 						'groupID' => $this->groupID,
 						'requiredPoints' => $this->requiredPoints,
@@ -591,7 +586,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 						'rankImage' => $this->rankImage,
 						'repeatImage' => $this->repeatImage,
 						'requiredGender' => $this->requiredGender
-					));
+					]);
 				}
 				else {
 					// load storage data
@@ -618,7 +613,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		// get group data from cache
 		$this->groupData = UserGroupPermissionCacheBuilder::getInstance()->getData($this->getGroupIDs());
 		if (isset($this->groupData['groupIDs']) && $this->groupData['groupIDs'] != $this->getGroupIDs()) {
-			$this->groupData = array();
+			$this->groupData = [];
 		}
 	}
 	
@@ -644,15 +639,6 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 */
 	public function canEditOwnProfile() {
 		return ($this->activationCode ? false : true);
-	}
-	
-	/**
-	 * @see	\wcf\system\breadcrumb\IBreadcrumbProvider::getBreadcrumb()
-	 */
-	public function getBreadcrumb() {
-		return new Breadcrumb($this->username, LinkHandler::getInstance()->getLink('User', array(
-			'object' => $this
-		)));
 	}
 	
 	/**
@@ -787,8 +773,36 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * @return	string
 	 */
 	public function getAnchorTag() {
-		$link = LinkHandler::getInstance()->getLink('User', array('object' => $this->getDecoratedObject()));
+		$link = LinkHandler::getInstance()->getLink('User', ['object' => $this->getDecoratedObject()]);
 		
-		return '<a href="'.$link.'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHtml($this->username).'</a>';
+		return '<a href="'.$link.'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getLink() {
+		return $this->getDecoratedObject()->getLink();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return $this->getDecoratedObject()->getTitle();
+	}
+	
+	/**
+	 * Returns an "empty" user profile object for a guest with the given username.
+	 * 
+	 * Such objects can also be used in situations where the relevant user has been deleted
+	 * but their original username is still known.
+	 * 
+	 * @param	string		$username
+	 * @return	UserProfile
+	 * @since	2.2
+	 */
+	public static function getGuestUserProfile($username) {
+		return new UserProfile(new User(null, ['username' => $username]));
 	}
 }

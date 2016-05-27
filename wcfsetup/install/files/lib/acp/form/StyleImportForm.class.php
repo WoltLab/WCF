@@ -15,7 +15,7 @@ use wcf\util\HeaderUtil;
  * Shows the style import form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -23,20 +23,20 @@ use wcf\util\HeaderUtil;
  */
 class StyleImportForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style.import';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.style.canManageStyle');
+	public $neededPermissions = ['admin.style.canManageStyle'];
 	
 	/**
 	 * upload data
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $source = array();
+	public $source = [];
 	
 	/**
 	 * style editor object
@@ -45,7 +45,7 @@ class StyleImportForm extends AbstractForm {
 	public $style = null;
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -54,7 +54,7 @@ class StyleImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -99,9 +99,9 @@ class StyleImportForm extends AbstractForm {
 			
 			WCF::getSession()->register('stylePackageImportLocation', $filename);
 			
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PackageStartInstall', array(
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PackageStartInstall', [
 				'action' => 'install'
-			)));
+			]));
 			exit;
 		}
 		catch (SystemException $e) {
@@ -118,7 +118,7 @@ class StyleImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();

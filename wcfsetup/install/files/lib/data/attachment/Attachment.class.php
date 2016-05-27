@@ -2,7 +2,9 @@
 namespace wcf\data\attachment;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
+use wcf\data\IThumbnailFile;
 use wcf\system\request\IRouteController;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -10,20 +12,45 @@ use wcf\util\FileUtil;
  * Represents an attachment.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.attachment
  * @category	Community Framework
+ *
+ * @property-read	integer		$attachmentID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer|null	$objectID
+ * @property-read	integer|null	$userID
+ * @property-read	string		$tmpHash
+ * @property-read	string		$filename
+ * @property-read	integer		$filesize
+ * @property-read	string		$fileType
+ * @property-read	string		$fileHash
+ * @property-read	integer		$isImage
+ * @property-read	integer		$width
+ * @property-read	integer		$height
+ * @property-read	string		$tinyThumbnailType
+ * @property-read	integer		$tinyThumbnailSize
+ * @property-read	integer		$tinyThumbnailWidth
+ * @property-read	integer		$tinyThumbnailHeight
+ * @property-read	string		$thumbnailType
+ * @property-read	integer		$thumbnailSize
+ * @property-read	integer		$thumbnailWidth
+ * @property-read	integer		$thumbnailHeight
+ * @property-read	integer		$downloads
+ * @property-read	integer		$lastDownloadTime
+ * @property-read	integer		$uploadTime
+ * @property-read	integer		$showOrder
  */
-class Attachment extends DatabaseObject implements IRouteController {
+class Attachment extends DatabaseObject implements IRouteController, IThumbnailFile {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritdoc
 	 */
 	protected static $databaseTableName = 'attachment';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritdoc
 	 */
 	protected static $databaseTableIndexName = 'attachmentID';
 	
@@ -35,9 +62,9 @@ class Attachment extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * user permissions for attachment access
-	 * @var	array<boolean>
+	 * @var	boolean[]
 	 */
-	protected $permissions = array();
+	protected $permissions = [];
 	
 	/**
 	 * Returns true if a user has the permission to download this attachment.
@@ -87,7 +114,7 @@ class Attachment extends DatabaseObject implements IRouteController {
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
 				$processor = $objectType->getProcessor();
 				if ($processor !== null) {
-					$this->permissions[$permission] = call_user_func(array($processor, $permission), $this->objectID);
+					$this->permissions[$permission] = call_user_func([$processor, $permission], $this->objectID);
 				}
 			}
 		}
@@ -98,16 +125,14 @@ class Attachment extends DatabaseObject implements IRouteController {
 	/**
 	 * Sets the permissions for attachment access.
 	 * 
-	 * @param	array<boolean>		$permissions
+	 * @param	boolean[]		$permissions
 	 */
 	public function setPermissions(array $permissions) {
 		$this->permissions = $permissions;
 	}
 	
 	/**
-	 * Returns the physical location of this attachment.
-	 * 
-	 * @return	string
+	 * @inheritdoc
 	 */
 	public function getLocation() {
 		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . ($this->attachmentID) . '-' . $this->fileHash;
@@ -119,20 +144,37 @@ class Attachment extends DatabaseObject implements IRouteController {
 	 * @return	string
 	 */
 	public function getTinyThumbnailLocation() {
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . ($this->attachmentID) . '-tiny-' . $this->fileHash;
+		return $this->getThumbnailLocation('tiny');
 	}
 	
 	/**
-	 * Returns the physical location of the standard thumbnail.
-	 * 
-	 * @return	string
+	 * @inheritdoc
 	 */
-	public function getThumbnailLocation() {
+	public function getThumbnailLocation($size = '') {
+		if ($size == 'tiny') {
+			return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . ($this->attachmentID) . '-tiny-' . $this->fileHash;
+		}
+		
 		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . ($this->attachmentID) . '-thumbnail-' . $this->fileHash;
 	}
 	
 	/**
-	 * @see	\wcf\system\request\IRouteController::getTitle()
+	 * @inheritdoc
+	 */
+	public function getThumbnailLink($size = '') {
+		$parameters = [
+			'id' => $this->attachmentID
+		];
+		
+		if ($size == 'tiny') {
+			$parameters['tiny'] = 1;
+		}
+		
+		return LinkHandler::getInstance()->getLink('Attachment', $parameters);
+	}
+	
+	/**
+	 * @inheritdoc
 	 */
 	public function getTitle() {
 		return $this->filename;
@@ -202,5 +244,24 @@ class Attachment extends DatabaseObject implements IRouteController {
 		}
 		
 		return WCF_DIR . 'attachments/';
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public static function getThumbnailSizes() {
+		return [
+			'tiny' => [
+				'height' => 144,
+				'retainDimensions' => false,
+				'width' => 144
+			],
+			// standard thumbnail size
+			'' => [
+				'height' => ATTACHMENT_THUMBNAIL_HEIGHT,
+				'retainDimensions' => ATTACHMENT_RETAIN_DIMENSIONS,
+				'width' => ATTACHMENT_THUMBNAIL_WIDTH
+			]
+		];
 	}
 }

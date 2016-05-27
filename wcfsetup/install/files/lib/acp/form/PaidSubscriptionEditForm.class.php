@@ -13,7 +13,7 @@ use wcf\util\ArrayUtil;
  * Shows the paid subscription edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -33,7 +33,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	public $subscription = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->subscriptionID = intval($_REQUEST['id']);
@@ -47,14 +47,14 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	
 	protected function getAvailableSubscriptions() {
 		$subscriptionList = new PaidSubscriptionList();
-		$subscriptionList->getConditionBuilder()->add('subscriptionID <> ?', array($this->subscriptionID));
+		$subscriptionList->getConditionBuilder()->add('subscriptionID <> ?', [$this->subscriptionID]);
 		$subscriptionList->sqlOrderBy = 'title';
 		$subscriptionList->readObjects();
 		$this->availableSubscriptions = $subscriptionList->getObjects();
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -76,7 +76,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -93,14 +93,16 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 		if (isset($_POST['cost'])) $this->cost = floatval($_POST['cost']);
 		if (isset($_POST['currency'])) $this->currency = $_POST['currency'];
 		if (!empty($_POST['subscriptionLengthPermanent'])) $this->subscriptionLengthPermanent = 1;
-		if (isset($_POST['subscriptionLength'])) $this->subscriptionLength = intval($_POST['subscriptionLength']);
-		if (isset($_POST['subscriptionLengthUnit'])) $this->subscriptionLengthUnit = $_POST['subscriptionLengthUnit'];
+		if (!$this->subscriptionLengthPermanent) {
+			if (isset($_POST['subscriptionLength'])) $this->subscriptionLength = intval($_POST['subscriptionLength']);
+			if (isset($_POST['subscriptionLengthUnit'])) $this->subscriptionLengthUnit = $_POST['subscriptionLengthUnit'];
+		}
 		if (!empty($_POST['isRecurring'])) $this->isRecurring = 1;
 		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -126,7 +128,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 		}
 		
 		// save subscription
-		$this->objectAction = new PaidSubscriptionAction(array($this->subscription), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PaidSubscriptionAction([$this->subscription], 'update', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'description' => $this->description,
 			'isDisabled' => $this->isDisabled,	
@@ -138,18 +140,18 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 			'isRecurring' => $this->isRecurring,
 			'groupIDs' => implode(',', $this->groupIDs),
 			'excludedSubscriptionIDs' => implode(',', $this->excludedSubscriptionIDs)
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'success' => true
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -157,10 +159,10 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 		$useRequestData = (empty($_POST)) ? false : true;
 		I18nHandler::getInstance()->assignVariables($useRequestData);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'subscriptionID' => $this->subscriptionID,
 			'subscription' => $this->subscription
-		));
+		]);
 	}
 }

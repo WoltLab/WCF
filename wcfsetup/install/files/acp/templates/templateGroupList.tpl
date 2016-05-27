@@ -1,47 +1,47 @@
 {include file='header' pageTitle='wcf.acp.template.group.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.template.group.list{/lang}</h1>
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			new WCF.Action.Delete('wcf\\data\\template\\group\\TemplateGroupAction', '.jsTemplateGroupRow');
-			
-			var options = { };
-			{if $pages > 1}
-				options.refreshPage = true;
-				{if $pages == $pageNo}
-					options.updatePageNumber = -1;
-				{/if}
-			{else}
-				options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
-			{/if}
-			
-			new WCF.Table.EmptyTableHandler($('#templateGroupTableContainer'), 'jsTemplateGroupRow', options);
-		});
-		//]]>
-	</script>
-</header>
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Action.Delete('wcf\\data\\template\\group\\TemplateGroupAction', '.jsTemplateGroupRow');
+		
+		var options = { };
+		{if $pages > 1}
+		options.refreshPage = true;
+		{if $pages == $pageNo}
+		options.updatePageNumber = -1;
+		{/if}
+		{else}
+		options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
+		{/if}
+		
+		new WCF.Table.EmptyTableHandler($('#templateGroupTableContainer'), 'jsTemplateGroupRow', options);
+	});
+	//]]>
+</script>
 
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="TemplateGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.template.group.list{/lang}</h1>
+	</div>
 	
-	<nav>
+	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsTop'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="TemplateGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
-	<div id="templateGroupTableContainer" class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.template.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div id="templateGroupTableContainer" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -58,8 +58,8 @@
 				{foreach from=$objects item=templateGroup}
 					<tr class="jsTemplateGroupRow">
 						<td class="columnIcon">
-							<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message="{lang}wcf.acp.template.group.delete.sure{/lang}"></span>
+							<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message-html="{lang __encode=true}wcf.acp.template.group.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
@@ -76,17 +76,21 @@
 		
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 				
-				{event name='contentNavigationButtonsBottom'}
+				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

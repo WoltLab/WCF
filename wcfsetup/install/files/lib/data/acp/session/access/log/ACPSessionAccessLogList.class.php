@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of access logs.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.access.log
  * @category	Community Framework
+ *
+ * @method	ACPSessionAccessLog		current()
+ * @method	ACPSessionAccessLog[]		getObjects()
+ * @method	ACPSessionAccessLog|null	search($objectID)
+ * @property	ACPSessionAccessLog[]		$objects
  */
 class ACPSessionAccessLogList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\acp\session\access\log\ACPSessionAccessLog';
+	public $className = ACPSessionAccessLog::class;
 }

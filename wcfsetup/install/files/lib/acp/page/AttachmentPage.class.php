@@ -8,7 +8,7 @@ use wcf\system\exception\PermissionDeniedException;
  * Shows an attachment.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -16,12 +16,12 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class AttachmentPage extends \wcf\page\AttachmentPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.attachment.canManageAttachment');
+	public $neededPermissions = ['admin.attachment.canManageAttachment'];
 	
 	/**
-	 * @see	\wcf\page\IPage::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		AbstractPage::checkPermissions();

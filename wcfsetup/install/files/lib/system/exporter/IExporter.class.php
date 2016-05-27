@@ -5,7 +5,7 @@ namespace wcf\system\exporter;
  * Basic interface for all exporters.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exporter
@@ -49,7 +49,7 @@ interface IExporter {
 	/**
 	 * Validates database access.
 	 * 
-	 * @throws	wcf\system\database\DatabaseException
+	 * @throws	\wcf\system\database\exception\DatabaseException
 	 */
 	public function validateDatabaseAccess();
 	
@@ -78,7 +78,7 @@ interface IExporter {
 	/**
 	 * Returns the supported data types.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getSupportedData();
 	

@@ -7,20 +7,26 @@ use wcf\system\WCF;
  * Represents a watched object.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.object.watch
  * @category	Community Framework
+ *
+ * @property-read	integer		$watchID
+ * @property-read	integer		$objectTypeID
+ * @property-read	integer		$objectID
+ * @property-read	integer		$userID
+ * @property-read	integer		$notification
  */
 class UserObjectWatch extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_object_watch';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'watchID';
 	
@@ -40,7 +46,7 @@ class UserObjectWatch extends DatabaseObject {
 				AND userID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectTypeID, $userID, $objectID));
+		$statement->execute([$objectTypeID, $userID, $objectID]);
 		$row = $statement->fetch();
 		if (!$row) return null;
 		return new UserObjectWatch(null, $row);

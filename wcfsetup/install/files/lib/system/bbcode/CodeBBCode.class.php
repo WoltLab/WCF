@@ -1,5 +1,19 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\system\bbcode\highlighter\BashHighlighter;
+use wcf\system\bbcode\highlighter\BrainfuckHighlighter;
+use wcf\system\bbcode\highlighter\CHighlighter;
+use wcf\system\bbcode\highlighter\DiffHighlighter;
+use wcf\system\bbcode\highlighter\HtmlHighlighter;
+use wcf\system\bbcode\highlighter\JavaHighlighter;
+use wcf\system\bbcode\highlighter\JsHighlighter;
+use wcf\system\bbcode\highlighter\PerlHighlighter;
+use wcf\system\bbcode\highlighter\PhpHighlighter;
+use wcf\system\bbcode\highlighter\PlainHighlighter;
+use wcf\system\bbcode\highlighter\PythonHighlighter;
+use wcf\system\bbcode\highlighter\SqlHighlighter;
+use wcf\system\bbcode\highlighter\TexHighlighter;
+use wcf\system\bbcode\highlighter\XmlHighlighter;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -8,7 +22,7 @@ use wcf\util\StringUtil;
  * Parses the [code] bbcode tag.
  * 
  * @author	Tim Duesterhus, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
@@ -35,12 +49,12 @@ class CodeBBCode extends AbstractBBCode {
 	
 	/**
 	 * already used ids for line numbers to prevent duplicate ids in the output
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	private static $codeIDs = array();
+	private static $codeIDs = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		// encode html
@@ -50,7 +64,7 @@ class CodeBBCode extends AbstractBBCode {
 		$this->mapAttributes($openingTag);
 		
 		// fetch highlighter-classname
-		$className = '\wcf\system\bbcode\highlighter\PlainHighlighter';
+		$className = PlainHighlighter::class;
 		
 		// no highlighting for strings over a certain size, to prevent DoS
 		// this serves as a safety net in case one of the regular expressions
@@ -61,91 +75,91 @@ class CodeBBCode extends AbstractBBCode {
 				
 				switch (mb_substr($className, strlen('\wcf\system\bbcode\highlighter\\'))) {
 					case 'ShellHighlighter':
-						$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
+						$className = BashHighlighter::class;
 					break;
 					
 					case 'C++Highlighter':
-						$className = '\wcf\system\bbcode\highlighter\CHighlighter';
+						$className = CHighlighter::class;
 					break;
 					
 					case 'JavascriptHighlighter':
-						$className = '\wcf\system\bbcode\highlighter\JsHighlighter';
+						$className = JsHighlighter::class;
 					break;
 					
 					case 'LatexHighlighter':
-						$className = '\wcf\system\bbcode\highlighter\TexHighlighter';
+						$className = TexHighlighter::class;
 					break;
 				}
 			}
 			else {
 				// try to guess highlighter
 				if (mb_strpos($content, '<?php') !== false) {
-					$className = '\wcf\system\bbcode\highlighter\PhpHighlighter';
+					$className = PhpHighlighter::class;
 				}
 				else if (mb_strpos($content, '<html') !== false) {
-					$className = '\wcf\system\bbcode\highlighter\HtmlHighlighter';
+					$className = HtmlHighlighter::class;
 				}
 				else if (mb_strpos($content, '<?xml') === 0) {
-					$className = '\wcf\system\bbcode\highlighter\XmlHighlighter';
+					$className = XmlHighlighter::class;
 				}
 				else if (	mb_strpos($content, 'SELECT') === 0
 						||	mb_strpos($content, 'UPDATE') === 0
 						||	mb_strpos($content, 'INSERT') === 0
 						||	mb_strpos($content, 'DELETE') === 0) {
-					$className = '\wcf\system\bbcode\highlighter\SqlHighlighter';
+					$className = SqlHighlighter::class;
 				}
 				else if (mb_strpos($content, 'import java.') !== false) {
-					$className = '\wcf\system\bbcode\highlighter\JavaHighlighter';
+					$className = JavaHighlighter::class;
 				}
 				else if (	mb_strpos($content, "---") !== false
 						&&	mb_strpos($content, "\n+++") !== false) {
-					$className = '\wcf\system\bbcode\highlighter\DiffHighlighter';
+					$className = DiffHighlighter::class;
 				}
 				else if (mb_strpos($content, "\n#include ") !== false) {
-					$className = '\wcf\system\bbcode\highlighter\CHighlighter';
+					$className = CHighlighter::class;
 				}
 				else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
-					$className = '\wcf\system\bbcode\highlighter\PerlHighlighter';
+					$className = PerlHighlighter::class;
 				}
 				else if (mb_strpos($content, 'def __init__(self') !== false) {
-					$className = '\wcf\system\bbcode\highlighter\PythonHighlighter';
+					$className = PythonHighlighter::class;
 				}
 				else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
-					$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
+					$className = BashHighlighter::class;
 				}
 				else if (mb_strpos($content, '\\documentclass') !== false) {
-					$className = '\wcf\system\bbcode\highlighter\TexHighlighter';
+					$className = TexHighlighter::class;
 				}
 				else if (Regex::compile('[-\\+\\.,\\[\\]\\>\\<]{9}')->match($content)) {
 					// 9 times a brainfuck char in a row -> seems to be brainfuck
-					$className = '\wcf\system\bbcode\highlighter\BrainfuckHighlighter';
+					$className = BrainfuckHighlighter::class;
 				}
 			}
 		}
 		
 		if (!class_exists($className)) {
-			$className = '\wcf\system\bbcode\highlighter\PlainHighlighter';
+			$className = PlainHighlighter::class;
 		}
 		
 		if ($parser->getOutputType() == 'text/html') {
 			$highlightedContent = self::fixMarkup(explode("\n", $className::getInstance()->highlight($content)));
 			
 			// show template
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'lineNumbers' => self::makeLineNumbers($content, $this->startLineNumber),
 				'startLineNumber' => $this->startLineNumber,
 				'content' => $highlightedContent,
 				'highlighter' => $className::getInstance(),
 				'filename' => $this->filename,
 				'lines' => substr_count($content, "\n") + 1
-			));
+			]);
 			return WCF::getTPL()->fetch('codeBBCodeTag');
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
-			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.text', array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.text', [
 				'highlighterTitle' => $className::getInstance()->getTitle(),
 				'lines' => substr_count($content, "\n") + 1
-			));
+			]);
 		}
 	}
 	
@@ -212,12 +226,13 @@ class CodeBBCode extends AbstractBBCode {
 	 * 
 	 * @param	string		$code
 	 * @param	integer		$start
+	 * @param	string		$split
 	 * @return	string
 	 */
 	protected static function makeLineNumbers($code, $start, $split = "\n") {
 		$lines = explode($split, $code);
 		
-		$lineNumbers = array();
+		$lineNumbers = [];
 		$i = -1;
 		// find an unused codeID
 		do {
@@ -249,7 +264,8 @@ class CodeBBCode extends AbstractBBCode {
 	/**
 	 * Fixes markup that every line has proper number of opening and closing tags
 	 * 
-	 * @param	array<string>	$lines
+	 * @param	string[]	$lines
+	 * @return	string[]
 	 */
 	public static function fixMarkup(array $lines) {
 		static $spanRegex = null;
@@ -259,7 +275,7 @@ class CodeBBCode extends AbstractBBCode {
 			$emptyTagRegex = new Regex('<span(?: class="(?:[^"])*")?></span>');
 		}
 		
-		$openTags = array();
+		$openTags = [];
 		foreach ($lines as &$line) {
 			$spanRegex->match($line, true);
 			// open all tags again

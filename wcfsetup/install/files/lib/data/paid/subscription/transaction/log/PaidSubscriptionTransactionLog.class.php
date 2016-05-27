@@ -10,20 +10,30 @@ use wcf\system\WCF;
  * Represents a paid subscription transaction log entry.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.paid.subscription.transaction.log
  * @category	Community Framework
+ *
+ * @property-read	integer		$logID
+ * @property-read	integer|null	$subscriptionUserID
+ * @property-read	integer|null	$userID
+ * @property-read	integer		$subscriptionID
+ * @property-read	integer		$paymentMethodObjectTypeID
+ * @property-read	integer		$logTime
+ * @property-read	string		$transactionID
+ * @property-read	string		$transactionDetails
+ * @property-read	string		$logMessage
  */
 class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'paid_subscription_transaction_log';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'logID';
 	
@@ -97,7 +107,7 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 			WHERE	paymentMethodObjectTypeID = ?
 				AND transactionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($paymentMethodObjectTypeID, $transactionID));
+		$statement->execute([$paymentMethodObjectTypeID, $transactionID]);
 		$row = $statement->fetchArray();
 		if ($row !== false) {
 			return new PaidSubscriptionTransactionLog(null, $row);

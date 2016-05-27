@@ -8,22 +8,25 @@ use wcf\system\WCF;
  * Provides functions to edit ACP sessions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session
  * @category	Community Framework
+ * 
+ * @method	ACPSession	getDecoratedObject()
+ * @mixin	ACPSession
  */
 class ACPSessionEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\acp\session\ACPSession';
+	protected static $baseClass = ACPSession::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		if (isset($parameters['userID']) && !$parameters['userID']) {
 			$parameters['userID'] = null;
 		}
@@ -32,28 +35,28 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::create()
+	 * @inheritDoc
 	 */
-	public function update(array $parameters = array()) {
+	public function update(array $parameters = []) {
 		if (isset($parameters['userID']) && !$parameters['userID']) {
 			$parameters['userID'] = null;
 		}
 		
-		return parent::update($parameters);
+		parent::update($parameters);
 	}
 	
 	/**
 	 * Deletes active sessions of the given users.
 	 * 
-	 * @param	array<integer>	$userIDs
+	 * @param	integer[]	$userIDs
 	 */
-	public static function deleteUserSessions(array $userIDs = array()) {
+	public static function deleteUserSessions(array $userIDs = []) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		if (!empty($userIDs)) {
-			$conditionBuilder->add('userID IN (?)', array($userIDs));
+			$conditionBuilder->add('userID IN (?)', [$userIDs]);
 		}
 		
-		$sql = "DELETE FROM	".call_user_func(array(static::$baseClass, 'getDatabaseTableName'))."
+		$sql = "DELETE FROM	".call_user_func([static::$baseClass, 'getDatabaseTableName'])."
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
@@ -65,9 +68,9 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	 * @param	integer		$timestamp
 	 */
 	public static function deleteExpiredSessions($timestamp) {
-		$sql = "DELETE FROM	".call_user_func(array(static::$baseClass, 'getDatabaseTableName'))."
+		$sql = "DELETE FROM	".call_user_func([static::$baseClass, 'getDatabaseTableName'])."
 			WHERE		lastActivityTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($timestamp));
+		$statement->execute([$timestamp]);
 	}
 }

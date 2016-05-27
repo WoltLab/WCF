@@ -8,22 +8,42 @@ use wcf\util\CronjobUtil;
  * Represents a cronjob.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.cronjob
  * @category	Community Framework
+ *
+ * @property-read	integer		$cronjobID
+ * @property-read	string		$className
+ * @property-read	integer		$packageID
+ * @property-read	string		$cronjobName
+ * @property-read	string		$description
+ * @property-read	string		$startMinute
+ * @property-read	string		$startHour
+ * @property-read	string		$startDom
+ * @property-read	string		$startMonth
+ * @property-read	string		$startDow
+ * @property-read	integer		$lastExec
+ * @property-read	integer		$nextExec
+ * @property-read	integer		$afterNextExec
+ * @property-read	integer		$isDisabled
+ * @property-read	integer		$canBeEdited
+ * @property-read	integer		$canBeDisabled
+ * @property-read	integer		$state
+ * @property-read	integer		$failCount
+ * @property-read	string		$options
  */
 class Cronjob extends DatabaseObject {
 	use TDatabaseObjectOptions;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'cronjob';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'cronjobID';
 	

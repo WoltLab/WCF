@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Handles github auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -25,12 +25,12 @@ use wcf\util\StringUtil;
  */
 class GithubAuthAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY');
+	public $neededModules = ['GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -39,11 +39,11 @@ class GithubAuthAction extends AbstractAction {
 		if (isset($_GET['code'])) {
 			try {
 				// fetch access_token
-				$request = new HTTPRequest('https://github.com/login/oauth/access_token', array(), array(
+				$request = new HTTPRequest('https://github.com/login/oauth/access_token', [], [
 					'client_id' => StringUtil::trim(GITHUB_PUBLIC_KEY),
 					'client_secret' => StringUtil::trim(GITHUB_PRIVATE_KEY),
 					'code' => $_GET['code']
-				));
+				]);
 				$request->execute();
 				$reply = $request->getReply();
 				
@@ -64,8 +64,26 @@ class GithubAuthAction extends AbstractAction {
 			// check whether the token is okay
 			if (isset($data['error'])) throw new IllegalLinkException();
 			
+			try {
+				// fetch userdata
+				$request = new HTTPRequest('https://api.github.com/user?access_token='.$data['access_token']);
+				$request->execute();
+				$reply = $request->getReply();
+				$userData = JSON::decode(StringUtil::trim($reply['body']));
+			}
+			catch (SystemException $e) {
+				// force logging
+				$e->getExceptionID();
+				throw new IllegalLinkException();
+			}
+			
 			// check whether a user is connected to this github account
-			$user = $this->getUser($data['access_token']);
+			$user = User::getUserByAuthData('github:'.$userData['id']);
+			if (!$user->userID) {
+				$user = $this->getUser($data['access_token']);
+				$userEditor = new UserEditor($user);
+				$userEditor->update(['authData' => 'github:'.$userData['id']]);
+			}
 			
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
@@ -77,7 +95,7 @@ class GithubAuthAction extends AbstractAction {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
 						$password = StringUtil::getRandomID();
 						$userEditor = new UserEditor($user);
-						$userEditor->update(array('password' => $password));
+						$userEditor->update(['password' => $password]);
 						
 						// reload user to retrieve salt
 						$user = new User($user->userID);
@@ -91,19 +109,6 @@ class GithubAuthAction extends AbstractAction {
 				}
 			}
 			else {
-				try {
-					// fetch userdata
-					$request = new HTTPRequest('https://api.github.com/user?access_token='.$data['access_token']);
-					$request->execute();
-					$reply = $request->getReply();
-					$userData = JSON::decode(StringUtil::trim($reply['body']));
-				}
-				catch (SystemException $e) {
-					// force logging
-					$e->getExceptionID();
-					throw new IllegalLinkException();
-				}
-				
 				WCF::getSession()->register('__3rdPartyProvider', 'github');
 				// save data for connection
 				if (WCF::getUser()->userID) {
@@ -117,34 +122,22 @@ class GithubAuthAction extends AbstractAction {
 					WCF::getSession()->register('__githubData', $userData);
 					WCF::getSession()->register('__username', $userData['login']);
 					
-					// check whether user has entered a public email
-					if (isset($userData) && isset($userData['email']) && $userData['email'] !== null) {
-						WCF::getSession()->register('__email', $userData['email']);
-					}
-					// fetch emails via api
-					else {
-						try {
-							$request = new HTTPRequest('https://api.github.com/user/emails?access_token='.$data['access_token']);
-							$request->execute();
-							$reply = $request->getReply();
-							$emails = JSON::decode(StringUtil::trim($reply['body']));
-							
-							// handle future response as well a current response (see. http://developer.github.com/v3/users/emails/)
-							if (is_string($emails[0])) {
-								$email = $emails[0];
-							}
-							else {
-								$email = $emails[0]['email'];
-								foreach ($emails as $tmp) {
-									if ($tmp['primary']) $email = $tmp['email'];
-									break;
-								}
-							}
-							WCF::getSession()->register('__email', $email);
+					try {
+						$request = new HTTPRequest('https://api.github.com/user/emails?access_token='.$data['access_token']);
+						$request->execute();
+						$reply = $request->getReply();
+						$emails = JSON::decode(StringUtil::trim($reply['body']));
+						
+						// search primary email
+						$email = $emails[0]['email'];
+						foreach ($emails as $tmp) {
+							if ($tmp['primary']) $email = $tmp['email'];
+							break;
 						}
-						catch (SystemException $e) { }
+						WCF::getSession()->register('__email', $email);
 					}
-					
+					catch (SystemException $e) {
+					}
 					WCF::getSession()->register('__githubToken', $data['access_token']);
 					
 					// we assume that bots won't register on github first
@@ -172,27 +165,5 @@ class GithubAuthAction extends AbstractAction {
 		HeaderUtil::redirect("https://github.com/login/oauth/authorize?client_id=".rawurlencode(StringUtil::trim(GITHUB_PUBLIC_KEY))."&scope=".rawurlencode('user:email')."&state=".$token);
 		$this->executed();
 		exit;
-	}
-	
-	/**
-	 * Fetches the User with the given access-token.
-	 * 
-	 * @param	string			$token
-	 * @return	\wcf\data\user\User
-	 */
-	public function getUser($token) {
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user
-			WHERE	authData = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('github:'.$token));
-		$row = $statement->fetchArray();
-		
-		if ($row === false) {
-			$row = array('userID' => 0);
-		}
-		
-		$user = new User($row['userID']);
-		return $user;
 	}
 }

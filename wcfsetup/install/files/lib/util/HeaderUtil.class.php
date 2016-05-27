@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Contains header-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -36,6 +36,10 @@ final class HeaderUtil {
 	
 	/**
 	 * Alias to php setcookie() function.
+	 * 
+	 * @param	string		$name
+	 * @param	string		$value
+	 * @param	integer		$expire
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
@@ -81,7 +85,7 @@ final class HeaderUtil {
 			@header('X-Frame-Options: SAMEORIGIN');
 		}
 		
-		ob_start(array('wcf\util\HeaderUtil', 'parseOutput'));
+		ob_start([self::class, 'parseOutput']);
 	}
 	
 	/**
@@ -104,11 +108,11 @@ final class HeaderUtil {
 		self::$output = $output;
 		
 		// move script tags to the bottom of the page
-		$javascript = array();
-		self::$output = preg_replace_callback('~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?)</script>(?P<conditionAfter>\s*<!\[ENDIF]-->)?~s', function($matches) use (&$javascript) {
+		$javascript = [];
+		self::$output = preg_replace_callback('~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?</script>\s*)(?P<conditionAfter><!\[ENDIF]-->\s*)?~s', function($matches) use (&$javascript) {
 			$match = '';
 			if (isset($matches['conditionBefore'])) $match .= $matches['conditionBefore'];
-			$match .= '<script' . $matches['script'] . '</script>';
+			$match .= '<script' . $matches['script'];
 			if (isset($matches['conditionAfter'])) $match .= $matches['conditionAfter'];
 			
 			$javascript[] = $match;
@@ -120,7 +124,7 @@ final class HeaderUtil {
 		// 3rd party plugins may differ the actual output before it is sent to the browser
 		// please be aware, that $eventObj is not available here due to this being a static
 		// class. Use HeaderUtil::$output to modify it.
-		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction('wcf\util\HeaderUtil', 'parseOutput');
+		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction(self::class, 'parseOutput');
 		
 		// gzip compression
 		if (self::$enableGzipCompression) {
@@ -159,16 +163,21 @@ final class HeaderUtil {
 	 * @param	string		$status
 	 */
 	public static function delayedRedirect($location, $message, $delay = 5, $status = 'success') {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'url' => $location,
 			'message' => $message,
 			'wait' => $delay,
 			'templateName' => 'redirect',
 			'templateNameApplication' => 'wcf',
 			'status' => $status
-		));
+		]);
 		WCF::getTPL()->display('redirect');
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of HeaderUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

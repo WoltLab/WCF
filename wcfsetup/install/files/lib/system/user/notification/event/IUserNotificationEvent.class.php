@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\data\language\Language;
+use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\UserProfile;
 use wcf\data\IDatabaseObjectProcessor;
@@ -10,11 +11,13 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  * This interface should be implemented by every event which is fired by the notification system.
  * 
  * @author	Marcel Werk, Oliver Kliebisch
- * @copyright	2001-2015 WoltLab GmbH, Oliver Kliebisch
+ * @copyright	2001-2016 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.event
  * @category	Community Framework
+ * 
+ * @mixin	UserNotificationEvent
  */
 interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
@@ -70,7 +73,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns a list of authors for stacked notifications sorted by time.
 	 * 
-	 * @return	array<\wcf\data\user\UserProfile>
+	 * @return	UserProfile[]
 	 */
 	public function getAuthors();
 	
@@ -84,7 +87,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets a list of authors for stacked notifications.
 	 * 
-	 * @param	array<\wcf\data\user\UserProfile>	$authors
+	 * @param	UserProfile[]	$authors
 	 */
 	public function setAuthors(array $authors);
 	
@@ -98,12 +101,12 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets the object for the event.
 	 * 
-	 * @param	\wcf\data\user\notification\UserNotification			$notification
-	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$object
-	 * @param	\wcf\data\user\UserProfile					$author
-	 * @param	array<mixed>							$additionalData
+	 * @param	UserNotification		$notification
+	 * @param	IUserNotificationObject		$object
+	 * @param	UserProfile			$author
+	 * @param	array				$additionalData
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array());
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = []);
 	
 	/**
 	 * Sets the language for the event
@@ -152,7 +155,14 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the underlying notification object.
 	 * 
-	 * @return	\wcf\data\user\notification\UserNotification
+	 * @return	UserNotification
 	 */
 	public function getNotification();
+	
+	/**
+	 * Returns the underlying user notification object.
+	 * 
+	 * @return	IUserNotificationObject
+	 */
+	public function getUserNotificationObject();
 }

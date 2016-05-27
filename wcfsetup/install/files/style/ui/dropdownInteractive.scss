@@ -1,0 +1,243 @@
+.dropdownMenuContainer > .interactiveDropdown.open {
+	visibility: visible;
+}
+
+/* styling for interactive dropdowns (currently only used in the user panel) */
+.interactiveDropdown {
+	background-color: $wcfContentBackground;
+	border-radius: 2px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	color: $wcfContentText;
+	pointer-events: all;
+	position: absolute;
+	visibility: hidden;
+	z-index: 450;
+	
+	/* prevent dropdown from flickering during calculation */
+	left: -200%;
+	
+	> .elementPointer {
+		display: none;
+	}
+	
+	&.interactiveDropdownUserMenu > .interactiveDropdownItemsContainer {
+		overflow: visible;
+		max-height: none;
+	}
+}
+
+/* drop down header */
+.interactiveDropdownHeader {
+	align-items: center;
+	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarHeadlineText;
+	display: flex;
+	padding: 10px 20px;
+	
+	a {
+		color: $wcfSidebarHeadlineLink;
+		
+		&:hover {
+			color: $wcfSidebarHeadlineLinkActive;
+			
+			text-decoration: underline;
+		}
+	}
+	
+	.interactiveDropdownTitle {
+		flex: 1 1 auto;
+		
+		@include wcfFontHeadline;
+	}
+	
+	.interactiveDropdownLinks {
+		flex: 0 0 auto;
+		margin-left: 5px;
+	}
+	
+	@include screen-sm-down {
+		padding: 10px;
+	}
+}
+
+/* container for dropdown items */
+.interactiveDropdownItemsContainer {
+	border: 1px solid $wcfContentBorderInner;
+	border-width: 1px 0;
+	
+	&.ps-container {
+		> .interactiveDropdownItems {
+			position: relative;
+			z-index: 100;
+		}
+		
+		> .ps-scrollbar-y-rail {
+			z-index: 200;
+		}
+	}
+}
+
+/* dropdown item list */
+.interactiveDropdownItems {
+	> li {
+		padding: 15px 20px;
+		position: relative;
+		
+		&:not(:last-child) {
+			border-bottom: 1px solid $wcfContentBorderInner;
+		}
+		
+		&:hover {
+			background-color: $wcfTabularBoxBackgroundActive;
+		}
+		
+		a {
+			color: $wcfContentLink;
+			
+			&:hover {
+				color: $wcfContentLinkActive;
+			}
+		}
+		
+		.box48 {
+			align-items: center;
+			overflow: hidden;
+		}
+		
+		@include screen-sm-down {
+			padding: 10px;
+		}
+	}
+	
+	.loading,
+	.noItems {
+		padding: 20px 10px;
+		text-align: center;
+		
+		@include wcfFontHeadline;
+	}
+}
+
+/* outstanding / unread item */
+.interactiveDropdownItemOutstanding {
+	display: flex;
+	
+	> .box48 {
+		flex: 1 1 auto;
+	}
+	
+	h3 {
+		font-weight: bold;
+	}
+}
+
+/* mark as read button for an item */
+.interactiveDropdownItemMarkAsRead {
+	align-self: center;
+	flex: 0 0 auto;
+	margin-left: 5px;
+}
+
+/* Adds a link spanning the entire item while being placed behind all other links appearing
+   within the regular text using a lower z-index. Allows for regular links to be accessible,
+   but causes the item to act as a link. */
+.interactiveDropdownItemShadow {
+	> .box48 {
+		position: relative;
+	}
+	
+	> .box48,
+	> .interactiveDropdownItemMarkAsRead {
+		pointer-events: none;
+		z-index: 20;
+		
+		a {
+			pointer-events: all;
+		}
+	}
+	
+	> .interactiveDropdownItemShadowLink {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 10;
+	}
+}
+
+/* show all button shown in dropdown menu bottom */
+.interactiveDropdownShowAll {
+	background-color: $wcfSidebarBackground;
+	color: $wcfSidebarHeadlineText;
+	display: block;
+	padding: 10px 20px;
+	text-align: center;
+	
+	&:hover {
+		color: $wcfSidebarHeadlineText;
+		text-decoration: underline;
+	}
+}
+
+@include screen-md-up {
+	.interactiveDropdown {
+		min-width: 350px;
+	}
+	
+	.interactiveDropdownItemsContainer {
+		max-height: 400px;
+		overflow: hidden;
+		position: relative;
+	}
+	
+	.interactiveDropdownItems:not(.interactiveDropdownItemsUserMenu) > li {
+		max-width: 400px;
+	}
+}
+
+@include screen-sm-down {
+	.interactiveDropdown {
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		left: 0;
+		position: fixed;
+		right: 0;
+	}
+	
+	.interactiveDropdownHeader {
+		flex: 0 0 auto;
+	}
+	
+	.interactiveDropdownItemsContainer {
+		flex: 1 1 auto;
+		overflow: auto;
+		
+		/* increase the clickable area of the mark as read icon */
+		.interactiveDropdownItemMarkAsRead {
+			bottom: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 36px; /* 16px icon + 2x 10px padding */
+			
+			> a {
+				display: block;
+				height: 100%;
+				text-align: center;
+				
+				> .icon {
+					position: relative;
+					top: 50%;
+					
+					transform: translateY(-50%);
+				}
+			}
+		}
+	}
+	
+	.interactiveDropdownShowAll {
+		flex: 0 0 auto;
+	}
+}

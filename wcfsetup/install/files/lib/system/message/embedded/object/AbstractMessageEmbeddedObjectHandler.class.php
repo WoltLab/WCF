@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\message\embedded\object;
+use wcf\data\object\type\ObjectType;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\util\ArrayUtil;
 
@@ -7,17 +8,20 @@ use wcf\util\ArrayUtil;
  * Provides default implementations for message embedded object handlers.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.message.embedded.object
  * @category	Community Framework
+ * 
+ * @method	ObjectType	getDecoratedObject()
+ * @mixin	ObjectType
  */
 abstract class AbstractMessageEmbeddedObjectHandler extends DatabaseObjectDecorator implements IMessageEmbeddedObjectHandler {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\object\type\ObjectType';
+	protected static $baseClass = ObjectType::class;
 	
 	/**
 	 * Parses given message for specific bbcode parameters.
@@ -30,11 +34,11 @@ abstract class AbstractMessageEmbeddedObjectHandler extends DatabaseObjectDecora
 		if (preg_match_all('~\['.$bbcode.'\](.*?)\[/'.$bbcode.'\]~i', $message, $matches)) {
 			$results = ArrayUtil::trim($matches[1]);
 			$results = array_unique($results);
-				
+			
 			return $results;
 		}
 		
-		return array();
+		return [];
 	}
 	
 	/**
@@ -67,6 +71,6 @@ abstract class AbstractMessageEmbeddedObjectHandler extends DatabaseObjectDecora
 			return $results;
 		}
 		
-		return array();
+		return [];
 	}
 }

@@ -11,37 +11,41 @@ use wcf\system\WCF;
  * Executes tagging-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.tag
  * @category	Community Framework
+ * 
+ * @method	Tag		create()
+ * @method	TagEditor[]	getObjects()
+ * @method	TagEditor	getSingleObject()
  */
 class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getSearchResultList');
+	protected $allowGuestAccess = ['getSearchResultList'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\tag\TagEditor';
+	protected $className = TagEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.tag.canManageTag');
+	protected $permissionsDelete = ['admin.content.tag.canManageTag'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.tag.canManageTag');
+	protected $permissionsUpdate = ['admin.content.tag.canManageTag'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('delete', 'update');
+	protected $requireACP = ['delete', 'update'];
 	
 	/**
 	 * tag for which other tags will be used as synonyms
@@ -50,7 +54,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	public $tagEditor = null;
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
+	 * @inheritDoc
 	 */
 	public function validateGetSearchResultList() {
 		$this->readString('searchString', false, 'data');
@@ -61,19 +65,19 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::getSearchResultList()
+	 * @inheritDoc
 	 */
 	public function getSearchResultList() {
-		$excludedSearchValues = array();
+		$excludedSearchValues = [];
 		if (isset($this->parameters['data']['excludedSearchValues'])) {
 			$excludedSearchValues = $this->parameters['data']['excludedSearchValues'];
 		}
-		$list = array();
+		$list = [];
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add("name LIKE ?", array($this->parameters['data']['searchString'].'%'));
+		$conditionBuilder->add("name LIKE ?", [$this->parameters['data']['searchString'].'%']);
 		if (!empty($excludedSearchValues)) {
-			$conditionBuilder->add("name NOT IN (?)", array($excludedSearchValues));
+			$conditionBuilder->add("name NOT IN (?)", [$excludedSearchValues]);
 		}
 		
 		// find tags
@@ -83,17 +87,17 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$list[] = array(
+			$list[] = [
 				'label' => $row['name'],
 				'objectID' => $row['tagID']
-			);
+			];
 		}
 		
 		return $list;
 	}
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$returnValue = parent::delete();
@@ -105,9 +109,11 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	
 	/**
 	 * Validates the 'setAsSynonyms' action.
+	 * 
+	 * @since	2.2
 	 */
 	public function validateSetAsSynonyms() {
-		WCF::getSession()->checkPermissions([ 'admin.content.tag.canManageTag' ]);
+		WCF::getSession()->checkPermissions(['admin.content.tag.canManageTag']);
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -125,6 +131,8 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	
 	/**
 	 * Sets a number of tags as a synonyms of another tag.
+	 *
+	 * @since	2.2
 	 */
 	public function setAsSynonyms() {
 		// the "main" tag may not be a synonym itself
@@ -134,7 +142,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 			]);
 		}
 		
-		foreach ($this->objects as $tagEditor) {
+		foreach ($this->getObjects() as $tagEditor) {
 			$this->tagEditor->addSynonym($tagEditor->getDecoratedObject());
 		}
 		
@@ -144,9 +152,10 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * Unmarks tags.
 	 * 
-	 * @param	array<integer>		$tagIDs
+	 * @param	integer[]		$tagIDs
+	 * @since	2.2
 	 */
-	protected function unmarkItems(array $tagIDs = array()) {
+	protected function unmarkItems(array $tagIDs = []) {
 		if (empty($tagIDs)) {
 			$tagIDs = $this->objectIDs;
 		}

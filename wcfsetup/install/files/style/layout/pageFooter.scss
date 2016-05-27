@@ -1,0 +1,28 @@
+.pageFooterCopyright {
+	background-color: $wcfFooterCopyrightBackground;
+	color: $wcfFooterCopyrightText;
+	flex: 0 0 auto;
+	text-align: center;
+	
+	@include screen-md-up {
+		padding: 20px 0;
+	}
+	
+	@include screen-sm-down {
+		padding: 20px 0;
+	}
+	
+	> .layoutBoundary > div:not(:first-child) {
+		margin-top: 10px;
+	}
+	
+	a {
+		// use text color instead
+		color: $wcfFooterText;
+		
+		&:hover {
+			color: $wcfFooterCopyrightLinkActive;
+			text-decoration: underline;
+		}
+	}
+}

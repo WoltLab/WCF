@@ -6,20 +6,25 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of session log entries.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.log
  * @category	Community Framework
+ *
+ * @method	ACPSessionLog		current()
+ * @method	ACPSessionLog[]		getObjects()
+ * @method	ACPSessionLog|null	search($objectID)
+ * @property	ACPSessionLog[]		$objects
  */
 class ACPSessionLogList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\acp\session\log\ACPSessionLog';
+	public $className = ACPSessionLog::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';

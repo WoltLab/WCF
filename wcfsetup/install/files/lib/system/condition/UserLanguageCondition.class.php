@@ -13,7 +13,7 @@ use wcf\util\ArrayUtil;
  * Condition implementation for the languages of a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.condition
@@ -23,27 +23,29 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	use TObjectListUserCondition;
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
+	 * @inheritDoc
 	 */
 	protected $label = 'wcf.user.condition.languages';
 	
 	/**
 	 * ids of the selected languages
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $languageIDs = array();
+	protected $languageIDs = [];
 	
 	/**
-	 * @see	\wcf\system\condition\IObjectListCondition::addObjectListCondition()
+	 * @inheritDoc
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
-		if (!($objectList instanceof UserList)) return;
+		if (!($objectList instanceof UserList)) {
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+		}
 		
-		$objectList->getConditionBuilder()->add('user_table.languageID IN (?)', array($conditionData['languageIDs']));
+		$objectList->getConditionBuilder()->add('user_table.languageID IN (?)', [$conditionData['languageIDs']]);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
 		if (!empty($condition->conditionData['languageIDs']) && !in_array($user->languageID, $condition->languageIDs)) {
@@ -54,20 +56,20 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		if (!empty($this->languageIDs)) {
-			return array(
+			return [
 				'languageIDs' => $this->languageIDs
-			);
+			];
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getFieldElement()
+	 * @inheritDoc
 	 */
 	protected function getFieldElement() {
 		$returnValue = "";
@@ -79,21 +81,21 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['languageIDs']) && is_array($_POST['languageIDs'])) $this->languageIDs = ArrayUtil::toIntegerArray($_POST['languageIDs']);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
-		$this->languageIDs = array();
+		$this->languageIDs = [];
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		if (!empty($condition->conditionData['languageIDs'])) {
@@ -102,7 +104,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		foreach ($this->languageIDs as $languageID) {
@@ -115,7 +117,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		if (WCF::getUser()->userID) {

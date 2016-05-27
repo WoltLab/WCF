@@ -1,0 +1,142 @@
+dl {
+	&:not(.plain) {
+		display: block;
+		
+		&:not(:first-child) {
+			margin-top: 20px;
+		}
+		
+		> dt {
+			color: $wcfInputLabel;
+			
+			display: block;
+			
+			&:not(:empty) {
+				margin-bottom: 5px;
+			}
+		}
+		
+		> dd {
+			display: block;
+			
+			&:not(:last-child) {
+				margin-bottom: 20px;
+			}
+			
+			> small:not(.innerError) {
+				color: $wcfContentDimmedText;
+				display: block;
+				margin-top: 5px;
+			}
+			
+			> label {
+				display: block;
+				
+				/* indentation for checkbox descriptions */
+				+ small:not(.innerError) {
+					margin-left: 24px;
+				} 
+			}
+			
+			> label:not(:first-child) {
+				margin-top: 3px;
+			}
+			
+			&.floated {
+				display: flex;
+				flex-wrap: wrap;
+				
+				> label {
+					flex: 0 0 auto;
+					margin: 0 10px 5px 0;
+					
+					&:last-child {
+						margin-right: 0;
+					}
+				}
+			}
+		}
+		
+		&.wide > dt {
+			display: none;
+		}
+	}
+	
+	&.dataList {
+		@include clearfix;
+		
+		> dt {
+			clear: right;
+			color: $wcfContentDimmedText;
+			float: left;
+			margin-right: 4px;
+			text-align: left;
+			
+			&:after {
+				content: ":";
+			}
+		}
+		
+		> dd {
+			float: right;
+			text-align: right;
+			
+			&:not(:last-child) {
+				margin-bottom: 3px;
+			}
+		}
+	}
+	
+	&.inlineDataList {
+		> dt {
+			display: inline-block;
+			
+			&:after {
+				content: ":";
+				padding-left: 1px;
+			}
+		}
+		
+		> dd {
+			display: inline-block;
+			
+			&:not(:last-of-type):after {
+				content: ",";
+				padding-left: 1px;
+			}
+		}
+	}
+	
+	&.statsDataList {
+		align-items: center;
+		display: flex;
+		flex-direction: row-reverse;
+		flex-wrap: wrap;
+		
+		> dt {
+			color: $wcfContentDimmedText;
+			flex: 0 0 60%;
+			margin-left: 5px;
+			overflow: hidden;
+			text-align: left;
+			white-space: nowrap;
+			
+			@include wcfFontSmall;
+		}
+		
+		> dd {
+			flex: 0 0 auto;
+			width: calc(40% - 5px); /* IE work-around */
+			
+			overflow: hidden;
+			text-align: right;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}
+
+/* remove `margin-top` for `<dl>` inside grid */
+.row.rowColGap > dl {
+	margin-top: 0;
+}

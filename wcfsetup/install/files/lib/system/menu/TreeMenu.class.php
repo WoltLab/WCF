@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Basis class for a tree menu.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.menu
@@ -17,24 +17,24 @@ use wcf\system\WCF;
 abstract class TreeMenu extends SingletonFactory {
 	/**
 	 * list of visible menu items
-	 * @var	array<\wcf\system\menu\ITreeMenuItem>
+	 * @var	ITreeMenuItem[]
 	 */
-	public $menuItemList = array();
+	public $menuItemList = [];
 	
 	/**
 	 * list of the names of the active menu items
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $activeMenuItems = array();
+	public $activeMenuItems = [];
 	
 	/**
 	 * list of all menu items
-	 * @var	array<\wcf\system\menu\ITreeMenuItem>
+	 * @var	ITreeMenuItem[]
 	 */
 	public $menuItems = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get menu items from cache
@@ -60,7 +60,7 @@ abstract class TreeMenu extends SingletonFactory {
 		// call loadCache event
 		EventHandler::getInstance()->fireAction($this, 'loadCache');
 		
-		$this->menuItems = array();
+		$this->menuItems = [];
 	}
 	
 	/**
@@ -161,12 +161,12 @@ abstract class TreeMenu extends SingletonFactory {
 	 * @param	string		$menuItem	name of the active menu item
 	 */
 	public function setActiveMenuItem($menuItem) {
-		$newActiveMenuItems = array();
+		$newActiveMenuItems = [];
 		while (isset($this->menuItemList[$menuItem])) {
 			$newActiveMenuItems[] = $menuItem;
 			$menuItem = $this->menuItemList[$menuItem]->parentMenuItem;
 			
-			if ($menuItem && !isset($this->menuItemList[$menuItem])) return false;
+			if ($menuItem && !isset($this->menuItemList[$menuItem])) return;
 		}
 		
 		if (!empty($newActiveMenuItems)) $this->activeMenuItems = $newActiveMenuItems;
@@ -203,6 +203,6 @@ abstract class TreeMenu extends SingletonFactory {
 	public function getMenuItems($parentMenuItem = null) {
 		if ($parentMenuItem === null) return $this->menuItems;
 		if (isset($this->menuItems[$parentMenuItem])) return $this->menuItems[$parentMenuItem];
-		return array();
+		return [];
 	}
 }

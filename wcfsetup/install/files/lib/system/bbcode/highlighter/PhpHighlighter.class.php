@@ -6,22 +6,22 @@ use wcf\system\Regex;
  * Highlights syntax of PHP sourcecode.
  * 
  * @author	Tim Duesterhus, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode.highlighter
  * @category	Community Framework
  */
 class PhpHighlighter extends Highlighter {
-	public static $colorToClass = array();
+	public static $colorToClass = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
 		
-		$types = array('default' => 'hlKeywords1', 'keyword' => 'hlKeywords2', 'comment' => 'hlComments', 'string' => 'hlQuotes');
+		$types = ['default' => 'hlKeywords1', 'keyword' => 'hlKeywords2', 'comment' => 'hlComments', 'string' => 'hlQuotes'];
 		
 		self::$colorToClass['<span style="color: '.ini_get('highlight.html').'">'] = '<span>';
 		foreach ($types as $type => $class) {
@@ -30,7 +30,7 @@ class PhpHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @inheritDoc
 	 */
 	public function highlight($code) {
 		// add starting php tag
@@ -49,8 +49,17 @@ class PhpHighlighter extends Highlighter {
 		
 		// remove added php tags
 		if ($phpTagsAdded) {
-			$regex = new Regex('([^\\2]*)(&lt;\?php&nbsp;)(.*)(&nbsp;.*\?&gt;)([^\\4]*)', Regex::CASE_INSENSITIVE | Regex::DOT_ALL);
-			$highlightedCode = $regex->replace($highlightedCode, '\\1\\3\\5');
+			// the opening and closing PHP tags were added previously, hence we actually do
+			// know that the first (last for the closing tag) occurence is the one inserted
+			// by us. The previously used regex was bad because it was significantly slower
+			// and could easily hit the backtrace limit for larger inputs
+			$openingTag = mb_strpos($highlightedCode, '&lt;?php&nbsp;');
+			$closingTag = mb_strrpos($highlightedCode, '?&gt;');
+			$tmp = mb_substr($highlightedCode, 0, $openingTag);
+			$tmp .= mb_substr($highlightedCode, $openingTag + 14, $closingTag - $openingTag - 14);
+			$tmp .= mb_substr($highlightedCode, $closingTag + 5);
+			
+			$highlightedCode = $tmp;
 		}
 		
 		// remove breaks

@@ -1,13 +1,18 @@
 <?php
 namespace wcf\system\database;
 use wcf\system\benchmark\Benchmark;
+use wcf\system\database\editor\DatabaseEditor;
+use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
+use wcf\system\database\exception\DatabaseQueryException;
+use wcf\system\database\exception\DatabaseTransactionException;
+use wcf\system\database\statement\PreparedStatement;
 use wcf\system\WCF;
 
 /**
  * Abstract implementation of a database access class using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database
@@ -18,13 +23,13 @@ abstract class Database {
 	 * name of the class used for prepared statements
 	 * @var	string
 	 */
-	protected $preparedStatementClassName = 'wcf\system\database\statement\PreparedStatement';
+	protected $preparedStatementClassName = PreparedStatement::class;
 	
 	/**
 	 * name of the database editor class
 	 * @var	string
 	 */
-	protected $editorClassName = 'wcf\system\database\editor\DatabaseEditor';
+	protected $editorClassName = DatabaseEditor::class;
 	
 	/**
 	 * sql server hostname
@@ -94,6 +99,7 @@ abstract class Database {
 	 * @param	string		$password		SQL database server password
 	 * @param	string		$database		SQL database server database name
 	 * @param	integer		$port			SQL database server port
+	 * @param	boolean		$failsafeTest
 	 */
 	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false) {
 		$this->host = $host;
@@ -118,13 +124,14 @@ abstract class Database {
 	 * @param	string		$table
 	 * @param	string		$field
 	 * @return	integer
+	 * @throws	DatabaseException
 	 */
 	public function getInsertID($table, $field) {
 		try {
 			return $this->pdo->lastInsertId();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot fetch last insert id: " . $e->getMessage(), $this);
+			throw new GenericDatabaseException("Cannot fetch last insert id", $e);
 		}
 	}
 	
@@ -132,6 +139,7 @@ abstract class Database {
 	 * Initiates a transaction.
 	 * 
 	 * @return	boolean		true on success
+	 * @throws	DatabaseTransactionException
 	 */
 	public function beginTransaction() {
 		try {
@@ -150,7 +158,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot begin transaction: " . $e->getMessage(), $this);
+			throw new DatabaseTransactionException("Could not begin transaction", $e);
 		}
 	}
 	
@@ -158,6 +166,7 @@ abstract class Database {
 	 * Commits a transaction and returns true if the transaction was successfull.
 	 * 
 	 * @return	boolean
+	 * @throws	DatabaseTransactionException
 	 */
 	public function commitTransaction() {
 		if ($this->activeTransactions === 0) return false;
@@ -179,7 +188,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot commit transaction: " . $e->getMessage(), $this);
+			throw new DatabaseTransactionException("Could not commit transaction", $e);
 		}
 	}
 	
@@ -187,6 +196,7 @@ abstract class Database {
 	 * Rolls back a transaction and returns true if the rollback was successfull.
 	 * 
 	 * @return	boolean
+	 * @throws	DatabaseTransactionException
 	 */
 	public function rollBackTransaction() {
 		if ($this->activeTransactions === 0) return false;
@@ -195,7 +205,7 @@ abstract class Database {
 			$this->activeTransactions--;
 			if ($this->activeTransactions === 0) {
 				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("ROLLBACK", Benchmark::TYPE_SQL_QUERY);
-				$result = $this->pdo->rollback();
+				$result = $this->pdo->rollBack();
 			}
 			else {
 				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("ROLLBACK TO SAVEPOINT level".$this->activeTransactions, Benchmark::TYPE_SQL_QUERY);
@@ -207,7 +217,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot rollback transaction: " . $e->getMessage(), $this);
+			throw new DatabaseTransactionException("Could not roll back transaction", $e);
 		}
 	}
 	
@@ -217,7 +227,8 @@ abstract class Database {
 	 * @param	string			$statement
 	 * @param	integer			$limit
 	 * @param	integer			$offset
-	 * @return	\wcf\system\database\statement\PreparedStatement
+	 * @return	PreparedStatement
+	 * @throws	DatabaseQueryException
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
 		$statement = $this->handleLimitParameter($statement, $limit, $offset);
@@ -228,7 +239,7 @@ abstract class Database {
 			return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException($e->getMessage(), $this, null, $statement);
+			throw new DatabaseQueryException("Could not prepare statement '".$statement."'", $e);
 		}
 	}
 	

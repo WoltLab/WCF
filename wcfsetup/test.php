@@ -91,6 +91,22 @@ else if (!extension_loaded('pcre')) {
 	<?php
 }
 
+// check Hash extension
+else if (!extension_loaded('hash')) {
+	?>
+	<p>The 'Hash' PHP extension is missing. Hash is required for a stable work of this software.<br />
+	Die 'Hash' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
+	<?php
+}
+
+// check whether Hash extension is sane
+else if (!in_array('sha256', hash_algos())) {
+	?>
+	<p>The 'Hash' PHP extension is broken. It needs to support the SHA-256 algorithm.<br />
+	Die 'Hash' Erweiterung f&uuml;r PHP ist kaputt. Sie unterstützt die SHA-256-Hashfunktion nicht.</p>
+	<?php
+}
+
 // everything is fine
 else {
 	?>

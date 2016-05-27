@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\object\type;
+use wcf\data\object\type\definition\ObjectTypeDefinition;
 use wcf\system\cache\builder\ObjectTypeCacheBuilder;
 use wcf\system\SingletonFactory;
 
@@ -7,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Manages the object type cache.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.object.type
@@ -16,48 +17,48 @@ use wcf\system\SingletonFactory;
 class ObjectTypeCache extends SingletonFactory {
 	/**
 	 * object type definitions
-	 * @var	array<\wcf\data\object\type\definition\ObjectTypeDefinition>
+	 * @var	ObjectTypeDefinition[]
 	 */
-	protected $definitions = array();
+	protected $definitions = [];
 	
 	/**
 	 * object type definition ids grouped by category name
-	 * @var	array<integer>
+	 * @var	integer[][]
 	 */
-	protected $definitionsByCategory = array();
+	protected $definitionsByCategory = [];
 	
 	/**
 	 * object type definitions sorted by name
-	 * @var	array<\wcf\data\object\type\definition\ObjectTypeDefinition>
+	 * @var	ObjectTypeDefinition[]
 	 */
-	protected $definitionsByName = array();
+	protected $definitionsByName = [];
 	
 	/**
 	 * object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
 	 * object types grouped by definition
 	 * @var	array
 	 */
-	protected $groupedObjectTypes = array();
+	protected $groupedObjectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get definition cache
-		$this->definitionsByCategory = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'categories');
-		$this->definitions = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'definitions');
+		$this->definitionsByCategory = ObjectTypeCacheBuilder::getInstance()->getData([], 'categories');
+		$this->definitions = ObjectTypeCacheBuilder::getInstance()->getData([], 'definitions');
 		foreach ($this->definitions as $definition) {
 			$this->definitionsByName[$definition->definitionName] = $definition;
 		}
 		
 		// get object type cache
-		$this->objectTypes = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'objectTypes');
-		$this->groupedObjectTypes = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'groupedObjectTypes');
+		$this->objectTypes = ObjectTypeCacheBuilder::getInstance()->getData([], 'objectTypes');
+		$this->groupedObjectTypes = ObjectTypeCacheBuilder::getInstance()->getData([], 'groupedObjectTypes');
 	}
 	
 	/**
@@ -95,11 +96,11 @@ class ObjectTypeCache extends SingletonFactory {
 	 * category name is invalid.
 	 * 
 	 * @param	string		$categoryName
-	 * @return	array<\wcf\data\object\type\definition\ObjectTypeDefinition>
+	 * @return	ObjectTypeDefinition[]
 	 */
 	public function getDefinitionsByCategory($categoryName) {
 		if (isset($this->definitionsByCategory[$categoryName])) {
-			$definitions = array();
+			$definitions = [];
 			foreach ($this->definitionsByCategory[$categoryName] as $definitionID) {
 				$definitions[$definitionID] = $this->getDefinition($definitionID);
 			}
@@ -129,14 +130,14 @@ class ObjectTypeCache extends SingletonFactory {
 	 * Returns the list of object type with the given definition name.
 	 * 
 	 * @param	string		$definitionName
-	 * @return	array<\wcf\data\object\type\ObjectType>
+	 * @return	ObjectType[]
 	 */
 	public function getObjectTypes($definitionName) {
 		if (isset($this->groupedObjectTypes[$definitionName])) {
 			return $this->groupedObjectTypes[$definitionName];
 		}
 		
-		return array();
+		return [];
 	}
 	
 	/**

@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Deletes orphaned attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
@@ -16,25 +16,22 @@ use wcf\system\WCF;
  */
 class AttachmentCleanUpCronjob extends AbstractCronjob {
 	/**
-	 * @see	\wcf\system\cronjob\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
 		// delete orphaned attachments
-		$attachmentIDs = array();
 		$sql = "SELECT	attachmentID
 			FROM	wcf".WCF_N."_attachment
 			WHERE	objectID = ?
 				AND uploadTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			0,
 			(TIME_NOW - 86400)
-		));
-		while ($row = $statement->fetchArray()) {
-			$attachmentIDs[] = $row['attachmentID'];
-		}
+		]);
+		$attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($attachmentIDs)) {
 			AttachmentEditor::deleteAll($attachmentIDs);

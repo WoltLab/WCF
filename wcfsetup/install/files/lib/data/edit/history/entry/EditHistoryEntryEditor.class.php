@@ -6,15 +6,18 @@ use wcf\data\DatabaseObjectEditor;
  * Extends the edit history entry object with functions to create, update and delete history entries.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.edit.history.entry
  * @category	Community Framework
+ * 
+ * @method	EditHistoryEntry	getDecoratedObject()
+ * @mixin	EditHistoryEntry
  */
 class EditHistoryEntryEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectEditor::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\edit\history\entry\EditHistoryEntry';
+	protected static $baseClass = EditHistoryEntry::class;
 }

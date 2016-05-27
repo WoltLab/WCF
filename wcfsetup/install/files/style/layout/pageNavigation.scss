@@ -1,0 +1,56 @@
+@include screen-lg {
+	.pageNavigation {
+		background-color: $wcfNavigationBackground;
+		color: $wcfNavigationText;
+		flex: 0 0 auto;
+		padding: 5px 0;
+		
+		> div {
+			align-items: center;
+			display: flex;
+			justify-content: flex-end;
+			height: 30px;
+		}
+		
+		.icon {
+			color: inherit;
+		}
+		
+		a {
+			color: $wcfNavigationLink;
+			
+			&:hover {
+				color: $wcfNavigationLinkActive;
+			}
+		}
+		
+		.breadcrumbs {
+			margin-left: 10px;
+		}
+	}
+	
+	.boxesHeaderBoxes + .pageNavigation {
+		margin-top: 1px;
+	}
+	
+	.pageNavigationIcons {
+		display: flex;
+		flex: 0 0 auto;
+		flex-direction: row-reverse;
+		margin-right: 10px;
+		
+		> li {
+			flex: 0 0 auto;
+			
+			&:not(:last-child) {
+				margin-left: 10px;
+			}
+		}
+	}
+}
+
+@include screen-md-down {
+	.pageNavigation {
+		display: none;
+	}
+}

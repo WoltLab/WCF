@@ -17,11 +17,21 @@ use wcf\system\exception\SystemException;
  * $file->close();
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
  * @category	Community Framework
+ * 
+ * @method	boolean		close()
+ * @method	boolean		eof()
+ * @method	string		gets($length = null)
+ * @method	resource	open($mode, $use_include_path = false, $context = null)
+ * @method	integer		seek($offset, $whence = SEEK_SET)
+ * @method	string		read($length)
+ * @method	integer		tell()
+ * @method	boolean		touch($time = 0, $atime = 0)		note: default value of `$time` actually is `time()`
+ * @method	integer		write($string, $length = null)
  */
 class File {
 	/**
@@ -42,8 +52,9 @@ class File {
 	 * @param	string		$filename
 	 * @param	string		$mode
 	 * @param	array		$options
+	 * @throws	SystemException
 	 */
-	public function __construct($filename, $mode = 'wb', $options = array()) {
+	public function __construct($filename, $mode = 'wb', $options = []) {
 		$this->filename = $filename;
 		if (!empty($options)) {
 			$context = stream_context_create($options);
@@ -63,6 +74,8 @@ class File {
 	 * 
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {

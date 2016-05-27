@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\event\EventHandler;
 use wcf\util\StringUtil;
@@ -9,7 +10,7 @@ use wcf\util\StringUtil;
  * Parses bbcode tags, smilies etc. in messages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
@@ -18,15 +19,15 @@ use wcf\util\StringUtil;
 class MessageParser extends BBCodeParser {
 	/**
 	 * list of smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
-	protected $smilies = array();
+	protected $smilies = [];
 	
 	/**
 	 * cached bbcodes
 	 * @var	array
 	 */
-	protected $cachedCodes = array();
+	protected $cachedCodes = [];
 	
 	/**
 	 * currently parsed message
@@ -35,7 +36,7 @@ class MessageParser extends BBCodeParser {
 	public $message = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
@@ -68,7 +69,7 @@ class MessageParser extends BBCodeParser {
 	 * @return	string		parsed message
 	 */
 	public function parse($message, $enableSmilies = true, $enableHtml = false, $enableBBCodes = true, $doKeywordHighlighting = true) {
-		$this->cachedCodes = array();
+		$this->cachedCodes = [];
 		$this->message = $message;
 		
 		// call event
@@ -115,8 +116,8 @@ class MessageParser extends BBCodeParser {
 		}
 		
 		// replace bad html tags (script etc.)
-		$badSearch = array('/(javascript):/i', '/(about):/i', '/(vbscript):/i');
-		$badReplace = array('$1<b></b>:', '$1<b></b>:', '$1<b></b>:');
+		$badSearch = ['/(javascript):/i', '/(about):/i', '/(vbscript):/i'];
+		$badReplace = ['$1<b></b>:', '$1<b></b>:', '$1<b></b>:'];
 		$this->message = preg_replace($badSearch, $badReplace, $this->message);
 		
 		// call event
@@ -129,7 +130,8 @@ class MessageParser extends BBCodeParser {
 	 * Parses smiley codes.
 	 * 
 	 * @param	string		$text
-	 * @return	string		text
+	 * @param	boolean		$enableHtml
+	 * @return	string
 	 */
 	protected function parseSmilies($text, $enableHtml = false) {
 		foreach ($this->smilies as $code => $html) {
@@ -154,7 +156,7 @@ class MessageParser extends BBCodeParser {
 					(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
 				)?\])
 				(.*?)
-				(?:\[/\\2\])~six", array($this, 'cacheCodesCallback'), $text);
+				(?:\[/\\2\])~six", [$this, 'cacheCodesCallback'], $text);
 		}
 		return $text;
 	}
@@ -202,7 +204,7 @@ class MessageParser extends BBCodeParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\BBCodeParser::isValidTagAttribute()
+	 * @inheritDoc
 	 */
 	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {
 		if (!parent::isValidTagAttribute($tagAttributes, $definedTagAttribute)) {

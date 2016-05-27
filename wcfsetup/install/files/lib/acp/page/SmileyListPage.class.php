@@ -1,7 +1,9 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\category\Category;
+use wcf\data\smiley\category\SmileyCategory;
 use wcf\data\smiley\SmileyCache;
+use wcf\data\smiley\SmileyList;
 use wcf\page\MultipleLinkPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
@@ -10,40 +12,42 @@ use wcf\system\WCF;
  * Lists the available smilies.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	SmileyList	$objectList
  */
 class SmileyListPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
+	public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_SMILEY');
+	public $neededModules = ['MODULE_SMILEY'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\smiley\SmileyList';
+	public $objectListClassName = SmileyList::class;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'smileyList';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'showOrder ASC, smileyID ASC';
 	
@@ -61,12 +65,12 @@ class SmileyListPage extends MultipleLinkPage {
 	
 	/**
 	 * available categories
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	SmileyCategory[]
 	 */
-	public $categories = array();
+	public $categories = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -81,34 +85,34 @@ class SmileyListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'category' => $this->category,
 			'categories' => $this->categories,
 			'smileyCount' => count(SmileyCache::getInstance()->getSmilies())
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
 		if ($this->categoryID) {
-			$this->objectList->getConditionBuilder()->add('categoryID = ?', array($this->categoryID));
+			$this->objectList->getConditionBuilder()->add('categoryID = ?', [$this->categoryID]);
 		}
 		else {
-			$this->objectList->getConditionBuilder()->add('categoryID IS NULL', array());
+			$this->objectList->getConditionBuilder()->add('categoryID IS NULL', []);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();

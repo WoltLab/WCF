@@ -3,6 +3,7 @@ namespace wcf\data\user\profile\visitor;
 use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
@@ -11,49 +12,52 @@ use wcf\system\WCF;
  * Executes profile visitor-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.profile.visitor
  * @category	Community Framework
+ * 
+ * @method	UserProfileVisitor		create()
+ * @method	UserProfileVisitorEditor[]	getObjects()
+ * @method	UserProfileVisitorEditor	getSingleObject()
  */
 class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getGroupedUserList');
+	protected $allowGuestAccess = ['getGroupedUserList'];
 	
 	/**
 	 * user profile object
-	 * @var	\wcf\data\user\UserProfile;
+	 * @var	UserProfile;
 	 */
 	public $userProfile = null;
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readInteger('pageNo');
 		$this->readInteger('userID');
 		
-		$this->userProfile = UserProfile::getUserProfile($this->parameters['userID']);
+		$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
 		if ($this->userProfile->isProtected()) {
 			throw new PermissionDeniedException();
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		// resolve page count
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_profile_visitor
 			WHERE	ownerID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->parameters['userID']));
-		$row = $statement->fetchArray();
-		$pageCount = ceil($row['count'] / 20);
+		$statement->execute([$this->parameters['userID']]);
+		$pageCount = ceil($statement->fetchSingleColumn() / 20);
 		
 		// get user ids
 		$sql = "SELECT		userID
@@ -61,11 +65,8 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 			WHERE		ownerID = ?
 			ORDER BY	time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
-		$statement->execute(array($this->parameters['userID']));
-		$userIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$userIDs[] = $row['userID'];
-		}
+		$statement->execute([$this->parameters['userID']]);
+		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		// create group
 		$group = new GroupedUserList();
@@ -74,13 +75,13 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 		// load user profiles
 		GroupedUserList::loadUsers();
 		
-		WCF::getTPL()->assign(array(
-			'groupedUsers' => array($group)
-		));
+		WCF::getTPL()->assign([
+			'groupedUsers' => [$group]
+		]);
 		
-		return array(
+		return [
 			'pageCount' => $pageCount,
 			'template' => WCF::getTPL()->fetch('groupedUserList')
-		);
+		];
 	}
 }

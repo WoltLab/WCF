@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Executes actions for reports.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
@@ -18,9 +18,9 @@ use wcf\util\StringUtil;
  */
 class ModerationQueueReportAction extends ModerationQueueAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('prepareReport', 'removeContent', 'removeReport', 'report');
+	protected $allowGuestAccess = ['prepareReport', 'removeContent', 'removeReport', 'report'];
 	
 	/**
 	 * moderation queue editor object
@@ -68,7 +68,7 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 	 * Validates parameters to prepare a report.
 	 */
 	public function validatePrepareReport() {
-		WCF::getSession()->checkPermissions(array('user.profile.canReportContent'));
+		WCF::getSession()->checkPermissions(['user.profile.canReportContent']);
 		
 		$this->readInteger('objectID');
 		$this->readString('objectType');
@@ -95,22 +95,22 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 		// content was already reported
 		$alreadyReported = (ModerationQueueReportManager::getInstance()->hasPendingReport($this->parameters['objectType'], $this->parameters['objectID'])) ? 1 : 0;
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'alreadyReported' => $alreadyReported,
 			'object' => ModerationQueueReportManager::getInstance()->getReportedObject($this->parameters['objectType'], $this->parameters['objectID'])
-		));
+		]);
 		
-		return array(
+		return [
 			'alreadyReported' => $alreadyReported,
 			'template' => WCF::getTPL()->fetch('moderationReportDialog')
-		);
+		];
 	}
 	
 	/**
 	 * Validates parameters for reporting.
 	 */
 	public function validateReport() {
-		WCF::getSession()->checkPermissions(array('user.profile.canReportContent'));
+		WCF::getSession()->checkPermissions(['user.profile.canReportContent']);
 		
 		$this->readString('message');
 		if (mb_strlen($this->parameters['message']) > 64000) {
@@ -135,8 +135,8 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 			);
 		}
 		
-		return array(
+		return [
 			'reported' => 1
-		);
+		];
 	}
 }

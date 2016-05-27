@@ -2,12 +2,10 @@
 namespace wcf\form;
 use wcf\acp\form\UserOptionListForm;
 use wcf\data\search\SearchEditor;
-use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\dashboard\DashboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
+use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -16,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the user search form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
@@ -24,14 +22,9 @@ use wcf\util\StringUtil;
  */
 class UserSearchForm extends UserOptionListForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.user.search';
-	
-	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
-	 */
-	public $neededModules = array('MODULE_MEMBERS_LIST');
+	public $neededModules = ['MODULE_MEMBERS_LIST'];
 	
 	/**
 	 * username
@@ -41,13 +34,13 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * matches
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $matches = array();
+	public $matches = [];
 	
 	/**
-	 * condtion builder object
-	 * @var	\wcf\system\database\condition\PreparedStatementConditionBuilder
+	 * condition builder object
+	 * @var	PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
 	
@@ -64,7 +57,13 @@ class UserSearchForm extends UserOptionListForm {
 	public $maxResults = 1000;
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * option tree
+	 * @var	array
+	 */
+	public $optionTree = [];
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -73,7 +72,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 * @inheritDoc
 	 */
 	protected function initOptionHandler() {
 		$this->optionHandler->enableSearchMode();
@@ -81,7 +80,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -89,7 +88,7 @@ class UserSearchForm extends UserOptionListForm {
 		$this->readOptionTree();
 		
 		// add breadcrumbs
-		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.user.members'), LinkHandler::getInstance()->getLink('MembersList')));
+		if (MODULE_MEMBERS_LIST) PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
 	}
 	
 	/**
@@ -100,47 +99,43 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		DashboardHandler::getInstance()->loadBoxes('com.woltlab.wcf.user.MembersListPage', $this);
-		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'username' => $this->username,
-			'optionTree' => $this->optionTree,
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'com.woltlab.wcf.user.MembersListPage'),
-			'sidebarName' => 'com.woltlab.wcf.user.MembersListPage'
-		));
+			'optionTree' => $this->optionTree
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// store search result in database
-		$search = SearchEditor::create(array(
+		$search = SearchEditor::create([
 			'userID' => WCF::getUser()->userID ?: null,
-			'searchData' => serialize(array('matches' => $this->matches)),
+			'searchData' => serialize(['matches' => $this->matches]),
 			'searchTime' => TIME_NOW,
 			'searchType' => 'users'
-		));
+		]);
 		
 		// get new search id
 		$this->searchID = $search->searchID;
 		$this->saved();
 		
 		// forward to result page
-		$url = LinkHandler::getInstance()->getLink('MembersList', array('id' => $this->searchID));
+		$url = LinkHandler::getInstance()->getLink('MembersList', ['id' => $this->searchID]);
 		HeaderUtil::redirect($url);
 		exit;
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		AbstractForm::validate();
@@ -157,7 +152,7 @@ class UserSearchForm extends UserOptionListForm {
 	 * Search for users which fit to the search values.
 	 */
 	protected function search() {
-		$this->matches = array();
+		$this->matches = [];
 		$sql = "SELECT		user_table.userID
 			FROM		wcf".WCF_N."_user user_table
 			LEFT JOIN	wcf".WCF_N."_user_option_value option_value
@@ -173,16 +168,14 @@ class UserSearchForm extends UserOptionListForm {
 		$this->buildDynamicConditions();
 		
 		// if no conditions exists, no need to send query
-		if (!count($this->conditions->getParameters())) {
+		if (!$this->conditions->__toString()) {
 			return;
 		}
 		
 		// do search
 		$statement = WCF::getDB()->prepareStatement($sql.$this->conditions, $this->maxResults);
 		$statement->execute($this->conditions->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$this->matches[] = $row['userID'];
-		}
+		$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 	}
 	
 	/**
@@ -190,7 +183,7 @@ class UserSearchForm extends UserOptionListForm {
 	 */
 	protected function buildStaticConditions() {
 		if (!empty($this->username)) {
-			$this->conditions->add("user_table.username LIKE ?", array('%'.addcslashes($this->username, '_%').'%'));
+			$this->conditions->add("user_table.username LIKE ?", ['%'.addcslashes($this->username, '_%').'%']);
 		}
 	}
 	

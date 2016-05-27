@@ -4,14 +4,15 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IAttachmentMessageQuickReplyAction;
 use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
+use wcf\data\IVisitableObjectAction;
 use wcf\system\bbcode\PreParser;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\ClassUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
@@ -19,7 +20,7 @@ use wcf\util\StringUtil;
  * Manages quick replies and stored messages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.message
@@ -28,7 +29,7 @@ use wcf\util\StringUtil;
 class QuickReplyManager extends SingletonFactory {
 	/**
 	 * list of allowed bbcodes
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	public $allowedBBodes = null;
 	
@@ -92,7 +93,7 @@ class QuickReplyManager extends SingletonFactory {
 	/**
 	 * Sets the allowed bbcodes.
 	 * 
-	 * @param	array<string>		$allowedBBCodes
+	 * @param	string[]		$allowedBBCodes
 	 */
 	public function setAllowedBBCodes(array $allowedBBCodes = null) {
 		$this->allowedBBodes = $allowedBBCodes;
@@ -101,10 +102,12 @@ class QuickReplyManager extends SingletonFactory {
 	/**
 	 * Validates parameters for current request.
 	 * 
-	 * @param	\wcf\system\message\IMessageQuickReplyAction	$object
-	 * @param	array<array>					$parameters
-	 * @param	string						$containerClassName
-	 * @param	string						$containerDecoratorClassName
+	 * @param	IMessageQuickReplyAction	$object
+	 * @param	mixed[][]			$parameters
+	 * @param	string				$containerClassName
+	 * @param	string				$containerDecoratorClassName
+	 * @throws	SystemException
+	 * @throws	UserInputException
 	 */
 	public function validateParameters(IMessageQuickReplyAction $object, array &$parameters, $containerClassName, $containerDecoratorClassName = '') {
 		if (!isset($parameters['data']['message'])) {
@@ -134,19 +137,24 @@ class QuickReplyManager extends SingletonFactory {
 		
 		$this->container = new $containerClassName($parameters['objectID']);
 		if (!empty($containerDecoratorClassName)) {
-			if (!ClassUtil::isInstanceOf($containerDecoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
-				throw new SystemException("'".$containerDecoratorClassName."' does not extend 'wcf\data\DatabaseObjectDecorator'");
+			if (!is_subclass_of($containerDecoratorClassName, DatabaseObjectDecorator::class)) {
+				throw new ParentClassException($containerDecoratorClassName, DatabaseObjectDecorator::class);
 			}
 			
 			$this->container = new $containerDecoratorClassName($this->container);
 		}
 		$object->validateContainer($this->container);
 		
+		$parameters['htmlInputProcessor'] = $object->getHtmlInputProcessor($parameters['data']['message']);
+		unset($parameters['data']['message']);
+		
+		$parameters['htmlInputProcessor']->validate();
+		
 		// validate message
-		$object->validateMessage($this->container, $parameters['data']['message']);
+		$object->validateMessage($this->container, $parameters['htmlInputProcessor']);
 		
 		// check for message quote ids
-		$parameters['removeQuoteIDs'] = (isset($parameters['removeQuoteIDs']) && is_array($parameters['removeQuoteIDs'])) ? ArrayUtil::trim($parameters['removeQuoteIDs']) : array();
+		$parameters['removeQuoteIDs'] = (isset($parameters['removeQuoteIDs']) && is_array($parameters['removeQuoteIDs'])) ? ArrayUtil::trim($parameters['removeQuoteIDs']) : [];
 		
 		// check for tmp hash (attachments)
 		$parameters['tmpHash'] = '';
@@ -155,12 +163,6 @@ class QuickReplyManager extends SingletonFactory {
 			unset($parameters['data']['tmpHash']);
 		}
 		
-		// message settings
-		$parameters['data'] = array_merge($parameters['data'], MessageFormSettingsHandler::getSettings($parameters));
-		
-		$parameters['data']['enableHtml'] = 0;
-		$parameters['data']['showSignature'] = (WCF::getUser()->userID ? WCF::getUser()->showSignature : 0);
-		
 		EventHandler::getInstance()->fireAction($this, 'validateParameters', $parameters);
 	}
 	
@@ -168,7 +170,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * Creates a new message and returns the parsed template.
 	 * 
 	 * @param	\wcf\data\IMessageQuickReplyAction	$object
-	 * @param	array<array>				$parameters
+	 * @param	array   				$parameters
 	 * @param	string					$containerActionClassName
 	 * @param	string					$sortOrder
 	 * @param	string					$templateName
@@ -176,20 +178,20 @@ class QuickReplyManager extends SingletonFactory {
 	 * @return	array
 	 */
 	public function createMessage(IMessageQuickReplyAction $object, array &$parameters, $containerActionClassName, $sortOrder, $templateName, $application = 'wcf') {
-		$additionalFields = array();
+		$additionalFields = [];
 		EventHandler::getInstance()->fireAction($this, 'createMessage', $additionalFields);
 		
-		$tableIndexName = call_user_func(array($this->container, 'getDatabaseTableIndexName'));
+		$tableIndexName = call_user_func([$this->container, 'getDatabaseTableIndexName']);
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
 		$parameters['data']['time'] = TIME_NOW;
 		$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
 		$parameters['data']['username'] = WCF::getUser()->username;
 		
 		// pre-parse message text
-		if ($parameters['data']['preParse']) {
+		/*if ($parameters['data']['preParse']) {
 			$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
 		}
-		unset($parameters['data']['preParse']);
+		unset($parameters['data']['preParse']);*/
 		
 		$parameters['data'] = array_merge($additionalFields, $parameters['data']);
 		
@@ -199,13 +201,11 @@ class QuickReplyManager extends SingletonFactory {
 		}
 		
 		$message = $object->create();
-		$eventParameters = array('message' => $message);
+		$eventParameters = ['message' => $message];
 		EventHandler::getInstance()->fireAction($this, 'createdMessage', $eventParameters);
 		
 		if ($message instanceof IMessage && !$message->isVisible()) {
-			return array(
-				'isVisible' => false
-			);
+			return ['isVisible' => false];
 		}
 		
 		// resolve the page no
@@ -219,13 +219,13 @@ class QuickReplyManager extends SingletonFactory {
 			// calculate start index
 			$startIndex = $count - (count($messageList) - 1);
 			
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'attachmentList' => $messageList->getAttachmentList(),
 				'container' => $this->container,
 				'objects' => $messageList,
 				'startIndex' => $startIndex,
 				'sortOrder' => $sortOrder,
-			));
+			]);
 			
 			// assign 'to top' link
 			if (isset($parameters['anchor'])) {
@@ -233,21 +233,19 @@ class QuickReplyManager extends SingletonFactory {
 			}
 			
 			// update visit time (messages shouldn't occur as new upon next visit)
-			if (ClassUtil::isInstanceOf($containerActionClassName, 'wcf\data\IVisitableObjectAction')) {
-				$containerAction = new $containerActionClassName(array(($this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container)), 'markAsRead');
+			if (is_subclass_of($containerActionClassName, IVisitableObjectAction::class)) {
+				$containerAction = new $containerActionClassName([($this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container)], 'markAsRead');
 				$containerAction->executeAction();
 			}
 			
-			return array(
+			return [
 				'lastPostTime' => $message->time,
 				'template' => WCF::getTPL()->fetch($templateName, $application)
-			);
+			];
 		}
 		else {
 			// redirect
-			return array(
-				'url' => $object->getRedirectUrl($this->container, $message)
-			);
+			return ['url' => $object->getRedirectUrl($this->container, $message)];
 		}
 	}
 	

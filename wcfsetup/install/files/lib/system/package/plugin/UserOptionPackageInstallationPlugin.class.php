@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes user options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -19,26 +19,26 @@ use wcf\system\WCF;
  */
 class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'user_option';
 	
 	/**
 	 * list of names of tags which aren't considered as additional data
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'isdisabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
+	public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'isdisabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata'];
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
+	 * @inheritDoc
 	 */
 	protected function saveCategory($category, $categoryXML = null) {
 		// use for create and update
-		$data = array(
+		$data = [
 			'parentCategoryName' => $category['parentCategoryName'],
 			'permissions' => $category['permissions'],
 			'options' => $category['options']
-		);
+		];
 		// append show order if explicitly stated
 		if ($category['showOrder'] !== null) $data['showOrder'] = $category['showOrder'];
 		
@@ -61,7 +61,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @inheritDoc
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
@@ -89,7 +89,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		if (isset($option['options'])) $options = $option['options'];
 		
 		// collect additional tags and their values
-		$additionalData = array();
+		$additionalData = [];
 		foreach ($option as $tag => $value) {
 			if (!in_array($tag, self::$reservedTags)) $additionalData[$tag] = $value;
 		}
@@ -100,14 +100,14 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			WHERE	optionName = ?
 			AND	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$optionName,
 			$this->installation->getPackageID()
-		));
+		]);
 		$result = $statement->fetchArray();
 		
 		// build data array
-		$data = array(
+		$data = [
 			'categoryName' => $categoryName,
 			'optionType' => $optionType,
 			'defaultValue' => $defaultValue,
@@ -126,7 +126,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			'options' => $options,
 			'additionalData' => serialize($additionalData),
 			'originIsSystem' => 1
-		);
+		];
 		
 		// update option
 		if (!empty($result['optionID']) && $this->installation->getAction() == 'update') {
@@ -144,7 +144,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// get optionsIDs from package
@@ -152,7 +152,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			FROM	wcf".WCF_N."_user_option
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		while ($row = $statement->fetchArray()) {
 			WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$row['optionID']);
 		}

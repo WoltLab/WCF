@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * IPaymentMethod implementation for Paypal.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.payment.method
@@ -16,17 +16,17 @@ use wcf\util\StringUtil;
  */
 class PaypalPaymentMethod extends AbstractPaymentMethod {
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::supportsRecurringPayments()
+	 * @inheritDoc
 	 */
 	public function supportsRecurringPayments() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::getSupportedCurrencies()
+	 * @inheritDoc
 	 */
 	public function getSupportedCurrencies() {
-		return array(
+		return [
 			'AUD', // Australian Dollar
 			'BRL', // Brazilian Real
 			'CAD', // Canadian Dollar
@@ -52,11 +52,11 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 			'THB', // Thai Baht
 			'TRY', // Turkish Lira
 			'USD'  // U.S. Dollar
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::getPurchaseButton()
+	 * @inheritDoc
 	 */
 	public function getPurchaseButton($cost, $currency, $name, $token, $returnURL, $cancelReturnURL, $isRecurring = false, $subscriptionLength = 0, $subscriptionLengthUnit = '') {
 		if ($isRecurring) {
@@ -77,7 +77,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 					<input type="hidden" name="lc" value="'.strtoupper(WCF::getLanguage()->languageCode).'" />
 					<input type="hidden" name="no_note" value="1" />
 					<input type="hidden" name="no_shipping" value="1" />
-					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', array('appendSession' => false))).'" />
+					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', ['appendSession' => false])).'" />
 					<input type="hidden" name="quantity" value="1" />
 					<input type="hidden" name="return" value="'.StringUtil::encodeHTML($returnURL).'" />
 			
@@ -98,7 +98,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 					<input type="hidden" name="lc" value="'.strtoupper(WCF::getLanguage()->languageCode).'" />
 					<input type="hidden" name="no_note" value="1" />
 					<input type="hidden" name="no_shipping" value="1" />
-					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', array('appendSession' => false))).'" />
+					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', ['appendSession' => false])).'" />
 					<input type="hidden" name="quantity" value="1" />
 					<input type="hidden" name="return" value="'.StringUtil::encodeHTML($returnURL).'" />	
 					

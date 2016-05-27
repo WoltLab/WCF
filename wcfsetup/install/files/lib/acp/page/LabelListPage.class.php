@@ -1,50 +1,176 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\label\group\LabelGroup;
+use wcf\data\label\group\LabelGroupList;
+use wcf\data\label\LabelList;
+use wcf\data\language\item\LanguageItemList;
 use wcf\page\SortablePage;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
+use wcf\util\HeaderUtil;
+use wcf\util\StringUtil;
 
 /**
  * Lists available labels
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
+ * 
+ * @property	LabelList	$objectList
  */
 class LabelListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.label.list';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'label';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('labelID', 'label', 'groupName');
+	public $validSortFields = ['labelID', 'label', 'groupName', 'showOrder'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.label.canManageLabel');
+	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\label\LabelList';
+	public $objectListClassName = LabelList::class;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * filter for css class name
+	 * @var	string
+	 */
+	public $cssClassName = '';
+	
+	/**
+	 * if of the label group to which the displayed labels belong
+	 * @var	integer
+	 */
+	public $groupID = 0;
+	
+	/**
+	 * filter for label name
+	 * @var	string
+	 */
+	public $label = '';
+	
+	/**
+	 * label group to which the displayed labels belong
+	 * @var	LabelGroup
+	 */
+	public $labelGroup = null;
+	
+	/**
+	 * list with available label groups
+	 * @var	LabelGroupList
+	 */
+	public $labelGroupList = null;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign([
+			'cssClassName' => $this->cssClassName,
+			'groupID' => $this->groupID,
+			'labelSearch' => $this->label,
+			'labelGroup' => $this->labelGroup,
+			'labelGroupList' => $this->labelGroupList
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
 		$this->objectList->sqlSelects = "label_group.groupName, label_group.groupDescription";
 		$this->objectList->sqlJoins = "LEFT JOIN wcf".WCF_N."_label_group label_group ON (label_group.groupID = label.groupID)";
+		if ($this->labelGroup) {
+			$this->objectList->getConditionBuilder()->add('label.groupID = ?', [$this->labelGroup->groupID]);
+		}
+		if ($this->cssClassName) {
+			$this->objectList->getConditionBuilder()->add('label.cssClassName LIKE ?', ['%'.addcslashes($this->cssClassName, '_%').'%']);
+		}
+		
+		if ($this->label) {
+			$languageItemList = new LanguageItemList();
+			$languageItemList->getConditionBuilder()->add('languageCategoryID = ?', [LanguageFactory::getInstance()->getCategory('wcf.acp.label')->languageCategoryID]);
+			$languageItemList->getConditionBuilder()->add('languageID = ?', [WCF::getLanguage()->languageID]);
+			$languageItemList->getConditionBuilder()->add('languageItem LIKE ?', ['wcf.acp.label.label%']);
+			$languageItemList->getConditionBuilder()->add('languageItemValue LIKE ?', ['%'.addcslashes($this->label, '_%').'%']);
+			$languageItemList->readObjects();
+			
+			$labelIDs = [];
+			foreach ($languageItemList as $languageItem) {
+				$labelIDs[] = str_replace('wcf.acp.label.label', '', $languageItem->languageItem);
+			}
+			
+			if (!empty($labelIDs)) {
+				$this->objectList->getConditionBuilder()->add('(label LIKE ? OR labelID IN (?))', ['%'.addcslashes($this->label, '_%').'%', $labelIDs]);
+			}
+			else {
+				$this->objectList->getConditionBuilder()->add('label LIKE ?', ['%'.addcslashes($this->label, '_%').'%',]);
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readData() {
+		parent::readData();
+		
+		$this->labelGroupList = new LabelGroupList();
+		$this->labelGroupList->readObjects();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		if (!empty($_POST)) {
+			$parameters = [];
+			if (!empty($_POST['groupID'])) $parameters['id'] = intval($_POST['groupID']);
+			if (!empty($_POST['label'])) $parameters['label'] = StringUtil::trim($_POST['label']);
+			if (!empty($_POST['cssClassName'])) $parameters['cssClassName'] = StringUtil::trim($_POST['cssClassName']);
+			
+			if (!empty($parameters)) {
+				HeaderUtil::redirect(LinkHandler::getInstance()->getLink('LabelList', $parameters));
+				exit;
+			}
+		}
+		
+		if (isset($_REQUEST['id'])) $this->groupID = intval($_REQUEST['id']);
+		if (isset($_REQUEST['label'])) $this->label = StringUtil::trim($_REQUEST['label']);
+		if (isset($_REQUEST['cssClassName'])) $this->cssClassName = StringUtil::trim($_REQUEST['cssClassName']);
+		
+		if ($this->groupID) {
+			$this->labelGroup = new LabelGroup($this->groupID);
+			if (!$this->labelGroup->groupID) {
+				throw new IllegalLinkException();
+			}
+			
+			$this->defaultSortField = 'showOrder';
+		}
 	}
 }

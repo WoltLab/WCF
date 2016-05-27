@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Handles twitter auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -24,12 +24,12 @@ use wcf\util\StringUtil;
  */
 class TwitterAuthAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('TWITTER_PUBLIC_KEY', 'TWITTER_PRIVATE_KEY');
+	public $neededModules = ['TWITTER_PUBLIC_KEY', 'TWITTER_PRIVATE_KEY'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -46,22 +46,22 @@ class TwitterAuthAction extends AbstractAction {
 			
 			try {
 				// fetch access_token
-				$oauthHeader = array(
+				$oauthHeader = [
 					'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
 					'oauth_nonce' => StringUtil::getRandomID(),
 					'oauth_signature_method' => 'HMAC-SHA1',
 					'oauth_timestamp' => TIME_NOW,
 					'oauth_version' => '1.0',
 					'oauth_token' => $initData['oauth_token']
-				);
-				$postData = array(
+				];
+				$postData = [
 					'oauth_verifier' => $_GET['oauth_verifier']
-				);
+				];
 				
 				$signature = $this->createSignature('https://api.twitter.com/oauth/access_token', array_merge($oauthHeader, $postData));
 				$oauthHeader['oauth_signature'] = $signature;
 				
-				$request = new HTTPRequest('https://api.twitter.com/oauth/access_token', array(), $postData);
+				$request = new HTTPRequest('https://api.twitter.com/oauth/access_token', [], $postData);
 				$request->addHeader('Authorization', 'OAuth '.$this->buildOAuthHeader($oauthHeader));
 				$request->execute();
 				$reply = $request->getReply();
@@ -76,7 +76,7 @@ class TwitterAuthAction extends AbstractAction {
 			parse_str($content, $data);
 			
 			// check whether a user is connected to this twitter account
-			$user = $this->getUser($data['user_id']);
+			$user = User::getUserByAuthData('twitter:'.$data['user_id']);
 			
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
@@ -88,7 +88,7 @@ class TwitterAuthAction extends AbstractAction {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
 						$password = StringUtil::getRandomID();
 						$userEditor = new UserEditor($user);
-						$userEditor->update(array('password' => $password));
+						$userEditor->update(['password' => $password]);
 						
 						// reload user to retrieve salt
 						$user = new User($user->userID);
@@ -149,22 +149,22 @@ class TwitterAuthAction extends AbstractAction {
 		
 		// start auth by fetching request_token
 		try {
-			$callbackURL = LinkHandler::getInstance()->getLink('TwitterAuth', array(
+			$callbackURL = LinkHandler::getInstance()->getLink('TwitterAuth', [
 				'appendSession' => false
-			));
-			$oauthHeader = array(
+			]);
+			$oauthHeader = [
 				'oauth_callback' => $callbackURL,
 				'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
 				'oauth_nonce' => StringUtil::getRandomID(),
 				'oauth_signature_method' => 'HMAC-SHA1',
 				'oauth_timestamp' => TIME_NOW,
 				'oauth_version' => '1.0'
-			);
+			];
 			$signature = $this->createSignature('https://api.twitter.com/oauth/request_token', $oauthHeader);
 			$oauthHeader['oauth_signature'] = $signature;
 			
 			// call api
-			$request = new HTTPRequest('https://api.twitter.com/oauth/request_token', array('method' => 'POST'));
+			$request = new HTTPRequest('https://api.twitter.com/oauth/request_token', ['method' => 'POST']);
 			$request->addHeader('Authorization', 'OAuth '.$this->buildOAuthHeader($oauthHeader));
 			$request->execute();
 			$reply = $request->getReply();
@@ -213,7 +213,7 @@ class TwitterAuthAction extends AbstractAction {
 	 * @return	string
 	 */
 	public function createSignature($url, array $parameters, $tokenSecret = '') {
-		$tmp = array();
+		$tmp = [];
 		foreach ($parameters as $key => $val) {
 			$tmp[rawurlencode($key)] = rawurlencode($val);
 		}
@@ -230,27 +230,5 @@ class TwitterAuthAction extends AbstractAction {
 		$key = rawurlencode(StringUtil::trim(TWITTER_PRIVATE_KEY)).'&'.rawurlencode($tokenSecret);
 		
 		return base64_encode(hash_hmac('sha1', $base, $key, true));
-	}
-	
-	/**
-	 * Fetches the User with the given userID
-	 * 
-	 * @param	integer			$userID
-	 * @return	\wcf\data\user\User
-	 */
-	public function getUser($userID) {
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user
-			WHERE	authData = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('twitter:'.$userID));
-		$row = $statement->fetchArray();
-		
-		if ($row === false) {
-			$row = array('userID' => 0);
-		}
-		
-		$user = new User($row['userID']);
-		return $user;
 	}
 }

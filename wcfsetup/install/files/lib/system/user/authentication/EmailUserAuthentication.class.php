@@ -14,7 +14,7 @@ use wcf\data\user\User;
  */
 class EmailUserAuthentication extends DefaultUserAuthentication {
 	/**
-	 * @see	\wcf\system\user\authentication\DefaultUserAuthentication::getUserByLogin()
+	 * @inheritDoc
 	 */
 	protected function getUserByLogin($login) {
 		return User::getUserByEmail($login);

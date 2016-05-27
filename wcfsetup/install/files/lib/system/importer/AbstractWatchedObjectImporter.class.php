@@ -1,12 +1,14 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\user\object\watch\UserObjectWatch;
 use wcf\data\user\object\watch\UserObjectWatchEditor;
+use wcf\system\database\DatabaseException;
 
 /**
  * Imports watched objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer
@@ -14,9 +16,9 @@ use wcf\data\user\object\watch\UserObjectWatchEditor;
  */
 class AbstractWatchedObjectImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\object\watch';
+	protected $className = UserObjectWatch::class;
 	
 	/**
 	 * object type id for watched objects
@@ -25,13 +27,23 @@ class AbstractWatchedObjectImporter extends AbstractImporter {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
 		
-		$watch = UserObjectWatchEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
-		return $watch->watchID;
+		try {
+			$watch = UserObjectWatchEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
+			return $watch->watchID;
+		}
+		catch (DatabaseException $e) {
+			// 23000 = INTEGRITY CONSTRAINT VIOLATION a.k.a. duplicate key
+			if ($e->getCode() != 23000) {
+				throw $e;
+			}
+		}
+		
+		return 0;
 	}
 }

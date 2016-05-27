@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Option type implementation for textual input fields.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -32,51 +32,51 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	protected $inputClass = 'long';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'inputType' => $this->inputType,
 			'inputClass' => $this->inputClass,
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'inputType' => $this->inputType,
 			'inputClass' => $this->inputClass,
 			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textSearchableOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
+	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
 		
 		$value = StringUtil::trim($value);
 		if ($value == '') {
-			$conditions->add("option_value.userOption".$option->optionID." = ?", array(''));
+			$conditions->add("option_value.userOption".$option->optionID." = ?", ['']);
 		}
 		else {
-			$conditions->add("option_value.userOption".$option->optionID." LIKE ?", array('%'.addcslashes($value, '_%').'%'));
+			$conditions->add("option_value.userOption".$option->optionID." LIKE ?", ['%'.addcslashes($value, '_%').'%']);
 		}
 		
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		$newValue = $this->getContent($option, $newValue);
@@ -90,7 +90,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		return $this->getContent($option, $newValue);
@@ -115,20 +115,20 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		$value = StringUtil::trim($value);
 		if ($value == '') {
-			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', array(''));
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', ['']);
 		}
 		else {
-			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' LIKE ?', array('%'.addcslashes($value, '_%').'%'));
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' LIKE ?', ['%'.addcslashes($value, '_%').'%']);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(User $user, Option $option, $value) {
 		$value = StringUtil::trim($value);
@@ -141,14 +141,14 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 * @inheritDoc
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 * @inheritDoc
 	 */
 	public function hideLabelInSearch() {
 		return true;

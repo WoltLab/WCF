@@ -6,15 +6,20 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of package installation plugins.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.plugin
  * @category	Community Framework
+ *
+ * @method	PackageInstallationPlugin		current()
+ * @method	PackageInstallationPlugin[]		getObjects()
+ * @method	PackageInstallationPlugin|null		search($objectID)
+ * @property	PackageInstallationPlugin[]		$objects
  */
 class PackageInstallationPluginList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\package\installation\plugin\PackageInstallationPlugin';
+	public $className = PackageInstallationPlugin::class;
 }

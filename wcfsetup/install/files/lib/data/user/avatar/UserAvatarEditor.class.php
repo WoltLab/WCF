@@ -7,34 +7,37 @@ use wcf\system\WCF;
  * Provides functions to edit avatars.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.avatar
  * @category	Community Framework
+ * 
+ * @method	UserAvatar	getDecoratedObject()
+ * @mixin	UserAvatar
  */
 class UserAvatarEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\user\avatar\UserAvatar';
+	protected static $baseClass = UserAvatar::class;
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_avatar
 			WHERE		avatarID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->avatarID));
+		$statement->execute([$this->avatarID]);
 		
 		$this->deleteFiles();
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_avatar
 			WHERE	avatarID IN (".str_repeat('?,', count($objectIDs) - 1)."?)";

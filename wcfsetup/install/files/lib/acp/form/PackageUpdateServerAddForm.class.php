@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Shows the server add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -20,14 +20,14 @@ use wcf\util\StringUtil;
  */
 class PackageUpdateServerAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.package.canEditServer');
+	public $neededPermissions = ['admin.configuration.package.canEditServer'];
 	
 	/**
 	 * server url
@@ -48,7 +48,7 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	public $loginPassword = '';
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -59,7 +59,7 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -74,17 +74,17 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save server
-		$this->objectAction = new PackageUpdateServerAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PackageUpdateServerAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -96,21 +96,21 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword,
 			'action' => 'add'
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check master password

@@ -12,7 +12,7 @@ use wcf\system\exception\SystemException;
  * IPaymentType implementation for paid subscriptions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.payment.method
@@ -20,7 +20,7 @@ use wcf\system\exception\SystemException;
  */
 class PaidSubscriptionPaymentType extends AbstractPaymentType {
 	/**
-	 * @see	wcf\system\payment\type\IPaymentType::processTransaction()
+	 * @inheritDoc
 	 */
 	public function processTransaction($paymentMethodObjectTypeID, $token, $amount, $currency, $transactionID, $status, $transactionDetails) {
 		$userSubscription = $user = $subscription = null;
@@ -62,16 +62,16 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 				// active/extend subscription
 				if ($userSubscription === null) {
 					// create new subscription
-					$action = new PaidSubscriptionUserAction(array(), 'create', array(
+					$action = new PaidSubscriptionUserAction([], 'create', [
 						'user' => $user,
 						'subscription' => $subscription
-					));
+					]);
 					$returnValues = $action->executeAction();
 					$userSubscription = $returnValues['returnValues'];
 				}
 				else {
 					// extend existing subscription
-					$action = new PaidSubscriptionUserAction(array($userSubscription), 'extend');
+					$action = new PaidSubscriptionUserAction([$userSubscription], 'extend');
 					$action->executeAction();
 				}
 				$logMessage = 'payment completed';
@@ -79,7 +79,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 			if ($status == 'reversed') {
 				if ($userSubscription !== null) {
 					// revoke subscription
-					$action = new PaidSubscriptionUserAction(array($userSubscription), 'revoke');
+					$action = new PaidSubscriptionUserAction([$userSubscription], 'revoke');
 					$action->executeAction();
 				}
 				$logMessage = 'payment reversed';
@@ -87,14 +87,14 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 			if ($status == 'canceled_reversal') {
 				if ($userSubscription !== null) {
 					// restore subscription
-					$action = new PaidSubscriptionUserAction(array($userSubscription), 'restore');
+					$action = new PaidSubscriptionUserAction([$userSubscription], 'restore');
 					$action->executeAction();
 				}
 				$logMessage = 'reversal canceled';
 			}
 			
 			// log success
-			$action = new PaidSubscriptionTransactionLogAction(array(), 'create', array('data' => array(
+			$action = new PaidSubscriptionTransactionLogAction([], 'create', ['data' => [
 				'subscriptionUserID' => $userSubscription->subscriptionUserID,
 				'userID' => $user->userID,
 				'subscriptionID' => $subscription->subscriptionID,
@@ -103,12 +103,12 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 				'transactionID' => $transactionID,
 				'logMessage' => $logMessage,
 				'transactionDetails' => serialize($transactionDetails)
-			)));
+			]]);
 			$action->executeAction();
 		}
 		catch (SystemException $e) {
 			// log failure
-			$action = new PaidSubscriptionTransactionLogAction(array(), 'create', array('data' => array(
+			$action = new PaidSubscriptionTransactionLogAction([], 'create', ['data' => [
 				'subscriptionUserID' => ($userSubscription !== null ? $userSubscription->subscriptionUserID : null),
 				'userID' => ($user !== null ? $user->userID : null),
 				'subscriptionID' => ($subscription !== null ? $subscription->subscriptionID : null),
@@ -117,7 +117,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 				'transactionID' => $transactionID,
 				'logMessage' => $e->getMessage(),
 				'transactionDetails' => serialize($transactionDetails)
-			)));
+			]]);
 			$action->executeAction();
 			throw $e;
 		}

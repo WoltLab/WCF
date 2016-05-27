@@ -7,7 +7,7 @@ use wcf\system\cache\builder\TypedTagCloudCacheBuilder;
  * This class provides the function to filter the tag cloud by object types.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.tagging
@@ -16,17 +16,17 @@ use wcf\system\cache\builder\TypedTagCloudCacheBuilder;
 class TypedTagCloud extends TagCloud {
 	/**
 	 * object type ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $objectTypeIDs = array();
+	protected $objectTypeIDs = [];
 	
 	/**
 	 * Contructs a new TypedTagCloud object.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$languageIDs
+	 * @param	integer[]	$languageIDs
 	 */
-	public function __construct($objectType, array $languageIDs = array()) {
+	public function __construct($objectType, array $languageIDs = []) {
 		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.tagging.taggableObject', $objectType);
 		$this->objectTypeIDs[] = $objectTypeObj->objectTypeID;
 		
@@ -37,9 +37,9 @@ class TypedTagCloud extends TagCloud {
 	 * Loads the tag cloud cache.
 	 */
 	protected function loadCache() {
-		$this->tags = TypedTagCloudCacheBuilder::getInstance()->getData(array(
+		$this->tags = TypedTagCloudCacheBuilder::getInstance()->getData([
 			'languageIDs' => $this->languageIDs,
 			'objectTypeIDs' => $this->objectTypeIDs
-		));
+		]);
 	}
 }

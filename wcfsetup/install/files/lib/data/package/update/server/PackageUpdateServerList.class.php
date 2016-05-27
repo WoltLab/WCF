@@ -6,20 +6,25 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of package update servers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update.server
  * @category	Community Framework
+ *
+ * @method	PackageUpdateServer		current()
+ * @method	PackageUpdateServer[]		getObjects()
+ * @method	PackageUpdateServer|null	search($objectID)
+ * @property	PackageUpdateServer[]		$objects
  */
 class PackageUpdateServerList extends DatabaseObjectList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\package\update\server\PackageUpdateServer';
+	public $className = PackageUpdateServer::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
