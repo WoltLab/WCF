@@ -41,7 +41,7 @@
 		<item name="wcf.global.languages.languages"><![CDATA[Sprachen]]></item>
 		<item name="wcf.global.languages.error.empty"><![CDATA[Bitte wählen Sie mindestens eine Sprache aus!]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Datenbankzugang konfigurieren]]></item>
-		<item name="wcf.global.configureDB.description"><![CDATA[Die Daten der Software werden in einer SQL-Datenbank gespeichert. Bitte geben Sie die Zugangsdaten für diese Datenbank an! Falls Ihnen die Zugangsdaten nicht bekannt sind, wenden Sie sich bitte an Ihren Serveradministrator oder Webhoster.]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[Die Daten der Software werden in einer MySQL oder MariaDB-Datenbank gespeichert. Bitte geben Sie die Zugangsdaten für diese Datenbank an! Falls Ihnen die Zugangsdaten nicht bekannt sind, wenden Sie sich bitte an Ihren Serveradministrator oder Webhoster.]]></item>
 		<item name="wcf.global.configureDB.host"><![CDATA[Server-Hostname]]></item>
 		<item name="wcf.global.configureDB.user"><![CDATA[Benutzername]]></item>
 		<item name="wcf.global.configureDB.password"><![CDATA[Kennwort]]></item>
@@ -52,9 +52,6 @@
 		<item name="wcf.global.configureDB.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
 		<br /><strong>{$exception->getMessage()}{if $exception->getPrevious()}<br />{$exception->getPrevious()->getMessage()}{/if}</strong>]]></item>
 		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Folgende Tabelle{if $conflictedTables|count > 1}n{/if} existier{if $conflictedTables|count > 1}en{else}t{/if} schon in der Datenbank „{$dbName}“:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />Um dieses Problem zu beheben, können Sie:<br />1. diese Tabelle{if $conflictedTables|count > 1}n{/if} manuell löschen und die „Weiter“ Schaltfläche betätigen, oder<br />2. Sie geben die Daten einer anderen Datenbank ein und betätigen die „Weiter“ Schaltfläche, oder<br />3. Sie geben eine von „{$dbNumber}“ unterschiedliche Installationsnummer an und betätigen die „Weiter“ Schaltfläche.]]></item>
-		<item name="wcf.global.configureDB.class"><![CDATA[Datenbank-Typ]]></item>
-		<item name="wcf.global.configureDB.class.MySQLDatabase"><![CDATA[MySQL 5.1+]]></item>
-		<item name="wcf.global.configureDB.class.PostgreSQLDatabase"><![CDATA[PostgreSQL 8.2+]]></item>
 		<item name="wcf.global.createUser"><![CDATA[Administrator erstellen]]></item>
 		<item name="wcf.global.createUser.description"><![CDATA[Der Installationsassistent erstellt nun ein Administrator-Konto für Sie. Bitte geben Sie dazu einen Benutzernamen, eine E-Mail-Adresse und ein Kennwort ein.]]></item>
 		<item name="wcf.global.createUser.username"><![CDATA[Benutzername]]></item>

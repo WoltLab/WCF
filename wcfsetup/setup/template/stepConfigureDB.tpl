@@ -16,17 +16,6 @@
 		</header>
 	
 		<dl>
-			<dt><label for="dbClass">{lang}wcf.global.configureDB.class{/lang}</label></dt>
-			<dd>
-				<select id="dbClass" name="dbClass">
-					{foreach from=$availableDBClasses key=dbClassName item=availableDBClass}
-						<option value="{@$availableDBClass.class}"{if $availableDBClass.class == $dbClass} selected="selected"{/if}>{lang}wcf.global.configureDB.class.{@$dbClassName}{/lang}</option>
-					{/foreach}
-				</select>
-			</dd>
-		</dl>
-		
-		<dl>
 			<dt><label for="dbHost">{lang}wcf.global.configureDB.host{/lang}</label></dt>
 			<dd><input type="text" id="dbHost" name="dbHost" value="{$dbHost}" required="required" class="long" /></dd>
 		</dl>

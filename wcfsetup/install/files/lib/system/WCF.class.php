@@ -301,11 +301,10 @@ class WCF {
 		// get configuration
 		$dbHost = $dbUser = $dbPassword = $dbName = '';
 		$dbPort = 0;
-		$dbClass = MySQLDatabase::class;
 		require(WCF_DIR.'config.inc.php');
 		
 		// create database connection
-		self::$dbObj = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
+		self::$dbObj = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
 	}
 	
 	/**

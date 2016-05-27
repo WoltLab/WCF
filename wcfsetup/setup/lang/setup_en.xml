@@ -41,7 +41,7 @@
 		<item name="wcf.global.languages.languages"><![CDATA[Languages]]></item>
 		<item name="wcf.global.languages.error.empty"><![CDATA[Please choose at least one language!]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Configure Database Access]]></item>
-		<item name="wcf.global.configureDB.description"><![CDATA[The data for this software needs to be stored in an SQL-database. Please enter your database access information!]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[The data for this software needs to be stored in a MySQL or MariaDB-database. Please enter your database access information!]]></item>
 		<item name="wcf.global.configureDB.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.global.configureDB.user"><![CDATA[Username]]></item>
 		<item name="wcf.global.configureDB.password"><![CDATA[Password]]></item>
@@ -52,9 +52,6 @@
 		<item name="wcf.global.configureDB.error"><![CDATA[An error has occurred while trying to connect to your database:
 		<br /><strong>{$exception->getMessage()}{if $exception->getPrevious()}<br />{$exception->getPrevious()->getMessage()}{/if}</strong>]]></item>
 		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your “{$dbName}” Database:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />To solve this problem, please do one of the following:<br />1. Remove the table{if $conflictedTables|count > 1}s{/if} manually and continue the installation with the “Next” button or<br />2. You re-enter the database access information, but to a different database and continue the installation with the “Next” button or<br />3. Enter a new installation number, not forgetting to continue the installation with the “Next” Button.]]></item>
-		<item name="wcf.global.configureDB.class"><![CDATA[Database Type]]></item>
-		<item name="wcf.global.configureDB.class.MySQLDatabase"><![CDATA[MySQL 5.1+]]></item>
-		<item name="wcf.global.configureDB.class.PostgreSQLDatabase"><![CDATA[PostgreSQL 8.2+]]></item>
 		<item name="wcf.global.createUser"><![CDATA[Create an Administrator]]></item>
 		<item name="wcf.global.createUser.description"><![CDATA[The installation will now generate an administrator account for you. Please provide username, email address and password.]]></item>
 		<item name="wcf.global.createUser.username"><![CDATA[Username]]></item>
