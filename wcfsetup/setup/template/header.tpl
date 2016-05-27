@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
-	<meta charset="utf-8" />
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.title{/lang}</title>
 	
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" media="screen" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/setup/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}WCFSetup.css" />
 	
 	{if !$lastStep|isset}
