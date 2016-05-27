@@ -57,6 +57,7 @@
 * Overhauled page tracking in sessions / user online locations
 * Overhauled language import form
 * Removed sitemap function/overlay
+* Added rebuild polls worker
 
 #### CMS
 
