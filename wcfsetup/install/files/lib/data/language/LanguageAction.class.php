@@ -2,6 +2,7 @@
 namespace wcf\data\language;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
