@@ -170,48 +170,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * Checks whether this package is required by other packages.
-	 * If so than a template will be displayed to warn the user that
-	 * a further uninstallation will uninstall also the dependent packages
-	 */
-	public static function checkDependencies() {
-		$packageID = 0;
-		if (isset($_REQUEST['packageID'])) {
-			$packageID = intval($_REQUEST['packageID']);
-		}
-		
-		// get packages info
-		try {
-			// create object of uninstalling package
-			$package = new Package($packageID);
-		}
-		catch (SystemException $e) {
-			throw new IllegalLinkException();
-		}
-		
-		// can not uninstall wcf package.
-		if ($package->package == 'com.woltlab.wcf') {
-			throw new IllegalLinkException();
-		}
-		
-		$dependentPackages = [];
-		$uninstallAvailable = true;
-		if ($package->isRequired()) {
-			// get packages that requires this package
-			$dependentPackages = self::getPackageDependencies($package->packageID);
-			foreach ($dependentPackages as $dependentPackage) {
-				if ($dependentPackage['packageID'] == PACKAGE_ID) {
-					$uninstallAvailable = false;
-					break;
-				}
-			}
-		}
-		
-		// add this package to queue
-		self::addQueueEntries($package, $dependentPackages);
-	}
-	
-	/**
 	 * Adds an uninstall entry to the package installation queue.
 	 * 
 	 * @param	Package		$package
