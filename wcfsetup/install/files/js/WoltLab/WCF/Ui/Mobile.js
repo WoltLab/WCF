@@ -76,7 +76,7 @@ define(
 		},
 		
 		_init: function() {
-			this._initSearchBar();
+			//@todothis._initSearchBar();
 			this._initButtonGroupNavigation();
 			this._initMobileMenu();
 			
