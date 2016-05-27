@@ -58,7 +58,7 @@ class ACPSearchHandler extends SingletonFactory {
 			
 			/** @var IACPSearchResultProvider $provider */
 			$provider = new $className();
-			$results = $provider->search($query, $maxResultsPerProvider);
+			$results = $provider->search($query);
 			
 			if (!empty($results)) {
 				$resultList = new ACPSearchResultList($acpSearchProvider->providerName);
