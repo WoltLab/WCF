@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\html\output\node;
-use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\HtmlNodeProcessor;
 use wcf\util\StringUtil;

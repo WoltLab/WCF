@@ -3,7 +3,6 @@ namespace wcf\data\user\online;
 use wcf\data\page\PageCache;
 use wcf\data\spider\Spider;
 use wcf\data\user\UserProfile;
-use wcf\page\CmsPage;
 use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\WCF;

@@ -4,7 +4,6 @@ use wcf\system\html\metacode\converter\IMetacodeConverter;
 use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\HtmlNodeProcessor;
 use wcf\util\DOMUtil;
-use wcf\util\StringUtil;
 
 /**
  * TOOD documentation

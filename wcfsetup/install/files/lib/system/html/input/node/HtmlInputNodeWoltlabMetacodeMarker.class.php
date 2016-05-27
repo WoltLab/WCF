@@ -4,7 +4,6 @@ use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\HtmlNodeProcessor;
 use wcf\util\DOMUtil;
-use wcf\util\StringUtil;
 
 /**
  * Transforms bbcode markers into the custom HTML element `<woltlab-metacode>`. This process
