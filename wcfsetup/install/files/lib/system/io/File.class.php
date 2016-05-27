@@ -23,15 +23,15 @@ use wcf\system\exception\SystemException;
  * @subpackage	system.io
  * @category	Community Framework
  * 
- * @method	boolean		close($handle)
- * @method	boolean		eof($handle)
- * @method	string		gets($handle, $length = null)
- * @method	resource	open($filename, $mode, $use_include_path = false, $context = null)
- * @method	integer		seek($handle, $offset, $whence = SEEK_SET)
- * @method	string		read($zp, $length)
- * @method	integer		tell($handle)
- * @method	boolean		touch($filename, $time = 0, $atime = 0)		note: default value of `$time` actually is `time()`
- * @method	integer		write($handle, $string, $length = null)
+ * @method	boolean		close()
+ * @method	boolean		eof()
+ * @method	string		gets($length = null)
+ * @method	resource	open($mode, $use_include_path = false, $context = null)
+ * @method	integer		seek($offset, $whence = SEEK_SET)
+ * @method	string		read($length)
+ * @method	integer		tell()
+ * @method	boolean		touch($time = 0, $atime = 0)		note: default value of `$time` actually is `time()`
+ * @method	integer		write($string, $length = null)
  */
 class File {
 	/**

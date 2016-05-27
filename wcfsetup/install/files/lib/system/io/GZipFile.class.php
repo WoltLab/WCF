@@ -12,8 +12,8 @@ use wcf\system\exception\SystemException;
  * @subpackage	system.io
  * @category	Community Framework
  * 
- * @method	resource	open($filename, $mode, $use_include_path = 0)
- * @method	boolean		rewind($zp)
+ * @method	resource	open($mode, $use_include_path = 0)
+ * @method	boolean		rewind()
  */
 class GZipFile extends File {
 	/**
