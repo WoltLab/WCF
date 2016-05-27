@@ -125,7 +125,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// delete avatars
 		$avatarIDs = [];
-		foreach ($this->objects as $user) {
+		foreach ($this->getObjects() as $user) {
 			if ($user->avatarID) $avatarIDs[] = $user->avatarID;
 		}
 		if (!empty($avatarIDs)) {
@@ -309,7 +309,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			parent::update();
 			
 			if (isset($this->parameters['data']['languageID'])) {
-				foreach ($this->objects as $object) {
+				foreach ($this->getObjects() as $object) {
 					if ($object->userID == WCF::getUser()->userID) {
 						if ($this->parameters['data']['languageID'] != WCF::getUser()->languageID) {
 							WCF::setLanguage($this->parameters['data']['languageID']);
@@ -346,7 +346,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$action->executeAction();
 		}
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			if (!empty($userOptions)) {
 				$userEditor->updateUserOptions($userOptions);
 			}
@@ -410,7 +410,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$groupIDs = $this->parameters['groups'];
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->removeFromGroups($groupIDs);
 		}
 		
@@ -442,7 +442,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (isset($this->parameters['deleteOldGroups'])) $deleteOldGroups = $this->parameters['deleteOldGroups'];
 		if (isset($this->parameters['addDefaultGroups'])) $addDefaultGroups = $this->parameters['addDefaultGroups'];
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
 		}
 		
@@ -589,7 +589,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// send e-mail notification
 		if (empty($this->parameters['skipNotification'])) {
-			foreach ($this->objects as $user) {
+			foreach ($this->getObjects() as $user) {
 				$mail = new Mail([$user->username => $user->email], $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'), $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail', [
 					'username' => $user->username
 				]));
@@ -673,7 +673,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$disableSignatureExpires = 0;
 		}
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->update([
 				'disableSignature' => 1,
 				'disableSignatureReason' => $this->parameters['disableSignatureReason'],
@@ -707,7 +707,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->update([
 				'disableSignature' => 0
 			]);
@@ -740,7 +740,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$disableAvatarExpires = 0;
 		}
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->update([
 				'disableAvatar' => 1,
 				'disableAvatarReason' => $this->parameters['disableAvatarReason'],
@@ -774,7 +774,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->update([
 				'disableAvatar' => 0
 			]);

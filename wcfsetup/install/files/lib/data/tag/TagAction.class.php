@@ -142,7 +142,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 			]);
 		}
 		
-		foreach ($this->objects as $tagEditor) {
+		foreach ($this->getObjects() as $tagEditor) {
 			$this->tagEditor->addSynonym($tagEditor->getDecoratedObject());
 		}
 		

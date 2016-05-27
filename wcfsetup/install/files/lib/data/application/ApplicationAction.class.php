@@ -51,7 +51,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		// calculate cookie path
 		$domains = [];
 		$regex = new Regex(':[0-9]+');
-		foreach ($this->objects as $application) {
+		foreach ($this->getObjects() as $application) {
 			$domainName = $application->domainName;
 			if (StringUtil::endsWith($regex->replace($domainName, ''), $application->cookieDomain)) {
 				$domainName = $application->cookieDomain;

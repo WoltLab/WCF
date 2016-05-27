@@ -106,7 +106,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $bbcode) {
+		foreach ($this->getObjects() as $bbcode) {
 			if (!$bbcode->canDelete()) {
 				throw new PermissionDeniedException();
 			}
@@ -124,7 +124,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $bbcode) {
+		foreach ($this->getObjects() as $bbcode) {
 			$bbcode->update([
 				'isDisabled' => $bbcode->isDisabled ? 0 : 1
 			]);

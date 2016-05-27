@@ -112,7 +112,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $notice) {
+		foreach ($this->getObjects() as $notice) {
 			$notice->update([
 				'isDisabled' => $notice->isDisabled ? 0 : 1
 			]);

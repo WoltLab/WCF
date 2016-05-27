@@ -65,7 +65,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		
 		// read object type ids for comments
 		$commentIDs = [];
-		foreach ($this->objects as $response) {
+		foreach ($this->getObjects() as $response) {
 			$commentIDs[] = $response->commentID;
 		}
 		
@@ -76,7 +76,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		
 		// update counters
 		$processors = $responseIDs = $updateComments = [];
-		foreach ($this->objects as $response) {
+		foreach ($this->getObjects() as $response) {
 			$objectTypeID = $comments[$response->commentID]->objectTypeID;
 			
 			if (!isset($processors[$objectTypeID])) {

@@ -66,7 +66,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 			}
 		}
 		
-		foreach ($this->objects as $attachment) {
+		foreach ($this->getObjects() as $attachment) {
 			if ($attachment->tmpHash) {
 				if ($attachment->userID != WCF::getUser()->userID) {
 					throw new PermissionDeniedException();
@@ -198,7 +198,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		
 		$saveStrategy = new DefaultUploadFileSaveStrategy(self::class);
 		
-		foreach ($this->objects as $attachment) {
+		foreach ($this->getObjects() as $attachment) {
 			if (!$attachment->isImage) {
 				// create thumbnails for every file that isn't an image
 				$this->eventAttachment = $attachment;

@@ -47,7 +47,7 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $assignment) {
+		foreach ($this->getObjects() as $assignment) {
 			$assignment->update([
 				'isDisabled' => $assignment->isDisabled ? 0 : 1
 			]);

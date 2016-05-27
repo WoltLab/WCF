@@ -44,7 +44,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 		$returnValue = parent::delete();
 		
 		// call category types
-		foreach ($this->objects as $categoryEditor) {
+		foreach ($this->getObjects() as $categoryEditor) {
 			$categoryEditor->getProcessor()->afterDeletion($categoryEditor);
 		}
 		
@@ -55,7 +55,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $categoryEditor) {
+		foreach ($this->getObjects() as $categoryEditor) {
 			$categoryEditor->update([
 				'isDisabled' => 1 - $categoryEditor->isDisabled
 			]);
@@ -100,7 +100,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 			$objectType = null;
 			$parentUpdates = [];
 			
-			foreach ($this->objects as $category) {
+			foreach ($this->getObjects() as $category) {
 				if ($objectType === null) {
 					$objectType = $category->getObjectType();
 				}
@@ -183,7 +183,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 			}
 		}
 		
-		foreach ($this->objects as $categoryEditor) {
+		foreach ($this->getObjects() as $categoryEditor) {
 			if (!$categoryEditor->getProcessor()->canDeleteCategory()) {
 				throw new PermissionDeniedException();
 			}
@@ -217,7 +217,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 			}
 		}
 		
-		foreach ($this->objects as $categoryEditor) {
+		foreach ($this->getObjects() as $categoryEditor) {
 			if (!$categoryEditor->getProcessor()->canEditCategory()) {
 				throw new PermissionDeniedException();
 			}

@@ -54,7 +54,7 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $server) {
+		foreach ($this->getObjects() as $server) {
 			$server->update(['isDisabled' => ($server->isDisabled) ? 0 : 1]);
 		}
 	}

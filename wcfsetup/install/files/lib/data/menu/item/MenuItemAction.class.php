@@ -55,7 +55,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
 	public function validateToggle() {
 		parent::validateUpdate();
 	
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			if (!$object->canDisable()) {
 				throw new PermissionDeniedException();
 			}
@@ -66,7 +66,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			$object->update(['isDisabled' => ($object->isDisabled) ? 0 : 1]);
 		}
 	}

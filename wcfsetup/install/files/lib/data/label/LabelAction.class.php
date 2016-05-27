@@ -89,7 +89,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
 		if (!empty($this->objects)) {
 			// identify i18n labels
 			$languageVariables = [];
-			foreach ($this->objects as $object) {
+			foreach ($this->getObjects() as $object) {
 				if (preg_match('~wcf.acp.label.label\d+~', $object->label)) {
 					$languageVariables[] = $object->label;
 				}

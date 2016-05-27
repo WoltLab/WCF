@@ -156,7 +156,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $avatar) {
+		foreach ($this->getObjects() as $avatar) {
 			$adapter = ImageHandler::getInstance()->getAdapter();
 			$adapter->loadFile($avatar->getLocation());
 			

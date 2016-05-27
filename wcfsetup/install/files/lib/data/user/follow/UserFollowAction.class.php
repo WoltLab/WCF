@@ -144,7 +144,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 		}
 		
 		// validate ownership
-		foreach ($this->objects as $follow) {
+		foreach ($this->getObjects() as $follow) {
 			if ($follow->userID != WCF::getUser()->userID) {
 				throw new PermissionDeniedException();
 			}
@@ -158,7 +158,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 		$returnValues = parent::delete();
 		
 		$followUserIDs = [];
-		foreach ($this->objects as $follow) {
+		foreach ($this->getObjects() as $follow) {
 			$followUserIDs[] = $follow->followUserID;
 			// remove activity event
 			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.user.recentActivityEvent.follow', [$follow->followUserID]);

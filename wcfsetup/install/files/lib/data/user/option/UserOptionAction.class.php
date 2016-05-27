@@ -50,7 +50,7 @@ class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAc
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $userOption) {
+		foreach ($this->getObjects() as $userOption) {
 			if (!$userOption->canDelete()) {
 				throw new PermissionDeniedException();
 			}
@@ -61,7 +61,7 @@ class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAc
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $optionEditor) {
+		foreach ($this->getObjects() as $optionEditor) {
 			$optionEditor->update([
 				'isDisabled' => 1 - $optionEditor->isDisabled
 			]);

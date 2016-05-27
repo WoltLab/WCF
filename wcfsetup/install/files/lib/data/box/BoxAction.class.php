@@ -125,7 +125,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 				VALUES		(?, ?, ?, ?, ?)";
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
-			foreach ($this->objects as $box) {
+			foreach ($this->getObjects() as $box) {
 				$deleteStatement->execute([$box->boxID]);
 				
 				foreach ($this->parameters['content'] as $languageID => $content) {
@@ -158,7 +158,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 				VALUES		(?, ?, ?)";
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
-			foreach ($this->objects as $box) {
+			foreach ($this->getObjects() as $box) {
 				$deleteStatement->execute([$box->boxID]);
 				$visibleEverywhere = (isset($this->parameters['data']['visibleEverywhere']) ? $this->parameters['data']['visibleEverywhere'] : $box->visibleEverywhere);
 				
@@ -175,7 +175,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			if (!$object->canDelete()) {
 				throw new PermissionDeniedException();
 			}
@@ -186,7 +186,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function delete() {
-		foreach ($this->objects as $box) {
+		foreach ($this->getObjects() as $box) {
 			if ($box->boxType == 'tpl') {
 				foreach ($box->getBoxContent() as $languageID => $content) {
 					$file = WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl';

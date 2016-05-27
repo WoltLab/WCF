@@ -68,7 +68,7 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $ad) {
+		foreach ($this->getObjects() as $ad) {
 			$ad->update([
 				'isDisabled' => $ad->isDisabled ? 0 : 1
 			]);

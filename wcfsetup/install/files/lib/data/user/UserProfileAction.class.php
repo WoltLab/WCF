@@ -320,7 +320,7 @@ class UserProfileAction extends UserAction {
 		}
 		
 		$resetUserIDs = [];
-		foreach ($this->objects as $user) {
+		foreach ($this->getObjects() as $user) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('user_rank.groupID IN (?)', [$user->getGroupIDs()]);
 			$conditionBuilder->add('user_rank.requiredPoints <= ?', [$user->activityPoints]);
@@ -364,7 +364,7 @@ class UserProfileAction extends UserAction {
 		}
 		
 		$userToGroup = [];
-		foreach ($this->objects as $user) {
+		foreach ($this->getObjects() as $user) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('groupID IN (?)', [$user->getGroupIDs()]);
 			

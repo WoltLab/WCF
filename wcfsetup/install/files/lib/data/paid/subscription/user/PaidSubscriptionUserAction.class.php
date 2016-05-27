@@ -89,7 +89,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			$endDate = 0;
 			if (!isset($this->parameters['data']['endDate'])) {
 				$subscription = $subscriptionUser->getSubscription();
@@ -133,7 +133,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			$subscriptionUser->update(['isActive' => 0]);
 			
 			// update group memberships
@@ -150,7 +150,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			if (!$subscriptionUser->isActive) {
 				throw new UserInputException('objectIDs');
 			}
@@ -165,9 +165,9 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			$subscriptionUser->update(['isActive' => 1]);
-				
+			
 			// update group memberships
 			$action = new PaidSubscriptionUserAction([$subscriptionUser], 'addGroupMemberships');
 			$action->executeAction();
@@ -182,7 +182,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			if ($subscriptionUser->isActive) {
 				throw new UserInputException('objectIDs');
 			}
@@ -197,7 +197,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			$groupIDs = [];
 			foreach (explode(',', $subscriptionUser->getSubscription()->groupIDs) as $groupID) {
 				if (UserGroup::getGroupByID($groupID) !== null) {
@@ -223,7 +223,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			$groupIDs = [];
 			foreach (explode(',', $subscriptionUser->getSubscription()->groupIDs) as $groupID) {
 				if (UserGroup::getGroupByID($groupID) !== null) {

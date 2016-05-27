@@ -76,7 +76,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			$object->update($this->parameters['data']);
 			$object->updateGroupOptions($this->parameters['options']);
 		}

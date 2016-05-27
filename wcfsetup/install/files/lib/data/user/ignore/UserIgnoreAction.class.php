@@ -130,7 +130,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// validate ownership
-		foreach ($this->objects as $ignore) {
+		foreach ($this->getObjects() as $ignore) {
 			if ($ignore->userID != WCF::getUser()->userID) {
 				throw new PermissionDeniedException();
 			}

@@ -60,7 +60,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			if (!$cronjob->isDeletable()) {
 				throw new PermissionDeniedException();
 			}
@@ -73,7 +73,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	public function validateUpdate() {
 		parent::validateUpdate();
 		
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			if (!$cronjob->isEditable()) {
 				throw new PermissionDeniedException();
 			}
@@ -86,7 +86,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	public function validateToggle() {
 		parent::validateUpdate();
 		
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			if (!$cronjob->canBeDisabled()) {
 				throw new PermissionDeniedException();
 			}
@@ -97,7 +97,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			$cronjob->update([
 				'isDisabled' => $cronjob->isDisabled ? 0 : 1
 			]);
@@ -117,12 +117,12 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	public function execute() {
 		$return = [];
 		
-		foreach ($this->objects as $key => $cronjob) {
+		foreach ($this->getObjects() as $key => $cronjob) {
 			// mark them as pending
 			$cronjob->update(['state' => Cronjob::PENDING]);
 		}
 		
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			// it now time for executing
 			$cronjob->update(['state' => Cronjob::EXECUTING]);
 			$className = $cronjob->className;

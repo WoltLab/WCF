@@ -72,7 +72,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 	public function validateToggle() {
 		parent::validateUpdate();
 		
-		foreach ($this->objects as $language) {
+		foreach ($this->getObjects() as $language) {
 			if ($language->isDefault) {
 				throw new UserInputException('objectIDs');
 			}
@@ -83,7 +83,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 	 * @inheritdoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $language) {
+		foreach ($this->getObjects() as $language) {
 			$isDisabled = ($language->isDisabled) ? 0 : 1;
 			$language->update(['isDisabled' => $isDisabled]);
 		}

@@ -249,7 +249,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		
 		// update object IDs
 		$this->objectIDs = [];
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			$this->objectIDs[] = $object->getObjectID();
 		}
 	}
@@ -348,7 +348,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		
 		// get ids
 		$objectIDs = [];
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			$objectIDs[] = $object->getObjectID();
 		}
 		
@@ -365,13 +365,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		}
 		
 		if (isset($this->parameters['data'])) {
-			foreach ($this->objects as $object) {
+			foreach ($this->getObjects() as $object) {
 				$object->update($this->parameters['data']);
 			}
 		}
 		
 		if (isset($this->parameters['counters'])) {
-			foreach ($this->objects as $object) {
+			foreach ($this->getObjects() as $object) {
 				$object->updateCounters($this->parameters['counters']);
 			}
 		}

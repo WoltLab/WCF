@@ -90,7 +90,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	public function update() {
 		parent::update();
 		
-		foreach ($this->objects as $style) {
+		foreach ($this->getObjects() as $style) {
 			// update variables
 			$this->updateVariables($style->getDecoratedObject(), true);
 			
@@ -108,7 +108,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	public function delete() {
 		$count = parent::delete();
 		
-		foreach ($this->objects as $style) {
+		foreach ($this->getObjects() as $style) {
 			// remove custom images
 			if ($style->imagePath && $style->imagePath != 'images/') {
 				$this->removeDirectory($style->imagePath);
@@ -581,7 +581,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	public function validateToggle() {
 		parent::validateUpdate();
 		
-		foreach ($this->objects as $style) {
+		foreach ($this->getObjects() as $style) {
 			if ($style->isDefault) {
 				throw new UserInputException('objectIDs');
 			}
@@ -592,7 +592,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 * @inheritdoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $style) {
+		foreach ($this->getObjects() as $style) {
 			$isDisabled = ($style->isDisabled) ? 0 : 1;
 			$style->update(['isDisabled' => $isDisabled]);
 		}

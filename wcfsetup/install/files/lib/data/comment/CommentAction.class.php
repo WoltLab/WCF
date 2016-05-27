@@ -102,7 +102,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		// update counters
 		$processors = [];
 		$groupCommentIDs = $commentIDs = [];
-		foreach ($this->objects as $comment) {
+		foreach ($this->getObjects() as $comment) {
 			if (!isset($processors[$comment->objectTypeID])) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
 				$processors[$comment->objectTypeID] = $objectType->getProcessor();

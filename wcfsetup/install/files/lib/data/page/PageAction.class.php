@@ -126,7 +126,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 				VALUES		(?, ?, ?, ?, ?, ?, ?)";
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
-			foreach ($this->objects as $page) {
+			foreach ($this->getObjects() as $page) {
 				$deleteStatement->execute([$page->pageID]);
 				
 				foreach ($this->parameters['content'] as $languageID => $content) {
@@ -161,7 +161,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 				VALUES		(?, ?, ?)";
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
-			foreach ($this->objects as $page) {
+			foreach ($this->getObjects() as $page) {
 				$deleteStatement->execute([$page->pageID]);
 				
 				foreach ($this->parameters['boxToPage'] as $boxData) {
@@ -181,7 +181,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			if (!$object->canDelete()) {
 				throw new PermissionDeniedException();
 			}
@@ -194,7 +194,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	public function validateToggle() {
 		parent::validateUpdate();
 		
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			if (!$object->canDisable()) {
 				throw new PermissionDeniedException();
 			}
@@ -205,7 +205,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			$object->update(['isDisabled' => ($object->isDisabled) ? 0 : 1]);
 		}
 	}
@@ -233,13 +233,13 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	 * @inheritDoc
 	 */
 	public function delete() {
-		foreach ($this->objects as $page) {
+		foreach ($this->getObjects() as $page) {
 			if ($page->pageType == 'tpl') {
 				foreach ($page->getPageContent() as $languageID => $content) {
 					$file = WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl';
 					if (file_exists($file)) {
 						@unlink($file);
-					}	
+					}
 				}
 			}
 		}

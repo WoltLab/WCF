@@ -76,7 +76,7 @@ class MenuAction extends AbstractDatabaseObjectAction {
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			if (!$object->canDelete()) {
 				throw new PermissionDeniedException();
 			}

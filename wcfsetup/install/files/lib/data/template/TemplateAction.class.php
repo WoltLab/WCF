@@ -75,7 +75,7 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	public function update() {
 		parent::update();
 		
-		foreach ($this->objects as $template) {
+		foreach ($this->getObjects() as $template) {
 			// rename file
 			$templateName = (isset($this->parameters['data']['templateName']) ? $this->parameters['data']['templateName'] : $template->templateName);
 			$templateGroupID = (isset($this->parameters['data']['templateGroupID']) ? $this->parameters['data']['templateGroupID'] : $template->templateGroupID);

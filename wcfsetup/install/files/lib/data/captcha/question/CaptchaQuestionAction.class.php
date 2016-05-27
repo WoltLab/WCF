@@ -32,7 +32,7 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $question) {
+		foreach ($this->getObjects() as $question) {
 			$question->update([
 				'isDisabled' => $question->isDisabled ? 0 : 1
 			]);

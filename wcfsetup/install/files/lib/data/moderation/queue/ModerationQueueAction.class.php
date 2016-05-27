@@ -75,7 +75,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		}
 		
 		$queueIDs = [];
-		foreach ($this->objects as $queue) {
+		foreach ($this->getObjects() as $queue) {
 			$queueIDs[] = $queue->queueID;
 		}
 		
@@ -291,7 +291,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $queue) {
+		foreach ($this->getObjects() as $queue) {
 			VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.moderation.queue', $queue->queueID, $this->parameters['visitTime']);
 		}
 		
@@ -316,7 +316,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $queue) {
+		foreach ($this->getObjects() as $queue) {
 			if (!$queue->canEdit()) {
 				throw new PermissionDeniedException();
 			}

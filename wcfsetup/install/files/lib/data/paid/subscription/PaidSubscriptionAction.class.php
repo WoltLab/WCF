@@ -66,7 +66,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			$object->update([
 				'isDisabled' => $object->isDisabled ? 0 : 1
 			]);

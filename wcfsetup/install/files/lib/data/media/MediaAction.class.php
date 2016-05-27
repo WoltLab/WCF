@@ -442,8 +442,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			$this->readObjects();
 		}
 		
-		/** @var MediaEditor $mediaEditor */
-		foreach ($this->objects as $mediaEditor) {
+		foreach ($this->getObjects() as $mediaEditor) {
 			$mediaEditor->deleteFiles();
 		}
 		
@@ -460,7 +459,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 */
 	protected function unmarkItems(array $mediaIDs = []) {
 		if (empty($mediaIDs)) {
-			foreach ($this->objects as $media) {
+			foreach ($this->getObjects() as $media) {
 				$mediaIDs[] = $media->mediaID;
 			}
 		}
