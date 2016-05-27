@@ -73,7 +73,7 @@
 									<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
 								{/if}
 								{if $cronjob->isDeletable()}
-									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$cronjob->cronjobID}" data-confirm-message-html="{lang __encode}wcf.acp.cronjob.delete.sure{/lang}"></span>
+									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$cronjob->cronjobID}" data-confirm-message-html="{lang __encode=true}wcf.acp.cronjob.delete.sure{/lang}"></span>
 								{else}
 									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 								{/if}
