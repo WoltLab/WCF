@@ -194,21 +194,35 @@ input {
 		width: 80px;
 	}
 	
-	&.short {
-		flex-grow: 0;
-		min-width: 80px;
-		width: 10%;
-	}
-	
-	&.medium {
-		flex-grow: 0;
-		min-width: 150px;
-		width: 30%;
-	}
-	
 	&.long {
 		min-width: 150px;
 		width: 100%;
+	}
+	
+	@include screen-xs {
+		&.short {
+			flex-grow: 0;
+			width: 150px;
+		}
+		
+		&.medium {
+			min-width: 150px;
+			width: 100%;
+		}
+	}
+	
+	@include screen-sm-up {
+		&.short {
+			flex-grow: 0;
+			min-width: 80px;
+			width: 10%;
+		}
+		
+		&.medium {
+			flex-grow: 0;
+			min-width: 150px;
+			width: 30%;
+		}
 	}
 }
 
