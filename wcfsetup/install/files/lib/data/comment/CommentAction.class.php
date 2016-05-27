@@ -477,7 +477,6 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function prepareEdit() {
-		$message = '';
 		if ($this->comment !== null) {
 			$message = $this->comment->message;
 		}

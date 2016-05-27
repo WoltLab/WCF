@@ -65,7 +65,6 @@ class LikeableComment extends AbstractLikeObject {
 	public function sendNotification(Like $like) {
 		$objectType = CommentHandler::getInstance()->getObjectType($this->object->objectTypeID);
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.like.notification')) {
-			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.like.notification');
 			if ($this->userID != WCF::getUser()->userID) {
 				$notificationObject = new LikeUserNotificationObject($like);
 				UserNotificationHandler::getInstance()->fireEvent('like', $objectType->objectType.'.like.notification', $notificationObject, [$this->userID], [

@@ -81,7 +81,6 @@ class FlexibleRoute implements IRoute {
 		
 		$buildSchema = ltrim($buildSchema, '/');
 		$components = preg_split('~({(?:[a-z]+)})~', $buildSchema, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-		$delimiters = ['/', '-', '.', '_'];
 		
 		foreach ($components as $component) {
 			$type = 'component';

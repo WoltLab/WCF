@@ -159,7 +159,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		
 		// insert queue
-		$queue = PackageInstallationQueueEditor::create([
+		PackageInstallationQueueEditor::create([
 			'processNo' => $processNo,
 			'userID' => CLIWCF::getUser()->userID,
 			'package' => $archive->getPackageInfo('name'),
@@ -309,9 +309,8 @@ class PackageCLICommand implements IArgumentedCLICommand {
 					// InstallPackageAction::stepInstall()
 					$step_ = $installation->install($node);
 					$queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo, $step_->getNode());
-						
+					
 					if ($step_->hasDocument()) {
-						$innerTemplate = $step_->getTemplate();
 						$progress = $installation->nodeBuilder->calculateProgress($node);
 						$node = $step_->getNode();
 						$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);

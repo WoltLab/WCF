@@ -151,7 +151,6 @@ Error Code: (?P<code>\d+)\s*
 File: (?P<file>.*?) \((?P<line>\d+)\)\s*
 Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*
 Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})', Regex::DOT_ALL);
-		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
 			if ($i < $this->startIndex || $i > $this->endIndex) {

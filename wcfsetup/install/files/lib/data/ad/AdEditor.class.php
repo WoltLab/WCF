@@ -32,8 +32,6 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * @param	integer		$showOrder
 	 */
 	public function setShowOrder($showOrder = 0) {
-		$newShowOrder = 1;
-		
 		$sql = "SELECT	MAX(showOrder)
 			FROM	wcf".WCF_N."_ad";
 		$statement = WCF::getDB()->prepareStatement($sql);

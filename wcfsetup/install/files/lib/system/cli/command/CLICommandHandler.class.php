@@ -61,7 +61,7 @@ class CLICommandHandler {
 	 * @throws	IllegalLinkException
 	 */
 	public static function getCommand($line) {
-		list($command, $parameters) = explode(' ', $line.' ', 2);
+		list($command, ) = explode(' ', $line.' ', 2);
 		
 		if (!isset(self::$commands[strtolower($command)])) throw new IllegalLinkException();
 		
@@ -76,7 +76,7 @@ class CLICommandHandler {
 	 * @throws	IllegalLinkException
 	 */
 	public static function getCommandName($line) {
-		list($command, $parameters) = explode(' ', $line.' ', 2);
+		list($command, ) = explode(' ', $line.' ', 2);
 		
 		if (!isset(self::$commands[strtolower($command)])) throw new IllegalLinkException();
 		
@@ -90,7 +90,7 @@ class CLICommandHandler {
 	 * @return	string[]
 	 */
 	public static function getParameters($line) {
-		list ($command, $parameters) = explode(' ', $line.' ', 2);
+		list (, $parameters) = explode(' ', $line.' ', 2);
 		
 		$chars = str_split(StringUtil::trim($parameters));
 		$tmp = '';

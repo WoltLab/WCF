@@ -84,7 +84,7 @@ class SearchResultTextParser extends SingletonFactory {
 							$shiftEndBy += $shiftStartBy;
 							$shiftStartBy = 0;
 						}
-							
+						
 						// shift abstract start
 						if ($start - $shiftStartBy < 0) {
 							$shiftEndBy += $shiftStartBy - $start;
@@ -97,7 +97,6 @@ class SearchResultTextParser extends SingletonFactory {
 						// shift abstract end
 						if ($end + $shiftEndBy > mb_strlen($text) - 1) {
 							$shiftStartBy = $end + $shiftEndBy - mb_strlen($text) - 1;
-							$shiftEndBy = 0;
 							if ($shiftStartBy > $start) {
 								$start = 0;
 							}

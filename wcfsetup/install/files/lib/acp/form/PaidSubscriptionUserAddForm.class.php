@@ -136,8 +136,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 				'subscription' => $this->subscription,
 				'data' => $data
 			]);
-			$returnValues = $action->executeAction();
-			$userSubscription = $returnValues['returnValues'];
+			$action->executeAction();
 		}
 		else {
 			// extend existing subscription

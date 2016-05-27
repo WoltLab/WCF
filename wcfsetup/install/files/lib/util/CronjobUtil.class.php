@@ -143,8 +143,7 @@ final class CronjobUtil {
 		// calculation starts with month, thus start with
 		// month of $time (if within values)
 		$currentMonth = gmdate('n', self::$timeBase);
-		$currentYear = gmdate('Y', self::$timeBase);
-		$index = self::findKey($currentMonth, $values['month']);
+		self::findKey($currentMonth, $values['month']);
 		
 		self::calculateDay($values);
 	}

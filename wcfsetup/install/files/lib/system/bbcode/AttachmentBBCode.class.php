@@ -73,7 +73,6 @@ class AttachmentBBCode extends AbstractBBCode {
 					}
 				}
 				
-				$result = '';
 				if ($width > 0) {
 					$class = '';
 					if ($alignment == 'left' || $alignment == 'right') {

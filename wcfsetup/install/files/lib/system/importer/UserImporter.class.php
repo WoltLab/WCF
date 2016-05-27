@@ -229,7 +229,6 @@ class UserImporter extends AbstractImporter {
 	 */
 	private static function resolveDuplicate($username) {
 		$i = 0;
-		$newUsername = '';
 		do {
 			$i++;
 			$newUsername = 'Duplicate'.($i > 1 ? $i : '').' '.$username;

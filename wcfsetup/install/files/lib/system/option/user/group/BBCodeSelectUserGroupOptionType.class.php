@@ -43,7 +43,6 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			$this->loadBBCodeSelection();
 		}
 		
-		$selectedBBCodes = [];
 		if ($value == 'all') {
 			$selectedBBCodes = $this->bbCodes;
 		}

@@ -245,11 +245,10 @@ class Diff {
 		$result[] = "--- a";
 		$result[] = "+++ b";
 		
-		$inContext = 0;
 		$leftStart = 1;
 		$rightStart = 1;
 		for ($i = 0, $max = count($d); $i < $max; $i++) {
-			list($type, $line) = $d[$i];
+			list($type, ) = $d[$i];
 			
 			if ($type == self::REMOVED || $type == self::ADDED) {
 				// calculate start of context
@@ -266,7 +265,7 @@ class Diff {
 				// search the end of the current window
 				$plus = $minus = 0;
 				for ($j = $start; $j < $max; $j++) {
-					list($type, $line) = $d[$j];
+					list($type, ) = $d[$j];
 					
 					switch ($type) {
 						case self::REMOVED:

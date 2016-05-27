@@ -74,6 +74,7 @@ class LinkHandler extends SingletonFactory {
 		/**
 		 * @deprecated 2.2 - no longer required
 		 */
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		$appendSession = false;
 		
 		// enforce a certain level of sanitation and protection for links embedded in emails

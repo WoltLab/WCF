@@ -174,7 +174,9 @@ class LikeHandler extends SingletonFactory {
 			WCF::getDB()->beginTransaction();
 			
 			// like data
+			/** @noinspection PhpUnusedLocalVariableInspection */
 			$cumulativeLikes = 0;
+			/** @noinspection PhpUnusedLocalVariableInspection */
 			$newValue = $oldValue = null;
 			$users = [];
 			

@@ -784,7 +784,6 @@ class TemplateScriptingCompiler {
 			}
 			
 			// pass remaining tag args as variables
-			$variables = [];
 			if (!empty($args)) {
 				foreach ($args as $variable => $value) {
 					if (substr($value, 0, 1) == "'") {
@@ -806,7 +805,6 @@ class TemplateScriptingCompiler {
 			if (!empty($phpCode)) $phpCode = "<?php\n".$phpCode."\n?>";
 			
 			$sourceFilename = $this->template->getSourceFilename($templateName, $application);
-			$metaDataFilename = $this->template->getMetaDataFilename($templateName);
 			
 			$data = $this->compileString($templateName, file_get_contents($sourceFilename), [
 				'application' => $application,
@@ -1012,7 +1010,7 @@ class TemplateScriptingCompiler {
 	 * @return	string		$tag
 	 */
 	public function popTag($tag) {
-		list($openTag, $lineNo) = array_pop($this->tagStack);
+		list($openTag, ) = array_pop($this->tagStack);
 		if ($tag == $openTag) {
 			return $openTag;
 		}

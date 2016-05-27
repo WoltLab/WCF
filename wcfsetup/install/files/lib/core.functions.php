@@ -442,9 +442,6 @@ EXPLANATION;
 								<ul class="exceptionStacktrace">
 									<?php
 									$trace = sanitizeStacktrace($e);
-									$pathLength = array_reduce($trace, function ($carry, $item) {
-										return max($carry, mb_strlen($item['file'].$item['line']));
-									}, 0) + 3;
 									for ($i = 0, $max = count($trace); $i < $max; $i++) {
 										?>
 										<li class="exceptionStacktraceFile"><?php echo '#'.$i.' '.StringUtil::encodeHTML($trace[$i]['file']).' ('.$trace[$i]['line'].')'.':'; ?></li>

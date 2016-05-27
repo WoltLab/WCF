@@ -34,7 +34,6 @@ class MessageOptionType extends TextareaOptionType {
 	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		$allowedBBCodes = [];
 		if ($option->allowedbbcodepermission) {
 			$allowedBBCodes = explode(',', WCF::getSession()->getPermission($option->allowedbbcodepermission));
 		}

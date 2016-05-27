@@ -37,7 +37,7 @@ class UserBirthdayCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(['%-' . ($parameters['month'] < 10 ? '0' : '') . $parameters['month'] . '-%']);
 		while ($row = $statement->fetchArray()) {
-			list($year, $month, $day) = explode('-', $row[$birthday]);
+			list(, $month, $day) = explode('-', $row[$birthday]);
 			if (!isset($data[$month . '-' . $day])) $data[$month . '-' . $day] = [];
 			$data[$month . '-' . $day][] = $row['userID'];
 		}

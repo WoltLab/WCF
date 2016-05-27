@@ -24,6 +24,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 		
 		WCF::getDB()->beginTransaction();
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		$commited = false;
 		try {
 			$sql = "SELECT		jobID, job

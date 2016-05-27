@@ -244,7 +244,6 @@ class MessageQuoteManager extends SingletonFactory {
 		}
 		
 		// find the quote and simulate a regular call to render quotes
-		$quoteData = [];
 		foreach ($this->quotes as $objectType => $objectIDs) {
 			foreach ($objectIDs as $objectID => $quoteIDs) {
 				if (isset($quoteIDs[$quoteID])) {

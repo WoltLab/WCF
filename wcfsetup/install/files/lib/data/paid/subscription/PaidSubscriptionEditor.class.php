@@ -30,8 +30,6 @@ class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCa
 	 * @param	integer		$showOrder
 	 */
 	public function setShowOrder($showOrder = 0) {
-		$newShowOrder = 1;
-		
 		$sql = "SELECT	MAX(showOrder)
 			FROM	wcf".WCF_N."_paid_subscription";
 		$statement = WCF::getDB()->prepareStatement($sql);

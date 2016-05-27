@@ -250,7 +250,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// open variables.xml
 		$xml = new XML();
 		$xml->loadXML($filename, $content);
-		$xpath = $xml->xpath();
 		$variables = $xml->xpath()->query('/ns:variables/ns:variable');
 		
 		$data = [];
