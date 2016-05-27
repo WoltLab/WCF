@@ -118,6 +118,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 		parent::readObjects();
 		
 		// removes orphaned and non-accessable events
+		/** @noinspection PhpParamsInspection */
 		UserActivityEventHandler::validateEvents($this->objectList);
 	}
 }
