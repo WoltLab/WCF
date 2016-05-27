@@ -12,15 +12,17 @@
 			}
 		}).trigger('change');
 		
-		$('#isDisabled').change(function(event) {
-			if ($('#isDisabled')[0].checked) {
-				$('#isLandingPage')[0].checked = false;
-				$('#isLandingPage')[0].disabled = true;
-			}
-			else {
-				$('#isLandingPage')[0].disabled = false;
-			}
-		}).trigger('change');
+		{if $action != 'edit' || !$page->isLandingPage}
+			$('#isDisabled').change(function(event) {
+				if ($('#isDisabled')[0].checked) {
+					$('#isLandingPage')[0].checked = false;
+					$('#isLandingPage')[0].disabled = true;
+				}
+				else {
+					$('#isLandingPage')[0].disabled = false;
+				}
+			}).trigger('change');
+		{/if}
 	});
 </script>
 
