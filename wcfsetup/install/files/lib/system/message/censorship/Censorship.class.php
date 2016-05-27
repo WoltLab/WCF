@@ -175,7 +175,7 @@ class Censorship extends SingletonFactory {
 				return true;
 			}
 			else if (mb_strpos($search, $this->words[$index]) === (mb_strlen($search) - mb_strlen($this->words[$index]))) {
-				return $this->lookBehind($index - 1, 0, (mb_strlen($search) - mb_strlen($this->words[$index])));
+				return $this->lookBehind($index - 1, mb_substr($search, 0, (mb_strlen($search) - mb_strlen($this->words[$index]))));
 			}
 		}
 		
