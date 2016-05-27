@@ -148,7 +148,7 @@
 	/**
 	 * Shorthand function to remove an element.
 	 * 
-	 * @param	{Element}	element		DOM element
+	 * @param	{Node}	        element		DOM node
 	 */
 	window.elRemove = function(element) {
 		element.parentNode.removeChild(element);

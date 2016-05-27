@@ -47,15 +47,14 @@ define(
 				messageSelector: '.jsMessage'
 			}, options);
 			
-			this._initElements();
+			this.rebuild();
 		},
 		
 		/**
-		 * Initializes each applicable message.
-		 * 
-		 * @protected
+		 * Initializes each applicable message, should be called whenever new
+		 * messages are being displayed.
 		 */
-		_initElements: function() {
+		rebuild: function() {
 			var button, canEdit, element, elements = elBySelAll(this._options.messageSelector);
 			
 			for (var i = 0, length = elements.length; i < length; i++) {

@@ -2,11 +2,11 @@
  * Provides access and editing of message properties.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Message/Manager
  */
-define(['Ajax', 'Core', 'Dictionary'], function(Ajax, Core, Dictionary) {
+define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/Util'], function(Ajax, Core, Dictionary, Language, DomUtil) {
 	"use strict";
 	
 	/**
@@ -116,7 +116,7 @@ define(['Ajax', 'Core', 'Dictionary'], function(Ajax, Core, Dictionary) {
 				}
 				
 				for (var key in data) {
-					if (objOwns(data, key)) {
+					if (data.hasOwnProperty(key)) {
 						this._update(element, key, data[key]);
 					}
 				}
@@ -134,7 +134,7 @@ define(['Ajax', 'Core', 'Dictionary'], function(Ajax, Core, Dictionary) {
 				objectIds.push(objectId);
 			}).bind(this));
 			
-			this.update(objectIds, data);
+			this.updateItems(objectIds, data);
 		},
 		
 		/**
@@ -166,11 +166,65 @@ define(['Ajax', 'Core', 'Dictionary'], function(Ajax, Core, Dictionary) {
 			switch (propertyName) {
 				case 'isDeleted':
 					element.classList[(propertyValueBoolean ? 'add' : 'remove')]('messageDeleted');
+					this._toggleMessageStatus(element, 'jsIconDeleted', 'wcf.message.status.deleted', 'red', propertyValueBoolean);
+					
 					break;
 				
 				case 'isDisabled':
 					element.classList[(propertyValueBoolean ? 'add' : 'remove')]('messageDisabled');
+					this._toggleMessageStatus(element, 'jsIconDisabled', 'wcf.message.status.disabled', 'green', propertyValueBoolean);
+					
 					break;
+			}
+		},
+		
+		/**
+		 * Toggles the message status bade for provided element.
+		 * 
+		 * @param       {Element}       element         message element
+		 * @param       {string}        className       badge class name
+		 * @param       {string}        phrase          language phrase
+		 * @param       {string}        badgeColor      color css class
+		 * @param       {boolean}       addBadge        add or remove badge
+		 * @protected
+		 */
+		_toggleMessageStatus: function(element, className, phrase, badgeColor, addBadge) {
+			var messageStatus = elBySel('.messageStatus', element);
+			if (messageStatus === null) {
+				var messageHeaderMetaData = elBySel('.messageHeaderMetaData', element);
+				if (messageHeaderMetaData === null) {
+					// can't find appropriate location to insert badge
+					return;
+				}
+				
+				messageStatus = elCreate('ul');
+				messageStatus.className = 'messageStatus';
+				DomUtil.insertAfter(messageStatus, messageHeaderMetaData);
+			}
+			
+			var badge = elBySel('.' + className, messageStatus);
+			
+			if (addBadge) {
+				if (badge !== null) {
+					// badge already exists
+					return;
+				}
+				
+				badge = elCreate('span');
+				badge.className = 'badge label ' + badgeColor + ' ' + className;
+				badge.textContent = Language.get(phrase);
+				
+				var listItem = elCreate('li');
+				listItem.appendChild(badge);
+				messageStatus.appendChild(listItem);
+			}
+			else {
+				if (badge === null) {
+					// badge does not exist
+					return;
+				}
+				
+				elRemove(badge.parentNode);
 			}
 		},
 		
@@ -199,7 +253,7 @@ define(['Ajax', 'Core', 'Dictionary'], function(Ajax, Core, Dictionary) {
 			return attributeName;
 		},
 		
-		_ajaxSuccess: function(data) {
+		_ajaxSuccess: function() {
 			throw new Error("Method _ajaxSuccess() must be implemented by deriving functions.");
 		},
 		
