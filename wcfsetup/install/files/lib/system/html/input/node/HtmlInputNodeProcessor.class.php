@@ -27,6 +27,7 @@ class HtmlInputNodeProcessor extends HtmlNodeProcessor implements IHtmlInputNode
 		
 		// handle static converters
 		$this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacode());
+		$this->invokeHtmlNode(new HtmlInputNodeImg());
 		
 		// extract embedded content
 		$this->parseEmbeddedContent();

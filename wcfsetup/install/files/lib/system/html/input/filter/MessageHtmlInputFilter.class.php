@@ -52,5 +52,8 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 			'data-name' => 'Text',
 			'data-uuid' => 'Text'
 		]);
+		
+		// add data-attachment-id="" for <img>
+		$definition->addAttribute('img', 'data-attachment-id', 'Number');
 	}
 }
