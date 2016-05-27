@@ -71,7 +71,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._fileListSelector.find('.jsButtonAttachmentInsertThumbnail').click($.proxy(this._insert, this));
 		this._fileListSelector.find('.jsButtonAttachmentInsertFull').click($.proxy(this._insert, this));
 		
-		//WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
+		WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
 		WCF.System.Event.addListener('com.woltlab.wcf.action.delete', 'attachment_' + this._editorId, $.proxy(this._removeLimitError, this));
 		
 		this._makeSortable();
@@ -198,8 +198,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			}).bind(this), 250);
 		}
 		
-		if (this._editorId) {
-			$('#' + this._editorId).redactor('wbbcode.removeAttachment', data.button.data('objectID'));
+		if (this._editorId && data.button) {
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'deleteAttachment_' + this._editorId, {
+				attachmentId: data.button.data('objectID')
+			});
 		}
 	},
 	
