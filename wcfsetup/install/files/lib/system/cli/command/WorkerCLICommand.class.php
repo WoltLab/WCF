@@ -162,6 +162,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			}
 			
 			$docComment = explode("\n", StringUtil::unifyNewlines($reflection->getDocComment()));
+			$comment = '';
 			foreach ($docComment as $commentLine) {
 				if (Regex::compile('[a-z]', Regex::CASE_INSENSITIVE)->match($commentLine)) {
 					$comment = Regex::compile('^[^a-z]+', Regex::CASE_INSENSITIVE)->replace($commentLine, '');

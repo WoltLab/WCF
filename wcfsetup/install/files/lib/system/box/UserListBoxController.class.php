@@ -102,6 +102,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	 * @inheritDoc
 	 */
 	protected function getTemplate() {
+		$userProfiles = [];
 		if ($this->userIDs !== null) {
 			$userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($this->userIDs);
 			

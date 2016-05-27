@@ -58,6 +58,7 @@ class ACLHandler extends SingletonFactory {
 			
 			$data = $this->getPermissions($objectTypeID, [], null, true);
 			
+			$users = [];
 			foreach ($values as $type => $optionData) {
 				if ($type === 'user') {
 					$users = User::getUsers(array_keys($optionData));

@@ -170,15 +170,15 @@ class LikeHandler extends SingletonFactory {
 			return $this->revertLike($like, $likeable, $likeObject, $user);
 		}
 		
+		// like data
+		/** @noinspection PhpUnusedLocalVariableInspection */
+		$cumulativeLikes = 0;
+		/** @noinspection PhpUnusedLocalVariableInspection */
+		$newValue = $oldValue = null;
+		$users = [];
+		
 		try {
 			WCF::getDB()->beginTransaction();
-			
-			// like data
-			/** @noinspection PhpUnusedLocalVariableInspection */
-			$cumulativeLikes = 0;
-			/** @noinspection PhpUnusedLocalVariableInspection */
-			$newValue = $oldValue = null;
-			$users = [];
 			
 			// update existing object
 			if ($likeObject->likeObjectID) {
@@ -340,6 +340,8 @@ class LikeHandler extends SingletonFactory {
 	 * @return	array
 	 */
 	public function revertLike(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user) {
+		$usersArray = [];
+		
 		try {
 			WCF::getDB()->beginTransaction();
 			
@@ -369,7 +371,6 @@ class LikeHandler extends SingletonFactory {
 			];
 			
 			$users = $likeObject->getUsers();
-			$usersArray = [];
 			foreach ($users as $user2) {
 				$usersArray[$user2->userID] = ['userID' => $user2->userID, 'username' => $user2->username];
 			}

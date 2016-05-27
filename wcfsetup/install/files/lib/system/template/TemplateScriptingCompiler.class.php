@@ -199,6 +199,7 @@ class TemplateScriptingCompiler {
 	 * @throws	SystemException
 	 */
 	public function compileString($identifier, $sourceContent, array $metaData = [], $isolated = false) {
+		$previousData = [];
 		if ($isolated) {
 			$previousData = [
 				'autoloadPlugins' => $this->autoloadPlugins,

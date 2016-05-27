@@ -163,6 +163,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 			}
 		}
 		
+		$comments = [];
 		if (!empty($commentIDs)) {
 			$comments = CommentRuntimeCache::getInstance()->getObjects($commentIDs);
 		}

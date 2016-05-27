@@ -186,6 +186,7 @@ class PackageInstallationScheduler {
 					// sort multiple instances by version number
 					uasort($installedPackages[$row['package']], [Package::class, 'compareVersion']);
 					
+					$packageID = 0;
 					foreach ($installedPackages[$row['package']] as $packageID => $packageVersion) {
 						if (empty($row['minversion']) || Package::compareVersion($row['minversion'], $packageVersion, '<=')) {
 							continue 2;

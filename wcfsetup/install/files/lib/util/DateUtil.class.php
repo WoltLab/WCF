@@ -193,6 +193,8 @@ final class DateUtil {
 		$weeks = floor($days / 7);
 		$hours = $interval->format('%h');
 		$minutes = $interval->format('%i');
+		
+		$direction = '';
 		switch ($interval->format('%R')) {
 			case '+':
 				$direction = 'past';

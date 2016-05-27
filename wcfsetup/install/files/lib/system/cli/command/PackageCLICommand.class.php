@@ -286,6 +286,8 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			}
 			$installation = new PackageInstallationDispatcher($queue);
 			
+			$progress = 0;
+			$currentAction = '';
 			switch ($step) {
 				case 'prepare':
 					// InstallPackageAction::stepPrepare()

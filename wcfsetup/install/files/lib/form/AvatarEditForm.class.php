@@ -92,6 +92,7 @@ class AvatarEditForm extends AbstractForm {
 		}
 		
 		// update user
+		$data = [];
 		switch ($this->avatarType) {
 			case 'none':
 				$data = [
@@ -99,13 +100,13 @@ class AvatarEditForm extends AbstractForm {
 					'enableGravatar' => 0
 				];
 			break;
-				
+			
 			case 'custom':
 				$data = [
 					'enableGravatar' => 0
 				];
 			break;
-				
+			
 			case 'gravatar':
 				$data = [
 					'avatarID' => null,

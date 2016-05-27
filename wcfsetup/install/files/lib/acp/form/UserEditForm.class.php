@@ -246,6 +246,8 @@ class UserEditForm extends UserAddForm {
 				$action->executeAction();
 			}
 		}
+		
+		$avatarData = [];
 		switch ($this->avatarType) {
 			case 'none':
 				$avatarData = [

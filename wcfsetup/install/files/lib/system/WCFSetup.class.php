@@ -1184,6 +1184,7 @@ class WCFSetup extends WCF {
 				}
 				
 				$queueIDs = [];
+				/** @noinspection PhpUndefinedVariableInspection */
 				$queueID = $queue->queueID;
 				while ($queueID) {
 					$queueIDs[] = $queueID;
@@ -1213,6 +1214,7 @@ class WCFSetup extends WCF {
 				throw new SystemException('', 0, '', $e);
 			}
 			
+			/** @noinspection PhpUndefinedVariableInspection */
 			$queue = PackageInstallationQueueEditor::create([
 				'parentQueueID' => $queue->queueID,
 				'processNo' => $processNo,

@@ -60,6 +60,8 @@ class UserImporter extends AbstractImporter {
 	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
+		$targetUser = null;
+		
 		// whether to perform a merge
 		$performMerge = false;
 		

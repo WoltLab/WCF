@@ -156,6 +156,7 @@ class PackageStartInstallForm extends AbstractForm {
 		// obey foreign key
 		$packageID = ($this->package) ? $this->package->packageID : null;
 		
+		$archive = null;
 		if ($this->stylePackageImportLocation) {
 			$archive = $this->stylePackageImportLocation;
 		}

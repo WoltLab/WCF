@@ -282,6 +282,7 @@ class LabelHandler extends SingletonFactory {
 	public function getLabelGroups(array $groupIDs = [], $validatePermissions = true, $permission = 'canSetLabel') {
 		$data = [];
 		
+		$optionID = null;
 		if ($validatePermissions) {
 			$optionID = $this->getOptionID($permission);
 			if ($optionID === null) {
