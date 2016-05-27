@@ -169,6 +169,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				
 				case 'files':
 					$elements = $xpath->query('child::*', $category);
+					
+					/** @var \DOMElement $element */
 					foreach ($elements as $element) {
 						$data[$element->tagName] = $element->nodeValue;
 						if ($element->hasAttribute('path')) {

@@ -38,6 +38,7 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		);
 		
 		// store options
+		/** @noinspection PhpUndefinedMethodInspection */
 		$data['options'] = $permissions['options']->getObjects();
 		
 		// assign permissions for each label group
@@ -59,6 +60,7 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 			$labelList = new LabelList();
 			$labelList->readObjects();
 			foreach ($labelList as $label) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				$data['groups'][$label->groupID]->addLabel($label);
 			}
 		}

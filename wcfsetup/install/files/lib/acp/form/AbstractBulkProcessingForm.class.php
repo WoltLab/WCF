@@ -34,7 +34,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	
 	/**
 	 * object condition object type types
-	 * @var	ObjectType[]
+	 * @var	ObjectType[][]
 	 */
 	public $conditions = [];
 	

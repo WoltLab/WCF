@@ -142,9 +142,11 @@ class CodeBBCode extends AbstractBBCode {
 		}
 		
 		if ($parser->getOutputType() == 'text/html') {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$highlightedContent = self::fixMarkup(explode("\n", $className::getInstance()->highlight($content)));
 			
 			// show template
+			/** @noinspection PhpUndefinedMethodInspection */
 			WCF::getTPL()->assign([
 				'lineNumbers' => self::makeLineNumbers($content, $this->startLineNumber),
 				'startLineNumber' => $this->startLineNumber,

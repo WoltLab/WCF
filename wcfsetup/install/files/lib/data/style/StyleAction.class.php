@@ -12,6 +12,8 @@ use wcf\system\image\ImageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
+use wcf\system\upload\UploadFile;
+use wcf\system\upload\UploadHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -266,12 +268,15 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 			$this->style = $styles[$this->parameters['styleID']];
 		}
 		
-		if (count($this->parameters['__files']->getFiles()) != 1) {
+		/** @var UploadHandler $uploadHandler */
+		$uploadHandler = $this->parameters['__files'];
+		
+		if (count($uploadHandler->getFiles()) != 1) {
 			throw new IllegalLinkException();
 		}
 		
 		// check max filesize, allowed file extensions etc.
-		$this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, ['jpg', 'jpeg', 'png', 'gif']));
+		$uploadHandler->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, ['jpg', 'jpeg', 'png', 'gif']));
 	}
 	
 	/**
@@ -279,6 +284,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 */
 	public function upload() {
 		// save files
+		/** @var UploadFile[] $files */
 		$files = $this->parameters['__files']->getFiles();
 		$file = $files[0];
 		
@@ -359,6 +365,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 */
 	public function uploadLogo() {
 		// save files
+		/** @var UploadFile[] $files */
 		$files = $this->parameters['__files']->getFiles();
 		$file = $files[0];
 		

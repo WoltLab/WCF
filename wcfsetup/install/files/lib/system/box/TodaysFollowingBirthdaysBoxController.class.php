@@ -23,6 +23,7 @@ class TodaysFollowingBirthdaysBoxController extends TodaysBirthdaysBoxController
 	 * @inheritDoc
 	 */
 	protected function filterUserIDs(&$userIDs) {
+		/** @noinspection PhpUndefinedMethodInspection */
 		$userIDs = array_intersect($userIDs, WCF::getUserProfileHandler()->getFollowingUsers());
 	}
 }

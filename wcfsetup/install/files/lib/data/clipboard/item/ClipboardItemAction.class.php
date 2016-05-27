@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\clipboard\item;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\clipboard\ClipboardEditorItem;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
@@ -154,6 +155,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 				'items' => []
 			];
 			
+			/** @var ClipboardEditorItem $item */
 			foreach ($itemData['items'] as $showOrder => $item) {
 				$items['items'][$showOrder] = [
 					'actionName' => $item->getName(),

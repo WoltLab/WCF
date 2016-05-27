@@ -25,10 +25,12 @@ use wcf\system\exception\SystemException;
  * 
  * @method	boolean		close()
  * @method	boolean		eof()
+ * @method	integer		filesize()
  * @method	string		gets($length = null)
  * @method	resource	open($mode, $use_include_path = false, $context = null)
- * @method	integer		seek($offset, $whence = SEEK_SET)
  * @method	string		read($length)
+ * @method	integer		seek($offset, $whence = SEEK_SET)
+ * @method	array		stat()
  * @method	integer		tell()
  * @method	boolean		touch($time = 0, $atime = 0)		note: default value of `$time` actually is `time()`
  * @method	integer		write($string, $length = null)

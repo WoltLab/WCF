@@ -83,6 +83,7 @@ class TagCloud {
 	 */
 	public function getTags($slice = 50) {
 		// slice list
+		/** @var TagCloudTag[] $tags */
 		$tags = array_slice($this->tags, 0, min($slice, count($this->tags)));
 		
 		// get min / max counter

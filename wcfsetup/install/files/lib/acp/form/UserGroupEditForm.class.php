@@ -60,7 +60,9 @@ class UserGroupEditForm extends UserGroupAddForm {
 		
 		$this->group = new UserGroupEditor($group);
 		
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->optionHandler->setUserGroup($group);
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->optionHandler->init();
 	}
 	

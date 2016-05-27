@@ -55,6 +55,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	
 	/**
 	 * @inheritDoc
+	 * @return	Smiley
 	 */
 	public function current() {
 		$objectID = $this->indexToObject[$this->index];
@@ -116,6 +117,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	
 	/**
 	 * @inheritDoc
+	 * @return	Smiley|null
 	 */
 	public function search($objectID) {
 		try {

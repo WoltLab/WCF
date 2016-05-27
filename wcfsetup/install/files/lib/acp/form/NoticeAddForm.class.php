@@ -54,7 +54,7 @@ class NoticeAddForm extends AbstractForm {
 	
 	/**
 	 * grouped notice condition object types
-	 * @var	array
+	 * @var	ObjectType[][]
 	 */
 	public $groupedConditionObjectTypes = [];
 	

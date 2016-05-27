@@ -47,6 +47,7 @@ class HtmlHighlighter extends XmlHighlighter {
 			
 			$class = '\wcf\system\bbcode\highlighter\\'.ucfirst($type).'Highlighter';
 			
+			/** @noinspection PhpUndefinedMethodInspection */
 			return $openingTag.StringStack::pushToStringStack('<span class="'.$type.'Highlighter">'.$class::getInstance()->highlight($content).'</span>', 'htmlHighlighter'.ucfirst($type)).$closingTag;
 		}));
 	}

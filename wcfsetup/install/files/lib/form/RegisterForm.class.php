@@ -1,6 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\acp\form\UserAddForm;
+use wcf\data\object\type\ObjectType;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
@@ -53,17 +54,20 @@ class RegisterForm extends UserAddForm {
 	public $message = '';
 	
 	/**
-	 * @inheritDoc
+	 * captcha object type object
+	 * @var	ObjectType
 	 */
-	public $captchaObjectType = null;
+	public $captchaObjectType;
 	
 	/**
-	 * @inheritDoc
+	 * name of the captcha object type; if empty, captcha is disabled
+	 * @var	string
 	 */
 	public $captchaObjectTypeName = CAPTCHA_TYPE;
 	
 	/**
-	 * @inheritDoc
+	 * true if captcha is used
+	 * @var	boolean
 	 */
 	public $useCaptcha = REGISTER_USE_CAPTCHA;
 	
@@ -135,9 +139,10 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 * @inheritDoc
 	 */
 	protected function initOptionHandler() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->optionHandler->setInRegistration();
 		parent::initOptionHandler();
 	}

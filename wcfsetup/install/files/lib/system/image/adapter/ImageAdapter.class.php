@@ -300,6 +300,8 @@ class ImageAdapter implements IImageAdapter {
 		}
 		
 		$adapterClassName = get_class($this->adapter);
+		
+		/** @var IImageAdapter $overlayImage */
 		$overlayImage = new $adapterClassName();
 		$overlayImage->loadFile($file);
 		$overlayHeight = $overlayImage->getHeight();

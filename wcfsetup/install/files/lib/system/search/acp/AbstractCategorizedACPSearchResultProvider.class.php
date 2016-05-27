@@ -95,6 +95,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 		}
 		
 		// read categories
+		/** @var DatabaseObjectList $categoryList */
 		$categoryList = new $this->listClassName();
 		$categoryList->readObjects();
 		

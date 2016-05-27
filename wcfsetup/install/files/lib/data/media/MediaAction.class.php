@@ -12,6 +12,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
 use wcf\system\upload\MediaUploadFileValidationStrategy;
+use wcf\system\upload\UploadFile;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -41,6 +42,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			throw new UserInputException('fileTypeFilters');
 		}
 		
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->validateFiles(new MediaUploadFileValidationStrategy(isset($this->parameters['fileTypeFilters']) ? $this->parameters['fileTypeFilters'] : []));
 	}
 	
@@ -56,6 +58,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'username' => WCF::getUser()->username
 		]);
 		
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->saveFiles($saveStrategy);
 		$mediaFiles = $saveStrategy->getObjects();
 		
@@ -81,6 +84,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			}
 		}
 		
+		/** @var UploadFile[] $files */
+		/** @noinspection PhpUndefinedMethodInspection */
 		$files = $this->parameters['__files']->getFiles();
 		foreach ($files as $file) {
 			if ($file->getValidationErrorType()) {

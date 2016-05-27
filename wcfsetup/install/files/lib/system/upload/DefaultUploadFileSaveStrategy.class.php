@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\upload;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IDatabaseObjectAction;
 use wcf\data\IFile;
 use wcf\data\IThumbnailFile;
 use wcf\system\exception\ImplementationException;
@@ -74,6 +75,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			throw new ParentClassException($this->actionClassName, AbstractDatabaseObjectAction::class);
 		}
 		
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->editorClassName = (new $this->actionClassName([], ''))->getClassName();
 		$baseClass = call_user_func([$this->editorClassName, 'getBaseClass']);
 		if (!is_subclass_of($baseClass, IFile::class)) {
@@ -117,9 +119,12 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			}
 		}
 		
+		/** @var IDatabaseObjectAction $action */
 		$action = new $this->actionClassName([], 'create', [
 			'data' => $data
 		]);
+		
+		/** @var IThumbnailFile $object */
 		$object = $action->executeAction()['returnValues'];
 		
 		$dir = dirname($object->getLocation());
@@ -245,6 +250,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		}
 		
 		if (!empty($updateData)) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			(new $this->editorClassName($file))->update($updateData);
 		}
 	}

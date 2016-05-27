@@ -117,6 +117,8 @@ class InstallPackageAction extends AbstractDialogAction {
 					WHERE	packageID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute([$packageID]);
+				
+				/** @var Application $application */
 				$application = $statement->fetchObject(Application::class);
 				
 				// build redirect location

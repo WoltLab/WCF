@@ -75,6 +75,7 @@ class UserSearchForm extends UserOptionListForm {
 	 * @inheritDoc
 	 */
 	protected function initOptionHandler() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->optionHandler->enableSearchMode();
 		$this->optionHandler->init();
 	}
@@ -195,6 +196,7 @@ class UserSearchForm extends UserOptionListForm {
 			$option = $option['object'];
 			
 			$value = isset($this->optionHandler->optionValues[$option->optionName]) ? $this->optionHandler->optionValues[$option->optionName] : null;
+			/** @noinspection PhpUndefinedMethodInspection */
 			$this->optionHandler->getTypeObject($option->optionType)->getCondition($this->conditions, $option, $value);
 		}
 	}

@@ -74,6 +74,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 		foreach ($likeData as $objectTypeID => $likes) {
 			$objectType = CommentHandler::getInstance()->getObjectType($objectTypeID);
 			if (CommentHandler::getInstance()->getCommentManager($objectType->objectType) instanceof IViewableLikeProvider) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				CommentHandler::getInstance()->getCommentManager($objectType->objectType)->prepare($likes);
 			}
 		}

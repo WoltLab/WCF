@@ -70,6 +70,7 @@ class UserOnline extends UserProfile {
 				if ($page !== null) {
 					if ($page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
 						// refer to page handler
+						/** @noinspection PhpUndefinedMethodInspection */
 						$this->location = $page->getHandler()->getOnlineLocation($page, $this);
 						return true;
 					}

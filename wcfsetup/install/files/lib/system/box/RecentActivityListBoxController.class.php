@@ -55,6 +55,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	 * @inheritDoc
 	 */
 	public function __construct() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		if (WCF::getUser()->userID && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
 			$this->canFilterByFollowedUsers = true;
 		}
@@ -85,6 +86,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	 */
 	public function getTemplate() {
 		if ($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') {
+			/** @noinspection PhpUndefinedMethodInspection */
 			return WCF::getTPL()->fetch('boxRecentActivity', 'wcf', [
 				'canFilterByFollowedUsers' => $this->canFilterByFollowedUsers,
 				'eventList' => $this->objectList,
@@ -112,6 +114,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	protected function readObjects() {
 		// apply filter
 		if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
 		}
 		

@@ -11,6 +11,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -115,6 +116,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 * @inheritDoc
 	 */
 	protected function executePIP(array $nodeData) {
+		/** @var IPackageInstallationPlugin $pip */
 		$pip = new $nodeData['className']($this);
 		
 		$pip->uninstall();

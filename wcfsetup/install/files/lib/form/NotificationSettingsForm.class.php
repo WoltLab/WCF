@@ -25,7 +25,7 @@ class NotificationSettingsForm extends AbstractForm {
 	
 	/**
 	 * list of notification events
-	 * @var	IUserNotificationEvent[]
+	 * @var	IUserNotificationEvent[][]
 	 */
 	public $events = null;
 	

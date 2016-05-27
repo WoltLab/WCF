@@ -59,11 +59,13 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			throw new PermissionDeniedException();
 		}
 		
+		/** @noinspection PhpUndefinedMethodInspection */
 		if (count($this->parameters['__files']->getFiles()) != 1) {
 			throw new UserInputException('files');
 		}
 		
 		// check max filesize, allowed file extensions etc.
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->validateFiles(new AvatarUploadFileValidationStrategy(PHP_INT_MAX, explode("\n", WCF::getSession()->getPermission('user.profile.avatar.allowedFileExtensions'))));
 	}
 	
@@ -72,6 +74,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 */
 	public function upload() {
 		/** @var UploadFile[] $files */
+		/** @noinspection PhpUndefinedMethodInspection */
 		$files = $this->parameters['__files']->getFiles();
 		$userID = (!empty($this->parameters['userID']) ? intval($this->parameters['userID']) : WCF::getUser()->userID);
 		$user = ($userID != WCF::getUser()->userID ? new User($userID) : WCF::getUser());
@@ -258,14 +261,17 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		
 		// update user
 		if ($avatarID) {
-			$this->parameters['userEditor']->update([
+			/** @var UserEditor $userEditor */
+			$userEditor = $this->parameters['userEditor'];
+			
+			$userEditor->update([
 				'avatarID' => $avatarID,
 				'enableGravatar' => 0
 			]);
 			
 			// delete old avatar
-			if ($this->parameters['userEditor']->avatarID) {
-				$action = new UserAvatarAction([$this->parameters['userEditor']->avatarID], 'delete');
+			if ($userEditor->avatarID) {
+				$action = new UserAvatarAction([$userEditor->avatarID], 'delete');
 				$action->executeAction();
 			}
 		}

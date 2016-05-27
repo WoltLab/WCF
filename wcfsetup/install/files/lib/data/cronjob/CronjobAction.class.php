@@ -5,6 +5,7 @@ use wcf\data\user\User;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\cronjob\ICronjob;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -126,6 +127,8 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			// it now time for executing
 			$cronjob->update(['state' => Cronjob::EXECUTING]);
 			$className = $cronjob->className;
+			
+			/** @var ICronjob $executable */
 			$executable = new $className();
 			
 			// execute cronjob

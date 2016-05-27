@@ -27,6 +27,7 @@ class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder {
 			}
 			
 			$aclOptions = ACLHandler::getInstance()->getPermissions(ACLHandler::getInstance()->getObjectTypeID($aclObjectType), array_keys($categories));
+			/** @noinspection PhpUndefinedMethodInspection */
 			$options = $aclOptions['options']->getObjects();
 			
 			foreach (['group', 'user'] as $type) {

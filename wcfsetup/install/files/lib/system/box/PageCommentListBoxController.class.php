@@ -34,6 +34,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
 	 * @inheritDoc
 	 */
 	protected function getTemplate() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		return WCF::getTPL()->fetch('boxPageComments', 'wcf', [
 			'commentCanAdd' => WCF::getSession()->getPermission('user.pageComment.canAddComment'),
 			'commentList' => $this->objectList,

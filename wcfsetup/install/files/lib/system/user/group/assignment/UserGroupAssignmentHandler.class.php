@@ -81,7 +81,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	/**
 	 * Returns the list of grouped user group assignment condition object types.
 	 * 
-	 * @return	array
+	 * @return	ObjectType[][]
 	 */
 	public function getGroupedObjectTypes() {
 		return $this->groupedObjectTypes;

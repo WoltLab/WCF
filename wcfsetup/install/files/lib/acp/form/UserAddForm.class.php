@@ -301,6 +301,7 @@ class UserAddForm extends UserOptionListForm {
 		$this->signature = $this->disableSignatureReason = $this->disableSignatureExpires = '';
 		$this->groupIDs = [];
 		$this->languageID = $this->getDefaultFormLanguageID();
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->optionHandler->resetOptionValues();
 	}
 	

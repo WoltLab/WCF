@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectType;
 use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
@@ -27,7 +28,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	
 	/**
 	 * list of grouped user group assignment condition object types
-	 * @var	array
+	 * @var	ObjectType[][]
 	 */
 	public $conditions = [];
 	
@@ -111,6 +112,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 		if (isset($_POST['title'])) $this->title = StringUtil::trim($_POST['title']);
 		
 		foreach ($this->conditions as $conditions) {
+			/** @var ObjectType $condition */
 			foreach ($conditions as $condition) {
 				$condition->getProcessor()->readFormParameters();
 			}

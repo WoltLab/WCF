@@ -24,6 +24,7 @@ trait TLegacyUserPropertyAccess {
 	 */
 	public function __get($name) {
 		/** @noinspection PhpUndefinedClassInspection */
+		/** @noinspection PhpUndefinedMethodInspection */
 		$value = parent::__get($name);
 		if ($value !== null) {
 			return $value;

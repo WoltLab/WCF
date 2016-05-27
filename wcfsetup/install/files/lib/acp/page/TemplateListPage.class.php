@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\TemplateList;
@@ -126,7 +127,7 @@ class TemplateListPage extends SortablePage {
 			$package->getName();
 		}
 		
-		uasort($this->availableApplications, function ($a, $b) {
+		uasort($this->availableApplications, function (Package $a, Package $b) {
 			return $a->getName() > $b->getName();
 		});
 	}

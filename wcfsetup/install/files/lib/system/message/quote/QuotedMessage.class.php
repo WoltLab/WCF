@@ -11,6 +11,17 @@ use wcf\data\IMessage;
  * @package	com.woltlab.wcf
  * @subpackage	system.message.quote
  * @category	Community Framework
+ * 
+ * Note: We cannot use mixin here as that causes errors about methods not being implemented.
+ * @method	string		getExcerpt($maxLength = 255)
+ * @method	string		getFormattedMessage()
+ * @method	string		getLink()
+ * @method	string		getMessage()
+ * @method	integer		getTime()
+ * @method	string		getTitle()
+ * @method	integer		getUserID()
+ * @method	string		getUsername()
+ * @method	boolean		isVisible()
  */
 class QuotedMessage implements \Countable, \Iterator {
 	/**

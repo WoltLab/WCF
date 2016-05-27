@@ -2,6 +2,7 @@
 namespace wcf\system\clipboard;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\system\cache\builder\ClipboardActionCacheBuilder;
 use wcf\system\cache\builder\ClipboardPageCacheBuilder;
 use wcf\system\clipboard\action\IClipboardAction;
@@ -238,6 +239,7 @@ class ClipboardHandler extends SingletonFactory {
 		
 		// read objects
 		foreach ($data as $objectType => $objectData) {
+			/** @var DatabaseObjectList $objectList */
 			$objectList = new $objectData['className']();
 			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . "." . $objectList->getDatabaseTableIndexName() . " IN (?)", [$objectData['objectIDs']]);
 			$objectList->readObjects();
@@ -342,19 +344,22 @@ class ClipboardHandler extends SingletonFactory {
 		// execute actions
 		$editorData = [];
 		foreach ($actions as $actionData) {
+			/** @var IClipboardAction $clipboardAction */
+			$clipboardAction = $actionData['object'];
+			
 			// get accepted objects
-			$typeName = $actionData['object']->getTypeName();
+			$typeName = $clipboardAction->getTypeName();
 			if (!isset($this->markedItems[$typeName]) || empty($this->markedItems[$typeName])) continue;
 			
 			if (!isset($editorData[$typeName])) {
 				$editorData[$typeName] = [
-					'label' => $actionData['object']->getEditorLabel($this->markedItems[$typeName]),
+					'label' => $clipboardAction->getEditorLabel($this->markedItems[$typeName]),
 					'items' => []
 				];
 			}
 			
 			foreach ($actionData['actions'] as $actionObject) {
-				$data = $actionData['object']->execute($this->markedItems[$typeName], $actionObject);
+				$data = $clipboardAction->execute($this->markedItems[$typeName], $actionObject);
 				if ($data === null) {
 					continue;
 				}

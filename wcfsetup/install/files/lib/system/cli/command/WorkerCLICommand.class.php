@@ -106,6 +106,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			}
 		}
 		
+		/** @var IWorker $worker */
 		$worker = new $class($parameters);
 		$worker->validate();
 		$worker->getProgress(); // make sure objects are counted

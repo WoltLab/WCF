@@ -68,6 +68,7 @@ trait TMultiCategoryObject {
 			
 			if (!empty($this->categoryIDs)) {
 				foreach ($this->categoryIDs as $categoryID) {
+					/** @noinspection PhpUndefinedMethodInspection */
 					$this->categories[$categoryID] = $className::getCategory($categoryID);
 				}
 			}
@@ -83,6 +84,7 @@ trait TMultiCategoryObject {
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute([$this->getObjectID()]);
 				while ($categoryID = $statement->fetchColumn()) {
+					/** @noinspection PhpUndefinedMethodInspection */
 					$this->categories[$categoryID] = $className::getCategory($categoryID);
 				}
 			}

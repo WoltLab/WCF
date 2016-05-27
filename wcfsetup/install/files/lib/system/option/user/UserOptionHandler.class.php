@@ -227,6 +227,8 @@ class UserOptionHandler extends OptionHandler {
 	 * @inheritDoc
 	 */
 	protected function checkVisibility(Option $option) {
+		/** @var UserOption $option */
+		
 		if ($option->isDisabled) {
 			return false;
 		}

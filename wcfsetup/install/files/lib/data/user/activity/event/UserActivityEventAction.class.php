@@ -55,8 +55,12 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 		if ($this->parameters['userID']) {
 			$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", [$this->parameters['userID']]);
 		}
-		else if ($this->parameters['filteredByFollowedUsers'] && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
-			$eventList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+		else {
+			/** @noinspection PhpUndefinedMethodInspection */
+			if ($this->parameters['filteredByFollowedUsers'] && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
+				/** @noinspection PhpUndefinedMethodInspection */
+				$eventList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+			}
 		}
 		
 		$eventList->readObjects();

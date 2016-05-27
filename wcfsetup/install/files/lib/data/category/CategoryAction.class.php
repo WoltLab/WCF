@@ -66,7 +66,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 * @inheritDoc
 	 */
 	public function toggleContainer() {
-		$collapsibleObjectTypeName = $this->objects[0]->getProcessor()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
+		$collapsibleObjectTypeName = $this->getObjects()[0]->getProcessor()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
 		if ($collapsibleObjectTypeName === null) {
 			throw new SystemException("Categories of this type don't support collapsing");
 		}
@@ -89,8 +89,9 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	public function update() {
 		// check if showOrder needs to be recalculated
 		if (count($this->objects) == 1 && isset($this->parameters['data']['parentCategoryID']) && isset($this->parameters['data']['showOrder'])) {
-			if ($this->objects[0]->parentCategoryID != $this->parameters['data']['parentCategoryID'] || $this->objects[0]->showOrder != $this->parameters['data']['showOrder']) {
-				$this->parameters['data']['showOrder'] = $this->objects[0]->updateShowOrder($this->parameters['data']['parentCategoryID'], $this->parameters['data']['showOrder']);
+			$categoryEditor = $this->getObjects()[0];
+			if ($categoryEditor->parentCategoryID != $this->parameters['data']['parentCategoryID'] || $categoryEditor->showOrder != $this->parameters['data']['showOrder']) {
+				$this->parameters['data']['showOrder'] = $categoryEditor->updateShowOrder($this->parameters['data']['parentCategoryID'], $this->parameters['data']['showOrder']);
 			}
 		}
 		

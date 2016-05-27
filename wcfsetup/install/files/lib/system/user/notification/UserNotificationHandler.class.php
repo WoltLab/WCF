@@ -36,13 +36,13 @@ use wcf\util\StringUtil;
 class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * list of available object types
-	 * @var	IUserNotificationEvent[][]
+	 * @var	IUserNotificationObjectType[]
 	 */
 	protected $availableObjectTypes = [];
 	
 	/**
 	 * list of available events
-	 * @var	array
+	 * @var	IUserNotificationEvent[][]
 	 */
 	protected $availableEvents = [];
 	
@@ -440,6 +440,7 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// load objects associated with each object type
 		foreach ($objectTypes as $objectType => $objectData) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$objectTypes[$objectType]['objects'] = $objectData['objectType']->getObjectsByIDs($objectData['objectIDs']);
 		}
 		
@@ -499,9 +500,11 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// check access
 		foreach ($notifications as $index => $notificationData) {
-			if (!$notificationData['event']->checkAccess()) {
-				if ($notificationData['event']->deleteNoAccessNotification()) {
-					$deleteNotifications[] = $notificationData['event']->getNotification();
+			/** @var IUserNotificationEvent $event */
+			$event = $notificationData['event'];
+			if (!$event->checkAccess()) {
+				if ($event->deleteNoAccessNotification()) {
+					$deleteNotifications[] = $event->getNotification();
 				}
 				
 				unset($notifications[$index]);

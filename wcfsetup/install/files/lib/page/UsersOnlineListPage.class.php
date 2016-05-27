@@ -110,6 +110,7 @@ class UsersOnlineListPage extends SortablePage {
 			if ($userOnline->controller) {
 				$page = PageCache::getInstance()->getPage($userOnline->pageID);
 				if ($page !== null && $page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
+					/** @noinspection PhpUndefinedMethodInspection */
 					$page->getHandler()->prepareOnlineLocation($page, $userOnline);
 				}
 			}

@@ -60,6 +60,7 @@ class SimpleMessageParser extends SingletonFactory {
 			foreach ($smilies as $categoryID => $categorySmilies) {
 				if ($categories[$categoryID ?: null]->isDisabled) continue;
 				
+				/** @var Smiley $smiley */
 				foreach ($categorySmilies as $smiley) {
 					foreach ($smiley->smileyCodes as $smileyCode) {
 						$this->smilies[$smileyCode] = '<img src="'.$smiley->getURL().'" alt="'.StringUtil::encodeHTML($smiley->smileyCode).'" />';

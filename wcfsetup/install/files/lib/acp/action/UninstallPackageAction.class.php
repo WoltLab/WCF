@@ -103,6 +103,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	 * @return	string
 	 */
 	public function stepUninstall() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		$node = $this->installation->uninstall($this->node);
 		
 		if ($node == '') {
@@ -133,6 +134,8 @@ class UninstallPackageAction extends InstallPackageAction {
 				WHERE	packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$packageID]);
+			
+			/** @var Application $application */
 			$application = $statement->fetchObject(Application::class);
 			
 			// build redirect location

@@ -2,6 +2,7 @@
 namespace wcf\system\message;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IAttachmentMessageQuickReplyAction;
+use wcf\data\IDatabaseObjectAction;
 use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
 use wcf\data\IVisitableObjectAction;
@@ -215,7 +216,7 @@ class QuickReplyManager extends SingletonFactory {
 		if ($pageNo == $parameters['pageNo']) {
 			// check for additional messages
 			$messageList = $object->getMessageList($this->container, $parameters['lastPostTime']);
-				
+			
 			// calculate start index
 			$startIndex = $count - (count($messageList) - 1);
 			
@@ -234,6 +235,7 @@ class QuickReplyManager extends SingletonFactory {
 			
 			// update visit time (messages shouldn't occur as new upon next visit)
 			if (is_subclass_of($containerActionClassName, IVisitableObjectAction::class)) {
+				/** @var IDatabaseObjectAction $containerAction */
 				$containerAction = new $containerActionClassName([($this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container)], 'markAsRead');
 				$containerAction->executeAction();
 			}

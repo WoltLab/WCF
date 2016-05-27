@@ -116,9 +116,10 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 * @inheritDoc
 	 */
 	protected function initOptionHandler() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->optionHandler->setUser($this->user->getDecoratedObject());
 	}
 	

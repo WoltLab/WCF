@@ -297,6 +297,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					
 					case 'requiredpackages':
 						$requiredPackages = $xpath->query('child::*', $child);
+						
+						/** @var \DOMElement $requiredPackage */
 						foreach ($requiredPackages as $requiredPackage) {
 							$minVersion = $requiredPackage->getAttribute('minversion');
 							$required = $requiredPackage->nodeValue;

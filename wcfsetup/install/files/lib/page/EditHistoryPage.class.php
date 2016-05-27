@@ -6,6 +6,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectList;
 use wcf\system\edit\IHistorySavingObject;
+use wcf\system\edit\IHistorySavingObjectTypeProvider;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -120,7 +121,11 @@ class EditHistoryPage extends AbstractPage {
 		}
 		
 		if (!$this->objectType) throw new IllegalLinkException();
+		
+		/** @var IHistorySavingObjectTypeProvider $processor */
 		$processor = $this->objectType->getProcessor();
+		
+		/** @var IHistorySavingObject object */
 		$this->object = $processor->getObjectByID($this->objectID);
 		if (!$this->object->getObjectID()) throw new IllegalLinkException();
 		$processor->checkPermissions($this->object);

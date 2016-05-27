@@ -101,6 +101,7 @@ class WCFSetup extends WCF {
 		$this->getInstallationDirectories();
 		$this->initLanguage();
 		$this->initTPL();
+		/** @noinspection PhpUndefinedMethodInspection */
 		self::getLanguage()->loadLanguage();
 		$this->getPackageName();
 		

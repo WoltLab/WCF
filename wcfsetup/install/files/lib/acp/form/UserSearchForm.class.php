@@ -8,6 +8,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
 use wcf\system\condition\IUserCondition;
+use wcf\system\condition\UserGroupCondition;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
@@ -37,7 +38,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * list of grouped user group assignment condition object types
-	 * @var	array
+	 * @var	ObjectType[][]
 	 */
 	public $conditions = [];
 	
@@ -223,6 +224,8 @@ class UserSearchForm extends UserOptionListForm {
 				
 				// manually inject user group data for listing of group members
 				if ($this->groupID && $objectType->objectType == 'com.woltlab.wcf.userGroup') {
+					/** @var UserGroupCondition $processor */
+					
 					$userGroups = UserGroup::getAccessibleGroups([], [UserGroup::EVERYONE, UserGroup::GUESTS]);
 					
 					uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {

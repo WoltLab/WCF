@@ -50,7 +50,7 @@ class AdAddForm extends AbstractForm {
 	
 	/**
 	 * grouped ad condition object types
-	 * @var	array
+	 * @var	ObjectType[][]
 	 */
 	public $groupedConditionObjectTypes = [];
 	

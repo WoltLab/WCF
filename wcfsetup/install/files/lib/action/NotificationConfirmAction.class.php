@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -80,6 +81,8 @@ class NotificationConfirmAction extends AbstractAction {
 		}
 		
 		$className = $event->className;
+		
+		/** @var IUserNotificationEvent $notificationEvent */
 		$notificationEvent = new $className($event);
 		$notificationEvent->setObject(
 			$this->notification,

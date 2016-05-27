@@ -166,6 +166,7 @@ class UsersOnlineList extends SessionList {
 				if (WCF::getUser()->userID) return true;
 				break;
 			case 2: // following
+				/** @noinspection PhpUndefinedMethodInspection */
 				if (WCF::getUserProfileHandler()->isFollower($userID)) return true;
 				break;
 		}

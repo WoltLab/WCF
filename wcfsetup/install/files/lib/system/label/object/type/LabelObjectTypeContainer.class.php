@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\label\object\type;
-use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 
 /**
@@ -22,7 +21,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	
 	/**
 	 * list of object types
-	 * @var	ObjectType[]
+	 * @var	LabelObjectType[]
 	 */
 	public $objectTypes = [];
 	
@@ -104,6 +103,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	
 	/**
 	 * @inheritDoc
+	 * @return	LabelObjectType
 	 */
 	public function current() {
 		return $this->objectTypes[$this->position];

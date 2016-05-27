@@ -85,6 +85,7 @@ class CacheListPage extends AbstractPage {
 			
 			case 'wcf\system\cache\source\RedisCacheSource':
 				// set version
+				/** @noinspection PhpUndefinedMethodInspection */
 				$this->cacheData['version'] = 'Redis '.CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
 			break;
 		}

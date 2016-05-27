@@ -10,6 +10,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\mail\Mail;
+use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -129,6 +130,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// load objects associated with each object type
 		foreach ($objectTypes as $objectType => $objectData) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$objectTypes[$objectType]['objects'] = $objectData['objectType']->getObjectsByIDs($objectData['objectIDs']);
 		}
 		
@@ -155,6 +157,8 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 				$notification = $notificationObjects[$notificationID];
 				
 				$className = $eventObjects[$notification->eventID]->className;
+				
+				/** @var IUserNotificationEvent $class */
 				$class = new $className($eventObjects[$notification->eventID]);
 				$class->setObject(
 					$notification,

@@ -112,6 +112,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		
 		// check max count of uploads
 		$handler = new AttachmentHandler($this->parameters['objectType'], intval($this->parameters['objectID']), $this->parameters['tmpHash']);
+		/** @noinspection PhpUndefinedMethodInspection */
 		if ($handler->count() + count($this->parameters['__files']->getFiles()) > $processor->getMaxCount()) {
 			throw new UserInputException('files', 'exceededQuota', [
 				'current' => $handler->count(),
@@ -120,6 +121,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		}
 		
 		// check max filesize, allowed file extensions etc.
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy($processor->getMaxSize(), $processor->getAllowedExtensions()));
 	}
 	
@@ -140,6 +142,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 			'tmpHash' => (!$this->parameters['objectID'] ? $this->parameters['tmpHash'] : '')
 		]);
 		
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->saveFiles($saveStrategy);
 		$attachments = $saveStrategy->getObjects();
 		

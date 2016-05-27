@@ -46,8 +46,8 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getPageLogo() {
-		if ($this->object->getVariable('pageLogo')) {
-			return $this->getImage($this->object->getVariable('pageLogo'));
+		if ($this->getDecoratedObject()->getVariable('pageLogo')) {
+			return $this->getImage($this->getDecoratedObject()->getVariable('pageLogo'));
 		}
 		
 		return '';

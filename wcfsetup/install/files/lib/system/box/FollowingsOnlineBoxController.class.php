@@ -30,6 +30,7 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
 	 */
 	protected function getObjectList() {
 		$objectList = new UsersOnlineList();
+		/** @noinspection PhpUndefinedMethodInspection */
 		$objectList->getConditionBuilder()->add('session.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
 		
 		return $objectList;
@@ -46,6 +47,7 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
 	 * @inheritDoc
 	 */
 	public function hasContent() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		if (!MODULE_USERS_ONLINE || !WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList') || empty(WCF::getUserProfileHandler()->getFollowingUsers())) {
 			return false;
 		}

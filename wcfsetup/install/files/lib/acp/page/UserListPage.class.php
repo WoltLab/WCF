@@ -10,6 +10,7 @@ use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\option\user\IUserOptionOutput;
 use wcf\system\option\IOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -104,7 +105,7 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * list of users
-	 * @var	User[]
+	 * @var	UserProfile[]
 	 */
 	public $users = [];
 	
@@ -312,6 +313,8 @@ class UserListPage extends SortablePage {
 							if (isset($this->options[$column])) {
 								if ($this->options[$column]->outputClass) {
 									$this->options[$column]->setOptionValue($user->getDecoratedObject());
+									
+									/** @var IUserOptionOutput $outputObj */
 									$outputObj = $this->options[$column]->getOutputObject();
 									$this->columnValues[$user->userID][$column] = $outputObj->getOutput($user->getDecoratedObject(), $this->options[$column]->getDecoratedObject(), $user->{$column});
 								}

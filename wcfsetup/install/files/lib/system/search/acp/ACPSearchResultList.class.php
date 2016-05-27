@@ -89,7 +89,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	 * Sorts results by title.
 	 */
 	public function sort() {
-		usort($this->results, function($a, $b) {
+		usort($this->results, function(ACPSearchResult $a, ACPSearchResult $b) {
 			return strcmp($a->getTitle(), $b->getTitle());
 		});
 	}
