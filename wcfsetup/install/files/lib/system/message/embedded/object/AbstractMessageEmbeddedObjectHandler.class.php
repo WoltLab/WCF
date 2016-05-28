@@ -2,6 +2,7 @@
 namespace wcf\system\message\embedded\object;
 use wcf\data\object\type\ObjectType;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\util\ArrayUtil;
 
 /**
@@ -24,53 +25,11 @@ abstract class AbstractMessageEmbeddedObjectHandler extends DatabaseObjectDecora
 	protected static $baseClass = ObjectType::class;
 	
 	/**
-	 * Parses given message for specific bbcode parameters.
-	 * 
-	 * @param	string		$message
-	 * @param	string		$bbcode		bbcode name
-	 * @return	array
+	 * @inheritDoc
 	 */
-	public static function getTextParameters($message, $bbcode) {
-		if (preg_match_all('~\['.$bbcode.'\](.*?)\[/'.$bbcode.'\]~i', $message, $matches)) {
-			$results = ArrayUtil::trim($matches[1]);
-			$results = array_unique($results);
-			
-			return $results;
-		}
-		
+	public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData) {
+		// TODO: DEBUG ONLY, remove this method!
 		return [];
 	}
 	
-	/**
-	 * Parses given message for specific bbcode parameters.
-	 * 
-	 * @param	string		$message
-	 * @param	string		$bbcode		bbcode name
-	 * @return	array
-	 */
-	public static function getFirstParameters($message, $bbcode) {
-		$pattern = '~\['.$bbcode.'=
-				(\'(?:[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\'|(?:[^,\]]*))
-				(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
-			\]~ix';
-		
-		if (preg_match_all($pattern, $message, $matches)) {
-			foreach ($matches[1] as &$value) {
-				// remove quotes
-				if (mb_substr($value, 0, 1) == "'" && mb_substr($value, -1) == "'") {
-					$value = str_replace("\'", "'", $value);
-					$value = str_replace("\\\\", "\\", $value);
-				
-					$value = mb_substr($value, 1, -1);
-				}
-			}
-			
-			$results = ArrayUtil::trim($matches[1]);
-			$results = array_unique($results);
-			
-			return $results;
-		}
-		
-		return [];
-	}
 }

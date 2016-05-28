@@ -175,7 +175,8 @@
 					<validationpattern>^(left|right|none)$</validationpattern>
 				</attribute>
 				<attribute name="2">
-					<validationpattern>^\d+$</validationpattern>
+					<!-- "\d+" is only matched for backward compatibility -->
+					<validationpattern>^(\d+|true|false)$</validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>

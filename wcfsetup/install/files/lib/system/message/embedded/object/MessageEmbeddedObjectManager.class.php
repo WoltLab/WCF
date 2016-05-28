@@ -3,6 +3,7 @@ namespace wcf\system\message\embedded\object;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -50,15 +51,12 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	/**
 	 * Registers the embedded objects found in given message.
 	 * 
-	 * @param	string		$messageObjectType
-	 * @param	integer		$messageID
-	 * @param	string		$message
-	 * @return	boolean
+	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance holding embedded object data
+	 * @param       string                  $messageObjectType      message object type
+	 * @param       integer                 $messageID              message id
+	 * @return      boolean                 true if at least one embedded object was found
 	 */
-	public function registerObjects($messageObjectType, $messageID, $message) {
-		// remove [code] tags
-		$message = BBCodeParser::getInstance()->removeCodeTags($message);
-		
+	public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $messageObjectType, $messageID) {
 		// delete existing assignments
 		$this->removeObjects($messageObjectType, [$messageID]);
 		
@@ -73,14 +71,20 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		
 		// call embedded object handlers
 		WCF::getDB()->beginTransaction();
+		
+		$embeddedData = $htmlInputProcessor->getEmbeddedContent();
 		$returnValue = false;
+		
+		/** @var IMessageEmbeddedObjectHandler $handler */
 		foreach ($this->getEmbeddedObjectHandlers() as $handler) {
-			$objectIDs = $handler->parseMessage($message);
+			$objectIDs = $handler->parse($htmlInputProcessor, $embeddedData);
+			
 			if (!empty($objectIDs)) {
-				$returnValue = true;
 				foreach ($objectIDs as $objectID) {
 					$statement->execute([$messageObjectTypeID, $messageID, $handler->objectTypeID, $objectID]);
 				}
+				
+				$returnValue = true;
 			}
 		}
 		WCF::getDB()->commitTransaction();

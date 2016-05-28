@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\message\embedded\object;
 use wcf\data\DatabaseObject;
+use wcf\system\html\input\HtmlInputProcessor;
 
 /**
  * Default interface of embedded object handler.
@@ -14,13 +15,15 @@ use wcf\data\DatabaseObject;
  */
 interface IMessageEmbeddedObjectHandler {
 	/**
-	 * Parses the given message to extract embedded objects.
-	 * Returns the IDs of found embedded objects.
+	 * Processes embedded data and optionally accesses the current
+	 * document to extract additional data. Returns the IDs of found
+	 * embedded objects.
 	 * 
-	 * @param	string		$message
-	 * @return	integer[]
+	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor holding the current document
+	 * @param       mixed[]                 $embeddedData           list of found embedded data with attributes
+	 * @return      integer[]               ids of found embedded objects
 	 */
-	public function parseMessage($message);
+	public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData);
 	
 	/**
 	 * Loads and returns embedded objects.

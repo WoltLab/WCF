@@ -58,22 +58,28 @@ class AttachmentBBCode extends AbstractBBCode {
 			if ($attachment->showAsImage() && $attachment->canViewPreview() && $parser->getOutputType() == 'text/html') {
 				// image
 				$alignment = (isset($openingTag['attributes'][1]) ? $openingTag['attributes'][1] : '');
-				$width = (isset($openingTag['attributes'][2]) ? $openingTag['attributes'][2] : 0);
+				$thumbnail = (isset($openingTag['attributes'][2]) ? $openingTag['attributes'][2] : false);
 				
-				// check if width is valid and the original is accessible by viewer
-				if ($width > 0) {
-					if ($attachment->canDownload()) {
-						// check if width exceeds image width
-						if ($width > $attachment->width) {
-							$width = $attachment->width;
-						}
+				// backward compatibility, check if width is larger than thumbnail's width to display full version
+				if (is_int($thumbnail)) {
+					if ($thumbnail == 0) {
+						$thumbnail = true;
 					}
 					else {
-						$width = 0;
+						// true if supplied width is smaller or equal to thumbnail's width
+						$thumbnail = ($attachment->thumbnailWidth >= $thumbnail) ? true : false;
 					}
 				}
+				else if ($thumbnail !== false) {
+					$thumbnail = true;
+				}
 				
-				if ($width > 0) {
+				// check if width is valid and the original is accessible by viewer
+				if (!$thumbnail && !$attachment->canDownload()) {
+					$thumbnail = false;
+				}
+				
+				if (!$thumbnail) {
 					$class = '';
 					if ($alignment == 'left' || $alignment == 'right') {
 						$class = 'messageFloatObject'.ucfirst($alignment);
@@ -82,7 +88,7 @@ class AttachmentBBCode extends AbstractBBCode {
 					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]));
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
-					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '"><img src="' . $source . '" style="width: '.$width.'px" alt="" /></a>';
+					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '"><img src="' . $source . '" alt="" /></a>';
 				}
 				else {
 					$linkParameters = [

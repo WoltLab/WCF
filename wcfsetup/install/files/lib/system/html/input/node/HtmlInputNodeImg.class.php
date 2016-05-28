@@ -25,9 +25,23 @@ class HtmlInputNodeImg extends AbstractHtmlNode {
 				continue;
 			}
 			
+			// TODO: add alignment detection
+			$alignment = 'none';
+			$thumbnail = false;
+			
+			if (strpos($element->getAttribute('src'), 'thumbnail=1') !== false) {
+				$thumbnail = true;
+			}
+			
+			$attributes = [
+				$attachmentID,
+				$alignment,
+				$thumbnail
+			];
+			
 			$newElement = $element->ownerDocument->createElement('woltlab-metacode');
 			$newElement->setAttribute('data-name', 'attach');
-			$newElement->setAttribute('data-attributes', base64_encode(JSON::encode([$attachmentID])));
+			$newElement->setAttribute('data-attributes', base64_encode(JSON::encode($attributes)));
 			DOMUtil::replaceElement($element, $newElement, false);
 		}
 	}

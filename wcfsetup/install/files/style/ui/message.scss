@@ -370,6 +370,10 @@
 	
 	> .messageText {
 		@extend .htmlContent;
+		
+		img {
+			max-width: 100%;
+		}
 	}
 }
 

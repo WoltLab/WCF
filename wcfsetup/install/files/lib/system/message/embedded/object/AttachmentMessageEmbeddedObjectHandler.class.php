@@ -2,6 +2,7 @@
 namespace wcf\system\message\embedded\object;
 use wcf\data\attachment\AttachmentList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\util\ArrayUtil;
 
 /**
@@ -18,24 +19,30 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
 	/**
 	 * @inheritDoc
 	 */
-	public function parseMessage($message) {
-		$parsedAttachmentIDs = array_unique(ArrayUtil::toIntegerArray(array_merge(self::getFirstParameters($message, 'attach'), self::getTextParameters($message, 'attach'))));
-		if (!empty($parsedAttachmentIDs)) {
-			$attachmentIDs = [];
-			foreach ($parsedAttachmentIDs as $parsedAttachmentID) {
-				if ($parsedAttachmentID) $attachmentIDs[] = $parsedAttachmentID;
-			}
+	public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData) {
+		if (empty($embeddedData['attach'])) {
+			return [];
+		}
+		
+		$attachmentIDs = [];
+		for ($i = 0, $length = count($embeddedData['attach']); $i < $length; $i++) {
+			$attributes = $embeddedData['attach'][$i];
+			$attachmentID = (!empty($attributes[0])) ? intval($attributes[0]) : 0;
 			
-			if (!empty($attachmentIDs)) {
-				$attachmentList = new AttachmentList();
-				$attachmentList->getConditionBuilder()->add("attachment.attachmentID IN (?)", [$attachmentIDs]);
-				$attachmentList->readObjectIDs();
-				
-				return $attachmentList->getObjectIDs();
+			if ($attachmentID > 0) {
+				$attachmentIDs[] = $attachmentID;
 			}
 		}
 		
-		return false;
+		if (!empty($attachmentIDs)) {
+			$attachmentList = new AttachmentList();
+			$attachmentList->getConditionBuilder()->add("attachment.attachmentID IN (?)", [$attachmentIDs]);
+			$attachmentList->readObjectIDs();
+			
+			return $attachmentList->getObjectIDs();
+		}
+		
+		return [];
 	}
 	
 	/**
