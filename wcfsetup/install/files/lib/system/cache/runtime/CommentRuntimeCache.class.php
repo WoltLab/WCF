@@ -14,6 +14,7 @@ use wcf\data\comment\CommentList;
  * @category	Community Framework
  * @since	2.2
  * 
+ * @method	Comment[]	getCachedObjects()
  * @method	Comment		getObject($objectID)
  * @method	Comment[]	getObjects(array $objectIDs)
  */

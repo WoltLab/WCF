@@ -14,6 +14,7 @@ use wcf\data\user\UserList;
  * @category	Community Framework
  * @since	2.2
  * 
+ * @method	User[]		getCachedObjects()
  * @method	User		getObject($objectID)
  * @method	User[]		getObjects(array $objectIDs)
  */
