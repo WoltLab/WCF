@@ -12,6 +12,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
+use wcf\system\upload\UploadFile;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\FileUtil;
@@ -177,6 +178,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 			}
 		}
 		
+		/** @noinspection PhpUndefinedMethodInspection */
+		/** @var UploadFile[] $files */
 		$files = $this->parameters['__files']->getFiles();
 		foreach ($files as $file) {
 			if ($file->getValidationErrorType()) {

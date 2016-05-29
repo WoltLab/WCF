@@ -255,6 +255,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$variables = $xml->xpath()->query('/ns:variables/ns:variable');
 		
 		$data = [];
+		
+		/** @var \DOMElement $variable */
 		foreach ($variables as $variable) {
 			$data[$variable->getAttribute('name')] = $variable->nodeValue;
 		}

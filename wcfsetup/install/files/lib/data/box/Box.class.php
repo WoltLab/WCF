@@ -473,7 +473,9 @@ class Box extends DatabaseObject {
 	 * @return	Condition[]
 	 */
 	public function getConditions() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		if ($this->boxType === 'system' && $this->getController() instanceof IConditionBoxController && $this->getController()->getConditionDefinition()) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			return ConditionHandler::getInstance()->getConditions($this->getController()->getConditionDefinition(), $this->boxID);
 		}
 		

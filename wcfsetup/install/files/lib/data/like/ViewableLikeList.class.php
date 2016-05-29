@@ -70,6 +70,7 @@ class ViewableLikeList extends LikeList {
 		// parse like
 		foreach ($likeGroups as $likeData) {
 			if ($likeData['provider'] instanceof IViewableLikeProvider) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				$likeData['provider']->prepare($likeData['objects']);
 			}
 		}

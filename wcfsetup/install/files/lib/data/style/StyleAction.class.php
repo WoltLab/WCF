@@ -284,6 +284,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 */
 	public function upload() {
 		// save files
+		/** @noinspection PhpUndefinedMethodInspection */
 		/** @var UploadFile[] $files */
 		$files = $this->parameters['__files']->getFiles();
 		$file = $files[0];
@@ -365,6 +366,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 */
 	public function uploadLogo() {
 		// save files
+		/** @noinspection PhpUndefinedMethodInspection */
 		/** @var UploadFile[] $files */
 		$files = $this->parameters['__files']->getFiles();
 		$file = $files[0];

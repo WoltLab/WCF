@@ -183,6 +183,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// fetch categories
 		$categories = $xpath->query('/ns:language/ns:category');
+		
+		/** @var \DOMElement $category */
 		foreach ($categories as $category) {
 			$usedCategories[$category->getAttribute('name')] = 0;
 		}
@@ -214,12 +216,16 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// loop through categories to import items
 		$itemData = [];
+		
+		/** @var \DOMElement $category */
 		foreach ($categories as $category) {
 			$categoryName = $category->getAttribute('name');
 			$categoryID = $usedCategories[$categoryName];
 			
 			// loop through items
 			$elements = $xpath->query('child::*', $category);
+			
+			/** @var \DOMElement $element */
 			foreach ($elements as $element) {
 				$itemName = $element->getAttribute('name');
 				$itemValue = $element->nodeValue;
