@@ -68,6 +68,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 		// links of top option category menu items need the id of the option
 		// category
 		if ($this->parentMenuItem == 'wcf.acp.menu.link.option.category') {
+			/** @noinspection PhpUndefinedFieldInspection */
 			$linkParameters['id'] = $this->optionCategoryID;
 		}
 		

@@ -39,6 +39,8 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 	 * @inheritDoc
 	 */
 	public function checkPermissions(ILikeObject $comment) {
+		/** @var Comment $comment */
+		
 		if (!$comment->commentID) return false;
 		
 		$objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);

@@ -61,12 +61,13 @@ class Poll extends DatabaseObject {
 	/**
 	 * Adds an option to current poll.
 	 * 
-	 * @param	\wcf\data\poll\option\PollOption		$option
+	 * @param	PollOption	$option
 	 */
 	public function addOption(PollOption $option) {
 		if ($option->pollID == $this->pollID) {
 			$this->options[$option->optionID] = $option;
 			
+			/** @noinspection PhpUndefinedFieldInspection */
 			if ($option->voted) {
 				$this->isParticipant = true;
 			}
@@ -124,6 +125,7 @@ class Poll extends DatabaseObject {
 		foreach ($optionList as $option) {
 			$this->options[$option->optionID] = $option;
 			
+			/** @noinspection PhpUndefinedFieldInspection */
 			if ($option->voted) {
 				$this->isParticipant = true;
 			}

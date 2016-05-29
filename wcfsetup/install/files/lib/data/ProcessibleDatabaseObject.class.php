@@ -13,6 +13,8 @@ use wcf\system\SingletonFactory;
  * @package	com.woltlab.wcf
  * @subpackage	data
  * @category	Community Framework
+ * 
+ * @property-read	string|null	$className
  */
 class ProcessibleDatabaseObject extends DatabaseObject {
 	/**

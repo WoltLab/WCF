@@ -60,6 +60,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		
 		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->saveFiles($saveStrategy);
+		
+		/** @var Media[] $mediaFiles */
 		$mediaFiles = $saveStrategy->getObjects();
 		
 		$result = [

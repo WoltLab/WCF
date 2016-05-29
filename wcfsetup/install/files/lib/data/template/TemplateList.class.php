@@ -13,6 +13,11 @@ use wcf\system\application\ApplicationHandler;
  * @package	com.woltlab.wcf
  * @subpackage	data.template
  * @category	Community Framework
+ * 
+ * @method	Template		current()
+ * @method	Template[]		getObjects()
+ * @method	Template|null		search($objectID)
+ * @property	Template[]		$objects
  */
 class TemplateList extends DatabaseObjectList {
 	/**

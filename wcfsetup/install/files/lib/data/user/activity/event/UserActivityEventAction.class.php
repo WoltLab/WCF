@@ -96,6 +96,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	public function validateSwitchContext() { }
 	
 	public function switchContext() {
+		/** @noinspection PhpUndefinedFieldInspection */
 		$userAction = new UserAction([WCF::getUser()], 'update', [
 			'options' => [
 				User::getUserOptionID('recentActivitiesFilterByFollowing') => (WCF::getUser()->recentActivitiesFilterByFollowing ? 0 : 1)

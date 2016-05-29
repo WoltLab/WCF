@@ -22,6 +22,7 @@ use wcf\util\UserUtil;
  * @property-read	integer|null	$pageID
  * @property-read	integer|null	$pageObjectID
  * @property-read	integer|null	$parentPageObjectID
+ * @property-read	string|null	$userOnlineMarking
  */
 class UserOnline extends UserProfile {
 	/**

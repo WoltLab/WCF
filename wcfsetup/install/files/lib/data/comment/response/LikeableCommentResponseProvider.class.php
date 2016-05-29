@@ -42,6 +42,8 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 	 * @inheritDoc
 	 */
 	public function checkPermissions(ILikeObject $response) {
+		/** @var CommentResponse $response */
+		
 		if (!$response->responseID) return false;
 		$comment = new Comment($response->commentID);
 		if (!$comment->commentID) {

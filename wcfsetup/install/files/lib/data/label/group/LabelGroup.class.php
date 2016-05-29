@@ -55,10 +55,13 @@ class LabelGroup extends DatabaseObject implements IRouteController {
 	 * @return	integer
 	 */
 	public static function sortLabelGroups(DatabaseObject $groupA, DatabaseObject $groupB) {
+		/** @noinspection PhpUndefinedFieldInspection */
 		if ($groupA->showOrder == $groupB->showOrder) {
+			/** @noinspection PhpUndefinedFieldInspection */
 			return ($groupA->groupID > $groupB->groupID) ? 1 : -1;
 		}
 		
+		/** @noinspection PhpUndefinedFieldInspection */
 		return ($groupA->showOrder > $groupB->showOrder) ? 1 : -1;
 	}
 }

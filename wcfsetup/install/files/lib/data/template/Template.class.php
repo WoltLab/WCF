@@ -80,6 +80,7 @@ class Template extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getPath() {
+		/** @noinspection PhpUndefinedFieldInspection */
 		$path = FileUtil::getRealPath(WCF_DIR . $this->packageDir) . 'templates/' . $this->templateGroupFolderName . $this->templateName . '.tpl';
 		return $path;
 	}

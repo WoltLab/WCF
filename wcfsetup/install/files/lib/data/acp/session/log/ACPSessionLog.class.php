@@ -22,6 +22,7 @@ use wcf\util\UserUtil;
  * @property-read	string		$userAgent
  * @property-read	integer		$time
  * @property-read	integer		$lastActivityTime
+ * @property-read	string|null	$active
  */
 class ACPSessionLog extends DatabaseObject {
 	/**

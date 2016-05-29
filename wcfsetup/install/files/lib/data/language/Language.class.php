@@ -20,6 +20,7 @@ use wcf\system\WCF;
  * @property-read	string		$countryCode
  * @property-read	integer		$isDefault
  * @property-read	integer		$hasContent
+ * @property-read	integer		$isDisabled
  */
 class Language extends DatabaseObject {
 	/**

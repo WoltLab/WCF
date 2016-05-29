@@ -18,6 +18,9 @@ use wcf\util\StringUtil;
  * 
  * @method	Media	getDecoratedObject()
  * @mixin	Media
+ * @property-read	string|null	$title
+ * @property-read	string|null	$description
+ * @property-read	string|null	$altText
  */
 class ViewableMedia extends DatabaseObjectDecorator {
 	/**
