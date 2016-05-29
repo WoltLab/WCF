@@ -129,7 +129,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		/**
 		 * Returns the list of current values.
 		 * 
-		 * @param	{string}		element id	input element id
+		 * @param	{string}		elementId	input element id
 		 * @return	{array<object>}		list of objects containing object id and value
 		 */
 		getValues: function(elementId) {
@@ -151,6 +151,31 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			}
 			
 			return values;
+		},
+		
+		/**
+		 * Sets the list of current values.
+		 * 
+		 * @param	{string}		elementDd	input element id
+		 * @param	{array<object>}		values		list of objects containing object id and value
+		 */
+		setValues: function(elementId, values) {
+			if (!_data.has(elementId)) {
+				throw new Error("Element id '" + elementId + "' is unknown.");
+			}
+			
+			var data = _data.get(elementId);
+			
+			// remove all existing items first
+			var items = DomTraverse.childrenByClass(data.list, 'item');
+			for (var i = 0, length = items.length; i < length; i++) {
+				this._removeItem(null, items[i], true);
+			}
+			
+			// add new items
+			for (var i = 0, length = values.length; i < length; i++) {
+				this._addItem(elementId, values[i]);
+			}
 		},
 		
 		/**
@@ -332,7 +357,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		 * Adds an item to the list.
 		 * 
 		 * @param	{string}	elementId	input element id
-		 * @param	{string}	value		item value
+		 * @param	{object}	value		item value
 		 */
 		_addItem: function(elementId, value) {
 			var data = _data.get(elementId);
@@ -369,8 +394,9 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		 * 
 		 * @param	{?object}	event		event object
 		 * @param	{Element=}	item		list item
+		 * @param	{boolean?}	noFocus		input element will not be focused if true
 		 */
-		_removeItem: function(event, item) {
+		_removeItem: function(event, item, noFocus) {
 			item = (event === null) ? item : event.currentTarget.parentNode;
 			
 			var parent = item.parentNode;
@@ -379,7 +405,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			
 			data.suggestion.removeExcludedValue(item.children[0].textContent);
 			parent.removeChild(item);
-			data.element.focus();
+			if (!noFocus) data.element.focus();
 			
 			this._handleLimit(elementId);
 			var values = this._syncShadow(data);
