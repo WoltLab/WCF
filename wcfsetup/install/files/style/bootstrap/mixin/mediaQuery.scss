@@ -49,7 +49,7 @@
 
 /* tablet (landscape) + desktop */
 @mixin screen-md-up() {
-	@media (min-width: 1024px) {
+	@media (min-width: 769px) {
 		@content;
 	}
 }
