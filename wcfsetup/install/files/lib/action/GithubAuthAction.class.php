@@ -80,7 +80,7 @@ class GithubAuthAction extends AbstractAction {
 			// check whether a user is connected to this github account
 			$user = User::getUserByAuthData('github:'.$userData['id']);
 			if (!$user->userID) {
-				$user = $this->getUser($data['access_token']);
+				$user = User::getUserByAuthData('github:'.$data['access_token']);
 				$userEditor = new UserEditor($user);
 				$userEditor->update(['authData' => 'github:'.$userData['id']]);
 			}
