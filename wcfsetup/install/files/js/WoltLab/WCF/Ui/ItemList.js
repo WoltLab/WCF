@@ -156,7 +156,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		/**
 		 * Sets the list of current values.
 		 * 
-		 * @param	{string}		elementDd	input element id
+		 * @param	{string}		elementId	input element id
 		 * @param	{array<object>}		values		list of objects containing object id and value
 		 */
 		setValues: function(elementId, values) {
