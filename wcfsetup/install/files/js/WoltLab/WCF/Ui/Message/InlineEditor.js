@@ -2,7 +2,7 @@
  * Flexible message inline editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Message/InlineEditor
  */
@@ -37,7 +37,6 @@ define(
 			this._elements = new ObjectMap();
 			this._options = Core.extend({
 				canEditInline: false,
-				extendedForm: true,
 				
 				className: '',
 				containerId: 0,
@@ -341,11 +340,6 @@ define(
 			var buttonSave = elBySel('button[data-type="save"]', formSubmit);
 			buttonSave.addEventListener('click', this._save.bind(this));
 			
-			if (this._options.extendedForm) {
-				var buttonExtended = elBySel('button[data-type="extended"]', formSubmit);
-				buttonExtended.addEventListener('click', this._prepareExtended.bind(this));
-			}
-			
 			var buttonCancel = elBySel('button[data-type="cancel"]', formSubmit);
 			buttonCancel.addEventListener('click', this._restoreMessage.bind(this));
 			
@@ -471,27 +465,6 @@ define(
 		},
 		
 		/**
-		 * Initiates the jump to the extended edit form.
-		 * 
-		 * @protected
-		 */
-		_prepareExtended: function() {
-			var data = {
-				actionName: 'jumpToExtended',
-				parameters: {
-					containerID: this._options.containerId,
-					message: '',
-					messageID: this._getObjectId(this._activeElement)
-				}
-			};
-			
-			var id = this._getEditorId();
-			EventHandler.fire('com.woltlab.wcf.redactor', 'getText_' + id, data.parameters);
-			
-			Ajax.api(this, data);
-		},
-		
-		/**
 		 * Hides the editor from view.
 		 * 
 		 * @protected
@@ -608,10 +581,6 @@ define(
 					this._showEditor(data);
 					break;
 					
-				case 'jumpToExtended':
-					window.location = data.returnValues.url;
-					break;
-				
 				case 'save':
 					this._showMessage(data);
 					break;
