@@ -29,7 +29,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * needed avatar thumbnail sizes
 	 * @var	integer[]
 	 */
-	public static $avatarThumbnailSizes = [32, 96, 128];
+	public static $avatarThumbnailSizes = [32, 96, 128, 256];
 	
 	/**
 	 * @inheritDoc
@@ -80,6 +80,15 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			case 64:
 				if ($this->width > 96 || $this->height > 96) {
 					$size = 96;
+				}
+				else {
+					$size = null;
+				}
+			break;
+			
+			case 160:
+				if ($this->width > 256 || $this->height > 256) {
+					$size = 256;
 				}
 				else {
 					$size = null;
@@ -142,6 +151,12 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			case 96:
 				if ($this->width >= 128 && $this->height >= 128) {
 					$retinaSize = 128;
+				}
+			break;
+			
+			case 128:
+				if ($this->width >= 128 && $this->height >= 128) {
+					$retinaSize = 256;
 				}
 			break;
 		}
