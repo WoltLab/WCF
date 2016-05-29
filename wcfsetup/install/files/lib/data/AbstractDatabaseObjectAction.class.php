@@ -47,7 +47,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	/**
 	 * multi-dimensional array of parameters required by an action
-	 * @var	mixed[][]
+	 * @var	array
 	 */
 	protected $parameters = [];
 	
