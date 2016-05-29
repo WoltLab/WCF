@@ -63,4 +63,18 @@ class MySQLDatabase extends Database {
 		parent::setAttributes();
 		$this->pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getVersion() {
+		try {
+			$statement = $this->prepareStatement('SELECT VERSION()');
+			$statement->execute();
+			return $statement->fetchSingleColumn();
+		}
+		catch (\PDOException $e) {}
+		
+		return 'unknown';
+	}
 }
