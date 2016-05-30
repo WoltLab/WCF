@@ -438,7 +438,7 @@
 }
 
 .messageSignature {
-	border-top: 1px solid rgb(238, 238, 238);
+	border-top: 1px solid $wcfContentBorderInner;
 	opacity: .6;
 	padding-top: 10px;
 	transition: opacity .12s linear;
@@ -452,12 +452,6 @@
 	@extend .buttonGroup;
 	
 	justify-content: flex-end;
-	//opacity: .3;
-	transition: opacity .12s linear;
-	
-	&.forceVisible {
-		//opacity: 1 !important;
-	}
 	
 	> li {
 		display: flex;
@@ -469,15 +463,5 @@
 	
 	.icon + span:not(.invisible)  {
 		margin-left: 5px;
-	}
-}
-
-.message:hover {
-	.messageFooterButtons {
-		//opacity: .6;
-		
-		&:hover {
-			//opacity: 1;
-		}
 	}
 }
