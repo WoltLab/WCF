@@ -1,0 +1,75 @@
+/* print version */
+@media print {
+	/** reset font colors, backgrounds and shadows **/
+	*,
+	::after,
+	::before {
+		background: 0 0 !important;
+		box-shadow: none !important;
+		color: #000 !important;
+		opacity: 1 !important;
+		text-shadow: none !important;
+	}
+	
+	
+	/** hide obsolete elements **/
+	/* general elements */
+	.pageHeaderContainer,
+	.pageNavigationIcons,
+	.userNotice,
+	.pageAction,
+	.contentHeaderNavigation,
+	.contentFooterNavigation,
+	.paginationTop,
+	.paginationBottom,
+	.buttonList,
+	.collapsibleButton,
+	.columnMark,
+	.statusDisplay,
+	.tabMenu > ul > li:not(.active),
+	.userProfileButtonContainer,
+	.showMore, 
+	
+	/* box layout */
+	.boxesSidebarLeft,
+	.boxesSidebarRight,
+	.boxesFooterBoxes,
+	.boxesFooter,
+	
+	/* message layout */
+	.messageFooterButtons,
+	.messageQuickOptions,
+	.messageGroupEditLink,
+	#messageQuickReply,
+	.messageAuthor .badgeOnline,
+
+	/* comment layout */
+	.jsCommentAdd {
+		display: none !important;
+	}
+	
+	
+	/** minor optimizations **/
+	.main {
+		padding: 30px 0;
+	}
+	
+	.content {
+		flex-basis: auto !important;
+		max-width: none !important;
+	}
+	
+	.pageNavigation .breadcrumbs {
+		margin-left: 0;
+	}
+	
+	.badge {
+		&::before {
+			content: "(";
+		}
+		
+		&::after {
+			content: ")";
+		}
+	}
+}
