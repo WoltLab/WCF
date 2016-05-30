@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\email\mime;
 use wcf\system\email\Mailbox;
+use wcf\system\template\EmailTemplateEngine;
 use wcf\system\WCF;
 
 /**
@@ -66,9 +67,9 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 		$language = WCF::getLanguage();
 		
 		try {
-			WCF::setLanguage($this->mailbox->getLanguage()->languageID);
+			if ($this->mailbox) WCF::setLanguage($this->mailbox->getLanguage()->languageID);
 			
-			return WCF::getTPL()->fetch($this->template, $this->application, [
+			return EmailTemplateEngine::getInstance()->fetch($this->template, $this->application, [
 				'content' => $this->content,
 				'mimeType' => $this->mimeType,
 				'mailbox' => $this->mailbox

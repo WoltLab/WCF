@@ -4,6 +4,7 @@ use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -44,6 +45,9 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 		$this->templateGroup = new TemplateGroup($this->templateGroupID);
 		if (!$this->templateGroup->templateGroupID) {
 			throw new IllegalLinkException();
+		}
+		if ($this->templateGroup->isImmutable()) {
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -89,7 +93,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	 * @inheritDoc
 	 */
 	public function readData() {
-		$this->availableTemplateGroups = TemplateGroup::getSelectList([$this->templateGroupID], 1);
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([$this->templateGroupID, -1], 1);
 		
 		AbstractForm::readData();
 		

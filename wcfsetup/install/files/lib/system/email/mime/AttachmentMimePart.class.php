@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\email\mime;
 use wcf\system\email\EmailGrammar;
-use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
 
 /**
@@ -46,11 +45,11 @@ class AttachmentMimePart extends AbstractMimePart {
 	 * @param	string	$path		Path to read the file from.
 	 * @param	string	$filename	Filename to provide in the email or null to use the $path's basename.
 	 * @param	string	$mimeType	Mime type to provide in the email or null to guess the mime type.
-	 * @throws	SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	public function __construct($path, $filename = null, $mimeType = null) {
 		if (!is_file($path) || !is_readable($path)) {
-			throw new SystemException("Cannot attach file '".$path."'. It either does not exist or is not readable.");
+			throw new \InvalidArgumentException("Cannot attach file '".$path."'. It either does not exist or is not readable.");
 		}
 		
 		$this->mimeType = $mimeType ?: (FileUtil::getMimeType($path) ?: 'application/octet-stream');

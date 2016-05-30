@@ -34,9 +34,29 @@ class TemplateGroup extends DatabaseObject {
 	protected static $selectList = null;
 	
 	/**
+	 * Returns whether the template group is immutable (i.e. whether it's the email
+	 * template group).
+	 * 
+	 * @return	boolean
+	 */
+	public function isImmutable() {
+		return $this->templateGroupFolderName === '_wcf_email/';
+	}
+	
+	/**
+	 * Returns the localized name of the template group.
+	 * 
+	 * @return	string
+	 */
+	public function getName() {
+		return WCF::getLanguage()->get($this->templateGroupName);
+	}
+	
+	/**
 	 * Creates a select list of all template groups.
 	 * 
-	 * @param	integer[]	$ignore		Array of template group ids that should be excluded with all of their children
+	 * @param	integer[]	$ignore		Array of template group ids that should be excluded with all of their children.
+	 * 						-1 denotes that all immutable groups should be ignored.
 	 * @param	integer		$initialDepth	Specifies the initial indentation depth of the list
 	 * @return	array
 	 */
@@ -44,7 +64,7 @@ class TemplateGroup extends DatabaseObject {
 		if (self::$templateGroupStructure === null) {
 			self::$templateGroupStructure = [];
 			
-			$sql = "SELECT		templateGroupID, templateGroupName, parentTemplateGroupID
+			$sql = "SELECT		*
 				FROM		wcf".WCF_N."_template_group
 				ORDER BY	templateGroupName ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -72,9 +92,10 @@ class TemplateGroup extends DatabaseObject {
 		
 		foreach (self::$templateGroupStructure[$parentID ?: 0] as $templateGroup) {
 			if (!empty($ignore) && in_array($templateGroup->templateGroupID, $ignore)) continue;
+			if (in_array(-1, $ignore) && $templateGroup->isImmutable()) continue;
 			
 			// we must encode html here because the htmloptions plugin doesn't do it
-			$title = StringUtil::encodeHTML($templateGroup->templateGroupName);
+			$title = StringUtil::encodeHTML($templateGroup->getName());
 			if ($depth > 0) $title = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $depth). ' ' . $title;
 			
 			self::$selectList[$templateGroup->templateGroupID] = $title;

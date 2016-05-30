@@ -31,6 +31,7 @@ use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
+use wcf\system\template\EmailTemplateEngine;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\util\FileUtil;
@@ -550,10 +551,12 @@ class WCF {
 				// add template path and abbreviation
 				$this->getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
 			}
+			EmailTemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
 			
 			// init application and assign it as template variable
 			self::$applicationObjects[$application->packageID] = call_user_func([$className, 'getInstance']);
 			$this->getTPL()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
+			EmailTemplateEngine::getInstance()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
@@ -625,6 +628,10 @@ class WCF {
 		self::getTPL()->assign([
 			'__wcf' => $this,
 			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated since 2.1, use LAST_UPDATE_TIME directly
+		]);
+		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang']);
+		EmailTemplateEngine::getInstance()->assign([
+			'__wcf' => $this
 		]);
 	}
 	

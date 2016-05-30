@@ -151,8 +151,8 @@ class TemplateGroupAddForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function readData() {
-		$this->availableTemplateGroups = TemplateGroup::getSelectList([], 1);
-
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([-1], 1);
+		
 		parent::readData();
 	}
 	

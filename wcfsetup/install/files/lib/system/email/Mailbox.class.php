@@ -34,11 +34,11 @@ class Mailbox {
 	 * @param	string		$address	email address of this mailbox
 	 * @param	string		$name		human readable name of this mailbox (or null)
 	 * @param	Language	$language	Language to use for localization (or null for the default language)
-	 * @throws	SystemException
+	 * @throws	DomainException
 	 */
 	public function __construct($address, $name = null, Language $language = null) {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('addr-spec').'$)', $address)) {
-			throw new SystemException("The given email address '".$address."' is invalid.");
+			throw new \DomainException("The given email address '".$address."' is invalid.");
 		}
 		
 		$this->address = $address;
